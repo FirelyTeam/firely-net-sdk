@@ -78,8 +78,10 @@ namespace Hl7.Fhir.Specification.Navigation
         }
 
         /// <summary>Move to last direct child element with same path as current element.</summary>
+        /// <param name="nav">An <see cref="ElementDefinitionNavigator"/> instance.</param>
+        /// <param name="sliceName">The optional target slice name, or <c>null</c>. Used for reslicing.</param>
         /// <returns><c>true</c> if the cursor has moved at least a single element, <c>false</c> otherwise</returns>
-        internal static bool MoveToLastSlice(this ElementDefinitionNavigator nav)
+        internal static bool MoveToLastSlice(this ElementDefinitionNavigator nav, string sliceName)
         {
             if (nav == null) { throw Error.ArgumentNull("nav"); }
             if (nav.Current == null) { throw Error.Argument("nav", "Cannot move to last slice. Current node is not set."); }
@@ -90,10 +92,13 @@ namespace Hl7.Fhir.Specification.Navigation
             // if (string.IsNullOrEmpty(basePath)) { throw Error.Argument("nav", "Cannot move to last slice. Current node has no Base.path component (path '{0}').".FormatWith(nav.Path)); }
 
             var result = false;
-            while (nav.MoveToNext())
+            // while (nav.MoveToNext())
+            do
             {
                 var baseComp = nav.Current.Base != null ? nav.Current.Base.Path : nav.Path;
-                if (baseComp != null && (baseComp == basePath || ElementDefinitionNavigator.IsRenamedChoiceElement(basePath, baseComp)))
+                if (baseComp != null && (baseComp == basePath || ElementDefinitionNavigator.IsRenamedChoiceElement(basePath, baseComp))
+                    && (sliceName == null || nav.Current.Name == sliceName)
+                )
                 {
                     // Match, advance cursor
                     bm = nav.Bookmark();
@@ -105,9 +110,44 @@ namespace Hl7.Fhir.Specification.Navigation
                     nav.ReturnToBookmark(bm);
                     break;
                 }
+            } while (nav.MoveToNext());
+            return result;
+        }
+
+#if true
+        /// <summary>Move to the next slice of the current element with the specified name, if it exists.</summary>
+        /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
+        internal static bool MoveToSlice(this ElementDefinitionNavigator nav, string sliceName)
+        {
+            if (nav == null) { throw Error.ArgumentNull("nav"); }
+            if (nav.Current == null) { throw Error.Argument("nav", "Cannot move to next slice. Current node is not set."); }
+
+            var bm = nav.Bookmark();
+            var basePath = nav.Current.Base != null ? nav.Current.Base.Path : nav.Path;
+
+            var result = false;
+            while (nav.MoveToNext())
+            {
+                var baseComp = nav.Current.Base != null ? nav.Current.Base.Path : nav.Path;
+                if (baseComp != null && (baseComp == basePath || ElementDefinitionNavigator.IsRenamedChoiceElement(basePath, baseComp)))
+                {
+                    if (nav.Current.Name == sliceName)
+                    {
+                        // Match!
+                        result = true;
+                        break;
+                    }
+                }
+                else
+                {
+                    // Mismatch, back up to previous element and exit
+                    nav.ReturnToBookmark(bm);
+                    break;
+                }
             }
             return result;
         }
+#endif
 
         /// <summary>Move the navigator to the first preceding sibling element with the specified name, if it exists.</summary>
         /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>

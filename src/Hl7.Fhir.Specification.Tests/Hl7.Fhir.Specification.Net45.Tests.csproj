@@ -112,9 +112,6 @@
     <Content Include="TestData\snapshot-test\Chris Grenz\codeable-with-systems-profile.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="TestData\snapshot-test\Chris Grenz\DAF-Religion-profile.xml.bak">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <Content Include="TestData\snapshot-test\Chris Grenz\encounter-with-type-profile-profile.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -1,4 +1,5 @@
-﻿// #define CHRIS_GRENZ
+﻿#define MATCH_SLICE_BY_NAME
+#define RESLICE
 
 /* 
  * Copyright (c) 2016, Furore (info@furore.com) and contributors
@@ -172,7 +173,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <param name="snapNav"></param>
         /// <param name="diffNav"></param>
         /// <returns></returns>
-        private static List<MatchInfo> constructMatch(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
+        static List<MatchInfo> constructMatch(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
         {
             // [WMR 20160802] snapNav and diffNav point to matching elements
             // Determine the associated action (Add, Merge, Slice)
@@ -233,7 +234,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         }
 
-        private static List<MatchInfo> constructSliceMatch(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
+        static List<MatchInfo> constructSliceMatch(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
         {
             var result = new List<MatchInfo>();
 
@@ -246,8 +247,19 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             bool isExtension = diffNav.Current.IsExtension();
             bool diffIsSliced = diffNav.Current.Slicing != null;
+
+#if RESLICE
+            var diffSliceName = diffNav.Current.Name;
+            if (baseIsSliced && diffSliceName != null)
+            {
+                // Re-slice; merge diff with matching base slice
+                snapNav.MoveToSlice(diffSliceName);
+                bm = snapNav.Bookmark();
+            }
+#endif
+
             if (diffIsSliced || isExtension)
-                {
+            {
                 // Differential has information for the slicing entry
                 result.Add(new MatchInfo()
                 {
@@ -262,11 +274,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // If the differential contains a slicing entry, then it should also define at least a single slice.
                     if (!diffNav.MoveToNext())
                     {
-#if CHRIS_GRENZ
-                        // Handle Chris Grenz example http://example.com/fhir/SD/patient-research-auth-reslice
-#else
                         throw Error.InvalidOperation("Differential has a slicing entry for path '{0}', but no first actual slice", diffNav.Path);
-#endif
                     }
                 }
             }
@@ -275,39 +283,30 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Note that the first entry may serve a double role and have to result matches (one for the constraints, one as a slicing entry)
             do
             {
-                // Find matching slice in base profile
-                if (!baseIsSliced)
+                Bookmark matchingSlice;
+                if (baseIsSliced && findBaseSlice(snapNav, diffNav, out matchingSlice))
                 {
                     result.Add(new MatchInfo()
                     {
-                        BaseBookmark = bm,
+                        BaseBookmark = matchingSlice,   // Merge with matching base slice
                         DiffBookmark = diffNav.Bookmark(),
-                        Action = MatchAction.Add
+                        Action = MatchAction.Merge,
                     });
                 }
                 else
                 {
-                    Bookmark matchingSlice;
-                    if (findBaseSlice(snapNav, diffNav, out matchingSlice))
+                    result.Add(new MatchInfo()
                     {
-                        result.Add(new MatchInfo()
-                        {
-                            BaseBookmark = matchingSlice,
-                            DiffBookmark = diffNav.Bookmark(),
-                            Action = MatchAction.Merge,
-                        });
-                    }
-                    else
-                    {
-                        result.Add(new MatchInfo()
-                        {
-                            // BaseBookmark = bm,
-                            BaseBookmark = matchingSlice,
-                            DiffBookmark = diffNav.Bookmark(),
-                            Action = MatchAction.Add
-                        });
-                    }
+                        BaseBookmark = bm,              // New slice, merge with default (unsliced) element definition
+                        DiffBookmark = diffNav.Bookmark(),
+                        Action = MatchAction.Add
+                    });
                 }
+
+                // TODO: Handle re-slicing child diff constraints
+                // e.g. patient-careprovider-type-reslice, organizationCare/teamCare
+                // => Must process while matching base slice "organizationCare"
+
             } while (diffNav.MoveToNext(diffName));
 
             return result;
@@ -320,20 +319,28 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Returns true when match is found, matchingSlice points to match in base (merge here)
         // Returns false otherwise, matchingSlice points to current node in base
         // Maintain snapNav current position
-        private static bool findBaseSlice(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, out Bookmark matchingSlice)
+        static bool findBaseSlice(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, out Bookmark matchingSlice)
         {
+#if MATCH_SLICE_BY_NAME
+            // [WMR 20161010] NEW
+            var bm = snapNav.Bookmark();
+            matchingSlice = Bookmark.Empty;
+            var result = snapNav.MoveToSlice(diffNav.Current.Name);
+            if (result)
+            {
+                matchingSlice = snapNav.Bookmark();
+                snapNav.ReturnToBookmark(bm);
+            }
+            return result;
+#else
             var slicing = snapNav.Current.Slicing;
             Debug.Assert(slicing != null);
 
             var slicingIntro = matchingSlice = snapNav.Bookmark();
             var result = false;
 
-#if CHRIS_GRENZ
-            var reslice = false;
-#endif
-
             // url, type@profile, @type + @profile
-            if (IsTypeProfileDiscriminator(slicing.Discriminator))
+            if (isTypeProfileDiscriminator(slicing.Discriminator))
             {
                 // [WMR 20160802] Handle complex extension constraints
                 // e.g. sdc-questionnaire, Path = 'Questionnaire.group.question.extension.extension', name = 'question'
@@ -345,11 +352,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Handle Chris Grenz example http://example.com/fhir/SD/patient-research-auth-reslice
                 if (diffProfiles == null || diffProfiles.Length == 0)
                 {
-#if CHRIS_GRENZ
-                    reslice = true;
-#else
                     throw Error.InvalidOperation($"Differential is reslicing on url, but resliced element has no type profile (path = '{diffNav.Path}').");
-#endif
                 }
                 if (diffProfiles != null && diffProfiles.Length > 1)
                 {
@@ -357,16 +360,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
 
 
-#if CHRIS_GRENZ
-                // TOOO: Resolve profile from element Type
-                // => Needs a reference to the calling SnapshotGenerator
-                // var diffProfile = generator.getStructureForElementType(diffNav.Current).Url;
-
-                var diffProfile = diffProfiles.FirstOrDefault() ?? Validation.TypeRefExtensions.ProfileUri(snapNav.Current.PrimaryType());
-                
-#else
                 var diffProfile = diffProfiles.FirstOrDefault();
-#endif
                 var profileRef = ProfileReference.FromUrl(diffProfile);
                 while (snapNav.MoveToNext(snapNav.PathName))
                 {
@@ -374,10 +368,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                     result = profileRef.IsComplex
                         // Match on element name
                         ? snapNav.Current.Name == profileRef.ElementName
-#if CHRIS_GRENZ
-                        // Match reslice on name
-                        : reslice ? snapNav.Current.Name == diffNav.Current.Name
-#endif
                         // Match on type profile(s)
                         : baseProfiles.SequenceEqual(diffProfiles);
                     if (result)
@@ -388,6 +378,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
 
             }
+
             // TODO: Support other discriminators
             // http://hl7.org/fhir/profiling.html#discriminator
 
@@ -398,11 +389,13 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             snapNav.ReturnToBookmark(slicingIntro);
 
+            Debug.Assert(snapNav.Current.Name == diffNav.Current.Name);
             return result;
+#endif
         }
 
         // [WMR 20160902] Represents a new element definition with no matching base element (for core resource & datatype definitions)
-        private static MatchInfo constructNew(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
+        static MatchInfo constructNew(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
         {
             // Called by Match when the current diffNav does not match any following sibling of snapNav (base)
             // This happens when merging a core definition (e.g. Patient) with a base type (e.g. Resource)
@@ -418,26 +411,26 @@ namespace Hl7.Fhir.Specification.Snapshot
             return match;
         }
 
+        static bool isProfileDiscriminator(string discriminator) => discriminator == "@profile";
+        static bool isTypeDiscriminator(string discriminator) => discriminator == "@type";
+        static bool isTypeAndProfileDiscriminator(string discriminator) => discriminator == "type@profile";
+        static bool isUrlDiscriminator(string discriminator) => discriminator == "url";
+
         // [WMR 20160801]
         // Determine if the specified discriminator(s) match on type/profile
-        private static bool IsTypeProfileDiscriminator(IEnumerable<string> discriminators)
+        static bool isTypeProfileDiscriminator(IEnumerable<string> discriminators)
         {
             if (discriminators != null)
             {
                 var ar = discriminators.ToArray();
                 if (ar.Length == 1)
                 {
-                    return ar[0] == "url" || ar[0] == "type@profile"
-#if CHRIS_GRENZ
-                        // [WMR 20160919] Added to handle Chris Grenz example http://example.com/fhir/SD/patient-research-auth-reslice
-                        || ar[0] == "@profile"
-#endif
-                        ;
+                    return isUrlDiscriminator(ar[0]) || isTypeAndProfileDiscriminator(ar[0]) || isProfileDiscriminator(ar[0]);
                 }
                 else if (ar.Length == 2)
                 {
-                    return (ar[0] == "@profile" && ar[1] == "@type")
-                        || (ar[1] == "@profile" && ar[0] == "@type");
+                    return (isProfileDiscriminator(ar[0]) && isTypeDiscriminator(ar[1]))
+                        || (isProfileDiscriminator(ar[1]) && isTypeDiscriminator(ar[0]));
                 }
             }
             return false;

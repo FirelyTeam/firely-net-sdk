@@ -370,20 +370,115 @@ namespace Hl7.Fhir.Specification.Tests
             dumpBasePaths(expanded);
         }
 
+        void assertElement(StructureDefinition sd, string path, string name = null, string elementId = null)
+        {
+            Assert.IsNotNull(sd);
+
+            Assert.IsNotNull(sd.Differential);
+            Assert.IsNotNull(sd.Differential.Element);
+            Assert.IsTrue(sd.Differential.Element.Count > 0);
+
+            // Verify that the differential component contains a matching element
+            assertElement(sd.Differential, path, name);
+            assertElement(sd.Snapshot, path, name, elementId);
+        }
+
+        void assertElement(IElementList elements, string path, string name = null, string elementId = null)
+        {
+            var label = elements is StructureDefinition.DifferentialComponent ? "differential" : "snapshot";
+            Assert.IsNotNull(elements);
+            var matches = elements.Element.Where(e => e.Path == path && e.Name == name).ToArray();
+            var cnt = matches.Length;
+            Assert.IsTrue(cnt > 0, $"Expected element is missing from {label} component. Path = '{path}', name = '{name}'.");
+            Assert.IsTrue(cnt == 1, $"Found multiple matching elements in {label} component for Path = '{path}', name = '{name}'.");
+            var elem = matches[0];
+            if (elementId != null)
+            {
+                Assert.AreEqual(elementId, elem.ElementId, $"Invalid elementId in {label} component. Expected = '{elementId}', actual = '{elem.ElementId}'.");
+            }
+        }
 
         [TestMethod]
-        [Ignore] // TODO
+        // [Ignore] // TODO
         public void GeneratePatientWithExtensionsSnapshot()
         {
             // [WMR 20161005] Very complex set of examples by Chris Grenz
             // https://github.com/chrisgrenz/FHIR-Primer/blob/master/profiles/patient-extensions-profile.xml
             // Manually downgraded from FHIR v1.4.0 to v1.0.2
-            
+
             // TODO: Support reslicing
 
+#if true
+            StructureDefinition expanded = null;
+
+            Func<string, StructureDefinition> generateSnapshot = url =>
+            {
+                var result = _testResolver.FindStructureDefinition(url);
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result.HasSnapshot);
+                generateSnapshotAndCompare(result, out expanded);
+                dumpOutcome(_generator.Outcome);
+                return expanded;
+            };
+
+            StructureDefinition sd;
+#if false
+            sd = generateSnapshot(@"http://example.com/fhir/SD/patient-with-extensions");
+            assertElement(sd.Snapshot, "Patient.extension"); // [WMR 20161010] Slice entry
+            assertElement(sd, "Patient.extension", "doNotCall", "Patient.extension:doNotCall");
+            assertElement(sd, "Patient.extension", "legalCase", "Patient.extension:legalCase");
+            assertElement(sd, "Patient.extension.valueBoolean", "legalCase.valueBoolean", "Patient.extension:legalCase.valueBoolean");
+            assertElement(sd, "Patient.extension.valueBoolean.extension", "legalCase.valueBoolean.leadCounsel", "Patient.extension:legalCase.valueBoolean.extension:leadCounsel");
+            assertElement(sd, "Patient.extension", "religion", "Patient.extension:religion");
+            assertElement(sd, "Patient.extension", "researchAuth", "Patient.extension:researchAuth");
+
+            sd = generateSnapshot(@"http://example.com/fhir/SD/patient-name-slice");
+            assertElement(sd.Snapshot, "Patient.name"); // [WMR 20161010] Slice entry
+            assertElement(sd, "Patient.name", "officialName", "Patient.name:officialName");
+            assertElement(sd, "Patient.name", "maidenName", "Patient.name:maidenName"); // [WMR 20161010] Added required element, missing in original profile diff
+            assertElement(sd, "Patient.name.use", "maidenName.use", "Patient.name:maidenName.use");
+            assertElement(sd, "Patient.name.family", "maidenName.family", "Patient.name:maidenName.family");
+
+            sd = generateSnapshot(@"http://example.com/fhir/SD/patient-telecom-slice");
+            assertElement(sd.Snapshot, "Patient.telecom"); // [WMR 20161010] Slice entry
+            assertElement(sd, "Patient.telecom", "homePhone", "Patient.telecom:homePhone");
+            assertElement(sd, "Patient.telecom", "mobilePhone", "Patient.telecom:mobilePhone"); // [WMR 20161010] Added required element, missing in original profile diff
+            assertElement(sd, "Patient.telecom", "homeEmail", "Patient.telecom:homeEmail"); // [WMR 20161010] Added required element, missing in original profile diff
+            assertElement(sd, "Patient.telecom", "workEmail", "Patient.telecom:workEmail"); // [WMR 20161010] Added required element, missing in original profile diff
+            assertElement(sd, "Patient.telecom", "pager", "Patient.telecom:pager");
+
+            // Original snapshot contains constraints for both deceased[x] and deceasedDateTime - invalid!
+            // Generated snapshot merges both constraints to deceasedDateTime type slice
+            sd = generateSnapshot(@"http://example.com/fhir/SD/patient-deceasedDatetime-slice");
+            assertElement(sd.Differential, "Patient.deceased[x]");                          // Differential contains a type slice on deceased[x]
+            Assert.IsFalse(sd.Snapshot.Element.Any(e => e.Path == "Patient.deceased[x]"));  // Snapshot only contains renamed element constraint
+            assertElement(sd, "Patient.deceasedDateTime", null, "Patient.deceasedDateTime");
+
+            sd = generateSnapshot(@"http://example.com/fhir/SD/patient-careprovider-type-slice");
+            assertElement(sd.Snapshot, "Patient.careProvider", null, "Patient.careProvider"); // [WMR 20161010] Slice entry
+            assertElement(sd, "Patient.careProvider", "organizationCare", "Patient.careProvider:organizationCare");
+            assertElement(sd, "Patient.careProvider", "practitionerCare", "Patient.careProvider:practitionerCare");
+#endif
+
+            // Verify re-slicing
+            sd = generateSnapshot(@"http://example.com/fhir/SD/patient-careprovider-type-reslice");
+            assertElement(sd.Snapshot, "Patient.careProvider", null, "Patient.careProvider"); // [WMR 20161010] Slice entry
+            assertElement(sd, "Patient.careProvider", "organizationCare", "Patient.careProvider:organizationCare"); // [WMR 20161010] Original (inherited) slice entry
+            assertElement(sd, "Patient.careProvider", "organizationCare/teamCare", "Patient.careProvider:organizationCare/teamCare"); // [WMR 20161010] Re-slice
+            assertElement(sd.Snapshot, "Patient.careProvider", "practitionerCare", "Patient.careProvider:practitionerCare");
+            // Also verify the correct (re)slice element order
+            var elems = sd.Snapshot.Element.Where(e => e.Path == "Patient.careProvider").ToArray();
+            Assert.AreEqual(4, elems.Length);
+            Assert.AreEqual("Patient.careProvider", elems[0].ElementId);
+            Assert.AreEqual("Patient.careProvider:organizationCare", elems[1].ElementId);
+            Assert.AreEqual("Patient.careProvider:organizationCare/teamCare", elems[2].ElementId);
+            Assert.AreEqual("Patient.careProvider:practitionerCare", elems[3].ElementId);
+
+
+#else
             // Note: each profile is derived from the previous profile
 
-            // var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/SD/patient-with-extensions");
+            var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/SD/patient-with-extensions");
             // OK; note that we don't expand extensions unless the diff contains constraints on child elements (which this one doesn't)
 
             // var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/SD/patient-name-slice");
@@ -396,16 +491,15 @@ namespace Hl7.Fhir.Specification.Tests
             // var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/SD/patient-research-auth-reslice");
 
             // Referenced extension definition profiles
-            var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/StructureDefinition/patient-legal-case");
+            // var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/StructureDefinition/patient-legal-case");
+            // var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/StructureDefinition/patient-legal-case-lead-counsel");
 
             Assert.IsNotNull(sd);
             Assert.IsTrue(sd.HasSnapshot);
 
             // [WMR 20160906] Remove ElementDefinition@id attributes (not supported yet)
-            foreach (var elem in sd.Snapshot.Element)
-            {
-                elem.ElementId = null;
-            }
+            //foreach (var elem in sd.Snapshot.Element) { elem.ElementId = null; }
+
             // dumpReferences(sd);
 
             StructureDefinition expanded;
@@ -413,6 +507,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
+#endif
         }
 
         [TestMethod]
