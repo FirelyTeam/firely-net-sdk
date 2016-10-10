@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AuditEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://hl7.org/fhir ../../Users/Ardon/Documents/FHIR/Schemas/auditevent.xsd"
+ xmlns="http://hl7.org/fhir">
+    <id value="noAuditLog-AuditEvent-example"/>
+    <meta>
+        <profile value="http://example.no/fhir/StructureDefinition/noAuditEvent"/>
+    </meta>
+    <text>
+        <status value="additional"/>
+        <div xmlns="http://www.w3.org/1999/xhtml">
+            This is an example of an Audit logging for access to a Patient's medical record.
+        </div>
+    </text>
+    <!-- The event describes what was done -->
+    <event>
+        <!-- Extension to define who authorized access to the patient's record.  -->
+        <extension url="http://example.no/fhir/StructureDefinition/extAuthorization">
+           <extension url="givenByPerson">
+                <valueReference>
+                    <reference value="http://example.no/fhir/Practitioner/noAuditLog-Practitioner-example25454"/>
+                </valueReference>
+            </extension>
+            <extension url="timePeriod">
+                <valuePeriod>
+                    <start value="2016-01-01T00:00:00Z"/>
+                    <end value="2017-01-01T00:00:00Z"/>
+                </valuePeriod>
+            </extension>
+        </extension>    
+        <type>
+            <system value="http://hl7.org/fhir/audit-event-type"/>
+            <code value="110110"/>
+            <display value="Patient Record"/>
+        </type>
+        <!-- action R = read -->
+        <action value="R"/>
+        <dateTime value="2016-03-20T23:41:23Z"/>
+        <!-- Outcocome of the event. 0 = Success-->
+        <outcome value="0"/>
+    </event>
+    <!-- The participant describes the employee/practitioner who performed the audit event. -->
+    <participant> 
+        <role>
+            <coding>
+                <code value="54158HeadRadiologistHelseFordeRadiotherapyDepartment"/>
+            </coding>
+        </role>
+        <reference>
+            <reference value="http://example.no/fhir/Practitioner/noAuditLog-Practitioner-example2"/>
+        </reference>
+        <userId>
+            <value value="j.doe@helseforde.no"/>
+        </userId>
+        <altId value="258852369"/>
+        <name value="John Doe"/>
+        <requestor value="true"/>
+        <!-- machine name + DNS name  -->
+        <network>
+            <address value="Mourne.furore.com"/>
+            <type value="1"/>
+        </network>
+    </participant>
+    <!-- The source describses the application where the auditEvent orgiginated.  -->
+    <source>
+        <site value="Helse Førde Radiotherapy department"/>
+        <identifier>
+            <!-- Made up system for now -->
+            <system value="http://example.no/fhir/NamingSystem/ApplicationIdentifier"/>
+            <value value="DIPS-HelseFørde"/>
+        </identifier>
+    </source>
+    <!-- The objects describe the instances of data or objects that have been accessed. 
+        The first object is about the specific patient of this AuditEvent. -->
+    <object>
+        <reference>
+            <reference value="http://example.no/fhir/Patient/noAuditLog-Patient-example7"/>
+        </reference>
+        <type>
+            <system value="http://hl7.org/fhir/object-type"/>
+            <code value="1"/>
+            <display value="Person"/>
+        </type>
+        <role>
+            <system value="http://hl7.org/fhir/object-role"/>
+            <code value="1"/>
+            <display value="Patient"/>
+        </role>
+        <name value="Herald Olsen"/>
+    </object>
+    <!-- The specific information that has been accessed. -->
+    <object>
+        <identifier>
+            <system value="http://helse-forde.no/informationIdentifier"/>
+            <value value="Consult54542154"/>
+        </identifier>
+        <type>
+            <system value="http://hl7.org/fhir/object-type"/>
+            <code value="2"/>
+            <display value="System Object"/>
+        </type>
+        <role>
+            <system value="http://hl7.org/fhir/object-role"/>
+            <code value="3"/>
+            <display value="Report"/>
+        </role>
+        <name value="Consultnote"/>
+        <description value="Radiology report-20160322"/>
+    </object>
+    <!-- 2 more objects to give information about the last modifcation date of the consult and last approval date. -->
+    <object>
+        <identifier>
+            <system value="http://helse-forde.no/informationIdentifier"/>
+            <value value="Consult54542154"/>
+        </identifier>
+        <type>
+            <system value="http://hl7.org/fhir/object-type"/>
+            <code value="4"/>
+            <display value="Other"/>
+        </type>
+        <name value="Last modified"/>
+        <description value="2016-03-19T23:41:23Z"/>
+    </object>
+    <object>
+        <identifier>
+            <system value="http://helse-forde.no/informationIdentifier"/>
+            <value value="Consult54542154"/>
+        </identifier>
+        <type>
+            <system value="http://hl7.org/fhir/object-type"/>
+            <code value="4"/>
+            <display value="Other"/>
+        </type>
+         <name value="Last approved"/>
+        <description value="2016-03-19T23:41:23Z"/>
+    </object>
+</AuditEvent>
+
+
+
