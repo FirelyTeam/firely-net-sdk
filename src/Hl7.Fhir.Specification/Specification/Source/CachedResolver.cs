@@ -69,26 +69,28 @@ namespace Hl7.Fhir.Specification.Source
                 _duration = duration;
             }
 
-            private SynchronizedCollection<CacheEntry<T>> _cache = new SynchronizedCollection<CacheEntry<T>>();
+           // private SynchronizedCollection<CacheEntry<T>> _cache = new SynchronizedCollection<CacheEntry<T>>();
             private Object getLock = new Object();
-
+            private Dictionary<string, CacheEntry<T>> _cache = new Dictionary<string, CacheEntry<T>>();
 
             public T Get(string identifier)
             {
                 lock (getLock)
                 {
                     // Check the cache
-                    var entry = _cache.Where(ce => ce.Identifier == identifier).SingleOrDefault();
+                    CacheEntry<T> entry;
+                    bool success = _cache.TryGetValue(identifier, out entry);
+                    //var entry = _cache.TryGetValue(Where(ce => ce.Identifier == identifier).SingleOrDefault();
 
                     // Remove entry if it's too old
-                    if (entry != null && entry.Expired)
+                    if (success && entry.Expired)
                     {
-                        _cache.Remove(entry);
+                        _cache.Remove(identifier);
                         entry = null;
                     }
 
                     // If we still have a fresh entry, return it
-                    if (entry != null)
+                    if (success)
                         return entry.Data;
                     else
                     {
@@ -96,7 +98,7 @@ namespace Hl7.Fhir.Specification.Source
                         T newData = default(T);
 
                         newData = _onCacheMiss(identifier);
-                        _cache.Add(new CacheEntry<T> { Data = newData, Identifier = identifier, Expires = DateTime.Now.AddSeconds(_duration) });
+                        _cache.Add(identifier, new CacheEntry<T> { Data = newData, Identifier = identifier, Expires = DateTime.Now.AddSeconds(_duration) });
 
                         return newData;
                     }

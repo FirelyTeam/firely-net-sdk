@@ -39,12 +39,13 @@ namespace Hl7.Fhir.Validation
 
         public static void Add(this OperationOutcome outcome, OperationOutcome other)
         {
-            foreach (var issue in other.Issue)
-            {
-                //var myIssue = (OperationOutcome.IssueComponent)issue.DeepCopy();
-                var myIssue = issue;
-                outcome.AddIssue(myIssue);
-            }
+            outcome.AddIssue(other.Issue);
+            //foreach (var issue in other.Issue)
+            //{
+            //    //var myIssue = (OperationOutcome.IssueComponent)issue.DeepCopy();
+            //    var myIssue = issue;
+            //    outcome.AddIssue(myIssue);
+            //}
         }
 
 

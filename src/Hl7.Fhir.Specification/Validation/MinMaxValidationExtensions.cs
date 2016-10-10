@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Validation
                                 var issue = comparisonOutcome == -1 ? Issue.CONTENT_ELEMENT_PRIMITIVE_VALUE_TOO_SMALL :
                                             Issue.CONTENT_ELEMENT_PRIMITIVE_VALUE_TOO_LARGE;
 
-                                outcome.Info($"Instance value '{instanceValue}' is {comparisonOutcome} {elementName} '{definition}'", issue, instance);
+                                outcome.Info($"Instance value '{instanceValue}' is {label} {elementName} '{definition}'", issue, instance);
                             }
                         }
                     }

@@ -43,11 +43,11 @@ namespace Hl7.Fhir.Validation
 
         public static void MakeInformational(this OperationOutcome outcome)
         {
-            //var result = (OperationOutcome)outcome.DeepCopy();
             var result = outcome;
 
             foreach (var issue in result.Issue)
-                issue.Severity = OperationOutcome.IssueSeverity.Information;
+                if(!issue.Success) 
+                    issue.Severity = OperationOutcome.IssueSeverity.Information;
         }
 
         public static void Flatten(this OperationOutcome outcome)
