@@ -2,6 +2,10 @@
 layout: default
 title: What's new?
 ---
+### In 0.90.6 (released 2016MMDD)
+* Fix: FhirClient will no longer always add `_summary=false` to search queries
+* Fix: FhirClient will not throw parse errors anymore if the server indicated a non-success status (i.e. a 406)
+
 ### In 0.90.5 (released 20160804)
 
 * Enhancement: Portable45 target includes support for validation, and no longer depends on Silverlight 5 SDK. Thanks Tilo!
