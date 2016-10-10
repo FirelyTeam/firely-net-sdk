@@ -178,6 +178,44 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(sw2.ElapsedMilliseconds < sw1.ElapsedMilliseconds && sw2.ElapsedMilliseconds < 100);
         }
 
+        [TestMethod]
+        public void TestCacheInvalidation()
+        {
+            var src = new CachedResolver(new MultiResolver(ZipSource.CreateValidationSource()));
+            CachedResolver.LoadResourceEventArgs eventArgs = null;
+            CachedResolver.LoadResourceEventHandler handler = (sender, args) => { eventArgs = args; };
+            src.Load += handler;
+
+            // Verify that the Load event is fired on the initial load
+            const string resourceUri = "http://hl7.org/fhir/ValueSet/v2-0292";
+            var resource = src.ResolveByUri(resourceUri);
+            Assert.IsNotNull(eventArgs);
+            Assert.AreEqual(resourceUri, eventArgs.Url);
+            Assert.AreEqual(resource, eventArgs.Resource);
+
+            // Verify that the Load event is not fired on subsequent load
+            eventArgs = null;
+            resource = src.ResolveByUri(resourceUri);
+            Assert.IsNull(eventArgs);
+
+            // Verify that we can remove the cache entry
+            var result = src.InvalidateUri(resourceUri);
+            Assert.IsTrue(result);
+
+            // Verify that the cache entry has been removed
+            result = src.InvalidateUri(resourceUri);
+            Assert.IsFalse(result);
+
+            // Verify that the Load event is fired again on the next load
+            var resource2 = src.ResolveByUri(resourceUri);
+            Assert.IsNotNull(eventArgs);
+            Assert.AreEqual(resourceUri, eventArgs.Url);
+            Assert.AreEqual(resource2, eventArgs.Resource);
+            
+            // Verify that the cache returned a new instance with exact same value
+            Assert.AreNotEqual(resource2.GetHashCode(), resource.GetHashCode());
+            Assert.IsTrue(resource.IsExactly(resource2));
+        }
 
         [TestMethod]
         public void TestSetupIsOnce()
