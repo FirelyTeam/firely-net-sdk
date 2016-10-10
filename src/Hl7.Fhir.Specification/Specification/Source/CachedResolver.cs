@@ -7,10 +7,8 @@
  */
 
 using System;
-using System.IO;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
-using System.Linq;
 using System.Collections.Generic;
 
 namespace Hl7.Fhir.Specification.Source
@@ -58,12 +56,12 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Remove the resource with the specified uri from the cache, if it exists.</summary>
         /// <param name="url">The resource uri.</param>
         /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
-        bool InvalidateUri(string url) => _resourcesByUri.Invalidate(url);
+        public bool InvalidateUri(string url) => _resourcesByUri.Invalidate(url);
 
         /// <summary>Remove the resource with the specified canonical uri from the cache, if it exists.</summary>
         /// <param name="url">The canonical resource uri.</param>
         /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
-        bool InvalidateCanonicalUri(string url) => _resourcesByCanonical.Invalidate(url);
+        public bool InvalidateCanonicalUri(string url) => _resourcesByCanonical.Invalidate(url);
 
         /// <summary>Event arguments for the <see cref="LoadResourceEventHandler"/> delegate.</summary>
         public class LoadResourceEventArgs : EventArgs
