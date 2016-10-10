@@ -982,6 +982,13 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             // Recursively resolve root element definition from base profile
+
+            // TODO: Recursion detection / protection
+            // e.g. detect cycle in StructureDefinition.Base references
+            // FHIR types and resources have no such cycles, but an attacker could abuse this
+            // Note that we need to use a separate stack, as we may need to expand the root element of a
+            // profile that is currently being fully expanded, i.e. the url is already on the main stack.
+
             Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - recursively resolve root element definition from base profile '{baseProfileUri}' ...");
             var sdBase = _resolver.FindStructureDefinition(baseProfileUri);
             var baseRoot = getSnapshotRootElement(sdBase, baseProfileUri, ToNamedNode(diffRoot)); // Recursion!
