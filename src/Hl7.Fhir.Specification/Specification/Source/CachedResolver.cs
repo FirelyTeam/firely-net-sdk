@@ -63,6 +63,13 @@ namespace Hl7.Fhir.Specification.Source
         /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
         public bool InvalidateCanonicalUri(string url) => _resourcesByCanonical.Invalidate(url);
 
+        /// <summary>Clear the cache by removing all existing cache entries.</summary>
+        public void Clear()
+        {
+            _resourcesByUri.Clear();
+            _resourcesByCanonical.Clear();
+        }
+
         /// <summary>Event arguments for the <see cref="LoadResourceEventHandler"/> delegate.</summary>
         public class LoadResourceEventArgs : EventArgs
         {
@@ -155,6 +162,14 @@ namespace Hl7.Fhir.Specification.Source
                 lock (getLock)
                 {
                     return _cache.Remove(identifier);
+                }
+            }
+
+            public void Clear()
+            {
+                lock (getLock)
+                {
+                    _cache.Clear();
                 }
             }
         }
