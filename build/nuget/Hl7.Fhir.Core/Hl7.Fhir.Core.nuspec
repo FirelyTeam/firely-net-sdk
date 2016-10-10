@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Hl7.Fhir.DSTU2</id>
-    <version>0.90.6-alpha7</version>
+    <version>0.90.6-alpha8</version>
     <title>HL7 FHIR Core support API for DSTU2</title>
     <authors>Ewout Kramer (e.kramer@furore.com) and contributors</authors>
     <owners>Furore (http://fhir.furore.com). Contains materials (C) Hl7 International</owners>
@@ -19,48 +19,48 @@
       <!-- see: https://github.com/onovotny/ReferenceGenerator and MvvmCross project for inspiration -->
       <group targetFramework="net">
         <dependency id="Newtonsoft.Json" version="8.0.2" />
-		<dependency id="Hl7.FluentPath" version="0.3.1-alpha7"/>
+        <dependency id="Hl7.FluentPath" version="0.3.1-alpha7" />
       </group>
       <group targetFramework="win">
         <dependency id="Newtonsoft.Json" version="8.0.2" />
         <dependency id="Portable-Strong.DataAnnotations" version="1.0.0" />
-		<dependency id="Hl7.FluentPath" version="0.3.1-alpha7"/>
+        <dependency id="Hl7.FluentPath" version="0.3.1-alpha7" />
       </group>
       <group targetFramework="wpa">
         <dependency id="Newtonsoft.Json" version="8.0.2" />
         <dependency id="Portable-Strong.DataAnnotations" version="1.0.0" />
-		<dependency id="Hl7.FluentPath" version="0.3.1-alpha7"/>
+        <dependency id="Hl7.FluentPath" version="0.3.1-alpha7" />
       </group>
       <group targetFramework="wp">
         <dependency id="Newtonsoft.Json" version="8.0.2" />
         <dependency id="Portable-Strong.DataAnnotations" version="1.0.0" />
-		<dependency id="Hl7.FluentPath" version="0.3.1-alpha7"/>
+        <dependency id="Hl7.FluentPath" version="0.3.1-alpha7" />
       </group>
       <group targetFramework="MonoAndroid">
         <dependency id="Newtonsoft.Json" version="8.0.2" />
         <dependency id="Portable-Strong.DataAnnotations" version="1.0.0" />
-		<dependency id="Hl7.FluentPath" version="0.3.1-alpha7"/>
+        <dependency id="Hl7.FluentPath" version="0.3.1-alpha7" />
       </group>
       <group targetFramework="Xamarin.iOS10">
         <dependency id="Newtonsoft.Json" version="8.0.2" />
         <dependency id="Portable-Strong.DataAnnotations" version="1.0.0" />
-		<dependency id="Hl7.FluentPath" version="0.3.1-alpha7"/>
+        <dependency id="Hl7.FluentPath" version="0.3.1-alpha7" />
       </group>
       <group targetFramework="Xamarin.Mac20">
         <dependency id="Newtonsoft.Json" version="8.0.2" />
         <dependency id="Portable-Strong.DataAnnotations" version="1.0.0" />
-		<dependency id="Hl7.FluentPath" version="0.3.1-alpha7"/>
+        <dependency id="Hl7.FluentPath" version="0.3.1-alpha7" />
       </group>
       <group targetFramework="portable-net45+win+wpa81+wp80">
         <dependency id="Newtonsoft.Json" version="8.0.2" />
         <dependency id="Portable-Strong.DataAnnotations" version="1.0.0" />
         <dependency id="Microsoft.Bcl" version="1.1.9" />
         <dependency id="Microsoft.Net.Http" version="2.2.28" />
-		<dependency id="Hl7.FluentPath" version="0.3.1-alpha7"/>
+        <dependency id="Hl7.FluentPath" version="0.3.1-alpha7" />
       </group>
       <group targetFramework="dotnet">
         <dependency id="Newtonsoft.Json" version="8.0.2" />
-		<dependency id="Hl7.FluentPath" version="0.3.1-alpha7"/>
+        <dependency id="Hl7.FluentPath" version="0.3.1-alpha7" />
       </group>
     </dependencies>
   </metadata>
