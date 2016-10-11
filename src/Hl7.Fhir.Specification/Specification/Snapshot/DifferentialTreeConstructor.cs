@@ -1,4 +1,6 @@
-﻿/* 
+﻿// #define RESLICING
+
+/* 
  * Copyright (c) 2014, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -8,9 +10,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
@@ -51,6 +50,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var thisPath = diff[index].Path;
                 var prevPath = index > 0 ? diff[index - 1].Path : String.Empty;
 
+#if RESLICING
+                var thisName = diff[index].Name;
+                var prevName = index > 0 ? diff[index - 1].Name : String.Empty;
+#endif
+
                 if (thisPath.IndexOf('.') == -1)
                 {
                     // I am a root node, just one segment of path, I need to be the first element
@@ -59,6 +63,25 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // Else, I am fine, proceed
                     index++;
                 }
+#if RESLICING
+                else if (ElementDefinitionNavigator.IsDirectChildPath(prevPath, thisPath) && !string.IsNullOrEmpty(thisName) && !string.IsNullOrEmpty(prevName) && !thisName.StartsWith(prevName + "."))
+                {
+                    var parentPath = ElementDefinitionNavigator.GetParentPath(thisPath);
+                    if (prevPath == String.Empty || !prevPath.StartsWith(parentPath + "."))
+                    {
+                        var parentElement = new ElementDefinition()
+                        {
+                            Path = parentPath,
+                            Name = 
+                        };
+                        diff.Insert(index, parentElement);
+                    }
+                    else
+                    {
+                        index++;
+                    }
+                }
+#endif
                 else if (ElementDefinitionNavigator.IsSibling(thisPath, prevPath) || ElementDefinitionNavigator.IsDirectChildPath(prevPath, thisPath))
                 {
                     // The previous path is a sibling, or my direct parent, so everything is alright, proceed to next node
@@ -79,7 +102,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     }
                     else
                     {
-                        // So, my predecessor an I share ancestry, of which I am sure it has been inserted by this algorithm
+                        // So, my predecessor and I share ancestry, of which I am sure it has been inserted by this algorithm
                         // before because of my predecessor, so we're fine.
                         index++;
                     }

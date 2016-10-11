@@ -9652,7 +9652,14 @@
 			</slicing>
 			<max value="2" />
 		</element>
-		<element>
+
+    <!-- [WMR 20161011] Added required slicing entry -->
+    <element>
+      <path value="Patient.identifier" />
+      <name value="mrn" />
+    </element>
+
+    <element>
 			<path value="Patient.identifier.extension" />
 			<name value="mrn.issuingSite" />
 			<min value="1" />

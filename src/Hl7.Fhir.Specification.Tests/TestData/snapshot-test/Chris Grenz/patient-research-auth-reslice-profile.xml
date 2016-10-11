@@ -10635,7 +10635,15 @@
 				<rules value="open" />
 			</slicing>
 		</element>
-		<element>
+
+    <!-- [WMR 20161010 Added required slicing entry -->
+    <element>
+      <path value="Patient.extension" />
+      <name value="researchAuth/grandfatheredResAuth" />
+    </element>
+
+
+    <element>
 			<path value="Patient.extension.extension.value[x]" />
 			<name value="researchAuth/grandfatheredResAuth.type.value[x]" />
 			<fixedCode value="grandfathered" />

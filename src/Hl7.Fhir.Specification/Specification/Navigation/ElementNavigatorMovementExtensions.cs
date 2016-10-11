@@ -96,13 +96,15 @@ namespace Hl7.Fhir.Specification.Navigation
             do
             {
                 var baseComp = nav.Current.Base != null ? nav.Current.Base.Path : nav.Path;
-                if (baseComp != null && (baseComp == basePath || ElementDefinitionNavigator.IsRenamedChoiceElement(basePath, baseComp))
-                    && (sliceName == null || nav.Current.Name == sliceName)
-                )
+                if (baseComp != null && (baseComp == basePath || ElementDefinitionNavigator.IsRenamedChoiceElement(basePath, baseComp)))
                 {
-                    // Match, advance cursor
-                    bm = nav.Bookmark();
-                    result = true;
+                    if (sliceName == null || nav.Current.Name == sliceName)
+                    {
+                        // Match, advance cursor
+                        bm = nav.Bookmark();
+                        result = true;
+                    }
+                    // Otherwise advance to next slice entry
                 }
                 else
                 {
@@ -114,10 +116,12 @@ namespace Hl7.Fhir.Specification.Navigation
             return result;
         }
 
-#if true
-        /// <summary>Move to the next slice of the current element with the specified name, if it exists.</summary>
+        /// <summary>
+        /// If the current element has the specified name, then maintain position and return true.
+        /// Otherwise move to the next sibling element with the specified slice name, if it exists.
+        /// </summary>
         /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
-        internal static bool MoveToSlice(this ElementDefinitionNavigator nav, string sliceName)
+        internal static bool MoveToNextSlice(this ElementDefinitionNavigator nav, string sliceName)
         {
             if (nav == null) { throw Error.ArgumentNull("nav"); }
             if (nav.Current == null) { throw Error.Argument("nav", "Cannot move to next slice. Current node is not set."); }
@@ -126,7 +130,7 @@ namespace Hl7.Fhir.Specification.Navigation
             var basePath = nav.Current.Base != null ? nav.Current.Base.Path : nav.Path;
 
             var result = false;
-            while (nav.MoveToNext())
+            do
             {
                 var baseComp = nav.Current.Base != null ? nav.Current.Base.Path : nav.Path;
                 if (baseComp != null && (baseComp == basePath || ElementDefinitionNavigator.IsRenamedChoiceElement(basePath, baseComp)))
@@ -144,10 +148,9 @@ namespace Hl7.Fhir.Specification.Navigation
                     nav.ReturnToBookmark(bm);
                     break;
                 }
-            }
+            } while (nav.MoveToNext());
             return result;
         }
-#endif
 
         /// <summary>Move the navigator to the first preceding sibling element with the specified name, if it exists.</summary>
         /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>

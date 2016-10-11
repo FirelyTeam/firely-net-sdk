@@ -1,5 +1,4 @@
 ﻿#define MATCH_SLICE_BY_NAME
-#define RESLICE
 
 /* 
  * Copyright (c) 2016, Furore (info@furore.com) and contributors
@@ -248,15 +247,20 @@ namespace Hl7.Fhir.Specification.Snapshot
             bool isExtension = diffNav.Current.IsExtension();
             bool diffIsSliced = diffNav.Current.Slicing != null;
 
-#if RESLICE
+            // Handle constraints on inherited sliced elements in base profile (incl. reslicing)
+            // If the differential element represents a named slice, then try to position onto the matching base slice
+            // If match, then merge slice introduction and append new slice entries after the matching base slice
+            // Otherwise the diff introduces a new slice
             var diffSliceName = diffNav.Current.Name;
             if (baseIsSliced && diffSliceName != null)
             {
-                // Re-slice; merge diff with matching base slice
-                snapNav.MoveToSlice(diffSliceName);
-                bm = snapNav.Bookmark();
+                // Constraints on existing slice in base? Then merge
+                if (snapNav.MoveToNextSlice(diffSliceName))
+                {
+                    // Add any re-slices after the associated base slice
+                    bm = snapNav.Bookmark();
+                }
             }
-#endif
 
             if (diffIsSliced || isExtension)
             {
@@ -274,7 +278,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // If the differential contains a slicing entry, then it should also define at least a single slice.
                     if (!diffNav.MoveToNext())
                     {
-                        throw Error.InvalidOperation("Differential has a slicing entry for path '{0}', but no first actual slice", diffNav.Path);
+                        throw Error.InvalidOperation($"Differential has a slicing entry for path '{diffNav.Path}', but no first actual slice");
                     }
                 }
             }
@@ -297,7 +301,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     result.Add(new MatchInfo()
                     {
-                        BaseBookmark = bm,              // New slice, merge with default (unsliced) element definition
+                        // - New slice: merge with default (unsliced) element definition
+                        // - Reslice: merge with associated base slice
+                        BaseBookmark = bm,              
                         DiffBookmark = diffNav.Bookmark(),
                         Action = MatchAction.Add
                     });
@@ -323,16 +329,28 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
 #if MATCH_SLICE_BY_NAME
             // [WMR 20161010] NEW
+            // Q: Do we still need to provide a fallback for unnamed slices?
+
             var bm = snapNav.Bookmark();
             matchingSlice = Bookmark.Empty;
-            var result = snapNav.MoveToSlice(diffNav.Current.Name);
-            if (result)
+            var diffSliceName = diffNav.Current.Name;
+            // If the diff slice has a name, than match base slice by name
+            if (!string.IsNullOrEmpty(diffSliceName))
             {
-                matchingSlice = snapNav.Bookmark();
-                snapNav.ReturnToBookmark(bm);
+                var result = snapNav.MoveToNextSlice(diffSliceName);
+                if (result)
+                {
+                    matchingSlice = snapNav.Bookmark();
+                    snapNav.ReturnToBookmark(bm);
+                }
+                return result;
             }
-            return result;
+            Debug.Fail("TODO: Support matching unnamed slices...?");
+            return false;
 #else
+            // Try to match base slice by discriminator
+            // Q: Is this still necessary? e.g. extensions
+
             var slicing = snapNav.Current.Slicing;
             Debug.Assert(slicing != null);
 
@@ -388,8 +406,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             snapNav.ReturnToBookmark(slicingIntro);
-
-            Debug.Assert(snapNav.Current.Name == diffNav.Current.Name);
             return result;
 #endif
         }

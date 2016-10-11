@@ -993,11 +993,15 @@
 			<path value="Extension" />
 			<definition value="Record of the patients general research authorization status." />
 		</element>
-		<element>
+
+    <!-- [WMR 20161011] WRONG! Invalid element order
+    <element>
 			<path value="Extension.url" />
 			<fixedUri value="http://example.com/fhir/StructureDefinition/patient-research-authorization" />
 		</element>
-		<element>
+		-->
+    
+    <element>
 			<path value="Extension.extension" />
 			<name value="type" />
 			<min value="1" />
@@ -1046,5 +1050,12 @@
 			<name value="date.value[x]" />
 			<min value="1" />
 		</element>
-	</differential>
+
+    <!-- [WMR 20161011] Fixed; moved element to correct position -->
+    <element>
+      <path value="Extension.url" />
+      <fixedUri value="http://example.com/fhir/StructureDefinition/patient-research-authorization" />
+    </element>
+
+  </differential>
 </StructureDefinition>

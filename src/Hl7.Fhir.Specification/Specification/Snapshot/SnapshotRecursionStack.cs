@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Initialize the recursion stack before generating a full snapshot.</summary>
         public void OnBeforeGenerateSnapshot(string profileUri)
         {
-            Debug.Print($"[{nameof(SnapshotRecursionStack)}.{nameof(OnBeforeGenerateSnapshot)}] '{profileUri}'");
+            // Debug.Print($"[{nameof(SnapshotRecursionStack)}.{nameof(OnBeforeGenerateSnapshot)}] '{profileUri}'");
             OnStartRecursion();
             _stack.Push(new SnapshotRecursionStackState(profileUri));
         }
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             validateStackIsNotEmpty(nameof(OnAfterGenerateSnapshot));
             var currentState = _stack.Pop();
             var currentProfileUri = currentState.ProfileUri;
-            Debug.Print($"[{nameof(SnapshotRecursionStack)}.{nameof(OnAfterGenerateSnapshot)}] '{profileUri}'");
+            // Debug.Print($"[{nameof(SnapshotRecursionStack)}.{nameof(OnAfterGenerateSnapshot)}] '{profileUri}'");
             if (profileUri != currentProfileUri)
             {
                 throw Error.InvalidOperation($"Invalid snapshot generator state ({nameof(OnAfterGenerateSnapshot)}). The specified profile Uri '{profileUri}' does not match the current state: '{CurrentProfileUri}'");
@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     $"Error generating snapshot. Recursive profile dependency detected for profile '{typeProfileUri}' on element '{path}'.\r\nProfile url stack:\r\n{string.Join("\r\n", this)}"
                 );
             }
-            Debug.Print($"[{nameof(SnapshotRecursionStack)}.{nameof(OnBeforeExpandTypeProfile)}] '{typeProfileUri}'");
+            // Debug.Print($"[{nameof(SnapshotRecursionStack)}.{nameof(OnBeforeExpandTypeProfile)}] '{typeProfileUri}'");
             _stack.Push(new SnapshotRecursionStackState(typeProfileUri));
 
         }
@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Signal that recursive snapshot generation of an external profile has finished.</summary>
         public void OnAfterExpandTypeProfile(string typeProfileUri, string path)
         {
-            Debug.Print($"[{nameof(SnapshotRecursionStack)}.{nameof(OnAfterExpandTypeProfile)}] '{typeProfileUri}'");
+            // Debug.Print($"[{nameof(SnapshotRecursionStack)}.{nameof(OnAfterExpandTypeProfile)}] '{typeProfileUri}'");
             validateStackIsNotEmpty(nameof(OnAfterExpandTypeProfile));
             var currentState = _stack.Pop();
             var currentProfileUri = currentState.ProfileUri;

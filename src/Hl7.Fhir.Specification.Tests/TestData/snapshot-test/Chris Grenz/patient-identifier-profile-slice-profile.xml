@@ -9296,7 +9296,14 @@
 				<profile value="http://example.com/fhir/SD/patient-mrn-id" />
 			</type>
 		</element>
-		<element>
+
+    <!-- [WMR 20161011] Added required re-slicing entry -->
+    <element>
+      <path value="Patient.identifier" />
+      <name value="mrn/officialMRN" />
+    </element>
+
+    <element>
 			<path value="Patient.identifier.use" />
 			<name value="mrn/officialMRN.use" />
 			<fixedCode value="official" />

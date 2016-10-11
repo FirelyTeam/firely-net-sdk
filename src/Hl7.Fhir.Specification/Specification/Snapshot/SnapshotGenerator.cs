@@ -623,6 +623,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var rebasedTypeSnapshot = (StructureDefinition.SnapshotComponent)typeStructure.Snapshot.DeepCopy();
                 rebasedTypeSnapshot.Rebase(rebasePath);
 
+                // [WMR 20161011] Also rebase slice names?
+
                 var typeNav = new ElementDefinitionNavigator(rebasedTypeSnapshot.Element);
 
                 if (!profileRef.IsComplex)
@@ -730,7 +732,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             // Add new slice after the last existing slice in base profile
             var sliceName = diff.Current.Name;
-            int pos = sliceName.LastIndexOf("/");
+            int pos = sliceName != null ? sliceName.LastIndexOf("/") : -1;
             var baseSliceName = pos > 0 ? sliceName.Substring(0, pos) : null;
             snap.MoveToLastSlice(baseSliceName);
 
