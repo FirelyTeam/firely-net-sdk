@@ -198,12 +198,14 @@ namespace Hl7.Fhir.Validation
                 else
                 {
                     // No inline-children, so validation depends on the presence of a <type> or <nameReference>
-                    if (outcome.Verify(() => elementConstraints.Type != null || elementConstraints.NameReference != null,
-                            "ElementDefinition has no child, nor does it specify a type or nameReference to validate the instance data against", Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE_OR_NAMEREF, instance))
+                    if (elementConstraints.Type != null || elementConstraints.NameReference != null)
+
                     {
                         outcome.Add(this.ValidateType(elementConstraints, instance));
                         outcome.Add(ValidateNameReference(elementConstraints, definition, instance));
                     }
+                    else
+                        Trace(outcome, "ElementDefinition has no child, nor does it specify a type or nameReference to validate the instance data against", Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE_OR_NAMEREF, instance);
                 }
 
                 outcome.Add(ValidateSlices(definition, instance));
@@ -231,6 +233,8 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
+            if (Settings.SkipConstraintValidation) return outcome;
+
             var context = ScopeTracker.ResourceContext(instance);
 
             // <constraint>
@@ -247,34 +251,32 @@ namespace Hl7.Fhir.Validation
             foreach (var constraintElement in definition.Constraint)
             {
                 var fpExpression = constraintElement.GetFluentPathConstraint();
-                if (outcome.Verify(() => fpExpression != null, "Encountered an invariant ({0}) that has no FluentPath expression, skipping validation of this constraint"
-                            .FormatWith(constraintElement.Key), Issue.UNSUPPORTED_CONSTRAINT_WITHOUT_FLUENTPATH, instance))
+
+                if (fpExpression != null)
                 {
-                    if (Settings.SkipConstraintValidation)
-                        outcome.Verify(() => true, "Instance was not validated against invariant {0}, because constraint validation is disabled", Issue.PROCESSING_CONSTRAINT_VALIDATION_INACTIVE, instance);
-                    else
+                    try
                     {
+                        bool success = instance.Predicate(fpExpression, context);
 
-                        bool success = false;
-                        try
+                        if (!success)
                         {
-                            success = instance.Predicate(fpExpression, context);
-
                             var text = "Instance failed constraint " + constraintElement.ConstraintDescription();
+                            var issue = constraintElement.Severity == ElementDefinition.ConstraintSeverity.Error ?
+                                Issue.CONTENT_ELEMENT_FAILS_ERROR_CONSTRAINT : Issue.CONTENT_ELEMENT_FAILS_WARNING_CONSTRAINT;
 
-                            if (constraintElement.Severity == ElementDefinition.ConstraintSeverity.Error)
-                                outcome.Verify(() => success, text, Issue.CONTENT_ELEMENT_FAILS_ERROR_CONSTRAINT, instance);
-                            else
-                                outcome.Verify(() => success, text, Issue.CONTENT_ELEMENT_FAILS_WARNING_CONSTRAINT, instance);
+                            Trace(outcome, text, issue, instance);
+                        }
 
-                        }
-                        catch (Exception e)
-                        {
-                            outcome.Verify(() => true, "Evaluation of FluentPath for constraint '{0}' failed: {1}"
-                                            .FormatWith(constraintElement.Key, e.Message), Issue.PROFILE_ELEMENTDEF_INVALID_FLUENTPATH_EXPRESSION, instance);
-                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Trace(outcome, $"Evaluation of FluentPath for constraint '{constraintElement.Key}' failed: {e.Message}",
+                                        Issue.PROFILE_ELEMENTDEF_INVALID_FLUENTPATH_EXPRESSION, instance);
                     }
                 }
+                else
+                    Trace(outcome, $"Encountered an invariant ({constraintElement.Key}) that has no FluentPath expression, skipping validation of this constraint",
+                                Issue.UNSUPPORTED_CONSTRAINT_WITHOUT_FLUENTPATH, instance);
             }
 
             return outcome;
@@ -292,7 +294,8 @@ namespace Hl7.Fhir.Validation
                 // content, otherwise the slicing is ambiguous. If there's no match
                 // we fail validation as well. 
                 // For now, we do not handle slices
-                outcome.Verify(() => definition.Current.Slicing == null, "ElementDefinition uses slicing, which is not yet supported. Instance has not been validated against " +
+                if(definition.Current.Slicing != null)
+                    Trace(outcome, "ElementDefinition uses slicing, which is not yet supported. Instance has not been validated against " +
                             "any of the slices", Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, instance);
             }
 
@@ -310,7 +313,7 @@ namespace Hl7.Fhir.Validation
                 var shouldCheck = binding.Strength == BindingStrength.Required || binding.Strength == BindingStrength.Preferred;
 
                 if(shouldCheck)
-                    outcome.Info("ElementDefinition has a binding, which is not yet supported. Instance has not been validated against this binding",
+                    Trace(outcome, "ElementDefinition has a binding, which is not yet supported. Instance has not been validated against this binding",
                         Issue.UNSUPPORTED_BINDING_NOT_SUPPORTED, instance);
             }
 
@@ -327,12 +330,11 @@ namespace Hl7.Fhir.Validation
 
                 var referencedPositionNav = allDefinitions.ShallowCopy();
 
-                if (outcome.Verify(() => referencedPositionNav.JumpToNameReference(definition.NameReference),
-                        "ElementDefinition uses a non-existing nameReference '{0}'".FormatWith(definition.NameReference),
-                        Issue.PROFILE_ELEMENTDEF_INVALID_NAMEREFERENCE, instance))
-                {
+                if (referencedPositionNav.JumpToNameReference(definition.NameReference))
                     outcome.Include(Validate(instance, referencedPositionNav));
-                }
+                else
+                    Trace(outcome, $"ElementDefinition uses a non-existing nameReference '{definition.NameReference}'", Issue.PROFILE_ELEMENTDEF_INVALID_NAMEREFERENCE, instance);
+
             }
 
             return outcome;
@@ -368,7 +370,9 @@ namespace Hl7.Fhir.Validation
                 var primitiveRegEx = definition.Type.First().GetPrimitiveValueRegEx();
                 var value = toStringRepresentation(instance);
                 var success = Regex.Match(value, "^" + primitiveRegEx + "$").Success;
-                outcome.Verify(() => success, "Primitive value '{0}' does not match regex '{1}'".FormatWith(value, primitiveRegEx), Issue.CONTENT_ELEMENT_INVALID_PRIMITIVE_VALUE, instance);
+
+                if (!success)
+                    Trace(outcome, $"Primitive value '{value}' does not match regex '{primitiveRegEx}'", Issue.CONTENT_ELEMENT_INVALID_PRIMITIVE_VALUE, instance);
             }
 
             return outcome;
@@ -383,18 +387,20 @@ namespace Hl7.Fhir.Validation
             {
                 var maxLength = definition.MaxLength.Value;
 
-                if (outcome.Verify(() => maxLength > 0, "MaxLength was given in ElementDefinition, but it has a negative value ({0})".FormatWith(maxLength),
-                                Issue.PROFILE_ELEMENTDEF_MAXLENGTH_NEGATIVE, instance))
+                if (maxLength > 0)
                 {
                     if (instance.Value != null)
                     {
                         //TODO: Is ToString() really the right way to turn (Fhir?) Primitives back into their original representation?
                         //If the source is POCO, hopefully FHIR types have all overloaded ToString() 
                         var serializedValue = instance.Value.ToString();
-                        outcome.Verify(() => serializedValue.Length <= maxLength, "Value '{0}' is too long (maximum length is {1})".FormatWith(serializedValue, maxLength),
-                            Issue.CONTENT_ELEMENT_VALUE_TOO_LONG, instance);
+
+                        if (serializedValue.Length > maxLength)
+                            Trace(outcome, $"Value '{serializedValue}' is too long (maximum length is {maxLength})", Issue.CONTENT_ELEMENT_VALUE_TOO_LONG, instance);
                     }
                 }
+                else
+                    Trace(outcome, $"MaxLength was given in ElementDefinition, but it has a negative value ({maxLength})", Issue.PROFILE_ELEMENTDEF_MAXLENGTH_NEGATIVE, instance);
             }
 
             return outcome;
@@ -445,7 +451,7 @@ namespace Hl7.Fhir.Validation
             }
             catch(Exception e)
             {
-                outcome.Info("External resolution of '{reference}' caused an error: " + e.Message, Issue.UNAVAILABLE_EXTERNAL_REFERENCE, instance);
+                Trace(outcome, "External resolution of '{reference}' caused an error: " + e.Message, Issue.UNAVAILABLE_EXTERNAL_REFERENCE, instance);
             }
 
             // Else, try to resolve using the given ResourceResolver 
@@ -460,7 +466,7 @@ namespace Hl7.Fhir.Validation
                 }
                 catch(Exception e)
                 {
-                    outcome.Info($"Resolution of reference '{reference}' using the Resolver API failed: " + e.Message, Issue.UNAVAILABLE_EXTERNAL_REFERENCE, instance);
+                    Trace(outcome, $"Resolution of reference '{reference}' using the Resolver API failed: " + e.Message, Issue.UNAVAILABLE_EXTERNAL_REFERENCE, instance);
                 }
             }
 
