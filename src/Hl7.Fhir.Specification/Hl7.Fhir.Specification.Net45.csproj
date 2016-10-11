@@ -119,6 +119,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validation\MinMaxValidationExtensions.cs" />
     <Compile Include="Validation\OperationOutcomeExtensions.cs" />
+    <Compile Include="Validation\ProfilePreprocessor.cs" />
     <Compile Include="Validation\XmlValidationExtensions.cs" />
     <Compile Include="Validation\PocoValidationExtensions.cs" />
     <Compile Include="Validation\ScopeTracker.cs" />
@@ -148,12 +149,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-  	<FhirConformance Include="data\*.*" />
+    <FhirConformance Include="data\*.*" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="BeforeBuild"
-		Inputs="@(FhirConformance)"
-		Outputs="specification.zip">
+  <Target Name="BeforeBuild" Inputs="@(FhirConformance)" Outputs="specification.zip">
     <CleanSpecFiles DirectoryName="data" />
     <ZipDir ZipFileName="specification.zip" DirectoryName="data" />
   </Target>

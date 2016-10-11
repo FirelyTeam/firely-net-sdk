@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using Hl7.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
+using System;
 
 namespace Hl7.Fhir.Validation
 {
@@ -19,6 +20,7 @@ namespace Hl7.Fhir.Validation
 
     internal static class OperationOutcomeExtensions
     {
+        [Obsolete("Use if() with Trace() instead")]
         public static bool Verify(this OperationOutcome outcome, Condition condition, string message, Issue issue, INamedNode location)
         {
             if (!condition())
