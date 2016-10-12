@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Rest
                     // Do this call after AfterResponse, so AfterResponse will be called, even if exceptions are thrown by ToBundleEntry()
                     try
                     {
-                        Bundle.EntryComponent LastResult = null;
+                        LastResult = null;
 
                         if (webResponse.StatusCode.IsSuccessful())
                         {
