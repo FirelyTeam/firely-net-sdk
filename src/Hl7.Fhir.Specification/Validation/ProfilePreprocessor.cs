@@ -12,240 +12,105 @@ namespace Hl7.Fhir.Validation
 {
     internal class ProfilePreprocessor
     {
-        private List<string> _canonicals = new List<string>();
-        private List<StructureDefinition> _sds = new List<StructureDefinition>();
-
-        private Action<StructureDefinition> _onSnapshotNeeded;
-        private Func<string, StructureDefinition> _onResolveProfiles;
-
+        private Func<string, StructureDefinition> _profileResolver;
+        private Action<StructureDefinition> _snapshotGenerator;
         private string _path;
+        private ProfileAssertion _profiles;
 
-        public ProfilePreprocessor(Func<string, StructureDefinition> onResolveProfiles, Action<StructureDefinition> onSnapshotNeeded, string path)
+        public ProfilePreprocessor(Func<string,StructureDefinition> profileResolver, Action<StructureDefinition> snapshotGenerator, IElementNavigator instance, string declaredTypeProfile, 
+                IEnumerable<StructureDefinition> additionalProfiles, IEnumerable<string> additionalCanonicals)
         {
-            _onResolveProfiles = onResolveProfiles;
-            _onSnapshotNeeded = onSnapshotNeeded;
-            _path = path;
+            _profileResolver = profileResolver;
+            _snapshotGenerator = snapshotGenerator;
+
+            _path = instance.Path;
+
+            // This is only for resources, but I don't bother checking, since this will return empty anyway
+            var statedProfiles = instance.GetChildrenByName("meta").ChildrenValues("profile").Cast<string>().ToList();
+
+            var instanceTypeProfile = instance.TypeName != null ? ModelInfo.CanonicalUriForFhirCoreType(instance.TypeName) : null;
+
+            _profiles = new ProfileAssertion(instanceTypeProfile, declaredTypeProfile, _path);
+
+            if(additionalProfiles != null) _profiles.AddStatedProfile(additionalProfiles);
+            if(additionalCanonicals != null) _profiles.AddStatedProfile(additionalCanonicals);
+            if(statedProfiles != null) _profiles.AddStatedProfile(statedProfiles);
         }
 
-        public void AddProfile(string canonical)
-        {
-            if(!_canonicals.Contains(canonical))
-                _canonicals.Add(canonical);
-        }
-
-        public void AddProfile(IEnumerable<string> canonicals)
-        {
-            foreach(var canonical in canonicals) AddProfile(canonical);
-        }
-
-        public void AddProfile(StructureDefinition definition)
-        {
-            if (!_sds.Any(sd => sd.Url == definition.Url))
-                _sds.Add(definition);
-        }
-
-        public void AddProfile(IEnumerable<StructureDefinition> definitions)
-        {
-            foreach (var sd in definitions) AddProfile(sd);
-        }
+        public IEnumerable<ElementDefinitionNavigator> Result { get; private set; }
 
 
-        /// <summary>
-        /// Resolves the StructureDefinitions referred to by the given canonicals, and adds them
-        /// to the list of StructureDefinitions available to the preprocessor
-        /// </summary>
-        /// <returns></returns>
-        public OperationOutcome ResolveCanonicals()
+        public OperationOutcome Process()
         {
             var outcome = new OperationOutcome();
 
-            foreach (var uri in _canonicals)
+            // Start preprocessing by resolving the references to the profiles (if any)
+            var resolveOutcome = _profiles.Resolve(_profileResolver);
+            outcome.Add(resolveOutcome);
+
+            if (resolveOutcome.Success)
             {
-                // Don't re-fetch a StructureDefinition that we already have in the preprocessor
-                if (_sds.Any(sd => sd.Url == uri)) continue;
+                // Then, validate consistency of the profile assertions
+                var validationOutcome = _profiles.Validate();
+                outcome.Add(validationOutcome);
 
-                StructureDefinition structureDefinition = null;
-
-                try
+                if (validationOutcome.Success)
                 {
-                    // Once FindStructureDefinition() gets an overload to resolve multiple at the same time,
-                    // use that one
-                    structureDefinition = _onResolveProfiles(uri);
+                    // Then, generate snapshots for all sds that we have found
+                    var genSnapshotOutcome = GenerateSnapshots(_profiles.MinimalProfiles, _snapshotGenerator, _path);
+                    outcome.Add(genSnapshotOutcome);
 
-                    if (structureDefinition == null)
-                        outcome.Info($"Unable to resolve reference to profile '{uri}'", Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, _path);
-                    else
+                    if (genSnapshotOutcome.Success)
                     {
-                        _sds.Add(structureDefinition);
+                        // Finally, return navigators to the definitions
+                        Result = CreateNavigators(_profiles.MinimalProfiles);
                     }
-
-                }
-                catch (Exception e)
-                {
-                    outcome.Info($"Resolution of profile at '{uri}' failed: {e.Message}", Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, _path);
-                    continue;
                 }
             }
 
             return outcome;
         }
-
-
-        /// <summary>
-        /// Cleans up the list of StructureDefinitions to remove duplicates and tautologies. Will also check consistency of the list
-        /// of StructureDefinitions
-        /// </summary>
-        /// <returns></returns>
-        public OperationOutcome NormalizeProfiles()
-        {
-            var outcome = new OperationOutcome();
-
-            // Note: this assumes there are no duplicate profiles in the list of profiles
-            // (which AddProfile and ResolveCanonicals ensure)
-
-            // First, remove all SDs that are the base of a more specialized profile in our list
-            var bases = _sds.Where(sd => sd.Base != null).Select(sd => sd.Base);
-            _sds.RemoveAll(sd => bases.Contains(sd.Url));
-
-            // Sanity check: all profiles on a core type (if any) must constrain the same core type
-            StructureDefinition profileOne = null;
-
-            foreach(var sd in _sds)
-            {
-                if(sd.ConstrainedType != null)
-                {
-                    if (profileOne != null)
-                    {
-                        if(sd.ConstrainedType != profileOne.ConstrainedType)
-                        {
-                            outcome.Info($"Profile '{profileOne.Url}' is a constraint on '{profileOne.ConstrainedType}', but '{sd.Url}' is a constraint on '{sd.ConstrainedType}'. This cannot both be true, so the instance is never valid",
-                                            Issue.CONTENT_MISMATCHING_PROFILES, _path);
-                            return outcome;
-                        }
-                    }
-                    else
-                        profileOne = sd;
-                }
-            }
-
-            // Sanity check: all profiles must be either for a datatype or for a resource (a logical model can be combined with either)
-            //profileOne = null;
-            //foreach (var sd in _sds)
-            //{
-            //    if (sd.Kind == StructureDefinition.StructureDefinitionKind.Datatype || sd.Kind == StructureDefinition.StructureDefinitionKind.Resource)
-            //    {
-            //        if (profileOne != null)
-            //        {
-            //            if (sd.Kind != profileOne.Kind)
-            //            {
-            //                outcome.Info($"Profile '{profileOne.Url}' is a {profileOne.Kind}', but '{sd.Url}' is a '{sd.Kind}'. This cannot both be true, so the instance is never valid",
-            //                                Issue.CONTENT_MISMATCHING_PROFILES, _path);
-            //                return outcome;
-            //            }
-            //        }
-            //        else
-            //            profileOne = sd;
-            //    }
-            //}
-
-            // Additional clean-up, depending on whether we are dealing with a datatype or resource, cleanup the abstract base classes
-            if(profileOne?.Kind == StructureDefinition.StructureDefinitionKind.Resource)
-            {
-                _sds.RemoveAll(sd => sd.Url == ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Resource) ||
-                                    sd.Url == ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.DomainResource));
-            }
-            else if (profileOne?.Kind == StructureDefinition.StructureDefinitionKind.Datatype)
-            {
-                _sds.RemoveAll(sd => sd.Url == ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Element));
-            }
-
-
-            // Now, we should only have at most ONE core type left, and profiles for that one core type
-            var coreTypes = _sds.Where(sd => sd.ConstrainedType == null).ToList();
-
-            if(coreTypes.Count > 1)
-            {
-                var combinedNames = coreTypes.Select(c => c.Id);
-                outcome.Info($"Instance cannot be a { String.Join(" and a ", combinedNames) }", Issue.CONTENT_MISMATCHING_PROFILES, _path);
-            }
-            if(coreTypes.Count == 1)
-            {
-                FHIRDefinedType theType = EnumUtility.ParseLiteral<FHIRDefinedType>(coreTypes.Single().Id).Value;
-
-                foreach(var profile in _sds.Where(sd => sd.ConstrainedType != null && sd.ConstrainedType != theType))
-                {
-                    outcome.Info($"Profile '{profile.Url}' must constrain the core type {theType}", Issue.CONTENT_MISMATCHING_PROFILES, _path);
-                }
-            }
-
-            // This should still leave something to validate
-            if (!_sds.Any())
-            {
-                outcome.Info("There is no (non-abstract) profile to validate against - nothing to validate", Issue.PROFILE_NO_PROFILE_TO_VALIDATE_AGAINST, _path);
-            }
-
-            return outcome;
-
-            // If done correctly, the previous code will make sure this code is not needed anymore
-            // First, a basic check: is the instance type equal to the defined type
-            // Only do this when the underlying navigator has supplied a type (from the serialization)
-            //if (instance.TypeName != null && elementConstraints.IsRootElement() && definition.StructureDefinition != null && definition.StructureDefinition.Id != null)
-            //{
-            //    var expected = definition.StructureDefinition.Id;
-
-            //    if (!ModelInfo.IsCoreModelType(expected) || ModelInfo.IsProfiledQuantity(expected))
-            //        expected = definition.StructureDefinition.ConstrainedType?.ToString();
-
-            //    if (expected != null)
-            //    {
-            //        if (!outcome.Verify(() => instance.TypeName == expected, $"Type mismatch: instance value is of type '{instance.TypeName}', " +
-            //                $"expected type '{expected}'", Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, instance))
-            //            return outcome;     // Type mismatch, no use continuing validation
-            //    }
-            //}
-
-            // For now, a quick algorithm
-        }
-
 
 
         /// <summary>
         /// Generate snapshots for all StructureDefinitions available to the preprocessor
         /// </summary>
         /// <returns></returns>
-        public OperationOutcome GenerateSnapshots()
+        public static OperationOutcome GenerateSnapshots(IEnumerable<StructureDefinition> sds, Action<StructureDefinition> snapshotGenerator, string path)
         {
             var outcome = new OperationOutcome();
 
-            foreach (var sd in _sds)
+            foreach (var sd in sds)
             {
                 if (!sd.HasSnapshot)
                 {
                     try
                     {
-                        _onSnapshotNeeded(sd);
+                        snapshotGenerator(sd);
                     }
                     catch (Exception e)
                     {
                         outcome.Info($"Snapshot generation failed for '{sd.Url}'. Message: {e.Message}",
-                               Issue.UNAVAILABLE_SNAPSHOT_GENERATION_FAILED, _path);
+                               Issue.UNAVAILABLE_SNAPSHOT_GENERATION_FAILED, path);
                     }
                 }
 
                 if (!sd.HasSnapshot)
-                    outcome.Info($"Profile '{sd.Url}' does not include a snapshot.", Issue.UNAVAILABLE_NEED_SNAPSHOT, _path);
+                    outcome.Info($"Profile '{sd.Url}' does not include a snapshot.", Issue.UNAVAILABLE_NEED_SNAPSHOT, path);
             }
 
             return outcome;
         }
 
+
+
         /// <summary>
         /// Generate navigators for all StructureDefinitions with snapshots available to the preprocessor
         /// </summary>
         /// <returns></returns>
-        public List<ElementDefinitionNavigator> CreateNavigators()
+        public static List<ElementDefinitionNavigator> CreateNavigators(IEnumerable<StructureDefinition> sds)
         {
-            return _sds.Where(sd => sd.HasSnapshot).Select(sd => new ElementDefinitionNavigator(sd)).ToList();
+            return sds.Where(sd => sd.HasSnapshot).Select(sd => new ElementDefinitionNavigator(sd)).ToList();
         }
     }
 }

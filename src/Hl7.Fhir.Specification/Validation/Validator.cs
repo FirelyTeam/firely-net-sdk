@@ -41,6 +41,11 @@ namespace Hl7.Fhir.Validation
 
         }
 
+        public OperationOutcome Validate(IElementNavigator instance)
+        {
+            return Validate(instance, declaredTypeProfile: null, statedCanonicals: null, statedProfiles: null);
+        }
+
         public OperationOutcome Validate(IElementNavigator instance, params string[] definitionUris)
         {
             return Validate(instance, (IEnumerable<string>)definitionUris);
@@ -48,73 +53,30 @@ namespace Hl7.Fhir.Validation
 
         public OperationOutcome Validate(IElementNavigator instance, IEnumerable<string> definitionUris)
         {
-            var outcome = new OperationOutcome();
-
-            var definitionNavs = normalizeProfiles(outcome, null, definitionUris, instance);
-            
-            // Note: only start validating if the profiles are complete and consistent
-            if(definitionNavs != null)
-                outcome.Add(Validate(instance, definitionNavs));
-
-            return outcome;
+            return Validate(instance, declaredTypeProfile: null, statedCanonicals: definitionUris, statedProfiles: null);
         }
 
-        public OperationOutcome Validate(IElementNavigator instance, StructureDefinition structureDefinition)
+        public OperationOutcome Validate(IElementNavigator instance, params StructureDefinition[] structureDefinitions)
         {
-            return Validate(instance, new[] { structureDefinition });
+            return Validate(instance, (IEnumerable<StructureDefinition>) structureDefinitions );
         }
 
         public OperationOutcome Validate(IElementNavigator instance, IEnumerable<StructureDefinition> structureDefinitions)
         {
-            var outcome = new OperationOutcome();
+            return Validate(instance, declaredTypeProfile: null, statedCanonicals: null, statedProfiles: structureDefinitions);
+        }
 
-            var definitionNavs = normalizeProfiles(outcome, structureDefinitions, null, instance);
+        internal OperationOutcome Validate(IElementNavigator instance, string declaredTypeProfile, IEnumerable<string> statedCanonicals, IEnumerable<StructureDefinition> statedProfiles)
+        {
+            var processor = new ProfilePreprocessor(profileResolutionNeeded, snapshotGenerationNeeded, instance, declaredTypeProfile, statedProfiles, statedCanonicals);
+            var outcome = processor.Process();
 
             // Note: only start validating if the profiles are complete and consistent
-            if (definitionNavs != null)
-                outcome.Add(Validate(instance, definitionNavs));
+            if(outcome.Success)
+                outcome.Add(Validate(instance, processor.Result));
 
             return outcome;
         }
-
-
-        private List<ElementDefinitionNavigator> normalizeProfiles(OperationOutcome outcome, IEnumerable<StructureDefinition> sds, IEnumerable<string> canonicals, IElementNavigator instance)
-        {
-            // This is only for resources, but I don't bother checking, since this will return empty anyway
-            var metaProfiles = instance.GetChildrenByName("meta").ChildrenValues("profile").Cast<string>().ToList();
-
-            var preprocessor = new ProfilePreprocessor(profileResolutionNeeded, snapshotGenerationNeeded, instance.Path);
-            preprocessor.AddProfile(metaProfiles);
-
-            if (instance.TypeName != null) preprocessor.AddProfile(ModelInfo.CanonicalUriForFhirCoreType(instance.TypeName));
-            if(canonicals != null) preprocessor.AddProfile(canonicals);
-            if(sds != null) preprocessor.AddProfile(sds);
-
-            // Start preprocessing by resolving the references to the profiles (if any)
-            var resolveOutcome = preprocessor.ResolveCanonicals();
-            outcome.Add(resolveOutcome);
-
-            if (resolveOutcome.Success)
-            {
-                // Then, generate snapshots for all sds that we have found
-                var genSnapshotOutcome = preprocessor.GenerateSnapshots();
-                outcome.Add(genSnapshotOutcome);
-
-                if(genSnapshotOutcome.Success)
-                {
-                    // Then, check consistency and clean up the list of profiles
-                    var normalizeOutcome = preprocessor.NormalizeProfiles();
-                    outcome.Add(normalizeOutcome);
-
-                    if (normalizeOutcome.Success)
-                        // Finally, return navigators to the definitions
-                        return preprocessor.CreateNavigators();
-                }
-            }
-
-            return null;
-        }
-
 
 
         internal OperationOutcome Validate(IElementNavigator instance, ElementDefinitionNavigator definition)
