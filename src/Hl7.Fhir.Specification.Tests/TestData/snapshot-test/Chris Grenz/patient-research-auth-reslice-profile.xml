@@ -10642,7 +10642,6 @@
       <name value="researchAuth/grandfatheredResAuth" />
     </element>
 
-
     <element>
 			<path value="Patient.extension.extension.value[x]" />
 			<name value="researchAuth/grandfatheredResAuth.type.value[x]" />

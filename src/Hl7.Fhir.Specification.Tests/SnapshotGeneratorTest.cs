@@ -417,13 +417,13 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         // Helper class to verify results
-        class ElementAsserter
+        class ElementVerifier
         {
             IList<ElementDefinition> _elements;
             ElementDefinition _current;
             int _pos;
 
-            public ElementAsserter(StructureDefinition sd)
+            public ElementVerifier(StructureDefinition sd)
             {
                 Assert.IsNotNull(sd);
                 Assert.IsTrue(sd.HasSnapshot);
@@ -433,11 +433,17 @@ namespace Hl7.Fhir.Specification.Tests
                 Debug.Print($"Assert structure: url = '{sd.Url}' - origin = '{ann.Origin}'");
             }
 
+            public ElementVerifier(IList<ElementDefinition> elements)
+            {
+                _elements = elements;
+                _pos = 0;
+            }
+
             // Find first element with matching path
             // Continue at the final element position from the last call to this method (or 0)
             // Search matching element in forward direction
             // Optionally verify specified name / id / fixed value
-            public void MatchForward(string path, string name = null, string elementId = null, Element fixedValue = null)
+            public void VerifyElement(string path, string name = null, string elementId = null, Element fixedValue = null)
             {
                 var elements = _elements;
                 while (_pos < _elements.Count)
@@ -455,7 +461,7 @@ namespace Hl7.Fhir.Specification.Tests
                         }
                         if (fixedValue != null)
                         {
-                            Assert.IsTrue(fixedValue.IsExactly(element.Fixed), $"Invalid fixed value. Expected = '{fixedValue}', actual = '{element.Fixed}'.");
+                            Assert.IsTrue(element.Fixed != null && fixedValue.IsExactly(element.Fixed), $"Invalid fixed value. Expected = '{fixedValue}', actual = '{element.Fixed}'.");
                         }
                         return;
                     }
@@ -497,68 +503,68 @@ namespace Hl7.Fhir.Specification.Tests
             };
 
             StructureDefinition sd;
-            ElementAsserter asserter;
+            ElementVerifier verifier;
 
             // http://example.com/fhir/StructureDefinition/patient-legal-case
             // http://example.com/fhir/StructureDefinition/patient-legal-case-lead-counsel
 
             // Verify complex extension used by patient-with-extensions profile
             sd = generateSnapshot(@"http://example.com/fhir/StructureDefinition/patient-research-authorization");
-            asserter = new ElementAsserter(sd);
-            asserter.MatchForward("Extension.extension", null, "Extension.extension");
-            asserter.MatchForward("Extension.extension", "type", "Extension.extension:type");
-            asserter.MatchForward("Extension.extension.url", "type.url", "Extension.extension:type.url", new FhirUri("type"));
-            asserter.MatchForward("Extension.extension", "flag", "Extension.extension:flag");
-            asserter.MatchForward("Extension.extension.url", "flag.url", "Extension.extension:flag.url", new FhirUri("flag"));
-            asserter.MatchForward("Extension.extension", "date", "Extension.extension:date");
-            asserter.MatchForward("Extension.extension.url", "date.url", "Extension.extension:date.url", new FhirUri("date"));
-            asserter.MatchForward("Extension.url", null, "Extension.url", new FhirUri(sd.Url));
+            verifier = new ElementVerifier(sd);
+            verifier.VerifyElement("Extension.extension", null, "Extension.extension");
+            verifier.VerifyElement("Extension.extension", "type", "Extension.extension:type");
+            verifier.VerifyElement("Extension.extension.url", "type.url", "Extension.extension:type.url", new FhirUri("type"));
+            verifier.VerifyElement("Extension.extension", "flag", "Extension.extension:flag");
+            verifier.VerifyElement("Extension.extension.url", "flag.url", "Extension.extension:flag.url", new FhirUri("flag"));
+            verifier.VerifyElement("Extension.extension", "date", "Extension.extension:date");
+            verifier.VerifyElement("Extension.extension.url", "date.url", "Extension.extension:date.url", new FhirUri("date"));
+            verifier.VerifyElement("Extension.url", null, "Extension.url", new FhirUri(sd.Url));
 
             // Basic Patient profile that references a set of extensions
             sd = generateSnapshot(@"http://example.com/fhir/SD/patient-with-extensions");
-            asserter = new ElementAsserter(sd);
-            asserter.MatchForward("Patient.extension", null, "Patient.extension");
-            asserter.MatchForward("Patient.extension", "doNotCall", "Patient.extension:doNotCall");
-            asserter.MatchForward("Patient.extension", "legalCase", "Patient.extension:legalCase");
-            asserter.MatchForward("Patient.extension.valueBoolean", "legalCase.valueBoolean", "Patient.extension:legalCase.valueBoolean");
-            asserter.MatchForward("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.valueBoolean.extension");
-            asserter.MatchForward("Patient.extension.valueBoolean.extension", "legalCase.valueBoolean.leadCounsel", "Patient.extension:legalCase.valueBoolean.extension:leadCounsel");
-            asserter.MatchForward("Patient.extension", "religion", "Patient.extension:religion");
-            asserter.MatchForward("Patient.extension", "researchAuth", "Patient.extension:researchAuth");
+            verifier = new ElementVerifier(sd);
+            verifier.VerifyElement("Patient.extension", null, "Patient.extension");
+            verifier.VerifyElement("Patient.extension", "doNotCall", "Patient.extension:doNotCall");
+            verifier.VerifyElement("Patient.extension", "legalCase", "Patient.extension:legalCase");
+            verifier.VerifyElement("Patient.extension.valueBoolean", "legalCase.valueBoolean", "Patient.extension:legalCase.valueBoolean");
+            verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.valueBoolean.extension");
+            verifier.VerifyElement("Patient.extension.valueBoolean.extension", "legalCase.valueBoolean.leadCounsel", "Patient.extension:legalCase.valueBoolean.extension:leadCounsel");
+            verifier.VerifyElement("Patient.extension", "religion", "Patient.extension:religion");
+            verifier.VerifyElement("Patient.extension", "researchAuth", "Patient.extension:researchAuth");
 
             // Each of the following profiles is derived from the previous profile
 
             sd = generateSnapshot(@"http://example.com/fhir/SD/patient-name-slice");
-            asserter = new ElementAsserter(sd);
-            asserter.MatchForward("Patient.name", null, "Patient.name");
-            asserter.MatchForward("Patient.name", "officialName", "Patient.name:officialName");
-            asserter.MatchForward("Patient.name.text", "officialName.text", "Patient.name:officialName.text");
-            asserter.MatchForward("Patient.name.family", "officialName.family", "Patient.name:officialName.family");
-            asserter.MatchForward("Patient.name.given", "officialName.given", "Patient.name:officialName.given");
-            asserter.MatchForward("Patient.name.use", "officialName.use", "Patient.name:officialName.use");
-            Assert.AreEqual((asserter.Current.Fixed as Code)?.Value, "official");
-            asserter.MatchForward("Patient.name", "maidenName", "Patient.name:maidenName");
-            asserter.MatchForward("Patient.name.use", "maidenName.use", "Patient.name:maidenName.use");
-            Assert.AreEqual((asserter.Current.Fixed as Code)?.Value, "maiden");
-            asserter.MatchForward("Patient.name.family", "maidenName.family", "Patient.name:maidenName.family");
+            verifier = new ElementVerifier(sd);
+            verifier.VerifyElement("Patient.name", null, "Patient.name");
+            verifier.VerifyElement("Patient.name", "officialName", "Patient.name:officialName");
+            verifier.VerifyElement("Patient.name.text", "officialName.text", "Patient.name:officialName.text");
+            verifier.VerifyElement("Patient.name.family", "officialName.family", "Patient.name:officialName.family");
+            verifier.VerifyElement("Patient.name.given", "officialName.given", "Patient.name:officialName.given");
+            verifier.VerifyElement("Patient.name.use", "officialName.use", "Patient.name:officialName.use");
+            Assert.AreEqual((verifier.Current.Fixed as Code)?.Value, "official");
+            verifier.VerifyElement("Patient.name", "maidenName", "Patient.name:maidenName");
+            verifier.VerifyElement("Patient.name.use", "maidenName.use", "Patient.name:maidenName.use");
+            Assert.AreEqual((verifier.Current.Fixed as Code)?.Value, "maiden");
+            verifier.VerifyElement("Patient.name.family", "maidenName.family", "Patient.name:maidenName.family");
 
             sd = generateSnapshot(@"http://example.com/fhir/SD/patient-telecom-slice");
-            asserter = new ElementAsserter(sd);
-            asserter.MatchForward("Patient.telecom", null, "Patient.telecom");
-            asserter.MatchForward("Patient.telecom", "homePhone", "Patient.telecom:homePhone");
-            asserter.MatchForward("Patient.telecom.system", "homePhone.system", "Patient.telecom:homePhone.system", new Code("phone"));
-            asserter.MatchForward("Patient.telecom.use", "homePhone.use", "Patient.telecom:homePhone.use", new Code("home"));
-            asserter.MatchForward("Patient.telecom", "mobilePhone", "Patient.telecom:mobilePhone");
-            asserter.MatchForward("Patient.telecom.system", "mobilePhone.system", "Patient.telecom:mobilePhone.system", new Code("phone"));
-            asserter.MatchForward("Patient.telecom.use", "mobilePhone.use", "Patient.telecom:mobilePhone.use", new Code("mobile"));
-            asserter.MatchForward("Patient.telecom", "homeEmail", "Patient.telecom:homeEmail");
-            asserter.MatchForward("Patient.telecom.system", "homeEmail.system", "Patient.telecom:homeEmail.system", new Code("email"));
-            asserter.MatchForward("Patient.telecom.use", "homeEmail.use", "Patient.telecom:homeEmail.use", new Code("home"));
-            asserter.MatchForward("Patient.telecom", "workEmail", "Patient.telecom:workEmail");
-            asserter.MatchForward("Patient.telecom.system", "workEmail.system", "Patient.telecom:workEmail.system", new Code("email"));
-            asserter.MatchForward("Patient.telecom.use", "workEmail.use", "Patient.telecom:workEmail.use", new Code("work"));
-            asserter.MatchForward("Patient.telecom", "pager", "Patient.telecom:pager");
-            asserter.MatchForward("Patient.telecom.system", "pager.system", "Patient.telecom:pager.system", new Code("pager"));
+            verifier = new ElementVerifier(sd);
+            verifier.VerifyElement("Patient.telecom", null, "Patient.telecom");
+            verifier.VerifyElement("Patient.telecom", "homePhone", "Patient.telecom:homePhone");
+            verifier.VerifyElement("Patient.telecom.system", "homePhone.system", "Patient.telecom:homePhone.system", new Code("phone"));
+            verifier.VerifyElement("Patient.telecom.use", "homePhone.use", "Patient.telecom:homePhone.use", new Code("home"));
+            verifier.VerifyElement("Patient.telecom", "mobilePhone", "Patient.telecom:mobilePhone");
+            verifier.VerifyElement("Patient.telecom.system", "mobilePhone.system", "Patient.telecom:mobilePhone.system", new Code("phone"));
+            verifier.VerifyElement("Patient.telecom.use", "mobilePhone.use", "Patient.telecom:mobilePhone.use", new Code("mobile"));
+            verifier.VerifyElement("Patient.telecom", "homeEmail", "Patient.telecom:homeEmail");
+            verifier.VerifyElement("Patient.telecom.system", "homeEmail.system", "Patient.telecom:homeEmail.system", new Code("email"));
+            verifier.VerifyElement("Patient.telecom.use", "homeEmail.use", "Patient.telecom:homeEmail.use", new Code("home"));
+            verifier.VerifyElement("Patient.telecom", "workEmail", "Patient.telecom:workEmail");
+            verifier.VerifyElement("Patient.telecom.system", "workEmail.system", "Patient.telecom:workEmail.system", new Code("email"));
+            verifier.VerifyElement("Patient.telecom.use", "workEmail.use", "Patient.telecom:workEmail.use", new Code("work"));
+            verifier.VerifyElement("Patient.telecom", "pager", "Patient.telecom:pager");
+            verifier.VerifyElement("Patient.telecom.system", "pager.system", "Patient.telecom:pager.system", new Code("pager"));
 
             // Original snapshot contains constraints for both deceased[x] and deceasedDateTime - invalid!
             // Generated snapshot merges both constraints to deceasedDateTime type slice
@@ -568,78 +574,84 @@ namespace Hl7.Fhir.Specification.Tests
             assertContainsElement(sd, "Patient.deceasedDateTime", null, "Patient.deceasedDateTime");
 
             sd = generateSnapshot(@"http://example.com/fhir/SD/patient-careprovider-type-slice");
-            asserter = new ElementAsserter(sd);
-            asserter.MatchForward("Patient.careProvider", null, "Patient.careProvider");
-            asserter.MatchForward("Patient.careProvider", "organizationCare", "Patient.careProvider:organizationCare");
-            asserter.MatchForward("Patient.careProvider", "practitionerCare", "Patient.careProvider:practitionerCare");
+            verifier = new ElementVerifier(sd);
+            verifier.VerifyElement("Patient.careProvider", null, "Patient.careProvider");
+            verifier.VerifyElement("Patient.careProvider", "organizationCare", "Patient.careProvider:organizationCare");
+            verifier.VerifyElement("Patient.careProvider", "practitionerCare", "Patient.careProvider:practitionerCare");
 
             // Verify re-slicing
             sd = generateSnapshot(@"http://example.com/fhir/SD/patient-careprovider-type-reslice");
-            asserter = new ElementAsserter(sd);
-            asserter.MatchForward("Patient.careProvider", null, "Patient.careProvider");
-            asserter.MatchForward("Patient.careProvider", "organizationCare", "Patient.careProvider:organizationCare");
-            asserter.MatchForward("Patient.careProvider", "organizationCare/teamCare", "Patient.careProvider:organizationCare/teamCare");
-            asserter.MatchForward("Patient.careProvider", "practitionerCare", "Patient.careProvider:practitionerCare");
+            verifier = new ElementVerifier(sd);
+            verifier.VerifyElement("Patient.careProvider", null, "Patient.careProvider");
+            verifier.VerifyElement("Patient.careProvider", "organizationCare", "Patient.careProvider:organizationCare");
+            verifier.VerifyElement("Patient.careProvider", "organizationCare/teamCare", "Patient.careProvider:organizationCare/teamCare");
+            verifier.VerifyElement("Patient.careProvider", "practitionerCare", "Patient.careProvider:practitionerCare");
 
             // Identifier Datatype profile
             sd = generateSnapshot(@"http://example.com/fhir/SD/patient-mrn-id");
-            asserter = new ElementAsserter(sd);
-            asserter.MatchForward("Identifier", null, "Identifier");
-            asserter.MatchForward("Identifier.system", null, "Identifier.system", new FhirUri(@"http://example.com/fhir/localsystems/PATIENT-ID-MRN"));
+            verifier = new ElementVerifier(sd);
+            verifier.VerifyElement("Identifier", null, "Identifier");
+            verifier.VerifyElement("Identifier.system", null, "Identifier.system", new FhirUri(@"http://example.com/fhir/localsystems/PATIENT-ID-MRN"));
 
             // Verify inline re-slicing
             // Profile slices identifier and also re-slices the "mrn" slice
+            // patient-identifier-profile-slice-profile.xml
             sd = generateSnapshot(@"http://example.com/fhir/SD/patient-slice-by-profile");
-            asserter = new ElementAsserter(sd);
-            asserter.MatchForward("Patient.identifier", null, "Patient.identifier");
-            asserter.MatchForward("Patient.identifier", "mrn", "Patient.identifier:mrn");
-            asserter.MatchForward("Patient.identifier", "mrn/officialMRN", "Patient.identifier:mrn/officialMRN");
-            asserter.MatchForward("Patient.identifier.use", "mrn/officialMRN.use", "Patient.identifier:mrn/officialMRN.use", new Code("official"));
-            asserter.MatchForward("Patient.identifier", "mdmId", "Patient.identifier:mdmId");
+            verifier = new ElementVerifier(sd);
+            verifier.VerifyElement("Patient.identifier", null, "Patient.identifier");
+            verifier.VerifyElement("Patient.identifier", "mrn", "Patient.identifier:mrn");
+            verifier.VerifyElement("Patient.identifier", "mrn/officialMRN", "Patient.identifier:mrn/officialMRN");
+            verifier.VerifyElement("Patient.identifier.use", "mrn/officialMRN.use", "Patient.identifier:mrn/officialMRN.use", new Code("official"));
+            verifier.VerifyElement("Patient.identifier", "mdmId", "Patient.identifier:mdmId");
 
             // Verify constraints on named slice in base profile
             // patient-identifier-slice-extension-profile.xml
             sd = generateSnapshot(@"http://example.com/fhir/SD/patient-identifier-subslice");
-            asserter = new ElementAsserter(sd);
-            asserter.MatchForward("Patient.identifier", null, "Patient.identifier");
-            asserter.AssertSlicing(new string[] { "system" }, ElementDefinition.SlicingRules.Open, null);
-            asserter.MatchForward("Patient.identifier", "mrn", "Patient.identifier:mrn");
-            asserter.AssertSlicing(new string[] { "use" }, ElementDefinition.SlicingRules.Open, null);
-            asserter.MatchForward("Patient.identifier.extension", null, "Patient.identifier:mrn.extension");
-            asserter.MatchForward("Patient.identifier.extension", "mrn.issuingSite", "Patient.identifier:mrn.extension:issuingSite");
-            asserter.MatchForward("Patient.identifier.use", null, "Patient.identifier:mrn.use");
-            asserter.MatchForward("Patient.identifier.type", null, "Patient.identifier:mrn.type");
-            asserter.MatchForward("Patient.identifier.system", null, "Patient.identifier:mrn.system", new FhirUri(@"http://example.com/fhir/localsystems/PATIENT-ID-MRN"));
-            asserter.MatchForward("Patient.identifier.value", null, "Patient.identifier:mrn.value");
-            asserter.MatchForward("Patient.identifier.period", null, "Patient.identifier:mrn.period");
-            asserter.MatchForward("Patient.identifier.assigner", null, "Patient.identifier:mrn.assigner");
-            asserter.MatchForward("Patient.identifier", "mrn/officialMRN", "Patient.identifier:mrn/officialMRN");
-            asserter.MatchForward("Patient.identifier", "mdmId", "Patient.identifier:mdmId");
+            verifier = new ElementVerifier(sd);
+            verifier.VerifyElement("Patient.identifier", null, "Patient.identifier");
+            verifier.AssertSlicing(new string[] { "system" }, ElementDefinition.SlicingRules.Open, null);
+            verifier.VerifyElement("Patient.identifier", "mrn", "Patient.identifier:mrn");
+            verifier.AssertSlicing(new string[] { "use" }, ElementDefinition.SlicingRules.Open, null);
+            verifier.VerifyElement("Patient.identifier.extension", null, "Patient.identifier:mrn.extension");
+            verifier.VerifyElement("Patient.identifier.extension", "mrn.issuingSite", "Patient.identifier:mrn.extension:issuingSite");
+            verifier.VerifyElement("Patient.identifier.use", null, "Patient.identifier:mrn.use");
+            verifier.VerifyElement("Patient.identifier.type", null, "Patient.identifier:mrn.type");
+            verifier.VerifyElement("Patient.identifier.system", null, "Patient.identifier:mrn.system", new FhirUri(@"http://example.com/fhir/localsystems/PATIENT-ID-MRN"));
+            verifier.VerifyElement("Patient.identifier.value", null, "Patient.identifier:mrn.value");
+            verifier.VerifyElement("Patient.identifier.period", null, "Patient.identifier:mrn.period");
+            verifier.VerifyElement("Patient.identifier.assigner", null, "Patient.identifier:mrn.assigner");
+            verifier.VerifyElement("Patient.identifier", "mrn/officialMRN", "Patient.identifier:mrn/officialMRN");
+            verifier.VerifyElement("Patient.identifier", "mdmId", "Patient.identifier:mdmId");
 
             // Verify extension re-slice
             sd = generateSnapshot(@"http://example.com/fhir/SD/patient-research-auth-reslice");
-            asserter = new ElementAsserter(sd);
-            asserter.MatchForward("Patient.extension", null, "Patient.extension");
-            asserter.MatchForward("Patient.extension", "doNotCall", "Patient.extension:doNotCall");
-            asserter.MatchForward("Patient.extension", "legalCase", "Patient.extension:legalCase");
-            asserter.MatchForward("Patient.extension.valueBoolean", "legalCase.valueBoolean", "Patient.extension:legalCase.valueBoolean");
-            asserter.MatchForward("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.valueBoolean.extension");
-            asserter.MatchForward("Patient.extension.valueBoolean.extension", "legalCase.valueBoolean.leadCounsel", "Patient.extension:legalCase.valueBoolean.extension:leadCounsel");
-            asserter.MatchForward("Patient.extension", "religion", "Patient.extension:religion");
-            asserter.MatchForward("Patient.extension", "researchAuth", "Patient.extension:researchAuth");
-            asserter.AssertSlicing(new string[] { "type.value[x]" }, ElementDefinition.SlicingRules.Open, null);
-            asserter.MatchForward("Patient.extension", "researchAuth/grandfatheredResAuth", "Patient.extension:researchAuth/grandfatheredResAuth");
-            asserter.MatchForward("Patient.extension.extension", null, "Patient.extension:researchAuth/grandfatheredResAuth.extension");
-            asserter.AssertSlicing(new string[] { "url" }, ElementDefinition.SlicingRules.Open, false);
-            asserter.MatchForward("Patient.extension.extension", "type", "Patient.extension:researchAuth/grandfatheredResAuth.extension:type");
-            asserter.MatchForward("Patient.extension.extension.url", "type.url", "Patient.extension:researchAuth/grandfatheredResAuth.extension:type.url", new FhirUri("type"));
-            asserter.MatchForward("Patient.extension.extension", "flag", "Patient.extension:researchAuth/grandfatheredResAuth.extension:flag");
-            asserter.MatchForward("Patient.extension.extension.url", "flag.url", "Patient.extension:researchAuth/grandfatheredResAuth.extension:flag.url", new FhirUri("flag"));
-            asserter.MatchForward("Patient.extension.extension", "date", "Patient.extension:researchAuth/grandfatheredResAuth.extension:date");
-            asserter.MatchForward("Patient.extension.extension.url", "date.url", "Patient.extension:researchAuth/grandfatheredResAuth.extension:date.url", new FhirUri("date"));
-            asserter.MatchForward("Patient.extension.extension.value[x]", "date.value[x]", "Patient.extension:researchAuth/grandfatheredResAuth.extension:date.value[x]");
-            asserter.MatchForward("Patient.extension.extension.value[x]", "researchAuth/grandfatheredResAuth.type.value[x]", "Patient.extension:researchAuth/grandfatheredResAuth.extension.value[x]", new Code("grandfathered"));
-            asserter.MatchForward("Patient.extension.url", null, "Patient.extension:researchAuth/grandfatheredResAuth.url", new FhirUri(@"http://example.com/fhir/StructureDefinition/patient-research-authorization"));
+            verifier = new ElementVerifier(sd);
+            verifier.VerifyElement("Patient.extension", null, "Patient.extension");
+            verifier.VerifyElement("Patient.extension", "doNotCall", "Patient.extension:doNotCall");
+            verifier.VerifyElement("Patient.extension", "legalCase", "Patient.extension:legalCase");
+            verifier.VerifyElement("Patient.extension.valueBoolean", "legalCase.valueBoolean", "Patient.extension:legalCase.valueBoolean");
+            verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.valueBoolean.extension");
+            verifier.VerifyElement("Patient.extension.valueBoolean.extension", "legalCase.valueBoolean.leadCounsel", "Patient.extension:legalCase.valueBoolean.extension:leadCounsel");
+            verifier.VerifyElement("Patient.extension", "religion", "Patient.extension:religion");
+            verifier.VerifyElement("Patient.extension", "researchAuth", "Patient.extension:researchAuth");
+            verifier.AssertSlicing(new string[] { "type.value[x]" }, ElementDefinition.SlicingRules.Open, null);
+            verifier.VerifyElement("Patient.extension", "researchAuth/grandfatheredResAuth", "Patient.extension:researchAuth/grandfatheredResAuth");
+            verifier.VerifyElement("Patient.extension.extension", null, "Patient.extension:researchAuth/grandfatheredResAuth.extension");
+            verifier.AssertSlicing(new string[] { "url" }, ElementDefinition.SlicingRules.Open, false);
+
+            // TODO
+            verifier.VerifyElement("Patient.extension.extension", "type", "Patient.extension:researchAuth/grandfatheredResAuth.extension:type");
+            verifier.VerifyElement("Patient.extension.extension.url", "type.url", "Patient.extension:researchAuth/grandfatheredResAuth.extension:type.url", new FhirUri("type"));
+
+            verifier.VerifyElement("Patient.extension.extension", "flag", "Patient.extension:researchAuth/grandfatheredResAuth.extension:flag");
+            verifier.VerifyElement("Patient.extension.extension.url", "flag.url", "Patient.extension:researchAuth/grandfatheredResAuth.extension:flag.url", new FhirUri("flag"));
+
+            verifier.VerifyElement("Patient.extension.extension", "date", "Patient.extension:researchAuth/grandfatheredResAuth.extension:date");
+            verifier.VerifyElement("Patient.extension.extension.url", "date.url", "Patient.extension:researchAuth/grandfatheredResAuth.extension:date.url", new FhirUri("date"));
+
+            verifier.VerifyElement("Patient.extension.extension.value[x]", "date.value[x]", "Patient.extension:researchAuth/grandfatheredResAuth.extension:date.value[x]");
+            verifier.VerifyElement("Patient.extension.extension.value[x]", "researchAuth/grandfatheredResAuth.type.value[x]", "Patient.extension:researchAuth/grandfatheredResAuth.extension.value[x]", new Code("grandfathered"));
+            verifier.VerifyElement("Patient.extension.url", null, "Patient.extension:researchAuth/grandfatheredResAuth.url", new FhirUri(@"http://example.com/fhir/StructureDefinition/patient-research-authorization"));
         }
 
         [TestMethod]
@@ -834,8 +846,10 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
+        // Unit tests for DifferentialTreeConstructor
+
         [TestMethod]
-        public void MakeDifferentialTree()
+        public void TestDifferentialTree()
         {
             var e = new List<ElementDefinition>();
 
@@ -846,7 +860,7 @@ namespace Hl7.Fhir.Specification.Tests
             e.Add(new ElementDefinition() { Path = "A.B.C1.D" });
             e.Add(new ElementDefinition() { Path = "A.D.F" });
 
-            var tree = new DifferentialTreeConstructor(e).MakeTree();
+            var tree = DifferentialTreeConstructor.MakeTree(e);
             Assert.IsNotNull(tree);
 
             var nav = new ElementDefinitionNavigator(tree);
@@ -869,7 +883,69 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.MoveToChild("F"));
         }
 
-        // [WMR 20161005] expandElement is no longer unit-testable; uninitialized recursion stack causes exceptions
+        // [WMR 20161012] Advanced unit test for DifferentialTreeConstructor with resliced input
+        [TestMethod]
+        public void TestDifferentialTreeForReslice()
+        {
+            var elements = new List<ElementDefinition>();
+
+            elements.Add(new ElementDefinition() { Path = "Patient.identifier" });
+            elements.Add(new ElementDefinition() { Path = "Patient.identifier", Name = "A/1" });
+            elements.Add(new ElementDefinition() { Path = "Patient.identifier.use" });
+            elements.Add(new ElementDefinition() { Path = "Patient.identifier", Name = "A/2" });
+            elements.Add(new ElementDefinition() { Path = "Patient.identifier.type" });
+            elements.Add(new ElementDefinition() { Path = "Patient.identifier", Name = "A/3" });
+            elements.Add(new ElementDefinition() { Path = "Patient.identifier.period.start" });
+            elements.Add(new ElementDefinition() { Path = "Patient.identifier", Name = "B/1" });
+            // Chris Grenz naming convention for slice children (allowed, but not required by FHIR)
+            elements.Add(new ElementDefinition() { Path = "Patient.identifier.system", Name = "B/1.system" });
+            // Chris Grenz - introduce slice by constrain on child element
+            elements.Add(new ElementDefinition() { Path = "Patient.identifier.use", Name = "C.use" });
+            // Chris Grenz - introduce reslice by constrain on child element
+            elements.Add(new ElementDefinition() { Path = "Patient.identifier.period", Name = "C/1.period" });
+            elements.Add(new ElementDefinition() { Path = "Patient.identifier.period.start", Name = "C/1.period.start" });
+
+            var tree = DifferentialTreeConstructor.MakeTree(elements);
+            Assert.IsNotNull(tree);
+            Debug.Print(string.Join(Environment.NewLine, tree.Select(e => $"{e.Path} : '{e.Name}'")));
+
+            Assert.AreEqual(18, tree.Count);
+            var verifier = new ElementVerifier(tree);
+
+            verifier.VerifyElement("Patient");                      // Added: root element
+            verifier.VerifyElement("Patient.identifier");
+            verifier.VerifyElement("Patient.identifier", "A");      // Added: base slice for reslice
+            verifier.VerifyElement("Patient.identifier", "A/1");
+            verifier.VerifyElement("Patient.identifier.use");
+            verifier.VerifyElement("Patient.identifier", "A/2");
+            verifier.VerifyElement("Patient.identifier.type");
+            verifier.VerifyElement("Patient.identifier", "A/3");
+            verifier.VerifyElement("Patient.identifier.period");    // Added: parent element
+            verifier.VerifyElement("Patient.identifier.period.start");
+            verifier.VerifyElement("Patient.identifier", "B");      // Added: base slice for reslice
+            verifier.VerifyElement("Patient.identifier", "B/1");
+            verifier.VerifyElement("Patient.identifier.system", "B/1.system");
+            verifier.VerifyElement("Patient.identifier", "C");      // Added: slice parent
+            verifier.VerifyElement("Patient.identifier.use", "C.use");
+            verifier.VerifyElement("Patient.identifier", "C/1");    // Added: reslice parent
+            verifier.VerifyElement("Patient.identifier.period", "C/1.period");
+            verifier.VerifyElement("Patient.identifier.period.start", "C/1.period.start");
+        }
+
+        [TestMethod]
+        [Ignore]
+        public void DebugDifferentialTree()
+        {
+            var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/SD/patient-research-auth-reslice");
+            Assert.IsNotNull(sd);
+            var tree = DifferentialTreeConstructor.MakeTree(sd.Differential.Element);
+            Assert.IsNotNull(tree);
+            Debug.Print(string.Join(Environment.NewLine, tree.Select(e => $"{e.Path} : '{e.Name}'")));
+        }
+
+        // [WMR 20160802] Unit tests for SnapshotGenerator.ExpandElement
+
+        // [WMR 20161005] internal expandElement method is no longer unit-testable; uninitialized recursion stack causes exceptions
 
         //[TestMethod]
         //public void TestExpandChild()
@@ -889,8 +965,6 @@ namespace Hl7.Fhir.Specification.Tests
         //    Assert.IsTrue(generator.expandElement(nav));
         //    Assert.IsTrue(nav.MoveToChild("title"), "Did not move into internally defined backbone element Group");
         //}
-
-        // [WMR 20160802] NEW - Expand a single element
 
         [TestMethod]
         public void TestExpandElement_PatientIdentifier()

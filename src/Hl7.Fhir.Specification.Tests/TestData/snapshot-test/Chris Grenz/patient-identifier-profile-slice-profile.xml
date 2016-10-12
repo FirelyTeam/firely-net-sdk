@@ -9297,7 +9297,7 @@
 			</type>
 		</element>
 
-    <!-- [WMR 20161011] Added required re-slicing entry -->
+    <!-- [WMR 20161010] Added required slicing entry -->
     <element>
       <path value="Patient.identifier" />
       <name value="mrn/officialMRN" />

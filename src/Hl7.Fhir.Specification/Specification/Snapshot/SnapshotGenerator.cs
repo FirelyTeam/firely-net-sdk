@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 #endif
 
             // Fill out the gaps (mostly missing parents) in the differential representation
-            var fullDifferential = new DifferentialTreeConstructor(differential.Element).MakeTree();
+            var fullDifferential = DifferentialTreeConstructor.MakeTree(differential.Element);
             var diff = new ElementDefinitionNavigator(fullDifferential);
 
             merge(nav, diff);
