@@ -430,7 +430,7 @@ namespace Hl7.Fhir.Tests.Rest
             FhirClient client = new FhirClient(testEndpoint);
 #if !PORTABLE45
             client.OnBeforeRequest += Compression_OnBeforeRequestZipOrDeflate;
-            client.CompressRequestBody = true;
+            // client.CompressRequestBody = true;
 #endif
             var pat = client.Read<Patient>("Patient/example");
             pat.Id = null;
