@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Rest
     internal static class EntryToHttpExtensions
     {
         public static HttpWebRequest ToHttpRequest(this Bundle.EntryComponent entry, 
-            Prefer bodyPreference, ResourceFormat format, bool useFormatParameter, out byte[] body)
+            Prefer bodyPreference, ResourceFormat format, bool useFormatParameter, bool CompressRequestBody, out byte[] body)
         {
             System.Diagnostics.Debug.WriteLine("{0}: {1}", entry.Request.Method, entry.Request.Url);
 
@@ -66,7 +66,7 @@ namespace Hl7.Fhir.Rest
             }
 
             if (entry.Resource != null)
-                setBodyAndContentType(request, entry.Resource, format, out body);
+                setBodyAndContentType(request, entry.Resource, format, CompressRequestBody, out body);
 #if !PORTABLE45
             // PCL doesn't support setting the length (and in this case will be empty anyway)
             else
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        private static void setBodyAndContentType(HttpWebRequest request, Resource data, ResourceFormat format, out byte[] body)
+        private static void setBodyAndContentType(HttpWebRequest request, Resource data, ResourceFormat format, bool CompressRequestBody, out byte[] body)
         {
             if (data == null) throw Error.ArgumentNull("data");
 
@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Rest
             {
                 var bin = (Binary)data;
                 body = bin.Content;
-                request.WriteBody(bin.Content);
+                request.WriteBody(CompressRequestBody, bin.Content);
                 request.ContentType = bin.ContentType;
             }
             else
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Rest
                     FhirSerializer.SerializeToXmlBytes(data, summary: Fhir.Rest.SummaryType.False) :
                     FhirSerializer.SerializeToJsonBytes(data, summary: Fhir.Rest.SummaryType.False);
 
-                request.WriteBody(body);
+                request.WriteBody(CompressRequestBody, body);
                 request.ContentType = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false);
             }
         }

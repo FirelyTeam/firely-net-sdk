@@ -33,11 +33,11 @@ namespace Hl7.Fhir.Tests.Rest
         //public static Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
         //public static Uri testEndpoint = new Uri("https://localhost:44346/fhir");
         //public static Uri testEndpoint = new Uri("http://localhost:1396/fhir");
-        public static Uri testEndpoint = new Uri("http://fhir2.healthintersections.com.au/open");
+        //public static Uri testEndpoint = new Uri("http://fhir2.healthintersections.com.au/open");
         //public static Uri testEndpoint = new Uri("https://api.fhir.me");
         //public static Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu2");
         //public static Uri testEndpoint = new Uri("http://localhost:49911/fhir");
-        //public static Uri testEndpoint = new Uri("http://sqlonfhir-dstu2.azurewebsites.net/fhir");
+        public static Uri testEndpoint = new Uri("http://sqlonfhir-dstu2.azurewebsites.net/fhir");
 
         [TestInitialize]
         public void TestInitialize()
@@ -198,19 +198,54 @@ namespace Hl7.Fhir.Tests.Rest
 			Assert.AreEqual("Den Burg", loc.Resource.Address.City);
 		}
 #endif
+        public static void Compression_OnBeforeRequestGZip(object sender, BeforeRequestEventArgs e)
+        {
+            if (e.RawRequest != null)
+            {
+                // e.RawRequest.AutomaticDecompression = System.Net.DecompressionMethods.Deflate | System.Net.DecompressionMethods.GZip;
+                e.RawRequest.Headers.Remove("Accept-Encoding");
+                e.RawRequest.Headers.Add("Accept-Encoding", "gzip");
+            }
+        }
+
+        public static void Compression_OnBeforeRequestDeflate(object sender, BeforeRequestEventArgs e)
+        {
+            if (e.RawRequest != null)
+            {
+                // e.RawRequest.AutomaticDecompression = System.Net.DecompressionMethods.Deflate | System.Net.DecompressionMethods.GZip;
+                e.RawRequest.Headers.Remove("Accept-Encoding");
+                e.RawRequest.Headers.Add("Accept-Encoding", "deflate");
+            }
+        }
+
+        public static void Compression_OnBeforeRequestZipOrDeflate(object sender, BeforeRequestEventArgs e)
+        {
+            if (e.RawRequest != null)
+            {
+                // e.RawRequest.AutomaticDecompression = System.Net.DecompressionMethods.Deflate | System.Net.DecompressionMethods.GZip;
+                e.RawRequest.Headers.Remove("Accept-Encoding");
+                e.RawRequest.Headers.Add("Accept-Encoding", "gzip, deflate");
+            }
+        }
+
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void Search()
         {
             FhirClient client = new FhirClient(testEndpoint);
             Bundle result;
 
+            client.CompressRequestBody = true;
+            client.OnBeforeRequest += Compression_OnBeforeRequestZipOrDeflate;
             result = client.Search<DiagnosticReport>();
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Entry.Count() > 10, "Test should use testdata with more than 10 reports");
+            client.OnBeforeRequest -= Compression_OnBeforeRequestZipOrDeflate;
 
+            client.OnBeforeRequest += Compression_OnBeforeRequestGZip;
             result = client.Search<DiagnosticReport>(pageSize: 10);
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Entry.Count <= 10);
+            client.OnBeforeRequest -= Compression_OnBeforeRequestGZip;
 
             var withSubject =
                 result.Entry.ByResourceType<DiagnosticReport>().FirstOrDefault(dr => dr.Subject != null);
@@ -230,6 +265,8 @@ namespace Hl7.Fhir.Tests.Rest
             //Assert.IsNotNull(result.Entry.Single(entry => entry.Resource.ResourceIdentity().ResourceType ==
             //            typeof(Patient).GetCollectionName()));
 
+
+            client.OnBeforeRequest += Compression_OnBeforeRequestDeflate;
             result = client.Search<Patient>(new string[] { "name=Chalmers", "name=Peter" });
 
             Assert.IsNotNull(result);
@@ -389,6 +426,8 @@ namespace Hl7.Fhir.Tests.Rest
         public void CreateEditDelete()
         {
             FhirClient client = new FhirClient(testEndpoint);
+            client.OnBeforeRequest += Compression_OnBeforeRequestZipOrDeflate;
+            client.CompressRequestBody = true;
             var pat = client.Read<Patient>("Patient/example");
             pat.Id = null;
             pat.Identifier.Clear();
@@ -421,9 +460,9 @@ namespace Hl7.Fhir.Tests.Rest
                 fe = client.Read<Patient>(fe.ResourceIdentity().WithoutVersion());
                 Assert.Fail();
             }
-            catch
+            catch(FhirOperationException ex)
             {
-                Assert.AreEqual("410", client.LastResult.Status);
+                Assert.AreEqual(HttpStatusCode.Gone, ex.Status); //"410"
             }
         }
 
