@@ -234,8 +234,10 @@ namespace Hl7.Fhir.Tests.Rest
             FhirClient client = new FhirClient(testEndpoint);
             Bundle result;
 
+#if !PORTABLE45
             client.CompressRequestBody = true;
             client.OnBeforeRequest += Compression_OnBeforeRequestZipOrDeflate;
+#endif
             result = client.Search<DiagnosticReport>();
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Entry.Count() > 10, "Test should use testdata with more than 10 reports");
