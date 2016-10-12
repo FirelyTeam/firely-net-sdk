@@ -1003,7 +1003,7 @@ namespace Hl7.Fhir.Tests.Rest
 
             client = new FhirClient(testEndpointDSTU23);
             client.ParserSettings.AllowUnrecognizedEnums = true;
-            p = client.Conformance();
+            // p = client.Conformance(); // The STU3 server conformance resource is now called CapabilityStatement.
 
             //client = new FhirClient(testEndpointDSTU2);
             //p = client.Read<Patient>("Patient/example");
