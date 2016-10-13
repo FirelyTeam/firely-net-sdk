@@ -276,7 +276,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // If the differential contains a slicing entry, then it should also define at least a single slice.
                     if (!diffNav.MoveToNext())
                     {
-                        throw Error.InvalidOperation($"Differential has a slicing entry for path '{diffNav.Path}', but no first actual slice");
+                        Debug.Print($"[{nameof(ElementMatcher)}] Warning! Differential has a slicing entry for path '{diffNav.Path}', but no first actual slice.");
+                        return result;
+                        // throw Error.InvalidOperation($"Differential has a slicing entry for path '{diffNav.Path}', but no first actual slice");
                     }
                 }
             }
@@ -340,7 +342,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     matchingSlice = snapNav.Bookmark();
                     snapNav.ReturnToBookmark(bm);
                 }
-                // No match; this represents a new slice
+                // No match; this represents a new named slice
                 return result;
             }
 
@@ -354,11 +356,12 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             var slicing = snapNav.Current.Slicing;
             Debug.Assert(slicing != null);
+            if (slicing == null) { return false; }
 
             var slicingIntro = matchingSlice = snapNav.Bookmark();
 
             // url, type@profile, @type + @profile
-            if (isTypeProfileDiscriminator(slicing.Discriminator))
+            if (isTypeProfileDiscriminator(slicing?.Discriminator))
             {
                 // [WMR 20160802] Handle complex extension constraints
                 // e.g. sdc-questionnaire, Path = 'Questionnaire.group.question.extension.extension', name = 'question'
@@ -384,7 +387,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     var baseProfiles = snapNav.Current.PrimaryTypeProfiles().ToArray();
                     result = profileRef.IsComplex
-                        // Match on element name
+                        // Match on element name (for complex extension elements)
                         ? snapNav.Current.Name == profileRef.ElementName
                         // Match on type profile(s)
                         : baseProfiles.SequenceEqual(diffProfiles);
@@ -396,10 +399,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
 
             }
-
-            // TODO: Support other discriminators
-            // http://hl7.org/fhir/profiling.html#discriminator
-
             else
             {
                 throw Error.NotSupported($"Reslicing on discriminator '{string.Join("|", slicing.Discriminator)}' is not supported. Path = '{snapNav.Path}'.");

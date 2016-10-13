@@ -1,8 +1,23 @@
 ﻿#define DUMPOUTPUT
 
+// EXPERIMENTAL
+//
+// #define CGNAMING
+//
+// Handle Chris Grenz element naming system
+// Name children of slices: [sliceName].[elementName]
+// Example:
+//   Path                       Name        Description
+//   -------------------------------------------------------------
+//   Patient.identifier                     slicing intro
+//   Patient.identifier         bsn         first slice
+//   Patient.identifier.use     bsn.use     child of first slice
+//   Patient.identifier         bsn/1       first reslice
+//   Patient.identifier.use     bsn/1.use   child of first reslice
+
+
 // * spec: slices MUST have names - but don't expect this for extensions
-//   => Reject non-extension slices without a name!
-//      Emit OperationOutcome issue
+//   => Reject non-extension slices without a name; emit OperationOutcome issue
 //
 // * Reslicing: name = "slice/reslice"
 //   => "/" is illegal character in slice name!
@@ -90,17 +105,61 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     // The current element represents a sibling of the previous element
                     // Note: don't catch here, let the Snapshot Generator handle this
-                    Debug.WriteLineIf(diff[index].Name == (index > 0 ? diff[index - 1].Name : null), $"Warning! Duplicate constraint at index {index}: '{thisPath}'");
+                    Debug.WriteLineIf(index > 0 && diff[index].Name == diff[index - 1].Name && diff[index - 1].Slicing == null, $"Warning! Duplicate constraint at index {index}: '{thisPath}'");
 
+#if CGNAMING
+                    // Handle Chris Grenz naming, e.g.
+                    // - Patient.name.use : "officialName.use"
+                    // - Patient.name.use : "maidenName.use"
+                    // => Belongs to a different slice "maidenName", not present => add parent slice
+                    var thisNameComponents = ParsedSliceName.Parse(diff[index]);
+                    var prevNameComponents = ParsedSliceName.Parse(index > 0 ? diff[index - 1] : null);
+                    if (thisNameComponents.ElementName != null && thisNameComponents.SliceName != prevNameComponents.SliceName)
+                    {
+                        var parentElement = new ElementDefinition()
+                        {
+                            Path = ElementDefinitionNavigator.GetParentPath(thisPath),
+                            Name = thisNameComponents.SliceName
+                        };
+                        diff.Insert(index, parentElement);
+                    }
+                    else
+                    {
+                        index++;
+                    }
+#else
                     // So we have already ensured that the parent node exists while processing the previous element
                     // OK, proceed to the next element
                     index++;
+#endif
                 }
                 else if (ElementDefinitionNavigator.IsDirectChildPath(prevPath, thisPath))
                 {
+#if CGNAMING
+                    // Handle Chris Grenz naming, e.g.
+                    // - Patient.identifier : "mrn"
+                    // - Patient.identifier.use : "mrn/officialMRN.use"
+                    // => Belongs to a different (re-)slice "mrn/officialMRN", not present => add parent (re)slice
+                    var parentName = getSliceParentName(diff[index].Name);
+                    var prevName = index > 0 ? diff[index - 1].Name : null;
+                    if (parentName != null && parentName != prevName)
+                    {
+                        var parentElement = new ElementDefinition()
+                        {
+                            Path = prevPath, // ElementDefinitionNavigator.GetParentPath(thisPath),
+                            Name = parentName
+                        };
+                        diff.Insert(index, parentElement);
+                    }
+                    else
+                    {
+                        index++;
+                    }
+#else
                     // The previous element is our parent
                     // OK, proceed to the next element
                     index++;
+#endif
                 }
                 else
                 {
@@ -143,6 +202,46 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             return diff;
         }
+
+#if CGNAMING
+        static string getSliceParentName(string name)
+        {
+            if (!string.IsNullOrEmpty(name))
+            {
+                var slashPos = name.LastIndexOf("/");
+                var dotPos = name.LastIndexOf(".");
+                if (dotPos > slashPos)
+                {
+                    return name.Substring(0, dotPos);
+                }
+            }
+            return null;
+        }
+
+        struct ParsedSliceName {
+            public ParsedSliceName(string sliceName, string elementName) { this.SliceName = sliceName; this.ElementName = elementName; }
+            // public readonly string BaseSliceName; // before "/"
+            public readonly string SliceName;
+            public readonly string ElementName;
+            public static ParsedSliceName Parse(ElementDefinition element)
+            {
+                var name = element.Name;
+                if (!string.IsNullOrEmpty(name))
+                {
+                    var last = ElementDefinitionNavigator.GetLastPathComponent(element.Path);
+                    if (name.EndsWith("." + last))
+                    {
+                        return new ParsedSliceName(
+                            name.Substring(0, name.Length - last.Length - 1),
+                            name.Substring(name.Length - last.Length)
+                        );
+                    }
+                }
+                return new ParsedSliceName(name, null);
+            }
+        }
+
+#endif
 
     }     
 }
