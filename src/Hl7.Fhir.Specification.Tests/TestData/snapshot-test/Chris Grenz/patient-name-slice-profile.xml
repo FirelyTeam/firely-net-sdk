@@ -5183,7 +5183,7 @@
 		</element>
 	</snapshot>
 	<differential>
-		<element>
+		  <element>
 			<path value="Patient.name" />
 			<slicing>
 				<discriminator value="use" />
@@ -5217,12 +5217,12 @@
 			<fixedCode value="official" />
 		</element>
 
-    <!-- [WMR 20161010 Added required slicing entry -->
+    <!-- [WMR 20161010 Added required slicing entry
     <element>
       <path value="Patient.name" />
       <name value="maidenName" />
     </element>
-    
+    -->
 
     <element>
 			<path value="Patient.name.use" />

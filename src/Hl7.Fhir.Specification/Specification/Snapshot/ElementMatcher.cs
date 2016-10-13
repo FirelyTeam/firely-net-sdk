@@ -1,6 +1,4 @@
-﻿#define MATCH_SLICE_BY_NAME
-
-/* 
+﻿/* 
  * Copyright (c) 2016, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -327,27 +325,30 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Maintain snapNav current position
         static bool findBaseSlice(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, out Bookmark matchingSlice)
         {
-#if MATCH_SLICE_BY_NAME
-            // [WMR 20161010] NEW
-            // Q: Do we still need to provide a fallback for unnamed slices?
+            var result = false;
 
             var bm = snapNav.Bookmark();
             matchingSlice = Bookmark.Empty;
-            var diffSliceName = diffNav.Current.Name;
+
             // If the diff slice has a name, than match base slice by name
+            var diffSliceName = diffNav.Current.Name;
             if (!string.IsNullOrEmpty(diffSliceName))
             {
-                var result = snapNav.MoveToNextSlice(diffSliceName);
+                result = snapNav.MoveToNextSlice(diffSliceName);
                 if (result)
                 {
                     matchingSlice = snapNav.Bookmark();
                     snapNav.ReturnToBookmark(bm);
                 }
+                // No match; this represents a new slice
                 return result;
             }
-            Debug.Fail("TODO: Support matching unnamed slices...?");
-            return false;
-#else
+
+            // Slice has no name
+            // This is expected for extensions => slice by url
+            Debug.WriteLineIf(!diffNav.Current.IsExtension(), $"Warning! Unnamed slice for path = '{diffNav.Path}'");
+            Debug.Assert(diffNav.Current.IsExtension());
+
             // Try to match base slice by discriminator
             // Q: Is this still necessary? e.g. extensions
 
@@ -355,7 +356,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             Debug.Assert(slicing != null);
 
             var slicingIntro = matchingSlice = snapNav.Bookmark();
-            var result = false;
 
             // url, type@profile, @type + @profile
             if (isTypeProfileDiscriminator(slicing.Discriminator))
@@ -402,12 +402,11 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             else
             {
-                throw Error.NotSupported($"Reslicing on discriminator '{string.Join("|", slicing.Discriminator)}' is not supported yet (path = '{snapNav.Path}').");
+                throw Error.NotSupported($"Reslicing on discriminator '{string.Join("|", slicing.Discriminator)}' is not supported. Path = '{snapNav.Path}'.");
             }
 
             snapNav.ReturnToBookmark(slicingIntro);
             return result;
-#endif
         }
 
         // [WMR 20160902] Represents a new element definition with no matching base element (for core resource & datatype definitions)

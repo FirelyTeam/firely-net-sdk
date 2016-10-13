@@ -533,23 +533,19 @@ namespace Hl7.Fhir.Specification.Navigation
             return new List<ElementDefinition>(Elements);
         }
 
-        private static bool isDeeperPath(string me, string that)
-        {
-            return NumberOfParts(that) > NumberOfParts(me);
-        }
+        private static bool isDeeperPath(string me, string that) => NumberOfParts(that) > NumberOfParts(me);
 
-        public static bool IsSibling(string me, string him)
-        {
-            return GetParentPath(me) == GetParentPath(him);
-        }
+        /// <summary>Determines if the specified element paths represent sibling elements.</summary>
+        public static bool IsSibling(string me, string him) => GetParentPath(me) == GetParentPath(him);
 
-        public static bool IsDirectChildPath(string parent, string child)
-        {
-            // A child with a single path segment, is "root" and child of "no" parent
-            //if (parent == String.Empty && child.IndexOf('.') == -1) return true;
+        /// <summary>Determines if the specified child path represent a direct child of the specified parent path.</summary>
+        public static bool IsDirectChildPath(string parent, string child) => IsChildPath(parent, child) && child.IndexOf('.', parent.Length + 1) == -1;
+        // => return child.StartsWith(parent + ".") && child.IndexOf('.', parent.Length + 1) == -1;
+        // A child with a single path segment, is "root" and child of "no" parent
+        //if (parent == String.Empty && child.IndexOf('.') == -1) return true;
 
-            return child.StartsWith(parent + ".") && child.IndexOf('.', parent.Length + 1) == -1;
-        }
+        /// <summary>Determines if the specified child path represent a (direct/grand) child of the specified parent path.</summary>
+        public static bool IsChildPath(string parent, string child) => child.StartsWith(parent + ".");
 
         public static string GetParentPath(string child)
         {
@@ -599,8 +595,14 @@ namespace Hl7.Fhir.Specification.Navigation
             return !string.IsNullOrEmpty(baseElementPath)
                 && !string.IsNullOrEmpty(elementPath)
                 && dot1 == -1 && dot2 == -1;
-             // && !ModelInfo.IsCoreModelType(baseElementPath);
+            // && !ModelInfo.IsCoreModelType(baseElementPath);
         }
+
+        /// <summary>Determines if the specified element path represents a root element.</summary>
+        public static bool IsRootPath(string path) => !string.IsNullOrEmpty(path) && !path.Contains('.');
+
+        /// <summary>Determines if the specified element path represents a (modifier) extension element.</summary>
+        public static bool IsExtensionPath(string path) => !string.IsNullOrEmpty(path) && (path.EndsWith(".extension") || path.EndsWith(".modifierExtension"));
 
         /// <summary>Returns the root component of the specified element path.</summary>
         /// <param name="path">An element path.</param>
@@ -636,6 +638,31 @@ namespace Hl7.Fhir.Specification.Navigation
             if (string.IsNullOrEmpty(path)) return string.Empty;
             var pos = path.LastIndexOf(".");
             return pos > -1 ? path.Substring(pos + 1) : path;
+        }
+
+        // [WMR 20161013] New
+        private const string RESLICE_NAME_SEPARATOR = "/";
+
+        /// <summary>Determines if the specified element name represents a reslice: "slice/reslice".</summary>
+        public static bool IsResliceName(string sliceName) => sliceName != null && sliceName.Contains(RESLICE_NAME_SEPARATOR);
+
+        /// <summary>Extracts the name of the base slice from a reslicing constraint name.</summary>
+        /// <returns>The name of the base slice, or <c>null</c>.</returns>
+        /// <example>
+        /// <code>GetBaseSliceName("slice/reslice")</code>
+        /// Returns: "slice"
+        /// </example>
+        public static string GetBaseSliceName(string resliceName)
+        {
+            if (resliceName != null)
+            {
+                var pos = resliceName.LastIndexOf(RESLICE_NAME_SEPARATOR);
+                if (pos >= 0)
+                {
+                    return resliceName.Substring(0, pos);
+                }
+            }
+            return null;
         }
 
         public override string ToString()

@@ -732,8 +732,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             // Add new slice after the last existing slice in base profile
             var sliceName = diff.Current.Name;
-            int pos = sliceName != null ? sliceName.LastIndexOf("/") : -1;
-            var baseSliceName = pos > 0 ? sliceName.Substring(0, pos) : null;
+            var baseSliceName = ElementDefinitionNavigator.GetBaseSliceName(sliceName);
             snap.MoveToLastSlice(baseSliceName);
 
             var lastSlice = snap.Bookmark();

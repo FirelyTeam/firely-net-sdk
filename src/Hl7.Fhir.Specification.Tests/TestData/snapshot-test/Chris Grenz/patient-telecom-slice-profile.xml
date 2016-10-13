@@ -7063,12 +7063,12 @@
 			<fixedCode value="home" />
 		</element>
 
-    <!-- [WMR 20161010] Added required slicing entry -->
+    <!-- [WMR 20161010] Added required slicing entry
     <element>
       <path value="Patient.telecom" />
       <name value="workEmail" />
     </element>
-    
+    -->
 
     <element>
 			<path value="Patient.telecom.system" />
