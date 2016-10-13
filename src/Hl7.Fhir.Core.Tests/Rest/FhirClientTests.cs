@@ -231,19 +231,21 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void Search()
         {
-            FhirClient client = new FhirClient(testEndpoint);
+            FhirClient client = new FhirClient("http://sqlonfhir-dstu2.azurewebsites.net/fhir"); // testEndpoint);
             Bundle result;
 
 #if !PORTABLE45
             client.CompressRequestBody = true;
-            client.OnBeforeRequest += Compression_OnBeforeRequestZipOrDeflate;
+            client.OnBeforeRequest += Compression_OnBeforeRequestGZip;
+            client.OnAfterResponse += Client_OnAfterResponse;
 #endif
-            result = client.Search<DiagnosticReport>();
+        result = client.Search<DiagnosticReport>();
+            client.OnAfterResponse -= Client_OnAfterResponse;
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Entry.Count() > 10, "Test should use testdata with more than 10 reports");
             client.OnBeforeRequest -= Compression_OnBeforeRequestZipOrDeflate;
 
-            client.OnBeforeRequest += Compression_OnBeforeRequestGZip;
+            client.OnBeforeRequest += Compression_OnBeforeRequestZipOrDeflate;
             result = client.Search<DiagnosticReport>(pageSize: 10);
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Entry.Count <= 10);
@@ -273,6 +275,12 @@ namespace Hl7.Fhir.Tests.Rest
 
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Entry.Count > 0);
+        }
+
+        private void Client_OnAfterResponse(object sender, AfterResponseEventArgs e)
+        {
+            // Test that the response was compressed
+            Assert.AreEqual("gzip", e.RawResponse.Headers[HttpResponseHeader.ContentEncoding]);
         }
 
 #if PORTABLE45z

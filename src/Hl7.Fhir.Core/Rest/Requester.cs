@@ -144,17 +144,17 @@ namespace Hl7.Fhir.Rest
 #if !PORTABLE45
                 if (response.ContentEncoding == "gzip")
                 {
-                    var decompressed = new GZipStream(respStream, CompressionMode.Decompress, true);
-                    body = HttpUtil.ReadAllFromStream(decompressed);
-                    decompressed.Close();
-                    decompressed.Dispose();
+                    using (var decompressed = new GZipStream(respStream, CompressionMode.Decompress, true))
+                    {
+                        body = HttpUtil.ReadAllFromStream(decompressed);
+                    }
                 }
                 else if (response.ContentEncoding == "deflate")
                 {
-                    var decompressed = new DeflateStream(respStream, CompressionMode.Decompress, true);
-                    body = HttpUtil.ReadAllFromStream(decompressed);
-                    decompressed.Close();
-                    decompressed.Dispose();
+                    using (var decompressed = new DeflateStream(respStream, CompressionMode.Decompress, true))
+                    {
+                        body = HttpUtil.ReadAllFromStream(decompressed);
+                    }
                 }
                 else
 #endif
