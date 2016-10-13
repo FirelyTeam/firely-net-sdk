@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Validation
             if (tr.Code == FHIRDefinedType.Reference)
                 return () => validator.ValidateResourceReference(instance, tr);
             else
-                return () => validator.Validate(instance, tr.Profile);
+                return () => validator.Validate(instance,tr.GetDeclaredProfiles(), statedCanonicals: null, statedProfiles: null);
         }
 
         internal static OperationOutcome ValidateResourceReference(this Validator validator, IElementNavigator instance, ElementDefinition.TypeRefComponent typeRef)
@@ -140,12 +140,12 @@ namespace Hl7.Fhir.Validation
                 // In both cases, the outcome is included in the result.
                 if (encounteredKind != ElementDefinition.AggregationMode.Referenced)
                 {
-                    outcome.Include(validator.Validate(referencedResource, typeRef.Profile));
+                    outcome.Include(validator.Validate(referencedResource, typeRef.GetDeclaredProfiles(), statedProfiles: null, statedCanonicals: null));
                 }
                 else
                 {
                     var newValidator = new Validator(validator.Settings);
-                    outcome.Include(newValidator.Validate(referencedResource, typeRef.Profile));
+                    outcome.Include(newValidator.Validate(referencedResource, typeRef.GetDeclaredProfiles(), statedProfiles: null, statedCanonicals: null));
                 }
             }
 

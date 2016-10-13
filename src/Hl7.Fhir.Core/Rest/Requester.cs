@@ -10,6 +10,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using System;
+using System.IO.Compression;
 using System.Net;
 
 namespace Hl7.Fhir.Rest
@@ -20,8 +21,21 @@ namespace Hl7.Fhir.Rest
 
         public bool UseFormatParameter { get; set; }
         public ResourceFormat PreferredFormat { get; set; }
-        public int Timeout { get; set; }           // In miliseconds
+        public int Timeout { get; set; }           // In milliseconds
         public Prefer Prefer { get; set; }
+#if !PORTABLE45
+        /// <summary>
+        /// This will do 2 things:
+        /// 1. Add the header Accept-Encoding: gzip, deflate
+        /// 2. decompress any responses that have Content-Encoding: gzip (or deflate)
+        /// </summary>
+        public bool PreferCompressedResponses { get; set; }
+        /// <summary>
+        /// Compress any Request bodies 
+        /// (warning, if a server does not handle compressed requests you will get a 415 response)
+        /// </summary>
+        public bool CompressRequestBody { get; set; }
+#endif
 
         public ParserSettings ParserSettings { get; set; }
 
@@ -47,12 +61,20 @@ namespace Hl7.Fhir.Rest
         public Bundle.EntryComponent Execute(Bundle.EntryComponent interaction)
         {
             if (interaction == null) throw Error.ArgumentNull("interaction");
+            bool compressRequestBody = false;
+#if !PORTABLE45
+            compressRequestBody = CompressRequestBody; // PCL doesn't support compression at the moment
+#endif
 
             byte[] outBody;
-            var request = interaction.ToHttpRequest(Prefer, PreferredFormat, UseFormatParameter, out outBody);
+            var request = interaction.ToHttpRequest(Prefer, PreferredFormat, UseFormatParameter, compressRequestBody, out outBody);
 
 #if !PORTABLE45
             request.Timeout = Timeout;
+            if (PreferCompressedResponses)
+            {
+                request.Headers.Add("Accept-Encoding", "gzip, deflate");
+            }
 #endif
 
             LastRequest = request;
@@ -73,7 +95,7 @@ namespace Hl7.Fhir.Rest
                     // Do this call after AfterResponse, so AfterResponse will be called, even if exceptions are thrown by ToBundleEntry()
                     try
                     {
-                        Bundle.EntryComponent LastResult = null;
+                        LastResult = null;
 
                         if (webResponse.StatusCode.IsSuccessful())
                         {
@@ -113,12 +135,33 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-
         private static byte[] readBody(HttpWebResponse response)
         {
             if (response.ContentLength != 0)
             {
-                var body = HttpUtil.ReadAllFromStream(response.GetResponseStream());
+                byte[] body = null;
+                var respStream = response.GetResponseStream();
+#if !PORTABLE45
+                if (response.ContentEncoding == "gzip")
+                {
+                    using (var decompressed = new GZipStream(respStream, CompressionMode.Decompress, true))
+                    {
+                        body = HttpUtil.ReadAllFromStream(decompressed);
+                    }
+                }
+                else if (response.ContentEncoding == "deflate")
+                {
+                    using (var decompressed = new DeflateStream(respStream, CompressionMode.Decompress, true))
+                    {
+                        body = HttpUtil.ReadAllFromStream(decompressed);
+                    }
+                }
+                else
+#endif
+                {
+                    body = HttpUtil.ReadAllFromStream(respStream);
+                }
+                respStream.Dispose();
 
                 if (body.Length > 0)
                     return body;

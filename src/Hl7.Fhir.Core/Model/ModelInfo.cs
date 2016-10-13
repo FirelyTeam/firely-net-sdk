@@ -416,21 +416,21 @@ namespace Hl7.Fhir.Model
         }
 
 
-        public static bool IsInstanceTypeFor(FHIRDefinedType superclass, FHIRDefinedType subclass)
+        public static bool IsInstanceTypeFor(FHIRDefinedType superType, FHIRDefinedType instanceType)
         {
-            if (superclass == subclass) return true;
+            if (superType == instanceType) return true;
 
-            if (IsKnownResource(subclass))
+            if (IsKnownResource(instanceType))
             {
-                if (superclass == FHIRDefinedType.Resource)
+                if (superType == FHIRDefinedType.Resource)
                     return true;
-                else if (superclass == FHIRDefinedType.DomainResource)
-                    return subclass != FHIRDefinedType.Parameters && subclass != FHIRDefinedType.Bundle && subclass != FHIRDefinedType.Binary;
+                else if (superType == FHIRDefinedType.DomainResource)
+                    return instanceType != FHIRDefinedType.Parameters && instanceType != FHIRDefinedType.Bundle && instanceType != FHIRDefinedType.Binary;
                 else
                     return false;
             }
             else
-                return superclass == FHIRDefinedType.Element;
+                return superType == FHIRDefinedType.Element;
         }
 
         public static string CanonicalUriForFhirCoreType(string typename)
