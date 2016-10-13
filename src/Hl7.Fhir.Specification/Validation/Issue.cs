@@ -109,11 +109,10 @@ namespace Hl7.Fhir.Validation
         public static readonly Issue UNSUPPORTED_BINDING_NOT_SUPPORTED = Create(3005, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
 
         // Non-availability, incomplete data
-        public static readonly Issue UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE = Create(4000, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
-        //public static readonly Issue UNAVAILABLE_ELEMENTDEF_WITHOUT_STRUCTDEF = def(4001, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
-        public static readonly Issue UNAVAILABLE_NEED_SNAPSHOT = Create(4002, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
-        public static readonly Issue UNAVAILABLE_SNAPSHOT_GENERATION_FAILED = Create(4003, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
-        public static readonly Issue UNAVAILABLE_NEED_DIFFERENTIAL = Create(4004, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
+        public static readonly Issue UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE = Create(4000, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Incomplete);
+        public static readonly Issue UNAVAILABLE_NEED_SNAPSHOT = Create(4002, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Incomplete);
+        public static readonly Issue UNAVAILABLE_SNAPSHOT_GENERATION_FAILED = Create(4003, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Incomplete);
+        public static readonly Issue UNAVAILABLE_NEED_DIFFERENTIAL = Create(4004, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Incomplete);
         public static readonly Issue UNAVAILABLE_EXTERNAL_REFERENCE = Create(4005, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
 
         // Processing information

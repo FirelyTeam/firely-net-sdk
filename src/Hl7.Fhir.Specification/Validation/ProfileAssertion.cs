@@ -15,6 +15,8 @@ namespace Hl7.Fhir.Validation
     {
         private string _path;
 
+        private List<ProfileEntry> _allEntries = new List<ProfileEntry>();
+
         public ProfileAssertion(string instanceTypeProfile, string declaredTypeProfile, string path)
         {
             _path = path;
@@ -22,35 +24,6 @@ namespace Hl7.Fhir.Validation
             if(declaredTypeProfile != null) SetDeclaredType(declaredTypeProfile);
         }
 
-        private class ProfileEntry
-        {
-            public ProfileEntry(StructureDefinition def)
-            {
-                this.StructureDefinition = def;
-            }
-
-            public ProfileEntry(string url)
-            {
-                this.Reference = url;
-            }
-
-            public string Reference { get; private set; }
-
-            private StructureDefinition _structureDefinition;
-
-            public StructureDefinition StructureDefinition
-            {
-                get
-                {
-                    return _structureDefinition;
-                }
-                set
-                {
-                    _structureDefinition = value;
-                    Reference = value.Url;
-                }
-            }
-        }
 
         private ProfileEntry _instanceType;
         public StructureDefinition InstanceType
@@ -61,14 +34,49 @@ namespace Hl7.Fhir.Validation
             }
         }
 
+
+        private ProfileEntry addEntry(string canonical)
+        {
+            var entry = _allEntries.SingleOrDefault(e => e.Reference == canonical);
+
+            if (entry != null)
+                return entry;
+            else
+            {
+                var newEntry = new ProfileEntry(canonical);
+                _allEntries.Add(newEntry);
+                return newEntry;
+            }
+        }
+
+        private ProfileEntry addEntry(StructureDefinition definition)
+        {
+            var entry = _allEntries.SingleOrDefault(e => e.Reference == definition.Url);
+
+            if (entry != null)
+            {
+                if (entry.Unresolved)
+                    entry.StructureDefinition = definition;
+
+                return entry;
+            }
+            else
+            {
+                var newEntry = new ProfileEntry(definition);
+                _allEntries.Add(newEntry);
+                return newEntry;
+            }
+        }
+
+
         public void SetInstanceType(string canonical)
         {
-            _instanceType = new ProfileEntry(canonical);
+            _instanceType = addEntry(canonical);
         }
 
         public void SetInstanceType(StructureDefinition instanceType)
         {
-            _instanceType = new ProfileEntry(instanceType);
+            _instanceType = addEntry(instanceType);
         }
 
         public void SetInstanceType(FHIRDefinedType instanceType)
@@ -88,12 +96,12 @@ namespace Hl7.Fhir.Validation
 
         public void SetDeclaredType(string canonical)
         {
-            _declaredType = new ProfileEntry(canonical);
+            _declaredType = addEntry(canonical);
         }
 
         public void SetDeclaredType(StructureDefinition declaredType)
         {
-            _declaredType = new ProfileEntry(declaredType);
+            _declaredType = addEntry(declaredType);
         }
 
         public void SetDeclaredType(FHIRDefinedType declaredType)
@@ -115,14 +123,16 @@ namespace Hl7.Fhir.Validation
 
         public void AddStatedProfile(StructureDefinition structureDefinition)
         {
-            if (!_statedProfiles.Any(profile => profile.Reference == structureDefinition.Url))
-                _statedProfiles.Add(new ProfileEntry(structureDefinition));
+            var entry = addEntry(structureDefinition);
+
+            if (!_statedProfiles.Contains(entry)) _statedProfiles.Add(entry);
         }
 
         public void AddStatedProfile(string canonical)
         {
-            if (!_statedProfiles.Any(profile => profile.Reference == canonical))
-                _statedProfiles.Add(new ProfileEntry(canonical));
+            var entry = addEntry(canonical);
+
+            if (!_statedProfiles.Contains(entry)) _statedProfiles.Add(entry);
         }
 
         public void AddStatedProfile(IEnumerable<string> canonicals)
@@ -139,18 +149,11 @@ namespace Hl7.Fhir.Validation
         {
             get
             {
-                return (new[] { InstanceType }).Concat(new[] { DeclaredType }).Concat(StatedProfiles);
+                return _allEntries.Select(e => e.StructureDefinition);
             }
         }
 
-        private IEnumerable<ProfileEntry> allEntries
-        {
-            get
-            {
-                return (new[] { _instanceType }).Concat(new[] { _declaredType }).Concat(_statedProfiles);
-            }
-        }
-
+      
         /// <summary>
         /// Resolves the StructureDefinitions referred to by the given canonicals, and adds them
         /// to the list of StructureDefinitions available to the preprocessor
@@ -161,7 +164,7 @@ namespace Hl7.Fhir.Validation
             var outcome = new OperationOutcome();
 
             // Go through all entries to find those that don't yet have a StructureDefinition
-            foreach (var entry in allEntries.Where(e => e.StructureDefinition == null))
+            foreach (var entry in _allEntries.Where(e => e.Unresolved))
             {
                 StructureDefinition structureDefinition = null;
 
@@ -192,24 +195,33 @@ namespace Hl7.Fhir.Validation
         /// Validates the instance, declared and stated profiles for consistenty.
         /// </summary>
         /// <returns></returns>
-        public OperationOutcome Validate()
+        public OperationOutcome Validate(Func<string, StructureDefinition> resolver)
         {
             var outcome = new OperationOutcome();
 
+            if (_allEntries.Any(e=>e.Unresolved))
+            {
+                var resolutionOutcome = Resolve(resolver);
+                if (!resolutionOutcome.Success)
+                    return resolutionOutcome;
+                else
+                    outcome.Add(resolutionOutcome);
+            }
+            
             // If we have an instance type, it should be compatible with the declared type on the definition and the stated profiles
             if (InstanceType != null)
             {
                 if (DeclaredType != null)
                 {
                     if (!ModelInfo.IsInstanceTypeFor(DeclaredType.BaseType(), InstanceType.BaseType()))
-                        outcome.Info($"The defined type of the element '{DeclaredType.Url}' is incompatible with that of the instance ('{InstanceType.BaseType()}')", 
+                        outcome.Info($"The declared type of the element ({DeclaredType.ReadableName()}) is incompatible with that of the instance ('{InstanceType.ReadableName()}')", 
                             Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, _path);
                 }
 
                 foreach (var type in StatedProfiles)
                 {
                     if (!ModelInfo.IsInstanceTypeFor(type.BaseType(), InstanceType.BaseType()))
-                        outcome.Info($"Instance of type '{InstanceType.BaseType()}' is incompatible with the constrained type '{type.BaseType()}' of stated profile '{type.Url}'", 
+                        outcome.Info($"Instance of type '{InstanceType.ReadableName()}' is incompatible with the stated profile '{type.Url}' which is constraining constrained type '{type.ReadableName()}'", 
                             Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, _path);
                 }
             }
@@ -231,7 +243,7 @@ namespace Hl7.Fhir.Validation
                     if (DeclaredType != null)
                     {
                         if (!ModelInfo.IsInstanceTypeFor(DeclaredType.BaseType(), baseTypes.Single()))
-                            outcome.Info($"The stated profiles are all constraints on '{baseTypes.Single()}', which is incompatible with type '{DeclaredType.BaseType()}' of the element",
+                            outcome.Info($"The stated profiles are all constraints on '{baseTypes.Single()}', which is incompatible with the declared type '{DeclaredType.ReadableName()}' of the element",
                                 Issue.CONTENT_MISMATCHING_PROFILES, _path);
                     }
                 }
@@ -246,7 +258,18 @@ namespace Hl7.Fhir.Validation
             {
                 // Provided validation was done, IF there are stated profiles, they are correct constraints on the instance, and compatible with the declared type
                 // so we can just return that list (we might even remove the ones that are constraints on constraints)
-                if (StatedProfiles.Any()) return StatedProfiles;
+                if (StatedProfiles.Any())
+                {
+                    // Remove redundant bases, since the snapshots will contain their constraints anyway.
+                    // Note: we're not doing a full closure by resolving all bases for performance sake 
+                    var result = StatedProfiles.ToList();
+                    var bases = StatedProfiles.Where(sp => sp.Base != null).Select(sp => sp.Base).Distinct().ToList();
+                    bases.AddRange(StatedProfiles.Where(sp => sp.ConstrainedType != null)
+                        .Select(sp => ModelInfo.CanonicalUriForFhirCoreType(sp.ConstrainedType.Value)).Distinct());
+
+                    result.RemoveAll(r => bases.Contains(r.Url));
+                    return result;
+                }
 
                 // If there are no stated profiles, then:
                 //  * If the declared type is a profile, it is more specific than the instance
@@ -263,5 +286,47 @@ namespace Hl7.Fhir.Validation
                     return null;               
             }
         }
+
+        private class ProfileEntry
+        {
+            public ProfileEntry(StructureDefinition def)
+            {
+                this.StructureDefinition = def;
+            }
+
+            public ProfileEntry(string url)
+            {
+                this.Reference = url;
+            }
+
+            public string Reference { get; private set; }
+
+            private StructureDefinition _structureDefinition;
+
+            public StructureDefinition StructureDefinition
+            {
+                get
+                {
+                    if (_structureDefinition == null)
+                        return new StructureDefinition { Url = Reference };
+                    else
+                        return _structureDefinition;
+                }
+                set
+                {
+                    _structureDefinition = value;
+                    Reference = value.Url;
+                }
+            }
+
+            public bool Unresolved
+            {
+                get
+                {
+                    return _structureDefinition == null;
+                }
+            }
+        }
+
     }
 }

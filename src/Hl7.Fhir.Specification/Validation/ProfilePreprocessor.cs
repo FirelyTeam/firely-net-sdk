@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Validation
             if (resolveOutcome.Success)
             {
                 // Then, validate consistency of the profile assertions
-                var validationOutcome = _profiles.Validate();
+                var validationOutcome = _profiles.Validate(_profileResolver);
                 outcome.Add(validationOutcome);
 
                 if (validationOutcome.Success)

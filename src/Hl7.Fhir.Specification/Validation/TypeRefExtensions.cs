@@ -25,6 +25,9 @@ namespace Hl7.Fhir.Validation
 
             return result.Value;
         }
+
+        public static string ReadableName(this StructureDefinition sd) => sd.ConstrainedType != null ? sd.Url : sd.Id;
+
         public static string GetDeclaredProfiles(this ElementDefinition.TypeRefComponent typeRef)
         {
             if (typeRef.Profile.Any())

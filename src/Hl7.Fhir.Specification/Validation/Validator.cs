@@ -439,7 +439,7 @@ namespace Hl7.Fhir.Validation
         private StructureDefinition profileResolutionNeeded(string canonical)
         {
             if (Settings.ResourceResolver != null)
-                return Settings.ResourceResolver.ResolveByCanonicalUri(canonical) as StructureDefinition;
+                return Settings.ResourceResolver.FindStructureDefinition(canonical);
             else
                 return null;
         }

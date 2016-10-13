@@ -99,6 +99,7 @@
     <Compile Include="OutcomeReportingTest.cs" />
     <Compile Include="ProfileNavigationTest.cs" />
     <Compile Include="Validation\MinMaxValidationTests.cs" />
+    <Compile Include="Validation\ProfileAssertionTests.cs" />
     <Compile Include="Validation\ScopeTrackerTests.cs" />
     <Compile Include="Validation\SchemaCollectionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
