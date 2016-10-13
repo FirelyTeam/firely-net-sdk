@@ -9,6 +9,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
+using System;
+using Hl7.Fhir.Rest;
 
 namespace Hl7.Fhir.Validation
 {
@@ -20,10 +22,13 @@ namespace Hl7.Fhir.Validation
         {
             _source = new CachedResolver(
                 new MultiResolver(
+                    new BundleExampleResolver(@"TestData\validation"),
+                    new DirectorySource(@"TestData\validation"),
                     new TestProfileArtifactSource(),
                     new ZipSource("specification.zip")));
 
-            var ctx = new ValidationSettings() { ResourceResolver = _source, GenerateSnapshot = true, EnableXsdValidation = true, Trace = false };
+            var ctx = new ValidationSettings() { ResourceResolver = _source, GenerateSnapshot = true, EnableXsdValidation = true,
+                Trace = false, ResolveExteralReferences = true };
 
             _validator = new Validator(ctx);
         }
@@ -458,6 +463,48 @@ namespace Hl7.Fhir.Validation
             Assert.IsTrue(report.ToString().Contains(".NET Xsd validation"));
         }
 
+        [TestMethod]
+        public void ValidateBundleExample()
+        {
+            var bundle = _source.ResolveByUri("http://example.org/StructureDefinition/Bundle/MainBundle");
+            Assert.IsNotNull(bundle);
+
+            var report = _validator.Validate(bundle);
+
+            Assert.IsTrue(report.Success);
+            Assert.AreEqual(18, report.Warnings);
+        }
+
+
+        internal class BundleExampleResolver : IResourceResolver
+        {
+            private string _path;
+
+            public BundleExampleResolver(string path)
+            {
+                _path = path;
+            }
+            public Resource ResolveByCanonicalUri(string uri)
+            {
+                throw new NotImplementedException();
+            }
+
+            public Resource ResolveByUri(string uri)
+            {
+                ResourceIdentity reference = new ResourceIdentity(uri);
+                var filename = $"{reference.Id}.{reference.ResourceType}.xml";
+                var path = Path.Combine(_path, filename);
+
+                if (File.Exists(path))
+                {
+                    var xml = File.ReadAllText(path);
+                    return (new FhirXmlParser()).Parse<Resource>(xml);
+                }
+                else
+                    return null;
+        }
+
     }
+}
 }
 

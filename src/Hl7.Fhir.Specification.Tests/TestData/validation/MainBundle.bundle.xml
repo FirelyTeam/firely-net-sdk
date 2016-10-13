@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle xmlns="http://hl7.org/fhir">
+    <id value="MainBundle"/>
+    <meta>
+        <profile value="http://example.org/StructureDefinition/DocumentBundle"/>
+    </meta>
+    <type value="document"/>
+    <entry>
+        <fullUrl value="http://example.org/fhir/Composition/thecomp"/>
+        <resource>
+            <Composition>
+                <id value="MainComposition"/>
+                <meta>
+                    <profile value="http://example.org/StructureDefinition/DocumentComposition"/>
+                </meta>
+                <date value="2016-10-06"/>
+                <type>
+                    <coding>
+                        <system value="http://loinc.org"/>
+                        <code value="18842-5"/>
+                    </coding>
+                    <coding>
+                        <system value="http://loinc.org"/>
+                        <code value="8716-3"/>
+                    </coding>
+                </type>
+                <title value="A document with observations"/>
+                <status value="final"/>
+                <subject>
+                    <reference value="http://example.org/fhir/Patient/Levin"/>
+                </subject>
+                <author>
+                    <reference value="http://example.org/fhir/Practitioner/Hippocrates"/>
+                </author>
+                <section>
+                    <title value="List of observations"/>
+                    <entry>
+                        <reference value="http://example.org/fhir/Observation/Weight"/>
+                    </entry>
+                </section>
+            </Composition>
+        </resource>
+    </entry>
+    <entry>
+        <fullUrl value="http://example.org/fhir/Patient/Levin"/>
+        <resource>
+            <Patient xmlns="http://hl7.org/fhir">
+                <id value="Levin"/>
+                <meta>
+                    <lastUpdated value="2014-11-13T11:41:00+11:00"/>
+                </meta>
+                <text>
+                    <status value="generated"/>
+                    <div xmlns="http://www.w3.org/1999/xhtml">
+                        <p>Henry Levin the 7th</p>
+                        <p>MRN: 123456. Male, 24-Sept 1932</p>
+                    </div>
+                </text>
+                <extension url="http://example.org/StructureDefinition/trials">
+                    <valueCode value="renal"/>
+                </extension>
+                <identifier>
+                    <use value="usual"/>
+                    <type>
+                        <coding>
+                            <system value="http://hl7.org/fhir/v2/0203"/>
+                            <code value="MR"/>
+                        </coding>
+                    </type>
+                    <system value="http://www.goodhealth.org/identifiers/mrn"/>
+                    <value value="123456"/>
+                </identifier>
+                <active value="true"/>
+                <name>
+                    <family value="Levin"/>
+                    <given value="Henry"/>
+                    <suffix value="The 7th"/>
+                </name>
+                <gender value="male"/>
+                <birthDate value="1932-09-24"/>
+            </Patient>
+        </resource>
+    </entry>
+    <entry>
+        <fullUrl value="http://example.org/fhir/Practitioner/Hippocrates"/>
+        <resource>
+            <Practitioner>
+                <id value="Hippocrates"/>
+                <meta>
+                    <lastUpdated value="2012-05-29T23:45:32Z"/>
+                </meta>
+                <text>
+                    <status value="generated"/>
+                    <div xmlns="http://www.w3.org/1999/xhtml">Hippocrates, Harold. SSN:
+                        444444444</div>
+                </text>
+                <identifier>
+                    <type>
+                        <coding>
+                            <system value="http://hl7.org/fhir/v2/0203"/>
+                            <code value="SS"/>
+                        </coding>
+                    </type>
+                    <system value="http://hl7.org/fhir/sid/us-ssn"/>
+                    <value value="444444444"/>
+                </identifier>
+                <name>
+                    <use value="official"/>
+                    <family value="Hippocrates"/>
+                    <given value="Harold"/>
+                </name>
+                <telecom>
+                    <system value="phone"/>
+                    <value value="555-555-1003"/>
+                    <use value="work"/>
+                </telecom>
+                <address>
+                    <use value="home"/>
+                    <line value="1003 Healthcare Drive"/>
+                </address>
+                <gender value="male"/>
+                <!--                <practitionerRole>
+                    <managingOrganization>
+                        <reference value="Organization/hl7"/>
+                    </managingOrganization>
+                </practitionerRole> -->
+            </Practitioner>
+        </resource>
+    </entry>
+</Bundle>
