@@ -48,7 +48,7 @@
 
 -->
 <xs:schema xmlns="http://www.w3.org/1999/xhtml" elementFormDefault="qualified" targetNamespace="http://www.w3.org/1999/xhtml" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-	<xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+	<xs:import namespace="http://www.w3.org/XML/1998/namespace"/>
 	<xs:annotation>
 		<xs:documentation>Generated from "XHTML Refactored (no xsd:groups)" under "XHTML"</xs:documentation>
 		<xs:documentation>
