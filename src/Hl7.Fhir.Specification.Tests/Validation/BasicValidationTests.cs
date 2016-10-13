@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Validation
             var report = _validator.Validate(questionnaire);
             Assert.IsFalse(report.Success);
             Assert.AreEqual(19, report.Errors);
-            Assert.AreEqual(26, report.Warnings);           // StructureDefinition/xhtml not found, 3x narrative constraint with no fluentpath + 22 bindings
+            Assert.AreEqual(3, report.Warnings);           // 3x narrative constraint with no fluentpath
         }
 
 
@@ -306,31 +306,34 @@ namespace Hl7.Fhir.Validation
             var obs = new Observation();
             obs.Status = Observation.ObservationStatus.Final;
             obs.Code = new CodeableConcept("http://somesystem.org/codes", "AABB");
+            obs.Meta = new Meta { Profile = new[] { "http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation" } };
+
+            _validator.Settings.Trace = true;
 
             obs.Value = new FhirString("I should be ok");
-            var report = _validator.Validate(obs, "http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation");
+            var report = _validator.Validate(obs);
             Assert.IsTrue(report.Success);
-            Assert.AreEqual(1, report.Warnings);    // missing qty-3 fp invariant
+            Assert.AreEqual(0, report.Warnings);  
 
             obs.Value = FhirDateTime.Now();
-            report = _validator.Validate(obs, "http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation");
+            report = _validator.Validate(obs);
             Assert.IsFalse(report.Success);
-            Assert.AreEqual(1, report.Warnings);   // missing qty-3 fp invariant
+            Assert.AreEqual(0, report.Warnings);
 
             obs.Value = new Quantity(78m, "kg");
-            report = _validator.Validate(obs, "http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation");
+            report = _validator.Validate(obs);
             Assert.IsTrue(report.Success);
-            Assert.AreEqual(1, report.Warnings);   // 2x missing qty-3 fp invariant
+            Assert.AreEqual(0, report.Warnings);  
 
             obs.Value = new Quantity(183m, "cm");
-            report = _validator.Validate(obs, "http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation");
+            report = _validator.Validate(obs);
             Assert.IsTrue(report.Success);
-            Assert.AreEqual(1, report.Warnings); // 2x missing qty-3 fp invariant
+            Assert.AreEqual(0, report.Warnings);
 
             obs.Value = new Quantity(300m, "in");
-            report = _validator.Validate(obs, "http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation");
+            report = _validator.Validate(obs);
             Assert.IsFalse(report.Success);
-            Assert.AreEqual(1, report.Warnings); // 3x missing qty-3 fp invariant
+            Assert.AreEqual(0, report.Warnings); 
         }
 
 
@@ -345,7 +348,7 @@ namespace Hl7.Fhir.Validation
 
             var report = _validator.Validate(careplan, careplanSd);
             Assert.IsTrue(report.Success);
-            Assert.AreEqual(46, report.Warnings);            // 4x missing xhtml + 42 missing bindings
+            Assert.AreEqual(3, report.Warnings);            // 3x invariant
         }
 
 
@@ -413,27 +416,27 @@ namespace Hl7.Fhir.Validation
 
             var report = _validator.Validate(bundle);
             Assert.IsTrue(report.Success);
-            Assert.AreEqual(2, report.Warnings);            // 1 unresolvable reference + 1 binding
+            Assert.AreEqual(1, report.Warnings);            // 1 unresolvable reference
             Assert.IsTrue(hitResolution);
 
             report = _validator.Validate(bundle, "http://validationtest.org/fhir/StructureDefinition/BundleWithContainedEntries");
             Assert.IsFalse(report.Success);
-            Assert.AreEqual(2, report.Warnings);            // 1 unresolvable reference + 1 binding
+            Assert.AreEqual(1, report.Warnings);            // 1 unresolvable reference
             Assert.AreEqual(4, report.Errors);            // 4 non-contained references
 
             report = _validator.Validate(bundle, "http://validationtest.org/fhir/StructureDefinition/BundleWithContainedBundledEntries");
             Assert.IsFalse(report.Success);
-            Assert.AreEqual(2, report.Warnings);            // 1 unresolvable reference + 1 binding
+            Assert.AreEqual(1, report.Warnings);            // 1 unresolvable reference
             Assert.AreEqual(1, report.Errors);            // 1 external reference
 
             report = _validator.Validate(bundle, "http://validationtest.org/fhir/StructureDefinition/BundleWithBundledEntries");
             Assert.IsFalse(report.Success);
-            Assert.AreEqual(2, report.Warnings);            // 1 unresolvable reference + 1 binding
+            Assert.AreEqual(1, report.Warnings);            // 1 unresolvable reference
             Assert.AreEqual(2, report.Errors);            // 1 external reference, 1 contained reference
 
             report = _validator.Validate(bundle, "http://validationtest.org/fhir/StructureDefinition/BundleWithReferencedEntries");
             Assert.IsFalse(report.Success);
-            Assert.AreEqual(2, report.Warnings);            // 1 unresolvable reference + 1 binding
+            Assert.AreEqual(1, report.Warnings);            // 1 unresolvable reference
             Assert.AreEqual(4, report.Errors);            // 3 bundled reference, 1 contained reference
         }
 
@@ -445,7 +448,7 @@ namespace Hl7.Fhir.Validation
 
             var report = _validator.Validate(cpDoc.CreateReader());
             Assert.IsTrue(report.Success);
-            Assert.AreEqual(46, report.Warnings);            // 4x missing xhtml + many "binding not supported"
+            Assert.AreEqual(3, report.Warnings);            // 3x missing invariant
 
             // Damage the document by removing the mandated 'status' element
             cpDoc.Element(XName.Get("CarePlan", "http://hl7.org/fhir")).Elements(XName.Get("status", "http://hl7.org/fhir")).Remove();

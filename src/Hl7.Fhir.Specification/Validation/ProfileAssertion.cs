@@ -14,16 +14,15 @@ namespace Hl7.Fhir.Validation
     internal class ProfileAssertion
     {
         private string _path;
+        private Func<string, StructureDefinition> _resolver;
 
         private List<ProfileEntry> _allEntries = new List<ProfileEntry>();
 
-        public ProfileAssertion(string instanceTypeProfile, string declaredTypeProfile, string path)
+        public ProfileAssertion(string path, Func<string, StructureDefinition> resolver)
         {
             _path = path;
-            if(instanceTypeProfile != null) SetInstanceType(instanceTypeProfile);
-            if(declaredTypeProfile != null) SetDeclaredType(declaredTypeProfile);
+            _resolver = resolver;
         }
-
 
         private ProfileEntry _instanceType;
         public StructureDefinition InstanceType
@@ -71,11 +70,13 @@ namespace Hl7.Fhir.Validation
 
         public void SetInstanceType(string canonical)
         {
+            inputsChanged();
             _instanceType = addEntry(canonical);
         }
 
         public void SetInstanceType(StructureDefinition instanceType)
         {
+            inputsChanged();
             _instanceType = addEntry(instanceType);
         }
 
@@ -96,11 +97,13 @@ namespace Hl7.Fhir.Validation
 
         public void SetDeclaredType(string canonical)
         {
+            inputsChanged();
             _declaredType = addEntry(canonical);
         }
 
         public void SetDeclaredType(StructureDefinition declaredType)
         {
+            inputsChanged();
             _declaredType = addEntry(declaredType);
         }
 
@@ -125,14 +128,23 @@ namespace Hl7.Fhir.Validation
         {
             var entry = addEntry(structureDefinition);
 
-            if (!_statedProfiles.Contains(entry)) _statedProfiles.Add(entry);
+            if (!_statedProfiles.Contains(entry))
+            {
+                inputsChanged();
+                _statedProfiles.Add(entry);
+            }
         }
 
         public void AddStatedProfile(string canonical)
         {
+            inputsChanged();
             var entry = addEntry(canonical);
 
-            if (!_statedProfiles.Contains(entry)) _statedProfiles.Add(entry);
+            if (!_statedProfiles.Contains(entry))
+            {
+                inputsChanged();
+                _statedProfiles.Add(entry);
+            }
         }
 
         public void AddStatedProfile(IEnumerable<string> canonicals)
@@ -153,14 +165,27 @@ namespace Hl7.Fhir.Validation
             }
         }
 
-      
+
+        OperationOutcome _lastResolutionOutcome = null;
+        OperationOutcome _lastValidationOutcome = null;
+        IEnumerable<StructureDefinition> _lastMinimalSet = null;
+
+        private void inputsChanged()
+        {
+            _lastResolutionOutcome = null;
+            _lastValidationOutcome = null;
+            _lastMinimalSet = null;
+        }
+
         /// <summary>
         /// Resolves the StructureDefinitions referred to by the given canonicals, and adds them
         /// to the list of StructureDefinitions available to the preprocessor
         /// </summary>
         /// <returns></returns>
-        public OperationOutcome Resolve(Func<string, StructureDefinition> resolver)
+        public OperationOutcome Resolve()
         {
+            if (_lastResolutionOutcome != null) return _lastResolutionOutcome;
+
             var outcome = new OperationOutcome();
 
             // Go through all entries to find those that don't yet have a StructureDefinition
@@ -172,7 +197,7 @@ namespace Hl7.Fhir.Validation
                 {
                     // Once FindStructureDefinition() gets an overload to resolve multiple at the same time,
                     // use that one
-                    structureDefinition = resolver(entry.Reference);
+                    structureDefinition = _resolver(entry.Reference);
 
                     if (structureDefinition == null)
                         outcome.Info($"Unable to resolve reference to profile '{entry.Reference}'", Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, _path);
@@ -188,6 +213,7 @@ namespace Hl7.Fhir.Validation
                 }
             }
 
+            _lastResolutionOutcome = outcome;
             return outcome;
         }
 
@@ -195,18 +221,18 @@ namespace Hl7.Fhir.Validation
         /// Validates the instance, declared and stated profiles for consistenty.
         /// </summary>
         /// <returns></returns>
-        public OperationOutcome Validate(Func<string, StructureDefinition> resolver)
+        public OperationOutcome Validate()
         {
+            if (_lastValidationOutcome != null) return _lastValidationOutcome;
+
             var outcome = new OperationOutcome();
 
-            if (_allEntries.Any(e=>e.Unresolved))
-            {
-                var resolutionOutcome = Resolve(resolver);
-                if (!resolutionOutcome.Success)
-                    return resolutionOutcome;
-                else
-                    outcome.Add(resolutionOutcome);
-            }
+            // Resolve input profiles first (note: this is cached)
+            var resolutionOutcome = Resolve();
+            if (!resolutionOutcome.Success)
+                return resolutionOutcome;
+            else
+                outcome.Add(resolutionOutcome);
             
             // If we have an instance type, it should be compatible with the declared type on the definition and the stated profiles
             if (InstanceType != null)
@@ -249,6 +275,7 @@ namespace Hl7.Fhir.Validation
                 }
             }
 
+            _lastValidationOutcome = outcome;
             return outcome;
         }
 
@@ -256,6 +283,9 @@ namespace Hl7.Fhir.Validation
         {
             get
             {
+                if (_lastMinimalSet != null)
+                    return _lastMinimalSet;
+                        
                 // Provided validation was done, IF there are stated profiles, they are correct constraints on the instance, and compatible with the declared type
                 // so we can just return that list (we might even remove the ones that are constraints on constraints)
                 if (StatedProfiles.Any())
@@ -268,23 +298,26 @@ namespace Hl7.Fhir.Validation
                         .Select(sp => ModelInfo.CanonicalUriForFhirCoreType(sp.ConstrainedType.Value)).Distinct());
 
                     result.RemoveAll(r => bases.Contains(r.Url));
-                    return result;
+                    _lastMinimalSet = result;
                 }
 
                 // If there are no stated profiles, then:
                 //  * If the declared type is a profile, it is more specific than the instance
                 //  * If the declared type is a concrete core type, it is as specific as the instance
                 // In both cases return the declared type.
-                if (DeclaredType.ConstrainedType != null || !ModelInfo.IsCoreSuperType(DeclaredType.BaseType()))
-                    return new[] { DeclaredType };
+                else if (DeclaredType != null && (DeclaredType.ConstrainedType != null || !ModelInfo.IsCoreSuperType(DeclaredType.BaseType())))
+                    _lastMinimalSet = new[] { DeclaredType };
 
                 // Else, all we have left is the instance type
                 // If there is no known instance type, we have no profile to validate against
-                if (InstanceType != null)
-                    return new[] { InstanceType };
+                else if (InstanceType != null)
+                    _lastMinimalSet = new[] { InstanceType };
                 else
-                    return null;               
+                    _lastMinimalSet = Enumerable.Empty<StructureDefinition>();
+
+                return _lastMinimalSet;
             }
+
         }
 
         private class ProfileEntry

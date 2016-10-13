@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Validation
             for (var index = 0; index < results.Count; index++)
             {
                 var result = results[index];
-                combinedResult.Info($"Report {index}: {(result.Success ? "SUCCESS" : "FAILURE")}", Issue.PROCESSING_PROGRESS, instance);
+                validator.Trace(combinedResult, $"Report {index}: {(result.Success ? "SUCCESS" : "FAILURE")}", Issue.PROCESSING_PROGRESS, instance);
 
                 if (success)
                 {

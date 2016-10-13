@@ -17,24 +17,24 @@ namespace Hl7.Fhir.Validation
         private string _path;
         private ProfileAssertion _profiles;
 
-        public ProfilePreprocessor(Func<string,StructureDefinition> profileResolver, Action<StructureDefinition> snapshotGenerator, IElementNavigator instance, string declaredTypeProfile, 
+        public ProfilePreprocessor(Func<string,StructureDefinition> profileResolver, Action<StructureDefinition> snapshotGenerator, 
+                IElementNavigator instance, string declaredTypeProfile, 
                 IEnumerable<StructureDefinition> additionalProfiles, IEnumerable<string> additionalCanonicals)
         {
             _profileResolver = profileResolver;
             _snapshotGenerator = snapshotGenerator;
-
             _path = instance.Path;
 
+            _profiles = new ProfileAssertion(_path, _profileResolver);
+
+            if (instance.TypeName != null) _profiles.SetInstanceType(ModelInfo.CanonicalUriForFhirCoreType(instance.TypeName));
+            if (declaredTypeProfile != null) _profiles.SetDeclaredType(declaredTypeProfile);
+
             // This is only for resources, but I don't bother checking, since this will return empty anyway
-            var statedProfiles = instance.GetChildrenByName("meta").ChildrenValues("profile").Cast<string>().ToList();
-
-            var instanceTypeProfile = instance.TypeName != null ? ModelInfo.CanonicalUriForFhirCoreType(instance.TypeName) : null;
-
-            _profiles = new ProfileAssertion(instanceTypeProfile, declaredTypeProfile, _path);
-
+            _profiles.AddStatedProfile(instance.GetChildrenByName("meta").ChildrenValues("profile").Cast<string>());
+                     
             if(additionalProfiles != null) _profiles.AddStatedProfile(additionalProfiles);
             if(additionalCanonicals != null) _profiles.AddStatedProfile(additionalCanonicals);
-            if(statedProfiles != null) _profiles.AddStatedProfile(statedProfiles);
         }
 
         public IEnumerable<ElementDefinitionNavigator> Result { get; private set; }
@@ -45,26 +45,34 @@ namespace Hl7.Fhir.Validation
             var outcome = new OperationOutcome();
 
             // Start preprocessing by resolving the references to the profiles (if any)
-            var resolveOutcome = _profiles.Resolve(_profileResolver);
+            var resolveOutcome = _profiles.Resolve();
             outcome.Add(resolveOutcome);
 
             if (resolveOutcome.Success)
             {
                 // Then, validate consistency of the profile assertions
-                var validationOutcome = _profiles.Validate(_profileResolver);
+                var validationOutcome = _profiles.Validate();
                 outcome.Add(validationOutcome);
 
                 if (validationOutcome.Success)
                 {
-                    // Then, generate snapshots for all sds that we have found
-                    var genSnapshotOutcome = GenerateSnapshots(_profiles.MinimalProfiles, _snapshotGenerator, _path);
-                    outcome.Add(genSnapshotOutcome);
-
-                    if (genSnapshotOutcome.Success)
+                    if (_profiles.MinimalProfiles.Any())
                     {
-                        // Finally, return navigators to the definitions
-                        Result = CreateNavigators(_profiles.MinimalProfiles);
+
+                        // Then, generate snapshots for all sds that we have found
+                        var genSnapshotOutcome = GenerateSnapshots(_profiles.MinimalProfiles, _snapshotGenerator, _path);
+                        outcome.Add(genSnapshotOutcome);
+
+                        if (genSnapshotOutcome.Success)
+                        {
+                            // Finally, return navigators to the definitions
+                            Result = CreateNavigators(_profiles.MinimalProfiles);
+                        }
                     }
+                    else
+                        outcome.Info("There are no profile and type assertions at this point in the instance, so validation cannot succeed",
+                                Issue.PROFILE_NO_PROFILE_TO_VALIDATE_AGAINST, _path);
+
                 }
             }
 

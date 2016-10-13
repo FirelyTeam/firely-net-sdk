@@ -38,7 +38,6 @@ namespace Hl7.Fhir.Validation
 
         public Validator() : this(ValidationSettings.Default)
         {
-
         }
 
         public OperationOutcome Validate(IElementNavigator instance)
@@ -66,6 +65,8 @@ namespace Hl7.Fhir.Validation
             return Validate(instance, declaredTypeProfile: null, statedCanonicals: null, statedProfiles: structureDefinitions);
         }
 
+
+        // This is the one and only main entry point for all external validation calls (i.e. invoked by the user of the API)
         internal OperationOutcome Validate(IElementNavigator instance, string declaredTypeProfile, IEnumerable<string> statedCanonicals, IEnumerable<StructureDefinition> statedProfiles)
         {
             var processor = new ProfilePreprocessor(profileResolutionNeeded, snapshotGenerationNeeded, instance, declaredTypeProfile, statedProfiles, statedCanonicals);
