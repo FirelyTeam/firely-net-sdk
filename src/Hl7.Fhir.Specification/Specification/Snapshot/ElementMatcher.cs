@@ -231,6 +231,23 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         }
 
+        // [WMR 20160902] Represents a new element definition with no matching base element (for core resource & datatype definitions)
+        static MatchInfo constructNew(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
+        {
+            // Called by Match when the current diffNav does not match any following sibling of snapNav (base)
+            // This happens when merging a core definition (e.g. Patient) with a base type (e.g. Resource)
+            // Return reference to *parent* element as BaseBookmark!
+            // Exception: when snapNav = {} | {Resource} e.g. Resource & Element
+            var bm = snapNav.Bookmark();
+            if (!string.IsNullOrEmpty(snapNav.ParentPath))
+            {
+                snapNav.MoveToParent();
+            }
+            var match = new MatchInfo() { BaseBookmark = snapNav.Bookmark(), DiffBookmark = diffNav.Bookmark(), Action = MatchAction.New };
+            snapNav.ReturnToBookmark(bm);
+            return match;
+        }
+
         static List<MatchInfo> constructSliceMatch(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
         {
             var result = new List<MatchInfo>();
@@ -408,23 +425,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             return result;
         }
 
-        // [WMR 20160902] Represents a new element definition with no matching base element (for core resource & datatype definitions)
-        static MatchInfo constructNew(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
-        {
-            // Called by Match when the current diffNav does not match any following sibling of snapNav (base)
-            // This happens when merging a core definition (e.g. Patient) with a base type (e.g. Resource)
-            // Return reference to *parent* element as BaseBookmark!
-            // Exception: when snapNav = {} | {Resource} e.g. Resource & Element
-            var bm = snapNav.Bookmark();
-            if (!string.IsNullOrEmpty(snapNav.ParentPath))
-            {
-                snapNav.MoveToParent();
-            }
-            var match = new MatchInfo() { BaseBookmark = snapNav.Bookmark(), DiffBookmark = diffNav.Bookmark(), Action = MatchAction.New };
-            snapNav.ReturnToBookmark(bm);
-            return match;
-        }
-
         static bool isProfileDiscriminator(string discriminator) => discriminator == "@profile";
         static bool isTypeDiscriminator(string discriminator) => discriminator == "@type";
         static bool isTypeAndProfileDiscriminator(string discriminator) => discriminator == "type@profile";
@@ -455,7 +455,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Difference with regular slices:
         // - Don't need to handle extensions
         // - Match renamed elements, i.e. value[x] => valueBoolean
-        private static List<MatchInfo> constructTypeSliceMatch(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
+        static List<MatchInfo> constructTypeSliceMatch(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
         {
             var result = new List<MatchInfo>();
 
@@ -478,6 +478,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 if (!diffNav.MoveToNext())
                 {
+                    // [WMR 20161013] Do we need to throw? Snapshot generator could simply accept this, return empty list
                     throw Error.InvalidOperation($"Differential has a slicing entry {diffNav.Path}, but no first actual slice");
                 }
             }
@@ -497,12 +498,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             return result;
         }
 
-        /// <summary>
-        /// List all names of nodes in the current navigator that are choice ('[x]') elements
-        /// </summary>
-        /// <param name="snapNav"></param>
-        /// <returns></returns>
-        private static List<string> listChoiceElements(ElementDefinitionNavigator snapNav)
+        /// <summary>List all names of nodes in the current navigator that are choice ('[x]') elements.</summary>
+        static List<string> listChoiceElements(ElementDefinitionNavigator snapNav)
         {
             var bm = snapNav.Bookmark();
             var result = new List<string>();
@@ -520,7 +517,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             return result;
         }
 
-        private static string nextChildName(ElementDefinitionNavigator nav)
+        static string nextChildName(ElementDefinitionNavigator nav)
         {
             string result = null;
 
