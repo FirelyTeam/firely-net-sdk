@@ -194,13 +194,16 @@ namespace Hl7.Fhir.Specification.Tests
             // - total number of known (concrete) resources
             // - 1 for abstract type Resource
             // - 1 for abstract type DomainResource
+            // + 1 xhtml (not present as FhirCsType)
             // =======================================
             //   total number of known FHIR (complex & primitive) datatypes
             var coreDataTypes = ModelInfo.FhirCsTypeToString.Where(kvp => !ModelInfo.IsKnownResource(kvp.Key)
                                                                             && kvp.Value != "Resource"
-                                                                            && kvp.Value != "DomainResource")
-                                                            .Select(kvp => kvp.Value);
+                                                                            && kvp.Value != "DomainResource"
+                                                                            )
+                                                            .Select(kvp => kvp.Value).Concat(new[] { "xhtml" });
             var numCoreDataTypes = coreDataTypes.Count();
+
             Assert.AreEqual(resourceIds.Length, numCoreDataTypes);
 
             // Assert.IsTrue(resourceIds.All(url => ModelInfo.CanonicalUriForFhirCoreType));

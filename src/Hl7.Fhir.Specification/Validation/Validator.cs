@@ -38,7 +38,11 @@ namespace Hl7.Fhir.Validation
 
         public Validator() : this(ValidationSettings.Default)
         {
+        }
 
+        public OperationOutcome Validate(IElementNavigator instance)
+        {
+            return Validate(instance, declaredTypeProfile: null, statedCanonicals: null, statedProfiles: null);
         }
 
         public OperationOutcome Validate(IElementNavigator instance, params string[] definitionUris)
@@ -48,91 +52,33 @@ namespace Hl7.Fhir.Validation
 
         public OperationOutcome Validate(IElementNavigator instance, IEnumerable<string> definitionUris)
         {
-            var outcome = new OperationOutcome();
-
-            var allDefinitions = collectApplicableProfiles(outcome, instance, references: definitionUris);
-            var definitionNavs = allDefinitions.Select(sd => navigatorFromStructureDefinition(sd, outcome, instance)).Where(nav => nav != null);
-
-            outcome.Add(Validate(instance, definitionNavs));
-
-            return outcome;
+            return Validate(instance, declaredTypeProfile: null, statedCanonicals: definitionUris, statedProfiles: null);
         }
 
-        public OperationOutcome Validate(IElementNavigator instance, StructureDefinition structureDefinition)
+        public OperationOutcome Validate(IElementNavigator instance, params StructureDefinition[] structureDefinitions)
         {
-            return Validate(instance, new[] { structureDefinition });
+            return Validate(instance, (IEnumerable<StructureDefinition>) structureDefinitions );
         }
 
         public OperationOutcome Validate(IElementNavigator instance, IEnumerable<StructureDefinition> structureDefinitions)
         {
-            var outcome = new OperationOutcome();
+            return Validate(instance, declaredTypeProfile: null, statedCanonicals: null, statedProfiles: structureDefinitions);
+        }
 
-            var allDefinitions = collectApplicableProfiles(outcome, instance, sds: structureDefinitions);
-            var definitionNavs = allDefinitions.Select(sd => navigatorFromStructureDefinition(sd, outcome, instance)).Where(nav => nav != null);
 
-            outcome.Add(Validate(instance, definitionNavs));
+        // This is the one and only main entry point for all external validation calls (i.e. invoked by the user of the API)
+        internal OperationOutcome Validate(IElementNavigator instance, string declaredTypeProfile, IEnumerable<string> statedCanonicals, IEnumerable<StructureDefinition> statedProfiles)
+        {
+            var processor = new ProfilePreprocessor(profileResolutionNeeded, snapshotGenerationNeeded, instance, declaredTypeProfile, statedProfiles, statedCanonicals);
+            var outcome = processor.Process();
+
+            // Note: only start validating if the profiles are complete and consistent
+            if(outcome.Success)
+                outcome.Add(Validate(instance, processor.Result));
 
             return outcome;
         }
 
-
-        private List<StructureDefinition> collectApplicableProfiles(OperationOutcome outcome, IElementNavigator instance, 
-                    IEnumerable<StructureDefinition> sds=null, IEnumerable<string> references=null)
-        {
-            if (sds == null) sds = Enumerable.Empty<StructureDefinition>();
-            if (references == null) references = Enumerable.Empty<string>();
-
-            var metaUris = extractMetaUris(instance);
-            var sdUris = sds.Select(sd => sd.Url).ToList();
-            var allUris = metaUris
-                            .Concat(sdUris)
-                            .Concat(references)
-                            .Concat(instance.TypeName != null ? new[] { ModelInfo.CanonicalUriForFhirCoreType(instance.TypeName) }  : Enumerable.Empty<string>())
-                            .Distinct();
-
-            // Avoid fetching sds that we have already been passed (though they may have been cached anyway, it's good behaviour)
-            var urisToFetch = allUris.Where(uri => !sdUris.Contains(uri));
-            var fetchedSds = ProfileResolutionNeeded(urisToFetch, outcome, instance);
-
-            // Create the full list of unique SDs that might be applicable. We will purge this list later and return it,
-            // so create a new list, don't alter any of the stuff we have been passed.
-            var applicableSds = sds.Concat(fetchedSds).ToList();
-
-            // TODO: Now, do consistency checks
-            // * The profiles may not be inconsistent (for different resources/datatype/not abstract base for....)
-            // * Purge duplicates (base for derived)
-
-            // If done correctly, the previous will make sure this code is not needed anymore
-            // First, a basic check: is the instance type equal to the defined type
-            // Only do this when the underlying navigator has supplied a type (from the serialization)
-            //if (instance.TypeName != null && elementConstraints.IsRootElement() && definition.StructureDefinition != null && definition.StructureDefinition.Id != null)
-            //{
-            //    var expected = definition.StructureDefinition.Id;
-
-            //    if (!ModelInfo.IsCoreModelType(expected) || ModelInfo.IsProfiledQuantity(expected))
-            //        expected = definition.StructureDefinition.ConstrainedType?.ToString();
-
-            //    if (expected != null)
-            //    {
-            //        if (!outcome.Verify(() => instance.TypeName == expected, $"Type mismatch: instance value is of type '{instance.TypeName}', " +
-            //                $"expected type '{expected}'", Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, instance))
-            //            return outcome;     // Type mismatch, no use continuing validation
-            //    }
-            //}
-
-            // For now, a quick algorithm
-            applicableSds.RemoveAll(sd => sd.Abstract == true);
-            if (applicableSds.Count > 1)
-                applicableSds.RemoveAll(sd => ModelInfo.IsCoreModelType(sd.Id));
-
-            if (!applicableSds.Any())
-            {
-               outcome.Info("There is no definition to validate against - nothing to validate", Issue.PROFILE_NO_PROFILE_TO_VALIDATE_AGAINST, instance);
-                return applicableSds;
-            }
-
-            return applicableSds;
-        }
 
         internal OperationOutcome Validate(IElementNavigator instance, ElementDefinitionNavigator definition)
         {
@@ -165,11 +111,6 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-        private List<string> extractMetaUris(IElementNavigator instance)
-        {
-            // This is only for resources, but I don't bother checking, since this will return empty anyway
-            return instance.GetChildrenByName("meta").ChildrenValues("profile").Cast<string>().ToList();
-        }
 
         private Func<OperationOutcome> createValidator(ElementDefinitionNavigator nav, IElementNavigator instance)
         {
@@ -187,9 +128,19 @@ namespace Hl7.Fhir.Validation
 
                 ScopeTracker.Enter(instance);
 
-                // Any node must either have a value, or children, or both (e.g. extensions on primitives)
-                if (!outcome.Verify(() => instance.Value != null || instance.HasChildren(), "Element must not be empty", Issue.CONTENT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN, instance))
+                // If navigator cannot be moved to content, there's really nothing to validate against.
+                if (definition.AtRoot && !definition.MoveToFirstChild())
+                {
+                    outcome.Info($"Snapshot component of Profile '{definition.StructureDefinition?.Url}' has no content.", Issue.PROFILE_ELEMENTDEF_IS_EMPTY, instance);
                     return outcome;
+                }
+
+                // Any node must either have a value, or children, or both (e.g. extensions on primitives)
+                if (instance.Value == null && !instance.HasChildren())
+                {
+                    outcome.Info("Element must not be empty", Issue.CONTENT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN, instance);
+                    return outcome;
+                }
 
                 var elementConstraints = definition.Current;
 
@@ -210,12 +161,14 @@ namespace Hl7.Fhir.Validation
                 else
                 {
                     // No inline-children, so validation depends on the presence of a <type> or <nameReference>
-                    if (outcome.Verify(() => elementConstraints.Type != null || elementConstraints.NameReference != null,
-                            "ElementDefinition has no child, nor does it specify a type or nameReference to validate the instance data against", Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE_OR_NAMEREF, instance))
+                    if (elementConstraints.Type != null || elementConstraints.NameReference != null)
+
                     {
                         outcome.Add(this.ValidateType(elementConstraints, instance));
                         outcome.Add(ValidateNameReference(elementConstraints, definition, instance));
                     }
+                    else
+                        Trace(outcome, "ElementDefinition has no child, nor does it specify a type or nameReference to validate the instance data against", Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE_OR_NAMEREF, instance);
                 }
 
                 outcome.Add(ValidateSlices(definition, instance));
@@ -243,6 +196,8 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
+            if (Settings.SkipConstraintValidation) return outcome;
+
             var context = ScopeTracker.ResourceContext(instance);
 
             // <constraint>
@@ -259,34 +214,32 @@ namespace Hl7.Fhir.Validation
             foreach (var constraintElement in definition.Constraint)
             {
                 var fpExpression = constraintElement.GetFluentPathConstraint();
-                if (outcome.Verify(() => fpExpression != null, "Encountered an invariant ({0}) that has no FluentPath expression, skipping validation of this constraint"
-                            .FormatWith(constraintElement.Key), Issue.UNSUPPORTED_CONSTRAINT_WITHOUT_FLUENTPATH, instance))
+
+                if (fpExpression != null)
                 {
-                    if (Settings.SkipConstraintValidation)
-                        outcome.Verify(() => true, "Instance was not validated against invariant {0}, because constraint validation is disabled", Issue.PROCESSING_CONSTRAINT_VALIDATION_INACTIVE, instance);
-                    else
+                    try
                     {
+                        bool success = instance.Predicate(fpExpression, context);
 
-                        bool success = false;
-                        try
+                        if (!success)
                         {
-                            success = instance.Predicate(fpExpression, context);
-
                             var text = "Instance failed constraint " + constraintElement.ConstraintDescription();
+                            var issue = constraintElement.Severity == ElementDefinition.ConstraintSeverity.Error ?
+                                Issue.CONTENT_ELEMENT_FAILS_ERROR_CONSTRAINT : Issue.CONTENT_ELEMENT_FAILS_WARNING_CONSTRAINT;
 
-                            if (constraintElement.Severity == ElementDefinition.ConstraintSeverity.Error)
-                                outcome.Verify(() => success, text, Issue.CONTENT_ELEMENT_FAILS_ERROR_CONSTRAINT, instance);
-                            else
-                                outcome.Verify(() => success, text, Issue.CONTENT_ELEMENT_FAILS_WARNING_CONSTRAINT, instance);
+                            Trace(outcome, text, issue, instance);
+                        }
 
-                        }
-                        catch (Exception e)
-                        {
-                            outcome.Verify(() => true, "Evaluation of FluentPath for constraint '{0}' failed: {1}"
-                                            .FormatWith(constraintElement.Key, e.Message), Issue.PROFILE_ELEMENTDEF_INVALID_FLUENTPATH_EXPRESSION, instance);
-                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Trace(outcome, $"Evaluation of FluentPath for constraint '{constraintElement.Key}' failed: {e.Message}",
+                                        Issue.PROFILE_ELEMENTDEF_INVALID_FLUENTPATH_EXPRESSION, instance);
                     }
                 }
+                else
+                    Trace(outcome, $"Encountered an invariant ({constraintElement.Key}) that has no FluentPath expression, skipping validation of this constraint",
+                                Issue.UNSUPPORTED_CONSTRAINT_WITHOUT_FLUENTPATH, instance);
             }
 
             return outcome;
@@ -304,7 +257,8 @@ namespace Hl7.Fhir.Validation
                 // content, otherwise the slicing is ambiguous. If there's no match
                 // we fail validation as well. 
                 // For now, we do not handle slices
-                outcome.Verify(() => definition.Current.Slicing == null, "ElementDefinition uses slicing, which is not yet supported. Instance has not been validated against " +
+                if(definition.Current.Slicing != null)
+                    Trace(outcome, "ElementDefinition uses slicing, which is not yet supported. Instance has not been validated against " +
                             "any of the slices", Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, instance);
             }
 
@@ -322,7 +276,7 @@ namespace Hl7.Fhir.Validation
                 var shouldCheck = binding.Strength == BindingStrength.Required || binding.Strength == BindingStrength.Preferred;
 
                 if(shouldCheck)
-                    outcome.Info("ElementDefinition has a binding, which is not yet supported. Instance has not been validated against this binding",
+                    Trace(outcome, "ElementDefinition has a binding, which is not yet supported. Instance has not been validated against this binding",
                         Issue.UNSUPPORTED_BINDING_NOT_SUPPORTED, instance);
             }
 
@@ -339,12 +293,11 @@ namespace Hl7.Fhir.Validation
 
                 var referencedPositionNav = allDefinitions.ShallowCopy();
 
-                if (outcome.Verify(() => referencedPositionNav.JumpToNameReference(definition.NameReference),
-                        "ElementDefinition uses a non-existing nameReference '{0}'".FormatWith(definition.NameReference),
-                        Issue.PROFILE_ELEMENTDEF_INVALID_NAMEREFERENCE, instance))
-                {
+                if (referencedPositionNav.JumpToNameReference(definition.NameReference))
                     outcome.Include(Validate(instance, referencedPositionNav));
-                }
+                else
+                    Trace(outcome, $"ElementDefinition uses a non-existing nameReference '{definition.NameReference}'", Issue.PROFILE_ELEMENTDEF_INVALID_NAMEREFERENCE, instance);
+
             }
 
             return outcome;
@@ -380,7 +333,9 @@ namespace Hl7.Fhir.Validation
                 var primitiveRegEx = definition.Type.First().GetPrimitiveValueRegEx();
                 var value = toStringRepresentation(instance);
                 var success = Regex.Match(value, "^" + primitiveRegEx + "$").Success;
-                outcome.Verify(() => success, "Primitive value '{0}' does not match regex '{1}'".FormatWith(value, primitiveRegEx), Issue.CONTENT_ELEMENT_INVALID_PRIMITIVE_VALUE, instance);
+
+                if (!success)
+                    Trace(outcome, $"Primitive value '{value}' does not match regex '{primitiveRegEx}'", Issue.CONTENT_ELEMENT_INVALID_PRIMITIVE_VALUE, instance);
             }
 
             return outcome;
@@ -395,18 +350,20 @@ namespace Hl7.Fhir.Validation
             {
                 var maxLength = definition.MaxLength.Value;
 
-                if (outcome.Verify(() => maxLength > 0, "MaxLength was given in ElementDefinition, but it has a negative value ({0})".FormatWith(maxLength),
-                                Issue.PROFILE_ELEMENTDEF_MAXLENGTH_NEGATIVE, instance))
+                if (maxLength > 0)
                 {
                     if (instance.Value != null)
                     {
                         //TODO: Is ToString() really the right way to turn (Fhir?) Primitives back into their original representation?
                         //If the source is POCO, hopefully FHIR types have all overloaded ToString() 
                         var serializedValue = instance.Value.ToString();
-                        outcome.Verify(() => serializedValue.Length <= maxLength, "Value '{0}' is too long (maximum length is {1})".FormatWith(serializedValue, maxLength),
-                            Issue.CONTENT_ELEMENT_VALUE_TOO_LONG, instance);
+
+                        if (serializedValue.Length > maxLength)
+                            Trace(outcome, $"Value '{serializedValue}' is too long (maximum length is {maxLength})", Issue.CONTENT_ELEMENT_VALUE_TOO_LONG, instance);
                     }
                 }
+                else
+                    Trace(outcome, $"MaxLength was given in ElementDefinition, but it has a negative value ({maxLength})", Issue.PROFILE_ELEMENTDEF_MAXLENGTH_NEGATIVE, instance);
             }
 
             return outcome;
@@ -457,7 +414,7 @@ namespace Hl7.Fhir.Validation
             }
             catch(Exception e)
             {
-                outcome.Info("External resolution of '{reference}' caused an error: " + e.Message, Issue.UNAVAILABLE_EXTERNAL_REFERENCE, instance);
+                Trace(outcome, "External resolution of '{reference}' caused an error: " + e.Message, Issue.UNAVAILABLE_EXTERNAL_REFERENCE, instance);
             }
 
             // Else, try to resolve using the given ResourceResolver 
@@ -472,96 +429,43 @@ namespace Hl7.Fhir.Validation
                 }
                 catch(Exception e)
                 {
-                    outcome.Info($"Resolution of reference '{reference}' using the Resolver API failed: " + e.Message, Issue.UNAVAILABLE_EXTERNAL_REFERENCE, instance);
+                    Trace(outcome, $"Resolution of reference '{reference}' using the Resolver API failed: " + e.Message, Issue.UNAVAILABLE_EXTERNAL_REFERENCE, instance);
                 }
             }
 
             return null;        // Sorry, nothing worked
         }
 
-        internal List<StructureDefinition> ProfileResolutionNeeded(IEnumerable<string> canonicals, OperationOutcome outcome, IElementNavigator instance)
+
+        private StructureDefinition profileResolutionNeeded(string canonical)
         {
-            var result = new List<StructureDefinition>();
-
-            foreach (var uri in canonicals)
-            {
-                StructureDefinition structureDefinition = null;
-
-                try
-                {
-                    // Once FindStructureDefinition() gets an overload to resolve multiple at the same time,
-                    // use that one
-                    structureDefinition = Settings.ResourceResolver.FindStructureDefinition(uri);
-
-                    if (outcome.Verify(() => structureDefinition != null, $"Unable to resolve reference to profile '{uri}'", Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, instance))
-                    {
-                        result.Add(structureDefinition);
-                    }
-
-                }
-                catch (Exception e)
-                {
-                    outcome.Info($"Resolution of profile at '{uri}' failed: {e.Message}", Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, instance);
-                    continue;
-                }
-            }
-
-            return result;
+            if (Settings.ResourceResolver != null)
+                return Settings.ResourceResolver.FindStructureDefinition(canonical);
+            else
+                return null;
         }
 
-        private ElementDefinitionNavigator navigatorFromStructureDefinition(StructureDefinition definition, OperationOutcome outcome, IElementNavigator instance)
-        {
-            if (!definition.HasSnapshot)
-                SnapshotGenerationNeeded(definition, outcome, instance);
-
-            if (outcome.Verify(() => definition.HasSnapshot,
-                "Profile '{0}' does not include a snapshot. Instance data has not been validated.".FormatWith(definition.Url), Issue.UNAVAILABLE_NEED_SNAPSHOT, instance))
-            {
-                var nav = new ElementDefinitionNavigator(definition);
-
-                // If the definition has no data, there's nothing to validate against, so we'll consider it "valid"
-                if (outcome.Verify(() => !nav.AtRoot || nav.MoveToFirstChild(), "Profile '{0}' has no content in snapshot"
-                        .FormatWith(definition.Url), Issue.PROFILE_ELEMENTDEF_IS_EMPTY, instance))
-                {
-                    return nav;
-                }
-            }
-
-            return null;
-        }
 
         // Note: this modifies an SD that is passed to us and will alter a possibly cached
         // object shared amongst other threads. This is generally useful and saves considerable
         // time when the same snapshot is needed again, but may result in side-effects
-        internal void SnapshotGenerationNeeded(StructureDefinition definition, OperationOutcome outcome, IElementNavigator instance)
+        private void snapshotGenerationNeeded(StructureDefinition definition)
         {
             if (!Settings.GenerateSnapshot) return;
 
-            try
+            // Default implementation: call event
+            if (OnSnapshotNeeded != null)
             {
-                // Default implementation: call event
-                if (OnSnapshotNeeded != null)
-                {
-                    OnSnapshotNeeded(this, new OnSnapshotNeededEventArgs(definition, Settings.ResourceResolver));
-                    return;
-                }
-
-                // Else, expand, depending on our configuration
-                if (Settings.ResourceResolver != null)
-                {
-                    SnapshotGeneratorSettings settings = Settings.GenerateSnapshotSettings;
-
-                    if (settings == null)
-                        settings = SnapshotGeneratorSettings.Default;
-
-                    var gen = new SnapshotGenerator(Settings.ResourceResolver, settings);
-                    gen.Update(definition);
-                }
+                OnSnapshotNeeded(this, new OnSnapshotNeededEventArgs(definition, Settings.ResourceResolver));
+                return;
             }
-            catch (Exception e)
+
+            // Else, expand, depending on our configuration
+            if (Settings.ResourceResolver != null)
             {
-                Trace(outcome, $"Snapshot generation failed for '{definition.Url}'. Message: {e.Message}",
-                       Issue.UNAVAILABLE_SNAPSHOT_GENERATION_FAILED, instance);
+                SnapshotGeneratorSettings settings = Settings.GenerateSnapshotSettings ?? SnapshotGeneratorSettings.Default;
+
+                (new SnapshotGenerator(Settings.ResourceResolver, settings)).Update(definition);
             }
         }
     }

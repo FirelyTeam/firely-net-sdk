@@ -81,6 +81,7 @@ namespace Hl7.Fhir.Validation
         public static readonly Issue CONTENT_ELEMENT_PRIMITIVE_VALUE_TOO_SMALL = Create(1019, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_PRIMITIVE_VALUE_TOO_LARGE = Create(1020, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_PRIMITIVE_VALUE_NOT_COMPARABLE = Create(1021, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Invalid);
+        public static readonly Issue CONTENT_MISMATCHING_PROFILES = Create(1022, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
 
         public static readonly Issue XSD_VALIDATION_ERROR = Create(1100, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue XSD_VALIDATION_WARNING = Create(1101, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Invalid);
@@ -97,7 +98,7 @@ namespace Hl7.Fhir.Validation
         public static readonly Issue PROFILE_ELEMENTDEF_CARDINALITY_MISSING = Create(2007, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
         public static readonly Issue PROFILE_ELEMENTDEF_IS_EMPTY = Create(2008, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
         public static readonly Issue PROFILE_ELEMENTDEF_INVALID_FLUENTPATH_EXPRESSION = Create(2009, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
-        public static readonly Issue PROFILE_NO_PROFILE_TO_VALIDATE_AGAINST = Create(2010, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
+        public static readonly Issue PROFILE_NO_PROFILE_TO_VALIDATE_AGAINST = Create(2010, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Incomplete);
 
         // Unsupported 
         public static readonly Issue UNSUPPORTED_SLICING_NOT_SUPPORTED = Create(3000, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
@@ -108,11 +109,10 @@ namespace Hl7.Fhir.Validation
         public static readonly Issue UNSUPPORTED_BINDING_NOT_SUPPORTED = Create(3005, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
 
         // Non-availability, incomplete data
-        public static readonly Issue UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE = Create(4000, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
-        //public static readonly Issue UNAVAILABLE_ELEMENTDEF_WITHOUT_STRUCTDEF = def(4001, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
-        public static readonly Issue UNAVAILABLE_NEED_SNAPSHOT = Create(4002, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
-        public static readonly Issue UNAVAILABLE_SNAPSHOT_GENERATION_FAILED = Create(4003, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
-        public static readonly Issue UNAVAILABLE_NEED_DIFFERENTIAL = Create(4004, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
+        public static readonly Issue UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE = Create(4000, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Incomplete);
+        public static readonly Issue UNAVAILABLE_NEED_SNAPSHOT = Create(4002, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Incomplete);
+        public static readonly Issue UNAVAILABLE_SNAPSHOT_GENERATION_FAILED = Create(4003, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Incomplete);
+        public static readonly Issue UNAVAILABLE_NEED_DIFFERENTIAL = Create(4004, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Incomplete);
         public static readonly Issue UNAVAILABLE_EXTERNAL_REFERENCE = Create(4005, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
 
         // Processing information

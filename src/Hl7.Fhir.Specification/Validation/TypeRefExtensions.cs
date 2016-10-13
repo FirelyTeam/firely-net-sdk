@@ -10,11 +10,37 @@ using System.Linq;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Validation
 {
     internal static class TypeRefExtensions
     {
+        public static FHIRDefinedType BaseType(this StructureDefinition sd)
+        {
+            var result = sd.ConstrainedType ?? EnumUtility.ParseLiteral<FHIRDefinedType>(sd.Id);
+
+            if (result == null)
+                throw Error.NotSupported($"Encountered profile '{sd.Url}', for which the declaring core type cannot be determined");
+
+            return result.Value;
+        }
+
+        public static string ReadableName(this StructureDefinition sd) => sd.ConstrainedType != null ? sd.Url : sd.Id;
+
+        public static string GetDeclaredProfiles(this ElementDefinition.TypeRefComponent typeRef)
+        {
+            if (typeRef.Profile.Any())
+            {
+                return typeRef.Profile.First();     // Take the first, this will disappear in STU3 anyway
+            }
+            else if (typeRef.Code.HasValue)
+                return ModelInfo.CanonicalUriForFhirCoreType(typeRef.Code.Value);
+            else
+                return null;
+        }
+
+
         public static string GetPrimitiveValueRegEx(this ElementDefinition.TypeRefComponent typeRef)
         {
             var regex = typeRef.GetStringExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-regex");

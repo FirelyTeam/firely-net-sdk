@@ -128,6 +128,8 @@
     <Compile Include="Validation\MinMaxValidationExtensions.cs" />
     <Compile Include="Validation\OperationOutcomeExtensions.cs" />
     <Compile Include="Validation\PocoValidationExtensions.cs" />
+    <Compile Include="Validation\ProfileAssertion.cs" />
+    <Compile Include="Validation\ProfilePreprocessor.cs" />
     <Compile Include="Validation\ScopeTracker.cs" />
     <Compile Include="Validation\TypeRefExtensions.cs" />
     <Compile Include="Validation\TypeRefValidationExtensions.cs" />
