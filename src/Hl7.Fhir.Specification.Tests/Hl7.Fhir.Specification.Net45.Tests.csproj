@@ -98,6 +98,7 @@
     <Compile Include="Source\ArtifactSourceTests.cs" />
     <Compile Include="OutcomeReportingTest.cs" />
     <Compile Include="ProfileNavigationTest.cs" />
+    <Compile Include="Source\VSExpansionTests.cs" />
     <Compile Include="Validation\MinMaxValidationTests.cs" />
     <Compile Include="Validation\ProfileAssertionTests.cs" />
     <Compile Include="Validation\ScopeTrackerTests.cs" />

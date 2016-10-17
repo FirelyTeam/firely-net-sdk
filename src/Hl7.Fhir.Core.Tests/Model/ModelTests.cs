@@ -295,6 +295,38 @@ namespace Hl7.Fhir.Tests.Model
 
 
         [TestMethod]
+        public void TestExpansionCheckForCode()
+        {
+            var vs = new ValueSet();
+            var sys1 = "http://example.org/system/system1";
+            var sys2 = "http://example.org/system/system2";
+
+            vs.Expansion = new ValueSet.ExpansionComponent();
+
+            vs.Expansion.Contains.Add(new ValueSet.ContainsComponent { System = sys1, Code = "code1" });
+            var sys1code2 = new ValueSet.ContainsComponent { System = sys1, Code = "code2" };
+            vs.Expansion.Contains.Add(sys1code2);
+            vs.Expansion.Contains.Add(new ValueSet.ContainsComponent { System = sys2, Code = "code1" });
+
+            sys1code2.Contains.Add(new ValueSet.ContainsComponent { System = sys1, Code = "code1.1" });
+            sys1code2.Contains.Add(new ValueSet.ContainsComponent { System = sys1, Code = "code1.2" });
+
+            Assert.IsTrue(vs.CodeInExpansion("code1", sys1));
+            Assert.IsTrue(vs.CodeInExpansion("code1", sys2));
+            Assert.IsTrue(vs.CodeInExpansion("code1"));
+
+            Assert.IsFalse(vs.CodeInExpansion("code2", sys2));
+            Assert.IsTrue(vs.CodeInExpansion("code2"));
+
+            Assert.IsTrue(vs.CodeInExpansion("code1.2"));
+            Assert.IsTrue(vs.CodeInExpansion("code1.2", sys1));
+            Assert.IsFalse(vs.CodeInExpansion("code1.2", sys2));
+
+            Assert.AreEqual(5, vs.CountCodes());
+        }
+
+
+        [TestMethod]
         public void TestSubclassInfo()
         {
             Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Resource, FHIRDefinedType.Patient));

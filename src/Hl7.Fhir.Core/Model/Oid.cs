@@ -44,5 +44,10 @@ namespace Hl7.Fhir.Model
         {
             return Regex.IsMatch(value, "^" + Oid.PATTERN + "$", RegexOptions.Singleline);
         }
+
+        public FhirUri AsUri()
+        {
+            return new Model.FhirUri(Value);
+        }
     }
 }

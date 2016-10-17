@@ -89,6 +89,7 @@
     <Compile Include="Specification\Snapshot\SnapshotBaseComponentGenerator.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorExtensions.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorOutcome.cs" />
+    <Compile Include="Specification\ValueSet\ValueSetExpander.cs" />
     <Compile Include="Validation\BatchValidationExtensions.cs" />
     <Compile Include="Validation\Cardinality.cs" />
     <Compile Include="Validation\ChildConstraintValidationExtensions.cs" />
