@@ -31,7 +31,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Introspection;
 using System.Diagnostics;
@@ -374,12 +373,19 @@ namespace Hl7.Fhir.Model
             FHIRDefinedType.TestScript
         };
 
-        /// <summary>
-        /// Is the given type a core Resource, Datatype or primitive
-        /// </summary>
-        public static bool IsCoreModelType(string name)
+        /// <summary>Determines if the specified value represents the name of a core Resource, Datatype or primitive.</summary>
+        public static bool IsCoreModelType(string name) => FhirTypeToCsType.ContainsKey(name);
+            // => IsKnownResource(name) || IsDataType(name) || IsPrimitive(name);
+
+        
+        static readonly Uri FhirCoreProfileBaseUri = new Uri(@"http://hl7.org/fhir/StructureDefinition/");
+
+        /// <summary>Determines if the specified value represents the canonical uri of a core Resource, Datatype or primitive.</summary>
+        public static bool IsCoreModelTypeUri(Uri uri)
         {
-            return IsKnownResource(name) || IsDataType(name) || IsPrimitive(name);
+            return uri != null
+                && FhirCoreProfileBaseUri.IsBaseOf(uri)
+                && IsCoreModelType(FhirCoreProfileBaseUri.MakeRelativeUri(uri).ToString());
         }
 
         /// <summary>
