@@ -190,7 +190,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 throw Error.Argument(nameof(structure), "Invalid input for snapshot generator. The specified StructureDefinition represents a constraint on a FHIR core type or resource, but it does not specify a base profile url.");
             }
 
-            StructureDefinition.SnapshotComponent snapshot = null;
+            ElementDefinitionNavigator nav;
+            // StructureDefinition.SnapshotComponent snapshot = null;
             if (structure.Base != null)
             {
                 var baseStructure = _resolver.FindStructureDefinition(structure.Base);
@@ -203,7 +204,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // [WMR 20160817] Notify client about the resolved, expanded base profile
                 OnPrepareBaseProfile(structure, baseStructure);
 
-                snapshot = (StructureDefinition.SnapshotComponent)baseStructure.Snapshot.DeepCopy();
+                var snapshot = (StructureDefinition.SnapshotComponent)baseStructure.Snapshot.DeepCopy();
 
                 // [WMR 20160915] Derived profiles should never inherit the ChangedByDiff extension from the base structure
                 snapshot.Element.RemoveAllChangedByDiff();
@@ -229,26 +230,29 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     OnPrepareElement(snapshot.Element[i], baseStructure, baseStructure.Snapshot.Element[i]);
                 }
+
+                nav = new ElementDefinitionNavigator(snapshot.Element, structure);
             }
             else
             {
                 // No base; input is a core resource or datatype definition
-                snapshot = new StructureDefinition.SnapshotComponent();
+                var snapshot = new StructureDefinition.SnapshotComponent();
+                nav = new ElementDefinitionNavigator(snapshot.Element, structure);
             }
 
-            var snap = new ElementDefinitionNavigator(snapshot.Element);
+            // var nav = new ElementDefinitionNavigator(snapshot.Element);
 
 #if CACHE_ROOT_ELEMDEF
-            _stack.RegisterSnapshotNavigator(structure.Url, snap);
+            _stack.RegisterSnapshotNavigator(structure.Url, nav);
 #endif
 
             // Fill out the gaps (mostly missing parents) in the differential representation
-            var fullDifferential = new DifferentialTreeConstructor(differential.Element).MakeTree();
+            var fullDifferential = DifferentialTreeConstructor.MakeTree(differential.Element);
             var diff = new ElementDefinitionNavigator(fullDifferential);
 
-            merge(snap, diff);
+            merge(nav, diff);
 
-            result = snap.ToListOfElements();
+            result = nav.ToListOfElements();
 
             // [WMR 20160917] NEW: Re-generate all ElementId values
             generateElementsId(result, true);
@@ -619,6 +623,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var rebasedTypeSnapshot = (StructureDefinition.SnapshotComponent)typeStructure.Snapshot.DeepCopy();
                 rebasedTypeSnapshot.Rebase(rebasePath);
 
+                // [WMR 20161011] Also rebase slice names?
+
                 var typeNav = new ElementDefinitionNavigator(rebasedTypeSnapshot.Element);
 
                 if (!profileRef.IsComplex)
@@ -725,7 +731,10 @@ namespace Hl7.Fhir.Specification.Snapshot
         void addSlice(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff, Bookmark baseBookmark)
         {
             // Add new slice after the last existing slice in base profile
-            snap.MoveToLastSlice();
+            var sliceName = diff.Current.Name;
+            var baseSliceName = ElementDefinitionNavigator.GetBaseSliceName(sliceName);
+            snap.MoveToLastSlice(baseSliceName);
+
             var lastSlice = snap.Bookmark();
 
             // Initialize slice by duplicating base slice entry

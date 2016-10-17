@@ -107,6 +107,24 @@ namespace Hl7.Fhir.Specification.Tests
         // [WMR 20160718] Generate snapshot for extension definition fails with exception:
         // System.ArgumentException: structure is not a constraint or extension
 
+#if false
+        [TestMethod]
+        public void FindDerivedExtensions()
+        {
+            var sdUris = _source.ListResourceUris(ResourceType.StructureDefinition);
+            foreach (var uri in sdUris)
+            {
+                var sd = _source.FindStructureDefinition(uri);
+                if (sd.ConstrainedType == FHIRDefinedType.Extension && sd.Base != "http://hl7.org/fhir/StructureDefinition/Extension")
+                {
+                    var origin = sd.Annotation<OriginInformation>();
+                    Debug.Print($"Derived extension: uri = '{uri}' origin = '{origin?.Origin}'");
+                }
+            }
+
+            // var sdInfo = testSD.Annotation<OriginInformation>();
+        }
+#endif
 
         [TestMethod]
         public void GenerateExtensionSnapshot()
@@ -370,49 +388,341 @@ namespace Hl7.Fhir.Specification.Tests
             dumpBasePaths(expanded);
         }
 
+        void assertContainsElement(StructureDefinition sd, string path, string name = null, string elementId = null)
+        {
+            Assert.IsNotNull(sd);
+
+            Assert.IsNotNull(sd.Differential);
+            Assert.IsNotNull(sd.Differential.Element);
+            Assert.IsTrue(sd.Differential.Element.Count > 0);
+
+            // Verify that the differential component contains a matching element
+            assertContainsElement(sd.Differential, path, name);
+            assertContainsElement(sd.Snapshot, path, name, elementId);
+        }
+
+        void assertContainsElement(IElementList elements, string path, string name = null, string elementId = null)
+        {
+            var label = elements is StructureDefinition.DifferentialComponent ? "differential" : "snapshot";
+            Assert.IsNotNull(elements);
+            var matches = elements.Element.Where(e => e.Path == path && e.Name == name).ToArray();
+            var cnt = matches.Length;
+            Assert.IsTrue(cnt > 0, $"Expected element is missing from {label} component. Path = '{path}', name = '{name}'.");
+            Assert.IsTrue(cnt == 1, $"Found multiple matching elements in {label} component for Path = '{path}', name = '{name}'.");
+            var elem = matches[0];
+            if (elementId != null)
+            {
+                Assert.AreEqual(elementId, elem.ElementId, $"Invalid elementId in {label} component. Expected = '{elementId}', actual = '{elem.ElementId}'.");
+            }
+        }
+
+        // Helper class to verify results
+        class ElementVerifier
+        {
+            IList<ElementDefinition> _elements;
+            ElementDefinition _current;
+            int _pos;
+
+            public ElementVerifier(StructureDefinition sd)
+            {
+                Assert.IsNotNull(sd);
+                Assert.IsTrue(sd.HasSnapshot);
+                _elements = sd.Snapshot.Element;
+                _pos = 0;
+                var ann = sd.Annotation<OriginInformation>();
+                Debug.Print($"Assert structure: url = '{sd.Url}' - origin = '{ann.Origin}'");
+            }
+
+            public ElementVerifier(IList<ElementDefinition> elements)
+            {
+                _elements = elements;
+                _pos = 0;
+            }
+
+            // Find first element with matching path
+            // Continue at the final element position from the last call to this method (or 0)
+            // Search matching element in forward direction
+            // Optionally verify specified name / id / fixed value
+            public void VerifyElement(string path, string name = null, string elementId = null, Element fixedValue = null)
+            {
+                var elements = _elements;
+                while (_pos < _elements.Count)
+                {
+                    var element = _current = elements[_pos++];
+                    if (element.Path == path)
+                    {
+                        if (name != null)
+                        {
+                            Assert.AreEqual(name, element.Name, $"Invalid element name. Expected = '{name}', actual = '{element.Name}'.");
+                        }
+                        if (elementId != null)
+                        {
+                            Assert.AreEqual(elementId, element.ElementId, $"Invalid elementId. Expected = '{elementId}', actual = '{element.ElementId}'.");
+                        }
+                        if (fixedValue != null)
+                        {
+                            Assert.IsTrue(element.Fixed != null && fixedValue.IsExactly(element.Fixed), $"Invalid fixed value. Expected = '{fixedValue}', actual = '{element.Fixed}'.");
+                        }
+                        return;
+                    }
+                }
+                Assert.Fail($"No matching element found for path '{path}'");
+            }
+
+            public void AssertSlicing(IEnumerable<string> discriminator, ElementDefinition.SlicingRules? rules, bool? ordered)
+            {
+                var slicing = Current.Slicing;
+                Assert.IsNotNull(slicing);
+                Assert.IsTrue(discriminator.SequenceEqual(slicing.Discriminator), $"Invalid discriminator for element with path '{Current.Path}' - Expected: '{string.Join(",", discriminator)}' Actual: '{string.Join(",", slicing.Discriminator)}' ");
+                Assert.AreEqual(slicing.Rules, rules);
+                Assert.AreEqual(slicing.Ordered, ordered);
+            }
+
+            public ElementDefinition Current => _current;
+        }
+
+        StructureDefinition generateSnapshot(string url, Action<StructureDefinition> preprocessor = null)
+        {
+            StructureDefinition expanded = null;
+            var structure = _testResolver.FindStructureDefinition(url);
+            Assert.IsNotNull(structure);
+            Assert.IsTrue(structure.HasSnapshot);
+            preprocessor?.Invoke(structure);
+            generateSnapshotAndCompare(structure, out expanded);
+            dumpOutcome(_generator.Outcome);
+            return expanded;
+        }
+
+        static void ensure(StructureDefinition structure, ElementDefinition insertBefore, params ElementDefinition[] inserts)
+            => ensure(structure.Differential.Element, insertBefore, inserts);
+
+        static void ensure(List<ElementDefinition> elements, ElementDefinition insertBefore, params ElementDefinition[] inserts)
+        {
+            var idx = elements.FindIndex(e => e.Path == insertBefore.Path && e.Name == insertBefore.Name);
+            Assert.AreNotEqual(-1, idx, $"Warning! insertBefore element is missing. Path = '{insertBefore.Path}', Name = '{insertBefore.Name}'.");
+            foreach (var insert in inserts)
+            {
+                var idx2 = elements.FindIndex(e => e.Path == insert.Path && e.Name == insert.Name);
+                Assert.AreEqual(-1, idx2, $"Warning! insert element is already present. Path = '{insert.Path}', Name = '{insert.Name}'.");
+            }
+            elements.InsertRange(idx, inserts);
+        }
 
         [TestMethod]
-        [Ignore] // TODO
+        // [Ignore]
         public void GeneratePatientWithExtensionsSnapshot()
         {
             // [WMR 20161005] Very complex set of examples by Chris Grenz
             // https://github.com/chrisgrenz/FHIR-Primer/blob/master/profiles/patient-extensions-profile.xml
             // Manually downgraded from FHIR v1.4.0 to v1.0.2
-            
-            // TODO: Support reslicing
 
-            // Note: each profile is derived from the previous profile
+            StructureDefinition sd;
+            ElementVerifier verifier;
 
-            // var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/SD/patient-with-extensions");
-            // OK; note that we don't expand extensions unless the diff contains constraints on child elements (which this one doesn't)
+            // http://example.com/fhir/StructureDefinition/patient-legal-case
+            // http://example.com/fhir/StructureDefinition/patient-legal-case-lead-counsel
 
-            // var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/SD/patient-name-slice");
-            // var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/SD/patient-telecom-slice");
-            // var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/SD/patient-deceasedDatetime-slice");
-            // var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/SD/patient-careprovider-type-slice");
-            // var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/SD/patient-careprovider-type-reslice");
-            // var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/SD/patient-slice-by-profile");
-            // var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/SD/patient-identifier-subslice");
-            // var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/SD/patient-research-auth-reslice");
+            // Verify complex extension used by patient-with-extensions profile
+            // patient-research-authorization-profile.xml
+            sd = generateSnapshot(@"http://example.com/fhir/StructureDefinition/patient-research-authorization");
+            verifier = new ElementVerifier(sd);
+            verifier.VerifyElement("Extension.extension", null, "Extension.extension");
+            verifier.VerifyElement("Extension.extension", "type", "Extension.extension:type");
+            verifier.VerifyElement("Extension.extension.url", "type.url", "Extension.extension:type.url", new FhirUri("type"));
+            verifier.VerifyElement("Extension.extension", "flag", "Extension.extension:flag");
+            verifier.VerifyElement("Extension.extension.url", "flag.url", "Extension.extension:flag.url", new FhirUri("flag"));
+            verifier.VerifyElement("Extension.extension", "date", "Extension.extension:date");
+            verifier.VerifyElement("Extension.extension.url", "date.url", "Extension.extension:date.url", new FhirUri("date"));
+            verifier.VerifyElement("Extension.url", null, "Extension.url", new FhirUri(sd.Url));
 
-            // Referenced extension definition profiles
-            var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/StructureDefinition/patient-legal-case");
+            // Basic Patient profile that references a set of extensions
+            // patient-extensions-profile.xml
+            sd = generateSnapshot(@"http://example.com/fhir/SD/patient-with-extensions");
+            verifier = new ElementVerifier(sd);
+            verifier.VerifyElement("Patient.extension", null, "Patient.extension");
+            verifier.VerifyElement("Patient.extension", "doNotCall", "Patient.extension:doNotCall");
+            verifier.VerifyElement("Patient.extension", "legalCase", "Patient.extension:legalCase");
+            verifier.VerifyElement("Patient.extension.valueBoolean", "legalCase.valueBoolean", "Patient.extension:legalCase.valueBoolean");
+            verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.valueBoolean.extension");
+            verifier.VerifyElement("Patient.extension.valueBoolean.extension", "legalCase.valueBoolean.leadCounsel", "Patient.extension:legalCase.valueBoolean.extension:leadCounsel");
+            verifier.VerifyElement("Patient.extension", "religion", "Patient.extension:religion");
+            verifier.VerifyElement("Patient.extension", "researchAuth", "Patient.extension:researchAuth");
 
-            Assert.IsNotNull(sd);
-            Assert.IsTrue(sd.HasSnapshot);
+            // Each of the following profiles is derived from the previous profile
 
-            // [WMR 20160906] Remove ElementDefinition@id attributes (not supported yet)
-            foreach (var elem in sd.Snapshot.Element)
-            {
-                elem.ElementId = null;
-            }
-            // dumpReferences(sd);
+            // patient-name-slice-profile.xml
+            sd = generateSnapshot(@"http://example.com/fhir/SD/patient-name-slice"
+                , structure => ensure(structure,
+                     new ElementDefinition() { Path = "Patient.name.use", Name = "maidenName.use" },
+                     // Add named parent slicing entry
+                     new ElementDefinition() { Path = "Patient.name", Name = "maidenName" }
+                 )
+            );
+            verifier = new ElementVerifier(sd);
+            verifier.VerifyElement("Patient.name", null, "Patient.name");
+            verifier.VerifyElement("Patient.name", "officialName", "Patient.name:officialName");
+            verifier.VerifyElement("Patient.name.text", "officialName.text", "Patient.name:officialName.text");
+            verifier.VerifyElement("Patient.name.family", "officialName.family", "Patient.name:officialName.family");
+            verifier.VerifyElement("Patient.name.given", "officialName.given", "Patient.name:officialName.given");
+            verifier.VerifyElement("Patient.name.use", "officialName.use", "Patient.name:officialName.use");
+            Assert.AreEqual((verifier.Current.Fixed as Code)?.Value, "official");
+            verifier.VerifyElement("Patient.name", "maidenName", "Patient.name:maidenName");
+            verifier.VerifyElement("Patient.name.use", "maidenName.use", "Patient.name:maidenName.use");
+            Assert.AreEqual((verifier.Current.Fixed as Code)?.Value, "maiden");
+            verifier.VerifyElement("Patient.name.family", "maidenName.family", "Patient.name:maidenName.family");
 
-            StructureDefinition expanded;
-            generateSnapshotAndCompare(sd, out expanded);
+            // patient-telecom-slice-profile.xml
+            sd = generateSnapshot(@"http://example.com/fhir/SD/patient-telecom-slice"
+                , structure => ensure(structure,
+                     new ElementDefinition() { Path = "Patient.telecom.system", Name = "workEmail.system" },
+                     // Add named parent slicing entry
+                     new ElementDefinition() { Path = "Patient.telecom", Name = "workEmail" }
+                 )
+            );
+            verifier = new ElementVerifier(sd);
+            verifier.VerifyElement("Patient.telecom", null, "Patient.telecom");
+            verifier.VerifyElement("Patient.telecom", "homePhone", "Patient.telecom:homePhone");
+            verifier.VerifyElement("Patient.telecom.system", "homePhone.system", "Patient.telecom:homePhone.system", new Code("phone"));
+            verifier.VerifyElement("Patient.telecom.use", "homePhone.use", "Patient.telecom:homePhone.use", new Code("home"));
+            verifier.VerifyElement("Patient.telecom", "mobilePhone", "Patient.telecom:mobilePhone");
+            verifier.VerifyElement("Patient.telecom.system", "mobilePhone.system", "Patient.telecom:mobilePhone.system", new Code("phone"));
+            verifier.VerifyElement("Patient.telecom.use", "mobilePhone.use", "Patient.telecom:mobilePhone.use", new Code("mobile"));
+            verifier.VerifyElement("Patient.telecom", "homeEmail", "Patient.telecom:homeEmail");
+            verifier.VerifyElement("Patient.telecom.system", "homeEmail.system", "Patient.telecom:homeEmail.system", new Code("email"));
+            verifier.VerifyElement("Patient.telecom.use", "homeEmail.use", "Patient.telecom:homeEmail.use", new Code("home"));
+            verifier.VerifyElement("Patient.telecom", "workEmail", "Patient.telecom:workEmail");
+            verifier.VerifyElement("Patient.telecom.system", "workEmail.system", "Patient.telecom:workEmail.system", new Code("email"));
+            verifier.VerifyElement("Patient.telecom.use", "workEmail.use", "Patient.telecom:workEmail.use", new Code("work"));
+            verifier.VerifyElement("Patient.telecom", "pager", "Patient.telecom:pager");
+            verifier.VerifyElement("Patient.telecom.system", "pager.system", "Patient.telecom:pager.system", new Code("pager"));
 
-            dumpOutcome(_generator.Outcome);
-            dumpBasePaths(expanded);
+            // Original snapshot contains constraints for both deceased[x] and deceasedDateTime - invalid!
+            // Generated snapshot merges both constraints to deceasedDateTime type slice
+            // patient-deceasedDatetime-slice-profile.xml
+            sd = generateSnapshot(@"http://example.com/fhir/SD/patient-deceasedDatetime-slice");
+            assertContainsElement(sd.Differential, "Patient.deceased[x]");                  // Differential contains a type slice on deceased[x]
+            Assert.IsFalse(sd.Snapshot.Element.Any(e => e.Path == "Patient.deceased[x]"));  // Snapshot only contains renamed element constraint
+            assertContainsElement(sd, "Patient.deceasedDateTime", null, "Patient.deceasedDateTime");
+
+            // patient-careprovider-type-slice-profile.xml
+            sd = generateSnapshot(@"http://example.com/fhir/SD/patient-careprovider-type-slice");
+            verifier = new ElementVerifier(sd);
+            verifier.VerifyElement("Patient.careProvider", null, "Patient.careProvider");
+            verifier.VerifyElement("Patient.careProvider", "organizationCare", "Patient.careProvider:organizationCare");
+            verifier.VerifyElement("Patient.careProvider", "practitionerCare", "Patient.careProvider:practitionerCare");
+
+            // Verify re-slicing
+            // patient-careprovider-type-reslice-profile.xml
+            sd = generateSnapshot(@"http://example.com/fhir/SD/patient-careprovider-type-reslice");
+            verifier = new ElementVerifier(sd);
+            verifier.VerifyElement("Patient.careProvider", null, "Patient.careProvider");
+            verifier.VerifyElement("Patient.careProvider", "organizationCare", "Patient.careProvider:organizationCare");
+            verifier.VerifyElement("Patient.careProvider", "organizationCare/teamCare", "Patient.careProvider:organizationCare/teamCare");
+            verifier.VerifyElement("Patient.careProvider", "practitionerCare", "Patient.careProvider:practitionerCare");
+
+            // Identifier Datatype profile
+            // patient-mrn-id-profile.xml
+            sd = generateSnapshot(@"http://example.com/fhir/SD/patient-mrn-id");
+            verifier = new ElementVerifier(sd);
+            verifier.VerifyElement("Identifier", null, "Identifier");
+            verifier.VerifyElement("Identifier.system", null, "Identifier.system", new FhirUri(@"http://example.com/fhir/localsystems/PATIENT-ID-MRN"));
+
+            // Verify inline re-slicing
+            // Profile slices identifier and also re-slices the "mrn" slice
+            // patient-identifier-profile-slice-profile.xml
+            sd = generateSnapshot(@"http://example.com/fhir/SD/patient-slice-by-profile"
+                , structure => ensure(structure,
+                     new ElementDefinition() { Path = "Patient.identifier.use", Name = "mrn/officialMRN.use" },
+                     // Add named parent reslicing entry
+                     new ElementDefinition() { Path = "Patient.identifier", Name = "mrn/officialMRN" }
+                 )
+            );
+            verifier = new ElementVerifier(sd);
+            verifier.VerifyElement("Patient.identifier", null, "Patient.identifier");
+            verifier.VerifyElement("Patient.identifier", "mrn", "Patient.identifier:mrn");
+            verifier.VerifyElement("Patient.identifier", "mrn/officialMRN", "Patient.identifier:mrn/officialMRN");
+            verifier.VerifyElement("Patient.identifier.use", "mrn/officialMRN.use", "Patient.identifier:mrn/officialMRN.use", new Code("official"));
+            verifier.VerifyElement("Patient.identifier", "mdmId", "Patient.identifier:mdmId");
+
+            // Verify constraints on named slice in base profile
+            // patient-identifier-slice-extension-profile.xml
+            sd = generateSnapshot(@"http://example.com/fhir/SD/patient-identifier-subslice"
+                , structure => ensure(structure,
+                     new ElementDefinition() { Path = "Patient.identifier.extension", Name = "mrn.issuingSite" },
+                     // Add named parent reslicing entry
+                     new ElementDefinition() { Path = "Patient.identifier", Name = "mrn" }
+                 )
+            );
+            verifier = new ElementVerifier(sd);
+            verifier.VerifyElement("Patient.identifier", null, "Patient.identifier");
+            verifier.AssertSlicing(new string[] { "system" }, ElementDefinition.SlicingRules.Open, null);
+            verifier.VerifyElement("Patient.identifier", "mrn", "Patient.identifier:mrn");
+            verifier.AssertSlicing(new string[] { "use" }, ElementDefinition.SlicingRules.Open, null);
+            verifier.VerifyElement("Patient.identifier.extension", null, "Patient.identifier:mrn.extension");
+            verifier.VerifyElement("Patient.identifier.extension", "mrn.issuingSite", "Patient.identifier:mrn.extension:issuingSite");
+            verifier.VerifyElement("Patient.identifier.use", null, "Patient.identifier:mrn.use");
+            verifier.VerifyElement("Patient.identifier.type", null, "Patient.identifier:mrn.type");
+            verifier.VerifyElement("Patient.identifier.system", null, "Patient.identifier:mrn.system", new FhirUri(@"http://example.com/fhir/localsystems/PATIENT-ID-MRN"));
+            verifier.VerifyElement("Patient.identifier.value", null, "Patient.identifier:mrn.value");
+            verifier.VerifyElement("Patient.identifier.period", null, "Patient.identifier:mrn.period");
+            verifier.VerifyElement("Patient.identifier.assigner", null, "Patient.identifier:mrn.assigner");
+            verifier.VerifyElement("Patient.identifier", "mrn/officialMRN", "Patient.identifier:mrn/officialMRN");
+            verifier.VerifyElement("Patient.identifier", "mdmId", "Patient.identifier:mdmId");
+
+            // Verify extension re-slice
+            // patient-research-auth-reslice-profile.xml
+            sd = generateSnapshot(@"http://example.com/fhir/SD/patient-research-auth-reslice"
+                , structure => ensure(structure,
+                     new ElementDefinition() { Path = "Patient.extension.extension.value[x]", Name = "researchAuth/grandfatheredResAuth.type.value[x]" },
+                     // Add named parent reslicing entry
+                     new ElementDefinition() { Path = "Patient.extension", Name = "researchAuth/grandfatheredResAuth" },
+                     new ElementDefinition() { Path = "Patient.extension.extension", Name = "type" }
+                     // new ElementDefinition() { Path = "Patient.extension.extension", Name = "researchAuth/grandfatheredResAuth.type" }
+                 )
+            );
+            verifier = new ElementVerifier(sd);
+            verifier.VerifyElement("Patient.extension", null, "Patient.extension");
+            verifier.VerifyElement("Patient.extension", "doNotCall", "Patient.extension:doNotCall");
+            verifier.VerifyElement("Patient.extension", "legalCase", "Patient.extension:legalCase");
+            verifier.VerifyElement("Patient.extension.valueBoolean", "legalCase.valueBoolean", "Patient.extension:legalCase.valueBoolean");
+            verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.valueBoolean.extension");
+            verifier.VerifyElement("Patient.extension.valueBoolean.extension", "legalCase.valueBoolean.leadCounsel", "Patient.extension:legalCase.valueBoolean.extension:leadCounsel");
+            verifier.VerifyElement("Patient.extension", "religion", "Patient.extension:religion");
+            verifier.VerifyElement("Patient.extension", "researchAuth", "Patient.extension:researchAuth");
+            // Note: in the original snapshot, the "researchAuth" complex extension slice is fully expanded (child extensions: type, flag, date)
+            // However this is not necessary, as there are no child constraints on the extension
+            verifier.AssertSlicing(new string[] { "type.value[x]" }, ElementDefinition.SlicingRules.Open, null);
+            // "researchAuth/grandfatheredResAuth" represents a reslice of the base extension "researchAuth" (0...*)
+            verifier.VerifyElement("Patient.extension", "researchAuth/grandfatheredResAuth", "Patient.extension:researchAuth/grandfatheredResAuth");
+            verifier.VerifyElement("Patient.extension.extension", null, "Patient.extension:researchAuth/grandfatheredResAuth.extension");
+            verifier.AssertSlicing(new string[] { "url" }, ElementDefinition.SlicingRules.Open, false);
+            // The reslice "researchAuth/grandfatheredResAuth" has a child element constraint on "type.value[x]"
+            // Therefore the complex extension is fully expanded (child extensions: type, flag, date)
+            verifier.VerifyElement("Patient.extension.extension", "type", "Patient.extension:researchAuth/grandfatheredResAuth.extension:type");
+            verifier.VerifyElement("Patient.extension.extension.url", "type.url", "Patient.extension:researchAuth/grandfatheredResAuth.extension:type.url", new FhirUri("type"));
+            // Child constraints on "type.value[x]" merged from differential
+            verifier.VerifyElement("Patient.extension.extension.value[x]", "researchAuth/grandfatheredResAuth.type.value[x]", "Patient.extension:researchAuth/grandfatheredResAuth.extension:type.value[x]");
+            verifier.VerifyElement("Patient.extension.extension", "flag", "Patient.extension:researchAuth/grandfatheredResAuth.extension:flag");
+            verifier.VerifyElement("Patient.extension.extension.url", "flag.url", "Patient.extension:researchAuth/grandfatheredResAuth.extension:flag.url", new FhirUri("flag"));
+            verifier.VerifyElement("Patient.extension.extension", "date", "Patient.extension:researchAuth/grandfatheredResAuth.extension:date");
+            verifier.VerifyElement("Patient.extension.extension.url", "date.url", "Patient.extension:researchAuth/grandfatheredResAuth.extension:date.url", new FhirUri("date"));
+            verifier.VerifyElement("Patient.extension.url", null, "Patient.extension:researchAuth/grandfatheredResAuth.url", new FhirUri(@"http://example.com/fhir/StructureDefinition/patient-research-authorization"));
+            // Slices inherited from base profile with url http://example.com/fhir/SD/patient-identifier-subslice
+            verifier.VerifyElement("Patient.identifier", null, "Patient.identifier");
+            verifier.AssertSlicing(new string[] { "system" }, ElementDefinition.SlicingRules.Open, null);
+            verifier.VerifyElement("Patient.identifier", "mrn", "Patient.identifier:mrn");
+            verifier.AssertSlicing(new string[] { "use" }, ElementDefinition.SlicingRules.Open, null);
+            verifier.VerifyElement("Patient.identifier.extension", null, "Patient.identifier:mrn.extension");
+            verifier.VerifyElement("Patient.identifier.extension", "mrn.issuingSite", "Patient.identifier:mrn.extension:issuingSite");
+            verifier.VerifyElement("Patient.identifier.use", null, "Patient.identifier:mrn.use");
+            verifier.VerifyElement("Patient.identifier.type", null, "Patient.identifier:mrn.type");
+            verifier.VerifyElement("Patient.identifier.system", null, "Patient.identifier:mrn.system", new FhirUri(@"http://example.com/fhir/localsystems/PATIENT-ID-MRN"));
+            verifier.VerifyElement("Patient.identifier.value", null, "Patient.identifier:mrn.value");
+            verifier.VerifyElement("Patient.identifier.period", null, "Patient.identifier:mrn.period");
+            verifier.VerifyElement("Patient.identifier.assigner", null, "Patient.identifier:mrn.assigner");
+            verifier.VerifyElement("Patient.identifier", "mrn/officialMRN", "Patient.identifier:mrn/officialMRN");
+            verifier.VerifyElement("Patient.identifier", "mdmId", "Patient.identifier:mdmId");
+
         }
 
         [TestMethod]
@@ -499,8 +809,8 @@ namespace Hl7.Fhir.Specification.Tests
 		//	// @"http://hl7.org/fhir/StructureDefinition/gao-medicationorder",
 		//};
 
-        [TestMethod, Ignore]
-        // [Ignore]
+        [TestMethod]
+        [Ignore]
         public void GenerateSnapshot()
         {
             var sw = new Stopwatch();
@@ -607,19 +917,21 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
+        // Unit tests for DifferentialTreeConstructor
+
         [TestMethod]
-        public void MakeDifferentialTree()
+        public void TestDifferentialTree()
         {
             var e = new List<ElementDefinition>();
 
             e.Add(new ElementDefinition() { Path = "A.B.C1" });
-            e.Add(new ElementDefinition() { Path = "A.B.C1" });
+            e.Add(new ElementDefinition() { Path = "A.B.C1", Name="C1-A" }); // First slice of A.B.C1
             e.Add(new ElementDefinition() { Path = "A.B.C2" });
-            e.Add(new ElementDefinition() { Path = "A.B" });
+            e.Add(new ElementDefinition() { Path = "A.B", Name="B-A" }); // First slice of A.B
             e.Add(new ElementDefinition() { Path = "A.B.C1.D" });
             e.Add(new ElementDefinition() { Path = "A.D.F" });
 
-            var tree = new DifferentialTreeConstructor(e).MakeTree();
+            var tree = DifferentialTreeConstructor.MakeTree(e);
             Assert.IsNotNull(tree);
 
             var nav = new ElementDefinitionNavigator(tree);
@@ -642,7 +954,75 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.MoveToChild("F"));
         }
 
-        // [WMR 20161005] expandElement is no longer unit-testable; uninitialized recursion stack causes exceptions
+        [TestMethod]
+        public void TestDifferentialTreeMultipleRoots()
+        {
+            var elements = new List<ElementDefinition>();
+
+            elements.Add(new ElementDefinition() { Path = "Patient.identifier" });
+            elements.Add(new ElementDefinition() { Path = "Patient" });
+
+            bool exceptionRaised = false;
+            try
+            {
+                var tree = DifferentialTreeConstructor.MakeTree(elements);
+            }
+            catch (InvalidOperationException ex)
+            {
+                Debug.Print(ex.Message);
+                exceptionRaised = true;
+            }
+            Assert.IsTrue(exceptionRaised);
+        }
+
+        // [WMR 20161012] Advanced unit test for DifferentialTreeConstructor with resliced input
+        [TestMethod]
+        public void TestDifferentialTreeForReslice()
+        {
+            var elements = new List<ElementDefinition>();
+
+            elements.Add(new ElementDefinition() { Path = "Patient.identifier" });
+            elements.Add(new ElementDefinition() { Path = "Patient.identifier", Name = "A" });
+            elements.Add(new ElementDefinition() { Path = "Patient.identifier.use" });
+            elements.Add(new ElementDefinition() { Path = "Patient.identifier", Name = "B/1" });
+            elements.Add(new ElementDefinition() { Path = "Patient.identifier.type" });
+            elements.Add(new ElementDefinition() { Path = "Patient.identifier", Name = "B/2" });
+            elements.Add(new ElementDefinition() { Path = "Patient.identifier.period.start" });
+            elements.Add(new ElementDefinition() { Path = "Patient.identifier", Name = "C/1" });
+
+            var tree = DifferentialTreeConstructor.MakeTree(elements);
+            Assert.IsNotNull(tree);
+            Debug.Print(string.Join(Environment.NewLine, tree.Select(e => $"{e.Path} : '{e.Name}'")));
+
+            Assert.AreEqual(10, tree.Count);
+            var verifier = new ElementVerifier(tree);
+
+            verifier.VerifyElement("Patient");                      // Added: root element
+            verifier.VerifyElement("Patient.identifier");
+            verifier.VerifyElement("Patient.identifier", "A");
+            verifier.VerifyElement("Patient.identifier.use");
+            verifier.VerifyElement("Patient.identifier", "B/1");
+            verifier.VerifyElement("Patient.identifier.type");
+            verifier.VerifyElement("Patient.identifier", "B/2");
+            verifier.VerifyElement("Patient.identifier.period");    // Added: parent element
+            verifier.VerifyElement("Patient.identifier.period.start");
+            verifier.VerifyElement("Patient.identifier", "C/1");
+        }
+
+        [TestMethod]
+        [Ignore]
+        public void DebugDifferentialTree()
+        {
+            var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/SD/patient-research-auth-reslice");
+            Assert.IsNotNull(sd);
+            var tree = DifferentialTreeConstructor.MakeTree(sd.Differential.Element);
+            Assert.IsNotNull(tree);
+            Debug.Print(string.Join(Environment.NewLine, tree.Select(e => $"{e.Path} : '{e.Name}'")));
+        }
+
+        // [WMR 20160802] Unit tests for SnapshotGenerator.ExpandElement
+
+        // [WMR 20161005] internal expandElement method is no longer unit-testable; uninitialized recursion stack causes exceptions
 
         //[TestMethod]
         //public void TestExpandChild()
@@ -662,8 +1042,6 @@ namespace Hl7.Fhir.Specification.Tests
         //    Assert.IsTrue(generator.expandElement(nav));
         //    Assert.IsTrue(nav.MoveToChild("title"), "Did not move into internally defined backbone element Group");
         //}
-
-        // [WMR 20160802] NEW - Expand a single element
 
         [TestMethod]
         public void TestExpandElement_PatientIdentifier()

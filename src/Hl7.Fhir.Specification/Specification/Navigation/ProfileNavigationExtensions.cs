@@ -91,21 +91,12 @@ namespace Hl7.Fhir.Specification.Navigation
             return true;
         }
 
-        public static bool IsRepeating(this ElementDefinition defn)
-        {
-            return defn.Max != "1" && defn.Max != "0";
-        }
+        public static bool IsRepeating(this ElementDefinition defn) => defn != null && defn.Max != "1" && defn.Max != "0";
 
-        public static bool IsExtension(this ElementDefinition defn)
-        {
-            return defn.Path.EndsWith(".extension") || defn.Path.EndsWith(".modifierExtension");
-        }
+        public static bool IsExtension(this ElementDefinition defn) => defn != null && ElementDefinitionNavigator.IsExtensionPath(defn.Path);
 
         // [WMR 20160805] New
-        public static bool IsRootElement(this ElementDefinition defn)
-        {
-            return !string.IsNullOrEmpty(defn.Path) && !defn.Path.Contains('.');
-        }
+        public static bool IsRootElement(this ElementDefinition defn) => defn != null && ElementDefinitionNavigator.IsRootPath(defn.Path);
 
         /// <summary>Returns the primary element type, if it exists.</summary>
         /// <param name="defn">An <see cref="ElementDefinition"/> instance.</param>

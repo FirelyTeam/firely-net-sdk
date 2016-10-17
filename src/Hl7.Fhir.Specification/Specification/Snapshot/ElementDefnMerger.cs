@@ -67,6 +67,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 //}
 
                 // representation cannot be overridden
+
                 snap.NameElement = mergePrimitiveAttribute(snap.NameElement, diff.NameElement);
             
                 // Codes are cumulative based on the code value

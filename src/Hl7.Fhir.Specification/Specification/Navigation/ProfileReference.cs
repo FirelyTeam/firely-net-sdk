@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Specification.Navigation
     /// <remarks>Useful to parse complex profile references of the form "canonicalUrl#elementName".</remarks>
     internal struct ProfileReference
     {
-        private ProfileReference(string url)
+        ProfileReference(string url)
         {
             if (url == null) { throw new ArgumentNullException("url"); }
             var pos = url.IndexOf('#');
@@ -35,15 +35,15 @@ namespace Hl7.Fhir.Specification.Navigation
         /// <summary>Initialize a new <see cref="ProfileReference"/> instance from the specified url.</summary>
         /// <param name="url">A resource reference to a profile.</param>
         /// <returns>A new <see cref="ProfileReference"/> structure.</returns>
-        public static ProfileReference FromUrl(string url) { return new ProfileReference(url); }
+        public static ProfileReference FromUrl(string url)  => new ProfileReference(url);
 
         /// <summary>Returns the canonical url of the profile.</summary>
-        public string CanonicalUrl { get; private set; }
+        public string CanonicalUrl { get; }
 
         /// <summary>Returns an optional profile element name, if included in the reference.</summary>
-        public string ElementName { get; private set; }
+        public string ElementName { get; }
 
         /// <summary>Returns <c>true</c> if the profile reference includes an element name, <c>false</c> otherwise.</summary>
-        public bool IsComplex { get { return ElementName != null; } }
+        public bool IsComplex => ElementName != null;
     }
 }
