@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Model
     [System.Diagnostics.DebuggerDisplay(@"\{{Value}}")]
     public partial class FhirDateTime : IStringValue
     {
-        public FhirDateTime(DateTimeOffset dt) : this(dt.ToString(FMT_FULL, System.Globalization.CultureInfo.InvariantCulture))
+        public FhirDateTime(DateTimeOffset dt) : this(XmlConvert.ToString(dt))
         {
         }
 
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
 
         public static FhirDateTime Now()
         {
-            return new FhirDateTime(DateTimeOffset.Now.ToString(FMT_FULL));
+            return new FhirDateTime(XmlConvert.ToString(DateTimeOffset.Now));
         }
 
         /// <summary>
