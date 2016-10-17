@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Model
     [System.Diagnostics.DebuggerDisplay(@"\{{Value}}")]
     public partial class FhirDateTime : IStringValue
     {
-        public FhirDateTime(DateTimeOffset dt) : this(dt.ToString(FMT_FULL))
+        public FhirDateTime(DateTimeOffset dt) : this(dt.ToString(FMT_FULL, System.Globalization.CultureInfo.InvariantCulture))
         {
         }
 
@@ -55,17 +55,17 @@ namespace Hl7.Fhir.Model
         }
 
         public FhirDateTime(int year, int month, int day)
-            : this(String.Format(FMT_YEARMONTHDAY, year, month, day))
+            : this(String.Format(System.Globalization.CultureInfo.InvariantCulture, FMT_YEARMONTHDAY, year, month, day))
         {
         }
 
         public FhirDateTime(int year, int month)
-            : this( String.Format(FMT_YEARMONTH,year,month) )
+            : this( String.Format(System.Globalization.CultureInfo.InvariantCulture, FMT_YEARMONTH, year,month) )
         {
         }
 
         public FhirDateTime(int year)
-            : this(String.Format(FMT_YEAR, year))
+            : this(String.Format(System.Globalization.CultureInfo.InvariantCulture, FMT_YEAR, year))
         {
         }
 
