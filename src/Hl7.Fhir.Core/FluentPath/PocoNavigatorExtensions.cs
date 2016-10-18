@@ -17,13 +17,63 @@ namespace Hl7.Fhir.FluentPath
 {
     public static class PocoNavigatorExtensions
     {
+        public static IEnumerable<Base> ToFhirValues(this IEnumerable<ElementModel.IValueProvider> results)
+        {
+            return results.Select(r =>
+            {
+                if (r == null)
+                    return null;
+
+                if (r is Hl7.Fhir.FluentPath.PocoNavigator && (r as Hl7.Fhir.FluentPath.PocoNavigator).FhirValue != null)
+                {
+                    return ((PocoNavigator)r).FhirValue;
+                }
+                object result;
+                if (r.Value is Hl7.FluentPath.ConstantValue)
+                {
+                    result = (r.Value as Hl7.FluentPath.ConstantValue).Value;
+                }
+                else
+                {
+                    result = r.Value;
+                }
+
+                if (result is bool)
+                {
+                    return new FhirBoolean((bool)result);
+                }
+                if (result is long)
+                {
+                    return new Integer((int)(long)result);
+                }
+                if (result is decimal)
+                {
+                    return new FhirDecimal((decimal)result);
+                }
+                if (result is string)
+                {
+                    return new FhirString((string)result);
+                }
+                if (result is PartialDateTime)
+                {
+                    var dt = (PartialDateTime)result;
+                    return new FhirDateTime(dt.ToUniversalTime());
+                }
+                else
+                {
+                    // This will throw an exception if the type isn't one of the FHIR types!
+                    return (Base)result;
+                }
+            });
+        }
+
         public static IEnumerable<Base> Select(this Base input, string expression, Resource resource = null)
         {
             var inputNav = new PocoNavigator(input);
             var resourceNav = resource != null ? new PocoNavigator(resource) : null;
 
             var result = inputNav.Select(expression, resourceNav);
-            return result.Select(r => ((PocoNavigator)r).FhirValue);            
+            return result.ToFhirValues();            
         }
 
         public static object Scalar(this Base input, string expression, Resource resource = null)
