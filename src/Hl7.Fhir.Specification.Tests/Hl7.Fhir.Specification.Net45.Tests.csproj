@@ -98,6 +98,7 @@
     <Compile Include="Source\ArtifactSourceTests.cs" />
     <Compile Include="OutcomeReportingTest.cs" />
     <Compile Include="ProfileNavigationTest.cs" />
+    <Compile Include="Source\VSExpansionTests.cs" />
     <Compile Include="Validation\MinMaxValidationTests.cs" />
     <Compile Include="Validation\ProfileAssertionTests.cs" />
     <Compile Include="Validation\ScopeTrackerTests.cs" />
@@ -122,9 +123,6 @@
     <Content Include="TestData\validation\WeightQuantity.structuredefinition.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="TestData\snapshot-test\Chris Grenz\DAF-Religion-profile.xml.bak">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <Content Include="TestData\snapshot-test\Chris Grenz\encounter-with-type-profile-profile.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

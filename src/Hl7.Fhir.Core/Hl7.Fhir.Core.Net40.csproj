@@ -85,6 +85,7 @@
     <Compile Include="Model\ElementDefinition.cs" />
     <Compile Include="Model\ElementDefinitionExtensions.cs" />
     <Compile Include="Model\Quantity.cs" />
+    <Compile Include="Model\ValueSetExpansionExtensions.cs" />
     <Compile Include="Support\ObjectList.cs" />
     <Compile Include="Model\Base.cs" />
     <Compile Include="Model\Binary.cs" />

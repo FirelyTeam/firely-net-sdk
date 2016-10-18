@@ -262,7 +262,7 @@ namespace Hl7.Fhir.Tests.Serialization
                     b = true;
                 }
             }
-            Assert.AreEqual(3, errorCount, String.Format("Failed Validating {0} of {1} examples", errorCount, testFileCount));
+            Assert.AreEqual(2, errorCount, String.Format("Failed Validating {0} of {1} examples", errorCount, testFileCount));
         }
     }
 }

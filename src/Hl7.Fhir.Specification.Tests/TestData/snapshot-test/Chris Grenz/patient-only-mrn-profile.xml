@@ -38,6 +38,7 @@
 			<path value="Patient" />
 			<short value="Information about an individual or animal receiving health care services" />
 			<definition value="Demographics and other administrative information about an individual or animal receiving care or other health-related services." />
+			<alias value="SubjectOfCare Client Resident" />
 			<min value="0" />
 			<max value="*" />
 			<base>
@@ -2476,7 +2477,7 @@
 			<definition value="Link to another patient resource that concerns the same actual patient." />
 			<comments value="There is no assumption that linked patient records have mutual links." />
 			<requirements value="There are multiple usecases: 
-      * Duplicate patient records due to the clerical errors associated with the difficulties of identifying humans consistently, and * Distribution of patient information across multiple servers." />
+      * Duplicate patient records due to the clerical errors associated with the difficulties of identifying humans consistently, and * Distribution of patient information across multiple server" />
 			<min value="0" />
 			<max value="*" />
 			<base>
@@ -2494,7 +2495,6 @@
 				<human value="All FHIR elements must have a @value or children" />
 				<xpath value="@value|f:*|h:div" />
 			</constraint>
-			<isModifier value="true" />
 			<mapping>
 				<identity value="rim" />
 				<map value="outboundLink" />

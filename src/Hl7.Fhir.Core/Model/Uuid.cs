@@ -44,5 +44,16 @@ namespace Hl7.Fhir.Model
         {
             return Regex.IsMatch(value, "^" + Uuid.PATTERN + "$", RegexOptions.Singleline);
         }
+
+        public static Uuid Generate()
+        {
+            var newUuid = "urn:uuid:" + System.Guid.NewGuid().ToString();
+            return new Uuid(newUuid);        
+        }
+
+        public FhirUri AsUri()
+        {
+            return new FhirUri(Value);
+        }
     }
 }

@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,61 +14,43 @@ using System.Text;
 
 namespace Hl7.Fhir.Model
 {
-        public partial class ValueSet : Hl7.Fhir.Model.DomainResource
+    public partial class ValueSet : Hl7.Fhir.Model.DomainResource
+    {
+        [Obsolete("This property was renamed in DSTU2 to CodeSystem", true)]
+        public CodeSystemComponent Define { get; set; }
+
+        public bool HasExpansion => Expansion != null;
+
+        public int CountCodes()
         {
-            [Obsolete("This property was renamed in DSTU2 to CodeSystem", true)]
-            public CodeSystemComponent Define { get; set; }
+            if (!HasExpansion)
+                throw Error.InvalidOperation($"ValueSet '{Url}' has no expansion, generate the expansion first before calling this function");
 
-    //        public static bool CodeEquals(string code, string value, bool caseSensitive)
-    //        {
-    //            return String.Equals(code, value,
-    //                caseSensitive ? StringComparison.Ordinal :
-    //                        StringComparison.OrdinalIgnoreCase);
-    //        }
+            return countCodes(Expansion.Contains);
+        }
 
+        private int countCodes(IEnumerable<ValueSet.ContainsComponent> contains)
+        {
+            return contains.Where(ct => ct.Contains.Any())
+                            .Aggregate(contains.Count(), (r, ct) => r + countCodes(ct.Contains));
+        }
 
-    //        public static IEnumerable<ValueSetDefineConceptComponent> GetFlattenedDefinedConcepts(
-    //                        IEnumerable<ValueSetDefineConceptComponent> concepts)
-    //        {
-    //            foreach (var concept in concepts)
-    //            {
-    //                yield return concept;
+        public bool CodeInExpansion(String code, string system = null)
+        {
+            if (!HasExpansion)
+                throw Error.InvalidOperation($"ValueSet '{Url}' has no expansion, generate the expansion first before calling this function");
 
-    //                if (concept.Concept != null)
-    //                    foreach (var childConcept in GetFlattenedDefinedConcepts(concept.Concept))
-    //                        yield return childConcept;
-    //            }
-    //        }
+            return FindInExpansion(code, system) != null;
 
+        }
 
-    //        internal static ValueSetDefineConceptComponent GetDefinedConceptForCode(
-    //                    IEnumerable<ValueSetDefineConceptComponent> concepts, string code, bool caseSensitive = true)
-    //        {
-    //            if (concepts != null)
-    //                return GetFlattenedDefinedConcepts(concepts)
-    //                    .FirstOrDefault(c => CodeEquals(c.Code, code, caseSensitive));
-    //            else
-    //                return null;
-    //        }
+        public ValueSet.ContainsComponent FindInExpansion(String code, string system = null)
+        {
+            if (!HasExpansion)
+                throw Error.InvalidOperation($"ValueSet '{Url}' has no expansion, generate the expansion first before calling this function");
 
+            return Expansion.Contains.FindCode(code, system);
+        }
 
-    //        /// <summary>
-    //        /// Searches for a concept, defined in this ValueSet, using its code
-    //        /// </summary>
-    //        /// <param name="code"></param>
-    //        /// <returns>The concept, or null if there was no concept found with that code</returns>
-    //        /// <remarks>The search will search nested concepts as well. 
-    //        /// Whether the search is case-sensitive depends on the value of Define.CaseSensitive</remarks>
-    //        public ValueSetDefineConceptComponent GetDefinedConceptForCode(string code)
-    //        {
-    //            if (this.Define != null && this.Define.Concept != null)
-    //            {
-    //                bool caseSensitive = Define.CaseSensitive.GetValueOrDefault();
-    //                return GetDefinedConceptForCode(this.Define.Concept, code, caseSensitive);
-    //            }
-    //            else
-    //                return null;
-    //        }
-    //    }
     }
 }

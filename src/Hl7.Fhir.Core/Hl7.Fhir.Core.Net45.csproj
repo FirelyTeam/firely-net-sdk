@@ -78,6 +78,7 @@
     <Compile Include="FluentPath\PocoElementNavigator.cs" />
     <Compile Include="FluentPath\PocoNavigator.cs" />
     <Compile Include="Model\Quantity.cs" />
+    <Compile Include="Model\ValueSetExpansionExtensions.cs" />
     <Compile Include="Support\CanonicalUrlConflictException.cs" />
     <Compile Include="FluentPath\PocoNavigatorExtensions.cs" />
     <Compile Include="Model\ElementDefinitionExtensions.cs" />

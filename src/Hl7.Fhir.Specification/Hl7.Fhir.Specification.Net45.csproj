@@ -93,6 +93,7 @@
     <Compile Include="Specification\Terminology\LocalTerminologyServer.cs" />
     <Compile Include="Specification\Terminology\ValueSetExpander.cs" />
     <Compile Include="Support\ValidationOutcomeExtensions.cs" />
+    <Compile Include="Specification\ValueSet\ValueSetExpander.cs" />
     <Compile Include="Validation\BatchValidationExtensions.cs" />
     <Compile Include="Validation\BindingValidationExtensions.cs" />
     <Compile Include="Validation\Cardinality.cs" />
