@@ -126,12 +126,12 @@ namespace Hl7.Fhir.Validation
                 catch (Exception e)
                 {
                     validator.Trace(outcome, $"Resolution of external reference {reference} failed. Message: {e.Message}",
-                           Issue.UNAVAILABLE_EXTERNAL_REFERENCE, instance);
+                           Issue.UNAVAILABLE_REFERENCED_RESOURCE, instance);
                 }
             }
 
             // If the reference was resolved (either internally or externally, validate it
-            if (outcome.Verify(() => referencedResource != null, $"Cannot resolve reference {reference}", Issue.UNAVAILABLE_EXTERNAL_REFERENCE, instance))
+            if (outcome.Verify(() => referencedResource != null, $"Cannot resolve reference {reference}", Issue.UNAVAILABLE_REFERENCED_RESOURCE, instance))
             {
                 validator.Trace(outcome, $"Starting validation of referenced resource {reference} ({encounteredKind})", Issue.PROCESSING_START_NESTED_VALIDATION, instance);
 

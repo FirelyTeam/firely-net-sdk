@@ -1,12 +1,17 @@
-﻿using Hl7.ElementModel;
+﻿/* 
+ * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+
+using Hl7.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using Hl7.FluentPath;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Validation
 {
@@ -111,13 +116,13 @@ namespace Hl7.Fhir.Validation
                                 var issue = comparisonOutcome == -1 ? Issue.CONTENT_ELEMENT_PRIMITIVE_VALUE_TOO_SMALL :
                                             Issue.CONTENT_ELEMENT_PRIMITIVE_VALUE_TOO_LARGE;
 
-                                outcome.Info($"Instance value '{instanceValue}' is {label} {elementName} '{definition}'", issue, instance);
+                                outcome.AddIssue($"Instance value '{instanceValue}' is {label} {elementName} '{definition}'", issue, instance);
                             }
                         }
                     }
                     catch (NotSupportedException ns)
                     {
-                        outcome.Info($"Comparing the instance against the {elementName} failed: {ns.Message}", Issue.UNSUPPORTED_MIN_MAX_QUANTITY, instance);
+                        outcome.AddIssue($"Comparing the instance against the {elementName} failed: {ns.Message}", Issue.UNSUPPORTED_MIN_MAX_QUANTITY, instance);
                     }
                 }
             }

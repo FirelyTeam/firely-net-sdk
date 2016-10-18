@@ -1,12 +1,17 @@
+/* 
+ * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using Hl7.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Specification.Navigation;
-using System.Text;
-using System.Threading.Tasks;
+using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Validation
 {
@@ -200,7 +205,7 @@ namespace Hl7.Fhir.Validation
                     structureDefinition = _resolver(entry.Reference);
 
                     if (structureDefinition == null)
-                        outcome.Info($"Unable to resolve reference to profile '{entry.Reference}'", Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, _path);
+                        outcome.AddIssue($"Unable to resolve reference to profile '{entry.Reference}'", Issue.UNAVAILABLE_REFERENCED_PROFILE, _path);
                     else
                     {
                         entry.StructureDefinition = structureDefinition;
@@ -208,7 +213,7 @@ namespace Hl7.Fhir.Validation
                 }
                 catch (Exception e)
                 {
-                    outcome.Info($"Resolution of profile at '{entry.Reference}' failed: {e.Message}", Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, _path);
+                    outcome.AddIssue($"Resolution of profile at '{entry.Reference}' failed: {e.Message}", Issue.UNAVAILABLE_REFERENCED_PROFILE, _path);
                     continue;
                 }
             }
@@ -240,14 +245,14 @@ namespace Hl7.Fhir.Validation
                 if (DeclaredType != null)
                 {
                     if (!ModelInfo.IsInstanceTypeFor(DeclaredType.BaseType(), InstanceType.BaseType()))
-                        outcome.Info($"The declared type of the element ({DeclaredType.ReadableName()}) is incompatible with that of the instance ('{InstanceType.ReadableName()}')", 
+                        outcome.AddIssue($"The declared type of the element ({DeclaredType.ReadableName()}) is incompatible with that of the instance ('{InstanceType.ReadableName()}')", 
                             Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, _path);
                 }
 
                 foreach (var type in StatedProfiles)
                 {
                     if (!ModelInfo.IsInstanceTypeFor(type.BaseType(), InstanceType.BaseType()))
-                        outcome.Info($"Instance of type '{InstanceType.ReadableName()}' is incompatible with the stated profile '{type.Url}' which is constraining constrained type '{type.ReadableName()}'", 
+                        outcome.AddIssue($"Instance of type '{InstanceType.ReadableName()}' is incompatible with the stated profile '{type.Url}' which is constraining constrained type '{type.ReadableName()}'", 
                             Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, _path);
                 }
             }
@@ -260,7 +265,7 @@ namespace Hl7.Fhir.Validation
                 if (baseTypes.Count > 1)
                 {
                     var combinedNames = String.Join(" and ", baseTypes.Select(bt => bt.GetLiteral()));
-                    outcome.Info($"The stated profiles are constraints on multiple different core types ({combinedNames}), which can never be satisfied.", 
+                    outcome.AddIssue($"The stated profiles are constraints on multiple different core types ({combinedNames}), which can never be satisfied.", 
                         Issue.CONTENT_MISMATCHING_PROFILES, _path);
                 }
                 else
@@ -269,7 +274,7 @@ namespace Hl7.Fhir.Validation
                     if (DeclaredType != null)
                     {
                         if (!ModelInfo.IsInstanceTypeFor(DeclaredType.BaseType(), baseTypes.Single()))
-                            outcome.Info($"The stated profiles are all constraints on '{baseTypes.Single()}', which is incompatible with the declared type '{DeclaredType.ReadableName()}' of the element",
+                            outcome.AddIssue($"The stated profiles are all constraints on '{baseTypes.Single()}', which is incompatible with the declared type '{DeclaredType.ReadableName()}' of the element",
                                 Issue.CONTENT_MISMATCHING_PROFILES, _path);
                     }
                 }

@@ -12,6 +12,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Support;
 using Hl7.FluentPath;
 using System;
@@ -105,7 +106,7 @@ namespace Hl7.Fhir.Validation
             }
             catch (Exception e)
             {
-                outcome.Info($"Internal logic failure: {e.Message}", Issue.PROCESSING_CATASTROPHIC_FAILURE, instance);
+                outcome.AddIssue($"Internal logic failure: {e.Message}", Issue.PROCESSING_CATASTROPHIC_FAILURE, instance);
             }
 
             return outcome;
@@ -131,14 +132,14 @@ namespace Hl7.Fhir.Validation
                 // If navigator cannot be moved to content, there's really nothing to validate against.
                 if (definition.AtRoot && !definition.MoveToFirstChild())
                 {
-                    outcome.Info($"Snapshot component of Profile '{definition.StructureDefinition?.Url}' has no content.", Issue.PROFILE_ELEMENTDEF_IS_EMPTY, instance);
+                    outcome.AddIssue($"Snapshot component of Profile '{definition.StructureDefinition?.Url}' has no content.", Issue.PROFILE_ELEMENTDEF_IS_EMPTY, instance);
                     return outcome;
                 }
 
                 // Any node must either have a value, or children, or both (e.g. extensions on primitives)
                 if (instance.Value == null && !instance.HasChildren())
                 {
-                    outcome.Info("Element must not be empty", Issue.CONTENT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN, instance);
+                    outcome.AddIssue("Element must not be empty", Issue.CONTENT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN, instance);
                     return outcome;
                 }
 
@@ -178,7 +179,7 @@ namespace Hl7.Fhir.Validation
                 outcome.Add(this.ValidateMinMaxValue(elementConstraints, instance));
                 outcome.Add(ValidateMaxLength(elementConstraints, instance));
                 outcome.Add(ValidateConstraints(elementConstraints, instance));
-           //     outcome.Add(ValidateBinding(elementConstraints, instance));
+                outcome.Add(this.ValidateBinding(elementConstraints, instance));
 
                 // If the report only has partial information, no use to show the hierarchy, so flatten it.
                 if (Settings.Trace == false) outcome.Flatten();
@@ -259,29 +260,14 @@ namespace Hl7.Fhir.Validation
                 // For now, we do not handle slices
                 if(definition.Current.Slicing != null)
                     Trace(outcome, "ElementDefinition uses slicing, which is not yet supported. Instance has not been validated against " +
-                            "any of the slices", Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, instance);
+                            "any of the slices", Issue.UNAVAILABLE_REFERENCED_PROFILE, instance);
             }
 
             return outcome;
         }
 
 
-        internal OperationOutcome ValidateBinding(ElementDefinition definition, IElementNavigator instance)
-        {
-            var outcome = new OperationOutcome();
-
-            if (definition.Binding != null)
-            {
-                var binding = definition.Binding;
-                var shouldCheck = binding.Strength == BindingStrength.Required || binding.Strength == BindingStrength.Preferred;
-
-                if(shouldCheck)
-                    Trace(outcome, "ElementDefinition has a binding, which is not yet supported. Instance has not been validated against this binding",
-                        Issue.UNSUPPORTED_BINDING_NOT_SUPPORTED, instance);
-            }
-
-            return outcome;
-        }
+  
 
         internal OperationOutcome ValidateNameReference(ElementDefinition definition, ElementDefinitionNavigator allDefinitions, IElementNavigator instance)
         {
@@ -373,7 +359,7 @@ namespace Hl7.Fhir.Validation
         internal void Trace(OperationOutcome outcome, string message, Issue issue, IElementNavigator location)
         {
             if (Settings.Trace || issue.Severity != OperationOutcome.IssueSeverity.Information)
-                outcome.Info(message, issue, location);
+                outcome.AddIssue(message, issue, location);
         }
 
         private string toStringRepresentation(IValueProvider vp)
@@ -414,7 +400,7 @@ namespace Hl7.Fhir.Validation
             }
             catch(Exception e)
             {
-                Trace(outcome, "External resolution of '{reference}' caused an error: " + e.Message, Issue.UNAVAILABLE_EXTERNAL_REFERENCE, instance);
+                Trace(outcome, "External resolution of '{reference}' caused an error: " + e.Message, Issue.UNAVAILABLE_REFERENCED_RESOURCE, instance);
             }
 
             // Else, try to resolve using the given ResourceResolver 
@@ -429,7 +415,7 @@ namespace Hl7.Fhir.Validation
                 }
                 catch(Exception e)
                 {
-                    Trace(outcome, $"Resolution of reference '{reference}' using the Resolver API failed: " + e.Message, Issue.UNAVAILABLE_EXTERNAL_REFERENCE, instance);
+                    Trace(outcome, $"Resolution of reference '{reference}' using the Resolver API failed: " + e.Message, Issue.UNAVAILABLE_REFERENCED_RESOURCE, instance);
                 }
             }
 

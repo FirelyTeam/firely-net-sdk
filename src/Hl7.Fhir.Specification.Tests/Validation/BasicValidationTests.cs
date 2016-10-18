@@ -11,6 +11,7 @@ using System.Linq;
 using System.Xml.Linq;
 using System;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Validation
 {

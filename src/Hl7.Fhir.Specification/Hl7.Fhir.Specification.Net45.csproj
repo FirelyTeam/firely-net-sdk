@@ -89,13 +89,18 @@
     <Compile Include="Specification\Snapshot\SnapshotBaseComponentGenerator.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorExtensions.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorOutcome.cs" />
+    <Compile Include="Specification\Terminology\ITerminologyService.cs" />
+    <Compile Include="Specification\Terminology\LocalTerminologyServer.cs" />
+    <Compile Include="Specification\Terminology\ValueSetExpander.cs" />
+    <Compile Include="Support\ValidationOutcomeExtensions.cs" />
     <Compile Include="Validation\BatchValidationExtensions.cs" />
+    <Compile Include="Validation\BindingValidationExtensions.cs" />
     <Compile Include="Validation\Cardinality.cs" />
     <Compile Include="Validation\ChildConstraintValidationExtensions.cs" />
     <Compile Include="Validation\ElementDefinitionNavigatorExtensions.cs" />
     <Compile Include="Validation\FixedPatternValidationExtensions.cs" />
     <Compile Include="Validation\InstanceToProfileMatcher.cs" />
-    <Compile Include="Validation\Issue.cs" />
+    <Compile Include="Support\Issue.cs" />
     <Compile Include="Specification\Navigation\ElementNavigatorTypeExtensions.cs" />
     <Compile Include="Specification\Navigation\ProfileReference.cs" />
     <Compile Include="Specification\Snapshot\DifferentialTreeConstructor.cs" />
@@ -126,7 +131,6 @@
     <Compile Include="Validation\ScopeTracker.cs" />
     <Compile Include="Validation\TypeRefValidationExtensions.cs" />
     <Compile Include="Validation\ValidationSettings.cs" />
-    <Compile Include="Validation\ValidationOutcomeExtensions.cs" />
     <Compile Include="Validation\TypeRefExtensions.cs" />
     <Compile Include="Validation\Validator.cs" />
     <Compile Include="XPath\CustomXsltFunction.cs" />

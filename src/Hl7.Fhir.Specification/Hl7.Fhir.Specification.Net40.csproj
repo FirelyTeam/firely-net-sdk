@@ -83,6 +83,7 @@
     <Compile Include="..\Hl7.Fhir.Core\Support\StringExtensions.cs">
       <Link>Support\StringExtensions.cs</Link>
     </Compile>
+    <Compile Include="Specification\Terminology\ITerminologyService.cs" />
     <Compile Include="Properties\AssemblyVersionInfo.cs" />
     <Compile Include="Specification\Navigation\Bookmark.cs" />
     <Compile Include="Specification\Navigation\ElementDefinitionNavigator.cs" />
@@ -118,13 +119,16 @@
     <Compile Include="Specification\Source\ZipCacher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Specification\Source\ZipSource.cs" />
+    <Compile Include="Specification\Terminology\LocalTerminologyServer.cs" />
+    <Compile Include="Specification\Terminology\ValueSetExpander.cs" />
+    <Compile Include="Support\Issue.cs" />
     <Compile Include="Validation\BatchValidationExtensions.cs" />
+    <Compile Include="Validation\BindingValidationExtensions.cs" />
     <Compile Include="Validation\Cardinality.cs" />
     <Compile Include="Validation\ChildConstraintValidationExtensions.cs" />
     <Compile Include="Validation\ElementDefinitionNavigatorExtensions.cs" />
     <Compile Include="Validation\FixedPatternValidationExtensions.cs" />
     <Compile Include="Validation\InstanceToProfileMatcher.cs" />
-    <Compile Include="Validation\Issue.cs" />
     <Compile Include="Validation\MinMaxValidationExtensions.cs" />
     <Compile Include="Validation\OperationOutcomeExtensions.cs" />
     <Compile Include="Validation\PocoValidationExtensions.cs" />
@@ -133,7 +137,7 @@
     <Compile Include="Validation\ScopeTracker.cs" />
     <Compile Include="Validation\TypeRefExtensions.cs" />
     <Compile Include="Validation\TypeRefValidationExtensions.cs" />
-    <Compile Include="Validation\ValidationOutcomeExtensions.cs" />
+    <Compile Include="Support\ValidationOutcomeExtensions.cs" />
     <Compile Include="Validation\ValidationSettings.cs" />
     <Compile Include="Validation\Validator.cs" />
     <Compile Include="Validation\XmlValidationExtensions.cs" />

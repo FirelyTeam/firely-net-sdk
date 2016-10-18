@@ -32,17 +32,6 @@ namespace Hl7.Fhir.Validation
                 return true;
         }
 
-        public static void Info(this OperationOutcome outcome, string message, Issue infoIssue, INamedNode location)
-        {
-            outcome.AddIssue(infoIssue.ToIssueComponent(message, location));
-        }
-
-        public static void Info(this OperationOutcome outcome, string message, Issue infoIssue, string location)
-        {
-            outcome.AddIssue(infoIssue.ToIssueComponent(message, location));
-        }
-
-
         public static void MakeInformational(this OperationOutcome outcome)
         {
             var result = outcome;

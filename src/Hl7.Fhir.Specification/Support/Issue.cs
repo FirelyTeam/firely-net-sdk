@@ -6,17 +6,16 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using System;
-using System.Linq;
 using System.Collections.Generic;
 using Hl7.Fhir.Model;
 using Hl7.ElementModel;
-using Hl7.Fhir.Support;
 
-namespace Hl7.Fhir.Validation
+namespace Hl7.Fhir.Support
 {
     public class Issue
     {
+        public const string API_OPERATION_OUTCOME_SYSTEM = "http://hl7.org/fhir/dotnet-api-operation-outcome";
+
         public int Code;
         public OperationOutcome.IssueSeverity Severity;
         public OperationOutcome.IssueType Type;
@@ -28,7 +27,7 @@ namespace Hl7.Fhir.Validation
 
         public static CodeableConcept ToCodeableConcept(int issueCode, string text = null)
         {
-            return new CodeableConcept("http://hl7.org/fhir/validation-operation-outcome", issueCode.ToString(), text);
+            return new CodeableConcept(API_OPERATION_OUTCOME_SYSTEM, issueCode.ToString(), text);
         }
 
         public OperationOutcome.IssueComponent ToIssueComponent(string message, INamedNode location = null)
@@ -58,10 +57,9 @@ namespace Hl7.Fhir.Validation
             return new Issue() { Code = code, Severity = severity, Type = type };
         }
 
-        // Content errors
+        // Validation resouce instance errors
         public static readonly Issue CONTENT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN = Create(1000, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_HAS_UNKNOWN_CHILDREN = Create(1001, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
-//        public static readonly Issue CONTENT_ELEMENT_HAS_UNKNOWN_TYPE = def(1002, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_HAS_INCORRECT_TYPE = Create(1003, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_MUST_MATCH_TYPE = Create(1004, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_VALUE_TOO_LONG = Create(1005, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
@@ -82,6 +80,8 @@ namespace Hl7.Fhir.Validation
         public static readonly Issue CONTENT_ELEMENT_PRIMITIVE_VALUE_TOO_LARGE = Create(1020, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_PRIMITIVE_VALUE_NOT_COMPARABLE = Create(1021, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_MISMATCHING_PROFILES = Create(1022, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+        public static readonly Issue CONTENT_INVALID_FOR_REQUIRED_BINDING = Create(1023, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+        public static readonly Issue CONTENT_INVALID_FOR_NON_REQUIRED_BINDING = Create(1024, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Invalid);
 
         public static readonly Issue XSD_VALIDATION_ERROR = Create(1100, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue XSD_VALIDATION_WARNING = Create(1101, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Invalid);
@@ -99,27 +99,50 @@ namespace Hl7.Fhir.Validation
         public static readonly Issue PROFILE_ELEMENTDEF_IS_EMPTY = Create(2008, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
         public static readonly Issue PROFILE_ELEMENTDEF_INVALID_FLUENTPATH_EXPRESSION = Create(2009, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
         public static readonly Issue PROFILE_NO_PROFILE_TO_VALIDATE_AGAINST = Create(2010, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Incomplete);
+        public static readonly Issue PROFILE_BINDING_WITHOUT_VALUESET = Create(2011, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Incomplete);
 
         // Unsupported 
         public static readonly Issue UNSUPPORTED_SLICING_NOT_SUPPORTED = Create(3000, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
-        //public static readonly Issue UNSUPPORTED_NESTED_BUNDLES = Create(3001, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
-        //public static readonly Issue UNSUPPORTED_FOLLOWING_EXTERNAL_REFERENCES = Create(3002, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
         public static readonly Issue UNSUPPORTED_CONSTRAINT_WITHOUT_FLUENTPATH = Create(3003, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
-        public static readonly Issue UNSUPPORTED_MIN_MAX_QUANTITY = Create(3004, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
-        public static readonly Issue UNSUPPORTED_BINDING_NOT_SUPPORTED = Create(3005, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
+        public static readonly Issue UNSUPPORTED_MIN_MAX_QUANTITY = Create(3004, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
+        public static readonly Issue UNSUPPORTED_BINDING_NOT_SUPPORTED = Create(3005, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
+        public static readonly Issue UNSUPPORTED_URI_BINDING_NOT_SUPPORTED = Create(3006, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
 
         // Non-availability, incomplete data
-        public static readonly Issue UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE = Create(4000, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Incomplete);
+        public static readonly Issue UNAVAILABLE_REFERENCED_PROFILE = Create(4000, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Incomplete);
         public static readonly Issue UNAVAILABLE_NEED_SNAPSHOT = Create(4002, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Incomplete);
         public static readonly Issue UNAVAILABLE_SNAPSHOT_GENERATION_FAILED = Create(4003, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Incomplete);
         public static readonly Issue UNAVAILABLE_NEED_DIFFERENTIAL = Create(4004, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Incomplete);
-        public static readonly Issue UNAVAILABLE_EXTERNAL_REFERENCE = Create(4005, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
+        public static readonly Issue UNAVAILABLE_REFERENCED_RESOURCE = Create(4005, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
+        public static readonly Issue UNAVAILABLE_VALUESET = Create(4006, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Incomplete);
+        public static readonly Issue UNAVAILABLE_TERMINOLOGY_SERVER = Create(4007, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Incomplete);
+        public static readonly Issue UNAVAILABLE_VALIDATE_CODE_FAILED = Create(4008, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Incomplete);
 
         // Processing information
         public static readonly Issue PROCESSING_PROGRESS = Create(5000, OperationOutcome.IssueSeverity.Information, OperationOutcome.IssueType.Informational);
-        public static readonly Issue PROCESSING_CONSTRAINT_VALIDATION_INACTIVE = Create(5001, OperationOutcome.IssueSeverity.Information, OperationOutcome.IssueType.Informational);
+       // public static readonly Issue PROCESSING_CONSTRAINT_VALIDATION_INACTIVEX = Create(5001, OperationOutcome.IssueSeverity.Information, OperationOutcome.IssueType.Informational);
         public static readonly Issue PROCESSING_START_NESTED_VALIDATION = Create(5002, OperationOutcome.IssueSeverity.Information, OperationOutcome.IssueType.Informational);
         public static readonly Issue PROCESSING_CATASTROPHIC_FAILURE = Create(5003, OperationOutcome.IssueSeverity.Fatal, OperationOutcome.IssueType.Exception);
+
+        // Terminology specific errors
+        public static readonly Issue TERMINOLOGY_CODE_NOT_IN_VALUESET = Create(6001, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.CodeInvalid);
+        public static readonly Issue TERMINOLOGY_ABSTRACT_CODE_NOT_ALLOWED = Create(6002, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.CodeInvalid);
+        public static readonly Issue TERMINOLOGY_INCORRECT_DISPLAY = Create(6003, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.CodeInvalid);
+        public static readonly Issue TERMINOLOGY_VALUESET_TOO_COMPLEX = Create(3005, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.NotSupported);
     }
 
+
+    public static class OperationOutcomeIssueExtensions
+    {
+        public static void AddIssue(this OperationOutcome outcome, string message, Issue infoIssue, INamedNode location)
+        {
+            outcome.AddIssue(infoIssue.ToIssueComponent(message, location));
+        }
+
+        public static void AddIssue(this OperationOutcome outcome, string message, Issue infoIssue, string location=null)
+        {
+            outcome.AddIssue(infoIssue.ToIssueComponent(message, location));
+        }
+
+    }
 }

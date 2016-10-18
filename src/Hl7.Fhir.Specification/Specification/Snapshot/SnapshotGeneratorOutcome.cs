@@ -175,11 +175,11 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (profileUrl == null) { throw Error.ArgumentNull(nameof(profileUrl)); }
             if (location != null)
             {
-                addIssue(Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, $"Unable to resolve reference to profile '{profileUrl}' for element '{location.Path}'", location, profileUrl);
+                addIssue(Issue.UNAVAILABLE_REFERENCED_PROFILE, $"Unable to resolve reference to profile '{profileUrl}' for element '{location.Path}'", location, profileUrl);
             }
             else
             {
-                addIssue(Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, $"Unable to resolve reference to profile '{profileUrl}'", null, profileUrl);
+                addIssue(Issue.UNAVAILABLE_REFERENCED_PROFILE, $"Unable to resolve reference to profile '{profileUrl}'", null, profileUrl);
             }
         }
 
