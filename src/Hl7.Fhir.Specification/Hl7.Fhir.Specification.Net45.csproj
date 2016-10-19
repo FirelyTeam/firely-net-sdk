@@ -99,6 +99,7 @@
     <Compile Include="Validation\Cardinality.cs" />
     <Compile Include="Validation\ChildConstraintValidationExtensions.cs" />
     <Compile Include="Validation\ElementDefinitionNavigatorExtensions.cs" />
+    <Compile Include="Validation\ElementNavigatorParsingExtensions.cs" />
     <Compile Include="Validation\FixedPatternValidationExtensions.cs" />
     <Compile Include="Validation\InstanceToProfileMatcher.cs" />
     <Compile Include="Support\Issue.cs" />

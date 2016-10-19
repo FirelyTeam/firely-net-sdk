@@ -17,22 +17,6 @@ namespace Hl7.Fhir.Validation
 {
     internal static class MinMaxValidationExtensions
     {
-        public static Hl7.FluentPath.Quantity ParseQuantity(this IElementNavigator instance)
-        {
-            var value = instance.GetChildrenByName("value").SingleOrDefault()?.Value as decimal?;
-            var comp = instance.GetChildrenByName("comparator").SingleOrDefault()?.Value as string;
-            var system = instance.GetChildrenByName("system").SingleOrDefault()?.Value as string;
-            var code = instance.GetChildrenByName("code").SingleOrDefault()?.Value as string;
-
-            if (comp != null)
-                throw Error.NotSupported("Cannot interpret quantities with a comparison");
-            if (value == null)
-                throw Error.NotSupported("Cannot interpret quantities without a value");
-
-            return new Hl7.FluentPath.Quantity(value.Value, code, system);
-        }
-
-
         internal static int Compare(IComparable instance, Element definition)
         {
             if (instance == null) throw Error.ArgumentNull(nameof(instance));
@@ -68,10 +52,19 @@ namespace Hl7.Fhir.Validation
             throw Error.NotSupported($"Value '{definition}' and instance value '{instance}' are of incompatible types and can not be compared");
         }
 
-        internal static IComparable GetComparableValue(this IElementNavigator instance)
+        internal static IComparable GetComparableValue(this IElementNavigator instance, Type expectedType)
         {
-            if (instance.TypeName == "Quantity")
-                return instance.ParseQuantity();
+            if (expectedType == typeof(Model.Quantity))
+            {
+                var q = instance.ParseQuantity();
+                // These checks should probably be somewhere else since it has nothing to do with parsing
+                if (q.Comparator != null)
+                    throw Error.NotSupported("Cannot interpret quantities with a comparison");
+                if (q.Value == null)
+                    throw Error.NotSupported("Cannot interpret quantities without a value");
+
+                return new Hl7.FluentPath.Quantity(q.Value.Value, q.Unit, q.System ?? Hl7.FluentPath.Quantity.UCUM);
+            }
             else if (instance.Value is IComparable)
                 return (IComparable)instance.Value;
             else
@@ -103,7 +96,7 @@ namespace Hl7.Fhir.Validation
                 {
                     try
                     {
-                        var instanceValue = instance.GetComparableValue();
+                        var instanceValue = instance.GetComparableValue(definition.GetType());
 
                         if (instanceValue != null)
                         {

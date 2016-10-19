@@ -62,11 +62,11 @@ namespace Hl7.Fhir.Validation
                     }
                     else
                         validator.Trace(outcome, $"Instance indicates the element is of type '{instance.TypeName}', which is not a known FHIR core type.",
-                                Issue.CONTENT_ELEMENT_CHOICE_WITH_NO_ACTUAL_TYPE, instance);
+                                Issue.CONTENT_ELEMENT_CHOICE_INVALID_INSTANCE_TYPE, instance);
                 }
                 else
                     validator.Trace(outcome, "ElementDefinition is a choice or contains a polymorphic type constraint, but the instance does not indicate its actual type",
-                        Issue.CONTENT_ELEMENT_CHOICE_WITH_NO_ACTUAL_TYPE, instance);
+                        Issue.CONTENT_ELEMENT_CANNOT_DETERMINE_TYPE, instance);
             }
             else if (choices.Count() == 1)
             {

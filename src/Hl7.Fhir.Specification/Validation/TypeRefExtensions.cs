@@ -41,6 +41,17 @@ namespace Hl7.Fhir.Validation
         }
 
 
+        public static bool IsChoice(this ElementDefinition definition)
+        {
+            return definition.Type.Where(tr => tr.Code != null).Distinct().Count() > 1;
+        }
+
+        public static List<FHIRDefinedType> ChoiceTypes(this ElementDefinition definition)
+        {
+            return definition.Type.Where(tr => tr.Code != null).Select(tr => tr.Code.Value).Distinct().ToList();
+        }
+
+
         public static string GetPrimitiveValueRegEx(this ElementDefinition.TypeRefComponent typeRef)
         {
             var regex = typeRef.GetStringExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-regex");

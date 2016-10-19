@@ -266,7 +266,44 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
+        internal OperationOutcome ValidateBinding(ElementDefinition definition, IElementNavigator instance)
+        {
+            var outcome = new OperationOutcome();
+            var ts = Settings.TerminologyService;
 
+            if (ts == null)
+            {
+                if (Settings.ResourceResolver == null)
+                {
+                    Trace(outcome, $"Cannot resolve binding references since neither TerminologyService nor ResourceResolver is given in the settings",
+                        Issue.UNAVAILABLE_TERMINOLOGY_SERVER, instance);
+                    return outcome;
+                }
+
+                ts = new LocalTerminologyServer(Settings.ResourceResolver);
+            }
+
+            var bindingValidator = new BindingValidator(ts, instance.Path);
+
+            try
+            {
+                return bindingValidator.ValidateBinding(instance, definition);
+            }
+            catch (Exception e)
+            {
+                Trace(outcome, $"Terminology failed while validating code X (system Y): {e.Message}", Issue.UNAVAILABLE_VALIDATE_CODE_FAILED, instance);
+                return outcome;
+            }
+        }
+
+
+        internal static FHIRDefinedType? DetermineType(ElementDefinition definition, IElementNavigator instance)
+        {
+            if (definition.IsChoice())
+                return ModelInfo.FhirTypeNameToFhirType(instance.TypeName);
+            else
+                return definition.Type.First().Code.Value;
+        }
   
 
         internal OperationOutcome ValidateNameReference(ElementDefinition definition, ElementDefinitionNavigator allDefinitions, IElementNavigator instance)
@@ -471,6 +508,17 @@ namespace Hl7.Fhir.Validation
                    t == typeof(Integer) ||
                    t == typeof(Model.Quantity) ||
                    t == typeof(FhirString);
+        }
+
+        public static bool IsBindeableFhirType(this FHIRDefinedType t)
+        {
+            return t == FHIRDefinedType.Code ||
+                   t == FHIRDefinedType.Coding ||
+                   t == FHIRDefinedType.CodeableConcept ||
+                   t == FHIRDefinedType.Quantity ||
+                   t == FHIRDefinedType.Extension ||
+                   t == FHIRDefinedType.String ||
+                   t == FHIRDefinedType.Uri;
         }
     }
 
