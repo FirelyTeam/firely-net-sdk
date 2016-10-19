@@ -26,10 +26,12 @@ namespace Hl7.Fhir.Validation
 
             var matchResult = ChildNameMatcher.Match(definition, instance);
 
-            outcome.Verify(() => !matchResult.UnmatchedInstanceElements.Any(), "Encountered unknown child elements {0} for definition '{1}'".
-                            FormatWith(String.Join(",", matchResult.UnmatchedInstanceElements.Select(e => "'" + e.Name + "'")),
-                                    definition.Path),
-                            Issue.CONTENT_ELEMENT_HAS_UNKNOWN_CHILDREN, instance);
+            if (matchResult.UnmatchedInstanceElements.Any())
+            {
+                var elementList = String.Join(",", matchResult.UnmatchedInstanceElements.Select(e => "'" + e.Name + "'"));
+                validator.Trace(outcome, $"Encountered unknown child elements {elementList} for definition '{definition.Path}'",
+                                Issue.CONTENT_ELEMENT_HAS_UNKNOWN_CHILDREN, instance);
+            }
 
             //TODO: Give warnings for out-of order children.  Really? That's an xml artifact, no such thing in Json!
 
@@ -47,7 +49,7 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-        internal static OperationOutcome ValidateCardinality(this Validator validator, MatchResult matchResult, INamedNode parent)
+        internal static OperationOutcome ValidateCardinality(this Validator validator, MatchResult matchResult, IElementNavigator parent)
         {
             var outcome = new OperationOutcome();
 
@@ -57,11 +59,14 @@ namespace Hl7.Fhir.Validation
                 var occurs = match.InstanceElements.Count;
                 var cardinality = Cardinality.FromElementDefinition(definition);
 
-                if (outcome.Verify(() => definition.Min != null && definition.Max != null, "ElementDefinition does not specify cardinality", Issue.PROFILE_ELEMENTDEF_CARDINALITY_MISSING, parent))
+                if (definition.Min != null && definition.Max != null)
                 {
-                    outcome.Verify(() => cardinality.InRange(occurs), "Element '{0}' occurs {1} times, which is not within the specified cardinality of {2}"
-                                .FormatWith(match.Definition.PathName, occurs, cardinality.ToString()), Issue.CONTENT_ELEMENT_INCORRECT_OCCURRENCE, parent);
+                    if(!cardinality.InRange(occurs))
+                        validator.Trace(outcome, $"Element '{match.Definition.PathName}' occurs {occurs} times, which is not within the specified cardinality of {cardinality.ToString()}",
+                                Issue.CONTENT_ELEMENT_INCORRECT_OCCURRENCE, parent);
                 }
+                else
+                    validator.Trace(outcome, "ElementDefinition does not specify cardinality", Issue.PROFILE_ELEMENTDEF_CARDINALITY_MISSING, parent);
             }
 
             return outcome;

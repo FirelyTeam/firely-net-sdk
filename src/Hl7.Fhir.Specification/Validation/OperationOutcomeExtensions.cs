@@ -20,18 +20,6 @@ namespace Hl7.Fhir.Validation
 
     internal static class OperationOutcomeExtensions
     {
-        [Obsolete("Use if() with Trace() instead")]
-        public static bool Verify(this OperationOutcome outcome, Condition condition, string message, Issue issue, INamedNode location)
-        {
-            if (!condition())
-            {
-                outcome.AddIssue(issue.ToIssueComponent(message, location));
-                return false;
-            }
-            else
-                return true;
-        }
-
         public static void MakeInformational(this OperationOutcome outcome)
         {
             var result = outcome;

@@ -27,42 +27,51 @@ namespace Hl7.Fhir.Validation
 
             validator.Trace(outcome, "Validating against constraints specified by the element's defined type", Issue.PROCESSING_PROGRESS, instance);
 
-            outcome.Verify(() => !definition.Type.Select(tr => tr.Code).Contains(null), "ElementDefinition contains a type with an empty type code", Issue.PROFILE_ELEMENTDEF_CONTAINS_NULL_TYPE, instance);
+            if(definition.Type.Any(tr => tr.Code == null))
+                validator.Trace(outcome, "ElementDefinition contains a type with an empty type code", Issue.PROFILE_ELEMENTDEF_CONTAINS_NULL_TYPE, instance);
 
             // Check if this is a choice: there are multiple distinct Codes to choose from
-            var types = definition.Type.Where(tr => tr.Code != null);
-            var choices = types.Select(tr => tr.Code.Value).Distinct();
+            var typeRefs = definition.Type.Where(tr => tr.Code != null);
+            var choices = typeRefs.Select(tr => tr.Code.Value).Distinct();
 
             if (choices.Count() > 1)
             {
-                if (outcome.Verify(() => instance.TypeName != null, "ElementDefinition is a choice or contains a polymorphic type constraint, but the instance does not indicate its actual type",
-                    Issue.CONTENT_ELEMENT_CHOICE_WITH_NO_ACTUAL_TYPE, instance))
+                if (instance.TypeName != null)
                 {
-                    // In fact, the next statements are just an optimalization, without them, we would do an ANY validation
-                    // against *all* choices, what we do here is pre-filtering for sensible choices, and report of there isn't
-                    // any.
-                    
                     // This is a choice type, find out what type is present in the instance data
                     // (e.g. deceased[Boolean], or _resourceType in json). This is exposed by IElementNavigator.TypeName.
                     var instanceType = ModelInfo.FhirTypeNameToFhirType(instance.TypeName);
-                    if (outcome.Verify(() => instanceType != null, "Instance indicates the element is of type '{0}', which is not a known FHIR core type."
-                                .FormatWith(instance.TypeName), Issue.CONTENT_ELEMENT_CHOICE_WITH_NO_ACTUAL_TYPE, instance))
+                    if (instanceType != null)
                     {
-                        var applicableChoices = types.Where(tr => ModelInfo.IsInstanceTypeFor(tr.Code.Value, instanceType.Value));
+                        // In fact, the next statements are just an optimalization, without them, we would do an ANY validation
+                        // against *all* choices, what we do here is pre-filtering for sensible choices, and report if there isn't
+                        // any.
+                        var applicableChoices = typeRefs.Where(tr => ModelInfo.IsInstanceTypeFor(tr.Code.Value, instanceType.Value));
 
                         // Instance typename must be one of the applicable types in the choice
-                        if (outcome.Verify(() => applicableChoices.Any(), "Type specified in the instance ('{0}') is not one of the allowed choices ({1})"
-                                    .FormatWith(instance.TypeName, String.Join(",", choices.Select(t => "'" + t.GetLiteral() + "'"))), Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, instance))
+                        if (applicableChoices.Any())
                         {
                             outcome.Include(validator.ValidateTypeReferences(applicableChoices, instance));
                         }
+                        else
+                        {
+                            var choiceList = String.Join(",", choices.Select(t => "'" + t.GetLiteral() + "'"));
+                            validator.Trace(outcome, $"Type specified in the instance ('{instance.TypeName}') is not one of the allowed choices ({choiceList})",
+                                     Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, instance);
+                        }
                     }
+                    else
+                        validator.Trace(outcome, $"Instance indicates the element is of type '{instance.TypeName}', which is not a known FHIR core type.",
+                                Issue.CONTENT_ELEMENT_CHOICE_WITH_NO_ACTUAL_TYPE, instance);
                 }
+                else
+                    validator.Trace(outcome, "ElementDefinition is a choice or contains a polymorphic type constraint, but the instance does not indicate its actual type",
+                        Issue.CONTENT_ELEMENT_CHOICE_WITH_NO_ACTUAL_TYPE, instance);
             }
             else if (choices.Count() == 1)
             {
                 // Only one type present in list of typerefs, all of the typerefs are candidates
-                outcome.Include(validator.ValidateTypeReferences(types, instance));
+                outcome.Include(validator.ValidateTypeReferences(typeRefs, instance));
             }
 
             return outcome;
@@ -102,8 +111,8 @@ namespace Hl7.Fhir.Validation
             if (reference == null)       // No reference found -> this is always valid
                 return outcome;
 
-            outcome.Verify(() => references.Count() == 1,
-                    $"Encountered multiple references, just using first ({reference})", Issue.CONTENT_REFERENCE_HAS_MULTIPLE_REFERENCES, instance);
+            if(references.Count() > 1)
+                validator.Trace(outcome, $"Encountered multiple references, just using first ({reference})", Issue.CONTENT_REFERENCE_HAS_MULTIPLE_REFERENCES, instance);
 
             // Try to resolve the reference *within* the current instance (Bundle, resource with contained resources) first
             ElementDefinition.AggregationMode? encounteredKind;
@@ -113,8 +122,8 @@ namespace Hl7.Fhir.Validation
             // If no aggregation is given, all kinds of aggregation are allowed, otherwise only allow
             // those aggregation types that are given in the Aggregation element
             bool hasAggregation = typeRef.Aggregation != null && typeRef.Aggregation.Count() != 0;
-            outcome.Verify(() => !hasAggregation || typeRef.Aggregation.Any(a => a == encounteredKind),
-                    $"Encountered a reference ({reference}) of kind '{encounteredKind}' which is not allowed", Issue.CONTENT_REFERENCE_OF_INVALID_KIND, instance);
+            if(hasAggregation && !typeRef.Aggregation.Any(a => a == encounteredKind))
+                  validator.Trace(outcome,  $"Encountered a reference ({reference}) of kind '{encounteredKind}' which is not allowed", Issue.CONTENT_REFERENCE_OF_INVALID_KIND, instance);
 
             // If we failed to find a referenced resource within the current instance, try to resolve it using an external method
             if (referencedResource == null && encounteredKind == ElementDefinition.AggregationMode.Referenced)
@@ -131,7 +140,7 @@ namespace Hl7.Fhir.Validation
             }
 
             // If the reference was resolved (either internally or externally, validate it
-            if (outcome.Verify(() => referencedResource != null, $"Cannot resolve reference {reference}", Issue.UNAVAILABLE_REFERENCED_RESOURCE, instance))
+            if (referencedResource != null)
             {
                 validator.Trace(outcome, $"Starting validation of referenced resource {reference} ({encounteredKind})", Issue.PROCESSING_START_NESTED_VALIDATION, instance);
 
@@ -148,6 +157,8 @@ namespace Hl7.Fhir.Validation
                     outcome.Include(newValidator.Validate(referencedResource, typeRef.GetDeclaredProfiles(), statedProfiles: null, statedCanonicals: null));
                 }
             }
+            else
+                validator.Trace(outcome, $"Cannot resolve reference {reference}", Issue.UNAVAILABLE_REFERENCED_RESOURCE, instance);
 
             return outcome;
         }
@@ -160,7 +171,7 @@ namespace Hl7.Fhir.Validation
             {
                 if (!Uri.IsWellFormedUriString(reference, UriKind.RelativeOrAbsolute))
                 {
-                    outcome.Verify(() => true, $"Encountered an unparseable reference ({reference})", Issue.CONTENT_UNPARSEABLE_REFERENCE, instance);
+                    validator.Trace(outcome, $"Encountered an unparseable reference ({reference})", Issue.CONTENT_UNPARSEABLE_REFERENCE, instance);
                     referenceKind = null;
                     return null;
                 }
@@ -171,7 +182,8 @@ namespace Hl7.Fhir.Validation
             if (identity.Form == ResourceIdentityForm.Local)
             {
                 referenceKind = ElementDefinition.AggregationMode.Contained;
-                outcome.Verify(() => result != null, $"Contained reference ({reference}) is not resolvable", Issue.CONTENT_CONTAINED_REFERENCE_NOT_RESOLVABLE, instance);
+                if(result == null)
+                    validator.Trace(outcome, $"Contained reference ({reference}) is not resolvable", Issue.CONTENT_CONTAINED_REFERENCE_NOT_RESOLVABLE, instance);
             }
             else
             {

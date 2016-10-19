@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Validation
                 // If navigator cannot be moved to content, there's really nothing to validate against.
                 if (definition.AtRoot && !definition.MoveToFirstChild())
                 {
-                    outcome.AddIssue($"Snapshot component of Profile '{definition.StructureDefinition?.Url}' has no content.", Issue.PROFILE_ELEMENTDEF_IS_EMPTY, instance);
+                    outcome.AddIssue($"Snapshot component of profile '{definition.StructureDefinition?.Url}' has no content.", Issue.PROFILE_ELEMENTDEF_IS_EMPTY, instance);
                     return outcome;
                 }
 

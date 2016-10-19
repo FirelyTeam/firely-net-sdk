@@ -83,15 +83,15 @@ namespace Hl7.Fhir.Validation
             var outcome = new OperationOutcome();
 
             if(definition.MinValue != null)
-                outcome.Add(validateMinMaxValue(definition.MinValue, instance, -1, "MinValue"));
+                outcome.Add(validateMinMaxValue(validator, definition.MinValue, instance, -1, "MinValue"));
 
             if(definition.MaxValue != null)
-                outcome.Add(validateMinMaxValue(definition.MaxValue, instance, 1, "MaxValue"));
+                outcome.Add(validateMinMaxValue(validator, definition.MaxValue, instance, 1, "MaxValue"));
 
             return outcome;
         }
 
-        private static OperationOutcome validateMinMaxValue(Element definition, IElementNavigator instance,
+        private static OperationOutcome validateMinMaxValue(Validator me, Element definition, IElementNavigator instance,
                         int comparisonOutcome, string elementName)
         {
             var outcome = new OperationOutcome();
@@ -99,8 +99,7 @@ namespace Hl7.Fhir.Validation
             if (definition != null)
             {
                 // Min/max are only defined for ordered types
-                if (outcome.Verify(() => definition.GetType().IsOrderedFhirType(),
-                    $"{elementName} was given in ElementDefinition, but type '{definition.TypeName}' is not an ordered type", Issue.PROFILE_ELEMENTDEF_MIN_MAX_USES_UNORDERED_TYPE, instance))
+                if (definition.GetType().IsOrderedFhirType())
                 {
                     try
                     {
@@ -125,6 +124,8 @@ namespace Hl7.Fhir.Validation
                         outcome.AddIssue($"Comparing the instance against the {elementName} failed: {ns.Message}", Issue.UNSUPPORTED_MIN_MAX_QUANTITY, instance);
                     }
                 }
+                else
+                    me.Trace(outcome, $"{elementName} was given in ElementDefinition, but type '{definition.TypeName}' is not an ordered type", Issue.PROFILE_ELEMENTDEF_MIN_MAX_USES_UNORDERED_TYPE, instance);
             }
 
             return outcome;
