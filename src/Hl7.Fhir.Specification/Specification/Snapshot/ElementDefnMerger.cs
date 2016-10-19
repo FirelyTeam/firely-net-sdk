@@ -178,8 +178,9 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 // [WMR 20160718] Handle snap == null
                 // if (!diff.IsNullOrEmpty() && !diff.IsExactly(snap))
-                if (!diff.IsNullOrEmpty() && (snap == null || !diff.IsExactly(snap)))
-                {
+                // if (!diff.IsNullOrEmpty() && (snap == null || !diff.IsExactly(snap)))
+                if (!diff.IsNullOrEmpty() && (snap.IsNullOrEmpty() || !diff.IsExactly(snap)))
+                    {
                     var result = (T)diff.DeepCopy();
 
                     if (allowAppend && diff.ObjectValue is string)
@@ -216,7 +217,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 //TODO: The next != null should be IsNullOrEmpty(), but we don't have that yet for complex types
                 // [WMR 20160718] Handle snap == null
                 // if (diff != null && !diff.IsExactly(snap))
-                if (diff != null && (snap == null || !diff.IsExactly(snap)))
+                // if (diff != null && (snap == null || !diff.IsExactly(snap)))
+                if (!diff.IsNullOrEmpty() && (snap.IsNullOrEmpty() || !diff.IsExactly(snap)))
                 {
                     var result = (T)diff.DeepCopy();
                     OnConstraint(result);
@@ -228,18 +230,10 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             private List<T> mergeCollection<T>(List<T> snap, List<T> diff, Func<T, T, bool> elemComparer) where T : Element
             {
-                // [WMR 20160915] Handle ChangedByDiff extension
-                // - Should not affect equality testing
-                // - Should not be inherited by derived profiles
-                
                 if (!diff.IsNullOrEmpty() && !diff.IsExactly(snap))
                 {
-                    var result = snap == null ? new List<T>() : new List<T>((IEnumerable<T>)snap.DeepCopy());
-
-                    // [WMR 20160915] Never inherit Changed extension from base profile!
-                    // Remove before comparing
-                    // result.RemoveAllChangedByDiff();
-
+                    var result = snap == null ? new List<T>() : new List<T>(snap.DeepCopy());
+                    
                     // Just add new elements to the result, never replace existing ones
                     foreach (var element in diff)
                     {
