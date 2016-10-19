@@ -291,7 +291,7 @@ namespace Hl7.Fhir.Validation
             }
             catch (Exception e)
             {
-                Trace(outcome, $"Terminology failed while validating code X (system Y): {e.Message}", Issue.UNAVAILABLE_VALIDATE_CODE_FAILED, instance);
+                Trace(outcome, $"Terminology service failed while validating code X (system Y): {e.Message}", Issue.UNAVAILABLE_VALIDATE_CODE_FAILED, instance);
                 return outcome;
             }
         }

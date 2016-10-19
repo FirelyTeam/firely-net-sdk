@@ -13,14 +13,6 @@ namespace Hl7.Fhir.Validation
     public class MinMaxValidationTests
     {
         [Fact]
-        public void TestParseQuantity()
-        {
-            var navQ = new PocoNavigator(new Model.Quantity(3.14m, "kg"));
-            var pQ = navQ.ParseQuantity();
-            Assert.True(pQ.IsExactly(new Model.Quantity(3.14m, "kg")));
-        }
-
-        [Fact]
         public void TestGetComparable()
         {
             var navQ = new PocoNavigator(new Model.FhirDateTime(1972, 11, 30));

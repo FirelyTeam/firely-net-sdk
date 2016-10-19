@@ -12,12 +12,12 @@ using Xunit;
 
 namespace Hl7.Fhir.Source
 {
-    public class VSExpansionTests : IClassFixture<ResolverFixture>
+    public class TerminologyTests : IClassFixture<ResolverFixture>
     {            
         private IResourceResolver _resolver;
         private IConformanceSource _zip;
 
-        public VSExpansionTests(ResolverFixture fixture)
+        public TerminologyTests(ResolverFixture fixture)
         {
             _resolver = fixture.Resolver;
             _zip = fixture.Zip;

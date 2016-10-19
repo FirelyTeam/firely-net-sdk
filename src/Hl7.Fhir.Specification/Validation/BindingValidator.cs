@@ -29,12 +29,12 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        public OperationOutcome ValidateBinding(Coding coding, string valueSetUri, BindingStrength? strength)
+        public OperationOutcome ValidateBinding(Coding coding, string valueSetUri, BindingStrength? strength=null)
         {
             return callService(coding.Code, coding.System, coding.Display, valueSetUri, strength, _path);
         }
 
-        public OperationOutcome ValidateBinding(CodeableConcept concept, string valueSetUri, BindingStrength? strength)
+        public OperationOutcome ValidateBinding(CodeableConcept concept, string valueSetUri, BindingStrength? strength=null)
         {
             var outcome = new OperationOutcome();
             var callResults = concept.Coding.Select(coding => ValidateBinding(coding, valueSetUri, strength));
@@ -45,7 +45,10 @@ namespace Hl7.Fhir.Validation
             {
                 outcome.AddIssue("None of the Codings in the CodeableConcept were valid for the binding. Details follow.", Issue.CONTENT_INVALID_FOR_REQUIRED_BINDING, _path);
                 foreach (var cr in callResults)
+                {
+                    cr.MakeInformational();
                     outcome.Include(cr);
+                }
             }
             else
             {
@@ -60,16 +63,31 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
-            OperationOutcome validateResult = _service.ValidateCode(uri, "code", "system", "display", abstractAllowed: false);
-            var codeLabel = $"Code '{"code"}' from system '{"system"}'";
+            OperationOutcome validateResult = _service.ValidateCode(uri, code, system, display, abstractAllowed: false);
+            var codeLabel = $"Code '{code}' from system '{system}'";
+            if (display != null) codeLabel += $" with display '{display}'";
+
+            if (validateResult.Where(type: OperationOutcome.IssueType.NotSupported).Any())
+            {
+                outcome.AddIssue($"The terminology service is incapable of validating {codeLabel} (valueset '{uri}').", Issue.UNSUPPORTED_BINDING_NOT_SUPPORTED_BY_SERVICE, path);
+                validateResult.MakeInformational();
+                outcome.Include(validateResult);
+                return outcome;
+            }
 
             if (!validateResult.Success)
             {
                 if (strength == BindingStrength.Required)
-                    outcome.AddIssue($"{codeLabel} is not a valid value for required binding to valueset '{uri}'", Issue.CONTENT_INVALID_FOR_REQUIRED_BINDING, path);
+                {
+                    outcome.AddIssue($"{codeLabel} is not valid for required binding to valueset '{uri}'", Issue.CONTENT_INVALID_FOR_REQUIRED_BINDING, path);
+                }
                 else
-                    outcome.AddIssue($"{codeLabel} is not valid in non-required binding to valueset '{uri}'", Issue.CONTENT_INVALID_FOR_NON_REQUIRED_BINDING, path);
+                {
+                    outcome.AddIssue($"{codeLabel} is not valid for non-required binding to valueset '{uri}'", Issue.CONTENT_INVALID_FOR_NON_REQUIRED_BINDING, path);
 
+                }
+
+                validateResult.MakeInformational();
                 outcome.Include(validateResult);
             }
 
