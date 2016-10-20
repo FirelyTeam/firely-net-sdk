@@ -362,6 +362,26 @@ namespace Hl7.Fhir.Tests.Model
         }
 
         [TestMethod]
+        public void TestNamingSystemCanonical()
+        {
+            NamingSystem ns = new NamingSystem();
+
+            Assert.IsNull(ns.Url);
+            Assert.IsNull(ns.UrlElement);
+
+            ns.UniqueId.Add(new NamingSystem.UniqueIdComponent { Value = "http://nu.nl" });
+            ns.UniqueId.Add(new NamingSystem.UniqueIdComponent { Value = "http://dan.nl", Preferred=true });
+
+            Assert.AreEqual("http://dan.nl", ns.Url);
+            Assert.AreEqual("http://dan.nl", ns.UrlElement.Value);
+
+            ns.UniqueId[1].Preferred = false;
+
+            Assert.AreEqual("http://nu.nl", ns.Url);
+            Assert.AreEqual("http://nu.nl", ns.UrlElement.Value);
+        }
+
+        [TestMethod]
         public void TestChildren_EmptyPatient()
         {
             var patient = new Patient();
