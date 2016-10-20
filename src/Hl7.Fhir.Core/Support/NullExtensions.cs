@@ -20,24 +20,42 @@ namespace Hl7.Fhir.Support
     {
         public static bool IsNullOrEmpty(this IList list)
         {
-            if (list == null) return true;
+            if (list == null) { return true; }
 
             return list.Count == 0;
         }
 
         public static bool IsNullOrEmpty(this Primitive element)
         {
-            if (element == null) return true;
+            if (element == null) { return true; }
 
-            if (element.ObjectValue == null) return true;
+            if (element.ObjectValue != null) { return false; }
 
-            return false;
-        } 
-        
+            // Recursively check all child elements
+            return element.Children.All(e => e.IsNullOrEmpty());
+        }
+
+        /// <summary>Determines if the element is <c>null</c> or empty.</summary>
+        /// <param name="element">A <see cref="Base"/> instance.</param>
+        /// <returns>
+        /// Returns <c>true</c> if the element is <c>null</c>, or if all child elements are <c>null</c> or empty.
+        /// Returns <c>false</c> if the element has one or more non-empty child elements.
+        /// </returns>
         public static bool IsNullOrEmpty(this Base element)
         {
             // Actually, we shoud really check all members...
-            return element == null;
+            // return element == null;
+
+            // [WMR 20161019] New
+            if (element == null) { return true; }
+
+            // If the element is a primitive, then check ObjectValue
+            var p = element as Primitive;
+            if (p != null) { return p.IsNullOrEmpty(); }
+
+            // Recursively check all child elements
+            return element.Children.All(e => e.IsNullOrEmpty());
         }
+
     }
 }

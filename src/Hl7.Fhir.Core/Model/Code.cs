@@ -43,7 +43,7 @@ using Hl7.Fhir.Support;
 namespace Hl7.Fhir.Model
 {
     [System.Diagnostics.DebuggerDisplay(@"\{{Value}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
-    public partial class Code
+    public partial class Code : IStringValue
     {
         public static bool IsValidValue(string value)
         {
