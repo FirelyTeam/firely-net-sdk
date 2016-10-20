@@ -300,7 +300,12 @@ namespace Hl7.Fhir.Validation
         internal static FHIRDefinedType? DetermineType(ElementDefinition definition, IElementNavigator instance)
         {
             if (definition.IsChoice())
-                return ModelInfo.FhirTypeNameToFhirType(instance.TypeName);
+            {
+                if (instance.TypeName != null)
+                    return ModelInfo.FhirTypeNameToFhirType(instance.TypeName);
+                else
+                    return null;
+            }
             else
                 return definition.Type.First().Code.Value;
         }

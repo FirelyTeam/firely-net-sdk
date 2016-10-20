@@ -37,8 +37,16 @@ namespace Hl7.Fhir.Validation
         public OperationOutcome ValidateBinding(CodeableConcept concept, string valueSetUri, BindingStrength? strength=null)
         {
             var outcome = new OperationOutcome();
-            var callResults = concept.Coding.Select(coding => ValidateBinding(coding, valueSetUri, strength));
 
+            // Maybe just a text, but if there are no codings, that's a positive result
+            if (!concept.Coding.Any()) return outcome;
+
+            // If we have just 1 coding, we better handle this using the simpler version of ValidateBinding
+            if (concept.Coding.Count == 1)
+                return ValidateBinding(concept.Coding.Single(), valueSetUri, strength);
+
+            // Else, look for one succesful match in any of the codes in the CodeableConcept
+            var callResults = concept.Coding.Select(coding => ValidateBinding(coding, valueSetUri, strength));
             var successOutcome = callResults.FirstOrDefault(r => r.Success);
 
             if (successOutcome == null)
@@ -69,9 +77,12 @@ namespace Hl7.Fhir.Validation
 
             if (validateResult.Where(type: OperationOutcome.IssueType.NotSupported).Any())
             {
-                outcome.AddIssue($"The terminology service is incapable of validating {codeLabel} (valueset '{uri}').", Issue.UNSUPPORTED_BINDING_NOT_SUPPORTED_BY_SERVICE, path);
-                validateResult.MakeInformational();
-                outcome.Include(validateResult);
+                if (strength != BindingStrength.Example)
+                {
+                    outcome.AddIssue($"The terminology service is incapable of validating {codeLabel} (valueset '{uri}').", Issue.UNSUPPORTED_BINDING_NOT_SUPPORTED_BY_SERVICE, path);
+                    validateResult.MakeInformational();
+                    outcome.Include(validateResult);
+                }
                 return outcome;
             }
 
@@ -81,10 +92,9 @@ namespace Hl7.Fhir.Validation
                 {
                     outcome.AddIssue($"{codeLabel} is not valid for required binding to valueset '{uri}'", Issue.CONTENT_INVALID_FOR_REQUIRED_BINDING, path);
                 }
-                else
+                else if(strength != BindingStrength.Example)
                 {
                     outcome.AddIssue($"{codeLabel} is not valid for non-required binding to valueset '{uri}'", Issue.CONTENT_INVALID_FOR_NON_REQUIRED_BINDING, path);
-
                 }
 
                 validateResult.MakeInformational();
@@ -107,6 +117,7 @@ namespace Hl7.Fhir.Validation
                 {
                     var uri = (binding.ValueSet as FhirUri)?.Value;
 
+                    // == null, so we check whether this could NOT be casted to a FhirUri, thus is a ValueSet reference
                     if (uri == null)
                     {
                         uri = (binding.ValueSet as ResourceReference).Reference;

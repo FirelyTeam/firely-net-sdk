@@ -65,7 +65,6 @@ namespace Hl7.Fhir.Tests.Model
             FhirDateTime dtWithMs = new FhirDateTime("2014-12-11T00:00:00.000+11:00");
             Assert.AreEqual("2014-12-11T00:00:00.000+11:00", dtWithMs.Value);
 
-
             var stamp = new DateTimeOffset(1972, 11, 30, 15, 10, 0, TimeSpan.Zero);
             dt = new FhirDateTime(stamp);
             Assert.IsTrue(dt.Value.EndsWith("+00:00"));
@@ -322,7 +321,52 @@ namespace Hl7.Fhir.Tests.Model
             Assert.IsTrue(vs.CodeInExpansion("code1.2", sys1));
             Assert.IsFalse(vs.CodeInExpansion("code1.2", sys2));
 
-            Assert.AreEqual(5, vs.CountCodes());
+            Assert.AreEqual(5, vs.ExpansionSize());
+        }
+
+        [TestMethod]
+        public void TestImportExpansion()
+        {
+            var sys1 = "http://example.org/system/system1";
+            var sys2 = "http://example.org/system/system2";
+
+            var vs = new ValueSet();
+            vs.Expansion = new ValueSet.ExpansionComponent();
+            vs.Expansion.Contains.Add(new ValueSet.ContainsComponent { System = sys1, Code = "code1" });
+            vs.Expansion.Contains.Add(new ValueSet.ContainsComponent { System = sys2, Code = "code1" });
+
+            var vs2 = new ValueSet();
+            vs2.Expansion = new ValueSet.ExpansionComponent();
+            vs2.Expansion.Contains.Add(new ValueSet.ContainsComponent { System = sys1, Code = "code3" });
+            vs2.Expansion.Contains.Add(new ValueSet.ContainsComponent { System = sys2, Code = "code4" });
+
+            vs.ImportExpansion(vs2);
+
+            Assert.AreEqual(4, vs.ExpansionSize());
+            Assert.AreEqual(4, vs.Expansion.Total);
+
+            Assert.IsTrue(vs.CodeInExpansion("code1", sys2));
+            Assert.IsTrue(vs.CodeInExpansion("code4", sys2));
+        }
+
+        public void TestImportExpansionInEmptyVs()
+        {
+            var sys1 = "http://example.org/system/system1";
+            var sys2 = "http://example.org/system/system2";
+
+            var vs = new ValueSet();
+            var vs2 = new ValueSet();
+            vs2.Expansion = new ValueSet.ExpansionComponent();
+            vs2.Expansion.Contains.Add(new ValueSet.ContainsComponent { System = sys1, Code = "code3" });
+            vs2.Expansion.Contains.Add(new ValueSet.ContainsComponent { System = sys2, Code = "code4" });
+
+            vs.ImportExpansion(vs2);
+
+            Assert.AreEqual(2, vs.ExpansionSize());
+            Assert.AreEqual(2, vs.Expansion.Total);
+
+            Assert.IsTrue(vs.CodeInExpansion("code3", sys1));
+            Assert.IsTrue(vs.CodeInExpansion("code4", sys2));
         }
 
 

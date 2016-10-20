@@ -28,8 +28,14 @@ namespace Hl7.Fhir.Validation
                     new TestProfileArtifactSource(),
                     new ZipSource("specification.zip")));
 
-            var ctx = new ValidationSettings() { ResourceResolver = _source, GenerateSnapshot = true, EnableXsdValidation = true,
-                Trace = false, ResolveExteralReferences = true };
+            var ctx = new ValidationSettings()
+            {
+                ResourceResolver = _source,
+                GenerateSnapshot = true,
+                EnableXsdValidation = true,
+                Trace = false,
+                ResolveExteralReferences = true
+            };
 
             _validator = new Validator(ctx);
         }
@@ -182,7 +188,7 @@ namespace Hl7.Fhir.Validation
         {
             var patientSd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRDefinedType.Patient);
 
-            var instance1 = new CodeableConcept("http://this.isa.test.nl/definition", "1234");
+            var instance1 = new CodeableConcept("http://hl7.org/fhir/marital-status", "U");
             instance1.Text = "This is fixed too";
 
             var maritalStatusElement = patientSd.Snapshot.Element.Single(e => e.Path == "Patient.maritalStatus");
@@ -202,7 +208,7 @@ namespace Hl7.Fhir.Validation
             report = _validator.Validate(patient, patientSd);
             Assert.AreEqual(0, report.Errors);
 
-            patient.MaritalStatus.Coding.Add(new Coding("http://this.isa.test.nl/definition", "5678"));
+            patient.MaritalStatus.Coding.Add(new Coding("http://hl7.org/fhir/v3/MaritalStatus", "L"));
             report = _validator.Validate(patient, patientSd);
             Assert.AreEqual(1, report.Errors);
 
@@ -216,7 +222,7 @@ namespace Hl7.Fhir.Validation
         {
             var patientSd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRDefinedType.Patient);
 
-            var instance1 = new CodeableConcept("http://this.isa.test.nl/definition", "1234");
+            var instance1 = new CodeableConcept("http://hl7.org/fhir/marital-status", "U");
 
             var maritalStatusElement = patientSd.Snapshot.Element.Single(e => e.Path == "Patient.maritalStatus");
             maritalStatusElement.Pattern = (CodeableConcept)instance1.DeepCopy();
@@ -239,7 +245,7 @@ namespace Hl7.Fhir.Validation
             report = _validator.Validate(patient, patientSd);
             Assert.AreEqual(0, report.Errors);
 
-            patient.MaritalStatus.Coding.Insert(0, new Coding("http://this.isa.test.nl/definition", "5678"));
+            patient.MaritalStatus.Coding.Insert(0, new Coding("http://hl7.org/fhir/v3/MaritalStatus", "L"));
             report = _validator.Validate(patient, patientSd);
             Assert.AreEqual(0, report.Errors);
 
@@ -319,7 +325,7 @@ namespace Hl7.Fhir.Validation
             obs.Value = new FhirString("I should be ok");
             var report = _validator.Validate(obs);
             Assert.IsTrue(report.Success);
-            Assert.AreEqual(0, report.Warnings);  
+            Assert.AreEqual(0, report.Warnings);
 
             obs.Value = FhirDateTime.Now();
             report = _validator.Validate(obs);
@@ -329,7 +335,7 @@ namespace Hl7.Fhir.Validation
             obs.Value = new Quantity(78m, "kg");
             report = _validator.Validate(obs);
             Assert.IsTrue(report.Success);
-            Assert.AreEqual(0, report.Warnings);  
+            Assert.AreEqual(0, report.Warnings);
 
             obs.Value = new Quantity(183m, "cm");
             report = _validator.Validate(obs);
@@ -339,7 +345,7 @@ namespace Hl7.Fhir.Validation
             obs.Value = new Quantity(300m, "in");
             report = _validator.Validate(obs);
             Assert.IsFalse(report.Success);
-            Assert.AreEqual(0, report.Warnings); 
+            Assert.AreEqual(0, report.Warnings);
         }
 
 
@@ -414,7 +420,7 @@ namespace Hl7.Fhir.Validation
             var bundle = (new FhirXmlParser()).Parse<Bundle>(bundleXml);
             Assert.IsNotNull(bundle);
 
-            var ctx = new ValidationSettings() { ResourceResolver = _source, GenerateSnapshot = true, ResolveExteralReferences=true, Trace = false };
+            var ctx = new ValidationSettings() { ResourceResolver = _source, GenerateSnapshot = true, ResolveExteralReferences = true, Trace = false };
             bool hitResolution = false;
 
             _validator = new Validator(ctx);
@@ -465,6 +471,50 @@ namespace Hl7.Fhir.Validation
         }
 
         [TestMethod]
+        public void TestBindingValidation()
+        {
+            var p = new Patient();
+
+            p.MaritalStatus = new CodeableConcept("http://hl7.org/fhir/v3/MaritalStatus", "S");
+
+            var report = _validator.Validate(p);
+            Assert.IsTrue(report.Success);
+            Assert.AreEqual(0, report.Warnings);
+
+            p.MaritalStatus.Coding[0].Code = "XX";
+
+            report = _validator.Validate(p);
+            Assert.IsFalse(report.Success);
+            Assert.AreEqual(0, report.Warnings);
+        }
+
+        [TestMethod]
+        public void TestChoiceBindingValidation()
+        {
+            var profile = "http://validationtest.org/fhir/StructureDefinition/ParametersWithBoundParams";
+            var cc = new CodeableConcept();
+            cc.Coding.Add(new Coding("http://hl7.org/fhir/data-absent-reason", "NaN"));
+            cc.Coding.Add(new Coding("http://hl7.org/fhir/data-absent-reason", "not-asked"));
+
+            var p = new Parameters();
+            p.Add("cc", cc);
+            p.Add("c", new Coding("http://hl7.org/fhir/data-absent-reason", "NaN"));
+            p.Add("s", new FhirString("not-asked"));
+
+            var report = _validator.Validate(p, profile);
+            Assert.IsTrue(report.Success);
+            Assert.AreEqual(0, report.Warnings);
+
+            p.Remove("s");
+            p.Add("s", new FhirString("not-a-member"));
+            report = _validator.Validate(p, profile);
+            Assert.IsFalse(report.Success);
+            Assert.IsTrue(report.ToString().Contains("not-a-member"));
+            Assert.AreEqual(0, report.Warnings);
+        }
+
+
+        [TestMethod]
         public void ValidateBundleExample()
         {
             var bundle = _source.ResolveByUri("http://example.org/StructureDefinition/Bundle/MainBundle");
@@ -473,8 +523,10 @@ namespace Hl7.Fhir.Validation
             var report = _validator.Validate(bundle);
 
             Assert.IsTrue(report.Success);
-            Assert.AreEqual(18, report.Warnings);
+            Assert.AreEqual(19, report.Warnings);
         }
+
+
 
 
         internal class BundleExampleResolver : IResourceResolver
@@ -503,9 +555,9 @@ namespace Hl7.Fhir.Validation
                 }
                 else
                     return null;
-        }
+            }
 
+        }
     }
-}
 }
 

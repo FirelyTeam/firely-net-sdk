@@ -7,22 +7,27 @@ namespace Hl7.Fhir.Specification.Terminology
 {
     public class LocalTerminologyServer : ITerminologyService
     {
-        private IConformanceSource _source;
+        //private IConformanceSource _source;
         private IResourceResolver _resolver;
+        private ValueSetExpander _expander;
 
-        public LocalTerminologyServer(IConformanceSource localSource)
-        {
-            if (localSource == null) throw Error.ArgumentNull(nameof(localSource));
+        //public LocalTerminologyServer(IConformanceSource localSource)
+        //{
+        //    if (localSource == null) throw Error.ArgumentNull(nameof(localSource));
 
-            _source = localSource;
-            _resolver = localSource;
-        }
+        //    _source = localSource;
+        //    _resolver = localSource;
+        //}
 
         public LocalTerminologyServer(IResourceResolver resolver)
         {
             if (resolver == null) throw Error.ArgumentNull(nameof(resolver));
 
             _resolver = resolver;
+
+            var settings = ValueSetExpanderSettings.Default;
+            settings.ValueSetSource = _resolver;
+            _expander = new ValueSetExpander(settings);
         }
 
 
@@ -40,18 +45,18 @@ namespace Hl7.Fhir.Specification.Terminology
             // We might have a cached or pre-expanded version brought to us by the _source
             if (!vs.HasExpansion)
             {
-                var expander = new ValueSetExpander();
-                // set the settings to use the _source
-
                 // This will expand te vs - since we do not deepcopy() it, it will change the instance
                 // as it was passed to us from the source
                 try
                 {
-                    expander.Expand(vs);
+                    _expander.Expand(vs);
                 }
-                catch(NotSupportedException nse)
+                catch(Exception e)
                 {
-                    result.AddIssue($"ValueSet cannot be expanded: {nse.Message}", Issue.TERMINOLOGY_VALUESET_TOO_COMPLEX);
+                    var tooComplex = e is NotSupportedException || e is ValueSetExpansionTooBigException;
+
+                    result.AddIssue($"ValueSet cannot be expanded: {e.Message}",
+                        tooComplex ? Issue.TERMINOLOGY_VALUESET_TOO_COMPLEX : Issue.TERMINOLOGY_EXPANSION_FAILED);
                     return result;
                 }
             }

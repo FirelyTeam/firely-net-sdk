@@ -89,6 +89,7 @@
     <Compile Include="Specification\Snapshot\SnapshotBaseComponentGenerator.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorExtensions.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorOutcome.cs" />
+    <Compile Include="Specification\Terminology\ExpansionSizeTooBig.cs" />
     <Compile Include="Specification\Terminology\ITerminologyService.cs" />
     <Compile Include="Specification\Terminology\LocalTerminologyServer.cs" />
     <Compile Include="Specification\Terminology\ValueSetExpander.cs" />

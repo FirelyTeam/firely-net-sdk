@@ -4,21 +4,22 @@ using Hl7.Fhir.Model;
 using System.Linq;
 using Xunit;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.FluentPath;
+using Hl7.Fhir.Specification.Navigation;
+using Hl7.ElementModel;
 
 namespace Hl7.Fhir.Validation
 {
     public class BindingValidationTests : IClassFixture<ResolverFixture>
     {
         private IResourceResolver _resolver;
-        private IConformanceSource _zip;
         private ITerminologyService _termService;
 
         public BindingValidationTests(ResolverFixture fixture)
         {
             _resolver = fixture.Resolver;
-            _zip = fixture.Zip;
 
-            _termService = new LocalTerminologyServer(_zip);
+            _termService = new LocalTerminologyServer(_resolver);
 
         }
 
@@ -79,7 +80,6 @@ namespace Hl7.Fhir.Validation
             result = val.ValidateBinding(cc, vsUri);
             Assert.True(result.Success);
             Assert.Equal(1, result.Warnings);
-        }
-
+        }      
     }
 }

@@ -15,12 +15,10 @@ namespace Hl7.Fhir.Source
     public class TerminologyTests : IClassFixture<ResolverFixture>
     {            
         private IResourceResolver _resolver;
-        private IConformanceSource _zip;
 
         public TerminologyTests(ResolverFixture fixture)
         {
             _resolver = fixture.Resolver;
-            _zip = fixture.Zip;
         }
 
         [Fact]
@@ -43,8 +41,8 @@ namespace Hl7.Fhir.Source
 
             Assert.True(issueTypeVs.CodeInExpansion("security", "http://hl7.org/fhir/issue-type"));
             Assert.True(issueTypeVs.CodeInExpansion("expired", "http://hl7.org/fhir/issue-type"));
-            Assert.Equal(29, issueTypeVs.CountCodes());
-            Assert.Equal(issueTypeVs.CountCodes(), issueTypeVs.Expansion.Total);
+            Assert.Equal(29, issueTypeVs.ExpansionSize());
+            Assert.Equal(issueTypeVs.ExpansionSize(), issueTypeVs.Expansion.Total);
 
             var trans = issueTypeVs.FindInExpansion("transient", "http://hl7.org/fhir/issue-type");
             Assert.NotNull(trans);
@@ -54,16 +52,43 @@ namespace Hl7.Fhir.Source
             issueTypeVs.CodeSystem.Version = "3.14";
             expander.Expand(issueTypeVs);
             Assert.NotEqual(id, issueTypeVs.Expansion.Identifier);
-            Assert.Equal(29, issueTypeVs.CountCodes());
+            Assert.Equal(29, issueTypeVs.ExpansionSize());
 
             var versionParam = issueTypeVs.Expansion.Parameter.Single(c => c.Name == "version");
             Assert.Equal("http://hl7.org/fhir/ValueSet/issue-type?version=3.14", ((FhirUri)versionParam.Value).Value);
         }
 
+
+        [Fact]
+        public void ExpansionOfComposeInclude()
+        {
+            var testVs = _resolver.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/marital-status").DeepCopy() as ValueSet;
+            Assert.False(testVs.HasExpansion);
+
+            var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
+            expander.Expand(testVs);
+            Assert.Equal(11, testVs.ExpansionSize());
+        }
+
+
+        [Fact]
+        public void ExpansionOfComposeImport()
+        {
+            var testVs = _resolver.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/referencerange-meaning").DeepCopy() as ValueSet;
+            Assert.False(testVs.HasExpansion);
+
+            var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
+            Assert.Throws<ValueSetExpansionTooBigException>( () => expander.Expand(testVs) );
+
+            expander.Settings.MaxExpansionSize = 1000;
+            expander.Expand(testVs);
+            Assert.Equal(937, testVs.ExpansionSize());
+        }
+
         [Fact]
         public void TermServiceLoopupTest()
         {
-            var svc = new LocalTerminologyServer(_zip);
+            var svc = new LocalTerminologyServer(_resolver);
 
             var result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/data-absent-reason", "NaN", "http://hl7.org/fhir/data-absent-reason");
             Assert.True(result.Success);

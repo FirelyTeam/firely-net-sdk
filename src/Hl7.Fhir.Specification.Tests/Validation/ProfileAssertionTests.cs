@@ -12,16 +12,14 @@ namespace Hl7.Fhir.Validation
     public class ResolverFixture
     {
         public IResourceResolver Resolver { get; }
-        public IConformanceSource Zip { get; }
-
         public ResolverFixture()
         {
-            Zip = ZipSource.CreateValidationSource();
+            var zip = ZipSource.CreateValidationSource();
 
             Resolver = new CachedResolver(
                 new MultiResolver(
                     new TestProfileArtifactSource(),
-                    Zip
+                    zip
                     ));
         }
     }

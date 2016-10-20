@@ -83,6 +83,7 @@
     <Compile Include="..\Hl7.Fhir.Core\Support\StringExtensions.cs">
       <Link>Support\StringExtensions.cs</Link>
     </Compile>
+    <Compile Include="Specification\Terminology\ExpansionSizeTooBig.cs" />
     <Compile Include="Specification\Terminology\ITerminologyService.cs" />
     <Compile Include="Properties\AssemblyVersionInfo.cs" />
     <Compile Include="Specification\Navigation\Bookmark.cs" />
