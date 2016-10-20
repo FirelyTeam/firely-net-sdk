@@ -237,7 +237,9 @@ namespace Hl7.Fhir.Model
         /// <summary>Determines if the specified <see cref="Type"/> instance represents a FHIR primitive data type.</summary>
         public static bool IsPrimitive(Type type)
         {
-            return IsPrimitive(type.Name);
+            var name = GetFhirTypeNameForType(type);
+
+            return name != null && Char.IsLower(name[0]);
         }
 
         /// <summary>Determines if the specified <see cref="FHIRDefinedType"/> value represents a FHIR primitive data type.</summary>
@@ -257,7 +259,9 @@ namespace Hl7.Fhir.Model
         /// <summary>Determines if the specified <see cref="Type"/> instance represents a FHIR complex data type (NOT including resources and primitives).</summary>
         public static bool IsDataType(Type type)
         {
-            return IsDataType(type.Name);
+            var name = GetFhirTypeNameForType(type);
+
+            return name != null && !IsKnownResource(name) && !IsPrimitive(name);
         }
 
         /// <summary>Determines if the specified <see cref="FHIRDefinedType"/> value represents a FHIR complex data type (NOT including resources and primitives).</summary>
