@@ -517,13 +517,13 @@ namespace Hl7.Fhir.Validation
         [TestMethod]
         public void ValidateBundleExample()
         {
-            var bundle = _source.ResolveByUri("http://example.org/StructureDefinition/Bundle/MainBundle");
+            var bundle = _source.ResolveByUri("http://example.org/examples/Bundle/MainBundle");
             Assert.IsNotNull(bundle);
 
             var report = _validator.Validate(bundle);
 
             Assert.IsTrue(report.Success);
-            Assert.AreEqual(19, report.Warnings);
+            Assert.AreEqual(22, report.Warnings);
         }
 
 
