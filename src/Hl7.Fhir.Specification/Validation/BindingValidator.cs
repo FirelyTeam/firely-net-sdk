@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Validation
 
             // Else, look for one succesful match in any of the codes in the CodeableConcept
             var callResults = concept.Coding.Select(coding => ValidateBinding(coding, valueSetUri, strength));
-            var successOutcome = callResults.FirstOrDefault(r => r.Success);
+            var successOutcome = callResults.Where(r => r.Success).OrderBy(oo => oo.Warnings).FirstOrDefault();
 
             if (successOutcome == null)
             {

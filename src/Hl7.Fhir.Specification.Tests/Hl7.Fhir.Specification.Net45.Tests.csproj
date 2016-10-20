@@ -116,6 +116,9 @@
     <Content Include="TestData\snapshot-test\Chris Grenz\codeable-with-systems-profile.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="TestData\validation\SectionTitles.valueset.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestData\validation\Weight.observation.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

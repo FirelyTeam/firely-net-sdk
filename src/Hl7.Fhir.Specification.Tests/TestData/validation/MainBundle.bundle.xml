@@ -6,7 +6,7 @@
     </meta>
     <type value="document"/>
     <entry>
-        <fullUrl value="http://example.org/fhir/Composition/thecomp"/>
+        <fullUrl value="http://example.org/fhir/Composition/MainBundle"/>
         <resource>
             <Composition>
                 <id value="MainComposition"/>
@@ -34,10 +34,32 @@
                 </author>
                 <section>
                     <title value="List of observations"/>
+                    <code>
+                        <coding>
+                            <system value="http://snomed.info/sct"/>
+                            <code value="46680005"/>
+                            <display value="Vital signs" />
+                        </coding>
+                    </code>
                     <entry>
                         <reference value="http://example.org/fhir/Observation/Weight"/>
                     </entry>
                 </section>
+                <section>
+                    <title value="Misc annotations"/>
+                    <code>
+                        <coding>
+                            <system value="http://example.org/fhir/demo-section-titles"/>
+                            <code value="notes"/>
+                        </coding>
+                    </code>
+                    <text>
+                        <status value="additional"/>
+                        <div xmlns="http://www.w3.org/1999/xhtml">
+                            Next time, give the patient some coffee and ask about children.
+                        </div>
+                    </text>
+                </section>               
             </Composition>
         </resource>
     </entry>
@@ -97,8 +119,8 @@
                 <identifier>
                     <type>
                         <coding>
-                            <system value="http://hl7.org/fhir/identifier-type"/>
-                            <code value="SB"/>
+                            <system value="http://hl7.org/fhir/v2/0203"/>
+                            <code value="DL"/>
                         </coding>
                     </type>
                     <system value="http://hl7.org/fhir/sid/us-ssn"/>
