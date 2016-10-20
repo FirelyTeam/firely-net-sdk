@@ -20,6 +20,7 @@ using Hl7.Fhir.FluentPath;
 using Hl7.ElementModel;
 using Hl7.FluentPath;
 using Hl7.Fhir.Validation;
+using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Specification.Tests
 {

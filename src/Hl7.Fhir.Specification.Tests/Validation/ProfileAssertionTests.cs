@@ -12,13 +12,15 @@ namespace Hl7.Fhir.Validation
     public class ResolverFixture
     {
         public IResourceResolver Resolver { get; }
-
         public ResolverFixture()
         {
+            var zip = ZipSource.CreateValidationSource();
+
             Resolver = new CachedResolver(
                 new MultiResolver(
                     new TestProfileArtifactSource(),
-                    new ZipSource("specification.zip")));
+                    zip
+                    ));
         }
     }
 

@@ -97,8 +97,8 @@
                 <identifier>
                     <type>
                         <coding>
-                            <system value="http://hl7.org/fhir/v2/0203"/>
-                            <code value="SS"/>
+                            <system value="http://hl7.org/fhir/identifier-type"/>
+                            <code value="SB"/>
                         </coding>
                     </type>
                     <system value="http://hl7.org/fhir/sid/us-ssn"/>

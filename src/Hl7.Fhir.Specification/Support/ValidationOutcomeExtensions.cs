@@ -7,16 +7,12 @@
 
 using Hl7.ElementModel;
 using Hl7.Fhir.Model;
-using System;
+using Hl7.Fhir.Support;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.XPath;
 
-namespace Hl7.Fhir.Validation
+namespace Hl7.Fhir.Support
 {
 
     public static class ValidationOutcomeExtensions
@@ -60,8 +56,6 @@ namespace Hl7.Fhir.Validation
                 myIssue.SetHierarchyLevel(myIssue.GetHierarchyLevel() + 1);
                 outcome.AddIssue(myIssue);
             }
-
-
         }
 
         public static void Clear(this OperationOutcome outcome)

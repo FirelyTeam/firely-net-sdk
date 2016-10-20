@@ -10,6 +10,7 @@ using Hl7.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Specification.Terminology;
 using System;
 
 namespace Hl7.Fhir.Validation
@@ -20,6 +21,8 @@ namespace Hl7.Fhir.Validation
         public static readonly ValidationSettings Default = new ValidationSettings();
 
         public IResourceResolver ResourceResolver { get; set; }
+
+        public ITerminologyService TerminologyService { get; set; }
 
         /// <summary>
         /// The validator needs StructureDefinitions to have a snapshot form to function. If a StructureDefinition

@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Model
         public List<CodeableConcept> UseContext
         {
             get { return null; }
-            set {; }
+            set { throw new NotImplementedException(); }
         }
 
         public partial class ContactComponent : IConformanceResourceContact
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
         public List<CodeableConcept> UseContext
         {
             get { return null; }
-            set {; }
+            set { throw new NotImplementedException(); }
         }
 
         public partial class ContactComponent : IConformanceResourceContact
@@ -120,14 +120,14 @@ namespace Hl7.Fhir.Model
         public string Description
         {
             get { return null; }
-            set { ; }
+            set { throw new NotImplementedException(); }
         }
 
         [NotMapped]
         public FhirString DescriptionElement
         {
             get { return null; }
-            set {; }
+            set { throw new NotImplementedException(); }
         }
 
         public partial class ContactComponent : IConformanceResourceContact
@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Model
         public List<CodeableConcept> UseContext
         {
             get { return null; }
-            set {; }
+            set { throw new NotImplementedException(); }
         }
         public partial class ContactComponent : IConformanceResourceContact
         { }
@@ -160,28 +160,41 @@ namespace Hl7.Fhir.Model
         public bool? Experimental
         {
             get { return null; }
-            set { ; }
+            set { throw new NotImplementedException(); }
         }
 
         [NotMapped]
         public FhirBoolean ExperimentalElement
         {
             get { return null; }
-            set {; }
+            set { throw new NotImplementedException(); }
         }
 
-        [NotMapped]
+        /// <summary>
+        /// Will return the (first) preferred UniqueId, or the first UniqueId if there is no preferred UniqueId
+        /// </summary>
+        [NotMapped]        
         public string Url
         {
-            get { return null; }
-            set { ; }
+            get
+            {
+                var preferred = UniqueId.FirstOrDefault(id => id.Preferred == true)?.Value;
+                return preferred ?? UniqueId.FirstOrDefault()?.Value;
+            }
+            set { throw new NotImplementedException(); }
         }
 
         [NotMapped]
         public FhirUri UrlElement
         {
-            get { return null; }
-            set {; }
+            get
+            {
+                if (Url != null)
+                    return new FhirUri(Url);
+                else
+                    return null;
+            }
+            set { throw new NotImplementedException(); }
         }
 
         public partial class ContactComponent : IConformanceResourceContact

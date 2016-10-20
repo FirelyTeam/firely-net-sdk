@@ -1,5 +1,14 @@
-﻿using Hl7.ElementModel;
+﻿/* 
+ * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+
+using Hl7.ElementModel;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,7 +79,7 @@ namespace Hl7.Fhir.Validation
             if (success)
                 validator.Trace(combinedResult, "Combined validation succeeded", Issue.PROCESSING_PROGRESS, instance);
             else
-                combinedResult.Info($"Combined {modeLabel} validation failed, {failures} child validation runs failed, {successes} succeeded", Issue.PROCESSING_PROGRESS, instance);
+                combinedResult.AddIssue($"Combined {modeLabel} validation failed, {failures} child validation runs failed, {successes} succeeded", Issue.PROCESSING_PROGRESS, instance);
 
 
             return combinedResult;

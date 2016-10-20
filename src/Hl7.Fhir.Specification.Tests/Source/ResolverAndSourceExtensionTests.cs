@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Specification.Tests
             var vs = source.FindValueSet("http://hl7.org/fhir/ValueSet/contact-point-system");
             Assert.IsNotNull(vs);
 
-            var vs2 = source.FindValueSet("http://hl7.org/fhir/contact-point-system");
+            var vs2 = source.FindValueSetBySystem("http://hl7.org/fhir/contact-point-system");
             Assert.IsNotNull(vs2);
 
             Assert.AreEqual(vs.Url, vs2.Url);

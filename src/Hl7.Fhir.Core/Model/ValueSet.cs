@@ -21,10 +21,9 @@ namespace Hl7.Fhir.Model
 
         public bool HasExpansion => Expansion != null;
 
-        public int CountCodes()
+        public int ExpansionSize()
         {
-            if (!HasExpansion)
-                throw Error.InvalidOperation($"ValueSet '{Url}' has no expansion, generate the expansion first before calling this function");
+            ensureExpansion();
 
             return countCodes(Expansion.Contains);
         }
@@ -37,8 +36,7 @@ namespace Hl7.Fhir.Model
 
         public bool CodeInExpansion(String code, string system = null)
         {
-            if (!HasExpansion)
-                throw Error.InvalidOperation($"ValueSet '{Url}' has no expansion, generate the expansion first before calling this function");
+            ensureExpansion();
 
             return FindInExpansion(code, system) != null;
 
@@ -46,10 +44,51 @@ namespace Hl7.Fhir.Model
 
         public ValueSet.ContainsComponent FindInExpansion(String code, string system = null)
         {
-            if (!HasExpansion)
-                throw Error.InvalidOperation($"ValueSet '{Url}' has no expansion, generate the expansion first before calling this function");
+            ensureExpansion();
 
             return Expansion.Contains.FindCode(code, system);
+        }
+
+        public void ImportExpansion(ValueSet other)
+        {
+            other.ensureExpansion();
+
+            var combinedExpansion = ExpansionComponent.Create();
+
+            // Todo: worry about duplicates
+            if (this.HasExpansion)
+            {
+                combinedExpansion.Parameter.AddRange(this.Expansion.Parameter);
+                combinedExpansion.Contains.AddRange(this.Expansion.Contains);
+            }
+
+            combinedExpansion.Parameter.AddRange(other.Expansion.Parameter);
+            combinedExpansion.Contains.AddRange(other.Expansion.Contains);
+
+            combinedExpansion.Total = countCodes(combinedExpansion.Contains);
+            combinedExpansion.Offset = 0;
+
+            Expansion = combinedExpansion;
+        }
+
+
+        private void ensureExpansion()
+        {
+            if (!HasExpansion)
+                throw Error.InvalidOperation($"ValueSet '{Url}' has no expansion, generate the expansion first before calling this function");
+        }
+
+
+        public partial class ExpansionComponent
+        {
+            public static ExpansionComponent Create()
+            {
+                var expansion = new ExpansionComponent();
+                expansion.TimestampElement = FhirDateTime.Now();
+                expansion.IdentifierElement = Uuid.Generate().AsUri();
+
+                return expansion;
+            }
         }
 
     }
