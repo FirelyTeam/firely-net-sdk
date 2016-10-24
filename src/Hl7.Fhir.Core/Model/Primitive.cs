@@ -11,6 +11,7 @@ using Hl7.Fhir.Validation;
 
 namespace Hl7.Fhir.Model
 {
+    [DataContract]
     public abstract class Primitive : Element
     {
         [NotMapped]
@@ -65,6 +66,23 @@ namespace Hl7.Fhir.Model
         }
     }
 
+    [KnownType(typeof(Id))]
+    [KnownType(typeof(Integer))]
+    [KnownType(typeof(FhirString))]
+    [KnownType(typeof(FhirUri))]
+    [KnownType(typeof(FhirBoolean))]
+    [KnownType(typeof(Code))]
+    [KnownType(typeof(Date))]
+    [KnownType(typeof(FhirDateTime))]
+    [KnownType(typeof(FhirDecimal))]
+    [KnownType(typeof(Instant))]
+    [KnownType(typeof(Markdown))]
+    [KnownType(typeof(Oid))]
+    [KnownType(typeof(PositiveInt))]
+    [KnownType(typeof(Time))]
+    [KnownType(typeof(UnsignedInt))]
+    [KnownType(typeof(Uuid))]
+    [DataContract]
     public abstract class Primitive<T> : Primitive
     {
         // [WMR 20160615] Cannot provide common generic Value property, as subclasses differ in their implementation

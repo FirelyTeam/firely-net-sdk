@@ -31,6 +31,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Xml;
 using Hl7.Fhir.Model;
@@ -39,6 +40,12 @@ using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Model
 {
+    [KnownType(typeof(Age))]
+    [KnownType(typeof(Count))]
+    [KnownType(typeof(Distance))]
+    [KnownType(typeof(Duration))]
+    [KnownType(typeof(Money))]
+    [KnownType(typeof(SimpleQuantity))]
     public partial class Quantity
     {
         public Hl7.FluentPath.Quantity? ToQuantity()

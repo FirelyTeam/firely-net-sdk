@@ -42,6 +42,7 @@ using System.ComponentModel;
 namespace Hl7.Fhir.Model
 {
     [FhirType("Quantity")]
+    [DataContract]
     public partial class Money : Quantity
     {
         [NotMapped]
