@@ -70,6 +70,7 @@
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Net" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
@@ -121,6 +122,7 @@
     <Compile Include="Serialization\RoundtripTest.cs" />
     <Compile Include="Serialization\SerializationTests.cs" />
     <Compile Include="TrainingTests\Z-TrainingUnitTests.cs" />
+    <Compile Include="Utils\ZipArchiveEntryExtensions.cs" />
     <Compile Include="Validation\AllResourceInvariantsTest.cs" />
     <Compile Include="Validation\ValidateAllExamplesTest.cs" />
     <Compile Include="Validation\ValidatePatient.cs" />
