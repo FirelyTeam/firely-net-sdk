@@ -39,6 +39,13 @@ namespace Hl7.Fhir.Validation
             // This is only for resources, but I don't bother checking, since this will return empty anyway
             _profiles.AddStatedProfile(instance.GetChildrenByName("meta").ChildrenValues("profile").Cast<string>());
                      
+            // Almost identically, extensions can declare adherance to a profile using the 'url' attribute
+            if(declaredTypeProfile == ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Extension))
+            {
+                var urlDeclaration = instance.GetChildrenByName("url").FirstOrDefault()?.Value as string;
+                if (urlDeclaration != null) _profiles.AddStatedProfile(urlDeclaration);
+            }
+
             if(additionalProfiles != null) _profiles.AddStatedProfile(additionalProfiles);
             if(additionalCanonicals != null) _profiles.AddStatedProfile(additionalCanonicals);
         }

@@ -78,9 +78,6 @@
                         <p>MRN: 123456. Male, 24-Sept 1932</p>
                     </div>
                 </text>
-                <extension url="http://example.org/StructureDefinition/trials">
-                    <valueCode value="renal"/>
-                </extension>
                 <identifier>
                     <use value="usual"/>
                     <type>
@@ -99,7 +96,11 @@
                     <suffix value="The 7th"/>
                 </name>
                 <gender value="male"/>
-                <birthDate value="1932-09-24"/>
+                <birthDate value="1932-09-24">
+                    <extension url="http://hl7.org/fhir/StructureDefinition/patient-birthTime">
+                        <valueDateTime value="1932-09-24T15:15:34+02:00" />
+                    </extension>                    
+                </birthDate>
             </Patient>
         </resource>
     </entry>
