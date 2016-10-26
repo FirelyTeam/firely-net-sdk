@@ -1,48 +1,23 @@
-﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.txt in the project root for license information.
+﻿/*  
+* Copyright (c) 2016, Furore (info@furore.com) and contributors 
+* See the file CONTRIBUTORS for details. 
+*  
+* This file is licensed under the BSD 3-Clause license 
+* available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE 
+*/
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 
-
-namespace Hl7.FluentPath.Support
+namespace Furore.Support
 {
-    internal static class Message
-    {
-        internal static void Info(string messageFormat, params object[] messageArgs)
-        {
-#if DEBUGX
-            Debug.WriteLine(Error.formatMessage(messageFormat,messageArgs));
-#endif
-        }
-    }
-
-
     /// <summary>
     /// Utility class for creating and unwrapping <see cref="Exception"/> instances.
     /// </summary>
     internal static class Error
     {
         /// <summary>
-        /// Formats the specified resource string using <see cref="M:CultureInfo.CurrentCulture"/>.
-        /// </summary>
-        /// <param name="format">A composite format string.</param>
-        /// <param name="args">An object array that contains zero or more objects to format.</param>
-        /// <returns>The formatted string.</returns>
-        internal static string formatMessage(string format, params object[] args)
-        {
-            return String.Format(CultureInfo.CurrentCulture, format, args);
-        }
-
-        /// <summary>
         /// Creates an <see cref="ArgumentException"/> with the provided properties.
         /// </summary>
-        /// <param name="message">A string explaining the reason for the exception.</param>
-        /// <returns>The logged <see cref="Exception"/>.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification="Utility method that might become useful for future usecases")]
         internal static ArgumentException Argument(string message)
         {
             return new ArgumentException(message);
@@ -51,10 +26,6 @@ namespace Hl7.FluentPath.Support
         /// <summary>
         /// Creates an <see cref="ArgumentException"/> with the provided properties.
         /// </summary>
-        /// <param name="parameterName">The name of the parameter that caused the current exception.</param>
-        /// <param name="message">A string explaining the reason for the exception.</param>
-        /// <returns>The logged <see cref="Exception"/>.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Utility method that might become useful for future usecases")]
         internal static ArgumentException Argument(string parameterName, string message)
         {
             return new ArgumentException(message, parameterName);
@@ -63,8 +34,6 @@ namespace Hl7.FluentPath.Support
         /// <summary>
         /// Creates an <see cref="ArgumentNullException"/> with the provided properties.
         /// </summary>
-        /// <param name="parameterName">The name of the parameter that caused the current exception.</param>
-        /// <returns>The logged <see cref="Exception"/>.</returns>
         internal static ArgumentException ArgumentNull(string parameterName)
         {
             return new ArgumentNullException(parameterName);
@@ -73,14 +42,9 @@ namespace Hl7.FluentPath.Support
         /// <summary>
         /// Creates an <see cref="ArgumentNullException"/> with the provided properties.
         /// </summary>
-        /// <param name="parameterName">The name of the parameter that caused the current exception.</param>
-        /// <param name="messageFormat">A composite format string explaining the reason for the exception.</param>
-        /// <param name="messageArgs">An object array that contains zero or more objects to format.</param>
-        /// <returns>The logged <see cref="Exception"/>.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Utility method that might become useful for future usecases")]
-        internal static ArgumentNullException ArgumentNull(string parameterName, string messageFormat, params object[] messageArgs)
+        internal static ArgumentNullException ArgumentNull(string parameterName, string message)
         {
-            return new ArgumentNullException(parameterName, Error.formatMessage(messageFormat, messageArgs));
+            return new ArgumentNullException(parameterName, message);
         }
 
         /// <summary>
@@ -88,58 +52,47 @@ namespace Hl7.FluentPath.Support
         /// </summary>
         /// <param name="parameterName">The name of the parameter that caused the current exception.</param>
         /// <returns>The logged <see cref="Exception"/>.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Utility method that might become useful for future usecases")]
         internal static ArgumentException ArgumentNullOrEmpty(string parameterName)
         {
-            return Error.Argument(parameterName, "The argument '{0}' is null or empty.".FormatWith(parameterName));
+            return Error.Argument(parameterName, $"The argument '{parameterName}' is null or empty.");
         }
 
 
         /// <summary>
         /// Creates an <see cref="InvalidOperationException"/>.
         /// </summary>
-        /// <param name="messageFormat">A composite format string explaining the reason for the exception.</param>
-        /// <param name="messageArgs">An object array that contains zero or more objects to format.</param>
-        /// <returns>The logged <see cref="Exception"/>.</returns>
-        internal static InvalidOperationException InvalidOperation(string messageFormat, params object[] messageArgs)
+        internal static InvalidOperationException InvalidOperation(string message)
         {
-            return new InvalidOperationException(Error.formatMessage(messageFormat, messageArgs));
+            return new InvalidOperationException(message);
+        }
+
+        internal static Exception Format(string v, object p)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
         /// Creates an <see cref="InvalidOperationException"/>.
         /// </summary>
-        /// <param name="innerException">Inner exception</param>
-        /// <param name="messageFormat">A composite format string explaining the reason for the exception.</param>
-        /// <param name="messageArgs">An object array that contains zero or more objects to format.</param>
-        /// <returns>The logged <see cref="Exception"/>.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Utility method that might become useful for future usecases")]
-        internal static InvalidOperationException InvalidOperation(Exception innerException, string messageFormat, params object[] messageArgs)
+        internal static InvalidOperationException InvalidOperation(Exception innerException, string message)
         {
-            return new InvalidOperationException(Error.formatMessage(messageFormat, messageArgs), innerException);
+            return new InvalidOperationException(message, innerException);
         }
 
         /// <summary>
         /// Creates an <see cref="NotSupportedException"/>.
         /// </summary>
-        /// <param name="messageFormat">A composite format string explaining the reason for the exception.</param>
-        /// <param name="messageArgs">An object array that contains zero or more objects to format.</param>
-        /// <returns>The logged <see cref="Exception"/>.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Utility method that might become useful for future usecases")]
-        internal static NotSupportedException NotSupported(string messageFormat, params object[] messageArgs)
+        internal static NotSupportedException NotSupported(string message)
         {
-            return new NotSupportedException(Error.formatMessage(messageFormat, messageArgs));
+            return new NotSupportedException(message);
         }
 
         /// <summary>
         /// Creates an <see cref="NotImplementedException"/>.
         /// </summary>
-        /// <param name="messageFormat">A composite format string explaining the reason for the exception.</param>
-        /// <param name="messageArgs">An object array that contains zero or more objects to format.</param>
-        /// <returns>The logged <see cref="Exception"/>.</returns>
-        internal static NotImplementedException NotImplemented(string messageFormat, params object[] messageArgs)
+        internal static NotImplementedException NotImplemented(string message)
         {
-            return new NotImplementedException(Error.formatMessage(messageFormat, messageArgs));
+            return new NotImplementedException(message);
         }
 
         /// <summary>
@@ -149,6 +102,11 @@ namespace Hl7.FluentPath.Support
         internal static NotImplementedException NotImplemented()
         {
             return new NotImplementedException();
+        }
+
+        internal static FormatException Format(string message)
+        {
+            return new FormatException(message);
         }
     }
 }
