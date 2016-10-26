@@ -1,0 +1,21 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xs: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+[a fhir:List;
+  fhir:nodeRole fhir:treeRoot;
+  fhir:Resource.id [ fhir:value "val1"];
+  fhir:List.status [
+     fhir:value "current";
+     fhir:string.extension [
+       fhir:index 0;
+       fhir:Extension.url [ fhir:value "http://acme.com/some_url" ]
+     ]
+  ];
+  fhir:List.mode [ fhir:value "changes"]].
+
+# -------------------------------------------------------------------------------------
+
