@@ -7,11 +7,11 @@
  */
 
 using Hl7.FluentPath.Functions;
-using Hl7.FluentPath.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hl7.ElementModel;
+using Furore.Support;
 
 namespace Hl7.FluentPath.Expressions
 {

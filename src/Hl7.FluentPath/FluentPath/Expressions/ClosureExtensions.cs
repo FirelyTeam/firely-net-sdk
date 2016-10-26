@@ -6,16 +6,11 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Hl7.FluentPath.Support;
 using Hl7.ElementModel;
 
 namespace Hl7.FluentPath.Expressions
-{ 
+{
     internal static class ClosureExtensions
     {
         public static IEnumerable<IValueProvider> GetThis(this Closure ctx)

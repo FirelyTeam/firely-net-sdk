@@ -21,7 +21,7 @@ using Hl7.FluentPath.Functions;
 using Xunit;
 using Xunit.Sdk;
 using Xunit.Abstractions;
-using Hl7.FluentPath.Support;
+using Furore.Support;
 
 namespace Hl7.FluentPath.Tests
 {

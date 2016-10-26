@@ -1,10 +1,10 @@
-﻿using Hl7.FluentPath.Support;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Hl7.ElementModel;
 using System.Diagnostics;
+using Furore.Support;
 
 namespace Hl7.FluentPath.Functions
 {

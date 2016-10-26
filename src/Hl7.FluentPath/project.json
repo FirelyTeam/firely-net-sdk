@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "Hl7.FluentPath",
 
   "version": "0.3.1-alpha7",
@@ -20,7 +20,7 @@
 
 
   "dependencies": {
-
+    "Newtonsoft.Json": "9.0.1"
   },
 
   "frameworks": {

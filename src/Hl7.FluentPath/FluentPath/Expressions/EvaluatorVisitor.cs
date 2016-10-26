@@ -5,14 +5,11 @@
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
-using Hl7.FluentPath.Support;
 using FP = Hl7.FluentPath.Expressions;
-using System.Linq.Expressions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Furore.Support;
 
 namespace Hl7.FluentPath.Expressions
 {

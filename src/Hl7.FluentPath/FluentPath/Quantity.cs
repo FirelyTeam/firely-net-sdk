@@ -7,10 +7,7 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Hl7.FluentPath.Support;
+using Furore.Support;
 
 namespace Hl7.FluentPath
 {

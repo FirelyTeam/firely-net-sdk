@@ -6,13 +6,9 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.FluentPath;
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using Hl7.FluentPath.Support;
-using Hl7.FluentPath.Functions;
-using System.Text.RegularExpressions;
 using Hl7.ElementModel;
 using System.Text;
 

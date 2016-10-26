@@ -7,9 +7,8 @@
  */
 
 
-using Hl7.FluentPath.Support;
+using Furore.Support;
 using System;
-using System.Linq;
 using System.Xml;
 
 namespace Hl7.FluentPath

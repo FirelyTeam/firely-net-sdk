@@ -10,9 +10,7 @@
 // extern alias dstu2;
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hl7.FluentPath;
 using Hl7.FluentPath.Expressions;
 using System.Diagnostics;
 using Hl7.Fhir.Model;
@@ -21,10 +19,8 @@ using System.Xml.Linq;
 using Hl7.ElementModel;
 using Xunit;
 using System.IO;
-using Hl7.Fhir.Serialization;
-using Hl7.FluentPath.Support;
 using Xunit.Abstractions;
-using Hl7.Fhir.FluentPath;
+using Furore.Support;
 
 namespace Hl7.FluentPath.Tests
 {

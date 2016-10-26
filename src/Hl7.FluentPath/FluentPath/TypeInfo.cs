@@ -1,11 +1,7 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using Hl7.FluentPath;
-using Hl7.FluentPath.Support;
-using System.Text;
-using System.Threading.Tasks;
 using Hl7.ElementModel;
+using Furore.Support;
 
 namespace Hl7.FluentPath
 {

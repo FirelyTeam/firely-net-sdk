@@ -9,8 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Hl7.FluentPath.Support;
 using Hl7.ElementModel;
+using Furore.Support;
 
 namespace Hl7.FluentPath.Expressions
 {
