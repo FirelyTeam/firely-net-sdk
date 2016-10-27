@@ -13,7 +13,7 @@ using Furore.Support;
 
 namespace Hl7.FluentPath
 {
-    public class ConstantValue : IValueProvider, ITypeNameProvider
+    public class ConstantValue : IElementNavigator
     {
         public static object ToFluentPathValue(object value)
         {
@@ -46,13 +46,22 @@ namespace Hl7.FluentPath
             return Value;
         }
 
-
+        
         private object _original;
 
         public ConstantValue(object value)
         {
             _original = value;
             Value = ToFluentPathValue(value);
+        }
+
+        public string Name
+        {
+            // todo: it's not used. Should it throw NotImplemented instead?
+            get
+            {
+                return null;
+            }
         }
 
         public object Value
@@ -83,6 +92,14 @@ namespace Hl7.FluentPath
             }
         }
 
+        public string Path
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public override string ToString()
         {
             return this.ToStringRepresentation();
@@ -90,8 +107,8 @@ namespace Hl7.FluentPath
 
         public override bool Equals(object obj)
         {
-            if (obj is IValueProvider)
-                return Object.Equals((obj as IValueProvider).Value,Value);
+            if (obj is IElementNavigator)
+                return Object.Equals((obj as IElementNavigator).Value,Value);
             else
                 return false;
         }
@@ -102,6 +119,21 @@ namespace Hl7.FluentPath
                 return Value.GetHashCode();
             else
                 return 0;
+        }
+
+        public bool MoveToNext()
+        {
+            return false;
+        }
+
+        public bool MoveToFirstChild()
+        {
+            return false;
+        }
+
+        public IElementNavigator Clone()
+        {
+            return new ConstantValue(Value);
         }
     }
 }

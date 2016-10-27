@@ -23,36 +23,36 @@ namespace Hl7.FluentPath.Expressions
             t.Add("empty", (IEnumerable<object> f) => !f.Any());
             t.Add("exists", (IEnumerable<object> f) => f.Any());
             t.Add("count", (IEnumerable<object> f) => f.Count());
-            t.Add("trace", (IEnumerable<IValueProvider> f, string name) => f.Trace(name));
+            t.Add("trace", (IEnumerable<IElementNavigator> f, string name) => f.Trace(name));
 
             //   t.Add("binary.|", (object f, IEnumerable<IValueProvider> l, IEnumerable<IValueProvider> r) => l.ConcatUnion(r));
-            t.Add("binary.|", (object f, IEnumerable<IValueProvider> l, IEnumerable<IValueProvider> r) => l.DistinctUnion(r));
-            t.Add("binary.contains", (object f, IEnumerable<IValueProvider> a, IValueProvider b) => a.Contains(b));
-            t.Add("binary.in", (object f, IValueProvider a, IEnumerable<IValueProvider> b) => b.Contains(a));
-            t.Add("distinct", (IEnumerable<IValueProvider> f) => f.Distinct());
-            t.Add("isDistinct", (IEnumerable<IValueProvider> f) => f.IsDistinct());
-            t.Add("subsetOf", (IEnumerable<IValueProvider> f, IEnumerable<IValueProvider> a) => f.SubsetOf(a));
-            t.Add("supersetOf", (IEnumerable<IValueProvider> f, IEnumerable<IValueProvider> a) => a.SubsetOf(f));
+            t.Add("binary.|", (object f, IEnumerable<IElementNavigator> l, IEnumerable<IElementNavigator> r) => l.DistinctUnion(r));
+            t.Add("binary.contains", (object f, IEnumerable<IElementNavigator> a, IElementNavigator b) => a.Contains(b));
+            t.Add("binary.in", (object f, IElementNavigator a, IEnumerable<IElementNavigator> b) => b.Contains(a));
+            t.Add("distinct", (IEnumerable<IElementNavigator> f) => f.Distinct());
+            t.Add("isDistinct", (IEnumerable<IElementNavigator> f) => f.IsDistinct());
+            t.Add("subsetOf", (IEnumerable<IElementNavigator> f, IEnumerable<IElementNavigator> a) => f.SubsetOf(a));
+            t.Add("supersetOf", (IEnumerable<IElementNavigator> f, IEnumerable<IElementNavigator> a) => a.SubsetOf(f));
 
             t.Add("today", (object f) => PartialDateTime.Today());
             t.Add("now", (object f) => PartialDateTime.Now());
 
             t.Add("binary.&", (object f, string a, string b) => (a ?? "") + (b ?? ""));
 
-            t.Add("iif", (IEnumerable<IValueProvider> f, bool? condition, IEnumerable<IValueProvider> result) => f.IIf(condition, result));
-            t.Add("iif", (IEnumerable<IValueProvider> f, bool? condition, IEnumerable<IValueProvider> result, IEnumerable<IValueProvider> otherwise) => f.IIf(condition, result, otherwise));
+            t.Add("iif", (IEnumerable<IElementNavigator> f, bool? condition, IEnumerable<IElementNavigator> result) => f.IIf(condition, result));
+            t.Add("iif", (IEnumerable<IElementNavigator> f, bool? condition, IEnumerable<IElementNavigator> result, IEnumerable<IElementNavigator> otherwise) => f.IIf(condition, result, otherwise));
 
             // Functions that use normal null propagation and work with the focus (buy may ignore it)
-            t.Add("not", (IEnumerable<IValueProvider> f) => f.Not(), doNullProp:true);
-            t.Add("builtin.children", (IEnumerable<IValueProvider> f, string a) => f.Navigate(a), doNullProp: true);
+            t.Add("not", (IEnumerable<IElementNavigator> f) => f.Not(), doNullProp:true);
+            t.Add("builtin.children", (IEnumerable<IElementNavigator> f, string a) => f.Navigate(a), doNullProp: true);
 
-            t.Add("children", (IEnumerable<IValueProvider> f) => f.Children(), doNullProp: true);
-            t.Add("descendants", (IEnumerable<IValueProvider> f) => f.Descendants(), doNullProp: true);
+            t.Add("children", (IEnumerable<IElementNavigator> f) => f.Children(), doNullProp: true);
+            t.Add("descendants", (IEnumerable<IElementNavigator> f) => f.Descendants(), doNullProp: true);
 
-            t.Add("binary.=", (object f, IEnumerable<IValueProvider>  a, IEnumerable<IValueProvider> b) => a.IsEqualTo(b), doNullProp: true);
-            t.Add("binary.!=", (object f, IEnumerable<IValueProvider> a, IEnumerable<IValueProvider> b) => !a.IsEqualTo(b), doNullProp: true);
-            t.Add("binary.~", (object f, IEnumerable<IValueProvider> a, IEnumerable<IValueProvider> b) => a.IsEquivalentTo(b), doNullProp: true);
-            t.Add("binary.!~", (object f, IEnumerable<IValueProvider> a, IEnumerable<IValueProvider> b) => !a.IsEquivalentTo(b), doNullProp: true);
+            t.Add("binary.=", (object f, IEnumerable<IElementNavigator>  a, IEnumerable<IElementNavigator> b) => a.IsEqualTo(b), doNullProp: true);
+            t.Add("binary.!=", (object f, IEnumerable<IElementNavigator> a, IEnumerable<IElementNavigator> b) => !a.IsEqualTo(b), doNullProp: true);
+            t.Add("binary.~", (object f, IEnumerable<IElementNavigator> a, IEnumerable<IElementNavigator> b) => a.IsEquivalentTo(b), doNullProp: true);
+            t.Add("binary.!~", (object f, IEnumerable<IElementNavigator> a, IEnumerable<IElementNavigator> b) => !a.IsEquivalentTo(b), doNullProp: true);
 
             t.Add("unary.-", (object f, long a) => -a, doNullProp: true);
             t.Add("unary.-", (object f, decimal a) => -a, doNullProp: true);
@@ -102,17 +102,17 @@ namespace Hl7.FluentPath.Expressions
             t.Add("binary.>=", (object f, PartialDateTime a, PartialDateTime b) => a >= b, doNullProp: true);
             t.Add("binary.>=", (object f, Time a, Time b) => a >= b, doNullProp: true);
 
-            t.Add("single", (IEnumerable<IValueProvider> f) => f.Single(), doNullProp: true);
-            t.Add("skip", (IEnumerable<IValueProvider> f, long a) =>  f.Skip((int)a), doNullProp: true);
-            t.Add("first", (IEnumerable<IValueProvider> f) => f.First(), doNullProp: true);
-            t.Add("last", (IEnumerable<IValueProvider> f) => f.Last(), doNullProp: true);
-            t.Add("tail", (IEnumerable<IValueProvider> f) => f.Tail(), doNullProp: true);
-            t.Add("take", (IEnumerable<IValueProvider> f, long a) => f.Take((int)a), doNullProp: true);
-            t.Add("builtin.item", (IEnumerable<IValueProvider> f, long a) => f.Item((int)a), doNullProp: true);
+            t.Add("single", (IEnumerable<IElementNavigator> f) => f.Single(), doNullProp: true);
+            t.Add("skip", (IEnumerable<IElementNavigator> f, long a) =>  f.Skip((int)a), doNullProp: true);
+            t.Add("first", (IEnumerable<IElementNavigator> f) => f.First(), doNullProp: true);
+            t.Add("last", (IEnumerable<IElementNavigator> f) => f.Last(), doNullProp: true);
+            t.Add("tail", (IEnumerable<IElementNavigator> f) => f.Tail(), doNullProp: true);
+            t.Add("take", (IEnumerable<IElementNavigator> f, long a) => f.Take((int)a), doNullProp: true);
+            t.Add("builtin.item", (IEnumerable<IElementNavigator> f, long a) => f.Item((int)a), doNullProp: true);
 
-            t.Add("toInteger", (IValueProvider f) => f.ToInteger(), doNullProp: true);
-            t.Add("toDecimal", (IValueProvider f) => f.ToDecimal(), doNullProp: true);
-            t.Add("toString", (IValueProvider f) => f.ToStringRepresentation(), doNullProp: true);
+            t.Add("toInteger", (IElementNavigator f) => f.ToInteger(), doNullProp: true);
+            t.Add("toDecimal", (IElementNavigator f) => f.ToDecimal(), doNullProp: true);
+            t.Add("toString", (IElementNavigator f) => f.ToStringRepresentation(), doNullProp: true);
 
             t.Add("substring", (string f, long a) => f.FpSubstring((int)a), doNullProp: true);
             t.Add("substring", (string f, long a, long b) => f.FpSubstring((int)a, (int)b), doNullProp: true);
@@ -125,12 +125,12 @@ namespace Hl7.FluentPath.Expressions
             t.Add("replace", (string f, string regex, string subst) => f.FpReplace(regex, subst), doNullProp: true);
             t.Add("length", (string f) => f.Length, doNullProp: true);
 
-            t.Add("is", (IValueProvider f, string name) => f.Is(name), doNullProp: true);
-            t.Add("as", (IEnumerable<IValueProvider> f, string name) => f.FilterType(name), doNullProp: true);
-            t.Add("binary.is", (object f, IValueProvider left, string name) => left.Is(name), doNullProp: true);
-            t.Add("binary.as", (object f, IValueProvider left, string name) => left.CastAs(name), doNullProp: true);
+            t.Add("is", (IElementNavigator f, string name) => f.Is(name), doNullProp: true);
+            t.Add("as", (IEnumerable<IElementNavigator> f, string name) => f.FilterType(name), doNullProp: true);
+            t.Add("binary.is", (object f, IElementNavigator left, string name) => left.Is(name), doNullProp: true);
+            t.Add("binary.as", (object f, IElementNavigator left, string name) => left.CastAs(name), doNullProp: true);
 
-            t.Add("extension", (IEnumerable<IValueProvider> f, string url) => f.Extension(url), doNullProp: true);
+            t.Add("extension", (IEnumerable<IElementNavigator> f, string url) => f.Extension(url), doNullProp: true);
 
             // Logic operators do not use null propagation and may do short-cut eval
             t.AddLogic("binary.and", (a, b) => a.And(b));
@@ -139,11 +139,11 @@ namespace Hl7.FluentPath.Expressions
             t.AddLogic("binary.implies", (a, b) => a.Implies(b));
 
             // Special late-bound functions
-            t.Add(new CallSignature("where", typeof(IEnumerable<IValueProvider>), typeof(object), typeof(Invokee)), runWhere);
-            t.Add(new CallSignature("select", typeof(IEnumerable<IValueProvider>), typeof(object), typeof(Invokee)), runSelect);
+            t.Add(new CallSignature("where", typeof(IEnumerable<IElementNavigator>), typeof(object), typeof(Invokee)), runWhere);
+            t.Add(new CallSignature("select", typeof(IEnumerable<IElementNavigator>), typeof(object), typeof(Invokee)), runSelect);
             t.Add(new CallSignature("all", typeof(bool), typeof(object), typeof(Invokee)), runAll);
             t.Add(new CallSignature("any", typeof(bool), typeof(object), typeof(Invokee)), runAny);
-            t.Add(new CallSignature("repeat", typeof(IEnumerable<IValueProvider>), typeof(object), typeof(Invokee)), runRepeat);
+            t.Add(new CallSignature("repeat", typeof(IEnumerable<IElementNavigator>), typeof(object), typeof(Invokee)), runRepeat);
             
 
             t.AddVar("sct", "http://snomed.info/sct");
@@ -168,12 +168,12 @@ namespace Hl7.FluentPath.Expressions
         }
 
 
-        private static IEnumerable<IValueProvider> runWhere(Closure ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<IElementNavigator> runWhere(Closure ctx, IEnumerable<Invokee> arguments)
         {
             var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
             var lambda = arguments.Skip(1).First();
 
-            foreach (IValueProvider element in focus)
+            foreach (IElementNavigator element in focus)
             {
                 var newFocus = FhirValueList.Create(element);
                 var newContext = ctx.Nest(newFocus);
@@ -184,12 +184,12 @@ namespace Hl7.FluentPath.Expressions
             }
         }
 
-        private static IEnumerable<IValueProvider> runSelect(Closure ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<IElementNavigator> runSelect(Closure ctx, IEnumerable<Invokee> arguments)
         {
             var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
             var lambda = arguments.Skip(1).First();
 
-            foreach (IValueProvider element in focus)
+            foreach (IElementNavigator element in focus)
             {
                 var newFocus = FhirValueList.Create(element);
                 var newContext = ctx.Nest(newFocus);
@@ -201,20 +201,20 @@ namespace Hl7.FluentPath.Expressions
             }
         }
 
-        private static IEnumerable<IValueProvider> runRepeat(Closure ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<IElementNavigator> runRepeat(Closure ctx, IEnumerable<Invokee> arguments)
         {
             var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
             var lambda = arguments.Skip(1).First();
 
-            var fullResult = new List<IValueProvider>();
-            List<IValueProvider> newNodes = new List<IValueProvider>(focus);
+            var fullResult = new List<IElementNavigator>();
+            List<IElementNavigator> newNodes = new List<IElementNavigator>(focus);
 
             while (newNodes.Any())
             {
                 var current = newNodes;
-                newNodes = new List<IValueProvider>();
+                newNodes = new List<IElementNavigator>();
 
-                foreach (IValueProvider element in current)
+                foreach (IElementNavigator element in current)
                 {
                     var newFocus = FhirValueList.Create(element);
                     var newContext = ctx.Nest(newFocus);
@@ -230,12 +230,12 @@ namespace Hl7.FluentPath.Expressions
             return fullResult;
         }
 
-        private static IEnumerable<IValueProvider> runAll(Closure ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<IElementNavigator> runAll(Closure ctx, IEnumerable<Invokee> arguments)
         {
             var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
             var lambda = arguments.Skip(1).First();
 
-            foreach (IValueProvider element in focus)
+            foreach (IElementNavigator element in focus)
             {
                 var newFocus = FhirValueList.Create(element);
                 var newContext = ctx.Nest(newFocus);
@@ -249,12 +249,12 @@ namespace Hl7.FluentPath.Expressions
             return FhirValueList.Create(true);
         }
 
-        private static IEnumerable<IValueProvider> runAny(Closure ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<IElementNavigator> runAny(Closure ctx, IEnumerable<Invokee> arguments)
         {
             var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
             var lambda = arguments.Skip(1).First();
 
-            foreach (IValueProvider element in focus)
+            foreach (IElementNavigator element in focus)
             {
                 var newFocus = FhirValueList.Create(element);
                 var newContext = ctx.Nest(newFocus);

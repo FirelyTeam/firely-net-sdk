@@ -15,35 +15,35 @@ namespace Hl7.FluentPath.Functions
 {
     internal static class TypeOperators
     {
-        public static bool Is(this IValueProvider focus, string typeName)
+        public static bool Is(this IElementNavigator focus, string typeName)
         {
-            if (focus is ITypeNameProvider)
+            if (focus.IsTypeProvider())
             {
-                return ((ITypeNameProvider)focus).TypeName == typeName;     // I have no information about classes/subclasses
+                return focus.TypeName == typeName;     // I have no information about classes/subclasses
             }
             else
                 throw Error.InvalidOperation("Is operator is called on data which does not support ITypeNameProvider");
         }
 
-        public static bool Is(this IEnumerable<IValueProvider> f, string typeName)
+        public static bool Is(this IEnumerable<IElementNavigator> f, string typeName)
         {
             var focus = f.First();
 
-            if (focus is ITypeNameProvider)
+            if (focus.IsTypeProvider())
             {
-                return ((ITypeNameProvider)focus).TypeName == typeName;     // I have no information about classes/subclasses
+                return focus.TypeName == typeName;     // I have no information about classes/subclasses
             }
             else
                 throw Error.InvalidOperation("Is operator is called on data which does not support ITypeNameProvider");
         }
 
 
-        public static IEnumerable<IValueProvider> FilterType(this IEnumerable<IValueProvider> focus, string typeName)
+        public static IEnumerable<IElementNavigator> FilterType(this IEnumerable<IElementNavigator> focus, string typeName)
         {
             return focus.Where(item => item.Is(typeName));
         }
 
-        public static IValueProvider CastAs(this IValueProvider focus, string typeName)
+        public static IElementNavigator CastAs(this IElementNavigator focus, string typeName)
         {
             if (focus.Is(typeName))
                 return focus;

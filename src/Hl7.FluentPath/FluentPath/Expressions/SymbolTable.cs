@@ -168,7 +168,7 @@ namespace Hl7.FluentPath.Expressions
             table.AddVar(name, new ConstantValue(value));
         }
 
-        public static void AddVar(this SymbolTable table, string name, IValueProvider value)
+        public static void AddVar(this SymbolTable table, string name, IElementNavigator value)
         {
             table.Add(new CallSignature(name, typeof(string)), InvokeeFactory.Return(value));
         }

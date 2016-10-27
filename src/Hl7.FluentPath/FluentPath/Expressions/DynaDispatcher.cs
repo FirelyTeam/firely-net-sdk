@@ -26,9 +26,9 @@ namespace Hl7.FluentPath.Expressions
         private string _name;
         private SymbolTable _scope;
 
-        public IEnumerable<IValueProvider> Dispatcher(Closure context, IEnumerable<Invokee> args)
+        public IEnumerable<IElementNavigator> Dispatcher(Closure context, IEnumerable<Invokee> args)
         {
-            var actualArgs = new List<IEnumerable<IValueProvider>>();
+            var actualArgs = new List<IEnumerable<IElementNavigator>>();
 
             var focus = args.First()(context, InvokeeFactory.EmptyArgs);
             if (!focus.Any()) return FhirValueList.Empty;

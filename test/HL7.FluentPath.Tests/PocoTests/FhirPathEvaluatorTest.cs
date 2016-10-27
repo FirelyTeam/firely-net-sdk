@@ -20,15 +20,16 @@ using Hl7.ElementModel;
 using Xunit;
 using System.IO;
 using Xunit.Abstractions;
+using Hl7.FluentPath.Functions;
 using Furore.Support;
 
 namespace Hl7.FluentPath.Tests
 {
     public class PatientFixture : IDisposable
     {
-        public IValueProvider TestInput;
-        public IValueProvider Questionnaire;
-        public IValueProvider UuidProfile;
+        public IElementNavigator TestInput;
+        public IElementNavigator Questionnaire;
+        public IElementNavigator UuidProfile;
         public int Counter = 0;
         public XDocument Xdoc;
 
@@ -80,7 +81,7 @@ namespace Hl7.FluentPath.Tests
             Assert.True(TestInput.IsBoolean(expr, true));
         }
 
-        public void IsTrue(string expr, IValueProvider input)
+        public void IsTrue(string expr, IElementNavigator input)
         {
             Assert.True(input.IsBoolean(expr, true));
         }
@@ -363,19 +364,18 @@ namespace Hl7.FluentPath.Tests
             fixture.IsTrue("@T10:01:02Z !~ @T10:01:55+01:00");
         }
 
-        public static string ToString(IValueProvider nav)
+        public static string ToString(IElementNavigator nav)
         {
             var result = "";
 
-            if (nav is INamedNode)
+            if (nav.IsNamedNode())
             {
-                result = ((INamedNode)nav).Name;
+                result = nav.Name;
             }
 
-            if (nav is ITypeNameProvider)
+            if (nav.IsTypeProvider())
             {
-                var tnp = (ITypeNameProvider)nav;
-                result += ": " + tnp.TypeName;
+                result += ": " + nav.TypeName;
             }
 
             if (nav.Value != null) result += " = " + nav.Value;

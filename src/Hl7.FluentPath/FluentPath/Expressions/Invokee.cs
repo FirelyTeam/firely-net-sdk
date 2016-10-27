@@ -15,29 +15,29 @@ using Furore.Support;
 
 namespace Hl7.FluentPath.Expressions
 {
-    internal delegate IEnumerable<IValueProvider> Invokee(Closure context, IEnumerable<Invokee> arguments);
+    internal delegate IEnumerable<IElementNavigator> Invokee(Closure context, IEnumerable<Invokee> arguments);
 
     internal static class InvokeeFactory
     {
         public static readonly IEnumerable<Invokee> EmptyArgs = Enumerable.Empty<Invokee>();
     
 
-        public static IEnumerable<IValueProvider> GetThis(Closure context, IEnumerable<Invokee> args)
+        public static IEnumerable<IElementNavigator> GetThis(Closure context, IEnumerable<Invokee> args)
         {
             return context.GetThis();
         }
 
-        public static IEnumerable<IValueProvider> GetContext(Closure context, IEnumerable<Invokee> arguments)
+        public static IEnumerable<IElementNavigator> GetContext(Closure context, IEnumerable<Invokee> arguments)
         {
             return context.GetOriginalContext();
         }
 
-        public static IEnumerable<IValueProvider> GetResource(Closure context, IEnumerable<Invokee> arguments)
+        public static IEnumerable<IElementNavigator> GetResource(Closure context, IEnumerable<Invokee> arguments)
         {
             return context.GetResource();
         }
 
-        public static IEnumerable<IValueProvider> GetThat(Closure context, IEnumerable<Invokee> args)
+        public static IEnumerable<IElementNavigator> GetThat(Closure context, IEnumerable<Invokee> args)
         {
             return context.GetThat();
         }
@@ -47,7 +47,7 @@ namespace Hl7.FluentPath.Expressions
         {
             return (ctx, args) =>
             {
-                return Typecasts.CastTo<IEnumerable<IValueProvider>>(func());
+                return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func());
             };
         }
 
@@ -58,7 +58,7 @@ namespace Hl7.FluentPath.Expressions
                 var focus = args.First()(ctx, InvokeeFactory.EmptyArgs);
                 if (propNull && !focus.Any()) return FhirValueList.Empty;
           
-                return Typecasts.CastTo<IEnumerable<IValueProvider>>(func(Typecasts.CastTo<A>(focus)));
+                return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(Typecasts.CastTo<A>(focus)));
             };
         }
 
@@ -73,7 +73,7 @@ namespace Hl7.FluentPath.Expressions
                 var argA = args.Skip(1).First()(newCtx, InvokeeFactory.EmptyArgs);
                 if (propNull && !argA.Any()) return FhirValueList.Empty;
 
-                return Typecasts.CastTo<IEnumerable<IValueProvider>>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA)));
+                return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA)));
             };
         }
 
@@ -90,7 +90,7 @@ namespace Hl7.FluentPath.Expressions
                 var argB = args.Skip(2).First()(newCtx, InvokeeFactory.EmptyArgs);
                 if (propNull && !argB.Any()) return FhirValueList.Empty;
 
-                return Typecasts.CastTo<IEnumerable<IValueProvider>>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA), Typecasts.CastTo<C>(argB)));
+                return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA), Typecasts.CastTo<C>(argB)));
             };
         }
 
@@ -109,7 +109,7 @@ namespace Hl7.FluentPath.Expressions
                 var argC = args.Skip(3).First()(newCtx, InvokeeFactory.EmptyArgs);
                 if (propNull && !argC.Any()) return FhirValueList.Empty;
 
-                return Typecasts.CastTo<IEnumerable<IValueProvider>>(func(Typecasts.CastTo<A>(focus), 
+                return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(Typecasts.CastTo<A>(focus), 
                             Typecasts.CastTo<B>(argA), Typecasts.CastTo<C>(argB), Typecasts.CastTo<D>(argC)));
             };
         }
@@ -124,24 +124,24 @@ namespace Hl7.FluentPath.Expressions
                 var right = args.Skip(2).First();
 
                 // Return function that actually executes the Invokee at the last moment
-                return Typecasts.CastTo<IEnumerable<IValueProvider>>(func(() => left(ctx, InvokeeFactory.EmptyArgs).BooleanEval(), () => right(ctx, InvokeeFactory.EmptyArgs).BooleanEval()));
+                return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(() => left(ctx, InvokeeFactory.EmptyArgs).BooleanEval(), () => right(ctx, InvokeeFactory.EmptyArgs).BooleanEval()));
             };
         }
 
-        public static Invokee Return(IValueProvider value)
+        public static Invokee Return(IElementNavigator value)
         {
-            return (_, __) => (new[] { ( IValueProvider)value });
+            return (_, __) => (new[] { (IElementNavigator)value });
         }
 
-        public static Invokee Return(IEnumerable<IValueProvider> value)
+        public static Invokee Return(IEnumerable<IElementNavigator> value)
         {
             return (_, __) => value;
         }
 
         public static Invokee Invoke(string functionName, IEnumerable<Invokee> arguments, Invokee invokee)
         {
-            Func<Closure, IEnumerable<IValueProvider>> boundFunc = (ctx) => invokee(ctx, arguments);
-            IEnumerable<IValueProvider> lastResult = null;
+            Func<Closure, IEnumerable<IElementNavigator>> boundFunc = (ctx) => invokee(ctx, arguments);
+            IEnumerable<IElementNavigator> lastResult = null;
 
             return (ctx, _) =>
             {

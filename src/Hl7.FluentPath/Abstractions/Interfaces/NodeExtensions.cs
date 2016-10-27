@@ -54,23 +54,23 @@ namespace Hl7.ElementModel
             return nodes.SelectMany(e => e.Ascendants()).Distinct();
         }
 
-        //public static IEnumerable<T> Descendants<T>(this T element) where T : INode<T>
-        //{
-        //    foreach (T child in element.Children)
-        //    {
-        //        yield return child;
+        public static IEnumerable<T> DescendantNodes<T>(this T element) where T : INode<T>
+        {
+            foreach (T child in element.Children)
+            {
+                yield return child;
 
-        //        foreach (T grandchild in child.Descendants())
-        //        {
-        //            yield return grandchild;
-        //        }
-        //    }
-        //}
+                foreach (T grandchild in child.DescendantNodes())
+                {
+                    yield return grandchild;
+                }
+            }
+        }
 
-        //public static IEnumerable<T> Descendants<T>(this T element, Func<T, bool> predicate) where T : INode<T>
-        //{
-        //    return element.Descendants().Where(predicate);
-        //}
+        public static IEnumerable<T> DescendantNodes<T>(this T element, Func<T, bool> predicate) where T : INode<T>
+        {
+            return element.DescendantNodes().Where(predicate);
+        }
 
         public static void Visit<T>(this T node, Action<T> visitor) where T : INode<T>
         {
@@ -238,18 +238,18 @@ namespace Hl7.ElementModel
             }
         }*/
 
-        //public static bool HasChildren<T>(this T node) where T : INode<T>
-        //{
-        //    return node.Children != null && node.Children.Any();
-        //}
+        public static bool HasChildNodes<T>(this T node) where T : INode<T>
+        {
+            return node.Children != null && node.Children.Any();
+        }
 
-        //public static int CountChildren<T>(this T node) where T : INode<T>
-        //{
-        //    if (node.HasChildren())
-        //        return node.Children.Count;
-        //    else
-        //        return 0;
-        //}
+        public static int CountChildNodes<T>(this T node) where T : INode<T>
+        {
+            if (node.HasChildNodes())
+                return node.Children.Count;
+            else
+                return 0;
+        }
 
         //public static void EnsureChildren<T>(this T node) where T : Node<T>
         //{

@@ -51,12 +51,12 @@ namespace Hl7.FluentPath.Tests
         [Fact]
         public void TestPath()
         {
-            Assert.Equal("Patient", patient.Path);
-            Assert.Equal("Patient.active[0]", patient.Children[0].Path);
-            Assert.Equal("Patient.active[0].id[0]", patient.Children[0].Children[0].Path);
-            Assert.Equal("Patient.active[0].id[1]", patient.Children[0].Children[1].Path);
-            Assert.Equal("Patient.active[0].extension[0].value[0]", patient.Children[0].Children[2].Children[0].Path);
-            Assert.Equal("Patient.active[0].extension[1].value[0]", patient.Children[0].Children[3].Children[0].Path);
+            Assert.Equal("Patient", patient.PathString());
+            Assert.Equal("Patient.active[0]", patient.Children[0].PathString());
+            Assert.Equal("Patient.active[0].id[0]", patient.Children[0].Children[0].PathString());
+            Assert.Equal("Patient.active[0].id[1]", patient.Children[0].Children[1].PathString());
+            Assert.Equal("Patient.active[0].extension[0].value[0]", patient.Children[0].Children[2].Children[0].PathString());
+            Assert.Equal("Patient.active[0].extension[1].value[0]", patient.Children[0].Children[3].Children[0].PathString());
         }
 
         [Fact]

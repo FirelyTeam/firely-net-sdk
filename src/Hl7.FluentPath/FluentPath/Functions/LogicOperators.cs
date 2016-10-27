@@ -93,12 +93,12 @@ namespace Hl7.FluentPath.Functions
             return null;
         }
 
-        public static IEnumerable<IValueProvider> IIf(this IEnumerable<IValueProvider> focus, bool? condition, IEnumerable<IValueProvider> result)
+        public static IEnumerable<IElementNavigator> IIf(this IEnumerable<IElementNavigator> focus, bool? condition, IEnumerable<IElementNavigator> result)
         {
             return IIf(focus, condition, result, null);
         }
 
-        public static IEnumerable<IValueProvider> IIf(this IEnumerable<IValueProvider> focus, bool? condition, IEnumerable<IValueProvider> result, IEnumerable<IValueProvider> otherwise)
+        public static IEnumerable<IElementNavigator> IIf(this IEnumerable<IElementNavigator> focus, bool? condition, IEnumerable<IElementNavigator> result, IEnumerable<IElementNavigator> otherwise)
         {
             if (condition == true)
                 return result;

@@ -12,11 +12,11 @@ using Hl7.FluentPath.Functions;
 
 namespace Hl7.FluentPath
 {
-    public delegate IEnumerable<IValueProvider> CompiledExpression(IValueProvider root, IValueProvider containerResource);
+    public delegate IEnumerable<IElementNavigator> CompiledExpression(IElementNavigator root, IElementNavigator containerResource);
 
     public static class CompiledExpressionExtensions
     {
-        public static object Scalar(this CompiledExpression evaluator, IValueProvider input, IValueProvider resource)
+        public static object Scalar(this CompiledExpression evaluator, IElementNavigator input, IElementNavigator resource)
         {
             var result = evaluator(input, resource);
             if (result.Any())
@@ -26,7 +26,7 @@ namespace Hl7.FluentPath
         }
 
         // For predicates, Empty is considered true
-        public static bool Predicate(this CompiledExpression evaluator, IValueProvider input, IValueProvider resource)
+        public static bool Predicate(this CompiledExpression evaluator, IElementNavigator input, IElementNavigator resource)
         {
             var result = evaluator(input, resource).BooleanEval();
 
@@ -36,7 +36,7 @@ namespace Hl7.FluentPath
                 return result.Value;
         }
 
-        public static bool IsBoolean(this CompiledExpression evaluator, bool value, IValueProvider input, IValueProvider resource)
+        public static bool IsBoolean(this CompiledExpression evaluator, bool value, IElementNavigator input, IElementNavigator resource)
         {
             var result = evaluator(input, resource).BooleanEval();
 

@@ -13,8 +13,12 @@ using System.Collections.Generic;
 namespace Hl7.ElementModel
 {
 
-    public interface IElementNode : INode<IElementNode>, ITypeNameProvider, INamedNode, IValueProvider
-    {
-    }
+    //public interface IElementNode : INode<IElementNode>
+    //{
+    //    string Name { get; set; }
+    //    string TypeName { get; set; }
+    //    object Value { get; set; }
+    //    // string Path ???
+    //}
 
 }

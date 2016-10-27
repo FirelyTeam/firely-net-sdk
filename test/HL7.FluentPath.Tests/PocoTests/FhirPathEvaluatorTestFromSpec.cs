@@ -109,16 +109,16 @@ namespace Hl7.FluentPath.Tests
             var npoco = new PocoNavigator(resource);
             //       FhirPathEvaluatorTest.Render(npoco);
 
-            IEnumerable<IValueProvider> actual = npoco.Select(expression);
+            IEnumerable<IElementNavigator> actual = npoco.Select(expression);
             Assert.Equal(expected.Count(), actual.Count());
 
             expected.Zip(actual, compare).Count();
         }
 
-        private static bool compare(XElement expected, IValueProvider actual)
+        private static bool compare(XElement expected, IElementNavigator actual)
         {
             var type = expected.Attribute("type").Value;
-            var tp = (ITypeNameProvider)actual;
+            var tp = (IElementNavigator)actual;
             Assert.True(type == tp.TypeName, "incorrect output type");
 
             if (expected.IsEmpty) return true;      // we are not checking the value
