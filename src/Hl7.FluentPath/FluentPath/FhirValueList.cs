@@ -14,16 +14,17 @@ namespace Hl7.FluentPath
 {
     public static class FhirValueList
     {
-        public static IEnumerable<IValueProvider> Create(params object[] values)
+        //todo: object can now be IElementNavigator? --mh
+        public static IEnumerable<IElementNavigator> Create(params object[] values)
         {
             if (values != null)
             {
-                return values.Select(value => value == null ? null : value is IValueProvider ? (IValueProvider)value : new ConstantValue(value));
+                return values.Select(value => value == null ? null : value is IElementNavigator ? (IElementNavigator)value : new ConstantValue(value));
             }
             else
                 return FhirValueList.Empty;
         }
 
-        public static readonly IEnumerable<IValueProvider> Empty = Enumerable.Empty<IValueProvider>();
+        public static readonly IEnumerable<IElementNavigator> Empty = Enumerable.Empty<IElementNavigator>();
     }
 }

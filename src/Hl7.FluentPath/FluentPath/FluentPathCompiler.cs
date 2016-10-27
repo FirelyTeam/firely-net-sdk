@@ -58,7 +58,7 @@ namespace Hl7.FluentPath
         {
             Invokee inv = expression.ToEvaluator(Symbols);
 
-            return (IValueProvider focus, IValueProvider containerResource) =>
+            return (IElementNavigator focus, IElementNavigator containerResource) =>
                 {
                     var closure = Closure.Root(focus, containerResource);
                     return inv(closure, InvokeeFactory.EmptyArgs);

@@ -12,39 +12,39 @@ namespace Hl7.FluentPath.Functions
     {
         static Action<string> WriteLine = (string s) => Debug.WriteLine(s);
          
-        public static IEnumerable<IValueProvider> Extension(this IEnumerable<IValueProvider> focus, string url)
+        public static IEnumerable<IElementNavigator> Extension(this IEnumerable<IElementNavigator> focus, string url)
         {
             return focus.Navigate("extension").Where(es => es.Navigate("url").Single().IsEqualTo(new ConstantValue(url)));
         }
 
-        public static IEnumerable<IValueProvider> Trace(this IEnumerable<IValueProvider> focus, string name)
+        public static IEnumerable<IElementNavigator> Trace(this IEnumerable<IElementNavigator> focus, string name)
         {
             WriteLine("=== Trace {0} ===".FormatWith(name));
 
             if (focus == null)
                 WriteLine("(null)");
-
-            else if (focus is IEnumerable<IValueProvider>)
+            else 
             {
                 WriteLine("Collection:".FormatWith(name));
-                foreach (var element in (IEnumerable<IValueProvider>)focus)
+                foreach (var element in focus)
                 {
                     if (element.Value != null)
                         WriteLine("   " + element.Value.ToString());
                 }
             }
-            else if (focus is IValueProvider)
-            {
-                var element = (IValueProvider)focus;
-                WriteLine("Value:".FormatWith(name));
+            // todo: this is always false --mh
+            //else if (focus is IValueProvider)
+            //{
+            //    var element = (IValueProvider)focus;
+            //    WriteLine("Value:".FormatWith(name));
 
-                if (element.Value != null)
-                {
-                    WriteLine(element.Value.ToString());
-                }
-            }
-            else
-                WriteLine(focus.ToString());
+            //    if (element.Value != null)
+            //    {
+            //        WriteLine(element.Value.ToString());
+            //    }
+            //}
+            //else
+            //    WriteLine(focus.ToString());
 
             WriteLine(Environment.NewLine);
 

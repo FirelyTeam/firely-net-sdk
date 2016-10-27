@@ -5,17 +5,17 @@ namespace Hl7.ElementModel
 {
     public struct ElementNodeNavigator : IElementNavigator
     {
-        private IList<IElementNode> _siblings;
+        private IList<ElementNode> _siblings;
         private int _index;
 
-        public IElementNode Current
+        public ElementNode Current
         {
             get { return _siblings[_index]; }
         }
 
-        public ElementNodeNavigator(IElementNode wrapped)
+        public ElementNodeNavigator(ElementNode wrapped)
         {
-            _siblings = new List<IElementNode> { wrapped };
+            _siblings = new List<ElementNode> { wrapped };
             _index = 0;
         }
 
@@ -39,7 +39,7 @@ namespace Hl7.ElementModel
         {
             get
             {
-                return Current.Path;
+                return Current.PathString();
             }
         }
 

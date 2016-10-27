@@ -6,47 +6,39 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Furore.Support;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Hl7.ElementModel
 {
 
-    public class ElementNode : IElementNode
+    public class ElementNode : INode<ElementNode>
     {
-        public IElementNode Parent { get; private set; }
+        public ElementNode Parent { get; set; }
 
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
-        public string Path
-        {
-            get
-            {
-                var myIndex = Parent != null ? Parent.Children.Where(c=> c.Name == Name).ToList().IndexOf(this) : -1;
-                var root = Parent != null ? Parent.Path + "." : "";
-                root += Name;
+        // todo: is this one necessary? We can calculate the path through the parent with INode<T>
+        //public string Path
+        //{
+        //    get
+        //    {
+        //        var myIndex = Parent != null ? Parent.Children.Where(c=> c.Name == Name).ToList().IndexOf(this) : -1;
+        //        var root = Parent != null ? Parent.Path + "." : "";
+        //        root += Name;
 
-                if(myIndex >= 0)
-                    root += "[{0}]".FormatWith(myIndex);
+        //        if(myIndex >= 0)
+        //            root += "[{0}]".FormatWith(myIndex);
 
-                return root;
-            }
+        //        return root;
+        //    }
 
-        }
+        //}
 
-        public string TypeName { get; private set; }
+        public string TypeName { get; set; }
 
-        public object Value { get; private set; }
+        public object Value { get;  set; }
 
-
-        public IList<IElementNode> Children { get; private set; }
-
-
-        public IElementNavigator ToNavigator()
-        {
-            return new ElementNodeNavigator(this);
-        }
+        public IList<ElementNode> Children { get; private set; }
 
         private ElementNode(string name, object value, string typeName, params ElementNode[] children)
         {

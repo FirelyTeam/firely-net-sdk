@@ -14,7 +14,7 @@ namespace Hl7.FluentPath.Functions
 {
     public static class ConversionOperators
     {
-        private static T getValue<T>(this IValueProvider val, string name)
+        private static T getValue<T>(this IElementNavigator val, string name)
         {
             if (val == null) throw Error.ArgumentNull(name);
             if (val.Value == null) throw Error.ArgumentNull(name + ".Value");
@@ -24,7 +24,7 @@ namespace Hl7.FluentPath.Functions
         }
 
         // FluentPath toInteger() function
-        public static long? ToInteger(this IValueProvider focus)
+        public static long? ToInteger(this IElementNavigator focus)
         {
             var val = focus.getValue<object>("focus");
 
@@ -50,7 +50,7 @@ namespace Hl7.FluentPath.Functions
         }
 
         // FluentPath toDecimal() function
-        public static decimal? ToDecimal(this IValueProvider focus)
+        public static decimal? ToDecimal(this IElementNavigator focus)
         {
             var val = focus.getValue<object>("focus");
 
@@ -77,7 +77,7 @@ namespace Hl7.FluentPath.Functions
 
 
         // FluentPath toString() function
-        public static string ToStringRepresentation(this IValueProvider focus)
+        public static string ToStringRepresentation(this IElementNavigator focus)
         {
             var val = focus.getValue<object>("focus");
 

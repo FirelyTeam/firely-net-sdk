@@ -18,7 +18,7 @@ using Furore.Support;
 
 namespace Hl7.FluentPath
 {
-    internal class PocoElementNavigator : IValueProvider, ITypeNameProvider
+    internal class PocoElementNavigator 
     {
         static Hl7.Fhir.Introspection.ClassMapping GetMappingForType(Type elementType)
         {

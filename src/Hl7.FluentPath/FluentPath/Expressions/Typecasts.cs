@@ -70,8 +70,8 @@ namespace Hl7.FluentPath.Expressions
             if (from.CanBeTreatedAsType(to)) return id;
 
             //if (to == typeof(bool)) return any2bool;
-            if (to == typeof(IValueProvider) && (!from.CanBeTreatedAsType(typeof(IEnumerable<IValueProvider>)))) return any2ValueProvider;
-            if (to == typeof(IEnumerable<IValueProvider>)) return any2List;
+            if (to == typeof(IElementNavigator) && (!from.CanBeTreatedAsType(typeof(IEnumerable<IElementNavigator>)))) return any2ValueProvider;
+            if (to == typeof(IEnumerable<IElementNavigator>)) return any2List;
              
             if (from == typeof(long) && (to == typeof(decimal) || to == typeof(decimal?))) return makeNativeCast(typeof(decimal));
             if (from == typeof(long?) && to == typeof(decimal?)) return makeNativeCast(typeof(decimal?));
@@ -82,21 +82,21 @@ namespace Hl7.FluentPath.Expressions
         {
             if (instance == null) return null;
 
-            if (to.CanBeTreatedAsType(typeof(IEnumerable<IValueProvider>))) return instance;
+            if (to.CanBeTreatedAsType(typeof(IEnumerable<IElementNavigator>))) return instance;
 
-            if (instance is IEnumerable<IValueProvider>)
+            if (instance is IEnumerable<IElementNavigator>)
             {
-                var list = (IEnumerable<IValueProvider>)instance;
+                var list = (IEnumerable<IElementNavigator>)instance;
                 if (!list.Any()) return null;
                 if (list.Count() == 1)
                     instance = list.Single();
             }
 
-            if (to.CanBeTreatedAsType(typeof(IValueProvider))) return instance;
+            if (to.CanBeTreatedAsType(typeof(IElementNavigator))) return instance;
 
-            if (instance is IValueProvider)
+            if (instance is IElementNavigator)
             {
-                var element = (IValueProvider)instance;
+                var element = (IElementNavigator)instance;
 
                 if (element.Value != null)
                     instance = element.Value;
@@ -153,7 +153,7 @@ namespace Hl7.FluentPath.Expressions
             }
 
             //if source == null, or unboxed source == null....
-            if (to == typeof(IEnumerable<IValueProvider>))
+            if (to == typeof(IEnumerable<IElementNavigator>))
                 return FhirValueList.Empty;
             if (to.IsNullable())
                 return null;
@@ -170,9 +170,9 @@ namespace Hl7.FluentPath.Expressions
 
         public static string ReadableFluentPathName(Type t)
         {
-            if (t.CanBeTreatedAsType(typeof(IEnumerable<IValueProvider>)))
+            if (t.CanBeTreatedAsType(typeof(IEnumerable<IElementNavigator>)))
                 return "collection";
-            else if (t.CanBeTreatedAsType(typeof(IValueProvider)))
+            else if (t.CanBeTreatedAsType(typeof(IElementNavigator)))
                 return "any single value";
             else
                 return t.Name;

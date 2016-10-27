@@ -17,18 +17,21 @@ namespace Hl7.FluentPath
 {
     internal static class IValueProviderListExtensions
     {
-        public static IEnumerable<IElementNavigator> JustElements(this IEnumerable<IValueProvider> focus)
+        public static IEnumerable<IElementNavigator> JustElements(this IEnumerable<IElementNavigator> focus)
         {
+            // todo: this is a tautology now --mh
             return focus.OfType<IElementNavigator>();
         }
 
 
-        public static IEnumerable<IValueProvider> Children(this IEnumerable<IValueProvider> focus)
+        public static IEnumerable<IElementNavigator> Children(this IEnumerable<IElementNavigator> focus)
         {
-            return focus.JustElements().SelectMany(node => node.Children());
+            // todo: this is now a tautology --mh
+            // return focus.JustElements().SelectMany(node => node.Children());
+            return focus.SelectMany(node => node.Children());
         }
 
-        public static IEnumerable<IValueProvider> Descendants(this IEnumerable<IValueProvider> focus)
+        public static IEnumerable<IElementNavigator> Descendants(this IEnumerable<IElementNavigator> focus)
         {
             return focus.JustElements().SelectMany(node => node.Descendants());
         }

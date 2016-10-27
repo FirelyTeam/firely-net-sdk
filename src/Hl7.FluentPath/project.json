@@ -1,7 +1,7 @@
 {
   "name": "Hl7.FluentPath",
 
-  "version": "0.3.1-alpha7",
+  "version": "0.4.0-alpha1",
   "title": "HL7 FluentPath evaluator",
   "authors": [ "Ewout Kramer (e.kramer@furore.com) and contributors" ],
   "description": "This library contains a runtime environment for executing HL7 FluentPath queries and invariants. It is used by the HL7 .NET FHIR API (https://www.nuget.org/packages/Hl7.Fhir.DSTU2) to run validation for the HL7 FHIR object model.",

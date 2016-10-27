@@ -18,7 +18,7 @@ namespace Hl7.FluentPath.Expressions
         {
         }
 
-        public static Closure Root(IValueProvider root)
+        public static Closure Root(IElementNavigator root)
         {
             var newContext = new Closure();
 
@@ -30,7 +30,7 @@ namespace Hl7.FluentPath.Expressions
             return newContext;
         }
 
-        public static Closure Root(IValueProvider root, IValueProvider resource)
+        public static Closure Root(IElementNavigator root, IElementNavigator resource)
         {
             var newContext = new Closure();
 
@@ -43,9 +43,9 @@ namespace Hl7.FluentPath.Expressions
             return newContext;
         }
 
-        private Dictionary<string, IEnumerable<IValueProvider>> _namedValues = new Dictionary<string, IEnumerable<IValueProvider>>();
+        private Dictionary<string, IEnumerable<IElementNavigator>> _namedValues = new Dictionary<string, IEnumerable<IElementNavigator>>();
 
-        public virtual void SetValue(string name, IEnumerable<IValueProvider> value)
+        public virtual void SetValue(string name, IEnumerable<IElementNavigator> value)
         {
             _namedValues.Remove(name);
             _namedValues.Add(name, value);
@@ -63,10 +63,10 @@ namespace Hl7.FluentPath.Expressions
         }
 
 
-        public virtual IEnumerable<IValueProvider> ResolveValue(string name)
+        public virtual IEnumerable<IElementNavigator> ResolveValue(string name)
         {
             // First, try to directly get "normal" values
-            IEnumerable<IValueProvider> result = null;
+            IEnumerable<IElementNavigator> result = null;
             _namedValues.TryGetValue(name, out result);
 
             if (result != null) return result;

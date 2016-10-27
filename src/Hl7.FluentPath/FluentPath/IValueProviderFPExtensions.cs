@@ -57,25 +57,25 @@ namespace Hl7.FluentPath
         }
 
 
-        public static IEnumerable<IValueProvider> Select(this IValueProvider input, string expression, IValueProvider resource=null)
+        public static IEnumerable<IElementNavigator> Select(this IElementNavigator input, string expression, IElementNavigator resource = null)
         {
             var evaluator = getCompiledExpression(expression);
             return evaluator(input, resource);
         }
 
-        public static object Scalar(this IValueProvider input, string expression, IValueProvider resource = null)
+        public static object Scalar(this IElementNavigator input, string expression, IElementNavigator resource = null)
         {
             var evaluator = getCompiledExpression(expression);
             return evaluator.Scalar(input, resource);
         }
 
-        public static bool Predicate(this IValueProvider input, string expression, IValueProvider resource = null)
+        public static bool Predicate(this IElementNavigator input, string expression, IElementNavigator resource = null)
         {
             var evaluator = getCompiledExpression(expression);
             return evaluator.Predicate(input, resource);
         }
 
-        public static bool IsBoolean(this IValueProvider input, string expression, bool value, IValueProvider resource = null)
+        public static bool IsBoolean(this IElementNavigator input, string expression, bool value, IElementNavigator resource = null)
         {
             var evaluator = getCompiledExpression(expression);
             return evaluator.IsBoolean(value, input, resource);

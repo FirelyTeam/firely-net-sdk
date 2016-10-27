@@ -10,8 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Hl7.FluentPath;
 using Hl7.ElementModel;
 
@@ -19,14 +17,14 @@ namespace Hl7.FluentPath.Functions
 {
     internal static class EqualityOperators
     {
-        public static bool IsEqualTo(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
+        public static bool IsEqualTo(this IEnumerable<IElementNavigator> left, IEnumerable<IElementNavigator> right)
         {
             if (left.Count() != right.Count()) return false;
 
             return left.Zip(right, (l, r) => l.IsEqualTo(r)).All(x => x);
         }
 
-        public static bool IsEqualTo(this IValueProvider left, IValueProvider right)
+        public static bool IsEqualTo(this IElementNavigator left, IElementNavigator right)
         {
             var l = left.Value;
             var r = right.Value;
@@ -72,23 +70,24 @@ namespace Hl7.FluentPath.Functions
         }
 
 
-        private static bool namesAreEqual(IValueProvider left, IValueProvider right, bool useEquivalence = false)
+        private static bool namesAreEqual(IElementNavigator left, IElementNavigator right, bool useEquivalence = false)
         {
             // If the values have names, compare them
-            if (left is INamedNode && right is INamedNode)
+            if (left.IsNamedNode() && right.IsNamedNode())
+            // -- if (left is INamedNode && right is INamedNode)
             {
-                var lNP = (INamedNode)left;
-                var rNP = (INamedNode)right;
+                //-- var lNP = (INamedNode)left;
+                //-- var rNP = (INamedNode)right;
 
-                if (useEquivalence && lNP.Name == "id") return true;      // don't compare 'id' elements for equivalence
-                if (lNP.Name != rNP.Name) return false;
+                if (useEquivalence && left.Name == "id") return true;      // don't compare 'id' elements for equivalence
+                if (left.Name != right.Name) return false;
             }
 
             return true;
         }
 
 
-        public static bool IsEquivalentTo(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
+        public static bool IsEquivalentTo(this IEnumerable<IElementNavigator> left, IEnumerable<IElementNavigator> right)
         {
             if (left.Count() != right.Count()) return false;
 
@@ -96,7 +95,7 @@ namespace Hl7.FluentPath.Functions
         }
 
 
-        public static bool IsEquivalentTo(this IValueProvider left, IValueProvider right)
+        public static bool IsEquivalentTo(this IElementNavigator left, IElementNavigator right)
         {
             var l = left.Value;
             var r = right.Value;
@@ -145,7 +144,7 @@ namespace Hl7.FluentPath.Functions
 
 
 
-        private static IEnumerable<IValueProvider> childrenOrEmpty(this IValueProvider focus)
+        private static IEnumerable<IElementNavigator> childrenOrEmpty(this IElementNavigator focus)
         {
             if (focus is IElementNavigator)
             {
@@ -182,9 +181,9 @@ namespace Hl7.FluentPath.Functions
             return repr.Length - repr.IndexOf('.') - 1;
         }
 
-        internal class ValueProviderEqualityComparer : IEqualityComparer<IValueProvider>
+        internal class ValueProviderEqualityComparer : IEqualityComparer<IElementNavigator>
         {
-            public bool Equals(IValueProvider x, IValueProvider y)
+            public bool Equals(IElementNavigator x, IElementNavigator y)
             {
                 if (x == null && y == null) return true;
                 if (x == null || y == null) return false;
@@ -192,13 +191,13 @@ namespace Hl7.FluentPath.Functions
                 return x.IsEqualTo(y);
             }
 
-            public int GetHashCode(IValueProvider value)
+            public int GetHashCode(IElementNavigator element)
             {
-                var result = value.Value != null ? value.Value.GetHashCode() : 0;
+                var result = element.Value != null ? element.Value.GetHashCode() : 0;
 
-                if (value is IElementNavigator)
+                if (element is IElementNavigator)
                 {
-                    var childnames = String.Concat(((IElementNavigator)value).GetChildNames());
+                    var childnames = String.Concat(((IElementNavigator)element).GetChildNames());
                     if (!String.IsNullOrEmpty(childnames))
                         result ^= childnames.GetHashCode();
                 }

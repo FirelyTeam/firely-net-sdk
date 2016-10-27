@@ -67,9 +67,9 @@ namespace Hl7.FluentPath
                 return TypeInfo.DateTime;
             else if (nativeType == typeof(Time))
                 return TypeInfo.Time;
-            else if (nativeType == typeof(IEnumerable<IValueProvider>))
+            else if (nativeType == typeof(IEnumerable<IElementNavigator>))
                 return TypeInfo.Any;
-            else if (nativeType == typeof(IValueProvider))
+            else if (nativeType == typeof(IElementNavigator))
                 return TypeInfo.Any;
             else
                 throw Error.Argument("nativeType", "Native type '{0}' is not mappable to a FluentPath type".FormatWith(nativeType.Name));

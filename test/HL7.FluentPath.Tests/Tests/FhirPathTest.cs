@@ -23,7 +23,7 @@ namespace Hl7.FluentPath.Tests
 {
     public class FhirPathTest
     {
-        public IValueProvider getTestData()
+        public IElementNavigator getTestData()
         {
             var tpXml = System.IO.File.ReadAllText("TestData\\fp-test-patient.xml");
             // var tree = TreeConstructor.FromXml(tpXml);
