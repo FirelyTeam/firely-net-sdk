@@ -133,7 +133,7 @@ namespace Hl7.FluentPath
 
         public IElementNavigator Clone()
         {
-            throw new NotImplementedException();
+            return new ConstantValue(Value);
         }
     }
 }
