@@ -7,20 +7,21 @@
 */
 
 using System.Xml;
+using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
 
-    public struct XmlSerializationDetails : IPositionProvider
+    public class XmlSerializationDetails : IPositionProvider
     {
         public XmlNodeType NodeType;
-        public string Namespace;
+        public XNamespace Namespace;
 
         public string[] CommentBefore;
         public string[] CommentAfter;
 
-        public int LineNumber { get; }
-        public int LinePosition { get; }
+        public int LineNumber { get; set; }
+        public int LinePosition { get; set; }
     }
 
 }

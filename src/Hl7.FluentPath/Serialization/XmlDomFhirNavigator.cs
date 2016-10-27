@@ -15,7 +15,7 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public partial struct XmlDomFhirNavigator : IElementNavigator, IPositionProvider
+    public partial struct XmlDomFhirNavigator : ISerializedSourceNavigator, IPositionProvider
     {
         internal XmlDomFhirNavigator(XObject current)
         {
@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Serialization
             return Char.IsUpper(elementName.LocalName, 0) && elementName.Namespace == XmlNs.XFHIR;
         }
 
-        public object Value
+        public string Text
         {
             get
             {
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        public IElementNavigator Clone()
+        public ISerializedSourceNavigator Clone()
         {
             return new XmlDomFhirNavigator(_current);
         }
@@ -168,7 +168,7 @@ namespace Hl7.Fhir.Serialization
                 var li = (IXmlLineInfo)_current;
 
                 if (!li.HasLineInfo())
-                    throw Error.InvalidOperation("No lineinfo available. Please read the Xml document using LoadOptions.SetLineInfo.");
+                    return -1;
 
                 return li.LineNumber;
             }
@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Serialization
                 var li = (IXmlLineInfo)_current;
 
                 if (!li.HasLineInfo())
-                    throw Error.InvalidOperation("No lineinfo available. Please read the Xml document using LoadOptions.SetLineInfo.");
+                    return -1;
 
                 return li.LinePosition;
             }
@@ -193,7 +193,27 @@ namespace Hl7.Fhir.Serialization
             return _current.ToString();
         }
 
-        
+        public T GetSerializationDetails<T>() where T:class
+        {
+            if (typeof(T) == typeof(XmlSerializationDetails))
+            {
+                var result = new XmlSerializationDetails();
+
+                result.NodeType = _current.NodeType;
+
+                if (_current.NodeType == XmlNodeType.Element)
+                    result.Namespace = ((XElement)_current).Name.Namespace;
+                if (_current.NodeType == XmlNodeType.Attribute)
+                    result.Namespace = ((XAttribute)_current).Name.Namespace;
+
+                result.LineNumber = LineNumber;
+                result.LinePosition = LinePosition;
+                    
+                return result as T;
+            }
+            else
+                return null;
+        }
     }
 }
 

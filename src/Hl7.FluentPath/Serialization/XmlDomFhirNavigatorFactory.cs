@@ -7,7 +7,7 @@ namespace Hl7.Fhir.Serialization
 {
     public partial struct XmlDomFhirNavigator
     {
-        public static IElementNavigator Create(XmlReader reader)
+        public static ISerializedSourceNavigator Create(XmlReader reader)
         {
             XDocument doc = null;
 
@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Serialization
             return new XmlDomFhirNavigator(doc.Root);
         }
 
-        public static IElementNavigator Create(string xml)
+        public static ISerializedSourceNavigator Create(string xml)
         {
             using (var reader = SerializationUtil.XmlReaderFromXmlText(xml))
             {

@@ -1,8 +1,5 @@
-﻿using Hl7.Fhir.Serialization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Hl7.ElementModel;
+using Hl7.Fhir.Serialization;
 using Xunit;
 
 namespace Hl7.FluentPath.Tests.XmlNavTests
@@ -29,7 +26,7 @@ namespace Hl7.FluentPath.Tests.XmlNavTests
 
             Assert.True(nav.MoveToFirstChild());
             Assert.Equal("value", nav.Name);
-            Assert.Equal("pat1", nav.Value);
+            Assert.Equal("pat1", nav.Text);
             Assert.False(nav.MoveToFirstChild());
             Assert.False(nav.MoveToNext());
 
@@ -40,7 +37,7 @@ namespace Hl7.FluentPath.Tests.XmlNavTests
             Assert.True(id.MoveToFirstChild()); // status
             Assert.True(id.MoveToNext());
             Assert.Equal("div", id.Name);
-            Assert.StartsWith("<div xmlns=", (string)id.Value);       // special handling of xhtml
+            Assert.StartsWith("<div xmlns=", (string)id.Text);       // special handling of xhtml
             Assert.False(id.MoveToFirstChild()); // cannot move into xhtml
             Assert.Equal("div", id.Name); // still on xhtml <div>
             Assert.False(id.MoveToNext());  // nothing more in <text>
@@ -59,7 +56,7 @@ namespace Hl7.FluentPath.Tests.XmlNavTests
             Assert.Equal("value", text.Name);
             Assert.True(text.MoveToFirstChild());
             Assert.Equal("value", text.Name); // value.value
-            Assert.Equal("444222222", text.Value);
+            Assert.Equal("444222222", text.Text);
             Assert.False(text.MoveToNext());
 
             Assert.True(identifier.MoveToNext()); // active
@@ -71,5 +68,14 @@ namespace Hl7.FluentPath.Tests.XmlNavTests
             Assert.Equal("use", identifier.Name);
         }
 
+        //[Fact]
+        //public void NavigateXmlDoc()
+        //{
+        //    var tpXml = System.IO.File.ReadAllText("TestData\\fp-test-patient.xml");
+
+        //    var nav = XmlDomFhirNavigator.Create(tpXml);
+
+        //    nav.GetChildrenByName("hi");
+        //}
     }
 }

@@ -22,7 +22,6 @@ namespace Furore.Support
         }
 
 
-
         /***
          *  Make sure we handle all possible node types:
          *  System.Xml.Linq.XObject

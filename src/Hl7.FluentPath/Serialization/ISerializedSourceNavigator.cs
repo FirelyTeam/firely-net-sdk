@@ -17,14 +17,12 @@ namespace Hl7.Fhir.Serialization
 {
     public interface ISerializedSourceNavigator : INavigator<ISerializedSourceNavigator>
     {
-        string Path { get; }
+        string Name { get; }
 
         string Text { get; }
 
-        string Type { get; }
+        string TypeName { get; }
 
-        T GetSerializationDetails<T>();
+        T GetSerializationDetails<T>() where T:class;
     }
-
-
 }

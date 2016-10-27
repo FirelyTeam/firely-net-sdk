@@ -40,7 +40,8 @@ namespace Hl7.FluentPath.Tests
             var newq4 = new Quantity(3.15, "kg");
 
             Assert.Equal(newq, newq2);
-            Assert.NotEqual(newq, newq3);
+            Assert.Throws<NotSupportedException>( () => newq == newq3);
+            Assert.NotEqual(newq, newq4);
         }
 
         [Fact]
