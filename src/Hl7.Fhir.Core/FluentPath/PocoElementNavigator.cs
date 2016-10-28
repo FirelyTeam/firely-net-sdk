@@ -15,7 +15,7 @@ using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.FluentPath
 {
-    internal class PocoElementNavigator : IValueProvider, ITypeNameProvider
+    internal class PocoElementNavigator
     {
         static Hl7.Fhir.Introspection.ClassMapping GetMappingForType(Type elementType)
         {

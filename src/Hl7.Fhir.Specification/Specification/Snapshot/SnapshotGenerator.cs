@@ -826,7 +826,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             return baseStructure;
         }
 
-        bool verifyStructure(StructureDefinition sd, string profileUrl, INamedNode location = null)
+        bool verifyStructure(StructureDefinition sd, string profileUrl, IElementNavigator location = null)
         {
             if (sd == null)
             {
@@ -841,7 +841,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // - the specified StructureDef is not null
         // - the snapshot component is not empty (expand on demand if necessary)
         // - The ElementDefinition.Base components are propertly initialized (regenerate if necessary)
-        bool ensureSnapshot(StructureDefinition sd, string profileUri, INamedNode location = null)
+        bool ensureSnapshot(StructureDefinition sd, string profileUri, IElementNavigator location = null)
         {
             if (!verifyStructure(sd, profileUri, location)) { return false; }
             profileUri = sd.Url;
@@ -938,7 +938,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Try to resolve from existing snapshot, if it exists and is valid
         // Try to resolve from partial snapshot, if it is currently being generated (higher up on the stack)
         // Otherwise recursively resolve the associated base profile root element definition (if it exists) and merge with differential root
-        ElementDefinition getSnapshotRootElement(StructureDefinition sd, string profileUri, INamedNode location)
+        ElementDefinition getSnapshotRootElement(StructureDefinition sd, string profileUri, IElementNavigator location)
         {
             // Debug.Print("[SnapshotGenerator.getSnapshotRootElement] profileUri = '{0}' - resolving root element definition...", profileUri);
             if (!verifyStructure(sd, profileUri, location)) { return null; }

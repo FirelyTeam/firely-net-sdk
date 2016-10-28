@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Support
             return new CodeableConcept(API_OPERATION_OUTCOME_SYSTEM, issueCode.ToString(), text);
         }
 
-        public OperationOutcome.IssueComponent ToIssueComponent(string message, INamedNode location = null)
+        public OperationOutcome.IssueComponent ToIssueComponent(string message, IElementNavigator location = null)
         {
             return ToIssueComponent(message, location != null ? location.Path : null);
         }
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Support
 
     public static class OperationOutcomeIssueExtensions
     {
-        public static void AddIssue(this OperationOutcome outcome, string message, Issue infoIssue, INamedNode location)
+        public static void AddIssue(this OperationOutcome outcome, string message, Issue infoIssue, IElementNavigator location)
         {
             outcome.AddIssue(infoIssue.ToIssueComponent(message, location));
         }

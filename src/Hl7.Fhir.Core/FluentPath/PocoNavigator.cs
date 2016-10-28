@@ -19,11 +19,6 @@ namespace Hl7.Fhir.FluentPath
 {
     public class PocoNavigator : IElementNavigator
     {
-        public static IEnumerable<IValueProvider> CreateInput(Base model)
-        {
-            return new List<IValueProvider>() { new PocoNavigator(model) };
-        }
-
         public PocoNavigator(Base model)
         {
             if (model == null) throw Error.ArgumentNull("model");

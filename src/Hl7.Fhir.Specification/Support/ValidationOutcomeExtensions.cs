@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Support
             return outcome.Issue.Where(issue => !issue.Success);
         }
 
-        public static IEnumerable<OperationOutcome.IssueComponent> IssuesAt(this OperationOutcome outcome, INamedNode node)
+        public static IEnumerable<OperationOutcome.IssueComponent> IssuesAt(this OperationOutcome outcome, IElementNavigator node)
         {
             return outcome.Issue.Where(issue => issue.IsAt(node));
         }
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Support
             return outcome.Issue.Where(issue => issue.IsAt(path));
         }
 
-        public static IEnumerable<OperationOutcome.IssueComponent> ErrorsAt(this OperationOutcome outcome, INamedNode node)
+        public static IEnumerable<OperationOutcome.IssueComponent> ErrorsAt(this OperationOutcome outcome, IElementNavigator node)
         {
             return outcome.ListErrors().Where(issue => issue.IsAt(node));
         }
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Support
             return false;
         }
 
-        public static bool IsAt(this OperationOutcome.IssueComponent issue, INamedNode location)
+        public static bool IsAt(this OperationOutcome.IssueComponent issue, IElementNavigator location)
         {
             return issue.IsAt(location.Path);
         }

@@ -19,13 +19,13 @@
       <group targetFramework="net45">
         <dependency id="Hl7.Fhir.DSTU2" version="0.90.6-alpha8" />
         <dependency id="Newtonsoft.Json" version="8.0.2" />
-        <dependency id="Hl7.FluentPath" version="0.3.1-alpha7" />
+        <dependency id="Hl7.FluentPath" version="0.4.0-alpha2" />
       </group>
       <group targetFramework="net40">
         <dependency id="Hl7.Fhir.DSTU2" version="0.90.6-alpha8" />
         <dependency id="Newtonsoft.Json" version="8.0.2" />
         <dependency id="SharpZipLib" version="0.86.0" />
-        <dependency id="Hl7.FluentPath" version="0.3.1-alpha7" />
+        <dependency id="Hl7.FluentPath" version="0.4.0-alpha2" />
       </group>
     </dependencies>
   </metadata>
