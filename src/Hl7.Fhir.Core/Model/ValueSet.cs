@@ -11,14 +11,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir.Model
 {
     public partial class ValueSet : Hl7.Fhir.Model.DomainResource
     {
+        [NotMapped]
         [Obsolete("This property was renamed in DSTU2 to CodeSystem", true)]
         public CodeSystemComponent Define { get; set; }
 
+        [NotMapped]
         public bool HasExpansion => Expansion != null;
 
         public int ExpansionSize()
