@@ -80,14 +80,14 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-
         internal OperationOutcome Validate(IElementNavigator instance, ElementDefinitionNavigator definition)
         {
             return Validate(instance, new[] { definition });
         }
 
 
-        // This is the one and only main internal entry point for all validations
+        // This is the one and only main internal entry point for all validations, which in its term
+        // will call step 1 in the validator, the function 
         internal OperationOutcome Validate(IElementNavigator instance, IEnumerable<ElementDefinitionNavigator> definitions)
         {
             var outcome = new OperationOutcome();
@@ -118,6 +118,8 @@ namespace Hl7.Fhir.Validation
             return () => validateElement(nav, instance);
         }
 
+
+     //   private OperationOutcome validateElement(ElementDefinitionNavigator definition, IElementNavigator instance)
 
         private OperationOutcome validateElement(ElementDefinitionNavigator definition, IElementNavigator instance)
         {
@@ -171,8 +173,6 @@ namespace Hl7.Fhir.Validation
                     else
                         Trace(outcome, "ElementDefinition has no child, nor does it specify a type or nameReference to validate the instance data against", Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE_OR_NAMEREF, instance);
                 }
-
-                outcome.Add(ValidateSlices(definition, instance));
 
                 outcome.Add(this.ValidateFixed(elementConstraints, instance));
                 outcome.Add(this.ValidatePattern(elementConstraints, instance));
@@ -241,26 +241,6 @@ namespace Hl7.Fhir.Validation
                 else
                     Trace(outcome, $"Encountered an invariant ({constraintElement.Key}) that has no FluentPath expression, skipping validation of this constraint",
                                 Issue.UNSUPPORTED_CONSTRAINT_WITHOUT_FLUENTPATH, instance);
-            }
-
-            return outcome;
-        }
-
-        internal OperationOutcome ValidateSlices(ElementDefinitionNavigator definition, IElementNavigator instance)
-        {
-            var outcome = new OperationOutcome();
-
-            if (definition.Current.Slicing != null)
-            {
-                // This is the slicing entry
-                // TODO: Find my siblings and try to validate the content against
-                // them. There should be exactly one slice validating against the
-                // content, otherwise the slicing is ambiguous. If there's no match
-                // we fail validation as well. 
-                // For now, we do not handle slices
-                if(definition.Current.Slicing != null)
-                    Trace(outcome, "ElementDefinition uses slicing, which is not yet supported. Instance has not been validated against " +
-                            "any of the slices", Issue.UNAVAILABLE_REFERENCED_PROFILE, instance);
             }
 
             return outcome;

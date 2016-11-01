@@ -76,6 +76,7 @@
       <Link>Support\StringExtensions.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyVersionInfo.cs" />
+    <Compile Include="Specification\Navigation\ElementNavigatorSlicingExtensions.cs" />
     <Compile Include="Specification\Snapshot\SnapshotElementIdGenerator.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorAnnotations.cs" />
     <Compile Include="Specification\Snapshot\SnapshotRecursionStack.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Validation\ElementDefinitionNavigatorExtensions.cs" />
     <Compile Include="Validation\ElementNavigatorParsingExtensions.cs" />
     <Compile Include="Validation\FixedPatternValidationExtensions.cs" />
+    <Compile Include="Validation\IBucket.cs" />
     <Compile Include="Validation\InstanceToProfileMatcher.cs" />
     <Compile Include="Support\Issue.cs" />
     <Compile Include="Specification\Navigation\ElementNavigatorTypeExtensions.cs" />
@@ -129,6 +131,9 @@
     <Compile Include="Validation\OperationOutcomeExtensions.cs" />
     <Compile Include="Validation\ProfileAssertion.cs" />
     <Compile Include="Validation\ProfilePreprocessor.cs" />
+    <Compile Include="Validation\SliceBucket.cs" />
+    <Compile Include="Validation\SliceGroupBucket.cs" />
+    <Compile Include="Validation\SliceValidationExtensions.cs" />
     <Compile Include="Validation\XmlValidationExtensions.cs" />
     <Compile Include="Validation\PocoValidationExtensions.cs" />
     <Compile Include="Validation\ScopeTracker.cs" />

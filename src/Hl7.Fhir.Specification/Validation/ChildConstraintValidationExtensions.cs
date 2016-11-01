@@ -35,43 +35,47 @@ namespace Hl7.Fhir.Validation
 
             //TODO: Give warnings for out-of order children.  Really? That's an xml artifact, no such thing in Json!
 
-            outcome.Add(validator.ValidateCardinality(matchResult, instance));
-
             // Recursively validate my children
-            foreach (Match match in matchResult.Matches)
+            foreach (var match in matchResult.Matches)
             {
-                foreach (IElementNavigator element in match.InstanceElements)
-                {
-                    outcome.Include(validator.Validate(element, match.Definition));
-                }
+                outcome.Add(validator.ValidateMatch(match, instance));
             }
 
             return outcome;
         }
 
-        internal static OperationOutcome ValidateCardinality(this Validator validator, MatchResult matchResult, IElementNavigator parent)
+        private static OperationOutcome ValidateMatch(this Validator validator, Match match, IElementNavigator instance)
         {
             var outcome = new OperationOutcome();
 
-            foreach (var match in matchResult.Matches)
-            {
-                var definition = match.Definition.Current;
-                var occurs = match.InstanceElements.Count;
-                var cardinality = Cardinality.FromElementDefinition(definition);
+            var definition = match.Definition.Current;
+            var occurs = match.InstanceElements.Count;
+            var cardinality = Cardinality.FromElementDefinition(definition);
 
-                if (definition.Min != null && definition.Max != null)
+            if (definition.Min != null && definition.Max != null)
+            {
+                if (!cardinality.InRange(occurs))
+                    validator.Trace(outcome, $"Element '{match.Definition.PathName}' occurs {occurs} times, which is not within the specified cardinality of {cardinality.ToString()}",
+                            Issue.CONTENT_ELEMENT_INCORRECT_OCCURRENCE, instance);
+            }
+            else
+                validator.Trace(outcome, "ElementDefinition does not specify cardinality", Issue.PROFILE_ELEMENTDEF_CARDINALITY_MISSING, instance);
+
+            // If there are instance occurrences, we should now validate them against the definition
+            if (match.InstanceElements.Any())
+            {
+                if (match.Definition.Current.Slicing == null)
                 {
-                    if(!cardinality.InRange(occurs))
-                        validator.Trace(outcome, $"Element '{match.Definition.PathName}' occurs {occurs} times, which is not within the specified cardinality of {cardinality.ToString()}",
-                                Issue.CONTENT_ELEMENT_INCORRECT_OCCURRENCE, parent);
+                    foreach (IElementNavigator element in match.InstanceElements)
+                    {
+                        outcome.Include(validator.Validate(element, match.Definition));
+                    }
                 }
                 else
-                    validator.Trace(outcome, "ElementDefinition does not specify cardinality", Issue.PROFILE_ELEMENTDEF_CARDINALITY_MISSING, parent);
+                    outcome.Add(validator.ValidateSlices(match.InstanceElements, match.Definition));
             }
 
             return outcome;
         }
-
-
     }
 }

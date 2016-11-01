@@ -19,6 +19,7 @@ namespace Hl7.Fhir.Validation
             Resolver = new CachedResolver(
                 new MultiResolver(
                     new TestProfileArtifactSource(),
+                    new DirectorySource(@"TestData\validation"),
                     zip
                     ));
         }

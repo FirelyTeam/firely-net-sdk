@@ -1,8 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
-  <meta>
-    <lastUpdated value="2016-10-06T10:58:18.75+02:00" />
-  </meta>
   <url value="http://example.org/StructureDefinition/DocumentBundle" />
   <name value="DocumentBundle" />
   <status value="draft" />
