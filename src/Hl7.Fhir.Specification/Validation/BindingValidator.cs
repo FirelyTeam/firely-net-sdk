@@ -97,10 +97,10 @@ namespace Hl7.Fhir.Validation
                     outcome.AddIssue($"{codeLabel} is not valid for non-required binding to valueset '{uri}'", Issue.CONTENT_INVALID_FOR_NON_REQUIRED_BINDING, path);
                 }
 
-                validateResult.MakeInformational();
-                outcome.Include(validateResult);
+                validateResult.MakeInformational();             
             }
 
+            outcome.Include(validateResult);
             return outcome;
         }
 
