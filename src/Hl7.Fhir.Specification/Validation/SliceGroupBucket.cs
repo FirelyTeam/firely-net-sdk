@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Validation
                 var cardinality = Cardinality.FromElementDefinition(slice.Root);
                 if (!cardinality.InRange(count))
                     Validator.Trace(outcome, $"Slice '{subsliceName}' has {count} members, which is not within the specified cardinality of {cardinality.ToString()}",
-                            Issue.CONTENT_ELEMENT_INCORRECT_OCCURRENCE, leftToJudge.First().Instance);
+                            Issue.CONTENT_ELEMENT_SLICING_INCORRECT_OCCURRENCE, leftToJudge.First().Instance);
 
                 leftToJudge = leftToJudge.Where(c => c.Membership == SliceMembership.NotMember).ToList();
                 if (!leftToJudge.Any()) break;
