@@ -49,14 +49,7 @@ namespace Hl7.Fhir.Validation
             Intro.ReturnToBookmark(bm);
         }
 
-
-        public OperationOutcome Judge(IEnumerable<IElementNavigator> candidates)
-        {
-            var sliceCandidates = candidates.Select(c => new SliceCandidate { Instance = c, Membership = SliceMembership.NotMember, Outcome = null })
-                                    .ToList();
-
-            return Judge(sliceCandidates);
-        }
+    
 
 
         public override OperationOutcome Judge(IEnumerable<SliceCandidate> candidates)
@@ -80,9 +73,13 @@ namespace Hl7.Fhir.Validation
             // All this being said, let's now first run the constraints in our intro slice, to select our "group" of instances
             // to work with
 
-            var outcomeX = base.Judge(candidates);
+            outcome.Add(base.Judge(candidates));
 
-            var memberInstances = candidates.Where(c => c.Membership == SliceMembership.Member).ToList();
+            // Slice validation is only done on candidates that are member of this slice AND
+            // that validated with success against the constraints on the intro (it's not of
+            // much use to do slice validation if they fail the intro's constraints)
+            var memberInstances = candidates.Where(c => c.Membership == SliceMembership.Member && 
+                                     (c.Outcome == null || c.Outcome.Success) ).ToList();
 
             // First, wipe any existing membership info - we're redoing it
             // In reality, we are doing a "nested" match, but copying all the candidacy info is a 
@@ -94,25 +91,44 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
+        private bool areNonMatchesContiguous(IEnumerable<SliceCandidate> candidates)
+        {
+            var openTail = candidates.SkipWhile(c => c.Membership == SliceMembership.Member);
+            return !openTail.Any(c => c.Membership == SliceMembership.Member);
+        }
+
         private void judgeChildSlices(OperationOutcome outcome, IList<SliceCandidate> candidates)
         {
             var leftToJudge = candidates;
 
+            if (!candidates.Any()) return;
 
-            foreach(var slice in ChildSlices)
+            foreach (var slice in ChildSlices)
             {
-                slice.Judge(leftToJudge);
+                outcome.Include(slice.Judge(leftToJudge));
+                var subsliceName = $"{slice.Root.Path} ({slice.Root.Name ?? "no name"})";
 
                 // check if the results are in order, i.e. contiguous within leftToJudge
+                if (!areNonMatchesContiguous(leftToJudge) && Intro.Current.Slicing.Ordered == true)
+                    Validator.Trace(outcome, $"Items are out of order for slice '{subsliceName}'", Issue.CONTENT_ELEMENT_SLICING_OUT_OF_ORDER,
+                        leftToJudge.First().Instance);
+
                 // check if the # of results matches the cardinality of the slice
+                var count = leftToJudge.Count(c => c.Membership == SliceMembership.Member);
+                var cardinality = Cardinality.FromElementDefinition(slice.Root);
+                if (!cardinality.InRange(count))
+                    Validator.Trace(outcome, $"Slice '{subsliceName}' has {count} members, which is not within the specified cardinality of {cardinality.ToString()}",
+                            Issue.CONTENT_ELEMENT_INCORRECT_OCCURRENCE, leftToJudge.First().Instance);
 
                 leftToJudge = leftToJudge.Where(c => c.Membership == SliceMembership.NotMember).ToList();
+                if (!leftToJudge.Any()) break;
             }
 
             var open = candidates.Where(c => c.Membership == SliceMembership.NotMember);
             var numOpen = open.Count();
             var rules = Intro.Current.Slicing.Rules;
-            var sliceName = $"{Intro.Current.Path} ({Intro.Current.Name ?? "no name"})"; 
+            var sliceName = $"{Root.Path} ({Root.Name ?? "no name"})";
+
             if (numOpen > 0)
             {
                 if(rules == ElementDefinition.SlicingRules.Closed)
@@ -129,11 +145,10 @@ namespace Hl7.Fhir.Validation
                 {
                     // All non matches instances must be at "the end", i.e. goto the first item that did
                     // not match, and check that all following items don't match either
-                    var openTail = candidates.SkipWhile(c => c.Membership == SliceMembership.Member);
-                    if(openTail.Any(c => c.Membership == SliceMembership.Member))
+                    if(!areNonMatchesContiguous(candidates))
                     {
                         Validator.Trace(outcome, $"Slice '{sliceName}' resulted in {numOpen} candidates for the open slice, but they are not all at the end",
-                                    Issue.CONTENT_ELEMENT_FAILS_SLICING_RULE, openTail.First().Instance);
+                                    Issue.CONTENT_ELEMENT_FAILS_SLICING_RULE, open.First().Instance);
                     }
                 }
             }

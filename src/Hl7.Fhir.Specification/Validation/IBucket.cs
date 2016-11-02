@@ -29,6 +29,8 @@ namespace Hl7.Fhir.Validation
         /// </summary>
         /// <remarks>Results are in the same order as the candidates passed in, and the result list will have the same number of elements.</remarks>
         //IList<SliceOutcome> Results { get; }
+
+        ElementDefinition Root { get; }
     }
 
 

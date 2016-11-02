@@ -11,6 +11,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
 using System.Collections.Generic;
+using System;
 
 namespace Hl7.Fhir.Validation
 {
@@ -27,6 +28,8 @@ namespace Hl7.Fhir.Validation
             Validator = validator;
         }
 
+        public ElementDefinition Root => Constraints.Current;
+
         public virtual OperationOutcome Judge(IEnumerable<SliceCandidate> candidates)
         {
             foreach(var candidate in candidates)
@@ -40,9 +43,20 @@ namespace Hl7.Fhir.Validation
                     candidate.Membership = SliceMembership.Member;
                     candidate.Outcome = report;
                 }
+                else
+                {
+                    candidate.Membership = SliceMembership.NotMember;
+                    candidate.Outcome = report;     // why it was not a member is interesting too, and
+                                                    // in case of an non-resliced slice, the validator
+                                                    // needs this information since non-members are then
+                                                    // considered errors.
+                }
             }
 
-            return new OperationOutcome();      // details will be collected by grouping
+            // When doing slicing with a discriminator, the operation outcome will contain all errors
+            // found in member slices (as determined by the discriminator),
+            // but for now, this is always empty
+            return new OperationOutcome();
         }
     }
 

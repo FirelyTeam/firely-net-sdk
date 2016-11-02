@@ -19,28 +19,23 @@ namespace Hl7.Fhir.Validation
             var slices = intro.FindMemberSlices().ToList();
 
             validator.Trace(outcome, $"Encountered a slice group with {slices.Count} member slices at '{intro.Path}'. ", Issue.PROCESSING_PROGRESS, instanceElements.First());
-            
-            foreach (IElementNavigator element in instanceElements)
+
+            var bucket = new SliceGroupBucket(validator, intro, discriminators: null);
+            var sliceCandidates = instanceElements.Select(c => new SliceCandidate { Instance = c, Membership = SliceMembership.NotMember, Outcome = null })
+                        .ToList();
+
+            outcome.Add(bucket.Judge(sliceCandidates));
+
+            // If any of our instances did not make it into the slice, this is actually an error
+            // since in a non-resliced slice group (=the original slice) ALL instances should be part
+            // of the slice. This is another way of saying: all instances should at least validate against
+            // the original constraints of the element before slicing (i.e. a "normal" element).
+            var failedCandidates = sliceCandidates.Where(c => c.Membership == SliceMembership.NotMember);
+            if (failedCandidates.Any())
             {
-                // All instances should at least conform to slice intro
-                var introResult = validator.Validate(element, intro);
-                outcome.Include(introResult);
-
-                // Only go on validating member slices when the instance at least matches the intro's constraints
-                if (introResult.Success)
-                {
-                    var slice = new ElementDefinitionNavigator(intro);
-
-                    foreach (var bm in slices)
-                    {
-                        slice.ReturnToBookmark(bm);
-
-                     //   var sliceValidationResults = ValidateSlices()
-                    }
-                }
+                foreach (var failedCandidate in failedCandidates)
+                    outcome.Include(failedCandidate.Outcome);
             }
-
-            // If this is a closed 
 
             return outcome;
         }
