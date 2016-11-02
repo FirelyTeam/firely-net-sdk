@@ -50,16 +50,19 @@ namespace Hl7.Fhir.Validation
 
             var definition = match.Definition.Current;
             var occurs = match.InstanceElements.Count;
+
+            if (definition.Min == null)
+                validator.Trace(outcome, $"Element definition does not specify a 'min' value, which is required. Cardinality has not been validated",
+                    Issue.PROFILE_ELEMENTDEF_CARDINALITY_MISSING, instance);
+            else if (definition.Max == null)
+                validator.Trace(outcome, $"Element definition does not specify a 'max' value, which is required. Cardinality has not been validated",
+                    Issue.PROFILE_ELEMENTDEF_CARDINALITY_MISSING, instance);
+
             var cardinality = Cardinality.FromElementDefinition(definition);
 
-            if (definition.Min != null && definition.Max != null)
-            {
-                if (!cardinality.InRange(occurs))
-                    validator.Trace(outcome, $"Element '{match.Definition.PathName}' occurs {occurs} times, which is not within the specified cardinality of {cardinality.ToString()}",
-                            Issue.CONTENT_ELEMENT_INCORRECT_OCCURRENCE, instance);
-            }
-            else
-                validator.Trace(outcome, "ElementDefinition does not specify cardinality", Issue.PROFILE_ELEMENTDEF_CARDINALITY_MISSING, instance);
+            if (!cardinality.InRange(occurs))
+                validator.Trace(outcome, $"Element '{match.Definition.PathName}' occurs {occurs} times, which is not within the specified cardinality of {cardinality.ToString()}",
+                        Issue.CONTENT_ELEMENT_INCORRECT_OCCURRENCE, instance);
 
             // If there are instance occurrences, we should now validate them against the definition
             if (match.InstanceElements.Any())
