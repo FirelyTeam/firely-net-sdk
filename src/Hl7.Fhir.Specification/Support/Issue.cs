@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Support
         public static readonly Issue UNAVAILABLE_SNAPSHOT_GENERATION_FAILED = Create(4003, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Incomplete);
         public static readonly Issue UNAVAILABLE_NEED_DIFFERENTIAL = Create(4004, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Incomplete);
         public static readonly Issue UNAVAILABLE_REFERENCED_RESOURCE = Create(4005, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
-        public static readonly Issue UNAVAILABLE_VALUESET = Create(4006, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Incomplete);
+        public static readonly Issue UNAVAILABLE_VALUESET = Create(4006, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
         public static readonly Issue UNAVAILABLE_TERMINOLOGY_SERVER = Create(4007, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Incomplete);
         public static readonly Issue UNAVAILABLE_VALIDATE_CODE_FAILED = Create(4008, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Incomplete);
 
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Support
         public static readonly Issue TERMINOLOGY_ABSTRACT_CODE_NOT_ALLOWED = Create(6002, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.CodeInvalid);
         public static readonly Issue TERMINOLOGY_INCORRECT_DISPLAY = Create(6003, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.CodeInvalid);
         public static readonly Issue TERMINOLOGY_VALUESET_TOO_COMPLEX = Create(3005, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.NotSupported);
-        public static readonly Issue TERMINOLOGY_EXPANSION_FAILED = Create(3006, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.NotSupported);
+        public static readonly Issue TERMINOLOGY_EXPANSION_FAILED = Create(3006, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
     }
 
 
