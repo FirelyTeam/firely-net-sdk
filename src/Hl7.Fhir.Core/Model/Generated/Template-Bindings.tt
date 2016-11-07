@@ -150,7 +150,8 @@ namespace Hl7.Fhir.Model
 <#
 	System.Collections.Generic.List<string> codedValues = new System.Collections.Generic.List<string>();
 	
-	foreach (System.Xml.XmlElement eval in valueset.SelectNodes("fhir:expansion/fhir:contains", nsE))
+	var items = valueset.SelectNodes("fhir:expansion/fhir:contains", nsE);
+	foreach (System.Xml.XmlElement eval in items)
     {
 		string system = eval.SelectSingleNode("fhir:system/@value", nsE).Value;
 		string code = eval.SelectSingleNode("fhir:code/@value", nsE).Value;

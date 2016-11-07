@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Specification.Tests
             var ns = source.ListResourceUris(ResourceType.NamingSystem); Assert.IsTrue(ns.Any());
             var sd = source.ListResourceUris(ResourceType.StructureDefinition); Assert.IsTrue(sd.Any());
             var de = source.ListResourceUris(ResourceType.DataElement); Assert.IsTrue(de.Any());
-            var cf = source.ListResourceUris(ResourceType.Conformance); Assert.IsTrue(cf.Any());
+            var cf = source.ListResourceUris(ResourceType.CapabilityStatement); Assert.IsTrue(cf.Any());
             var od = source.ListResourceUris(ResourceType.OperationDefinition); Assert.IsTrue(od.Any());
             var sp = source.ListResourceUris(ResourceType.SearchParameter); Assert.IsTrue(sp.Any());
             var all = source.ListResourceUris();

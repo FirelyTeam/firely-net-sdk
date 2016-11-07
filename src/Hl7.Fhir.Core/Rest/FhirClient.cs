@@ -77,23 +77,23 @@ namespace Hl7.Fhir.Rest
             get;
             set;
         }
-        
+
         /// <summary>
         /// The preferred format of the content to be used when communicating with the FHIR server (XML or JSON)
         /// </summary>
         public ResourceFormat PreferredFormat
         {
-            get     { return _requester.PreferredFormat; }
-            set     { _requester.PreferredFormat = value; }
+            get { return _requester.PreferredFormat; }
+            set { _requester.PreferredFormat = value; }
         }
-        
+
         /// <summary>
         /// When passing the content preference, use the _format parameter instead of the request header
         /// </summary>
-        public bool UseFormatParam 
+        public bool UseFormatParam
         {
-            get     { return _requester.UseFormatParameter; }
-            set     { _requester.UseFormatParameter = value; }
+            get { return _requester.UseFormatParameter; }
+            set { _requester.UseFormatParameter = value; }
         }
 
         /// <summary>
@@ -114,13 +114,13 @@ namespace Hl7.Fhir.Rest
         /// <remarks>Refer to specification section 2.1.0.5 (Managing Return Content)</remarks>
         public bool ReturnFullResource
         {
-            get 
+            get
             {
                 return _requester.Prefer == Prefer.ReturnRepresentation;
             }
-            set 
+            set
             {
-                _requester.Prefer = value==true ? Prefer.ReturnRepresentation : Prefer.ReturnMinimal; 
+                _requester.Prefer = value == true ? Prefer.ReturnRepresentation : Prefer.ReturnMinimal;
             }
         }
 
@@ -135,8 +135,8 @@ namespace Hl7.Fhir.Rest
 
         public ParserSettings ParserSettings
         {
-            get { return _requester.ParserSettings;  }
-            set { _requester.ParserSettings = value;  }
+            get { return _requester.ParserSettings; }
+            set { _requester.ParserSettings = value; }
         }
 
 
@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Rest
         /// </returns>
         /// <remarks>Since ResourceLocation is a subclass of Uri, you may pass in ResourceLocations too.</remarks>
         /// <exception cref="FhirOperationException">This will occur if conditional request returns a status 304 and optionally an OperationOutcome</exception>
-        public TResource Read<TResource>(Uri location, string ifNoneMatch=null, DateTimeOffset? ifModifiedSince=null) where TResource : Resource
+        public TResource Read<TResource>(Uri location, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null) where TResource : Resource
         {
             if (location == null) throw Error.ArgumentNull("location");
 
@@ -248,7 +248,7 @@ namespace Hl7.Fhir.Rest
         /// <remarks>Throws an exception when the update failed, in particular when an update conflict is detected and the server returns a HTTP 409.
         /// If the resource does not yet exist - and the server allows client-assigned id's - a new resource with the given id will be
         /// created.</remarks>
-        public TResource Update<TResource>(TResource resource, bool versionAware=false) where TResource : Resource
+        public TResource Update<TResource>(TResource resource, bool versionAware = false) where TResource : Resource
         {
             if (resource == null) throw Error.ArgumentNull("resource");
             if (resource.Id == null) throw Error.Argument("resource", "Resource needs a non-null Id to send the update to");
@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Rest
             if (condition == null) throw Error.ArgumentNull("condition");
 
             var upd = new TransactionBuilder(Endpoint);
-                
+
             if (versionAware && resource.HasVersionId)
                 upd.Update(condition, resource, ifMatch: resource.VersionId);
             else
@@ -364,7 +364,7 @@ namespace Hl7.Fhir.Rest
 
             var tx = new TransactionBuilder(Endpoint).Create(resource).ToBundle();
 
-            return execute<TResource>(tx,new[] { HttpStatusCode.Created, HttpStatusCode.OK });
+            return execute<TResource>(tx, new[] { HttpStatusCode.Created, HttpStatusCode.OK });
         }
 
 
@@ -380,7 +380,7 @@ namespace Hl7.Fhir.Rest
             if (resource == null) throw Error.ArgumentNull("resource");
             if (condition == null) throw Error.ArgumentNull("condition");
 
-            var tx = new TransactionBuilder(Endpoint).Create(resource,condition).ToBundle();
+            var tx = new TransactionBuilder(Endpoint).Create(resource, condition).ToBundle();
 
             return execute<TResource>(tx, new[] { HttpStatusCode.Created, HttpStatusCode.OK });
         }
@@ -389,13 +389,23 @@ namespace Hl7.Fhir.Rest
         /// Get a conformance statement for the system
         /// </summary>
         /// <returns>A Conformance resource. Throws an exception if the operation failed.</returns>
-        public Conformance Conformance(SummaryType? summary = null)
+        [Obsolete("The Conformance operation has been replaced by the CapabilityStatement", false)]
+        public CapabilityStatement Conformance(SummaryType? summary = null)
         {
-            var tx = new TransactionBuilder(Endpoint).Conformance(summary).ToBundle();
-            return execute<Conformance>(tx, HttpStatusCode.OK);
+            return CapabilityStatement(summary);
         }
 
-       
+        /// <summary>
+        /// Get a conformance statement for the system
+        /// </summary>
+        /// <returns>A Conformance resource. Throws an exception if the operation failed.</returns>
+        public CapabilityStatement CapabilityStatement(SummaryType? summary = null)
+        {
+            var tx = new TransactionBuilder(Endpoint).CapabilityStatement(summary).ToBundle();
+            return execute<CapabilityStatement>(tx, HttpStatusCode.OK);
+        }
+
+
         /// <summary>
         /// Retrieve the version history for a specific resource type
         /// </summary>
@@ -405,7 +415,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="summary">Optional. Asks the server to only provide the fields defined for the summary</param>        
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-	    public Bundle TypeHistory(string resourceType, DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False)
+        public Bundle TypeHistory(string resourceType, DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False)
         {          
             return internalHistory(resourceType, null, since, pageSize, summary);
         }
@@ -880,7 +890,7 @@ namespace Hl7.Fhir.Rest
             if (versionChecked) return;
             versionChecked = true;      // So we can now start calling Conformance() without getting into a loop
 
-            Conformance conf = null;
+            CapabilityStatement conf = null;
             try
             {
                 conf = Conformance();

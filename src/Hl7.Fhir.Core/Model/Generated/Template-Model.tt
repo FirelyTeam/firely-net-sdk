@@ -76,7 +76,7 @@
     }
 
 	var sdNodes = docResources.DocumentElement.SelectNodes(
-		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition", nsR);
+		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:kind/@value != 'logical']", nsR);
 	//	"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:id/@value = 'Communication' or fhir:id/@value = 'Basic' or fhir:id/@value = 'Appointment' or fhir:id/@value = 'Patient']", nsR);
 	
 
@@ -1002,7 +1002,7 @@ if(!abstractType) {
 			if (result.PropType == "Hl7.Fhir.Model.ResourceReference")
             {
 				// Lets find the list of reference types that are permitted:
-				foreach (System.Xml.XmlAttribute erp in element.SelectNodes("fhir:type[fhir:code/@value = 'Reference']/fhir:profile/@value", nsR))
+				foreach (System.Xml.XmlAttribute erp in element.SelectNodes("fhir:type[fhir:code/@value = 'Reference']/fhir:targetProfile/@value", nsR))
                 {
 					//if (erp.Value == "http://hl7.org/fhir/StructureDefinition/Resource")
 					//	continue;
@@ -1235,7 +1235,7 @@ if(!abstractType) {
 			if (result.PropType == "Hl7.Fhir.Model.ResourceReference")
             {
 				// Lets find the list of reference types that are permitted:
-				foreach (System.Xml.XmlAttribute erp in element.SelectNodes("fhir:type[fhir:code/@value = 'Reference']/fhir:profile/@value", nsR))
+				foreach (System.Xml.XmlAttribute erp in element.SelectNodes("fhir:type[fhir:code/@value = 'Reference']/fhir:targetProfile/@value", nsR))
                 {
 					//if (erp.Value == "http://hl7.org/fhir/StructureDefinition/Resource")
 					//	continue;

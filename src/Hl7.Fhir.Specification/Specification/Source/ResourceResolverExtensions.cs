@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <param name="resolver">An <see cref="IArtifactSource"/> reference.</param>
         /// <param name="typeCodeElement">A <see cref="ElementDefinition.TypeRefComponent.CodeElement"/> reference.</param>
         /// <returns>A <see cref="StructureDefinition"/> instance, or <c>null</c>.</returns>
-        internal static StructureDefinition GetStructureDefinitionForTypeCode(this IResourceResolver resolver, Code typeCodeElement)
+        internal static StructureDefinition GetStructureDefinitionForTypeCode(this IResourceResolver resolver, FhirUri typeCodeElement)
         {
             StructureDefinition sd = null;
             var typeCode = typeCodeElement.Value;

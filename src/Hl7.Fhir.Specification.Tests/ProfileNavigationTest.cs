@@ -436,7 +436,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var nav = createTestNav();
             nav.JumpToFirst("A.B.C1.D");
-            nav.Current.Name = "A-Named-Constraint";
+            nav.Current.SliceName = "A-Named-Constraint";
 
             nav.Reset();
             Assert.IsTrue(nav.JumpToNameReference("A-Named-Constraint"));

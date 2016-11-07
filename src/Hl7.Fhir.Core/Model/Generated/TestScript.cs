@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.6.0
+// Generated for FHIR v1.7.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -142,6 +142,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
+            [EnumLiteral("DosageInstruction"), Description("DosageInstruction")]
+            DosageInstruction,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/data-types)
+            /// </summary>
             [EnumLiteral("Duration"), Description("Duration")]
             Duration,
             /// <summary>
@@ -232,8 +238,8 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("RelatedResource"), Description("RelatedResource")]
-            RelatedResource,
+            [EnumLiteral("RelatedArtifact"), Description("RelatedArtifact")]
+            RelatedArtifact,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
@@ -442,6 +448,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
+            [EnumLiteral("CapabilityStatement"), Description("CapabilityStatement")]
+            CapabilityStatement,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
             [EnumLiteral("CarePlan"), Description("CarePlan")]
             CarePlan,
             /// <summary>
@@ -514,12 +526,6 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Conformance"), Description("Conformance")]
-            Conformance,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
             [EnumLiteral("Consent"), Description("Consent")]
             Consent,
             /// <summary>
@@ -540,12 +546,6 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("DataElement"), Description("DataElement")]
             DataElement,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
-            [EnumLiteral("DecisionSupportServiceModule"), Description("DecisionSupportServiceModule")]
-            DecisionSupportServiceModule,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -796,8 +796,8 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("MedicationOrder"), Description("MedicationOrder")]
-            MedicationOrder,
+            [EnumLiteral("MedicationRequest"), Description("MedicationRequest")]
+            MedicationRequest,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -952,6 +952,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
+            [EnumLiteral("RequestGroup"), Description("RequestGroup")]
+            RequestGroup,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
             [EnumLiteral("Resource"), Description("Resource")]
             Resource,
             /// <summary>
@@ -978,6 +984,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("Sequence"), Description("Sequence")]
             Sequence,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("ServiceDefinition"), Description("ServiceDefinition")]
+            ServiceDefinition,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -1032,6 +1044,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("Task"), Description("Task")]
             Task,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("TestReport"), Description("TestReport")]
+            TestReport,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -1173,6 +1191,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("notContains"), Description("notContains")]
             NotContains,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/assert-operator-codes)
+            /// </summary>
+            [EnumLiteral("eval"), Description("evaluate")]
+            Eval,
         }
 
         /// <summary>
@@ -1256,120 +1280,6 @@ namespace Hl7.Fhir.Model
             Unprocessable,
         }
 
-        [FhirType("ContactComponent")]
-        [DataContract]
-        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ContactComponent"; } }
-            
-            /// <summary>
-            /// Name of an individual to contact
-            /// </summary>
-            [FhirElement("name", InSummary=true, Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString NameElement
-            {
-                get { return _NameElement; }
-                set { _NameElement = value; OnPropertyChanged("NameElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _NameElement;
-            
-            /// <summary>
-            /// Name of an individual to contact
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Name
-            {
-                get { return NameElement != null ? NameElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        NameElement = null; 
-                    else
-                        NameElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Name");
-                }
-            }
-            
-            /// <summary>
-            /// Contact details for individual or publisher
-            /// </summary>
-            [FhirElement("telecom", InSummary=true, Order=50)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.ContactPoint> Telecom
-            {
-                get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
-                set { _Telecom = value; OnPropertyChanged("Telecom"); }
-            }
-            
-            private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ContactComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                    if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ContactComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ContactComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ContactComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ContactComponent elements
-                    if (NameElement != null) yield return NameElement;
-                    foreach (var elem in Telecom) { if (elem != null) yield return elem; }
-                }
-            }
-            
-        }
-        
-        
         [FhirType("OriginComponent")]
         [DataContract]
         public partial class OriginComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -2031,19 +1941,19 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Required Conformance
+            /// Required Capability Statement
             /// </summary>
-            [FhirElement("conformance", Order=100)]
-            [References("Conformance")]
+            [FhirElement("capabilities", Order=100)]
+            [References("CapabilityStatement")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Conformance
+            public Hl7.Fhir.Model.ResourceReference Capabilities
             {
-                get { return _Conformance; }
-                set { _Conformance = value; OnPropertyChanged("Conformance"); }
+                get { return _Capabilities; }
+                set { _Capabilities = value; OnPropertyChanged("Capabilities"); }
             }
             
-            private Hl7.Fhir.Model.ResourceReference _Conformance;
+            private Hl7.Fhir.Model.ResourceReference _Capabilities;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -2058,7 +1968,7 @@ namespace Hl7.Fhir.Model
                     if(OriginElement != null) dest.OriginElement = new List<Hl7.Fhir.Model.Integer>(OriginElement.DeepCopy());
                     if(DestinationElement != null) dest.DestinationElement = (Hl7.Fhir.Model.Integer)DestinationElement.DeepCopy();
                     if(LinkElement != null) dest.LinkElement = new List<Hl7.Fhir.Model.FhirUri>(LinkElement.DeepCopy());
-                    if(Conformance != null) dest.Conformance = (Hl7.Fhir.Model.ResourceReference)Conformance.DeepCopy();
+                    if(Capabilities != null) dest.Capabilities = (Hl7.Fhir.Model.ResourceReference)Capabilities.DeepCopy();
                     return dest;
                 }
                 else
@@ -2082,7 +1992,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(OriginElement, otherT.OriginElement)) return false;
                 if( !DeepComparable.Matches(DestinationElement, otherT.DestinationElement)) return false;
                 if( !DeepComparable.Matches(LinkElement, otherT.LinkElement)) return false;
-                if( !DeepComparable.Matches(Conformance, otherT.Conformance)) return false;
+                if( !DeepComparable.Matches(Capabilities, otherT.Capabilities)) return false;
                 
                 return true;
             }
@@ -2099,7 +2009,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(OriginElement, otherT.OriginElement)) return false;
                 if( !DeepComparable.IsExactly(DestinationElement, otherT.DestinationElement)) return false;
                 if( !DeepComparable.IsExactly(LinkElement, otherT.LinkElement)) return false;
-                if( !DeepComparable.IsExactly(Conformance, otherT.Conformance)) return false;
+                if( !DeepComparable.IsExactly(Capabilities, otherT.Capabilities)) return false;
                 
                 return true;
             }
@@ -2119,7 +2029,7 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in OriginElement) { if (elem != null) yield return elem; }
                     if (DestinationElement != null) yield return DestinationElement;
                     foreach (var elem in LinkElement) { if (elem != null) yield return elem; }
-                    if (Conformance != null) yield return Conformance;
+                    if (Capabilities != null) yield return Capabilities;
                 }
             }
             
@@ -2349,9 +2259,73 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// Natural language description of the variable
+            /// </summary>
+            [FhirElement("description", Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString DescriptionElement
+            {
+                get { return _DescriptionElement; }
+                set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _DescriptionElement;
+            
+            /// <summary>
+            /// Natural language description of the variable
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Description
+            {
+                get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        DescriptionElement = null; 
+                    else
+                        DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Description");
+                }
+            }
+            
+            /// <summary>
+            /// The fhirpath expression against the fixture body
+            /// </summary>
+            [FhirElement("expression", Order=70)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString ExpressionElement
+            {
+                get { return _ExpressionElement; }
+                set { _ExpressionElement = value; OnPropertyChanged("ExpressionElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _ExpressionElement;
+            
+            /// <summary>
+            /// The fhirpath expression against the fixture body
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Expression
+            {
+                get { return ExpressionElement != null ? ExpressionElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        ExpressionElement = null; 
+                    else
+                        ExpressionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Expression");
+                }
+            }
+            
+            /// <summary>
             /// HTTP header field name for source
             /// </summary>
-            [FhirElement("headerField", Order=60)]
+            [FhirElement("headerField", Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString HeaderFieldElement
             {
@@ -2381,9 +2355,41 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// Hint help text for default value to enter
+            /// </summary>
+            [FhirElement("hint", Order=90)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString HintElement
+            {
+                get { return _HintElement; }
+                set { _HintElement = value; OnPropertyChanged("HintElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _HintElement;
+            
+            /// <summary>
+            /// Hint help text for default value to enter
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Hint
+            {
+                get { return HintElement != null ? HintElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        HintElement = null; 
+                    else
+                        HintElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Hint");
+                }
+            }
+            
+            /// <summary>
             /// XPath or JSONPath against the fixture body
             /// </summary>
-            [FhirElement("path", Order=70)]
+            [FhirElement("path", Order=100)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString PathElement
             {
@@ -2415,7 +2421,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Fixture Id of source expression or headerField within this variable
             /// </summary>
-            [FhirElement("sourceId", Order=80)]
+            [FhirElement("sourceId", Order=110)]
             [DataMember]
             public Hl7.Fhir.Model.Id SourceIdElement
             {
@@ -2453,7 +2459,10 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                     if(DefaultValueElement != null) dest.DefaultValueElement = (Hl7.Fhir.Model.FhirString)DefaultValueElement.DeepCopy();
+                    if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
+                    if(ExpressionElement != null) dest.ExpressionElement = (Hl7.Fhir.Model.FhirString)ExpressionElement.DeepCopy();
                     if(HeaderFieldElement != null) dest.HeaderFieldElement = (Hl7.Fhir.Model.FhirString)HeaderFieldElement.DeepCopy();
+                    if(HintElement != null) dest.HintElement = (Hl7.Fhir.Model.FhirString)HintElement.DeepCopy();
                     if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopy();
                     if(SourceIdElement != null) dest.SourceIdElement = (Hl7.Fhir.Model.Id)SourceIdElement.DeepCopy();
                     return dest;
@@ -2475,7 +2484,10 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
                 if( !DeepComparable.Matches(DefaultValueElement, otherT.DefaultValueElement)) return false;
+                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.Matches(ExpressionElement, otherT.ExpressionElement)) return false;
                 if( !DeepComparable.Matches(HeaderFieldElement, otherT.HeaderFieldElement)) return false;
+                if( !DeepComparable.Matches(HintElement, otherT.HintElement)) return false;
                 if( !DeepComparable.Matches(PathElement, otherT.PathElement)) return false;
                 if( !DeepComparable.Matches(SourceIdElement, otherT.SourceIdElement)) return false;
                 
@@ -2490,7 +2502,10 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
                 if( !DeepComparable.IsExactly(DefaultValueElement, otherT.DefaultValueElement)) return false;
+                if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.IsExactly(ExpressionElement, otherT.ExpressionElement)) return false;
                 if( !DeepComparable.IsExactly(HeaderFieldElement, otherT.HeaderFieldElement)) return false;
+                if( !DeepComparable.IsExactly(HintElement, otherT.HintElement)) return false;
                 if( !DeepComparable.IsExactly(PathElement, otherT.PathElement)) return false;
                 if( !DeepComparable.IsExactly(SourceIdElement, otherT.SourceIdElement)) return false;
                 
@@ -2508,7 +2523,10 @@ namespace Hl7.Fhir.Model
                     // VariableComponent elements
                     if (NameElement != null) yield return NameElement;
                     if (DefaultValueElement != null) yield return DefaultValueElement;
+                    if (DescriptionElement != null) yield return DescriptionElement;
+                    if (ExpressionElement != null) yield return ExpressionElement;
                     if (HeaderFieldElement != null) yield return HeaderFieldElement;
+                    if (HintElement != null) yield return HintElement;
                     if (PathElement != null) yield return PathElement;
                     if (SourceIdElement != null) yield return SourceIdElement;
                 }
@@ -3587,9 +3605,41 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.TestScript.RequestHeaderComponent> _RequestHeader;
             
             /// <summary>
+            /// Fixture Id of mapped request
+            /// </summary>
+            [FhirElement("requestId", Order=150)]
+            [DataMember]
+            public Hl7.Fhir.Model.Id RequestIdElement
+            {
+                get { return _RequestIdElement; }
+                set { _RequestIdElement = value; OnPropertyChanged("RequestIdElement"); }
+            }
+            
+            private Hl7.Fhir.Model.Id _RequestIdElement;
+            
+            /// <summary>
+            /// Fixture Id of mapped request
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string RequestId
+            {
+                get { return RequestIdElement != null ? RequestIdElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        RequestIdElement = null; 
+                    else
+                        RequestIdElement = new Hl7.Fhir.Model.Id(value);
+                    OnPropertyChanged("RequestId");
+                }
+            }
+            
+            /// <summary>
             /// Fixture Id of mapped response
             /// </summary>
-            [FhirElement("responseId", Order=150)]
+            [FhirElement("responseId", Order=160)]
             [DataMember]
             public Hl7.Fhir.Model.Id ResponseIdElement
             {
@@ -3621,7 +3671,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Fixture Id of body for PUT and POST requests
             /// </summary>
-            [FhirElement("sourceId", Order=160)]
+            [FhirElement("sourceId", Order=170)]
             [DataMember]
             public Hl7.Fhir.Model.Id SourceIdElement
             {
@@ -3653,7 +3703,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Id of fixture used for extracting the [id],  [type], and [vid] for GET requests
             /// </summary>
-            [FhirElement("targetId", Order=170)]
+            [FhirElement("targetId", Order=180)]
             [DataMember]
             public Hl7.Fhir.Model.Id TargetIdElement
             {
@@ -3685,7 +3735,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Request URL
             /// </summary>
-            [FhirElement("url", Order=180)]
+            [FhirElement("url", Order=190)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString UrlElement
             {
@@ -3732,6 +3782,7 @@ namespace Hl7.Fhir.Model
                     if(OriginElement != null) dest.OriginElement = (Hl7.Fhir.Model.Integer)OriginElement.DeepCopy();
                     if(ParamsElement != null) dest.ParamsElement = (Hl7.Fhir.Model.FhirString)ParamsElement.DeepCopy();
                     if(RequestHeader != null) dest.RequestHeader = new List<Hl7.Fhir.Model.TestScript.RequestHeaderComponent>(RequestHeader.DeepCopy());
+                    if(RequestIdElement != null) dest.RequestIdElement = (Hl7.Fhir.Model.Id)RequestIdElement.DeepCopy();
                     if(ResponseIdElement != null) dest.ResponseIdElement = (Hl7.Fhir.Model.Id)ResponseIdElement.DeepCopy();
                     if(SourceIdElement != null) dest.SourceIdElement = (Hl7.Fhir.Model.Id)SourceIdElement.DeepCopy();
                     if(TargetIdElement != null) dest.TargetIdElement = (Hl7.Fhir.Model.Id)TargetIdElement.DeepCopy();
@@ -3764,6 +3815,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(OriginElement, otherT.OriginElement)) return false;
                 if( !DeepComparable.Matches(ParamsElement, otherT.ParamsElement)) return false;
                 if( !DeepComparable.Matches(RequestHeader, otherT.RequestHeader)) return false;
+                if( !DeepComparable.Matches(RequestIdElement, otherT.RequestIdElement)) return false;
                 if( !DeepComparable.Matches(ResponseIdElement, otherT.ResponseIdElement)) return false;
                 if( !DeepComparable.Matches(SourceIdElement, otherT.SourceIdElement)) return false;
                 if( !DeepComparable.Matches(TargetIdElement, otherT.TargetIdElement)) return false;
@@ -3789,6 +3841,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(OriginElement, otherT.OriginElement)) return false;
                 if( !DeepComparable.IsExactly(ParamsElement, otherT.ParamsElement)) return false;
                 if( !DeepComparable.IsExactly(RequestHeader, otherT.RequestHeader)) return false;
+                if( !DeepComparable.IsExactly(RequestIdElement, otherT.RequestIdElement)) return false;
                 if( !DeepComparable.IsExactly(ResponseIdElement, otherT.ResponseIdElement)) return false;
                 if( !DeepComparable.IsExactly(SourceIdElement, otherT.SourceIdElement)) return false;
                 if( !DeepComparable.IsExactly(TargetIdElement, otherT.TargetIdElement)) return false;
@@ -3817,6 +3870,7 @@ namespace Hl7.Fhir.Model
                     if (OriginElement != null) yield return OriginElement;
                     if (ParamsElement != null) yield return ParamsElement;
                     foreach (var elem in RequestHeader) { if (elem != null) yield return elem; }
+                    if (RequestIdElement != null) yield return RequestIdElement;
                     if (ResponseIdElement != null) yield return ResponseIdElement;
                     if (SourceIdElement != null) yield return SourceIdElement;
                     if (TargetIdElement != null) yield return TargetIdElement;
@@ -4065,7 +4119,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Id of fixture used to compare the "sourceId/path" evaluations to
+            /// Id of the source fixture to be evaluated
             /// </summary>
             [FhirElement("compareToSourceId", Order=70)]
             [DataMember]
@@ -4078,7 +4132,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _CompareToSourceIdElement;
             
             /// <summary>
-            /// Id of fixture used to compare the "sourceId/path" evaluations to
+            /// Id of the source fixture to be evaluated
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -4097,9 +4151,41 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// XPath or JSONPath expression against fixture used to compare the "sourceId/path" evaluations to
+            /// The fhirpath expression to evaluate against the source fixture
             /// </summary>
-            [FhirElement("compareToSourcePath", Order=80)]
+            [FhirElement("compareToSourceExpression", Order=80)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString CompareToSourceExpressionElement
+            {
+                get { return _CompareToSourceExpressionElement; }
+                set { _CompareToSourceExpressionElement = value; OnPropertyChanged("CompareToSourceExpressionElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _CompareToSourceExpressionElement;
+            
+            /// <summary>
+            /// The fhirpath expression to evaluate against the source fixture
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string CompareToSourceExpression
+            {
+                get { return CompareToSourceExpressionElement != null ? CompareToSourceExpressionElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        CompareToSourceExpressionElement = null; 
+                    else
+                        CompareToSourceExpressionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("CompareToSourceExpression");
+                }
+            }
+            
+            /// <summary>
+            /// XPath or JSONPath expression to evaluate against the source fixture
+            /// </summary>
+            [FhirElement("compareToSourcePath", Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString CompareToSourcePathElement
             {
@@ -4110,7 +4196,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _CompareToSourcePathElement;
             
             /// <summary>
-            /// XPath or JSONPath expression against fixture used to compare the "sourceId/path" evaluations to
+            /// XPath or JSONPath expression to evaluate against the source fixture
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -4131,7 +4217,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// xml | json | ttl | none
             /// </summary>
-            [FhirElement("contentType", Order=90)]
+            [FhirElement("contentType", Order=100)]
             [DataMember]
             public Code<Hl7.Fhir.Model.TestScript.ContentType> ContentType_Element
             {
@@ -4161,9 +4247,41 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// The fhirpath expression to be evaluated
+            /// </summary>
+            [FhirElement("expression", Order=110)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString ExpressionElement
+            {
+                get { return _ExpressionElement; }
+                set { _ExpressionElement = value; OnPropertyChanged("ExpressionElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _ExpressionElement;
+            
+            /// <summary>
+            /// The fhirpath expression to be evaluated
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Expression
+            {
+                get { return ExpressionElement != null ? ExpressionElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        ExpressionElement = null; 
+                    else
+                        ExpressionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Expression");
+                }
+            }
+            
+            /// <summary>
             /// HTTP header field name
             /// </summary>
-            [FhirElement("headerField", Order=100)]
+            [FhirElement("headerField", Order=120)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString HeaderFieldElement
             {
@@ -4195,7 +4313,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Fixture Id of minimum content resource
             /// </summary>
-            [FhirElement("minimumId", Order=110)]
+            [FhirElement("minimumId", Order=130)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString MinimumIdElement
             {
@@ -4227,7 +4345,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Perform validation on navigation links?
             /// </summary>
-            [FhirElement("navigationLinks", Order=120)]
+            [FhirElement("navigationLinks", Order=140)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean NavigationLinksElement
             {
@@ -4257,9 +4375,9 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// equals | notEquals | in | notIn | greaterThan | lessThan | empty | notEmpty | contains | notContains
+            /// equals | notEquals | in | notIn | greaterThan | lessThan | empty | notEmpty | contains | notContains | eval
             /// </summary>
-            [FhirElement("operator", Order=130)]
+            [FhirElement("operator", Order=150)]
             [DataMember]
             public Code<Hl7.Fhir.Model.TestScript.AssertionOperatorType> OperatorElement
             {
@@ -4270,7 +4388,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.TestScript.AssertionOperatorType> _OperatorElement;
             
             /// <summary>
-            /// equals | notEquals | in | notIn | greaterThan | lessThan | empty | notEmpty | contains | notContains
+            /// equals | notEquals | in | notIn | greaterThan | lessThan | empty | notEmpty | contains | notContains | eval
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -4291,7 +4409,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// XPath or JSONPath expression
             /// </summary>
-            [FhirElement("path", Order=140)]
+            [FhirElement("path", Order=160)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString PathElement
             {
@@ -4323,7 +4441,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Request URL comparison value
             /// </summary>
-            [FhirElement("requestURL", Order=150)]
+            [FhirElement("requestURL", Order=170)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString RequestURLElement
             {
@@ -4355,7 +4473,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Resource type
             /// </summary>
-            [FhirElement("resource", Order=160)]
+            [FhirElement("resource", Order=180)]
             [DataMember]
             public Code<Hl7.Fhir.Model.TestScript.FHIRDefinedType> ResourceElement
             {
@@ -4387,7 +4505,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// okay | created | noContent | notModified | bad | forbidden | notFound | methodNotAllowed | conflict | gone | preconditionFailed | unprocessable
             /// </summary>
-            [FhirElement("response", Order=170)]
+            [FhirElement("response", Order=190)]
             [DataMember]
             public Code<Hl7.Fhir.Model.TestScript.AssertionResponseTypes> ResponseElement
             {
@@ -4419,7 +4537,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// HTTP response code to test
             /// </summary>
-            [FhirElement("responseCode", Order=180)]
+            [FhirElement("responseCode", Order=200)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ResponseCodeElement
             {
@@ -4451,7 +4569,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The reference to a TestScript.rule
             /// </summary>
-            [FhirElement("rule", Order=190)]
+            [FhirElement("rule", Order=210)]
             [DataMember]
             public Hl7.Fhir.Model.TestScript.ActionAssertRuleComponent Rule
             {
@@ -4464,7 +4582,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The reference to a TestScript.ruleset
             /// </summary>
-            [FhirElement("ruleset", Order=200)]
+            [FhirElement("ruleset", Order=220)]
             [DataMember]
             public Hl7.Fhir.Model.TestScript.ActionAssertRulesetComponent Ruleset
             {
@@ -4477,7 +4595,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Fixture Id of source expression or headerField
             /// </summary>
-            [FhirElement("sourceId", Order=210)]
+            [FhirElement("sourceId", Order=230)]
             [DataMember]
             public Hl7.Fhir.Model.Id SourceIdElement
             {
@@ -4509,7 +4627,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Profile Id of validation profile reference
             /// </summary>
-            [FhirElement("validateProfileId", Order=220)]
+            [FhirElement("validateProfileId", Order=240)]
             [DataMember]
             public Hl7.Fhir.Model.Id ValidateProfileIdElement
             {
@@ -4541,7 +4659,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The value to compare to
             /// </summary>
-            [FhirElement("value", Order=230)]
+            [FhirElement("value", Order=250)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ValueElement
             {
@@ -4573,7 +4691,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Will this assert produce a warning only on error?
             /// </summary>
-            [FhirElement("warningOnly", Order=240)]
+            [FhirElement("warningOnly", Order=260)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean WarningOnlyElement
             {
@@ -4613,8 +4731,10 @@ namespace Hl7.Fhir.Model
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(DirectionElement != null) dest.DirectionElement = (Code<Hl7.Fhir.Model.TestScript.AssertionDirectionType>)DirectionElement.DeepCopy();
                     if(CompareToSourceIdElement != null) dest.CompareToSourceIdElement = (Hl7.Fhir.Model.FhirString)CompareToSourceIdElement.DeepCopy();
+                    if(CompareToSourceExpressionElement != null) dest.CompareToSourceExpressionElement = (Hl7.Fhir.Model.FhirString)CompareToSourceExpressionElement.DeepCopy();
                     if(CompareToSourcePathElement != null) dest.CompareToSourcePathElement = (Hl7.Fhir.Model.FhirString)CompareToSourcePathElement.DeepCopy();
                     if(ContentType_Element != null) dest.ContentType_Element = (Code<Hl7.Fhir.Model.TestScript.ContentType>)ContentType_Element.DeepCopy();
+                    if(ExpressionElement != null) dest.ExpressionElement = (Hl7.Fhir.Model.FhirString)ExpressionElement.DeepCopy();
                     if(HeaderFieldElement != null) dest.HeaderFieldElement = (Hl7.Fhir.Model.FhirString)HeaderFieldElement.DeepCopy();
                     if(MinimumIdElement != null) dest.MinimumIdElement = (Hl7.Fhir.Model.FhirString)MinimumIdElement.DeepCopy();
                     if(NavigationLinksElement != null) dest.NavigationLinksElement = (Hl7.Fhir.Model.FhirBoolean)NavigationLinksElement.DeepCopy();
@@ -4651,8 +4771,10 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.Matches(DirectionElement, otherT.DirectionElement)) return false;
                 if( !DeepComparable.Matches(CompareToSourceIdElement, otherT.CompareToSourceIdElement)) return false;
+                if( !DeepComparable.Matches(CompareToSourceExpressionElement, otherT.CompareToSourceExpressionElement)) return false;
                 if( !DeepComparable.Matches(CompareToSourcePathElement, otherT.CompareToSourcePathElement)) return false;
                 if( !DeepComparable.Matches(ContentType_Element, otherT.ContentType_Element)) return false;
+                if( !DeepComparable.Matches(ExpressionElement, otherT.ExpressionElement)) return false;
                 if( !DeepComparable.Matches(HeaderFieldElement, otherT.HeaderFieldElement)) return false;
                 if( !DeepComparable.Matches(MinimumIdElement, otherT.MinimumIdElement)) return false;
                 if( !DeepComparable.Matches(NavigationLinksElement, otherT.NavigationLinksElement)) return false;
@@ -4682,8 +4804,10 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.IsExactly(DirectionElement, otherT.DirectionElement)) return false;
                 if( !DeepComparable.IsExactly(CompareToSourceIdElement, otherT.CompareToSourceIdElement)) return false;
+                if( !DeepComparable.IsExactly(CompareToSourceExpressionElement, otherT.CompareToSourceExpressionElement)) return false;
                 if( !DeepComparable.IsExactly(CompareToSourcePathElement, otherT.CompareToSourcePathElement)) return false;
                 if( !DeepComparable.IsExactly(ContentType_Element, otherT.ContentType_Element)) return false;
+                if( !DeepComparable.IsExactly(ExpressionElement, otherT.ExpressionElement)) return false;
                 if( !DeepComparable.IsExactly(HeaderFieldElement, otherT.HeaderFieldElement)) return false;
                 if( !DeepComparable.IsExactly(MinimumIdElement, otherT.MinimumIdElement)) return false;
                 if( !DeepComparable.IsExactly(NavigationLinksElement, otherT.NavigationLinksElement)) return false;
@@ -4716,8 +4840,10 @@ namespace Hl7.Fhir.Model
                     if (DescriptionElement != null) yield return DescriptionElement;
                     if (DirectionElement != null) yield return DirectionElement;
                     if (CompareToSourceIdElement != null) yield return CompareToSourceIdElement;
+                    if (CompareToSourceExpressionElement != null) yield return CompareToSourceExpressionElement;
                     if (CompareToSourcePathElement != null) yield return CompareToSourcePathElement;
                     if (ContentType_Element != null) yield return ContentType_Element;
+                    if (ExpressionElement != null) yield return ExpressionElement;
                     if (HeaderFieldElement != null) yield return HeaderFieldElement;
                     if (MinimumIdElement != null) yield return MinimumIdElement;
                     if (NavigationLinksElement != null) yield return NavigationLinksElement;
@@ -5685,6 +5811,7 @@ namespace Hl7.Fhir.Model
             /// The teardown operation to perform
             /// </summary>
             [FhirElement("operation", Order=40)]
+            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.TestScript.OperationComponent Operation
             {
@@ -5752,7 +5879,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Absolute URL used to reference this TestScript
+        /// Logical uri to reference this test script (globally unique)
         /// </summary>
         [FhirElement("url", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
@@ -5766,7 +5893,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
-        /// Absolute URL used to reference this TestScript
+        /// Logical uri to reference this test script (globally unique)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -5785,9 +5912,22 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Logical id for this version of the TestScript
+        /// Additional identifier for the test script
         /// </summary>
-        [FhirElement("version", InSummary=true, Order=100)]
+        [FhirElement("identifier", InSummary=true, Order=100)]
+        [DataMember]
+        public Hl7.Fhir.Model.Identifier Identifier
+        {
+            get { return _Identifier; }
+            set { _Identifier = value; OnPropertyChanged("Identifier"); }
+        }
+        
+        private Hl7.Fhir.Model.Identifier _Identifier;
+        
+        /// <summary>
+        /// Business version of the test script
+        /// </summary>
+        [FhirElement("version", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString VersionElement
         {
@@ -5798,7 +5938,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _VersionElement;
         
         /// <summary>
-        /// Logical id for this version of the TestScript
+        /// Business version of the test script
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -5817,9 +5957,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Informal name for this TestScript
+        /// Name for this test script (Computer friendly)
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=110)]
+        [FhirElement("name", InSummary=true, Order=120)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
@@ -5831,7 +5971,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _NameElement;
         
         /// <summary>
-        /// Informal name for this TestScript
+        /// Name for this test script (Computer friendly)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -5850,18 +5990,50 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Name for this test script (Human friendly)
+        /// </summary>
+        [FhirElement("title", InSummary=true, Order=130)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString TitleElement
+        {
+            get { return _TitleElement; }
+            set { _TitleElement = value; OnPropertyChanged("TitleElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _TitleElement;
+        
+        /// <summary>
+        /// Name for this test script (Human friendly)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Title
+        {
+            get { return TitleElement != null ? TitleElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  TitleElement = null; 
+                else
+                  TitleElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Title");
+            }
+        }
+        
+        /// <summary>
         /// draft | active | retired
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=120)]
+        [FhirElement("status", InSummary=true, Order=140)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.ConformanceResourceStatus> StatusElement
+        public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.ConformanceResourceStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.PublicationStatus> _StatusElement;
         
         /// <summary>
         /// draft | active | retired
@@ -5869,7 +6041,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.ConformanceResourceStatus? Status
+        public Hl7.Fhir.Model.PublicationStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -5877,28 +6049,15 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                   StatusElement = null; 
                 else
-                  StatusElement = new Code<Hl7.Fhir.Model.ConformanceResourceStatus>(value);
+                  StatusElement = new Code<Hl7.Fhir.Model.PublicationStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
         
         /// <summary>
-        /// External identifier
-        /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=130)]
-        [DataMember]
-        public Hl7.Fhir.Model.Identifier Identifier
-        {
-            get { return _Identifier; }
-            set { _Identifier = value; OnPropertyChanged("Identifier"); }
-        }
-        
-        private Hl7.Fhir.Model.Identifier _Identifier;
-        
-        /// <summary>
         /// If for testing purposes, not real usage
         /// </summary>
-        [FhirElement("experimental", InSummary=true, Order=140)]
+        [FhirElement("experimental", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
         {
@@ -5930,7 +6089,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of the publisher (Organization or individual)
         /// </summary>
-        [FhirElement("publisher", InSummary=true, Order=150)]
+        [FhirElement("publisher", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
         {
@@ -5960,23 +6119,23 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Contact details of the publisher
+        /// Contact details for the publisher
         /// </summary>
-        [FhirElement("contact", InSummary=true, Order=160)]
+        [FhirElement("contact", InSummary=true, Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.TestScript.ContactComponent> Contact
+        public List<ContactDetail> Contact
         {
-            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.TestScript.ContactComponent>(); return _Contact; }
+            get { if(_Contact==null) _Contact = new List<ContactDetail>(); return _Contact; }
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         
-        private List<Hl7.Fhir.Model.TestScript.ContactComponent> _Contact;
+        private List<ContactDetail> _Contact;
         
         /// <summary>
-        /// Date for this version of the TestScript
+        /// Date this was last changed
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=170)]
+        [FhirElement("date", InSummary=true, Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -5987,7 +6146,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
-        /// Date for this version of the TestScript
+        /// Date this was last changed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -6006,9 +6165,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Natural language description of the TestScript
+        /// Natural language description of the test script
         /// </summary>
-        [FhirElement("description", InSummary=true, Order=180)]
+        [FhirElement("description", Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown Description
         {
@@ -6021,66 +6180,61 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Content intends to support these contexts
         /// </summary>
-        [FhirElement("useContext", InSummary=true, Order=190)]
+        [FhirElement("useContext", InSummary=true, Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> UseContext
+        public List<UsageContext> UseContext
         {
-            get { if(_UseContext==null) _UseContext = new List<Hl7.Fhir.Model.CodeableConcept>(); return _UseContext; }
+            get { if(_UseContext==null) _UseContext = new List<UsageContext>(); return _UseContext; }
             set { _UseContext = value; OnPropertyChanged("UseContext"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _UseContext;
+        private List<UsageContext> _UseContext;
         
         /// <summary>
-        /// Scope and Usage this Test Script is for
+        /// Intended jurisdiction for test script (if applicable)
         /// </summary>
-        [FhirElement("requirements", Order=200)]
+        [FhirElement("jurisdiction", InSummary=true, Order=210)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.Markdown Requirements
+        public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
         {
-            get { return _Requirements; }
-            set { _Requirements = value; OnPropertyChanged("Requirements"); }
+            get { if(_Jurisdiction==null) _Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Jurisdiction; }
+            set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
         }
         
-        private Hl7.Fhir.Model.Markdown _Requirements;
+        private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
+        
+        /// <summary>
+        /// Why this test script is defined
+        /// </summary>
+        [FhirElement("purpose", Order=220)]
+        [DataMember]
+        public Hl7.Fhir.Model.Markdown Purpose
+        {
+            get { return _Purpose; }
+            set { _Purpose = value; OnPropertyChanged("Purpose"); }
+        }
+        
+        private Hl7.Fhir.Model.Markdown _Purpose;
         
         /// <summary>
         /// Use and/or publishing restrictions
         /// </summary>
-        [FhirElement("copyright", Order=210)]
+        [FhirElement("copyright", Order=230)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString CopyrightElement
+        public Hl7.Fhir.Model.Markdown Copyright
         {
-            get { return _CopyrightElement; }
-            set { _CopyrightElement = value; OnPropertyChanged("CopyrightElement"); }
+            get { return _Copyright; }
+            set { _Copyright = value; OnPropertyChanged("Copyright"); }
         }
         
-        private Hl7.Fhir.Model.FhirString _CopyrightElement;
-        
-        /// <summary>
-        /// Use and/or publishing restrictions
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Copyright
-        {
-            get { return CopyrightElement != null ? CopyrightElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  CopyrightElement = null; 
-                else
-                  CopyrightElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Copyright");
-            }
-        }
+        private Hl7.Fhir.Model.Markdown _Copyright;
         
         /// <summary>
         /// An abstract server representing a client or sender in a message exchange
         /// </summary>
-        [FhirElement("origin", Order=220)]
+        [FhirElement("origin", Order=240)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.TestScript.OriginComponent> Origin
@@ -6094,7 +6248,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// An abstract server representing a destination or receiver in a message exchange
         /// </summary>
-        [FhirElement("destination", Order=230)]
+        [FhirElement("destination", Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.TestScript.DestinationComponent> Destination
@@ -6108,7 +6262,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Required capability that is assumed to function correctly on the FHIR server being tested
         /// </summary>
-        [FhirElement("metadata", Order=240)]
+        [FhirElement("metadata", Order=260)]
         [DataMember]
         public Hl7.Fhir.Model.TestScript.MetadataComponent Metadata
         {
@@ -6121,7 +6275,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Fixture in the test script - by reference (uri)
         /// </summary>
-        [FhirElement("fixture", Order=250)]
+        [FhirElement("fixture", Order=270)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.TestScript.FixtureComponent> Fixture
@@ -6135,7 +6289,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reference of the validation profile
         /// </summary>
-        [FhirElement("profile", Order=260)]
+        [FhirElement("profile", Order=280)]
         [References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -6150,7 +6304,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Placeholder for evaluated elements
         /// </summary>
-        [FhirElement("variable", Order=270)]
+        [FhirElement("variable", Order=290)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.TestScript.VariableComponent> Variable
@@ -6164,7 +6318,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Assert rule used within the test script
         /// </summary>
-        [FhirElement("rule", Order=280)]
+        [FhirElement("rule", Order=300)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.TestScript.RuleComponent> Rule
@@ -6178,7 +6332,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Assert ruleset used within the test script
         /// </summary>
-        [FhirElement("ruleset", Order=290)]
+        [FhirElement("ruleset", Order=310)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.TestScript.RulesetComponent> Ruleset
@@ -6192,7 +6346,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A series of required setup operations before tests are executed
         /// </summary>
-        [FhirElement("setup", Order=300)]
+        [FhirElement("setup", Order=320)]
         [DataMember]
         public Hl7.Fhir.Model.TestScript.SetupComponent Setup
         {
@@ -6205,7 +6359,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A test in this script
         /// </summary>
-        [FhirElement("test", Order=310)]
+        [FhirElement("test", Order=330)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.TestScript.TestComponent> Test
@@ -6219,7 +6373,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A series of required clean up steps
         /// </summary>
-        [FhirElement("teardown", Order=320)]
+        [FhirElement("teardown", Order=340)]
         [DataMember]
         public Hl7.Fhir.Model.TestScript.TeardownComponent Teardown
         {
@@ -6230,22 +6384,22 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.TestScript.TeardownComponent _Teardown;
         
 
-        public static ElementDefinition.ConstraintComponent TestScript_INV_5 = new ElementDefinition.ConstraintComponent()
+        public static ElementDefinition.ConstraintComponent TestScript_INV_4 = new ElementDefinition.ConstraintComponent()
         {
             Expression = "metadata.all(capability.required.exists() or capability.validated.exists())",
-            Key = "inv-5",
+            Key = "inv-4",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "TestScript metadata capability SHALL contain required or validated or both.",
             Xpath = "f:capability/f:required or f:capability/f:validated or (f:capability/f:required and f:capability/f:validated)"
         };
 
-        public static ElementDefinition.ConstraintComponent TestScript_INV_4 = new ElementDefinition.ConstraintComponent()
+        public static ElementDefinition.ConstraintComponent TestScript_INV_3 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "variable.all(headerField.empty() or path.empty())",
-            Key = "inv-4",
+            Expression = "variable.all(expression.empty() or headerField.empty() or path.empty())",
+            Key = "inv-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Variable cannot contain both headerField and path.",
-            Xpath = "not(f:headerField and f:path)"
+            Human = "Variable can only contain one of expression, headerField or path.",
+            Xpath = "not(f:expression and f:headerField and f:path)"
         };
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_1 = new ElementDefinition.ConstraintComponent()
@@ -6257,31 +6411,40 @@ namespace Hl7.Fhir.Model
             Xpath = "(f:operation or f:assert) and not(f:operation and f:assert)"
         };
 
-        public static ElementDefinition.ConstraintComponent TestScript_INV_8 = new ElementDefinition.ConstraintComponent()
+        public static ElementDefinition.ConstraintComponent TestScript_INV_7 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "setup.action.operation.all(sourceId.exists() or (targetId.count() + url.count() + params.count() = 1) or (type.code in ('conformance' |'search' | 'transaction' | 'history')))",
-            Key = "inv-8",
+            Expression = "setup.action.operation.all(sourceId.exists() or (targetId.count() + url.count() + params.count() = 1) or (type.code in ('capabilities' |'search' | 'transaction' | 'history')))",
+            Key = "inv-7",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Setup operation SHALL contain either sourceId or targetId or params or url.",
-            Xpath = "f:sourceId or ((f:targetId or f:url or f:params) and (count(f:targetId) + count(f:url) + count(f:params) =1)) or (f:type/f:code/@value='conformance' or f:type/f:code/@value='search' or f:type/f:code/@value='transaction' or f:type/f:code/@value='history')"
+            Xpath = "f:sourceId or ((f:targetId or f:url or f:params) and (count(f:targetId) + count(f:url) + count(f:params) =1)) or (f:type/f:code/@value='capabilities' or f:type/f:code/@value='search' or f:type/f:code/@value='transaction' or f:type/f:code/@value='history')"
         };
 
-        public static ElementDefinition.ConstraintComponent TestScript_INV_6 = new ElementDefinition.ConstraintComponent()
+        public static ElementDefinition.ConstraintComponent TestScript_INV_5 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "setup.action.assert.all(contentType.count() + headerField.count() + minimumId.count() + navigationLinks.count() + path.count() + resource.count() + responseCode.count() + response.count() + rule.count() + ruleset.count() + validateProfileId.count() <=1)",
-            Key = "inv-6",
+            Expression = "setup.action.assert.all(contentType.count() + expression.count() + headerField.count() + minimumId.count() + navigationLinks.count() + path.count() + resource.count() + responseCode.count() + response.count() + rule.count() + ruleset.count() + validateProfileId.count() <=1)",
+            Key = "inv-5",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Only a single assertion SHALL be present within setup action assert element.",
-            Xpath = "count(f:contentType) + count(f:headerField) + count(f:minimumId) + count(f:navigationLinks) + count(f:path) + count(f:resource) + count(f:responseCode) + count(f:response) + count(f:rule) + count(f:ruleset) + count(f:validateProfileId)  <=1"
+            Xpath = "count(f:contentType) + count(f:expression) + count(f:headerField) + count(f:minimumId) + count(f:navigationLinks) + count(f:path) + count(f:resource) + count(f:responseCode) + count(f:response) + count(f:rule) + count(f:ruleset) + count(f:validateProfileId)  <=1"
         };
 
-        public static ElementDefinition.ConstraintComponent TestScript_INV_11 = new ElementDefinition.ConstraintComponent()
+        public static ElementDefinition.ConstraintComponent TestScript_INV_10 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "setup.action.assert.all(compareToSourceId.empty() xor compareToSourcePath.exists())",
-            Key = "inv-11",
+            Expression = "setup.action.assert.all(compareToSourceId.empty() xor (compareToSourceExpression.exists() or compareToSourcePath.exists()))",
+            Key = "inv-10",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Setup action assert shall contain both compareToSourceId and compareToSourcePath or neither.",
-            Xpath = "(f:compareToSourceId and f:compareToSourcePath) or not(f:compareToSourceId or f:compareToSourcePath)"
+            Human = "Setup action assert SHALL contain either compareToSourceId and compareToSourceExpression, compareToSourceId and compareToSourcePath or neither.",
+            Xpath = "(f:compareToSourceId and f:compareToSourceExpression) or (f:compareToSourceId and f:compareToSourcePath) or not(f:compareToSourceId or f:compareToSourceExpression or f:compareToSourcePath)"
+        };
+
+        public static ElementDefinition.ConstraintComponent TestScript_INV_12 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "setup.action.assert.all((response.empty() and responseCode.empty() and direction = 'request') or direction.empty() or direction = 'response')",
+            Key = "inv-12",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Setup action assert response and response and responseCode SHALL be empty when direction equals request",
+            Xpath = "((count(f:response) + count(f:responseCode)) = 0 and (f:direction/@value='request')) or (count(f:direction) = 0) or (f:direction/@value='response')"
         };
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_2 = new ElementDefinition.ConstraintComponent()
@@ -6293,67 +6456,68 @@ namespace Hl7.Fhir.Model
             Xpath = "(f:operation or f:assert) and not(f:operation and f:assert)"
         };
 
-        public static ElementDefinition.ConstraintComponent TestScript_INV_9 = new ElementDefinition.ConstraintComponent()
+        public static ElementDefinition.ConstraintComponent TestScript_INV_8 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "test.action.operation.all(sourceId.exists() or (targetId.count() + url.count() + params.count() = 1) or (type.code in ('conformance' | 'search' | 'transaction' | 'history')))",
-            Key = "inv-9",
+            Expression = "test.action.operation.all(sourceId.exists() or (targetId.count() + url.count() + params.count() = 1) or (type.code in ('capabilities' | 'search' | 'transaction' | 'history')))",
+            Key = "inv-8",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Test operation SHALL contain either sourceId or targetId or params or url.",
-            Xpath = "f:sourceId or (f:targetId or f:url or f:params) and (count(f:targetId) + count(f:url) + count(f:params) =1) or (f:type/f:code/@value='conformance' or f:type/f:code/@value='search' or f:type/f:code/@value='transaction' or f:type/f:code/@value='history')"
+            Xpath = "f:sourceId or (f:targetId or f:url or f:params) and (count(f:targetId) + count(f:url) + count(f:params) =1) or (f:type/f:code/@value='capabilities' or f:type/f:code/@value='search' or f:type/f:code/@value='transaction' or f:type/f:code/@value='history')"
         };
 
-        public static ElementDefinition.ConstraintComponent TestScript_INV_7 = new ElementDefinition.ConstraintComponent()
+        public static ElementDefinition.ConstraintComponent TestScript_INV_6 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "test.action.assert.all(contentType.count() + headerField.count() + minimumId.count() + navigationLinks.count() + path.count() + resource.count() + responseCode.count() + response.count() + rule.count() + ruleset.count() + validateProfileId.count() <=1)",
-            Key = "inv-7",
+            Expression = "test.action.assert.all(contentType.count() + expression.count() + headerField.count() + minimumId.count() + navigationLinks.count() + path.count() + resource.count() + responseCode.count() + response.count() + rule.count() + ruleset.count() + validateProfileId.count() <=1)",
+            Key = "inv-6",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Only a single assertion SHALL be present within test action assert element.",
-            Xpath = "count(f:contentType) + count(f:headerField) + count(f:minimumId) + count(f:navigationLinks) + count(f:path) + count(f:resource) + count(f:responseCode) + count(f:response) + count(f:rule) + count(f:ruleset) + count(f:validateProfileId)  <=1"
+            Xpath = "count(f:contentType) + count(f:expression) + count(f:headerField) + count(f:minimumId) + count(f:navigationLinks) + count(f:path) + count(f:resource) + count(f:responseCode) + count(f:response) + count(f:rule) + count(f:ruleset) + count(f:validateProfileId)  <=1"
         };
 
-        public static ElementDefinition.ConstraintComponent TestScript_INV_12 = new ElementDefinition.ConstraintComponent()
+        public static ElementDefinition.ConstraintComponent TestScript_INV_11 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "test.action.assert.all(compareToSourceId.empty() xor compareToSourcePath.exists())",
-            Key = "inv-12",
+            Expression = "test.action.assert.all(compareToSourceId.empty() xor (compareToSourceExpression.exists() or compareToSourcePath.exists()))",
+            Key = "inv-11",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Test action assert shall contain both compareToSourceId and compareToSourcePath or neither.",
-            Xpath = "(f:compareToSourceId and f:compareToSourcePath) or not(f:compareToSourceId or f:compareToSourcePath)"
+            Human = "Test action assert SHALL contain either compareToSourceId and compareToSourceExpression, compareToSourceId and compareToSourcePath or neither.",
+            Xpath = "(f:compareToSourceId and f:compareToSourceExpression) or (f:compareToSourceId and f:compareToSourcePath) or not(f:compareToSourceId or f:compareToSourceExpression or f:compareToSourcePath)"
         };
 
-        public static ElementDefinition.ConstraintComponent TestScript_INV_3 = new ElementDefinition.ConstraintComponent()
+        public static ElementDefinition.ConstraintComponent TestScript_INV_13 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "teardown.action.all(operation.exists())",
-            Key = "inv-3",
+            Expression = "test.action.assert.all((response.empty() and responseCode.empty() and direction = 'request') or direction.empty() or direction = 'response')",
+            Key = "inv-13",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Teardown action SHALL contain an operation.",
-            Xpath = "f:operation"
+            Human = "Test action assert response and response and responseCode SHALL be empty when direction equals request",
+            Xpath = "((count(f:response) + count(f:responseCode)) = 0 and (f:direction/@value='request')) or (count(f:direction) = 0) or (f:direction/@value='response')"
         };
 
-        public static ElementDefinition.ConstraintComponent TestScript_INV_10 = new ElementDefinition.ConstraintComponent()
+        public static ElementDefinition.ConstraintComponent TestScript_INV_9 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "teardown.action.operation.all(sourceId.exists() or (targetId.count() + url.count() + params.count() = 1) or (type.code in ('conformance' | 'search' | 'transaction' | 'history')))",
-            Key = "inv-10",
+            Expression = "teardown.action.operation.all(sourceId.exists() or (targetId.count() + url.count() + params.count() = 1) or (type.code in ('capabilities' | 'search' | 'transaction' | 'history')))",
+            Key = "inv-9",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Teardown operation SHALL contain either sourceId or targetId or params or url.",
-            Xpath = "f:sourceId or (f:targetId or f:url or (f:params and f:resource)) and (count(f:targetId) + count(f:url) + count(f:params) =1) or (f:type/f:code/@value='conformance' or f:type/f:code/@value='search' or f:type/f:code/@value='transaction' or f:type/f:code/@value='history')"
+            Xpath = "f:sourceId or (f:targetId or f:url or (f:params and f:resource)) and (count(f:targetId) + count(f:url) + count(f:params) =1) or (f:type/f:code/@value='capabilities' or f:type/f:code/@value='search' or f:type/f:code/@value='transaction' or f:type/f:code/@value='history')"
         };
 
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
 
-            InvariantConstraints.Add(TestScript_INV_5);
             InvariantConstraints.Add(TestScript_INV_4);
+            InvariantConstraints.Add(TestScript_INV_3);
             InvariantConstraints.Add(TestScript_INV_1);
+            InvariantConstraints.Add(TestScript_INV_7);
+            InvariantConstraints.Add(TestScript_INV_5);
+            InvariantConstraints.Add(TestScript_INV_10);
+            InvariantConstraints.Add(TestScript_INV_12);
+            InvariantConstraints.Add(TestScript_INV_2);
             InvariantConstraints.Add(TestScript_INV_8);
             InvariantConstraints.Add(TestScript_INV_6);
             InvariantConstraints.Add(TestScript_INV_11);
-            InvariantConstraints.Add(TestScript_INV_2);
+            InvariantConstraints.Add(TestScript_INV_13);
             InvariantConstraints.Add(TestScript_INV_9);
-            InvariantConstraints.Add(TestScript_INV_7);
-            InvariantConstraints.Add(TestScript_INV_12);
-            InvariantConstraints.Add(TestScript_INV_3);
-            InvariantConstraints.Add(TestScript_INV_10);
         }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -6364,18 +6528,20 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
+                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ConformanceResourceStatus>)StatusElement.DeepCopy();
-                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
+                if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopy();
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
                 if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.TestScript.ContactComponent>(Contact.DeepCopy());
+                if(Contact != null) dest.Contact = new List<ContactDetail>(Contact.DeepCopy());
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(Description != null) dest.Description = (Hl7.Fhir.Model.Markdown)Description.DeepCopy();
-                if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.CodeableConcept>(UseContext.DeepCopy());
-                if(Requirements != null) dest.Requirements = (Hl7.Fhir.Model.Markdown)Requirements.DeepCopy();
-                if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.FhirString)CopyrightElement.DeepCopy();
+                if(UseContext != null) dest.UseContext = new List<UsageContext>(UseContext.DeepCopy());
+                if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
+                if(Purpose != null) dest.Purpose = (Hl7.Fhir.Model.Markdown)Purpose.DeepCopy();
+                if(Copyright != null) dest.Copyright = (Hl7.Fhir.Model.Markdown)Copyright.DeepCopy();
                 if(Origin != null) dest.Origin = new List<Hl7.Fhir.Model.TestScript.OriginComponent>(Origin.DeepCopy());
                 if(Destination != null) dest.Destination = new List<Hl7.Fhir.Model.TestScript.DestinationComponent>(Destination.DeepCopy());
                 if(Metadata != null) dest.Metadata = (Hl7.Fhir.Model.TestScript.MetadataComponent)Metadata.DeepCopy();
@@ -6405,18 +6571,20 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(VersionElement, otherT.VersionElement)) return false;
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+            if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(ExperimentalElement, otherT.ExperimentalElement)) return false;
             if( !DeepComparable.Matches(PublisherElement, otherT.PublisherElement)) return false;
             if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.Matches(Description, otherT.Description)) return false;
             if( !DeepComparable.Matches(UseContext, otherT.UseContext)) return false;
-            if( !DeepComparable.Matches(Requirements, otherT.Requirements)) return false;
-            if( !DeepComparable.Matches(CopyrightElement, otherT.CopyrightElement)) return false;
+            if( !DeepComparable.Matches(Jurisdiction, otherT.Jurisdiction)) return false;
+            if( !DeepComparable.Matches(Purpose, otherT.Purpose)) return false;
+            if( !DeepComparable.Matches(Copyright, otherT.Copyright)) return false;
             if( !DeepComparable.Matches(Origin, otherT.Origin)) return false;
             if( !DeepComparable.Matches(Destination, otherT.Destination)) return false;
             if( !DeepComparable.Matches(Metadata, otherT.Metadata)) return false;
@@ -6439,18 +6607,20 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(VersionElement, otherT.VersionElement)) return false;
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+            if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(ExperimentalElement, otherT.ExperimentalElement)) return false;
             if( !DeepComparable.IsExactly(PublisherElement, otherT.PublisherElement)) return false;
             if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
             if( !DeepComparable.IsExactly(UseContext, otherT.UseContext)) return false;
-            if( !DeepComparable.IsExactly(Requirements, otherT.Requirements)) return false;
-            if( !DeepComparable.IsExactly(CopyrightElement, otherT.CopyrightElement)) return false;
+            if( !DeepComparable.IsExactly(Jurisdiction, otherT.Jurisdiction)) return false;
+            if( !DeepComparable.IsExactly(Purpose, otherT.Purpose)) return false;
+            if( !DeepComparable.IsExactly(Copyright, otherT.Copyright)) return false;
             if( !DeepComparable.IsExactly(Origin, otherT.Origin)) return false;
             if( !DeepComparable.IsExactly(Destination, otherT.Destination)) return false;
             if( !DeepComparable.IsExactly(Metadata, otherT.Metadata)) return false;
@@ -6473,18 +6643,20 @@ namespace Hl7.Fhir.Model
             {
 				// TestScript elements
 				if (UrlElement != null) yield return UrlElement;
+				if (Identifier != null) yield return Identifier;
 				if (VersionElement != null) yield return VersionElement;
 				if (NameElement != null) yield return NameElement;
+				if (TitleElement != null) yield return TitleElement;
 				if (StatusElement != null) yield return StatusElement;
-				if (Identifier != null) yield return Identifier;
 				if (ExperimentalElement != null) yield return ExperimentalElement;
 				if (PublisherElement != null) yield return PublisherElement;
 				foreach (var elem in Contact) { if (elem != null) yield return elem; }
 				if (DateElement != null) yield return DateElement;
 				if (Description != null) yield return Description;
 				foreach (var elem in UseContext) { if (elem != null) yield return elem; }
-				if (Requirements != null) yield return Requirements;
-				if (CopyrightElement != null) yield return CopyrightElement;
+				foreach (var elem in Jurisdiction) { if (elem != null) yield return elem; }
+				if (Purpose != null) yield return Purpose;
+				if (Copyright != null) yield return Copyright;
 				foreach (var elem in Origin) { if (elem != null) yield return elem; }
 				foreach (var elem in Destination) { if (elem != null) yield return elem; }
 				if (Metadata != null) yield return Metadata;

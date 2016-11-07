@@ -37,10 +37,13 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.6.0
+// Generated for FHIR v1.7.0
 //
 namespace Hl7.Fhir.Model
 {
+    /// <summary>
+    /// Record of use of a device
+    /// </summary>
     [FhirType("DeviceUseStatement", IsResource=true)]
     [DataContract]
     public partial class DeviceUseStatement : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
@@ -65,7 +68,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Element _BodySite;
         
         /// <summary>
-        /// 
+        /// Period device was used
         /// </summary>
         [FhirElement("whenUsed", InSummary=true, Order=100)]
         [DataMember]
@@ -78,7 +81,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Period _WhenUsed;
         
         /// <summary>
-        /// 
+        /// Reference to device used
         /// </summary>
         [FhirElement("device", InSummary=true, Order=110)]
         [References("Device")]
@@ -93,7 +96,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Device;
         
         /// <summary>
-        /// 
+        /// External identifier for this record
         /// </summary>
         [FhirElement("identifier", InSummary=true, Order=120)]
         [Cardinality(Min=0,Max=-1)]
@@ -107,7 +110,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// 
+        /// Why device was used
         /// </summary>
         [FhirElement("indication", InSummary=true, Order=130)]
         [Cardinality(Min=0,Max=-1)]
@@ -121,7 +124,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _Indication;
         
         /// <summary>
-        /// 
+        /// Addition details (comments, instructions)
         /// </summary>
         [FhirElement("notes", InSummary=true, Order=140)]
         [Cardinality(Min=0,Max=-1)]
@@ -135,7 +138,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.FhirString> _NotesElement;
         
         /// <summary>
-        /// 
+        /// Addition details (comments, instructions)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -154,7 +157,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// 
+        /// When statement was recorded
         /// </summary>
         [FhirElement("recordedOn", InSummary=true, Order=150)]
         [DataMember]
@@ -167,7 +170,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirDateTime _RecordedOnElement;
         
         /// <summary>
-        /// 
+        /// When statement was recorded
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -186,7 +189,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// 
+        /// Patient using device
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=160)]
         [References("Patient")]
@@ -201,7 +204,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
-        /// 
+        /// How often  the device was used
         /// </summary>
         [FhirElement("timing", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]

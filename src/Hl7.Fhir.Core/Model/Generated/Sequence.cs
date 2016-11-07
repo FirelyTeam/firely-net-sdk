@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.6.0
+// Generated for FHIR v1.7.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -1386,7 +1386,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// 
+            /// Structural variant outer
             /// </summary>
             [FhirElement("outer", InSummary=true, Order=70)]
             [DataMember]
@@ -1399,7 +1399,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Sequence.OuterComponent _Outer;
             
             /// <summary>
-            /// 
+            /// Structural variant inner
             /// </summary>
             [FhirElement("inner", InSummary=true, Order=80)]
             [DataMember]
@@ -2018,7 +2018,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Pointer;
         
         /// <summary>
-        /// 
+        /// Structural variant
         /// </summary>
         [FhirElement("structureVariant", InSummary=true, Order=230)]
         [Cardinality(Min=0,Max=-1)]

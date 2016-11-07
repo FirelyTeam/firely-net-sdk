@@ -38,26 +38,26 @@ namespace Hl7.Fhir.Model
 
     /// <summary>
     /// The lifecycle status of a Value Set or Concept Map.
-    /// (url: http://hl7.org/fhir/ValueSet/conformance-resource-status)
+    /// (url: http://hl7.org/fhir/ValueSet/publication-status)
     /// </summary>
-    [FhirEnumeration("ConformanceResourceStatus")]
-    public enum ConformanceResourceStatus
+    [FhirEnumeration("PublicationStatus")]
+    public enum PublicationStatus
     {
         /// <summary>
         /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/conformance-resource-status)
+        /// (system: http://hl7.org/fhir/publication-status)
         /// </summary>
         [EnumLiteral("draft"), Description("Draft")]
         Draft,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/conformance-resource-status)
+        /// (system: http://hl7.org/fhir/publication-status)
         /// </summary>
         [EnumLiteral("active"), Description("Active")]
         Active,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/conformance-resource-status)
+        /// (system: http://hl7.org/fhir/publication-status)
         /// </summary>
         [EnumLiteral("retired"), Description("Retired")]
         Retired,
@@ -112,33 +112,6 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("generalizes"), Description("Generalizes (by Subsumption)")]
         Generalizes,
-    }
-
-    /// <summary>
-    /// The status of the knowledge asset
-    /// (url: http://hl7.org/fhir/ValueSet/module-metadata-status)
-    /// </summary>
-    [FhirEnumeration("LibraryStatus")]
-    public enum LibraryStatus
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/module-metadata-status)
-        /// </summary>
-        [EnumLiteral("draft"), Description("Draft")]
-        Draft,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/module-metadata-status)
-        /// </summary>
-        [EnumLiteral("active"), Description("Active")]
-        Active,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/module-metadata-status)
-        /// </summary>
-        [EnumLiteral("inactive"), Description("Inactive")]
-        Inactive,
     }
 
     /// <summary>
@@ -272,6 +245,12 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
         /// </summary>
+        [EnumLiteral("CapabilityStatement"), Description("CapabilityStatement")]
+        CapabilityStatement,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
         [EnumLiteral("CarePlan"), Description("CarePlan")]
         CarePlan,
         /// <summary>
@@ -344,12 +323,6 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
         /// </summary>
-        [EnumLiteral("Conformance"), Description("Conformance")]
-        Conformance,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/resource-types)
-        /// </summary>
         [EnumLiteral("Consent"), Description("Consent")]
         Consent,
         /// <summary>
@@ -370,12 +343,6 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("DataElement"), Description("DataElement")]
         DataElement,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/resource-types)
-        /// </summary>
-        [EnumLiteral("DecisionSupportServiceModule"), Description("DecisionSupportServiceModule")]
-        DecisionSupportServiceModule,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -626,8 +593,8 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
         /// </summary>
-        [EnumLiteral("MedicationOrder"), Description("MedicationOrder")]
-        MedicationOrder,
+        [EnumLiteral("MedicationRequest"), Description("MedicationRequest")]
+        MedicationRequest,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -782,6 +749,12 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
         /// </summary>
+        [EnumLiteral("RequestGroup"), Description("RequestGroup")]
+        RequestGroup,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
         [EnumLiteral("Resource"), Description("Resource")]
         Resource,
         /// <summary>
@@ -808,6 +781,12 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("Sequence"), Description("Sequence")]
         Sequence,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
+        [EnumLiteral("ServiceDefinition"), Description("ServiceDefinition")]
+        ServiceDefinition,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -866,6 +845,12 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
         /// </summary>
+        [EnumLiteral("TestReport"), Description("TestReport")]
+        TestReport,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
         [EnumLiteral("TestScript"), Description("TestScript")]
         TestScript,
         /// <summary>
@@ -880,33 +865,6 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("VisionPrescription"), Description("VisionPrescription")]
         VisionPrescription,
-    }
-
-    /// <summary>
-    /// The processing mode that applies to this list
-    /// (url: http://hl7.org/fhir/ValueSet/list-mode)
-    /// </summary>
-    [FhirEnumeration("ListMode")]
-    public enum ListMode
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/list-mode)
-        /// </summary>
-        [EnumLiteral("working"), Description("Working List")]
-        Working,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/list-mode)
-        /// </summary>
-        [EnumLiteral("snapshot"), Description("Snapshot List")]
-        Snapshot,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/list-mode)
-        /// </summary>
-        [EnumLiteral("changes"), Description("Change List")]
-        Changes,
     }
 
     /// <summary>
@@ -964,6 +922,33 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("uri"), Description("URI")]
         Uri,
+    }
+
+    /// <summary>
+    /// The processing mode that applies to this list
+    /// (url: http://hl7.org/fhir/ValueSet/list-mode)
+    /// </summary>
+    [FhirEnumeration("ListMode")]
+    public enum ListMode
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/list-mode)
+        /// </summary>
+        [EnumLiteral("working"), Description("Working List")]
+        Working,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/list-mode)
+        /// </summary>
+        [EnumLiteral("snapshot"), Description("Snapshot List")]
+        Snapshot,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/list-mode)
+        /// </summary>
+        [EnumLiteral("changes"), Description("Change List")]
+        Changes,
     }
 
     /// <summary>
@@ -1099,195 +1084,6 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Defines the types of relationships between actions
-    /// (url: http://hl7.org/fhir/ValueSet/action-relationship-type)
-    /// </summary>
-    [FhirEnumeration("PlanActionRelationshipType")]
-    public enum PlanActionRelationshipType
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/action-relationship-type)
-        /// </summary>
-        [EnumLiteral("before"), Description("Before")]
-        Before,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/action-relationship-type)
-        /// </summary>
-        [EnumLiteral("after"), Description("After")]
-        After,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/action-relationship-type)
-        /// </summary>
-        [EnumLiteral("concurrent"), Description("Concurrent")]
-        Concurrent,
-    }
-
-    /// <summary>
-    /// Defines possible anchors for the relationship between actions
-    /// (url: http://hl7.org/fhir/ValueSet/action-relationship-anchor)
-    /// </summary>
-    [FhirEnumeration("PlanActionRelationshipAnchor")]
-    public enum PlanActionRelationshipAnchor
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/action-relationship-anchor)
-        /// </summary>
-        [EnumLiteral("start"), Description("Start")]
-        Start,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/action-relationship-anchor)
-        /// </summary>
-        [EnumLiteral("end"), Description("End")]
-        End,
-    }
-
-    /// <summary>
-    /// Defines organization behavior of a group
-    /// (url: http://hl7.org/fhir/ValueSet/action-grouping-behavior)
-    /// </summary>
-    [FhirEnumeration("PlanActionGroupingBehavior")]
-    public enum PlanActionGroupingBehavior
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/action-grouping-behavior)
-        /// </summary>
-        [EnumLiteral("visual-group"), Description("Visual Group")]
-        VisualGroup,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/action-grouping-behavior)
-        /// </summary>
-        [EnumLiteral("logical-group"), Description("Logical Group")]
-        LogicalGroup,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/action-grouping-behavior)
-        /// </summary>
-        [EnumLiteral("sentence-group"), Description("Sentence Group")]
-        SentenceGroup,
-    }
-
-    /// <summary>
-    /// Defines selection behavior of a group
-    /// (url: http://hl7.org/fhir/ValueSet/action-selection-behavior)
-    /// </summary>
-    [FhirEnumeration("PlanActionSelectionBehavior")]
-    public enum PlanActionSelectionBehavior
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/action-selection-behavior)
-        /// </summary>
-        [EnumLiteral("any"), Description("Any")]
-        Any,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/action-selection-behavior)
-        /// </summary>
-        [EnumLiteral("all"), Description("All")]
-        All,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/action-selection-behavior)
-        /// </summary>
-        [EnumLiteral("all-or-none"), Description("All Or None")]
-        AllOrNone,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/action-selection-behavior)
-        /// </summary>
-        [EnumLiteral("exactly-one"), Description("Exactly One")]
-        ExactlyOne,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/action-selection-behavior)
-        /// </summary>
-        [EnumLiteral("at-most-one"), Description("At Most One")]
-        AtMostOne,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/action-selection-behavior)
-        /// </summary>
-        [EnumLiteral("one-or-more"), Description("One Or More")]
-        OneOrMore,
-    }
-
-    /// <summary>
-    /// Defines requiredness behavior for selecting an action or an action group
-    /// (url: http://hl7.org/fhir/ValueSet/action-required-behavior)
-    /// </summary>
-    [FhirEnumeration("PlanActionRequiredBehavior")]
-    public enum PlanActionRequiredBehavior
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/action-required-behavior)
-        /// </summary>
-        [EnumLiteral("must"), Description("Must")]
-        Must,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/action-required-behavior)
-        /// </summary>
-        [EnumLiteral("could"), Description("Could")]
-        Could,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/action-required-behavior)
-        /// </summary>
-        [EnumLiteral("must-unless-documented"), Description("Must Unless Documented")]
-        MustUnlessDocumented,
-    }
-
-    /// <summary>
-    /// Defines selection frequency behavior for an action or group
-    /// (url: http://hl7.org/fhir/ValueSet/action-precheck-behavior)
-    /// </summary>
-    [FhirEnumeration("PlanActionPrecheckBehavior")]
-    public enum PlanActionPrecheckBehavior
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/action-precheck-behavior)
-        /// </summary>
-        [EnumLiteral("yes"), Description("Yes")]
-        Yes,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/action-precheck-behavior)
-        /// </summary>
-        [EnumLiteral("no"), Description("No")]
-        No,
-    }
-
-    /// <summary>
-    /// Defines behavior for an action or a group for how many times that item may be repeated
-    /// (url: http://hl7.org/fhir/ValueSet/action-cardinality-behavior)
-    /// </summary>
-    [FhirEnumeration("PlanActionCardinalityBehavior")]
-    public enum PlanActionCardinalityBehavior
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/action-cardinality-behavior)
-        /// </summary>
-        [EnumLiteral("single"), Description("Single")]
-        Single,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/action-cardinality-behavior)
-        /// </summary>
-        [EnumLiteral("multiple"), Description("Multiple")]
-        Multiple,
-    }
-
-    /// <summary>
     /// The days of the week.
     /// (url: http://hl7.org/fhir/ValueSet/days-of-week)
     /// </summary>
@@ -1336,45 +1132,6 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("sun"), Description("Sunday")]
         Sun,
-    }
-
-    /// <summary>
-    /// A set of codes indicating the current status of a MedicationAdministration.
-    /// (url: http://hl7.org/fhir/ValueSet/medication-admin-status)
-    /// </summary>
-    [FhirEnumeration("MedicationAdministrationStatus")]
-    public enum MedicationAdministrationStatus
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/medication-admin-status)
-        /// </summary>
-        [EnumLiteral("in-progress"), Description("In Progress")]
-        InProgress,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/medication-admin-status)
-        /// </summary>
-        [EnumLiteral("on-hold"), Description("On Hold")]
-        OnHold,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/medication-admin-status)
-        /// </summary>
-        [EnumLiteral("completed"), Description("Completed")]
-        Completed,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/medication-admin-status)
-        /// </summary>
-        [EnumLiteral("entered-in-error"), Description("Entered in Error")]
-        EnteredInError,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/medication-admin-status)
-        /// </summary>
-        [EnumLiteral("stopped"), Description("Stopped")]
-        Stopped,
     }
 
     /// <summary>
@@ -1538,6 +1295,12 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/data-types)
         /// </summary>
+        [EnumLiteral("DosageInstruction"), Description("DosageInstruction")]
+        DosageInstruction,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/data-types)
+        /// </summary>
         [EnumLiteral("Duration"), Description("Duration")]
         Duration,
         /// <summary>
@@ -1628,8 +1391,8 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/data-types)
         /// </summary>
-        [EnumLiteral("RelatedResource"), Description("RelatedResource")]
-        RelatedResource,
+        [EnumLiteral("RelatedArtifact"), Description("RelatedArtifact")]
+        RelatedArtifact,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/data-types)
@@ -1838,6 +1601,12 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
         /// </summary>
+        [EnumLiteral("CapabilityStatement"), Description("CapabilityStatement")]
+        CapabilityStatement,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
         [EnumLiteral("CarePlan"), Description("CarePlan")]
         CarePlan,
         /// <summary>
@@ -1910,12 +1679,6 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
         /// </summary>
-        [EnumLiteral("Conformance"), Description("Conformance")]
-        Conformance,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/resource-types)
-        /// </summary>
         [EnumLiteral("Consent"), Description("Consent")]
         Consent,
         /// <summary>
@@ -1936,12 +1699,6 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("DataElement"), Description("DataElement")]
         DataElement,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/resource-types)
-        /// </summary>
-        [EnumLiteral("DecisionSupportServiceModule"), Description("DecisionSupportServiceModule")]
-        DecisionSupportServiceModule,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -2192,8 +1949,8 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
         /// </summary>
-        [EnumLiteral("MedicationOrder"), Description("MedicationOrder")]
-        MedicationOrder,
+        [EnumLiteral("MedicationRequest"), Description("MedicationRequest")]
+        MedicationRequest,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -2348,6 +2105,12 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
         /// </summary>
+        [EnumLiteral("RequestGroup"), Description("RequestGroup")]
+        RequestGroup,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
         [EnumLiteral("Resource"), Description("Resource")]
         Resource,
         /// <summary>
@@ -2374,6 +2137,12 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("Sequence"), Description("Sequence")]
         Sequence,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
+        [EnumLiteral("ServiceDefinition"), Description("ServiceDefinition")]
+        ServiceDefinition,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -2428,6 +2197,12 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("Task"), Description("Task")]
         Task,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
+        [EnumLiteral("TestReport"), Description("TestReport")]
+        TestReport,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -2491,6 +2266,210 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("example"), Description("Example")]
         Example,
+    }
+
+    /// <summary>
+    /// Defines the types of relationships between actions
+    /// (url: http://hl7.org/fhir/ValueSet/action-relationship-type)
+    /// </summary>
+    [FhirEnumeration("PlanActionRelationshipType")]
+    public enum PlanActionRelationshipType
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/action-relationship-type)
+        /// </summary>
+        [EnumLiteral("before-start"), Description("Before Start")]
+        BeforeStart,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/action-relationship-type)
+        /// </summary>
+        [EnumLiteral("before"), Description("Before")]
+        Before,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/action-relationship-type)
+        /// </summary>
+        [EnumLiteral("before-end"), Description("Before End")]
+        BeforeEnd,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/action-relationship-type)
+        /// </summary>
+        [EnumLiteral("concurrent-with-start"), Description("Concurrent With Start")]
+        ConcurrentWithStart,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/action-relationship-type)
+        /// </summary>
+        [EnumLiteral("concurrent"), Description("Concurrent")]
+        Concurrent,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/action-relationship-type)
+        /// </summary>
+        [EnumLiteral("concurrent-with-end"), Description("Concurrent With End")]
+        ConcurrentWithEnd,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/action-relationship-type)
+        /// </summary>
+        [EnumLiteral("after-start"), Description("After Start")]
+        AfterStart,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/action-relationship-type)
+        /// </summary>
+        [EnumLiteral("after"), Description("After")]
+        After,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/action-relationship-type)
+        /// </summary>
+        [EnumLiteral("after-end"), Description("After End")]
+        AfterEnd,
+    }
+
+    /// <summary>
+    /// Defines organization behavior of a group
+    /// (url: http://hl7.org/fhir/ValueSet/action-grouping-behavior)
+    /// </summary>
+    [FhirEnumeration("PlanActionGroupingBehavior")]
+    public enum PlanActionGroupingBehavior
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/action-grouping-behavior)
+        /// </summary>
+        [EnumLiteral("visual-group"), Description("Visual Group")]
+        VisualGroup,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/action-grouping-behavior)
+        /// </summary>
+        [EnumLiteral("logical-group"), Description("Logical Group")]
+        LogicalGroup,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/action-grouping-behavior)
+        /// </summary>
+        [EnumLiteral("sentence-group"), Description("Sentence Group")]
+        SentenceGroup,
+    }
+
+    /// <summary>
+    /// Defines selection behavior of a group
+    /// (url: http://hl7.org/fhir/ValueSet/action-selection-behavior)
+    /// </summary>
+    [FhirEnumeration("PlanActionSelectionBehavior")]
+    public enum PlanActionSelectionBehavior
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/action-selection-behavior)
+        /// </summary>
+        [EnumLiteral("any"), Description("Any")]
+        Any,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/action-selection-behavior)
+        /// </summary>
+        [EnumLiteral("all"), Description("All")]
+        All,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/action-selection-behavior)
+        /// </summary>
+        [EnumLiteral("all-or-none"), Description("All Or None")]
+        AllOrNone,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/action-selection-behavior)
+        /// </summary>
+        [EnumLiteral("exactly-one"), Description("Exactly One")]
+        ExactlyOne,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/action-selection-behavior)
+        /// </summary>
+        [EnumLiteral("at-most-one"), Description("At Most One")]
+        AtMostOne,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/action-selection-behavior)
+        /// </summary>
+        [EnumLiteral("one-or-more"), Description("One Or More")]
+        OneOrMore,
+    }
+
+    /// <summary>
+    /// Defines requiredness behavior for selecting an action or an action group
+    /// (url: http://hl7.org/fhir/ValueSet/action-required-behavior)
+    /// </summary>
+    [FhirEnumeration("PlanActionRequiredBehavior")]
+    public enum PlanActionRequiredBehavior
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/action-required-behavior)
+        /// </summary>
+        [EnumLiteral("must"), Description("Must")]
+        Must,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/action-required-behavior)
+        /// </summary>
+        [EnumLiteral("could"), Description("Could")]
+        Could,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/action-required-behavior)
+        /// </summary>
+        [EnumLiteral("must-unless-documented"), Description("Must Unless Documented")]
+        MustUnlessDocumented,
+    }
+
+    /// <summary>
+    /// Defines selection frequency behavior for an action or group
+    /// (url: http://hl7.org/fhir/ValueSet/action-precheck-behavior)
+    /// </summary>
+    [FhirEnumeration("PlanActionPrecheckBehavior")]
+    public enum PlanActionPrecheckBehavior
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/action-precheck-behavior)
+        /// </summary>
+        [EnumLiteral("yes"), Description("Yes")]
+        Yes,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/action-precheck-behavior)
+        /// </summary>
+        [EnumLiteral("no"), Description("No")]
+        No,
+    }
+
+    /// <summary>
+    /// Defines behavior for an action or a group for how many times that item may be repeated
+    /// (url: http://hl7.org/fhir/ValueSet/action-cardinality-behavior)
+    /// </summary>
+    [FhirEnumeration("PlanActionCardinalityBehavior")]
+    public enum PlanActionCardinalityBehavior
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/action-cardinality-behavior)
+        /// </summary>
+        [EnumLiteral("single"), Description("Single")]
+        Single,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/action-cardinality-behavior)
+        /// </summary>
+        [EnumLiteral("multiple"), Description("Multiple")]
+        Multiple,
     }
 
 }

@@ -1,7 +1,7 @@
 ﻿
 
 //
-// Model Generated on Fri, 09 Sep 2016 22:27:35 GMT for FHIR v1.6.0
+// Model Generated on Mon, 07 Nov 2016 12:23:06 GMT for FHIR v1.7.0
 //
 // Generated Shared Enumeration: ResourceType
 
@@ -35,11 +35,7 @@
 
 // Generated Shared Enumeration: PlanActionParticipantType
 
-// Generated Shared Enumeration: ConformanceResourceStatus
-
 // Generated Shared Enumeration: DaysOfWeek
-
-// Generated Shared Enumeration: LibraryStatus
 
 // Generated Shared Enumeration: PlanActionRelationshipType
 
@@ -47,30 +43,29 @@
 
 // Generated Shared Enumeration: RequestStatus
 
-// Generated Shared Enumeration: MedicationAdministrationStatus
-
 // Generated Shared Enumeration: PlanActionRequiredBehavior
-
-// Generated Shared Enumeration: PlanActionRelationshipAnchor
 
 // Generated Shared Enumeration: FHIRAllTypes
 	// Used in model class (type): DataRequirement.type
 	// Used in model class (type): ParameterDefinition.type
 
+// Generated Shared Enumeration: PublicationStatus
+
 // Generated helper templates
 // Generated items
 // Hl7.Fhir.Core\Model\Generated\ParameterDefinition.cs
+// Hl7.Fhir.Core\Model\Generated\DosageInstruction.cs
 // Hl7.Fhir.Core\Model\Generated\ElementDefinition.cs
 // Hl7.Fhir.Core\Model\Generated\Timing.cs
 // Hl7.Fhir.Core\Model\Generated\UsageContext.cs
 // Hl7.Fhir.Core\Model\Generated\ContactPoint.cs
 // Hl7.Fhir.Core\Model\Generated\HumanName.cs
 // Hl7.Fhir.Core\Model\Generated\ContactDetail.cs
+// Hl7.Fhir.Core\Model\Generated\RelatedArtifact.cs
 // Hl7.Fhir.Core\Model\Generated\DataRequirement.cs
 // Hl7.Fhir.Core\Model\Generated\Contributor.cs
 // Hl7.Fhir.Core\Model\Generated\TriggerDefinition.cs
 // Hl7.Fhir.Core\Model\Generated\Address.cs
-// Hl7.Fhir.Core\Model\Generated\RelatedResource.cs
 // Hl7.Fhir.Core\Model\Generated\Meta.cs
 // Hl7.Fhir.Core\Model\Generated\BackboneElement.cs
 // Hl7.Fhir.Core\Model\Generated\CodeableConcept.cs

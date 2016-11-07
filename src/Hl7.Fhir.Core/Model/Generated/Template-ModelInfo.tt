@@ -36,7 +36,7 @@
 	string fhirVersion = docResources.SelectSingleNode("//fhir:fhirVersion/@value", nsE).Value;
 
 	XmlNodeList nodeResources = docResources.DocumentElement.SelectNodes(
-		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition", nsR);
+		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:kind/@value != 'logical']", nsR);
 
 	List<System.Xml.XmlElement> sortedResources = new List<System.Xml.XmlElement>();
 	foreach (System.Xml.XmlElement e in nodeResources)
@@ -44,7 +44,7 @@
 	sortedResources.Sort((a, b)=> string.Compare((a as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value, (b as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value));
 
 	XmlNodeList nodeTypes = docTypes.DocumentElement.SelectNodes(
-		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition", nsR);
+		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:kind/@value != 'logical']", nsR);
 
 	List<System.Xml.XmlElement> sortedTypes = new List<System.Xml.XmlElement>();
 	foreach (System.Xml.XmlElement e in nodeTypes)

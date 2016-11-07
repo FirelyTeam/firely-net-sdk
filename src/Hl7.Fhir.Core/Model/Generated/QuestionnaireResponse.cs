@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.6.0
+// Generated for FHIR v1.7.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -78,6 +78,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("amended"), Description("Amended")]
             Amended,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/questionnaire-answers-status)
+            /// </summary>
+            [EnumLiteral("entered-in-error"), Description("Entered In Error")]
+            EnteredInError,
         }
 
         [FhirType("ItemComponent")]
@@ -420,7 +426,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Questionnaire;
         
         /// <summary>
-        /// in-progress | completed | amended
+        /// in-progress | completed | amended | entered-in-error
         /// </summary>
         [FhirElement("status", InSummary=true, Order=130)]
         [Cardinality(Min=1,Max=1)]
@@ -434,7 +440,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus> _StatusElement;
         
         /// <summary>
-        /// in-progress | completed | amended
+        /// in-progress | completed | amended | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

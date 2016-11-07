@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.6.0
+// Generated for FHIR v1.7.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -332,23 +332,38 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Encounter leading to message
+        /// Focal resources
         /// </summary>
-        [FhirElement("encounter", InSummary=true, Order=170)]
-        [References("Encounter")]
+        [FhirElement("topic", InSummary=true, Order=170)]
+        [References()]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Encounter
+        public List<Hl7.Fhir.Model.ResourceReference> Topic
         {
-            get { return _Encounter; }
-            set { _Encounter = value; OnPropertyChanged("Encounter"); }
+            get { if(_Topic==null) _Topic = new List<Hl7.Fhir.Model.ResourceReference>(); return _Topic; }
+            set { _Topic = value; OnPropertyChanged("Topic"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Encounter;
+        private List<Hl7.Fhir.Model.ResourceReference> _Topic;
+        
+        /// <summary>
+        /// Encounter or episode leading to message
+        /// </summary>
+        [FhirElement("context", InSummary=true, Order=180)]
+        [References("Encounter","EpisodeOfCare")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Context
+        {
+            get { return _Context; }
+            set { _Context = value; OnPropertyChanged("Context"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Context;
         
         /// <summary>
         /// When scheduled
         /// </summary>
-        [FhirElement("scheduled", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("scheduled", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
         public Hl7.Fhir.Model.Element Scheduled
@@ -362,7 +377,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Indication for message
         /// </summary>
-        [FhirElement("reason", InSummary=true, Order=190)]
+        [FhirElement("reason", InSummary=true, Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Reason
@@ -376,7 +391,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When ordered or proposed
         /// </summary>
-        [FhirElement("requestedOn", InSummary=true, Order=200)]
+        [FhirElement("requestedOn", InSummary=true, Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime RequestedOnElement
         {
@@ -408,7 +423,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Focus of message
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=210)]
+        [FhirElement("subject", InSummary=true, Order=220)]
         [References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -422,7 +437,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Message urgency
         /// </summary>
-        [FhirElement("priority", InSummary=true, Order=220)]
+        [FhirElement("priority", InSummary=true, Order=230)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Priority
         {
@@ -454,7 +469,8 @@ namespace Hl7.Fhir.Model
                 if(Medium != null) dest.Medium = new List<Hl7.Fhir.Model.CodeableConcept>(Medium.DeepCopy());
                 if(Requester != null) dest.Requester = (Hl7.Fhir.Model.ResourceReference)Requester.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.CommunicationRequest.CommunicationRequestStatus>)StatusElement.DeepCopy();
-                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
+                if(Topic != null) dest.Topic = new List<Hl7.Fhir.Model.ResourceReference>(Topic.DeepCopy());
+                if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
                 if(Scheduled != null) dest.Scheduled = (Hl7.Fhir.Model.Element)Scheduled.DeepCopy();
                 if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
                 if(RequestedOnElement != null) dest.RequestedOnElement = (Hl7.Fhir.Model.FhirDateTime)RequestedOnElement.DeepCopy();
@@ -485,7 +501,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Medium, otherT.Medium)) return false;
             if( !DeepComparable.Matches(Requester, otherT.Requester)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
+            if( !DeepComparable.Matches(Topic, otherT.Topic)) return false;
+            if( !DeepComparable.Matches(Context, otherT.Context)) return false;
             if( !DeepComparable.Matches(Scheduled, otherT.Scheduled)) return false;
             if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
             if( !DeepComparable.Matches(RequestedOnElement, otherT.RequestedOnElement)) return false;
@@ -509,7 +526,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Medium, otherT.Medium)) return false;
             if( !DeepComparable.IsExactly(Requester, otherT.Requester)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
+            if( !DeepComparable.IsExactly(Topic, otherT.Topic)) return false;
+            if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
             if( !DeepComparable.IsExactly(Scheduled, otherT.Scheduled)) return false;
             if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
             if( !DeepComparable.IsExactly(RequestedOnElement, otherT.RequestedOnElement)) return false;
@@ -533,7 +551,8 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Medium) { if (elem != null) yield return elem; }
 				if (Requester != null) yield return Requester;
 				if (StatusElement != null) yield return StatusElement;
-				if (Encounter != null) yield return Encounter;
+				foreach (var elem in Topic) { if (elem != null) yield return elem; }
+				if (Context != null) yield return Context;
 				if (Scheduled != null) yield return Scheduled;
 				foreach (var elem in Reason) { if (elem != null) yield return elem; }
 				if (RequestedOnElement != null) yield return RequestedOnElement;

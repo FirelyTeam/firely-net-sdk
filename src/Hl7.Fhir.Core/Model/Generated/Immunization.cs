@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.6.0
+// Generated for FHIR v1.7.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,6 +53,27 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "Immunization"; } }
         
+        /// <summary>
+        /// The value set to instantiate this attribute should be drawn from a terminologically robust code system that consists of or contains concepts to support the immunization process.
+        /// (url: http://hl7.org/fhir/ValueSet/immunization-status)
+        /// </summary>
+        [FhirEnumeration("ImmunizationStatusCodes")]
+        public enum ImmunizationStatusCodes
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/medication-admin-status)
+            /// </summary>
+            [EnumLiteral("completed"), Description("Completed")]
+            Completed,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/medication-admin-status)
+            /// </summary>
+            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
+            EnteredInError,
+        }
+
         [FhirType("ExplanationComponent")]
         [DataContract]
         public partial class ExplanationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -589,26 +610,26 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// in-progress | on-hold | completed | entered-in-error | stopped
+        /// completed | entered-in-error
         /// </summary>
         [FhirElement("status", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.MedicationAdministrationStatus> StatusElement
+        public Code<Hl7.Fhir.Model.Immunization.ImmunizationStatusCodes> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.MedicationAdministrationStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.Immunization.ImmunizationStatusCodes> _StatusElement;
         
         /// <summary>
-        /// in-progress | on-hold | completed | entered-in-error | stopped
+        /// completed | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.MedicationAdministrationStatus? Status
+        public Hl7.Fhir.Model.Immunization.ImmunizationStatusCodes? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -616,7 +637,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                   StatusElement = null; 
                 else
-                  StatusElement = new Code<Hl7.Fhir.Model.MedicationAdministrationStatus>(value);
+                  StatusElement = new Code<Hl7.Fhir.Model.Immunization.ImmunizationStatusCodes>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -1011,7 +1032,7 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.MedicationAdministrationStatus>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Immunization.ImmunizationStatusCodes>)StatusElement.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(VaccineCode != null) dest.VaccineCode = (Hl7.Fhir.Model.CodeableConcept)VaccineCode.DeepCopy();
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();

@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.6.0
+// Generated for FHIR v1.7.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -90,6 +90,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("entered-in-error"), Description("Entered in error")]
             EnteredInError,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/endpoint-status)
+            /// </summary>
+            [EnumLiteral("test"), Description("Test")]
+            Test,
         }
 
         /// <summary>
@@ -107,7 +113,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// active | suspended | error | off | entered-in-error
+        /// active | suspended | error | off | entered-in-error | test
         /// </summary>
         [FhirElement("status", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
@@ -121,7 +127,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.Endpoint.EndpointStatus> _StatusElement;
         
         /// <summary>
-        /// active | suspended | error | off | entered-in-error
+        /// active | suspended | error | off | entered-in-error | test
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -200,9 +206,22 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ContactPoint> _Contact;
         
         /// <summary>
-        /// rest-hook | websocket | email | sms | message
+        /// Interval the endpoint is expected to be operational
         /// </summary>
-        [FhirElement("connectionType", InSummary=true, Order=140)]
+        [FhirElement("period", InSummary=true, Order=140)]
+        [DataMember]
+        public Hl7.Fhir.Model.Period Period
+        {
+            get { return _Period; }
+            set { _Period = value; OnPropertyChanged("Period"); }
+        }
+        
+        private Hl7.Fhir.Model.Period _Period;
+        
+        /// <summary>
+        /// Protocol/Profile/Standard to be used with this endpoint connection
+        /// </summary>
+        [FhirElement("connectionType", InSummary=true, Order=150)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Coding ConnectionType
@@ -214,36 +233,56 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Coding _ConnectionType;
         
         /// <summary>
-        /// The http verb to be used when calling this endpoint
+        /// The type of content that may be used at this endpoint (e.g. XDS Discharge summaries)
         /// </summary>
-        [FhirElement("method", InSummary=true, Order=150)]
+        [FhirElement("payloadType", InSummary=true, Order=160)]
+        [Cardinality(Min=1,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> PayloadType
+        {
+            get { if(_PayloadType==null) _PayloadType = new List<Hl7.Fhir.Model.CodeableConcept>(); return _PayloadType; }
+            set { _PayloadType = value; OnPropertyChanged("PayloadType"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _PayloadType;
+        
+        /// <summary>
+        /// Mimetype to send. If not specified, the content could be anything (including no payload, if the connectionType defined this)
+        /// </summary>
+        [FhirElement("payloadMimeType", InSummary=true, Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Coding> Method
+        public List<Hl7.Fhir.Model.Code> PayloadMimeTypeElement
         {
-            get { if(_Method==null) _Method = new List<Hl7.Fhir.Model.Coding>(); return _Method; }
-            set { _Method = value; OnPropertyChanged("Method"); }
+            get { if(_PayloadMimeTypeElement==null) _PayloadMimeTypeElement = new List<Hl7.Fhir.Model.Code>(); return _PayloadMimeTypeElement; }
+            set { _PayloadMimeTypeElement = value; OnPropertyChanged("PayloadMimeTypeElement"); }
         }
         
-        private List<Hl7.Fhir.Model.Coding> _Method;
+        private List<Hl7.Fhir.Model.Code> _PayloadMimeTypeElement;
         
         /// <summary>
-        /// Interval during responsibility is assumed
+        /// Mimetype to send. If not specified, the content could be anything (including no payload, if the connectionType defined this)
         /// </summary>
-        [FhirElement("period", InSummary=true, Order=160)]
-        [DataMember]
-        public Hl7.Fhir.Model.Period Period
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public IEnumerable<string> PayloadMimeType
         {
-            get { return _Period; }
-            set { _Period = value; OnPropertyChanged("Period"); }
+            get { return PayloadMimeTypeElement != null ? PayloadMimeTypeElement.Select(elem => elem.Value) : null; }
+            set
+            {
+                if (value == null)
+                  PayloadMimeTypeElement = null; 
+                else
+                  PayloadMimeTypeElement = new List<Hl7.Fhir.Model.Code>(value.Select(elem=>new Hl7.Fhir.Model.Code(elem)));
+                OnPropertyChanged("PayloadMimeType");
+            }
         }
         
-        private Hl7.Fhir.Model.Period _Period;
-        
         /// <summary>
-        /// Where the channel points to
+        /// The technical address for conneccting to this endpoint
         /// </summary>
-        [FhirElement("address", InSummary=true, Order=170)]
+        [FhirElement("address", InSummary=true, Order=180)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri AddressElement
@@ -255,7 +294,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirUri _AddressElement;
         
         /// <summary>
-        /// Where the channel points to
+        /// The technical address for conneccting to this endpoint
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -274,56 +313,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Mimetype to send, or blank for no payload
-        /// </summary>
-        [FhirElement("payloadFormat", Order=180)]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString PayloadFormatElement
-        {
-            get { return _PayloadFormatElement; }
-            set { _PayloadFormatElement = value; OnPropertyChanged("PayloadFormatElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _PayloadFormatElement;
-        
-        /// <summary>
-        /// Mimetype to send, or blank for no payload
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string PayloadFormat
-        {
-            get { return PayloadFormatElement != null ? PayloadFormatElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  PayloadFormatElement = null; 
-                else
-                  PayloadFormatElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("PayloadFormat");
-            }
-        }
-        
-        /// <summary>
-        /// The type of content that may be used at this endpoint (e.g. XDS Discharge summaries)
-        /// </summary>
-        [FhirElement("payloadType", InSummary=true, Order=190)]
-        [Cardinality(Min=1,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> PayloadType
-        {
-            get { if(_PayloadType==null) _PayloadType = new List<Hl7.Fhir.Model.CodeableConcept>(); return _PayloadType; }
-            set { _PayloadType = value; OnPropertyChanged("PayloadType"); }
-        }
-        
-        private List<Hl7.Fhir.Model.CodeableConcept> _PayloadType;
-        
-        /// <summary>
         /// Usage depends on the channel type
         /// </summary>
-        [FhirElement("header", Order=200)]
+        [FhirElement("header", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> HeaderElement
@@ -356,7 +348,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// PKI Public keys to support secure communications
         /// </summary>
-        [FhirElement("publicKey", Order=210)]
+        [FhirElement("publicKey", Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublicKeyElement
         {
@@ -404,12 +396,11 @@ namespace Hl7.Fhir.Model
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopy();
                 if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ContactPoint>(Contact.DeepCopy());
-                if(ConnectionType != null) dest.ConnectionType = (Hl7.Fhir.Model.Coding)ConnectionType.DeepCopy();
-                if(Method != null) dest.Method = new List<Hl7.Fhir.Model.Coding>(Method.DeepCopy());
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                if(AddressElement != null) dest.AddressElement = (Hl7.Fhir.Model.FhirUri)AddressElement.DeepCopy();
-                if(PayloadFormatElement != null) dest.PayloadFormatElement = (Hl7.Fhir.Model.FhirString)PayloadFormatElement.DeepCopy();
+                if(ConnectionType != null) dest.ConnectionType = (Hl7.Fhir.Model.Coding)ConnectionType.DeepCopy();
                 if(PayloadType != null) dest.PayloadType = new List<Hl7.Fhir.Model.CodeableConcept>(PayloadType.DeepCopy());
+                if(PayloadMimeTypeElement != null) dest.PayloadMimeTypeElement = new List<Hl7.Fhir.Model.Code>(PayloadMimeTypeElement.DeepCopy());
+                if(AddressElement != null) dest.AddressElement = (Hl7.Fhir.Model.FhirUri)AddressElement.DeepCopy();
                 if(HeaderElement != null) dest.HeaderElement = new List<Hl7.Fhir.Model.FhirString>(HeaderElement.DeepCopy());
                 if(PublicKeyElement != null) dest.PublicKeyElement = (Hl7.Fhir.Model.FhirString)PublicKeyElement.DeepCopy();
                 return dest;
@@ -434,12 +425,11 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.Matches(ManagingOrganization, otherT.ManagingOrganization)) return false;
             if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
-            if( !DeepComparable.Matches(ConnectionType, otherT.ConnectionType)) return false;
-            if( !DeepComparable.Matches(Method, otherT.Method)) return false;
             if( !DeepComparable.Matches(Period, otherT.Period)) return false;
-            if( !DeepComparable.Matches(AddressElement, otherT.AddressElement)) return false;
-            if( !DeepComparable.Matches(PayloadFormatElement, otherT.PayloadFormatElement)) return false;
+            if( !DeepComparable.Matches(ConnectionType, otherT.ConnectionType)) return false;
             if( !DeepComparable.Matches(PayloadType, otherT.PayloadType)) return false;
+            if( !DeepComparable.Matches(PayloadMimeTypeElement, otherT.PayloadMimeTypeElement)) return false;
+            if( !DeepComparable.Matches(AddressElement, otherT.AddressElement)) return false;
             if( !DeepComparable.Matches(HeaderElement, otherT.HeaderElement)) return false;
             if( !DeepComparable.Matches(PublicKeyElement, otherT.PublicKeyElement)) return false;
             
@@ -457,12 +447,11 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.IsExactly(ManagingOrganization, otherT.ManagingOrganization)) return false;
             if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
-            if( !DeepComparable.IsExactly(ConnectionType, otherT.ConnectionType)) return false;
-            if( !DeepComparable.IsExactly(Method, otherT.Method)) return false;
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
-            if( !DeepComparable.IsExactly(AddressElement, otherT.AddressElement)) return false;
-            if( !DeepComparable.IsExactly(PayloadFormatElement, otherT.PayloadFormatElement)) return false;
+            if( !DeepComparable.IsExactly(ConnectionType, otherT.ConnectionType)) return false;
             if( !DeepComparable.IsExactly(PayloadType, otherT.PayloadType)) return false;
+            if( !DeepComparable.IsExactly(PayloadMimeTypeElement, otherT.PayloadMimeTypeElement)) return false;
+            if( !DeepComparable.IsExactly(AddressElement, otherT.AddressElement)) return false;
             if( !DeepComparable.IsExactly(HeaderElement, otherT.HeaderElement)) return false;
             if( !DeepComparable.IsExactly(PublicKeyElement, otherT.PublicKeyElement)) return false;
             
@@ -480,12 +469,11 @@ namespace Hl7.Fhir.Model
 				if (NameElement != null) yield return NameElement;
 				if (ManagingOrganization != null) yield return ManagingOrganization;
 				foreach (var elem in Contact) { if (elem != null) yield return elem; }
-				if (ConnectionType != null) yield return ConnectionType;
-				foreach (var elem in Method) { if (elem != null) yield return elem; }
 				if (Period != null) yield return Period;
-				if (AddressElement != null) yield return AddressElement;
-				if (PayloadFormatElement != null) yield return PayloadFormatElement;
+				if (ConnectionType != null) yield return ConnectionType;
 				foreach (var elem in PayloadType) { if (elem != null) yield return elem; }
+				foreach (var elem in PayloadMimeTypeElement) { if (elem != null) yield return elem; }
+				if (AddressElement != null) yield return AddressElement;
 				foreach (var elem in HeaderElement) { if (elem != null) yield return elem; }
 				if (PublicKeyElement != null) yield return PublicKeyElement;
             }

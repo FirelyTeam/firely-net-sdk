@@ -37,10 +37,13 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.6.0
+// Generated for FHIR v1.7.0
 //
 namespace Hl7.Fhir.Model
 {
+    /// <summary>
+    /// Tracks balance, charges, for patient or cost center
+    /// </summary>
     [FhirType("Account", IsResource=true)]
     [DataContract]
     public partial class Account : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged

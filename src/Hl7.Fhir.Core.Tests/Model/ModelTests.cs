@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void SimpleValueSupport()
         {
-            Conformance c = new Conformance();
+            CapabilityStatement c = new CapabilityStatement();
 
             Assert.IsNull(c.Experimental);
             c.Experimental = true;

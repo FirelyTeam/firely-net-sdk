@@ -73,21 +73,21 @@ namespace Hl7.Fhir.Tests.Rest
             FhirClient client = new FhirClient(testEndpoint);
             client.ParserSettings.AllowUnrecognizedEnums = true;
 
-            var entry = client.Conformance();
+            var entry = client.CapabilityStatement();
 
             Assert.IsNotNull(entry.Text);
             Assert.IsNotNull(entry);
             Assert.IsNotNull(entry.FhirVersion);
             // Assert.AreEqual("Spark.Service", c.Software.Name); // This is only for ewout's server
-            Assert.AreEqual(Conformance.RestfulConformanceMode.Server, entry.Rest[0].Mode.Value);
+            Assert.AreEqual(CapabilityStatement.RestfulCapabilityMode.Server, entry.Rest[0].Mode.Value);
             Assert.AreEqual("200", client.LastResult.Status);
 
-            entry = client.Conformance(SummaryType.True);
+            entry = client.CapabilityStatement(SummaryType.True);
 
             Assert.IsNull(entry.Text); // DSTU2 has this property as not include as part of the summary (that would be with SummaryType.Text)
             Assert.IsNotNull(entry);
             Assert.IsNotNull(entry.FhirVersion);
-            Assert.AreEqual(Conformance.RestfulConformanceMode.Server, entry.Rest[0].Mode.Value);
+            Assert.AreEqual(CapabilityStatement.RestfulCapabilityMode.Server, entry.Rest[0].Mode.Value);
             Assert.AreEqual("200", client.LastResult.Status);
 
             Assert.IsNotNull(entry.Rest[0].Resource, "The resource property should be in the summary");
@@ -423,8 +423,9 @@ namespace Hl7.Fhir.Tests.Rest
                 fe = client.Read<Patient>(fe.ResourceIdentity().WithoutVersion());
                 Assert.Fail();
             }
-            catch
+            catch(FhirOperationException ex)
             {
+                Assert.AreEqual(HttpStatusCode.Gone, ex.Status, "Expected the record to be gone");
                 Assert.AreEqual("410", client.LastResult.Status);
             }
         }
@@ -951,7 +952,7 @@ namespace Hl7.Fhir.Tests.Rest
             var client = new FhirClient(testEndpointDSTU1);
             client.ParserSettings.AllowUnrecognizedEnums = true;
 
-            Conformance p;
+            CapabilityStatement p;
 
             try
             {
@@ -970,7 +971,7 @@ namespace Hl7.Fhir.Tests.Rest
 
             client = new FhirClient(testEndpointDSTU23);
             client.ParserSettings.AllowUnrecognizedEnums = true;
-            p = client.Conformance();
+            p = client.CapabilityStatement();
 
             //client = new FhirClient(testEndpointDSTU2);
             //p = client.Read<Patient>("Patient/example");
@@ -986,7 +987,7 @@ namespace Hl7.Fhir.Tests.Rest
                        
             try
             {
-                p = client.Conformance();
+                p = client.CapabilityStatement();
                 Assert.Fail("Getting DSTU1 data using DSTU2 parsers should have failed");
             }
             catch (Exception)

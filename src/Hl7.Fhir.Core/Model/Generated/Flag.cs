@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.6.0
+// Generated for FHIR v1.7.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Author;
         
         /// <summary>
-        /// Message to display to user
+        /// Coded or textual message to display to user
         /// </summary>
         [FhirElement("code", InSummary=true, Order=160)]
         [Cardinality(Min=1,Max=1)]

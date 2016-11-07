@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.6.0
+// Generated for FHIR v1.7.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -274,7 +274,7 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.CodeableConcept> _Type;
             
             /// <summary>
-            /// Period of time during the encounter participant was present
+            /// Period of time during the encounter that the participant participated
             /// </summary>
             [FhirElement("period", Order=50)]
             [DataMember]

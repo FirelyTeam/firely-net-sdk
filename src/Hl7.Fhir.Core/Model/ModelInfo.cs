@@ -362,7 +362,7 @@ namespace Hl7.Fhir.Model
 
         public static readonly FHIRAllTypes[] ConformanceResources = 
         {
-            FHIRAllTypes.Conformance,
+            FHIRAllTypes.CapabilityStatement,
             FHIRAllTypes.StructureDefinition,
             FHIRAllTypes.ValueSet,
             FHIRAllTypes.ConceptMap,

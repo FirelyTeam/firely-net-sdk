@@ -706,7 +706,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Move to first (named) slice
             nav.MoveToNext();
             Assert.AreEqual(nav.Path, "DiagnosticReport.result");
-            Assert.IsNotNull(nav.Current.Name);
+            Assert.IsNotNull(nav.Current.SliceName);
 
             testExpandElement(sd, nav.Current);
         }
@@ -783,11 +783,11 @@ namespace Hl7.Fhir.Specification.Tests
                 //    Assert.IsTrue(result.Where(e => e.Path.StartsWith(expandElemPath)).Count() == typeElems.Count);
                 //}
                 //else
-                if (elem.Name != null)
+                if (elem.ContentReference != null)
                 {
                     // The expanded element represents a slice
                     // var nav = new ElementDefinitionNavigator(result);
-                    nav.JumpToNameReference(elem.Name);
+                    nav.JumpToNameReference(elem.ContentReference);
                     var cnt = 1;
                     Assert.IsTrue(nav.MoveToFirstChild());
                     do
@@ -1193,7 +1193,7 @@ namespace Hl7.Fhir.Specification.Tests
                 || IsChanged(elem.MinElement)
                 || IsChanged(elem.MinValue)
                 || IsChanged(elem.MustSupportElement)
-                || IsChanged(elem.NameElement)
+                || IsChanged(elem.SliceNameElement)
                 || IsChanged(elem.ContentReferenceElement)
                 || IsChanged(elem.PathElement)
                 || IsChanged(elem.Pattern)
@@ -1237,8 +1237,8 @@ namespace Hl7.Fhir.Specification.Tests
             if (IsChanged(element.MinElement)) { return "Min"; }
             if (IsChanged(element.MinValue)) { return "MinValue"; }
             if (IsChanged(element.MustSupportElement)) { return "MustSupport"; }
-            if (IsChanged(element.NameElement)) { return "Name"; }
-            if (IsChanged(element.ContentReferenceElement)) { return "NameReference"; }
+            if (IsChanged(element.SliceNameElement)) { return "SliceName"; }
+            if (IsChanged(element.ContentReferenceElement)) { return "ContentReference"; }
             if (IsChanged(element.PathElement)) { return "Path"; }
             if (IsChanged(element.Pattern)) { return "Pattern"; }
             if (HasChanges(element.RepresentationElement)) { return "Representation"; }

@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.6.0
+// Generated for FHIR v1.7.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -122,17 +122,17 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Identifier for the plan or agreement issuer
         /// </summary>
-        [FhirElement("issuer", InSummary=true, Order=100, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [FhirElement("issuer", InSummary=true, Order=100)]
+        [References("Organization","Patient","RelatedPerson")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Element Issuer
+        public Hl7.Fhir.Model.ResourceReference Issuer
         {
             get { return _Issuer; }
             set { _Issuer = value; OnPropertyChanged("Issuer"); }
         }
         
-        private Hl7.Fhir.Model.Element _Issuer;
+        private Hl7.Fhir.Model.ResourceReference _Issuer;
         
         /// <summary>
         /// Is a Payment Agreement
@@ -167,41 +167,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// BIN Number
-        /// </summary>
-        [FhirElement("bin", InSummary=true, Order=120)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString BinElement
-        {
-            get { return _BinElement; }
-            set { _BinElement = value; OnPropertyChanged("BinElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _BinElement;
-        
-        /// <summary>
-        /// BIN Number
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Bin
-        {
-            get { return BinElement != null ? BinElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  BinElement = null; 
-                else
-                  BinElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Bin");
-            }
-        }
-        
-        /// <summary>
         /// Coverage start and end dates
         /// </summary>
-        [FhirElement("period", InSummary=true, Order=130)]
+        [FhirElement("period", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
@@ -214,7 +182,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Type of coverage
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=140)]
+        [FhirElement("type", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Type
         {
@@ -227,37 +195,37 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Plan holder
         /// </summary>
-        [FhirElement("planholder", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [FhirElement("planholder", InSummary=true, Order=140)]
+        [References("Patient","Organization")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Element Planholder
+        public Hl7.Fhir.Model.ResourceReference Planholder
         {
             get { return _Planholder; }
             set { _Planholder = value; OnPropertyChanged("Planholder"); }
         }
         
-        private Hl7.Fhir.Model.Element _Planholder;
+        private Hl7.Fhir.Model.ResourceReference _Planholder;
         
         /// <summary>
         /// Plan Beneficiary
         /// </summary>
-        [FhirElement("beneficiary", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [FhirElement("beneficiary", InSummary=true, Order=150)]
+        [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Element Beneficiary
+        public Hl7.Fhir.Model.ResourceReference Beneficiary
         {
             get { return _Beneficiary; }
             set { _Beneficiary = value; OnPropertyChanged("Beneficiary"); }
         }
         
-        private Hl7.Fhir.Model.Element _Beneficiary;
+        private Hl7.Fhir.Model.ResourceReference _Beneficiary;
         
         /// <summary>
         /// Beneficiary relationship to Planholder
         /// </summary>
-        [FhirElement("relationship", Order=170)]
+        [FhirElement("relationship", Order=160)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Relationship
@@ -271,7 +239,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The primary coverage ID
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=180)]
+        [FhirElement("identifier", InSummary=true, Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -283,169 +251,23 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// An identifier for the group
+        /// Additional coverage classifications
         /// </summary>
-        [FhirElement("group", InSummary=true, Order=190)]
+        [FhirElement("level", InSummary=true, Order=180)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString GroupElement
+        public List<Hl7.Fhir.Model.Coding> Level
         {
-            get { return _GroupElement; }
-            set { _GroupElement = value; OnPropertyChanged("GroupElement"); }
+            get { if(_Level==null) _Level = new List<Hl7.Fhir.Model.Coding>(); return _Level; }
+            set { _Level = value; OnPropertyChanged("Level"); }
         }
         
-        private Hl7.Fhir.Model.FhirString _GroupElement;
-        
-        /// <summary>
-        /// An identifier for the group
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Group
-        {
-            get { return GroupElement != null ? GroupElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  GroupElement = null; 
-                else
-                  GroupElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Group");
-            }
-        }
-        
-        /// <summary>
-        /// An identifier for the subsection of the group
-        /// </summary>
-        [FhirElement("subGroup", InSummary=true, Order=200)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString SubGroupElement
-        {
-            get { return _SubGroupElement; }
-            set { _SubGroupElement = value; OnPropertyChanged("SubGroupElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _SubGroupElement;
-        
-        /// <summary>
-        /// An identifier for the subsection of the group
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string SubGroup
-        {
-            get { return SubGroupElement != null ? SubGroupElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  SubGroupElement = null; 
-                else
-                  SubGroupElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("SubGroup");
-            }
-        }
-        
-        /// <summary>
-        /// An identifier for the plan
-        /// </summary>
-        [FhirElement("plan", InSummary=true, Order=210)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString PlanElement
-        {
-            get { return _PlanElement; }
-            set { _PlanElement = value; OnPropertyChanged("PlanElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _PlanElement;
-        
-        /// <summary>
-        /// An identifier for the plan
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Plan
-        {
-            get { return PlanElement != null ? PlanElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  PlanElement = null; 
-                else
-                  PlanElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Plan");
-            }
-        }
-        
-        /// <summary>
-        /// An identifier for the subsection of the plan
-        /// </summary>
-        [FhirElement("subPlan", InSummary=true, Order=220)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString SubPlanElement
-        {
-            get { return _SubPlanElement; }
-            set { _SubPlanElement = value; OnPropertyChanged("SubPlanElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _SubPlanElement;
-        
-        /// <summary>
-        /// An identifier for the subsection of the plan
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string SubPlan
-        {
-            get { return SubPlanElement != null ? SubPlanElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  SubPlanElement = null; 
-                else
-                  SubPlanElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("SubPlan");
-            }
-        }
-        
-        /// <summary>
-        /// An identifier for the class
-        /// </summary>
-        [FhirElement("class", InSummary=true, Order=230)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString ClassElement
-        {
-            get { return _ClassElement; }
-            set { _ClassElement = value; OnPropertyChanged("ClassElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _ClassElement;
-        
-        /// <summary>
-        /// An identifier for the class
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Class
-        {
-            get { return ClassElement != null ? ClassElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  ClassElement = null; 
-                else
-                  ClassElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Class");
-            }
-        }
+        private List<Hl7.Fhir.Model.Coding> _Level;
         
         /// <summary>
         /// Dependent number
         /// </summary>
-        [FhirElement("dependent", InSummary=true, Order=240)]
+        [FhirElement("dependent", InSummary=true, Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.PositiveInt DependentElement
         {
@@ -477,7 +299,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The plan instance or sequence counter
         /// </summary>
-        [FhirElement("sequence", InSummary=true, Order=250)]
+        [FhirElement("sequence", InSummary=true, Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.PositiveInt SequenceElement
         {
@@ -509,7 +331,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Insurer network
         /// </summary>
-        [FhirElement("network", InSummary=true, Order=260)]
+        [FhirElement("network", InSummary=true, Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NetworkElement
         {
@@ -541,7 +363,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contract details
         /// </summary>
-        [FhirElement("contract", Order=270)]
+        [FhirElement("contract", Order=220)]
         [References("Contract")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -568,20 +390,15 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Coverage.CoverageStatus>)StatusElement.DeepCopy();
-                if(Issuer != null) dest.Issuer = (Hl7.Fhir.Model.Element)Issuer.DeepCopy();
+                if(Issuer != null) dest.Issuer = (Hl7.Fhir.Model.ResourceReference)Issuer.DeepCopy();
                 if(IsAgreementElement != null) dest.IsAgreementElement = (Hl7.Fhir.Model.FhirBoolean)IsAgreementElement.DeepCopy();
-                if(BinElement != null) dest.BinElement = (Hl7.Fhir.Model.FhirString)BinElement.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.Coding)Type.DeepCopy();
-                if(Planholder != null) dest.Planholder = (Hl7.Fhir.Model.Element)Planholder.DeepCopy();
-                if(Beneficiary != null) dest.Beneficiary = (Hl7.Fhir.Model.Element)Beneficiary.DeepCopy();
+                if(Planholder != null) dest.Planholder = (Hl7.Fhir.Model.ResourceReference)Planholder.DeepCopy();
+                if(Beneficiary != null) dest.Beneficiary = (Hl7.Fhir.Model.ResourceReference)Beneficiary.DeepCopy();
                 if(Relationship != null) dest.Relationship = (Hl7.Fhir.Model.Coding)Relationship.DeepCopy();
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(GroupElement != null) dest.GroupElement = (Hl7.Fhir.Model.FhirString)GroupElement.DeepCopy();
-                if(SubGroupElement != null) dest.SubGroupElement = (Hl7.Fhir.Model.FhirString)SubGroupElement.DeepCopy();
-                if(PlanElement != null) dest.PlanElement = (Hl7.Fhir.Model.FhirString)PlanElement.DeepCopy();
-                if(SubPlanElement != null) dest.SubPlanElement = (Hl7.Fhir.Model.FhirString)SubPlanElement.DeepCopy();
-                if(ClassElement != null) dest.ClassElement = (Hl7.Fhir.Model.FhirString)ClassElement.DeepCopy();
+                if(Level != null) dest.Level = new List<Hl7.Fhir.Model.Coding>(Level.DeepCopy());
                 if(DependentElement != null) dest.DependentElement = (Hl7.Fhir.Model.PositiveInt)DependentElement.DeepCopy();
                 if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.PositiveInt)SequenceElement.DeepCopy();
                 if(NetworkElement != null) dest.NetworkElement = (Hl7.Fhir.Model.FhirString)NetworkElement.DeepCopy();
@@ -606,18 +423,13 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(Issuer, otherT.Issuer)) return false;
             if( !DeepComparable.Matches(IsAgreementElement, otherT.IsAgreementElement)) return false;
-            if( !DeepComparable.Matches(BinElement, otherT.BinElement)) return false;
             if( !DeepComparable.Matches(Period, otherT.Period)) return false;
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
             if( !DeepComparable.Matches(Planholder, otherT.Planholder)) return false;
             if( !DeepComparable.Matches(Beneficiary, otherT.Beneficiary)) return false;
             if( !DeepComparable.Matches(Relationship, otherT.Relationship)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.Matches(GroupElement, otherT.GroupElement)) return false;
-            if( !DeepComparable.Matches(SubGroupElement, otherT.SubGroupElement)) return false;
-            if( !DeepComparable.Matches(PlanElement, otherT.PlanElement)) return false;
-            if( !DeepComparable.Matches(SubPlanElement, otherT.SubPlanElement)) return false;
-            if( !DeepComparable.Matches(ClassElement, otherT.ClassElement)) return false;
+            if( !DeepComparable.Matches(Level, otherT.Level)) return false;
             if( !DeepComparable.Matches(DependentElement, otherT.DependentElement)) return false;
             if( !DeepComparable.Matches(SequenceElement, otherT.SequenceElement)) return false;
             if( !DeepComparable.Matches(NetworkElement, otherT.NetworkElement)) return false;
@@ -635,18 +447,13 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(Issuer, otherT.Issuer)) return false;
             if( !DeepComparable.IsExactly(IsAgreementElement, otherT.IsAgreementElement)) return false;
-            if( !DeepComparable.IsExactly(BinElement, otherT.BinElement)) return false;
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
             if( !DeepComparable.IsExactly(Planholder, otherT.Planholder)) return false;
             if( !DeepComparable.IsExactly(Beneficiary, otherT.Beneficiary)) return false;
             if( !DeepComparable.IsExactly(Relationship, otherT.Relationship)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.IsExactly(GroupElement, otherT.GroupElement)) return false;
-            if( !DeepComparable.IsExactly(SubGroupElement, otherT.SubGroupElement)) return false;
-            if( !DeepComparable.IsExactly(PlanElement, otherT.PlanElement)) return false;
-            if( !DeepComparable.IsExactly(SubPlanElement, otherT.SubPlanElement)) return false;
-            if( !DeepComparable.IsExactly(ClassElement, otherT.ClassElement)) return false;
+            if( !DeepComparable.IsExactly(Level, otherT.Level)) return false;
             if( !DeepComparable.IsExactly(DependentElement, otherT.DependentElement)) return false;
             if( !DeepComparable.IsExactly(SequenceElement, otherT.SequenceElement)) return false;
             if( !DeepComparable.IsExactly(NetworkElement, otherT.NetworkElement)) return false;
@@ -664,18 +471,13 @@ namespace Hl7.Fhir.Model
 				if (StatusElement != null) yield return StatusElement;
 				if (Issuer != null) yield return Issuer;
 				if (IsAgreementElement != null) yield return IsAgreementElement;
-				if (BinElement != null) yield return BinElement;
 				if (Period != null) yield return Period;
 				if (Type != null) yield return Type;
 				if (Planholder != null) yield return Planholder;
 				if (Beneficiary != null) yield return Beneficiary;
 				if (Relationship != null) yield return Relationship;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-				if (GroupElement != null) yield return GroupElement;
-				if (SubGroupElement != null) yield return SubGroupElement;
-				if (PlanElement != null) yield return PlanElement;
-				if (SubPlanElement != null) yield return SubPlanElement;
-				if (ClassElement != null) yield return ClassElement;
+				foreach (var elem in Level) { if (elem != null) yield return elem; }
 				if (DependentElement != null) yield return DependentElement;
 				if (SequenceElement != null) yield return SequenceElement;
 				if (NetworkElement != null) yield return NetworkElement;

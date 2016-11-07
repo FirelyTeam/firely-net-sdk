@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.6.0
+// Generated for FHIR v1.7.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -132,6 +132,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("behind-target"), Description("Behind Target")]
             BehindTarget,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/goal-status)
+            /// </summary>
+            [EnumLiteral("entered-in-error"), Description("Entered In Error")]
+            EnteredInError,
         }
 
         [FhirType("OutcomeComponent")]
@@ -227,79 +233,9 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// Who this goal is intended for
+        /// proposed | planned | accepted | rejected | in-progress | achieved | sustaining | on-hold | cancelled | on-target | ahead-of-target | behind-target | entered-in-error
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=100)]
-        [References("Patient","Group","Organization")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Subject
-        {
-            get { return _Subject; }
-            set { _Subject = value; OnPropertyChanged("Subject"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Subject;
-        
-        /// <summary>
-        /// When goal pursuit begins
-        /// </summary>
-        [FhirElement("start", InSummary=true, Order=110, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.CodeableConcept))]
-        [DataMember]
-        public Hl7.Fhir.Model.Element Start
-        {
-            get { return _Start; }
-            set { _Start = value; OnPropertyChanged("Start"); }
-        }
-        
-        private Hl7.Fhir.Model.Element _Start;
-        
-        /// <summary>
-        /// Reach goal on or before
-        /// </summary>
-        [FhirElement("target", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Duration))]
-        [DataMember]
-        public Hl7.Fhir.Model.Element Target
-        {
-            get { return _Target; }
-            set { _Target = value; OnPropertyChanged("Target"); }
-        }
-        
-        private Hl7.Fhir.Model.Element _Target;
-        
-        /// <summary>
-        /// E.g. Treatment, dietary, behavioral, etc.
-        /// </summary>
-        [FhirElement("category", InSummary=true, Order=130)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> Category
-        {
-            get { if(_Category==null) _Category = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Category; }
-            set { _Category = value; OnPropertyChanged("Category"); }
-        }
-        
-        private List<Hl7.Fhir.Model.CodeableConcept> _Category;
-        
-        /// <summary>
-        /// Code or text describing goal
-        /// </summary>
-        [FhirElement("description", InSummary=true, Order=140)]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Description
-        {
-            get { return _Description; }
-            set { _Description = value; OnPropertyChanged("Description"); }
-        }
-        
-        private Hl7.Fhir.Model.CodeableConcept _Description;
-        
-        /// <summary>
-        /// proposed | planned | accepted | rejected | in-progress | achieved | sustaining | on-hold | cancelled | on-target | ahead-of-target | behind-target
-        /// </summary>
-        [FhirElement("status", InSummary=true, Order=150)]
+        [FhirElement("status", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Goal.GoalStatus> StatusElement
@@ -311,7 +247,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.Goal.GoalStatus> _StatusElement;
         
         /// <summary>
-        /// proposed | planned | accepted | rejected | in-progress | achieved | sustaining | on-hold | cancelled | on-target | ahead-of-target | behind-target
+        /// proposed | planned | accepted | rejected | in-progress | achieved | sustaining | on-hold | cancelled | on-target | ahead-of-target | behind-target | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -330,9 +266,92 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// E.g. Treatment, dietary, behavioral, etc.
+        /// </summary>
+        [FhirElement("category", InSummary=true, Order=110)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> Category
+        {
+            get { if(_Category==null) _Category = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Category; }
+            set { _Category = value; OnPropertyChanged("Category"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _Category;
+        
+        /// <summary>
+        /// high | medium |low
+        /// </summary>
+        [FhirElement("priority", InSummary=true, Order=120)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept Priority
+        {
+            get { return _Priority; }
+            set { _Priority = value; OnPropertyChanged("Priority"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _Priority;
+        
+        /// <summary>
+        /// Code or text describing goal
+        /// </summary>
+        [FhirElement("description", InSummary=true, Order=130)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept Description
+        {
+            get { return _Description; }
+            set { _Description = value; OnPropertyChanged("Description"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _Description;
+        
+        /// <summary>
+        /// Who this goal is intended for
+        /// </summary>
+        [FhirElement("subject", InSummary=true, Order=140)]
+        [References("Patient","Group","Organization")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Subject
+        {
+            get { return _Subject; }
+            set { _Subject = value; OnPropertyChanged("Subject"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Subject;
+        
+        /// <summary>
+        /// When goal pursuit begins
+        /// </summary>
+        [FhirElement("start", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.CodeableConcept))]
+        [DataMember]
+        public Hl7.Fhir.Model.Element Start
+        {
+            get { return _Start; }
+            set { _Start = value; OnPropertyChanged("Start"); }
+        }
+        
+        private Hl7.Fhir.Model.Element _Start;
+        
+        /// <summary>
+        /// Reach goal on or before
+        /// </summary>
+        [FhirElement("target", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Duration))]
+        [DataMember]
+        public Hl7.Fhir.Model.Element Target
+        {
+            get { return _Target; }
+            set { _Target = value; OnPropertyChanged("Target"); }
+        }
+        
+        private Hl7.Fhir.Model.Element _Target;
+        
+        /// <summary>
         /// When goal status took effect
         /// </summary>
-        [FhirElement("statusDate", InSummary=true, Order=160)]
+        [FhirElement("statusDate", InSummary=true, Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.Date StatusDateElement
         {
@@ -364,7 +383,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reason for current status
         /// </summary>
-        [FhirElement("statusReason", Order=170)]
+        [FhirElement("statusReason", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> StatusReason
@@ -378,7 +397,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who's responsible for creating Goal?
         /// </summary>
-        [FhirElement("expressedBy", InSummary=true, Order=180)]
+        [FhirElement("expressedBy", InSummary=true, Order=190)]
         [References("Patient","Practitioner","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference ExpressedBy
@@ -388,19 +407,6 @@ namespace Hl7.Fhir.Model
         }
         
         private Hl7.Fhir.Model.ResourceReference _ExpressedBy;
-        
-        /// <summary>
-        /// high | medium |low
-        /// </summary>
-        [FhirElement("priority", InSummary=true, Order=190)]
-        [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Priority
-        {
-            get { return _Priority; }
-            set { _Priority = value; OnPropertyChanged("Priority"); }
-        }
-        
-        private Hl7.Fhir.Model.CodeableConcept _Priority;
         
         /// <summary>
         /// Issues addressed by this goal
@@ -432,7 +438,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Annotation> _Note;
         
         /// <summary>
-        /// What was end result of goal?
+        /// What result was achieved regarding the goal?
         /// </summary>
         [FhirElement("outcome", Order=220)]
         [Cardinality(Min=0,Max=-1)]
@@ -460,16 +466,16 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Goal.GoalStatus>)StatusElement.DeepCopy();
+                if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
+                if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopy();
+                if(Description != null) dest.Description = (Hl7.Fhir.Model.CodeableConcept)Description.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Start != null) dest.Start = (Hl7.Fhir.Model.Element)Start.DeepCopy();
                 if(Target != null) dest.Target = (Hl7.Fhir.Model.Element)Target.DeepCopy();
-                if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
-                if(Description != null) dest.Description = (Hl7.Fhir.Model.CodeableConcept)Description.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Goal.GoalStatus>)StatusElement.DeepCopy();
                 if(StatusDateElement != null) dest.StatusDateElement = (Hl7.Fhir.Model.Date)StatusDateElement.DeepCopy();
                 if(StatusReason != null) dest.StatusReason = new List<Hl7.Fhir.Model.CodeableConcept>(StatusReason.DeepCopy());
                 if(ExpressedBy != null) dest.ExpressedBy = (Hl7.Fhir.Model.ResourceReference)ExpressedBy.DeepCopy();
-                if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopy();
                 if(Addresses != null) dest.Addresses = new List<Hl7.Fhir.Model.ResourceReference>(Addresses.DeepCopy());
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 if(Outcome != null) dest.Outcome = new List<Hl7.Fhir.Model.Goal.OutcomeComponent>(Outcome.DeepCopy());
@@ -491,16 +497,16 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.Matches(Category, otherT.Category)) return false;
+            if( !DeepComparable.Matches(Priority, otherT.Priority)) return false;
+            if( !DeepComparable.Matches(Description, otherT.Description)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(Start, otherT.Start)) return false;
             if( !DeepComparable.Matches(Target, otherT.Target)) return false;
-            if( !DeepComparable.Matches(Category, otherT.Category)) return false;
-            if( !DeepComparable.Matches(Description, otherT.Description)) return false;
-            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(StatusDateElement, otherT.StatusDateElement)) return false;
             if( !DeepComparable.Matches(StatusReason, otherT.StatusReason)) return false;
             if( !DeepComparable.Matches(ExpressedBy, otherT.ExpressedBy)) return false;
-            if( !DeepComparable.Matches(Priority, otherT.Priority)) return false;
             if( !DeepComparable.Matches(Addresses, otherT.Addresses)) return false;
             if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             if( !DeepComparable.Matches(Outcome, otherT.Outcome)) return false;
@@ -515,16 +521,16 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
+            if( !DeepComparable.IsExactly(Priority, otherT.Priority)) return false;
+            if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(Start, otherT.Start)) return false;
             if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
-            if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
-            if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
-            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(StatusDateElement, otherT.StatusDateElement)) return false;
             if( !DeepComparable.IsExactly(StatusReason, otherT.StatusReason)) return false;
             if( !DeepComparable.IsExactly(ExpressedBy, otherT.ExpressedBy)) return false;
-            if( !DeepComparable.IsExactly(Priority, otherT.Priority)) return false;
             if( !DeepComparable.IsExactly(Addresses, otherT.Addresses)) return false;
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             if( !DeepComparable.IsExactly(Outcome, otherT.Outcome)) return false;
@@ -539,16 +545,16 @@ namespace Hl7.Fhir.Model
             {
 				// Goal elements
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (StatusElement != null) yield return StatusElement;
+				foreach (var elem in Category) { if (elem != null) yield return elem; }
+				if (Priority != null) yield return Priority;
+				if (Description != null) yield return Description;
 				if (Subject != null) yield return Subject;
 				if (Start != null) yield return Start;
 				if (Target != null) yield return Target;
-				foreach (var elem in Category) { if (elem != null) yield return elem; }
-				if (Description != null) yield return Description;
-				if (StatusElement != null) yield return StatusElement;
 				if (StatusDateElement != null) yield return StatusDateElement;
 				foreach (var elem in StatusReason) { if (elem != null) yield return elem; }
 				if (ExpressedBy != null) yield return ExpressedBy;
-				if (Priority != null) yield return Priority;
 				foreach (var elem in Addresses) { if (elem != null) yield return elem; }
 				foreach (var elem in Note) { if (elem != null) yield return elem; }
 				foreach (var elem in Outcome) { if (elem != null) yield return elem; }

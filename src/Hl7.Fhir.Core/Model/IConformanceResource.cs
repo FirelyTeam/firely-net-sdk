@@ -49,21 +49,15 @@ namespace Hl7.Fhir.Model
         Markdown Description { get; set; }
         //FhirString DescriptionElement { get; set; }
 
-        ConformanceResourceStatus? Status { get; set; }
-        Code<Hl7.Fhir.Model.ConformanceResourceStatus> StatusElement { get; set; }
+        PublicationStatus? Status { get; set; }
+        Code<Hl7.Fhir.Model.PublicationStatus> StatusElement { get; set; }
         bool? Experimental { get; set; }
         Hl7.Fhir.Model.FhirBoolean ExperimentalElement { get; set; }
         string Date { get; set; }
         Hl7.Fhir.Model.FhirDateTime DateElement { get; set; }
 
-        List<CodeableConcept> UseContext { get; set; }
-        //List<ContactPoint> Contact { get; set; }
-    }
-    public interface IConformanceResourceContact
-    {
-        Hl7.Fhir.Model.FhirString NameElement { get; set; }
-        string Name { get; set; }
-        List<Hl7.Fhir.Model.ContactPoint> Telecom { get; set; }
+        List<UsageContext> UseContext { get; set; }
+        List<ContactDetail> Contact { get; set; }
     }
 
     public interface IVersionableConformanceResource : IConformanceResource
@@ -73,29 +67,6 @@ namespace Hl7.Fhir.Model
         Hl7.Fhir.Model.FhirString VersionElement { get; set; }
     }
 
-    public partial class StructureDefinition : IVersionableConformanceResource
-    {
-        public partial class ContactComponent : IConformanceResourceContact
-        { }
-    }   
-
-    public partial class ValueSet : IVersionableConformanceResource
-    {
-        public partial class ContactComponent : IConformanceResourceContact
-        { }
-    }
-
-    public partial class OperationDefinition : IVersionableConformanceResource
-    {
-        public partial class ContactComponent : IConformanceResourceContact
-        { }
-    }
-
-    public partial class SearchParameter : IConformanceResource
-    {
-        public partial class ContactComponent : IConformanceResourceContact
-        { }
-    }
 
     public partial class DataElement : IConformanceResource
     {
@@ -115,21 +86,8 @@ namespace Hl7.Fhir.Model
         //    set {; }
         //}
 
-        public partial class ContactComponent : IConformanceResourceContact
-        { }
     }
 
-    public partial class ConceptMap : IVersionableConformanceResource
-    {
-        public partial class ContactComponent : IConformanceResourceContact
-        { }
-    }
-
-    public partial class Conformance : IVersionableConformanceResource
-    {
-        public partial class ContactComponent : IConformanceResourceContact
-        { }
-    }
 
     public partial class NamingSystem : IConformanceResource
     {
@@ -161,20 +119,5 @@ namespace Hl7.Fhir.Model
             get { return null; }
             set {; }
         }
-
-        public partial class ContactComponent : IConformanceResourceContact
-        { }
-    }
-
-    public partial class ImplementationGuide : IVersionableConformanceResource
-    {
-        public partial class ContactComponent : IConformanceResourceContact
-        { }
-    }
-
-    public partial class TestScript : IVersionableConformanceResource
-    {
-        public partial class ContactComponent : IConformanceResourceContact
-        { }
     }
 }

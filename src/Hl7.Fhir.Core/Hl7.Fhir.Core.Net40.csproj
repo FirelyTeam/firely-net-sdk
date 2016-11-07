@@ -82,10 +82,19 @@
     <Compile Include="Introspection\ReferencesAttribute.cs" />
     <Compile Include="Introspection\XmlSerializationHint.cs" />
     <Compile Include="Model\ElementDefinitionExtensions.cs" />
+    <Compile Include="Model\Generated\CapabilityStatement.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\DosageInstruction.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\Measure.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\MeasureReport.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\MedicationRequest.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\NutritionRequest.cs">
@@ -100,16 +109,25 @@
     <Compile Include="Model\Generated\PractitionerRole.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\RelatedResource.cs">
+    <Compile Include="Model\Generated\RelatedArtifact.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Generated\RequestGroup.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\Sequence.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\ServiceDefinition.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\StructureMap.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\Task.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\TestReport.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\TriggerDefinition.cs">
@@ -217,9 +235,6 @@
     <Compile Include="Model\Generated\DataRequirement.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\DecisionSupportServiceModule.cs">
-      <DependentUpon>Template-Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\Generated\DetectedIssue.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
@@ -297,9 +312,6 @@
     </Compile>
     <Compile Include="Model\Generated\Markdown.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Generated\MedicationOrder.cs">
-      <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\Meta.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
@@ -448,9 +460,6 @@
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\Condition.cs">
-      <DependentUpon>Template-Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Generated\Conformance.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\Count.cs">

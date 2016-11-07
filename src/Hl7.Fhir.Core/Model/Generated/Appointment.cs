@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.6.0
+// Generated for FHIR v1.7.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -673,6 +673,20 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Appointment.ParticipantComponent> _Participant;
         
+        /// <summary>
+        /// Potential date/time interval(s) requested to allocate the appointment during
+        /// </summary>
+        [FhirElement("requestedPeriod", Order=250)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Period> RequestedPeriod
+        {
+            get { if(_RequestedPeriod==null) _RequestedPeriod = new List<Hl7.Fhir.Model.Period>(); return _RequestedPeriod; }
+            set { _RequestedPeriod = value; OnPropertyChanged("RequestedPeriod"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Period> _RequestedPeriod;
+        
 
         public static ElementDefinition.ConstraintComponent Appointment_APP_3 = new ElementDefinition.ConstraintComponent()
         {
@@ -733,6 +747,7 @@ namespace Hl7.Fhir.Model
                 if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
                 if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
                 if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.Appointment.ParticipantComponent>(Participant.DeepCopy());
+                if(RequestedPeriod != null) dest.RequestedPeriod = new List<Hl7.Fhir.Model.Period>(RequestedPeriod.DeepCopy());
                 return dest;
             }
             else
@@ -766,6 +781,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
             if( !DeepComparable.Matches(Participant, otherT.Participant)) return false;
+            if( !DeepComparable.Matches(RequestedPeriod, otherT.RequestedPeriod)) return false;
             
             return true;
         }
@@ -792,6 +808,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
             if( !DeepComparable.IsExactly(Participant, otherT.Participant)) return false;
+            if( !DeepComparable.IsExactly(RequestedPeriod, otherT.RequestedPeriod)) return false;
             
             return true;
         }
@@ -818,6 +835,7 @@ namespace Hl7.Fhir.Model
 				if (CreatedElement != null) yield return CreatedElement;
 				if (CommentElement != null) yield return CommentElement;
 				foreach (var elem in Participant) { if (elem != null) yield return elem; }
+				foreach (var elem in RequestedPeriod) { if (elem != null) yield return elem; }
             }
         }
     }

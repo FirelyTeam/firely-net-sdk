@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.6.0
+// Generated for FHIR v1.7.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -301,9 +301,24 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Extra information to use in performing request
+        /// </summary>
+        [FhirElement("supportingInfo", InSummary=true, Order=180)]
+        [References()]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> SupportingInfo
+        {
+            get { if(_SupportingInfo==null) _SupportingInfo = new List<Hl7.Fhir.Model.ResourceReference>(); return _SupportingInfo; }
+            set { _SupportingInfo = value; OnPropertyChanged("SupportingInfo"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _SupportingInfo;
+        
+        /// <summary>
         /// Additional information about desired procedure
         /// </summary>
-        [FhirElement("notes", InSummary=true, Order=180)]
+        [FhirElement("notes", InSummary=true, Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Annotation> Notes
@@ -317,7 +332,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Preconditions for procedure
         /// </summary>
-        [FhirElement("asNeeded", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("asNeeded", InSummary=true, Order=200, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
         [DataMember]
         public Hl7.Fhir.Model.Element AsNeeded
@@ -331,7 +346,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When request was created
         /// </summary>
-        [FhirElement("orderedOn", InSummary=true, Order=200)]
+        [FhirElement("orderedOn", InSummary=true, Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime OrderedOnElement
         {
@@ -363,7 +378,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who made request
         /// </summary>
-        [FhirElement("orderer", InSummary=true, Order=210)]
+        [FhirElement("orderer", InSummary=true, Order=220)]
         [References("Practitioner","Patient","RelatedPerson","Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Orderer
@@ -377,7 +392,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// routine | urgent | stat | asap
         /// </summary>
-        [FhirElement("priority", InSummary=true, Order=220)]
+        [FhirElement("priority", InSummary=true, Order=230)]
         [DataMember]
         public Code<Hl7.Fhir.Model.ProcedureRequest.ProcedureRequestPriority> PriorityElement
         {
@@ -429,6 +444,7 @@ namespace Hl7.Fhir.Model
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ProcedureRequest.ProcedureRequestStatus>)StatusElement.DeepCopy();
+                if(SupportingInfo != null) dest.SupportingInfo = new List<Hl7.Fhir.Model.ResourceReference>(SupportingInfo.DeepCopy());
                 if(Notes != null) dest.Notes = new List<Hl7.Fhir.Model.Annotation>(Notes.DeepCopy());
                 if(AsNeeded != null) dest.AsNeeded = (Hl7.Fhir.Model.Element)AsNeeded.DeepCopy();
                 if(OrderedOnElement != null) dest.OrderedOnElement = (Hl7.Fhir.Model.FhirDateTime)OrderedOnElement.DeepCopy();
@@ -460,6 +476,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.Matches(SupportingInfo, otherT.SupportingInfo)) return false;
             if( !DeepComparable.Matches(Notes, otherT.Notes)) return false;
             if( !DeepComparable.Matches(AsNeeded, otherT.AsNeeded)) return false;
             if( !DeepComparable.Matches(OrderedOnElement, otherT.OrderedOnElement)) return false;
@@ -484,6 +501,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.IsExactly(SupportingInfo, otherT.SupportingInfo)) return false;
             if( !DeepComparable.IsExactly(Notes, otherT.Notes)) return false;
             if( !DeepComparable.IsExactly(AsNeeded, otherT.AsNeeded)) return false;
             if( !DeepComparable.IsExactly(OrderedOnElement, otherT.OrderedOnElement)) return false;
@@ -508,6 +526,7 @@ namespace Hl7.Fhir.Model
 				if (Encounter != null) yield return Encounter;
 				if (Performer != null) yield return Performer;
 				if (StatusElement != null) yield return StatusElement;
+				foreach (var elem in SupportingInfo) { if (elem != null) yield return elem; }
 				foreach (var elem in Notes) { if (elem != null) yield return elem; }
 				if (AsNeeded != null) yield return AsNeeded;
 				if (OrderedOnElement != null) yield return OrderedOnElement;

@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.6.0
+// Generated for FHIR v1.7.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ProductComponent"; } }
             
             /// <summary>
-            /// powder | tablets | carton +
+            /// powder | tablets | capsule +
             /// </summary>
             [FhirElement("form", Order=40)]
             [DataMember]
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.Medication.IngredientComponent> _Ingredient;
             
             /// <summary>
-            /// 
+            /// Identifies a single production run
             /// </summary>
             [FhirElement("batch", Order=60)]
             [Cardinality(Min=0,Max=-1)]
@@ -270,7 +270,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "BatchComponent"; } }
             
             /// <summary>
-            /// 
+            /// Identifier assigned to batch
             /// </summary>
             [FhirElement("lotNumber", Order=40)]
             [DataMember]
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _LotNumberElement;
             
             /// <summary>
-            /// 
+            /// Identifier assigned to batch
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -302,7 +302,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// 
+            /// When batch will expire
             /// </summary>
             [FhirElement("expirationDate", Order=50)]
             [DataMember]
@@ -315,7 +315,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirDateTime _ExpirationDateElement;
             
             /// <summary>
-            /// 
+            /// When batch will expire
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]

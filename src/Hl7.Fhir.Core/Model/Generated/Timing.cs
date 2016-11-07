@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.6.0
+// Generated for FHIR v1.7.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -62,43 +62,43 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://unitsofmeasure.org)
             /// </summary>
-            [EnumLiteral("s"), Description("second")]
+            [EnumLiteral("s"), Description("秒")]
             S,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://unitsofmeasure.org)
             /// </summary>
-            [EnumLiteral("min"), Description("minute")]
+            [EnumLiteral("min"), Description("分钟")]
             Min,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://unitsofmeasure.org)
             /// </summary>
-            [EnumLiteral("h"), Description("hour")]
+            [EnumLiteral("h"), Description("小时")]
             H,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://unitsofmeasure.org)
             /// </summary>
-            [EnumLiteral("d"), Description("day")]
+            [EnumLiteral("d"), Description("天")]
             D,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://unitsofmeasure.org)
             /// </summary>
-            [EnumLiteral("wk"), Description("week")]
+            [EnumLiteral("wk"), Description("星期")]
             Wk,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://unitsofmeasure.org)
             /// </summary>
-            [EnumLiteral("mo"), Description("month")]
+            [EnumLiteral("mo"), Description("月")]
             Mo,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://unitsofmeasure.org)
             /// </summary>
-            [EnumLiteral("a"), Description("year")]
+            [EnumLiteral("a"), Description("年")]
             A,
         }
 

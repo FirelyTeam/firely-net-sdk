@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.6.0
+// Generated for FHIR v1.7.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -195,16 +195,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Type of team
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=110)]
+        [FhirElement("category", InSummary=true, Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> Type
+        public List<Hl7.Fhir.Model.CodeableConcept> Category
         {
-            get { if(_Type==null) _Type = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Type; }
-            set { _Type = value; OnPropertyChanged("Type"); }
+            get { if(_Category==null) _Category = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Category; }
+            set { _Category = value; OnPropertyChanged("Category"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _Type;
+        private List<Hl7.Fhir.Model.CodeableConcept> _Category;
         
         /// <summary>
         /// Name of the team, such as crisis assessment team
@@ -284,14 +284,15 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("managingOrganization", InSummary=true, Order=160)]
         [References("Organization")]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference ManagingOrganization
+        public List<Hl7.Fhir.Model.ResourceReference> ManagingOrganization
         {
-            get { return _ManagingOrganization; }
+            get { if(_ManagingOrganization==null) _ManagingOrganization = new List<Hl7.Fhir.Model.ResourceReference>(); return _ManagingOrganization; }
             set { _ManagingOrganization = value; OnPropertyChanged("ManagingOrganization"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _ManagingOrganization;
+        private List<Hl7.Fhir.Model.ResourceReference> _ManagingOrganization;
         
 
         public override void AddDefaultConstraints()
@@ -309,12 +310,12 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopy();
-                if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
+                if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.CareTeam.ParticipantComponent>(Participant.DeepCopy());
-                if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopy();
+                if(ManagingOrganization != null) dest.ManagingOrganization = new List<Hl7.Fhir.Model.ResourceReference>(ManagingOrganization.DeepCopy());
                 return dest;
             }
             else
@@ -334,7 +335,7 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(Status, otherT.Status)) return false;
-            if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+            if( !DeepComparable.Matches(Category, otherT.Category)) return false;
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(Period, otherT.Period)) return false;
@@ -352,7 +353,7 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(Status, otherT.Status)) return false;
-            if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+            if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
@@ -370,12 +371,12 @@ namespace Hl7.Fhir.Model
 				// CareTeam elements
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (Status != null) yield return Status;
-				foreach (var elem in Type) { if (elem != null) yield return elem; }
+				foreach (var elem in Category) { if (elem != null) yield return elem; }
 				if (NameElement != null) yield return NameElement;
 				if (Subject != null) yield return Subject;
 				if (Period != null) yield return Period;
 				foreach (var elem in Participant) { if (elem != null) yield return elem; }
-				if (ManagingOrganization != null) yield return ManagingOrganization;
+				foreach (var elem in ManagingOrganization) { if (elem != null) yield return elem; }
             }
         }
     }

@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.6.0
+// Generated for FHIR v1.7.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -1089,14 +1089,15 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("interpreter", InSummary=true, Order=190)]
         [References("Practitioner")]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Interpreter
+        public List<Hl7.Fhir.Model.ResourceReference> Interpreter
         {
-            get { return _Interpreter; }
+            get { if(_Interpreter==null) _Interpreter = new List<Hl7.Fhir.Model.ResourceReference>(); return _Interpreter; }
             set { _Interpreter = value; OnPropertyChanged("Interpreter"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Interpreter;
+        private List<Hl7.Fhir.Model.ResourceReference> _Interpreter;
         
         /// <summary>
         /// Study access service endpoint
@@ -1276,7 +1277,7 @@ namespace Hl7.Fhir.Model
                 if(StartedElement != null) dest.StartedElement = (Hl7.Fhir.Model.FhirDateTime)StartedElement.DeepCopy();
                 if(BasedOn != null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
                 if(Referrer != null) dest.Referrer = (Hl7.Fhir.Model.ResourceReference)Referrer.DeepCopy();
-                if(Interpreter != null) dest.Interpreter = (Hl7.Fhir.Model.ResourceReference)Interpreter.DeepCopy();
+                if(Interpreter != null) dest.Interpreter = new List<Hl7.Fhir.Model.ResourceReference>(Interpreter.DeepCopy());
                 if(BaseLocation != null) dest.BaseLocation = new List<Hl7.Fhir.Model.ImagingStudy.StudyBaseLocationComponent>(BaseLocation.DeepCopy());
                 if(NumberOfSeriesElement != null) dest.NumberOfSeriesElement = (Hl7.Fhir.Model.UnsignedInt)NumberOfSeriesElement.DeepCopy();
                 if(NumberOfInstancesElement != null) dest.NumberOfInstancesElement = (Hl7.Fhir.Model.UnsignedInt)NumberOfInstancesElement.DeepCopy();
@@ -1367,7 +1368,7 @@ namespace Hl7.Fhir.Model
 				if (StartedElement != null) yield return StartedElement;
 				foreach (var elem in BasedOn) { if (elem != null) yield return elem; }
 				if (Referrer != null) yield return Referrer;
-				if (Interpreter != null) yield return Interpreter;
+				foreach (var elem in Interpreter) { if (elem != null) yield return elem; }
 				foreach (var elem in BaseLocation) { if (elem != null) yield return elem; }
 				if (NumberOfSeriesElement != null) yield return NumberOfSeriesElement;
 				if (NumberOfInstancesElement != null) yield return NumberOfInstancesElement;

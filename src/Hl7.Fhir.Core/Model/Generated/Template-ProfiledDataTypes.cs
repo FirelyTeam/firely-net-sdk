@@ -1,6 +1,6 @@
 ﻿
 //
-// Model Generated on Sat, 10 Sep 2016 02:35:11 GMT for FHIR v1.6.0
+// Model Generated on Mon, 07 Nov 2016 12:22:24 GMT for FHIR v1.7.0
 //
 // Generated Shared Enumeration: ResourceType
 
@@ -34,11 +34,7 @@
 
 // Generated Shared Enumeration: PlanActionParticipantType
 
-// Generated Shared Enumeration: ConformanceResourceStatus
-
 // Generated Shared Enumeration: DaysOfWeek
-
-// Generated Shared Enumeration: LibraryStatus
 
 // Generated Shared Enumeration: PlanActionRelationshipType
 
@@ -46,15 +42,13 @@
 
 // Generated Shared Enumeration: RequestStatus
 
-// Generated Shared Enumeration: MedicationAdministrationStatus
-
 // Generated Shared Enumeration: PlanActionRequiredBehavior
-
-// Generated Shared Enumeration: PlanActionRelationshipAnchor
 
 // Generated Shared Enumeration: FHIRAllTypes
 	// Used in model class (type): DataRequirement.type
 	// Used in model class (type): ParameterDefinition.type
+
+// Generated Shared Enumeration: PublicationStatus
 
 // Generated helper templates
 // Generated items
