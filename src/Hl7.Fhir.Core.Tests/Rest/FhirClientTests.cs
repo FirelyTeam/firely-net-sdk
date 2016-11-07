@@ -150,8 +150,9 @@ namespace Hl7.Fhir.Tests.Rest
                 var random = client.Read<Location>(new Uri("Location/45qq54", UriKind.Relative));
                 Assert.Fail();
             }
-            catch (FhirOperationException)
+            catch (FhirOperationException ex)
             {
+                Assert.AreEqual(HttpStatusCode.NotFound, ex.Status);
                 Assert.AreEqual("404", client.LastResult.Status);
             }
 
