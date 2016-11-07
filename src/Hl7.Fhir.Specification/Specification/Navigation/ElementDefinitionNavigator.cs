@@ -304,7 +304,7 @@ namespace Hl7.Fhir.Specification.Navigation
                         return true;
                     }
                 }
-                else if (Elements[pos].Name == nameReference)
+                else if (Elements[pos].ContentReference == nameReference)
                 {
                     OrdinalPosition = pos;
                     return true;

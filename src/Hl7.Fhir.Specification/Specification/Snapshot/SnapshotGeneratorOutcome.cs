@@ -49,7 +49,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 if (elementDef == null) { throw Error.ArgumentNull("elementDef"); }
                 _elemDef = elementDef;
             }
-            public string Name { get { return _elemDef.Name; } }
+            public string Name { get { return _elemDef.SliceName; } }
             public string Path { get { return _elemDef.Path; } }
         }
 

@@ -36,8 +36,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var dPos = diffNav.Path + "[{0}]".FormatWith(diffNav.OrdinalPosition);
 
                 // [WMR 20160719] Add name, if not null
-                if (snapNav.Current != null && snapNav.Current.Name != null) bPos += " '{0}'".FormatWith(snapNav.Current.Name);
-                if (diffNav.Current != null && diffNav.Current.Name != null) dPos += " '{0}'".FormatWith(diffNav.Current.Name);
+                if (snapNav.Current != null && snapNav.Current.SliceName != null) bPos += " '{0}'".FormatWith(snapNav.Current.SliceName);
+                if (diffNav.Current != null && diffNav.Current.SliceName != null) dPos += " '{0}'".FormatWith(diffNav.Current.SliceName);
 
                 Debug.WriteLine("B:{0} <--{1}--> D:{2}".FormatWith(bPos, match.Action.ToString(), dPos));
             }
@@ -344,7 +344,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     var baseProfiles = snapNav.Current.PrimaryTypeProfiles().ToArray();
                     result = profileRef.IsComplex
                         // Match on element name
-                        ? snapNav.Current.Name == profileRef.ElementName
+                        ? snapNav.Current.ContentReference == profileRef.ElementName
                         // Match on profile(s)
                         : baseProfiles.SequenceEqual(diffProfiles);
                     if (result)
