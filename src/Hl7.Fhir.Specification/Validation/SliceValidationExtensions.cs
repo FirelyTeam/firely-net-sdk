@@ -12,29 +12,22 @@ namespace Hl7.Fhir.Validation
 {
     internal static class SliceValidationExtensions
     {
-        public static OperationOutcome ValidateSlices(this Validator validator, List<IElementNavigator> instanceElements, ElementDefinitionNavigator intro)
+        public static OperationOutcome ValidateRootSliceGroup(this Validator validator, List<IElementNavigator> instanceElements, ElementDefinitionNavigator intro, IElementNavigator parent)
         {
             var outcome = new OperationOutcome();
 
-            var slices = intro.FindMemberSlices().ToList();
+            var bucket = BucketFactory.Create(intro, validator, parent);
 
-            validator.Trace(outcome, $"Encountered a slice group with {slices.Count} member slices at '{intro.Path}'. ", Issue.PROCESSING_PROGRESS, instanceElements.First());
-
-            var bucket = new SliceGroupBucket(validator, intro, discriminators: null);
-            var sliceCandidates = instanceElements.Select(c => new SliceCandidate { Instance = c, Membership = SliceMembership.NotMember, Outcome = null })
-                        .ToList();
-
-            outcome.Add(bucket.Judge(sliceCandidates));
-
-            // If any of our instances did not make it into the slice, this is actually an error
-            // since in a non-resliced slice group (=the original slice) ALL instances should be part
-            // of the slice. This is another way of saying: all instances should at least validate against
-            // the original constraints of the element before slicing (i.e. a "normal" element).
-            var failedCandidates = sliceCandidates.Where(c => c.Membership == SliceMembership.NotMember);
-            if (failedCandidates.Any())
+            foreach (var instance in instanceElements)
             {
-                foreach (var failedCandidate in failedCandidates)
-                    outcome.Include(failedCandidate.Outcome);
+                var matchOutcome = bucket.Add(instance);
+
+                // For the "root" slice group (=the original core element that was sliced, not resliced)
+                // any element that does not match is an error
+                if (!matchOutcome.Success)
+                {
+                    outcome.Add(matchOutcome);
+                }
             }
 
             return outcome;

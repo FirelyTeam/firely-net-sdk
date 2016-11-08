@@ -64,7 +64,6 @@ namespace Hl7.Fhir.Support
         public static readonly Issue CONTENT_ELEMENT_MUST_MATCH_TYPE = Create(1004, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_VALUE_TOO_LONG = Create(1005, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_INVALID_PRIMITIVE_VALUE = Create(1006, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
-        public static readonly Issue CONTENT_ELEMENT_INCORRECT_OCCURRENCE = Create(1007, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_DOES_NOT_MATCH_FIXED_VALUE = Create(1008, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_DOES_NOT_MATCH_PATTERN_VALUE = Create(1009, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_CANNOT_DETERMINE_TYPE = Create(1010, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
@@ -85,7 +84,7 @@ namespace Hl7.Fhir.Support
         public static readonly Issue CONTENT_TYPE_NOT_BINDEABLE = Create(1025, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_FAILS_SLICING_RULE = Create(1026, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_SLICING_OUT_OF_ORDER = Create(1027, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
-        public static readonly Issue CONTENT_ELEMENT_SLICING_INCORRECT_OCCURRENCE = Create(1028, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+        public static readonly Issue CONTENT_INCORRECT_OCCURRENCE = Create(1028, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
 
         public static readonly Issue XSD_VALIDATION_ERROR = Create(1100, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue XSD_VALIDATION_WARNING = Create(1101, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Invalid);

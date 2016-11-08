@@ -34,6 +34,7 @@ namespace Hl7.Fhir.Validation
             }
 
             //TODO: Give warnings for out-of order children.  Really? That's an xml artifact, no such thing in Json!
+            //(with the serializationrepresentationnav we could determine the source is xml and make order matter....)
 
             // Recursively validate my children
             foreach (var match in matchResult.Matches)
@@ -62,7 +63,7 @@ namespace Hl7.Fhir.Validation
 
             if (!cardinality.InRange(occurs))
                 validator.Trace(outcome, $"Element '{match.Definition.PathName}' occurs {occurs} times, which is not within the specified cardinality of {cardinality.ToString()}",
-                        Issue.CONTENT_ELEMENT_INCORRECT_OCCURRENCE, instance);
+                        Issue.CONTENT_INCORRECT_OCCURRENCE, instance);
 
             // If there are instance occurrences, we should now validate them against the definition
             if (match.InstanceElements.Any())
@@ -75,7 +76,7 @@ namespace Hl7.Fhir.Validation
                     }
                 }
                 else
-                    outcome.Add(validator.ValidateSlices(match.InstanceElements, match.Definition));
+                    outcome.Add(validator.ValidateRootSliceGroup(match.InstanceElements, match.Definition, instance));
             }
 
             return outcome;

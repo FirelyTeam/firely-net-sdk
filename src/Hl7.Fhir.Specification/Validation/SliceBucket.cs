@@ -15,76 +15,33 @@ using System;
 
 namespace Hl7.Fhir.Validation
 {
-    internal class SliceBucket : IBucket
+    internal class SliceBucket : BaseBucket
     {
-        protected ElementDefinitionNavigator Constraints;
-        protected string[] Discriminators;
-        protected Validator Validator;
-
-        public SliceBucket(Validator validator, ElementDefinitionNavigator sliceConstraints, string[] discriminators=null)
+        public SliceBucket(ElementDefinitionNavigator root, Validator validator, IElementNavigator errorLocation)
+            : base(root.Current, validator, errorLocation)
         {
-            Constraints = sliceConstraints.ShallowCopy();
-            Discriminators = discriminators;
-            Validator = validator;
+            Root = root.ShallowCopy();
         }
 
-        public ElementDefinition Root => Constraints.Current;
+        public ElementDefinitionNavigator Root { get; private set; }
 
-        public virtual OperationOutcome Judge(IEnumerable<SliceCandidate> candidates)
+        private List<OperationOutcome> _successes = new List<OperationOutcome>();
+
+        protected override OperationOutcome IsMember(IElementNavigator candidate)
         {
-            foreach(var candidate in candidates)
-            {
-                var report = Validator.Validate(candidate.Instance, Constraints);
+            var report = Validator.Validate(candidate, Root);
 
-                // For now, only do discriminator-less matching, which means that
-                // if validation succeeds, the instance belongs to the slice, otherwise it does not
-                if (report.Success)
-                {
-                    candidate.Membership = SliceMembership.Member;
-                    candidate.Outcome = report;
-                }
-                else
-                {
-                    candidate.Membership = SliceMembership.NotMember;
-                    candidate.Outcome = report;     // why it was not a member is interesting too, and
-                                                    // in case of an non-resliced slice, the validator
-                                                    // needs this information since non-members are then
-                                                    // considered errors.
-                }
-            }
+            if (report.Success)
+                _successes.Add(report);
 
-            // When doing slicing with a discriminator, the operation outcome will contain all errors
-            // found in member slices (as determined by the discriminator),
-            // but for now, this is always empty
-            return new OperationOutcome();
+            return report;
         }
-    }
 
-
-
-    /// <summary>
-    /// The result of trying to match an instance with the constraints of the slice
-    /// </summary>
-    /// <remarks>For discriminator-based slicing, an instance is a member of a slice when it matches the
-    /// constraints pointed to by the discriminator. Any member may still fail validation for the rest of the constraints.
-    /// In discriminator-less slicing, a slice is a member only when the outcome of the validation is successful.
-    /// </remarks>
-    internal class SliceCandidate
-    {
-        public IElementNavigator Instance;
-        public SliceMembership Membership;
-        public OperationOutcome Outcome;
-    }
-
-    /// <summary>
-    /// Whether an instance was determined to be a member of the slice.
-    /// </summary>
-    /// <remarks>For discriminator-based slicing, membership is based on whether the instance matches the
-    /// discriminator. For discriminator-less slicing, membership is determined on whether the instance matches
-    /// all the constraints that define the slice</remarks>
-    internal enum SliceMembership
-    {
-        NotMember,
-        Member
+        public override OperationOutcome Validate()
+        {
+            // Since all members are already valid (otherwise they would not be members),
+            // there's nothing to do beyond the checks in base (cardinality)
+            return base.Validate();
+        }
     }
 }

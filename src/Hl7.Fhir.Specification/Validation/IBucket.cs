@@ -19,10 +19,10 @@ namespace Hl7.Fhir.Validation
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="candidates"></param>
+        /// <param name="candidate"></param>
         /// <remarks><paramref value='sequential' /> ensures the slice only tries to match the list of candidates in order: the first non-matching candidate
         /// ends further evaluation of the list of canidates. This improves performance for ordered slices.</remarks>
-        OperationOutcome Judge(IEnumerable<SliceCandidate> candidates);
+        OperationOutcome Add(IElementNavigator candidate);
 
         /// <summary>
         /// The results of the last call to Receive().
@@ -30,13 +30,12 @@ namespace Hl7.Fhir.Validation
         /// <remarks>Results are in the same order as the candidates passed in, and the result list will have the same number of elements.</remarks>
         //IList<SliceOutcome> Results { get; }
 
-        ElementDefinition Root { get; }
+        //ElementDefinition Root { get; }
+
+        string Name { get; }
+
+        IList<IElementNavigator> Members { get; }
+
+        OperationOutcome Validate();
     }
-
-
-    //internal static class IBucketExtensions
-    //{
-    //    public static int CountMembers(this IBucket bucket) => bucket.Results.Count(r => r.Membership == SliceMembership.Member);
-    //}
-
 }
