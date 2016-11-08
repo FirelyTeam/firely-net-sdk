@@ -1,0 +1,82 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+	<url value="http://example.com/StructureDefinition/patient-telecom-reslice-ek" />
+	<name value="patient-telecom-slice" />
+	<status value="draft" />
+	<description value="Slice Patient.telecom by multiple discriminators - based on an example by Chris Grenz." />
+	<fhirVersion value="1.0.2" />
+	<kind value="resource" />
+	<constrainedType value="Patient" />
+	<abstract value="false" />
+	<base value="http://hl7.org/fhir/StructureDefinition/Patient" />	
+	<differential>
+		<element>
+			<path value="Patient.telecom" />
+			<slicing>
+				<discriminator value="system" />
+				<rules value="closed" />
+			</slicing>
+		</element>
+
+    <!-- First, slice into PHONE -->
+    <element>
+      <path value="Patient.telecom" />
+      <name value="phone" />
+    </element>
+    <element>
+			<path value="Patient.telecom.system" />
+			<min value="1" />
+			<fixedCode value="phone" />
+		</element>
+
+
+    <!-- Now, the emails. A slice with Email, re-sliced to account for use -->
+    <element>
+      <path value="Patient.telecom" />
+      <name value="email" />
+ 			<slicing>
+				<discriminator value="system" />
+        <discriminator value="use" />
+				<rules value="openAtEnd" />
+			</slicing>
+    </element>
+    <element>
+			<path value="Patient.telecom.system" />
+			<min value="1" />
+			<fixedCode value="email" />
+		</element>
+
+    <!-- A re-slice for Email + home -->
+    <element>
+      <path value="Patient.telecom" />
+      <name value="email/home" />
+    </element>
+    <element>
+			<path value="Patient.telecom.system" />
+			<name value="homeEmail.system" />
+			<min value="1" />
+			<fixedCode value="email" />
+		</element>
+		<element>
+			<path value="Patient.telecom.use" />
+			<min value="1" />
+			<fixedCode value="home" />
+		</element>
+
+    <!-- A re-slice for Email + work -->
+    <element>
+      <path value="Patient.telecom" />
+      <name value="email/work" />
+    </element>
+
+    <element>
+			<path value="Patient.telecom.system" />
+			<min value="1" />
+			<fixedCode value="email" />
+		</element>
+		<element>
+			<path value="Patient.telecom.use" />
+			<min value="1" />
+			<fixedCode value="work" />
+		</element>
+	</differential>
+</StructureDefinition>

@@ -12,17 +12,11 @@ namespace Hl7.Fhir.Validation
 {
     internal abstract class BaseBucket : IBucket
     {
-        internal protected BaseBucket(ElementDefinition definition, Validator validator, IElementNavigator errorLocation)
+        internal protected BaseBucket(ElementDefinition definition)
         {
-            Name = definition.Path + definition.Name != null ? $"[{definition.Name}]" : null;
+            Name = definition.Path + (definition.Name != null ? $":{definition.Name}" : null);
             Cardinality = Cardinality.FromElementDefinition(definition);
-
-            Validator = validator;
-            ErrorLocation = errorLocation;
         }
-
-        protected Validator Validator;
-        protected IElementNavigator ErrorLocation;
 
         public string Name { get; private set; }
         public Cardinality Cardinality { get; private set; }
@@ -40,13 +34,13 @@ namespace Hl7.Fhir.Validation
 
         protected abstract OperationOutcome IsMember(IElementNavigator candidate);
 
-        public virtual OperationOutcome Validate()
+        public virtual OperationOutcome Validate(Validator validator, IElementNavigator errorLocation)
         {
             var outcome = new OperationOutcome();
 
             if (Cardinality.InRange(Members.Count))
-                Validator.Trace(outcome, $"Instance count for {Name}' is {Members.Count}, which is not within the specified cardinality of {Cardinality.ToString()}",
-                        Issue.CONTENT_INCORRECT_OCCURRENCE, ErrorLocation);
+                validator.Trace(outcome, $"Instance count for {Name}' is {Members.Count}, which is not within the specified cardinality of {Cardinality.ToString()}",
+                        Issue.CONTENT_INCORRECT_OCCURRENCE, errorLocation);
 
             return outcome;
         }

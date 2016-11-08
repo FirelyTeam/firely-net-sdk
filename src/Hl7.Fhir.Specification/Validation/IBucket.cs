@@ -36,6 +36,6 @@ namespace Hl7.Fhir.Validation
 
         IList<IElementNavigator> Members { get; }
 
-        OperationOutcome Validate();
+        OperationOutcome Validate(Validator validator, IElementNavigator errorLocation);
     }
 }

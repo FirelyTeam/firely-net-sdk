@@ -17,13 +17,15 @@ namespace Hl7.Fhir.Validation
 {
     internal class SliceBucket : BaseBucket
     {
-        public SliceBucket(ElementDefinitionNavigator root, Validator validator, IElementNavigator errorLocation)
-            : base(root.Current, validator, errorLocation)
+        public SliceBucket(ElementDefinitionNavigator root, Validator validator, string[] discriminator=null) : base(root.Current)
         {
             Root = root.ShallowCopy();
+            Validator = validator;
         }
 
         public ElementDefinitionNavigator Root { get; private set; }
+
+        public Validator Validator { get; private set; }
 
         private List<OperationOutcome> _successes = new List<OperationOutcome>();
 
@@ -37,11 +39,11 @@ namespace Hl7.Fhir.Validation
             return report;
         }
 
-        public override OperationOutcome Validate()
+        public override OperationOutcome Validate(Validator validator, IElementNavigator errorLocation)
         {
             // Since all members are already valid (otherwise they would not be members),
             // there's nothing to do beyond the checks in base (cardinality)
-            return base.Validate();
+            return base.Validate(validator, errorLocation);
         }
     }
 }

@@ -18,20 +18,12 @@ namespace Hl7.Fhir.Validation
 {
     internal static class BucketFactory
     {
-        public static IBucket Create(ElementDefinitionNavigator root, Validator validator, IElementNavigator errorLocation, string[] discriminator = null)
+        public static IBucket Create(ElementDefinitionNavigator root, Validator validator, string[] discriminator = null)
         {
-            if (root.Current.Slicing == null)
-            {
-                // Create a single bucket
+            // Create a single bucket
+            var entryBucket = new SliceBucket(root, validator, discriminator);
 
-                if (discriminator == null)
-                    return new SliceBucket(root, validator, errorLocation);
-                else
-                    throw new NotImplementedException("Does not support slices with discriminators yet");
-            }
-
-            // Create a group bucket
-            var entryBucket = Create(root, validator, errorLocation, discriminator);
+            if (root.Current.Slicing == null) return entryBucket;
 
             var childDiscriminators = root.Current.Slicing.Discriminator.ToArray();
             var slices = root.FindMemberSlices();
@@ -42,12 +34,12 @@ namespace Hl7.Fhir.Validation
             {
                 root.ReturnToBookmark(slice);
 
-                subs.Add(Create(root, validator, errorLocation, childDiscriminators));
+                subs.Add(Create(root, validator, childDiscriminators));
             }
 
             root.ReturnToBookmark(bm);
 
-            return new SliceGroupBucket(root.Current.Slicing, validator, entryBucket, subs, errorLocation);
+            return new SliceGroupBucket(root.Current.Slicing, entryBucket, subs);
         }        
     }
 
@@ -67,19 +59,16 @@ namespace Hl7.Fhir.Validation
 
     internal class SliceGroupBucket : IBucket
     {
-        internal SliceGroupBucket(ElementDefinition.SlicingComponent slicing, Validator validator, IBucket main, List<IBucket> subs, IElementNavigator errorLocation)                
+        internal SliceGroupBucket(ElementDefinition.SlicingComponent slicing, IBucket main, List<IBucket> subs)                
         {
             if (slicing == null) throw Error.ArgumentNull(nameof(slicing));
 
             Entry = main;
             ChildSlices = subs;
-            Validator = validator;
 
             Ordered = slicing.Ordered ?? false;
             Rules = slicing.Rules ?? ElementDefinition.SlicingRules.Open;
         }
-
-        public Validator Validator { get; private set; }
 
         public List<IBucket> ChildSlices { get; private set; }
         public IBucket Entry { get; private set; }
@@ -97,9 +86,9 @@ namespace Hl7.Fhir.Validation
             return Entry.Add(candidate);
         }
 
-        public OperationOutcome Validate()
+        public OperationOutcome Validate(Validator validator, IElementNavigator errorLocation)
         {
-            var outcome = Entry.Validate();   // Validate against entry slice, e.g. cardinality
+            var outcome = Entry.Validate(validator, errorLocation);   // Validate against entry slice, e.g. cardinality
 
             var lastMatchingSlice = -1;
             var openTailInUse = false;
@@ -120,7 +109,7 @@ namespace Hl7.Fhir.Validation
                         // The instance matched a slice that we have already passed, if order matters, 
                         // this is not allowed
                         if (sliceNumber < lastMatchingSlice && Ordered)
-                            Validator.Trace(outcome, $"Element matches slice '{sliceName}', but this " +
+                            validator.Trace(outcome, $"Element matches slice '{sliceName}', but this " +
                                 $"is out of order for group '{Name}', since a previous element already matched slice '{ChildSlices[lastMatchingSlice].Name}'", 
                             Issue.CONTENT_ELEMENT_SLICING_OUT_OF_ORDER, candidate);
                         else 
@@ -129,7 +118,7 @@ namespace Hl7.Fhir.Validation
                         if (openTailInUse)
                         {
                             // We found a match while we already added a non-match to a "open at end" slicegroup, that's not allowed
-                            Validator.Trace(outcome, $"Element matched slice '{sliceName}', but it appears after a non-match, which is not allowed for an open-at-end group",
+                            validator.Trace(outcome, $"Element matched slice '{sliceName}', but it appears after a non-match, which is not allowed for an open-at-end group",
                                         Issue.CONTENT_ELEMENT_FAILS_SLICING_RULE, candidate);
                         }
 
@@ -141,13 +130,13 @@ namespace Hl7.Fhir.Validation
                 if (!hasSucceeded)
                 {
                     if (Rules == ElementDefinition.SlicingRules.Open)
-                        Validator.Trace(outcome, $"Element was determined to be in the open slice for group '{Name}'", Issue.PROCESSING_PROGRESS, candidate);
+                        validator.Trace(outcome, $"Element was determined to be in the open slice for group '{Name}'", Issue.PROCESSING_PROGRESS, candidate);
                     else if (Rules == ElementDefinition.SlicingRules.OpenAtEnd)
                         openTailInUse = true;
                     else
                     {
                         // Sorry, won't fly
-                        Validator.Trace(outcome, $"Element does not match any slice, but the group at '{Name}' is closed.",
+                        validator.Trace(outcome, $"Element does not match any slice, but the group at '{Name}' is closed.",
                                 Issue.CONTENT_ELEMENT_FAILS_SLICING_RULE, candidate);
                     }
                 }
@@ -155,7 +144,7 @@ namespace Hl7.Fhir.Validation
 
             // Finally, add any validation items on the elements that made it into the child slices
             foreach(var slice in ChildSlices)
-                outcome.Include(slice.Validate());
+                outcome.Include(slice.Validate(validator, errorLocation));
 
             return outcome;
         }    

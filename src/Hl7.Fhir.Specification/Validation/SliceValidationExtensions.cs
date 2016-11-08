@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
-            var bucket = BucketFactory.Create(intro, validator, parent);
+            var bucket = BucketFactory.Create(intro, validator);
 
             foreach (var instance in instanceElements)
             {

@@ -34,22 +34,16 @@ namespace Hl7.Fhir.Validation
             if (Min != null && x < Min)
                 return false;
 
-            if (Max == "*")
+            if (Max == "*" || Max == null)
                 return true;
 
-            if (Max != null)
-            {
-                int max = Convert.ToInt16(Max);
-                if (x > max)
-                    return false;
-            }
-
-            return true;
+            int max = Convert.ToInt16(Max);
+            return x <= max;
         }
 
         public override string ToString()
         {
-            return Min?.ToString()??"<-" + ".." + Max ?? "->";
+            return (Min?.ToString()??"<-") + ".." + (Max ?? "->");
         }
     }
 
