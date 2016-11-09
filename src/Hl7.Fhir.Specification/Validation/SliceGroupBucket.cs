@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Validation
 
             // Finally, add any validation items on the elements that made it into the child slices
             foreach(var slice in ChildSlices)
-                outcome.Include(slice.Validate(validator, errorLocation));
+                outcome.Add(slice.Validate(validator, errorLocation));
 
             return outcome;
         }    

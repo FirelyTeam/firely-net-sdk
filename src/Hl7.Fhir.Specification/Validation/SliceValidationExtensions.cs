@@ -30,6 +30,8 @@ namespace Hl7.Fhir.Validation
                 }
             }
 
+            outcome.Add(bucket.Validate(validator, parent));
+
             return outcome;
         }
 

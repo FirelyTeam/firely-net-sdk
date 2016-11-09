@@ -38,8 +38,8 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
-            if (Cardinality.InRange(Members.Count))
-                validator.Trace(outcome, $"Instance count for {Name}' is {Members.Count}, which is not within the specified cardinality of {Cardinality.ToString()}",
+            if (!Cardinality.InRange(Members.Count))
+                validator.Trace(outcome, $"Instance count for '{Name}' is {Members.Count}, which is not within the specified cardinality of {Cardinality.ToString()}",
                         Issue.CONTENT_INCORRECT_OCCURRENCE, errorLocation);
 
             return outcome;

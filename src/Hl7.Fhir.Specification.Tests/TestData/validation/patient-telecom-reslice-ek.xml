@@ -1,4 +1,4 @@
-<StructureDefinition xmlns="http://hl7.org/fhir">
+<StructureDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://hl7.org/fhir">
 	<url value="http://example.com/StructureDefinition/patient-telecom-reslice-ek" />
 	<name value="patient-telecom-slice" />
 	<status value="draft" />
@@ -13,46 +13,54 @@
 			<path value="Patient.telecom" />
 			<slicing>
 				<discriminator value="system" />
-				<rules value="closed" />
+				<ordered value="true" />
+				<rules value="openAtEnd" />
 			</slicing>
+			<min value="1" />
+			<max value="5" />            
 		</element>
-
-    <!-- First, slice into PHONE -->
-    <element>
-      <path value="Patient.telecom" />
-      <name value="phone" />
-    </element>
-    <element>
+		
+		<!-- First, slice into PHONE -->
+		<element>
+			<path value="Patient.telecom" />
+			<name value="phone" />
+			<min value="1" />
+			<max value="2" /> 			
+		</element>
+		<element>
 			<path value="Patient.telecom.system" />
 			<min value="1" />
 			<fixedCode value="phone" />
 		</element>
-
-
-    <!-- Now, the emails. A slice with Email, re-sliced to account for use -->
-    <element>
-      <path value="Patient.telecom" />
-      <name value="email" />
- 			<slicing>
+		
+		
+		<!-- Now, the emails. A slice with Email, re-sliced to account for use -->
+		<element>
+			<path value="Patient.telecom" />
+			<name value="email" />
+			<slicing>
 				<discriminator value="system" />
-        <discriminator value="use" />
-				<rules value="openAtEnd" />
+				<discriminator value="use" />				
+				<rules value="closed" />				
 			</slicing>
-    </element>
-    <element>
+			<min value="0" />
+			<max value="1" /> 						
+		</element>
+		<element>
 			<path value="Patient.telecom.system" />
 			<min value="1" />
 			<fixedCode value="email" />
 		</element>
-
-    <!-- A re-slice for Email + home -->
-    <element>
-      <path value="Patient.telecom" />
-      <name value="email/home" />
-    </element>
-    <element>
+		
+		<!-- A re-slice for Email + home -->
+		<element>
+			<path value="Patient.telecom" />
+			<name value="email/home" />
+			<min value="0" />
+			<max value="1" /> 						
+		</element>
+		<element>
 			<path value="Patient.telecom.system" />
-			<name value="homeEmail.system" />
 			<min value="1" />
 			<fixedCode value="email" />
 		</element>
@@ -61,14 +69,16 @@
 			<min value="1" />
 			<fixedCode value="home" />
 		</element>
-
-    <!-- A re-slice for Email + work -->
-    <element>
-      <path value="Patient.telecom" />
-      <name value="email/work" />
-    </element>
-
-    <element>
+		
+		<!-- A re-slice for Email + work -->
+		<element>
+			<path value="Patient.telecom" />
+			<name value="email/work" />
+			<min value="0" />
+			<max value="1" /> 									
+		</element>
+		
+		<element>
 			<path value="Patient.telecom.system" />
 			<min value="1" />
 			<fixedCode value="email" />
@@ -78,5 +88,61 @@
 			<min value="1" />
 			<fixedCode value="work" />
 		</element>
+		
+		<!-- Finally, other -->
+		<element>
+			<path value="Patient.telecom" />
+			<name value="other" />
+			<slicing>
+				<discriminator value="system" />
+				<discriminator value="use" />
+				<rules value="open" />
+			</slicing>
+			<min value="0" />
+			<max value="3" /> 						
+		</element>
+		<element>
+			<path value="Patient.telecom.system" />
+			<min value="1" />
+			<fixedCode value="other" />
+		</element>
+		
+		<!-- A re-slice for other + home -->
+		<element>
+			<path value="Patient.telecom" />
+			<name value="other/home" />
+			<min value="0" />
+			<max value="1" /> 						
+		</element>
+		<element>
+			<path value="Patient.telecom.system" />
+			<min value="1" />
+			<fixedCode value="other" />
+		</element>
+		<element>
+			<path value="Patient.telecom.use" />
+			<min value="1" />
+			<fixedCode value="home" />
+		</element>
+		
+		<!-- A re-slice for other + work -->
+		<element>
+			<path value="Patient.telecom" />
+			<name value="other/work" />
+			<min value="0" />
+			<max value="1" /> 						
+		</element>
+		
+		<element>
+			<path value="Patient.telecom.system" />
+			<min value="1" />
+			<fixedCode value="other" />
+		</element>
+		<element>
+			<path value="Patient.telecom.use" />
+			<min value="1" />
+			<fixedCode value="work" />
+		</element>
+		
 	</differential>
 </StructureDefinition>
