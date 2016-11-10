@@ -384,7 +384,7 @@ namespace Hl7.Fhir.Validation
                 outcome.AddIssue(message, issue, location);
         }
 
-        private string toStringRepresentation(IValueProvider vp)
+        private string toStringRepresentation(IElementNavigator vp)
         {
             if (vp == null || vp.Value == null) return null;
 

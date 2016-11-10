@@ -15,7 +15,7 @@ using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.FluentPath
 {
-    internal class PocoElementNavigator : IValueProvider, ITypeNameProvider
+    internal class PocoElementNavigator
     {
         static Hl7.Fhir.Introspection.ClassMapping GetMappingForType(Type elementType)
         {
@@ -82,6 +82,12 @@ namespace Hl7.Fhir.FluentPath
                     {
                         if ((_pocoElement as Integer).Value.HasValue)
                             return (long)(_pocoElement as Integer).Value.Value;
+                        return null;
+                    }
+                    else if ((_pocoElement is PositiveInt))
+                    {
+                        if ((_pocoElement as Integer).Value.HasValue)
+                            return (long)(_pocoElement as PositiveInt).Value.Value;
                         return null;
                     }
                     else if (_pocoElement is Primitive)
