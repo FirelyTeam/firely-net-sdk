@@ -130,6 +130,7 @@
     <Compile Include="Validation\BindingValidator.cs" />
     <Compile Include="Validation\Cardinality.cs" />
     <Compile Include="Validation\ChildConstraintValidationExtensions.cs" />
+    <Compile Include="Validation\ElementBucket.cs" />
     <Compile Include="Validation\ElementDefinitionNavigatorExtensions.cs" />
     <Compile Include="Validation\ElementNavigatorParsingExtensions.cs" />
     <Compile Include="Validation\FixedPatternValidationExtensions.cs" />

@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Validation
             //var xml = FhirSerializer.SerializeResourceToXml(sd);
             //File.WriteAllText(@"c:\temp\sdout.xml", xml);
 
-            return BucketFactory.Create(nav, _validator);
+            return BucketFactory.CreateRoot(nav, _validator);
         }
 
         /*
@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Validation
             Assert.Equal(true, slice.Ordered);
             Assert.Equal("Patient.telecom", slice.Name);
             Assert.Equal(3, slice.ChildSlices.Count);
-            Assert.IsType<SliceBucket>(slice.Entry);
+            Assert.IsType<ElementBucket>(slice.Entry);
 
             Assert.IsType<SliceBucket>(slice.ChildSlices[0]);
             Assert.Equal("Patient.telecom:phone", slice.ChildSlices[0].Name);
@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Validation
 
             var outcome = _validator.Validate(p, "http://example.com/StructureDefinition/patient-telecom-reslice-ek");
             Assert.False(outcome.Success);
-            Assert.Equal(8, outcome.Errors);        // One too many, there's a duplicate, need to fix
+            Assert.Equal(7, outcome.Errors);
             Assert.Equal(0, outcome.Warnings);
             var repr = outcome.ToString();
             Assert.Contains("not within the specified cardinality of 1..5 (at Patient)", repr);

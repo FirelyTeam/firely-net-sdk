@@ -45,39 +45,36 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-        private static OperationOutcome ValidateMatch(this Validator validator, Match match, IElementNavigator instance)
+        private static OperationOutcome ValidateMatch(this Validator validator, Match match, IElementNavigator parent)
         {
             var outcome = new OperationOutcome();
 
             var definition = match.Definition.Current;
-            var occurs = match.InstanceElements.Count;
 
             if (definition.Min == null)
                 validator.Trace(outcome, $"Element definition does not specify a 'min' value, which is required. Cardinality has not been validated",
-                    Issue.PROFILE_ELEMENTDEF_CARDINALITY_MISSING, instance);
+                    Issue.PROFILE_ELEMENTDEF_CARDINALITY_MISSING, parent);
             else if (definition.Max == null)
                 validator.Trace(outcome, $"Element definition does not specify a 'max' value, which is required. Cardinality has not been validated",
-                    Issue.PROFILE_ELEMENTDEF_CARDINALITY_MISSING, instance);
+                    Issue.PROFILE_ELEMENTDEF_CARDINALITY_MISSING, parent);
 
             var cardinality = Cardinality.FromElementDefinition(definition);
 
-            if (!cardinality.InRange(occurs))
-                validator.Trace(outcome, $"Element '{match.Definition.PathName}' occurs {occurs} times, which is not within the specified cardinality of {cardinality.ToString()}",
-                        Issue.CONTENT_INCORRECT_OCCURRENCE, instance);
+            var bucket = BucketFactory.CreateRoot(match.Definition, validator);
 
-            // If there are instance occurrences, we should now validate them against the definition
-            if (match.InstanceElements.Any())
+            foreach (var element in match.InstanceElements)
             {
-                if (match.Definition.Current.Slicing == null)
+                var matchOutcome = bucket.Add(element);
+
+                // For the "root" slice group (=the original core element that was sliced, not resliced)
+                // any element that does not match is an error
+                if (!matchOutcome.Success)
                 {
-                    foreach (IElementNavigator element in match.InstanceElements)
-                    {
-                        outcome.Include(validator.Validate(element, match.Definition));
-                    }
+                    outcome.Add(matchOutcome);
                 }
-                else
-                    outcome.Add(validator.ValidateRootSliceGroup(match.InstanceElements, match.Definition, instance));
             }
+
+            outcome.Add(bucket.Validate(validator, parent));
 
             return outcome;
         }

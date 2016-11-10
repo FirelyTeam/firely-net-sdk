@@ -132,6 +132,7 @@
     <Compile Include="Validation\OperationOutcomeExtensions.cs" />
     <Compile Include="Validation\ProfileAssertion.cs" />
     <Compile Include="Validation\ProfilePreprocessor.cs" />
+    <Compile Include="Validation\ElementBucket.cs" />
     <Compile Include="Validation\SliceBucket.cs" />
     <Compile Include="Validation\SliceGroupBucket.cs" />
     <Compile Include="Validation\SliceValidationExtensions.cs" />
