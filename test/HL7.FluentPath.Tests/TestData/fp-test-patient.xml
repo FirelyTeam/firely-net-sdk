@@ -38,7 +38,8 @@
         <system value="phone"/>
         <value value="555-555-2003"/>
         <use value="work"/>
-      </telecom>
+		<rank value="1"/>
+	  </telecom>
       <gender value="female"/>
       <birthDate value="1973-05-31"/>
       <address>
@@ -210,6 +211,12 @@
     <family value="Donald"/>
     <given value="Duck"/>
   </name>
+      <telecom>
+        <system value="phone"/>
+        <value value="555-555-2003"/>
+        <use value="work"/>
+		<rank value="1"/>
+	  </telecom>
   <gender value="male">
     <extension url="http://example.org/StructureDefinition/real-gender">
       <valueCode value="metrosexual" />

@@ -23,6 +23,11 @@ namespace Hl7.FluentPath
     public class FluentPathCompiler
     {
         private static Lazy<SymbolTable> _defaultSymbolTable = new Lazy<SymbolTable>(() => new SymbolTable().AddStandardFP(), isThreadSafe: false);
+        
+        public static void SetDefaultSymbolTable(Lazy<SymbolTable> st)
+        {
+            _defaultSymbolTable = st;
+        }
 
         public static SymbolTable DefaultSymbolTable
         { 
