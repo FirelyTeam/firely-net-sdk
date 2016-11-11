@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !NETCore
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
@@ -10,6 +11,7 @@ using Hl7.Fhir.XPath;
 
 namespace Hl7.Fhir.Specification.Tests
 {
+
     [TestClass]
     public class XsltContextTests
     {
@@ -108,3 +110,4 @@ namespace Hl7.Fhir.Specification.Tests
         //}        
     }
 }
+#endif

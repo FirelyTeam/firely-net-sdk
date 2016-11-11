@@ -452,6 +452,7 @@ namespace Hl7.Fhir.Validation
             Assert.AreEqual(4, report.Errors);            // 3 bundled reference, 1 contained reference
         }
 
+#if !NETCore
         [TestMethod]
         public void RunXsdValidation()
         {
@@ -469,6 +470,7 @@ namespace Hl7.Fhir.Validation
             Assert.IsFalse(report.Success);
             Assert.IsTrue(report.ToString().Contains(".NET Xsd validation"));
         }
+#endif
 
         [TestMethod]
         public void TestBindingValidation()

@@ -1,0 +1,29 @@
+﻿{
+  "version": "1.0.0-*",
+   "testRunner": "mstest",
+
+  "dependencies": {
+    "dotnet-test-mstest": "1.1.1-preview",
+    "Hl7.Fhir.Specification": "1.0.0-*",
+    "MSTest.TestFramework": "1.0.1-preview",
+    "NETStandard.Library": "1.6.0",
+    "System.Xml.XmlDocument": "4.0.1",
+    "xunit": "2.2.0-beta4-build3444",
+    "Hl7.FluentPath": "0.4.0-alpha3"
+  },
+
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": "dnxcore50",
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "version": "1.0.0",
+          "type": "platform"
+        }
+      }
+    }
+  },
+  "buildOptions": {
+    "define": [ "NETCore" ]
+  }
+}

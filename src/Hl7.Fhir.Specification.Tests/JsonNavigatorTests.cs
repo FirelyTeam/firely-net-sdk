@@ -11,7 +11,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.XPath;
-using System.Xml.Xsl;
+#if !NETCore
+    using System.Xml.Xsl;
+#endif
 using Hl7.Fhir.Support;
 using Hl7.Fhir.XPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -246,6 +248,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(result.Value.StartsWith("R0lGODlhEwARAPcAAAAAAAAA"));
         }
 
+#if !NETCore
         [TestMethod]
         public void TestTransform()
         { 
@@ -274,6 +277,7 @@ namespace Hl7.Fhir.Specification.Tests
                 "<f:Patient xmlns:f=\"http://hl7.org/fhir\"><f:identifier><f:period><f:start value=\"2001-05-06\" /></f:period>"+
                 "<f:assigner><f:display value=\"Acme Healthcare\" /></f:assigner><f:use value=\"usual\" />"));
         }
+#endif
 
         private static JsonXPathNavigator buildNav()
         {
