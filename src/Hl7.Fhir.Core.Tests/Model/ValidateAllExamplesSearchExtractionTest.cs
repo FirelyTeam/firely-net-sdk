@@ -80,6 +80,7 @@ namespace Hl7.Fhir.Tests.Model
             }
 
             var missingSearchValues = exampleSearchValues.Where(i => i.Value == 0);
+#if !NETCore
             if (missingSearchValues.Count() > 0)
             {
                 Debug.WriteLine(String.Format("\r\n------------------\r\nValidation failed, missing data in {0} of {1} search parameters", missingSearchValues.Count(), exampleSearchValues.Count));
@@ -90,6 +91,7 @@ namespace Hl7.Fhir.Tests.Model
                 // Trace.WriteLine(outcome.ToString());
                 errorCount++;
             }
+#endif
 
             Assert.IsTrue(140 >= errorCount, String.Format("Failed search parameter data extraction, missing data in {0} of {1} search parameters", missingSearchValues.Count(), exampleSearchValues.Count));
         }

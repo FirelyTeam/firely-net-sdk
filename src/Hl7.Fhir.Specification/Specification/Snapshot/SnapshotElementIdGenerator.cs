@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         static void generateChildElementsId(ElementDefinitionNavigator nav, bool force = false)
         {
             var parent = nav.Current;
-            Debug.Print($"[{nameof(generateChildElementsId)}] '{(parent != null ? parent.Path : "[root]")}'");
+            Debug.Write($"[{nameof(generateChildElementsId)}] '{(parent != null ? parent.Path : "[root]")}'");
             var bm = nav.Bookmark();
             if (nav.MoveToFirstChild())
             {

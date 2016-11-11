@@ -19,6 +19,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
 
+#if !NETCore
 namespace Hl7.Fhir.Validation
 {
     /// <summary>
@@ -120,3 +121,4 @@ namespace Hl7.Fhir.Validation
         }
     }
 }
+#endif

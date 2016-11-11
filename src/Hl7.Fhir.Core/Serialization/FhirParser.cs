@@ -161,8 +161,8 @@ namespace Hl7.Fhir.Serialization
             return new Lazy<ModelInspector>(() =>
             {
                 var result = new ModelInspector();
-#if PORTABLE45
-                    result.Import(typeof(Resource).GetTypeInfo().Assembly);
+#if PORTABLE45 || NETCore
+                result.Import(typeof(Resource).GetTypeInfo().Assembly);
 #else
                 result.Import(typeof(Resource).Assembly);
 #endif

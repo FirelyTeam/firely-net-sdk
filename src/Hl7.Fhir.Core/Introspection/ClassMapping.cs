@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Introspection
             if(ReflectionHelper.IsClosedGenericType(type))
             {
                 name += "<";
-#if PORTABLE45
+#if NETCore || PORTABLE45
 				name += String.Join(",", type.GenericTypeArguments.Select(arg => arg.FullName));
 #else
                 name += String.Join(",", type.GetGenericArguments().Select(arg => arg.FullName));
@@ -209,20 +209,29 @@ namespace Hl7.Fhir.Introspection
 
         public static bool IsFhirResource(Type type)
         {
+#if NETCore
+            var attr = ReflectionHelper.GetAttribute<FhirTypeAttribute>(type.GetTypeInfo());
+            return typeof(Resource).GetTypeInfo().IsAssignableFrom(type)
+                   || (attr != null && attr.IsResource);
+#else
             var attr = ReflectionHelper.GetAttribute<FhirTypeAttribute>(type);
-
-            return typeof(Resource).IsAssignableFrom(type)
+             return typeof(Resource).IsAssignableFrom(type)
                     || (attr != null && attr.IsResource);
+#endif
+
         }
 
         public static bool IsMappableType(Type type)
         {
+#if NETCore
+            var hasAttribute = type.GetTypeInfo().IsDefined(typeof(FhirTypeAttribute), false);
+#else
             var hasAttribute = type.IsDefined(typeof(FhirTypeAttribute),false);
+#endif
+            if (!hasAttribute) return false;
 
-            if(!hasAttribute) return false;
-
-#if PORTABLE45
-			if (type.GetTypeInfo().IsAbstract)
+#if PORTABLE45 || NETCore
+            if (type.GetTypeInfo().IsAbstract)
 #else
 			if (type.IsAbstract)
 #endif

@@ -1,4 +1,4 @@
-﻿#if PORTABLE45
+﻿#if PORTABLE45 
 namespace System.ComponentModel
 {
     [AttributeUsage(AttributeTargets.All)]

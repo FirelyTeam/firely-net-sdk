@@ -7,6 +7,7 @@
  */
 
 using System;
+using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
@@ -82,7 +83,7 @@ namespace Hl7.Fhir.Tests.Introspection
             var inspector = new ModelInspector();
 
             // Inspect the HL7.Fhir.Model assembly
-            inspector.Import(typeof(Resource).Assembly);
+            inspector.Import(typeof(Resource).GetTypeInfo().Assembly);
 
             // Check for presence of some basic ingredients
             Assert.IsNotNull(inspector.FindClassMappingForResource("patient"));

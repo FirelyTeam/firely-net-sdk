@@ -1,0 +1,26 @@
+{
+  "version": "1.0.0-*",
+
+  "dependencies": {
+    "Hl7.FluentPath": "0.4.0-alpha3",
+    "NETStandard.Library": "1.6.0",
+    "Newtonsoft.Json": "9.0.1",
+    "System.Xml.XPath": "4.0.1",
+    "Hl7.Fhir.Core": "1.0.0-*",
+    "System.AppContext": "4.1.0"
+  },
+
+  "frameworks": {
+    //"net45": {
+    //}
+    "netstandard1.6": {
+      "imports": ["dnxcore50",
+        "netcoreapp1.0",
+        "portable-net45+win8"
+      ]
+    }
+  },
+  "buildOptions": {
+    "define": [ "NETCore" ]
+  }
+}

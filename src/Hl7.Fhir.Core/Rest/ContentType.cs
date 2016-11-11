@@ -70,8 +70,14 @@ namespace Hl7.Fhir.Rest
         public static ResourceFormat GetResourceFormatFromContentType(string contentType)
         {
             if (String.IsNullOrEmpty(contentType)) return ResourceFormat.Unknown;
+#if NETCore
+            System.Net.Http.Headers.MediaTypeHeaderValue headerValue;
+            System.Net.Http.Headers.MediaTypeHeaderValue.TryParse(contentType, out headerValue);
+            var f = headerValue.MediaType.ToLowerInvariant();
 
+#else
             var f = new System.Net.Mime.ContentType(contentType).MediaType.ToLowerInvariant();
+#endif
 
             if (JSON_CONTENT_HEADERS.Contains(f))
                 return ResourceFormat.Json;
@@ -114,7 +120,15 @@ namespace Hl7.Fhir.Rest
         /// <returns></returns>
         public static bool IsValidResourceContentType(string contentType)
         {
-            var f = new System.Net.Mime.ContentType(contentType).MediaType.ToLowerInvariant();
+
+#if NETCore
+            System.Net.Http.Headers.MediaTypeHeaderValue headerValue;
+            System.Net.Http.Headers.MediaTypeHeaderValue.TryParse(contentType, out headerValue);
+            var f = headerValue.MediaType.ToLowerInvariant();
+#else
+               var f = new System.Net.Mime.ContentType(contentType).MediaType.ToLowerInvariant();
+#endif
+
 
             return JSON_CONTENT_HEADERS.Contains(f) || XML_CONTENT_HEADERS.Contains(f);
         }

@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-#if !PORTABLE45
+#if !PORTABLE45 && !NETCore
         /// <summary>
         /// This will do 2 things:
         /// 1. Add the header Accept-Encoding: gzip, deflate

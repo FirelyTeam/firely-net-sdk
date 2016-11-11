@@ -68,11 +68,16 @@ namespace Hl7.Fhir.Tests.Introspection
 
 
         [TestMethod]
+#if !NETCore
         [ExpectedException(typeof(ArgumentException))]
+#endif
         public void TestMixedDataTypeDetection()
         {
+#if NETCore
+            Assert.ThrowsException<ArgumentException>(() => ClassMapping.Create(typeof(ComplexNumber)));
+#else
             var mapping = ClassMapping.Create(typeof(ComplexNumber));
-
+#endif
             // cannot have a datatype with a profile....
         }
 

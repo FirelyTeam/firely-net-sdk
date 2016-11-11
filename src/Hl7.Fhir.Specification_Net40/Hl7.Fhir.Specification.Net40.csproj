@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C19A8686-2DCA-4C00-A2E5-3CEC9D27EA8D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Hl7.Fhir</RootNamespace>
+    <AssemblyName>Hl7.Fhir.DSTU2.Specification</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\Net40\</OutputPath>
+    <BaseIntermediateOutputPath>obj\Debug\Net40\</BaseIntermediateOutputPath>
+    <DefineConstants>TRACE;DEBUG;NET40</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <DocumentationFile>bin\Debug\Net40\Hl7.Fhir.DSTU2.Specification.xml</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+    <NoWarn>1591</NoWarn>
+    <LangVersion>6</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\Net40\</OutputPath>
+    <BaseIntermediateOutputPath>obj\Release\Net40\</BaseIntermediateOutputPath>
+    <DefineConstants>TRACE;NET40</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Net40\Hl7.Fhir.DSTU2.Specification.xml</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+      <Reference Include="Hl7.FluentPath, Version=0.4.0.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hl7.FluentPath.0.4.0-alpha3\lib\net40\Hl7.FluentPath.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Hl7.Fhir.Specification\Support\Error.cs" ><Link>Support\Error.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Support\ReflectionHelper.cs" ><Link>Support\ReflectionHelper.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Support\StringExtensions.cs" ><Link>Support\StringExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Terminology\ExpansionSizeTooBig.cs" ><Link>Specification\Terminology\ExpansionSizeTooBig.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Terminology\ITerminologyService.cs" ><Link>Specification\Terminology\ITerminologyService.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Properties\AssemblyVersionInfo.cs" ><Link>Properties\AssemblyVersionInfo.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Navigation\Bookmark.cs" ><Link>Specification\Navigation\Bookmark.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Navigation\ElementDefinitionNavigator.cs" ><Link>Specification\Navigation\ElementDefinitionNavigator.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Navigation\ElementNavigatorModificationExtensions.cs" ><Link>Specification\Navigation\ElementNavigatorModificationExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Navigation\ElementNavigatorMovementExtensions.cs" ><Link>Specification\Navigation\ElementNavigatorMovementExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Navigation\ElementNavigatorTypeExtensions.cs" ><Link>Specification\Navigation\ElementNavigatorTypeExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Navigation\ProfileNavigationExtensions.cs" ><Link>Specification\Navigation\ProfileNavigationExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Navigation\ProfileReference.cs" ><Link>Specification\Navigation\ProfileReference.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Snapshot\DifferentialTreeConstructor.cs" ><Link>Specification\Snapshot\DifferentialTreeConstructor.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Snapshot\ElementDefnMerger.cs" ><Link>Specification\Snapshot\ElementDefnMerger.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Snapshot\ElementMatcher.cs" ><Link>Specification\Snapshot\ElementMatcher.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Snapshot\SnapshotBaseComponentGenerator.cs" ><Link>Specification\Snapshot\SnapshotBaseComponentGenerator.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Snapshot\SnapshotElementIdGenerator.cs" ><Link>Specification\Snapshot\SnapshotElementIdGenerator.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Snapshot\SnapshotGenerator.cs" ><Link>Specification\Snapshot\SnapshotGenerator.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Snapshot\SnapshotGeneratorAnnotations.cs" ><Link>Specification\Snapshot\SnapshotGeneratorAnnotations.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Snapshot\SnapshotGeneratorEvents.cs" ><Link>Specification\Snapshot\SnapshotGeneratorEvents.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Snapshot\SnapshotGeneratorExtensions.cs" ><Link>Specification\Snapshot\SnapshotGeneratorExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Snapshot\SnapshotGeneratorOutcome.cs" ><Link>Specification\Snapshot\SnapshotGeneratorOutcome.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Snapshot\SnapshotGeneratorSettings.cs" ><Link>Specification\Snapshot\SnapshotGeneratorSettings.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Snapshot\SnapshotRecursionStack.cs" ><Link>Specification\Snapshot\SnapshotRecursionStack.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Source\CachedResolver.cs" ><Link>Specification\Source\CachedResolver.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Source\DirectorySource.cs" ><Link>Specification\Source\DirectorySource.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Source\IArtifactSource.cs" ><Link>Specification\Source\IArtifactSource.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Source\IConformanceSource.cs" ><Link>Specification\Source\IConformanceSource.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Source\IResourceResolver.cs" ><Link>Specification\Source\IResourceResolver.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Source\MultiResolver.cs" ><Link>Specification\Source\MultiResolver.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Source\OriginInformation.cs" ><Link>Specification\Source\OriginInformation.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Source\ResourceResolverExtensions.cs" ><Link>Specification\Source\ResourceResolverExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Source\ResourceStreamScanner.cs" ><Link>Specification\Source\ResourceStreamScanner.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Source\SourceFactory.cs" ><Link>Specification\Source\SourceFactory.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Source\WebResolver.cs" ><Link>Specification\Source\WebResolver.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Source\SchemaCollection.cs" ><Link>Specification\Source\SchemaCollection.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Source\ZipCacher.cs" ><Link>Specification\Source\ZipCacher.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Properties\AssemblyInfo.cs" ><Link>Properties\AssemblyInfo.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Source\ZipSource.cs" ><Link>Specification\Source\ZipSource.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Terminology\LocalTerminologyServer.cs" ><Link>Specification\Terminology\LocalTerminologyServer.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\Terminology\ValueSetExpander.cs" ><Link>Specification\Terminology\ValueSetExpander.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Support\Issue.cs" ><Link>Support\Issue.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Specification\ValueSet\ValueSetExpander.cs" ><Link>Specification\ValueSet\ValueSetExpander.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Validation\BatchValidationExtensions.cs" ><Link>Validation\BatchValidationExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Validation\BindingValidator.cs" ><Link>Validation\BindingValidator.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Validation\Cardinality.cs" ><Link>Validation\Cardinality.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Validation\ChildConstraintValidationExtensions.cs" ><Link>Validation\ChildConstraintValidationExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Validation\ElementDefinitionNavigatorExtensions.cs" ><Link>Validation\ElementDefinitionNavigatorExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Validation\ElementNavigatorParsingExtensions.cs" ><Link>Validation\ElementNavigatorParsingExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Validation\FixedPatternValidationExtensions.cs" ><Link>Validation\FixedPatternValidationExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Validation\InstanceToProfileMatcher.cs" ><Link>Validation\InstanceToProfileMatcher.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Validation\MinMaxValidationExtensions.cs" ><Link>Validation\MinMaxValidationExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Validation\OperationOutcomeExtensions.cs" ><Link>Validation\OperationOutcomeExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Validation\PocoValidationExtensions.cs" ><Link>Validation\PocoValidationExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Validation\ProfileAssertion.cs" ><Link>Validation\ProfileAssertion.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Validation\ProfilePreprocessor.cs" ><Link>Validation\ProfilePreprocessor.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Validation\ScopeTracker.cs" ><Link>Validation\ScopeTracker.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Validation\TypeRefExtensions.cs" ><Link>Validation\TypeRefExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Validation\TypeRefValidationExtensions.cs" ><Link>Validation\TypeRefValidationExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Support\ValidationOutcomeExtensions.cs" ><Link>Support\ValidationOutcomeExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Validation\ValidationSettings.cs" ><Link>Validation\ValidationSettings.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Validation\Validator.cs" ><Link>Validation\Validator.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\Validation\XmlValidationExtensions.cs" ><Link>Validation\XmlValidationExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\XPath\CustomXsltFunction.cs" ><Link>XPath\CustomXsltFunction.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\XPath\FhirNamespaceManager.cs" ><Link>XPath\FhirNamespaceManager.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\XPath\JsonReaderExtensions.cs" ><Link>XPath\JsonReaderExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\XPath\JsonXPathNavigator.cs" ><Link>XPath\JsonXPathNavigator.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\XPath\JTokenExtensions.cs" ><Link>XPath\JTokenExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\XPath\NavigatorState.cs" ><Link>XPath\NavigatorState.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Specification\XPath\XPath2Context.cs" ><Link>XPath\XPath2Context.cs</Link></Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="..\Hl7.Fhir.Specification\specification.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hl7.Fhir.Core_Net40\Hl7.Fhir.Core.Net40.csproj">
+      <Project>{32353385-77a1-4972-ab0c-688de8db6e1b}</Project>
+      <Name>Hl7.Fhir.Core.Net40</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

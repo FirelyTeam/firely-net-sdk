@@ -293,7 +293,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // If the differential contains a slicing entry, then it should also define at least a single slice.
                     if (!diffNav.MoveToNext())
                     {
-                        Debug.Print($"[{nameof(ElementMatcher)}] Warning! Differential has a slicing entry for path '{diffNav.Path}', but no first actual slice.");
+                        Debug.Write($"[{nameof(ElementMatcher)}] Warning! Differential has a slicing entry for path '{diffNav.Path}', but no first actual slice.");
                         return result;
                         // throw Error.InvalidOperation($"Differential has a slicing entry for path '{diffNav.Path}', but no first actual slice");
                     }

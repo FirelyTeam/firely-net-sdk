@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Rest
 
             result.Response.Location = response.Headers[HttpUtil.LOCATION] ?? response.Headers[HttpUtil.CONTENTLOCATION];
 
-#if PORTABLE45
+#if PORTABLE45 || NETCore
             if (!String.IsNullOrEmpty(response.Headers[HttpUtil.LASTMODIFIED]))
                     result.Response.LastModified = DateTimeOffset.Parse(response.Headers[HttpUtil.LASTMODIFIED]);
 #else
@@ -99,8 +99,8 @@ namespace Hl7.Fhir.Rest
         {
             if (!String.IsNullOrEmpty(response.ContentType))
             {
-#if PORTABLE45
-				return System.Net.Http.Headers.MediaTypeHeaderValue.Parse(response.ContentType).MediaType;
+#if PORTABLE45 || NETCore
+                return System.Net.Http.Headers.MediaTypeHeaderValue.Parse(response.ContentType).MediaType;
 #else
                 return new System.Net.Mime.ContentType(response.ContentType).MediaType;
 #endif
@@ -115,8 +115,8 @@ namespace Hl7.Fhir.Rest
 
             if (!String.IsNullOrEmpty(response.ContentType))
             {
-#if PORTABLE45
-				var charset = System.Net.Http.Headers.MediaTypeHeaderValue.Parse(response.ContentType).CharSet;
+#if PORTABLE45 || NETCore
+                var charset = System.Net.Http.Headers.MediaTypeHeaderValue.Parse(response.ContentType).CharSet;
 #else
                 var charset = new System.Net.Mime.ContentType(response.ContentType).CharSet;
 #endif

@@ -15,8 +15,10 @@ using System.Security;
 [assembly: AssemblyTitle("Hl7.Fhir.DSTU2.Core .Net 4.5")]
 #elif NET40
 [assembly: AssemblyTitle("Hl7.Fhir.DSTU2.Core .Net 4.0")]
+#elif NETCore
+[assembly: AssemblyTitle("Hl7.Fhir.DSTU2.Core .Net Core")]
 #else
-#error No valid constant for target framework defined (NET40, NET45, or PORTABLE45)
+#error No valid constant for target framework defined (NET40, NET45, or PORTABLE45 or NETCore)
 #endif
 
 [assembly: AssemblyDescription("Core .NET support for working with HL7 FHIR. Supports FHIR DSTU2 (1.0)")]

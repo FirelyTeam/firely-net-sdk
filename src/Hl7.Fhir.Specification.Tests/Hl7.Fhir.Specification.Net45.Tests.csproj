@@ -913,11 +913,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.Net45.csproj">
+    <ProjectReference Include="..\Hl7.Fhir.Core_Net45\Hl7.Fhir.Core.Net45.csproj">
       <Project>{92cc9186-0a21-4e06-b11f-907584fbfd81}</Project>
       <Name>Hl7.Fhir.Core.Net45</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Hl7.Fhir.Specification\Hl7.Fhir.Specification.Net45.csproj">
+    <ProjectReference Include="..\Hl7.Fhir.Specification_Net45\Hl7.Fhir.Specification.Net45.csproj">
       <Project>{34a3b072-5abc-4f7c-b7e8-0ab67c58cc61}</Project>
       <Name>Hl7.Fhir.Specification.Net45</Name>
     </ProjectReference>

@@ -61,8 +61,11 @@ namespace Hl7.Fhir.Specification.Source
         {
             get
             {
-                var codebase = AppDomain.CurrentDomain.BaseDirectory;
-
+#if NETCore
+            var codebase = AppContext.BaseDirectory;
+#else
+                   var codebase = AppDomain.CurrentDomain.BaseDirectory;
+#endif
                 if (Directory.Exists(codebase))
                     return codebase;
                 else

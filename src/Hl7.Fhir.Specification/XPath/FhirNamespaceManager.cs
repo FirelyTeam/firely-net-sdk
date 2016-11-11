@@ -4,6 +4,7 @@
 *
 * This file is licensed under the BSD 3-Clause license
 */
+#if !NETCore
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,3 +45,4 @@ namespace Hl7.Fhir.XPath
         }
     }
 }
+#endif
