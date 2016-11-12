@@ -80,6 +80,30 @@ namespace Hl7.Fhir
             Assert.AreEqual(2, extensions.Count());
         }
 
+        [TestMethod]
+        public void PocoHasValueTest()
+        {
+            // Ensure the FHIR extensions are registered
+            Hl7.FluentPath.FluentPathCompiler.SetDefaultSymbolTable(FluentPath.PocoNavigatorExtensions._defaultSymbolTable);
+
+            Patient p = new Patient();
+
+            Assert.AreEqual(false, p.Predicate("Patient.active.hasValue()"));
+            Assert.AreEqual(false, p.Predicate("Patient.active.exists()"));
+
+            p.Active = true;
+            Assert.AreEqual(true, p.Predicate("Patient.active.hasValue()"));
+            Assert.AreEqual(true, p.Predicate("Patient.active.exists()"));
+
+            p.ActiveElement.AddExtension("http://something.org", new FhirBoolean(false));
+            Assert.AreEqual(true, p.Predicate("Patient.active.hasValue()"));
+            Assert.AreEqual(true, p.Predicate("Patient.active.exists()"));
+
+            p.ActiveElement = new FhirBoolean();
+            p.ActiveElement.AddExtension("http://something.org", new FhirBoolean(false));
+            Assert.AreEqual(false, p.Predicate("Patient.active.hasValue()"));
+            Assert.AreEqual(true, p.Predicate("Patient.active.exists()"));
+        }
     }
 
 }
