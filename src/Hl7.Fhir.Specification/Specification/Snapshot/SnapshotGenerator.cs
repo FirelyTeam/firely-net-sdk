@@ -22,8 +22,9 @@
 // #define CACHE_ROOT_ELEMDEF_ASSERT
 
 // Known issues:
-// - Reslicing is only supported for complex extensions
-// - Only supports a few hardcoded discriminator paths (url, @type, @profile)
+// - [Ewout/validator] reslicing constraints are emitted in reverse order
+// TODO:
+// - Merge global StructureDefinition.mapping definitions
 
 using System;
 using System.Collections.Generic;

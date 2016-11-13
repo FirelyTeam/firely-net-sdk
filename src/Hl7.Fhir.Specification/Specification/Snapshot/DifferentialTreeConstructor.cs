@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
     /// <summary>
     /// Differential structures may contain paths that "skip" over parents. For our profile expansion logic,
-    /// it's easier to have the skipped parents present. This class will insert these missing parent.
+    /// it's easier to have the skipped parents present. This class will insert these missing parents.
     /// Notice that these parent are just "stand ins", there's no
     /// slicing or ElementDefn information associated with them, so they should not have any 
     /// influence on the final snapshot form.
