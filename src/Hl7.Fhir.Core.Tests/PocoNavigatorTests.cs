@@ -84,7 +84,7 @@ namespace Hl7.Fhir
         public void PocoHasValueTest()
         {
             // Ensure the FHIR extensions are registered
-            Hl7.FluentPath.FluentPathCompiler.SetDefaultSymbolTable(FluentPath.PocoNavigatorExtensions._defaultSymbolTable);
+            Hl7.Fhir.FluentPath.PocoNavigatorExtensions.PrepareFhirSybolTableFunctions();
 
             Patient p = new Patient();
 
