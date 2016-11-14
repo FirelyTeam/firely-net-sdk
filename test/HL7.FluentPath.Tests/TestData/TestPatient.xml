@@ -32,6 +32,7 @@
         <system value="phone"/>
         <value value="555-555-2003"/>
         <use value="work"/>
+		<rank value="1"/>
       </telecom>
       <gender value="female"/>
       <birthDate value="1973-05-31"/>
