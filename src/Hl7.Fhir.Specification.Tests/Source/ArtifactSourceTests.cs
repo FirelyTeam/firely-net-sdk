@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void ZipCacherShouldCache()
         {
             var cacheKey = Guid.NewGuid().ToString();
-            var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "specification.zip");
+            var zipFile = Path.Combine(DirectoryExtensions.GetCurrentBinDirectory(), "specification.zip");
 
             var fa = new ZipCacher(zipFile, cacheKey);
 
@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         private string prepareExampleDirectory()
         {
-            var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "specification.zip");
+            var zipFile = Path.Combine(DirectoryExtensions.GetCurrentBinDirectory(), "specification.zip");
             var zip = new ZipCacher(zipFile);
             var zipPath = zip.GetContentDirectory();
 
@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestZipSourceMask()
         {
-            var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "specification.zip");
+            var zipFile = Path.Combine(DirectoryExtensions.GetCurrentBinDirectory(), "specification.zip");
             Assert.IsTrue(File.Exists(zipFile), "Error! specification.zip is not available.");
             var za = new ZipSource(zipFile);
             za.Mask = "profiles-types.xml";

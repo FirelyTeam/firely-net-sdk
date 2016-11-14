@@ -120,8 +120,8 @@ namespace Hl7.Fhir.Tests.Serialization
         public void ValidateInvariantAllExamplesWithOtherConstraints()
         {
 #if NETCore
-            string examplesZip = @"bin\Debug\netcoreapp1.0\TestData\examples.zip";
-            string profiles = @"bin\Debug\netcoreapp1.0\TestData\profiles-others.xml";
+            string examplesZip = $@"{AppContext.BaseDirectory}\TestData\examples.zip";
+            string profiles = $@"{AppContext.BaseDirectory}\TestData\profiles-others.xml";
 #else
             string examplesZip = @"TestData\examples.zip";
             string profiles = @"TestData\profiles-others.xml";

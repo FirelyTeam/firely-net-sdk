@@ -7594,6 +7594,7 @@
       "Hl7.FluentPath >= 0.4.0-alpha3",
       "MSTest.TestFramework >= 1.0.1-preview",
       "NETStandard.Library >= 1.6.0",
+      "System.AppContext >= 4.1.0",
       "System.Xml.XmlDocument >= 4.0.1",
       "dotnet-test-mstest >= 1.1.1-preview",
       "xunit >= 2.2.0-beta4-build3444"

@@ -1,6 +1,6 @@
 ﻿{
   "version": "1.0.0-*",
-   "testRunner": "mstest",
+  "testRunner": "mstest",
 
   "dependencies": {
     "dotnet-test-mstest": "1.1.1-preview",
@@ -9,7 +9,8 @@
     "NETStandard.Library": "1.6.0",
     "System.Xml.XmlDocument": "4.0.1",
     "xunit": "2.2.0-beta4-build3444",
-    "Hl7.FluentPath": "0.4.0-alpha3"
+    "Hl7.FluentPath": "0.4.0-alpha3",
+    "System.AppContext": "4.1.0"
   },
 
   "frameworks": {
@@ -24,6 +25,11 @@
     }
   },
   "buildOptions": {
-    "define": [ "NETCore" ]
+    "define": [ "NETCore" ],
+    "copyToOutput": {
+      "mappings": {
+        "specification.zip": "..\\Hl7.Fhir.Specification\\specification.zip"
+      }
+    }
   }
 }

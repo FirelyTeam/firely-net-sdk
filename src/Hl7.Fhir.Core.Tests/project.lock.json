@@ -7429,6 +7429,7 @@
       "Hl7.Fhir.Core >= 1.0.0-*",
       "MSTest.TestFramework >= 1.0.1-preview",
       "NETStandard.Library >= 1.6.0",
+      "System.AppContext >= 4.1.0",
       "System.Xml.XmlDocument >= 4.0.1",
       "dotnet-test-mstest >= 1.1.1-preview"
     ],
