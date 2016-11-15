@@ -98,7 +98,7 @@ namespace Hl7.Fhir.FluentPath
                     }
                     else if ((_pocoElement is PositiveInt))
                     {
-                        if ((_pocoElement as Integer).Value.HasValue)
+                        if ((_pocoElement as PositiveInt).Value.HasValue)
                             return (long)(_pocoElement as PositiveInt).Value.Value;
                         return null;
                     }
