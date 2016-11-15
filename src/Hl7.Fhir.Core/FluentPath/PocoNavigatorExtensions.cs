@@ -19,7 +19,7 @@ namespace Hl7.Fhir.FluentPath
     public static class PocoNavigatorExtensions
     {
         internal static bool _fhirSymbolTableExtensionsAdded = false;
-        internal static void PrepareFhirSybolTableFunctions()
+        public static void PrepareFhirSybolTableFunctions()
         {
             if (!_fhirSymbolTableExtensionsAdded)
             {
