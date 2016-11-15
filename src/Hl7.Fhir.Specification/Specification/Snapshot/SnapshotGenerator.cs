@@ -256,7 +256,10 @@ namespace Hl7.Fhir.Specification.Snapshot
             result = nav.ToListOfElements();
 
             // [WMR 20160917] NEW: Re-generate all ElementId values
-            generateElementsId(result, true);
+            if (_settings.GenerateElementIds)
+            {
+                generateElementsId(result, true);
+            }
 
             return result;
         }

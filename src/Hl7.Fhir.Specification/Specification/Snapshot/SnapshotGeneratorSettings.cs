@@ -20,6 +20,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             ExpandExternalProfiles = true,
             ForceExpandAll = false,         // Only enable this when using a cached source...
             MarkChanges = false,            // Enabled by Simplifier
+            GenerateElementIds = false      // for STU3
             // MergeTypeProfiles = true
         };
 
@@ -81,5 +82,10 @@ namespace Hl7.Fhir.Specification.Snapshot
         // </summary>
         // <remarks>See GForge #9791</remarks>
         // public bool MergeTypeProfiles { get; set; }
+
+        // [WMR 20161115] New
+        /// <summary>Enable this setting to automatically generate missing element id values.</summary>
+        /// <remarks>The generated element ids conform to the STU3 FHIR specification.</remarks>
+        public bool GenerateElementIds { get; set; }
     }
 }
