@@ -34,6 +34,7 @@
     <WarningLevel>4</WarningLevel>
     <NoWarn>3016,1591</NoWarn>
     <DocumentationFile>bin\Debug\Portable45\Hl7.Fhir.STU3.Core.xml</DocumentationFile>
+    <LangVersion>6</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -54,12 +55,13 @@
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Hl7.FluentPath, Version=0.3.1.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Hl7.FluentPath.0.3.1-alpha4\lib\netstandard1.0\Hl7.FluentPath.dll</HintPath>
+    <Reference Include="Hl7.FluentPath, Version=0.4.0.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hl7.FluentPath.0.4.0-alpha3\lib\netstandard1.0\Hl7.FluentPath.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\portable-net45+wp80+win8+wpa81+dnxcore50\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\netstandard1.0\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Portable.DataAnnotations, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6f21be3d5ccff8cd, processorArchitecture=MSIL">
       <HintPath>..\packages\Portable-Strong.DataAnnotations.1.0.0\lib\portable-net45+netcore45+wp8+wpa81\Portable.DataAnnotations.dll</HintPath>
@@ -103,6 +105,7 @@
     <Compile Include="Model\BackboneElement.cs" />
     <Compile Include="Model\Element.cs" />
     <Compile Include="Model\ElementDefinition.cs" />
+    <Compile Include="Model\ElementDefinitionExtensions.cs" />
     <Compile Include="Model\Extension.cs" />
     <Compile Include="Model\Base64Binary.cs" />
     <Compile Include="Model\FhirString.cs" />
@@ -647,9 +650,11 @@
     <Compile Include="Model\Oid.cs" />
     <Compile Include="Model\OperationOutcome.cs" />
     <Compile Include="Model\PositiveInt.cs" />
+    <Compile Include="Model\Quantity.cs" />
     <Compile Include="Model\StructureDefinition.cs" />
     <Compile Include="Model\Time.cs" />
     <Compile Include="Model\UnsignedInt.cs" />
+    <Compile Include="Model\ValueSetExpansionExtensions.cs" />
     <Compile Include="Properties\AssemblyVersionInfo.cs" />
     <Compile Include="Rest\EntryToHttpExtensions.cs" />
     <Compile Include="Rest\FhirClientOperations.cs" />

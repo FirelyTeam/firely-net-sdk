@@ -12,19 +12,18 @@ using System.Linq;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
-using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
     public partial class SnapshotGenerator
     {
         /// <summary>
-        /// Private helper class for <see cref="SnapshotGenerator"/>.
+        /// Private static helper for <see cref="SnapshotGenerator"/>.
         /// Merge two <see cref="ElementDefinition"/> instances and all their properties.
         /// </summary>
-        private class ElementDefnMerger
+        struct ElementDefnMerger
         {
-            /// <summary>Merge the two specified <see cref="ElementDefinition"/> instances.</summary>
+            /// <summary>Merges two <see cref="ElementDefinition"/> instances. Existing diff properties override associated snap properties.</summary>
             public static void Merge(SnapshotGenerator generator, ElementDefinition snap, ElementDefinition diff)
             {
                 var merger = new ElementDefnMerger(generator);
@@ -40,6 +39,10 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             private void merge(ElementDefinition snap, ElementDefinition diff)
             {
+                // [WMR 20160915] Important! Derived profiles should never inherit the ChangedByDiff extension
+                // Caller should make sure that existing extensions have been removed from snap,
+                // otherwise associated diff elems will be considered as changed (because they don't have the extension yet).
+
                 // bool isExtensionConstraint = snap.Path == "Extension" || snap.IsExtension();
 
                 // paths can be changed under one circumstance: the snap is a choice[x] element, and diff limits the type choices
@@ -50,10 +53,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // if (snap.Path.Substring(0, snap.Path.Length - 3) + diff.Type.First().Code.ToString().Capitalize() != diff.Path)
                     if (!ElementDefinitionNavigator.IsCandidateBaseElementPath(snap.Path, diff.Path))
                     {
-                        throw Error.InvalidOperation(
-                            "Path cannot be changed from '{0}' to '{1}', since the type is sliced to '{2}'",
-                            snap.Path, diff.Path, diff.Type.First().Code
-                        );
+                        throw Error.InvalidOperation($"Invalid operation in snapshot generator. Path cannot be changed from '{snap.Path}' to '{diff.Path}', since the type is sliced to '{diff.Type.First().Code}'");
                     }
 
                     snap.PathElement = mergePrimitiveAttribute(snap.PathElement, diff.PathElement);
@@ -125,7 +125,12 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // TODO: [GG] what to do about conditions?  [EK] We have key, so merge Constraint and condition based on that?
                 // Constraints are cumulative, so they are always "new" (hence a constant false for the comparer)
-                snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, (a, b) => false);
+                // [WMR 20160917] Note: constraint keys must be unique. The validator will detect duplicate keys, so the derived
+                // profile author can correct the conflicting constraint key.
+                // [WMR 20160918] MUST merge indentical constraints, otherwise each derived profile accumulates
+                // additional identical constraints inherited from e.g. BackboneElement.
+                // snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, (a, b) => false);
+                snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, (a, b) => a.IsExactly(b));
 
                 // [WMR 20160907] merge conditions
                 snap.ConditionElement = mergeCollection(snap.ConditionElement, diff.ConditionElement, (a, b) => a.Value == b.Value);
@@ -172,7 +177,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 // [WMR 20160718] Handle snap == null
                 // if (!diff.IsNullOrEmpty() && !diff.IsExactly(snap))
-                if (!diff.IsNullOrEmpty() && (snap == null || !diff.IsExactly(snap)))
+                // if (!diff.IsNullOrEmpty() && (snap == null || !diff.IsExactly(snap)))
+                if (!diff.IsNullOrEmpty() && (snap.IsNullOrEmpty() || !diff.IsExactly(snap)))
                 {
                     var result = (T)diff.DeepCopy();
 
@@ -210,7 +216,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 //TODO: The next != null should be IsNullOrEmpty(), but we don't have that yet for complex types
                 // [WMR 20160718] Handle snap == null
                 // if (diff != null && !diff.IsExactly(snap))
-                if (diff != null && (snap == null || !diff.IsExactly(snap)))
+                // if (diff != null && (snap == null || !diff.IsExactly(snap)))
+                if (!diff.IsNullOrEmpty() && (snap.IsNullOrEmpty() || !diff.IsExactly(snap)))
                 {
                     var result = (T)diff.DeepCopy();
                     OnConstraint(result);
@@ -222,11 +229,9 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             private List<T> mergeCollection<T>(List<T> snap, List<T> diff, Func<T, T, bool> elemComparer) where T : Element
             {
-                //TODO: The next != null should be IsNullOrEmpty(), but we don't have that yet for complex types
-                // if (diff != null && !diff.IsExactly(snap))
                 if (!diff.IsNullOrEmpty() && !diff.IsExactly(snap))
                 {
-                    var result = snap == null ? new List<T>() : new List<T>((IEnumerable<T>)snap.DeepCopy());
+                    var result = snap == null ? new List<T>() : new List<T>(snap.DeepCopy());
 
                     // Just add new elements to the result, never replace existing ones
                     foreach (var element in diff)

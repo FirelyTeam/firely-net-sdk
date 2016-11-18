@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Specification.Source
         }
 
 
-        private static string[] minimalSchemas = { "fhir-single.xsd", "fhir-xhtml.xsd", "xml.xsd", "xmldsig-core-schema.xsd" };
+        private static string[] minimalSchemas = { "xml.xsd", "fhir-single.xsd", "fhir-xhtml.xsd","xmldsig-core-schema.xsd" };
         
         private static XmlSchemaSet compileValidationSchemas()
         {

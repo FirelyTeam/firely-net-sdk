@@ -65,5 +65,17 @@ namespace Hl7.Fhir.Model
             return ed;
         }
 
+        public static ElementDefinition WithBinding(this ElementDefinition ed, string valueSetUri, BindingStrength strength)
+        {
+            var binding = new ElementDefinition.BindingComponent
+            {
+                ValueSet = new ResourceReference(valueSetUri),
+                Strength = strength
+            };
+
+            ed.Binding = binding;
+
+            return ed;
+        }
     }
 }

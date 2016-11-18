@@ -124,6 +124,28 @@ namespace Hl7.Fhir.Rest
             }
         }
 
+#if !PORTABLE45
+        /// <summary>
+        /// This will do 2 things:
+        /// 1. Add the header Accept-Encoding: gzip, deflate
+        /// 2. decompress any responses that have Content-Encoding: gzip (or deflate)
+        /// </summary>
+        public bool PreferCompressedResponses 
+        {
+            get { return _requester.PreferCompressedResponses; }
+            set { _requester.PreferCompressedResponses = value; }
+        }
+        /// <summary>
+        /// Compress any Request bodies 
+        /// (warning, if a server does not handle compressed requests you will get a 415 response)
+        /// </summary>
+        public bool CompressRequestBody
+        {
+            get { return _requester.CompressRequestBody; }
+            set { _requester.CompressRequestBody = value; }
+        }
+#endif
+
 
         /// <summary>
         /// The last transaction result that was executed on this connection to the FHIR server
@@ -893,7 +915,7 @@ namespace Hl7.Fhir.Rest
             CapabilityStatement conf = null;
             try
             {
-                conf = Conformance();
+                conf = CapabilityStatement(SummaryType.True); // don't get the full version as its huge just to read the fhir version
             }
             catch (FormatException)
             {

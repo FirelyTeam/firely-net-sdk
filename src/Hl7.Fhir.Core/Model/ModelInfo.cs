@@ -31,7 +31,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Introspection;
 using System.Diagnostics;
@@ -238,7 +237,9 @@ namespace Hl7.Fhir.Model
         /// <summary>Determines if the specified <see cref="Type"/> instance represents a FHIR primitive data type.</summary>
         public static bool IsPrimitive(Type type)
         {
-            return IsPrimitive(type.Name);
+            var name = GetFhirTypeNameForType(type);
+
+            return name != null && Char.IsLower(name[0]);
         }
 
         /// <summary>Determines if the specified <see cref="FHIRAllTypes"/> value represents a FHIR primitive data type.</summary>
@@ -258,7 +259,9 @@ namespace Hl7.Fhir.Model
         /// <summary>Determines if the specified <see cref="Type"/> instance represents a FHIR complex data type (NOT including resources and primitives).</summary>
         public static bool IsDataType(Type type)
         {
-            return IsDataType(type.Name);
+            var name = GetFhirTypeNameForType(type);
+
+            return name != null && !IsKnownResource(name) && !IsPrimitive(name);
         }
 
         /// <summary>Determines if the specified <see cref="FHIRAllTypes"/> value represents a FHIR complex data type (NOT including resources and primitives).</summary>
@@ -374,12 +377,19 @@ namespace Hl7.Fhir.Model
             FHIRAllTypes.TestScript
         };
 
-        /// <summary>
-        /// Is the given type a core Resource, Datatype or primitive
-        /// </summary>
-        public static bool IsCoreModelType(string name)
+        /// <summary>Determines if the specified value represents the name of a core Resource, Datatype or primitive.</summary>
+        public static bool IsCoreModelType(string name) => FhirTypeToCsType.ContainsKey(name);
+            // => IsKnownResource(name) || IsDataType(name) || IsPrimitive(name);
+
+        
+        static readonly Uri FhirCoreProfileBaseUri = new Uri(@"http://hl7.org/fhir/StructureDefinition/");
+
+        /// <summary>Determines if the specified value represents the canonical uri of a core Resource, Datatype or primitive.</summary>
+        public static bool IsCoreModelTypeUri(Uri uri)
         {
-            return IsKnownResource(name) || IsDataType(name) || IsPrimitive(name);
+            return uri != null
+                && FhirCoreProfileBaseUri.IsBaseOf(uri)
+                && IsCoreModelType(FhirCoreProfileBaseUri.MakeRelativeUri(uri).ToString());
         }
 
         /// <summary>

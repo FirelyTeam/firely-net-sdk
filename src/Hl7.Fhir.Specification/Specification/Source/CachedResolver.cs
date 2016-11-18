@@ -7,10 +7,8 @@
  */
 
 using System;
-using System.IO;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
-using System.Linq;
 using System.Collections.Generic;
 
 namespace Hl7.Fhir.Specification.Source
@@ -22,9 +20,7 @@ namespace Hl7.Fhir.Specification.Source
     {
         public const int DEFAULT_CACHE_DURATION = 4 * 3600;     // 4 hours
 
-        /// <summary>
-        /// 
-        /// </summary>
+        /// <summary>Artifact resolver decorator to cache loaded resources in memory.</summary>
         /// <param name="source">ArtifactSource that will be used to get data from on a cache miss</param>
         /// <param name="cacheDuration">Duration before trying to refresh the cache, in seconds</param>
         public CachedResolver(IResourceResolver source, int cacheDuration = DEFAULT_CACHE_DURATION)
@@ -32,8 +28,8 @@ namespace Hl7.Fhir.Specification.Source
             Source = source;
             CacheDuration = cacheDuration;
 
-            _resourcesByUri = new Cache<Resource>(id => Source.ResolveByUri(id), CacheDuration);
-            _resourcesByCanonical = new Cache<Resource>(id => Source.ResolveByCanonicalUri(id), CacheDuration);
+            _resourcesByUri = new Cache<Resource>(id => InternalResolveByUri(id), CacheDuration);
+            _resourcesByCanonical = new Cache<Resource>(id => InternalResolveByCanonicalUri(id), CacheDuration);
         }
 
         public IResourceResolver Source { get; private set; }
@@ -57,6 +53,62 @@ namespace Hl7.Fhir.Specification.Source
             return _resourcesByCanonical.Get(url);
         }
 
+        /// <summary>Remove the resource with the specified uri from the cache, if it exists.</summary>
+        /// <param name="url">The resource uri.</param>
+        /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
+        public bool InvalidateUri(string url) => _resourcesByUri.Invalidate(url);
+
+        /// <summary>Remove the resource with the specified canonical uri from the cache, if it exists.</summary>
+        /// <param name="url">The canonical resource uri.</param>
+        /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
+        public bool InvalidateCanonicalUri(string url) => _resourcesByCanonical.Invalidate(url);
+
+        /// <summary>Clear the cache by removing all existing cache entries.</summary>
+        public void Clear()
+        {
+            _resourcesByUri.Clear();
+            _resourcesByCanonical.Clear();
+        }
+
+        /// <summary>Event arguments for the <see cref="LoadResourceEventHandler"/> delegate.</summary>
+        public class LoadResourceEventArgs : EventArgs
+        {
+            public LoadResourceEventArgs(string url, Resource resource) : base()
+            {
+                Url = url;
+                Resource = resource;
+            }
+
+            /// <summary>Returns the url of the cached resource.</summary>
+            public string Url { get; }
+
+            /// <summary>Returns a reference to the cached resource.</summary>
+            public Resource Resource { get; }
+        }
+
+        /// <summary>Handles the <see cref="Load"/> event that is fired when a new resources is loaded into the cache.</summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public delegate void LoadResourceEventHandler(object sender, LoadResourceEventArgs e);
+
+        /// <summary>Occurs when a resource is loaded into the cache.</summary>
+        public event LoadResourceEventHandler Load;
+
+        protected virtual void OnLoad(string url, Resource resource) => Load?.Invoke(this, new LoadResourceEventArgs(url, resource));
+
+        Resource InternalResolveByUri(string url)
+        {
+            var resource = Source.ResolveByUri(url);
+            OnLoad(url, resource);
+            return resource;
+        }
+
+        Resource InternalResolveByCanonicalUri(string url)
+        {
+            var resource = Source.ResolveByCanonicalUri(url);
+            OnLoad(url, resource);
+            return resource;
+        }
 
         private class Cache<T>
         {
@@ -69,26 +121,28 @@ namespace Hl7.Fhir.Specification.Source
                 _duration = duration;
             }
 
-            private SynchronizedCollection<CacheEntry<T>> _cache = new SynchronizedCollection<CacheEntry<T>>();
+           // private SynchronizedCollection<CacheEntry<T>> _cache = new SynchronizedCollection<CacheEntry<T>>();
             private Object getLock = new Object();
-
+            private Dictionary<string, CacheEntry<T>> _cache = new Dictionary<string, CacheEntry<T>>();
 
             public T Get(string identifier)
             {
                 lock (getLock)
                 {
                     // Check the cache
-                    var entry = _cache.Where(ce => ce.Identifier == identifier).SingleOrDefault();
+                    CacheEntry<T> entry;
+                    bool success = _cache.TryGetValue(identifier, out entry);
+                    //var entry = _cache.TryGetValue(Where(ce => ce.Identifier == identifier).SingleOrDefault();
 
                     // Remove entry if it's too old
-                    if (entry != null && entry.Expired)
+                    if (success && entry.Expired)
                     {
-                        _cache.Remove(entry);
+                        _cache.Remove(identifier);
                         entry = null;
                     }
 
                     // If we still have a fresh entry, return it
-                    if (entry != null)
+                    if (success)
                         return entry.Data;
                     else
                     {
@@ -96,10 +150,26 @@ namespace Hl7.Fhir.Specification.Source
                         T newData = default(T);
 
                         newData = _onCacheMiss(identifier);
-                        _cache.Add(new CacheEntry<T> { Data = newData, Identifier = identifier, Expires = DateTime.Now.AddSeconds(_duration) });
+                        _cache.Add(identifier, new CacheEntry<T> { Data = newData, Identifier = identifier, Expires = DateTime.Now.AddSeconds(_duration) });
 
                         return newData;
                     }
+                }
+            }
+
+            public bool Invalidate(string identifier)
+            {
+                lock (getLock)
+                {
+                    return _cache.Remove(identifier);
+                }
+            }
+
+            public void Clear()
+            {
+                lock (getLock)
+                {
+                    _cache.Clear();
                 }
             }
         }
@@ -110,13 +180,8 @@ namespace Hl7.Fhir.Specification.Source
             public DateTime Expires;
             public string Identifier;
 
-            public bool Expired
-            {
-                get
-                {
-                    return DateTime.Now > Expires;
-                }
-            }
+            /// <summary>Returns a boolean value that indicates if the cache entry is expired.</summary>
+            public bool Expired => DateTime.Now > Expires;
         }    
     }
 }

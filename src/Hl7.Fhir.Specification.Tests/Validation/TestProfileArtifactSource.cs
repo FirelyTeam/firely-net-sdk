@@ -8,12 +8,13 @@ using Hl7.Fhir.Model;
 using System.IO;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Snapshot;
+using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.Validation
 {
     internal class TestProfileArtifactSource : IResourceResolver
     {
-        List<StructureDefinition> TestProfiles = new List<StructureDefinition>
+        public List<StructureDefinition> TestProfiles = new List<StructureDefinition>
         {
             buildIdentifierWithBSN(),
             buildIdentifierWithDriversLicense(),
@@ -21,7 +22,16 @@ namespace Hl7.Fhir.Validation
             buildQuestionnaireWithFixedType(),
             buildHeightQuantity(),
             buildWeightQuantity(),
-            buildWeightHeightObservation()
+            buildWeightHeightObservation(),
+            bundleWithSpecificEntries("Contained"),
+            patientWithSpecificOrganization(new[] { ElementDefinition.AggregationMode.Contained }, "Contained"),
+            bundleWithSpecificEntries("ContainedBundled"),
+            patientWithSpecificOrganization(new[] { ElementDefinition.AggregationMode.Contained, ElementDefinition.AggregationMode.Bundled }, "ContainedBundled"),
+            bundleWithSpecificEntries("Bundled"),
+            patientWithSpecificOrganization(new[] { ElementDefinition.AggregationMode.Bundled }, "Bundled"),
+            bundleWithSpecificEntries("Referenced"),
+            patientWithSpecificOrganization(new[] { ElementDefinition.AggregationMode.Referenced }, "Referenced"),
+            buildParametersWithBoundParams()
         };
 
 
@@ -132,6 +142,52 @@ namespace Hl7.Fhir.Validation
                 .OrType(FHIRAllTypes.Quantity, "http://validationtest.org/fhir/StructureDefinition/HeightQuantity")
                 .OrType(FHIRAllTypes.String));
 
+            Console.WriteLine(FhirSerializer.SerializeResourceToXml(result));
+            return result;
+        }
+
+
+        private static StructureDefinition bundleWithSpecificEntries(string prefix)
+        {
+            var result = createTestSD($"http://validationtest.org/fhir/StructureDefinition/BundleWith{prefix}Entries", $"Bundle with specific {prefix} test entries",
+                    $"Bundle with just Organization or {prefix} Patient entries", FHIRAllTypes.Bundle);
+
+            var cons = result.Differential.Element;
+
+            cons.Add(new ElementDefinition("Bundle").OfType(FHIRAllTypes.Bundle));
+            cons.Add(new ElementDefinition("Bundle.entry.resource")
+                .OfType(FHIRAllTypes.Organization)
+                .OrType(FHIRAllTypes.Patient, $"http://validationtest.org/fhir/StructureDefinition/PatientWith{prefix}Organization"));
+
+            return result;
+        }
+
+
+        private static StructureDefinition patientWithSpecificOrganization(IEnumerable<ElementDefinition.AggregationMode> aggregation, string prefix)
+        {
+            var result = createTestSD($"http://validationtest.org/fhir/StructureDefinition/PatientWith{prefix}Organization", $"Patient with {prefix} managing organization",
+                    $"Patient for which the managingOrganization reference is limited to {prefix} references", FHIRAllTypes.Patient);
+
+            var cons = result.Differential.Element;
+
+            cons.Add(new ElementDefinition("Patient").OfType(FHIRAllTypes.Patient));
+            cons.Add(new ElementDefinition("Patient.managingOrganization")
+                .OfType(FHIRAllTypes.Reference, ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Organization))); //, aggregation));
+
+            return result;
+        }
+
+
+        private static StructureDefinition buildParametersWithBoundParams()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/ParametersWithBoundParams", "Parameters with term binding on Params",
+                    "Parameters resource where the parameter.value[x] is bound to a valueset", FHIRAllTypes.Parameters);
+            var cons = result.Differential.Element;
+
+            cons.Add(new ElementDefinition("Parameters").OfType(FHIRAllTypes.Parameters));
+            cons.Add(new ElementDefinition("Parameters.parameter.value[x]")
+                    .WithBinding("http://hl7.org/fhir/ValueSet/data-absent-reason", BindingStrength.Required));
+
             return result;
         }
 
@@ -167,5 +223,7 @@ namespace Hl7.Fhir.Validation
 
             return result;
         }
+
+
     }
 }

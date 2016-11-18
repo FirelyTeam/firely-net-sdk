@@ -28,7 +28,7 @@
     <DocumentationFile>bin\Debug\Net45\Hl7.Fhir.STU3.Specification.xml</DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
     <NoWarn>1591</NoWarn>
-    <LangVersion>5</LangVersion>
+    <LangVersion>6</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -43,13 +43,13 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Hl7.FluentPath, Version=0.3.1.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Hl7.FluentPath.0.3.1-alpha4\lib\net45\Hl7.FluentPath.dll</HintPath>
+    <Reference Include="Hl7.FluentPath, Version=0.4.0.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hl7.FluentPath.0.4.0-alpha3\lib\net45\Hl7.FluentPath.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+	    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -76,6 +76,9 @@
       <Link>Support\StringExtensions.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyVersionInfo.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotElementIdGenerator.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotGeneratorAnnotations.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotRecursionStack.cs" />
     <Compile Include="Specification\Source\CachedResolver.cs" />
     <Compile Include="Specification\Source\IConformanceSource.cs" />
     <Compile Include="Specification\Source\MultiResolver.cs" />
@@ -83,14 +86,24 @@
     <Compile Include="Specification\Source\ResourceResolverExtensions.cs" />
     <Compile Include="Specification\Source\IArtifactSource.cs" />
     <Compile Include="Specification\Source\WebResolver.cs" />
-    <Compile Include="Specification\Snapshot\SnapshotElementBaseGenerator.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotBaseComponentGenerator.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorExtensions.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorOutcome.cs" />
+    <Compile Include="Specification\Terminology\ExpansionSizeTooBig.cs" />
+    <Compile Include="Specification\Terminology\ITerminologyService.cs" />
+    <Compile Include="Specification\Terminology\LocalTerminologyServer.cs" />
+    <Compile Include="Specification\Terminology\ValueSetExpander.cs" />
+    <Compile Include="Support\ValidationOutcomeExtensions.cs" />
+    <Compile Include="Specification\ValueSet\ValueSetExpander.cs" />
+    <Compile Include="Validation\BatchValidationExtensions.cs" />
+    <Compile Include="Validation\BindingValidator.cs" />
     <Compile Include="Validation\Cardinality.cs" />
-    <Compile Include="Validation\ChildConstraintExtensions.cs" />
-    <Compile Include="Validation\FixedPatternExtensions.cs" />
+    <Compile Include="Validation\ChildConstraintValidationExtensions.cs" />
+    <Compile Include="Validation\ElementDefinitionNavigatorExtensions.cs" />
+    <Compile Include="Validation\ElementNavigatorParsingExtensions.cs" />
+    <Compile Include="Validation\FixedPatternValidationExtensions.cs" />
     <Compile Include="Validation\InstanceToProfileMatcher.cs" />
-    <Compile Include="Validation\Issue.cs" />
+    <Compile Include="Support\Issue.cs" />
     <Compile Include="Specification\Navigation\ElementNavigatorTypeExtensions.cs" />
     <Compile Include="Specification\Navigation\ProfileReference.cs" />
     <Compile Include="Specification\Snapshot\DifferentialTreeConstructor.cs" />
@@ -104,7 +117,6 @@
     <Compile Include="Specification\Navigation\ProfileNavigationExtensions.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorEvents.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorSettings.cs" />
-    <Compile Include="Specification\Snapshot\SnapshotRecursionChecker.cs" />
     <Compile Include="Specification\Source\SourceFactory.cs" />
     <Compile Include="Specification\Source\ZipSource.cs" />
     <Compile Include="Specification\Source\DirectorySource.cs" />
@@ -113,10 +125,15 @@
     <Compile Include="Specification\Source\ResourceStreamScanner.cs" />
     <Compile Include="Specification\Source\ZipCacher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Validation\OperationOutcomeValidationExtensions.cs" />
+    <Compile Include="Validation\MinMaxValidationExtensions.cs" />
+    <Compile Include="Validation\OperationOutcomeExtensions.cs" />
+    <Compile Include="Validation\ProfileAssertion.cs" />
+    <Compile Include="Validation\ProfilePreprocessor.cs" />
+    <Compile Include="Validation\XmlValidationExtensions.cs" />
     <Compile Include="Validation\PocoValidationExtensions.cs" />
-    <Compile Include="Validation\ValidationContext.cs" />
-    <Compile Include="Validation\ValidationOutcomeExtensions.cs" />
+    <Compile Include="Validation\ScopeTracker.cs" />
+    <Compile Include="Validation\TypeRefValidationExtensions.cs" />
+    <Compile Include="Validation\ValidationSettings.cs" />
     <Compile Include="Validation\TypeRefExtensions.cs" />
     <Compile Include="Validation\Validator.cs" />
     <Compile Include="XPath\CustomXsltFunction.cs" />
@@ -139,8 +156,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <FhirConformance Include="data\*.*" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="BeforeBuild">
+  <Target Name="BeforeBuild" Inputs="@(FhirConformance)" Outputs="specification.zip">
     <CleanSpecFiles DirectoryName="data" />
     <ZipDir ZipFileName="specification.zip" DirectoryName="data" />
   </Target>
@@ -178,9 +198,9 @@
       <Using Namespace="System.Xml.Linq" />
       <Using Namespace="System.IO" />
       <Code Type="Fragment" Language="cs"><![CDATA[
-		  try
-		  {
-		    Log.LogMessage(string.Format("Cleaning spec files in directory {0}", DirectoryName));
+          try
+          {
+            Log.LogMessage(string.Format("Cleaning spec files in directory {0}", DirectoryName));
 
 			var fhirns = XNamespace.Get("http://hl7.org/fhir");
 			var xmlns = XNamespace.Get("http://www.w3.org/1999/xhtml");

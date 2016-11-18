@@ -28,6 +28,7 @@
     <DocumentationFile>bin\Debug\Net40\Hl7.Fhir.STU3.Specification.xml</DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
     <NoWarn>1591</NoWarn>
+    <LangVersion>6</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -49,15 +50,15 @@
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Hl7.FluentPath, Version=0.3.1.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Hl7.FluentPath.0.3.1-alpha4\lib\net40\Hl7.FluentPath.dll</HintPath>
+    <Reference Include="Hl7.FluentPath, Version=0.4.0.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hl7.FluentPath.0.4.0-alpha3\lib\net40\Hl7.FluentPath.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -82,6 +83,8 @@
     <Compile Include="..\Hl7.Fhir.Core\Support\StringExtensions.cs">
       <Link>Support\StringExtensions.cs</Link>
     </Compile>
+    <Compile Include="Specification\Terminology\ExpansionSizeTooBig.cs" />
+    <Compile Include="Specification\Terminology\ITerminologyService.cs" />
     <Compile Include="Properties\AssemblyVersionInfo.cs" />
     <Compile Include="Specification\Navigation\Bookmark.cs" />
     <Compile Include="Specification\Navigation\ElementDefinitionNavigator.cs" />
@@ -93,13 +96,15 @@
     <Compile Include="Specification\Snapshot\DifferentialTreeConstructor.cs" />
     <Compile Include="Specification\Snapshot\ElementDefnMerger.cs" />
     <Compile Include="Specification\Snapshot\ElementMatcher.cs" />
-    <Compile Include="Specification\Snapshot\SnapshotElementBaseGenerator.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotBaseComponentGenerator.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotElementIdGenerator.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGenerator.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotGeneratorAnnotations.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorEvents.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorExtensions.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorOutcome.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorSettings.cs" />
-    <Compile Include="Specification\Snapshot\SnapshotRecursionChecker.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotRecursionStack.cs" />
     <Compile Include="Specification\Source\CachedResolver.cs" />
     <Compile Include="Specification\Source\DirectorySource.cs" />
     <Compile Include="Specification\Source\IArtifactSource.cs" />
@@ -115,17 +120,30 @@
     <Compile Include="Specification\Source\ZipCacher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Specification\Source\ZipSource.cs" />
+    <Compile Include="Specification\Terminology\LocalTerminologyServer.cs" />
+    <Compile Include="Specification\Terminology\ValueSetExpander.cs" />
+    <Compile Include="Support\Issue.cs" />
+    <Compile Include="Specification\ValueSet\ValueSetExpander.cs" />
+    <Compile Include="Validation\BatchValidationExtensions.cs" />
+    <Compile Include="Validation\BindingValidator.cs" />
     <Compile Include="Validation\Cardinality.cs" />
-    <Compile Include="Validation\ChildConstraintExtensions.cs" />
-    <Compile Include="Validation\FixedPatternExtensions.cs" />
+    <Compile Include="Validation\ChildConstraintValidationExtensions.cs" />
+    <Compile Include="Validation\ElementDefinitionNavigatorExtensions.cs" />
+    <Compile Include="Validation\ElementNavigatorParsingExtensions.cs" />
+    <Compile Include="Validation\FixedPatternValidationExtensions.cs" />
     <Compile Include="Validation\InstanceToProfileMatcher.cs" />
-    <Compile Include="Validation\Issue.cs" />
-    <Compile Include="Validation\OperationOutcomeValidationExtensions.cs" />
+    <Compile Include="Validation\MinMaxValidationExtensions.cs" />
+    <Compile Include="Validation\OperationOutcomeExtensions.cs" />
     <Compile Include="Validation\PocoValidationExtensions.cs" />
+    <Compile Include="Validation\ProfileAssertion.cs" />
+    <Compile Include="Validation\ProfilePreprocessor.cs" />
+    <Compile Include="Validation\ScopeTracker.cs" />
     <Compile Include="Validation\TypeRefExtensions.cs" />
-    <Compile Include="Validation\ValidationContext.cs" />
-    <Compile Include="Validation\ValidationOutcomeExtensions.cs" />
+    <Compile Include="Validation\TypeRefValidationExtensions.cs" />
+    <Compile Include="Support\ValidationOutcomeExtensions.cs" />
+    <Compile Include="Validation\ValidationSettings.cs" />
     <Compile Include="Validation\Validator.cs" />
+    <Compile Include="Validation\XmlValidationExtensions.cs" />
     <Compile Include="XPath\CustomXsltFunction.cs" />
     <Compile Include="XPath\FhirNamespaceManager.cs" />
     <Compile Include="XPath\JsonReaderExtensions.cs" />

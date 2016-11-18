@@ -17,7 +17,7 @@ namespace Hl7.Fhir.FluentPath
 {
     public static class PocoNavigatorExtensions
     {
-        public static IEnumerable<Base> ToFhirValues(this IEnumerable<ElementModel.IValueProvider> results)
+        public static IEnumerable<Base> ToFhirValues(this IEnumerable<ElementModel.IElementNavigator> results)
         {
             return results.Select(r =>
             {

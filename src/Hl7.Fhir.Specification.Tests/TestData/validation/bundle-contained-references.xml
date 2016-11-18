@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Bundle xmlns="http://hl7.org/fhir">
+  <type value="collection"/>
+
+  <!-- An organization that already has an id on a server -->
+  <entry>
+    <fullUrl value="http://example.org/fhir/Organization/23"/>
+    <resource>
+      <Organization>
+        <id value="23"/>
+        <active value="true" />
+      </Organization>
+    </resource>
+  </entry>
+
+  <!-- An organization that doesn't have a persistent home - but it does have 
+      a UUID assigned for this bundle "locally identified" -->
+  <entry>
+    <fullUrl value="urn:uuid:04121321-4af5-424c-a0e1-ed3aab1c349d"/>
+    <resource>
+      <Organization>
+        <active value="true" />
+      </Organization>
+    </resource>
+  </entry>
+
+  <!-- a relative resource reference -->
+  <entry>
+    <fullUrl value="http://example.org/fhir/Patient/a"/>
+    <resource>
+      <Patient>
+        <id value="a"/>
+        <managingOrganization>
+          <!-- this is reference to the first resource above -->
+          <reference value="Organization/23"/>
+        </managingOrganization>
+      </Patient>
+    </resource>
+  </entry>
+
+  <!-- an absolute reference -->
+  <entry>
+    <fullUrl value="http://example.org/fhir/Patient/b"/>
+    <resource>
+      <Patient>
+        <id value="b"/>
+        <managingOrganization>
+          <!-- this is reference to the first resource above -->
+          <reference value="http://example.org/fhir/Organization/23"/>
+        </managingOrganization>
+      </Patient>
+    </resource>
+  </entry>
+
+  <!-- reference to a locally identified resource -->
+  <entry>
+    <fullUrl value="http://example.org/fhir/Patient/c"/>
+    <resource>
+      <Patient>
+        <id value="c"/>
+        <managingOrganization>
+          <!-- this is reference to the second resource above -->
+          <reference value="urn:uuid:04121321-4af5-424c-a0e1-ed3aab1c349d"/>
+        </managingOrganization>
+      </Patient>
+    </resource>
+  </entry>
+
+  <!-- reference that doesn't resolve in this bundle -->
+  <entry>
+    <fullUrl value="http://example.org/fhir/Patient/d"/>
+    <resource>
+      <Patient>
+        <id value="d"/>
+        <managingOrganization>
+          <!-- this is reference to the second resource above -->
+          <reference value="http://example.org/somehwere/else/org3"/>
+        </managingOrganization>
+      </Patient>
+    </resource>
+  </entry>
+
+  <!-- a contained reference -->
+  <entry>
+    <fullUrl value="http://example.org/fhir/Patient/e"/>
+    <resource>
+      <Patient>
+        <id value="e"/>
+        <contained>
+          <Organization>
+            <id value="orgX" />
+          </Organization>
+        </contained>
+        <contained>
+          <Organization>
+            <id value="orgY" />
+          </Organization>
+        </contained>
+        <managingOrganization>
+          <!-- reference to the contained organization -->
+          <reference value="#orgY"/>
+        </managingOrganization>
+      </Patient>
+    </resource>
+  </entry>
+
+</Bundle>

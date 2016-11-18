@@ -28,13 +28,11 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <param name="element">A reference to the snapshot element with merged differential constraints.</param>
         internal void OnConstraint(Element element)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
-            
+            if (element == null) { throw new ArgumentNullException(nameof(element)); }
+
             // Configurable default behavior: mark changed elements
-            if (_settings.MarkChanges)
-            {
-                element.SetChangedByDiff();
-            }
+            // [WMR 20160915] Mark element as chaged
+            markChangedByDiff(element);
 
             var handler = Constraint;
             if (handler != null)
@@ -63,8 +61,8 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <param name="baseProfile">The associated base profile <see cref="StructureDefinition"/> instance.</param>
         internal void OnPrepareBaseProfile(StructureDefinition profile, StructureDefinition baseProfile)
         {
-            if (profile == null) { throw new ArgumentNullException("profile"); }
-            if (baseProfile == null) { throw new ArgumentNullException("baseProfile"); }
+            if (profile == null) { throw new ArgumentNullException(nameof(profile)); }
+            if (baseProfile == null) { throw new ArgumentNullException(nameof(baseProfile)); }
             var handler = PrepareBaseProfile;
             if (handler != null)
             {
@@ -85,7 +83,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Raise the <see cref="PrepareElement"/> event to notify the client when an element definition is being prepared for merging.</summary>
         internal void OnPrepareElement(ElementDefinition element, StructureDefinition baseStructure, ElementDefinition baseElement)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            if (element == null) { throw new ArgumentNullException(nameof(element)); }
             var handler = PrepareElement;
             if (handler != null)
             {

@@ -37,9 +37,31 @@ namespace Hl7.Fhir.Model
     [System.Diagnostics.DebuggerDisplay(@"\{{Value}}")]
     public partial class Date : IStringValue
     {
+        public Date(int year, int month, int day)
+            : this(String.Format(Model.FhirDateTime.FMT_YEARMONTHDAY, year, month, day))
+        {
+        }
+
+        public Date(int year, int month)
+            : this( String.Format(Model.FhirDateTime.FMT_YEARMONTH,year,month) )
+        {
+        }
+
+        public Date(int year): this( String.Format(Model.FhirDateTime.FMT_YEAR, year))
+        {
+        }
+
         public static Date Today()
         {
             return new Date(DateTime.Now.ToString("yyyy-MM-dd"));
+        }
+
+        public Hl7.FluentPath.PartialDateTime? ToPartialDateTime()
+        {
+            if (Value != null)
+                return PartialDateTime.Parse(Value);
+            else
+                return null;
         }
 
         public static bool IsValidValue(string value)

@@ -10,32 +10,47 @@ using System.Linq;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Validation
 {
     internal static class TypeRefExtensions
     {
-        public static string ProfileUri(this ElementDefinition.TypeRefComponent typeRef)
+        public static FHIRAllTypes BaseType(this StructureDefinition sd)
         {
-            if (!string.IsNullOrEmpty(typeRef.Profile))
+            var result = EnumUtility.ParseLiteral<FHIRAllTypes>(sd.Type) ?? EnumUtility.ParseLiteral<FHIRAllTypes>(sd.Id);
+
+            if (result == null)
+                throw Error.NotSupported($"Encountered profile '{sd.Url}', for which the declaring core type cannot be determined");
+
+            return result.Value;
+        }
+
+        public static string ReadableName(this StructureDefinition sd) => sd.Type != null ? sd.Url : sd.Id;
+
+        public static string GetDeclaredProfiles(this ElementDefinition.TypeRefComponent typeRef)
+        {
+            if (typeRef.Profile.Any())
             {
-                return typeRef.Profile;
+                return typeRef.Profile;     // Take the first, this will disappear in STU3 anyway
             }
+            else if (!string.IsNullOrEmpty(typeRef.Code))
+                return ModelInfo.CanonicalUriForFhirCoreType(typeRef.Code);
             else
-            {
-                return "http://hl7.org/fhir/StructureDefinition/" + typeRef.Code;
-            }
+                return null;
         }
 
-        public static string ToHumanReadable(this ElementDefinition.TypeRefComponent typeRef)
+
+        public static bool IsChoice(this ElementDefinition definition)
         {
-            var result = typeRef.Code;
-
-            if (!string.IsNullOrEmpty(typeRef.Profile))
-                result += " ({0})".FormatWith(typeRef.Profile);
-
-            return result;
+            return definition.Type.Where(tr => tr.Code != null).Distinct().Count() > 1;
         }
+
+        public static List<FHIRAllTypes> ChoiceTypes(this ElementDefinition definition)
+        {
+            return definition.Type.Where(tr => tr.Code != null).Select(tr => EnumUtility.ParseLiteral<FHIRAllTypes>(tr.Code).Value).Distinct().ToList();
+        }
+
 
         public static string GetPrimitiveValueRegEx(this ElementDefinition.TypeRefComponent typeRef)
         {

@@ -30,6 +30,7 @@
     <WarningLevel>4</WarningLevel>
     <NoWarn>3016,1591</NoWarn>
     <DocumentationFile>bin\Debug\Net40\Hl7.Fhir.STU3.Core.xml</DocumentationFile>
+    <LangVersion>6</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -50,12 +51,12 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Hl7.FluentPath, Version=0.3.1.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Hl7.FluentPath.0.3.1-alpha4\lib\net40\Hl7.FluentPath.dll</HintPath>
+    <Reference Include="Hl7.FluentPath, Version=0.4.0.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hl7.FluentPath.0.4.0-alpha3\lib\net40\Hl7.FluentPath.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -139,6 +140,8 @@
     <Compile Include="Model\Generated\Xhtml.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Quantity.cs" />
+    <Compile Include="Model\ValueSetExpansionExtensions.cs" />
     <Compile Include="Support\ObjectList.cs" />
     <Compile Include="Model\Base.cs" />
     <Compile Include="Model\Binary.cs" />
@@ -755,7 +758,9 @@
   <ItemGroup>
     <None Include="Model\Generated\Template-Children.ttinclude" />
     <None Include="Model\Generated\TemplateFileManagerV2.1.ttinclude" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Model\Source\expansions.xml" />

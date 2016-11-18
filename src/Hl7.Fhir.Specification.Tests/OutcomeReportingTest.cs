@@ -20,6 +20,7 @@ using Hl7.Fhir.FluentPath;
 using Hl7.ElementModel;
 using Hl7.FluentPath;
 using Hl7.Fhir.Validation;
+using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -48,7 +49,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             OperationOutcome level2 = new OperationOutcome();
 
-            level2.AddIssue(Issue.UNAVAILABLE_NEED_SNAPSHOT.ToIssueComponent("A test warning at level 2", "Patient.active[0].id[0]"));
+            level2.AddIssue(Issue.UNSUPPORTED_CONSTRAINT_WITHOUT_FLUENTPATH.ToIssueComponent("A test warning at level 2", "Patient.active[0].id[0]"));
             level2.AddIssue(Issue.CONTENT_ELEMENT_MUST_MATCH_TYPE.ToIssueComponent("Another test error at level 2", "Patient.active[0].id[0]"));
 
             level1.Include(level2);
@@ -80,7 +81,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(2, _report.ListErrors().Count());
             Assert.AreEqual(3, _report.Where(severity: OperationOutcome.IssueSeverity.Warning).Count());
             Assert.AreEqual(2, _report.Where(type: OperationOutcome.IssueType.BusinessRule).Count());
-            Assert.AreEqual(1, _report.Where(issueCode: 2008).Count());
+            Assert.AreEqual(1, _report.Where(issueCode: Issue.PROFILE_ELEMENTDEF_CARDINALITY_MISSING.Code).Count());
             Assert.AreEqual(1, _report.Where(severity: OperationOutcome.IssueSeverity.Warning, type: OperationOutcome.IssueType.BusinessRule, issueCode: 2008).Count());
             Assert.AreEqual(0, _report.Where(severity: OperationOutcome.IssueSeverity.Error, type: OperationOutcome.IssueType.BusinessRule, issueCode: 2008).Count());
         }

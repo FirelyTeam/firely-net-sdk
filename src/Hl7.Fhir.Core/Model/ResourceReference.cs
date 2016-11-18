@@ -41,6 +41,16 @@ namespace Hl7.Fhir.Model
     [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
     public partial class ResourceReference
     {
+        public ResourceReference(string reference)
+        {
+            Reference = reference;
+        }
+
+        public ResourceReference()
+        {
+
+        }
+
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         [NotMapped]
         private string DebuggerDisplay

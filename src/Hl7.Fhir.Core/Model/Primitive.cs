@@ -24,6 +24,10 @@ namespace Hl7.Fhir.Model
 
         public override string ToString()
         {
+            // The primitive can exist without a value (when there is an extension present)
+            // so we need to be able to handle when there is no extension present
+            if (this.ObjectValue == null)
+                return null;
             return PrimitiveTypeConverter.ConvertTo<string>(this.ObjectValue);
         }
 

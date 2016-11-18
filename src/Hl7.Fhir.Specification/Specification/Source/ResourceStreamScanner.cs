@@ -125,9 +125,12 @@ namespace Hl7.Fhir.Specification.Source
                         if (fullUrl != null)
                         {
                             var resourceNode = entryNode.Element(XName.Get("resource", XmlNs.FHIR));
-                            var resource = resourceNode.Elements().First();
-                            resource.AddAnnotation(new FullUrlAnnotation { FullUrl = fullUrl.Value } );
-                            yield return resource;
+                            if (resourceNode != null)
+                            {
+                                var resource = resourceNode.Elements().First();
+                                resource.AddAnnotation(new FullUrlAnnotation { FullUrl = fullUrl.Value });
+                                yield return resource;
+                            }
                         }
                     }
                     else

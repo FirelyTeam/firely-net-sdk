@@ -15,7 +15,7 @@ using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.FluentPath
 {
-    public class PocoElementNavigator : IValueProvider, ITypeNameProvider
+    public class PocoElementNavigator
     {
         static Hl7.Fhir.Introspection.ClassMapping GetMappingForType(Type elementType)
         {
@@ -80,12 +80,14 @@ namespace Hl7.Fhir.FluentPath
                 if (_string != null)
                     return _string;
 
+                try
+                {
                 if (_pocoElement is FhirDateTime)
-                    return Hl7.FluentPath.PartialDateTime.FromDateTime(((FhirDateTime)_pocoElement).ToDateTimeOffset());
+                    return ((FhirDateTime)_pocoElement).ToPartialDateTime();
                 else if (_pocoElement is Hl7.Fhir.Model.Time)
-                    return Hl7.FluentPath.Time.Parse(((Hl7.Fhir.Model.Time)_pocoElement).Value);
+                    return ((Hl7.Fhir.Model.Time)_pocoElement).ToTime();
                 else if ((_pocoElement is Hl7.Fhir.Model.Date))
-                    return Hl7.FluentPath.PartialDateTime.Parse(((Hl7.Fhir.Model.Date)_pocoElement).Value);
+                    return (((Hl7.Fhir.Model.Date)_pocoElement).ToPartialDateTime());
                 else if ((_pocoElement is Integer))
                 {
                     if ((_pocoElement as Integer).Value.HasValue)
@@ -103,8 +105,15 @@ namespace Hl7.Fhir.FluentPath
                 else
                     return null;
             }
+                catch(FormatException)
+                {
+                    // If it fails, just return the unparsed shit
+                    // Todo: add sentinel class!
+                    return (_pocoElement as Primitive)?.ObjectValue;
         }
 
+            }
+        }
 
         private static string[] quantitySubtypes = { "SimpleQuantity", "Age", "Count", "Distance", "Duration", "Money" };
 
@@ -116,7 +125,16 @@ namespace Hl7.Fhir.FluentPath
                 Console.WriteLine("Read TypeName '{0}' for Element '{1}' (value '{2}')".FormatWith(_mapping.Name, Name, Value ?? "(nothing)"));
 #endif
                 if (_string != null)
-                    return "string";
+                {
+                    if (Name == "url")
+                        return "uri";
+                    else if (Name == "id")
+                        return "id";
+                    else if (Name == "div")
+                        return "xhtml";
+                else
+                        throw new NotSupportedException($"Don't know about primitive with name '{Name}'");
+                }
                 else
                 {
 

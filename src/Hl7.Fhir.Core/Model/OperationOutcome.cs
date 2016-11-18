@@ -51,25 +51,22 @@ namespace Hl7.Fhir.Model
                 return Text.Div;
             }
 
+            var text = Success ?
+                "Overall result: SUCCESS" + Environment.NewLine :
+                $"Overall result: FAILURE ({Errors + Fatals} errors and {Warnings} warnings)" + Environment.NewLine;
+
             if (Issue.Any())
             {
-                var text = "";
-
-                // When this is a summary report (e.g. just showing errors), it might well be informational 
-                // parents are missing in the hierarchy above their error children. In this case, don't
-                // try to use indentation.
-                bool useIndentation = Issue.First().HierarchyLevel == 0;
+                text += Environment.NewLine;
 
                 foreach (var issue in Issue)
                 {
-                    var indent = useIndentation ? new string(' ', issue.HierarchyLevel * 2) : "";
+                    var indent = new string(' ', issue.HierarchyLevel * 2);
                     text += indent + issue.ToString() + Environment.NewLine;
                 }
-
-                return text;
             }
 
-            return "(no outcomes to report)";
+            return text;
         }
 
         [NotMapped]
@@ -141,13 +138,11 @@ namespace Hl7.Fhir.Model
                     text += "[" + Severity.ToString().ToUpper() + "] ";
                 }
 
+                text += Details?.Text ?? "(no details)";
+
                 if (Diagnostics != null)
                 {
-                    text += Diagnostics;
-                }
-                else
-                {
-                    text += "(no diagnostics)";
+                    text += $"(further diagnostics: {Diagnostics})";
                 }
 
                 if (Location.Any())

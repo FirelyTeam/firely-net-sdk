@@ -2,13 +2,13 @@
 <package>
   <metadata>
     <id>Hl7.Fhir.STU3</id>
-    <version>0.90.6-alpha7</version>
+    <version>0.90.6-alpha8</version>
     <title>HL7 FHIR Core support API for STU3</title>
     <authors>Ewout Kramer (e.kramer@furore.com) and contributors</authors>
     <owners>Furore (http://fhir.furore.com). Contains materials (C) Hl7 International</owners>
-    <description>WARNING: Sept 2016 WGM Connectathon Release! Core .NET support for working with HL7 FHIR. Supports FHIR STU3 (Connectathon Sept 2016).</description>
+    <description>WARNING: Jan 2017 WGM Connectathon Release! Core .NET support for working with HL7 FHIR. Supports FHIR STU3 (Connectathon Jan 2017).</description>
     <releaseNotes>STU3 release. See http://ewoutkramer.github.io/fhir-net-api/whats-new.html</releaseNotes>
-    <summary>WARNING: Sept 2016 WGM Connectathon Release! This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the core functionality to working with RESTful FHIR servers: POCO classes for FHIR, parsing/serialization of FHIR data and a FhirClient for easy access to FHIR servers.</summary>
+    <summary>WARNING: Jan 2017 WGM Connectathon Release! This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the core functionality to working with RESTful FHIR servers: POCO classes for FHIR, parsing/serialization of FHIR data and a FhirClient for easy access to FHIR servers.</summary>
     <language>en-us</language>
     <projectUrl>https://github.com/ewoutkramer/fhir-net-api</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/icon-fhir-32.png</iconUrl>
@@ -19,39 +19,48 @@
       <!-- see: https://github.com/onovotny/ReferenceGenerator and MvvmCross project for inspiration -->
       <group targetFramework="net">
         <dependency id="Newtonsoft.Json" version="8.0.2" />
+		<dependency id="Hl7.FluentPath" version="0.4.0-alpha2" />
       </group>
       <group targetFramework="win">
         <dependency id="Newtonsoft.Json" version="8.0.2" />
         <dependency id="Portable-Strong.DataAnnotations" version="1.0.0" />
+        <dependency id="Hl7.FluentPath" version="0.4.0-alpha2" />
       </group>
       <group targetFramework="wpa">
         <dependency id="Newtonsoft.Json" version="8.0.2" />
         <dependency id="Portable-Strong.DataAnnotations" version="1.0.0" />
+        <dependency id="Hl7.FluentPath" version="0.4.0-alpha2" />
       </group>
       <group targetFramework="wp">
         <dependency id="Newtonsoft.Json" version="8.0.2" />
         <dependency id="Portable-Strong.DataAnnotations" version="1.0.0" />
+        <dependency id="Hl7.FluentPath" version="0.4.0-alpha2" />
       </group>
       <group targetFramework="MonoAndroid">
         <dependency id="Newtonsoft.Json" version="8.0.2" />
         <dependency id="Portable-Strong.DataAnnotations" version="1.0.0" />
+        <dependency id="Hl7.FluentPath" version="0.4.0-alpha2" />
       </group>
       <group targetFramework="Xamarin.iOS10">
         <dependency id="Newtonsoft.Json" version="8.0.2" />
         <dependency id="Portable-Strong.DataAnnotations" version="1.0.0" />
+        <dependency id="Hl7.FluentPath" version="0.4.0-alpha2" />
       </group>
       <group targetFramework="Xamarin.Mac20">
         <dependency id="Newtonsoft.Json" version="8.0.2" />
         <dependency id="Portable-Strong.DataAnnotations" version="1.0.0" />
+        <dependency id="Hl7.FluentPath" version="0.4.0-alpha2" />
       </group>
       <group targetFramework="portable-net45+win+wpa81+wp80">
         <dependency id="Newtonsoft.Json" version="8.0.2" />
         <dependency id="Portable-Strong.DataAnnotations" version="1.0.0" />
         <dependency id="Microsoft.Bcl" version="1.1.9" />
         <dependency id="Microsoft.Net.Http" version="2.2.28" />
+        <dependency id="Hl7.FluentPath" version="0.4.0-alpha2" />
       </group>
       <group targetFramework="dotnet">
         <dependency id="Newtonsoft.Json" version="8.0.2" />
+        <dependency id="Hl7.FluentPath" version="0.4.0-alpha2" />
       </group>
     </dependencies>
   </metadata>
