@@ -26,6 +26,7 @@ namespace Hl7.Fhir.FluentPath
 
             //_current = new PocoElementNavigator(model.TypeName, model);
             _parentPath = "";
+            _parentShortPath = "";
             _parentCommonPath = "";
 
             var me = new PocoElementNavigator(model.TypeName, model);
@@ -40,6 +41,7 @@ namespace Hl7.Fhir.FluentPath
         private IList<PocoElementNavigator> _siblings;
         private int _index;
         private string _parentPath;
+        private string _parentShortPath;
         private string _parentCommonPath;
 
         private PocoElementNavigator Current
@@ -114,16 +116,38 @@ namespace Hl7.Fhir.FluentPath
                 }
                 else
                 {
+                    int myIndex = _siblings.Where(s => s.Name == Current.Name).ToList().IndexOf(Current);
+                    return _parentPath + ".{0}[{1}]".FormatWith(Current.Name, myIndex);
+                }
+            }
+        }
+
+        /// <summary>
+        /// The ShortPath is almost the same as the Path except that
+        /// where the item is not an array, the array signature is not included.
+        /// </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public string ShortPath
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(_parentShortPath))
+                {
+                    return Current.Name;
+                }
+                else
+                {
                     // Needs to consider that the index might be irrelevant
                     if (Current.PropMap.IsCollection)
                     {
                         int myIndex = _siblings.Where(s => s.Name == Current.Name).ToList().IndexOf(Current);
-                        return _parentPath + ".{0}[{1}]".FormatWith(Current.Name, myIndex);
+                        return _parentShortPath + ".{0}[{1}]".FormatWith(Current.Name, myIndex);
                     }
-                    return _parentPath + ".{0}".FormatWith(Current.Name);
+                    return _parentShortPath + ".{0}".FormatWith(Current.Name);
                 }
             }
         }
+
 
         /// <summary>
         /// This is different to the explicit path as it considers what is
@@ -134,6 +158,7 @@ namespace Hl7.Fhir.FluentPath
         ///      Identifiers are referenced through system
         /// others all revert back to the normal Path indexing
         /// </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public string CommonPath
         {
             get
@@ -211,6 +236,7 @@ namespace Hl7.Fhir.FluentPath
             if (Current.Children().Any())
             {
                 _parentPath = Path;
+                _parentShortPath = ShortPath;
                 _parentCommonPath = CommonPath;
                 _siblings = Current.Children().ToList();
                 _index = 0;
@@ -251,6 +277,7 @@ namespace Hl7.Fhir.FluentPath
             result._siblings = this._siblings;
             result._index = this._index;
             result._parentPath = this._parentPath;
+            result._parentShortPath = this._parentShortPath;
             result._parentCommonPath = this._parentCommonPath;
             // Console.WriteLine("Cloning: {0}", this.GetName());
             return result;

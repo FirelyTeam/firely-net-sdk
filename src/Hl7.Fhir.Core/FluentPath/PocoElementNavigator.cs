@@ -43,7 +43,6 @@ namespace Hl7.Fhir.FluentPath
             Name = map.Name;
         }
 
-
         // For properties representing primitive strings (id, url, div), as
         // rendered as attributes in the xml
         internal PocoElementNavigator(Introspection.PropertyMapping map, string value)
@@ -82,29 +81,31 @@ namespace Hl7.Fhir.FluentPath
 
                 try
                 {
-                if (_pocoElement is FhirDateTime)
-                    return ((FhirDateTime)_pocoElement).ToPartialDateTime();
-                else if (_pocoElement is Hl7.Fhir.Model.Time)
-                    return ((Hl7.Fhir.Model.Time)_pocoElement).ToTime();
-                else if ((_pocoElement is Hl7.Fhir.Model.Date))
-                    return (((Hl7.Fhir.Model.Date)_pocoElement).ToPartialDateTime());
-                else if ((_pocoElement is Integer))
-                {
-                    if ((_pocoElement as Integer).Value.HasValue)
-                        return (long)(_pocoElement as Integer).Value.Value;
-                    return null;
-                }
-                else if (_pocoElement is Hl7.Fhir.Model.Instant)
-                {
-                    if (!((Hl7.Fhir.Model.Instant)_pocoElement).Value.HasValue)
+                    if (_pocoElement is FhirDateTime)
+                        return ((FhirDateTime)_pocoElement).ToPartialDateTime();
+                    else if (_pocoElement is Hl7.Fhir.Model.Time)
+                        return ((Hl7.Fhir.Model.Time)_pocoElement).ToTime();
+                    else if ((_pocoElement is Hl7.Fhir.Model.Date))
+                        return (((Hl7.Fhir.Model.Date)_pocoElement).ToPartialDateTime());
+                    else if (_pocoElement is Hl7.Fhir.Model.Instant)
+                        return ((Hl7.Fhir.Model.Instant)_pocoElement).ToPartialDateTime();
+                    else if ((_pocoElement is Integer))
+                    {
+                        if ((_pocoElement as Integer).Value.HasValue)
+                            return (long)(_pocoElement as Integer).Value.Value;
                         return null;
-                    return Hl7.FluentPath.PartialDateTime.Parse(((Hl7.Fhir.Model.Instant)_pocoElement).Value.Value.ToString("O"));
+                    }
+                    else if ((_pocoElement is PositiveInt))
+                    {
+                        if ((_pocoElement as PositiveInt).Value.HasValue)
+                            return (long)(_pocoElement as PositiveInt).Value.Value;
+                        return null;
+                    }
+                    else if (_pocoElement is Primitive)
+                        return ((Primitive)_pocoElement).ObjectValue;
+                    else
+                        return null;
                 }
-                else if (_pocoElement is Primitive)
-                    return ((Primitive)_pocoElement).ObjectValue;
-                else
-                    return null;
-            }
                 catch(FormatException)
                 {
                     // If it fails, just return the unparsed shit
@@ -132,7 +133,7 @@ namespace Hl7.Fhir.FluentPath
                         return "id";
                     else if (Name == "div")
                         return "xhtml";
-                else
+                    else
                         throw new NotSupportedException($"Don't know about primitive with name '{Name}'");
                 }
                 else
