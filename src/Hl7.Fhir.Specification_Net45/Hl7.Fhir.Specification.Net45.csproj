@@ -146,12 +146,14 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
     <None Include="..\Hl7.Fhir.Specification\specification.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-	<FhirConformance Include="..\Hl7.Fhir.Specification\data\*.*"/>
+	  <FhirConformance Include="..\Hl7.Fhir.Specification\data\*.*"/>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="BeforeBuild" Inputs="@(FhirConformance)" Outputs="specification.zip">
