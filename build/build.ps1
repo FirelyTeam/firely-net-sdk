@@ -59,6 +59,7 @@ properties {
   $dirPairs = @(                               # Update this when new target frameworks are added
     @{BinDir="Net40"; LibDir="net40"},
     @{BinDir="Net45"; LibDir="net45"},
+    @{BinDir="NetCore"; LibDir="netstandard1.6"},
     @{BinDir="Portable45"; LibDir="portable-net45+win+wpa81+wp80"},
     @{BinDir="Portable45"; LibDir="netcore45"},
     @{BinDir="Portable45"; LibDir="wp8"},
@@ -85,6 +86,7 @@ properties {
     @{SlnName = "Hl7.Fhir"; Configuration="ReleaseNet45"; PrjNames = "Hl7.Fhir.Core.Net45","Hl7.Fhir.Specification.Net45"; TestNames = "Hl7.Fhir.Core.Tests","Hl7.Fhir.Specification.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="NET45"; FinalDir="Net45"},
     @{SlnName = "Hl7.Fhir"; Configuration="ReleaseNet40"; PrjNames = "Hl7.Fhir.Core.Net40","Hl7.Fhir.Specification.Net40"; TestNames = @(); BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="NET40"; FinalDir="Net40"},
     @{SlnName = "Hl7.Fhir"; Configuration="ReleasePCL45"; PrjNames = "Hl7.Fhir.Core.Portable45"; TestNames = "Hl7.Fhir.Core.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="PORTABLE45"; FinalDir="Portable45"}
+    @{SlnName = "Hl7.Fhir"; Configuration="ReleaseNetCore"; PrjNames = "Hl7.Fhir.Core.NetCore", "Hl7.Fhir.Specification.NetCore"; TestNames = "Hl7.Fhir.Core.NetCore.Tests", "Hl7.Fhir.Specification.NetCore.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="NETCore"; FinalDir="netstandard1.6"}
   )
 
   $Script:MSBuild = "MSBuild"
@@ -170,7 +172,7 @@ task Clean -description "Clean all output and temporary files from previous buil
 # Build each solution, optionally signed
 task Build -depends Clean -description "Build all targets. Output to various bin/ directories." { 
 
-  Copy-Robot -sourcePath "$sourceDir" -destPath "$workingSourceDir" -excludeDirectories "bin","obj","TestResults","AppPackages","$packageDirs",".vs","artifacts" -excludeFiles "*.suo","*.user","project.json","*.lock.json" -item "source"
+  Copy-Robot -sourcePath "$sourceDir" -destPath "$workingSourceDir" -excludeDirectories "bin","obj","TestResults","AppPackages","$packageDirs",".vs","artifacts" -excludeFiles "*.suo","*.user" -item "source"
 
   Write-Host -ForegroundColor $ProgressColor "Updating assembly version"
   Write-Host
@@ -453,7 +455,14 @@ function MSBuildBuild($build)
 
   Write-Host
   Write-Host "Building configuration $configuration from $workingSourceDir\$slnName.sln" -ForegroundColor $ProgressColor
-  exec { & "$MSBuild" "/verbosity:minimal" "/t:Clean;Rebuild" /p:Configuration=$configuration "/p:CopyNuGetImplementations=true" "/p:Platform=Any CPU" "/p:PlatformTarget=AnyCPU" /p:OutputPath=bin\Release\$finalDir\ "/p:TreatWarningsAsErrors=$treatWarningsAsErrors" "/p:VisualStudioVersion=14.0" /p:DefineConstants=`"$constants`" "$workingSourceDir\$slnName.sln" | Out-Default } "Error building $slnName"
+  if($configuration -eq 'ReleaseNetCore')
+  {
+    exec { & "$MSBuild" "/verbosity:minimal" "/t:Clean;Rebuild" /p:Configuration=$configuration "/p:CopyNuGetImplementations=true" "/p:Platform=Any CPU" "/p:PlatformTarget=AnyCPU" "/p:TreatWarningsAsErrors=$treatWarningsAsErrors" "/p:VisualStudioVersion=14.0" /p:DefineConstants=`"$constants`" "$workingSourceDir\$slnName.sln" | Out-Default } "Error building $slnName" 
+  }
+  else
+  {
+    exec { & "$MSBuild" "/verbosity:minimal" "/t:Clean;Rebuild" /p:Configuration=$configuration "/p:CopyNuGetImplementations=true" "/p:Platform=Any CPU" "/p:PlatformTarget=AnyCPU" /p:OutputPath=bin\Release\$finalDir\ "/p:TreatWarningsAsErrors=$treatWarningsAsErrors" "/p:VisualStudioVersion=14.0" /p:DefineConstants=`"$constants`" "$workingSourceDir\$slnName.sln" | Out-Default } "Error building $slnName" 
+  }
 }
 
 
