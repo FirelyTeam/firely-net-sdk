@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.Model;
 using Hl7.FluentPath;
+using Hl7.FluentPath.Expressions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,39 @@ namespace Hl7.Fhir.FluentPath
 {
     public static class PocoNavigatorExtensions
     {
+        internal static bool _fhirSymbolTableExtensionsAdded = false;
+        public static void PrepareFhirSybolTableFunctions()
+        {
+            if (!_fhirSymbolTableExtensionsAdded)
+            {
+                _fhirSymbolTableExtensionsAdded = true;
+                Hl7.FluentPath.FluentPathCompiler.DefaultSymbolTable.AddFhirExtensions();
+            }
+        }
+
+        // TODO: Add support for the custom fluentpath function hasValue() on the default symbol table
+        //
+        public static SymbolTable AddFhirExtensions(this SymbolTable t)
+        {
+            t.Add("hasValue", (ElementModel.IElementNavigator f) => f.HasValue(), doNullProp: false);
+
+            return t;
+        }
+
+        /// <summary>
+        /// Check if the node has a value, and not just extensions.
+        /// </summary>
+        /// <param name="focus"></param>
+        /// <returns></returns>
+        public static bool HasValue(this ElementModel.IElementNavigator focus)
+        {
+            if (focus == null)
+                return false;
+            if (focus.Value == null)
+                return false;
+            return true;
+        }
+
         public static IEnumerable<Base> ToFhirValues(this IEnumerable<ElementModel.IElementNavigator> results)
         {
             return results.Select(r =>

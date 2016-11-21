@@ -30,24 +30,36 @@ namespace Hl7.Fhir.FluentPath
             if (value == null) throw Error.ArgumentNull("value");
 
             _pocoElement = value;
+            PropMap = null;
             Name = name;
         }
 
+        // For Normal element properties representing a FHIR type
+        internal PocoElementNavigator(Introspection.PropertyMapping map, Base value)
+        {
+            if (value == null) throw Error.ArgumentNull("value");
+
+            _pocoElement = value;
+            PropMap = map;
+            Name = map.Name;
+        }
 
         // For properties representing primitive strings (id, url, div), as
         // rendered as attributes in the xml
-        internal PocoElementNavigator(string name, string value)
+        internal PocoElementNavigator(Introspection.PropertyMapping map, string value)
         {
             if (value == null) throw Error.ArgumentNull("value");
 
             _string = value;
-            Name = name;
+            PropMap = map;
+            Name = map.Name;
         }
 
         private Base _pocoElement;
         private string _string;
 
         public string Name { get; private set; }
+        public Introspection.PropertyMapping PropMap { get; private set; }
 
         /// <summary>
         /// This is only needed for search data extraction (and debugging)
@@ -86,7 +98,7 @@ namespace Hl7.Fhir.FluentPath
                     }
                     else if ((_pocoElement is PositiveInt))
                     {
-                        if ((_pocoElement as Integer).Value.HasValue)
+                        if ((_pocoElement as PositiveInt).Value.HasValue)
                             return (long)(_pocoElement as PositiveInt).Value.Value;
                         return null;
                     }
@@ -136,6 +148,16 @@ namespace Hl7.Fhir.FluentPath
             }
         }
 
+        internal Introspection.ClassMapping ClassMapping
+        {
+            get
+            {
+                if (_classmapping == null)
+                    _classmapping = GetMappingForType(_pocoElement.GetType());
+                return _classmapping;
+            }
+        }
+        private Introspection.ClassMapping _classmapping;
 
         private List<PocoElementNavigator> _children;
 
@@ -170,17 +192,17 @@ namespace Hl7.Fhir.FluentPath
                         {
                             if (colItem != null)
                             {
-                                _children.Add(new PocoElementNavigator(item.Name, (Base)colItem));
+                                _children.Add(new PocoElementNavigator(item, (Base)colItem));
                             }
                         }
                     }
                     else
                     {
-                        if(itemValue is string)
+                        if (itemValue is string)
                             // The special case for the 'url' and 'id' properties, which are primitive strings
-                            _children.Add(new PocoElementNavigator(item.Name, (string)itemValue));
+                            _children.Add(new PocoElementNavigator(item, (string)itemValue));
                         else
-                            _children.Add(new PocoElementNavigator(item.Name, (Base)itemValue));
+                            _children.Add(new PocoElementNavigator(item, (Base)itemValue));
                     }
                 }
             }
