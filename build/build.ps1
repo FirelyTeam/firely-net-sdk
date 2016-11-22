@@ -457,6 +457,7 @@ function MSBuildBuild($build)
   Write-Host "Building configuration $configuration from $workingSourceDir\$slnName.sln" -ForegroundColor $ProgressColor
   if($configuration -eq 'ReleaseNetCore')
   {
+    dotnet.exe restore
     exec { & "$MSBuild" "/verbosity:minimal" "/t:Clean;Rebuild" /p:Configuration=$configuration "/p:CopyNuGetImplementations=true" "/p:Platform=Any CPU" "/p:PlatformTarget=AnyCPU" "/p:TreatWarningsAsErrors=$treatWarningsAsErrors" "/p:VisualStudioVersion=14.0" /p:DefineConstants=`"$constants`" "$workingSourceDir\$slnName.sln" | Out-Default } "Error building $slnName" 
   }
   else
