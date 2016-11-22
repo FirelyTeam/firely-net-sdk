@@ -153,12 +153,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-	  <FhirConformance Include="..\Hl7.Fhir.Specification\data\*.*"/>
+    <FhirConformance Include="data\*.*" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="BeforeBuild" Inputs="@(FhirConformance)" Outputs="specification.zip">
-    <CleanSpecFiles DirectoryName="..\Hl7.Fhir.Specification\data" />
-    <ZipDir ZipFileName="specification.zip" DirectoryName="..\Hl7.Fhir.Specification\data" />
+    <CleanSpecFiles DirectoryName="data" />
+    <ZipDir ZipFileName="..\Hl7.Fhir.Specification\specification.zip" DirectoryName="data" />
   </Target>
   <UsingTask TaskName="ZipDir" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v12.0.dll">
     <ParameterGroup>
