@@ -60,7 +60,7 @@
       <HintPath>..\packages\Hl7.FluentPath.0.4.0-alpha2\lib\net45\Hl7.FluentPath.dll</HintPath>
       <Private>True</Private>
     </Reference>
-	    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
@@ -113,6 +113,7 @@
     <Compile Include="Rest\UtilityTests.cs" />
     <Compile Include="Serialization\ConversionTest.cs" />
     <Compile Include="Serialization\DefaultModelFactoryTest.cs" />
+    <Compile Include="Serialization\EnementNodeTests.cs" />
     <Compile Include="Serialization\MeasurePerformance.cs" />
     <Compile Include="Serialization\ModelClassFactoryListTest.cs" />
     <Compile Include="Serialization\QueryParserTests.cs" />

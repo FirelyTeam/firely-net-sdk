@@ -10,12 +10,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Hl7.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Specification.Navigation
 {
-    public class ElementDefinitionNavigator
+
+    public class ElementDefinitionNavigator : IElementNavigator, INavigator<ElementDefinitionNavigator>
     {
         internal ElementDefinitionNavigator()
         {
@@ -126,36 +128,37 @@ namespace Hl7.Fhir.Specification.Navigation
             get { return Elements.Count; }
         }
 
+        public ElementDefinitionNavigator Clone()
+        {
+            return this.ShallowCopy();
+        }
+
+        string IElementNavigator.Name
+        {
+            get
+            {
+                return this.PathName;
+            }
+        }
+
+        object IElementNavigator.Value
+        {
+            get
+            {
+                return Current;
+            }
+        }
 
 
+        string IElementNavigator.TypeName
+        {
+            get { return "ElementDefinition"; }
+        }
 
-        //IElementNavigator INavigator<IElementNavigator>.Clone()
-        //{
-        //    return this.ShallowCopy();
-        //}
-
-        //string INamedNode.Name
-        //{
-        //    get
-        //    {
-        //        return this.PathName;
-        //    }
-        //}
-
-        //object IValueProvider.Value
-        //{
-        //    get
-        //    {
-        //        return Current;
-        //    }
-        //}
-
-
-        //string ITypeNameProvider.TypeName
-        //{
-        //    get { return "ElementDefinition";  }
-        //}
-
+        IElementNavigator INavigator<IElementNavigator>.Clone()
+        {
+            return this.Clone();
+        }
 
         //----------------------------------
         //
@@ -676,5 +679,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
             return output.ToString();
         }
+
+      
     }
 }

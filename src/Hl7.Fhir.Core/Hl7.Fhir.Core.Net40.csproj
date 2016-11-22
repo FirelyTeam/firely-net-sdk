@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DSTU1compatibility.cs" />
+    <Compile Include="FluentPath\ElementNodeWriter.cs" />
     <Compile Include="FluentPath\PocoElementNavigator.cs" />
     <Compile Include="FluentPath\PocoNavigator.cs" />
     <Compile Include="FluentPath\PocoNavigatorExtensions.cs" />
