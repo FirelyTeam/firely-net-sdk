@@ -106,6 +106,9 @@ namespace Hl7.Fhir.Model
                     return true;
                 }
 
+                // Ensure the FHIR extensions are registered
+                Hl7.Fhir.FluentPath.PocoNavigatorExtensions.PrepareFhirSybolTableFunctions();
+
                 if (model.Predicate(expression, model))
                     return true;
 

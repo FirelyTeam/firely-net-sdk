@@ -10169,7 +10169,7 @@
       <SearchParameter>
         <id value="Bundle-composition" />
         <extension url="http://hl7.org/fhir/StructureDefinition/searchparameter-expression">
-          <valueString value="Bundle.entry.resource.item(0)" />
+          <valueString value="Bundle.entry.resource[0]" />
         </extension>
         <url value="http://hl7.org/fhir/SearchParameter/Bundle-composition" />
         <name value="composition" />
@@ -10203,7 +10203,7 @@
       <SearchParameter>
         <id value="Bundle-message" />
         <extension url="http://hl7.org/fhir/StructureDefinition/searchparameter-expression">
-          <valueString value="Bundle.entry.resource.item(0)" />
+          <valueString value="Bundle.entry.resource[0]" />
         </extension>
         <url value="http://hl7.org/fhir/SearchParameter/Bundle-message" />
         <name value="message" />
