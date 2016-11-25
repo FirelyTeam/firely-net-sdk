@@ -2,23 +2,39 @@
   "version": "1.0.0-*",
   "dependencies": {
     "Hl7.FluentPath": "0.4.0-alpha3",
-    "NETStandard.Library": "1.6.0",
     "Newtonsoft.Json": "9.0.1",
-    "System.ComponentModel": "4.0.1",
-    "System.ComponentModel.Annotations": "4.1.0",
-    "System.Net.Http": "4.1.0",
-    "System.Net.Requests": "4.0.11",
-    "System.ComponentModel.Primitives": "4.1.0"
+    "NETStandard.Library": "1.6.0"
   },
   "frameworks": {
     "netstandard1.6": {
-      "imports": "dnxcore50"
+      "imports": "dnxcore50",
+      "dependencies": {
+        "System.ComponentModel": "4.0.1",
+        "System.ComponentModel.Annotations": "4.1.0",
+        "System.Net.Http": "4.1.0",
+        "System.Net.Requests": "4.0.11",
+        "System.ComponentModel.Primitives": "4.1.0"
+      },
+      "buildOptions": {
+        "define": [ "NETCore" ]
+      }
     }
-    //,"net40": {
+    //,
+    //"netstandard1.1": {
+    //  "dependencies": {
+    //    "System.ComponentModel": "4.3.0",
+    //    "System.ComponentModel.Annotations": "4.1.0",
+    //    "System.Runtime.Serialization.Primitives": "4.1.1",
+    //    "System.ComponentModel.Primitives": "4.1.0",
+    //    "System.Net.Requests": "4.0.11",
+    //    "System.Xml. ": ""
+    //  },
+    //  "buildOptions": {
+    //    "define": [ "NET45" ]
+    //  }
     //}
   },
   "buildOptions": {
-    "define": [ "NETCore" ],
     "embed": { "includeFiles": [ "Properties/Resources.resx" ] }
   }
 }
