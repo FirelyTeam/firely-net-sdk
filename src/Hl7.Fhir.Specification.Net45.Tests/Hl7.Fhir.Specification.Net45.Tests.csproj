@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Hl7.Fhir</RootNamespace>
-    <AssemblyName>HL7.Fhir.Specification.Tests</AssemblyName>
+    <AssemblyName>HL7.Fhir.Specification.Net45.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -27,7 +27,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\Net45\</OutputPath>
+    <OutputPath>..\Hl7.Fhir.Specification.Tests\bin\Debug\Net45\</OutputPath>
     <BaseIntermediateOutputPath>obj\Debug\Net45\</BaseIntermediateOutputPath>
     <DefineConstants>TRACE;DEBUG;NET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -39,7 +39,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\Net45\</OutputPath>
+    <OutputPath>..\Hl7.Fhir.Specification.Tests\bin\Release\Net45\</OutputPath>
     <BaseIntermediateOutputPath>obj\Release\Net45\</BaseIntermediateOutputPath>
     <DefineConstants>TRACE;NET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -151,7 +151,7 @@
     <Compile Include="..\Hl7.Fhir.Specification.Tests\XsltContextTests.cs">
       <Link>XsltContextTests.cs</Link>
     </Compile>
-	<Compile Include="..\Hl7.Fhir.Specification.Tests\DirectoryExtensionsForNetCore.cs">
+    <Compile Include="..\Hl7.Fhir.Specification.Tests\DirectoryExtensionsForNetCore.cs">
       <Link>DirectoryExtensionsForNetCore.cs</Link>
     </Compile>
   </ItemGroup>

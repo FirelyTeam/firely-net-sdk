@@ -83,9 +83,9 @@ properties {
   $packageDirs = "$sourceDir\packages"         # Comment this out if you need to build while offline
 
   $builds = @(                           # Update this to add new target frameworks 
-    @{SlnName = "Hl7.Fhir"; Configuration="ReleaseNet45"; PrjNames = "Hl7.Fhir.Core.Net45","Hl7.Fhir.Specification.Net45"; TestNames = "Hl7.Fhir.Core.Tests","Hl7.Fhir.Specification.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="NET45"; FinalDir="Net45"},
+    @{SlnName = "Hl7.Fhir"; Configuration="ReleaseNet45"; PrjNames = "Hl7.Fhir.Core.Net45","Hl7.Fhir.Specification.Net45"; TestNames = "Hl7.Fhir.Core.Net45.Tests","Hl7.Fhir.Specification.Net45.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="NET45"; FinalDir="Net45"},
     @{SlnName = "Hl7.Fhir"; Configuration="ReleaseNet40"; PrjNames = "Hl7.Fhir.Core.Net40","Hl7.Fhir.Specification.Net40"; TestNames = @(); BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="NET40"; FinalDir="Net40"},
-    @{SlnName = "Hl7.Fhir"; Configuration="ReleasePCL45"; PrjNames = "Hl7.Fhir.Core.Portable45"; TestNames = "Hl7.Fhir.Core.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="PORTABLE45"; FinalDir="Portable45"}
+    @{SlnName = "Hl7.Fhir"; Configuration="ReleasePCL45"; PrjNames = "Hl7.Fhir.Core.Portable45"; TestNames = "Hl7.Fhir.Core.Portable45.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="PORTABLE45"; FinalDir="Portable45"}
     @{SlnName = "Hl7.Fhir"; Configuration="ReleaseNetCore"; PrjNames = "Hl7.Fhir.Core.NetCore", "Hl7.Fhir.Specification.NetCore"; TestNames = "Hl7.Fhir.Core.NetCore.Tests", "Hl7.Fhir.Specification.NetCore.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="NETCore"; FinalDir="netstandard1.6"}
   )
 

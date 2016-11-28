@@ -7,7 +7,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Hl7.Fhir.Core.Tests</RootNamespace>
-    <AssemblyName>Hl7.Fhir.Core.Tests</AssemblyName>
+    <AssemblyName>Hl7.Fhir.Core.Portable45.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -30,7 +30,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\Portable45\</OutputPath>
+    <OutputPath>..\Hl7.Fhir.Core.Tests\bin\Debug\Portable45\</OutputPath>
     <BaseIntermediateOutputPath>obj\Debug\Portable45\</BaseIntermediateOutputPath>
     <DefineConstants>TRACE;DEBUG;PORTABLE45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -41,17 +41,17 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\Portable45\</OutputPath>
+    <OutputPath>..\Hl7.Fhir.Core.Tests\bin\Release\Portable45\</OutputPath>
     <BaseIntermediateOutputPath>obj\Release\Portable45\</BaseIntermediateOutputPath>
     <DefineConstants>TRACE;PORTABLE45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Portable45\Hl7.Fhir.Core.Tests.XML</DocumentationFile>
+    <DocumentationFile>..\Hl7.Fhir.Core.Tests\bin\Release\Portable45\Hl7.Fhir.Core.Portable45.Tests.xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Hl7.FluentPath, Version=0.4.0.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
-	<HintPath>..\packages\Hl7.FluentPath.0.4.0-alpha3\lib\net45\Hl7.FluentPath.dll</HintPath>
+      <HintPath>..\packages\Hl7.FluentPath.0.4.0-alpha3\lib\net45\Hl7.FluentPath.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -92,53 +92,119 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\Introspection\ClassMappingTest.cs"><Link>Introspection\ClassMappingTest.cs</Link></Compile>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\Introspection\EnumMappingTest.cs"><Link>Introspection\EnumMappingTest.cs</Link></Compile>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\Introspection\ModelInspectorTest.cs"><Link>Introspection\ModelInspectorTest.cs</Link></Compile>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\Introspection\PropertyMappingTest.cs"><Link>Introspection\PropertyMappingTest.cs</Link></Compile>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\Model\BundleExtensionsTest.cs"><Link>Model\BundleExtensionsTest.cs</Link></Compile>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\Model\DeepCompareTest.cs"><Link>Model\DeepCompareTest.cs</Link></Compile>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\Model\DeepCopyTest.cs"><Link>Model\DeepCopyTest.cs</Link></Compile>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\Model\DeepMatchTest.cs"><Link>Model\DeepMatchTest.cs</Link></Compile>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\Model\ModelTests.cs"><Link>Model\ModelTests.cs</Link></Compile>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\Model\ValidateAllExamplesSearchExtractionTest.cs"><Link>Model\ValidateAllExamplesSearchExtractionTest.cs</Link></Compile>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\PocoNavigatorTests.cs"><Link>PocoNavigatorTests.cs</Link></Compile>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\Properties\AssemblyInfo.cs"><Link>Properties\AssemblyInfo.cs</Link></Compile>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\JsonAssert.cs"><Link>JsonAssert.cs</Link></Compile>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\Rest\FhirClientTests.cs"><Link>Rest\FhirClientTests.cs</Link></Compile>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\Rest\OperationsTests.cs"><Link>Rest\OperationsTests.cs</Link></Compile>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\Rest\ReferenceExtensionsTest.cs"><Link>Rest\ReferenceExtensionsTest.cs</Link></Compile>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\Rest\SearchParamsTests.cs"><Link>Rest\SearchParamsTests.cs</Link></Compile>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\Rest\TestResourceIdentifier.cs"><Link>Rest\TestResourceIdentifier.cs</Link></Compile>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\Rest\TestRestUrl.cs"><Link>Rest\TestRestUrl.cs</Link></Compile>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\Rest\TransactionBuilderTests.cs"><Link>Rest\TransactionBuilderTests.cs</Link></Compile>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\Serialization\ConversionTest.cs"><Link>Serialization\ConversionTest.cs</Link></Compile>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\Serialization\DefaultModelFactoryTest.cs"><Link>Serialization\DefaultModelFactoryTest.cs</Link></Compile>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\Serialization\MeasurePerformance.cs"><Link>Serialization\MeasurePerformance.cs</Link></Compile>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\Serialization\ModelClassFactoryListTest.cs"><Link>Serialization\ModelClassFactoryListTest.cs</Link></Compile>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\Serialization\QueryParserTests.cs"><Link>Serialization\QueryParserTests.cs</Link></Compile>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\Serialization\ResourceParsingTests.cs"><Link>Serialization\ResourceParsingTests.cs</Link></Compile>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\Serialization\RoundtripTest.cs"><Link>Serialization\RoundtripTest.cs</Link></Compile>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\Serialization\SerializationTests.cs"><Link>Serialization\SerializationTests.cs</Link></Compile>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\Validation\ValidatePatient.cs"><Link>Validation\ValidatePatient.cs</Link></Compile>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\Validation\ValidationTests.cs"><Link>Validation\ValidationTests.cs</Link></Compile>
-    <Compile Include="..\Hl7.Fhir.Core.Tests\XmlAssert.cs"><Link>XmlAssert.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Introspection\ClassMappingTest.cs">
+      <Link>Introspection\ClassMappingTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Introspection\EnumMappingTest.cs">
+      <Link>Introspection\EnumMappingTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Introspection\ModelInspectorTest.cs">
+      <Link>Introspection\ModelInspectorTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Introspection\PropertyMappingTest.cs">
+      <Link>Introspection\PropertyMappingTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Model\BundleExtensionsTest.cs">
+      <Link>Model\BundleExtensionsTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Model\DeepCompareTest.cs">
+      <Link>Model\DeepCompareTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Model\DeepCopyTest.cs">
+      <Link>Model\DeepCopyTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Model\DeepMatchTest.cs">
+      <Link>Model\DeepMatchTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Model\ModelTests.cs">
+      <Link>Model\ModelTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Model\ValidateAllExamplesSearchExtractionTest.cs">
+      <Link>Model\ValidateAllExamplesSearchExtractionTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\PocoNavigatorTests.cs">
+      <Link>PocoNavigatorTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Properties\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\JsonAssert.cs">
+      <Link>JsonAssert.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Rest\FhirClientTests.cs">
+      <Link>Rest\FhirClientTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Rest\OperationsTests.cs">
+      <Link>Rest\OperationsTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Rest\ReferenceExtensionsTest.cs">
+      <Link>Rest\ReferenceExtensionsTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Rest\SearchParamsTests.cs">
+      <Link>Rest\SearchParamsTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Rest\TestResourceIdentifier.cs">
+      <Link>Rest\TestResourceIdentifier.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Rest\TestRestUrl.cs">
+      <Link>Rest\TestRestUrl.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Rest\TransactionBuilderTests.cs">
+      <Link>Rest\TransactionBuilderTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Serialization\ConversionTest.cs">
+      <Link>Serialization\ConversionTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Serialization\DefaultModelFactoryTest.cs">
+      <Link>Serialization\DefaultModelFactoryTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Serialization\MeasurePerformance.cs">
+      <Link>Serialization\MeasurePerformance.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Serialization\ModelClassFactoryListTest.cs">
+      <Link>Serialization\ModelClassFactoryListTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Serialization\QueryParserTests.cs">
+      <Link>Serialization\QueryParserTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Serialization\ResourceParsingTests.cs">
+      <Link>Serialization\ResourceParsingTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Serialization\RoundtripTest.cs">
+      <Link>Serialization\RoundtripTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Serialization\SerializationTests.cs">
+      <Link>Serialization\SerializationTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Validation\ValidatePatient.cs">
+      <Link>Validation\ValidatePatient.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Validation\ValidationTests.cs">
+      <Link>Validation\ValidationTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\XmlAssert.cs">
+      <Link>XmlAssert.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Hl7.Fhir.Core.Tests\app.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="..\Hl7.Fhir.Core.Tests\TestData\examples-json.zip"><Link>TestData\examples-json.zip</Link>
+    <None Include="..\Hl7.Fhir.Core.Tests\TestData\examples-json.zip">
+      <Link>TestData\examples-json.zip</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="..\Hl7.Fhir.Core.Tests\TestData\examples.zip"><Link>TestData\examples.zip</Link>
+    <None Include="..\Hl7.Fhir.Core.Tests\TestData\examples.zip">
+      <Link>TestData\examples.zip</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="..\Hl7.Fhir.Core.Tests\TestData\json-edge-cases.json"><Link>TestData\json-edge-cases.json</Link>
+    <None Include="..\Hl7.Fhir.Core.Tests\TestData\json-edge-cases.json">
+      <Link>TestData\json-edge-cases.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="..\Hl7.Fhir.Core.Tests\TestData\TestPatient.json"><Link>TestData\TestPatient.json</Link>
+    <None Include="..\Hl7.Fhir.Core.Tests\TestData\TestPatient.json">
+      <Link>TestData\TestPatient.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="..\Hl7.Fhir.Core.Tests\TestData\TestPatient.xml">
@@ -155,11 +221,11 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="..\Hl7.Fhir.Core.Tests\TestData\careplan-example-f201-renal.xml">
-		<Link>TestData\careplan-example-f201-renal.xml</Link>
+      <Link>TestData\careplan-example-f201-renal.xml</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Hl7.Fhir.Core.Tests\TestData\testscript-example%28example%29.xml">
-		<Link>TestData\testscript-example%28example%29.xml</Link>
+      <Link>TestData\testscript-example%28example%29.xml</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
