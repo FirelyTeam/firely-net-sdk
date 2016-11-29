@@ -86,7 +86,7 @@ properties {
     @{SlnName = "Hl7.Fhir"; Configuration="ReleaseNet45"; PrjNames = "Hl7.Fhir.Core.Net45","Hl7.Fhir.Specification.Net45"; TestNames = "Hl7.Fhir.Core.Net45.Tests","Hl7.Fhir.Specification.Net45.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="NET45"; FinalDir="Net45"},
     @{SlnName = "Hl7.Fhir"; Configuration="ReleaseNet40"; PrjNames = "Hl7.Fhir.Core.Net40","Hl7.Fhir.Specification.Net40"; TestNames = @(); BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="NET40"; FinalDir="Net40"},
     @{SlnName = "Hl7.Fhir"; Configuration="ReleasePCL45"; PrjNames = "Hl7.Fhir.Core.Portable45"; TestNames = "Hl7.Fhir.Core.Portable45.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="PORTABLE45"; FinalDir="Portable45"}
-    @{SlnName = "Hl7.Fhir"; Configuration="ReleaseNetCore"; PrjNames = "Hl7.Fhir.Core.NetCore", "Hl7.Fhir.Specification.NetCore"; TestNames = "Hl7.Fhir.Core.NetCore.Tests", "Hl7.Fhir.Specification.NetCore.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="NETCore"; FinalDir="netstandard1.6"}
+    @{SlnName = "Hl7.Fhir"; Configuration="ReleaseNetCore"; PrjNames = "Hl7.Fhir.Core.NetCore", "Hl7.Fhir.Specification.NetCore"; TestNames = "Hl7.Fhir.Core.Tests", "Hl7.Fhir.Specification.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="NETCore"; FinalDir="netstandard1.6"}
   )
 
   $Script:MSBuild = "MSBuild"
@@ -471,6 +471,7 @@ function VSTests($build)
 {
   $testNames = $build.TestNames
   $finalDir = $build.FinalDir
+  $configuration = $build.Configuration
 
   $testFailure = $false
 
@@ -485,10 +486,13 @@ function VSTests($build)
     Push-Location $resultsDir          # VSTest creates Test Results relative to current directory
   
     Write-Host "Testing $testName on $finalDir" -ForegroundColor $ProgressColor
-    Write-Host
     try
     {
-       if ($appVeyor)
+       if($configuration -eq 'ReleaseNetCore')
+       {
+        & "$VSTest" $workingSourceDir\$testName\project.json /Logger:Trx /TestCaseFilter:”$testCaseFilter" /UseVsixExtensions:true | Out-Default     # TODO: Find out why Trx logger is often not writing anything to file.
+       }
+       elseif ($appVeyor)
        {
          & "$VSTest" $workingSourceDir\$testName\bin\Release\$finalDir\$testName.dll /Logger:Appveyor /TestCaseFilter:”$testCaseFilter" | Out-Default  # TODO: Include LongRunners again.
        }

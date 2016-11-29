@@ -13,22 +13,22 @@
 
   "frameworks": {
     "netcoreapp1.0": {
-      "imports": "dnxcore50",
-      "dependencies": {
-        "Microsoft.NETCore.App": {
-          "version": "1.0.0",
-          "type": "platform"
+        "imports":  "dnxcore50",
+        "dependencies": {
+          "Microsoft.NETCore.App": {
+            "version": "1.0.0",
+            "type": "platform"
+          }
+        }
+      }
+    },
+    "buildOptions": {
+      "define": [ "NETCore" ],
+      "copyToOutput": {
+        "includeFiles": [ "TestData/examples.zip" ],
+        "mappings": {
+          "TestData/profiles-others.xml": "..\\Hl7.Fhir.Core\\Model\\Source\\profiles-others.xml"
         }
       }
     }
-  },
-  "buildOptions": {
-    "define": [ "NETCore" ],
-    "copyToOutput": {
-      "includeFiles": [ "TestData/examples.zip" ],
-      "mappings": {
-        "TestData/profiles-others.xml": "..\\Hl7.Fhir.Core\\Model\\Source\\profiles-others.xml"
-      }
-    }
   }
-}

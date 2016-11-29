@@ -9,9 +9,9 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Hl7.Fhir.Core.NetCore", "Hl
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Hl7.Fhir.Specification.NetCore", "Hl7.Fhir.Specification\Hl7.Fhir.Specification.NetCore.xproj", "{CBF05C1A-C76B-4559-B086-EEB3F766B179}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Hl7.Fhir.Core.NetCore.Tests", "Hl7.Fhir.Core.Tests\Hl7.Fhir.Core.NetCore.Tests.xproj", "{8B2AC963-08A5-4840-BCBC-9E05FD8CF12D}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Hl7.Fhir.Core.Tests", "Hl7.Fhir.Core.Tests\Hl7.Fhir.Core.Tests.xproj", "{8B2AC963-08A5-4840-BCBC-9E05FD8CF12D}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Hl7.Fhir.Specification.NetCore.Tests", "Hl7.Fhir.Specification.Tests\Hl7.Fhir.Specification.NetCore.Tests.xproj", "{64B7D5FC-496B-4A2B-9B8D-A796BAA9B71F}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Hl7.Fhir.Specification.Tests", "Hl7.Fhir.Specification.Tests\Hl7.Fhir.Specification.Tests.xproj", "{64B7D5FC-496B-4A2B-9B8D-A796BAA9B71F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
