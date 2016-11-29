@@ -96,42 +96,42 @@ namespace Hl7.Fhir.Serialization
 
             throw Error.NotSupported("Cannot convert {0} value '{1}' to string", value.GetType().Name, value);
         }
-        
+
         private static object convertXmlStringToPrimitive(Type to, string value)
         {
-            if(typeof(Boolean).IsAssignableFrom(to))
+            if(typeof(Boolean).CanBeTreatedAsType(to))
                 return XmlConvert.ToBoolean(value);
-            if(typeof(Byte).IsAssignableFrom(to))
+            if(typeof(Byte).CanBeTreatedAsType(to))
                 return XmlConvert.ToByte(value);        // Not used in FHIR serialization
-            if(typeof(Char).IsAssignableFrom(to))
+            if(typeof(Char).CanBeTreatedAsType(to))
                 return XmlConvert.ToChar(value);        // Not used in FHIR serialization
-            if(typeof(DateTime).IsAssignableFrom(to))
+            if(typeof(DateTime).CanBeTreatedAsType(to))
                 return XmlConvert.ToDateTimeOffset(value); // TODO: should handle FHIR's "instant" datatype
-            if(typeof(Decimal).IsAssignableFrom(to))
+            if(typeof(Decimal).CanBeTreatedAsType(to))
                 return XmlConvert.ToDecimal(value);
-            if(typeof(Double).IsAssignableFrom(to))
+            if(typeof(Double).CanBeTreatedAsType(to))
                 return XmlConvert.ToDouble(value);      // Could lead to loss in precision
-            if(typeof(Int16).IsAssignableFrom(to))
+            if(typeof(Int16).CanBeTreatedAsType(to))
                 return XmlConvert.ToInt16(value);       // Could lead to loss in precision
-            if(typeof(Int32).IsAssignableFrom(to))
+            if(typeof(Int32).CanBeTreatedAsType(to))
                 return XmlConvert.ToInt32(value);
-            if(typeof(Int64).IsAssignableFrom(to))
+            if(typeof(Int64).CanBeTreatedAsType(to))
                 return XmlConvert.ToInt64(value);       // Not used in FHIR serialization
-            if(typeof(SByte).IsAssignableFrom(to))
+            if(typeof(SByte).CanBeTreatedAsType(to))
                 return XmlConvert.ToSByte(value);       // Not used in FHIR serialization
-            if(typeof(Single).IsAssignableFrom(to))
+            if(typeof(Single).CanBeTreatedAsType(to))
                 return XmlConvert.ToSingle(value);      // Not used in FHIR serialization
-            if(typeof(UInt16).IsAssignableFrom(to))
+            if(typeof(UInt16).CanBeTreatedAsType(to))
                 return XmlConvert.ToUInt16(value);      // Not used in FHIR serialization
-            if(typeof(UInt32).IsAssignableFrom(to))
+            if(typeof(UInt32).CanBeTreatedAsType(to))
                 return XmlConvert.ToUInt32(value);      // Not used in FHIR serialization
-            if(typeof(UInt64).IsAssignableFrom(to))
+            if(typeof(UInt64).CanBeTreatedAsType(to))
                 return XmlConvert.ToUInt64(value);      // Not used in FHIR serialization
-            if(typeof(byte[]).IsAssignableFrom(to))
+            if(typeof(byte[]).CanBeTreatedAsType(to))
                 return System.Convert.FromBase64String(value);
-            if (typeof(DateTimeOffset).IsAssignableFrom(to))
+            if (typeof(DateTimeOffset).CanBeTreatedAsType(to))
                 return XmlConvert.ToDateTimeOffset(value);
-            if(typeof(System.Uri).IsAssignableFrom(to))
+            if(typeof(System.Uri).CanBeTreatedAsType(to))
                 return new Uri(value, UriKind.RelativeOrAbsolute);
             if (to.IsEnum())
             {

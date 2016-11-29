@@ -25,16 +25,22 @@ namespace Hl7.Fhir.FhirPath
                     dr.AddDefaultConstraints();
                     if (dr.InvariantConstraints == null || dr.InvariantConstraints.Count == 0)
                         continue;
+#if !NETCore
                     Trace.WriteLine(String.Format("Testing Validation: {0} ({1} rules)", item, (dr.InvariantConstraints != null ? dr.InvariantConstraints.Count : 0)));
+#endif
                     var results = dr.Validate(new System.ComponentModel.DataAnnotations.ValidationContext(dr));
                     foreach (var result in results)
                     {
                         if (result.ErrorMessage.Contains("FATAL"))
                             failedExpressions += result.ErrorMessage + "\r\n";
+#if !NETCore
                         Trace.WriteLine(result.ErrorMessage);
+#endif
                     }
                     //if (results.Count() > 0)
+#if !NETCore
                     Trace.WriteLine("");
+#endif
                 }
             }
             Assert.IsNull(failedExpressions);

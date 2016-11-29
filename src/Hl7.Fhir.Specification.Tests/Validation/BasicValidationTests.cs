@@ -11,6 +11,7 @@ using System.Linq;
 using System.Xml.Linq;
 using System;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Specification.Tests;
 using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Validation
@@ -26,7 +27,7 @@ namespace Hl7.Fhir.Validation
                     new BundleExampleResolver(@"TestData\validation"),
                     new DirectorySource(@"TestData\validation"),
                     new TestProfileArtifactSource(),
-                    new ZipSource("specification.zip")));
+                    new ZipSource($"{DirectoryExtensions.GetCurrentBinDirectory()}\\specification.zip")));
 
             var ctx = new ValidationSettings()
             {
@@ -452,6 +453,7 @@ namespace Hl7.Fhir.Validation
             Assert.AreEqual(4, report.Errors);            // 3 bundled reference, 1 contained reference
         }
 
+#if !NETCore
         [TestMethod]
         public void RunXsdValidation()
         {
@@ -469,6 +471,7 @@ namespace Hl7.Fhir.Validation
             Assert.IsFalse(report.Success);
             Assert.IsTrue(report.ToString().Contains(".NET Xsd validation"));
         }
+#endif
 
         [TestMethod]
         public void TestBindingValidation()

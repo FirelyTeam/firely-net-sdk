@@ -1,0 +1,733 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{92CC9186-0A21-4E06-B11F-907584FBFD81}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Hl7.Fhir</RootNamespace>
+    <AssemblyName>Hl7.Fhir.DSTU2.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>f6a6eb53</NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\Net45\</OutputPath>
+    <BaseIntermediateOutputPath>obj\Debug\Net45\</BaseIntermediateOutputPath>
+    <DefineConstants>TRACE;DEBUG;PORTABLE45, NET45</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET45</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>3016,1591</NoWarn>
+    <DocumentationFile>bin\Debug\Net45\Hl7.Fhir.DSTU2.Core.xml</DocumentationFile>
+    <LangVersion>6</LangVersion>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\Net45\</OutputPath>
+    <BaseIntermediateOutputPath>obj\Release\Net45\</BaseIntermediateOutputPath>
+    <DefineConstants>TRACE;NET45</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>3016,1591</NoWarn>
+    <DocumentationFile>bin\Release\Net45\Hl7.Fhir.Core.xml</DocumentationFile>
+    <DefineConstants>TRACE;NET45</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Net45\Hl7.Fhir.DSTU2.Core.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Hl7.FluentPath, Version=0.4.0.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hl7.FluentPath.0.4.0-alpha3\lib\net45\Hl7.FluentPath.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+	    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\hl7.fhir.specification\validation\Cardinality.cs">
+      <Link>Validation\Cardinality.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\FluentPath\PocoElementNavigator.cs" ><Link>FluentPath\PocoElementNavigator.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\FluentPath\PocoNavigator.cs" ><Link>FluentPath\PocoNavigator.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Quantity.cs" ><Link>Model\Quantity.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\ValueSetExpansionExtensions.cs" ><Link>Model\ValueSetExpansionExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Support\CanonicalUrlConflictException.cs" ><Link>Support\CanonicalUrlConflictException.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\FluentPath\PocoNavigatorExtensions.cs" ><Link>FluentPath\PocoNavigatorExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\ElementDefinitionExtensions.cs" ><Link>Model\ElementDefinitionExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\ElementDefinition.cs" ><Link>Model\ElementDefinition.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Support\EnumUtility.cs" ><Link>Support\EnumUtility.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\IValue.cs" ><Link>Model\IValue.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Time.cs" ><Link>Model\Time.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Properties\AssemblyVersionInfo.cs" ><Link>Properties\AssemblyVersionInfo.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\DSTU1compatibility.cs" ><Link>DSTU1compatibility.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Introspection\ChoiceType.cs" ><Link>Introspection\ChoiceType.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Introspection\EnumLiteralAttribute.cs" ><Link>Introspection\EnumLiteralAttribute.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Introspection\FhirElementAttribute.cs" ><Link>Introspection\FhirElementAttribute.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Introspection\FhirEnumerationAttribute.cs" ><Link>Introspection\FhirEnumerationAttribute.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Introspection\FhirTypeAttribute.cs" ><Link>Introspection\FhirTypeAttribute.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Introspection\NotMappedAttribute.cs" ><Link>Introspection\NotMappedAttribute.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Introspection\ReferencesAttribute.cs" ><Link>Introspection\ReferencesAttribute.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Introspection\XmlSerializationHint.cs" ><Link>Introspection\XmlSerializationHint.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Base.cs" ><Link>Model\Base.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Binary.cs" ><Link>Model\Binary.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Bundle.cs" ><Link>Model\Bundle.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\BundleExtensions.cs" ><Link>Model\BundleExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Code.cs" ><Link>Model\Code.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Coding.cs" ><Link>Model\Coding.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\ConceptMap.cs" ><Link>Model\ConceptMap.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\ContactPoint.cs" ><Link>Model\ContactPoint.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Date.cs" ><Link>Model\Date.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\BackboneElement.cs" ><Link>Model\BackboneElement.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Account.cs" ><Link>Model\Generated\Account.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Address.cs" ><Link>Model\Generated\Address.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Age.cs" ><Link>Model\Generated\Age.cs</Link>
+      <DependentUpon>Template-ProfiledDataTypes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Annotation.cs" ><Link>Model\Generated\Annotation.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Attachment.cs" ><Link>Model\Generated\Attachment.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\BackboneElement.cs" ><Link>Model\Generated\BackboneElement.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Base64Binary.cs" ><Link>Model\Generated\Base64Binary.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Code.cs" ><Link>Model\Generated\Code.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\CodeableConcept.cs" ><Link>Model\Generated\CodeableConcept.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Coding.cs" ><Link>Model\Generated\Coding.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\ContactPoint.cs" ><Link>Model\Generated\ContactPoint.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Count.cs" ><Link>Model\Generated\Count.cs</Link>
+      <DependentUpon>Template-ProfiledDataTypes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Date.cs" ><Link>Model\Generated\Date.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\DetectedIssue.cs" ><Link>Model\Generated\DetectedIssue.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Distance.cs" ><Link>Model\Generated\Distance.cs</Link>
+      <DependentUpon>Template-ProfiledDataTypes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Duration.cs" ><Link>Model\Generated\Duration.cs</Link>
+      <DependentUpon>Template-ProfiledDataTypes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Element.cs" ><Link>Model\Generated\Element.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\ElementDefinition.cs" ><Link>Model\Generated\ElementDefinition.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Extension.cs" ><Link>Model\Generated\Extension.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\FhirBoolean.cs" ><Link>Model\Generated\FhirBoolean.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\HumanName.cs" ><Link>Model\Generated\HumanName.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Id.cs" ><Link>Model\Generated\Id.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Identifier.cs" ><Link>Model\Generated\Identifier.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\ImplementationGuide.cs" ><Link>Model\Generated\ImplementationGuide.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Instant.cs" ><Link>Model\Generated\Instant.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Integer.cs" ><Link>Model\Generated\Integer.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Markdown.cs" ><Link>Model\Generated\Markdown.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\MedicationOrder.cs" ><Link>Model\Generated\MedicationOrder.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Meta.cs" ><Link>Model\Generated\Meta.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Money.cs" ><Link>Model\Generated\Money.cs</Link>
+      <DependentUpon>Template-ProfiledDataTypes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Narrative.cs" ><Link>Model\Generated\Narrative.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Oid.cs" ><Link>Model\Generated\Oid.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Period.cs" ><Link>Model\Generated\Period.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\PositiveInt.cs" ><Link>Model\Generated\PositiveInt.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Quantity.cs" ><Link>Model\Generated\Quantity.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\QuestionnaireResponse.cs" ><Link>Model\Generated\QuestionnaireResponse.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Range.cs" ><Link>Model\Generated\Range.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Ratio.cs" ><Link>Model\Generated\Ratio.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\SampledData.cs" ><Link>Model\Generated\SampledData.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Signature.cs" ><Link>Model\Generated\Signature.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\SimpleQuantity.cs" ><Link>Model\Generated\SimpleQuantity.cs</Link>
+      <DependentUpon>Template-ProfiledDataTypes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\SupplyDelivery.cs" ><Link>Model\Generated\SupplyDelivery.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\SupplyRequest.cs" ><Link>Model\Generated\SupplyRequest.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Template-Bindings.cs" ><Link>Model\Generated\Template-Bindings.cs</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Template-Bindings.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Template-DataTypeModel.cs" ><Link>Model\Generated\Template-DataTypeModel.cs</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Template-Model.cs" ><Link>Model\Generated\Template-Model.cs</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Template-ModelInfo.cs" ><Link>Model\Generated\Template-ModelInfo.cs</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Template-ModelInfo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Template-ProfiledDataTypes.cs" ><Link>Model\Generated\Template-ProfiledDataTypes.cs</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Template-ProfiledDataTypes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\TestScript.cs" ><Link>Model\Generated\TestScript.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Time.cs" ><Link>Model\Generated\Time.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Timing.cs" ><Link>Model\Generated\Timing.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\UnsignedInt.cs" ><Link>Model\Generated\UnsignedInt.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Uuid.cs" ><Link>Model\Generated\Uuid.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Markdown.cs" ><Link>Model\Markdown.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\PositiveInt.cs" ><Link>Model\PositiveInt.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Rest\ResourceReferenceExtensions.cs" ><Link>Rest\ResourceReferenceExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\StructureDefinition.cs" ><Link>Model\StructureDefinition.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Element.cs" ><Link>Model\Element.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Extension.cs" ><Link>Model\Extension.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Base64Binary.cs" ><Link>Model\Base64Binary.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\FhirString.cs" ><Link>Model\FhirString.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\FhirDateTime.cs" ><Link>Model\FhirDateTime.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\FhirBoolean.cs" ><Link>Model\FhirBoolean.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Appointment.cs" ><Link>Model\Generated\Appointment.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\AppointmentResponse.cs" ><Link>Model\Generated\AppointmentResponse.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\AuditEvent.cs" ><Link>Model\Generated\AuditEvent.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Basic.cs" ><Link>Model\Generated\Basic.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\BodySite.cs" ><Link>Model\Generated\BodySite.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Bundle.cs" ><Link>Model\Generated\Bundle.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Claim.cs" ><Link>Model\Generated\Claim.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\ClaimResponse.cs" ><Link>Model\Generated\ClaimResponse.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\ClinicalImpression.cs" ><Link>Model\Generated\ClinicalImpression.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Communication.cs" ><Link>Model\Generated\Communication.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\CommunicationRequest.cs" ><Link>Model\Generated\CommunicationRequest.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Contract.cs" ><Link>Model\Generated\Contract.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Coverage.cs" ><Link>Model\Generated\Coverage.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\DataElement.cs" ><Link>Model\Generated\DataElement.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\DeviceComponent.cs" ><Link>Model\Generated\DeviceComponent.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\DeviceMetric.cs" ><Link>Model\Generated\DeviceMetric.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\DeviceUseRequest.cs" ><Link>Model\Generated\DeviceUseRequest.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\DeviceUseStatement.cs" ><Link>Model\Generated\DeviceUseStatement.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\DomainResource.cs" ><Link>Model\Generated\DomainResource.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\EligibilityRequest.cs" ><Link>Model\Generated\EligibilityRequest.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\EligibilityResponse.cs" ><Link>Model\Generated\EligibilityResponse.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\EnrollmentRequest.cs" ><Link>Model\Generated\EnrollmentRequest.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\EnrollmentResponse.cs" ><Link>Model\Generated\EnrollmentResponse.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\EpisodeOfCare.cs" ><Link>Model\Generated\EpisodeOfCare.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\ExplanationOfBenefit.cs" ><Link>Model\Generated\ExplanationOfBenefit.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\FamilyMemberHistory.cs" ><Link>Model\Generated\FamilyMemberHistory.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Flag.cs" ><Link>Model\Generated\Flag.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Goal.cs" ><Link>Model\Generated\Goal.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\HealthcareService.cs" ><Link>Model\Generated\HealthcareService.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\ImagingObjectSelection.cs" ><Link>Model\Generated\ImagingObjectSelection.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\NamingSystem.cs" ><Link>Model\Generated\NamingSystem.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\NutritionOrder.cs" ><Link>Model\Generated\NutritionOrder.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\OperationDefinition.cs" ><Link>Model\Generated\OperationDefinition.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Parameters.cs" ><Link>Model\Generated\Parameters.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\PaymentNotice.cs" ><Link>Model\Generated\PaymentNotice.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\PaymentReconciliation.cs" ><Link>Model\Generated\PaymentReconciliation.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Person.cs" ><Link>Model\Generated\Person.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\ProcedureRequest.cs" ><Link>Model\Generated\ProcedureRequest.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\ProcessRequest.cs" ><Link>Model\Generated\ProcessRequest.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\ProcessResponse.cs" ><Link>Model\Generated\ProcessResponse.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\ReferralRequest.cs" ><Link>Model\Generated\ReferralRequest.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\RiskAssessment.cs" ><Link>Model\Generated\RiskAssessment.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Schedule.cs" ><Link>Model\Generated\Schedule.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\SearchParameter.cs" ><Link>Model\Generated\SearchParameter.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Slot.cs" ><Link>Model\Generated\Slot.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\StructureDefinition.cs" ><Link>Model\Generated\StructureDefinition.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Subscription.cs" ><Link>Model\Generated\Subscription.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\VisionPrescription.cs" ><Link>Model\Generated\VisionPrescription.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\HumanName.cs" ><Link>Model\HumanName.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\IConformanceResource.cs" ><Link>Model\IConformanceResource.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\IDeepComparable.cs" ><Link>Model\IDeepComparable.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Integer.cs" ><Link>Model\Integer.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\FhirUri.cs" ><Link>Model\FhirUri.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\AllergyIntolerance.cs" ><Link>Model\Generated\AllergyIntolerance.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Binary.cs" ><Link>Model\Generated\Binary.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\CarePlan.cs" ><Link>Model\Generated\CarePlan.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Composition.cs" ><Link>Model\Generated\Composition.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\ConceptMap.cs" ><Link>Model\Generated\ConceptMap.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Condition.cs" ><Link>Model\Generated\Condition.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Conformance.cs" ><Link>Model\Generated\Conformance.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Device.cs" ><Link>Model\Generated\Device.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\DiagnosticOrder.cs" ><Link>Model\Generated\DiagnosticOrder.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\DiagnosticReport.cs" ><Link>Model\Generated\DiagnosticReport.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\DocumentManifest.cs" ><Link>Model\Generated\DocumentManifest.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\DocumentReference.cs" ><Link>Model\Generated\DocumentReference.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Encounter.cs" ><Link>Model\Generated\Encounter.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\FhirDateTime.cs" ><Link>Model\Generated\FhirDateTime.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\FhirDecimal.cs" ><Link>Model\Generated\FhirDecimal.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\FhirString.cs" ><Link>Model\Generated\FhirString.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\FhirUri.cs" ><Link>Model\Generated\FhirUri.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Group.cs" ><Link>Model\Generated\Group.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\ImagingStudy.cs" ><Link>Model\Generated\ImagingStudy.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Immunization.cs" ><Link>Model\Generated\Immunization.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\ImmunizationRecommendation.cs" ><Link>Model\Generated\ImmunizationRecommendation.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\List.cs" ><Link>Model\Generated\List.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Location.cs" ><Link>Model\Generated\Location.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Media.cs" ><Link>Model\Generated\Media.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Medication.cs" ><Link>Model\Generated\Medication.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\MedicationAdministration.cs" ><Link>Model\Generated\MedicationAdministration.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\MedicationDispense.cs" ><Link>Model\Generated\MedicationDispense.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\MedicationStatement.cs" ><Link>Model\Generated\MedicationStatement.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\MessageHeader.cs" ><Link>Model\Generated\MessageHeader.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Observation.cs" ><Link>Model\Generated\Observation.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\OperationOutcome.cs" ><Link>Model\Generated\OperationOutcome.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Order.cs" ><Link>Model\Generated\Order.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\OrderResponse.cs" ><Link>Model\Generated\OrderResponse.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Organization.cs" ><Link>Model\Generated\Organization.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Patient.cs" ><Link>Model\Generated\Patient.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Practitioner.cs" ><Link>Model\Generated\Practitioner.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Procedure.cs" ><Link>Model\Generated\Procedure.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Provenance.cs" ><Link>Model\Generated\Provenance.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Questionnaire.cs" ><Link>Model\Generated\Questionnaire.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\RelatedPerson.cs" ><Link>Model\Generated\RelatedPerson.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Resource.cs" ><Link>Model\Generated\Resource.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\ResourceReference.cs" ><Link>Model\Generated\ResourceReference.cs</Link>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Specimen.cs" ><Link>Model\Generated\Specimen.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Substance.cs" ><Link>Model\Generated\Substance.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\ValueSet.cs" ><Link>Model\Generated\ValueSet.cs</Link>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Id.cs" ><Link>Model\Id.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\IDeepCopyable.cs" ><Link>Model\IDeepCopyable.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\FhirDecimal.cs" ><Link>Model\FhirDecimal.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Identifier.cs" ><Link>Model\Identifier.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\IExtendable.cs" ><Link>Model\IExtendable.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Initializers.cs" ><Link>Model\Initializers.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Instant.cs" ><Link>Model\Instant.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\ModelInfo.cs" ><Link>Model\ModelInfo.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Oid.cs" ><Link>Model\Oid.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\OperationOutcome.cs" ><Link>Model\OperationOutcome.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\UnsignedInt.cs" ><Link>Model\UnsignedInt.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Rest\EntryToHttpExtensions.cs" ><Link>Rest\EntryToHttpExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Rest\FhirClientOperations.cs" ><Link>Rest\FhirClientOperations.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Rest\FhirClientSearch.cs" ><Link>Rest\FhirClientSearch.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Rest\HttpToEntryExtensions.cs" ><Link>Rest\HttpToEntryExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Rest\Requester.cs" ><Link>Rest\Requester.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Rest\UriParamList.cs" ><Link>Rest\UriParamList.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Rest\SearchParamsExtensions.cs" ><Link>Rest\SearchParamsExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Rest\SearchParams.cs" ><Link>Rest\SearchParams.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Parameters.cs" ><Link>Model\Parameters.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\DomainResource.cs" ><Link>Model\DomainResource.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Primitive.cs" ><Link>Model\Primitive.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Resource.cs" ><Link>Model\Resource.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\ResourceReference.cs" ><Link>Model\ResourceReference.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\Uuid.cs" ><Link>Model\Uuid.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\ValueSet.cs" ><Link>Model\ValueSet.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Model\XHtml.cs" ><Link>Model\XHtml.cs</Link></Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Introspection\ClassMapping.cs" ><Link>Introspection\ClassMapping.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Rest\BundleExtensions.cs" ><Link>Rest\BundleExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Rest\ContentType.cs" ><Link>Rest\ContentType.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Rest\FhirClient.cs" ><Link>Rest\FhirClient.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Rest\FhirOperationException.cs" ><Link>Rest\FhirOperationException.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Rest\HttpUtil.cs" ><Link>Rest\HttpUtil.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Rest\ResourceIdentity.cs" ><Link>Rest\ResourceIdentity.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Rest\RestUrl.cs" ><Link>Rest\RestUrl.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Rest\TransactionBuilder.cs" ><Link>Rest\TransactionBuilder.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Rest\SystemNetMimeContentType.cs" ><Link>Rest\SystemNetMimeContentType.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Rest\WebRequestExtensions.cs" ><Link>Rest\WebRequestExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Serialization\ComplexTypeWriter.cs" ><Link>Serialization\ComplexTypeWriter.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Serialization\ComplexTypeReader.cs" ><Link>Serialization\ComplexTypeReader.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Serialization\DefaultModelFactory.cs" ><Link>Serialization\DefaultModelFactory.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Serialization\DispatchingWriter.cs" ><Link>Serialization\DispatchingWriter.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Serialization\DispatchingReader.cs" ><Link>Serialization\DispatchingReader.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\GlobalSuppressions.cs" ><Link>GlobalSuppressions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Serialization\FhirParser.cs" ><Link>Serialization\FhirParser.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Serialization\FhirSerializer.cs" ><Link>Serialization\FhirSerializer.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Serialization\IFhirReader.cs" ><Link>Serialization\IFhirReader.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Serialization\ParserSettings.cs" ><Link>Serialization\ParserSettings.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Serialization\IFhirWriter.cs" ><Link>Serialization\IFhirWriter.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Serialization\JsonTreeRewriter.cs" ><Link>Serialization\JsonTreeRewriter.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Serialization\JsonDomFhirWriter.cs" ><Link>Serialization\JsonDomFhirWriter.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Serialization\PrimitiveValueWriter.cs" ><Link>Serialization\PrimitiveValueWriter.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Serialization\RepeatingElementWriter.cs" ><Link>Serialization\RepeatingElementWriter.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Serialization\XmlDomFhirReader.cs" ><Link>Serialization\XmlDomFhirReader.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Serialization\JsonDomFhirReader.cs" ><Link>Serialization\JsonDomFhirReader.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Serialization\ResourceWriter.cs" ><Link>Serialization\ResourceWriter.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Serialization\XmlFhirWriter.cs" ><Link>Serialization\XmlFhirWriter.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Support\GuidExtensions.cs" ><Link>Support\GuidExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Support\IPositionInfo.cs" ><Link>Support\IPositionInfo.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Support\Error.cs" ><Link>Support\Error.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Serialization\ModelFactoryList.cs" ><Link>Serialization\ModelFactoryList.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Introspection\ModelInspector.cs" ><Link>Introspection\ModelInspector.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Serialization\PrimitiveTypeConverter.cs" ><Link>Serialization\PrimitiveTypeConverter.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Serialization\PrimitiveValueReader.cs" ><Link>Serialization\PrimitiveValueReader.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Properties\AssemblyInfo.cs" ><Link>Properties\AssemblyInfo.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Introspection\PropertyMapping.cs" ><Link>Introspection\PropertyMapping.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Support\NullExtensions.cs" ><Link>Support\NullExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Support\DateExtensions.cs" ><Link>Support\DateExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Support\ObjectList.cs" ><Link>Support\ObjectList.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Support\ResourceReferenceNotFoundException.cs" ><Link>Support\ResourceReferenceNotFoundException.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Support\XmlNs.cs" ><Link>Support\XmlNs.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Support\ReflectionHelper.cs" ><Link>Support\ReflectionHelper.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Serialization\RepeatingElementReader.cs" ><Link>Serialization\RepeatingElementReader.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Serialization\ResourceReader.cs" ><Link>Serialization\ResourceReader.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Serialization\SerializationUtil.cs" ><Link>Serialization\SerializationUtil.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Support\StringExtensions.cs" ><Link>Support\StringExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Support\XObjectExtensions.cs" ><Link>Support\XObjectExtensions.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Validation\AllowedTypesAttribute.cs" ><Link>Validation\AllowedTypesAttribute.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Validation\CardinalityAttribute.cs" ><Link>Validation\CardinalityAttribute.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Validation\CodePatternAttribute.cs" ><Link>Validation\CodePatternAttribute.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Validation\DatePatternAttribute.cs" ><Link>Validation\DatePatternAttribute.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Validation\DateTimePatternAttribute.cs" ><Link>Validation\DateTimePatternAttribute.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Validation\DotNetAttributeValidation.cs" ><Link>Validation\DotNetAttributeValidation.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Validation\IdPatternAttribute.cs" ><Link>Validation\IdPatternAttribute.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Validation\InstantPatternAttribute.cs" ><Link>Validation\InstantPatternAttribute.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Validation\InvokeIValidatableObjectAttribute.cs" ><Link>Validation\InvokeIValidatableObjectAttribute.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Validation\IValidatableObject.cs" ><Link>Validation\IValidatableObject.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Validation\NarrativeXhtmlPatternAttribute.cs" ><Link>Validation\NarrativeXhtmlPatternAttribute.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Validation\OidPatternAttribute.cs" ><Link>Validation\OidPatternAttribute.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Validation\UriPatternAttribute.cs" ><Link>Validation\UriPatternAttribute.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Validation\UuidPatternAttribute.cs" ><Link>Validation\UuidPatternAttribute.cs</Link></Compile>
+    <Compile Include="..\Hl7.Fhir.Core\Validation\ValidationContextExtensions.cs" ><Link>Validation\ValidationContextExtensions.cs</Link></Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Hl7.Fhir.Core\Validation\xhtml\fhir-xhtml.xsd">
+	<Link>Validation\xhtml\fhir-xhtml.xsd</Link>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Hl7.Fhir.Core\Validation\xhtml\xml.xsd">
+		<Link>Validation\xhtml\xml.xsd</Link>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Hl7.Fhir.Core\Model\Generated\Template-Children.ttinclude">
+	<Link>Model\Generated\Template-Children.ttinclude</Link>
+	</None>
+    <None Include="..\Hl7.Fhir.Core\Model\Generated\TemplateFileManagerV2.1.ttinclude">
+	<Link>Model\Generated\TemplateFileManagerV2.1.ttinclude</Link>
+	</None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Hl7.Fhir.Core\Model\Generated\Template-Bindings.tt"><Link>Model\Generated\Template-Bindings.tt</Link>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Template-Bindings.cs</LastGenOutput>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Core\Model\Generated\Template-DataTypeModel.tt"><Link>Model\Generated\Template-DataTypeModel.tt</Link>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Template-DataTypeModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Core\Model\Generated\Template-Model.tt"><Link>Model\Generated\Template-Model.tt</Link>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Template-Model.cs</LastGenOutput>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Core\Model\Generated\Template-ModelInfo.tt"><Link>Model\Generated\Template-ModelInfo.tt</Link>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Template-ModelInfo.cs</LastGenOutput>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Core\Model\Generated\Template-ProfiledDataTypes.tt"><Link>Model\Generated\Template-ProfiledDataTypes.tt</Link>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Template-ProfiledDataTypes.cs</LastGenOutput>
+    </Content>
+    <None Include="..\Hl7.Fhir.Core\Model\Source\search-parameters.xml"><Link>Model\Source\search-parameters.xml</Link>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="..\Hl7.Fhir.Core\Model\Source\expansions.xml"><Link>Model\Source\expansions.xml</Link>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="..\Hl7.Fhir.Core\Model\Source\profiles-resources.xml"><Link>Model\Source\profiles-resources.xml</Link>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="..\Hl7.Fhir.Core\Model\Source\profiles-types.xml"><Link>Model\Source\profiles-types.xml</Link>
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

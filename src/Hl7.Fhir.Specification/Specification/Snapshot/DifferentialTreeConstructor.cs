@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
 #if DEBUG && DUMPOUTPUT
-            Debug.Print($"[{nameof(DifferentialTreeConstructor)}] results:\r\n" + string.Join(Environment.NewLine, diff.Select(e => $"  {e.Path} : {e.Name}")));
+            Debug.Write($"[{nameof(DifferentialTreeConstructor)}] results:\r\n" + string.Join(Environment.NewLine, diff.Select(e => $"  {e.Path} : {e.Name}")));
 #endif
 
             return diff;

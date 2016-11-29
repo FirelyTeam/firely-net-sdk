@@ -360,7 +360,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
             catch (Exception ex)
             {
-                Debug.Print("{0}: {1}".FormatWith(ex.GetType().Name, ex.Message));
+                Debug.Write(string.Format("{0}: {1}".FormatWith(ex.GetType().Name, ex.Message)));
                 exceptionRaised = ex is NotSupportedException;
             }
             Assert.IsTrue(exceptionRaised);
@@ -430,7 +430,7 @@ namespace Hl7.Fhir.Specification.Tests
                 _elements = sd.Snapshot.Element;
                 _pos = 0;
                 var ann = sd.Annotation<OriginInformation>();
-                Debug.Print($"Assert structure: url = '{sd.Url}' - origin = '{ann.Origin}'");
+                Debug.Write($"Assert structure: url = '{sd.Url}' - origin = '{ann.Origin}'");
             }
 
             public ElementVerifier(IList<ElementDefinition> elements)
@@ -969,7 +969,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
             catch (InvalidOperationException ex)
             {
-                Debug.Print(ex.Message);
+                Debug.Write(ex.Message);
                 exceptionRaised = true;
             }
             Assert.IsTrue(exceptionRaised);
@@ -992,7 +992,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var tree = DifferentialTreeConstructor.MakeTree(elements);
             Assert.IsNotNull(tree);
-            Debug.Print(string.Join(Environment.NewLine, tree.Select(e => $"{e.Path} : '{e.Name}'")));
+            Debug.Write(string.Join(Environment.NewLine, tree.Select(e => $"{e.Path} : '{e.Name}'")));
 
             Assert.AreEqual(10, tree.Count);
             var verifier = new ElementVerifier(tree);
@@ -1017,7 +1017,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(sd);
             var tree = DifferentialTreeConstructor.MakeTree(sd.Differential.Element);
             Assert.IsNotNull(tree);
-            Debug.Print(string.Join(Environment.NewLine, tree.Select(e => $"{e.Path} : '{e.Name}'")));
+            Debug.Write(string.Join(Environment.NewLine, tree.Select(e => $"{e.Path} : '{e.Name}'")));
         }
 
         // [WMR 20160802] Unit tests for SnapshotGenerator.ExpandElement
@@ -1102,9 +1102,13 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(elems);
 
             Debug.WriteLine("Input:");
+#if !NETCore
             Debug.Indent();
+#endif
             Debug.WriteLine(string.Join(Environment.NewLine, elems.Where(e => e.Path.StartsWith(expandElemPath)).Select(e => e.Path)));
+#if !NETCore
             Debug.Unindent();
+#endif
 
             var elem = elems.FirstOrDefault(e => e.Path == expandElemPath);
             testExpandElement(sd, elem);
@@ -1200,7 +1204,9 @@ namespace Hl7.Fhir.Specification.Tests
                 var pos = result.IndexOf(elem);
 
                 Debug.WriteLine("\r\nName Reference:");
+#if !NETCore
                 Debug.Indent();
+#endif
                 do
                 {
                     Debug.WriteLine(nav.Path);
@@ -1208,7 +1214,9 @@ namespace Hl7.Fhir.Specification.Tests
                     var tgtPath = result[++pos].Path.Substring(expandElemPath.Length);
                     Assert.AreEqual(srcPath, tgtPath);
                 } while (nav.MoveToNext());
+#if !NETCore
                 Debug.Unindent();
+#endif
             }
         }
 
@@ -1228,7 +1236,9 @@ namespace Hl7.Fhir.Specification.Tests
                 var component = differential ? sd.Differential.Element : sd.Snapshot.Element;
                 var profiles = enumerateDistinctTypeProfiles(component);
 
+#if !NETCore
                 Debug.Indent();
+#endif
                 foreach (var profile in profiles)
                 {
                     Debug.WriteLine(profile);
@@ -1245,7 +1255,9 @@ namespace Hl7.Fhir.Specification.Tests
                     //    Debug.WriteLine(ex.Message);
                     //}
                 }
+#if !NETCore
                 Debug.Unindent();
+#endif
             }
         }
 
@@ -1257,7 +1269,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Conditional("DEBUG")]
         static void dumpBaseElems(IList<ElementDefinition> elements)
         {
-            Debug.Print(string.Join(Environment.NewLine,
+            Debug.Write(string.Join(Environment.NewLine,
                 elements.Select(e =>
                 {
                     var bea = e.Annotation<BaseDefAnnotation>();
@@ -1283,8 +1295,8 @@ namespace Hl7.Fhir.Specification.Tests
                 Debug.WriteLine("StructureDefinition '{0}' ('{1}')".FormatWith(sd.Name, sd.Url));
                 Debug.WriteLine("Base = '{0}'".FormatWith(sd.Base));
                 // Debug.Indent();
-                Debug.Print("Element.Id | Element.Path | Element.Base.Path");
-                Debug.Print(new string('=', 100));
+                Debug.Write("Element.Id | Element.Path | Element.Base.Path");
+                Debug.Write(new string('=', 100));
                 foreach (var elem in sd.Snapshot.Element)
                 {
                     Debug.WriteLine("{0}  |  {1}  |  {2}", elem.ElementId, elem.Path, elem.Base != null ? elem.Base.Path : null);
@@ -1298,12 +1310,12 @@ namespace Hl7.Fhir.Specification.Tests
         {
             if (outcome != null)
             {
-                Debug.Print("===== OperationOutcome: {0} issues", outcome.Issue.Count);
+                Debug.Write(string.Format("===== OperationOutcome: {0} issues", outcome.Issue.Count));
                 for (int i = 0; i < outcome.Issue.Count; i++)
                 {
                     dumpIssue(outcome.Issue[i], i);
                 }
-                Debug.Print("==================================");
+                Debug.Write("==================================");
             }
         }
 
@@ -1320,7 +1332,7 @@ namespace Hl7.Fhir.Specification.Tests
             if (issue.Diagnostics != null) { sb.AppendFormat(" Profile: '{0}'", issue.Diagnostics); }
             if (issue.Location != null) { sb.AppendFormat(" Path: '{0}'", string.Join(" | ", issue.Location)); }
 
-            Debug.Print(sb.ToString());
+            Debug.Write(sb.ToString());
         }
 
 
@@ -1439,9 +1451,9 @@ namespace Hl7.Fhir.Specification.Tests
             var baseProfile = e.BaseProfile;
             Assert.IsNotNull(baseProfile);
             Debug.WriteLine("[SnapshotBaseProfileHandler] Profile #{0} '{1}' Base = '{2}'".FormatWith(profile.GetHashCode(), profile.Url, profile.Base));
-            Debug.Print("[SnapshotBaseProfileHandler] Base Profile #{0} '{1}'".FormatWith(baseProfile.GetHashCode(), baseProfile.Url));
+            Debug.Write("[SnapshotBaseProfileHandler] Base Profile #{0} '{1}'".FormatWith(baseProfile.GetHashCode(), baseProfile.Url));
             var rootElem = baseProfile.Snapshot.Element[0];
-            Debug.Print("[SnapshotBaseProfileHandler] Base Root element #{0} '{1}'".FormatWith(rootElem.GetHashCode(), rootElem.Path));
+            Debug.Write("[SnapshotBaseProfileHandler] Base Root element #{0} '{1}'".FormatWith(rootElem.GetHashCode(), rootElem.Path));
             Assert.AreEqual(profile.Base, baseProfile.Url);
         }
 
@@ -1471,7 +1483,7 @@ namespace Hl7.Fhir.Specification.Tests
             if (elem != null)
             {
                 var changed = elem.GetChangedByDiff() == true;
-                Debug.Print("[SnapshotConstraintHandler] #{0} '{1}'{2}".FormatWith(elem.GetHashCode(), elem.Path, changed ? " CHANGED!" : null));
+                Debug.Write("[SnapshotConstraintHandler] #{0} '{1}'{2}".FormatWith(elem.GetHashCode(), elem.Path, changed ? " CHANGED!" : null));
             }
         }
 
@@ -1485,9 +1497,9 @@ namespace Hl7.Fhir.Specification.Tests
 
             var isConstraint = sd.ConstrainedType.HasValue;
 
-            Debug.Print("\r\nStructureDefinition '{0}' url = '{1}'", sd.Name, sd.Url);
-            Debug.Print("# | Constraints? | Changed? | Element.Path | Element.Base.Path | BaseElement.Path | #Base | Invalid?");
-            Debug.Print(new string('=', 100));
+            Debug.Write($"\r\nStructureDefinition '{sd.Name}' url = '{sd.Url}'");
+            Debug.Write("# | Constraints? | Changed? | Element.Path | Element.Base.Path | BaseElement.Path | #Base | Invalid?");
+            Debug.Write(new string('=', 100));
             foreach (var elem in elems)
             {
                 // Each element should have a valid Base component, unless the profile is a core type/resource definition (no base)
@@ -1697,7 +1709,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         bool testExpandResource(string url)
         {
-            Debug.Print("[testExpandResource] url = '{0}'", url);
+            Debug.Write($"[testExpandResource] url = '{url}'");
             var sd = _testResolver.FindStructureDefinition(url);
             Assert.IsNotNull(sd);
             // dumpReferences(sd);
@@ -1710,7 +1722,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             if (!result)
             {
-                Debug.Print("Expanded is not exactly equal to original... verifying...");
+                Debug.Write("Expanded is not exactly equal to original... verifying...");
                 result = verifyElementBase(sd, expanded);
             }
 
@@ -1790,7 +1802,7 @@ namespace Hl7.Fhir.Specification.Tests
         void updateSnapshot(StructureDefinition sd)
         {
             Assert.IsNotNull(sd);
-            Debug.Print("Profile: '{0}' : '{1}'".FormatWith(sd.Url, sd.Base));
+            Debug.Write("Profile: '{0}' : '{1}'".FormatWith(sd.Url, sd.Base));
             // Important! Must expand original instances, not clones!
             // var original = sd.DeepCopy() as StructureDefinition;
             _generator.Update(sd);
@@ -1805,7 +1817,7 @@ namespace Hl7.Fhir.Specification.Tests
             var originalElems = original.HasSnapshot ? original.Snapshot.Element : new List<ElementDefinition>();
             var expandedElems = expanded.HasSnapshot ? expanded.Snapshot.Element : new List<ElementDefinition>();
             var isConstraint = expanded.ConstrainedType.HasValue;
-            Debug.Print("Original has {0} elements, expanded has {1} elements...".FormatWith(originalElems.Count, expandedElems.Count));
+            Debug.Write("Original has {0} elements, expanded has {1} elements...".FormatWith(originalElems.Count, expandedElems.Count));
 
             // dumpBasePaths(original);
 
@@ -1818,7 +1830,7 @@ namespace Hl7.Fhir.Specification.Tests
                     var match = expandedElems.Any(e => e.Path == elem.Path);
                     if (!match)
                     {
-                        Debug.Print("{0} has not been expanded...".FormatWith(elem.Path));
+                        Debug.Write("{0} has not been expanded...".FormatWith(elem.Path));
                     }
                 }
             }

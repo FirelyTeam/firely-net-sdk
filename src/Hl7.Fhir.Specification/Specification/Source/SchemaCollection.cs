@@ -16,7 +16,7 @@ using System.Xml.Schema;
 
 namespace Hl7.Fhir.Specification.Source
 {
-#if !PORTABLE45
+#if !PORTABLE45 && !NETCore
     public class SchemaCollection
     {
 

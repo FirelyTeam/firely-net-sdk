@@ -1,6 +1,7 @@
 ﻿
+
 //
-// Model Generated on Wed, 24 Aug 2016 23:59:23 GMT for FHIR v1.0.2
+// Model Generated on Thu, 24 Nov 2016 11:18:36 GMT for FHIR v1.0.2
 //
 // Generated Shared Enumeration: ResourceType
 	// Used in model class (resource): Conformance.rest.resource.type
@@ -68,98 +69,98 @@
 
 // Generated helper templates
 // Generated items
-// Hl7.Fhir.Core\Model\Generated\VisionPrescription.cs
-// Hl7.Fhir.Core\Model\Generated\TestScript.cs
-// Hl7.Fhir.Core\Model\Generated\SupplyRequest.cs
-// Hl7.Fhir.Core\Model\Generated\SupplyDelivery.cs
-// Hl7.Fhir.Core\Model\Generated\Substance.cs
-// Hl7.Fhir.Core\Model\Generated\Subscription.cs
-// Hl7.Fhir.Core\Model\Generated\StructureDefinition.cs
-// Hl7.Fhir.Core\Model\Generated\Specimen.cs
-// Hl7.Fhir.Core\Model\Generated\Slot.cs
-// Hl7.Fhir.Core\Model\Generated\SearchParameter.cs
-// Hl7.Fhir.Core\Model\Generated\Schedule.cs
-// Hl7.Fhir.Core\Model\Generated\RiskAssessment.cs
-// Hl7.Fhir.Core\Model\Generated\RelatedPerson.cs
-// Hl7.Fhir.Core\Model\Generated\ReferralRequest.cs
-// Hl7.Fhir.Core\Model\Generated\QuestionnaireResponse.cs
-// Hl7.Fhir.Core\Model\Generated\Questionnaire.cs
-// Hl7.Fhir.Core\Model\Generated\Provenance.cs
-// Hl7.Fhir.Core\Model\Generated\ProcessResponse.cs
-// Hl7.Fhir.Core\Model\Generated\ProcessRequest.cs
-// Hl7.Fhir.Core\Model\Generated\ProcedureRequest.cs
-// Hl7.Fhir.Core\Model\Generated\Procedure.cs
-// Hl7.Fhir.Core\Model\Generated\Practitioner.cs
-// Hl7.Fhir.Core\Model\Generated\Person.cs
-// Hl7.Fhir.Core\Model\Generated\PaymentReconciliation.cs
-// Hl7.Fhir.Core\Model\Generated\PaymentNotice.cs
-// Hl7.Fhir.Core\Model\Generated\Patient.cs
-// Hl7.Fhir.Core\Model\Generated\Organization.cs
-// Hl7.Fhir.Core\Model\Generated\OrderResponse.cs
-// Hl7.Fhir.Core\Model\Generated\Order.cs
-// Hl7.Fhir.Core\Model\Generated\OperationOutcome.cs
-// Hl7.Fhir.Core\Model\Generated\OperationDefinition.cs
-// Hl7.Fhir.Core\Model\Generated\Observation.cs
-// Hl7.Fhir.Core\Model\Generated\NutritionOrder.cs
-// Hl7.Fhir.Core\Model\Generated\NamingSystem.cs
-// Hl7.Fhir.Core\Model\Generated\MessageHeader.cs
-// Hl7.Fhir.Core\Model\Generated\MedicationStatement.cs
-// Hl7.Fhir.Core\Model\Generated\MedicationOrder.cs
-// Hl7.Fhir.Core\Model\Generated\MedicationDispense.cs
-// Hl7.Fhir.Core\Model\Generated\MedicationAdministration.cs
-// Hl7.Fhir.Core\Model\Generated\Medication.cs
-// Hl7.Fhir.Core\Model\Generated\Media.cs
-// Hl7.Fhir.Core\Model\Generated\Location.cs
-// Hl7.Fhir.Core\Model\Generated\List.cs
-// Hl7.Fhir.Core\Model\Generated\ImplementationGuide.cs
-// Hl7.Fhir.Core\Model\Generated\ImmunizationRecommendation.cs
-// Hl7.Fhir.Core\Model\Generated\Immunization.cs
-// Hl7.Fhir.Core\Model\Generated\ImagingStudy.cs
-// Hl7.Fhir.Core\Model\Generated\ImagingObjectSelection.cs
-// Hl7.Fhir.Core\Model\Generated\HealthcareService.cs
-// Hl7.Fhir.Core\Model\Generated\Group.cs
-// Hl7.Fhir.Core\Model\Generated\Goal.cs
-// Hl7.Fhir.Core\Model\Generated\Flag.cs
-// Hl7.Fhir.Core\Model\Generated\FamilyMemberHistory.cs
-// Hl7.Fhir.Core\Model\Generated\ExplanationOfBenefit.cs
-// Hl7.Fhir.Core\Model\Generated\EpisodeOfCare.cs
-// Hl7.Fhir.Core\Model\Generated\EnrollmentResponse.cs
-// Hl7.Fhir.Core\Model\Generated\EnrollmentRequest.cs
-// Hl7.Fhir.Core\Model\Generated\Encounter.cs
-// Hl7.Fhir.Core\Model\Generated\EligibilityResponse.cs
-// Hl7.Fhir.Core\Model\Generated\EligibilityRequest.cs
-// Hl7.Fhir.Core\Model\Generated\DocumentReference.cs
-// Hl7.Fhir.Core\Model\Generated\DocumentManifest.cs
-// Hl7.Fhir.Core\Model\Generated\DiagnosticReport.cs
-// Hl7.Fhir.Core\Model\Generated\DiagnosticOrder.cs
-// Hl7.Fhir.Core\Model\Generated\DeviceUseStatement.cs
-// Hl7.Fhir.Core\Model\Generated\DeviceUseRequest.cs
-// Hl7.Fhir.Core\Model\Generated\DeviceMetric.cs
-// Hl7.Fhir.Core\Model\Generated\DeviceComponent.cs
-// Hl7.Fhir.Core\Model\Generated\Device.cs
-// Hl7.Fhir.Core\Model\Generated\DetectedIssue.cs
-// Hl7.Fhir.Core\Model\Generated\DataElement.cs
-// Hl7.Fhir.Core\Model\Generated\Coverage.cs
-// Hl7.Fhir.Core\Model\Generated\Contract.cs
-// Hl7.Fhir.Core\Model\Generated\Conformance.cs
-// Hl7.Fhir.Core\Model\Generated\Condition.cs
-// Hl7.Fhir.Core\Model\Generated\ConceptMap.cs
-// Hl7.Fhir.Core\Model\Generated\Composition.cs
-// Hl7.Fhir.Core\Model\Generated\CommunicationRequest.cs
-// Hl7.Fhir.Core\Model\Generated\Communication.cs
-// Hl7.Fhir.Core\Model\Generated\ClinicalImpression.cs
-// Hl7.Fhir.Core\Model\Generated\ClaimResponse.cs
-// Hl7.Fhir.Core\Model\Generated\Claim.cs
-// Hl7.Fhir.Core\Model\Generated\CarePlan.cs
-// Hl7.Fhir.Core\Model\Generated\Bundle.cs
-// Hl7.Fhir.Core\Model\Generated\BodySite.cs
-// Hl7.Fhir.Core\Model\Generated\Binary.cs
-// Hl7.Fhir.Core\Model\Generated\Basic.cs
-// Hl7.Fhir.Core\Model\Generated\AuditEvent.cs
-// Hl7.Fhir.Core\Model\Generated\AppointmentResponse.cs
-// Hl7.Fhir.Core\Model\Generated\Appointment.cs
-// Hl7.Fhir.Core\Model\Generated\AllergyIntolerance.cs
-// Hl7.Fhir.Core\Model\Generated\Account.cs
-// Hl7.Fhir.Core\Model\Generated\DomainResource.cs
-// Hl7.Fhir.Core\Model\Generated\Parameters.cs
-// Hl7.Fhir.Core\Model\Generated\ValueSet.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\VisionPrescription.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\TestScript.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\SupplyRequest.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\SupplyDelivery.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Substance.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Subscription.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\StructureDefinition.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Specimen.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Slot.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\SearchParameter.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Schedule.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\RiskAssessment.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\RelatedPerson.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\ReferralRequest.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\QuestionnaireResponse.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Questionnaire.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Provenance.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\ProcessResponse.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\ProcessRequest.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\ProcedureRequest.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Procedure.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Practitioner.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Person.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\PaymentReconciliation.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\PaymentNotice.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Patient.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Organization.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\OrderResponse.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Order.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\OperationOutcome.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\OperationDefinition.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Observation.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\NutritionOrder.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\NamingSystem.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\MessageHeader.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\MedicationStatement.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\MedicationOrder.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\MedicationDispense.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\MedicationAdministration.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Medication.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Media.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Location.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\List.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\ImplementationGuide.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\ImmunizationRecommendation.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Immunization.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\ImagingStudy.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\ImagingObjectSelection.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\HealthcareService.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Group.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Goal.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Flag.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\FamilyMemberHistory.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\ExplanationOfBenefit.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\EpisodeOfCare.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\EnrollmentResponse.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\EnrollmentRequest.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Encounter.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\EligibilityResponse.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\EligibilityRequest.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\DocumentReference.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\DocumentManifest.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\DiagnosticReport.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\DiagnosticOrder.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\DeviceUseStatement.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\DeviceUseRequest.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\DeviceMetric.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\DeviceComponent.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Device.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\DetectedIssue.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\DataElement.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Coverage.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Contract.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Conformance.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Condition.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\ConceptMap.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Composition.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\CommunicationRequest.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Communication.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\ClinicalImpression.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\ClaimResponse.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Claim.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\CarePlan.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Bundle.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\BodySite.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Binary.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Basic.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\AuditEvent.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\AppointmentResponse.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Appointment.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\AllergyIntolerance.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Account.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\DomainResource.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\Parameters.cs
+// D:\projects\furore\FhirApi - myFork\fhir-net-api\src\Hl7.Fhir.Core\Model\Generated\ValueSet.cs

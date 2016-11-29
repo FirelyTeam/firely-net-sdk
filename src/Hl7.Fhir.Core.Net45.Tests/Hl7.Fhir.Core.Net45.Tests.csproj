@@ -1,0 +1,278 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D6CE2817-0931-4D56-B989-AAC5319B78CE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Hl7.Fhir</RootNamespace>
+    <AssemblyName>Hl7.Fhir.Core.Net45.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\Net45\</OutputPath>
+    <BaseIntermediateOutputPath>obj\Debug\Net45\</BaseIntermediateOutputPath>
+    <DefineConstants>TRACE;DEBUG;NET45</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <LangVersion>6</LangVersion>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\Net45\</OutputPath>
+    <BaseIntermediateOutputPath>obj\Release\Net45\</BaseIntermediateOutputPath>
+    <DefineConstants>TRACE;NET45</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Hl7.FluentPath, Version=0.4.0.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hl7.FluentPath.0.4.0-alpha2\lib\net45\Hl7.FluentPath.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+  <ItemGroup>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Introspection\ClassMappingTest.cs">
+      <Link>Introspection\ClassMappingTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Introspection\EnumMappingTest.cs">
+      <Link>Introspection\EnumMappingTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Introspection\ModelInspectorTest.cs">
+      <Link>Introspection\ModelInspectorTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Introspection\PropertyMappingTest.cs">
+      <Link>Introspection\PropertyMappingTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Model\AnnotationTests.cs">
+      <Link>Model\AnnotationTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Model\BundleExtensionsTest.cs">
+      <Link>Model\BundleExtensionsTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Model\DeepCompareTest.cs">
+      <Link>Model\DeepCompareTest</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Model\DeepCopyTest.cs">
+      <Link>Model\DeepCopyTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Model\DeepMatchTest.cs">
+      <Link>Model\DeepMatchTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Model\CodeEnumTests.cs">
+      <Link>Model\CodeEnumTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Model\DateTimeOperatorTests.cs">
+      <Link>Model\DateTimeOperatorTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Model\ModelTests.cs">
+      <Link>Model\ModelTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Model\ValidateAllExamplesSearchExtractionTest.cs">
+      <Link>Model\ValidateAllExamplesSearchExtractionTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\PocoNavigatorTests.cs">
+      <Link>PocoNavigatorTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Properties\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\JsonAssert.cs">
+      <Link>JsonAssert.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Rest\FhirClientTests.cs">
+      <Link>Rest\FhirClientTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Rest\OperationsTests.cs">
+      <Link>Rest\OperationsTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Rest\SearchParamsTests.cs">
+      <Link>Rest\SearchParamsTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Rest\TestResourceIdentifier.cs">
+      <Link>Rest\TestResourceIdentifier.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Rest\ReferenceExtensionsTest.cs">
+      <Link>Rest\ReferenceExtensionsTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Rest\TransactionBuilderTests.cs">
+      <Link>Rest\TransactionBuilderTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Rest\TestRestUrl.cs">
+      <Link>Rest\TestRestUrl.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Rest\UtilityTests.cs">
+      <Link>Rest\UtilityTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Serialization\ConversionTest.cs">
+      <Link>Serialization\ConversionTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Serialization\DefaultModelFactoryTest.cs">
+      <Link>Serialization\DefaultModelFactoryTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Serialization\MeasurePerformance.cs">
+      <Link>Serialization\MeasurePerformance.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Serialization\ModelClassFactoryListTest.cs">
+      <Link>Serialization\ModelClassFactoryListTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Serialization\QueryParserTests.cs">
+      <Link>Serialization\QueryParserTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Serialization\ResourceParsingTests.cs">
+      <Link>Serialization\ResourceParsingTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Serialization\RoundtripTest.cs">
+      <Link>Serialization\RoundtripTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Serialization\SerializationTests.cs">
+      <Link>Serialization\SerializationTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\TrainingTests\Z-TrainingUnitTests.cs">
+      <Link>TrainingTests\Z-TrainingUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Validation\AllResourceInvariantsTest.cs">
+      <Link>Validation\AllResourceInvariantsTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Validation\ValidateAllExamplesTest.cs">
+      <Link>Validation\ValidateAllExamplesTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Validation\ValidatePatient.cs">
+      <Link>Validation\ValidatePatient.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\Validation\ValidationTests.cs">
+      <Link>Validation\ValidationTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\XmlAssert.cs">
+      <Link>XmlAssert.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="..\Hl7.Fhir.Core.Tests\TestData\examples-json.zip">
+      <Link>TestData\examples-json.zip</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Hl7.Fhir.Core.Tests\TestData\examples.zip">
+      <Link>TestData\examples.zip</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Hl7.Fhir.Core.Tests\TestData\json-edge-cases.json">
+      <Link>TestData\json-edge-cases.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Hl7.Fhir.Core.Tests\TestData\TestPatient.json">
+      <Link>TestData\TestPatient.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Hl7.Fhir.Core.Tests\TestData\TestPatient.xml">
+      <Link>TestData\TestPatient.xml</Link>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hl7.Fhir.Core.Net45\Hl7.Fhir.Core.Net45.csproj">
+      <Project>{92cc9186-0a21-4e06-b11f-907584fbfd81}</Project>
+      <Name>Hl7.Fhir.Core.Net45</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Hl7.Fhir.Core\Model\Source\profiles-others.xml">
+      <Link>TestData\profiles-others.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="..\Hl7.Fhir.Core.Tests\TestData\careplan-example-f201-renal.xml">
+      <Link>TestData\careplan-example-f201-renal.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Core.Tests\TestData\testscript-example%28example%29.xml">
+      <Link>TestData\testscript-example%28example%29.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

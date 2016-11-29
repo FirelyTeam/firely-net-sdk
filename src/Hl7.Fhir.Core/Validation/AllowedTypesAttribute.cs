@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Validation
         {
             if (item != null)
             {
-#if PORTABLE45
+#if PORTABLE45 || NETCore
 				if (!Types.Any(type => type.GetTypeInfo().IsAssignableFrom(item.GetType().GetTypeInfo())))
 #else
                 if (!Types.Any(type => type.IsAssignableFrom(item.GetType())))

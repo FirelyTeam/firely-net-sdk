@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
             catch (CanonicalUrlConflictException ex)
             {
-                Debug.Print("{0}:\r\n{1}", ex.GetType().Name, ex.Message);
+                Debug.Write(string.Format("{0}:\r\n{1}", ex.GetType().Name, ex.Message));
                 Assert.IsNotNull(ex.Conflicts);
                 Assert.AreEqual(1, ex.Conflicts.Length);
                 var conflict = ex.Conflicts[0];

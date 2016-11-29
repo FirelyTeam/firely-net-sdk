@@ -1,0 +1,1268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props" Condition="Exists('..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6FED47F1-F7EF-42E8-9FF8-FC1439F04DF2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Hl7.Fhir</RootNamespace>
+    <AssemblyName>HL7.Fhir.Specification.Net45.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Hl7.Fhir.Specification.Tests\bin\Debug\Net45\</OutputPath>
+    <BaseIntermediateOutputPath>obj\Debug\Net45\</BaseIntermediateOutputPath>
+    <DefineConstants>TRACE;DEBUG;NET45</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>6</LangVersion>
+    <NoWarn>1591</NoWarn>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Hl7.Fhir.Specification.Tests\bin\Release\Net45\</OutputPath>
+    <BaseIntermediateOutputPath>obj\Release\Net45\</BaseIntermediateOutputPath>
+    <DefineConstants>TRACE;NET45</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Hl7.FluentPath, Version=0.4.0.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hl7.FluentPath.0.4.0-alpha3\lib\net45\Hl7.FluentPath.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.abstractions.2.0.0\lib\net35\xunit.abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="xunit.assert, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.assert.2.1.0\lib\dotnet\xunit.assert.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="xunit.core, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.extensibility.core.2.1.0\lib\dotnet\xunit.core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="xunit.execution.desktop, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.extensibility.execution.2.1.0\lib\net45\xunit.execution.desktop.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <Choose>
+    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+  <ItemGroup>
+    <Compile Include="..\Hl7.Fhir.Core.Tests\XmlAssert.cs">
+      <Link>XmlAssert.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Specification.Tests\JsonNavigatorTests.cs">
+      <Link>JsonNavigatorTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Specification.Tests\JTokenExtensionsTests.cs">
+      <Link>JTokenExtensionsTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Specification.Tests\Source\ResolverAndSourceExtensionTests.cs">
+      <Link>Source\ResolverAndSourceExtensionTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Specification.Tests\Source\ConformanceSourceTests.cs">
+      <Link>Source\ConformanceSourceTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Specification.Tests\Source\ArtifactSourceTests.cs">
+      <Link>Source\ArtifactSourceTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Specification.Tests\OutcomeReportingTest.cs">
+      <Link>OutcomeReportingTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Specification.Tests\ProfileNavigationTest.cs">
+      <Link>ProfileNavigationTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Specification.Tests\Source\TerminologyTests.cs">
+      <Link>Source\TerminologyTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Specification.Tests\Validation\BindingValidationTests.cs">
+      <Link>Validation\BindingValidationTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Specification.Tests\Validation\ParseExtensionsTests.cs">
+      <Link>Validation\ParseExtensionsTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Specification.Tests\Validation\MinMaxValidationTests.cs">
+      <Link>Validation\MinMaxValidationTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Specification.Tests\Validation\ProfileAssertionTests.cs">
+      <Link>Validation\ProfileAssertionTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Specification.Tests\Validation\ScopeTrackerTests.cs">
+      <Link>Validation\ScopeTrackerTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Specification.Tests\Validation\SchemaCollectionTest.cs">
+      <Link>Validation\SchemaCollectionTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Specification.Tests\Properties\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Specification.Tests\SnapshotGeneratorTest.cs">
+      <Link>SnapshotGeneratorTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Specification.Tests\Source\ResourceResolverTests.cs">
+      <Link>Source\ResourceResolverTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Specification.Tests\Validation\BasicValidationTests.cs">
+      <Link>Validation\BasicValidationTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Specification.Tests\Validation\TestProfileArtifactSource.cs">
+      <Link>Validation\TestProfileArtifactSource.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Specification.Tests\XsltContextTests.cs">
+      <Link>XsltContextTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Hl7.Fhir.Specification.Tests\DirectoryExtensionsForNetCore.cs">
+      <Link>DirectoryExtensionsForNetCore.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\Chris Grenz\codeable-with-systems-profile.xml">
+      <Link>TestData\snapshot-test\Chris Grenz\codeable-with-systems-profile.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\validation\SectionTitles.valueset.xml">
+      <Link>TestData\validation\SectionTitles.valueset.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\validation\Weight.observation.xml">
+      <Link>TestData\validation\Weight.observation.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\validation\WeightHeightObservation.structuredefinition.xml">
+      <Link>TestData\validation\WeightHeightObservation.structuredefinition.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\validation\WeightQuantity.structuredefinition.xml">
+      <Link>TestData\validation\WeightQuantity.structuredefinition.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\Chris Grenz\encounter-with-type-profile-profile.xml">
+      <Link>TestData\snapshot-test\Chris Grenz\encounter-with-type-profile-profile.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\Chris Grenz\extension-structuredefinition-explicit-type-name.xml">
+      <Link>TestData\snapshot-test\Chris Grenz\extension-structuredefinition-explicit-type-name.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\Chris Grenz\organization-team-profile.xml">
+      <Link>TestData\snapshot-test\Chris Grenz\organization-team-profile.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\Chris Grenz\patient-careprovider-type-reslice-profile.xml">
+      <Link>TestData\snapshot-test\Chris Grenz\patient-careprovider-type-reslice-profile.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\Chris Grenz\patient-careprovider-type-slice-profile.xml">
+      <Link>TestData\snapshot-test\Chris Grenz\patient-careprovider-type-slice-profile.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\Chris Grenz\patient-deceasedDatetime-slice-profile.xml">
+      <Link>TestData\snapshot-test\Chris Grenz\patient-deceasedDatetime-slice-profile.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\Chris Grenz\patient-do-not-call-profile.xml">
+      <Link>TestData\snapshot-test\Chris Grenz\patient-do-not-call-profile.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\Chris Grenz\patient-extensions-profile.xml">
+      <Link>TestData\snapshot-test\Chris Grenz\patient-extensions-profile.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\Chris Grenz\patient-gender-profile.xml">
+      <Link>TestData\snapshot-test\Chris Grenz\patient-gender-profile.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\Chris Grenz\patient-id-site-profile.xml">
+      <Link>TestData\snapshot-test\Chris Grenz\patient-id-site-profile.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\Chris Grenz\patient-identifier-profile-slice-profile.xml">
+      <Link>TestData\snapshot-test\Chris Grenz\patient-identifier-profile-slice-profile.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\Chris Grenz\patient-identifier-slice-extension-profile.xml">
+      <Link>TestData\snapshot-test\Chris Grenz\patient-identifier-slice-extension-profile.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\Chris Grenz\patient-legal-case-lead-counsel-profile.xml">
+      <Link>TestData\snapshot-test\Chris Grenz\patient-legal-case-lead-counsel-profile.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\Chris Grenz\patient-legal-case-profile.xml">
+      <Link>TestData\snapshot-test\Chris Grenz\patient-legal-case-profile.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\Chris Grenz\patient-mdm-id-profile.xml">
+      <Link>TestData\snapshot-test\Chris Grenz\patient-mdm-id-profile.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\Chris Grenz\patient-mrn-id-profile.xml">
+      <Link>TestData\snapshot-test\Chris Grenz\patient-mrn-id-profile.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\Chris Grenz\patient-name-slice-profile.xml">
+      <Link>TestData\snapshot-test\Chris Grenz\patient-name-slice-profile.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\Chris Grenz\patient-only-mrn-profile.xml">
+      <Link>TestData\snapshot-test\Chris Grenz\patient-only-mrn-profile.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\Chris Grenz\patient-only-mrn-slice-profile.xml">
+      <Link>TestData\snapshot-test\Chris Grenz\patient-only-mrn-slice-profile.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\Chris Grenz\patient-research-auth-algorithm-profile.xml">
+      <Link>TestData\snapshot-test\Chris Grenz\patient-research-auth-algorithm-profile.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\Chris Grenz\patient-research-auth-reslice-profile.xml">
+      <Link>TestData\snapshot-test\Chris Grenz\patient-research-auth-reslice-profile.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\Chris Grenz\patient-research-authorization-profile.xml">
+      <Link>TestData\snapshot-test\Chris Grenz\patient-research-authorization-profile.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\Chris Grenz\patient-telecom-reslice-profile.xml">
+      <Link>TestData\snapshot-test\Chris Grenz\patient-telecom-reslice-profile.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\Chris Grenz\patient-telecom-slice-profile.xml">
+      <Link>TestData\snapshot-test\Chris Grenz\patient-telecom-slice-profile.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\Ewout\HeightQuantity.StructureDefinition.xml">
+      <Link>TestData\snapshot-test\Ewout\HeightQuantity.StructureDefinition.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\Ewout\weightheight.xml">
+      <Link>TestData\snapshot-test\Ewout\weightheight.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\Ewout\WeightQuantity.StructureDefinition.xml">
+      <Link>TestData\snapshot-test\Ewout\WeightQuantity.StructureDefinition.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-11179-de-administrative-status.xml">
+      <Link>TestData\snapshot-test\extensions\extension-11179-de-administrative-status.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-11179-de-change-description.xml">
+      <Link>TestData\snapshot-test\extensions\extension-11179-de-change-description.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-11179-de-classification-or-context.xml">
+      <Link>TestData\snapshot-test\extensions\extension-11179-de-classification-or-context.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-11179-de-contact-address.xml">
+      <Link>TestData\snapshot-test\extensions\extension-11179-de-contact-address.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-11179-de-document-reference.xml">
+      <Link>TestData\snapshot-test\extensions\extension-11179-de-document-reference.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-11179-de-effective-period.xml">
+      <Link>TestData\snapshot-test\extensions\extension-11179-de-effective-period.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-11179-de-is-data-element-concept.xml">
+      <Link>TestData\snapshot-test\extensions\extension-11179-de-is-data-element-concept.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-11179-de-registry-org.xml">
+      <Link>TestData\snapshot-test\extensions\extension-11179-de-registry-org.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-11179-de-submitter-org.xml">
+      <Link>TestData\snapshot-test\extensions\extension-11179-de-submitter-org.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-11179-objectclass.xml">
+      <Link>TestData\snapshot-test\extensions\extension-11179-objectclass.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-11179-objectclassproperty.xml">
+      <Link>TestData\snapshot-test\extensions\extension-11179-objectclassproperty.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-11179-permitted-value-conceptmap.xml">
+      <Link>TestData\snapshot-test\extensions\extension-11179-permitted-value-conceptmap.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-11179-permitted-value-valueset.xml">
+      <Link>TestData\snapshot-test\extensions\extension-11179-permitted-value-valueset.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-allergyintolerance-duration.xml">
+      <Link>TestData\snapshot-test\extensions\extension-allergyintolerance-duration.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-allergyintolerance-reasonrefuted.xml">
+      <Link>TestData\snapshot-test\extensions\extension-allergyintolerance-reasonrefuted.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-allergyintolerance-resolutionage.xml">
+      <Link>TestData\snapshot-test\extensions\extension-allergyintolerance-resolutionage.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-birthplace.xml">
+      <Link>TestData\snapshot-test\extensions\extension-birthplace.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-communication-reasonnotperformed.xml">
+      <Link>TestData\snapshot-test\extensions\extension-communication-reasonnotperformed.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-communicationrequest-reasonrejected.xml">
+      <Link>TestData\snapshot-test\extensions\extension-communicationrequest-reasonrejected.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-condition-criticality.xml">
+      <Link>TestData\snapshot-test\extensions\extension-condition-criticality.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-codesystem.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-codesystem.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-content.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-content.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-contributor.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-contributor.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-data.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-data.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-description.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-description.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-effectiveperiod.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-effectiveperiod.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-evaluateatdatetime.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-evaluateatdatetime.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-evaluationmessage.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-evaluationmessage.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-evaluationsupported.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-evaluationsupported.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-expression.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-expression.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-guidance-action.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-guidance-action.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-guidance-encounterclass.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-guidance-encounterclass.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-guidance-encountertype.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-guidance-encountertype.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-guidance-initiatingorganization.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-guidance-initiatingorganization.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-guidance-initiatingperson.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-guidance-initiatingperson.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-guidance-receivingorganization.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-guidance-receivingorganization.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-guidance-receivingperson.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-guidance-receivingperson.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-guidance-recipientlanguage.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-guidance-recipientlanguage.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-guidance-recipienttype.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-guidance-recipienttype.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-guidance-structure.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-guidance-structure.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-guidance-systemuserlanguage.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-guidance-systemuserlanguage.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-guidance-systemusertaskcontext.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-guidance-systemusertaskcontext.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-guidance-systemusertype.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-guidance-systemusertype.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-guidance-trigger.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-guidance-trigger.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-inputparameters.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-inputparameters.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-keyword.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-keyword.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-lastreviewdate.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-lastreviewdate.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-library.canonical.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-library.canonical.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-model.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-model.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-module.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-module.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-modulestatus.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-modulestatus.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-moduleversion.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-moduleversion.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-outputparameters.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-outputparameters.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-parameter.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-parameter.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-publicationdate.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-publicationdate.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-publisher.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-publisher.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-purpose.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-purpose.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-qualityofevidence.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-qualityofevidence.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-relatedresource.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-relatedresource.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-requestdatetime.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-requestdatetime.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-requestid.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-requestid.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-responsestatus.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-responsestatus.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-rightsdeclaration.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-rightsdeclaration.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-steward.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-steward.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-strengthofrecommendation.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-strengthofrecommendation.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-title.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-title.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-topic.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-topic.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-usage.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-usage.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-cqif-basic-valueset.xml">
+      <Link>TestData\snapshot-test\extensions\extension-cqif-basic-valueset.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-deviceuserequest-reasonrejected.xml">
+      <Link>TestData\snapshot-test\extensions\extension-deviceuserequest-reasonrejected.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-diagnosticorder-precondition.xml">
+      <Link>TestData\snapshot-test\extensions\extension-diagnosticorder-precondition.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-diagnosticorder-reasonrejected.xml">
+      <Link>TestData\snapshot-test\extensions\extension-diagnosticorder-reasonrejected.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-diagnosticreport-locationperformed.xml">
+      <Link>TestData\snapshot-test\extensions\extension-diagnosticreport-locationperformed.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-elementdefinition-allowedunits.xml">
+      <Link>TestData\snapshot-test\extensions\extension-elementdefinition-allowedunits.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-elementdefinition-equivalence.xml">
+      <Link>TestData\snapshot-test\extensions\extension-elementdefinition-equivalence.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-elementdefinition-question.xml">
+      <Link>TestData\snapshot-test\extensions\extension-elementdefinition-question.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-encounter-reasoncancelled.xml">
+      <Link>TestData\snapshot-test\extensions\extension-encounter-reasoncancelled.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-encounter-relatedcondition.xml">
+      <Link>TestData\snapshot-test\extensions\extension-encounter-relatedcondition.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-entryformat.xml">
+      <Link>TestData\snapshot-test\extensions\extension-entryformat.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-family-member-history-genetics-observation.xml">
+      <Link>TestData\snapshot-test\extensions\extension-family-member-history-genetics-observation.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-family-member-history-genetics-parent.xml">
+      <Link>TestData\snapshot-test\extensions\extension-family-member-history-genetics-parent.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-familymemberhistory-abatement.xml">
+      <Link>TestData\snapshot-test\extensions\extension-familymemberhistory-abatement.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-familymemberhistory-severity.xml">
+      <Link>TestData\snapshot-test\extensions\extension-familymemberhistory-severity.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-gao-extension-device.xml">
+      <Link>TestData\snapshot-test\extensions\extension-gao-extension-device.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-gao-extension-guideline.xml">
+      <Link>TestData\snapshot-test\extensions\extension-gao-extension-guideline.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-gao-extension-item.canonical.xml">
+      <Link>TestData\snapshot-test\extensions\extension-gao-extension-item.canonical.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-gao-extension-period.xml">
+      <Link>TestData\snapshot-test\extensions\extension-gao-extension-period.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-gao-extension-practitioner.xml">
+      <Link>TestData\snapshot-test\extensions\extension-gao-extension-practitioner.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-gao-extension-score.xml">
+      <Link>TestData\snapshot-test\extensions\extension-gao-extension-score.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-gao-extension-signature.xml">
+      <Link>TestData\snapshot-test\extensions\extension-gao-extension-signature.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-geneticsallelename.xml">
+      <Link>TestData\snapshot-test\extensions\extension-geneticsallelename.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-geneticsallelicfrequency.xml">
+      <Link>TestData\snapshot-test\extensions\extension-geneticsallelicfrequency.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-geneticsallelicstate.xml">
+      <Link>TestData\snapshot-test\extensions\extension-geneticsallelicstate.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-geneticsaminoacidchange.xml">
+      <Link>TestData\snapshot-test\extensions\extension-geneticsaminoacidchange.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-geneticsaminoacidchangetype.xml">
+      <Link>TestData\snapshot-test\extensions\extension-geneticsaminoacidchangetype.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-geneticsassessedcondition.xml">
+      <Link>TestData\snapshot-test\extensions\extension-geneticsassessedcondition.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-geneticschromosome.xml">
+      <Link>TestData\snapshot-test\extensions\extension-geneticschromosome.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-geneticscigar.xml">
+      <Link>TestData\snapshot-test\extensions\extension-geneticscigar.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-geneticscopynumberevent.xml">
+      <Link>TestData\snapshot-test\extensions\extension-geneticscopynumberevent.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-geneticsdnaregionname.xml">
+      <Link>TestData\snapshot-test\extensions\extension-geneticsdnaregionname.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-geneticsdnasequencevariation.xml">
+      <Link>TestData\snapshot-test\extensions\extension-geneticsdnasequencevariation.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-geneticsdnasequencevariationtype.xml">
+      <Link>TestData\snapshot-test\extensions\extension-geneticsdnasequencevariationtype.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-geneticsgene.xml">
+      <Link>TestData\snapshot-test\extensions\extension-geneticsgene.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-geneticsgenomebuild.xml">
+      <Link>TestData\snapshot-test\extensions\extension-geneticsgenomebuild.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-geneticsgenomicsourceclass.xml">
+      <Link>TestData\snapshot-test\extensions\extension-geneticsgenomicsourceclass.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-geneticsgenomicstart.xml">
+      <Link>TestData\snapshot-test\extensions\extension-geneticsgenomicstart.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-geneticsgenomicstop.xml">
+      <Link>TestData\snapshot-test\extensions\extension-geneticsgenomicstop.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-geneticsobservedallele.xml">
+      <Link>TestData\snapshot-test\extensions\extension-geneticsobservedallele.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-geneticsproteinreferencesequenceid.xml">
+      <Link>TestData\snapshot-test\extensions\extension-geneticsproteinreferencesequenceid.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-geneticsreadcoverage.xml">
+      <Link>TestData\snapshot-test\extensions\extension-geneticsreadcoverage.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-geneticsreferenceallele.xml">
+      <Link>TestData\snapshot-test\extensions\extension-geneticsreferenceallele.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-geneticsresult.xml">
+      <Link>TestData\snapshot-test\extensions\extension-geneticsresult.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-geneticsspecies.xml">
+      <Link>TestData\snapshot-test\extensions\extension-geneticsspecies.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-geneticstranscriptreferencesequenceid.xml">
+      <Link>TestData\snapshot-test\extensions\extension-geneticstranscriptreferencesequenceid.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-geneticsvariationid.xml">
+      <Link>TestData\snapshot-test\extensions\extension-geneticsvariationid.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-goal-reasonrejected.xml">
+      <Link>TestData\snapshot-test\extensions\extension-goal-reasonrejected.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-goal-target.xml">
+      <Link>TestData\snapshot-test\extensions\extension-goal-target.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-imagingstudy-radiationdose.xml">
+      <Link>TestData\snapshot-test\extensions\extension-imagingstudy-radiationdose.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-imagingstudy-radiationduration.xml">
+      <Link>TestData\snapshot-test\extensions\extension-imagingstudy-radiationduration.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-iso21090-preferred.xml">
+      <Link>TestData\snapshot-test\extensions\extension-iso21090-preferred.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-lipid-report-ldl-chol-calculated.xml">
+      <Link>TestData\snapshot-test\extensions\extension-lipid-report-ldl-chol-calculated.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-markup.xml">
+      <Link>TestData\snapshot-test\extensions\extension-markup.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-maxdecimalplaces.xml">
+      <Link>TestData\snapshot-test\extensions\extension-maxdecimalplaces.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-maxvalue.xml">
+      <Link>TestData\snapshot-test\extensions\extension-maxvalue.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-medication-isactiveingredient.xml">
+      <Link>TestData\snapshot-test\extensions\extension-medication-isactiveingredient.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-medicationdispense-validityperiod.xml">
+      <Link>TestData\snapshot-test\extensions\extension-medicationdispense-validityperiod.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-minlength.xml">
+      <Link>TestData\snapshot-test\extensions\extension-minlength.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-minvalue.xml">
+      <Link>TestData\snapshot-test\extensions\extension-minvalue.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-observation-bodyposition.xml">
+      <Link>TestData\snapshot-test\extensions\extension-observation-bodyposition.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-patient-birthtime.xml">
+      <Link>TestData\snapshot-test\extensions\extension-patient-birthtime.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-patient-cadavericdonor.xml">
+      <Link>TestData\snapshot-test\extensions\extension-patient-cadavericdonor.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-patient-clinicaltrial.xml">
+      <Link>TestData\snapshot-test\extensions\extension-patient-clinicaltrial.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-patient-disability.xml">
+      <Link>TestData\snapshot-test\extensions\extension-patient-disability.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-patient-mothersmaidenname.xml">
+      <Link>TestData\snapshot-test\extensions\extension-patient-mothersmaidenname.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-patient-nationality.xml">
+      <Link>TestData\snapshot-test\extensions\extension-patient-nationality.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-pharmacy-core-dosetype.xml">
+      <Link>TestData\snapshot-test\extensions\extension-pharmacy-core-dosetype.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-pharmacy-core-infuseover.xml">
+      <Link>TestData\snapshot-test\extensions\extension-pharmacy-core-infuseover.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-pharmacy-core-maxdeliveryrate.xml">
+      <Link>TestData\snapshot-test\extensions\extension-pharmacy-core-maxdeliveryrate.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-pharmacy-core-maxdeliveryvolume.xml">
+      <Link>TestData\snapshot-test\extensions\extension-pharmacy-core-maxdeliveryvolume.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-pharmacy-core-mindoseperperiod.xml">
+      <Link>TestData\snapshot-test\extensions\extension-pharmacy-core-mindoseperperiod.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-pharmacy-core-rategoal.xml">
+      <Link>TestData\snapshot-test\extensions\extension-pharmacy-core-rategoal.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-pharmacy-core-rateincrement.xml">
+      <Link>TestData\snapshot-test\extensions\extension-pharmacy-core-rateincrement.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-pharmacy-core-rateincrementinterval.xml">
+      <Link>TestData\snapshot-test\extensions\extension-pharmacy-core-rateincrementinterval.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-pharmacy-core-refillsremaining.xml">
+      <Link>TestData\snapshot-test\extensions\extension-pharmacy-core-refillsremaining.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-practitioner-classification.xml">
+      <Link>TestData\snapshot-test\extensions\extension-practitioner-classification.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-practitioner-primaryind.xml">
+      <Link>TestData\snapshot-test\extensions\extension-practitioner-primaryind.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-procedure-approachbodysite.xml">
+      <Link>TestData\snapshot-test\extensions\extension-procedure-approachbodysite.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-procedure-incisiondatetime.xml">
+      <Link>TestData\snapshot-test\extensions\extension-procedure-incisiondatetime.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-procedurerequest-approachbodysite.xml">
+      <Link>TestData\snapshot-test\extensions\extension-procedurerequest-approachbodysite.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-procedurerequest-reasonrefused.xml">
+      <Link>TestData\snapshot-test\extensions\extension-procedurerequest-reasonrefused.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-qicore-adverseevent-category.xml">
+      <Link>TestData\snapshot-test\extensions\extension-qicore-adverseevent-category.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-qicore-adverseevent-cause.xml">
+      <Link>TestData\snapshot-test\extensions\extension-qicore-adverseevent-cause.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-qicore-adverseevent-clinicalstudy.xml">
+      <Link>TestData\snapshot-test\extensions\extension-qicore-adverseevent-clinicalstudy.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-qicore-adverseevent-didnotoccur.xml">
+      <Link>TestData\snapshot-test\extensions\extension-qicore-adverseevent-didnotoccur.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-qicore-adverseevent-discoverydatetime.xml">
+      <Link>TestData\snapshot-test\extensions\extension-qicore-adverseevent-discoverydatetime.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-qicore-adverseevent-location.xml">
+      <Link>TestData\snapshot-test\extensions\extension-qicore-adverseevent-location.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-qicore-adverseevent-period.xml">
+      <Link>TestData\snapshot-test\extensions\extension-qicore-adverseevent-period.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-qicore-adverseevent-reaction.xml">
+      <Link>TestData\snapshot-test\extensions\extension-qicore-adverseevent-reaction.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-qicore-adverseevent-severity.xml">
+      <Link>TestData\snapshot-test\extensions\extension-qicore-adverseevent-severity.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-qicore-adverseevent-type.xml">
+      <Link>TestData\snapshot-test\extensions\extension-qicore-adverseevent-type.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-qicore-patient-militaryservice.xml">
+      <Link>TestData\snapshot-test\extensions\extension-qicore-patient-militaryservice.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-qicore-procedurerequest-appropriatenessscore.xml">
+      <Link>TestData\snapshot-test\extensions\extension-qicore-procedurerequest-appropriatenessscore.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-questionnaire-category.xml">
+      <Link>TestData\snapshot-test\extensions\extension-questionnaire-category.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-questionnaire-choiceorientation.xml">
+      <Link>TestData\snapshot-test\extensions\extension-questionnaire-choiceorientation.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-questionnaire-defaultvalue.xml">
+      <Link>TestData\snapshot-test\extensions\extension-questionnaire-defaultvalue.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-questionnaire-dereference.xml">
+      <Link>TestData\snapshot-test\extensions\extension-questionnaire-dereference.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-questionnaire-enablewhen.xml">
+      <Link>TestData\snapshot-test\extensions\extension-questionnaire-enablewhen.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-questionnaire-help.xml">
+      <Link>TestData\snapshot-test\extensions\extension-questionnaire-help.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-questionnaire-hidden.xml">
+      <Link>TestData\snapshot-test\extensions\extension-questionnaire-hidden.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-questionnaire-instruction.xml">
+      <Link>TestData\snapshot-test\extensions\extension-questionnaire-instruction.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-questionnaire-label.xml">
+      <Link>TestData\snapshot-test\extensions\extension-questionnaire-label.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-questionnaire-maxlength.xml">
+      <Link>TestData\snapshot-test\extensions\extension-questionnaire-maxlength.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-questionnaire-maxoccurs.xml">
+      <Link>TestData\snapshot-test\extensions\extension-questionnaire-maxoccurs.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-questionnaire-minoccurs.xml">
+      <Link>TestData\snapshot-test\extensions\extension-questionnaire-minoccurs.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-questionnaire-questioncontrol.xml">
+      <Link>TestData\snapshot-test\extensions\extension-questionnaire-questioncontrol.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-questionnaire-readonly.xml">
+      <Link>TestData\snapshot-test\extensions\extension-questionnaire-readonly.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-questionnaire-security.xml">
+      <Link>TestData\snapshot-test\extensions\extension-questionnaire-security.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-questionnaire-tooltip.xml">
+      <Link>TestData\snapshot-test\extensions\extension-questionnaire-tooltip.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-questionnaire-trailing.xml">
+      <Link>TestData\snapshot-test\extensions\extension-questionnaire-trailing.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-questionnaire-units.xml">
+      <Link>TestData\snapshot-test\extensions\extension-questionnaire-units.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-referralrequest-reasonrefused.xml">
+      <Link>TestData\snapshot-test\extensions\extension-referralrequest-reasonrefused.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-regex.xml">
+      <Link>TestData\snapshot-test\extensions\extension-regex.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-sdc-questionnaire-endpoint.xml">
+      <Link>TestData\snapshot-test\extensions\extension-sdc-questionnaire-endpoint.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-sdc-questionnaire-optionaldisplay.xml">
+      <Link>TestData\snapshot-test\extensions\extension-sdc-questionnaire-optionaldisplay.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-sdc-questionnaire-provenancesignaturerequred.xml">
+      <Link>TestData\snapshot-test\extensions\extension-sdc-questionnaire-provenancesignaturerequred.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-sdc-questionnaire-specialgroup.xml">
+      <Link>TestData\snapshot-test\extensions\extension-sdc-questionnaire-specialgroup.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-specimen-sequencenumber.xml">
+      <Link>TestData\snapshot-test\extensions\extension-specimen-sequencenumber.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-string-translation.xml">
+      <Link>TestData\snapshot-test\extensions\extension-string-translation.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-style.xml">
+      <Link>TestData\snapshot-test\extensions\extension-style.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-stylesensitive.xml">
+      <Link>TestData\snapshot-test\extensions\extension-stylesensitive.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-us-core-county.xml">
+      <Link>TestData\snapshot-test\extensions\extension-us-core-county.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-us-core-direct.xml">
+      <Link>TestData\snapshot-test\extensions\extension-us-core-direct.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-us-core-ethnicity.xml">
+      <Link>TestData\snapshot-test\extensions\extension-us-core-ethnicity.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-us-core-race.xml">
+      <Link>TestData\snapshot-test\extensions\extension-us-core-race.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-us-core-religion.xml">
+      <Link>TestData\snapshot-test\extensions\extension-us-core-religion.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-uslab-cc-practitioner.xml">
+      <Link>TestData\snapshot-test\extensions\extension-uslab-cc-practitioner.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-uslab-observationkind.xml">
+      <Link>TestData\snapshot-test\extensions\extension-uslab-observationkind.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-uslab-specimenrejectreason.xml">
+      <Link>TestData\snapshot-test\extensions\extension-uslab-specimenrejectreason.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-valueset-conceptorder.xml">
+      <Link>TestData\snapshot-test\extensions\extension-valueset-conceptorder.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-valueset-definition.xml">
+      <Link>TestData\snapshot-test\extensions\extension-valueset-definition.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-valueset-effectivedate.xml">
+      <Link>TestData\snapshot-test\extensions\extension-valueset-effectivedate.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-valueset-expirationdate.xml">
+      <Link>TestData\snapshot-test\extensions\extension-valueset-expirationdate.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-valueset-label.xml">
+      <Link>TestData\snapshot-test\extensions\extension-valueset-label.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-valueset-systemname.xml">
+      <Link>TestData\snapshot-test\extensions\extension-valueset-systemname.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\extensions\extension-valueset-trusted-expansion.xml">
+      <Link>TestData\snapshot-test\extensions\extension-valueset-trusted-expansion.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\WMR\MyBasic.structuredefinition.xml">
+      <Link>TestData\snapshot-test\WMR\MyBasic.structuredefinition.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\WMR\MyBundle.structuredefinition.xml">
+      <Link>TestData\snapshot-test\WMR\MyBundle.structuredefinition.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\WMR\MyExtensionNoSnapshot.structuredefinition.xml">
+      <Link>TestData\snapshot-test\WMR\MyExtensionNoSnapshot.structuredefinition.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\WMR\MyLocation.structuredefinition.xml">
+      <Link>TestData\snapshot-test\WMR\MyLocation.structuredefinition.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\WMR\MyLocationExtension.structuredefinition.xml">
+      <Link>TestData\snapshot-test\WMR\MyLocationExtension.structuredefinition.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\WMR\MyObservation.structuredefinition.xml">
+      <Link>TestData\snapshot-test\WMR\MyObservation.structuredefinition.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\WMR\MyObservation2.structuredefinition.xml">
+      <Link>TestData\snapshot-test\WMR\MyObservation2.structuredefinition.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\profiles-others.xml">
+      <Link>TestData\snapshot-test\profiles-others.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\profiles-resources.xml">
+      <Link>TestData\snapshot-test\profiles-resources.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\profiles-types.xml">
+      <Link>TestData\snapshot-test\profiles-types.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\Simone Heckman\StructureDefinition_kbv_betriebsstaette.xml">
+      <Link>TestData\snapshot-test\Simone Heckman\StructureDefinition_kbv_betriebsstaette.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\Simone Heckman\StructureDefinition_kbv_istNebenbetriebsstaette.xml">
+      <Link>TestData\snapshot-test\Simone Heckman\StructureDefinition_kbv_istNebenbetriebsstaette.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\structdef-human-group.xml">
+      <Link>TestData\snapshot-test\structdef-human-group.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\valueset-group-type-human.xml">
+      <Link>TestData\snapshot-test\valueset-group-type-human.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\WMR\MyExtension1.structuredefinition.xml">
+      <Link>TestData\snapshot-test\WMR\MyExtension1.structuredefinition.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\WMR\MyExtension2.structuredefinition.xml">
+      <Link>TestData\snapshot-test\WMR\MyExtension2.structuredefinition.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\WMR\MyPatient.structuredefinition.xml">
+      <Link>TestData\snapshot-test\WMR\MyPatient.structuredefinition.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\TestPatient.xml">
+      <Link>TestData\TestPatient.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\validation\bundle-contained-references.xml">
+      <Link>TestData\validation\bundle-contained-references.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\validation\careplan-example-integrated.xml">
+      <Link>TestData\validation\careplan-example-integrated.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\validation\DocumentBundle.structuredefinition.xml">
+      <Link>TestData\validation\DocumentBundle.structuredefinition.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\validation\DocumentComposition.structuredefinition.xml">
+      <Link>TestData\validation\DocumentComposition.structuredefinition.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\validation\HeightQuantity.structuredefinition.xml">
+      <Link>TestData\validation\HeightQuantity.structuredefinition.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\validation\Hippocrates.practitioner.xml">
+      <Link>TestData\validation\Hippocrates.practitioner.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\validation\Levin.patient.xml">
+      <Link>TestData\validation\Levin.patient.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\validation\MainBundle.bundle.xml">
+      <Link>TestData\validation\MainBundle.bundle.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification.Tests\TestData\validation\questionnaire-sdc-profile-example-cap.xml">
+      <Link>TestData\validation\questionnaire-sdc-profile-example-cap.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="..\Hl7.Fhir.Specification.Tests\TestData\TestPatient.json">
+      <Link>TestData\TestPatient.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hl7.Fhir.Core.Net45\Hl7.Fhir.Core.Net45.csproj">
+      <Project>{92cc9186-0a21-4e06-b11f-907584fbfd81}</Project>
+      <Name>Hl7.Fhir.Core.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Hl7.Fhir.Specification.Net45\Hl7.Fhir.Specification.Net45.csproj">
+      <Project>{34a3b072-5abc-4f7c-b7e8-0ab67c58cc61}</Project>
+      <Name>Hl7.Fhir.Specification.Net45</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

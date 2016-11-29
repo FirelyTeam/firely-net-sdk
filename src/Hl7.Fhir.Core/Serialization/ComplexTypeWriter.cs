@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Serialization
             Type serializationType = value.GetType();
             if (!prop.IsPrimitive && false)
             {
-#if PORTABLE45
+#if PORTABLE45 || NETCore
                 Type baseType = serializationType.GetTypeInfo().BaseType;
                 while (baseType != typeof(Element) && baseType != typeof(object))
                 {

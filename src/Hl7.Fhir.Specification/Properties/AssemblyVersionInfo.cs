@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 
 #if !SIGNED
 [assembly: InternalsVisibleTo("Hl7.Fhir.Specification.Tests")]
+[assembly: InternalsVisibleTo("Hl7.Fhir.Specification.Net45.Tests")]
 #else
 // Enable execution of unit tests on Release Assembly. See: https://msdn.microsoft.com/en-us/library/0tke9fxk.aspx
 [assembly:AssemblyKeyFileAttribute("..\\FhirNetApi.snk")]
