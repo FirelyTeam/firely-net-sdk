@@ -85,6 +85,7 @@ namespace Hl7.Fhir.Model
             return Enumerable.Empty<ValidationResult>();
         }
 
+        #region << Annotations and UserData >>
         private Dictionary<string, object> _userData = new Dictionary<string, object>();
 
         [NotMapped]
@@ -104,7 +105,7 @@ namespace Hl7.Fhir.Model
             return annotations.OfType(type).FirstOrDefault();
         }
 
-        public A Annotation<A>() where A : class
+        public A Annotation<A>()
         {
             return (A)Annotation(typeof(A));
         }
@@ -114,7 +115,7 @@ namespace Hl7.Fhir.Model
             return annotations.OfType(type);
         }
 
-        public IEnumerable<A> Annotations<A>() where A : class
+        public IEnumerable<A> Annotations<A>()
         {
             return annotations.OfType(typeof(A)).Cast<A>();
         }
@@ -124,15 +125,28 @@ namespace Hl7.Fhir.Model
             annotations.Add(annotation);
         }
 
+        public bool HasAnnotation<A>()
+        {
+            return annotations.OfType(typeof(A)).Count() > 0;
+        }
+
+        public void SetAnnotation<A>(A annotation)
+        {
+            RemoveAnnotations<A>();
+            if (annotation != null)
+                AddAnnotation(annotation);
+        }
+
         public void RemoveAnnotations(Type type)
         {
             annotations.RemoveOfType(type);
         }
 
-        public void RemoveAnnotations<A>() where A : class
+        public void RemoveAnnotations<A>()
         {
             annotations.RemoveOfType(typeof(A));
         }
+        #endregion
 
 
 
