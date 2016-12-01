@@ -214,7 +214,7 @@ namespace Hl7.Fhir.Validation
 
             foreach (var constraintElement in definition.Constraint)
             {
-                var fpExpression = constraintElement.GetFluentPathConstraint();
+                var fpExpression = constraintElement.GetFhirPathConstraint();
 
                 if (fpExpression != null)
                 {
@@ -234,13 +234,13 @@ namespace Hl7.Fhir.Validation
                     }
                     catch (Exception e)
                     {
-                        Trace(outcome, $"Evaluation of FluentPath for constraint '{constraintElement.Key}' failed: {e.Message}",
-                                        Issue.PROFILE_ELEMENTDEF_INVALID_FLUENTPATH_EXPRESSION, instance);
+                        Trace(outcome, $"Evaluation of FhirPath for constraint '{constraintElement.Key}' failed: {e.Message}",
+                                        Issue.PROFILE_ELEMENTDEF_INVALID_FHIRPATH_EXPRESSION, instance);
                     }
                 }
                 else
-                    Trace(outcome, $"Encountered an invariant ({constraintElement.Key}) that has no FluentPath expression, skipping validation of this constraint",
-                                Issue.UNSUPPORTED_CONSTRAINT_WITHOUT_FLUENTPATH, instance);
+                    Trace(outcome, $"Encountered an invariant ({constraintElement.Key}) that has no FhirPath expression, skipping validation of this constraint",
+                                Issue.UNSUPPORTED_CONSTRAINT_WITHOUT_FHIRPATH, instance);
             }
 
             return outcome;

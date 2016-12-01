@@ -545,7 +545,7 @@ namespace Hl7.Fhir.Specification.Tests
     //{
     //    public static IEnumerable<IValueProvider> ForPoco(this PathExpression.CompiledExpression ce, Base poco)
     //    {
-    //        var nav = new FluentPath.ModelNavigator(poco);
+    //        var nav = new FhirPath.ModelNavigator(poco);
 
     //        return ce(new List<IValueProvider> { nav }, poco is Resource ? new List<IValueProvider> { nav } : null);
     //    }

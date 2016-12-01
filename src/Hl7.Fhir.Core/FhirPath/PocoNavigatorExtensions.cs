@@ -28,7 +28,7 @@ namespace Hl7.Fhir.FhirPath
             }
         }
 
-        // TODO: Add support for the custom fluentpath function hasValue() on the default symbol table
+        // TODO: Add support for the custom fhirpath function hasValue() on the default symbol table
         //
         public static SymbolTable AddFhirExtensions(this SymbolTable t)
         {

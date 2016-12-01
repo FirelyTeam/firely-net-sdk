@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
             if (Value != null)
             {
                 if (Comparator != null)
-                    throw Error.NotSupported("Cannot convert a Quantity with a comparator to a FluentPath Quantity");
+                    throw Error.NotSupported("Cannot convert a Quantity with a comparator to a FhirPath Quantity");
 
                 return new Hl7.FhirPath.Quantity(Value.Value, Code);
             }

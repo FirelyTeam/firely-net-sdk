@@ -231,7 +231,7 @@ namespace Hl7.Fhir.FhirPath
                         if (Current.FhirValue is Extension)
                         {
                             // Need to construct a where clause for this property
-                            // The extension is different as with fluentpath there
+                            // The extension is different as with fhirpath there
                             // is a shortcut format of .extension('url'), and since
                             // all extensions have a property name of extension, can just at the brackets and string name
                             var item = Current.FhirValue as Extension;

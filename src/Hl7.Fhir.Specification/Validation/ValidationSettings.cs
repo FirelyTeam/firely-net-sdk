@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Validation
         // FP SymbolTable
 
         /// <summary>
-        /// StructureDefinition may contain FluentPath constraints to enfore invariants in the data that cannot
+        /// StructureDefinition may contain FhirPath constraints to enfore invariants in the data that cannot
         /// be expresses using StructureDefinition alone. This validation can be turned off for performance or
         /// debugging purposes. Default is 'false'.
         /// </summary>
