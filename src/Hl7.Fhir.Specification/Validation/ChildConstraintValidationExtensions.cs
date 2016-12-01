@@ -34,44 +34,49 @@ namespace Hl7.Fhir.Validation
             }
 
             //TODO: Give warnings for out-of order children.  Really? That's an xml artifact, no such thing in Json!
-
-            outcome.Add(validator.ValidateCardinality(matchResult, instance));
+            //(with the serializationrepresentationnav we could determine the source is xml and make order matter....)
 
             // Recursively validate my children
-            foreach (Match match in matchResult.Matches)
+            foreach (var match in matchResult.Matches)
             {
-                foreach (IElementNavigator element in match.InstanceElements)
-                {
-                    outcome.Include(validator.Validate(element, match.Definition));
-                }
+                outcome.Add(validator.ValidateMatch(match, instance));
             }
 
             return outcome;
         }
 
-        internal static OperationOutcome ValidateCardinality(this Validator validator, MatchResult matchResult, IElementNavigator parent)
+        private static OperationOutcome ValidateMatch(this Validator validator, Match match, IElementNavigator parent)
         {
             var outcome = new OperationOutcome();
 
-            foreach (var match in matchResult.Matches)
-            {
-                var definition = match.Definition.Current;
-                var occurs = match.InstanceElements.Count;
-                var cardinality = Cardinality.FromElementDefinition(definition);
+            var definition = match.Definition.Current;
 
-                if (definition.Min != null && definition.Max != null)
+            if (definition.Min == null)
+                validator.Trace(outcome, $"Element definition does not specify a 'min' value, which is required. Cardinality has not been validated",
+                    Issue.PROFILE_ELEMENTDEF_CARDINALITY_MISSING, parent);
+            else if (definition.Max == null)
+                validator.Trace(outcome, $"Element definition does not specify a 'max' value, which is required. Cardinality has not been validated",
+                    Issue.PROFILE_ELEMENTDEF_CARDINALITY_MISSING, parent);
+
+            var cardinality = Cardinality.FromElementDefinition(definition);
+
+            var bucket = BucketFactory.CreateRoot(match.Definition, validator);
+
+            foreach (var element in match.InstanceElements)
+            {
+                var matchOutcome = bucket.Add(element);
+
+                // For the "root" slice group (=the original core element that was sliced, not resliced)
+                // any element that does not match is an error
+                if (!matchOutcome.Success)
                 {
-                    if(!cardinality.InRange(occurs))
-                        validator.Trace(outcome, $"Element '{match.Definition.PathName}' occurs {occurs} times, which is not within the specified cardinality of {cardinality.ToString()}",
-                                Issue.CONTENT_ELEMENT_INCORRECT_OCCURRENCE, parent);
+                    outcome.Add(matchOutcome);
                 }
-                else
-                    validator.Trace(outcome, "ElementDefinition does not specify cardinality", Issue.PROFILE_ELEMENTDEF_CARDINALITY_MISSING, parent);
             }
+
+            outcome.Add(bucket.Validate(validator, parent));
 
             return outcome;
         }
-
-
     }
 }

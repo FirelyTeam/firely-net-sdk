@@ -12,11 +12,11 @@ using Xunit;
 
 namespace Hl7.Fhir.Source
 {
-    public class TerminologyTests : IClassFixture<ResolverFixture>
+    public class TerminologyTests : IClassFixture<ValidationFixture>
     {            
         private IResourceResolver _resolver;
 
-        public TerminologyTests(ResolverFixture fixture)
+        public TerminologyTests(ValidationFixture fixture)
         {
             _resolver = fixture.Resolver;
         }

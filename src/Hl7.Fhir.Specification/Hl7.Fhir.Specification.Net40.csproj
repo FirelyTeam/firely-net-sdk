@@ -83,6 +83,7 @@
     <Compile Include="..\Hl7.Fhir.Core\Support\StringExtensions.cs">
       <Link>Support\StringExtensions.cs</Link>
     </Compile>
+    <Compile Include="Specification\Navigation\ElementNavigatorSlicingExtensions.cs" />
     <Compile Include="Specification\Terminology\ExpansionSizeTooBig.cs" />
     <Compile Include="Specification\Terminology\ITerminologyService.cs" />
     <Compile Include="Properties\AssemblyVersionInfo.cs" />
@@ -124,13 +125,16 @@
     <Compile Include="Specification\Terminology\ValueSetExpander.cs" />
     <Compile Include="Support\Issue.cs" />
     <Compile Include="Specification\ValueSet\ValueSetExpander.cs" />
+    <Compile Include="Validation\BaseBucket.cs" />
     <Compile Include="Validation\BatchValidationExtensions.cs" />
     <Compile Include="Validation\BindingValidator.cs" />
     <Compile Include="Validation\Cardinality.cs" />
     <Compile Include="Validation\ChildConstraintValidationExtensions.cs" />
+    <Compile Include="Validation\ElementBucket.cs" />
     <Compile Include="Validation\ElementDefinitionNavigatorExtensions.cs" />
     <Compile Include="Validation\ElementNavigatorParsingExtensions.cs" />
     <Compile Include="Validation\FixedPatternValidationExtensions.cs" />
+    <Compile Include="Validation\IBucket.cs" />
     <Compile Include="Validation\InstanceToProfileMatcher.cs" />
     <Compile Include="Validation\MinMaxValidationExtensions.cs" />
     <Compile Include="Validation\OperationOutcomeExtensions.cs" />
@@ -138,6 +142,9 @@
     <Compile Include="Validation\ProfileAssertion.cs" />
     <Compile Include="Validation\ProfilePreprocessor.cs" />
     <Compile Include="Validation\ScopeTracker.cs" />
+    <Compile Include="Validation\SliceBucket.cs" />
+    <Compile Include="Validation\SliceGroupBucket.cs" />
+    <Compile Include="Validation\SliceValidationExtensions.cs" />
     <Compile Include="Validation\TypeRefExtensions.cs" />
     <Compile Include="Validation\TypeRefValidationExtensions.cs" />
     <Compile Include="Support\ValidationOutcomeExtensions.cs" />

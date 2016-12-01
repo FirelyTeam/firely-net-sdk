@@ -1,0 +1,11 @@
+<Group xmlns="http://hl7.org/fhir">
+  <type value="person"/>
+  <actual value="true"/>
+  <characteristic>
+    <code>
+      <text value="test"/>
+    </code>
+    <valueBoolean value="true"/>
+    <exclude value="false"/>
+  </characteristic>
+</Group>

@@ -1,0 +1,10 @@
+{
+  "resourceType": "List",
+  "id": "val1",
+  "text": {
+    "status": "generated",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n      <!DOCTYPE foo [ <!ENTITY xxe SYSTEM \"file://c:\\temp\\xxe.txt\">]>\n <p>This is some narrative  &xxe;</p>\n    </div>"
+  },
+  "status": "current",
+  "mode": "changes"
+}

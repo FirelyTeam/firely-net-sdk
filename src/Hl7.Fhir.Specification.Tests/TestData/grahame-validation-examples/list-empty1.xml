@@ -1,0 +1,9 @@
+<!-- this is all valid -->
+<List xmlns="http://hl7.org/fhir">
+  <!-- another comment -->
+  <id value="val1"/>
+  <status value="current"/>
+  <mode value="changes"/>
+  <entry/>
+</List>
+<!-- ending comment -->
