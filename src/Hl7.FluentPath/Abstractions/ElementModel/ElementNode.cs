@@ -38,7 +38,7 @@ namespace Hl7.ElementModel
 
         public object Value { get;  set; }
 
-        public IList<ElementNode> Children { get; private set; }
+        public IList<ElementNode> Children { get; set; }
 
         private ElementNode(string name, object value, string typeName, params ElementNode[] children)
         {

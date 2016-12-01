@@ -8,6 +8,15 @@ namespace Hl7.ElementModel
 {
     public static class NodeExtensions
     {
+        public static void AddChild<T>(this T node, T child) where T : INode<T>
+        {
+            child.Parent = node;
+
+            if (!node.HasChildNodes()) node.Children = new List<T>();
+            
+            node.Children.Add(child);
+        }
+
 
         public static IEnumerable<T> All<T>(this IEnumerable<T> elements) where T : INode<T>
         {

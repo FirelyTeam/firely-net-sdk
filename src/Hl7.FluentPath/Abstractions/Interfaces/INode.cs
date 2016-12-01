@@ -16,9 +16,9 @@ namespace Hl7.ElementModel
 {
     public interface INode<T> where T : INode<T>
     {
-        T Parent { get;  }
+        T Parent { get; set; }
 
-        IList<T> Children { get; }
+        IList<T> Children { get; set; }
     }
 
 }
