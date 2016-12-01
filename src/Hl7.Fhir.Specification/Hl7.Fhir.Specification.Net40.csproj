@@ -50,8 +50,8 @@
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Hl7.FluentPath, Version=0.4.0.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Hl7.FluentPath.0.4.0-alpha3\lib\net40\Hl7.FluentPath.dll</HintPath>
+    <Reference Include="Hl7.FhirPath, Version=0.4.0.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hl7.FhirPath.0.4.0\lib\net40\Hl7.FhirPath.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
@@ -124,7 +124,6 @@
     <Compile Include="Specification\Terminology\LocalTerminologyServer.cs" />
     <Compile Include="Specification\Terminology\ValueSetExpander.cs" />
     <Compile Include="Support\Issue.cs" />
-    <Compile Include="Specification\ValueSet\ValueSetExpander.cs" />
     <Compile Include="Validation\BaseBucket.cs" />
     <Compile Include="Validation\BatchValidationExtensions.cs" />
     <Compile Include="Validation\BindingValidator.cs" />

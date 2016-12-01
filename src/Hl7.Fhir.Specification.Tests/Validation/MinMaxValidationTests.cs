@@ -1,6 +1,6 @@
-﻿using Hl7.Fhir.FluentPath;
+﻿using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
-using Hl7.FluentPath;
+using Hl7.FhirPath;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Validation
             Assert.Equal(0,navQ.GetComparableValue(typeof(Model.FhirDateTime)).CompareTo(PartialDateTime.Parse("1972-11-30")));
 
             navQ = new PocoNavigator(new Model.Quantity(3.14m, "kg"));
-            Assert.Equal(-1, navQ.GetComparableValue(typeof(Model.Quantity)).CompareTo(new Hl7.FluentPath.Quantity(5.0m, "kg")));
+            Assert.Equal(-1, navQ.GetComparableValue(typeof(Model.Quantity)).CompareTo(new Hl7.FhirPath.Quantity(5.0m, "kg")));
 
             navQ = new PocoNavigator(new Model.HumanName());
             Assert.Null(navQ.GetComparableValue(typeof(Model.HumanName)));
@@ -39,11 +39,11 @@ namespace Hl7.Fhir.Validation
             Assert.Equal(-1,
                 MinMaxValidationExtensions.Compare(PartialDateTime.Parse("1972-12-01T13:00:00Z"),
                     new Model.Instant(new DateTimeOffset(1972, 12, 01, 14, 00, 00, TimeSpan.Zero))));
-            Assert.Equal(0, MinMaxValidationExtensions.Compare(Hl7.FluentPath.Time.Parse("12:00:00Z"), new Model.Time("12:00:00Z")));
+            Assert.Equal(0, MinMaxValidationExtensions.Compare(Hl7.FhirPath.Time.Parse("12:00:00Z"), new Model.Time("12:00:00Z")));
             Assert.Equal(1, MinMaxValidationExtensions.Compare(3.14m, new Model.FhirDecimal(2.14m)));
             Assert.Equal(-1, MinMaxValidationExtensions.Compare(-3L, new Model.Integer(3)));
             Assert.Equal(-1, MinMaxValidationExtensions.Compare("aaa", new Model.FhirString("bbb")));
-            Assert.Equal(1, MinMaxValidationExtensions.Compare(new Hl7.FluentPath.Quantity(5.0m, "kg"), new Model.Quantity(4.0m, "kg")));
+            Assert.Equal(1, MinMaxValidationExtensions.Compare(new Hl7.FhirPath.Quantity(5.0m, "kg"), new Model.Quantity(4.0m, "kg")));
 
             Assert.Throws<NotSupportedException>(() => MinMaxValidationExtensions.Compare(PartialDateTime.Parse("1972-11-30"), new Model.Quantity(4.0m, "kg")));
         }

@@ -37,7 +37,7 @@ using Hl7.Fhir.Support;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Rest;
 using Hl7.ElementModel;
-using Hl7.FluentPath;
+using Hl7.FhirPath;
 
 namespace Hl7.Fhir.Model
 {
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
                 }
 
                 // Ensure the FHIR extensions are registered
-                Hl7.Fhir.FluentPath.PocoNavigatorExtensions.PrepareFhirSybolTableFunctions();
+                Hl7.Fhir.FhirPath.PocoNavigatorExtensions.PrepareFhirSybolTableFunctions();
 
                 if (model.Predicate(expression, model))
                     return true;
@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Model
                 // Need to serialize to XML until the object model processor exists
                 // string tpXml = Fhir.Serialization.FhirSerializer.SerializeResourceToXml(this);
                 // FhirPath.IFhirPathElement tree = FhirPath.InstanceTree.TreeConstructor.FromXml(tpXml);
-                var tree = new FluentPath.PocoNavigator(this);
+                var tree = new FhirPath.PocoNavigator(this);
                 foreach (var invariantRule in InvariantConstraints)
                 {
                     ValidateInvariantRule(invariantRule, tree, result);

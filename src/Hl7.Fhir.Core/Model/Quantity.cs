@@ -41,14 +41,14 @@ namespace Hl7.Fhir.Model
 {
     public partial class Quantity
     {
-        public Hl7.FluentPath.Quantity? ToQuantity()
+        public Hl7.FhirPath.Quantity? ToQuantity()
         {
             if (Value != null)
             {
                 if (Comparator != null)
                     throw Error.NotSupported("Cannot convert a Quantity with a comparator to a FluentPath Quantity");
 
-                return new Hl7.FluentPath.Quantity(Value.Value, Code);
+                return new Hl7.FhirPath.Quantity(Value.Value, Code);
             }
             else
                 return null;

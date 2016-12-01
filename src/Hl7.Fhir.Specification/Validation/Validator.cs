@@ -7,20 +7,20 @@
  */
 
 using Hl7.ElementModel;
-using Hl7.Fhir.FluentPath;
+using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Support;
-using Hl7.FluentPath;
+using Hl7.FhirPath;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
-using Time = Hl7.FluentPath.Time;
+using Time = Hl7.FhirPath.Time;
 
 namespace Hl7.Fhir.Validation
 {
@@ -398,10 +398,10 @@ namespace Hl7.Fhir.Validation
                 return XmlConvert.ToString((decimal)val);
             else if (val is bool)
                 return (bool)val ? "true" : "false";
-            else if (val is Hl7.FluentPath.Time)
-                return ((Hl7.FluentPath.Time)val).ToString();
-            else if (val is Hl7.FluentPath.PartialDateTime)
-                return ((Hl7.FluentPath.PartialDateTime)val).ToString();
+            else if (val is Hl7.FhirPath.Time)
+                return ((Hl7.FhirPath.Time)val).ToString();
+            else if (val is Hl7.FhirPath.PartialDateTime)
+                return ((Hl7.FhirPath.PartialDateTime)val).ToString();
             else
                 return val.ToString();
         }

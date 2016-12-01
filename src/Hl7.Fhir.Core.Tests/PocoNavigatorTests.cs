@@ -1,5 +1,5 @@
 ﻿using Hl7.ElementModel;
-using Hl7.Fhir.FluentPath;
+using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -84,7 +84,7 @@ namespace Hl7.Fhir
         public void PocoHasValueTest()
         {
             // Ensure the FHIR extensions are registered
-            Hl7.Fhir.FluentPath.PocoNavigatorExtensions.PrepareFhirSybolTableFunctions();
+            Hl7.Fhir.FhirPath.PocoNavigatorExtensions.PrepareFhirSybolTableFunctions();
 
             Patient p = new Patient();
 

@@ -16,9 +16,9 @@ using System.Xml;
 using System.Collections.Generic;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
-using Hl7.Fhir.FluentPath;
+using Hl7.Fhir.FhirPath;
 using Hl7.ElementModel;
-using Hl7.FluentPath;
+using Hl7.FhirPath;
 using Hl7.Fhir.Validation;
 using Hl7.Fhir.Support;
 

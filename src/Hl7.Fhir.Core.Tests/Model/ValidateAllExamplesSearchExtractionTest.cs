@@ -22,7 +22,7 @@ using Hl7.Fhir.Serialization;
 using System.IO.Compression;
 using Hl7.Fhir.Validation;
 using System.ComponentModel.DataAnnotations;
-using Hl7.FluentPath;
+using Hl7.FhirPath;
 
 namespace Hl7.Fhir.Tests.Model
 {
@@ -124,8 +124,8 @@ namespace Hl7.Fhir.Tests.Model
 
         private static void ExtractExamplesFromResource(Dictionary<string, int> exampleSearchValues, Resource resource, ModelInfo.SearchParamDefinition index, string key)
         {
-            var resourceModel = new FluentPath.PocoNavigator(resource);
-            var navigator = new FluentPath.PocoNavigator(resource);
+            var resourceModel = new FhirPath.PocoNavigator(resource);
+            var navigator = new FhirPath.PocoNavigator(resource);
 
             try
             {
@@ -136,14 +136,14 @@ namespace Hl7.Fhir.Tests.Model
                     {
                         if (t2 != null)
                         {
-                            if (t2 is FluentPath.PocoNavigator && (t2 as FluentPath.PocoNavigator).FhirValue != null)
+                            if (t2 is FhirPath.PocoNavigator && (t2 as FhirPath.PocoNavigator).FhirValue != null)
                             {
                                 // Validate the type of data returned against the type of search parameter
                             //    Debug.Write(index.Resource + "." + index.Name + ": ");
                             //    Debug.WriteLine((t2 as FluentPath.ModelNavigator).FhirValue.ToString());// + "\r\n";
                                 exampleSearchValues[key]++;
                             }
-                            else if (t2.Value is Hl7.FluentPath.ConstantValue)
+                            else if (t2.Value is Hl7.FhirPath.ConstantValue)
                             {
                             //    Debug.Write(index.Resource + "." + index.Name + ": ");
                             //    Debug.WriteLine((t2.Value as Hl7.FluentPath.ConstantValue).Value);

@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Introspection;
 
-namespace Hl7.Fhir.FluentPath
+namespace Hl7.Fhir.FhirPath
 {
     public class PocoNavigator : IElementNavigator
     {
