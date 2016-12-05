@@ -174,7 +174,7 @@ namespace Hl7.FhirPath.Tests
         [Fact, Trait("Area", "FhirPathFromSpec")]
         public void TestPublishedTests()
         {
-            var files = Directory.EnumerateFiles(@"C:\git\fluentpath\tests\dstu2", "*.xml", SearchOption.TopDirectoryOnly);
+            var files = Directory.EnumerateFiles(@"..\..\..\fluentpath\tests\dstu2", "*.xml", SearchOption.TopDirectoryOnly);
 
             foreach (var file in files)
             {
@@ -213,7 +213,7 @@ namespace Hl7.FhirPath.Tests
                 Model.DomainResource resource = null;
                 if (!_cache.ContainsKey(inputfile))
                 {
-                    string basepath = @"C:\git\fluentpath\tests\dstu2\input\";
+                    string basepath = @"..\..\..\fluentpath\tests\dstu2\input\";
                     _cache.Add(inputfile, (Model.DomainResource)(new FhirXmlParser().Parse<Model.DomainResource>(File.ReadAllText(basepath + inputfile))));
                 }
                 resource = _cache[inputfile];
