@@ -19,9 +19,8 @@
                 "James"
             ],
             "use": "official",
-            "family": ["Chalmers"]
-        },
-        {
+            "family": "Chalmers"
+        }, {
             "given": ["Jim"],
             "use": "usual"
         }
@@ -120,35 +119,17 @@
     ],
     "contact": [{
         "name": {
-            "family": [
-                null,
-                "du",
-                null,
-                "Marché",
-                null
-            ],
-            "_family": [
-                {"extension": [{
-                    "url": "http://example.org/fhir/StructureDefinition/nullFlavor",
-                    "valueCode": "ASKU"
-                }]},
-                {
-                    "id": "a2",
-                    "extension": [{
-                        "url": "http://example.org/fhir/StructureDefinition/qualifier",
-                        "valueCode": "VV"
-                    }]
-                },
-                {"extension": [{
-                    "url": "http://hl7.org/fhir/StructureDefinitioniso-21090#nullFlavor",
-                    "valueCode": "ASKU"
-                }]},
-                null,
-                {"extension": [{
-                    "url": "http://hl7.org/fhir/StructureDefinition/nullFlavor",
-                    "valueCode": "ASKU"
-                }]}
-            ],
+            "family" : "du Marché",
+            "_family": {
+              "extension": [{
+                  "url": "http://example.org/fhir/StructureDefinition/qualifier",
+                  "valueString": "VV"
+                }, {
+                  "url": "http://hl7.org/fhir/StructureDefinitioniso-21090#nullFlavor",
+                  "valueCode": "ASKU"
+                }
+              ]
+            },
             "_given": [
                 null,
                 {
