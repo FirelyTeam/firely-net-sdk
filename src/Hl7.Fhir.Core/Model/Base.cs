@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
 
         public bool HasAnnotation<A>()
         {
-            return annotations.OfType(typeof(A)).Count() > 0;
+            return annotations.OfType(typeof(A)).Any();
         }
 
         public void SetAnnotation<A>(A annotation)
