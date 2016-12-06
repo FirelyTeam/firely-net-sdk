@@ -195,6 +195,7 @@ namespace Hl7.Fhir.Model
 #>
             };
         
+		// http://build.fhir.org/searchparameter-registry.html
         public static List<SearchParamDefinition> SearchParameters = 
             new List<SearchParamDefinition>
             {
@@ -215,7 +216,10 @@ namespace Hl7.Fhir.Model
 			foreach (XmlElement sp in sortedSPs)
             {
 				string name = sp.SelectSingleNode("fhir:name/@value", nsS).Value;
+				string url = sp.SelectSingleNode("fhir:url/@value", nsS).Value;
 				string description = sp.SelectSingleNode("fhir:description/@value", nsS).Value;
+				if (description.StartsWith("Multiple"))
+					description = "";
 				string searchType = sp.SelectSingleNode("fhir:type/@value", nsS).Value;
 				string outputType = "";
 				switch (searchType)
@@ -234,9 +238,9 @@ namespace Hl7.Fhir.Model
 				foreach(XmlAttribute et in sp.SelectNodes("fhir:xpath/@value", nsS))
                 {
 					xpath = et.Value;
-					string temp = "\"" + et.Value.Replace("f:", "").Replace("/", ".").Replace("(", "[").Replace(")", "]") + "\"";
-					var split = temp.Split(new char[] {'|', ' '}, StringSplitOptions.RemoveEmptyEntries);
-					path += string.Join("\", \"", split) + ", ";
+					string temp = et.Value.Replace("f:", "").Replace("/", ".").Replace("(", "[").Replace(")", "]");
+					var split = temp.Split(new char[] {'|', ' '}, StringSplitOptions.RemoveEmptyEntries).Where(s => s.StartsWith(resourceName + "."));
+					path += "\"" + string.Join("\", \"", split) + "\", ";
 				}
 				string target = ""; // "ResourceType.Patient, ";
 				string expression = "";
@@ -255,7 +259,7 @@ namespace Hl7.Fhir.Model
 					target = ", Target = new ResourceType[] { " + string.Join(", ", sc) + ", }";
                 }
 				// string path = sp.SelectSingleNode("fhir:xpath/@value", nsR).Value;
-#>                new SearchParamDefinition() { Resource = "<#= resourceName #>", Name = "<#= name #>", Description = @"<#= description.Replace("\"", "\"\"") #>", Type = SearchParamType.<#= outputType #>, Path = new string[] { <#= path #>}<#= target #><#= !string.IsNullOrEmpty(xpath) ? ", XPath = \"" + xpath + "\"" : "" #><#= !string.IsNullOrEmpty(expression) ? ", Expression = \"" + expression + "\"" : "" #> },
+#>                new SearchParamDefinition() { Resource = "<#= resourceName #>", Name = "<#= name #>", Description = @"<#= description.Replace("\"", "\"\"") #>", Type = SearchParamType.<#= outputType #>, Path = new string[] { <#= path #>}<#= target #><#= !string.IsNullOrEmpty(xpath) ? ", XPath = \"" + xpath + "\"" : "" #><#= !string.IsNullOrEmpty(expression) ? ", Expression = \"" + expression + "\"" : "" #>, Url = "<#= url #>" },
 <#
             }
         }
