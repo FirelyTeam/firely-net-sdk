@@ -1,12 +1,18 @@
-﻿using Hl7.ElementModel;
-using Hl7.Fhir.Introspection;
+﻿/* 
+ * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+
+using Hl7.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Validation
 {
@@ -32,8 +38,16 @@ namespace Hl7.Fhir.Validation
 
             // This is only for resources, but I don't bother checking, since this will return empty anyway
             _profiles.AddStatedProfile(instance.GetChildrenByName("meta").ChildrenValues("profile").Cast<string>());
-                     
-            if(additionalProfiles != null) _profiles.AddStatedProfile(additionalProfiles);
+
+            //Almost identically, extensions can declare adherance to a profile using the 'url' attribute
+            if (declaredTypeProfile == ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Extension))
+            {
+                var urlDeclaration = instance.GetChildrenByName("url").FirstOrDefault()?.Value as string;
+
+                if (urlDeclaration != null && urlDeclaration.StartsWith("http://",StringComparison.InvariantCultureIgnoreCase)) _profiles.AddStatedProfile(urlDeclaration);
+            }
+
+            if (additionalProfiles != null) _profiles.AddStatedProfile(additionalProfiles);
             if(additionalCanonicals != null) _profiles.AddStatedProfile(additionalCanonicals);
         }
 
@@ -70,7 +84,7 @@ namespace Hl7.Fhir.Validation
                         }
                     }
                     else
-                        outcome.Info("There are no profile and type assertions at this point in the instance, so validation cannot succeed",
+                        outcome.AddIssue("There are no profile and type assertions at this point in the instance, so validation cannot succeed",
                                 Issue.PROFILE_NO_PROFILE_TO_VALIDATE_AGAINST, _path);
 
                 }
@@ -98,13 +112,13 @@ namespace Hl7.Fhir.Validation
                     }
                     catch (Exception e)
                     {
-                        outcome.Info($"Snapshot generation failed for '{sd.Url}'. Message: {e.Message}",
+                        outcome.AddIssue($"Snapshot generation failed for '{sd.Url}'. Message: {e.Message}",
                                Issue.UNAVAILABLE_SNAPSHOT_GENERATION_FAILED, path);
                     }
                 }
 
                 if (!sd.HasSnapshot)
-                    outcome.Info($"Profile '{sd.Url}' does not include a snapshot.", Issue.UNAVAILABLE_NEED_SNAPSHOT, path);
+                    outcome.AddIssue($"Profile '{sd.Url}' does not include a snapshot.", Issue.UNAVAILABLE_NEED_SNAPSHOT, path);
             }
 
             return outcome;

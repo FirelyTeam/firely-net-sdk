@@ -65,10 +65,9 @@ namespace Hl7.Fhir.Tests.Model
             FhirDateTime dtWithMs = new FhirDateTime("2014-12-11T00:00:00.000+11:00");
             Assert.AreEqual("2014-12-11T00:00:00.000+11:00", dtWithMs.Value);
 
-
             var stamp = new DateTimeOffset(1972, 11, 30, 15, 10, 0, TimeSpan.Zero);
             dt = new FhirDateTime(stamp);
-            Assert.IsTrue(dt.Value.EndsWith("+00:00"));
+            Assert.IsTrue(dt.Value.EndsWith("Z"));
         }
 
 
@@ -295,6 +294,83 @@ namespace Hl7.Fhir.Tests.Model
 
 
         [TestMethod]
+        public void TestExpansionCheckForCode()
+        {
+            var vs = new ValueSet();
+            var sys1 = "http://example.org/system/system1";
+            var sys2 = "http://example.org/system/system2";
+
+            vs.Expansion = new ValueSet.ExpansionComponent();
+
+            vs.Expansion.Contains.Add(new ValueSet.ContainsComponent { System = sys1, Code = "code1" });
+            var sys1code2 = new ValueSet.ContainsComponent { System = sys1, Code = "code2" };
+            vs.Expansion.Contains.Add(sys1code2);
+            vs.Expansion.Contains.Add(new ValueSet.ContainsComponent { System = sys2, Code = "code1" });
+
+            sys1code2.Contains.Add(new ValueSet.ContainsComponent { System = sys1, Code = "code1.1" });
+            sys1code2.Contains.Add(new ValueSet.ContainsComponent { System = sys1, Code = "code1.2" });
+
+            Assert.IsTrue(vs.CodeInExpansion("code1", sys1));
+            Assert.IsTrue(vs.CodeInExpansion("code1", sys2));
+            Assert.IsTrue(vs.CodeInExpansion("code1"));
+
+            Assert.IsFalse(vs.CodeInExpansion("code2", sys2));
+            Assert.IsTrue(vs.CodeInExpansion("code2"));
+
+            Assert.IsTrue(vs.CodeInExpansion("code1.2"));
+            Assert.IsTrue(vs.CodeInExpansion("code1.2", sys1));
+            Assert.IsFalse(vs.CodeInExpansion("code1.2", sys2));
+
+            Assert.AreEqual(5, vs.ExpansionSize());
+        }
+
+        [TestMethod]
+        public void TestImportExpansion()
+        {
+            var sys1 = "http://example.org/system/system1";
+            var sys2 = "http://example.org/system/system2";
+
+            var vs = new ValueSet();
+            vs.Expansion = new ValueSet.ExpansionComponent();
+            vs.Expansion.Contains.Add(new ValueSet.ContainsComponent { System = sys1, Code = "code1" });
+            vs.Expansion.Contains.Add(new ValueSet.ContainsComponent { System = sys2, Code = "code1" });
+
+            var vs2 = new ValueSet();
+            vs2.Expansion = new ValueSet.ExpansionComponent();
+            vs2.Expansion.Contains.Add(new ValueSet.ContainsComponent { System = sys1, Code = "code3" });
+            vs2.Expansion.Contains.Add(new ValueSet.ContainsComponent { System = sys2, Code = "code4" });
+
+            vs.ImportExpansion(vs2);
+
+            Assert.AreEqual(4, vs.ExpansionSize());
+            Assert.AreEqual(4, vs.Expansion.Total);
+
+            Assert.IsTrue(vs.CodeInExpansion("code1", sys2));
+            Assert.IsTrue(vs.CodeInExpansion("code4", sys2));
+        }
+
+        public void TestImportExpansionInEmptyVs()
+        {
+            var sys1 = "http://example.org/system/system1";
+            var sys2 = "http://example.org/system/system2";
+
+            var vs = new ValueSet();
+            var vs2 = new ValueSet();
+            vs2.Expansion = new ValueSet.ExpansionComponent();
+            vs2.Expansion.Contains.Add(new ValueSet.ContainsComponent { System = sys1, Code = "code3" });
+            vs2.Expansion.Contains.Add(new ValueSet.ContainsComponent { System = sys2, Code = "code4" });
+
+            vs.ImportExpansion(vs2);
+
+            Assert.AreEqual(2, vs.ExpansionSize());
+            Assert.AreEqual(2, vs.Expansion.Total);
+
+            Assert.IsTrue(vs.CodeInExpansion("code3", sys1));
+            Assert.IsTrue(vs.CodeInExpansion("code4", sys2));
+        }
+
+
+        [TestMethod]
         public void TestSubclassInfo()
         {
             Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Resource, FHIRDefinedType.Patient));
@@ -327,6 +403,26 @@ namespace Hl7.Fhir.Tests.Model
             Assert.IsNotNull(iv);
             iv.Value = 12345;
             Assert.AreEqual(iv.Value, 12345);
+        }
+
+        [TestMethod]
+        public void TestNamingSystemCanonical()
+        {
+            NamingSystem ns = new NamingSystem();
+
+            Assert.IsNull(ns.Url);
+            Assert.IsNull(ns.UrlElement);
+
+            ns.UniqueId.Add(new NamingSystem.UniqueIdComponent { Value = "http://nu.nl" });
+            ns.UniqueId.Add(new NamingSystem.UniqueIdComponent { Value = "http://dan.nl", Preferred=true });
+
+            Assert.AreEqual("http://dan.nl", ns.Url);
+            Assert.AreEqual("http://dan.nl", ns.UrlElement.Value);
+
+            ns.UniqueId[1].Preferred = false;
+
+            Assert.AreEqual("http://nu.nl", ns.Url);
+            Assert.AreEqual("http://nu.nl", ns.UrlElement.Value);
         }
 
         [TestMethod]

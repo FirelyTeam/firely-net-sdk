@@ -55,12 +55,13 @@
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Hl7.FluentPath, Version=0.3.1.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Hl7.FluentPath.0.3.1-alpha7\lib\netstandard1.0\Hl7.FluentPath.dll</HintPath>
+    <Reference Include="Hl7.FhirPath, Version=0.4.0.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hl7.FhirPath.0.4.0\lib\netstandard1.0\Hl7.FhirPath.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\portable-net45+wp80+win8+wpa81+dnxcore50\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\netstandard1.0\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Portable.DataAnnotations, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6f21be3d5ccff8cd, processorArchitecture=MSIL">
       <HintPath>..\packages\Portable-Strong.DataAnnotations.1.0.0\lib\portable-net45+netcore45+wp8+wpa81\Portable.DataAnnotations.dll</HintPath>
@@ -80,9 +81,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DSTU1compatibility.cs" />
-    <Compile Include="FluentPath\PocoElementNavigator.cs" />
-    <Compile Include="FluentPath\PocoNavigator.cs" />
-    <Compile Include="FluentPath\PocoNavigatorExtensions.cs" />
+    <Compile Include="FhirPath\PocoElementNavigator.cs" />
+    <Compile Include="FhirPath\PocoNavigator.cs" />
+    <Compile Include="FhirPath\PocoNavigatorExtensions.cs" />
     <Compile Include="Introspection\ChoiceType.cs" />
     <Compile Include="Introspection\PortableDescriptionAttribute.cs" />
     <Compile Include="Introspection\EnumLiteralAttribute.cs" />
@@ -572,6 +573,7 @@
     <Compile Include="Model\StructureDefinition.cs" />
     <Compile Include="Model\Time.cs" />
     <Compile Include="Model\UnsignedInt.cs" />
+    <Compile Include="Model\ValueSetExpansionExtensions.cs" />
     <Compile Include="Properties\AssemblyVersionInfo.cs" />
     <Compile Include="Rest\EntryToHttpExtensions.cs" />
     <Compile Include="Rest\FhirClientOperations.cs" />

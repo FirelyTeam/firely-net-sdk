@@ -6,7 +6,7 @@
     </meta>
     <type value="document"/>
     <entry>
-        <fullUrl value="http://example.org/fhir/Composition/thecomp"/>
+        <fullUrl value="http://example.org/fhir/Composition/MainBundle"/>
         <resource>
             <Composition>
                 <id value="MainComposition"/>
@@ -34,10 +34,32 @@
                 </author>
                 <section>
                     <title value="List of observations"/>
+                    <code>
+                        <coding>
+                            <system value="http://snomed.info/sct"/>
+                            <code value="46680005"/>
+                            <display value="Vital signs" />
+                        </coding>
+                    </code>
                     <entry>
                         <reference value="http://example.org/fhir/Observation/Weight"/>
                     </entry>
                 </section>
+                <section>
+                    <title value="Misc annotations"/>
+                    <code>
+                        <coding>
+                            <system value="http://example.org/fhir/demo-section-titles"/>
+                            <code value="notes"/>
+                        </coding>
+                    </code>
+                    <text>
+                        <status value="additional"/>
+                        <div xmlns="http://www.w3.org/1999/xhtml">
+                            Next time, give the patient some coffee and ask about children.
+                        </div>
+                    </text>
+                </section>               
             </Composition>
         </resource>
     </entry>
@@ -56,9 +78,6 @@
                         <p>MRN: 123456. Male, 24-Sept 1932</p>
                     </div>
                 </text>
-                <extension url="http://example.org/StructureDefinition/trials">
-                    <valueCode value="renal"/>
-                </extension>
                 <identifier>
                     <use value="usual"/>
                     <type>
@@ -77,7 +96,11 @@
                     <suffix value="The 7th"/>
                 </name>
                 <gender value="male"/>
-                <birthDate value="1932-09-24"/>
+                <birthDate value="1932-09-24">
+                    <extension url="http://hl7.org/fhir/StructureDefinition/patient-birthTime">
+                        <valueDateTime value="1932-09-24T15:15:34+02:00" />
+                    </extension>                    
+                </birthDate>
             </Patient>
         </resource>
     </entry>
@@ -98,7 +121,7 @@
                     <type>
                         <coding>
                             <system value="http://hl7.org/fhir/v2/0203"/>
-                            <code value="SS"/>
+                            <code value="DL"/>
                         </coding>
                     </type>
                     <system value="http://hl7.org/fhir/sid/us-ssn"/>

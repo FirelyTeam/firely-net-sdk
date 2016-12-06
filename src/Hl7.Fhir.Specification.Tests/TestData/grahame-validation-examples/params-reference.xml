@@ -1,0 +1,22 @@
+<Parameters xmlns="http://hl7.org/fhir">
+  <id value="1"/>
+  <parameter>
+    <name value="param"/>
+    <resource>
+      <Basic>
+        <id value="2"/>
+        <contained>
+          <Patient>
+            <id value="patient"/>
+          </Patient>
+        </contained>
+        <code>
+          <text value="test"/>
+        </code>
+        <subject>
+          <reference value="#patient"/>
+        </subject>
+      </Basic>
+    </resource>
+  </parameter>
+</Parameters>

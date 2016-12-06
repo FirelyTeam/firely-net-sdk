@@ -50,13 +50,12 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Hl7.FluentPath, Version=0.3.1.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Hl7.FluentPath.0.3.1-alpha7\lib\net45\Hl7.FluentPath.dll</HintPath>
+    <Reference Include="Hl7.FhirPath, Version=0.4.0.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hl7.FhirPath.0.4.0\lib\net45\Hl7.FhirPath.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Portable.DataAnnotations, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6f21be3d5ccff8cd, processorArchitecture=MSIL">

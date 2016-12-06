@@ -7,7 +7,7 @@
  */
 
 using Hl7.ElementModel;
-using Hl7.Fhir.FluentPath;
+using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
@@ -29,8 +29,11 @@ namespace Hl7.Fhir.Validation
             {
                 IElementNavigator fixedValueNav = new PocoNavigator(definition.Fixed);
 
-                outcome.Verify(() => instance.IsExactlyEqualTo(fixedValueNav), "Value is not exactly equal to fixed value '{0}'"
-                            .FormatWith(toReadable(definition.Fixed)), Issue.CONTENT_DOES_NOT_MATCH_FIXED_VALUE, instance);
+                if (!instance.IsExactlyEqualTo(fixedValueNav))
+                {
+                    v.Trace(outcome, $"Value is not exactly equal to fixed value '{toReadable(definition.Fixed)}'",
+                            Issue.CONTENT_DOES_NOT_MATCH_FIXED_VALUE, instance);
+                }
             }
 
             return outcome;
@@ -44,8 +47,11 @@ namespace Hl7.Fhir.Validation
             {
                 IElementNavigator patternValueNav = new PocoNavigator(definition.Pattern);
 
-                outcome.Verify(() => instance.Matches(patternValueNav), "Value does not match pattern '{0}'"
-                            .FormatWith(toReadable(definition.Pattern), "pattern"), Issue.CONTENT_DOES_NOT_MATCH_PATTERN_VALUE, instance);
+                if (!instance.Matches(patternValueNav))
+                {
+                    v.Trace(outcome, $"Value does not match pattern '{toReadable(definition.Pattern)}'",
+                            Issue.CONTENT_DOES_NOT_MATCH_PATTERN_VALUE, instance);
+                }
             }
 
             return outcome;

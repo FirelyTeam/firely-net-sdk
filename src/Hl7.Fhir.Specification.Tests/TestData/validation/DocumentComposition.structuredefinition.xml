@@ -51,7 +51,7 @@
       </extension>
       <path value="Composition.section" />
       <min value="1" />
-      <max value="1" />
+      <max value="2" />
     </element>
     <element>
       <path value="Composition.section.title" />
@@ -59,8 +59,17 @@
       <maxLength value="20" />
     </element>
     <element>
-      <path value="Composition.section.entry" />
+      <path value="Composition.section.code" />
       <min value="1" />
+      <binding>
+        <strength value="required" />
+        <valueSetReference>
+          <reference value="http://example.org/ValueSet/SectionTitles" />
+        </valueSetReference>
+      </binding>
+    </element>    
+    <element>
+      <path value="Composition.section.entry" />
       <type>
         <code value="Reference" />
         <profile value="http://hl7.org/fhir/StructureDefinition/Observation" />

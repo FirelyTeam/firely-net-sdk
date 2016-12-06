@@ -37,7 +37,7 @@ using Hl7.Fhir.Support;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Rest;
 using Hl7.ElementModel;
-using Hl7.FluentPath;
+using Hl7.FhirPath;
 
 namespace Hl7.Fhir.Model
 {
@@ -93,18 +93,21 @@ namespace Hl7.Fhir.Model
             string expression = invariantRule.GetStringExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression");
             try
             {
-                // No FluentPath extension
+                // No FhirPath extension
                 if (string.IsNullOrEmpty(expression))
                 {
                     result.Issue.Add(new OperationOutcome.IssueComponent()
                     {
                         Code = OperationOutcome.IssueType.Invariant,
                         Severity = OperationOutcome.IssueSeverity.Warning,
-                        Details = new CodeableConcept(null, invariantRule.Key, "Unable to validate without a fluentpath expression"),
+                        Details = new CodeableConcept(null, invariantRule.Key, "Unable to validate without a FhirPath expression"),
                         Diagnostics = expression
                     });
                     return true;
                 }
+
+                // Ensure the FHIR extensions are registered
+                Hl7.Fhir.FhirPath.PocoNavigatorExtensions.PrepareFhirSybolTableFunctions();
 
                 if (model.Predicate(expression, model))
                     return true;
@@ -125,7 +128,7 @@ namespace Hl7.Fhir.Model
                     Code = OperationOutcome.IssueType.Invariant,
                     Severity = OperationOutcome.IssueSeverity.Fatal,
                     Details = new CodeableConcept(null, invariantRule.Key, "FATAL: Unable to process the invariant rule: " + invariantRule.Key + " " + expression),
-                    Diagnostics = String.Format("FluentPath: {0}\r\nError: {1}", expression, ex.Message)
+                    Diagnostics = String.Format("FhirPath: {0}\r\nError: {1}", expression, ex.Message)
                 });
                 return false;
             }
@@ -203,7 +206,7 @@ namespace Hl7.Fhir.Model
                 // Need to serialize to XML until the object model processor exists
                 // string tpXml = Fhir.Serialization.FhirSerializer.SerializeResourceToXml(this);
                 // FhirPath.IFhirPathElement tree = FhirPath.InstanceTree.TreeConstructor.FromXml(tpXml);
-                var tree = new FluentPath.PocoNavigator(this);
+                var tree = new FhirPath.PocoNavigator(this);
                 foreach (var invariantRule in InvariantConstraints)
                 {
                     ValidateInvariantRule(invariantRule, tree, result);

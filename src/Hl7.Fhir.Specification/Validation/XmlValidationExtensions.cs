@@ -6,10 +6,11 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.FluentPath;
+using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -88,7 +89,7 @@ namespace Hl7.Fhir.Validation
             }
             catch (Exception e)
             {
-                result.Info($"Parsing of Xml into a FHIR Poco failed: {e.Message}", Issue.XSD_CONTENT_POCO_PARSING_FAILED, (string)null);
+                result.AddIssue($"Parsing of Xml into a FHIR Poco failed: {e.Message}", Issue.XSD_CONTENT_POCO_PARSING_FAILED, (string)null);
                 poco = null;
             }
 

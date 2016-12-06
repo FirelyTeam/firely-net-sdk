@@ -1,0 +1,18 @@
+{
+  "resourceType": "List",
+  "fhir_comments": [
+    " this is all valid "
+  ],
+  "id": "val1",
+  "_id": {
+    "fhir_comments": [
+      " another comment "
+    ]
+  },
+  "text": {
+    "status": "generated",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtmlx\">\n      <p>This is some narrative</p>\n    </div>"
+  },
+  "status": "current",
+  "mode": "changes"
+}

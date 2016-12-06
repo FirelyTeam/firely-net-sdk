@@ -16,9 +16,9 @@ using System.Xml;
 using System.Collections.Generic;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
-using Hl7.Fhir.FluentPath;
+using Hl7.Fhir.FhirPath;
 using Hl7.ElementModel;
-using Hl7.FluentPath;
+using Hl7.FhirPath;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -545,7 +545,7 @@ namespace Hl7.Fhir.Specification.Tests
     //{
     //    public static IEnumerable<IValueProvider> ForPoco(this PathExpression.CompiledExpression ce, Base poco)
     //    {
-    //        var nav = new FluentPath.ModelNavigator(poco);
+    //        var nav = new FhirPath.ModelNavigator(poco);
 
     //        return ce(new List<IValueProvider> { nav }, poco is Resource ? new List<IValueProvider> { nav } : null);
     //    }

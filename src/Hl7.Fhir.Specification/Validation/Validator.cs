@@ -7,19 +7,20 @@
  */
 
 using Hl7.ElementModel;
-using Hl7.Fhir.FluentPath;
+using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Support;
-using Hl7.FluentPath;
+using Hl7.FhirPath;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
-using Time = Hl7.FluentPath.Time;
+using Time = Hl7.FhirPath.Time;
 
 namespace Hl7.Fhir.Validation
 {
@@ -79,14 +80,14 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-
         internal OperationOutcome Validate(IElementNavigator instance, ElementDefinitionNavigator definition)
         {
             return Validate(instance, new[] { definition });
         }
 
 
-        // This is the one and only main internal entry point for all validations
+        // This is the one and only main internal entry point for all validations, which in its term
+        // will call step 1 in the validator, the function 
         internal OperationOutcome Validate(IElementNavigator instance, IEnumerable<ElementDefinitionNavigator> definitions)
         {
             var outcome = new OperationOutcome();
@@ -105,7 +106,7 @@ namespace Hl7.Fhir.Validation
             }
             catch (Exception e)
             {
-                outcome.Info($"Internal logic failure: {e.Message}", Issue.PROCESSING_CATASTROPHIC_FAILURE, instance);
+                outcome.AddIssue($"Internal logic failure: {e.Message}", Issue.PROCESSING_CATASTROPHIC_FAILURE, instance);
             }
 
             return outcome;
@@ -117,6 +118,8 @@ namespace Hl7.Fhir.Validation
             return () => validateElement(nav, instance);
         }
 
+
+     //   private OperationOutcome validateElement(ElementDefinitionNavigator definition, IElementNavigator instance)
 
         private OperationOutcome validateElement(ElementDefinitionNavigator definition, IElementNavigator instance)
         {
@@ -131,14 +134,14 @@ namespace Hl7.Fhir.Validation
                 // If navigator cannot be moved to content, there's really nothing to validate against.
                 if (definition.AtRoot && !definition.MoveToFirstChild())
                 {
-                    outcome.Info($"Snapshot component of Profile '{definition.StructureDefinition?.Url}' has no content.", Issue.PROFILE_ELEMENTDEF_IS_EMPTY, instance);
+                    outcome.AddIssue($"Snapshot component of profile '{definition.StructureDefinition?.Url}' has no content.", Issue.PROFILE_ELEMENTDEF_IS_EMPTY, instance);
                     return outcome;
                 }
 
                 // Any node must either have a value, or children, or both (e.g. extensions on primitives)
                 if (instance.Value == null && !instance.HasChildren())
                 {
-                    outcome.Info("Element must not be empty", Issue.CONTENT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN, instance);
+                    outcome.AddIssue("Element must not be empty", Issue.CONTENT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN, instance);
                     return outcome;
                 }
 
@@ -171,14 +174,12 @@ namespace Hl7.Fhir.Validation
                         Trace(outcome, "ElementDefinition has no child, nor does it specify a type or nameReference to validate the instance data against", Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE_OR_NAMEREF, instance);
                 }
 
-                outcome.Add(ValidateSlices(definition, instance));
-
                 outcome.Add(this.ValidateFixed(elementConstraints, instance));
                 outcome.Add(this.ValidatePattern(elementConstraints, instance));
                 outcome.Add(this.ValidateMinMaxValue(elementConstraints, instance));
                 outcome.Add(ValidateMaxLength(elementConstraints, instance));
                 outcome.Add(ValidateConstraints(elementConstraints, instance));
-           //     outcome.Add(ValidateBinding(elementConstraints, instance));
+                outcome.Add(this.ValidateBinding(elementConstraints, instance));
 
                 // If the report only has partial information, no use to show the hierarchy, so flatten it.
                 if (Settings.Trace == false) outcome.Flatten();
@@ -213,7 +214,7 @@ namespace Hl7.Fhir.Validation
 
             foreach (var constraintElement in definition.Constraint)
             {
-                var fpExpression = constraintElement.GetFluentPathConstraint();
+                var fpExpression = constraintElement.GetFhirPathConstraint();
 
                 if (fpExpression != null)
                 {
@@ -233,55 +234,62 @@ namespace Hl7.Fhir.Validation
                     }
                     catch (Exception e)
                     {
-                        Trace(outcome, $"Evaluation of FluentPath for constraint '{constraintElement.Key}' failed: {e.Message}",
-                                        Issue.PROFILE_ELEMENTDEF_INVALID_FLUENTPATH_EXPRESSION, instance);
+                        Trace(outcome, $"Evaluation of FhirPath for constraint '{constraintElement.Key}' failed: {e.Message}",
+                                        Issue.PROFILE_ELEMENTDEF_INVALID_FHIRPATH_EXPRESSION, instance);
                     }
                 }
                 else
-                    Trace(outcome, $"Encountered an invariant ({constraintElement.Key}) that has no FluentPath expression, skipping validation of this constraint",
-                                Issue.UNSUPPORTED_CONSTRAINT_WITHOUT_FLUENTPATH, instance);
+                    Trace(outcome, $"Encountered an invariant ({constraintElement.Key}) that has no FhirPath expression, skipping validation of this constraint",
+                                Issue.UNSUPPORTED_CONSTRAINT_WITHOUT_FHIRPATH, instance);
             }
 
             return outcome;
         }
-
-        internal OperationOutcome ValidateSlices(ElementDefinitionNavigator definition, IElementNavigator instance)
-        {
-            var outcome = new OperationOutcome();
-
-            if (definition.Current.Slicing != null)
-            {
-                // This is the slicing entry
-                // TODO: Find my siblings and try to validate the content against
-                // them. There should be exactly one slice validating against the
-                // content, otherwise the slicing is ambiguous. If there's no match
-                // we fail validation as well. 
-                // For now, we do not handle slices
-                if(definition.Current.Slicing != null)
-                    Trace(outcome, "ElementDefinition uses slicing, which is not yet supported. Instance has not been validated against " +
-                            "any of the slices", Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, instance);
-            }
-
-            return outcome;
-        }
-
 
         internal OperationOutcome ValidateBinding(ElementDefinition definition, IElementNavigator instance)
         {
             var outcome = new OperationOutcome();
+            var ts = Settings.TerminologyService;
 
-            if (definition.Binding != null)
+            if (ts == null)
             {
-                var binding = definition.Binding;
-                var shouldCheck = binding.Strength == BindingStrength.Required || binding.Strength == BindingStrength.Preferred;
+                if (Settings.ResourceResolver == null)
+                {
+                    Trace(outcome, $"Cannot resolve binding references since neither TerminologyService nor ResourceResolver is given in the settings",
+                        Issue.UNAVAILABLE_TERMINOLOGY_SERVER, instance);
+                    return outcome;
+                }
 
-                if(shouldCheck)
-                    Trace(outcome, "ElementDefinition has a binding, which is not yet supported. Instance has not been validated against this binding",
-                        Issue.UNSUPPORTED_BINDING_NOT_SUPPORTED, instance);
+                ts = new LocalTerminologyServer(Settings.ResourceResolver);
             }
 
-            return outcome;
+            var bindingValidator = new BindingValidator(ts, instance.Path);
+
+            try
+            {
+                return bindingValidator.ValidateBinding(instance, definition);
+            }
+            catch (Exception e)
+            {
+                Trace(outcome, $"Terminology service failed while validating code X (system Y): {e.Message}", Issue.UNAVAILABLE_VALIDATE_CODE_FAILED, instance);
+                return outcome;
+            }
         }
+
+
+        internal static FHIRDefinedType? DetermineType(ElementDefinition definition, IElementNavigator instance)
+        {
+            if (definition.IsChoice())
+            {
+                if (instance.TypeName != null)
+                    return ModelInfo.FhirTypeNameToFhirType(instance.TypeName);
+                else
+                    return null;
+            }
+            else
+                return definition.Type.First().Code.Value;
+        }
+  
 
         internal OperationOutcome ValidateNameReference(ElementDefinition definition, ElementDefinitionNavigator allDefinitions, IElementNavigator instance)
         {
@@ -373,10 +381,10 @@ namespace Hl7.Fhir.Validation
         internal void Trace(OperationOutcome outcome, string message, Issue issue, IElementNavigator location)
         {
             if (Settings.Trace || issue.Severity != OperationOutcome.IssueSeverity.Information)
-                outcome.Info(message, issue, location);
+                outcome.AddIssue(message, issue, location);
         }
 
-        private string toStringRepresentation(IValueProvider vp)
+        private string toStringRepresentation(IElementNavigator vp)
         {
             if (vp == null || vp.Value == null) return null;
 
@@ -390,10 +398,10 @@ namespace Hl7.Fhir.Validation
                 return XmlConvert.ToString((decimal)val);
             else if (val is bool)
                 return (bool)val ? "true" : "false";
-            else if (val is Hl7.FluentPath.Time)
-                return ((Hl7.FluentPath.Time)val).ToString();
-            else if (val is Hl7.FluentPath.PartialDateTime)
-                return ((Hl7.FluentPath.PartialDateTime)val).ToString();
+            else if (val is Hl7.FhirPath.Time)
+                return ((Hl7.FhirPath.Time)val).ToString();
+            else if (val is Hl7.FhirPath.PartialDateTime)
+                return ((Hl7.FhirPath.PartialDateTime)val).ToString();
             else
                 return val.ToString();
         }
@@ -414,7 +422,7 @@ namespace Hl7.Fhir.Validation
             }
             catch(Exception e)
             {
-                Trace(outcome, "External resolution of '{reference}' caused an error: " + e.Message, Issue.UNAVAILABLE_EXTERNAL_REFERENCE, instance);
+                Trace(outcome, "External resolution of '{reference}' caused an error: " + e.Message, Issue.UNAVAILABLE_REFERENCED_RESOURCE, instance);
             }
 
             // Else, try to resolve using the given ResourceResolver 
@@ -429,7 +437,7 @@ namespace Hl7.Fhir.Validation
                 }
                 catch(Exception e)
                 {
-                    Trace(outcome, $"Resolution of reference '{reference}' using the Resolver API failed: " + e.Message, Issue.UNAVAILABLE_EXTERNAL_REFERENCE, instance);
+                    Trace(outcome, $"Resolution of reference '{reference}' using the Resolver API failed: " + e.Message, Issue.UNAVAILABLE_REFERENCED_RESOURCE, instance);
                 }
             }
 
@@ -485,6 +493,17 @@ namespace Hl7.Fhir.Validation
                    t == typeof(Integer) ||
                    t == typeof(Model.Quantity) ||
                    t == typeof(FhirString);
+        }
+
+        public static bool IsBindeableFhirType(this FHIRDefinedType t)
+        {
+            return t == FHIRDefinedType.Code ||
+                   t == FHIRDefinedType.Coding ||
+                   t == FHIRDefinedType.CodeableConcept ||
+                   t == FHIRDefinedType.Quantity ||
+                   t == FHIRDefinedType.Extension ||
+                   t == FHIRDefinedType.String ||
+                   t == FHIRDefinedType.Uri;
         }
     }
 

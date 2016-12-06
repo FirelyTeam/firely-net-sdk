@@ -62,17 +62,9 @@ namespace Hl7.Fhir.Specification.Source
         /// <param name="source"></param>
         /// <param name="uri"></param>
         /// <returns></returns>
-        public static ValueSet FindValueSet(this IConformanceSource source, string uri)
+        public static ValueSet FindValueSet(this IResourceResolver source, string uri)
         {
-            var vs = source.FindValueSetBySystem(uri);
-
-            if (vs == null)
-                vs = source.ResolveByCanonicalUri(uri) as ValueSet;
-
-            if (vs == null)
-                vs = source.ResolveByUri(uri) as ValueSet;
-
-            return vs;
+            return source.ResolveByCanonicalUri(uri) as ValueSet;
         }
 
 

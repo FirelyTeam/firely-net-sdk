@@ -28,7 +28,7 @@
 
 */
 
-using Hl7.FluentPath;
+using Hl7.FhirPath;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Model
     [System.Diagnostics.DebuggerDisplay(@"\{{Value}}")]
     public partial class FhirDateTime : IStringValue
     {
-        public FhirDateTime(DateTimeOffset dt) : this(dt.ToString(FMT_FULL))
+        public FhirDateTime(DateTimeOffset dt) : this(XmlConvert.ToString(dt))
         {
         }
 
@@ -55,17 +55,17 @@ namespace Hl7.Fhir.Model
         }
 
         public FhirDateTime(int year, int month, int day)
-            : this(String.Format(FMT_YEARMONTHDAY, year, month, day))
+            : this(String.Format(System.Globalization.CultureInfo.InvariantCulture, FMT_YEARMONTHDAY, year, month, day))
         {
         }
 
         public FhirDateTime(int year, int month)
-            : this( String.Format(FMT_YEARMONTH,year,month) )
+            : this( String.Format(System.Globalization.CultureInfo.InvariantCulture, FMT_YEARMONTH, year,month) )
         {
         }
 
         public FhirDateTime(int year)
-            : this(String.Format(FMT_YEAR, year))
+            : this(String.Format(System.Globalization.CultureInfo.InvariantCulture, FMT_YEAR, year))
         {
         }
 
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
 
         public static FhirDateTime Now()
         {
-            return new FhirDateTime(DateTimeOffset.Now.ToString(FMT_FULL));
+            return new FhirDateTime(XmlConvert.ToString(DateTimeOffset.Now));
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
         }
 
 
-        public Hl7.FluentPath.PartialDateTime? ToPartialDateTime()
+        public Hl7.FhirPath.PartialDateTime? ToPartialDateTime()
         {
             if (Value != null)
                 return PartialDateTime.Parse(Value);

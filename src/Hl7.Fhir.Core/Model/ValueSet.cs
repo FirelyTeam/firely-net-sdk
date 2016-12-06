@@ -6,68 +6,93 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir.Model
 {
-        public partial class ValueSet : Hl7.Fhir.Model.DomainResource
+    public partial class ValueSet : Hl7.Fhir.Model.DomainResource
+    {
+        [NotMapped]
+        [Obsolete("This property was renamed in DSTU2 to CodeSystem", true)]
+        public CodeSystemComponent Define { get; set; }
+
+        [NotMapped]
+        public bool HasExpansion => Expansion != null;
+
+        public int ExpansionSize()
         {
-            [Obsolete("This property was renamed in DSTU2 to CodeSystem", true)]
-            public CodeSystemComponent Define { get; set; }
+            ensureExpansion();
 
-    //        public static bool CodeEquals(string code, string value, bool caseSensitive)
-    //        {
-    //            return String.Equals(code, value,
-    //                caseSensitive ? StringComparison.Ordinal :
-    //                        StringComparison.OrdinalIgnoreCase);
-    //        }
+            return countCodes(Expansion.Contains);
+        }
+
+        private int countCodes(IEnumerable<ValueSet.ContainsComponent> contains)
+        {
+            return contains.Where(ct => ct.Contains.Any())
+                            .Aggregate(contains.Count(), (r, ct) => r + countCodes(ct.Contains));
+        }
+
+        public bool CodeInExpansion(String code, string system = null)
+        {
+            ensureExpansion();
+
+            return FindInExpansion(code, system) != null;
+
+        }
+
+        public ValueSet.ContainsComponent FindInExpansion(String code, string system = null)
+        {
+            ensureExpansion();
+
+            return Expansion.Contains.FindCode(code, system);
+        }
+
+        public void ImportExpansion(ValueSet other)
+        {
+            other.ensureExpansion();
+
+            var combinedExpansion = ExpansionComponent.Create();
+
+            // Todo: worry about duplicates
+            if (this.HasExpansion)
+            {
+                combinedExpansion.Parameter.AddRange(this.Expansion.Parameter);
+                combinedExpansion.Contains.AddRange(this.Expansion.Contains);
+            }
+
+            combinedExpansion.Parameter.AddRange(other.Expansion.Parameter);
+            combinedExpansion.Contains.AddRange(other.Expansion.Contains);
+
+            combinedExpansion.Total = countCodes(combinedExpansion.Contains);
+            combinedExpansion.Offset = 0;
+
+            Expansion = combinedExpansion;
+        }
 
 
-    //        public static IEnumerable<ValueSetDefineConceptComponent> GetFlattenedDefinedConcepts(
-    //                        IEnumerable<ValueSetDefineConceptComponent> concepts)
-    //        {
-    //            foreach (var concept in concepts)
-    //            {
-    //                yield return concept;
-
-    //                if (concept.Concept != null)
-    //                    foreach (var childConcept in GetFlattenedDefinedConcepts(concept.Concept))
-    //                        yield return childConcept;
-    //            }
-    //        }
+        private void ensureExpansion()
+        {
+            if (!HasExpansion)
+                throw Error.InvalidOperation($"ValueSet '{Url}' has no expansion, generate the expansion first before calling this function");
+        }
 
 
-    //        internal static ValueSetDefineConceptComponent GetDefinedConceptForCode(
-    //                    IEnumerable<ValueSetDefineConceptComponent> concepts, string code, bool caseSensitive = true)
-    //        {
-    //            if (concepts != null)
-    //                return GetFlattenedDefinedConcepts(concepts)
-    //                    .FirstOrDefault(c => CodeEquals(c.Code, code, caseSensitive));
-    //            else
-    //                return null;
-    //        }
+        public partial class ExpansionComponent
+        {
+            public static ExpansionComponent Create()
+            {
+                var expansion = new ExpansionComponent();
+                expansion.TimestampElement = FhirDateTime.Now();
+                expansion.IdentifierElement = Uuid.Generate().AsUri();
 
+                return expansion;
+            }
+        }
 
-    //        /// <summary>
-    //        /// Searches for a concept, defined in this ValueSet, using its code
-    //        /// </summary>
-    //        /// <param name="code"></param>
-    //        /// <returns>The concept, or null if there was no concept found with that code</returns>
-    //        /// <remarks>The search will search nested concepts as well. 
-    //        /// Whether the search is case-sensitive depends on the value of Define.CaseSensitive</remarks>
-    //        public ValueSetDefineConceptComponent GetDefinedConceptForCode(string code)
-    //        {
-    //            if (this.Define != null && this.Define.Concept != null)
-    //            {
-    //                bool caseSensitive = Define.CaseSensitive.GetValueOrDefault();
-    //                return GetDefinedConceptForCode(this.Define.Concept, code, caseSensitive);
-    //            }
-    //            else
-    //                return null;
-    //        }
-    //    }
     }
 }

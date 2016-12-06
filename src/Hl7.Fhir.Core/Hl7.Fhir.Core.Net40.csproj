@@ -51,12 +51,12 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Hl7.FluentPath, Version=0.3.1.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Hl7.FluentPath.0.3.1-alpha7\lib\net40\Hl7.FluentPath.dll</HintPath>
+    <Reference Include="Hl7.FhirPath, Version=0.4.0.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hl7.FhirPath.0.4.0\lib\net40\Hl7.FhirPath.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -71,9 +71,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DSTU1compatibility.cs" />
-    <Compile Include="FluentPath\PocoElementNavigator.cs" />
-    <Compile Include="FluentPath\PocoNavigator.cs" />
-    <Compile Include="FluentPath\PocoNavigatorExtensions.cs" />
+    <Compile Include="FhirPath\PocoElementNavigator.cs" />
+    <Compile Include="FhirPath\PocoNavigator.cs" />
+    <Compile Include="FhirPath\PocoNavigatorExtensions.cs" />
     <Compile Include="Introspection\ChoiceType.cs" />
     <Compile Include="Introspection\EnumLiteralAttribute.cs" />
     <Compile Include="Introspection\FhirElementAttribute.cs" />
@@ -85,6 +85,7 @@
     <Compile Include="Model\ElementDefinition.cs" />
     <Compile Include="Model\ElementDefinitionExtensions.cs" />
     <Compile Include="Model\Quantity.cs" />
+    <Compile Include="Model\ValueSetExpansionExtensions.cs" />
     <Compile Include="Support\ObjectList.cs" />
     <Compile Include="Model\Base.cs" />
     <Compile Include="Model\Binary.cs" />

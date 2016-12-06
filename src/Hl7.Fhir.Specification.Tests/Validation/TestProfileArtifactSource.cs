@@ -30,8 +30,8 @@ namespace Hl7.Fhir.Validation
             bundleWithSpecificEntries("Bundled"),
             patientWithSpecificOrganization(new[] { ElementDefinition.AggregationMode.Bundled }, "Bundled"),
             bundleWithSpecificEntries("Referenced"),
-            patientWithSpecificOrganization(new[] { ElementDefinition.AggregationMode.Referenced }, "Referenced")
-
+            patientWithSpecificOrganization(new[] { ElementDefinition.AggregationMode.Referenced }, "Referenced"),
+            buildParametersWithBoundParams()
         };
 
 
@@ -177,6 +177,21 @@ namespace Hl7.Fhir.Validation
             return result;
         }
 
+
+        private static StructureDefinition buildParametersWithBoundParams()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/ParametersWithBoundParams", "Parameters with term binding on Params",
+                    "Parameters resource where the parameter.value[x] is bound to a valueset", FHIRDefinedType.Parameters);
+            var cons = result.Differential.Element;
+
+            cons.Add(new ElementDefinition("Parameters").OfType(FHIRDefinedType.Parameters));
+            cons.Add(new ElementDefinition("Parameters.parameter.value[x]")
+                    .WithBinding("http://hl7.org/fhir/ValueSet/data-absent-reason", BindingStrength.Required));
+
+            return result;
+        }
+
+
         private static StructureDefinition createTestSD(string url, string name, string description, FHIRDefinedType constrainedType, string baseUri=null)
         {
             var result = new StructureDefinition();
@@ -206,5 +221,7 @@ namespace Hl7.Fhir.Validation
 
             return result;
         }
+
+
     }
 }

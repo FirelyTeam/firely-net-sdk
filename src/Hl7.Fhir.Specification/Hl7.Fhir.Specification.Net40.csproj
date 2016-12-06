@@ -50,15 +50,15 @@
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Hl7.FluentPath, Version=0.3.1.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Hl7.FluentPath.0.3.1-alpha7\lib\net40\Hl7.FluentPath.dll</HintPath>
+    <Reference Include="Hl7.FhirPath, Version=0.4.0.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hl7.FhirPath.0.4.0\lib\net40\Hl7.FhirPath.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -83,6 +83,9 @@
     <Compile Include="..\Hl7.Fhir.Core\Support\StringExtensions.cs">
       <Link>Support\StringExtensions.cs</Link>
     </Compile>
+    <Compile Include="Specification\Navigation\ElementNavigatorSlicingExtensions.cs" />
+    <Compile Include="Specification\Terminology\ExpansionSizeTooBig.cs" />
+    <Compile Include="Specification\Terminology\ITerminologyService.cs" />
     <Compile Include="Properties\AssemblyVersionInfo.cs" />
     <Compile Include="Specification\Navigation\Bookmark.cs" />
     <Compile Include="Specification\Navigation\ElementDefinitionNavigator.cs" />
@@ -118,22 +121,32 @@
     <Compile Include="Specification\Source\ZipCacher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Specification\Source\ZipSource.cs" />
+    <Compile Include="Specification\Terminology\LocalTerminologyServer.cs" />
+    <Compile Include="Specification\Terminology\ValueSetExpander.cs" />
+    <Compile Include="Support\Issue.cs" />
+    <Compile Include="Validation\BaseBucket.cs" />
     <Compile Include="Validation\BatchValidationExtensions.cs" />
+    <Compile Include="Validation\BindingValidator.cs" />
     <Compile Include="Validation\Cardinality.cs" />
     <Compile Include="Validation\ChildConstraintValidationExtensions.cs" />
+    <Compile Include="Validation\ElementBucket.cs" />
     <Compile Include="Validation\ElementDefinitionNavigatorExtensions.cs" />
+    <Compile Include="Validation\ElementNavigatorParsingExtensions.cs" />
     <Compile Include="Validation\FixedPatternValidationExtensions.cs" />
+    <Compile Include="Validation\IBucket.cs" />
     <Compile Include="Validation\InstanceToProfileMatcher.cs" />
-    <Compile Include="Validation\Issue.cs" />
     <Compile Include="Validation\MinMaxValidationExtensions.cs" />
     <Compile Include="Validation\OperationOutcomeExtensions.cs" />
     <Compile Include="Validation\PocoValidationExtensions.cs" />
     <Compile Include="Validation\ProfileAssertion.cs" />
     <Compile Include="Validation\ProfilePreprocessor.cs" />
     <Compile Include="Validation\ScopeTracker.cs" />
+    <Compile Include="Validation\SliceBucket.cs" />
+    <Compile Include="Validation\SliceGroupBucket.cs" />
+    <Compile Include="Validation\SliceValidationExtensions.cs" />
     <Compile Include="Validation\TypeRefExtensions.cs" />
     <Compile Include="Validation\TypeRefValidationExtensions.cs" />
-    <Compile Include="Validation\ValidationOutcomeExtensions.cs" />
+    <Compile Include="Support\ValidationOutcomeExtensions.cs" />
     <Compile Include="Validation\ValidationSettings.cs" />
     <Compile Include="Validation\Validator.cs" />
     <Compile Include="Validation\XmlValidationExtensions.cs" />

@@ -9,24 +9,40 @@ using Xunit;
 
 namespace Hl7.Fhir.Validation
 {
-    public class ResolverFixture
+    public class ValidationFixture
     {
         public IResourceResolver Resolver { get; }
 
-        public ResolverFixture()
+        public Validator Validator { get; }
+        public ValidationFixture()
         {
+            var zip = ZipSource.CreateValidationSource();
+
             Resolver = new CachedResolver(
                 new MultiResolver(
                     new TestProfileArtifactSource(),
-                    new ZipSource("specification.zip")));
+                    new DirectorySource(@"TestData\validation"),
+                    zip
+                    ));
+
+            var ctx = new ValidationSettings()
+            {
+                ResourceResolver = Resolver,
+                GenerateSnapshot = true,
+                EnableXsdValidation = true,
+                Trace = false,
+                ResolveExteralReferences = true
+            };
+
+            Validator = new Validator(ctx);
         }
     }
 
-    public class ProfileAssertionTests : IClassFixture<ResolverFixture>
+    public class ProfileAssertionTests : IClassFixture<ValidationFixture>
     {
         private IResourceResolver _resolver;
 
-        public ProfileAssertionTests(ResolverFixture fixture)
+        public ProfileAssertionTests(ValidationFixture fixture)
         {
             _resolver = fixture.Resolver;
         }

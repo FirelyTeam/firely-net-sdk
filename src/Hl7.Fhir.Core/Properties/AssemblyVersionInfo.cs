@@ -3,9 +3,9 @@ using System.Runtime.CompilerServices;
 
 // Version information, see:
 // http://blogs.msdn.com/b/jjameson/archive/2009/04/03/best-practices-for-net-assembly-versioning.aspx
-[assembly: AssemblyVersion("0.90.6.8")]
-[assembly: AssemblyFileVersion("0.90.6.8")]
-[assembly: AssemblyInformationalVersion("Hl7.Fhir .Net Library 0.90.6-alpha8")]
+[assembly: AssemblyVersion("0.90.6.9")]
+[assembly: AssemblyFileVersion("0.90.6.9")]
+[assembly: AssemblyInformationalVersion("Hl7.Fhir .Net Library 0.90.6-alpha9")]
 
 #if !SIGNED
 [assembly: InternalsVisibleTo("Hl7.Fhir.Core.Tests")]

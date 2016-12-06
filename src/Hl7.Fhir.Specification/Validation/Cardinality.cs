@@ -15,43 +15,35 @@ namespace Hl7.Fhir.Validation
 
     internal class Cardinality
     {
-        public int Min;
+        public int? Min;
         public string Max;
 
         public static Cardinality FromElementDefinition(ElementDefinition def)
         {
-            if (def.Min == null) throw Error.ArgumentNull("def.Min");
-            if (def.Max == null) throw Error.ArgumentNull("def.Max");
-
-            return new Cardinality(def.Min.Value, def.Max);
+            return new Cardinality(def.Min, def.Max);
         }
 
-        public Cardinality(int min, string max)
+        public Cardinality(int? min, string max)
         {
-            if (max == null) throw Error.ArgumentNull("max");
-
             Min = min;
             Max = max;
         }
 
         public bool InRange(int x)
         {
-            if (x < Min)
+            if (Min != null && x < Min)
                 return false;
 
-            if (Max == "*")
+            if (Max == "*" || Max == null)
                 return true;
 
             int max = Convert.ToInt16(Max);
-            if (x > max)
-                return false;
-
-            return true;
+            return x <= max;
         }
 
         public override string ToString()
         {
-            return Min + ".." + Max;
+            return (Min?.ToString()??"<-") + ".." + (Max ?? "->");
         }
     }
 
