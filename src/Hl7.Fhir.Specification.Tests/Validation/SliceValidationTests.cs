@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Validation
             var telecoms = pnav.GetChildrenByName("telecom");
 
             foreach(var telecom in telecoms)
-                Assert.True(s.Add(telecom).Success);
+                Assert.True(s.Add(telecom));
 
             var outcome = s.Validate(_validator, pnav);
             Assert.True(outcome.Success);
@@ -137,12 +137,40 @@ namespace Hl7.Fhir.Validation
         }
 
         [Fact]
-        public void TestIncorrectTelecomSliceUse()
+        public void TestDiscriminatedTelecomSliceUse()
+        {
+            var p = new Patient();
+
+            // Incorrect "home" use for slice "phone"
+            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Phone, Use = ContactPoint.ContactPointUse.Home, Value = "e.kramer@furore.com" });
+
+            // Incorrect use of "use" for slice "other"
+            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Other, Use = ContactPoint.ContactPointUse.Home, Value = "http://nu.nl" });
+
+            // Correct use of slice "other"
+            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Other, Value = "http://nu.nl" });
+
+            // Correct "work" use for slice "phone", but out of order
+            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Phone, Use = ContactPoint.ContactPointUse.Work, Value = "ewout@di.nl" });
+
+            var outcome = _validator.Validate(p, "http://example.com/StructureDefinition/patient-telecom-slice-ek");
+            Assert.False(outcome.Success);
+            Assert.Equal(3, outcome.Errors);
+            Assert.Equal(0, outcome.Warnings);
+            var repr = outcome.ToString();
+            Assert.Contains("matches slice 'Patient.telecom:phone', but this is out of order for group 'Patient.telecom'", repr);
+            Assert.Contains("Value is not exactly equal to fixed value 'work'", repr);
+            Assert.Contains("Instance count for 'Patient.telecom.use' is 1", repr);            
+        }
+
+
+        [Fact]
+        public void TestTelecomReslicing()
         {
             var p = new Patient();
 
             // Incorrect "old" use for closed slice telecom:email
-            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Email, Use = ContactPoint.ContactPointUse.Work, Value = "e.kramer@furore.com" });
+            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Email, Use = ContactPoint.ContactPointUse.Home, Value = "e.kramer@furore.com" });
             p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Email, Use = ContactPoint.ContactPointUse.Old, Value = "ewout@di.nl" });
 
             // Too many for telecom:other/home
