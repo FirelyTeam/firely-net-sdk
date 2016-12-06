@@ -93,7 +93,8 @@ namespace Hl7.Fhir.Specification.Tests
             // Throw on unresolved profile references; must include in TestData folder
             ExpandExternalProfiles = true,
             ForceExpandAll = true,
-            MarkChanges = false
+            MarkChanges = false,
+            GenerateElementIds = false // STU3
         };
 
         [TestInitialize]
@@ -410,7 +411,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(cnt > 0, $"Expected element is missing from {label} component. Path = '{path}', name = '{name}'.");
             Assert.IsTrue(cnt == 1, $"Found multiple matching elements in {label} component for Path = '{path}', name = '{name}'.");
             var elem = matches[0];
-            if (elementId != null)
+            if (_settings.GenerateElementIds && elementId != null)
             {
                 Assert.AreEqual(elementId, elem.ElementId, $"Invalid elementId in {label} component. Expected = '{elementId}', actual = '{elem.ElementId}'.");
             }
@@ -421,12 +422,14 @@ namespace Hl7.Fhir.Specification.Tests
         {
             IList<ElementDefinition> _elements;
             ElementDefinition _current;
+            SnapshotGeneratorSettings _settings;
             int _pos;
 
-            public ElementVerifier(StructureDefinition sd)
+            public ElementVerifier(StructureDefinition sd, SnapshotGeneratorSettings settings)
             {
                 Assert.IsNotNull(sd);
                 Assert.IsTrue(sd.HasSnapshot);
+                _settings = settings;
                 _elements = sd.Snapshot.Element;
                 _pos = 0;
                 var ann = sd.Annotation<OriginInformation>();
@@ -455,7 +458,7 @@ namespace Hl7.Fhir.Specification.Tests
                         {
                             Assert.AreEqual(name, element.Name, $"Invalid element name. Expected = '{name}', actual = '{element.Name}'.");
                         }
-                        if (elementId != null)
+                        if (_settings.GenerateElementIds && elementId != null)
                         {
                             Assert.AreEqual(elementId, element.ElementId, $"Invalid elementId. Expected = '{elementId}', actual = '{element.ElementId}'.");
                         }
@@ -525,7 +528,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Verify complex extension used by patient-with-extensions profile
             // patient-research-authorization-profile.xml
             sd = generateSnapshot(@"http://example.com/fhir/StructureDefinition/patient-research-authorization");
-            verifier = new ElementVerifier(sd);
+            verifier = new ElementVerifier(sd, _settings);
             verifier.VerifyElement("Extension.extension", null, "Extension.extension");
             verifier.VerifyElement("Extension.extension", "type", "Extension.extension:type");
             verifier.VerifyElement("Extension.extension.url", "type.url", "Extension.extension:type.url", new FhirUri("type"));
@@ -538,7 +541,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Basic Patient profile that references a set of extensions
             // patient-extensions-profile.xml
             sd = generateSnapshot(@"http://example.com/fhir/SD/patient-with-extensions");
-            verifier = new ElementVerifier(sd);
+            verifier = new ElementVerifier(sd, _settings);
             verifier.VerifyElement("Patient.extension", null, "Patient.extension");
             verifier.VerifyElement("Patient.extension", "doNotCall", "Patient.extension:doNotCall");
             verifier.VerifyElement("Patient.extension", "legalCase", "Patient.extension:legalCase");
@@ -558,7 +561,7 @@ namespace Hl7.Fhir.Specification.Tests
                      new ElementDefinition() { Path = "Patient.name", Name = "maidenName" }
                  )
             );
-            verifier = new ElementVerifier(sd);
+            verifier = new ElementVerifier(sd, _settings);
             verifier.VerifyElement("Patient.name", null, "Patient.name");
             verifier.VerifyElement("Patient.name", "officialName", "Patient.name:officialName");
             verifier.VerifyElement("Patient.name.text", "officialName.text", "Patient.name:officialName.text");
@@ -579,7 +582,7 @@ namespace Hl7.Fhir.Specification.Tests
                      new ElementDefinition() { Path = "Patient.telecom", Name = "workEmail" }
                  )
             );
-            verifier = new ElementVerifier(sd);
+            verifier = new ElementVerifier(sd, _settings);
             verifier.VerifyElement("Patient.telecom", null, "Patient.telecom");
             verifier.VerifyElement("Patient.telecom", "homePhone", "Patient.telecom:homePhone");
             verifier.VerifyElement("Patient.telecom.system", "homePhone.system", "Patient.telecom:homePhone.system", new Code("phone"));
@@ -606,7 +609,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // patient-careprovider-type-slice-profile.xml
             sd = generateSnapshot(@"http://example.com/fhir/SD/patient-careprovider-type-slice");
-            verifier = new ElementVerifier(sd);
+            verifier = new ElementVerifier(sd, _settings);
             verifier.VerifyElement("Patient.careProvider", null, "Patient.careProvider");
             verifier.VerifyElement("Patient.careProvider", "organizationCare", "Patient.careProvider:organizationCare");
             verifier.VerifyElement("Patient.careProvider", "practitionerCare", "Patient.careProvider:practitionerCare");
@@ -614,7 +617,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Verify re-slicing
             // patient-careprovider-type-reslice-profile.xml
             sd = generateSnapshot(@"http://example.com/fhir/SD/patient-careprovider-type-reslice");
-            verifier = new ElementVerifier(sd);
+            verifier = new ElementVerifier(sd, _settings);
             verifier.VerifyElement("Patient.careProvider", null, "Patient.careProvider");
             verifier.VerifyElement("Patient.careProvider", "organizationCare", "Patient.careProvider:organizationCare");
             verifier.VerifyElement("Patient.careProvider", "organizationCare/teamCare", "Patient.careProvider:organizationCare/teamCare");
@@ -623,7 +626,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Identifier Datatype profile
             // patient-mrn-id-profile.xml
             sd = generateSnapshot(@"http://example.com/fhir/SD/patient-mrn-id");
-            verifier = new ElementVerifier(sd);
+            verifier = new ElementVerifier(sd, _settings);
             verifier.VerifyElement("Identifier", null, "Identifier");
             verifier.VerifyElement("Identifier.system", null, "Identifier.system", new FhirUri(@"http://example.com/fhir/localsystems/PATIENT-ID-MRN"));
 
@@ -637,7 +640,7 @@ namespace Hl7.Fhir.Specification.Tests
                      new ElementDefinition() { Path = "Patient.identifier", Name = "mrn/officialMRN" }
                  )
             );
-            verifier = new ElementVerifier(sd);
+            verifier = new ElementVerifier(sd, _settings);
             verifier.VerifyElement("Patient.identifier", null, "Patient.identifier");
             verifier.VerifyElement("Patient.identifier", "mrn", "Patient.identifier:mrn");
             verifier.VerifyElement("Patient.identifier", "mrn/officialMRN", "Patient.identifier:mrn/officialMRN");
@@ -653,7 +656,7 @@ namespace Hl7.Fhir.Specification.Tests
                      new ElementDefinition() { Path = "Patient.identifier", Name = "mrn" }
                  )
             );
-            verifier = new ElementVerifier(sd);
+            verifier = new ElementVerifier(sd, _settings);
             verifier.VerifyElement("Patient.identifier", null, "Patient.identifier");
             verifier.AssertSlicing(new string[] { "system" }, ElementDefinition.SlicingRules.Open, null);
             verifier.VerifyElement("Patient.identifier", "mrn", "Patient.identifier:mrn");
@@ -680,7 +683,7 @@ namespace Hl7.Fhir.Specification.Tests
                      // new ElementDefinition() { Path = "Patient.extension.extension", Name = "researchAuth/grandfatheredResAuth.type" }
                  )
             );
-            verifier = new ElementVerifier(sd);
+            verifier = new ElementVerifier(sd, _settings);
             verifier.VerifyElement("Patient.extension", null, "Patient.extension");
             verifier.VerifyElement("Patient.extension", "doNotCall", "Patient.extension:doNotCall");
             verifier.VerifyElement("Patient.extension", "legalCase", "Patient.extension:legalCase");
