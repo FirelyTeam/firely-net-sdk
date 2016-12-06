@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -99,12 +99,6 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("display"), Description("Display")]
             Display,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/item-type)
-            /// </summary>
-            [EnumLiteral("question"), Description("Question")]
-            Question,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/item-type)
@@ -205,9 +199,10 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ItemComponent"; } }
             
             /// <summary>
-            /// To link questionnaire with questionnaire response
+            /// Unique id for item in questionnaire
             /// </summary>
             [FhirElement("linkId", Order=40)]
+            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString LinkIdElement
             {
@@ -218,7 +213,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _LinkIdElement;
             
             /// <summary>
-            /// To link questionnaire with questionnaire response
+            /// Unique id for item in questionnaire
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -237,9 +232,41 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// ElementDefinition - details for the item
+            /// </summary>
+            [FhirElement("definition", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirUri DefinitionElement
+            {
+                get { return _DefinitionElement; }
+                set { _DefinitionElement = value; OnPropertyChanged("DefinitionElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirUri _DefinitionElement;
+            
+            /// <summary>
+            /// ElementDefinition - details for the item
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Definition
+            {
+                get { return DefinitionElement != null ? DefinitionElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        DefinitionElement = null; 
+                    else
+                        DefinitionElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("Definition");
+                }
+            }
+            
+            /// <summary>
             /// Concept that represents this item within in a questionnaire
             /// </summary>
-            [FhirElement("concept", InSummary=true, Order=50)]
+            [FhirElement("concept", InSummary=true, Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Coding> Concept
@@ -253,7 +280,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// E.g. "1(a)", "2.5.3"
             /// </summary>
-            [FhirElement("prefix", Order=60)]
+            [FhirElement("prefix", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString PrefixElement
             {
@@ -285,7 +312,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Primary text for the item
             /// </summary>
-            [FhirElement("text", InSummary=true, Order=70)]
+            [FhirElement("text", InSummary=true, Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString TextElement
             {
@@ -315,10 +342,9 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// group | display | question | boolean | decimal | integer | date | dateTime +
+            /// group | display | boolean | decimal | integer | date | dateTime +
             /// </summary>
-            [FhirElement("type", Order=80)]
-            [Cardinality(Min=1,Max=1)]
+            [FhirElement("type", Order=90)]
             [DataMember]
             public Code<Hl7.Fhir.Model.Questionnaire.QuestionnaireItemType> TypeElement
             {
@@ -329,7 +355,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.Questionnaire.QuestionnaireItemType> _TypeElement;
             
             /// <summary>
-            /// group | display | question | boolean | decimal | integer | date | dateTime +
+            /// group | display | boolean | decimal | integer | date | dateTime +
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -350,7 +376,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Only allow data when:
             /// </summary>
-            [FhirElement("enableWhen", InSummary=true, Order=90)]
+            [FhirElement("enableWhen", InSummary=true, Order=100)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Questionnaire.EnableWhenComponent> EnableWhen
@@ -364,7 +390,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Whether the item must be included in data results
             /// </summary>
-            [FhirElement("required", Order=100)]
+            [FhirElement("required", Order=110)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean RequiredElement
             {
@@ -396,7 +422,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Whether the item may repeat
             /// </summary>
-            [FhirElement("repeats", Order=110)]
+            [FhirElement("repeats", Order=120)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean RepeatsElement
             {
@@ -428,7 +454,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Don't allow human editing
             /// </summary>
-            [FhirElement("readOnly", Order=120)]
+            [FhirElement("readOnly", Order=130)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean ReadOnlyElement
             {
@@ -460,7 +486,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// No more than this many characters
             /// </summary>
-            [FhirElement("maxLength", Order=130)]
+            [FhirElement("maxLength", Order=140)]
             [DataMember]
             public Hl7.Fhir.Model.Integer MaxLengthElement
             {
@@ -492,7 +518,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Valueset containing permitted answers
             /// </summary>
-            [FhirElement("options", Order=140)]
+            [FhirElement("options", Order=150)]
             [References("ValueSet")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Options
@@ -506,7 +532,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Permitted answer
             /// </summary>
-            [FhirElement("option", Order=150)]
+            [FhirElement("option", Order=160)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Questionnaire.OptionComponent> Option
@@ -518,9 +544,9 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.Questionnaire.OptionComponent> _Option;
             
             /// <summary>
-            /// Initial presumed answer for question
+            /// Default value when item is first rendered
             /// </summary>
-            [FhirElement("initial", Order=160, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("initial", Order=170, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Coding),typeof(Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element Initial
@@ -534,7 +560,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Nested questionnaire items
             /// </summary>
-            [FhirElement("item", Order=170)]
+            [FhirElement("item", Order=180)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Questionnaire.ItemComponent> Item
@@ -553,6 +579,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(LinkIdElement != null) dest.LinkIdElement = (Hl7.Fhir.Model.FhirString)LinkIdElement.DeepCopy();
+                    if(DefinitionElement != null) dest.DefinitionElement = (Hl7.Fhir.Model.FhirUri)DefinitionElement.DeepCopy();
                     if(Concept != null) dest.Concept = new List<Hl7.Fhir.Model.Coding>(Concept.DeepCopy());
                     if(PrefixElement != null) dest.PrefixElement = (Hl7.Fhir.Model.FhirString)PrefixElement.DeepCopy();
                     if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
@@ -584,6 +611,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(LinkIdElement, otherT.LinkIdElement)) return false;
+                if( !DeepComparable.Matches(DefinitionElement, otherT.DefinitionElement)) return false;
                 if( !DeepComparable.Matches(Concept, otherT.Concept)) return false;
                 if( !DeepComparable.Matches(PrefixElement, otherT.PrefixElement)) return false;
                 if( !DeepComparable.Matches(TextElement, otherT.TextElement)) return false;
@@ -608,6 +636,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(LinkIdElement, otherT.LinkIdElement)) return false;
+                if( !DeepComparable.IsExactly(DefinitionElement, otherT.DefinitionElement)) return false;
                 if( !DeepComparable.IsExactly(Concept, otherT.Concept)) return false;
                 if( !DeepComparable.IsExactly(PrefixElement, otherT.PrefixElement)) return false;
                 if( !DeepComparable.IsExactly(TextElement, otherT.TextElement)) return false;
@@ -635,6 +664,7 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // ItemComponent elements
                     if (LinkIdElement != null) yield return LinkIdElement;
+                    if (DefinitionElement != null) yield return DefinitionElement;
                     foreach (var elem in Concept) { if (elem != null) yield return elem; }
                     if (PrefixElement != null) yield return PrefixElement;
                     if (TextElement != null) yield return TextElement;
@@ -1262,6 +1292,15 @@ namespace Hl7.Fhir.Model
             Xpath = "not((f:type/@value='group' and not(f:item)) or (f:type/@value='display' and f:item))"
         };
 
+        public static ElementDefinition.ConstraintComponent Questionnaire_QUE_11 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "item.all(definition.empty() implies type.exists())",
+            Key = "que-11",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Type is required if a definition is not provided",
+            Xpath = "not(exists(f:type)) or exists(f:definition)"
+        };
+
         public static ElementDefinition.ConstraintComponent Questionnaire_QUE_7 = new ElementDefinition.ConstraintComponent()
         {
             Expression = "item.enableWhen.all(hasAnswer.exists() xor answer.exists())",
@@ -1284,6 +1323,7 @@ namespace Hl7.Fhir.Model
             InvariantConstraints.Add(Questionnaire_QUE_3);
             InvariantConstraints.Add(Questionnaire_QUE_10);
             InvariantConstraints.Add(Questionnaire_QUE_1);
+            InvariantConstraints.Add(Questionnaire_QUE_11);
             InvariantConstraints.Add(Questionnaire_QUE_7);
         }
 

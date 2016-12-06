@@ -5,6 +5,7 @@
     <xsl:output method="xml" indent="yes" encoding="UTF-8"  />
 
 	<xsl:template match="fhir:meta"><xsl:text disable-output-escaping="yes">&lt;!-- Removed Meta/LastModified --&gt;</xsl:text></xsl:template>
+	<xsl:template match="fhir:CapabilityStatement/fhir:date"><xsl:text disable-output-escaping="yes">&lt;!-- Removed date --&gt;</xsl:text></xsl:template>
 	<xsl:template match="fhir:Conformance/fhir:date"><xsl:text disable-output-escaping="yes">&lt;!-- Removed date --&gt;</xsl:text></xsl:template>
 	<xsl:template match="fhir:CompartmentDefinition/fhir:date"><xsl:text disable-output-escaping="yes">&lt;!-- Removed date --&gt;</xsl:text></xsl:template>
 	<xsl:template match="fhir:OperationDefinition/fhir:date"><xsl:text disable-output-escaping="yes">&lt;!-- Removed date --&gt;</xsl:text></xsl:template>

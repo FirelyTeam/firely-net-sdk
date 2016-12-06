@@ -31,6 +31,7 @@ PowerCurl "$srcdir\Hl7.Fhir.Core\Model\Source\expansions.xml" "$server/expansion
 PowerCurl "$srcdir\Hl7.Fhir.Core\Model\Source\profiles-resources.xml" "$server/profiles-resources.xml"
 PowerCurl "$srcdir\Hl7.Fhir.Core\Model\Source\profiles-types.xml" "$server/profiles-types.xml"
 PowerCurl "$srcdir\Hl7.Fhir.Core\Model\Source\search-parameters.xml" "$server/search-parameters.xml"
+PowerCurl "$srcdir\Hl7.Fhir.Core\Model\source\profiles-others.xml" "$server/profiles-others.xml"
 
 PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\careplan-example-f201-renal.xml" "$server/careplan-example-f201-renal.xml"
 PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\examples.zip" "$server/examples.zip"
@@ -38,7 +39,6 @@ PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\examples-json.zip" "$server/exam
 PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\json-edge-cases.json" "$server/json-edge-cases.json"
 
 PowerCurl "$srcdir\Hl7.Fhir.Specification\validation.xml.zip" "$server/definitions.xml.zip"
-PowerCurl "$srcdir\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\profiles-others.xml" "$server/profiles-others.xml"
 
 copy "$srcdir\Hl7.Fhir.Core\Model\Source\profiles-resources.xml" "$srcdir\Hl7.Fhir.Specification.Tests\TestData\snapshot-test"
 copy "$srcdir\Hl7.Fhir.Core\Model\Source\profiles-types.xml" "$srcdir\Hl7.Fhir.Specification.Tests\TestData\snapshot-test"
@@ -67,3 +67,8 @@ Write-Host -ForegroundColor White "transforming expansions.xml ..."
 $xslt.Transform("$srcdir\Hl7.Fhir.Core\Model\Source\expansions.xml", "$srcdir\Hl7.Fhir.Core\Model\Source\expansions2.xml");
 del "$srcdir\Hl7.Fhir.Core\Model\Source\expansions.xml"
 move "$srcdir\Hl7.Fhir.Core\Model\Source\expansions2.xml" "$srcdir\Hl7.Fhir.Core\Model\Source\expansions.xml"
+
+Write-Host -ForegroundColor White "transforming profiles-others.xml ..."
+$xslt.Transform("$srcdir\Hl7.Fhir.Core\Model\Source\profiles-others.xml", "$srcdir\Hl7.Fhir.Core\Model\Source\profiles-others2.xml");
+del "$srcdir\Hl7.Fhir.Core\Model\Source\profiles-others.xml"
+move "$srcdir\Hl7.Fhir.Core\Model\Source\profiles-others2.xml" "$srcdir\Hl7.Fhir.Core\Model\Source\profiles-others.xml"

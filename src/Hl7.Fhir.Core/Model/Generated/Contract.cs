@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -1430,9 +1430,41 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
+        /// active | cancelled | draft | entered-in-error
+        /// </summary>
+        [FhirElement("status", InSummary=true, Order=100)]
+        [DataMember]
+        public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
+        {
+            get { return _StatusElement; }
+            set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+        }
+        
+        private Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> _StatusElement;
+        
+        /// <summary>
+        /// active | cancelled | draft | entered-in-error
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.FinancialResourceStatusCodes? Status
+        {
+            get { return StatusElement != null ? StatusElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  StatusElement = null; 
+                else
+                  StatusElement = new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
+                OnPropertyChanged("Status");
+            }
+        }
+        
+        /// <summary>
         /// When this Contract was issued
         /// </summary>
-        [FhirElement("issued", InSummary=true, Order=100)]
+        [FhirElement("issued", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime IssuedElement
         {
@@ -1464,7 +1496,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Effective time
         /// </summary>
-        [FhirElement("applies", InSummary=true, Order=110)]
+        [FhirElement("applies", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.Period Applies
         {
@@ -1477,7 +1509,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contract Target Entity
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=120)]
+        [FhirElement("subject", InSummary=true, Order=130)]
         [References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1492,7 +1524,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Context of the Contract
         /// </summary>
-        [FhirElement("topic", InSummary=true, Order=130)]
+        [FhirElement("topic", InSummary=true, Order=140)]
         [References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1507,7 +1539,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Authority under which this Contract has standing
         /// </summary>
-        [FhirElement("authority", Order=140)]
+        [FhirElement("authority", Order=150)]
         [References("Organization")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1522,7 +1554,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Domain in which this Contract applies
         /// </summary>
-        [FhirElement("domain", Order=150)]
+        [FhirElement("domain", Order=160)]
         [References("Location")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -1537,7 +1569,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contract Type
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=160)]
+        [FhirElement("type", InSummary=true, Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
         {
@@ -1550,7 +1582,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contract Subtype
         /// </summary>
-        [FhirElement("subType", InSummary=true, Order=170)]
+        [FhirElement("subType", InSummary=true, Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> SubType
@@ -1564,7 +1596,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contract Action
         /// </summary>
-        [FhirElement("action", Order=180)]
+        [FhirElement("action", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Action
@@ -1578,7 +1610,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contract Action Reason
         /// </summary>
-        [FhirElement("actionReason", Order=190)]
+        [FhirElement("actionReason", Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> ActionReason
@@ -1592,7 +1624,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contract Agent
         /// </summary>
-        [FhirElement("agent", Order=200)]
+        [FhirElement("agent", Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Contract.AgentComponent> Agent
@@ -1606,7 +1638,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contract Signer
         /// </summary>
-        [FhirElement("signer", Order=210)]
+        [FhirElement("signer", Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Contract.SignatoryComponent> Signer
@@ -1620,7 +1652,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contract Valued Item
         /// </summary>
-        [FhirElement("valuedItem", Order=220)]
+        [FhirElement("valuedItem", Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Contract.ValuedItemComponent> ValuedItem
@@ -1634,7 +1666,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contract Term List
         /// </summary>
-        [FhirElement("term", Order=230)]
+        [FhirElement("term", Order=240)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Contract.TermComponent> Term
@@ -1648,7 +1680,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Binding Contract
         /// </summary>
-        [FhirElement("binding", Order=240, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("binding", Order=250, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element Binding
@@ -1662,7 +1694,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contract Friendly Language
         /// </summary>
-        [FhirElement("friendly", Order=250)]
+        [FhirElement("friendly", Order=260)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Contract.FriendlyLanguageComponent> Friendly
@@ -1676,7 +1708,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contract Legal Language
         /// </summary>
-        [FhirElement("legal", Order=260)]
+        [FhirElement("legal", Order=270)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Contract.LegalLanguageComponent> Legal
@@ -1690,7 +1722,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Computable Contract Language
         /// </summary>
-        [FhirElement("rule", Order=270)]
+        [FhirElement("rule", Order=280)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Contract.ComputableLanguageComponent> Rule
@@ -1716,6 +1748,7 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)StatusElement.DeepCopy();
                 if(IssuedElement != null) dest.IssuedElement = (Hl7.Fhir.Model.FhirDateTime)IssuedElement.DeepCopy();
                 if(Applies != null) dest.Applies = (Hl7.Fhir.Model.Period)Applies.DeepCopy();
                 if(Subject != null) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(Subject.DeepCopy());
@@ -1752,6 +1785,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(IssuedElement, otherT.IssuedElement)) return false;
             if( !DeepComparable.Matches(Applies, otherT.Applies)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
@@ -1781,6 +1815,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(IssuedElement, otherT.IssuedElement)) return false;
             if( !DeepComparable.IsExactly(Applies, otherT.Applies)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
@@ -1810,6 +1845,7 @@ namespace Hl7.Fhir.Model
             {
 				// Contract elements
 				if (Identifier != null) yield return Identifier;
+				if (StatusElement != null) yield return StatusElement;
 				if (IssuedElement != null) yield return IssuedElement;
 				if (Applies != null) yield return Applies;
 				foreach (var elem in Subject) { if (elem != null) yield return elem; }

@@ -42,6 +42,7 @@ namespace HealthConnex.Fhir.Server.Tests
 
             FhirXmlParser parser = new FhirXmlParser();
             int errorCount = 0;
+            int parserErrorCount = 0;
             int testFileCount = 0;
             Dictionary<String, int> exampleSearchValues = new Dictionary<string, int>();
             Dictionary<string, int> failedInvariantCodes = new Dictionary<string, int>();
@@ -60,21 +61,30 @@ namespace HealthConnex.Fhir.Server.Tests
                         //    continue;
 
                         testFileCount++;
-                        // Debug.WriteLine(String.Format("Validating {0}", file));
-                        var reader = SerializationUtil.WrapXmlReader(XmlReader.Create(file));
-                        var resource = parser.Parse<Resource>(reader);
 
-                        ExtractValuesForSearchParameterFromFile(exampleSearchValues, resource);
-
-                        if (resource is Bundle)
+                        try
                         {
-                            foreach (var item in (resource as Bundle).Entry)
+                            // Debug.WriteLine(String.Format("Validating {0}", file));
+                            var reader = SerializationUtil.WrapXmlReader(XmlReader.Create(file));
+                            var resource = parser.Parse<Resource>(reader);
+
+                            ExtractValuesForSearchParameterFromFile(exampleSearchValues, resource);
+
+                            if (resource is Bundle)
                             {
-                                if (item.Resource != null)
+                                foreach (var item in (resource as Bundle).Entry)
                                 {
-                                    ExtractValuesForSearchParameterFromFile(exampleSearchValues, item.Resource);
+                                    if (item.Resource != null)
+                                    {
+                                        ExtractValuesForSearchParameterFromFile(exampleSearchValues, item.Resource);
+                                    }
                                 }
                             }
+                        }
+                        catch(Exception ex)
+                        {
+                            System.Diagnostics.Trace.WriteLine("Error processing file " + entry.Name + ": " + ex.Message);
+                            parserErrorCount++;
                         }
                     }
                 }
@@ -93,6 +103,7 @@ namespace HealthConnex.Fhir.Server.Tests
             }
 
             Assert.IsTrue(216 >= errorCount, String.Format("Failed Validating, missing data in {0} of {1} search parameters", missingSearchValues.Count(), exampleSearchValues.Count));
+            Assert.AreEqual(0, parserErrorCount, String.Format("Failed search parameter data extraction, {0} files failed parsing", parserErrorCount));
         }
 
         private static void ExtractValuesForSearchParameterFromFile(Dictionary<string, int> exampleSearchValues, Resource resource)

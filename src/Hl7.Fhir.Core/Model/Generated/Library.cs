@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -602,15 +602,15 @@ namespace Hl7.Fhir.Model
         /// The content of the library
         /// </summary>
         [FhirElement("content", Order=340)]
-        [Cardinality(Min=1,Max=1)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.Attachment Content
+        public List<Hl7.Fhir.Model.Attachment> Content
         {
-            get { return _Content; }
+            get { if(_Content==null) _Content = new List<Hl7.Fhir.Model.Attachment>(); return _Content; }
             set { _Content = value; OnPropertyChanged("Content"); }
         }
         
-        private Hl7.Fhir.Model.Attachment _Content;
+        private List<Hl7.Fhir.Model.Attachment> _Content;
         
 
         public override void AddDefaultConstraints()
@@ -651,7 +651,7 @@ namespace Hl7.Fhir.Model
                 if(RelatedArtifact != null) dest.RelatedArtifact = new List<RelatedArtifact>(RelatedArtifact.DeepCopy());
                 if(Parameter != null) dest.Parameter = new List<ParameterDefinition>(Parameter.DeepCopy());
                 if(DataRequirement != null) dest.DataRequirement = new List<DataRequirement>(DataRequirement.DeepCopy());
-                if(Content != null) dest.Content = (Hl7.Fhir.Model.Attachment)Content.DeepCopy();
+                if(Content != null) dest.Content = new List<Hl7.Fhir.Model.Attachment>(Content.DeepCopy());
                 return dest;
             }
             else
@@ -766,7 +766,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in RelatedArtifact) { if (elem != null) yield return elem; }
 				foreach (var elem in Parameter) { if (elem != null) yield return elem; }
 				foreach (var elem in DataRequirement) { if (elem != null) yield return elem; }
-				if (Content != null) yield return Content;
+				foreach (var elem in Content) { if (elem != null) yield return elem; }
             }
         }
     }

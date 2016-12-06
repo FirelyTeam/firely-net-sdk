@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -92,6 +92,254 @@ namespace Hl7.Fhir.Model
             Other,
         }
 
+        /// <summary>
+        /// What Search Comparator Codes are supported in search
+        /// (url: http://hl7.org/fhir/ValueSet/search-comparator)
+        /// </summary>
+        [FhirEnumeration("SearchComparator")]
+        public enum SearchComparator
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/search-comparator)
+            /// </summary>
+            [EnumLiteral("eq"), Description("Equals")]
+            Eq,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/search-comparator)
+            /// </summary>
+            [EnumLiteral("ne"), Description("Not Equals")]
+            Ne,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/search-comparator)
+            /// </summary>
+            [EnumLiteral("gt"), Description("Greater Than")]
+            Gt,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/search-comparator)
+            /// </summary>
+            [EnumLiteral("lt"), Description("Less Then")]
+            Lt,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/search-comparator)
+            /// </summary>
+            [EnumLiteral("ge"), Description("Greater or Equals")]
+            Ge,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/search-comparator)
+            /// </summary>
+            [EnumLiteral("le"), Description("Less of Equal")]
+            Le,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/search-comparator)
+            /// </summary>
+            [EnumLiteral("sa"), Description("Starts After")]
+            Sa,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/search-comparator)
+            /// </summary>
+            [EnumLiteral("eb"), Description("Ends Before")]
+            Eb,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/search-comparator)
+            /// </summary>
+            [EnumLiteral("ap"), Description("Approximately")]
+            Ap,
+        }
+
+        /// <summary>
+        /// A supported modifier for a search parameter.
+        /// (url: http://hl7.org/fhir/ValueSet/search-modifier-code)
+        /// </summary>
+        [FhirEnumeration("SearchModifierCode")]
+        public enum SearchModifierCode
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/search-modifier-code)
+            /// </summary>
+            [EnumLiteral("missing"), Description("Missing")]
+            Missing,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/search-modifier-code)
+            /// </summary>
+            [EnumLiteral("exact"), Description("Exact")]
+            Exact,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/search-modifier-code)
+            /// </summary>
+            [EnumLiteral("contains"), Description("Contains")]
+            Contains,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/search-modifier-code)
+            /// </summary>
+            [EnumLiteral("not"), Description("Not")]
+            Not,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/search-modifier-code)
+            /// </summary>
+            [EnumLiteral("text"), Description("Text")]
+            Text,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/search-modifier-code)
+            /// </summary>
+            [EnumLiteral("in"), Description("In")]
+            In,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/search-modifier-code)
+            /// </summary>
+            [EnumLiteral("not-in"), Description("Not In")]
+            NotIn,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/search-modifier-code)
+            /// </summary>
+            [EnumLiteral("below"), Description("Below")]
+            Below,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/search-modifier-code)
+            /// </summary>
+            [EnumLiteral("above"), Description("Above")]
+            Above,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/search-modifier-code)
+            /// </summary>
+            [EnumLiteral("type"), Description("Type")]
+            Type,
+        }
+
+        [FhirType("ComponentComponent")]
+        [DataContract]
+        public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "ComponentComponent"; } }
+            
+            /// <summary>
+            /// Defines how the part works
+            /// </summary>
+            [FhirElement("definition", Order=40)]
+            [References("SearchParameter")]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Definition
+            {
+                get { return _Definition; }
+                set { _Definition = value; OnPropertyChanged("Definition"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Definition;
+            
+            /// <summary>
+            /// Subexpression relative to main expression
+            /// </summary>
+            [FhirElement("expression", Order=50)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString ExpressionElement
+            {
+                get { return _ExpressionElement; }
+                set { _ExpressionElement = value; OnPropertyChanged("ExpressionElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _ExpressionElement;
+            
+            /// <summary>
+            /// Subexpression relative to main expression
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Expression
+            {
+                get { return ExpressionElement != null ? ExpressionElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        ExpressionElement = null; 
+                    else
+                        ExpressionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Expression");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ComponentComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Definition != null) dest.Definition = (Hl7.Fhir.Model.ResourceReference)Definition.DeepCopy();
+                    if(ExpressionElement != null) dest.ExpressionElement = (Hl7.Fhir.Model.FhirString)ExpressionElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ComponentComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ComponentComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Definition, otherT.Definition)) return false;
+                if( !DeepComparable.Matches(ExpressionElement, otherT.ExpressionElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ComponentComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Definition, otherT.Definition)) return false;
+                if( !DeepComparable.IsExactly(ExpressionElement, otherT.ExpressionElement)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ComponentComponent elements
+                    if (Definition != null) yield return Definition;
+                    if (ExpressionElement != null) yield return ExpressionElement;
+                }
+            }
+            
+        }
+        
+        
         /// <summary>
         /// Logical uri to reference this search parameter (globally unique)
         /// </summary>
@@ -408,34 +656,34 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// The resource type this search parameter applies to
+        /// The resource type(s) this search parameter applies to
         /// </summary>
         [FhirElement("base", InSummary=true, Order=210)]
-        [Cardinality(Min=1,Max=1)]
+        [Cardinality(Min=1,Max=-1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.ResourceType> BaseElement
+        public List<Code<Hl7.Fhir.Model.ResourceType>> BaseElement
         {
-            get { return _BaseElement; }
+            get { if(_BaseElement==null) _BaseElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>>(); return _BaseElement; }
             set { _BaseElement = value; OnPropertyChanged("BaseElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.ResourceType> _BaseElement;
+        private List<Code<Hl7.Fhir.Model.ResourceType>> _BaseElement;
         
         /// <summary>
-        /// The resource type this search parameter applies to
+        /// The resource type(s) this search parameter applies to
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.ResourceType? Base
+        public IEnumerable<Hl7.Fhir.Model.ResourceType?> Base
         {
-            get { return BaseElement != null ? BaseElement.Value : null; }
+            get { return BaseElement != null ? BaseElement.Select(elem => elem.Value) : null; }
             set
             {
-                if (!value.HasValue)
+                if (value == null)
                   BaseElement = null; 
                 else
-                  BaseElement = new Code<Hl7.Fhir.Model.ResourceType>(value);
+                  BaseElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>(elem)));
                 OnPropertyChanged("Base");
             }
         }
@@ -474,9 +722,41 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Original Definition for the search parameter
+        /// </summary>
+        [FhirElement("derivedFrom", Order=230)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirUri DerivedFromElement
+        {
+            get { return _DerivedFromElement; }
+            set { _DerivedFromElement = value; OnPropertyChanged("DerivedFromElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirUri _DerivedFromElement;
+        
+        /// <summary>
+        /// Original Definition for the search parameter
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string DerivedFrom
+        {
+            get { return DerivedFromElement != null ? DerivedFromElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  DerivedFromElement = null; 
+                else
+                  DerivedFromElement = new Hl7.Fhir.Model.FhirUri(value);
+                OnPropertyChanged("DerivedFrom");
+            }
+        }
+        
+        /// <summary>
         /// Natural language description of the search parameter
         /// </summary>
-        [FhirElement("description", InSummary=true, Order=230)]
+        [FhirElement("description", InSummary=true, Order=240)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown Description
@@ -490,7 +770,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// FluentPath expression that extracts the values
         /// </summary>
-        [FhirElement("expression", Order=240)]
+        [FhirElement("expression", Order=250)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ExpressionElement
         {
@@ -522,7 +802,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// XPath that extracts the values
         /// </summary>
-        [FhirElement("xpath", Order=250)]
+        [FhirElement("xpath", Order=260)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString XpathElement
         {
@@ -554,7 +834,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// normal | phonetic | nearby | distance | other
         /// </summary>
-        [FhirElement("xpathUsage", Order=260)]
+        [FhirElement("xpathUsage", Order=270)]
         [DataMember]
         public Code<Hl7.Fhir.Model.SearchParameter.XPathUsageType> XpathUsageElement
         {
@@ -586,7 +866,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Types of resource (if a resource reference)
         /// </summary>
-        [FhirElement("target", Order=270)]
+        [FhirElement("target", Order=280)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Code<Hl7.Fhir.Model.ResourceType>> TargetElement
@@ -617,19 +897,117 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// For Composite resources to define the parts
+        /// eq | ne | gt | lt | ge | le | sa | eb | ap
         /// </summary>
-        [FhirElement("component", Order=280)]
-        [References("SearchParameter")]
+        [FhirElement("comparator", Order=290)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Component
+        public List<Code<Hl7.Fhir.Model.SearchParameter.SearchComparator>> ComparatorElement
         {
-            get { if(_Component==null) _Component = new List<Hl7.Fhir.Model.ResourceReference>(); return _Component; }
+            get { if(_ComparatorElement==null) _ComparatorElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchParameter.SearchComparator>>(); return _ComparatorElement; }
+            set { _ComparatorElement = value; OnPropertyChanged("ComparatorElement"); }
+        }
+        
+        private List<Code<Hl7.Fhir.Model.SearchParameter.SearchComparator>> _ComparatorElement;
+        
+        /// <summary>
+        /// eq | ne | gt | lt | ge | le | sa | eb | ap
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public IEnumerable<Hl7.Fhir.Model.SearchParameter.SearchComparator?> Comparator
+        {
+            get { return ComparatorElement != null ? ComparatorElement.Select(elem => elem.Value) : null; }
+            set
+            {
+                if (value == null)
+                  ComparatorElement = null; 
+                else
+                  ComparatorElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchParameter.SearchComparator>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchParameter.SearchComparator>(elem)));
+                OnPropertyChanged("Comparator");
+            }
+        }
+        
+        /// <summary>
+        /// missing | exact | contains | not | text | in | not-in | below | above | type
+        /// </summary>
+        [FhirElement("modifier", Order=300)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Code<Hl7.Fhir.Model.SearchParameter.SearchModifierCode>> ModifierElement
+        {
+            get { if(_ModifierElement==null) _ModifierElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchParameter.SearchModifierCode>>(); return _ModifierElement; }
+            set { _ModifierElement = value; OnPropertyChanged("ModifierElement"); }
+        }
+        
+        private List<Code<Hl7.Fhir.Model.SearchParameter.SearchModifierCode>> _ModifierElement;
+        
+        /// <summary>
+        /// missing | exact | contains | not | text | in | not-in | below | above | type
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public IEnumerable<Hl7.Fhir.Model.SearchParameter.SearchModifierCode?> Modifier
+        {
+            get { return ModifierElement != null ? ModifierElement.Select(elem => elem.Value) : null; }
+            set
+            {
+                if (value == null)
+                  ModifierElement = null; 
+                else
+                  ModifierElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchParameter.SearchModifierCode>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchParameter.SearchModifierCode>(elem)));
+                OnPropertyChanged("Modifier");
+            }
+        }
+        
+        /// <summary>
+        /// Chained names supported
+        /// </summary>
+        [FhirElement("chain", Order=310)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.FhirString> ChainElement
+        {
+            get { if(_ChainElement==null) _ChainElement = new List<Hl7.Fhir.Model.FhirString>(); return _ChainElement; }
+            set { _ChainElement = value; OnPropertyChanged("ChainElement"); }
+        }
+        
+        private List<Hl7.Fhir.Model.FhirString> _ChainElement;
+        
+        /// <summary>
+        /// Chained names supported
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public IEnumerable<string> Chain
+        {
+            get { return ChainElement != null ? ChainElement.Select(elem => elem.Value) : null; }
+            set
+            {
+                if (value == null)
+                  ChainElement = null; 
+                else
+                  ChainElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
+                OnPropertyChanged("Chain");
+            }
+        }
+        
+        /// <summary>
+        /// For Composite resources to define the parts
+        /// </summary>
+        [FhirElement("component", Order=320)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.SearchParameter.ComponentComponent> Component
+        {
+            get { if(_Component==null) _Component = new List<Hl7.Fhir.Model.SearchParameter.ComponentComponent>(); return _Component; }
             set { _Component = value; OnPropertyChanged("Component"); }
         }
         
-        private List<Hl7.Fhir.Model.ResourceReference> _Component;
+        private List<Hl7.Fhir.Model.SearchParameter.ComponentComponent> _Component;
         
 
         public static ElementDefinition.ConstraintComponent SearchParameter_SPD_1 = new ElementDefinition.ConstraintComponent()
@@ -641,11 +1019,21 @@ namespace Hl7.Fhir.Model
             Xpath = "not(exists(f:xpath)) or exists(f:xpathUsage)"
         };
 
+        public static ElementDefinition.ConstraintComponent SearchParameter_SPD_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "chain.empty() or type = 'reference'",
+            Key = "spd-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Search parameters can only have chain names when the search parameter type is 'reference'",
+            Xpath = "not(exists(f:chain)) or (f:type/@value = 'reference')"
+        };
+
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
 
             InvariantConstraints.Add(SearchParameter_SPD_1);
+            InvariantConstraints.Add(SearchParameter_SPD_2);
         }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -667,14 +1055,18 @@ namespace Hl7.Fhir.Model
                 if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
                 if(Purpose != null) dest.Purpose = (Hl7.Fhir.Model.Markdown)Purpose.DeepCopy();
                 if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
-                if(BaseElement != null) dest.BaseElement = (Code<Hl7.Fhir.Model.ResourceType>)BaseElement.DeepCopy();
+                if(BaseElement != null) dest.BaseElement = new List<Code<Hl7.Fhir.Model.ResourceType>>(BaseElement.DeepCopy());
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.SearchParamType>)TypeElement.DeepCopy();
+                if(DerivedFromElement != null) dest.DerivedFromElement = (Hl7.Fhir.Model.FhirUri)DerivedFromElement.DeepCopy();
                 if(Description != null) dest.Description = (Hl7.Fhir.Model.Markdown)Description.DeepCopy();
                 if(ExpressionElement != null) dest.ExpressionElement = (Hl7.Fhir.Model.FhirString)ExpressionElement.DeepCopy();
                 if(XpathElement != null) dest.XpathElement = (Hl7.Fhir.Model.FhirString)XpathElement.DeepCopy();
                 if(XpathUsageElement != null) dest.XpathUsageElement = (Code<Hl7.Fhir.Model.SearchParameter.XPathUsageType>)XpathUsageElement.DeepCopy();
                 if(TargetElement != null) dest.TargetElement = new List<Code<Hl7.Fhir.Model.ResourceType>>(TargetElement.DeepCopy());
-                if(Component != null) dest.Component = new List<Hl7.Fhir.Model.ResourceReference>(Component.DeepCopy());
+                if(ComparatorElement != null) dest.ComparatorElement = new List<Code<Hl7.Fhir.Model.SearchParameter.SearchComparator>>(ComparatorElement.DeepCopy());
+                if(ModifierElement != null) dest.ModifierElement = new List<Code<Hl7.Fhir.Model.SearchParameter.SearchModifierCode>>(ModifierElement.DeepCopy());
+                if(ChainElement != null) dest.ChainElement = new List<Hl7.Fhir.Model.FhirString>(ChainElement.DeepCopy());
+                if(Component != null) dest.Component = new List<Hl7.Fhir.Model.SearchParameter.ComponentComponent>(Component.DeepCopy());
                 return dest;
             }
             else
@@ -706,11 +1098,15 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
             if( !DeepComparable.Matches(BaseElement, otherT.BaseElement)) return false;
             if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
+            if( !DeepComparable.Matches(DerivedFromElement, otherT.DerivedFromElement)) return false;
             if( !DeepComparable.Matches(Description, otherT.Description)) return false;
             if( !DeepComparable.Matches(ExpressionElement, otherT.ExpressionElement)) return false;
             if( !DeepComparable.Matches(XpathElement, otherT.XpathElement)) return false;
             if( !DeepComparable.Matches(XpathUsageElement, otherT.XpathUsageElement)) return false;
             if( !DeepComparable.Matches(TargetElement, otherT.TargetElement)) return false;
+            if( !DeepComparable.Matches(ComparatorElement, otherT.ComparatorElement)) return false;
+            if( !DeepComparable.Matches(ModifierElement, otherT.ModifierElement)) return false;
+            if( !DeepComparable.Matches(ChainElement, otherT.ChainElement)) return false;
             if( !DeepComparable.Matches(Component, otherT.Component)) return false;
             
             return true;
@@ -736,11 +1132,15 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
             if( !DeepComparable.IsExactly(BaseElement, otherT.BaseElement)) return false;
             if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
+            if( !DeepComparable.IsExactly(DerivedFromElement, otherT.DerivedFromElement)) return false;
             if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
             if( !DeepComparable.IsExactly(ExpressionElement, otherT.ExpressionElement)) return false;
             if( !DeepComparable.IsExactly(XpathElement, otherT.XpathElement)) return false;
             if( !DeepComparable.IsExactly(XpathUsageElement, otherT.XpathUsageElement)) return false;
             if( !DeepComparable.IsExactly(TargetElement, otherT.TargetElement)) return false;
+            if( !DeepComparable.IsExactly(ComparatorElement, otherT.ComparatorElement)) return false;
+            if( !DeepComparable.IsExactly(ModifierElement, otherT.ModifierElement)) return false;
+            if( !DeepComparable.IsExactly(ChainElement, otherT.ChainElement)) return false;
             if( !DeepComparable.IsExactly(Component, otherT.Component)) return false;
             
             return true;
@@ -764,13 +1164,17 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Jurisdiction) { if (elem != null) yield return elem; }
 				if (Purpose != null) yield return Purpose;
 				if (CodeElement != null) yield return CodeElement;
-				if (BaseElement != null) yield return BaseElement;
+				foreach (var elem in BaseElement) { if (elem != null) yield return elem; }
 				if (TypeElement != null) yield return TypeElement;
+				if (DerivedFromElement != null) yield return DerivedFromElement;
 				if (Description != null) yield return Description;
 				if (ExpressionElement != null) yield return ExpressionElement;
 				if (XpathElement != null) yield return XpathElement;
 				if (XpathUsageElement != null) yield return XpathUsageElement;
 				foreach (var elem in TargetElement) { if (elem != null) yield return elem; }
+				foreach (var elem in ComparatorElement) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierElement) { if (elem != null) yield return elem; }
+				foreach (var elem in ChainElement) { if (elem != null) yield return elem; }
 				foreach (var elem in Component) { if (elem != null) yield return elem; }
             }
         }

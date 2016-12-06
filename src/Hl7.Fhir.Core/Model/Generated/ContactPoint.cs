@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -86,7 +86,13 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contact-point-system)
             /// </summary>
-            [EnumLiteral("other"), Description("URL")]
+            [EnumLiteral("url"), Description("URL")]
+            Url,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/contact-point-system)
+            /// </summary>
+            [EnumLiteral("other"), Description("Other")]
             Other,
         }
 
@@ -130,7 +136,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// phone | fax | email | pager | other
+        /// phone | fax | email | pager | url | other
         /// </summary>
         [FhirElement("system", InSummary=true, Order=30)]
         [DataMember]
@@ -143,7 +149,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem> _SystemElement;
         
         /// <summary>
-        /// phone | fax | email | pager | other
+        /// phone | fax | email | pager | url | other
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

@@ -282,6 +282,9 @@
     <Compile Include="Model\Generated\MedicationRequest.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Generated\MessageDefinition.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\Meta.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
@@ -337,6 +340,12 @@
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\RequestGroup.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\ResearchStudy.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\ResearchSubject.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\RiskAssessment.cs">

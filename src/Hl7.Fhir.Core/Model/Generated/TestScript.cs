@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -808,6 +808,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
+            [EnumLiteral("MessageDefinition"), Description("MessageDefinition")]
+            MessageDefinition,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
             [EnumLiteral("MessageHeader"), Description("MessageHeader")]
             MessageHeader,
             /// <summary>
@@ -954,6 +960,18 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("RequestGroup"), Description("RequestGroup")]
             RequestGroup,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("ResearchStudy"), Description("ResearchStudy")]
+            ResearchStudy,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("ResearchSubject"), Description("ResearchSubject")]
+            ResearchSubject,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)

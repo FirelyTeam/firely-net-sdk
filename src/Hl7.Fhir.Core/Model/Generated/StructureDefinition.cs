@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -1284,7 +1284,7 @@ namespace Hl7.Fhir.Model
             Key = "sdf-7",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "If the structure describes a base Resource or Type, the URL has to start with \"http://hl7.org/fhir/StructureDefinition/\" and the tail must match the id",
-            Xpath = "(f:derivation/@value = 'constraint') or f:url/@value=concat('http://hl7.org/fhir/StructureDefinition/', f:id/@value)"
+            Xpath = "(f:derivation/@value = 'constraint') or (f:derivation/@value = 'logical') or (f:url/@value=concat('http://hl7.org/fhir/StructureDefinition/', f:id/@value))"
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_6 = new ElementDefinition.ConstraintComponent()
@@ -1319,7 +1319,7 @@ namespace Hl7.Fhir.Model
             Expression = "mapping.all(name.exists() or uri.exists())",
             Key = "sdf-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Must have at a name or a uri (or both)",
+            Human = "Must have at least a name or a uri (or both)",
             Xpath = "exists(f:uri) or exists(f:name)"
         };
 
@@ -1359,6 +1359,15 @@ namespace Hl7.Fhir.Model
             Xpath = "not(f:element[1][not(contains(f:path/@value, '.'))]/f:type)"
         };
 
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_20 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "differential.all(element.first().slicing.empty())",
+            Key = "sdf-20",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "No slicing on the root element",
+            Xpath = "not(f:element[1]/f:slicing)"
+        };
+
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_8A = new ElementDefinition.ConstraintComponent()
         {
             Expression = "differential.all(element.first().path.startsWith(%resource.type) and element.tail().all(path.startsWith(%resource.type&'.')))",
@@ -1390,6 +1399,7 @@ namespace Hl7.Fhir.Model
             InvariantConstraints.Add(StructureDefinition_SDF_8);
             InvariantConstraints.Add(StructureDefinition_SDF_3);
             InvariantConstraints.Add(StructureDefinition_SDF_15A);
+            InvariantConstraints.Add(StructureDefinition_SDF_20);
             InvariantConstraints.Add(StructureDefinition_SDF_8A);
         }
 

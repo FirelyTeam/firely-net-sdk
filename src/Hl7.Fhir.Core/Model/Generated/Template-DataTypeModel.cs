@@ -1,7 +1,7 @@
 ﻿
 
 //
-// Model Generated on Mon, 07 Nov 2016 12:23:06 GMT for FHIR v1.7.0
+// Model Generated on Tue, 06 Dec 2016 16:29:08 GMT for FHIR v1.8.0
 //
 // Generated Shared Enumeration: ResourceType
 
@@ -11,6 +11,10 @@
 // Generated Shared Enumeration: FilterOperator
 
 // Generated Shared Enumeration: PlanActionSelectionBehavior
+
+// Generated Shared Enumeration: RequestPriority
+
+// Generated Shared Enumeration: RequestIntent
 
 // Generated Shared Enumeration: AdministrativeGender
 
@@ -25,17 +29,20 @@
 
 // Generated Shared Enumeration: ParticipationStatus
 
-// Generated Shared Enumeration: ClaimProcessingCodes
-
 // Generated Shared Enumeration: ListMode
 
 // Generated Shared Enumeration: SearchParamType
 
+// Generated Shared Enumeration: FinancialResourceStatusCodes
+
 // Generated Shared Enumeration: PlanActionCardinalityBehavior
+
+// Generated Shared Enumeration: PlanActionConditionKind
 
 // Generated Shared Enumeration: PlanActionParticipantType
 
 // Generated Shared Enumeration: DaysOfWeek
+	// Used in model class (type): Timing.repeat.dayOfWeek
 
 // Generated Shared Enumeration: PlanActionRelationshipType
 
@@ -44,6 +51,8 @@
 // Generated Shared Enumeration: RequestStatus
 
 // Generated Shared Enumeration: PlanActionRequiredBehavior
+
+// Generated Shared Enumeration: MessageSignificanceCategory
 
 // Generated Shared Enumeration: FHIRAllTypes
 	// Used in model class (type): DataRequirement.type

@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -951,6 +951,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=130)]
         [References("Patient","Group")]
+        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {

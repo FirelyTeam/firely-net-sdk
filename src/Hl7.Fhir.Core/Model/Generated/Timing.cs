@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -109,6 +109,30 @@ namespace Hl7.Fhir.Model
         [FhirEnumeration("EventTiming")]
         public enum EventTiming
         {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/event-timing)
+            /// </summary>
+            [EnumLiteral("MORN"), Description("Morning")]
+            MORN,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/event-timing)
+            /// </summary>
+            [EnumLiteral("AFT"), Description("Afternoon")]
+            AFT,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/event-timing)
+            /// </summary>
+            [EnumLiteral("EVE"), Description("Evening")]
+            EVE,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/event-timing)
+            /// </summary>
+            [EnumLiteral("NIGHT"), Description("Night")]
+            NIGHT,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/TimingEvent)
@@ -537,9 +561,75 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// mon | tue | wed | thu | fri | sat | sun
+            /// </summary>
+            [FhirElement("dayOfWeek", InSummary=true, Order=150)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Code<Hl7.Fhir.Model.DaysOfWeek>> DayOfWeekElement
+            {
+                get { if(_DayOfWeekElement==null) _DayOfWeekElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>>(); return _DayOfWeekElement; }
+                set { _DayOfWeekElement = value; OnPropertyChanged("DayOfWeekElement"); }
+            }
+            
+            private List<Code<Hl7.Fhir.Model.DaysOfWeek>> _DayOfWeekElement;
+            
+            /// <summary>
+            /// mon | tue | wed | thu | fri | sat | sun
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public IEnumerable<Hl7.Fhir.Model.DaysOfWeek?> DayOfWeek
+            {
+                get { return DayOfWeekElement != null ? DayOfWeekElement.Select(elem => elem.Value) : null; }
+                set
+                {
+                    if (value == null)
+                      DayOfWeekElement = null; 
+                    else
+                      DayOfWeekElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>(elem)));
+                    OnPropertyChanged("DayOfWeek");
+                }
+            }
+            
+            /// <summary>
+            /// Time of day for action
+            /// </summary>
+            [FhirElement("timeOfDay", InSummary=true, Order=160)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Time> TimeOfDayElement
+            {
+                get { if(_TimeOfDayElement==null) _TimeOfDayElement = new List<Hl7.Fhir.Model.Time>(); return _TimeOfDayElement; }
+                set { _TimeOfDayElement = value; OnPropertyChanged("TimeOfDayElement"); }
+            }
+            
+            private List<Hl7.Fhir.Model.Time> _TimeOfDayElement;
+            
+            /// <summary>
+            /// Time of day for action
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public IEnumerable<string> TimeOfDay
+            {
+                get { return TimeOfDayElement != null ? TimeOfDayElement.Select(elem => elem.Value) : null; }
+                set
+                {
+                    if (value == null)
+                      TimeOfDayElement = null; 
+                    else
+                      TimeOfDayElement = new List<Hl7.Fhir.Model.Time>(value.Select(elem=>new Hl7.Fhir.Model.Time(elem)));
+                    OnPropertyChanged("TimeOfDay");
+                }
+            }
+            
+            /// <summary>
             /// Regular life events the event is tied to
             /// </summary>
-            [FhirElement("when", InSummary=true, Order=150)]
+            [FhirElement("when", InSummary=true, Order=170)]
             [DataMember]
             public Code<Hl7.Fhir.Model.Timing.EventTiming> WhenElement
             {
@@ -571,7 +661,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Minutes from event (before or after)
             /// </summary>
-            [FhirElement("offset", InSummary=true, Order=160)]
+            [FhirElement("offset", InSummary=true, Order=180)]
             [DataMember]
             public Hl7.Fhir.Model.UnsignedInt OffsetElement
             {
@@ -618,6 +708,8 @@ namespace Hl7.Fhir.Model
                     if(PeriodElement != null) dest.PeriodElement = (Hl7.Fhir.Model.FhirDecimal)PeriodElement.DeepCopy();
                     if(PeriodMaxElement != null) dest.PeriodMaxElement = (Hl7.Fhir.Model.FhirDecimal)PeriodMaxElement.DeepCopy();
                     if(PeriodUnitElement != null) dest.PeriodUnitElement = (Code<Hl7.Fhir.Model.Timing.UnitsOfTime>)PeriodUnitElement.DeepCopy();
+                    if(DayOfWeekElement != null) dest.DayOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(DayOfWeekElement.DeepCopy());
+                    if(TimeOfDayElement != null) dest.TimeOfDayElement = new List<Hl7.Fhir.Model.Time>(TimeOfDayElement.DeepCopy());
                     if(WhenElement != null) dest.WhenElement = (Code<Hl7.Fhir.Model.Timing.EventTiming>)WhenElement.DeepCopy();
                     if(OffsetElement != null) dest.OffsetElement = (Hl7.Fhir.Model.UnsignedInt)OffsetElement.DeepCopy();
                     return dest;
@@ -648,6 +740,8 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(PeriodElement, otherT.PeriodElement)) return false;
                 if( !DeepComparable.Matches(PeriodMaxElement, otherT.PeriodMaxElement)) return false;
                 if( !DeepComparable.Matches(PeriodUnitElement, otherT.PeriodUnitElement)) return false;
+                if( !DeepComparable.Matches(DayOfWeekElement, otherT.DayOfWeekElement)) return false;
+                if( !DeepComparable.Matches(TimeOfDayElement, otherT.TimeOfDayElement)) return false;
                 if( !DeepComparable.Matches(WhenElement, otherT.WhenElement)) return false;
                 if( !DeepComparable.Matches(OffsetElement, otherT.OffsetElement)) return false;
                 
@@ -671,6 +765,8 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(PeriodElement, otherT.PeriodElement)) return false;
                 if( !DeepComparable.IsExactly(PeriodMaxElement, otherT.PeriodMaxElement)) return false;
                 if( !DeepComparable.IsExactly(PeriodUnitElement, otherT.PeriodUnitElement)) return false;
+                if( !DeepComparable.IsExactly(DayOfWeekElement, otherT.DayOfWeekElement)) return false;
+                if( !DeepComparable.IsExactly(TimeOfDayElement, otherT.TimeOfDayElement)) return false;
                 if( !DeepComparable.IsExactly(WhenElement, otherT.WhenElement)) return false;
                 if( !DeepComparable.IsExactly(OffsetElement, otherT.OffsetElement)) return false;
                 
@@ -696,6 +792,8 @@ namespace Hl7.Fhir.Model
                     if (PeriodElement != null) yield return PeriodElement;
                     if (PeriodMaxElement != null) yield return PeriodMaxElement;
                     if (PeriodUnitElement != null) yield return PeriodUnitElement;
+                    foreach (var elem in DayOfWeekElement) { if (elem != null) yield return elem; }
+                    foreach (var elem in TimeOfDayElement) { if (elem != null) yield return elem; }
                     if (WhenElement != null) yield return WhenElement;
                     if (OffsetElement != null) yield return OffsetElement;
                 }

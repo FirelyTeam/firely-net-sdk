@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -870,6 +870,21 @@ namespace Hl7.Fhir.Model
             }
         }
         
+        /// <summary>
+        /// Technical endpoints providing access to services operated for the location
+        /// </summary>
+        [FhirElement("endpoint", Order=330)]
+        [References("Endpoint")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> Endpoint
+        {
+            get { if(_Endpoint==null) _Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(); return _Endpoint; }
+            set { _Endpoint = value; OnPropertyChanged("Endpoint"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
+        
 
         public override void AddDefaultConstraints()
         {
@@ -908,6 +923,7 @@ namespace Hl7.Fhir.Model
                 if(AvailableTime != null) dest.AvailableTime = new List<Hl7.Fhir.Model.HealthcareService.AvailableTimeComponent>(AvailableTime.DeepCopy());
                 if(NotAvailable != null) dest.NotAvailable = new List<Hl7.Fhir.Model.HealthcareService.NotAvailableComponent>(NotAvailable.DeepCopy());
                 if(AvailabilityExceptionsElement != null) dest.AvailabilityExceptionsElement = (Hl7.Fhir.Model.FhirString)AvailabilityExceptionsElement.DeepCopy();
+                if(Endpoint != null) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopy());
                 return dest;
             }
             else
@@ -949,6 +965,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(AvailableTime, otherT.AvailableTime)) return false;
             if( !DeepComparable.Matches(NotAvailable, otherT.NotAvailable)) return false;
             if( !DeepComparable.Matches(AvailabilityExceptionsElement, otherT.AvailabilityExceptionsElement)) return false;
+            if( !DeepComparable.Matches(Endpoint, otherT.Endpoint)) return false;
             
             return true;
         }
@@ -983,6 +1000,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(AvailableTime, otherT.AvailableTime)) return false;
             if( !DeepComparable.IsExactly(NotAvailable, otherT.NotAvailable)) return false;
             if( !DeepComparable.IsExactly(AvailabilityExceptionsElement, otherT.AvailabilityExceptionsElement)) return false;
+            if( !DeepComparable.IsExactly(Endpoint, otherT.Endpoint)) return false;
             
             return true;
         }
@@ -1017,6 +1035,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in AvailableTime) { if (elem != null) yield return elem; }
 				foreach (var elem in NotAvailable) { if (elem != null) yield return elem; }
 				if (AvailabilityExceptionsElement != null) yield return AvailabilityExceptionsElement;
+				foreach (var elem in Endpoint) { if (elem != null) yield return elem; }
             }
         }
     }

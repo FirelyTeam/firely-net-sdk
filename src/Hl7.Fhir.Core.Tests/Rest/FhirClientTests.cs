@@ -896,13 +896,13 @@ namespace Hl7.Fhir.Tests.Rest
             var client = new FhirClient(testEndpoint);
             var result = client.Read<Patient>("Patient/example");
 
-            var orig = result.Name[0].FamilyElement[0].Value;
+            var orig = result.Name[0].FamilyElement.Value;
 
-            result.Name[0].FamilyElement[0].Value = "overwritten name";
+            result.Name[0].FamilyElement.Value = "overwritten name";
 
             result = client.Refresh(result);
 
-            Assert.AreEqual(orig, result.Name[0].FamilyElement[0].Value);
+            Assert.AreEqual(orig, result.Name[0].FamilyElement.Value);
         }
 
         [TestMethod]

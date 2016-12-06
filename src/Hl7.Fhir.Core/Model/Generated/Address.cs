@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -369,7 +369,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Country (can be ISO 3166 3 letter code)
+        /// Country (e.g. can be ISO 3166 2 or 3 letter code)
         /// </summary>
         [FhirElement("country", InSummary=true, Order=110)]
         [DataMember]
@@ -382,7 +382,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _CountryElement;
         
         /// <summary>
-        /// Country (can be ISO 3166 3 letter code)
+        /// Country (e.g. can be ISO 3166 2 or 3 letter code)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

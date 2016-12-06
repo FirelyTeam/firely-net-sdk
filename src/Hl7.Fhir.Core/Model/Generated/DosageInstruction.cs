@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -159,16 +159,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Body site to administer to
         /// </summary>
-        [FhirElement("site", InSummary=true, Order=80, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [FhirElement("site", InSummary=true, Order=80)]
         [DataMember]
-        public Hl7.Fhir.Model.Element Site
+        public Hl7.Fhir.Model.CodeableConcept Site
         {
             get { return _Site; }
             set { _Site = value; OnPropertyChanged("Site"); }
         }
         
-        private Hl7.Fhir.Model.Element _Site;
+        private Hl7.Fhir.Model.CodeableConcept _Site;
         
         /// <summary>
         /// How drug should enter body
@@ -276,7 +275,7 @@ namespace Hl7.Fhir.Model
                 if(AdditionalInstructions != null) dest.AdditionalInstructions = new List<Hl7.Fhir.Model.CodeableConcept>(AdditionalInstructions.DeepCopy());
                 if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Timing)Timing.DeepCopy();
                 if(AsNeeded != null) dest.AsNeeded = (Hl7.Fhir.Model.Element)AsNeeded.DeepCopy();
-                if(Site != null) dest.Site = (Hl7.Fhir.Model.Element)Site.DeepCopy();
+                if(Site != null) dest.Site = (Hl7.Fhir.Model.CodeableConcept)Site.DeepCopy();
                 if(Route != null) dest.Route = (Hl7.Fhir.Model.CodeableConcept)Route.DeepCopy();
                 if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
                 if(Dose != null) dest.Dose = (Hl7.Fhir.Model.Element)Dose.DeepCopy();

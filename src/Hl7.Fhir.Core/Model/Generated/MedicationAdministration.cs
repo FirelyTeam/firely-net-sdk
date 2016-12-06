@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -134,16 +134,15 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Body site administered to
             /// </summary>
-            [FhirElement("site", Order=50, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [FhirElement("site", Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Site
+            public Hl7.Fhir.Model.CodeableConcept Site
             {
                 get { return _Site; }
                 set { _Site = value; OnPropertyChanged("Site"); }
             }
             
-            private Hl7.Fhir.Model.Element _Site;
+            private Hl7.Fhir.Model.CodeableConcept _Site;
             
             /// <summary>
             /// Path of substance into body
@@ -206,7 +205,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
-                    if(Site != null) dest.Site = (Hl7.Fhir.Model.Element)Site.DeepCopy();
+                    if(Site != null) dest.Site = (Hl7.Fhir.Model.CodeableConcept)Site.DeepCopy();
                     if(Route != null) dest.Route = (Hl7.Fhir.Model.CodeableConcept)Route.DeepCopy();
                     if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
                     if(Dose != null) dest.Dose = (Hl7.Fhir.Model.SimpleQuantity)Dose.DeepCopy();
@@ -384,17 +383,17 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Start and end time of administration
         /// </summary>
-        [FhirElement("effectiveTime", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("effective", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Element EffectiveTime
+        public Hl7.Fhir.Model.Element Effective
         {
-            get { return _EffectiveTime; }
-            set { _EffectiveTime = value; OnPropertyChanged("EffectiveTime"); }
+            get { return _Effective; }
+            set { _Effective = value; OnPropertyChanged("Effective"); }
         }
         
-        private Hl7.Fhir.Model.Element _EffectiveTime;
+        private Hl7.Fhir.Model.Element _Effective;
         
         /// <summary>
         /// Who administered substance
@@ -606,7 +605,7 @@ namespace Hl7.Fhir.Model
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(SupportingInformation != null) dest.SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(SupportingInformation.DeepCopy());
-                if(EffectiveTime != null) dest.EffectiveTime = (Hl7.Fhir.Model.Element)EffectiveTime.DeepCopy();
+                if(Effective != null) dest.Effective = (Hl7.Fhir.Model.Element)Effective.DeepCopy();
                 if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopy();
                 if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonReference.DeepCopy());
                 if(Prescription != null) dest.Prescription = (Hl7.Fhir.Model.ResourceReference)Prescription.DeepCopy();
@@ -640,7 +639,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
             if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(SupportingInformation, otherT.SupportingInformation)) return false;
-            if( !DeepComparable.Matches(EffectiveTime, otherT.EffectiveTime)) return false;
+            if( !DeepComparable.Matches(Effective, otherT.Effective)) return false;
             if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
             if( !DeepComparable.Matches(ReasonReference, otherT.ReasonReference)) return false;
             if( !DeepComparable.Matches(Prescription, otherT.Prescription)) return false;
@@ -667,7 +666,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
             if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(SupportingInformation, otherT.SupportingInformation)) return false;
-            if( !DeepComparable.IsExactly(EffectiveTime, otherT.EffectiveTime)) return false;
+            if( !DeepComparable.IsExactly(Effective, otherT.Effective)) return false;
             if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
             if( !DeepComparable.IsExactly(ReasonReference, otherT.ReasonReference)) return false;
             if( !DeepComparable.IsExactly(Prescription, otherT.Prescription)) return false;
@@ -694,7 +693,7 @@ namespace Hl7.Fhir.Model
 				if (Patient != null) yield return Patient;
 				if (Encounter != null) yield return Encounter;
 				foreach (var elem in SupportingInformation) { if (elem != null) yield return elem; }
-				if (EffectiveTime != null) yield return EffectiveTime;
+				if (Effective != null) yield return Effective;
 				if (Performer != null) yield return Performer;
 				foreach (var elem in ReasonReference) { if (elem != null) yield return elem; }
 				if (Prescription != null) yield return Prescription;

@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/name-use)
             /// </summary>
-            [EnumLiteral("maiden"), Description("Maiden")]
+            [EnumLiteral("maiden"), Description("Name changed for Marriage")]
             Maiden,
         }
 
@@ -170,15 +170,14 @@ namespace Hl7.Fhir.Model
         /// Family name (often called 'Surname')
         /// </summary>
         [FhirElement("family", InSummary=true, Order=50)]
-        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.FhirString> FamilyElement
+        public Hl7.Fhir.Model.FhirString FamilyElement
         {
-            get { if(_FamilyElement==null) _FamilyElement = new List<Hl7.Fhir.Model.FhirString>(); return _FamilyElement; }
+            get { return _FamilyElement; }
             set { _FamilyElement = value; OnPropertyChanged("FamilyElement"); }
         }
         
-        private List<Hl7.Fhir.Model.FhirString> _FamilyElement;
+        private Hl7.Fhir.Model.FhirString _FamilyElement;
         
         /// <summary>
         /// Family name (often called 'Surname')
@@ -186,15 +185,15 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public IEnumerable<string> Family
+        public string Family
         {
-            get { return FamilyElement != null ? FamilyElement.Select(elem => elem.Value) : null; }
+            get { return FamilyElement != null ? FamilyElement.Value : null; }
             set
             {
                 if (value == null)
                   FamilyElement = null; 
                 else
-                  FamilyElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
+                  FamilyElement = new Hl7.Fhir.Model.FhirString(value);
                 OnPropertyChanged("Family");
             }
         }
@@ -321,7 +320,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(UseElement != null) dest.UseElement = (Code<Hl7.Fhir.Model.HumanName.NameUse>)UseElement.DeepCopy();
                 if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
-                if(FamilyElement != null) dest.FamilyElement = new List<Hl7.Fhir.Model.FhirString>(FamilyElement.DeepCopy());
+                if(FamilyElement != null) dest.FamilyElement = (Hl7.Fhir.Model.FhirString)FamilyElement.DeepCopy();
                 if(GivenElement != null) dest.GivenElement = new List<Hl7.Fhir.Model.FhirString>(GivenElement.DeepCopy());
                 if(PrefixElement != null) dest.PrefixElement = new List<Hl7.Fhir.Model.FhirString>(PrefixElement.DeepCopy());
                 if(SuffixElement != null) dest.SuffixElement = new List<Hl7.Fhir.Model.FhirString>(SuffixElement.DeepCopy());
@@ -379,7 +378,7 @@ namespace Hl7.Fhir.Model
                 // HumanName elements
                 if (UseElement != null) yield return UseElement;
                 if (TextElement != null) yield return TextElement;
-                foreach (var elem in FamilyElement) { if (elem != null) yield return elem; }
+                if (FamilyElement != null) yield return FamilyElement;
                 foreach (var elem in GivenElement) { if (elem != null) yield return elem; }
                 foreach (var elem in PrefixElement) { if (elem != null) yield return elem; }
                 foreach (var elem in SuffixElement) { if (elem != null) yield return elem; }

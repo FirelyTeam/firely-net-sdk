@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -625,10 +625,10 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _PrognosisReference;
         
         /// <summary>
-        /// Actions taken during assessment
+        /// Action taken as part of assessment procedure
         /// </summary>
         [FhirElement("action", Order=260)]
-        [References("ReferralRequest","ProcedureRequest","Procedure","MedicationRequest","DiagnosticRequest","NutritionRequest","DeviceUseRequest","Appointment")]
+        [References("ReferralRequest","ProcedureRequest","Procedure","MedicationRequest","DiagnosticRequest","Appointment")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Action

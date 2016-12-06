@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -737,42 +737,55 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Indicates a self-reported record
+        /// Indicates context the data was recorded in
         /// </summary>
-        [FhirElement("reported", Order=150)]
+        [FhirElement("primarySource", Order=150)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirBoolean ReportedElement
+        public Hl7.Fhir.Model.FhirBoolean PrimarySourceElement
         {
-            get { return _ReportedElement; }
-            set { _ReportedElement = value; OnPropertyChanged("ReportedElement"); }
+            get { return _PrimarySourceElement; }
+            set { _PrimarySourceElement = value; OnPropertyChanged("PrimarySourceElement"); }
         }
         
-        private Hl7.Fhir.Model.FhirBoolean _ReportedElement;
+        private Hl7.Fhir.Model.FhirBoolean _PrimarySourceElement;
         
         /// <summary>
-        /// Indicates a self-reported record
+        /// Indicates context the data was recorded in
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public bool? Reported
+        public bool? PrimarySource
         {
-            get { return ReportedElement != null ? ReportedElement.Value : null; }
+            get { return PrimarySourceElement != null ? PrimarySourceElement.Value : null; }
             set
             {
                 if (!value.HasValue)
-                  ReportedElement = null; 
+                  PrimarySourceElement = null; 
                 else
-                  ReportedElement = new Hl7.Fhir.Model.FhirBoolean(value);
-                OnPropertyChanged("Reported");
+                  PrimarySourceElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                OnPropertyChanged("PrimarySource");
             }
         }
         
         /// <summary>
+        /// Indicates the source of a secondarily reported record
+        /// </summary>
+        [FhirElement("reportOrigin", Order=160)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept ReportOrigin
+        {
+            get { return _ReportOrigin; }
+            set { _ReportOrigin = value; OnPropertyChanged("ReportOrigin"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _ReportOrigin;
+        
+        /// <summary>
         /// Who administered vaccine
         /// </summary>
-        [FhirElement("performer", Order=160)]
+        [FhirElement("performer", Order=170)]
         [References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Performer
@@ -786,7 +799,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who ordered vaccination
         /// </summary>
-        [FhirElement("requester", Order=170)]
+        [FhirElement("requester", Order=180)]
         [References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Requester
@@ -800,7 +813,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Encounter administered as part of
         /// </summary>
-        [FhirElement("encounter", Order=180)]
+        [FhirElement("encounter", Order=190)]
         [References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
@@ -814,7 +827,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Vaccine manufacturer
         /// </summary>
-        [FhirElement("manufacturer", Order=190)]
+        [FhirElement("manufacturer", Order=200)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Manufacturer
@@ -828,7 +841,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where vaccination occurred
         /// </summary>
-        [FhirElement("location", Order=200)]
+        [FhirElement("location", Order=210)]
         [References("Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Location
@@ -842,7 +855,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Vaccine lot number
         /// </summary>
-        [FhirElement("lotNumber", Order=210)]
+        [FhirElement("lotNumber", Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString LotNumberElement
         {
@@ -874,7 +887,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Vaccine expiration date
         /// </summary>
-        [FhirElement("expirationDate", Order=220)]
+        [FhirElement("expirationDate", Order=230)]
         [DataMember]
         public Hl7.Fhir.Model.Date ExpirationDateElement
         {
@@ -906,7 +919,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Body site vaccine  was administered
         /// </summary>
-        [FhirElement("site", Order=230)]
+        [FhirElement("site", Order=240)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Site
         {
@@ -919,7 +932,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// How vaccine entered body
         /// </summary>
-        [FhirElement("route", Order=240)]
+        [FhirElement("route", Order=250)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Route
         {
@@ -932,7 +945,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Amount of vaccine administered
         /// </summary>
-        [FhirElement("doseQuantity", Order=250)]
+        [FhirElement("doseQuantity", Order=260)]
         [DataMember]
         public Hl7.Fhir.Model.SimpleQuantity DoseQuantity
         {
@@ -945,7 +958,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Vaccination notes
         /// </summary>
-        [FhirElement("note", InSummary=true, Order=260)]
+        [FhirElement("note", InSummary=true, Order=270)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Annotation> Note
@@ -959,7 +972,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Administration/non-administration reasons
         /// </summary>
-        [FhirElement("explanation", Order=270)]
+        [FhirElement("explanation", Order=280)]
         [DataMember]
         public Hl7.Fhir.Model.Immunization.ExplanationComponent Explanation
         {
@@ -972,7 +985,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Details of a reaction that follows immunization
         /// </summary>
-        [FhirElement("reaction", Order=280)]
+        [FhirElement("reaction", Order=290)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Immunization.ReactionComponent> Reaction
@@ -986,7 +999,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What protocol was followed
         /// </summary>
-        [FhirElement("vaccinationProtocol", Order=290)]
+        [FhirElement("vaccinationProtocol", Order=300)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Immunization.VaccinationProtocolComponent> VaccinationProtocol
@@ -1037,7 +1050,8 @@ namespace Hl7.Fhir.Model
                 if(VaccineCode != null) dest.VaccineCode = (Hl7.Fhir.Model.CodeableConcept)VaccineCode.DeepCopy();
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(WasNotGivenElement != null) dest.WasNotGivenElement = (Hl7.Fhir.Model.FhirBoolean)WasNotGivenElement.DeepCopy();
-                if(ReportedElement != null) dest.ReportedElement = (Hl7.Fhir.Model.FhirBoolean)ReportedElement.DeepCopy();
+                if(PrimarySourceElement != null) dest.PrimarySourceElement = (Hl7.Fhir.Model.FhirBoolean)PrimarySourceElement.DeepCopy();
+                if(ReportOrigin != null) dest.ReportOrigin = (Hl7.Fhir.Model.CodeableConcept)ReportOrigin.DeepCopy();
                 if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopy();
                 if(Requester != null) dest.Requester = (Hl7.Fhir.Model.ResourceReference)Requester.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
@@ -1075,7 +1089,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(VaccineCode, otherT.VaccineCode)) return false;
             if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
             if( !DeepComparable.Matches(WasNotGivenElement, otherT.WasNotGivenElement)) return false;
-            if( !DeepComparable.Matches(ReportedElement, otherT.ReportedElement)) return false;
+            if( !DeepComparable.Matches(PrimarySourceElement, otherT.PrimarySourceElement)) return false;
+            if( !DeepComparable.Matches(ReportOrigin, otherT.ReportOrigin)) return false;
             if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
             if( !DeepComparable.Matches(Requester, otherT.Requester)) return false;
             if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
@@ -1106,7 +1121,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(VaccineCode, otherT.VaccineCode)) return false;
             if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
             if( !DeepComparable.IsExactly(WasNotGivenElement, otherT.WasNotGivenElement)) return false;
-            if( !DeepComparable.IsExactly(ReportedElement, otherT.ReportedElement)) return false;
+            if( !DeepComparable.IsExactly(PrimarySourceElement, otherT.PrimarySourceElement)) return false;
+            if( !DeepComparable.IsExactly(ReportOrigin, otherT.ReportOrigin)) return false;
             if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
             if( !DeepComparable.IsExactly(Requester, otherT.Requester)) return false;
             if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
@@ -1137,7 +1153,8 @@ namespace Hl7.Fhir.Model
 				if (VaccineCode != null) yield return VaccineCode;
 				if (Patient != null) yield return Patient;
 				if (WasNotGivenElement != null) yield return WasNotGivenElement;
-				if (ReportedElement != null) yield return ReportedElement;
+				if (PrimarySourceElement != null) yield return PrimarySourceElement;
+				if (ReportOrigin != null) yield return ReportOrigin;
 				if (Performer != null) yield return Performer;
 				if (Requester != null) yield return Requester;
 				if (Encounter != null) yield return Encounter;

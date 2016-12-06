@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -87,7 +87,40 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// The type of measure
+        /// The composite scoring method of the measure
+        /// (url: http://hl7.org/fhir/ValueSet/composite-measure-scoring)
+        /// </summary>
+        [FhirEnumeration("CompositeMeasureScoring")]
+        public enum CompositeMeasureScoring
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/composite-measure-scoring)
+            /// </summary>
+            [EnumLiteral("opportunity"), Description("Opportunity")]
+            Opportunity,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/composite-measure-scoring)
+            /// </summary>
+            [EnumLiteral("all-or-nothing"), Description("All-or-nothing")]
+            AllOrNothing,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/composite-measure-scoring)
+            /// </summary>
+            [EnumLiteral("linear"), Description("Linear")]
+            Linear,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/composite-measure-scoring)
+            /// </summary>
+            [EnumLiteral("weighted"), Description("Weighted")]
+            Weighted,
+        }
+
+        /// <summary>
+        /// The type of measure (includes codes from 2.16.840.1.113883.1.11.20368)
         /// (url: http://hl7.org/fhir/ValueSet/measure-type)
         /// </summary>
         [FhirEnumeration("MeasureType")]
@@ -105,6 +138,24 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("outcome"), Description("Outcome")]
             Outcome,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/measure-type)
+            /// </summary>
+            [EnumLiteral("structure"), Description("Structure")]
+            Structure,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/measure-type)
+            /// </summary>
+            [EnumLiteral("patient-reported-outcome"), Description("Patient Reported Outcome")]
+            PatientReportedOutcome,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/measure-type)
+            /// </summary>
+            [EnumLiteral("composite"), Description("Composite")]
+            Composite,
         }
 
         /// <summary>
@@ -1459,7 +1510,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Disclaimer for the measure
         /// </summary>
-        [FhirElement("disclaimer", Order=320)]
+        [FhirElement("disclaimer", InSummary=true, Order=320)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown Disclaimer
         {
@@ -1472,7 +1523,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// proportion | ratio | continuous-variable | cohort
         /// </summary>
-        [FhirElement("scoring", Order=330)]
+        [FhirElement("scoring", InSummary=true, Order=330)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Measure.MeasureScoring> ScoringElement
         {
@@ -1502,9 +1553,41 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// process | outcome
+        /// opportunity | all-or-nothing | linear | weighted
         /// </summary>
-        [FhirElement("type", Order=340)]
+        [FhirElement("compositeScoring", InSummary=true, Order=340)]
+        [DataMember]
+        public Code<Hl7.Fhir.Model.Measure.CompositeMeasureScoring> CompositeScoringElement
+        {
+            get { return _CompositeScoringElement; }
+            set { _CompositeScoringElement = value; OnPropertyChanged("CompositeScoringElement"); }
+        }
+        
+        private Code<Hl7.Fhir.Model.Measure.CompositeMeasureScoring> _CompositeScoringElement;
+        
+        /// <summary>
+        /// opportunity | all-or-nothing | linear | weighted
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.Measure.CompositeMeasureScoring? CompositeScoring
+        {
+            get { return CompositeScoringElement != null ? CompositeScoringElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  CompositeScoringElement = null; 
+                else
+                  CompositeScoringElement = new Code<Hl7.Fhir.Model.Measure.CompositeMeasureScoring>(value);
+                OnPropertyChanged("CompositeScoring");
+            }
+        }
+        
+        /// <summary>
+        /// process | outcome | structure | patient-reported-outcome | composite
+        /// </summary>
+        [FhirElement("type", InSummary=true, Order=350)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Code<Hl7.Fhir.Model.Measure.MeasureType>> TypeElement
@@ -1516,7 +1599,7 @@ namespace Hl7.Fhir.Model
         private List<Code<Hl7.Fhir.Model.Measure.MeasureType>> _TypeElement;
         
         /// <summary>
-        /// process | outcome
+        /// process | outcome | structure | patient-reported-outcome | composite
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1537,7 +1620,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// How is risk adjustment applied for this measure
         /// </summary>
-        [FhirElement("riskAdjustment", Order=350)]
+        [FhirElement("riskAdjustment", InSummary=true, Order=360)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString RiskAdjustmentElement
         {
@@ -1569,7 +1652,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// How is rate aggregation performed for this measure
         /// </summary>
-        [FhirElement("rateAggregation", Order=360)]
+        [FhirElement("rateAggregation", InSummary=true, Order=370)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString RateAggregationElement
         {
@@ -1601,7 +1684,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Why does this measure exist
         /// </summary>
-        [FhirElement("rationale", Order=370)]
+        [FhirElement("rationale", InSummary=true, Order=380)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown Rationale
         {
@@ -1614,7 +1697,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Clinical recommendation
         /// </summary>
-        [FhirElement("clinicalRecommendationStatement", Order=380)]
+        [FhirElement("clinicalRecommendationStatement", InSummary=true, Order=390)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown ClinicalRecommendationStatement
         {
@@ -1627,7 +1710,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Improvement notation for the measure, e.g. higher score indicates better quality
         /// </summary>
-        [FhirElement("improvementNotation", Order=390)]
+        [FhirElement("improvementNotation", InSummary=true, Order=400)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ImprovementNotationElement
         {
@@ -1659,7 +1742,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A natural language definition of the measure
         /// </summary>
-        [FhirElement("definition", Order=400)]
+        [FhirElement("definition", InSummary=true, Order=410)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown Definition
         {
@@ -1672,7 +1755,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The guidance for the measure
         /// </summary>
-        [FhirElement("guidance", Order=410)]
+        [FhirElement("guidance", InSummary=true, Order=420)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown Guidance
         {
@@ -1685,7 +1768,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The measure set, e.g. Preventive Care and Screening
         /// </summary>
-        [FhirElement("set", Order=420)]
+        [FhirElement("set", InSummary=true, Order=430)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString SetElement
         {
@@ -1717,7 +1800,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Population criteria group
         /// </summary>
-        [FhirElement("group", Order=430)]
+        [FhirElement("group", Order=440)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Measure.GroupComponent> Group
@@ -1731,7 +1814,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Supplemental data
         /// </summary>
-        [FhirElement("supplementalData", Order=440)]
+        [FhirElement("supplementalData", Order=450)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Measure.SupplementalDataComponent> SupplementalData
@@ -1781,6 +1864,7 @@ namespace Hl7.Fhir.Model
                 if(Library != null) dest.Library = new List<Hl7.Fhir.Model.ResourceReference>(Library.DeepCopy());
                 if(Disclaimer != null) dest.Disclaimer = (Hl7.Fhir.Model.Markdown)Disclaimer.DeepCopy();
                 if(ScoringElement != null) dest.ScoringElement = (Code<Hl7.Fhir.Model.Measure.MeasureScoring>)ScoringElement.DeepCopy();
+                if(CompositeScoringElement != null) dest.CompositeScoringElement = (Code<Hl7.Fhir.Model.Measure.CompositeMeasureScoring>)CompositeScoringElement.DeepCopy();
                 if(TypeElement != null) dest.TypeElement = new List<Code<Hl7.Fhir.Model.Measure.MeasureType>>(TypeElement.DeepCopy());
                 if(RiskAdjustmentElement != null) dest.RiskAdjustmentElement = (Hl7.Fhir.Model.FhirString)RiskAdjustmentElement.DeepCopy();
                 if(RateAggregationElement != null) dest.RateAggregationElement = (Hl7.Fhir.Model.FhirString)RateAggregationElement.DeepCopy();
@@ -1834,6 +1918,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Library, otherT.Library)) return false;
             if( !DeepComparable.Matches(Disclaimer, otherT.Disclaimer)) return false;
             if( !DeepComparable.Matches(ScoringElement, otherT.ScoringElement)) return false;
+            if( !DeepComparable.Matches(CompositeScoringElement, otherT.CompositeScoringElement)) return false;
             if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.Matches(RiskAdjustmentElement, otherT.RiskAdjustmentElement)) return false;
             if( !DeepComparable.Matches(RateAggregationElement, otherT.RateAggregationElement)) return false;
@@ -1880,6 +1965,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Library, otherT.Library)) return false;
             if( !DeepComparable.IsExactly(Disclaimer, otherT.Disclaimer)) return false;
             if( !DeepComparable.IsExactly(ScoringElement, otherT.ScoringElement)) return false;
+            if( !DeepComparable.IsExactly(CompositeScoringElement, otherT.CompositeScoringElement)) return false;
             if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.IsExactly(RiskAdjustmentElement, otherT.RiskAdjustmentElement)) return false;
             if( !DeepComparable.IsExactly(RateAggregationElement, otherT.RateAggregationElement)) return false;
@@ -1926,6 +2012,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Library) { if (elem != null) yield return elem; }
 				if (Disclaimer != null) yield return Disclaimer;
 				if (ScoringElement != null) yield return ScoringElement;
+				if (CompositeScoringElement != null) yield return CompositeScoringElement;
 				foreach (var elem in TypeElement) { if (elem != null) yield return elem; }
 				if (RiskAdjustmentElement != null) yield return RiskAdjustmentElement;
 				if (RateAggregationElement != null) yield return RateAggregationElement;

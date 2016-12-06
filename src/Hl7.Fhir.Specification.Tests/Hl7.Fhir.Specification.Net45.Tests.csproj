@@ -851,9 +851,10 @@
     <Content Include="TestData\snapshot-test\WMR\MyObservation2.structuredefinition.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\profiles-others.xml">
+    <None Include="..\Hl7.Fhir.Core\Model\Source\profiles-others.xml">
+      <Link>TestData\snapshot-test\profiles-others.xml</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
     <Content Include="TestData\snapshot-test\profiles-resources.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>

@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "LinkComponent"; } }
             
             /// <summary>
-            /// http://www.iana.org/assignments/link-relations/link-relations.xhtml
+            /// See http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1
             /// </summary>
             [FhirElement("relation", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _RelationElement;
             
             /// <summary>
-            /// http://www.iana.org/assignments/link-relations/link-relations.xhtml
+            /// See http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1160,9 +1160,22 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Persistent identifier for the bundle
+        /// </summary>
+        [FhirElement("identifier", InSummary=true, Order=60)]
+        [DataMember]
+        public Hl7.Fhir.Model.Identifier Identifier
+        {
+            get { return _Identifier; }
+            set { _Identifier = value; OnPropertyChanged("Identifier"); }
+        }
+        
+        private Hl7.Fhir.Model.Identifier _Identifier;
+        
+        /// <summary>
         /// If search, the total number of matches
         /// </summary>
-        [FhirElement("total", InSummary=true, Order=60)]
+        [FhirElement("total", InSummary=true, Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.UnsignedInt TotalElement
         {
@@ -1194,7 +1207,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Links related to this Bundle
         /// </summary>
-        [FhirElement("link", InSummary=true, Order=70)]
+        [FhirElement("link", InSummary=true, Order=80)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Bundle.LinkComponent> Link
@@ -1208,7 +1221,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Entry in the bundle - will have a resource, or information
         /// </summary>
-        [FhirElement("entry", InSummary=true, Order=80)]
+        [FhirElement("entry", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Bundle.EntryComponent> Entry
@@ -1222,7 +1235,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Digital Signature
         /// </summary>
-        [FhirElement("signature", InSummary=true, Order=90)]
+        [FhirElement("signature", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.Signature Signature
         {
@@ -1240,6 +1253,15 @@ namespace Hl7.Fhir.Model
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "FullUrl must be unique in a bundle, or else entries with the same fullUrl must have different meta.versionId",
             Xpath = "count(for $entry in f:entry[f:resource] return $entry[count(parent::f:Bundle/f:entry[f:fullUrl/@value=$entry/f:fullUrl/@value and ((not(f:resource/*/f:meta/f:versionId/@value) and not($entry/f:resource/*/f:meta/f:versionId/@value)) or f:resource/*/f:meta/f:versionId/@value=$entry/f:resource/*/f:meta/f:versionId/@value)])!=1])=0"
+        };
+
+        public static ElementDefinition.ConstraintComponent Bundle_BDL_9 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "type = 'document' implies (identifier.system.exists() and identifier.value.exists())",
+            Key = "bdl-9",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "A document must have an identifier with a system and a value",
+            Xpath = "not(f:type/@value = 'document') or exists(f:identifier/f:system) or exists(f:identifier/f:value)"
         };
 
         public static ElementDefinition.ConstraintComponent Bundle_BDL_3 = new ElementDefinition.ConstraintComponent()
@@ -1296,27 +1318,18 @@ namespace Hl7.Fhir.Model
             Xpath = "exists(f:resource) or exists(f:request) or exists(f:response)"
         };
 
-        public static ElementDefinition.ConstraintComponent Bundle_BDL_6 = new ElementDefinition.ConstraintComponent()
-        {
-            Expression = "entry.all(fullUrl.empty() xor resource.exists())",
-            Key = "bdl-6",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "The fullUrl element must be present when a resource is present, and not present otherwise",
-            Xpath = "(not(exists(f:fullUrl)) and not(exists(f:resource))) or (exists(f:fullUrl) and exists(f:resource))"
-        };
-
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
 
             InvariantConstraints.Add(Bundle_BDL_7);
+            InvariantConstraints.Add(Bundle_BDL_9);
             InvariantConstraints.Add(Bundle_BDL_3);
             InvariantConstraints.Add(Bundle_BDL_4);
             InvariantConstraints.Add(Bundle_BDL_1);
             InvariantConstraints.Add(Bundle_BDL_2);
             InvariantConstraints.Add(Bundle_BDL_8);
             InvariantConstraints.Add(Bundle_BDL_5);
-            InvariantConstraints.Add(Bundle_BDL_6);
         }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1327,6 +1340,7 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Bundle.BundleType>)TypeElement.DeepCopy();
+                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(TotalElement != null) dest.TotalElement = (Hl7.Fhir.Model.UnsignedInt)TotalElement.DeepCopy();
                 if(Link != null) dest.Link = new List<Hl7.Fhir.Model.Bundle.LinkComponent>(Link.DeepCopy());
                 if(Entry != null) dest.Entry = new List<Hl7.Fhir.Model.Bundle.EntryComponent>(Entry.DeepCopy());
@@ -1349,6 +1363,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(TotalElement, otherT.TotalElement)) return false;
             if( !DeepComparable.Matches(Link, otherT.Link)) return false;
             if( !DeepComparable.Matches(Entry, otherT.Entry)) return false;
@@ -1364,6 +1379,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(TotalElement, otherT.TotalElement)) return false;
             if( !DeepComparable.IsExactly(Link, otherT.Link)) return false;
             if( !DeepComparable.IsExactly(Entry, otherT.Entry)) return false;
@@ -1379,6 +1395,7 @@ namespace Hl7.Fhir.Model
             {
 				// Bundle elements
 				if (TypeElement != null) yield return TypeElement;
+				if (Identifier != null) yield return Identifier;
 				if (TotalElement != null) yield return TotalElement;
 				foreach (var elem in Link) { if (elem != null) yield return elem; }
 				foreach (var elem in Entry) { if (elem != null) yield return elem; }

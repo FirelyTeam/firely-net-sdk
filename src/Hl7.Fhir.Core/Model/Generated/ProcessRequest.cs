@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,39 +53,6 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "ProcessRequest"; } }
         
-        /// <summary>
-        /// A code specifying the state of the resource instance.
-        /// (url: http://hl7.org/fhir/ValueSet/processrequest-status)
-        /// </summary>
-        [FhirEnumeration("ProcessRequestStatus")]
-        public enum ProcessRequestStatus
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/processrequest-status)
-            /// </summary>
-            [EnumLiteral("active"), Description("Active")]
-            Active,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/processrequest-status)
-            /// </summary>
-            [EnumLiteral("cancelled"), Description("Cancelled")]
-            Cancelled,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/processrequest-status)
-            /// </summary>
-            [EnumLiteral("draft"), Description("Draft")]
-            Draft,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/processrequest-status)
-            /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered In Error")]
-            EnteredInError,
-        }
-
         /// <summary>
         /// List of allowable action which this resource can request.
         /// (url: http://hl7.org/fhir/ValueSet/actionlist)
@@ -234,15 +201,14 @@ namespace Hl7.Fhir.Model
         /// active | cancelled | draft | entered-in-error
         /// </summary>
         [FhirElement("status", InSummary=true, Order=100)]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.ProcessRequest.ProcessRequestStatus> StatusElement
+        public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.ProcessRequest.ProcessRequestStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> _StatusElement;
         
         /// <summary>
         /// active | cancelled | draft | entered-in-error
@@ -250,7 +216,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.ProcessRequest.ProcessRequestStatus? Status
+        public Hl7.Fhir.Model.FinancialResourceStatusCodes? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -258,42 +224,15 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                   StatusElement = null; 
                 else
-                  StatusElement = new Code<Hl7.Fhir.Model.ProcessRequest.ProcessRequestStatus>(value);
+                  StatusElement = new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
                 OnPropertyChanged("Status");
             }
         }
         
         /// <summary>
-        /// Resource version
-        /// </summary>
-        [FhirElement("ruleset", Order=110)]
-        [DataMember]
-        public Hl7.Fhir.Model.Coding Ruleset
-        {
-            get { return _Ruleset; }
-            set { _Ruleset = value; OnPropertyChanged("Ruleset"); }
-        }
-        
-        private Hl7.Fhir.Model.Coding _Ruleset;
-        
-        /// <summary>
-        /// Original version
-        /// </summary>
-        [FhirElement("originalRuleset", Order=120)]
-        [DataMember]
-        public Hl7.Fhir.Model.Coding OriginalRuleset
-        {
-            get { return _OriginalRuleset; }
-            set { _OriginalRuleset = value; OnPropertyChanged("OriginalRuleset"); }
-        }
-        
-        private Hl7.Fhir.Model.Coding _OriginalRuleset;
-        
-        /// <summary>
         /// cancel | poll | reprocess | status
         /// </summary>
-        [FhirElement("action", Order=130)]
-        [Cardinality(Min=1,Max=1)]
+        [FhirElement("action", Order=110)]
         [DataMember]
         public Code<Hl7.Fhir.Model.ProcessRequest.ActionList> ActionElement
         {
@@ -323,9 +262,23 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Target of the request
+        /// </summary>
+        [FhirElement("target", Order=120)]
+        [References("Organization")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Target
+        {
+            get { return _Target; }
+            set { _Target = value; OnPropertyChanged("Target"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Target;
+        
+        /// <summary>
         /// Creation date
         /// </summary>
-        [FhirElement("created", Order=140)]
+        [FhirElement("created", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime CreatedElement
         {
@@ -355,23 +308,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Target of the request
-        /// </summary>
-        [FhirElement("target", Order=150)]
-        [References("Organization")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Target
-        {
-            get { return _Target; }
-            set { _Target = value; OnPropertyChanged("Target"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Target;
-        
-        /// <summary>
         /// Responsible practitioner
         /// </summary>
-        [FhirElement("provider", Order=160)]
+        [FhirElement("provider", Order=140)]
         [References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Provider
@@ -385,7 +324,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Responsible organization
         /// </summary>
-        [FhirElement("organization", Order=170)]
+        [FhirElement("organization", Order=150)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Organization
@@ -399,7 +338,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Request reference
         /// </summary>
-        [FhirElement("request", Order=180)]
+        [FhirElement("request", Order=160)]
         [References()]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Request
@@ -413,7 +352,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Response reference
         /// </summary>
-        [FhirElement("response", Order=190)]
+        [FhirElement("response", Order=170)]
         [References()]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Response
@@ -427,7 +366,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Nullify
         /// </summary>
-        [FhirElement("nullify", Order=200)]
+        [FhirElement("nullify", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean NullifyElement
         {
@@ -459,7 +398,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reference number/string
         /// </summary>
-        [FhirElement("reference", Order=210)]
+        [FhirElement("reference", Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ReferenceElement
         {
@@ -491,7 +430,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Items to re-adjudicate
         /// </summary>
-        [FhirElement("item", Order=220)]
+        [FhirElement("item", Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ProcessRequest.ItemsComponent> Item
@@ -505,7 +444,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Resource type(s) to include
         /// </summary>
-        [FhirElement("include", Order=230)]
+        [FhirElement("include", Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> IncludeElement
@@ -538,7 +477,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Resource type(s) to exclude
         /// </summary>
-        [FhirElement("exclude", Order=240)]
+        [FhirElement("exclude", Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> ExcludeElement
@@ -571,7 +510,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Period
         /// </summary>
-        [FhirElement("period", Order=250)]
+        [FhirElement("period", Order=230)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
@@ -596,12 +535,10 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ProcessRequest.ProcessRequestStatus>)StatusElement.DeepCopy();
-                if(Ruleset != null) dest.Ruleset = (Hl7.Fhir.Model.Coding)Ruleset.DeepCopy();
-                if(OriginalRuleset != null) dest.OriginalRuleset = (Hl7.Fhir.Model.Coding)OriginalRuleset.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)StatusElement.DeepCopy();
                 if(ActionElement != null) dest.ActionElement = (Code<Hl7.Fhir.Model.ProcessRequest.ActionList>)ActionElement.DeepCopy();
-                if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
                 if(Target != null) dest.Target = (Hl7.Fhir.Model.ResourceReference)Target.DeepCopy();
+                if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
                 if(Provider != null) dest.Provider = (Hl7.Fhir.Model.ResourceReference)Provider.DeepCopy();
                 if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
                 if(Request != null) dest.Request = (Hl7.Fhir.Model.ResourceReference)Request.DeepCopy();
@@ -631,11 +568,9 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.Matches(Ruleset, otherT.Ruleset)) return false;
-            if( !DeepComparable.Matches(OriginalRuleset, otherT.OriginalRuleset)) return false;
             if( !DeepComparable.Matches(ActionElement, otherT.ActionElement)) return false;
-            if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.Matches(Target, otherT.Target)) return false;
+            if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.Matches(Provider, otherT.Provider)) return false;
             if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
             if( !DeepComparable.Matches(Request, otherT.Request)) return false;
@@ -658,11 +593,9 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.IsExactly(Ruleset, otherT.Ruleset)) return false;
-            if( !DeepComparable.IsExactly(OriginalRuleset, otherT.OriginalRuleset)) return false;
             if( !DeepComparable.IsExactly(ActionElement, otherT.ActionElement)) return false;
-            if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
+            if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.IsExactly(Provider, otherT.Provider)) return false;
             if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
             if( !DeepComparable.IsExactly(Request, otherT.Request)) return false;
@@ -685,11 +618,9 @@ namespace Hl7.Fhir.Model
 				// ProcessRequest elements
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
-				if (Ruleset != null) yield return Ruleset;
-				if (OriginalRuleset != null) yield return OriginalRuleset;
 				if (ActionElement != null) yield return ActionElement;
-				if (CreatedElement != null) yield return CreatedElement;
 				if (Target != null) yield return Target;
+				if (CreatedElement != null) yield return CreatedElement;
 				if (Provider != null) yield return Provider;
 				if (Organization != null) yield return Organization;
 				if (Request != null) yield return Request;

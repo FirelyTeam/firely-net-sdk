@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -190,17 +190,17 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who is/was taking  the medication
         /// </summary>
-        [FhirElement("patient", InSummary=true, Order=120)]
-        [References("Patient")]
+        [FhirElement("subject", InSummary=true, Order=120)]
+        [References("Patient","Group")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Patient
+        public Hl7.Fhir.Model.ResourceReference Subject
         {
-            get { return _Patient; }
-            set { _Patient = value; OnPropertyChanged("Patient"); }
+            get { return _Subject; }
+            set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Patient;
+        private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// Over what period was medication consumed?
@@ -326,22 +326,22 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reason for why the medication is being/was taken
         /// </summary>
-        [FhirElement("reasonForUseCode", Order=190)]
+        [FhirElement("reasonForUseCodeableConcept", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> ReasonForUseCode
+        public List<Hl7.Fhir.Model.CodeableConcept> ReasonForUseCodeableConcept
         {
-            get { if(_ReasonForUseCode==null) _ReasonForUseCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ReasonForUseCode; }
-            set { _ReasonForUseCode = value; OnPropertyChanged("ReasonForUseCode"); }
+            get { if(_ReasonForUseCodeableConcept==null) _ReasonForUseCodeableConcept = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ReasonForUseCodeableConcept; }
+            set { _ReasonForUseCodeableConcept = value; OnPropertyChanged("ReasonForUseCodeableConcept"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _ReasonForUseCode;
+        private List<Hl7.Fhir.Model.CodeableConcept> _ReasonForUseCodeableConcept;
         
         /// <summary>
-        /// Condition that supports why the medication is being/was taken
+        /// Condition or observation that supports why the medication is being/was taken
         /// </summary>
         [FhirElement("reasonForUseReference", Order=200)]
-        [References("Condition")]
+        [References("Condition","Observation")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> ReasonForUseReference
@@ -439,14 +439,14 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.MedicationStatement.MedicationStatementStatus>)StatusElement.DeepCopy();
                 if(Medication != null) dest.Medication = (Hl7.Fhir.Model.Element)Medication.DeepCopy();
-                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Effective != null) dest.Effective = (Hl7.Fhir.Model.Element)Effective.DeepCopy();
                 if(InformationSource != null) dest.InformationSource = (Hl7.Fhir.Model.ResourceReference)InformationSource.DeepCopy();
                 if(DerivedFrom != null) dest.DerivedFrom = new List<Hl7.Fhir.Model.ResourceReference>(DerivedFrom.DeepCopy());
                 if(DateAssertedElement != null) dest.DateAssertedElement = (Hl7.Fhir.Model.FhirDateTime)DateAssertedElement.DeepCopy();
                 if(NotTakenElement != null) dest.NotTakenElement = (Code<Hl7.Fhir.Model.MedicationStatement.MedicationStatementNotTaken>)NotTakenElement.DeepCopy();
                 if(ReasonNotTaken != null) dest.ReasonNotTaken = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonNotTaken.DeepCopy());
-                if(ReasonForUseCode != null) dest.ReasonForUseCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonForUseCode.DeepCopy());
+                if(ReasonForUseCodeableConcept != null) dest.ReasonForUseCodeableConcept = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonForUseCodeableConcept.DeepCopy());
                 if(ReasonForUseReference != null) dest.ReasonForUseReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonForUseReference.DeepCopy());
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 if(CategoryElement != null) dest.CategoryElement = (Hl7.Fhir.Model.Code)CategoryElement.DeepCopy();
@@ -471,14 +471,14 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(Medication, otherT.Medication)) return false;
-            if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(Effective, otherT.Effective)) return false;
             if( !DeepComparable.Matches(InformationSource, otherT.InformationSource)) return false;
             if( !DeepComparable.Matches(DerivedFrom, otherT.DerivedFrom)) return false;
             if( !DeepComparable.Matches(DateAssertedElement, otherT.DateAssertedElement)) return false;
             if( !DeepComparable.Matches(NotTakenElement, otherT.NotTakenElement)) return false;
             if( !DeepComparable.Matches(ReasonNotTaken, otherT.ReasonNotTaken)) return false;
-            if( !DeepComparable.Matches(ReasonForUseCode, otherT.ReasonForUseCode)) return false;
+            if( !DeepComparable.Matches(ReasonForUseCodeableConcept, otherT.ReasonForUseCodeableConcept)) return false;
             if( !DeepComparable.Matches(ReasonForUseReference, otherT.ReasonForUseReference)) return false;
             if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             if( !DeepComparable.Matches(CategoryElement, otherT.CategoryElement)) return false;
@@ -496,14 +496,14 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(Medication, otherT.Medication)) return false;
-            if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(Effective, otherT.Effective)) return false;
             if( !DeepComparable.IsExactly(InformationSource, otherT.InformationSource)) return false;
             if( !DeepComparable.IsExactly(DerivedFrom, otherT.DerivedFrom)) return false;
             if( !DeepComparable.IsExactly(DateAssertedElement, otherT.DateAssertedElement)) return false;
             if( !DeepComparable.IsExactly(NotTakenElement, otherT.NotTakenElement)) return false;
             if( !DeepComparable.IsExactly(ReasonNotTaken, otherT.ReasonNotTaken)) return false;
-            if( !DeepComparable.IsExactly(ReasonForUseCode, otherT.ReasonForUseCode)) return false;
+            if( !DeepComparable.IsExactly(ReasonForUseCodeableConcept, otherT.ReasonForUseCodeableConcept)) return false;
             if( !DeepComparable.IsExactly(ReasonForUseReference, otherT.ReasonForUseReference)) return false;
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             if( !DeepComparable.IsExactly(CategoryElement, otherT.CategoryElement)) return false;
@@ -521,14 +521,14 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
 				if (Medication != null) yield return Medication;
-				if (Patient != null) yield return Patient;
+				if (Subject != null) yield return Subject;
 				if (Effective != null) yield return Effective;
 				if (InformationSource != null) yield return InformationSource;
 				foreach (var elem in DerivedFrom) { if (elem != null) yield return elem; }
 				if (DateAssertedElement != null) yield return DateAssertedElement;
 				if (NotTakenElement != null) yield return NotTakenElement;
 				foreach (var elem in ReasonNotTaken) { if (elem != null) yield return elem; }
-				foreach (var elem in ReasonForUseCode) { if (elem != null) yield return elem; }
+				foreach (var elem in ReasonForUseCodeableConcept) { if (elem != null) yield return elem; }
 				foreach (var elem in ReasonForUseReference) { if (elem != null) yield return elem; }
 				foreach (var elem in Note) { if (elem != null) yield return elem; }
 				if (CategoryElement != null) yield return CategoryElement;

@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -70,8 +70,14 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/condition-clinical)
             /// </summary>
-            [EnumLiteral("relapse"), Description("Relapse")]
-            Relapse,
+            [EnumLiteral("recurrence"), Description("Recurrence")]
+            Recurrence,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/condition-clinical)
+            /// </summary>
+            [EnumLiteral("inactive"), Description("Inactive")]
+            Inactive,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/condition-clinical)
@@ -338,7 +344,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// active | relapse | remission | resolved
+        /// active | recurrence | inactive | remission | resolved
         /// </summary>
         [FhirElement("clinicalStatus", InSummary=true, Order=100)]
         [DataMember]
@@ -351,7 +357,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.Condition.ConditionClinicalStatusCodes> _ClinicalStatusElement;
         
         /// <summary>
-        /// active | relapse | remission | resolved
+        /// active | recurrence | inactive | remission | resolved
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -373,7 +379,6 @@ namespace Hl7.Fhir.Model
         /// provisional | differential | confirmed | refuted | entered-in-error | unknown
         /// </summary>
         [FhirElement("verificationStatus", InSummary=true, Order=110)]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Condition.ConditionVerificationStatus> VerificationStatusElement
         {
@@ -602,6 +607,24 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Annotation> _Note;
         
 
+        public static ElementDefinition.ConstraintComponent Condition_CON_4 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "abatement.empty() or (abatement as boolean).not()  or clinicalStatus='resolved' or clinicalStatus='remission' or clinicalStatus='inactive'",
+            Key = "con-4",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If condition is abated, then clinicalStatus must be either inactive, resolved, or remission",
+            Xpath = "xpath: not(f:abatementBoolean='true' or (not(exists(f:abatementBoolean)) and exists(*[starts-with(local-name(.), 'abatement')])) or f:clinicalStatus/@value=('resolved', 'remission', 'inactive')"
+        };
+
+        public static ElementDefinition.ConstraintComponent Condition_CON_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "verificationStatus='entered-in-error' or clinicalStatus.exists()",
+            Key = "con-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Condition.clinicalStatus SHALL be present if verificationStatus is not entered-in-error",
+            Xpath = "f:verificationStatus/@value='entered-in-error' or exists(f:clinicalStatus)"
+        };
+
         public static ElementDefinition.ConstraintComponent Condition_CON_1 = new ElementDefinition.ConstraintComponent()
         {
             Expression = "stage.all(summary.exists() or assessment.exists())",
@@ -624,6 +647,8 @@ namespace Hl7.Fhir.Model
         {
             base.AddDefaultConstraints();
 
+            InvariantConstraints.Add(Condition_CON_4);
+            InvariantConstraints.Add(Condition_CON_3);
             InvariantConstraints.Add(Condition_CON_1);
             InvariantConstraints.Add(Condition_CON_2);
         }

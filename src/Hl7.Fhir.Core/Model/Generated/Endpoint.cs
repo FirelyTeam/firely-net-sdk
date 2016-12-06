@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Endpoint"; } }
         
         /// <summary>
-        /// The status of the encounter.
+        /// The status of the endpoint
         /// (url: http://hl7.org/fhir/ValueSet/endpoint-status)
         /// </summary>
         [FhirEnumeration("EndpointStatus")]

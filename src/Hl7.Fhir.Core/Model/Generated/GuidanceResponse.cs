@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -319,16 +319,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Proposed actions, if any
         /// </summary>
-        [FhirElement("requestGroup", Order=210)]
-        [References("RequestGroup")]
+        [FhirElement("result", Order=210)]
+        [References("CarePlan","RequestGroup")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference RequestGroup
+        public Hl7.Fhir.Model.ResourceReference Result
         {
-            get { return _RequestGroup; }
-            set { _RequestGroup = value; OnPropertyChanged("RequestGroup"); }
+            get { return _Result; }
+            set { _Result = value; OnPropertyChanged("Result"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _RequestGroup;
+        private Hl7.Fhir.Model.ResourceReference _Result;
         
         /// <summary>
         /// Additional required data
@@ -370,7 +370,7 @@ namespace Hl7.Fhir.Model
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 if(EvaluationMessage != null) dest.EvaluationMessage = new List<Hl7.Fhir.Model.ResourceReference>(EvaluationMessage.DeepCopy());
                 if(OutputParameters != null) dest.OutputParameters = (Hl7.Fhir.Model.ResourceReference)OutputParameters.DeepCopy();
-                if(RequestGroup != null) dest.RequestGroup = (Hl7.Fhir.Model.ResourceReference)RequestGroup.DeepCopy();
+                if(Result != null) dest.Result = (Hl7.Fhir.Model.ResourceReference)Result.DeepCopy();
                 if(DataRequirement != null) dest.DataRequirement = new List<DataRequirement>(DataRequirement.DeepCopy());
                 return dest;
             }
@@ -401,7 +401,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             if( !DeepComparable.Matches(EvaluationMessage, otherT.EvaluationMessage)) return false;
             if( !DeepComparable.Matches(OutputParameters, otherT.OutputParameters)) return false;
-            if( !DeepComparable.Matches(RequestGroup, otherT.RequestGroup)) return false;
+            if( !DeepComparable.Matches(Result, otherT.Result)) return false;
             if( !DeepComparable.Matches(DataRequirement, otherT.DataRequirement)) return false;
             
             return true;
@@ -425,7 +425,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             if( !DeepComparable.IsExactly(EvaluationMessage, otherT.EvaluationMessage)) return false;
             if( !DeepComparable.IsExactly(OutputParameters, otherT.OutputParameters)) return false;
-            if( !DeepComparable.IsExactly(RequestGroup, otherT.RequestGroup)) return false;
+            if( !DeepComparable.IsExactly(Result, otherT.Result)) return false;
             if( !DeepComparable.IsExactly(DataRequirement, otherT.DataRequirement)) return false;
             
             return true;
@@ -449,7 +449,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Note) { if (elem != null) yield return elem; }
 				foreach (var elem in EvaluationMessage) { if (elem != null) yield return elem; }
 				if (OutputParameters != null) yield return OutputParameters;
-				if (RequestGroup != null) yield return RequestGroup;
+				if (Result != null) yield return Result;
 				foreach (var elem in DataRequirement) { if (elem != null) yield return elem; }
             }
         }

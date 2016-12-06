@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -1290,7 +1290,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Include or exclude nested codes in the value set expansion
+        /// Nested codes in the expansion or not
         /// </summary>
         [FhirElement("excludeNested", InSummary=true, Order=270)]
         [DataMember]
@@ -1303,7 +1303,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirBoolean _ExcludeNestedElement;
         
         /// <summary>
-        /// Include or exclude nested codes in the value set expansion
+        /// Nested codes in the expansion or not
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

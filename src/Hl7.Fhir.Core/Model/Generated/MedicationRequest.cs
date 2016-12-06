@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -580,16 +580,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who ordered the initial medication(s)
         /// </summary>
-        [FhirElement("prescriber", InSummary=true, Order=200)]
-        [References("Practitioner")]
+        [FhirElement("requester", InSummary=true, Order=200)]
+        [References("Practitioner","Organization","Patient","RelatedPerson","Device")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Prescriber
+        public Hl7.Fhir.Model.ResourceReference Requester
         {
-            get { return _Prescriber; }
-            set { _Prescriber = value; OnPropertyChanged("Prescriber"); }
+            get { return _Requester; }
+            set { _Requester = value; OnPropertyChanged("Requester"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Prescriber;
+        private Hl7.Fhir.Model.ResourceReference _Requester;
         
         /// <summary>
         /// Reason or indication for writing the prescription
@@ -741,7 +741,7 @@ namespace Hl7.Fhir.Model
                 if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
                 if(SupportingInformation != null) dest.SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(SupportingInformation.DeepCopy());
                 if(DateWrittenElement != null) dest.DateWrittenElement = (Hl7.Fhir.Model.FhirDateTime)DateWrittenElement.DeepCopy();
-                if(Prescriber != null) dest.Prescriber = (Hl7.Fhir.Model.ResourceReference)Prescriber.DeepCopy();
+                if(Requester != null) dest.Requester = (Hl7.Fhir.Model.ResourceReference)Requester.DeepCopy();
                 if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
                 if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonReference.DeepCopy());
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
@@ -779,7 +779,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Context, otherT.Context)) return false;
             if( !DeepComparable.Matches(SupportingInformation, otherT.SupportingInformation)) return false;
             if( !DeepComparable.Matches(DateWrittenElement, otherT.DateWrittenElement)) return false;
-            if( !DeepComparable.Matches(Prescriber, otherT.Prescriber)) return false;
+            if( !DeepComparable.Matches(Requester, otherT.Requester)) return false;
             if( !DeepComparable.Matches(ReasonCode, otherT.ReasonCode)) return false;
             if( !DeepComparable.Matches(ReasonReference, otherT.ReasonReference)) return false;
             if( !DeepComparable.Matches(Note, otherT.Note)) return false;
@@ -810,7 +810,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
             if( !DeepComparable.IsExactly(SupportingInformation, otherT.SupportingInformation)) return false;
             if( !DeepComparable.IsExactly(DateWrittenElement, otherT.DateWrittenElement)) return false;
-            if( !DeepComparable.IsExactly(Prescriber, otherT.Prescriber)) return false;
+            if( !DeepComparable.IsExactly(Requester, otherT.Requester)) return false;
             if( !DeepComparable.IsExactly(ReasonCode, otherT.ReasonCode)) return false;
             if( !DeepComparable.IsExactly(ReasonReference, otherT.ReasonReference)) return false;
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
@@ -841,7 +841,7 @@ namespace Hl7.Fhir.Model
 				if (Context != null) yield return Context;
 				foreach (var elem in SupportingInformation) { if (elem != null) yield return elem; }
 				if (DateWrittenElement != null) yield return DateWrittenElement;
-				if (Prescriber != null) yield return Prescriber;
+				if (Requester != null) yield return Requester;
 				foreach (var elem in ReasonCode) { if (elem != null) yield return elem; }
 				foreach (var elem in ReasonReference) { if (elem != null) yield return elem; }
 				foreach (var elem in Note) { if (elem != null) yield return elem; }

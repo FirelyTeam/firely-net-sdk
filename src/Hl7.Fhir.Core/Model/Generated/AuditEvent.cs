@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -388,13 +388,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("purposeOfUse", Order=140)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Coding> PurposeOfUse
+            public List<Hl7.Fhir.Model.CodeableConcept> PurposeOfUse
             {
-                get { if(_PurposeOfUse==null) _PurposeOfUse = new List<Hl7.Fhir.Model.Coding>(); return _PurposeOfUse; }
+                get { if(_PurposeOfUse==null) _PurposeOfUse = new List<Hl7.Fhir.Model.CodeableConcept>(); return _PurposeOfUse; }
                 set { _PurposeOfUse = value; OnPropertyChanged("PurposeOfUse"); }
             }
             
-            private List<Hl7.Fhir.Model.Coding> _PurposeOfUse;
+            private List<Hl7.Fhir.Model.CodeableConcept> _PurposeOfUse;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -413,7 +413,7 @@ namespace Hl7.Fhir.Model
                     if(PolicyElement != null) dest.PolicyElement = new List<Hl7.Fhir.Model.FhirUri>(PolicyElement.DeepCopy());
                     if(Media != null) dest.Media = (Hl7.Fhir.Model.Coding)Media.DeepCopy();
                     if(Network != null) dest.Network = (Hl7.Fhir.Model.AuditEvent.NetworkComponent)Network.DeepCopy();
-                    if(PurposeOfUse != null) dest.PurposeOfUse = new List<Hl7.Fhir.Model.Coding>(PurposeOfUse.DeepCopy());
+                    if(PurposeOfUse != null) dest.PurposeOfUse = new List<Hl7.Fhir.Model.CodeableConcept>(PurposeOfUse.DeepCopy());
                     return dest;
                 }
                 else
@@ -1344,13 +1344,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("purposeOfEvent", InSummary=true, Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Coding> PurposeOfEvent
+        public List<Hl7.Fhir.Model.CodeableConcept> PurposeOfEvent
         {
-            get { if(_PurposeOfEvent==null) _PurposeOfEvent = new List<Hl7.Fhir.Model.Coding>(); return _PurposeOfEvent; }
+            get { if(_PurposeOfEvent==null) _PurposeOfEvent = new List<Hl7.Fhir.Model.CodeableConcept>(); return _PurposeOfEvent; }
             set { _PurposeOfEvent = value; OnPropertyChanged("PurposeOfEvent"); }
         }
         
-        private List<Hl7.Fhir.Model.Coding> _PurposeOfEvent;
+        private List<Hl7.Fhir.Model.CodeableConcept> _PurposeOfEvent;
         
         /// <summary>
         /// Actor involved in the event
@@ -1424,7 +1424,7 @@ namespace Hl7.Fhir.Model
                 if(RecordedElement != null) dest.RecordedElement = (Hl7.Fhir.Model.Instant)RecordedElement.DeepCopy();
                 if(OutcomeElement != null) dest.OutcomeElement = (Code<Hl7.Fhir.Model.AuditEvent.AuditEventOutcome>)OutcomeElement.DeepCopy();
                 if(OutcomeDescElement != null) dest.OutcomeDescElement = (Hl7.Fhir.Model.FhirString)OutcomeDescElement.DeepCopy();
-                if(PurposeOfEvent != null) dest.PurposeOfEvent = new List<Hl7.Fhir.Model.Coding>(PurposeOfEvent.DeepCopy());
+                if(PurposeOfEvent != null) dest.PurposeOfEvent = new List<Hl7.Fhir.Model.CodeableConcept>(PurposeOfEvent.DeepCopy());
                 if(Agent != null) dest.Agent = new List<Hl7.Fhir.Model.AuditEvent.AgentComponent>(Agent.DeepCopy());
                 if(Source != null) dest.Source = (Hl7.Fhir.Model.AuditEvent.SourceComponent)Source.DeepCopy();
                 if(Entity != null) dest.Entity = new List<Hl7.Fhir.Model.AuditEvent.EntityComponent>(Entity.DeepCopy());

@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Identifier of the population group being reported
             /// </summary>
-            [FhirElement("identifier", InSummary=true, Order=40)]
+            [FhirElement("identifier", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Identifier Identifier
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The populations in the group
             /// </summary>
-            [FhirElement("population", InSummary=true, Order=50)]
+            [FhirElement("population", Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.MeasureReport.PopulationComponent> Population
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The measure score
             /// </summary>
-            [FhirElement("measureScore", InSummary=true, Order=60)]
+            [FhirElement("measureScore", Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal MeasureScoreElement
             {
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Stratification results
             /// </summary>
-            [FhirElement("stratifier", InSummary=true, Order=70)]
+            [FhirElement("stratifier", Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.MeasureReport.StratifierComponent> Stratifier
@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Supplemental data elements for the measure
             /// </summary>
-            [FhirElement("supplementalData", InSummary=true, Order=80)]
+            [FhirElement("supplementalData", Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.MeasureReport.SupplementalDataComponent> SupplementalData
@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-score
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=40)]
+            [FhirElement("type", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Code TypeElement
@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Size of the population
             /// </summary>
-            [FhirElement("count", InSummary=true, Order=50)]
+            [FhirElement("count", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.Integer CountElement
             {
@@ -350,7 +350,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// For patient-list reports, the patients in this population
             /// </summary>
-            [FhirElement("patients", InSummary=true, Order=60)]
+            [FhirElement("patients", Order=60)]
             [References("List")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Patients
@@ -436,7 +436,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Identifier of the stratifier
             /// </summary>
-            [FhirElement("identifier", InSummary=true, Order=40)]
+            [FhirElement("identifier", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Identifier Identifier
@@ -450,7 +450,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Stratum results, one for each unique value in the stratifier
             /// </summary>
-            [FhirElement("group", InSummary=true, Order=50)]
+            [FhirElement("group", Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.MeasureReport.StratifierGroupComponent> Group
@@ -532,7 +532,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The stratum value, e.g. male
             /// </summary>
-            [FhirElement("value", InSummary=true, Order=40)]
+            [FhirElement("value", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ValueElement
@@ -565,7 +565,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Population results in this stratum
             /// </summary>
-            [FhirElement("population", InSummary=true, Order=50)]
+            [FhirElement("population", Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.MeasureReport.StratifierGroupPopulationComponent> Population
@@ -579,7 +579,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The measure score
             /// </summary>
-            [FhirElement("measureScore", InSummary=true, Order=60)]
+            [FhirElement("measureScore", Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal MeasureScoreElement
             {
@@ -683,7 +683,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-score
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=40)]
+            [FhirElement("type", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Code TypeElement
@@ -716,7 +716,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Size of the population
             /// </summary>
-            [FhirElement("count", InSummary=true, Order=50)]
+            [FhirElement("count", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.Integer CountElement
             {
@@ -748,7 +748,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// For patient-list reports, the patients in this population
             /// </summary>
-            [FhirElement("patients", InSummary=true, Order=60)]
+            [FhirElement("patients", Order=60)]
             [References("List")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Patients
@@ -834,7 +834,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Identifier of the supplemental data element
             /// </summary>
-            [FhirElement("identifier", InSummary=true, Order=40)]
+            [FhirElement("identifier", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Identifier Identifier
@@ -848,7 +848,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Supplemental data results, one for each unique supplemental data value
             /// </summary>
-            [FhirElement("group", InSummary=true, Order=50)]
+            [FhirElement("group", Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.MeasureReport.SupplementalDataGroupComponent> Group
@@ -930,7 +930,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The data value, e.g. male
             /// </summary>
-            [FhirElement("value", InSummary=true, Order=40)]
+            [FhirElement("value", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ValueElement
@@ -963,7 +963,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Number of members in the group
             /// </summary>
-            [FhirElement("count", InSummary=true, Order=50)]
+            [FhirElement("count", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.Integer CountElement
             {
@@ -995,7 +995,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// For patient-list reports, the patients in this population
             /// </summary>
-            [FhirElement("patients", InSummary=true, Order=60)]
+            [FhirElement("patients", Order=60)]
             [References("List")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Patients
@@ -1229,7 +1229,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Measure results for each group
         /// </summary>
-        [FhirElement("group", InSummary=true, Order=160)]
+        [FhirElement("group", Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MeasureReport.GroupComponent> Group
@@ -1243,7 +1243,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Evaluated Resources
         /// </summary>
-        [FhirElement("evaluatedResources", InSummary=true, Order=170)]
+        [FhirElement("evaluatedResources", Order=170)]
         [References("Bundle")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference EvaluatedResources

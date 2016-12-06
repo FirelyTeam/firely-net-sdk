@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -802,6 +802,121 @@ namespace Hl7.Fhir.Model
                     if (TargetProfileElement != null) yield return TargetProfileElement;
                     foreach (var elem in AggregationElement) { if (elem != null) yield return elem; }
                     if (VersioningElement != null) yield return VersioningElement;
+                }
+            }
+            
+        }
+        
+        
+        [FhirType("ExampleComponent")]
+        [DataContract]
+        public partial class ExampleComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "ExampleComponent"; } }
+            
+            /// <summary>
+            /// Describes the purpose of this example
+            /// </summary>
+            [FhirElement("label", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString LabelElement
+            {
+                get { return _LabelElement; }
+                set { _LabelElement = value; OnPropertyChanged("LabelElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _LabelElement;
+            
+            /// <summary>
+            /// Describes the purpose of this example
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Label
+            {
+                get { return LabelElement != null ? LabelElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                      LabelElement = null; 
+                    else
+                      LabelElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Label");
+                }
+            }
+            
+            /// <summary>
+            /// Value of Example (one of allowed types)
+            /// </summary>
+            [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Address),typeof(Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Count),typeof(Distance),typeof(Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Money),typeof(Hl7.Fhir.Model.Period),typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Meta))]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Value
+            {
+                get { return _Value; }
+                set { _Value = value; OnPropertyChanged("Value"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _Value;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ExampleComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(LabelElement != null) dest.LabelElement = (Hl7.Fhir.Model.FhirString)LabelElement.DeepCopy();
+                    if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ExampleComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ExampleComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(LabelElement, otherT.LabelElement)) return false;
+                if( !DeepComparable.Matches(Value, otherT.Value)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ExampleComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(LabelElement, otherT.LabelElement)) return false;
+                if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
+                
+                return true;
+            }
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // ExampleComponent elements
+                    if (LabelElement != null) yield return LabelElement;
+                    if (Value != null) yield return Value;
                 }
             }
             
@@ -1960,16 +2075,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Example value (as defined for type)
         /// </summary>
-        [FhirElement("example", InSummary=true, Order=230, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Address),typeof(Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Count),typeof(Distance),typeof(Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Money),typeof(Hl7.Fhir.Model.Period),typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Meta))]
+        [FhirElement("example", InSummary=true, Order=230)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.Element Example
+        public List<Hl7.Fhir.Model.ElementDefinition.ExampleComponent> Example
         {
-            get { return _Example; }
+            get { if(_Example==null) _Example = new List<Hl7.Fhir.Model.ElementDefinition.ExampleComponent>(); return _Example; }
             set { _Example = value; OnPropertyChanged("Example"); }
         }
         
-        private Hl7.Fhir.Model.Element _Example;
+        private List<Hl7.Fhir.Model.ElementDefinition.ExampleComponent> _Example;
         
         /// <summary>
         /// Minimum Allowed Value (for some types)
@@ -2229,7 +2344,7 @@ namespace Hl7.Fhir.Model
                 if(MeaningWhenMissingElement != null) dest.MeaningWhenMissingElement = (Hl7.Fhir.Model.Markdown)MeaningWhenMissingElement.DeepCopy();
                 if(Fixed != null) dest.Fixed = (Hl7.Fhir.Model.Element)Fixed.DeepCopy();
                 if(Pattern != null) dest.Pattern = (Hl7.Fhir.Model.Element)Pattern.DeepCopy();
-                if(Example != null) dest.Example = (Hl7.Fhir.Model.Element)Example.DeepCopy();
+                if(Example != null) dest.Example = new List<Hl7.Fhir.Model.ElementDefinition.ExampleComponent>(Example.DeepCopy());
                 if(MinValue != null) dest.MinValue = (Hl7.Fhir.Model.Element)MinValue.DeepCopy();
                 if(MaxValue != null) dest.MaxValue = (Hl7.Fhir.Model.Element)MaxValue.DeepCopy();
                 if(MaxLengthElement != null) dest.MaxLengthElement = (Hl7.Fhir.Model.Integer)MaxLengthElement.DeepCopy();
@@ -2359,7 +2474,7 @@ namespace Hl7.Fhir.Model
                 if (MeaningWhenMissingElement != null) yield return MeaningWhenMissingElement;
                 if (Fixed != null) yield return Fixed;
                 if (Pattern != null) yield return Pattern;
-                if (Example != null) yield return Example;
+                foreach (var elem in Example) { if (elem != null) yield return elem; }
                 if (MinValue != null) yield return MinValue;
                 if (MaxValue != null) yield return MaxValue;
                 if (MaxLengthElement != null) yield return MaxLengthElement;

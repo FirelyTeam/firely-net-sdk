@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -495,7 +495,7 @@ namespace Hl7.Fhir.Model
             Expression = "age.exists() or estimatedAge.empty()",
             Key = "fhs-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Can only have estimatedAge is age[x] is present",
+            Human = "Can only have estimatedAge if age[x] is present",
             Xpath = "exists(*[starts-with(local-name(.), 'age')]) or not(exists(f:estimatedAge))"
         };
 

@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -389,16 +389,34 @@ namespace Hl7.Fhir.Model
         /// The profile of the required data
         /// </summary>
         [FhirElement("profile", InSummary=true, Order=40)]
-        [References("StructureDefinition")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Profile
+        public List<Hl7.Fhir.Model.FhirUri> ProfileElement
         {
-            get { if(_Profile==null) _Profile = new List<Hl7.Fhir.Model.ResourceReference>(); return _Profile; }
-            set { _Profile = value; OnPropertyChanged("Profile"); }
+            get { if(_ProfileElement==null) _ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(); return _ProfileElement; }
+            set { _ProfileElement = value; OnPropertyChanged("ProfileElement"); }
         }
         
-        private List<Hl7.Fhir.Model.ResourceReference> _Profile;
+        private List<Hl7.Fhir.Model.FhirUri> _ProfileElement;
+        
+        /// <summary>
+        /// The profile of the required data
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public IEnumerable<string> Profile
+        {
+            get { return ProfileElement != null ? ProfileElement.Select(elem => elem.Value) : null; }
+            set
+            {
+                if (value == null)
+                  ProfileElement = null; 
+                else
+                  ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
+                OnPropertyChanged("Profile");
+            }
+        }
         
         /// <summary>
         /// Indicates that specific structure elements are referenced by the knowledge module
@@ -470,7 +488,7 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.FHIRAllTypes>)TypeElement.DeepCopy();
-                if(Profile != null) dest.Profile = new List<Hl7.Fhir.Model.ResourceReference>(Profile.DeepCopy());
+                if(ProfileElement != null) dest.ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(ProfileElement.DeepCopy());
                 if(MustSupportElement != null) dest.MustSupportElement = new List<Hl7.Fhir.Model.FhirString>(MustSupportElement.DeepCopy());
                 if(CodeFilter != null) dest.CodeFilter = new List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>(CodeFilter.DeepCopy());
                 if(DateFilter != null) dest.DateFilter = new List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>(DateFilter.DeepCopy());
@@ -492,7 +510,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
-            if( !DeepComparable.Matches(Profile, otherT.Profile)) return false;
+            if( !DeepComparable.Matches(ProfileElement, otherT.ProfileElement)) return false;
             if( !DeepComparable.Matches(MustSupportElement, otherT.MustSupportElement)) return false;
             if( !DeepComparable.Matches(CodeFilter, otherT.CodeFilter)) return false;
             if( !DeepComparable.Matches(DateFilter, otherT.DateFilter)) return false;
@@ -507,7 +525,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
-            if( !DeepComparable.IsExactly(Profile, otherT.Profile)) return false;
+            if( !DeepComparable.IsExactly(ProfileElement, otherT.ProfileElement)) return false;
             if( !DeepComparable.IsExactly(MustSupportElement, otherT.MustSupportElement)) return false;
             if( !DeepComparable.IsExactly(CodeFilter, otherT.CodeFilter)) return false;
             if( !DeepComparable.IsExactly(DateFilter, otherT.DateFilter)) return false;
@@ -522,7 +540,7 @@ namespace Hl7.Fhir.Model
             {
                 // DataRequirement elements
                 if (TypeElement != null) yield return TypeElement;
-                foreach (var elem in Profile) { if (elem != null) yield return elem; }
+                foreach (var elem in ProfileElement) { if (elem != null) yield return elem; }
                 foreach (var elem in MustSupportElement) { if (elem != null) yield return elem; }
                 foreach (var elem in CodeFilter) { if (elem != null) yield return elem; }
                 foreach (var elem in DateFilter) { if (elem != null) yield return elem; }

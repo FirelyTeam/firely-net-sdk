@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -87,9 +87,23 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Access Control Management
+        /// </summary>
+        [FhirElement("securityContext", InSummary=true, Order=60)]
+        [References()]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference SecurityContext
+        {
+            get { return _SecurityContext; }
+            set { _SecurityContext = value; OnPropertyChanged("SecurityContext"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _SecurityContext;
+        
+        /// <summary>
         /// The actual content
         /// </summary>
-        [FhirElement("content", Order=60)]
+        [FhirElement("content", Order=70)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Base64Binary ContentElement
@@ -134,6 +148,7 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(ContentTypeElement != null) dest.ContentTypeElement = (Hl7.Fhir.Model.Code)ContentTypeElement.DeepCopy();
+                if(SecurityContext != null) dest.SecurityContext = (Hl7.Fhir.Model.ResourceReference)SecurityContext.DeepCopy();
                 if(ContentElement != null) dest.ContentElement = (Hl7.Fhir.Model.Base64Binary)ContentElement.DeepCopy();
                 return dest;
             }
@@ -153,6 +168,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(ContentTypeElement, otherT.ContentTypeElement)) return false;
+            if( !DeepComparable.Matches(SecurityContext, otherT.SecurityContext)) return false;
             if( !DeepComparable.Matches(ContentElement, otherT.ContentElement)) return false;
             
             return true;
@@ -165,6 +181,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(ContentTypeElement, otherT.ContentTypeElement)) return false;
+            if( !DeepComparable.IsExactly(SecurityContext, otherT.SecurityContext)) return false;
             if( !DeepComparable.IsExactly(ContentElement, otherT.ContentElement)) return false;
             
             return true;
@@ -177,6 +194,7 @@ namespace Hl7.Fhir.Model
             {
 				// Binary elements
 				if (ContentTypeElement != null) yield return ContentTypeElement;
+				if (SecurityContext != null) yield return SecurityContext;
 				if (ContentElement != null) yield return ContentElement;
             }
         }

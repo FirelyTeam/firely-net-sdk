@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -298,7 +298,6 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=130)]
         [References("Patient","Group","Device","Location")]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -327,7 +326,6 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("effective", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Element Effective
         {
@@ -341,7 +339,6 @@ namespace Hl7.Fhir.Model
         /// DateTime this version was released
         /// </summary>
         [FhirElement("issued", InSummary=true, Order=160)]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant IssuedElement
         {
@@ -375,7 +372,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("performer", InSummary=true, Order=170)]
         [References("Practitioner","Organization")]
-        [Cardinality(Min=1,Max=-1)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Performer
         {

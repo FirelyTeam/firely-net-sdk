@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -57,8 +57,8 @@ namespace Hl7.Fhir.Model
         /// Different measurement principle supported by the device.
         /// (url: http://hl7.org/fhir/ValueSet/measurement-principle)
         /// </summary>
-        [FhirEnumeration("Measmnt_Principle")]
-        public enum Measmnt_Principle
+        [FhirEnumeration("MeasmntPrinciple")]
+        public enum MeasmntPrinciple
         {
             /// <summary>
             /// MISSING DESCRIPTION
@@ -379,13 +379,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("measurementPrinciple", InSummary=true, Order=160)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.DeviceComponent.Measmnt_Principle> MeasurementPrincipleElement
+        public Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple> MeasurementPrincipleElement
         {
             get { return _MeasurementPrincipleElement; }
             set { _MeasurementPrincipleElement = value; OnPropertyChanged("MeasurementPrincipleElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.DeviceComponent.Measmnt_Principle> _MeasurementPrincipleElement;
+        private Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple> _MeasurementPrincipleElement;
         
         /// <summary>
         /// other | chemical | electrical | impedance | nuclear | optical | thermal | biological | mechanical | acoustical | manual+
@@ -393,7 +393,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.DeviceComponent.Measmnt_Principle? MeasurementPrinciple
+        public Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple? MeasurementPrinciple
         {
             get { return MeasurementPrincipleElement != null ? MeasurementPrincipleElement.Value : null; }
             set
@@ -401,7 +401,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                   MeasurementPrincipleElement = null; 
                 else
-                  MeasurementPrincipleElement = new Code<Hl7.Fhir.Model.DeviceComponent.Measmnt_Principle>(value);
+                  MeasurementPrincipleElement = new Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple>(value);
                 OnPropertyChanged("MeasurementPrinciple");
             }
         }
@@ -454,7 +454,7 @@ namespace Hl7.Fhir.Model
                 if(Parent != null) dest.Parent = (Hl7.Fhir.Model.ResourceReference)Parent.DeepCopy();
                 if(OperationalStatus != null) dest.OperationalStatus = new List<Hl7.Fhir.Model.CodeableConcept>(OperationalStatus.DeepCopy());
                 if(ParameterGroup != null) dest.ParameterGroup = (Hl7.Fhir.Model.CodeableConcept)ParameterGroup.DeepCopy();
-                if(MeasurementPrincipleElement != null) dest.MeasurementPrincipleElement = (Code<Hl7.Fhir.Model.DeviceComponent.Measmnt_Principle>)MeasurementPrincipleElement.DeepCopy();
+                if(MeasurementPrincipleElement != null) dest.MeasurementPrincipleElement = (Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple>)MeasurementPrincipleElement.DeepCopy();
                 if(ProductionSpecification != null) dest.ProductionSpecification = new List<Hl7.Fhir.Model.DeviceComponent.ProductionSpecificationComponent>(ProductionSpecification.DeepCopy());
                 if(LanguageCode != null) dest.LanguageCode = (Hl7.Fhir.Model.CodeableConcept)LanguageCode.DeepCopy();
                 return dest;

@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -70,8 +70,8 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/codesystem-hierarchy-meaning)
             /// </summary>
-            [EnumLiteral("subsumes"), Description("Subsumes")]
-            Subsumes,
+            [EnumLiteral("is-a"), Description("Is-A")]
+            IsA,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/codesystem-hierarchy-meaning)
@@ -1482,7 +1482,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// grouped-by | subsumes | part-of | classified-with
+        /// grouped-by | is-a | part-of | classified-with
         /// </summary>
         [FhirElement("hierarchyMeaning", InSummary=true, Order=260)]
         [DataMember]
@@ -1495,7 +1495,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.CodeSystem.CodeSystemHierarchyMeaning> _HierarchyMeaningElement;
         
         /// <summary>
-        /// grouped-by | subsumes | part-of | classified-with
+        /// grouped-by | is-a | part-of | classified-with
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

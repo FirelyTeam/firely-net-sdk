@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -94,9 +94,10 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ItemComponent"; } }
             
             /// <summary>
-            /// Corresponding item within Questionnaire
+            /// Pointer to specific item from Questionnaire
             /// </summary>
             [FhirElement("linkId", Order=40)]
+            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString LinkIdElement
             {
@@ -107,7 +108,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _LinkIdElement;
             
             /// <summary>
-            /// Corresponding item within Questionnaire
+            /// Pointer to specific item from Questionnaire
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -126,9 +127,41 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// ElementDefinition - details for the item
+            /// </summary>
+            [FhirElement("definition", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirUri DefinitionElement
+            {
+                get { return _DefinitionElement; }
+                set { _DefinitionElement = value; OnPropertyChanged("DefinitionElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirUri _DefinitionElement;
+            
+            /// <summary>
+            /// ElementDefinition - details for the item
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Definition
+            {
+                get { return DefinitionElement != null ? DefinitionElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        DefinitionElement = null; 
+                    else
+                        DefinitionElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("Definition");
+                }
+            }
+            
+            /// <summary>
             /// Name for group or question text
             /// </summary>
-            [FhirElement("text", Order=50)]
+            [FhirElement("text", Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString TextElement
             {
@@ -160,7 +193,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The subject this group's answers are about
             /// </summary>
-            [FhirElement("subject", Order=60)]
+            [FhirElement("subject", Order=70)]
             [References()]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Subject
@@ -174,7 +207,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The response(s) to the question
             /// </summary>
-            [FhirElement("answer", Order=70)]
+            [FhirElement("answer", Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.QuestionnaireResponse.AnswerComponent> Answer
@@ -188,7 +221,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Nested questionnaire response items
             /// </summary>
-            [FhirElement("item", Order=80)]
+            [FhirElement("item", Order=90)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> Item
@@ -207,6 +240,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(LinkIdElement != null) dest.LinkIdElement = (Hl7.Fhir.Model.FhirString)LinkIdElement.DeepCopy();
+                    if(DefinitionElement != null) dest.DefinitionElement = (Hl7.Fhir.Model.FhirUri)DefinitionElement.DeepCopy();
                     if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
                     if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                     if(Answer != null) dest.Answer = new List<Hl7.Fhir.Model.QuestionnaireResponse.AnswerComponent>(Answer.DeepCopy());
@@ -229,6 +263,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(LinkIdElement, otherT.LinkIdElement)) return false;
+                if( !DeepComparable.Matches(DefinitionElement, otherT.DefinitionElement)) return false;
                 if( !DeepComparable.Matches(TextElement, otherT.TextElement)) return false;
                 if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
                 if( !DeepComparable.Matches(Answer, otherT.Answer)) return false;
@@ -244,6 +279,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(LinkIdElement, otherT.LinkIdElement)) return false;
+                if( !DeepComparable.IsExactly(DefinitionElement, otherT.DefinitionElement)) return false;
                 if( !DeepComparable.IsExactly(TextElement, otherT.TextElement)) return false;
                 if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
                 if( !DeepComparable.IsExactly(Answer, otherT.Answer)) return false;
@@ -262,6 +298,7 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // ItemComponent elements
                     if (LinkIdElement != null) yield return LinkIdElement;
+                    if (DefinitionElement != null) yield return DefinitionElement;
                     if (TextElement != null) yield return TextElement;
                     if (Subject != null) yield return Subject;
                     foreach (var elem in Answer) { if (elem != null) yield return elem; }
@@ -382,7 +419,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
-        /// Request fulfilled by this Questionnaire
+        /// Request fulfilled by this QuestionnaireResponse
         /// </summary>
         [FhirElement("basedOn", InSummary=true, Order=100)]
         [References("DiagnosticRequest","ReferralRequest","CarePlan")]
@@ -561,10 +598,20 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> _Item;
         
 
+        public static ElementDefinition.ConstraintComponent QuestionnaireResponse_QRS_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "item.all((answer.exists() and item.exists()).not())",
+            Key = "qrs-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Nested item can't be beneath both item and answer",
+            Xpath = "not(exists(f:answer) and exists(f:item))"
+        };
+
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
 
+            InvariantConstraints.Add(QuestionnaireResponse_QRS_1);
         }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)

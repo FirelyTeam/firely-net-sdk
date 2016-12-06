@@ -453,12 +453,12 @@ namespace Hl7.Fhir.Tests.Model
                     new HumanName()
                     {
                         Given = new string[] { "John" },
-                        Family = new string[] { "Doe" }
+                        Family = "Doe"
                     },
                      new HumanName()
                     {
                         Given = new string[] { "Alias" },
-                        Family = new string[] { "Alternate" }
+                        Family = "Alternate"
                     }
                 },
                 Address =
@@ -514,7 +514,7 @@ namespace Hl7.Fhir.Tests.Model
                 // ===== HumanName elements =====
                 // name.UseElement,
                 // name.TextElement,
-                name.FamilyElement[0],
+                name.FamilyElement,
                 name.GivenElement[0],
                 // name.Period
             };

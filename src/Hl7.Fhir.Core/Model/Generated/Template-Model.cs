@@ -1,15 +1,15 @@
 ﻿
 
 //
-// Model Generated on Mon, 07 Nov 2016 12:23:19 GMT for FHIR v1.7.0
+// Model Generated on Tue, 06 Dec 2016 16:29:18 GMT for FHIR v1.8.0
 //
 // Generated Shared Enumeration: ResourceType
 	// Used in model class (resource): CapabilityStatement.rest.resource.type
-	// Used in model class (resource): CapabilityStatement.rest.resource.searchParam.target
 	// Used in model class (resource): CapabilityStatement.messaging.event.focus
 	// Used in model class (resource): CompartmentDefinition.resource.code
 	// Used in model class (resource): ImplementationGuide.global.type
 	// Used in model class (resource): ImplementationGuide.page.type
+	// Used in model class (resource): MessageDefinition.focus.code
 	// Used in model class (resource): OperationDefinition.resource
 	// Used in model class (resource): Questionnaire.subjectType
 	// Used in model class (resource): SearchParameter.base
@@ -26,6 +26,14 @@
 // Generated Shared Enumeration: PlanActionSelectionBehavior
 	// Used in model class (resource): PlanDefinition.actionDefinition.selectionBehavior
 	// Used in model class (resource): RequestGroup.action.selectionBehavior
+
+// Generated Shared Enumeration: RequestPriority
+	// Used in model class (resource): DiagnosticRequest.priority
+	// Used in model class (resource): Task.priority
+
+// Generated Shared Enumeration: RequestIntent
+	// Used in model class (resource): DiagnosticRequest.intent
+	// Used in model class (resource): Task.intent
 
 // Generated Shared Enumeration: AdministrativeGender
 	// Used in model class (resource): FamilyMemberHistory.gender
@@ -55,11 +63,6 @@
 	// Used in model class (resource): Appointment.participant.status
 	// Used in model class (resource): AppointmentResponse.participantStatus
 
-// Generated Shared Enumeration: ClaimProcessingCodes
-	// Used in model class (resource): EligibilityResponse.outcome
-	// Used in model class (resource): EnrollmentResponse.outcome
-	// Used in model class (resource): PaymentReconciliation.outcome
-
 // Generated Shared Enumeration: ListMode
 	// Used in model class (resource): Composition.section.mode
 	// Used in model class (resource): List.mode
@@ -69,9 +72,28 @@
 	// Used in model class (resource): OperationDefinition.parameter.searchType
 	// Used in model class (resource): SearchParameter.type
 
+// Generated Shared Enumeration: FinancialResourceStatusCodes
+	// Used in model class (resource): Claim.status
+	// Used in model class (resource): ClaimResponse.status
+	// Used in model class (resource): Contract.status
+	// Used in model class (resource): Coverage.status
+	// Used in model class (resource): EligibilityRequest.status
+	// Used in model class (resource): EligibilityResponse.status
+	// Used in model class (resource): EnrollmentRequest.status
+	// Used in model class (resource): EnrollmentResponse.status
+	// Used in model class (resource): PaymentNotice.status
+	// Used in model class (resource): PaymentReconciliation.status
+	// Used in model class (resource): ProcessRequest.status
+	// Used in model class (resource): ProcessResponse.status
+	// Used in model class (resource): VisionPrescription.status
+
 // Generated Shared Enumeration: PlanActionCardinalityBehavior
 	// Used in model class (resource): PlanDefinition.actionDefinition.cardinalityBehavior
 	// Used in model class (resource): RequestGroup.action.cardinalityBehavior
+
+// Generated Shared Enumeration: PlanActionConditionKind
+	// Used in model class (resource): PlanDefinition.actionDefinition.condition.kind
+	// Used in model class (resource): RequestGroup.action.condition.kind
 
 // Generated Shared Enumeration: PlanActionParticipantType
 	// Used in model class (resource): ActivityDefinition.participantType
@@ -80,6 +102,7 @@
 // Generated Shared Enumeration: DaysOfWeek
 	// Used in model class (resource): HealthcareService.availableTime.daysOfWeek
 	// Used in model class (resource): PractitionerRole.availableTime.daysOfWeek
+	// Used in model class (type): Timing.repeat.dayOfWeek
 
 // Generated Shared Enumeration: PlanActionRelationshipType
 	// Used in model class (resource): PlanDefinition.actionDefinition.relatedAction.relationship
@@ -96,6 +119,10 @@
 // Generated Shared Enumeration: PlanActionRequiredBehavior
 	// Used in model class (resource): PlanDefinition.actionDefinition.requiredBehavior
 	// Used in model class (resource): RequestGroup.action.requiredBehavior
+
+// Generated Shared Enumeration: MessageSignificanceCategory
+	// Used in model class (resource): CapabilityStatement.messaging.event.category
+	// Used in model class (resource): MessageDefinition.category
 
 // Generated Shared Enumeration: FHIRAllTypes
 	// Used in model class (resource): OperationDefinition.parameter.type
@@ -114,6 +141,7 @@
 	// Used in model class (resource): ImplementationGuide.status
 	// Used in model class (resource): Library.status
 	// Used in model class (resource): Measure.status
+	// Used in model class (resource): MessageDefinition.status
 	// Used in model class (resource): NamingSystem.status
 	// Used in model class (resource): OperationDefinition.status
 	// Used in model class (resource): PlanDefinition.status
@@ -143,6 +171,8 @@
 // Hl7.Fhir.Core\Model\Generated\SearchParameter.cs
 // Hl7.Fhir.Core\Model\Generated\Schedule.cs
 // Hl7.Fhir.Core\Model\Generated\RiskAssessment.cs
+// Hl7.Fhir.Core\Model\Generated\ResearchSubject.cs
+// Hl7.Fhir.Core\Model\Generated\ResearchStudy.cs
 // Hl7.Fhir.Core\Model\Generated\RequestGroup.cs
 // Hl7.Fhir.Core\Model\Generated\RelatedPerson.cs
 // Hl7.Fhir.Core\Model\Generated\ReferralRequest.cs
@@ -167,6 +197,7 @@
 // Hl7.Fhir.Core\Model\Generated\NutritionRequest.cs
 // Hl7.Fhir.Core\Model\Generated\NamingSystem.cs
 // Hl7.Fhir.Core\Model\Generated\MessageHeader.cs
+// Hl7.Fhir.Core\Model\Generated\MessageDefinition.cs
 // Hl7.Fhir.Core\Model\Generated\MedicationStatement.cs
 // Hl7.Fhir.Core\Model\Generated\MedicationRequest.cs
 // Hl7.Fhir.Core\Model\Generated\MedicationDispense.cs

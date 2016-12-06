@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,16 +56,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Target body site
         /// </summary>
-        [FhirElement("bodySite", InSummary=true, Order=90, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [FhirElement("bodySite", InSummary=true, Order=90)]
         [DataMember]
-        public Hl7.Fhir.Model.Element BodySite
+        public Hl7.Fhir.Model.CodeableConcept BodySite
         {
             get { return _BodySite; }
             set { _BodySite = value; OnPropertyChanged("BodySite"); }
         }
         
-        private Hl7.Fhir.Model.Element _BodySite;
+        private Hl7.Fhir.Model.CodeableConcept _BodySite;
         
         /// <summary>
         /// Period device was used
@@ -231,7 +230,7 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.Element)BodySite.DeepCopy();
+                if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableConcept)BodySite.DeepCopy();
                 if(WhenUsed != null) dest.WhenUsed = (Hl7.Fhir.Model.Period)WhenUsed.DeepCopy();
                 if(Device != null) dest.Device = (Hl7.Fhir.Model.ResourceReference)Device.DeepCopy();
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());

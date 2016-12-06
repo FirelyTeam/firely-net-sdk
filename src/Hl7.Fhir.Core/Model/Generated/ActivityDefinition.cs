@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -1010,9 +1010,23 @@ namespace Hl7.Fhir.Model
         private List<DosageInstruction> _DosageInstruction;
         
         /// <summary>
+        /// What part of body to perform on
+        /// </summary>
+        [FhirElement("bodySite", Order=400)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> BodySite
+        {
+            get { if(_BodySite==null) _BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(); return _BodySite; }
+            set { _BodySite = value; OnPropertyChanged("BodySite"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _BodySite;
+        
+        /// <summary>
         /// Transform to apply the template
         /// </summary>
-        [FhirElement("transform", Order=400)]
+        [FhirElement("transform", Order=410)]
         [References("StructureMap")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Transform
@@ -1026,7 +1040,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Dynamic aspects of the definition
         /// </summary>
-        [FhirElement("dynamicValue", Order=410)]
+        [FhirElement("dynamicValue", Order=420)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ActivityDefinition.DynamicValueComponent> DynamicValue
@@ -1082,6 +1096,7 @@ namespace Hl7.Fhir.Model
                 if(Product != null) dest.Product = (Hl7.Fhir.Model.Element)Product.DeepCopy();
                 if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
                 if(DosageInstruction != null) dest.DosageInstruction = new List<DosageInstruction>(DosageInstruction.DeepCopy());
+                if(BodySite != null) dest.BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(BodySite.DeepCopy());
                 if(Transform != null) dest.Transform = (Hl7.Fhir.Model.ResourceReference)Transform.DeepCopy();
                 if(DynamicValue != null) dest.DynamicValue = new List<Hl7.Fhir.Model.ActivityDefinition.DynamicValueComponent>(DynamicValue.DeepCopy());
                 return dest;
@@ -1132,6 +1147,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Product, otherT.Product)) return false;
             if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
             if( !DeepComparable.Matches(DosageInstruction, otherT.DosageInstruction)) return false;
+            if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
             if( !DeepComparable.Matches(Transform, otherT.Transform)) return false;
             if( !DeepComparable.Matches(DynamicValue, otherT.DynamicValue)) return false;
             
@@ -1175,6 +1191,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Product, otherT.Product)) return false;
             if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
             if( !DeepComparable.IsExactly(DosageInstruction, otherT.DosageInstruction)) return false;
+            if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
             if( !DeepComparable.IsExactly(Transform, otherT.Transform)) return false;
             if( !DeepComparable.IsExactly(DynamicValue, otherT.DynamicValue)) return false;
             
@@ -1218,6 +1235,7 @@ namespace Hl7.Fhir.Model
 				if (Product != null) yield return Product;
 				if (Quantity != null) yield return Quantity;
 				foreach (var elem in DosageInstruction) { if (elem != null) yield return elem; }
+				foreach (var elem in BodySite) { if (elem != null) yield return elem; }
 				if (Transform != null) yield return Transform;
 				foreach (var elem in DynamicValue) { if (elem != null) yield return elem; }
             }

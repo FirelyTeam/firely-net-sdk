@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.7.0
+// Generated for FHIR v1.8.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -80,6 +80,138 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
+        [FhirType("GuarantorComponent")]
+        [DataContract]
+        public partial class GuarantorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "GuarantorComponent"; } }
+            
+            /// <summary>
+            /// Responsible entity
+            /// </summary>
+            [FhirElement("party", InSummary=true, Order=40)]
+            [References("Patient","RelatedPerson","Organization")]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Party
+            {
+                get { return _Party; }
+                set { _Party = value; OnPropertyChanged("Party"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Party;
+            
+            /// <summary>
+            /// Credit or other hold applied
+            /// </summary>
+            [FhirElement("onHold", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirBoolean OnHoldElement
+            {
+                get { return _OnHoldElement; }
+                set { _OnHoldElement = value; OnPropertyChanged("OnHoldElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirBoolean _OnHoldElement;
+            
+            /// <summary>
+            /// Credit or other hold applied
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public bool? OnHold
+            {
+                get { return OnHoldElement != null ? OnHoldElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        OnHoldElement = null; 
+                    else
+                        OnHoldElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("OnHold");
+                }
+            }
+            
+            /// <summary>
+            /// Guarrantee account during
+            /// </summary>
+            [FhirElement("period", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.Period Period
+            {
+                get { return _Period; }
+                set { _Period = value; OnPropertyChanged("Period"); }
+            }
+            
+            private Hl7.Fhir.Model.Period _Period;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as GuarantorComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Party != null) dest.Party = (Hl7.Fhir.Model.ResourceReference)Party.DeepCopy();
+                    if(OnHoldElement != null) dest.OnHoldElement = (Hl7.Fhir.Model.FhirBoolean)OnHoldElement.DeepCopy();
+                    if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new GuarantorComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as GuarantorComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Party, otherT.Party)) return false;
+                if( !DeepComparable.Matches(OnHoldElement, otherT.OnHoldElement)) return false;
+                if( !DeepComparable.Matches(Period, otherT.Period)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as GuarantorComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Party, otherT.Party)) return false;
+                if( !DeepComparable.IsExactly(OnHoldElement, otherT.OnHoldElement)) return false;
+                if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // GuarantorComponent elements
+                    if (Party != null) yield return Party;
+                    if (OnHoldElement != null) yield return OnHoldElement;
+                    if (Period != null) yield return Period;
+                }
+            }
+            
+        }
+        
+        
         /// <summary>
         /// Account number
         /// </summary>
@@ -298,6 +430,20 @@ namespace Hl7.Fhir.Model
             }
         }
         
+        /// <summary>
+        /// Responsible for the account
+        /// </summary>
+        [FhirElement("guarantor", InSummary=true, Order=210)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Account.GuarantorComponent> Guarantor
+        {
+            get { if(_Guarantor==null) _Guarantor = new List<Hl7.Fhir.Model.Account.GuarantorComponent>(); return _Guarantor; }
+            set { _Guarantor = value; OnPropertyChanged("Guarantor"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Account.GuarantorComponent> _Guarantor;
+        
 
         public override void AddDefaultConstraints()
         {
@@ -324,6 +470,7 @@ namespace Hl7.Fhir.Model
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Owner != null) dest.Owner = (Hl7.Fhir.Model.ResourceReference)Owner.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
+                if(Guarantor != null) dest.Guarantor = new List<Hl7.Fhir.Model.Account.GuarantorComponent>(Guarantor.DeepCopy());
                 return dest;
             }
             else
@@ -353,6 +500,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(Owner, otherT.Owner)) return false;
             if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+            if( !DeepComparable.Matches(Guarantor, otherT.Guarantor)) return false;
             
             return true;
         }
@@ -375,6 +523,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(Owner, otherT.Owner)) return false;
             if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+            if( !DeepComparable.IsExactly(Guarantor, otherT.Guarantor)) return false;
             
             return true;
         }
@@ -397,6 +546,7 @@ namespace Hl7.Fhir.Model
 				if (Subject != null) yield return Subject;
 				if (Owner != null) yield return Owner;
 				if (DescriptionElement != null) yield return DescriptionElement;
+				foreach (var elem in Guarantor) { if (elem != null) yield return elem; }
             }
         }
     }

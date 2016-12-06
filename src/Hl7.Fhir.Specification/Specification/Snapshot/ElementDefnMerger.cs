@@ -113,7 +113,8 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 snap.Fixed = mergeComplexAttribute(snap.Fixed, diff.Fixed);
                 snap.Pattern = mergeComplexAttribute(snap.Pattern, diff.Pattern);
-                snap.Example = mergeComplexAttribute(snap.Example, diff.Example);
+                // TODO: STU3 snapshot generation
+                // snap.Example = mergeComplexAttribute(snap.Example, diff.Example);
                 snap.MinValue = mergeComplexAttribute(snap.MinValue, diff.MinValue);
                 snap.MaxValue = mergeComplexAttribute(snap.MaxValue, diff.MaxValue);
                 
