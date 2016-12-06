@@ -1556,7 +1556,8 @@ namespace Hl7.Fhir.Specification.Tests
                 || hasChanges(elem.Constraint)
                 || isChanged(elem.DefaultValue)
                 || isChanged(elem.DefinitionElement)
-                || isChanged(elem.Example)
+             // TODO: STU3 snapshot generation
+             //   || isChanged(elem.Example)
                 || hasChanges(elem.Extension)
                 || hasChanges(elem.FhirCommentsElement)
                 || isChanged(elem.Fixed)
@@ -1597,7 +1598,8 @@ namespace Hl7.Fhir.Specification.Tests
             if (hasChanges(element.Constraint)) { return "Constraint"; }
             if (isChanged(element.DefaultValue)) { return "DefaultValue"; }
             if (isChanged(element.DefinitionElement)) { return "Definition"; }
-            if (isChanged(element.Example)) { return "Example"; }
+            // TODO: STU3 snapshot generation
+            //  if (isChanged(element.Example)) { return "Example"; }
             if (hasChanges(element.Extension)) { return "Extension"; }
             if (hasChanges(element.FhirCommentsElement)) { return "FhirComments"; }
             if (isChanged(element.Fixed)) { return "Fixed"; }
