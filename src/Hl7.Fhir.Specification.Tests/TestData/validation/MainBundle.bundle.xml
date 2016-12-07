@@ -98,13 +98,13 @@
                 <gender value="male"/>
                 <birthDate value="1932-09-24">
                     <extension url="http://hl7.org/fhir/StructureDefinition/patient-birthTime">
-                        <valueDateTime value="1932-09-24T15:15:34+02:00" />
-                    </extension>                    
+                        <valueDateTime value="1932-09-24T15:15:50+02:00" />
+                    </extension>
                 </birthDate>
             </Patient>
         </resource>
     </entry>
-    <entry>
+  <!--  <entry>
         <fullUrl value="http://example.org/fhir/Practitioner/Hippocrates"/>
         <resource>
             <Practitioner>
@@ -142,12 +142,7 @@
                     <line value="1003 Healthcare Drive"/>
                 </address>
                 <gender value="male"/>
-                <!--                <practitionerRole>
-                    <managingOrganization>
-                        <reference value="Organization/hl7"/>
-                    </managingOrganization>
-                </practitionerRole> -->
             </Practitioner>
         </resource>
-    </entry>
+    </entry> -->
 </Bundle>
