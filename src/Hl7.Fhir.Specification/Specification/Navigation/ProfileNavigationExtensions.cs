@@ -167,11 +167,16 @@ namespace Hl7.Fhir.Specification.Navigation
             return defn.Path.EndsWith("[x]");
         }
 
+        public static string GetNameFromPath(string path)
+        {
+            var pos = path.LastIndexOf(".");
+
+            return pos != -1 ? path.Substring(pos + 1) : path;
+        }
+
         public static string GetNameFromPath(this ElementDefinition defn)
         {
- 	        var pos = defn.Path.LastIndexOf(".");
-
-            return pos != -1 ? defn.Path.Substring(pos+1) : defn.Path;
+            return GetNameFromPath(defn.Path);
         }
 
         public static string GetParentNameFromPath(this ElementDefinition defn)

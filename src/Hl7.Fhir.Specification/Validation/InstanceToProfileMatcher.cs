@@ -15,6 +15,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using Hl7.ElementModel;
+using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Validation
 {
@@ -41,7 +42,8 @@ namespace Hl7.Fhir.Validation
                 }
                 else
                 {
-                    var found = elementsToMatch.Where(ie => NameMatches(definitionElement.PathName, ie)).ToList();
+                    var definitionPath = ProfileNavigationExtensions.GetNameFromPath(definitionElement.Current?.Base?.Path ?? definitionElement.Path);
+                    var found = elementsToMatch.Where(ie => NameMatches(definitionPath, ie)).ToList();
 
                     match.InstanceElements.AddRange(found);
                     elementsToMatch.RemoveAll(e => found.Contains(e));
@@ -85,19 +87,20 @@ namespace Hl7.Fhir.Validation
         }
 
         public static bool NameMatches(string name, IElementNavigator instance)
-        {           
+        {
+            var definedName = name;
             // simple direct match
-            if (name == instance.Name) return true;   
+            if (definedName == instance.Name) return true;   
 
             // match where definition path includes a type suffix (typeslice shorthand)
             // example: path Patient.deceasedBoolean matches Patient.deceased (with type 'boolean')
-            if (name == instance.Name + instance.TypeName.Capitalize()) return true;
+            if (definedName == instance.Name + instance.TypeName.Capitalize()) return true;
 
             // match where definition path is a choice (suffix '[x]'), in this case
             // match the path without the suffix against the name
-            if(name.EndsWith("[x]"))
+            if(definedName.EndsWith("[x]"))
             {
-                if (name.Substring(0, name.Length - 3) == instance.Name) return true;
+                if (definedName.Substring(0, definedName.Length - 3) == instance.Name) return true;
             }
 
             return false;
