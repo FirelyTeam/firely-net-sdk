@@ -643,14 +643,17 @@ namespace Hl7.Fhir.Specification.Navigation
         // [WMR 20161013] New
         private const string RESLICE_NAME_SEPARATOR = "/";
 
-        /// <summary>Determines if the specified element name represents a reslice: "slice/reslice".</summary>
+        /// <summary>Determines if the specified element name represents a reslice: "slice/reslice[/reslice2...]".</summary>
         public static bool IsResliceName(string sliceName) => sliceName != null && sliceName.Contains(RESLICE_NAME_SEPARATOR);
 
         /// <summary>Extracts the name of the base slice from a reslicing constraint name.</summary>
         /// <returns>The name of the base slice, or <c>null</c>.</returns>
         /// <example>
-        /// <code>GetBaseSliceName("slice/reslice")</code>
-        /// Returns: "slice"
+        /// <code>
+        /// GetBaseSliceName("A/B") == "A"
+        /// GetBaseSliceName("A/B/C") == "A/B"
+        /// GetBaseSliceName("A") == null
+        /// </code>
         /// </example>
         public static string GetBaseSliceName(string resliceName)
         {
@@ -663,6 +666,30 @@ namespace Hl7.Fhir.Specification.Navigation
                 }
             }
             return null;
+        }
+
+        /// <summary>Determines if the specified slice name represents a reslice of an existing slice.</summary>
+        /// <param name="sliceName">The name of the candidate reslice.</param>
+        /// <param name="baseSliceName">The name of an existing slice.</param>
+        /// <returns><c>true</c> if <paramref name="sliceName"/> is a reslice of <paramref name="baseSliceName"/>, or <c>false</c> otherwise.</returns>
+        /// <example>
+        /// <code>
+        /// IsResliceOf("A/B", "A") == true
+        /// 
+        /// IsResliceOf("A", "A") == false
+        /// IsResliceOf("B/A", "A") == false
+        /// IsResliceOf("A/B/C", "A") == false
+        /// </code>
+        /// </example>
+        public static bool IsResliceOf(string sliceName, string baseSliceName)
+        {
+            // return sliceName.StartsWith(baseSliceName + RESLICE_NAME_SEPARATOR);
+            return sliceName != null
+                && baseSliceName != null
+                && sliceName.Length > baseSliceName.Length + 1
+                && string.CompareOrdinal(sliceName, 0, baseSliceName, 0, baseSliceName.Length) == 0
+                && sliceName.Substring(baseSliceName.Length, 1) == RESLICE_NAME_SEPARATOR
+                && sliceName.IndexOf(RESLICE_NAME_SEPARATOR, baseSliceName.Length + 1) == -1;
         }
 
         public override string ToString()

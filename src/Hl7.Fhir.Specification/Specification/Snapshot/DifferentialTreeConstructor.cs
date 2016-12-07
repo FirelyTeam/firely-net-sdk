@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     // The current element represents a sibling of the previous element
                     // Note: don't catch here, let the Snapshot Generator handle this
-                    Debug.WriteLineIf(index > 0 && diff[index].Name == diff[index - 1].Name && diff[index - 1].Slicing == null, $"Warning! Duplicate constraint at index {index}: '{thisPath}'");
+                    Debug.WriteLineIf(index > 0 && diff[index].Name != null && diff[index].Name == diff[index - 1].Name && diff[index - 1].Slicing == null, $"Warning! Duplicate constraint at index {index}: '{thisPath}'");
 
 #if CGNAMING
                     // Handle Chris Grenz naming, e.g.

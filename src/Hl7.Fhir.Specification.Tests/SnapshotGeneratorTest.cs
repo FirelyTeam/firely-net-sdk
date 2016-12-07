@@ -1948,6 +1948,86 @@ namespace Hl7.Fhir.Specification.Tests
             return result;
         }
 
+        // [WMR 20161207] NEW
+        // Verify reslicing order
+        [TestMethod]
+        public void TestReslicingOrder()
+        {
+            var dirSource = new DirectorySource("TestData/validation", includeSubdirectories: false);
+            var sd = dirSource.FindStructureDefinition("http://example.com/StructureDefinition/patient-telecom-reslice-ek");
+            Assert.IsNotNull(sd);
+
+            // Verify original differential - defines reslicing
+            Debug.Print("Verify differential...");
+            var diffNav = ElementDefinitionNavigator.ForDifferential(sd);
+            assertPatientTelecomReslice(diffNav);
+
+            StructureDefinition expanded;
+            generateSnapshotAndCompare(sd, out expanded);
+
+            Debug.Print("Verify snapshot...");
+            var snapNav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            assertPatientTelecomReslice(snapNav);
+        }
+
+        void assertPatientTelecomReslice(ElementDefinitionNavigator nav)
+        {
+            Assert.IsTrue(nav.MoveToFirstChild());  // Patient
+
+            if (ElementDefinitionNavigator.IsRootPath(nav.Path))
+            {
+                Assert.IsTrue(nav.MoveToChild("telecom"));
+            }
+
+            var bm = nav.Bookmark();
+            do
+            {
+                Debug.Print($"{nav.Path} : '{nav.Current.Name}'");
+            } while (nav.MoveToNext("telecom"));
+            nav.ReturnToBookmark(bm);
+
+#if true
+            // Patient.telecom - slicing introduction
+            Assert.IsTrue(nav.Path == "Patient.telecom");
+            Assert.IsNotNull(nav.Current.Slicing);
+
+            // Patient.telecom - slice "phone"
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.IsTrue(nav.Path == "Patient.telecom");
+            Assert.IsTrue(nav.Current.Name == "phone");
+
+            // Patient.telecom - slice "email"
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.IsTrue(nav.Path == "Patient.telecom");
+            Assert.IsTrue(nav.Current.Name == "email");
+
+            // Patient.telecom - reslice "email/home"
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.IsTrue(nav.Path == "Patient.telecom");
+            Assert.IsTrue(nav.Current.Name == "email/home");
+
+            // Patient.telecom - reslice "email/work"
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.IsTrue(nav.Path == "Patient.telecom");
+            Assert.IsTrue(nav.Current.Name == "email/work");
+
+            // Patient.telecom - slice "other"
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.IsTrue(nav.Path == "Patient.telecom");
+            Assert.IsTrue(nav.Current.Name == "other");
+
+            // Patient.telecom - reslice "other/home"
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.IsTrue(nav.Path == "Patient.telecom");
+            Assert.IsTrue(nav.Current.Name == "other/home");
+
+            // Patient.telecom - reslice "other/work"
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.IsTrue(nav.Path == "Patient.telecom");
+            Assert.IsTrue(nav.Current.Name == "other/work");
+#endif
+        }
+
     }
 
 }

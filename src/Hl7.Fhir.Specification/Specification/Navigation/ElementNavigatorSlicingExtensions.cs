@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Specification.Navigation
                 var baseComp = nav.Current.Base != null ? nav.Current.Base.Path : nav.Path;
                 if (baseComp != null && (baseComp == basePath || ElementDefinitionNavigator.IsRenamedChoiceElement(basePath, baseComp)))
                 {
-                    if (sliceName == null || nav.Current.Name == sliceName)
+                    if (sliceName == null || nav.Current.Name == sliceName || ElementDefinitionNavigator.IsResliceOf(nav.Current.Name, sliceName))
                     {
                         // Match, advance cursor
                         bm = nav.Bookmark();

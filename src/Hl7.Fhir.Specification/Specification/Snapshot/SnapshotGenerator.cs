@@ -737,6 +737,9 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Add new slice after the last existing slice in base profile
             var sliceName = diff.Current.Name;
             var baseSliceName = ElementDefinitionNavigator.GetBaseSliceName(sliceName);
+
+            // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(addSlice)}] Base Path = '{snap.Path}' Base Slice Name = '{snap.Current.Name}' Diff Slice Name = {sliceName}");
+
             snap.MoveToLastSlice(baseSliceName);
 
             var lastSlice = snap.Bookmark();
