@@ -74,6 +74,27 @@ namespace Hl7.Fhir.Tests.Model
             Assert.AreEqual("Hi!", copied.Annotation<AnnotationData>().Data);
         }
 
+        [TestMethod]
+        public void TestAnnotationsEnumType()
+        {
+            FhirBoolean data = new FhirBoolean(true);
+
+            data.SetAnnotation(SummaryType.True);
+
+            var copied = (FhirBoolean)data.DeepCopy();
+
+            Assert.AreEqual(SummaryType.True, copied.Annotation<SummaryType>());
+
+            copied.SetAnnotation(SummaryType.Text);
+            Assert.AreEqual(SummaryType.Text, copied.Annotation<SummaryType>());
+
+            Assert.IsTrue(copied.HasAnnotation<SummaryType>());
+
+            copied.RemoveAnnotations<SummaryType>();
+
+            Assert.IsFalse(copied.HasAnnotation<SummaryType>());
+        }
+
 
         [TestMethod]
         public void SetBaseUri()
