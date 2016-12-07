@@ -2070,7 +2070,106 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
+        // [WMR 20161207] TODO
+        // Handle type slicing
+        [TestMethod]
+        public void TestTypeSlicing()
+        {
+            var sd = new StructureDefinition()
+            {
+                ConstrainedType = FHIRDefinedType.Observation,
+                Base = ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Observation),
+                Name = "MyTestObservation",
+                Url = "http://example.org/fhir/StructureDefinition/MyTestObservation",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Observation.value[x]")
+                        {
+                            Slicing = new ElementDefinition.SlicingComponent()
+                            {
+                                Discriminator = new string[] { "@type" },
+                                Ordered = false,
+                                Rules = ElementDefinition.SlicingRules.Open
+                            }
+                        }
+                        ,new ElementDefinition("Observation.valueString")
+                        {
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent() { Code = FHIRDefinedType.String }
+                            }
+                        }
+                    }
+                }
+            };
+
+            var resources = new Resource[] { sd };
+            var resolver = new InMemoryResourceResolver(resources);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            var _generator = new SnapshotGenerator(multiResolver);
+            StructureDefinition expanded = null;
+
+            generateSnapshotAndCompare(sd, out expanded);
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            Debug.Print("[1] Observation.value slice:");
+            var elems = expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Observation.value"));
+            foreach (var elem in elems)
+            {
+                Debug.Print(elem.Path);
+            }
+
+            var nav = new ElementDefinitionNavigator(expanded);
+            Assert.IsTrue(nav.MoveToFirstChild());
+            Assert.AreEqual(nav.Path, "Observation");
+            Assert.IsTrue(nav.MoveToChild("value[x]"));
+            Assert.IsTrue(nav.MoveToNext("valueString"));
+
+            sd.Differential.Element.Add(
+                new ElementDefinition("Observation.valueCodeableConcept")
+                {
+                    Type = new List<ElementDefinition.TypeRefComponent>()
+                    {
+                        new ElementDefinition.TypeRefComponent() { Code = FHIRDefinedType.CodeableConcept }
+                    }
+                }
+            );
+
+            generateSnapshotAndCompare(sd, out expanded);
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            Debug.Print("[2] Observation.value slice:");
+            elems = expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Observation.value"));
+            foreach (var elem in elems)
+            {
+                Debug.Print(elem.Path);
+            }
+
+            nav = new ElementDefinitionNavigator(expanded);
+            Assert.IsTrue(nav.MoveToFirstChild());
+            Assert.AreEqual(nav.Path, "Observation");
+            Assert.IsTrue(nav.MoveToChild("value[x]"));
+            Assert.IsTrue(nav.MoveToNext("valueString"));
+            Assert.IsTrue(nav.MoveToNext("valueCodeableConcept"));
+        }
 
     }
 
+    class InMemoryResourceResolver : IResourceResolver
+    {
+        ILookup<string, Resource> _resources;
+
+        public InMemoryResourceResolver(IEnumerable<Resource> resources)
+        {
+            _resources = resources.OfType<IConformanceResource>().ToLookup(r => r.Url, r => r as Resource);
+        }
+
+        public Resource ResolveByCanonicalUri(string uri) => _resources[uri].FirstOrDefault();
+
+        public Resource ResolveByUri(string uri) => _resources[uri].FirstOrDefault();
+    }
 }
