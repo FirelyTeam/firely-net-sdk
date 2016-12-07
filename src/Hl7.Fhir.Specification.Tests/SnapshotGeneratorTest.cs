@@ -1986,7 +1986,6 @@ namespace Hl7.Fhir.Specification.Tests
             } while (nav.MoveToNext("telecom"));
             nav.ReturnToBookmark(bm);
 
-#if true
             // Patient.telecom - slicing introduction
             Assert.IsTrue(nav.Path == "Patient.telecom");
             Assert.IsNotNull(nav.Current.Slicing);
@@ -2025,8 +2024,52 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.MoveToNext());
             Assert.IsTrue(nav.Path == "Patient.telecom");
             Assert.IsTrue(nav.Current.Name == "other/work");
-#endif
         }
+
+
+        // [WMR 20161207] DEBUGGING
+        // List all complex extensions that are available in the TestData folder
+
+        // http://hl7.org/fhir/StructureDefinition/cqif-basic-codeSystem : 'TestData/snapshot-test/extensions\extension-cqif-basic-codesystem.xml'
+        // http://hl7.org/fhir/StructureDefinition/cqif-basic-contributor : 'TestData/snapshot-test/extensions\extension-cqif-basic-contributor.xml'
+        // http://hl7.org/fhir/StructureDefinition/cqif-basic-data : 'TestData/snapshot-test/extensions\extension-cqif-basic-data.xml'
+        // http://hl7.org/fhir/StructureDefinition/cqif-basic-guidance-action : 'TestData/snapshot-test/extensions\extension-cqif-basic-guidance-action.xml'
+        // http://hl7.org/fhir/StructureDefinition/cqif-basic-guidance-trigger : 'TestData/snapshot-test/extensions\extension-cqif-basic-guidance-trigger.xml'
+        // http://hl7.org/fhir/StructureDefinition/cqif-basic-library : 'TestData/snapshot-test/extensions\extension-cqif-basic-library.canonical.xml'
+        // http://hl7.org/fhir/StructureDefinition/cqif-basic-model : 'TestData/snapshot-test/extensions\extension-cqif-basic-model.xml'
+        // http://hl7.org/fhir/StructureDefinition/cqif-basic-parameter : 'TestData/snapshot-test/extensions\extension-cqif-basic-parameter.xml'
+        // http://hl7.org/fhir/StructureDefinition/cqif-basic-relatedResource : 'TestData/snapshot-test/extensions\extension-cqif-basic-relatedresource.xml'
+        // http://hl7.org/fhir/StructureDefinition/cqif-basic-valueSet : 'TestData/snapshot-test/extensions\extension-cqif-basic-valueset.xml'
+        // http://hl7.org/fhir/StructureDefinition/encounter-relatedCondition : 'TestData/snapshot-test/extensions\extension-encounter-relatedcondition.xml'
+        // http://hl7.org/fhir/StructureDefinition/family-member-history-genetics-parent : 'TestData/snapshot-test/extensions\extension-family-member-history-genetics-parent.xml'
+        // http://hl7.org/fhir/StructureDefinition/gao-extension-item : 'TestData/snapshot-test/extensions\extension-gao-extension-item.canonical.xml'
+        // http://hl7.org/fhir/StructureDefinition/goal-target : 'TestData/snapshot-test/extensions\extension-goal-target.xml'
+        // http://hl7.org/fhir/StructureDefinition/patient-clinicalTrial : 'TestData/snapshot-test/extensions\extension-patient-clinicaltrial.xml'
+        // http://hl7.org/fhir/StructureDefinition/patient-nationality : 'TestData/snapshot-test/extensions\extension-patient-nationality.xml'
+        // http://hl7.org/fhir/StructureDefinition/qicore-adverseevent-cause : 'TestData/snapshot-test/extensions\extension-qicore-adverseevent-cause.xml'
+        // http://hl7.org/fhir/StructureDefinition/questionnaire-enableWhen : 'TestData/snapshot-test/extensions\extension-questionnaire-enablewhen.xml'
+
+        [TestMethod]
+        [Ignore]
+        public void FindComplexTestExtensions()
+        {
+            Debug.WriteLine("Complex extension in TestData folder:");
+            var dirSource = new DirectorySource("TestData/snapshot-test/extensions", includeSubdirectories: false);
+            var uris = dirSource.ListResourceUris(ResourceType.StructureDefinition);
+            foreach (var uri in uris)
+            {
+                var sd = dirSource.FindStructureDefinition(uri);
+                if (sd.IsExtension)
+                {
+                    if (sd.Differential.Element.Any(e => e.Path.StartsWith("Extension.extension.", StringComparison.Ordinal)))
+                    {
+                        var orgInfo = sd.Annotation<OriginInformation>();
+                        Debug.WriteLine($"{uri} : '{orgInfo?.Origin}'");
+                    }
+                }
+            }
+        }
+
 
     }
 
