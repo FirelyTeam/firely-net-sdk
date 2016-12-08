@@ -43,11 +43,11 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Hl7.FluentPath, Version=0.4.0.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Hl7.FluentPath.0.4.0-alpha3\lib\net45\Hl7.FluentPath.dll</HintPath>
+    <Reference Include="Hl7.FhirPath, Version=0.4.0.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hl7.FhirPath.0.4.0\lib\net45\Hl7.FhirPath.dll</HintPath>
       <Private>True</Private>
     </Reference>
-	    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
@@ -76,6 +76,7 @@
       <Link>Support\StringExtensions.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyVersionInfo.cs" />
+    <Compile Include="Specification\Navigation\ElementNavigatorSlicingExtensions.cs" />
     <Compile Include="Specification\Snapshot\SnapshotElementIdGenerator.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorAnnotations.cs" />
     <Compile Include="Specification\Snapshot\SnapshotRecursionStack.cs" />
@@ -94,7 +95,7 @@
     <Compile Include="Specification\Terminology\LocalTerminologyServer.cs" />
     <Compile Include="Specification\Terminology\ValueSetExpander.cs" />
     <Compile Include="Support\ValidationOutcomeExtensions.cs" />
-    <Compile Include="Specification\ValueSet\ValueSetExpander.cs" />
+    <Compile Include="Validation\BaseBucket.cs" />
     <Compile Include="Validation\BatchValidationExtensions.cs" />
     <Compile Include="Validation\BindingValidator.cs" />
     <Compile Include="Validation\Cardinality.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Validation\ElementDefinitionNavigatorExtensions.cs" />
     <Compile Include="Validation\ElementNavigatorParsingExtensions.cs" />
     <Compile Include="Validation\FixedPatternValidationExtensions.cs" />
+    <Compile Include="Validation\IBucket.cs" />
     <Compile Include="Validation\InstanceToProfileMatcher.cs" />
     <Compile Include="Support\Issue.cs" />
     <Compile Include="Specification\Navigation\ElementNavigatorTypeExtensions.cs" />
@@ -129,6 +131,10 @@
     <Compile Include="Validation\OperationOutcomeExtensions.cs" />
     <Compile Include="Validation\ProfileAssertion.cs" />
     <Compile Include="Validation\ProfilePreprocessor.cs" />
+    <Compile Include="Validation\ElementBucket.cs" />
+    <Compile Include="Validation\SliceBucket.cs" />
+    <Compile Include="Validation\SliceGroupBucket.cs" />
+    <Compile Include="Validation\SliceValidationExtensions.cs" />
     <Compile Include="Validation\XmlValidationExtensions.cs" />
     <Compile Include="Validation\PocoValidationExtensions.cs" />
     <Compile Include="Validation\ScopeTracker.cs" />

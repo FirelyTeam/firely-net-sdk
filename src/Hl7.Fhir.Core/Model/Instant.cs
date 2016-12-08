@@ -29,7 +29,7 @@
 */
 
 using System;
-using Hl7.FluentPath;
+using Hl7.FhirPath;
 
 namespace Hl7.Fhir.Model
 {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
             return new Instant(DateTimeOffset.Now);
         }
 
-        public Hl7.FluentPath.PartialDateTime? ToPartialDateTime()
+        public Hl7.FhirPath.PartialDateTime? ToPartialDateTime()
         {
             if (Value != null)
                 return PartialDateTime.FromDateTime(Value.Value);

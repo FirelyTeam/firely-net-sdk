@@ -9,7 +9,7 @@
 using Hl7.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
-using Hl7.FluentPath;
+using Hl7.FhirPath;
 using System;
 using System.Linq;
 
@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Validation
                     return instance.CompareTo(((Instant)definition).ToPartialDateTime());
             }
 
-            else if (instance is Hl7.FluentPath.Time && definition is Model.Time)
+            else if (instance is Hl7.FhirPath.Time && definition is Model.Time)
                 return instance.CompareTo(((Model.Time)definition).ToTime());
 
             else if (instance is decimal && definition is FhirDecimal)
@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Validation
             else if (instance is string && definition is FhirString)
                 return instance.CompareTo(((FhirString)definition).Value);
 
-            else if (instance is Hl7.FluentPath.Quantity && definition is Model.Quantity)
+            else if (instance is Hl7.FhirPath.Quantity && definition is Model.Quantity)
                 return instance.CompareTo(((Model.Quantity)definition).ToQuantity());
 
             throw Error.NotSupported($"Value '{definition}' and instance value '{instance}' are of incompatible types and can not be compared");
@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Validation
                 if (q.Value == null)
                     throw Error.NotSupported("Cannot interpret quantities without a value");
 
-                return new Hl7.FluentPath.Quantity(q.Value.Value, q.Unit, q.System ?? Hl7.FluentPath.Quantity.UCUM);
+                return new Hl7.FhirPath.Quantity(q.Value.Value, q.Unit, q.System ?? Hl7.FhirPath.Quantity.UCUM);
             }
             else if (instance.Value is IComparable)
                 return (IComparable)instance.Value;
