@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Practitioner>
+<Practitioner xmlns="http://hl7.org/fhir">
     <id value="Hippocrates"/>
     <meta>
         <lastUpdated value="2012-05-29T23:45:32Z"/>
@@ -13,7 +13,7 @@
         <type>
             <coding>
                 <system value="http://hl7.org/fhir/v2/0203"/>
-                <code value="SS"/>
+                <code value="TAX"/>
             </coding>
         </type>
         <system value="http://hl7.org/fhir/sid/us-ssn"/>

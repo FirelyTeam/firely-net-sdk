@@ -64,14 +64,11 @@ namespace Hl7.Fhir.Validation
 
             foreach (var element in match.InstanceElements)
             {
-                var matchOutcome = bucket.Add(element);
+                var success = bucket.Add(element);
 
                 // For the "root" slice group (=the original core element that was sliced, not resliced)
                 // any element that does not match is an error
-                if (!matchOutcome.Success)
-                {
-                    outcome.Add(matchOutcome);
-                }
+                // Since the ChildNameMatcher currently does the matching, this will never go wrong
             }
 
             outcome.Add(bucket.Validate(validator, parent));

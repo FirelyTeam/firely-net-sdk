@@ -13,98 +13,42 @@
 			<path value="Patient.telecom" />
 			<slicing>
 				<discriminator value="system" />
-				<discriminator value="use" />
-				<rules value="closed" />
+				<ordered value="true" />
+				<rules value="open" />
 			</slicing>
 		</element>
 
-    <!-- First, slice into a homePhone = PHONE + HOME -->
-    <element>
-      <path value="Patient.telecom" />
-      <name value="homePhone" />
-    </element>
+	    <!-- First, slice into a PHONE, use constrained to work -->
+	    <element>
+	      <path value="Patient.telecom" />
+	      <name value="phone" />
+	    </element>
 
-    <element>
+	    <element>
 			<path value="Patient.telecom.system" />
-			<name value="homePhone.system" />
 			<min value="1" />
 			<fixedCode value="phone" />
 		</element>
 		<element>
 			<path value="Patient.telecom.use" />
-			<name value="homePhone.use" />
-			<min value="1" />
-			<fixedCode value="home" />
-		</element>
-
-    <!-- First, slice into a homePhone = PHONE + MOBILE -->
-    <element>
-      <path value="Patient.telecom" />
-      <name value="mobilePhone" />
-    </element>
-
-    <element>
-			<path value="Patient.telecom.system" />
-			<name value="mobilePhone.system" />
-			<min value="1" />
-			<fixedCode value="phone" />
-		</element>
-		<element>
-			<path value="Patient.telecom.use" />
-			<name value="mobilePhone.use" />
-			<min value="1" />
-			<fixedCode value="mobile" />
-		</element>
-
-    <!-- Now, the emails. homeEmail = EMAIL + HOME -->
-    <element>
-      <path value="Patient.telecom" />
-      <name value="homeEmail" />
-    </element>
-
-    <element>
-			<path value="Patient.telecom.system" />
-			<name value="homeEmail.system" />
-			<min value="1" />
-			<fixedCode value="email" />
-		</element>
-		<element>
-			<path value="Patient.telecom.use" />
-			<name value="homeEmail.use" />
-			<min value="1" />
-			<fixedCode value="home" />
-		</element>
-
-    <!-- Finally, wokrEmail = EMAIL + WORK -->
-    <element>
-      <path value="Patient.telecom" />
-      <name value="workEmail" />
-    </element>
-
-    <element>
-			<path value="Patient.telecom.system" />
-			<name value="workEmail.system" />
-			<min value="1" />
-			<fixedCode value="email" />
-		</element>
-		<element>
-			<path value="Patient.telecom.use" />
-			<name value="workEmail.use" />
 			<min value="1" />
 			<fixedCode value="work" />
 		</element>
 
-    <!-- A category with just pager, no constraints on telecom.use
-    <element>
-			<path value="Patient.telecom" />
-			<name value="pager" />
-			<comments value="Only one of the two discriminators fixed." />
+	    <!-- Then, slice into OTHER, make sure "use" cannot be used -->
+	    <element>
+	      <path value="Patient.telecom" />
+	      <name value="other" />
+	    </element>
+
+	    <element>
+			<path value="Patient.telecom.system" />
+			<min value="1" />
+			<fixedCode value="other" />
 		</element>
 		<element>
-			<path value="Patient.telecom.system" />
-			<name value="pager.system" />
-			<min value="1" />
-			<fixedCode value="pager" />
-		</element> -->
+			<path value="Patient.telecom.use" />
+			<max value="0" />
+		</element>
 	</differential>
 </StructureDefinition>

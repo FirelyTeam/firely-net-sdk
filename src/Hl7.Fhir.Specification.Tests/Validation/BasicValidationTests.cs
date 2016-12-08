@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Validation
 
             Assert.IsTrue(ChildNameMatcher.NameMatches("active", data));
             Assert.IsTrue(ChildNameMatcher.NameMatches("activeBoolean", data));
-            Assert.IsFalse(ChildNameMatcher.NameMatches("activeDateTime", data));
+            Assert.IsFalse(ChildNameMatcher.NameMatches("activeDateTime", data)); 
             Assert.IsTrue(ChildNameMatcher.NameMatches("active[x]", data));
             Assert.IsFalse(ChildNameMatcher.NameMatches("activate", data));
         }
@@ -307,7 +307,7 @@ namespace Hl7.Fhir.Validation
             //      http://validationtest.org/fhir/StructureDefinition/QuestionnaireWithFixedType
             var report = _validator.Validate(questionnaire);
             Assert.IsFalse(report.Success);
-            Assert.AreEqual(19, report.Errors);
+            Assert.AreEqual(35, report.Errors);
             Assert.AreEqual(3, report.Warnings);           // 3x narrative constraint with no fhirpath
         }
 
@@ -515,6 +515,31 @@ namespace Hl7.Fhir.Validation
 
 
         [TestMethod]
+        public void ValidateExtensionExamples()
+        {
+            var levinXml = File.ReadAllText(@"TestData\validation\Levin.patient.xml");
+            var levin = (new FhirXmlParser()).Parse<Patient>(levinXml);
+            Assert.IsNotNull(levin);
+
+            var report = _validator.Validate(levin);
+
+            Assert.IsTrue(report.Success);
+            Assert.AreEqual(3, report.Warnings);
+
+            // Now, rename the mandatory NCT sub-extension
+            levin.Extension[1].Extension[0].Url = "NCTX";
+            report = _validator.Validate(levin);
+            Assert.IsFalse(report.Success);
+            Assert.IsTrue(report.ToString().Contains("Instance count for 'Extension.extension:NCT' is 0"));
+
+            levin.Extension[1].Extension[0].Url = "NCT";
+            levin.Extension[1].Extension[1].Value = new FhirString("wrong!");
+            report = _validator.Validate(levin);
+            Assert.IsFalse(report.Success);
+            Assert.IsTrue(report.ToString().Contains("The declared type of the element (Period) is incompatible with that of the instance ('string')"));
+        }
+
+        [TestMethod]
         public void ValidateBundleExample()
         {
             var bundle = _source.ResolveByUri("http://example.org/examples/Bundle/MainBundle");
@@ -523,9 +548,11 @@ namespace Hl7.Fhir.Validation
             var report = _validator.Validate(bundle);
 
             Assert.IsTrue(report.Success);
-            Assert.AreEqual(22, report.Warnings);
+            Assert.AreEqual(20, report.Warnings);
         }
 
+
+     
 
 
 

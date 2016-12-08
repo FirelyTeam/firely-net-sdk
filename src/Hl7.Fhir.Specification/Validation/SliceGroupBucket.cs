@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Validation
 
         public IList<IElementNavigator> Members => Entry.Members;
 
-        public OperationOutcome Add(IElementNavigator candidate)
+        public bool Add(IElementNavigator candidate)
         {
             return Entry.Add(candidate);
         }
@@ -114,9 +114,9 @@ namespace Hl7.Fhir.Validation
                 for(var sliceNumber = 0; sliceNumber < ChildSlices.Count; sliceNumber++)
                 {
                     var sliceName = ChildSlices[sliceNumber].Name;
-                    var sliceOutcome = ChildSlices[sliceNumber].Add(candidate);
+                    var success = ChildSlices[sliceNumber].Add(candidate);
 
-                    if (sliceOutcome.Success)
+                    if (success)
                     {
                         // The instance matched a slice that we have already passed, if order matters, 
                         // this is not allowed

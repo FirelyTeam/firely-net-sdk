@@ -22,18 +22,8 @@ namespace Hl7.Fhir.Validation
         public Cardinality Cardinality { get; private set; }
         public IList<IElementNavigator> Members { get; private set; } = new List<IElementNavigator>();
 
-        public virtual OperationOutcome Add(IElementNavigator instance)
-        {
-            var outcome = IsMember(instance);
-
-            if (outcome.Success)
-                Members.Add(instance);
-
-            return outcome;
-        }
-
-        protected abstract OperationOutcome IsMember(IElementNavigator candidate);
-
+        public abstract bool Add(IElementNavigator instance);
+  
         public virtual OperationOutcome Validate(Validator validator, IElementNavigator errorLocation)
         {
             var outcome = new OperationOutcome();
