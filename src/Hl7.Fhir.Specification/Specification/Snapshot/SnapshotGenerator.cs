@@ -174,16 +174,17 @@ namespace Hl7.Fhir.Specification.Snapshot
             var differential = structure.Differential;
             if (differential == null)
             {
-                // [WMR 20160905] Or simply return the expanded base profile?
-                throw Error.Argument(nameof(structure), "Invalid input for snapshot generator. The specified StructureDefinition does not contain a differential component.");
+                // [WMR 20161208] TODO: Handle missing differential
+                // throw Error.Argument(nameof(structure), "Invalid input for snapshot generator. The specified StructureDefinition does not contain a differential component.");
+                differential = structure.Differential = new StructureDefinition.DifferentialComponent() { Element = new List<ElementDefinition>() };
             }
 
             // [WMR 20160902] Also handle core resource / datatype definitions
-            if (differential.Element == null || differential.Element.Count == 0)
-            {
-                // [WMR 20160905] Or simply return the expanded base profile?
-                throw Error.Argument(nameof(structure), "Invalid input for snapshot generator. The differential component of the specified StructureDefinition is empty.");
-            }
+            //if (differential.Element == null || differential.Element.Count == 0)
+            //{
+            //    // [WMR 20160905] Or simply return the expanded base profile?
+            //    throw Error.Argument(nameof(structure), "Invalid input for snapshot generator. The differential component of the specified StructureDefinition is empty.");
+            //}
 
             // [WMR 20160718] Also accept extension definitions (IsConstraint == false)
             if (structure.IsConstraint && structure.Base == null)
@@ -196,7 +197,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (structure.Base != null)
             {
                 var baseStructure = _resolver.FindStructureDefinition(structure.Base);
-                if (!ensureSnapshot(baseStructure, structure.Base, ToNamedNode(differential.Element[0])))
+                var location = differential.Element.Count > 0 ? ToNamedNode(differential.Element[0]) : null;
+                if (!ensureSnapshot(baseStructure, structure.Base, location))
                 {
                     // Fatal error...
                     return null;
