@@ -103,6 +103,8 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // snap.base should already be there, and is not changed by the diff
 
+                // Type collection has different semantics; any change replaces the inherited type (no item merging)
+                // i.e. derived profiles can remove inherited types
                 if (!diff.Type.IsNullOrEmpty() && !diff.Type.IsExactly(snap.Type))
                 {
                     snap.Type = new List<ElementDefinition.TypeRefComponent>(diff.Type.DeepCopy());

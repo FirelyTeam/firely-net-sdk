@@ -93,7 +93,8 @@ namespace Hl7.Fhir.Specification.Tests
             // Throw on unresolved profile references; must include in TestData folder
             ExpandExternalProfiles = true,
             ForceExpandAll = true,
-            MarkChanges = false
+            MarkChanges = false,
+            GenerateElementIds = false // STU3
         };
 
         [TestInitialize]
@@ -410,7 +411,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(cnt > 0, $"Expected element is missing from {label} component. Path = '{path}', name = '{name}'.");
             Assert.IsTrue(cnt == 1, $"Found multiple matching elements in {label} component for Path = '{path}', name = '{name}'.");
             var elem = matches[0];
-            if (elementId != null)
+            if (_settings.GenerateElementIds && elementId != null)
             {
                 Assert.AreEqual(elementId, elem.ElementId, $"Invalid elementId in {label} component. Expected = '{elementId}', actual = '{elem.ElementId}'.");
             }
@@ -421,12 +422,14 @@ namespace Hl7.Fhir.Specification.Tests
         {
             IList<ElementDefinition> _elements;
             ElementDefinition _current;
+            SnapshotGeneratorSettings _settings;
             int _pos;
 
-            public ElementVerifier(StructureDefinition sd)
+            public ElementVerifier(StructureDefinition sd, SnapshotGeneratorSettings settings)
             {
                 Assert.IsNotNull(sd);
                 Assert.IsTrue(sd.HasSnapshot);
+                _settings = settings;
                 _elements = sd.Snapshot.Element;
                 _pos = 0;
                 var ann = sd.Annotation<OriginInformation>();
@@ -455,7 +458,7 @@ namespace Hl7.Fhir.Specification.Tests
                         {
                             Assert.AreEqual(name, element.Name, $"Invalid element name. Expected = '{name}', actual = '{element.Name}'.");
                         }
-                        if (elementId != null)
+                        if (_settings.GenerateElementIds && elementId != null)
                         {
                             Assert.AreEqual(elementId, element.ElementId, $"Invalid elementId. Expected = '{elementId}', actual = '{element.ElementId}'.");
                         }
@@ -525,7 +528,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Verify complex extension used by patient-with-extensions profile
             // patient-research-authorization-profile.xml
             sd = generateSnapshot(@"http://example.com/fhir/StructureDefinition/patient-research-authorization");
-            verifier = new ElementVerifier(sd);
+            verifier = new ElementVerifier(sd, _settings);
             verifier.VerifyElement("Extension.extension", null, "Extension.extension");
             verifier.VerifyElement("Extension.extension", "type", "Extension.extension:type");
             verifier.VerifyElement("Extension.extension.url", "type.url", "Extension.extension:type.url", new FhirUri("type"));
@@ -538,7 +541,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Basic Patient profile that references a set of extensions
             // patient-extensions-profile.xml
             sd = generateSnapshot(@"http://example.com/fhir/SD/patient-with-extensions");
-            verifier = new ElementVerifier(sd);
+            verifier = new ElementVerifier(sd, _settings);
             verifier.VerifyElement("Patient.extension", null, "Patient.extension");
             verifier.VerifyElement("Patient.extension", "doNotCall", "Patient.extension:doNotCall");
             verifier.VerifyElement("Patient.extension", "legalCase", "Patient.extension:legalCase");
@@ -558,7 +561,7 @@ namespace Hl7.Fhir.Specification.Tests
                      new ElementDefinition() { Path = "Patient.name", Name = "maidenName" }
                  )
             );
-            verifier = new ElementVerifier(sd);
+            verifier = new ElementVerifier(sd, _settings);
             verifier.VerifyElement("Patient.name", null, "Patient.name");
             verifier.VerifyElement("Patient.name", "officialName", "Patient.name:officialName");
             verifier.VerifyElement("Patient.name.text", "officialName.text", "Patient.name:officialName.text");
@@ -579,7 +582,7 @@ namespace Hl7.Fhir.Specification.Tests
                      new ElementDefinition() { Path = "Patient.telecom", Name = "workEmail" }
                  )
             );
-            verifier = new ElementVerifier(sd);
+            verifier = new ElementVerifier(sd, _settings);
             verifier.VerifyElement("Patient.telecom", null, "Patient.telecom");
             verifier.VerifyElement("Patient.telecom", "homePhone", "Patient.telecom:homePhone");
             verifier.VerifyElement("Patient.telecom.system", "homePhone.system", "Patient.telecom:homePhone.system", new Code("phone"));
@@ -606,7 +609,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // patient-careprovider-type-slice-profile.xml
             sd = generateSnapshot(@"http://example.com/fhir/SD/patient-careprovider-type-slice");
-            verifier = new ElementVerifier(sd);
+            verifier = new ElementVerifier(sd, _settings);
             verifier.VerifyElement("Patient.careProvider", null, "Patient.careProvider");
             verifier.VerifyElement("Patient.careProvider", "organizationCare", "Patient.careProvider:organizationCare");
             verifier.VerifyElement("Patient.careProvider", "practitionerCare", "Patient.careProvider:practitionerCare");
@@ -614,7 +617,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Verify re-slicing
             // patient-careprovider-type-reslice-profile.xml
             sd = generateSnapshot(@"http://example.com/fhir/SD/patient-careprovider-type-reslice");
-            verifier = new ElementVerifier(sd);
+            verifier = new ElementVerifier(sd, _settings);
             verifier.VerifyElement("Patient.careProvider", null, "Patient.careProvider");
             verifier.VerifyElement("Patient.careProvider", "organizationCare", "Patient.careProvider:organizationCare");
             verifier.VerifyElement("Patient.careProvider", "organizationCare/teamCare", "Patient.careProvider:organizationCare/teamCare");
@@ -623,7 +626,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Identifier Datatype profile
             // patient-mrn-id-profile.xml
             sd = generateSnapshot(@"http://example.com/fhir/SD/patient-mrn-id");
-            verifier = new ElementVerifier(sd);
+            verifier = new ElementVerifier(sd, _settings);
             verifier.VerifyElement("Identifier", null, "Identifier");
             verifier.VerifyElement("Identifier.system", null, "Identifier.system", new FhirUri(@"http://example.com/fhir/localsystems/PATIENT-ID-MRN"));
 
@@ -637,7 +640,7 @@ namespace Hl7.Fhir.Specification.Tests
                      new ElementDefinition() { Path = "Patient.identifier", Name = "mrn/officialMRN" }
                  )
             );
-            verifier = new ElementVerifier(sd);
+            verifier = new ElementVerifier(sd, _settings);
             verifier.VerifyElement("Patient.identifier", null, "Patient.identifier");
             verifier.VerifyElement("Patient.identifier", "mrn", "Patient.identifier:mrn");
             verifier.VerifyElement("Patient.identifier", "mrn/officialMRN", "Patient.identifier:mrn/officialMRN");
@@ -653,7 +656,7 @@ namespace Hl7.Fhir.Specification.Tests
                      new ElementDefinition() { Path = "Patient.identifier", Name = "mrn" }
                  )
             );
-            verifier = new ElementVerifier(sd);
+            verifier = new ElementVerifier(sd, _settings);
             verifier.VerifyElement("Patient.identifier", null, "Patient.identifier");
             verifier.AssertSlicing(new string[] { "system" }, ElementDefinition.SlicingRules.Open, null);
             verifier.VerifyElement("Patient.identifier", "mrn", "Patient.identifier:mrn");
@@ -680,7 +683,7 @@ namespace Hl7.Fhir.Specification.Tests
                      // new ElementDefinition() { Path = "Patient.extension.extension", Name = "researchAuth/grandfatheredResAuth.type" }
                  )
             );
-            verifier = new ElementVerifier(sd);
+            verifier = new ElementVerifier(sd, _settings);
             verifier.VerifyElement("Patient.extension", null, "Patient.extension");
             verifier.VerifyElement("Patient.extension", "doNotCall", "Patient.extension:doNotCall");
             verifier.VerifyElement("Patient.extension", "legalCase", "Patient.extension:legalCase");
@@ -1945,6 +1948,228 @@ namespace Hl7.Fhir.Specification.Tests
             return result;
         }
 
+        // [WMR 20161207] NEW
+        // Verify reslicing order
+        [TestMethod]
+        public void TestReslicingOrder()
+        {
+            var dirSource = new DirectorySource("TestData/validation", includeSubdirectories: false);
+            var sd = dirSource.FindStructureDefinition("http://example.com/StructureDefinition/patient-telecom-reslice-ek");
+            Assert.IsNotNull(sd);
+
+            // Verify original differential - defines reslicing
+            Debug.Print("Verify differential...");
+            var diffNav = ElementDefinitionNavigator.ForDifferential(sd);
+            assertPatientTelecomReslice(diffNav);
+
+            StructureDefinition expanded;
+            generateSnapshotAndCompare(sd, out expanded);
+
+            Debug.Print("Verify snapshot...");
+            var snapNav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            assertPatientTelecomReslice(snapNav);
+        }
+
+        void assertPatientTelecomReslice(ElementDefinitionNavigator nav)
+        {
+            Assert.IsTrue(nav.MoveToFirstChild());  // Patient
+
+            if (ElementDefinitionNavigator.IsRootPath(nav.Path))
+            {
+                Assert.IsTrue(nav.MoveToChild("telecom"));
+            }
+
+            var bm = nav.Bookmark();
+            do
+            {
+                Debug.Print($"{nav.Path} : '{nav.Current.Name}'");
+            } while (nav.MoveToNext("telecom"));
+            nav.ReturnToBookmark(bm);
+
+            // Patient.telecom - slicing introduction
+            Assert.IsTrue(nav.Path == "Patient.telecom");
+            Assert.IsNotNull(nav.Current.Slicing);
+
+            // Patient.telecom - slice "phone"
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.IsTrue(nav.Path == "Patient.telecom");
+            Assert.IsTrue(nav.Current.Name == "phone");
+
+            // Patient.telecom - slice "email"
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.IsTrue(nav.Path == "Patient.telecom");
+            Assert.IsTrue(nav.Current.Name == "email");
+
+            // Patient.telecom - reslice "email/home"
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.IsTrue(nav.Path == "Patient.telecom");
+            Assert.IsTrue(nav.Current.Name == "email/home");
+
+            // Patient.telecom - reslice "email/work"
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.IsTrue(nav.Path == "Patient.telecom");
+            Assert.IsTrue(nav.Current.Name == "email/work");
+
+            // Patient.telecom - slice "other"
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.IsTrue(nav.Path == "Patient.telecom");
+            Assert.IsTrue(nav.Current.Name == "other");
+
+            // Patient.telecom - reslice "other/home"
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.IsTrue(nav.Path == "Patient.telecom");
+            Assert.IsTrue(nav.Current.Name == "other/home");
+
+            // Patient.telecom - reslice "other/work"
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.IsTrue(nav.Path == "Patient.telecom");
+            Assert.IsTrue(nav.Current.Name == "other/work");
+        }
+
+
+        // [WMR 20161207] DEBUGGING
+        // List all complex extensions that are available in the TestData folder
+
+        // http://hl7.org/fhir/StructureDefinition/cqif-basic-codeSystem : 'TestData/snapshot-test/extensions\extension-cqif-basic-codesystem.xml'
+        // http://hl7.org/fhir/StructureDefinition/cqif-basic-contributor : 'TestData/snapshot-test/extensions\extension-cqif-basic-contributor.xml'
+        // http://hl7.org/fhir/StructureDefinition/cqif-basic-data : 'TestData/snapshot-test/extensions\extension-cqif-basic-data.xml'
+        // http://hl7.org/fhir/StructureDefinition/cqif-basic-guidance-action : 'TestData/snapshot-test/extensions\extension-cqif-basic-guidance-action.xml'
+        // http://hl7.org/fhir/StructureDefinition/cqif-basic-guidance-trigger : 'TestData/snapshot-test/extensions\extension-cqif-basic-guidance-trigger.xml'
+        // http://hl7.org/fhir/StructureDefinition/cqif-basic-library : 'TestData/snapshot-test/extensions\extension-cqif-basic-library.canonical.xml'
+        // http://hl7.org/fhir/StructureDefinition/cqif-basic-model : 'TestData/snapshot-test/extensions\extension-cqif-basic-model.xml'
+        // http://hl7.org/fhir/StructureDefinition/cqif-basic-parameter : 'TestData/snapshot-test/extensions\extension-cqif-basic-parameter.xml'
+        // http://hl7.org/fhir/StructureDefinition/cqif-basic-relatedResource : 'TestData/snapshot-test/extensions\extension-cqif-basic-relatedresource.xml'
+        // http://hl7.org/fhir/StructureDefinition/cqif-basic-valueSet : 'TestData/snapshot-test/extensions\extension-cqif-basic-valueset.xml'
+        // http://hl7.org/fhir/StructureDefinition/encounter-relatedCondition : 'TestData/snapshot-test/extensions\extension-encounter-relatedcondition.xml'
+        // http://hl7.org/fhir/StructureDefinition/family-member-history-genetics-parent : 'TestData/snapshot-test/extensions\extension-family-member-history-genetics-parent.xml'
+        // http://hl7.org/fhir/StructureDefinition/gao-extension-item : 'TestData/snapshot-test/extensions\extension-gao-extension-item.canonical.xml'
+        // http://hl7.org/fhir/StructureDefinition/goal-target : 'TestData/snapshot-test/extensions\extension-goal-target.xml'
+        // http://hl7.org/fhir/StructureDefinition/patient-clinicalTrial : 'TestData/snapshot-test/extensions\extension-patient-clinicaltrial.xml'
+        // http://hl7.org/fhir/StructureDefinition/patient-nationality : 'TestData/snapshot-test/extensions\extension-patient-nationality.xml'
+        // http://hl7.org/fhir/StructureDefinition/qicore-adverseevent-cause : 'TestData/snapshot-test/extensions\extension-qicore-adverseevent-cause.xml'
+        // http://hl7.org/fhir/StructureDefinition/questionnaire-enableWhen : 'TestData/snapshot-test/extensions\extension-questionnaire-enablewhen.xml'
+
+        [TestMethod]
+        [Ignore]
+        public void FindComplexTestExtensions()
+        {
+            Debug.WriteLine("Complex extension in TestData folder:");
+            var dirSource = new DirectorySource("TestData/snapshot-test/extensions", includeSubdirectories: false);
+            var uris = dirSource.ListResourceUris(ResourceType.StructureDefinition);
+            foreach (var uri in uris)
+            {
+                var sd = dirSource.FindStructureDefinition(uri);
+                if (sd.IsExtension)
+                {
+                    if (sd.Differential.Element.Any(e => e.Path.StartsWith("Extension.extension.", StringComparison.Ordinal)))
+                    {
+                        var orgInfo = sd.Annotation<OriginInformation>();
+                        Debug.WriteLine($"{uri} : '{orgInfo?.Origin}'");
+                    }
+                }
+            }
+        }
+
+        // [WMR 20161207] TODO
+        // Handle type slicing
+        [TestMethod]
+        public void TestTypeSlicing()
+        {
+            var sd = new StructureDefinition()
+            {
+                ConstrainedType = FHIRDefinedType.Observation,
+                Base = ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Observation),
+                Name = "MyTestObservation",
+                Url = "http://example.org/fhir/StructureDefinition/MyTestObservation",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Observation.value[x]")
+                        {
+                            Slicing = new ElementDefinition.SlicingComponent()
+                            {
+                                Discriminator = new string[] { "@type" },
+                                Ordered = false,
+                                Rules = ElementDefinition.SlicingRules.Open
+                            }
+                        }
+                        ,new ElementDefinition("Observation.valueString")
+                        {
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent() { Code = FHIRDefinedType.String }
+                            }
+                        }
+                    }
+                }
+            };
+
+            var resources = new Resource[] { sd };
+            var resolver = new InMemoryResourceResolver(resources);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            var _generator = new SnapshotGenerator(multiResolver);
+            StructureDefinition expanded = null;
+
+            generateSnapshotAndCompare(sd, out expanded);
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            Debug.Print("[1] Observation.value slice:");
+            var elems = expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Observation.value"));
+            foreach (var elem in elems)
+            {
+                Debug.Print(elem.Path);
+            }
+
+            var nav = new ElementDefinitionNavigator(expanded);
+            Assert.IsTrue(nav.MoveToFirstChild());
+            Assert.AreEqual(nav.Path, "Observation");
+            Assert.IsTrue(nav.MoveToChild("value[x]"));
+            Assert.IsTrue(nav.MoveToNext("valueString"));
+
+            sd.Differential.Element.Add(
+                new ElementDefinition("Observation.valueCodeableConcept")
+                {
+                    Type = new List<ElementDefinition.TypeRefComponent>()
+                    {
+                        new ElementDefinition.TypeRefComponent() { Code = FHIRDefinedType.CodeableConcept }
+                    }
+                }
+            );
+
+            generateSnapshotAndCompare(sd, out expanded);
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            Debug.Print("[2] Observation.value slice:");
+            elems = expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Observation.value"));
+            foreach (var elem in elems)
+            {
+                Debug.Print(elem.Path);
+            }
+
+            nav = new ElementDefinitionNavigator(expanded);
+            Assert.IsTrue(nav.MoveToFirstChild());
+            Assert.AreEqual(nav.Path, "Observation");
+            Assert.IsTrue(nav.MoveToChild("value[x]"));
+            Assert.IsTrue(nav.MoveToNext("valueString"));
+            Assert.IsTrue(nav.MoveToNext("valueCodeableConcept"));
+        }
+
     }
 
+    class InMemoryResourceResolver : IResourceResolver
+    {
+        ILookup<string, Resource> _resources;
+
+        public InMemoryResourceResolver(IEnumerable<Resource> resources)
+        {
+            _resources = resources.OfType<IConformanceResource>().ToLookup(r => r.Url, r => r as Resource);
+        }
+
+        public Resource ResolveByCanonicalUri(string uri) => _resources[uri].FirstOrDefault();
+
+        public Resource ResolveByUri(string uri) => _resources[uri].FirstOrDefault();
+    }
 }

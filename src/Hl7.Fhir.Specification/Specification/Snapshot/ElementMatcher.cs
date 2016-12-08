@@ -98,17 +98,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             diffNav.MoveToFirstChild();
 
             var choiceNames = listChoiceElements(snapNav);
-
             var result = new List<MatchInfo>();
-
-            // [WMR 20160906] DEBUG: http://example.com/fhir/StructureDefinition/patient-research-authorization
-            //if (diffNav.Elements.Count == 11
-            //    && snapNav.Elements.Count == 5
-            //    && diffNav.Elements[1].Path == "Extension.url"
-            //    && snapNav.Elements[1].Path == "Extension.id")
-            //{
-            //    Debug.Fail("");
-            //}
 
             try
             {
@@ -195,7 +185,9 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             var nextDiffChildName = nextChildName(diffNav);
             bool diffIsSliced = diffIsExtension || nextDiffChildName == diffNav.PathName;
-            bool diffIsTypeSlice = snapNav.Current.IsChoice() && snapNav.IsCandidateTypeSlice(diffNav.PathName);
+            // [WMR 20161207] WRONG!
+            // bool diffIsTypeSlice = snapNav.Current.IsChoice() && snapNav.IsCandidateTypeSlice(diffNav.PathName);
+            bool diffIsTypeSlice = snapNav.Current.IsChoice() && (snapNav.PathName == diffNav.PathName || snapNav.IsCandidateTypeSlice(diffNav.PathName));
 
             if (diffIsTypeSlice)
             {

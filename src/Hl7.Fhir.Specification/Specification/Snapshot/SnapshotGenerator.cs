@@ -22,8 +22,9 @@
 // #define CACHE_ROOT_ELEMDEF_ASSERT
 
 // Known issues:
-// - Reslicing is only supported for complex extensions
-// - Only supports a few hardcoded discriminator paths (url, @type, @profile)
+// - [Ewout/validator] reslicing constraints are emitted in reverse order
+// TODO:
+// - Merge global StructureDefinition.mapping definitions
 
 using System;
 using System.Collections.Generic;
@@ -255,7 +256,10 @@ namespace Hl7.Fhir.Specification.Snapshot
             result = nav.ToListOfElements();
 
             // [WMR 20160917] NEW: Re-generate all ElementId values
-            generateElementsId(result, true);
+            if (_settings.GenerateElementIds)
+            {
+                generateElementsId(result, true);
+            }
 
             return result;
         }
@@ -733,6 +737,9 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Add new slice after the last existing slice in base profile
             var sliceName = diff.Current.Name;
             var baseSliceName = ElementDefinitionNavigator.GetBaseSliceName(sliceName);
+
+            // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(addSlice)}] Base Path = '{snap.Path}' Base Slice Name = '{snap.Current.Name}' Diff Slice Name = {sliceName}");
+
             snap.MoveToLastSlice(baseSliceName);
 
             var lastSlice = snap.Bookmark();

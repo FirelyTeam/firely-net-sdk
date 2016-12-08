@@ -79,12 +79,6 @@ namespace Hl7.Fhir.Validation
             Assert.IsType<SliceBucket>(email.Entry);
             Assert.Equal(2, email.ChildSlices.Count);
 
-            // Does not succeed yet since the snapshot generator reverses de re-slices
-            // FIX - remove when Michel has fixed the problem with the snapshot generator
-            var swap = email.ChildSlices[1];
-            email.ChildSlices[1] = email.ChildSlices[0];
-            email.ChildSlices[0] = swap;
-
             Assert.IsType<SliceBucket>(email.ChildSlices[0]);
             Assert.Equal("Patient.telecom:email/home", email.ChildSlices[0].Name);
 
