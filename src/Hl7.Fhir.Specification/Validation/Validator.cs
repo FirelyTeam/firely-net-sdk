@@ -9,6 +9,7 @@
 using Hl7.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
@@ -17,6 +18,7 @@ using Hl7.Fhir.Support;
 using Hl7.FhirPath;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -474,6 +476,13 @@ namespace Hl7.Fhir.Validation
                 SnapshotGeneratorSettings settings = Settings.GenerateSnapshotSettings ?? SnapshotGeneratorSettings.Default;
 
                 (new SnapshotGenerator(Settings.ResourceResolver, settings)).Update(definition);
+#if DUMP_SNAPSHOTS
+
+                string xml = FhirSerializer.SerializeResourceToXml(definition);
+                string name = definition.Id ?? definition.Name.Replace(" ", "");
+
+                File.WriteAllText(@"c:\temp\validation\" + name + ".StructureDefinition.xml", xml);
+#endif
             }
         }
     }
