@@ -308,7 +308,7 @@ namespace Hl7.Fhir.Validation
             var report = _validator.Validate(questionnaire);
             Assert.IsFalse(report.Success);
             Assert.AreEqual(35, report.Errors);
-            Assert.AreEqual(3, report.Warnings);           // 3x narrative constraint with no fhirpath
+            Assert.AreEqual(0, report.Warnings);           // 3x narrative constraint with no fhirpath
         }
 
 
@@ -360,7 +360,7 @@ namespace Hl7.Fhir.Validation
 
             var report = _validator.Validate(careplan, careplanSd);
             Assert.IsTrue(report.Success);
-            Assert.AreEqual(3, report.Warnings);            // 3x invariant
+            Assert.AreEqual(0, report.Warnings);            // 3x invariant
         }
 
 
@@ -460,7 +460,7 @@ namespace Hl7.Fhir.Validation
 
             var report = _validator.Validate(cpDoc.CreateReader());
             Assert.IsTrue(report.Success);
-            Assert.AreEqual(3, report.Warnings);            // 3x missing invariant
+            Assert.AreEqual(0, report.Warnings);            // 3x missing invariant
 
             // Damage the document by removing the mandated 'status' element
             cpDoc.Element(XName.Get("CarePlan", "http://hl7.org/fhir")).Elements(XName.Get("status", "http://hl7.org/fhir")).Remove();
@@ -524,7 +524,7 @@ namespace Hl7.Fhir.Validation
             var report = _validator.Validate(levin);
 
             Assert.IsTrue(report.Success);
-            Assert.AreEqual(3, report.Warnings);
+            Assert.AreEqual(0, report.Warnings);
 
             // Now, rename the mandatory NCT sub-extension
             levin.Extension[1].Extension[0].Url = "NCTX";
@@ -548,13 +548,9 @@ namespace Hl7.Fhir.Validation
             var report = _validator.Validate(bundle);
 
             Assert.IsTrue(report.Success);
-            Assert.AreEqual(20, report.Warnings);
+            Assert.AreEqual(1, report.Warnings);
         }
-
-
-     
-
-
+    
 
         internal class BundleExampleResolver : IResourceResolver
         {

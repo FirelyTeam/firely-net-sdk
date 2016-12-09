@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Validation
                 var ni = strip(location);
 
                 //TODO: Crude algorithm. Does not support navigating across references, nor type slices, nor discriminators on choices
-                if (discriminators.Contains(ni))
+                if (discriminators.Any(d => d == ni || ni.StartsWith(d + ".")))
                     return true;
             }
 

@@ -43,6 +43,16 @@ namespace Hl7.Fhir.Validation
         {
         }
 
+        internal Validator NewInstance()
+        {
+            var newValidator = new Validator(Settings);
+            newValidator.OnSnapshotNeeded = this.OnSnapshotNeeded;
+            newValidator.OnExternalResolutionNeeded = this.OnExternalResolutionNeeded;
+
+            return newValidator;
+        }
+
+
         public OperationOutcome Validate(IElementNavigator instance)
         {
             return Validate(instance, declaredTypeProfile: null, statedCanonicals: null, statedProfiles: null);

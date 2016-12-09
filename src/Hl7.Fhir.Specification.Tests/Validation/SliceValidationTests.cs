@@ -119,12 +119,12 @@ namespace Hl7.Fhir.Validation
 
             var emailBucket = s.ChildSlices[1] as SliceGroupBucket;
             Assert.Equal("e.kramer@furore.com", emailBucket.Members.Single().Values("value").Single());
-            Assert.Equal("e.kramer@furore.com", emailBucket.ChildSlices[0].Members.Single().Values("value").Single());
-            Assert.False(emailBucket.ChildSlices[1].Members.Any());
-
+            Assert.False(emailBucket.ChildSlices[0].Members.Any());
+            Assert.Equal("e.kramer@furore.com", emailBucket.ChildSlices[1].Members.Single().Values("value").Single());
+           
             var otherBucket = s.ChildSlices[2] as SliceGroupBucket;
-            Assert.Equal("http://nu.nl", otherBucket.ChildSlices[1].Members.Single().Values("value").Single());
-            Assert.False(otherBucket.ChildSlices[0].Members.Any());
+            Assert.Equal("http://nu.nl", otherBucket.ChildSlices[0].Members.Single().Values("value").Single());
+            Assert.False(otherBucket.ChildSlices[1].Members.Any());
             Assert.Equal("skype://crap", otherBucket.Members.First().Values("value").Single()); // in the open slice - find it on other bucket, not child
 
             Assert.Equal("+31-20-6707070", s.Members.Last().Values("value").Single()); // in the open-at-end slice

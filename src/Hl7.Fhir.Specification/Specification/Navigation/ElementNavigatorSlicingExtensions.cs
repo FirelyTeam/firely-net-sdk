@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
 
         //TODO: Discuss with Michel why he uses Base path (or definition path), instead of just definition path
-        internal static IEnumerable<Bookmark> FindMemberSlices(this ElementDefinitionNavigator intro)
+        internal static IEnumerable<Bookmark> FindMemberSlices(this ElementDefinitionNavigator intro, bool atRoot)
         {
             var bm = intro.Bookmark();
             var path = intro.Current.Path;
@@ -119,10 +119,12 @@ namespace Hl7.Fhir.Specification.Navigation
 
             while (intro.MoveToNext() && intro.Path == path)
             {
-                if (name == null)
+                if (atRoot)
                 {
-                    // If this is the "root" slice-intro for the group (the un-resliced original element), my slices
-                    // would be the unnamed slices (though this is strictly seen not correct, every slice needs a name)
+                    // Is this the slice-intro of the un-resliced original element? Then my name == null or
+                    // (in DSTU2) my name has no slicing separator (since name is used both for slicing and
+                    // re-use of constraints, e.g. Composition.section.name, just == null is not enough)
+                    // I am the root slice, my slices would be the unnamed slices (though this is strictly seen not correct, every slice needs a name)
                     // and every slice with a non-resliced name
                     if (intro.Current.Name == null) yield return intro.Bookmark();
                     if (!ElementDefinitionNavigator.IsResliceName(intro.Current.Name)) yield return intro.Bookmark();

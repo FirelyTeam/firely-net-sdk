@@ -56,5 +56,9 @@
         <suffix value="The 7th"/>
     </name>
     <gender value="male"/>
-    <birthDate value="1932-09-24"/>
+    <birthDate value="1932-09-24">
+        <extension url="http://hl7.org/fhir/StructureDefinition/patient-birthTime">
+            <valueDateTime value="1932-09-24T15:15:50+02:00" />
+        </extension>
+    </birthDate>   
 </Patient>

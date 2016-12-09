@@ -26,13 +26,13 @@ namespace Hl7.Fhir.Validation
             if (root.Current.Slicing == null)
                 return entryBucket;
             else
-                return CreateGroup(root, validator, entryBucket);
+                return CreateGroup(root, validator, entryBucket, atRoot: true);
         }
 
-        public static IBucket CreateGroup(ElementDefinitionNavigator root, Validator validator, IBucket entryBucket)
+        public static IBucket CreateGroup(ElementDefinitionNavigator root, Validator validator, IBucket entryBucket, bool atRoot)
         {
             var childDiscriminators = root.Current.Slicing.Discriminator.ToArray();
-            var slices = root.FindMemberSlices();
+            var slices = root.FindMemberSlices(atRoot);
             var bm = root.Bookmark();
             var subs = new List<IBucket>();
 
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Validation
                 if (root.Current.Slicing == null)
                     subs.Add(subBucket);
                 else
-                    subs.Add(CreateGroup(root, validator, subBucket));
+                    subs.Add(CreateGroup(root, validator, subBucket, atRoot: false));
             }
 
             root.ReturnToBookmark(bm);

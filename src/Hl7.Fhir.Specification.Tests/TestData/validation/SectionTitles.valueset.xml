@@ -25,7 +25,13 @@
     <system value="http://example.org/fhir/demo-section-titles"/>
     <caseSensitive value="true"/>
     <concept>
-    <!--    work around for missing code in v3 code system - should be temporary, until added in v3    -->
+      <!--    work around for missing code in v3 code system - should be temporary, until added in v3    -->
+      <code value="notes"/>
+      <display value="Practitioner notes"/>
+      <definition value="A text-only section with practitioner notes"/>
+    </concept>
+    <concept>
+      <!--    work around for missing code in v3 code system - should be temporary, until added in v3    -->
       <code value="notes"/>
       <display value="Practitioner notes"/>
       <definition value="A text-only section with practitioner notes"/>
@@ -34,11 +40,19 @@
   <!-- And compose in some additional codes for e.g. the vital signs section -->
   <compose>
     <include>
-      <system value="http://snomed.info/sct"/>
+      <system value="http://loinc.org"/>
       <concept>
-        <code value="46680005"/>
+        <code value="42348-3"/>
+        <display value="Advance Directives" />
+      </concept>
+      <concept>
+        <code value="8716-3"/>
         <display value="Vital signs" />
       </concept>
+      <concept>
+        <code value="10154-3"/>
+        <display value="Chief complaint" />
+      </concept>         
     </include>
   </compose>
 </ValueSet>
