@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             var differential = structure.Differential;
             if (differential == null)
             {
-                // [WMR 20161208] TODO: Handle missing differential
+                // [WMR 20161208] Handle missing differential
                 // throw Error.Argument(nameof(structure), "Invalid input for snapshot generator. The specified StructureDefinition does not contain a differential component.");
                 differential = structure.Differential = new StructureDefinition.DifferentialComponent() { Element = new List<ElementDefinition>() };
             }
@@ -197,6 +197,16 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (structure.Base != null)
             {
                 var baseStructure = _resolver.FindStructureDefinition(structure.Base);
+
+                // [WMR 20161208] Handle unresolved base profile
+                if (baseStructure == null)
+                {
+                    addIssueProfileNotFound(structure.Base);
+                    // Fatal error...
+                    return null;
+                }
+
+                // [WMR 20161208] Handle missing differential
                 var location = differential.Element.Count > 0 ? ToNamedNode(differential.Element[0]) : null;
                 if (!ensureSnapshot(baseStructure, structure.Base, location))
                 {
@@ -292,7 +302,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 if (!success)
                 {
-                    addIssueInvalidNameReference(defn, defn.NameReference);
+                    addIssueInvalidNameReference(defn);
                     return false;
                 }
 
@@ -387,6 +397,15 @@ namespace Hl7.Fhir.Specification.Snapshot
                         // snap is positioned at the associated parent element
                         // [WMR 20160907] NEW: For new elements, use the associated type profile as the base for each element type
                         createNewElement(snap, diff);
+                    }
+                    // [WMR 20161212] NEW
+                    else if (match.Action == ElementMatcher.MatchAction.Invalid)
+                    {
+                        // Invalid diff constraint; ignore
+                        if (match.Issue != null)
+                        {
+                            addIssue(match.Issue);
+                        }
                     }
 
                 }
@@ -724,7 +743,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
                 else
                 {
-                    addIssueMissingSliceEntry(diff.Current);
+                    addIssueMissingSliceEntry(slicingEntry);
                     return;
                 }
             }

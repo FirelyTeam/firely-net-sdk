@@ -11,7 +11,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
         /// <summary>Determines if the element with the specified name represents a type slice for the current (choice) element.</summary>
         /// <returns><c>true</c> if the element name represents a type slice of the current element, <c>false</c> otherwise.</returns>
-        internal static bool IsCandidateTypeSlice(this ElementDefinitionNavigator nav, string diffName)
+        internal static bool IsRenamedChoiceElement(this ElementDefinitionNavigator nav, string diffName)
         {
             if (nav == null) { throw Error.ArgumentNull("nav"); }
             return ElementDefinitionNavigator.IsRenamedChoiceElement(nav.PathName, diffName);
@@ -19,7 +19,8 @@ namespace Hl7.Fhir.Specification.Navigation
 
         /// <summary>Move the navigator to the next type slice of the (choice) element with the specified name, if it exists.</summary>
         /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
-        public static bool MoveToNextTypeSlice(this ElementDefinitionNavigator nav, string name)
+        [Obsolete("Multiple type constraints are not allowed; type constraint is NOT a type slice!")]
+        public static bool MoveToNextRenamedChoiceElement(this ElementDefinitionNavigator nav, string name)
         {
             if (nav == null) { throw Error.ArgumentNull("nav"); }
             var bm = nav.Bookmark();
@@ -72,6 +73,40 @@ namespace Hl7.Fhir.Specification.Navigation
             return result;
         }
 
+        // [WMR 20161212] NEW
+
+        /// <summary>
+        /// Advance to the next slice in the current slice group, i.e. to the next sibling element with the same path as the current element, if it exists.
+        /// Otherwise remain positioned at the current element.
+        /// </summary>
+        /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
+        public static bool MoveToNextSlice(this ElementDefinitionNavigator nav)
+        {
+            if (nav == null) { throw Error.ArgumentNull("nav"); }
+            if (nav.Current == null) { throw Error.Argument("nav", "Cannot move to next slice. Current node is not set."); }
+            var name = nav.PathName;
+            var sliceName = nav.Current.Name;
+            var bm = nav.Bookmark();
+            if (nav.MoveToNext() && nav.PathName == name)
+            {
+                // Is this a reslice? 
+                var resliceBaseName = ElementDefinitionNavigator.GetBaseSliceName(sliceName);
+                // No; then we found the next slice
+                if (resliceBaseName == null) { return true; }
+                // Yes; verify that the parent slice names match
+                var candidateResliceBaseName = ElementDefinitionNavigator.GetBaseSliceName(nav.Current.Name);
+                if (StringComparer.Ordinal.Equals(resliceBaseName, candidateResliceBaseName)) { return true; }
+            }
+
+            // No match, restore original position
+            nav.ReturnToBookmark(bm);
+            return false;
+        }
+
+
+#if false
+        // [WMR 20161212] OBSOLETE
+
         /// <summary>
         /// If the current element has the specified name, then maintain position and return true.
         /// Otherwise move to the next sibling element with the specified slice name, if it exists.
@@ -108,6 +143,7 @@ namespace Hl7.Fhir.Specification.Navigation
             return result;
         }
 
+#endif
 
         //TODO: Discuss with Michel why he uses Base path (or definition path), instead of just definition path
         internal static IEnumerable<Bookmark> FindMemberSlices(this ElementDefinitionNavigator intro)
