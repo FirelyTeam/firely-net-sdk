@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Validation
                 }
                 else
                 {
-                    var newValidator = new Validator(validator.Settings);
+                    var newValidator = validator.NewInstance();
                     outcome.Include(newValidator.Validate(referencedResource, typeRef.GetDeclaredProfiles(), statedProfiles: null, statedCanonicals: null));
                 }
             }

@@ -440,6 +440,7 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 _settings = settings;
                 _elements = elements;
+                _settings = settings;
                 _pos = 0;
             }
 

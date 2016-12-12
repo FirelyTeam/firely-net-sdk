@@ -34,7 +34,7 @@
       <type>
         <code value="Reference" />
         <profile value="http://hl7.org/fhir/StructureDefinition/Patient" />
-        <aggregation value="bundled" />
+        <aggregation value="referenced" />
       </type>
     </element>
     <element>
@@ -43,15 +43,22 @@
       <type>
         <code value="Reference" />
         <profile value="http://hl7.org/fhir/StructureDefinition/Practitioner" />
+        <aggregation value="bundled" />
       </type>
     </element>
+    
+    <!-- Slice intro on Composition.section with some child constraints -->
     <element>
       <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
         <valueString value="Section" />
       </extension>
       <path value="Composition.section" />
+      <slicing>
+        <discriminator value="code" />
+        <ordered value="false" />
+        <rules value="open" />
+      </slicing>      
       <min value="1" />
-      <max value="2" />
     </element>
     <element>
       <path value="Composition.section.title" />
@@ -84,6 +91,42 @@
     <element>
       <path value="Composition.section.section" />
       <max value="0" />
+    </element>
+    
+    <!-- slice on Composition.section: vital signs, EXACTLY 1 -->
+    <element>
+      <path value="Composition.section" />
+      <name value="vitalSigns" />
+      <min value="1" />
+      <max value="1" />
+    </element>
+    <element>
+      <path value="Composition.section.code" />
+      <min value="1" />
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org" />
+          <code value="8716-3" />          
+        </coding>
+      </patternCodeableConcept>
+    </element>        
+    
+    <!-- slice on Composition.section: chief complaint, MAX 1 -->
+    <element>
+      <path value="Composition.section" />
+      <name value="chiefComplaint" />
+      <min value="0" />
+      <max value="1" />
+    </element>
+    <element>
+      <path value="Composition.section.code" />
+      <min value="1" />
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org" />
+          <code value="10154-3" />          
+        </coding>
+      </patternCodeableConcept>
     </element>
   </differential>
 </StructureDefinition>
