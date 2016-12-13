@@ -25,6 +25,9 @@
 // - [Ewout/validator] reslicing constraints are emitted in reverse order
 // TODO:
 // - Merge global StructureDefinition.mapping definitions
+// - Support constraining existing slice entry (e.g. constrain Rule from Open to OpenAtEnd or Closed)
+// - Enforce/verify Slicing.Rule = Closed / OpenAtEnd
+// - Test error handling, gracefully handle
 
 using System;
 using System.Collections.Generic;
@@ -743,6 +746,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
                 else
                 {
+                    // [WMR 20161213] Note: profile is allowed to close existing slice (Rules = Closed)
+                    // In that case, the profile only contains a slice entry but no actual slices... valid!
+
                     addIssueMissingSliceEntry(slicingEntry);
                     return;
                 }

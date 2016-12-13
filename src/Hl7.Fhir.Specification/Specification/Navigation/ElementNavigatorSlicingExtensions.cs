@@ -76,7 +76,8 @@ namespace Hl7.Fhir.Specification.Navigation
         // [WMR 20161212] NEW
 
         /// <summary>
-        /// Advance to the next slice in the current slice group, i.e. to the next sibling element with the same path as the current element, if it exists.
+        /// Advance to the next slice in the current slice group.
+        /// Specifically, move to the next sibling element with the exact same path as the current element, if it exists.
         /// Otherwise remain positioned at the current element.
         /// </summary>
         /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>

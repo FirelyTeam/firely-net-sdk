@@ -42,6 +42,7 @@ using Hl7.Fhir.Support;
 using System.Diagnostics;
 using Hl7.Fhir.Model;
 using Hl7.ElementModel;
+using System.Text;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -74,11 +75,39 @@ namespace Hl7.Fhir.Specification.Snapshot
             snapNav.ReturnToBookmark(sbm);
             diffNav.ReturnToBookmark(dbm);
         }
+
+        [Conditional("DEBUG")]
+        public static void DumpMatch(this ElementMatcher.MatchInfo match, ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
+        {
+            var sbm = snapNav.Bookmark();
+            var dbm = diffNav.Bookmark();
+
+            if (!snapNav.ReturnToBookmark(match.BaseBookmark) || !diffNav.ReturnToBookmark(match.DiffBookmark))
+            {
+                throw Error.InvalidOperation("Found unreachable bookmark in matches");
+            }
+
+            var bPos = snapNav.Path + $"[{snapNav.OrdinalPosition}]";
+            var dPos = diffNav.Path + $"[{diffNav.OrdinalPosition}]";
+
+            // [WMR 20160719] Add name, if not null
+            if (snapNav.Current != null && snapNav.Current.Name != null) bPos += $" '{snapNav.Current.Name}'";
+            if (diffNav.Current != null && diffNav.Current.Name != null) dPos += $" '{diffNav.Current.Name}'";
+
+            Debug.WriteLine($"B:{bPos} <-- {match.Action.ToString()} --> D:{dPos}");
+
+            snapNav.ReturnToBookmark(sbm);
+            diffNav.ReturnToBookmark(dbm);
+        }
     }
 
 
     internal static class ElementMatcher
     {
+        // [WMR 20161213] TODO: Make readonly
+
+        // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+        [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
         public struct MatchInfo
         {
             /// <summary>Represents an element in the base profile.</summary>
@@ -91,15 +120,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             // [WMR 20161212] NEW
             public OperationOutcome.IssueComponent Issue { get; set; }
 
-            //IEnumerable<OperationOutcome.IssueComponent> Issues => _issues;
-            //List<OperationOutcome.IssueComponent> _issues;
-            //public void AddIssue(OperationOutcome.IssueComponent component) //, profileUrl
-            //{
-            //    if (component == null) { throw Error.ArgumentNull(nameof(component)); }
-            //    // component.Diagnostics = profileUrl ?? CurrentProfileUri;
-            //    if (_issues == null) { _issues = new List<OperationOutcome.IssueComponent>(); }
-            //    _issues.Add(component);
-            //}
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            string DebuggerDisplay => $"B:{BaseBookmark.DebuggerDisplay} <-- {Action} --> D:{DiffBookmark.DebuggerDisplay}";
         }
 
 
@@ -353,6 +375,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             var isExtension = diffNav.Current.IsExtension();
             var diffIsSliced = diffNav.Current.Slicing != null;
 
+            // Extract the discriminator from diff or base slice entry
             var discriminator = diffIsSliced ? diffNav.Current.Slicing.Discriminator.ToList() : snapNav.Current.Slicing?.Discriminator.ToList();
 
 #if NEW_TYPE_SLICE
@@ -362,7 +385,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 result.Add(new MatchInfo()
                 {
                     BaseBookmark = defaultBase,
-                    DiffBookmark = diffNav.Bookmark(),
+                    DiffBookmark = diffIsSliced ? diffNav.Bookmark() : Bookmark.Empty,
                     Action = MatchAction.Slice
                 });
 
@@ -373,26 +396,15 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // Note: this is allowed, e.g. constrain rules = closed to disallow extensions in derived profile
                     return result;
                 }
-
-                if (baseIsSliced)
-                {
-                    // Base slice entry will be merged with diff slice entry => advance to concrete base slices
-                    // May return false if the base doesn't define any concrete slices...?
-                    snapNav.MoveToNextSlice();
-                }
             }
-            else if (baseIsSliced)
+
+            // Note: if slice entry is missing from diff, then we fall back to the inherited base slicing entry
+            // Strictly not valid according to FHIR rules, but we can cope
+            // Caller (SnapshotGenerator.makeSlice) should emit an issue PROFILE_ELEMENTDEF_MISSING_SLICE_ENTRY
+
+            if (baseIsSliced)
             {
-                // Base is sliced, but diff is not...?
-                // Merge diff constraints with base slice entry
-                // Differential has information for the slicing entry
-                result.Add(new MatchInfo()
-                {
-                    BaseBookmark = defaultBase,
-                    DiffBookmark = diffNav.Bookmark(),
-                    Action = MatchAction.Slice
-                });
-                return result;
+                snapNav.MoveToNextSlice();
             }
 
             // snapNav and diffNav are now positioned on the first concrete slices, if they exist (?)
@@ -412,6 +424,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     var match = matchSlice(snapNav, diffNav, discriminator, defaultBase);
                     result.Add(match);
+
+                    // Match to base slice? Then consume and advance to next
+                    if (match.Action == MatchAction.Merge)
+                    {
+                        snapNav.MoveToNextSlice();
+                    }
                 }
 
             } while (diffNav.MoveToNextSlice());
@@ -491,7 +509,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // defaultBase represents the base element for newly introduced slices
         static MatchInfo matchSlice(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, List<string> discriminators, Bookmark defaultBase)
         {
-            Debug.Assert(diffNav.Current.Slicing == null); // Callker must handle reslicing
+            Debug.Assert(diffNav.Current.Slicing == null); // Caller must handle reslicing
 
             var match = new MatchInfo() { DiffBookmark = diffNav.Bookmark() };
 
@@ -537,7 +555,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 return matchSliceByTypeProfile(snapNav, diffNav, defaultBase);
             }
 
-            // Error! Unsupported discriminator => Author must define slice names
+            // Error! Unsupported discriminator => slices must be named
             match.BaseBookmark = defaultBase;
             match.Action = MatchAction.Invalid;
             match.Issue = SnapshotGenerator.CreateIssueSliceWithoutName(diffNav.Current);
