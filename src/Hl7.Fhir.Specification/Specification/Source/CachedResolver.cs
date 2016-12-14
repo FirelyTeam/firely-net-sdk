@@ -20,6 +20,9 @@ namespace Hl7.Fhir.Specification.Source
     {
         public const int DEFAULT_CACHE_DURATION = 4 * 3600;     // 4 hours
 
+        readonly Cache<Resource> _resourcesByUri;
+        readonly Cache<Resource> _resourcesByCanonical;
+
         /// <summary>Artifact resolver decorator to cache loaded resources in memory.</summary>
         /// <param name="source">ArtifactSource that will be used to get data from on a cache miss</param>
         /// <param name="cacheDuration">Duration before trying to refresh the cache, in seconds</param>
@@ -35,9 +38,6 @@ namespace Hl7.Fhir.Specification.Source
         public IResourceResolver Source { get; private set; }
 
         public int CacheDuration { get; set; }
-
-        private Cache<Resource> _resourcesByUri;
-        private Cache<Resource> _resourcesByCanonical;
 
         public Resource ResolveByUri(string url)
         {
@@ -112,8 +112,8 @@ namespace Hl7.Fhir.Specification.Source
 
         private class Cache<T>
         {
-            private Func<string,T> _onCacheMiss;
-            private int _duration;
+            readonly Func<string,T> _onCacheMiss;
+            readonly int _duration;
 
             public Cache(Func<string,T> onCacheMiss, int duration)
             {
@@ -150,7 +150,8 @@ namespace Hl7.Fhir.Specification.Source
                         T newData = default(T);
 
                         newData = _onCacheMiss(identifier);
-                        _cache.Add(identifier, new CacheEntry<T> { Data = newData, Identifier = identifier, Expires = DateTime.Now.AddSeconds(_duration) });
+                        // _cache.Add(identifier, new CacheEntry<T> { Data = newData, Identifier = identifier, Expires = DateTime.Now.AddSeconds(_duration) });
+                        _cache.Add(identifier, new CacheEntry<T>(newData, identifier, DateTime.Now.AddSeconds(_duration)));
 
                         return newData;
                     }
@@ -176,9 +177,16 @@ namespace Hl7.Fhir.Specification.Source
 
         private class CacheEntry<T>
         {
-            public T Data;
-            public DateTime Expires;
-            public string Identifier;
+            public readonly T Data;
+            public readonly string Identifier;
+            public readonly DateTime Expires;
+
+            public CacheEntry(T data, string identifier, DateTime expires)
+            {
+                Data = data;
+                Identifier = identifier;
+                Expires = expires;
+            }
 
             /// <summary>Returns a boolean value that indicates if the cache entry is expired.</summary>
             public bool Expired => DateTime.Now > Expires;
