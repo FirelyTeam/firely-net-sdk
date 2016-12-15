@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Specification.Navigation
                 sb.Append(elemDef.Path);
                 if (elemDef.Name != null)
                 {
-                    sb.AppendFormat(" ('{0}')", elemDef.Name);
+                    sb.AppendFormat(" '{0}'", elemDef.Name);
                 }
 
                 //sb.AppendFormat("Path='{0}'", elemDef.Path);

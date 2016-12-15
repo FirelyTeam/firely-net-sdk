@@ -1,6 +1,7 @@
 ﻿using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -16,6 +17,138 @@ namespace Hl7.Fhir.Specification.Navigation
             if (nav == null) { throw Error.ArgumentNull("nav"); }
             return ElementDefinitionNavigator.IsRenamedChoiceElement(nav.PathName, diffName);
         }
+
+        // [WMR 20161212] NEW
+
+        /// <summary>
+        /// Advance to the next slice in the current (re-)slice group.
+        /// Specifically, move to the next sibling element with the same path
+        /// as the current element that is not a reslice, if it exists.
+        /// Otherwise remain positioned at the current element.
+        /// </summary>
+        /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
+        public static bool MoveToNextSlice(this ElementDefinitionNavigator nav) // , string resliceBaseName
+        {
+            if (nav == null) { throw Error.ArgumentNull("nav"); }
+            if (nav.Current == null) { throw Error.Argument("nav", "Cannot move to navigator next slice. Current node is not set."); }
+
+            var bm = nav.Bookmark();
+            var sliceName = nav.Current.Name;
+
+            // Skip all reslices
+            while (nav.MoveToNext(nav.PathName))
+            {
+                var currentSliceName = nav.Current.Name;
+                
+                // Not supported: Reslicing on unnamed slices (extension, type slice)
+                Debug.Assert(currentSliceName != null);
+
+                // Reslice?
+                if (ElementDefinitionNavigator.IsResliceOf(currentSliceName, sliceName))
+                {
+                    continue;   // Skip and keep searching
+                }
+
+                // Next sibling slice?
+                if (ElementDefinitionNavigator.IsSiblingSliceOf(currentSliceName, sliceName))
+                {
+                    return true; // Match!
+                }
+
+                // No match
+                break;
+            }
+
+            // No match, restore original position
+            nav.ReturnToBookmark(bm);
+            return false;
+        }
+
+        /// <summary>
+        /// Advance to the first reslice of the current slice element, if it exists.
+        /// Specifically, move to the next sibling element with the same path
+        /// as the current element, if it exists and represents a reslice.
+        /// Otherwise remain positioned at the current element.
+        /// </summary>
+        /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
+        public static bool MoveToFirstReslice(this ElementDefinitionNavigator nav)
+        {
+            if (nav == null) { throw Error.ArgumentNull("nav"); }
+            if (nav.Current == null) { throw Error.Argument("nav", "Cannot move navigator to first reslice. Current node is not set."); }
+
+            var bm = nav.Bookmark();
+            var sliceName = nav.Current.Name;
+            if (sliceName == null) { throw Error.Argument("nav", "Cannot move navigator to first reslice. Current node has no slice name."); }
+
+            if (nav.MoveToNext(nav.PathName)
+                && ElementDefinitionNavigator.IsDirectResliceOf(nav.Current.Name, sliceName))
+            {
+                return true;
+            }
+
+            // No match, restore original position
+            nav.ReturnToBookmark(bm);
+            return false;
+        }
+
+        /// <summary>
+        /// Reposition the navigator to the base slice of the current slice element, if it exists.
+        /// Otherwise remain positioned at the current element.
+        /// </summary>
+        /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
+        public static bool MoveToBaseSlice(this ElementDefinitionNavigator nav)
+        {
+            if (nav == null) { throw Error.ArgumentNull("nav"); }
+            if (nav.Current == null) { throw Error.Argument("nav", "Cannot move navigator to parent slice. Current node is not set."); }
+
+            var bm = nav.Bookmark();
+            var sliceName = nav.Current.Name;
+            if (sliceName == null) { throw Error.Argument("nav", "Cannot move navigator to parent slice. Current node has no slice name."); }
+            // if (sliceName == null) { return false; }
+
+            var baseName = ElementDefinitionNavigator.GetBaseSliceName(sliceName);
+            if (baseName == null) { return false; }
+
+            var name = nav.PathName;
+            while (nav.MoveToPrevious(name))
+            {
+                var currentSliceName = nav.Current.Name;
+
+                // Base slice?
+                if (currentSliceName == baseName)
+                {
+                    return true; // Found it!
+                }
+            }
+
+            // No match, restore original position
+            nav.ReturnToBookmark(bm);
+            return false;
+        }
+
+        /// <summary>
+        /// Advance to the last slice in the current (re-)slice group.
+        /// Specifically, move to the last sibling element with the exact same path as the current element
+        /// (and optionally with the same base slice name), if it exists.
+        /// Otherwise remain positioned at the current element.
+        /// </summary>
+        /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
+        public static bool MoveToLastSlice(this ElementDefinitionNavigator nav)
+        {
+            if (nav == null) { throw Error.ArgumentNull("nav"); }
+            if (nav.Current == null) { throw Error.Argument("nav", "Cannot move navigator to last slice. Current node is not set."); }
+
+            var result = nav.MoveToNextSlice();
+            if (result)
+            {
+                while (nav.MoveToNextSlice()) ;
+            }
+            return result;
+        }
+
+
+#if false
+        // [WMR 20161212] OBSOLETE
 
         /// <summary>Move the navigator to the next type slice of the (choice) element with the specified name, if it exists.</summary>
         /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
@@ -33,117 +166,6 @@ namespace Hl7.Fhir.Specification.Navigation
             nav.ReturnToBookmark(bm);
             return false;
         }
-
-        /// <summary>Move to last direct child element with same path as current element.</summary>
-        /// <param name="nav">An <see cref="ElementDefinitionNavigator"/> instance.</param>
-        /// <param name="sliceName">The optional target slice name, or <c>null</c>. Used for reslicing.</param>
-        /// <returns><c>true</c> if the cursor has moved at least a single element, <c>false</c> otherwise</returns>
-        public static bool MoveToLastSlice(this ElementDefinitionNavigator nav, string sliceName)
-        {
-            if (nav == null) { throw Error.ArgumentNull("nav"); }
-            if (nav.Current == null) { throw Error.Argument("nav", "Cannot move to last slice. Current node is not set."); }
-            // if (nav.Current.Base == null) { throw Error.Argument("nav", "Cannot move to last slice. Current node has no Base.path component (path '{0}').".FormatWith(nav.Path)); }
-
-            var bm = nav.Bookmark();
-            var basePath = nav.Current.Base != null ? nav.Current.Base.Path : nav.Path;
-            // if (string.IsNullOrEmpty(basePath)) { throw Error.Argument("nav", "Cannot move to last slice. Current node has no Base.path component (path '{0}').".FormatWith(nav.Path)); }
-
-            var result = false;
-            // while (nav.MoveToNext())
-            do
-            {
-                var baseComp = nav.Current.Base != null ? nav.Current.Base.Path : nav.Path;
-                if (baseComp != null && (baseComp == basePath || ElementDefinitionNavigator.IsRenamedChoiceElement(basePath, baseComp)))
-                {
-                    if (sliceName == null || nav.Current.Name == sliceName || ElementDefinitionNavigator.IsResliceOf(nav.Current.Name, sliceName))
-                    {
-                        // Match, advance cursor
-                        bm = nav.Bookmark();
-                        result = true;
-                    }
-                    // Otherwise advance to next slice entry
-                }
-                else
-                {
-                    // Mismatch, back up to previous element and exit
-                    nav.ReturnToBookmark(bm);
-                    break;
-                }
-            } while (nav.MoveToNext());
-            return result;
-        }
-
-        // [WMR 20161212] NEW
-
-        /// <summary>
-        /// Advance to the next slice in the current slice group.
-        /// Specifically, move to the next sibling element with the exact same path as the current element, if it exists.
-        /// Otherwise remain positioned at the current element.
-        /// </summary>
-        /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
-        public static bool MoveToNextSlice(this ElementDefinitionNavigator nav)
-        {
-            if (nav == null) { throw Error.ArgumentNull("nav"); }
-            if (nav.Current == null) { throw Error.Argument("nav", "Cannot move to next slice. Current node is not set."); }
-            var name = nav.PathName;
-            var sliceName = nav.Current.Name;
-            var bm = nav.Bookmark();
-            if (nav.MoveToNext() && nav.PathName == name)
-            {
-                // Is this a reslice? 
-                var resliceBaseName = ElementDefinitionNavigator.GetBaseSliceName(sliceName);
-                // No; then we found the next slice
-                if (resliceBaseName == null) { return true; }
-                // Yes; verify that the parent slice names match
-                var candidateResliceBaseName = ElementDefinitionNavigator.GetBaseSliceName(nav.Current.Name);
-                if (StringComparer.Ordinal.Equals(resliceBaseName, candidateResliceBaseName)) { return true; }
-            }
-
-            // No match, restore original position
-            nav.ReturnToBookmark(bm);
-            return false;
-        }
-
-
-#if false
-        // [WMR 20161212] OBSOLETE
-
-        /// <summary>
-        /// If the current element has the specified name, then maintain position and return true.
-        /// Otherwise move to the next sibling element with the specified slice name, if it exists.
-        /// </summary>
-        /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
-        public static bool MoveToNextSlice(this ElementDefinitionNavigator nav, string sliceName)
-        {
-            if (nav == null) { throw Error.ArgumentNull("nav"); }
-            if (nav.Current == null) { throw Error.Argument("nav", "Cannot move to next slice. Current node is not set."); }
-
-            var bm = nav.Bookmark();
-            var basePath = nav.Current.Base != null ? nav.Current.Base.Path : nav.Path;
-
-            var result = false;
-            do
-            {
-                var baseComp = nav.Current.Base != null ? nav.Current.Base.Path : nav.Path;
-                if (baseComp != null && (baseComp == basePath || ElementDefinitionNavigator.IsRenamedChoiceElement(basePath, baseComp)))
-                {
-                    if (nav.Current.Name == sliceName)
-                    {
-                        // Match!
-                        result = true;
-                        break;
-                    }
-                }
-                else
-                {
-                    // Mismatch, back up to previous element and exit
-                    nav.ReturnToBookmark(bm);
-                    break;
-                }
-            } while (nav.MoveToNext());
-            return result;
-        }
-
 #endif
 
         //TODO: Discuss with Michel why he uses Base path (or definition path), instead of just definition path

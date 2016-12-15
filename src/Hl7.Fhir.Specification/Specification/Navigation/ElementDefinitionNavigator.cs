@@ -353,8 +353,13 @@ namespace Hl7.Fhir.Specification.Navigation
             }
         }
 
-
-
+        // [WMR 20161214] NEW
+        /// <summary>Returns the ordinal position of the bookmarked element, or -1.</summary>
+        internal int GetOrdinalPosition(Bookmark bookmark)
+        {
+            var elem = bookmark.data as ElementDefinition;
+            return elem != null ? Elements.IndexOf(elem) : -1;
+        }
 
         //----------------------------------
         //
@@ -641,7 +646,14 @@ namespace Hl7.Fhir.Specification.Navigation
         }
 
         // [WMR 20161013] New
+        private const char RESLICE_NAME_SEPARATOR_CHAR = '/';
         private const string RESLICE_NAME_SEPARATOR = "/";
+
+        //public static bool IsValidSliceName(string sliceName)
+        //{
+        //    if (sliceName == null) { return true; }
+        //    return !sliceName.Contains("//") && !sliceName.EndsWith("/");
+        //}
 
         /// <summary>Determines if the specified element name represents a reslice: "slice/reslice[/reslice2...]".</summary>
         public static bool IsResliceName(string sliceName) => sliceName != null && sliceName.Contains(RESLICE_NAME_SEPARATOR);
@@ -669,27 +681,88 @@ namespace Hl7.Fhir.Specification.Navigation
         }
 
         /// <summary>Determines if the specified slice name represents a reslice of an existing slice.</summary>
-        /// <param name="sliceName">The name of the candidate reslice.</param>
+        /// <param name="sliceName">The name of the candidate slice.</param>
         /// <param name="baseSliceName">The name of an existing slice.</param>
         /// <returns><c>true</c> if <paramref name="sliceName"/> is a reslice of <paramref name="baseSliceName"/>, or <c>false</c> otherwise.</returns>
         /// <example>
         /// <code>
-        /// IsResliceOf("A/B", "A") == true
+        /// IsDirectResliceOf("A/B", "A") == true
         /// 
-        /// IsResliceOf("A", "A") == false
-        /// IsResliceOf("B/A", "A") == false
-        /// IsResliceOf("A/B/C", "A") == false
+        /// IsDirectResliceOf("A", "A") == false
+        /// IsDirectResliceOf("B/A", "A") == false
+        /// IsDirectResliceOf("A/B/C", "A") == false
         /// </code>
         /// </example>
-        public static bool IsResliceOf(string sliceName, string baseSliceName)
+        public static bool IsDirectResliceOf(string sliceName, string baseSliceName)
         {
-            // return sliceName.StartsWith(baseSliceName + RESLICE_NAME_SEPARATOR);
             return sliceName != null
                 && baseSliceName != null
                 && sliceName.Length > baseSliceName.Length + 1
                 && string.CompareOrdinal(sliceName, 0, baseSliceName, 0, baseSliceName.Length) == 0
-                && sliceName.Substring(baseSliceName.Length, 1) == RESLICE_NAME_SEPARATOR
-                && sliceName.IndexOf(RESLICE_NAME_SEPARATOR, baseSliceName.Length + 1) == -1;
+                && sliceName[baseSliceName.Length] == RESLICE_NAME_SEPARATOR_CHAR
+                && sliceName.IndexOf(RESLICE_NAME_SEPARATOR, baseSliceName.Length + 1, StringComparison.Ordinal) == -1;
+        }
+
+        /// <summary>Determines if the specified slice name represents a (nested) reslice of an existing slice.</summary>
+        /// <param name="sliceName">The name of the candidate slice.</param>
+        /// <param name="baseSliceName">The name of an existing slice.</param>
+        /// <returns><c>true</c> if <paramref name="sliceName"/> is a (nested) reslice of <paramref name="baseSliceName"/>, or <c>false</c> otherwise.</returns>
+        /// <example>
+        /// <code>
+        /// IsResliceOf("A/B", "A") == true
+        /// IsResliceOf("A/B/C", "A") == true
+        /// 
+        /// IsResliceOf("A", "A") == false
+        /// IsResliceOf("B/A", "A") == false
+        /// </code>
+        /// </example>
+        public static bool IsResliceOf(string sliceName, string baseSliceName)
+        {
+            return sliceName != null
+                && baseSliceName != null
+                && sliceName.Length > baseSliceName.Length + 1
+                && string.CompareOrdinal(sliceName, 0, baseSliceName, 0, baseSliceName.Length) == 0
+                && sliceName[baseSliceName.Length] == RESLICE_NAME_SEPARATOR_CHAR;
+        }
+
+        /// <summary>Determines if the specified slice names represent sibling slices.</summary>
+        /// <returns><c>true</c> if <paramref name="sliceName"/> represents a sibling slice of <paramref name="siblingSliceName"/>, or <c>false</c> otherwise.</returns>
+        /// <example>
+        /// <code>
+        /// IsSiblingSliceOf("A", "B") == true
+        /// IsSiblingSliceOf("A", null) == true
+        /// IsSiblingSliceOf("A/1", "A/2") == true
+        /// 
+        /// IsSiblingSliceOf("A", "A") == false
+        /// IsSiblingSliceOf("A/1", "A") == false
+        /// </code>
+        /// </example>
+        public static bool IsSiblingSliceOf(string sliceName, string siblingSliceName)
+        {
+            if (string.IsNullOrEmpty(sliceName))
+            {
+                return !string.IsNullOrEmpty(siblingSliceName) && !IsResliceName(siblingSliceName);
+            }
+            if (string.IsNullOrEmpty(siblingSliceName))
+            {
+                return !string.IsNullOrEmpty(sliceName) && !IsResliceName(sliceName);
+            }
+
+            var baseName = GetBaseSliceName(sliceName);
+            var siblingBaseName = GetBaseSliceName(siblingSliceName);
+            if (baseName == null && siblingBaseName == null)
+            {
+                return !StringComparer.Ordinal.Equals(sliceName, siblingSliceName);
+            }
+
+            if (StringComparer.Ordinal.Equals(baseName, siblingBaseName))
+            {
+                var resliceName = sliceName.Substring(baseName.Length);
+                var siblingResliceName = siblingSliceName.Substring(siblingBaseName.Length);
+                return !StringComparer.Ordinal.Equals(resliceName, siblingResliceName);
+            }
+
+            return false;
         }
 
         public override string ToString()
