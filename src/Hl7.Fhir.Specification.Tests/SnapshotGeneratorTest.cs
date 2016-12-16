@@ -701,24 +701,29 @@ namespace Hl7.Fhir.Specification.Tests
             verifier.VerifyElement("Patient.extension", "researchAuth", "Patient.extension:researchAuth");
             // Note: in the original snapshot, the "researchAuth" complex extension slice is fully expanded (child extensions: type, flag, date)
             // However this is not necessary, as there are no child constraints on the extension
+
+            // [WMR 20161216] TODO: Merge slicing entry
             verifier.AssertSlicing(new string[] { "type.value[x]" }, ElementDefinition.SlicingRules.Open, null);
 
             // [WMR 20161208] TODO...
 
             // "researchAuth/grandfatheredResAuth" represents a reslice of the base extension "researchAuth" (0...*)
             verifier.VerifyElement("Patient.extension", "researchAuth/grandfatheredResAuth", "Patient.extension:researchAuth/grandfatheredResAuth");
+
+            // [WMR 20161216] TODO: Merge slicing entry
             verifier.VerifyElement("Patient.extension.extension", null, "Patient.extension:researchAuth/grandfatheredResAuth.extension");
             verifier.AssertSlicing(new string[] { "url" }, ElementDefinition.SlicingRules.Open, false);
+
             // The reslice "researchAuth/grandfatheredResAuth" has a child element constraint on "type.value[x]"
             // Therefore the complex extension is fully expanded (child extensions: type, flag, date)
             verifier.VerifyElement("Patient.extension.extension", "type", "Patient.extension:researchAuth/grandfatheredResAuth.extension:type");
-            verifier.VerifyElement("Patient.extension.extension.url", "type.url", "Patient.extension:researchAuth/grandfatheredResAuth.extension:type.url", new FhirUri("type"));
+            verifier.VerifyElement("Patient.extension.extension.url", null, "Patient.extension:researchAuth/grandfatheredResAuth.extension:type.url", new FhirUri("type"));
             // Child constraints on "type.value[x]" merged from differential
             verifier.VerifyElement("Patient.extension.extension.value[x]", "researchAuth/grandfatheredResAuth.type.value[x]", "Patient.extension:researchAuth/grandfatheredResAuth.extension:type.value[x]");
             verifier.VerifyElement("Patient.extension.extension", "flag", "Patient.extension:researchAuth/grandfatheredResAuth.extension:flag");
-            verifier.VerifyElement("Patient.extension.extension.url", "flag.url", "Patient.extension:researchAuth/grandfatheredResAuth.extension:flag.url", new FhirUri("flag"));
+            verifier.VerifyElement("Patient.extension.extension.url", null, "Patient.extension:researchAuth/grandfatheredResAuth.extension:flag.url", new FhirUri("flag"));
             verifier.VerifyElement("Patient.extension.extension", "date", "Patient.extension:researchAuth/grandfatheredResAuth.extension:date");
-            verifier.VerifyElement("Patient.extension.extension.url", "date.url", "Patient.extension:researchAuth/grandfatheredResAuth.extension:date.url", new FhirUri("date"));
+            verifier.VerifyElement("Patient.extension.extension.url", null, "Patient.extension:researchAuth/grandfatheredResAuth.extension:date.url", new FhirUri("date"));
             verifier.VerifyElement("Patient.extension.url", null, "Patient.extension:researchAuth/grandfatheredResAuth.url", new FhirUri(@"http://example.com/fhir/StructureDefinition/patient-research-authorization"));
 
             // Slices inherited from base profile with url http://example.com/fhir/SD/patient-identifier-subslice
@@ -1968,6 +1973,15 @@ namespace Hl7.Fhir.Specification.Tests
             var sd = dirSource.FindStructureDefinition("http://example.com/StructureDefinition/patient-telecom-reslice-ek");
             Assert.IsNotNull(sd);
 
+            //Patient.telecom : ''
+            //Patient.telecom : 'phone'
+            //Patient.telecom : 'email'
+            //Patient.telecom : 'email/home'
+            //Patient.telecom : 'email/work'
+            //Patient.telecom : 'other'
+            //Patient.telecom : 'other/home'
+            //Patient.telecom : 'other/work'
+
             // Verify original differential - defines reslicing
             Debug.Print("Verify differential...");
             var diffNav = ElementDefinitionNavigator.ForDifferential(sd);
@@ -2082,7 +2096,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         // Ewout: type slices cannot contain renamed elements!
-        static readonly StructureDefinition ObservationTypeSliceProfile = new StructureDefinition()
+        static StructureDefinition ObservationTypeSliceProfile => new StructureDefinition()
         {
             ConstrainedType = FHIRDefinedType.Observation,
             Base = ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Observation),
@@ -2218,7 +2232,7 @@ namespace Hl7.Fhir.Specification.Tests
             assertProfileNotFoundIssue(outcome.Issue[0], Issue.UNAVAILABLE_REFERENCED_PROFILE, profile.Base);
         }
 
-        static readonly StructureDefinition ObservationTypeResliceProfile = new StructureDefinition()
+        static StructureDefinition ObservationTypeResliceProfile => new StructureDefinition()
         {
             ConstrainedType = FHIRDefinedType.Observation,
             Base = ObservationTypeSliceProfile.Url,
@@ -2246,9 +2260,10 @@ namespace Hl7.Fhir.Specification.Tests
                             new ElementDefinition.TypeRefComponent() { Code = FHIRDefinedType.String }
                         }
                     }
-                    // New type slice constraint
-                    // Note: this is actually invalid; derived profiles can only constrain...
-                    // However the snapshot generator does not detect this
+                    
+                    // Remove existing type slice value[x]: CodeableConcept
+
+                    // Add a new type slice value[x]: Integer
                     ,new ElementDefinition("Observation.value[x]")
                     {
                         Type = new List<ElementDefinition.TypeRefComponent>()
@@ -2294,7 +2309,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         // Choice type constraint, with element renaming
-        static readonly StructureDefinition ObservationTypeConstraintProfile = new StructureDefinition()
+        static StructureDefinition ObservationTypeConstraintProfile => new StructureDefinition()
         {
             ConstrainedType = FHIRDefinedType.Observation,
             Base = ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Observation),

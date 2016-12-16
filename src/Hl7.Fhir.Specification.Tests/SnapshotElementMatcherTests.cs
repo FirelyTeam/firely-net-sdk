@@ -1,4 +1,12 @@
-﻿using System;
+﻿/* 
+ * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+
+using System;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Snapshot;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -115,7 +123,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Slice: Patient.extension
             matches = ElementMatcher.Match(snapNav, diffNav);
             Assert.IsNotNull(matches);
-            MatchPrinter.DumpMatches(matches, snapNav, diffNav);
+            matches.DumpMatches(snapNav, diffNav);
             Assert.AreEqual(2, matches.Count);
             Assert.IsTrue(diffNav.MoveToFirstChild());
             Assert.IsTrue(snapNav.MoveToChild(diffNav.PathName));
@@ -173,7 +181,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Slice: Patient.extension
             matches = ElementMatcher.Match(snapNav, diffNav);
             Assert.IsNotNull(matches);
-            MatchPrinter.DumpMatches(matches, snapNav, diffNav);
+            matches.DumpMatches(snapNav, diffNav);
             Assert.AreEqual(2, matches.Count);
             Assert.IsTrue(diffNav.MoveToFirstChild());
             Assert.IsTrue(snapNav.MoveToChild(diffNav.PathName));
@@ -234,7 +242,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Slice: Patient.extension
             matches = ElementMatcher.Match(snapNav, diffNav);
             Assert.IsNotNull(matches);
-            MatchPrinter.DumpMatches(matches, snapNav, diffNav);
+            matches.DumpMatches(snapNav, diffNav);
             Assert.AreEqual(2, matches.Count);
             Assert.IsTrue(diffNav.MoveToFirstChild());
             Assert.IsTrue(snapNav.MoveToChild(diffNav.PathName));
@@ -297,7 +305,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Slice: Patient.extension
             matches = ElementMatcher.Match(snapNav, diffNav);
             Assert.IsNotNull(matches);
-            MatchPrinter.DumpMatches(matches, snapNav, diffNav);
+            matches.DumpMatches(snapNav, diffNav);
             Assert.AreEqual(3, matches.Count);
             Assert.IsTrue(diffNav.MoveToFirstChild());
             Assert.IsTrue(snapNav.MoveToChild(diffNav.PathName));
@@ -355,7 +363,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Slice: Extension.extension
             matches = ElementMatcher.Match(snapNav, diffNav);
             Assert.IsNotNull(matches);
-            MatchPrinter.DumpMatches(matches, snapNav, diffNav);
+            matches.DumpMatches(snapNav, diffNav);
             Assert.AreEqual(3, matches.Count);  // extension slice entry + 2 complex extension elements
             Assert.IsTrue(diffNav.MoveToFirstChild());
             Assert.IsTrue(snapNav.MoveToChild(diffNav.PathName));
@@ -373,11 +381,12 @@ namespace Hl7.Fhir.Specification.Tests
 
             var baseProfile = new StructureDefinition()
             {
-                Differential = new StructureDefinition.DifferentialComponent()
+                Snapshot = new StructureDefinition.SnapshotComponent()
                 {
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Extension"),
+                        new ElementDefinition("Extension.extension") { Slicing = new ElementDefinition.SlicingComponent() { Discriminator = new string[] {"url" } } },
                         new ElementDefinition("Extension.extension") { Name = "name" },
                         new ElementDefinition("Extension.extension.value")
                         {
@@ -419,7 +428,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            var snapNav = ElementDefinitionNavigator.ForDifferential(baseProfile);
+            var snapNav = ElementDefinitionNavigator.ForSnapshot(baseProfile);
             var diffNav = ElementDefinitionNavigator.ForDifferential(userProfile);
 
             // Merge: Extension root
@@ -431,7 +440,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Slice: Extension.extension
             matches = ElementMatcher.Match(snapNav, diffNav);
             Assert.IsNotNull(matches);
-            MatchPrinter.DumpMatches(matches, snapNav, diffNav);
+            matches.DumpMatches(snapNav, diffNav);
             Assert.AreEqual(2, matches.Count);  // extension slice entry + one additional complex extension element
             Assert.IsTrue(diffNav.MoveToFirstChild());
             Assert.IsTrue(snapNav.MoveToChild(diffNav.PathName));
@@ -447,11 +456,12 @@ namespace Hl7.Fhir.Specification.Tests
 
             var baseProfile = new StructureDefinition()
             {
-                Differential = new StructureDefinition.DifferentialComponent()
+                Snapshot = new StructureDefinition.SnapshotComponent()
                 {
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Extension"),
+                        new ElementDefinition("Extension.extension") { Slicing = new ElementDefinition.SlicingComponent() { Discriminator = new string[] {"url" } } },
                         new ElementDefinition("Extension.extension") { Name = "name" },
                         new ElementDefinition("Extension.extension.value")
                         {
@@ -511,7 +521,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            var snapNav = ElementDefinitionNavigator.ForDifferential(baseProfile);
+            var snapNav = ElementDefinitionNavigator.ForSnapshot(baseProfile);
             var diffNav = ElementDefinitionNavigator.ForDifferential(userProfile);
 
             // Merge: Extension root
@@ -523,16 +533,17 @@ namespace Hl7.Fhir.Specification.Tests
             // Slice: Extension.extension
             matches = ElementMatcher.Match(snapNav, diffNav);
             Assert.IsNotNull(matches);
-            MatchPrinter.DumpMatches(matches, snapNav, diffNav);
+            matches.DumpMatches(snapNav, diffNav);
             Assert.AreEqual(4, matches.Count);  // extension slice entry + three complex extension elements
             Assert.IsTrue(diffNav.MoveToFirstChild());
             Assert.IsTrue(snapNav.MoveToChild(diffNav.PathName));
             assertMatch(matches[0], ElementMatcher.MatchAction.Slice, snapNav);             // Extension slice entry (no diff match)
             assertMatch(matches[1], ElementMatcher.MatchAction.Add, snapNav, diffNav);      // Insert new extension child element "size"
             Assert.IsTrue(diffNav.MoveToNext());
-            assertMatch(matches[2], ElementMatcher.MatchAction.Merge, snapNav, diffNav);    // Merge extension child element "name"
             Assert.IsTrue(snapNav.MoveToNext());
+            assertMatch(matches[2], ElementMatcher.MatchAction.Merge, snapNav, diffNav);    // Merge extension child element "name"
             Assert.IsTrue(diffNav.MoveToNext());
+            Assert.IsTrue(snapNav.MoveToNext());
             assertMatch(matches[3], ElementMatcher.MatchAction.Merge, snapNav, diffNav);    // Merge extension child element "age"
             Assert.IsFalse(diffNav.MoveToNext());
         }
@@ -568,7 +579,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Slice: Patient.animal
             matches = ElementMatcher.Match(snapNav, diffNav);
             Assert.IsNotNull(matches);
-            MatchPrinter.DumpMatches(matches, snapNav, diffNav);
+            matches.DumpMatches(snapNav, diffNav);
             Assert.AreEqual(2, matches.Count);
             Assert.IsTrue(diffNav.MoveToFirstChild());
             Assert.IsTrue(snapNav.MoveToChild(diffNav.PathName));
@@ -610,7 +621,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Slice: Patient.animal
             matches = ElementMatcher.Match(snapNav, diffNav);
             Assert.IsNotNull(matches);
-            MatchPrinter.DumpMatches(matches, snapNav, diffNav);
+            matches.DumpMatches(snapNav, diffNav);
             Assert.AreEqual(2, matches.Count);
             Assert.IsTrue(diffNav.MoveToFirstChild());
             Assert.IsTrue(snapNav.MoveToChild(diffNav.PathName));
@@ -656,7 +667,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Slice: Patient.animal
             matches = ElementMatcher.Match(snapNav, diffNav);
             Assert.IsNotNull(matches);
-            MatchPrinter.DumpMatches(matches, snapNav, diffNav);
+            matches.DumpMatches(snapNav, diffNav);
             Assert.AreEqual(1, matches.Count);
             Assert.IsTrue(diffNav.MoveToFirstChild());
             Assert.IsTrue(snapNav.MoveToChild(diffNav.PathName));
@@ -697,7 +708,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Slice: Patient.animal
             matches = ElementMatcher.Match(snapNav, diffNav);
             Assert.IsNotNull(matches);
-            MatchPrinter.DumpMatches(matches, snapNav, diffNav);
+            matches.DumpMatches(snapNav, diffNav);
             Assert.AreEqual(2, matches.Count);
             Assert.IsTrue(diffNav.MoveToFirstChild());
             Assert.IsTrue(snapNav.MoveToChild(diffNav.PathName));
@@ -741,7 +752,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Slice: Patient.animal
             matches = ElementMatcher.Match(snapNav, diffNav);
             Assert.IsNotNull(matches);
-            MatchPrinter.DumpMatches(matches, snapNav, diffNav);
+            matches.DumpMatches(snapNav, diffNav);
             Assert.AreEqual(3, matches.Count);
             Assert.IsTrue(diffNav.MoveToFirstChild());
             Assert.IsTrue(snapNav.MoveToChild(diffNav.PathName));
@@ -799,7 +810,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Reslice: Patient.animal
             matches = ElementMatcher.Match(snapNav, diffNav);
             Assert.IsNotNull(matches);
-            MatchPrinter.DumpMatches(matches, snapNav, diffNav);
+            matches.DumpMatches(snapNav, diffNav);
             Assert.AreEqual(4, matches.Count);
             Assert.IsTrue(diffNav.MoveToFirstChild());
             Assert.IsTrue(snapNav.MoveToChild(diffNav.PathName));
@@ -864,7 +875,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Slice: Patient.animal
             matches = ElementMatcher.Match(snapNav, diffNav);
             Assert.IsNotNull(matches);
-            MatchPrinter.DumpMatches(matches, snapNav, diffNav);
+            matches.DumpMatches(snapNav, diffNav);
             Assert.AreEqual(2, matches.Count);
             Assert.IsTrue(diffNav.MoveToFirstChild());
             Assert.IsTrue(snapNav.MoveToChild(diffNav.PathName));
@@ -877,7 +888,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Nested slice: Patient.animal.breed
             matches = ElementMatcher.Match(snapNav, diffNav);
             Assert.IsNotNull(matches);
-            MatchPrinter.DumpMatches(matches, snapNav, diffNav);
+            matches.DumpMatches(snapNav, diffNav);
             Assert.AreEqual(3, matches.Count);
             Assert.IsTrue(diffNav.MoveToFirstChild());
             Assert.IsTrue(snapNav.MoveToFirstChild());
@@ -901,12 +912,12 @@ namespace Hl7.Fhir.Specification.Tests
         static List<ElementMatcher.MatchInfo> matchAndVerify(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, ElementMatcher.MatchAction action = ElementMatcher.MatchAction.Merge)
         {
             List<ElementMatcher.MatchInfo> matches = ElementMatcher.Match(snapNav, diffNav);
-            // MatchPrinter.DumpMatches(matches, snapNav, diffNav);
             Assert.IsTrue(diffNav.MoveToFirstChild());
             Assert.IsTrue(snapNav.MoveToFirstChild());
             for (int i = 0; i < matches.Count; i++)
             {
-                dumpMatch(matches[i], snapNav, diffNav);
+                matches[i].DumpMatch(snapNav, diffNav);
+
                 assertMatch(matches[i], action, snapNav, diffNav);
 
                 snapNav.ReturnToBookmark(matches[i].BaseBookmark);
@@ -930,7 +941,7 @@ namespace Hl7.Fhir.Specification.Tests
         static void assertMatch(List<ElementMatcher.MatchInfo> matches, ElementMatcher.MatchAction action, ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
         {
             Assert.IsNotNull(matches);
-            MatchPrinter.DumpMatches(matches, snapNav, diffNav);
+            matches.DumpMatches(snapNav, diffNav);
             Assert.AreEqual(1, matches.Count);
             assertMatch(matches[0], action, snapNav, diffNav);
         }
@@ -946,25 +957,6 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(action, match.Action);
             Assert.AreEqual(snap, match.BaseBookmark);
             Assert.AreEqual(diff, match.DiffBookmark);
-        }
-
-        static void dumpMatch(ElementMatcher.MatchInfo match, ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
-        {
-            var snapBM = snapNav.Bookmark();
-            var diffBM = snapNav.Bookmark();
-
-            Assert.IsTrue(snapNav.ReturnToBookmark(match.BaseBookmark));
-            Assert.IsTrue(diffNav.ReturnToBookmark(match.DiffBookmark));
-
-            var bPos = snapNav.Path + $"[{snapNav.OrdinalPosition}]";
-            var dPos = diffNav.Path + $"[{diffNav.OrdinalPosition}]";
-            if (snapNav.Current != null && snapNav.Current.Name != null) bPos += $" '{snapNav.Current.Name}'";
-            if (diffNav.Current != null && diffNav.Current.Name != null) dPos += $" '{diffNav.Current.Name}'";
-            Debug.WriteLine($"B:{bPos} <--{match.Action.ToString()}--> D:{dPos}");
-
-            Assert.IsTrue(snapNav.ReturnToBookmark(snapBM));
-            Assert.IsTrue(snapNav.ReturnToBookmark(diffBM));
-
         }
     }
 }

@@ -638,6 +638,7 @@ namespace Hl7.Fhir.Specification.Tests
             e.Add(new ElementDefinition() { Path = "A.C", Name = "1/1/1" });
             e.Add(new ElementDefinition() { Path = "A.C", Name = "1/1/2" });
             e.Add(new ElementDefinition() { Path = "A.C", Name = "1/2" });
+            e.Add(new ElementDefinition() { Path = "A.C", Name = "1/3" });
             e.Add(new ElementDefinition() { Path = "A.C", Name = "2" });
             e.Add(new ElementDefinition() { Path = "A.D" });
 
@@ -656,55 +657,25 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.MoveToNext("C"));
             Assert.IsTrue(nav.MoveToNextSlice());
             Assert.AreEqual(nav.Current.Name, "1");
-            Assert.IsTrue(nav.MoveToFirstReslice());
+            Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
             Assert.AreEqual(nav.Current.Name, "1/1");
-            Assert.IsTrue(nav.MoveToFirstReslice());
+
+            var bm = nav.Bookmark();
+            Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
             Assert.AreEqual(nav.Current.Name, "1/1/1");
-            Assert.IsFalse(nav.MoveToFirstReslice());
             Assert.IsTrue(nav.MoveToNextSlice());
             Assert.AreEqual(nav.Current.Name, "1/1/2");
             Assert.IsFalse(nav.MoveToNextSlice());
-            Assert.IsTrue(nav.MoveToBaseSlice());
-            Assert.AreEqual(nav.Current.Name, "1/1");
-            Assert.IsTrue(nav.MoveToNextSlice());
+            Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
             Assert.AreEqual(nav.Current.Name, "1/2");
-            Assert.IsFalse(nav.MoveToNextSlice());
-            Assert.IsTrue(nav.MoveToBaseSlice());
-            Assert.AreEqual(nav.Current.Name, "1");
-            Assert.IsFalse(nav.MoveToBaseSlice());
             Assert.IsTrue(nav.MoveToNextSlice());
-            Assert.AreEqual(nav.Current.Name, "2");
+            Assert.AreEqual(nav.Current.Name, "1/3");
             Assert.IsFalse(nav.MoveToNextSlice());
+            Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
+            Assert.AreEqual(nav.Current.Name, "2");
 
             Assert.IsTrue(nav.MoveToNext("D"));
             Assert.IsFalse(nav.MoveToNext());
-
-            while (nav.MoveToPrevious("B"));
-
-            Assert.IsTrue(nav.MoveToLastSlice());
-            Assert.AreEqual(nav.Current.Name, "3");
-            Assert.IsFalse(nav.MoveToLastSlice());
-
-            Assert.IsTrue(nav.MoveToNext("C"));
-            var bm = nav.Bookmark();
-            Assert.IsTrue(nav.MoveToLastSlice());
-            Assert.AreEqual(nav.Current.Name, "2");
-            Assert.IsFalse(nav.MoveToLastSlice());
-            nav.ReturnToBookmark(bm);
-            Assert.IsTrue(nav.MoveToNextSlice());
-            Assert.AreEqual(nav.Current.Name, "1");
-            Assert.IsTrue(nav.MoveToFirstReslice());
-            Assert.AreEqual(nav.Current.Name, "1/1");
-            bm = nav.Bookmark();
-            Assert.IsTrue(nav.MoveToLastSlice());
-            Assert.AreEqual(nav.Current.Name, "1/2");
-            Assert.IsFalse(nav.MoveToLastSlice());
-            nav.ReturnToBookmark(bm);
-            Assert.IsTrue(nav.MoveToFirstReslice());
-            Assert.AreEqual(nav.Current.Name, "1/1/1");
-            Assert.IsTrue(nav.MoveToLastSlice());
-            Assert.AreEqual(nav.Current.Name, "1/1/2");
-            Assert.IsFalse(nav.MoveToLastSlice());
         }
 
 

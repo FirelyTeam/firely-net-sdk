@@ -20,43 +20,52 @@ namespace Hl7.Fhir.Specification.Navigation
 
         // [WMR 20161212] NEW
 
+        // '' => ''                             found unnamed sibling (extension)
+        // '' => A                              found sibling
+        // '' => A/1                            not a sibling => return false
+        // A => ( A/1 => A/2 => ) B             found sibling
+        // A/1 => ( A/1/1 => A/1/2 => ) A/2     found sibling
+        // A/1 => ( A/1/1 => A/1/2 => ) B       not a sibling => return false
+
         /// <summary>
-        /// Advance to the next slice in the current (re-)slice group.
-        /// Specifically, move to the next sibling element with the same path
-        /// as the current element that is not a reslice, if it exists.
+        /// Advance the navigator the the immediately following slicing constraint in the current slice group, at any (re)slicing level.
+        /// Skip any existing child elements.
         /// Otherwise remain positioned at the current element.
         /// </summary>
         /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
-        public static bool MoveToNextSlice(this ElementDefinitionNavigator nav) // , string resliceBaseName
+        public static bool MoveToNextSliceAtAnyLevel(this ElementDefinitionNavigator nav) => nav.MoveToNext(nav.PathName);
+
+        /// <summary>
+        /// Advance the navigator to the next slice in the current slice group and on the current slicing level.
+        /// Skip any existing child elements and/or child reslicing constraints.
+        /// Otherwise remain positioned at the current element.
+        /// </summary>
+        /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
+        public static bool MoveToNextSlice(this ElementDefinitionNavigator nav)
         {
             if (nav == null) { throw Error.ArgumentNull("nav"); }
             if (nav.Current == null) { throw Error.Argument("nav", "Cannot move to navigator next slice. Current node is not set."); }
 
             var bm = nav.Bookmark();
-            var sliceName = nav.Current.Name;
 
-            // Skip all reslices
-            while (nav.MoveToNext(nav.PathName))
+            var name = nav.PathName;
+            var startSliceName = nav.Current.Name;
+            var startBaseSliceName = ElementDefinitionNavigator.GetBaseSliceName(startSliceName);
+            while (nav.MoveToNext(name))
             {
-                var currentSliceName = nav.Current.Name;
-                
-                // Not supported: Reslicing on unnamed slices (extension, type slice)
-                Debug.Assert(currentSliceName != null);
+                var sliceName = nav.Current.Name;
+                // Handle unnamed slices, eg. extensions
+                if (startSliceName == null && sliceName == null) { return true; }
 
-                // Reslice?
-                if (ElementDefinitionNavigator.IsResliceOf(currentSliceName, sliceName))
+                if (ElementDefinitionNavigator.IsSiblingSliceOf(startSliceName, sliceName))
                 {
-                    continue;   // Skip and keep searching
+                    return true;
                 }
 
-                // Next sibling slice?
-                if (ElementDefinitionNavigator.IsSiblingSliceOf(currentSliceName, sliceName))
+                if (startBaseSliceName != null && sliceName.Length > startBaseSliceName.Length && !sliceName.StartsWith(startBaseSliceName))
                 {
-                    return true; // Match!
+                    break;
                 }
-
-                // No match
-                break;
             }
 
             // No match, restore original position
@@ -64,10 +73,12 @@ namespace Hl7.Fhir.Specification.Navigation
             return false;
         }
 
+#if false
+        // [WMR 20161212] OBSOLETE
+
         /// <summary>
         /// Advance to the first reslice of the current slice element, if it exists.
-        /// Specifically, move to the next sibling element with the same path
-        /// as the current element, if it exists and represents a reslice.
+        /// Specifically, move to the next sibling element with the same path as the current element, if it exists and represents a reslice.
         /// Otherwise remain positioned at the current element.
         /// </summary>
         /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
@@ -80,7 +91,7 @@ namespace Hl7.Fhir.Specification.Navigation
             var sliceName = nav.Current.Name;
             if (sliceName == null) { throw Error.Argument("nav", "Cannot move navigator to first reslice. Current node has no slice name."); }
 
-            if (nav.MoveToNext(nav.PathName)
+            if (nav.MoveToNextSliceAtAnyLevel()
                 && ElementDefinitionNavigator.IsDirectResliceOf(nav.Current.Name, sliceName))
             {
                 return true;
@@ -126,6 +137,8 @@ namespace Hl7.Fhir.Specification.Navigation
             return false;
         }
 
+        public static bool MoveToLastSlice(this ElementDefinitionNavigator nav) => nav.MoveToLastSlice(nav.Current.Name);
+
         /// <summary>
         /// Advance to the last slice in the current (re-)slice group.
         /// Specifically, move to the last sibling element with the exact same path as the current element
@@ -133,22 +146,18 @@ namespace Hl7.Fhir.Specification.Navigation
         /// Otherwise remain positioned at the current element.
         /// </summary>
         /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
-        public static bool MoveToLastSlice(this ElementDefinitionNavigator nav)
+        public static bool MoveToLastSlice(this ElementDefinitionNavigator nav, string baseSliceName)
         {
             if (nav == null) { throw Error.ArgumentNull("nav"); }
             if (nav.Current == null) { throw Error.Argument("nav", "Cannot move navigator to last slice. Current node is not set."); }
 
-            var result = nav.MoveToNextSlice();
+            var result = nav.MoveToNextSlice(baseSliceName);
             if (result)
             {
-                while (nav.MoveToNextSlice()) ;
+                while (nav.MoveToNextSlice(baseSliceName)) ;
             }
             return result;
         }
-
-
-#if false
-        // [WMR 20161212] OBSOLETE
 
         /// <summary>Move the navigator to the next type slice of the (choice) element with the specified name, if it exists.</summary>
         /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
