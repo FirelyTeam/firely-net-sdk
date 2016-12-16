@@ -12,9 +12,12 @@ using System.Linq;
 using System.Text;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Navigation
 {
+    // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+    [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
     public class ElementDefinitionNavigator
     {
         internal ElementDefinitionNavigator()
@@ -765,16 +768,19 @@ namespace Hl7.Fhir.Specification.Navigation
             return false;
         }
 
-        public override string ToString()
+        // public override string ToString()
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        string DebuggerDisplay
         {
-            var output = new StringBuilder();
-
-            foreach (var elem in Elements)
+            get
             {
-                output.AppendFormat("{0}{1}" + Environment.NewLine, elem == Current ? "*" : "", elem.Path);
+                var output = new StringBuilder();
+                foreach (var elem in Elements)
+                {
+                    output.AppendFormat("{0}{1}\r\n", elem == Current ? "*" : "", elem.Path);
+                }
+                return output.ToString();
             }
-
-            return output.ToString();
         }
     }
 }
