@@ -166,7 +166,13 @@ namespace Hl7.Fhir.Specification.Tests
 
             // var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyBasic");
 
-            var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyObservation2");
+            // var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyObservation2");
+
+            // [WMR 20161219] Problem: Composition.section element in core resource has name 'section' (b/o name reference)
+            // Ambiguous... snapshot generator slicing logic cannot handle this...
+
+            var sd = _testResolver.FindStructureDefinition(@"http://example.org/StructureDefinition/DocumentComposition");
+            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Composition");
 
             Assert.IsNotNull(sd);
 
@@ -176,7 +182,8 @@ namespace Hl7.Fhir.Specification.Tests
             generateSnapshotAndCompare(sd, out expanded);
 
             dumpOutcome(_generator.Outcome);
-            dumpBasePaths(expanded);
+            // dumpBasePaths(expanded);
+            dumpElements(expanded.Snapshot.Element);
         }
 
         [TestMethod]
@@ -2135,7 +2142,14 @@ namespace Hl7.Fhir.Specification.Tests
             Debug.WriteLineIf(!string.IsNullOrEmpty(header), header);
             foreach (var elem in elements)
             {
-                Debug.Print(elem.Path);
+                if (elem.Name != null)
+                {
+                    Debug.Print(elem.Path + " : '" + elem.Name + "'");
+                }
+                else
+                {
+                    Debug.Print(elem.Path);
+                }
             }
         }
 

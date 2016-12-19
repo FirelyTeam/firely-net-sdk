@@ -15,7 +15,7 @@ namespace Hl7.Fhir.Specification.Navigation
 {
     // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
 
-    /// <summary>Represents the position of an <see cref="ElementDefinitionNavigator"/> instance.</summary>
+    /// <summary>Represents a bookmarked position of an <see cref="ElementDefinitionNavigator"/> instance.</summary>
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
     public struct Bookmark : IEquatable<Bookmark>
     {
@@ -36,13 +36,33 @@ namespace Hl7.Fhir.Specification.Navigation
 
         /// <summary>Indicates if the bookmark is empty, i.e. represents an unpositioned navigator.</summary>
         public bool IsEmpty => data == null;
-
         
+        // Equality
+
+        public override bool Equals(object obj) => obj is Bookmark && Equals((Bookmark)obj);
+
+        public override int GetHashCode()
+        {
+            var d = data != null ? data.GetHashCode() : 0;
+            var i = index.GetValueOrDefault(0);
+            return (d * 17) ^ i;
+        }
+
+        // IEquatable
+
+        public bool Equals(Bookmark other) => object.ReferenceEquals(data, other.data) && index.Equals(other.index);
+
+        // Equality operators
+
+        public static bool operator ==(Bookmark x, Bookmark y) => x.Equals(y);
+
+        public static bool operator !=(Bookmark x, Bookmark y) => !x.Equals(y);
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         internal string DebuggerDisplay
         {
-            get {
+            get
+            {
                 var elemDef = data as ElementDefinition;
                 if (elemDef == null) { return "(empty)"; }
 
@@ -59,21 +79,6 @@ namespace Hl7.Fhir.Specification.Navigation
             }
         }
 
-        public override bool Equals(object obj) => obj is Bookmark && Equals((Bookmark)obj);
 
-        public override int GetHashCode()
-        {
-            var d = data != null ? data.GetHashCode() : 0;
-            var i = index.GetValueOrDefault(0);
-            return (d * 17) ^ i;
-        }
-
-        // IEquatable
-
-        public bool Equals(Bookmark other) => object.ReferenceEquals(data, other.data) && index.Equals(other.index);
-
-        public static bool operator ==(Bookmark x, Bookmark y) => x.Equals(y);
-
-        public static bool operator !=(Bookmark x, Bookmark y) => !x.Equals(y);
     }
 }

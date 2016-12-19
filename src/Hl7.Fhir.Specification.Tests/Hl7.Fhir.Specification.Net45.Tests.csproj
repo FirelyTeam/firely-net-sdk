@@ -118,6 +118,9 @@
     <Content Include="TestData\snapshot-test\Chris Grenz\codeable-with-systems-profile.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="TestData\snapshot-test\Ewout\DocumentComposition.structuredefinition.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestData\validation\patient-telecom-reslice-ek.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

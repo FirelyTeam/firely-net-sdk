@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Specification.Navigation
         /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
         public static bool MoveToChild(this ElementDefinitionNavigator nav, string name)
         {
-            if (nav == null) { throw Error.ArgumentNull("nav"); }
+            if (nav == null) { throw Error.ArgumentNull(nameof(nav)); }
             if (nav.MoveToFirstChild())
             {
                 do
@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Specification.Navigation
         /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
         public static bool MoveToNext(this ElementDefinitionNavigator nav, string name)
         {
-            if (nav == null) { throw Error.ArgumentNull("nav"); }
+            if (nav == null) { throw Error.ArgumentNull(nameof(nav)); }
             var bm = nav.Bookmark();
 
             while (nav.MoveToNext())
@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Specification.Navigation
         /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
         public static bool MoveToPrevious(this ElementDefinitionNavigator nav, string name)
         {
-            if (nav == null) { throw Error.ArgumentNull("nav"); }
+            if (nav == null) { throw Error.ArgumentNull(nameof(nav)); }
             var bm = nav.Bookmark();
 
             while (nav.MoveToPrevious())
@@ -85,9 +85,9 @@ namespace Hl7.Fhir.Specification.Navigation
         /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
         public static bool MoveTo(this ElementDefinitionNavigator nav, ElementDefinition element)
         {
-            if (nav == null) { throw Error.ArgumentNull("nav"); }
-            // Validated by Bookmark.FromElement
-            // if (element == null) { throw Error.ArgumentNull(nameof(element)); }
+            if (nav == null) { throw Error.ArgumentNull(nameof(nav)); }
+            if (element == null) { throw Error.ArgumentNull(nameof(element)); }
+
             var bm = new Bookmark(element);
             return nav.ReturnToBookmark(bm);
         }
@@ -116,8 +116,8 @@ namespace Hl7.Fhir.Specification.Navigation
         /// <returns>A sequence of <see cref="Bookmark"/> values.</returns>
         public static IEnumerable<Bookmark> Find(this ElementDefinitionNavigator nav, string path)
         {
-            if (nav == null) { throw Error.ArgumentNull("nav"); }
-            if (path == null) { throw Error.ArgumentNull("path"); }
+            if (nav == null) { throw Error.ArgumentNull(nameof(nav)); }
+            if (path == null) { throw Error.ArgumentNull(nameof(path)); }
 
             var parts = path.Split('.');
 
@@ -132,8 +132,8 @@ namespace Hl7.Fhir.Specification.Navigation
 
         public static IEnumerable<Bookmark> Approach(this ElementDefinitionNavigator nav, string path)
         {
-            if (nav == null) { throw Error.ArgumentNull("nav"); }
-            if (path == null) { throw Error.ArgumentNull("path"); }
+            if (nav == null) { throw Error.ArgumentNull(nameof(nav)); }
+            if (path == null) { throw Error.ArgumentNull(nameof(path)); }
 
             var parts = path.Split('.');
 

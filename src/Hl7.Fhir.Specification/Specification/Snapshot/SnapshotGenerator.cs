@@ -353,8 +353,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 var matches = ElementMatcher.Match(snap, diff);
 
-                // Debug.WriteLine("Matches for children of " + snap.Path + (snap.Current != null && snap.Current.Name != null ? " '" + snap.Current.Name + "'" : null));
-                // matches.DumpMatches(snap, diff);
+                Debug.WriteLine("Matches for children of " + snap.Path + (snap.Current != null && snap.Current.Name != null ? " '" + snap.Current.Name + "'" : null));
+                matches.DumpMatches(snap, diff);
 
                 foreach (var match in matches)
                 {
@@ -755,7 +755,10 @@ namespace Hl7.Fhir.Specification.Snapshot
             // diff = { ... *Patient.telecom : email (slice entry), Patient.telecom : email/home, Patient.telecom: email/work ... }
             // => Duplicate base slice after last slice
 
-            if (ElementDefinitionNavigator.IsSiblingSliceOf(snap.Current.Name, slicingEntry.Name))
+            // [WMR 20161219] Handle Composition.section - has default name 'section' in core resource (name reference target for Composition.section.section)
+            // Ambiguous in DSTU2... STU3 introduces contentReference
+            // => If slicing entry has no name, then merge with current snap
+            if (slicingEntry.Name != null && ElementDefinitionNavigator.IsSiblingSliceOf(snap.Current.Name, slicingEntry.Name))
             {
                 // Append the new slice constraint to the existing slice group
                 var lastSlice = findSliceAddPosition(snap, diff);
@@ -835,7 +838,11 @@ namespace Hl7.Fhir.Specification.Snapshot
             // base is named => diff is new reslice; add after last existing reslice (if any)
 
             // Debug.Assert(diff.Current.Name != null);
-            Debug.Assert(snap.Current.Name == null || diff.Current.Name == null || ElementDefinitionNavigator.IsDirectResliceOf(diff.Current.Name, snap.Current.Name));
+            Debug.Assert(snap.Current.Name == null
+                // [WMR 20161219] Handle Composition.section - has default name 'section' in core resource (name reference target for Composition.section.section)
+                || snap.Path == "Composition.section"
+                || diff.Current.Name == null
+                || ElementDefinitionNavigator.IsDirectResliceOf(diff.Current.Name, snap.Current.Name));
 
             // Append the new slice constraint to the existing slice group
             // var lastSlice = findLastSlice(snap);
