@@ -314,21 +314,16 @@ namespace Hl7.Fhir.Specification.Navigation
         //
         //----------------------------------
 
-
-        public Bookmark Bookmark()
-        {
-            return new Bookmark() { data = Current };
-        }
-
+        public Bookmark Bookmark() => new Bookmark(Current, OrdinalPosition);
 
         public bool IsAtBookmark(Bookmark bookmark)
         {
-            if (bookmark.data == null)
-                return OrdinalPosition == null;
-
             var elem = bookmark.data as ElementDefinition;
-
-            return this.Current == elem;
+            if (elem == null)
+            {
+                return OrdinalPosition == null;
+            }
+            return object.ReferenceEquals(Current, elem);
         }
 
         public bool ReturnToBookmark(Bookmark bookmark)
@@ -338,30 +333,32 @@ namespace Hl7.Fhir.Specification.Navigation
                 OrdinalPosition = null;
                 return true;
             }
-            else
+
+            var elem = bookmark.data as ElementDefinition;
+            if (elem == null) { return false; }
+
+            // If the bookmark has an index, then try to use it
+            var index = bookmark.index.GetValueOrDefault(-1);
+            if (index > -1 && index < Count)
             {
-                var elem = bookmark.data as ElementDefinition;
-
-                if (elem == null) return false;
-
-                var index = Elements.IndexOf(elem);
-
-                if (index != -1)
+                // Verify: element at index is a match?
+                if (object.ReferenceEquals(Elements[index], bookmark.data))
                 {
                     OrdinalPosition = index;
                     return true;
                 }
-                else
-                    return false;
+                // No match; e.g. element list was modified after creating bookmark
             }
-        }
 
-        // [WMR 20161214] NEW
-        /// <summary>Returns the ordinal position of the bookmarked element, or -1.</summary>
-        internal int GetOrdinalPosition(Bookmark bookmark)
-        {
-            var elem = bookmark.data as ElementDefinition;
-            return elem != null ? Elements.IndexOf(elem) : -1;
+            // Otherwise scan the element list for the bookmarked element
+            index = Elements.IndexOf(elem);
+            if (index != -1)
+            {
+                OrdinalPosition = index;
+                return true;
+            }
+
+            return false;
         }
 
         //----------------------------------

@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Specification.Navigation
             if (nav == null) { throw Error.ArgumentNull("nav"); }
             // Validated by Bookmark.FromElement
             // if (element == null) { throw Error.ArgumentNull(nameof(element)); }
-            var bm = Bookmark.FromElement(element);
+            var bm = new Bookmark(element);
             return nav.ReturnToBookmark(bm);
         }
 
