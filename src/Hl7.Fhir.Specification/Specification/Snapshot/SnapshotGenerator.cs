@@ -210,6 +210,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // [WMR 20160915] Derived profiles should never inherit the ChangedByDiff extension from the base structure
                 snapshot.Element.RemoveAllChangedByDiff();
+                snapshot.Element.ClearAllConstrainedByDifferential();
 
                 // [WMR 20160902] Rebase the cloned base profile (e.g. DomainResource)
                 if (!structure.IsConstraint)
@@ -330,6 +331,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                         // [WMR 20160826] Never inherit Changed extension from base profile!
                         elem.RemoveAllChangedByDiff();
+                        elem.ClearAllConstrainedByDifferential();
 
                         // [WMR 20160902] Initialize empty ElementDefinition.Base components if necessary
                         // [WMR 20160906] Always regenerate! Cannot reuse cloned base components
@@ -935,6 +937,10 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (_settings.MarkChanges)
             {
                 element.SetChangedByDiff();
+            }
+            if (_settings.AnnotateDifferentialConstraints)
+            {
+                element.SetConstrainedByDifferential();
             }
         }
 

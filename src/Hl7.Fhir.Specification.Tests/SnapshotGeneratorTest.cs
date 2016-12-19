@@ -94,6 +94,7 @@ namespace Hl7.Fhir.Specification.Tests
             ExpandExternalProfiles = true,
             ForceExpandAll = true,
             MarkChanges = false,
+            AnnotateDifferentialConstraints = false,
             GenerateElementIds = false // STU3
         };
 
@@ -1387,7 +1388,8 @@ namespace Hl7.Fhir.Specification.Tests
             // dumpReferences(sd);
 
             var settings = new SnapshotGeneratorSettings(_settings);
-            settings.MarkChanges = true;
+            // settings.MarkChanges = true;
+            settings.AnnotateDifferentialConstraints = true;
             _generator = new SnapshotGenerator(source, settings);
 
             try
@@ -1499,7 +1501,9 @@ namespace Hl7.Fhir.Specification.Tests
             var elem = e.Element as ElementDefinition;
             if (elem != null)
             {
-                var changed = elem.GetChangedByDiff() == true;
+                // var changed = elem.GetChangedByDiff() == true;
+                var changed = elem.IsConstrainedByDifferential();
+                Debug.Assert(!_settings.AnnotateDifferentialConstraints || changed);
                 Debug.Print("[SnapshotConstraintHandler] #{0} '{1}'{2}".FormatWith(elem.GetHashCode(), elem.Path, changed ? " CHANGED!" : null));
             }
         }
@@ -1567,6 +1571,8 @@ namespace Hl7.Fhir.Specification.Tests
             // Also ignore any Changed extensions on base and diff
             elemClone.RemoveAllChangedByDiff();
             baseClone.RemoveAllChangedByDiff();
+            elemClone.ClearAllConstrainedByDifferential();
+            baseClone.ClearAllConstrainedByDifferential();
 
             var result = !baseClone.IsExactly(elemClone);
             return result;
@@ -1656,9 +1662,12 @@ namespace Hl7.Fhir.Specification.Tests
             return string.Empty;
         }
 
-        static bool hasChanges<T>(IList<T> extendables) where T : IExtendable => extendables != null ? extendables.Any(e => isChanged(e)) : false;
+        // static bool hasChanges<T>(IList<T> extendables) where T : IExtendable => extendables != null ? extendables.Any(e => isChanged(e)) : false;
 
-        static bool isChanged(IExtendable extendable) => extendable != null && extendable.GetChangedByDiff() == true;
+        // static bool isChanged(IExtendable extendable) => extendable != null && extendable.GetChangedByDiff() == true;
+
+        static bool hasChanges<T>(IList<T> elements) where T : Element => elements != null ? elements.Any(e => isChanged(e)) : false;
+        static bool isChanged(Element elem) => elem != null && elem.IsConstrainedByDifferential();
 
         [TestMethod]
         public void TestExpandCoreArtifacts()
