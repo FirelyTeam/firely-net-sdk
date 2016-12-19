@@ -169,7 +169,10 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (differential == null)
             {
                 // [WMR 20161208] Handle missing differential
-                differential = structure.Differential = new StructureDefinition.DifferentialComponent() { Element = new List<ElementDefinition>() };
+                differential = structure.Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                };
             }
 
             // [WMR 20160718] Also accept extension definitions (IsConstraint == false)
@@ -340,7 +343,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             return true;
         }
 
-        // Merge children of the currently selected element from differential into snapshot
+        /// <summary>Merge children of the currently selected element from differential into snapshot.</summary>
         void merge(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
             var snapPos = snap.Bookmark();
@@ -350,11 +353,12 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 var matches = ElementMatcher.Match(snap, diff);
 
-                Debug.WriteLine("Matches for children of " + snap.Path + (snap.Current != null && snap.Current.Name != null ? " '" + snap.Current.Name + "'" : null));
-                matches.DumpMatches(snap, diff);
+                // Debug.WriteLine("Matches for children of " + snap.Path + (snap.Current != null && snap.Current.Name != null ? " '" + snap.Current.Name + "'" : null));
+                // matches.DumpMatches(snap, diff);
 
                 foreach (var match in matches)
                 {
+                    // Navigate to the matched elements
                     if (!snap.ReturnToBookmark(match.BaseBookmark))
                     {
                         throw Error.InvalidOperation($"Internal error in snapshot generator ({nameof(merge)}): bookmark '{match.BaseBookmark}' in snap is no longer available");
@@ -363,43 +367,34 @@ namespace Hl7.Fhir.Specification.Snapshot
                     {
                         throw Error.InvalidOperation($"Internal error in snapshot generator ({nameof(merge)}): bookmark '{match.DiffBookmark}' in diff is no longer available");
                     }
-                    // Collect reported issues
+
+                    // Collect any reported issue
                     if (match.Issue != null)
                     {
                         addIssue(match.Issue);
                     }
 
-
-                    if (match.Action == ElementMatcher.MatchAction.Add)
+                    // Process the match, depending on the result
+                    switch (match.Action)
                     {
-#if NEW_SLICE
-                        addSlice(snap, diff);
-#else
-                        addSlice(snap, diff, match.BaseBookmark);
-#endif
+                        case ElementMatcher.MatchAction.Merge:
+                            mergeElement(snap, diff);
+                            break;
+                        case ElementMatcher.MatchAction.Add:
+                            addSlice(snap, diff);
+                            break;
+                        case ElementMatcher.MatchAction.Slice:
+                            startSlice(snap, diff);
+                            break;
+                        case ElementMatcher.MatchAction.New:
+                            // No matching base element; this is a new element definition
+                            // snap is positioned at the associated parent element
+                            createNewElement(snap, diff);
+                            break;
+                        case ElementMatcher.MatchAction.Invalid:
+                            // Collect issue and ignore invalid element
+                            break;
                     }
-                    else if (match.Action == ElementMatcher.MatchAction.Merge)
-                    {
-                        mergeElement(snap, diff);
-                    }
-                    else if (match.Action == ElementMatcher.MatchAction.Slice)
-                    {
-                        makeSlice(snap, diff);
-                    }
-                    // For expanding core resource & datatype definitions
-                    else if (match.Action == ElementMatcher.MatchAction.New)
-                    {
-                        // No matching base element; this is a new element definition
-                        // snap is positioned at the associated parent element
-                        // [WMR 20160907] NEW: For new elements, use the associated type profile as the base for each element type
-                        createNewElement(snap, diff);
-                    }
-                    // [WMR 20161212] NEW
-                    else if (match.Action == ElementMatcher.MatchAction.Invalid)
-                    {
-                        // Collect issue and ignore...
-                    }
-
                 }
             }
             finally
@@ -709,7 +704,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
-        void makeSlice(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
+        void startSlice(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
             // diff is now located at the first repeat of a slice, which is normally the slice entry
             // (Extension slices need not have a slicing entry)
@@ -746,7 +741,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
             }
 
-#if NEW_SLICE
             // Handle new nested reslice in diff, for example:
             //
             //   Base     Diff       Operation
@@ -761,15 +755,12 @@ namespace Hl7.Fhir.Specification.Snapshot
             // diff = { ... *Patient.telecom : email (slice entry), Patient.telecom : email/home, Patient.telecom: email/work ... }
             // => Duplicate base slice after last slice
 
-            var baseSliceName = snap.Current.Name;
-            var diffSliceName = slicingEntry.Name;
-            if (ElementDefinitionNavigator.IsSiblingSliceOf(baseSliceName, diffSliceName))
+            if (ElementDefinitionNavigator.IsSiblingSliceOf(snap.Current.Name, slicingEntry.Name))
             {
                 // Append the new slice constraint to the existing slice group
                 var lastSlice = findSliceAddPosition(snap, diff);
                 snap.DuplicateAfter(lastSlice);
             }
-#endif
 
             if (slicingEntry != null)
             {
@@ -793,65 +784,70 @@ namespace Hl7.Fhir.Specification.Snapshot
             return location;
         }
 
-#if NEW_SLICE
+        // diff is positioned on a new element constraint in a slicing group
+        // snap is positioned on the matching base element
+        // - first element in (re)slicing group
+        // - contains slicing component (always present in snapshot)
+        // Requirement: diff (re)slicing constraints must be in same order as base!
 
+        // Example 1: base is unsliced, diff defines new slices and reslices
+        //
+        //   Base     Diff       Operation
+        //   -----------------------------
+        //   ''       ''         Slice
+        //            'A'        Add
+        //            'A/1'      Add
+        //            'A/2'      Add
+        //            'B'        Add
+        //
+        // Example 2: base is sliced, diff defines new slices and reslices
+        //
+        //   Base     Diff       Operation
+        //   -----------------------------
+        //   ''
+        //   'A'      'A'        Slice
+        //            'A/1'      Add
+        //            'A/1/1'    Add
+        //            'A/1/2'    Add
+        //            'A/2'      Add
+        //   'B'      'B'        Merge
+        //   'C'                 
+        //            'D'        Add
+        // 
+        // Example 3: base is resliced, diff defines new slices and reslices
+        //
+        //   Base     Diff       Operation
+        //   -----------------------------
+        //   ''       ''         Slice
+        //   'A'      
+        //   'A/1'    'A/1'      Slice
+        //            'A/1/1'    Add
+        //            'A/1/2'    Add
+        //   'A/2'
+        //            'A/1/3'    Add
+        //   'C'
+        //            
         void addSlice(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
             // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(addSlice)}] Base Path = '{snap.Path}' Base Slice Name = '{snap.Current.Name}' Diff Slice Name = {sliceName}");
 
-            // diff is positioned on a new element constraint in a slicing group
-            // snap is positioned on the matching base element
-            // - first element in (re)slicing group
-            // - contains slicing component (always present in snapshot)
-            // Requirement: diff (re)slicing constraints must be in same order as base!
-
-            // Example 1: base is unsliced, diff defines new slices and reslices
-            //
-            //   Base     Diff       Operation
-            //   -----------------------------
-            //   ''       ''         Slice
-            //            'A'        Add
-            //            'A/1'      Add
-            //            'A/2'      Add
-            //            'B'        Add
-            //
-            // Example 2: base is sliced, diff defines new slices and reslices
-            //
-            //   Base     Diff       Operation
-            //   -----------------------------
-            //   ''
-            //   'A'      'A'        Slice
-            //            'A/1'      Add
-            //            'A/1/1'    Add
-            //            'A/1/2'    Add
-            //            'A/2'      Add
-            //   'B'      'B'        Merge
-            //   'C'                 
-            //            'D'        Add
-            // 
-            // Example 3: base is resliced, diff defines new slices and reslices
-            //
-            //   Base     Diff       Operation
-            //   -----------------------------
-            //   ''       ''         Slice
-            //   'A'      
-            //   'A/1'    'A/1'      Slice
-            //            'A/1/1'    Add
-            //            'A/1/2'    Add
-            //   'A/2'
-            //            'A/1/3'    Add
-            //   'C'
-            //            
-
             // base has no name => diff is new slice; add after last existing slice (if any)
             // base is named => diff is new reslice; add after last existing reslice (if any)
-            Debug.Assert(diff.Current.Name != null);
-            Debug.Assert(snap.Current.Name == null || ElementDefinitionNavigator.IsDirectResliceOf(diff.Current.Name, snap.Current.Name));
+
+            // Debug.Assert(diff.Current.Name != null);
+            Debug.Assert(snap.Current.Name == null || diff.Current.Name == null || ElementDefinitionNavigator.IsDirectResliceOf(diff.Current.Name, snap.Current.Name));
 
             // Append the new slice constraint to the existing slice group
             // var lastSlice = findLastSlice(snap);
             var lastSlice = findSliceAddPosition(snap, diff);
             snap.DuplicateAfter(lastSlice);
+
+            // [WMR 20161219] Handle invalid multiple renamed choice type constraints, e.g. { valueString, valueInteger }
+            // Snapshot base element has already been renamed by the first match => re-assign
+            if (!StringComparer.Ordinal.Equals(snap.PathName, diff.PathName))
+            {
+                snap.Current.Path = diff.Current.Path;
+            }
 
             // Important: explicitly clear the slicing node in the copy!
             snap.Current.Slicing = null;
@@ -861,6 +857,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // Merge differential
             mergeElement(snap, diff);
+
         }
 
         // Search snapshot slice group for suitable position to add new diff slice
@@ -871,8 +868,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             var bm = snap.Bookmark();
             var name = snap.PathName;
             var sliceName = diff.Current.Name;
+            //Debug.Assert(sliceName != null);
             var baseSliceName = ElementDefinitionNavigator.GetBaseSliceName(sliceName);
-            Debug.Assert(sliceName != null);
             do
             {
                 var snapSliceName = snap.Current.Name;
@@ -912,34 +909,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         //    return result;
         //}
 
-#else
-            void addSlice(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff, Bookmark baseBookmark)
-        {
-            // Add new slice after the last existing slice in base profile
-            var sliceName = diff.Current.Name;
-            var baseSliceName = ElementDefinitionNavigator.GetBaseSliceName(sliceName);
-
-            // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(addSlice)}] Base Path = '{snap.Path}' Base Slice Name = '{snap.Current.Name}' Diff Slice Name = {sliceName}");
-
-            snap.MoveToLastSlice(baseSliceName);
-
-            var lastSlice = snap.Bookmark();
-
-            // Initialize slice by duplicating base slice entry
-            snap.ReturnToBookmark(baseBookmark);
-            snap.DuplicateAfter(lastSlice);
-            // Important: explicitly clear the slicing node in the copy!
-            snap.Current.Slicing = null;
-
-            // Notify clients about a snapshot element with differential constraints
-            OnConstraint(snap.Current);
-
-            // Merge differential
-            mergeElement(snap, diff);
-        }
-#endif
-
-            static ElementDefinition createExtensionSlicingEntry(ElementDefinition baseExtensionElement)
+        static ElementDefinition createExtensionSlicingEntry(ElementDefinition baseExtensionElement)
         {
             // Create the slicing entry by cloning the base Extension element
             var elem = baseExtensionElement != null ? (ElementDefinition)baseExtensionElement.DeepCopy() : new ElementDefinition();

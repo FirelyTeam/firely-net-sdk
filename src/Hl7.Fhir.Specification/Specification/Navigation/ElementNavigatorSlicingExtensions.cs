@@ -28,12 +28,31 @@ namespace Hl7.Fhir.Specification.Navigation
         // A/1 => ( A/1/1 => A/1/2 => ) B       not a sibling => return false
 
         /// <summary>
-        /// Advance the navigator the the immediately following slicing constraint in the current slice group, at any (re)slicing level.
+        /// Advance the navigator to the immediately following slicing constraint in the current slice group, at any (re)slicing level.
         /// Skip any existing child elements.
         /// Otherwise remain positioned at the current element.
         /// </summary>
         /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
         public static bool MoveToNextSliceAtAnyLevel(this ElementDefinitionNavigator nav) => nav.MoveToNext(nav.PathName);
+
+        /// <summary>
+        /// Advance the navigator forward to the slicing constraint in the current slice group with the specified slice name, if it exists.
+        /// Otherwise remain positioned at the current element.
+        /// </summary>
+        /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
+        public static bool MoveToNextSliceAtAnyLevel(this ElementDefinitionNavigator nav, string sliceName)
+        {
+            var bm = nav.Bookmark();
+            while (nav.MoveToNextSliceAtAnyLevel())
+            {
+                if (StringComparer.Ordinal.Equals(nav.Current.Name, sliceName))
+                {
+                    return true;
+                }
+            }
+            nav.ReturnToBookmark(bm);
+            return false;
+        }
 
         /// <summary>
         /// Advance the navigator to the next slice in the current slice group and on the current slicing level.

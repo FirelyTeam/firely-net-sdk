@@ -803,21 +803,24 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(outcome);
             Assert.AreEqual(3, outcome.Issue.Count);
 
-            assertProfileNotFoundIssue(outcome.Issue[0], Issue.UNAVAILABLE_REFERENCED_PROFILE, "http://example.org/fhir/StructureDefinition/MyMissingExtension");
+            assertIssue(outcome.Issue[0], Issue.UNAVAILABLE_REFERENCED_PROFILE, "http://example.org/fhir/StructureDefinition/MyMissingExtension");
             // Note: the extension reference to MyExtensionNoSnapshot should not generate an Issue,
             // as the profile only needs to merge the extension definition root element (no full expansion)
-            assertProfileNotFoundIssue(outcome.Issue[1], Issue.UNAVAILABLE_REFERENCED_PROFILE, "http://example.org/fhir/StructureDefinition/MyIdentifier");
-            assertProfileNotFoundIssue(outcome.Issue[2], Issue.UNAVAILABLE_REFERENCED_PROFILE, "http://example.org/fhir/StructureDefinition/MyCodeableConcept");
+            assertIssue(outcome.Issue[1], Issue.UNAVAILABLE_REFERENCED_PROFILE, "http://example.org/fhir/StructureDefinition/MyIdentifier");
+            assertIssue(outcome.Issue[2], Issue.UNAVAILABLE_REFERENCED_PROFILE, "http://example.org/fhir/StructureDefinition/MyCodeableConcept");
         }
 
-        static void assertProfileNotFoundIssue(OperationOutcome.IssueComponent issue, Issue expected, string profileUrl)
+        static void assertIssue(OperationOutcome.IssueComponent issue, Issue expected, string diagnostics = null)
         {
             Assert.IsNotNull(issue);
             Assert.AreEqual(expected.Type, issue.Code);
             Assert.AreEqual(expected.Severity, issue.Severity);
             Assert.AreEqual(expected.Code.ToString(), issue.Details.Coding[0].Code);
             Assert.IsNotNull(issue.Extension);
-            Assert.AreEqual(profileUrl, issue.Diagnostics);
+            if (diagnostics != null)
+            {
+                Assert.AreEqual(diagnostics, issue.Diagnostics);
+            }
         }
 
         // [WMR 20160721] Following profiles are not yet handled (TODO)
@@ -2229,7 +2232,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(outcome);
             Assert.IsNotNull(outcome.Issue);
             Assert.AreEqual(outcome.Issue.Count, 1);
-            assertProfileNotFoundIssue(outcome.Issue[0], Issue.UNAVAILABLE_REFERENCED_PROFILE, profile.Base);
+            assertIssue(outcome.Issue[0], Issue.UNAVAILABLE_REFERENCED_PROFILE, profile.Base);
         }
 
         static StructureDefinition ObservationTypeResliceProfile => new StructureDefinition()
@@ -2384,6 +2387,8 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(expanded.HasSnapshot);
 
             dumpElements(expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Observation.value")), "Observation.value choice type constraint:");
+            var outcome = _generator.Outcome;
+            dumpOutcome(outcome);
 
             var nav = new ElementDefinitionNavigator(expanded);
             Assert.IsTrue(nav.MoveToFirstChild());
@@ -2392,6 +2397,14 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.MoveToChild("valueString"));
             Assert.IsNull(nav.Current.Slicing);
             Assert.AreEqual(nav.Current.Type.FirstOrDefault().Code, FHIRDefinedType.String);
+
+            Assert.IsTrue(nav.MoveToNext("valueInteger"));
+            Assert.IsNull(nav.Current.Slicing);
+            Assert.AreEqual(nav.Current.Type.FirstOrDefault().Code, FHIRDefinedType.Integer);
+
+            Assert.IsNotNull(outcome);
+            Assert.AreEqual(1, outcome.Issue.Count);
+            assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT);
         }
 
     }
