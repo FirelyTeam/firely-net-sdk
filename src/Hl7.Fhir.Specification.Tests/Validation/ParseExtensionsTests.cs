@@ -10,6 +10,8 @@ using Xunit;
 
 namespace Hl7.Fhir.Validation
 {
+
+    [Trait("Category", "Validation")]
     public class ParseExtensionsTests
     {
         [Fact]
