@@ -6,6 +6,32 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+// Accept multiple renamed choice type elements (Chris Grenz)
+#define MULTIPLE_RENAMED_CHOICE_TYPES
+
+// [WMR 20161208] NEW
+// Ewout:
+// (1) Type slice: slicing constraints on choice type element "value[x]"
+//     * Slicing introduction is required
+//     * Elements are NOT renamed, e.g. value[x], Type.Code = "String"
+//     * Use this format when you want to allow multiple element types with separate type-specific constraints
+//     * Ewout: do NOT mix type slicing & element renaming (below)
+//
+//     Example:
+//       element { path = "Observation.value[x]", slicing.discriminator = "@type" }
+//       element { path = "Observation.value[x]", type.code = "String" }
+//       element { path = "Observation.value[x]", type.code = "Integer" }
+//
+// (2) Type constraint: single type constraint on choice type element "value[x]"
+//     * Only accepts a single type
+//     * Element is renamed to "value{TYPE}"
+//     * Cannot have multiple element constraints - this is NOT a slice!
+//     * Snapshot: copy as-is
+//       Theoretically, we could transform this to a type slice (1) with a single slice
+//       However this form is harder to interpret and process (e.g. code generators), so keep simple syntax when possible
+//
+//     Example:
+//       element { path = "Observation.valueString", type.code = "String" }
 
 using System;
 using System.Collections.Generic;
@@ -13,54 +39,13 @@ using System.Linq;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
 using System.Diagnostics;
+using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
-    internal static class MatchPrinter
-    {
-        // [WMR 20160719] Add conditional compilation attribute
-        [Conditional("DEBUG")]
-        public static void DumpMatches(this IEnumerable<ElementMatcher.MatchInfo> matches, ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
-        {
-            var sbm = snapNav.Bookmark();
-            var dbm = diffNav.Bookmark();
-
-            foreach(var match in matches)
-            {
-                if (!snapNav.ReturnToBookmark(match.BaseBookmark) || !diffNav.ReturnToBookmark(match.DiffBookmark))
-                {
-                    throw Error.InvalidOperation("Found unreachable bookmark in matches");
-                }
-
-                var bPos = snapNav.Path + $"[{snapNav.OrdinalPosition}]";
-                var dPos = diffNav.Path + $"[{diffNav.OrdinalPosition}]";
-
-                // [WMR 20160719] Add name, if not null
-                if (snapNav.Current != null && snapNav.Current.Name != null) bPos += $" '{snapNav.Current.Name}'";
-                if (diffNav.Current != null && diffNav.Current.Name != null) dPos += $" '{diffNav.Current.Name}'";
-
-                Debug.WriteLine($"B:{bPos} <--{match.Action.ToString()}--> D:{dPos}");
-            }
-
-            snapNav.ReturnToBookmark(sbm);
-            diffNav.ReturnToBookmark(dbm);
-        }
-    }
-
-
     internal static class ElementMatcher
     {
-        public struct MatchInfo
-        {
-            /// <summary>Represents an element in the base profile.</summary>
-            public Bookmark BaseBookmark;
-            /// <summary>Represents a matching element in the differential.</summary>
-            public Bookmark DiffBookmark;
-            /// <summary>Indicates how to handle this match: Merge | Add | Slice</summary>
-            public MatchAction Action;
-        }
-
-
+        /// <summary>Constants that indicate how a match should be processed.</summary>
         public enum MatchAction
         {
             /// <summary>Merge the elementdefinition in snap with the diff</summary>
@@ -70,25 +55,51 @@ namespace Hl7.Fhir.Specification.Snapshot
             /// <summary>Begin a new slice with this slice as slicing entry</summary>
             Slice,
             /// <summary>Introduce a new element (for core resource and datatype definitions).</summary>
-            New
+            New,
+
+            // [WMR 20161212] NEW
+            /// <summary>The element constraint is invalid and should be discarded.</summary>
+            Invalid
         }
 
-        /// <summary>
-        /// Will match up the children of the current element in diffNav to the children of the element in snapNav.
-        /// </summary>
-        /// <param name="snapNav"></param>
-        /// <param name="diffNav"></param>
-        /// <returns>Returns a list of Bookmark combinations, the first bookmark pointing to an element in the base,
-        /// the second a bookmark in the diff that matches the bookmark in the base.</returns>
-        /// <remarks>Will match slices to base elements, re-sliced slices to slices and type-slice shorthands to choice elements.
+        // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+        [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
+        public class MatchInfo
+        {
+            /// <summary>Indicates how to handle this match: Merge | Add | Slice</summary>
+            public MatchAction Action;
+
+            /// <summary>Represents an element in the base profile.</summary>
+            public Bookmark BaseBookmark;
+
+            /// <summary>Represents a matching element in the differential.</summary>
+            public Bookmark DiffBookmark;
+
+            /// <summary>Returns optional matching error information.</summary>
+            public OperationOutcome.IssueComponent Issue;
+
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            string DebuggerDisplay => $"B:{BaseBookmark.DebuggerDisplay} <-- {Action} --> D:{DiffBookmark.DebuggerDisplay}";
+        }
+
+        /// <summary>Match the children of the current element in diffNav to the children of the current element in snapNav.</summary>
+        /// <param name="snapNav">A navigator for the user profile differential.</param>
+        /// <param name="diffNav">A navigator for the base profile snapshot.</param>
+        /// <returns>
+        /// Returns a list of Bookmark combinations, the first bookmark pointing to an element in the base,
+        /// the second a bookmark in the diff that matches the bookmark in the base.
+        /// </returns>
+        /// <remarks>
+        /// Will match slices to base elements, re-sliced slices to slices and type-slice shorthands to choice elements.
         /// Note that this function may expand snapNav when it encounters paths in the differential that move into the complex types
-        /// of one of snap's elements.  (NO NEED, it just has to match direct children, not deeper)
+        /// of one of snap's elements. (NO NEED, it just has to match direct children, not deeper)
         /// This function assumes the differential is not sparse: it must have parent nodes for all child constraint paths.
         /// </remarks>
         public static List<MatchInfo> Match(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
         {
-            // if (!snapNav.HasChildren) throw Error.Argument(nameof(snapNav), $"Cannot match base to diff: element '{snapNav.Path}' in snap has no children");
-            if (!diffNav.HasChildren) throw Error.Argument(nameof(diffNav), $"Cannot match base to diff: element '{diffNav.Path}' in diff has no children");
+            // if (!snapNav.HasChildren) { throw Error.Argument(nameof(snapNav), $"Cannot match base to diff: element '{snapNav.Path}' in snap has no children"); }
+            // if (!diffNav.HasChildren) { throw Error.Argument(nameof(diffNav), $"Cannot match base to diff: element '{diffNav.Path}' in diff has no children"); }
+            if (!diffNav.HasChildren) { return new List<MatchInfo>(); } // [WMR 20161208] Gracefully handle missing differential
 
             // These bookmarks are used only in the finally {} to make sure we don't alter the position of the navs when leaving the merger
             var baseStartBM = snapNav.Bookmark();
@@ -104,42 +115,17 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 do
                 {
-                    bool isNewElement = false;
-
-                    // First, match directly -> try to find the child in base with the same name as the path in the diff
-                    if (snapNav.PathName != diffNav.PathName && !snapNav.MoveToNext(diffNav.PathName))
+                    var match = matchBase(snapNav, diffNav, choiceNames);
+                    if (match)
                     {
-                        // Not found, maybe this is a type slice shorthand, look if we have a matching choice prefix in snap
-                        var typeSliceShorthand = diffNav.PathName;
-
-                        // Try to match nameXXXXX to name[x]
-                        var matchingChoice = choiceNames.SingleOrDefault(xName => ElementDefinitionNavigator.IsRenamedChoiceElement(xName, typeSliceShorthand));
-
-                        if (matchingChoice != null)
-                        {
-                            snapNav.MoveToNext(matchingChoice);
-                        }
-                        else
-                        {
-                            // No match; consider this to be a new element definition
-                            // This is allowed for core resource & datatype definitions
-                            // Note that the SnapshotGenerator does not verify correctness; that is the responsibility of the Validator!
-                            // SnapshotGenerator should never throw, unless there is faulty logic
-                            // Instead, emit a list of OperationDefinitions to describe issues (TODO)
-                            // Ewout: also annotate ElementDefinitions with associated OperationDefinitions
-                            // Validator is responsible for verifying correctness
-                            isNewElement = true;
-                        }
-                    }
-                    if (isNewElement)
-                    {
-                        // Note: this loop consumes all new diffNav elements when processing the first element from snapNav
-                        // When Match is called for remaining snapNav (base) elements, all new diffNav elements will already have been merged
-                        result.Add(constructNew(snapNav, diffNav));
+                        result.AddRange(constructMatch(snapNav, diffNav));
                     }
                     else
                     {
-                        result.AddRange(constructMatch(snapNav, diffNav));
+                        // No matching base element; this is a new element (core resource definitions)
+                        // Note: this loop consumes all new diffNav elements when processing the first element from snapNav
+                        // When Match is called for remaining snapNav (base) elements, all new diffNav elements will already have been merged
+                        result.Add(constructNew(snapNav, diffNav));
                     }
                 }
                 while (diffNav.MoveToNext());
@@ -151,6 +137,37 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             return result;
+        }
+
+        /// <summary>Move snapNav to matching base element for diffNav, if it exists. Otherwise diffNav introduces a new element.</summary>
+        /// <returns><c>true</c> if snapNav is positioned on macthing base element, or <c>false</c> if diffNav introduces a new element.</returns>
+        static bool matchBase(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, List<string> choiceNames)
+        {
+            // First, match directly -> try to find the child in base with the same name as the path in the diff
+            if (StringComparer.Ordinal.Equals(snapNav.PathName, diffNav.PathName) || snapNav.MoveToNext(diffNav.PathName))
+            {
+                return true;
+            }
+
+            // Not found, maybe this is a type slice shorthand, look if we have a matching choice prefix in snap
+            var typeSliceShorthand = diffNav.PathName;
+
+            // Try to match nameXXXXX to name[x]
+            var matchingChoice = choiceNames.SingleOrDefault(xName => ElementDefinitionNavigator.IsRenamedChoiceElement(xName, typeSliceShorthand));
+
+            if (matchingChoice != null)
+            {
+                return snapNav.MoveToNext(matchingChoice);
+            }
+
+            // No match; consider this to be a new element definition
+            // This is allowed for core resource & datatype definitions
+            // Note that the SnapshotGenerator does not verify correctness; that is the responsibility of the Validator!
+            // SnapshotGenerator should never throw, unless there is faulty logic
+            // Instead, emit a list of OperationDefinitions to describe issues (TODO)
+            // Ewout: also annotate ElementDefinitions with associated OperationDefinitions
+            // Validator is responsible for verifying correctness
+            return false;
         }
 
         /// <summary>
@@ -167,60 +184,93 @@ namespace Hl7.Fhir.Specification.Snapshot
             // If this represents a slice, then also process all the slice elements
             // Note that in case of a slice, both snapNav and diffNav will always point to the first element in the slice group
 
-            var match = new MatchInfo() { BaseBookmark = snapNav.Bookmark(), DiffBookmark = diffNav.Bookmark() };
-
-            bool baseIsSliced = snapNav.Current.Slicing != null;
-
             // [WMR 20160801] Only emit slicing entry for actual extension elements (with extension profile url)
             // Do not emit slicing entry for abstract Extension base element definition (inherited from external profiles)
             // [WMR 20160906] WRONG! Also need to handle complex extensions
-            // bool diffIsExtension = diffNav.Current.IsExtension();
-            bool diffIsExtension = // diffNav.Current.IsMappedExtension()
-                diffNav.Current.IsExtension() &&
+            var diffIsExtension = diffNav.Current.IsExtension() &&
                 (
                     diffNav.Current.PrimaryTypeProfile() != null                            // Extension element in a profile
                     || ElementDefinitionNavigator.GetPathRoot(diffNav.Path) == "Extension"  // Complex extension child element
                 );
+            bool baseIsSliced = snapNav.Current.Slicing != null;
+            bool diffIsSliced = diffIsExtension || diffNav.Current.Slicing != null;
 
-
-            var nextDiffChildName = nextChildName(diffNav);
-            bool diffIsSliced = diffIsExtension || nextDiffChildName == diffNav.PathName;
-            // [WMR 20161207] WRONG!
-            // bool diffIsTypeSlice = snapNav.Current.IsChoice() && snapNav.IsCandidateTypeSlice(diffNav.PathName);
-            bool diffIsTypeSlice = snapNav.Current.IsChoice() && (snapNav.PathName == diffNav.PathName || snapNav.IsCandidateTypeSlice(diffNav.PathName));
-
-            if (diffIsTypeSlice)
-            {
-                if (baseIsSliced)
-                {
-                    // TODO...?
-                    throw Error.NotSupported("Reslicing of type slices is not supported (path = '{0}').", diffNav.Path);
-                }
-
-                // Only a single type slice? Then merge
-                // e.g. base:value[x] <=> diff:valueString
-                if (!snapNav.IsCandidateTypeSlice(nextDiffChildName))
-                {
-                    match.Action = MatchAction.Merge;
-                    return new List<MatchInfo>() { match };
-                }
-
-                // Multiple type slices
-                // e.g. base:value[x] <=> diff:valueString + diff:valueBoolean
-                return constructTypeSliceMatch(snapNav, diffNav);
-            }
-            else if (baseIsSliced || diffIsSliced)
+            if (baseIsSliced || diffIsSliced)
             {
                 // This is a slice match - process it separately
                 return constructSliceMatch(snapNav, diffNav);
             }
-            else
+
+            var match = new MatchInfo()
             {
-                // Easiest case - one to one match, without slicing involved
-                match.Action = MatchAction.Merge;
-                return new List<MatchInfo>() { match };
+                Action = MatchAction.Merge,
+                BaseBookmark = snapNav.Bookmark(),
+                DiffBookmark = diffNav.Bookmark()
+            };
+
+
+            // Verify type slice constraints (e.g. value[x] => valueString)
+            // - base element has a type choice (value[x])
+            // - Single derived element is constrained to single type and renamed (valueString)
+            // - This is NOT a type slice => derived profile cannot contain multiple renamed elements!
+#if true
+            var result = new List<MatchInfo>() { match };
+
+            if (snapNav.Current.IsChoice())
+            {
+                var bm = diffNav.Bookmark();
+                while (diffNav.MoveToNext())
+                {
+                    if (snapNav.IsRenamedChoiceElement(diffNav.PathName))
+                    {
+                        match = new MatchInfo()
+                        {
+#if MULTIPLE_RENAMED_CHOICE_TYPES
+                            Action = MatchAction.Add,
+#else
+                            Action = MatchAction.Invalid,
+#endif
+                            BaseBookmark = snapNav.Bookmark(),
+                            DiffBookmark = diffNav.Bookmark(),
+                            Issue = SnapshotGenerator.CreateIssueInvalidChoiceConstraint(diffNav.Current)
+                        };
+                        result.Add(match);
+                        bm = diffNav.Bookmark();
+                    }
+                    else
+                    {
+                        diffNav.ReturnToBookmark(bm);
+                        break;
+                    }
+                }
             }
 
+            return result;
+#else
+
+            if (snapNav.Current.IsChoice() && (snapNav.PathName == diffNav.PathName || snapNav.IsRenamedChoiceElement(diffNav.PathName)))
+            {
+                // Verify that the differential contains only a single type slice constraint
+                // Generate a warning if the profile contains multiple type slice constraints (invalid)
+
+                var prevDiffElemName = previousElementName(diffNav);
+                if (snapNav.PathName == prevDiffElemName || snapNav.IsRenamedChoiceElement(prevDiffElemName))
+                {
+                    Debug.Print($"[{nameof(ElementMatcher)}.{nameof(constructMatch)}] Warning! Differential contains multiple constraints on choice type, path = '{diffNav.Path}'. Shortcut notation only allows a single type constraint, otherwise must use type slicing.");
+
+#if MULTIPLE_RENAMED_CHOICE_TYPES
+                    match.Issue = SnapshotGenerator.CreateIssueInvalidChoiceConstraint(diffNav.Current);
+#else
+                    match.Action = MatchAction.Invalid;
+                    match.Issue = SnapshotGenerator.CreateIssueInvalidChoiceConstraint(diffNav.Current);
+                    return new List<MatchInfo>() { match };
+#endif
+                }
+            }
+
+            // Easiest case - one to one match, without slicing involved
+            return new List<MatchInfo>() { match };
+#endif
         }
 
         // [WMR 20160902] Represents a new element definition with no matching base element (for core resource & datatype definitions)
@@ -235,7 +285,12 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 snapNav.MoveToParent();
             }
-            var match = new MatchInfo() { BaseBookmark = snapNav.Bookmark(), DiffBookmark = diffNav.Bookmark(), Action = MatchAction.New };
+            var match = new MatchInfo()
+            {
+                Action = MatchAction.New,
+                BaseBookmark = snapNav.Bookmark(),
+                DiffBookmark = diffNav.Bookmark()
+            };
             snapNav.ReturnToBookmark(bm);
             return match;
         }
@@ -244,186 +299,275 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             var result = new List<MatchInfo>();
 
-            var bm = snapNav.Bookmark();
-            var diffName = diffNav.PathName;
-            bool baseIsSliced = snapNav.Current.Slicing != null;
+            // if diffNav specifies a slice name, then advance snapNav to matching base slice
+            // Otherwise remain at the current slice entry or unsliced element
+            snapNav.MoveToNextSliceAtAnyLevel(diffNav.Current.Name);
+
+            var defaultBase = snapNav.Bookmark();
+            var baseIsSliced = snapNav.Current.Slicing != null;
 
             // For the first entries with explicit slicing information (or implicit if this is an extension),
             // generate a match between the base's unsliced element and the first entry in the diff
 
-            bool isExtension = diffNav.Current.IsExtension();
-            bool diffIsSliced = diffNav.Current.Slicing != null;
+            var isExtension = diffNav.Current.IsExtension();
+            var diffIsSliced = diffNav.Current.Slicing != null;
 
-            // Handle constraints on inherited sliced elements in base profile (incl. reslicing)
-            // If the differential element represents a named slice, then try to position onto the matching base slice
-            // If match, then merge slice introduction and append new slice entries after the matching base slice
-            // Otherwise the diff introduces a new slice
-            var diffSliceName = diffNav.Current.Name;
-            if (baseIsSliced && diffSliceName != null)
-            {
-                // Constraints on existing slice in base? Then merge
-                if (snapNav.MoveToNextSlice(diffSliceName))
-                {
-                    // Add any re-slices after the associated base slice
-                    bm = snapNav.Bookmark();
-                }
-            }
+            // Extract the discriminator from diff or base slice entry
+            var discriminator = diffIsSliced ? diffNav.Current.Slicing.Discriminator.ToList() : snapNav.Current.Slicing?.Discriminator.ToList();
 
             if (diffIsSliced || isExtension)
             {
                 // Differential has information for the slicing entry
                 result.Add(new MatchInfo()
                 {
-                    BaseBookmark = bm,
-                    DiffBookmark = diffNav.Bookmark(),
-                    Action = MatchAction.Slice
+                    Action = MatchAction.Slice,
+                    BaseBookmark = defaultBase,
+                    DiffBookmark = diffIsSliced ? diffNav.Bookmark() : Bookmark.Empty
                 });
 
                 // Skip any existing slicing entry in the differential; below we process the actual slices
-                if (diffIsSliced)
+                if (diffIsSliced && !diffNav.MoveToNextSliceAtAnyLevel())
                 {
-                    // If the differential contains a slicing entry, then it should also define at least a single slice.
-                    if (!diffNav.MoveToNext())
-                    {
-                        Debug.Print($"[{nameof(ElementMatcher)}] Warning! Differential has a slicing entry for path '{diffNav.Path}', but no first actual slice.");
-                        return result;
-                        // throw Error.InvalidOperation($"Differential has a slicing entry for path '{diffNav.Path}', but no first actual slice");
-                    }
+                    // Differential only contains a slice entry, but no actual slices
+                    // Note: this is allowed, e.g. constrain rules = closed to disallow extensions in derived profile
+                    return result;
                 }
             }
 
-            // Then, generate a match between the base element(s) and the slicing entries in the diff
-            // Note that the first entry may serve a double role and have to result matches (one for the constraints, one as a slicing entry)
+            // Note: if slice entry is missing from diff, then we fall back to the inherited base slicing entry
+            // Strictly not valid according to FHIR rules, but we can cope
+            // Caller (SnapshotGenerator.makeSlice) should emit an issue PROFILE_ELEMENTDEF_MISSING_SLICE_ENTRY
+
+            if (baseIsSliced)
+            {
+                snapNav.MoveToNextSliceAtAnyLevel();
+            }
+
+            // snapNav and diffNav are now positioned on the first concrete slices, if they exist (?)
+            // Match remaining concrete slices, in order
+            // Note: if Slicing.Rules = OpenAtEnd, then diff may inject slices inbetween existing base slices
+
+            // Merge concrete diff slices to base
             do
             {
-                Bookmark matchingSlice;
-                if (baseIsSliced && findBaseSlice(snapNav, diffNav, out matchingSlice))
+                if (diffNav.Current.Slicing != null)
                 {
-                    result.Add(new MatchInfo()
-                    {
-                        BaseBookmark = matchingSlice,   // Merge with matching base slice
-                        DiffBookmark = diffNav.Bookmark(),
-                        Action = MatchAction.Merge,
-                    });
+                    // Current slice introduces a re-slice; recursively collect
+                    var reslices = constructSliceMatch(snapNav, diffNav);
+                    result.AddRange(reslices);
                 }
                 else
                 {
-                    result.Add(new MatchInfo()
+                    var match = matchSlice(snapNav, diffNav, discriminator, defaultBase);
+                    result.Add(match);
+
+                    // Match to base slice? Then consume and advance to next
+                    if (match.Action == MatchAction.Merge)
                     {
-                        // - New slice: merge with default (unsliced) element definition
-                        // - Reslice: merge with associated base slice
-                        BaseBookmark = bm,              
-                        DiffBookmark = diffNav.Bookmark(),
-                        Action = MatchAction.Add
-                    });
-                }
-
-                // TODO: Handle re-slicing child diff constraints
-                // e.g. patient-careprovider-type-reslice, organizationCare/teamCare
-                // => Must process while matching base slice "organizationCare"
-
-            } while (diffNav.MoveToNext(diffName));
-
-            return result;
-        }
-
-        // [WMR 20160801] NEW
-        // Try to find matching slice element in base profile
-        // Assume snapNav is positioned on slicing entry node
-        // Assume diffNav is positioned on a resliced element node
-        // Returns true when match is found, matchingSlice points to match in base (merge here)
-        // Returns false otherwise, matchingSlice points to current node in base
-        // Maintain snapNav current position
-        static bool findBaseSlice(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, out Bookmark matchingSlice)
-        {
-            var result = false;
-
-            var bm = snapNav.Bookmark();
-            matchingSlice = Bookmark.Empty;
-
-            // If the diff slice has a name, than match base slice by name
-            var diffSliceName = diffNav.Current.Name;
-            if (!string.IsNullOrEmpty(diffSliceName))
-            {
-                result = snapNav.MoveToNextSlice(diffSliceName);
-                if (result)
-                {
-                    matchingSlice = snapNav.Bookmark();
-                    snapNav.ReturnToBookmark(bm);
-                }
-                // No match; this represents a new named slice
-                return result;
-            }
-
-            // Slice has no name
-            // This is expected for extensions => slice by url
-            Debug.WriteLineIf(!diffNav.Current.IsExtension(), $"Warning! Unnamed slice for path = '{diffNav.Path}'");
-            Debug.Assert(diffNav.Current.IsExtension());
-
-            // Try to match base slice by discriminator
-            // Q: Is this still necessary? e.g. extensions
-
-            var slicing = snapNav.Current.Slicing;
-            Debug.Assert(slicing != null);
-            if (slicing == null) { return false; }
-
-            var slicingIntro = matchingSlice = snapNav.Bookmark();
-
-            // url, type@profile, @type + @profile
-            if (isTypeProfileDiscriminator(slicing?.Discriminator))
-            {
-                // [WMR 20160802] Handle complex extension constraints
-                // e.g. sdc-questionnaire, Path = 'Questionnaire.group.question.extension.extension', name = 'question'
-                // Type.Profile = 'http://hl7.org/fhir/StructureDefinition/questionnaire-enableWhen#question'
-                // snapNav has already expanded target extension definition 'questionnaire-enableWhen'
-                // => Match to base profile on child element with name 'question'
-
-                var diffProfiles = diffNav.Current.PrimaryTypeProfiles().ToArray();
-                // Handle Chris Grenz example http://example.com/fhir/SD/patient-research-auth-reslice
-                if (diffProfiles == null || diffProfiles.Length == 0)
-                {
-                    throw Error.InvalidOperation($"Differential is reslicing on url, but resliced element has no type profile (path = '{diffNav.Path}').");
-                }
-                if (diffProfiles != null && diffProfiles.Length > 1)
-                {
-                    throw Error.NotSupported($"Reslicing on complex discriminator is not supported (path = '{diffNav.Path}').");
-                }
-
-
-                var diffProfile = diffProfiles.FirstOrDefault();
-                var profileRef = ProfileReference.FromUrl(diffProfile);
-                while (snapNav.MoveToNext(snapNav.PathName))
-                {
-                    var baseProfiles = snapNav.Current.PrimaryTypeProfiles().ToArray();
-                    result = profileRef.IsComplex
-                        // Match on element name (for complex extension elements)
-                        ? snapNav.Current.Name == profileRef.ElementName
-                        // Match on type profile(s)
-                        : baseProfiles.SequenceEqual(diffProfiles);
-                    if (result)
-                    {
-                        matchingSlice = snapNav.Bookmark();
-                        break;
+                        snapNav.MoveToNextSlice();
                     }
                 }
 
-            }
-            else
-            {
-                throw Error.NotSupported($"Reslicing on discriminator '{string.Join("|", slicing.Discriminator)}' is not supported. Path = '{snapNav.Path}'.");
-            }
+            } while (diffNav.MoveToNextSliceAtAnyLevel());
 
-            snapNav.ReturnToBookmark(slicingIntro);
             return result;
         }
 
-        static bool isProfileDiscriminator(string discriminator) => discriminator == "@profile";
-        static bool isTypeDiscriminator(string discriminator) => discriminator == "@type";
-        static bool isTypeAndProfileDiscriminator(string discriminator) => discriminator == "type@profile";
-        static bool isUrlDiscriminator(string discriminator) => discriminator == "url";
+        // Match current snapshot and differential slice elements
+        // Returns an initialized MatchInfo with action = Merge | Add
+        // defaultBase represents the base element for newly introduced slices
+        static MatchInfo matchSlice(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, List<string> discriminators, Bookmark defaultBase)
+        {
+            Debug.Assert(diffNav.Current.Slicing == null); // Caller must handle reslicing
+
+            var match = new MatchInfo() { DiffBookmark = diffNav.Bookmark() };
+
+            // 1. If the diff slice has a name, than match base slice by name
+            var diffSliceName = diffNav.Current.Name;
+            if (!string.IsNullOrEmpty(diffSliceName))
+            {
+                // if (snapNav.PathName == diffSliceName)
+                if (StringComparer.Ordinal.Equals(snapNav.Current.Name, diffSliceName))
+                {
+                    match.BaseBookmark = snapNav.Bookmark();
+                    match.Action = MatchAction.Merge;
+                    return match;
+                }
+                else
+                {
+                    match.BaseBookmark = defaultBase;
+                    match.Action = MatchAction.Add;
+                }
+                return match;
+            }
+
+            // Slice has no name
+            // Allowed for:
+            // - Extensions => discriminator = url
+            // - type slices => discriminator = @type / @profile
+
+            if (diffNav.Current.IsExtension())
+            {
+                // Discriminator = url => match on ElementDefinition.Type[0].Profile
+                return matchExtensionSlice(snapNav, diffNav, discriminators, defaultBase);
+            }
+
+            else if (discriminators.Count == 1 && isTypeDiscriminator(discriminators[0]))
+            {
+                // Discriminator = @type => match on ElementDefinition.Type[0].Code
+                return matchSliceByTypeCode(snapNav, diffNav, defaultBase);
+            }
+
+            else if (isTypeProfileDiscriminator(discriminators))
+            {
+                // Discriminator = type@profile, { @type, @profile }
+                return matchSliceByTypeProfile(snapNav, diffNav, defaultBase);
+            }
+
+            // Error! Unsupported discriminator => slices must be named
+            match.BaseBookmark = defaultBase;
+            match.Action = MatchAction.Invalid;
+            match.Issue = SnapshotGenerator.CreateIssueSliceWithoutName(diffNav.Current);
+            return match;
+        }
+
+        // Match current snapshot and differential extension slice elements on extension type profile
+        // Returns an initialized MatchInfo with action = Merge | Add
+        // defaultBase represents the base element for newly introduced slices
+        static MatchInfo matchExtensionSlice(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, List<string> discriminators, Bookmark defaultBase)
+        {
+            var match = new MatchInfo() { DiffBookmark = diffNav.Bookmark() };
+
+            if (discriminators == null || discriminators.Count > 1 || discriminators.FirstOrDefault() != "url")
+            {
+                // Invalid extension discriminator; generate issue and ignore
+                Debug.Print($"[{nameof(ElementMatcher)}.{nameof(matchExtensionSlice)}] Warning! Invalid discriminator for extension slice (path = '{diffNav.Path}') - must be 'url'.");
+
+                match.Issue = SnapshotGenerator.CreateIssueInvalidExtensionSlicingDiscriminator(diffNav.Current);
+            }
+
+            // Ignore the specified discriminator, always match on url
+            var snapExtensionUri = getExtensionProfileUri(snapNav.Current);
+            var diffExtensionUri = getExtensionProfileUri(diffNav.Current);
+            // if (snapExtensionUri == diffExtensionUri)
+            if (StringComparer.Ordinal.Equals(snapExtensionUri, diffExtensionUri))
+            {
+                match.BaseBookmark = snapNav.Bookmark();
+                match.Action = MatchAction.Merge;
+            }
+            else
+            {
+                match.BaseBookmark = defaultBase;
+                match.Action = MatchAction.Add;
+            }
+
+            return match;
+        }
+
+        // Match current snapshot and differential slice elements on @type = Element.Type.Code
+        // Returns an initialized MatchInfo with action = Merge | Add
+        // defaultBase represents the base element for newly introduced slices
+        static MatchInfo matchSliceByTypeCode(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, Bookmark defaultBase)
+        {
+            var match = new MatchInfo() { DiffBookmark = diffNav.Bookmark() };
+
+            var diffTypeCodes = diffNav.Current.Type.Select(t => t.Code).ToList();
+            if (diffTypeCodes.Count == 0)
+            {
+                Debug.Print($"[{nameof(ElementMatcher)}.{nameof(matchSliceByTypeCode)}] Error! Element '{diffNav.Path}' is part of a @type slice group, but the element itself has no type.");
+
+                match.BaseBookmark = defaultBase;
+                match.Action = MatchAction.Invalid;
+                match.Issue = SnapshotGenerator.CreateIssueTypeSliceWithoutType(diffNav.Current);
+                return match;
+            }
+
+            var snapTypeCodes = snapNav.Current.Type.Select(t => t.Code);
+            if (snapTypeCodes.SequenceEqual(diffTypeCodes))
+            {
+                match.BaseBookmark = snapNav.Bookmark();
+                match.Action = MatchAction.Merge;
+                return match;
+            }
+
+            match.BaseBookmark = defaultBase;
+            match.Action = MatchAction.Add;
+            return match;
+        }
+
+        // Match current snapshot and differential slice elements on @type|@profile = Element.Type.Code and Element.Type.Profile
+        // Returns an initialized MatchInfo with action = Merge | Add
+        // defaultBase represents the base element for newly introduced slices
+        static MatchInfo matchSliceByTypeProfile(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, Bookmark defaultBase)
+        {
+            var match = matchSliceByTypeCode(snapNav, diffNav, defaultBase);
+            if (match.Action == MatchAction.Merge)
+            {
+                // We have a match on type code(s); match type profiles
+                var diffProfiles = diffNav.Current.PrimaryTypeProfiles().ToList();
+                var snapProfiles = snapNav.Current.PrimaryTypeProfiles().ToList();
+
+                // Handle Chris Grenz example http://example.com/fhir/SD/patient-research-auth-reslice
+                if (diffProfiles.IsNullOrEmpty() && snapProfiles.IsNullOrEmpty())
+                {
+                    return match;
+                }
+
+                var diffProfile = diffProfiles.FirstOrDefault();
+                var profileRef = ProfileReference.FromUrl(diffProfile);
+                var result = profileRef.IsComplex
+                    // Match on element name (for complex extension elements)
+                    ? StringComparer.Ordinal.Equals(snapNav.Current.Name, profileRef.ElementName)
+                    // Match on type profile(s)
+                    : snapProfiles.SequenceEqual(diffProfiles);
+
+                if (!result)
+                {
+                    match.Action = MatchAction.Add;
+                }
+            }
+            return match;
+        }
+
+        /// <summary>Given an extension element, return the canonical url of the associated extension definition, or <c>null</c>.</summary>
+        static string getExtensionProfileUri(ElementDefinition elem)
+        {
+            Debug.Assert(elem.IsExtension());
+            var elemTypes = elem.Type;
+            if (elemTypes.Count != 1) { return null; }
+            var elemType = elemTypes.FirstOrDefault();
+            if (elemType.Code != FHIRDefinedType.Extension) { return null; }
+            var profiles = elemType.Profile.ToList();
+            if (profiles.Count != 1) { return null; }
+            return profiles[0];
+        }
+
+        /// <summary>Special predefined discriminator for slicing on element type.</summary>
+        static readonly string TypeDiscriminator = "@type";
+
+        /// <summary>Special predefined discriminator for slicing on element type profile.</summary>
+        static readonly string ProfileDiscriminator = "@profile";
+
+        /// <summary>Special predefined discriminator for slicing on element type and profile.</summary>
+        static readonly string TypeAndProfileDiscriminator = "type@profile";
+
+        /// <summary>Fixed default discriminator for slicing extension elements.</summary>
+        static readonly string UrlDiscriminator = "url";
+
+        /// <summary>Determines if the specified value equals the special predefined discriminator for slicing on element type profile.</summary>
+        static bool isProfileDiscriminator(string discriminator) => StringComparer.Ordinal.Equals(discriminator, ProfileDiscriminator);
+
+        /// <summary>Determines if the specified value equals the special predefined discriminator for slicing on element type.</summary>
+        static bool isTypeDiscriminator(string discriminator) => StringComparer.Ordinal.Equals(discriminator, TypeDiscriminator);
+
+        /// <summary>Determines if the specified value equals the special predefined discriminator for slicing on element type and profile.</summary>
+        static bool isTypeAndProfileDiscriminator(string discriminator) => StringComparer.Ordinal.Equals(discriminator, TypeAndProfileDiscriminator);
+
+        /// <summary>Determines if the specified value equals the fixed default discriminator for slicing extension elements.</summary>
+        static bool isUrlDiscriminator(string discriminator) => StringComparer.Ordinal.Equals(discriminator, UrlDiscriminator);
 
         // [WMR 20160801]
-        // Determine if the specified discriminator(s) match on type/profile
+        // Determine if the specified discriminator(s) match on (type and) profile
         static bool isTypeProfileDiscriminator(IEnumerable<string> discriminators)
         {
             if (discriminators != null)
@@ -431,7 +575,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var ar = discriminators.ToArray();
                 if (ar.Length == 1)
                 {
-                    return isUrlDiscriminator(ar[0]) || isTypeAndProfileDiscriminator(ar[0]) || isProfileDiscriminator(ar[0]);
+                    // return isUrlDiscriminator(ar[0]) || isTypeAndProfileDiscriminator(ar[0]) || isProfileDiscriminator(ar[0]);
+                    return isTypeAndProfileDiscriminator(ar[0]) || isProfileDiscriminator(ar[0]);
                 }
                 else if (ar.Length == 2)
                 {
@@ -440,54 +585,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
             }
             return false;
-        }
-
-        // [WMR 20160720] NEW
-        // Handle type slices
-        // Difference with regular slices:
-        // - Don't need to handle extensions
-        // - Match renamed elements, i.e. value[x] => valueBoolean
-        static List<MatchInfo> constructTypeSliceMatch(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
-        {
-            var result = new List<MatchInfo>();
-
-            var bm = snapNav.Bookmark();
-            var diffName = diffNav.PathName;
-
-            Debug.Assert(snapNav.Current.Slicing == null);
-
-            // For the first entries with explicit slicing information,
-            // generate a match between the base's unsliced element and the first entry in the diff
-            if (diffNav.Current.Slicing != null)
-            {
-                // Differential has information for the slicing entry
-                result.Add(new MatchInfo()
-                {
-                    BaseBookmark = bm,
-                    DiffBookmark = diffNav.Bookmark(),
-                    Action = MatchAction.Slice
-                });
-
-                if (!diffNav.MoveToNext())
-                {
-                    // [WMR 20161013] Do we need to throw? Snapshot generator could simply accept this, return empty list
-                    throw Error.InvalidOperation($"Differential has a slicing entry {diffNav.Path}, but no first actual slice");
-                }
-            }
-
-            // Then, generate a match between the base's unsliced element and the slicing entries in the diff
-            // Note that the first entry may serve a double role and have to result matches (one for the constraints, one as a slicing entry)
-            do
-            {
-                result.Add(new MatchInfo()
-                {
-                    BaseBookmark = bm,
-                    DiffBookmark = diffNav.Bookmark(),
-                    Action = MatchAction.Add
-                });
-            } while (diffNav.MoveToNextTypeSlice(snapNav.PathName));
-
-            return result;
         }
 
         /// <summary>List all names of nodes in the current navigator that are choice ('[x]') elements.</summary>
@@ -509,18 +606,76 @@ namespace Hl7.Fhir.Specification.Snapshot
             return result;
         }
 
-        static string nextChildName(ElementDefinitionNavigator nav)
+        static string previousElementName(ElementDefinitionNavigator nav)
         {
             string result = null;
 
-            if (nav.MoveToNext())
+            var bm = nav.Bookmark();
+            if (nav.MoveToPrevious())
             {
                 result = nav.PathName;
-                nav.MoveToPrevious();
+                nav.ReturnToBookmark(bm);
             }
 
             return result;
         }
 
     }
+
+    // For debugging purposes
+    internal static class MatchPrinter
+    {
+        // [WMR 20160719] Add conditional compilation attribute
+        [Conditional("DEBUG")]
+        public static void DumpMatches(this IEnumerable<ElementMatcher.MatchInfo> matches, ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
+        {
+            var sbm = snapNav.Bookmark();
+            var dbm = diffNav.Bookmark();
+
+            foreach (var match in matches)
+            {
+                if (!snapNav.ReturnToBookmark(match.BaseBookmark) || !diffNav.ReturnToBookmark(match.DiffBookmark))
+                {
+                    throw Error.InvalidOperation("Found unreachable bookmark in matches");
+                }
+
+                var bPos = snapNav.Path + $"[{snapNav.OrdinalPosition}]";
+                var dPos = diffNav.Path + $"[{diffNav.OrdinalPosition}]";
+
+                // [WMR 20160719] Add name, if not null
+                if (snapNav.Current != null && snapNav.Current.Name != null) bPos += $" '{snapNav.Current.Name}'";
+                if (diffNav.Current != null && diffNav.Current.Name != null) dPos += $" '{diffNav.Current.Name}'";
+
+                Debug.WriteLine($"B:{bPos} <-- {match.Action.ToString()} --> D:{dPos}");
+            }
+
+            snapNav.ReturnToBookmark(sbm);
+            diffNav.ReturnToBookmark(dbm);
+        }
+
+        [Conditional("DEBUG")]
+        public static void DumpMatch(this ElementMatcher.MatchInfo match, ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
+        {
+            var sbm = snapNav.Bookmark();
+            var dbm = diffNav.Bookmark();
+
+            if (!snapNav.ReturnToBookmark(match.BaseBookmark) || !diffNav.ReturnToBookmark(match.DiffBookmark))
+            {
+                throw Error.InvalidOperation("Found unreachable bookmark in matches");
+            }
+
+            var bPos = snapNav.Path + $"[{snapNav.OrdinalPosition}]";
+            var dPos = diffNav.Path + $"[{diffNav.OrdinalPosition}]";
+
+            // [WMR 20160719] Add name, if not null
+            if (snapNav.Current != null && snapNav.Current.Name != null) bPos += $" '{snapNav.Current.Name}'";
+            if (diffNav.Current != null && diffNav.Current.Name != null) dPos += $" '{diffNav.Current.Name}'";
+
+            Debug.WriteLine($"B:{bPos} <-- {match.Action.ToString()} --> D:{dPos}");
+
+            snapNav.ReturnToBookmark(sbm);
+            diffNav.ReturnToBookmark(dbm);
+        }
+    }
+
 }

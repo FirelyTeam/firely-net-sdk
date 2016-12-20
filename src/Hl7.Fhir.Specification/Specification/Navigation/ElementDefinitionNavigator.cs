@@ -12,9 +12,12 @@ using System.Linq;
 using System.Text;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Navigation
 {
+    // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+    [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
     public class ElementDefinitionNavigator
     {
         internal ElementDefinitionNavigator()
@@ -311,21 +314,16 @@ namespace Hl7.Fhir.Specification.Navigation
         //
         //----------------------------------
 
-
-        public Bookmark Bookmark()
-        {
-            return new Bookmark() { data = Current };
-        }
-
+        public Bookmark Bookmark() => new Bookmark(Current, OrdinalPosition);
 
         public bool IsAtBookmark(Bookmark bookmark)
         {
-            if (bookmark.data == null)
-                return OrdinalPosition == null;
-
             var elem = bookmark.data as ElementDefinition;
-
-            return this.Current == elem;
+            if (elem == null)
+            {
+                return OrdinalPosition == null;
+            }
+            return object.ReferenceEquals(Current, elem);
         }
 
         public bool ReturnToBookmark(Bookmark bookmark)
@@ -335,26 +333,33 @@ namespace Hl7.Fhir.Specification.Navigation
                 OrdinalPosition = null;
                 return true;
             }
-            else
+
+            var elem = bookmark.data as ElementDefinition;
+            if (elem == null) { return false; }
+
+            // If the bookmark has an index, then try to use it
+            var index = bookmark.index.GetValueOrDefault(-1);
+            if (index > -1 && index < Count)
             {
-                var elem = bookmark.data as ElementDefinition;
-
-                if (elem == null) return false;
-
-                var index = Elements.IndexOf(elem);
-
-                if (index != -1)
+                // Verify: element at index is a match?
+                if (object.ReferenceEquals(Elements[index], bookmark.data))
                 {
                     OrdinalPosition = index;
                     return true;
                 }
-                else
-                    return false;
+                // No match; e.g. element list was modified after creating bookmark
             }
+
+            // Otherwise scan the element list for the bookmarked element
+            index = Elements.IndexOf(elem);
+            if (index != -1)
+            {
+                OrdinalPosition = index;
+                return true;
+            }
+
+            return false;
         }
-
-
-
 
         //----------------------------------
         //
@@ -641,7 +646,14 @@ namespace Hl7.Fhir.Specification.Navigation
         }
 
         // [WMR 20161013] New
+        private const char RESLICE_NAME_SEPARATOR_CHAR = '/';
         private const string RESLICE_NAME_SEPARATOR = "/";
+
+        //public static bool IsValidSliceName(string sliceName)
+        //{
+        //    if (sliceName == null) { return true; }
+        //    return !sliceName.Contains("//") && !sliceName.EndsWith("/");
+        //}
 
         /// <summary>Determines if the specified element name represents a reslice: "slice/reslice[/reslice2...]".</summary>
         public static bool IsResliceName(string sliceName) => sliceName != null && sliceName.Contains(RESLICE_NAME_SEPARATOR);
@@ -669,39 +681,103 @@ namespace Hl7.Fhir.Specification.Navigation
         }
 
         /// <summary>Determines if the specified slice name represents a reslice of an existing slice.</summary>
-        /// <param name="sliceName">The name of the candidate reslice.</param>
+        /// <param name="sliceName">The name of the candidate slice.</param>
         /// <param name="baseSliceName">The name of an existing slice.</param>
         /// <returns><c>true</c> if <paramref name="sliceName"/> is a reslice of <paramref name="baseSliceName"/>, or <c>false</c> otherwise.</returns>
         /// <example>
         /// <code>
-        /// IsResliceOf("A/B", "A") == true
+        /// IsDirectResliceOf("A/B", "A") == true
         /// 
-        /// IsResliceOf("A", "A") == false
-        /// IsResliceOf("B/A", "A") == false
-        /// IsResliceOf("A/B/C", "A") == false
+        /// IsDirectResliceOf("A", "A") == false
+        /// IsDirectResliceOf("B/A", "A") == false
+        /// IsDirectResliceOf("A/B/C", "A") == false
         /// </code>
         /// </example>
-        public static bool IsResliceOf(string sliceName, string baseSliceName)
+        public static bool IsDirectResliceOf(string sliceName, string baseSliceName)
         {
-            // return sliceName.StartsWith(baseSliceName + RESLICE_NAME_SEPARATOR);
             return sliceName != null
                 && baseSliceName != null
                 && sliceName.Length > baseSliceName.Length + 1
                 && string.CompareOrdinal(sliceName, 0, baseSliceName, 0, baseSliceName.Length) == 0
-                && sliceName.Substring(baseSliceName.Length, 1) == RESLICE_NAME_SEPARATOR
-                && sliceName.IndexOf(RESLICE_NAME_SEPARATOR, baseSliceName.Length + 1) == -1;
+                && sliceName[baseSliceName.Length] == RESLICE_NAME_SEPARATOR_CHAR
+                && sliceName.IndexOf(RESLICE_NAME_SEPARATOR, baseSliceName.Length + 1, StringComparison.Ordinal) == -1;
         }
 
-        public override string ToString()
+        /// <summary>Determines if the specified slice name represents a (nested) reslice of an existing slice.</summary>
+        /// <param name="sliceName">The name of the candidate slice.</param>
+        /// <param name="baseSliceName">The name of an existing slice.</param>
+        /// <returns><c>true</c> if <paramref name="sliceName"/> is a (nested) reslice of <paramref name="baseSliceName"/>, or <c>false</c> otherwise.</returns>
+        /// <example>
+        /// <code>
+        /// IsResliceOf("A/B", "A") == true
+        /// IsResliceOf("A/B/C", "A") == true
+        /// 
+        /// IsResliceOf("A", "A") == false
+        /// IsResliceOf("B/A", "A") == false
+        /// </code>
+        /// </example>
+        public static bool IsResliceOf(string sliceName, string baseSliceName)
         {
-            var output = new StringBuilder();
+            return sliceName != null
+                && baseSliceName != null
+                && sliceName.Length > baseSliceName.Length + 1
+                && string.CompareOrdinal(sliceName, 0, baseSliceName, 0, baseSliceName.Length) == 0
+                && sliceName[baseSliceName.Length] == RESLICE_NAME_SEPARATOR_CHAR;
+        }
 
-            foreach (var elem in Elements)
+        /// <summary>Determines if the specified slice names represent sibling slices.</summary>
+        /// <returns><c>true</c> if <paramref name="sliceName"/> represents a sibling slice of <paramref name="siblingSliceName"/>, or <c>false</c> otherwise.</returns>
+        /// <example>
+        /// <code>
+        /// IsSiblingSliceOf("A", "B") == true
+        /// IsSiblingSliceOf("A", null) == true
+        /// IsSiblingSliceOf("A/1", "A/2") == true
+        /// 
+        /// IsSiblingSliceOf("A", "A") == false
+        /// IsSiblingSliceOf("A/1", "A") == false
+        /// </code>
+        /// </example>
+        public static bool IsSiblingSliceOf(string sliceName, string siblingSliceName)
+        {
+            if (string.IsNullOrEmpty(sliceName))
             {
-                output.AppendFormat("{0}{1}" + Environment.NewLine, elem == Current ? "*" : "", elem.Path);
+                return !string.IsNullOrEmpty(siblingSliceName) && !IsResliceName(siblingSliceName);
+            }
+            if (string.IsNullOrEmpty(siblingSliceName))
+            {
+                return !string.IsNullOrEmpty(sliceName) && !IsResliceName(sliceName);
             }
 
-            return output.ToString();
+            var baseName = GetBaseSliceName(sliceName);
+            var siblingBaseName = GetBaseSliceName(siblingSliceName);
+            if (baseName == null && siblingBaseName == null)
+            {
+                return !StringComparer.Ordinal.Equals(sliceName, siblingSliceName);
+            }
+
+            if (StringComparer.Ordinal.Equals(baseName, siblingBaseName))
+            {
+                var resliceName = sliceName.Substring(baseName.Length);
+                var siblingResliceName = siblingSliceName.Substring(siblingBaseName.Length);
+                return !StringComparer.Ordinal.Equals(resliceName, siblingResliceName);
+            }
+
+            return false;
+        }
+
+        // public override string ToString()
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        string DebuggerDisplay
+        {
+            get
+            {
+                var output = new StringBuilder();
+                foreach (var elem in Elements)
+                {
+                    output.AppendFormat("{0}{1}\r\n", elem == Current ? "*" : "", elem.Path);
+                }
+                return output.ToString();
+            }
         }
     }
 }

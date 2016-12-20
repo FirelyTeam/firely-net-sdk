@@ -14,7 +14,9 @@ using System.Linq;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
-    /// <summary>Extension methods for the <see cref="SnapshotGenerator"/> class.</summary>
+    // [WMR 20161219] OBSOLETE - Instead, use ConstrainedByDifferentialAnnotation
+
+    /// <summary>Helper methods for the <see cref="SnapshotGenerator"/> class to generate and inspect custom extensions.</summary>
     public static class SnapshotGeneratorExtensions
     {
         /// <summary>The canonical url of the extension definition that marks snapshot elements with associated differential constraints.</summary>

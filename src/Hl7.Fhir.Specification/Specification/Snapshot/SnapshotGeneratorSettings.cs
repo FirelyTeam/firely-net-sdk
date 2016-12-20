@@ -18,9 +18,10 @@ namespace Hl7.Fhir.Specification.Snapshot
         public static readonly SnapshotGeneratorSettings Default = new SnapshotGeneratorSettings()
         {
             ExpandExternalProfiles = true,
-            ForceExpandAll = false,         // Only enable this when using a cached source...
-            MarkChanges = false,            // Enabled by Simplifier
-            GenerateElementIds = false      // for STU3
+            ForceExpandAll = false,                     // Only enable this when using a cached source...
+            MarkChanges = false,                        // Enabled by Simplifier
+            AnnotateDifferentialConstraints = false,    // For snapshot rendering
+            GenerateElementIds = false                  // for STU3
             // MergeTypeProfiles = true
         };
 
@@ -44,6 +45,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             other.ExpandExternalProfiles = ExpandExternalProfiles;
             other.ForceExpandAll = ForceExpandAll;
             other.MarkChanges = MarkChanges;
+            other.AnnotateDifferentialConstraints = AnnotateDifferentialConstraints;
+            other.GenerateElementIds = GenerateElementIds;
             // other.MergeTypeProfiles = MergeTypeProfiles;
         }
 
@@ -72,6 +75,12 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// The FHIR API snapshot generator explicitly removes and re-generates these extensions for each profile.
         /// </summary>
         public bool MarkChanges { get; set; }
+
+        /// <summary>
+        /// Enable this setting to annotate all elements and properties in the snapshot that are constrained by the differential
+        /// using the <see cref="SnapshotGeneratorAnnotations.ConstrainedByDifferentialAnnotation"/>.
+        /// </summary>
+        public bool AnnotateDifferentialConstraints { get; set; }
 
         // [WMR 20161004] Always try to merge element type profiles
 

@@ -87,7 +87,6 @@ namespace Hl7.Fhir.Validation
             //when a reference cannot be resolved.  (this happens in a choice type where there are multiple references with multiple profiles)
 
             IEnumerable<Func<OperationOutcome>> validations = typeRefs.Select(tr => createValidatorForTypeRef(validator, instance,tr));
-
             return validator.Combine(BatchValidationMode.Any, instance, validations);
         }
 
