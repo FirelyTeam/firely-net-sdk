@@ -606,7 +606,7 @@ namespace Hl7.Fhir.Validation
         // [WMR 20161220] Example by Christiaan Knaap
         // Causes stack overflow exception in validator when processing the related Organization profile
         // TypeRefValidationExtensions.ValidateTypeReferences needs to detect and handle recursion
-        // 
+        // Example: Organization.partOf => Organization
         [TestMethod]
         public void TestPatientWithOrganization()
         {
