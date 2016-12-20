@@ -34,6 +34,8 @@ namespace Hl7.Fhir.Validation
             var snapgen = new SnapshotGenerator(_resolver);
             snapgen.Update(sd);
 
+            // sd.Snapshot.Element.Where(e => e.Path.EndsWith(".telecom")).Select(e=>e.Path + " : " + e.Name ?? "").ToArray()
+
             var nav = new ElementDefinitionNavigator(sd);
             var success = nav.JumpToFirst("Patient.telecom");
             Assert.True(success);

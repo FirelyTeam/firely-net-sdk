@@ -584,9 +584,29 @@ namespace Hl7.Fhir.Validation
 
         }
 
+        class InMemoryResourceResolver : IResourceResolver
+        {
+            ILookup<string, Resource> _resources;
 
-        // [WMR 20161220] Patient example by Christiaan Knaap
-        // Causes exception in snapshot generator when processing the related Organization profile (unavailable)
+            public InMemoryResourceResolver(IEnumerable<Resource> profiles)
+            {
+                _resources = profiles.ToLookup(r => getResourceUri(r), r => r as Resource);
+            }
+
+            public InMemoryResourceResolver(Resource profile) : this(new Resource[] { profile }) { }
+
+            public Resource ResolveByCanonicalUri(string uri) => null;
+
+            public Resource ResolveByUri(string uri) => _resources[uri].FirstOrDefault();
+
+            // cf. ResourceStreamScanner.StreamResources
+            static string getResourceUri(Resource res) => res.TypeName + "/" + res.Id;
+        }
+
+        // [WMR 20161220] Example by Christiaan Knaap
+        // Causes stack overflow exception in validator when processing the related Organization profile
+        // TypeRefValidationExtensions.ValidateTypeReferences needs to detect and handle recursion
+        // 
         [TestMethod]
         public void TestPatientWithOrganization()
         {
@@ -594,11 +614,17 @@ namespace Hl7.Fhir.Validation
             // var source = new DirectorySource(@"TestData\validation");
             // var res = source.ResolveByUri("Patient/pat1"); // cf. "Patient/Levin"
 
-            var json = File.ReadAllText(@"TestData\validation\patient-ck.json");
+            var jsonPatient = File.ReadAllText(@"TestData\validation\patient-ck.json");
             var parser = new FhirJsonParser();
-            var res = parser.Parse<Patient>(json);
+            var patient = parser.Parse<Patient>(jsonPatient);
+            Assert.IsNotNull(patient);
 
-            Assert.IsNotNull(res);
+            var jsonOrganization = File.ReadAllText(@"TestData\validation\organization-ck.json");
+            var organization = parser.Parse<Organization>(jsonOrganization);
+            Assert.IsNotNull(organization);
+
+            var resources = new Resource[] { patient, organization };
+            var memResolver = new InMemoryResourceResolver(resources);
 
             // [WMR 20161220] Validator always uses existing snapshots if present
             // ProfilePreprocessor.GenerateSnapshots:
@@ -613,9 +639,10 @@ namespace Hl7.Fhir.Validation
                 // This will force the validator to regenerate all snapshots
                 new ClearSnapshotResolver(
                     new MultiResolver(
-                        new BundleExampleResolver(@"TestData\validation"),
-                        new DirectorySource(@"TestData\validation"),
-                        new TestProfileArtifactSource(),
+                        // new BundleExampleResolver(@"TestData\validation"),
+                        // new DirectorySource(@"TestData\validation"),
+                        // new TestProfileArtifactSource(),
+                        memResolver,
                         new ZipSource("specification.zip"))));
 
             var ctx = new ValidationSettings()
@@ -629,7 +656,7 @@ namespace Hl7.Fhir.Validation
 
             var validator = new Validator(ctx);
 
-            var report = validator.Validate(res);
+            var report = validator.Validate(patient);
             Assert.IsTrue(report.Success);
 
             // Assert.AreEqual(4, report.Warnings);

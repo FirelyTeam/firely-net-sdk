@@ -159,6 +159,8 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// </summary>
         List<ElementDefinition> generate(StructureDefinition structure)
         {
+            Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(generate)}] Generate snapshot for profile '{structure.Name}' : '{structure.Url}' ...");
+
             List<ElementDefinition> result;
             var differential = structure.Differential;
             if (differential == null)
@@ -1026,7 +1028,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 )
                 {
                     // Automatically expand external profiles on demand
-                    Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(ensureSnapshot)}] Recursively generate snapshot for type profile with url: '{sd.Url}' ...");
+                    // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(ensureSnapshot)}] Recursively generate snapshot for type profile with url: '{sd.Url}' ...");
 
                     sd.Snapshot = new StructureDefinition.SnapshotComponent()
                     {

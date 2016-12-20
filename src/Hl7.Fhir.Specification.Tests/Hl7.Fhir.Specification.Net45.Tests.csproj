@@ -925,6 +925,9 @@
     <Content Include="TestData\validation\patient-ck.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="TestData\validation\organization-ck.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.Net45.csproj">
