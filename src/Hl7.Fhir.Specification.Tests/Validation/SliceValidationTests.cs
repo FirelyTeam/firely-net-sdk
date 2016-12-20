@@ -119,9 +119,12 @@ namespace Hl7.Fhir.Validation
         }
 
         // [WMR 20161219] Snapshot generator now emits (re-)slices in correct order
-        // However the validator slice bucket matching algorithm is incorrect - reslices are also claimed by base slice bucket
+        // However the validator slice bucket matching algorithm seems incorrect
+        // First telecom entry (Phone/Home) is matched by all three slices (0,1,2)... wrong!
+        // Second telecom entry is matched by slice 1 => before last match index (2) => invalid for ordered slice
 
         [Fact(Skip ="[WMR 20161219] TODO: Fix bucket assignment")]
+        // [Fact]
         public void TestBucketAssignment()
         {
             var s = createSliceDefs() as SliceGroupBucket;

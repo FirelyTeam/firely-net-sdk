@@ -12,6 +12,7 @@ using System.Xml.Linq;
 using System;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Validation
 {
@@ -562,7 +563,8 @@ namespace Hl7.Fhir.Validation
             }
             public Resource ResolveByCanonicalUri(string uri)
             {
-                throw new NotImplementedException();
+                // throw new NotImplementedException(); // Slow, pollutes debug output window
+                return null;
             }
 
             public Resource ResolveByUri(string uri)
@@ -581,6 +583,119 @@ namespace Hl7.Fhir.Validation
             }
 
         }
+
+
+        // [WMR 20161220] Patient example by Christiaan Knaap
+        // Causes exception in snapshot generator when processing the related Organization profile (unavailable)
+        [TestMethod]
+        public void TestPatientWithOrganization()
+        {
+            // DirectorySource (and ResourceStreamScanner) does not support json...
+            // var source = new DirectorySource(@"TestData\validation");
+            // var res = source.ResolveByUri("Patient/pat1"); // cf. "Patient/Levin"
+
+            var json = File.ReadAllText(@"TestData\validation\patient-ck.json");
+            var parser = new FhirJsonParser();
+            var res = parser.Parse<Patient>(json);
+
+            Assert.IsNotNull(res);
+
+            // [WMR 20161220] Validator always uses existing snapshots if present
+            // ProfilePreprocessor.GenerateSnapshots:
+            // if (!sd.HasSnapshot) { ... snapshotGenerator(sd) ... }
+
+            // Create custom source to properly force snapshot expansion
+            // Run validator on instance
+            // Afterwards, verify that instance profile has been expanded
+
+            var source = new CachedResolver(
+                // Clear snapshots after initial load
+                // This will force the validator to regenerate all snapshots
+                new ClearSnapshotResolver(
+                    new MultiResolver(
+                        new BundleExampleResolver(@"TestData\validation"),
+                        new DirectorySource(@"TestData\validation"),
+                        new TestProfileArtifactSource(),
+                        new ZipSource("specification.zip"))));
+
+            var ctx = new ValidationSettings()
+            {
+                ResourceResolver = source,
+                GenerateSnapshot = true,
+                EnableXsdValidation = true,
+                Trace = false,
+                ResolveExteralReferences = true
+            };
+
+            var validator = new Validator(ctx);
+
+            var report = validator.Validate(res);
+            Assert.IsTrue(report.Success);
+
+            // Assert.AreEqual(4, report.Warnings);
+
+            // To check for ele-1 constraints on expanded Patient snapshot:
+            // source.FindStructureDefinitionForCoreType(FHIRDefinedType.Patient).Snapshot.Element.Select(e=>e.Path + " : " + e.Constraint.FirstOrDefault()?.Key ?? "").ToArray()
+            var patientStructDef = source.FindStructureDefinitionForCoreType(FHIRDefinedType.Patient);
+            Assert.IsNotNull(patientStructDef);
+            Assert.IsTrue(patientStructDef.HasSnapshot);
+            assertElementConstraints(patientStructDef.Snapshot.Element);
+        }
+
+        // Verify aggregated element constraints
+        static void assertElementConstraints(List<ElementDefinition> patientElems)
+        {
+            foreach (var elem in patientElems)
+            {
+                if (elem.IsRootElement())
+                {
+                    // DomainResource constraints dom-1 ... dom-4 are defined in reversed order (specification.zip/profile-resources.xml)
+                    // Assert.AreEqual("dom-4", elem.Constraint.FirstOrDefault()?.Key);
+                    var constraintKeys = elem.Constraint.Select(c => c.Key).ToList();
+                    Assert.IsTrue(constraintKeys.Contains("dom-1"));
+                    Assert.IsTrue(constraintKeys.Contains("dom-2"));
+                    Assert.IsTrue(constraintKeys.Contains("dom-3"));
+                    Assert.IsTrue(constraintKeys.Contains("dom-4"));
+                }
+                else if (!elem.Path.EndsWith(".contained"))
+                {
+                    // ele-1 should always be the first constraint
+                    Assert.AreEqual("ele-1", elem.Constraint.FirstOrDefault()?.Key);
+                }
+            }
+        }
+
+        class ClearSnapshotResolver : IResourceResolver
+        {
+            IResourceResolver _resolver;
+            public ClearSnapshotResolver(IResourceResolver resolver)
+            {
+                _resolver = resolver;
+            }
+
+            public Resource ResolveByCanonicalUri(string uri)
+            {
+                var result = _resolver.ResolveByCanonicalUri(uri);
+                return clearSnapshot(result);
+            }
+
+            public Resource ResolveByUri(string uri)
+            {
+                var result = _resolver.ResolveByUri(uri);
+                return clearSnapshot(result);
+            }
+
+            private static Resource clearSnapshot(Resource result)
+            {
+                var sd = result as StructureDefinition;
+                if (sd != null && sd.HasSnapshot)
+                {
+                    sd.Snapshot = null;
+                }
+                return result;
+            }
+        }
+
     }
 }
 

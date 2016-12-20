@@ -2430,21 +2430,66 @@ namespace Hl7.Fhir.Specification.Tests
             assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT);
         }
 
-    }
-
-    class InMemoryProfileResolver : IResourceResolver
-    {
-        ILookup<string, Resource> _resources;
-
-        public InMemoryProfileResolver(IEnumerable<IConformanceResource> profiles)
+        class InMemoryProfileResolver : IResourceResolver
         {
-            _resources = profiles.ToLookup(r => r.Url, r => r as Resource);
+            ILookup<string, Resource> _resources;
+
+            public InMemoryProfileResolver(IEnumerable<IConformanceResource> profiles)
+            {
+                _resources = profiles.ToLookup(r => r.Url, r => r as Resource);
+            }
+
+            public InMemoryProfileResolver(IConformanceResource profile) : this(new IConformanceResource[] { profile }) { }
+
+            public Resource ResolveByCanonicalUri(string uri) => _resources[uri].FirstOrDefault();
+
+            public Resource ResolveByUri(string uri) => null;
         }
 
-        public InMemoryProfileResolver(IConformanceResource profile) : this(new IConformanceResource[] { profile }) { }
+        static StructureDefinition ClosedExtensionSliceObservationProfile => new StructureDefinition()
+        {
+            ConstrainedType = FHIRDefinedType.Observation,
+            Base = ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Observation),
+            Name = "MyTestObservation",
+            Url = "http://example.org/fhir/StructureDefinition/MyTestObservation",
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("Observation.extension")
+                    {
+                        Slicing = new ElementDefinition.SlicingComponent()
+                        {
+                            Rules = ElementDefinition.SlicingRules.Closed
+                        }
+                    }
+                }
+            }
+        };
 
-        public Resource ResolveByCanonicalUri(string uri) => _resources[uri].FirstOrDefault();
+        [TestMethod]
+        public void TestEmptyClosedExtensionSlice()
+        {
+            var profile = ClosedExtensionSliceObservationProfile;
 
-        public Resource ResolveByUri(string uri) => null;
+            var resolver = new InMemoryProfileResolver(profile);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            _generator = new SnapshotGenerator(multiResolver);
+            StructureDefinition expanded = null;
+
+            generateSnapshotAndCompare(profile, out expanded);
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            // dumpElements(expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Observation.extension")), "Observation.extension constraint:");
+            var outcome = _generator.Outcome;
+            dumpOutcome(outcome);
+
+            var elem = expanded.Snapshot.Element.Find(e => e.Path == "Observation.extension");
+            Assert.IsNotNull(elem);
+            Assert.IsNotNull(elem.Slicing);
+            Assert.AreEqual(ElementDefinition.SlicingRules.Closed, elem.Slicing.Rules);
+        }
     }
+
 }

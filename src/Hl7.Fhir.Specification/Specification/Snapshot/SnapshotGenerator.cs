@@ -14,15 +14,10 @@
 // [WMR 20161004] Only enable this for debugging & verification (costly...)
 // #define CACHE_ROOT_ELEMDEF_ASSERT
 
-// Known issues:
-// - [Ewout/validator] reslicing constraints are emitted in reverse order
 // TODO:
 // - Merge global StructureDefinition.mapping definitions
-// - Support constraining existing slice entry (e.g. constrain Rule from Open to OpenAtEnd or Closed)
 // - Enforce/verify Slicing.Rule = Closed / OpenAtEnd
-// - Test error handling, gracefully handle
-
-#define NEW_SLICE
+// - Test error handling: gracefully handle invalid input, report issue
 
 using System;
 using System.Collections.Generic;
@@ -355,8 +350,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 var matches = ElementMatcher.Match(snap, diff);
 
-                Debug.WriteLine("Matches for children of " + snap.Path + (snap.Current != null && snap.Current.Name != null ? " '" + snap.Current.Name + "'" : null));
-                matches.DumpMatches(snap, diff);
+                // Debug.WriteLine("Matches for children of " + snap.Path + (snap.Current != null && snap.Current.Name != null ? " '" + snap.Current.Name + "'" : null));
+                // matches.DumpMatches(snap, diff);
 
                 foreach (var match in matches)
                 {
@@ -476,7 +471,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 Debug.Assert(cachedRootClone.IsExactly(currentRootClone));
 #endif
 
-                Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(mergeElement)}] Re-use cached root element definition: '{cachedRootElemDef.Path}'  #{cachedRootElemDef.GetHashCode()}");
+                // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(mergeElement)}] Re-use cached root element definition: '{cachedRootElemDef.Path}'  #{cachedRootElemDef.GetHashCode()}");
                 snap.Elements[snap.OrdinalPosition.Value] = cachedRootElemDef;
                 diff.Current.ClearSnapshotElementAnnotations();
             }
@@ -1119,7 +1114,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // 2. Return root element definition from existing (pre-generated) snapshot, if it exists
             if (sd.HasSnapshot && (sd.Snapshot.IsCreatedBySnapshotGenerator() || !_settings.ForceExpandAll))
             {
-                Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - use existing root element definition from snapshot: #{sd.Snapshot.Element[0].GetHashCode()}");
+                // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - use existing root element definition from snapshot: #{sd.Snapshot.Element[0].GetHashCode()}");
                 // No need to save root ElemDef annotation, as the snapshot has already been fully expanded
                 return sd.Snapshot.Element[0];
             }
@@ -1130,7 +1125,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (nav != null && nav.Elements != null && nav.Elements.Count > 0)
             {
                 var recursiveRootElemDef = nav.Elements[0];
-                Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - use existing root element definition from generating snapshot: #{recursiveRootElemDef.GetHashCode()}");
+                // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - use existing root element definition from generating snapshot: #{recursiveRootElemDef.GetHashCode()}");
                 // No need to save root ElemDef annotation, as the snapshot root element has already been expanded
                 return recursiveRootElemDef;
             }
@@ -1149,7 +1144,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 clonedDiffRoot.EnsureBaseComponent(null, true);
                 sd.SetSnapshotRootElementAnnotation(clonedDiffRoot);
 #endif
-                Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - use root element definition from differential: #{clonedDiffRoot.GetHashCode()}");
+                // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - use root element definition from differential: #{clonedDiffRoot.GetHashCode()}");
                 return clonedDiffRoot;
             }
 
@@ -1161,7 +1156,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Note that we need to use a separate stack, as we may need to expand the root element of a
             // profile that is currently being fully expanded, i.e. the url is already on the main stack.
 
-            Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - recursively resolve root element definition from base profile '{baseProfileUri}' ...");
+            // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - recursively resolve root element definition from base profile '{baseProfileUri}' ...");
             var sdBase = _resolver.FindStructureDefinition(baseProfileUri);
             var baseRoot = getSnapshotRootElement(sdBase, baseProfileUri, ToNamedNode(diffRoot)); // Recursion!
             if (baseRoot == null)
@@ -1178,7 +1173,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             mergeElementDefinition(rebasedRoot, diffRoot);
 
 
-            Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - succesfully resolved root element definition: #{rebasedRoot.GetHashCode()}");
+            // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - succesfully resolved root element definition: #{rebasedRoot.GetHashCode()}");
 
 #if CACHE_ROOT_ELEMDEF
             // Save the generated snapshot root element definition as annotation on StructureDefinition.Snapshot component

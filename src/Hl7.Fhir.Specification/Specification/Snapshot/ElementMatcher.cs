@@ -6,7 +6,6 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-#define NEW_SLICE
 // Accept multiple renamed choice type elements (Chris Grenz)
 #define MULTIPLE_RENAMED_CHOICE_TYPES
 

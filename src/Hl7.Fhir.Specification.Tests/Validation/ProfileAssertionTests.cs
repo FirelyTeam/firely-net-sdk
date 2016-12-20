@@ -185,7 +185,6 @@ namespace Hl7.Fhir.Validation
             Assert.False(report.Success);
             Assert.Contains("is incompatible with the declared type", report.ToString());
         }
-
     }
 
 }
