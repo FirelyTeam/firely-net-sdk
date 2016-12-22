@@ -384,5 +384,26 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsFalse(outp.Contains("\"male\""));
             Assert.IsTrue(outp.Contains("\"superman\""));
         }
+
+        // [WMR 20161222] Richard Kavanagh: serializing ValueSet (to XML) throws an exception...?
+        // Cause: { ... "text" { ... "div" = "removed" } ... }
+        // => "removed" is not valid Xhtml contents (no root)! Should be e.g. "<p>removed</p>"
+        // However: http://www.hl7.org/implement/standards/fhir/narrative.html#Narrative
+        // => div SHOULD accept plain text!
+        [TestMethod]
+        [Ignore]
+        public void SerializeValueSet()
+        {
+            // var res = new ValueSet() { Url = "http://example.org/fhir/ValueSet/MyValueSetExample" };
+
+            string json = File.ReadAllText(@"TestData\valueset-v2-0717.json");
+            Assert.IsNotNull(json);
+            var parser = new FhirJsonParser();
+            var vs = parser.Parse<ValueSet>(json);
+            Assert.IsNotNull(vs);
+
+            var xml = FhirSerializer.SerializeResourceToXml(vs);
+            Assert.IsNotNull(xml);
+        }
     }
 }
