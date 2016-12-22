@@ -15,6 +15,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Globalization;
+using System.IO.Compression;
+using System.Runtime.Serialization;
+using System.Text.RegularExpressions;
+using System.Xml;
+using Hl7.Fhir.Utils;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -383,6 +388,51 @@ namespace Hl7.Fhir.Tests.Serialization
             outp = FhirSerializer.SerializeResourceToXml(p);
             Assert.IsFalse(outp.Contains("\"male\""));
             Assert.IsTrue(outp.Contains("\"superman\""));
+        }
+
+        [TestMethod]
+        public void SerializeSpecificationZip()
+        {
+            DataContractSerializer serializer = new DataContractSerializer(typeof(Resource), new Type [] {typeof(Integer)});
+            using (var archive = ZipFile.Open("../../../../Hl7.Fhir.Specification/specification.zip", ZipArchiveMode.Read))
+            {
+                var entries = archive.Entries.Where(e=> Regex.IsMatch(e.Name, "^.*\\.xml$", RegexOptions.IgnoreCase));
+                foreach (var zipArchiveEntry in entries.GetResources())
+                {
+                   var stream =  Serialize(serializer, zipArchiveEntry);
+                    var resource = Deserialize(serializer, stream);
+                    string original_xml = FhirSerializer.SerializeResourceToXml(zipArchiveEntry);
+                    string processed_xml = FhirSerializer.SerializeResourceToXml(resource);
+                    Assert.AreEqual(original_xml, processed_xml);
+                    stream.Dispose();
+                }
+            }
+        }
+
+        private static Stream Serialize(DataContractSerializer serializer, Resource zipArchiveEntry)
+        {
+            var memoryStream = new MemoryStream();
+            XmlDictionaryWriter binaryDictionaryWriter = XmlDictionaryWriter.CreateBinaryWriter(memoryStream);
+            serializer.WriteObject(binaryDictionaryWriter, zipArchiveEntry);
+            binaryDictionaryWriter.Flush();
+            memoryStream.Position = 0;
+            return memoryStream;
+        }
+
+        private static Resource Deserialize(DataContractSerializer serializer, Stream stream)
+        {
+            stream.Position = 0;
+            var bytes = new byte[stream.Length];
+            stream.Read(bytes, 0, bytes.Length);
+
+            var xmlDictionaryReaderQuotas = new XmlDictionaryReaderQuotas();
+            xmlDictionaryReaderQuotas.MaxArrayLength = int.MaxValue;
+            xmlDictionaryReaderQuotas.MaxDepth = int.MaxValue;
+            xmlDictionaryReaderQuotas.MaxStringContentLength = int.MaxValue;
+            XmlDictionaryReader binaryDictionaryReader = XmlDictionaryReader.CreateBinaryReader(bytes, xmlDictionaryReaderQuotas);
+            var resource = (Resource)serializer.ReadObject(binaryDictionaryReader, true);
+
+            return resource;
         }
     }
 }
