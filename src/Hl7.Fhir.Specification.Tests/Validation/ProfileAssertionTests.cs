@@ -38,6 +38,7 @@ namespace Hl7.Fhir.Validation
         }
     }
 
+    [Trait("Category", "Validation")]
     public class ProfileAssertionTests : IClassFixture<ValidationFixture>
     {
         private IResourceResolver _resolver;
