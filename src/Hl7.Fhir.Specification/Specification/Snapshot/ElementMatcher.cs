@@ -301,7 +301,10 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // if diffNav specifies a slice name, then advance snapNav to matching base slice
             // Otherwise remain at the current slice entry or unsliced element
-            snapNav.MoveToNextSliceAtAnyLevel(diffNav.Current.Name);
+            if (diffNav.Current.Name != null)
+            {
+                snapNav.MoveToNextSliceAtAnyLevel(diffNav.Current.Name);
+            }
 
             var defaultBase = snapNav.Bookmark();
             var baseIsSliced = snapNav.Current.Slicing != null;

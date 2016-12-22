@@ -352,7 +352,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 var matches = ElementMatcher.Match(snap, diff);
 
-                // Debug.WriteLine("Matches for children of " + snap.Path + (snap.Current != null && snap.Current.Name != null ? " '" + snap.Current.Name + "'" : null));
+                // Debug.WriteLine("Matches for children of " + snap.Path + (snap.Current != null && snap.Current.Name != null ? " '" + snap.Current.Name + "'" : CurrentProfileUri));
                 // matches.DumpMatches(snap, diff);
 
                 foreach (var match in matches)
@@ -755,8 +755,15 @@ namespace Hl7.Fhir.Specification.Snapshot
             // => Duplicate base slice after last slice
 
             // [WMR 20161219] Handle Composition.section - has default name 'section' in core resource (name reference target for Composition.section.section)
-            // Ambiguous in DSTU2... STU3 introduces contentReference
-            // => If slicing entry has no name, then merge with current snap
+            // Ambiguous in DSTU2... usually this would introduce a reslice of named slice 'section'
+            // Note that STU3 introduces contentReference
+            //
+            //   Base           Diff          Operation
+            //   --------------------------------------
+            //   'section'      'section'     Slice
+            //                  'mySection'   Add
+            // 
+            // => If slicing entry has no name, or same name as current slice, then merge with current snap; otherwise add
             if (slicingEntry.Name != null && ElementDefinitionNavigator.IsSiblingSliceOf(snap.Current.Name, slicingEntry.Name))
             {
                 // Append the new slice constraint to the existing slice group
@@ -766,7 +773,16 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             if (slicingEntry != null)
             {
-                mergeElementDefinition(snap.Current, slicingEntry);
+                if (diff.Current == null || diff.Current.IsExtension())
+                {
+                    // Merge newly created slicing entry onto snap
+                    mergeElementDefinition(snap.Current, slicingEntry);
+                }
+                else
+                {
+                    // [WMR 20161222] Recursively merge diff constraints on slicing entry and child elements (if any)
+                    mergeElement(snap, diff);
+                }
             }
 
             // TODO: update / check the slice entry's min/max property to match what we've found in the slice group

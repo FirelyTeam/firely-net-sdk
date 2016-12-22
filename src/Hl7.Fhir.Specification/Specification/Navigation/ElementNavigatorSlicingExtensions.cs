@@ -92,6 +92,14 @@ namespace Hl7.Fhir.Specification.Navigation
             return false;
         }
 
+        /// <summary>
+        /// Enumerate any succeeding direct child slices of the specified element.
+        /// Skip any intermediate child elements and re-slice elements.
+        /// When finished, return the navigator to the initial position.
+        /// </summary>
+        /// <param name="intro"></param>
+        /// <param name="atRoot">Specify <c>true</c> for finding direct (simple) slices, or <c>false</c> for finding re-slices.</param>
+        /// <returns>A sequence of <see cref="Bookmark"/> instances.</returns>
         internal static IEnumerable<Bookmark> FindMemberSlices(this ElementDefinitionNavigator intro, bool atRoot)
         {
             var bm = intro.Bookmark();
