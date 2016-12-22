@@ -172,6 +172,7 @@ namespace Hl7.Fhir.Specification.Tests
             // [WMR 20161219] Problem: Composition.section element in core resource has name 'section' (b/o name reference)
             // Ambiguous... snapshot generator slicing logic cannot handle this...
 
+            // [WMR 20161222] Example by EK from validator
             var sd = _testResolver.FindStructureDefinition(@"http://example.org/StructureDefinition/DocumentComposition");
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Composition");
 
@@ -451,6 +452,8 @@ namespace Hl7.Fhir.Specification.Tests
                 _settings = settings;
                 _pos = 0;
             }
+
+            public ElementDefinition CurrentElement => _current;
 
             // Find first element with matching path
             // Continue at the final element position from the last call to this method (or 0)
@@ -2490,6 +2493,32 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(elem.Slicing);
             Assert.AreEqual(ElementDefinition.SlicingRules.Closed, elem.Slicing.Rules);
         }
-    }
 
+        [TestMethod()]
+        public void TestSlicingEntryWithChilren()
+        {
+            var sd = _testResolver.FindStructureDefinition(@"http://example.org/StructureDefinition/DocumentComposition");
+
+            Assert.IsNotNull(sd);
+
+            // dumpReferences(sd);
+
+            StructureDefinition expanded;
+            generateSnapshotAndCompare(sd, out expanded);
+
+            dumpOutcome(_generator.Outcome);
+            dumpElements(expanded.Snapshot.Element);
+
+            // Verify that the snapshot includes the merged children of the slice entry element
+            var verifier = new ElementVerifier(expanded, _settings);
+            verifier.VerifyElement("Composition.section", null);
+            verifier.AssertSlicing(new string[] { "code" }, ElementDefinition.SlicingRules.Open, false);
+            verifier.VerifyElement("Composition.section.title", null);
+            verifier.VerifyElement("Composition.section.code", null);
+            Assert.IsNotNull(verifier.CurrentElement.Binding);
+            Assert.AreEqual(BindingStrength.Required, verifier.CurrentElement.Binding.Strength);
+            Assert.AreEqual("http://example.org/ValueSet/SectionTitles", (verifier.CurrentElement.Binding.ValueSet as ResourceReference)?.Reference);
+        }
+    }
 }
+

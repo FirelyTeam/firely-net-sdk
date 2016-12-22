@@ -208,7 +208,8 @@ namespace Hl7.Fhir.Specification.Tests
                             Type = new List<ElementDefinition.TypeRefComponent>() { new ElementDefinition.TypeRefComponent() { Code = FHIRDefinedType.Extension } },
                             Slicing = new ElementDefinition.SlicingComponent()
                             {
-                                Discriminator = new string[] { "url" }
+                                Discriminator = new string[] { "url" },
+                                Rules = ElementDefinition.SlicingRules.Closed
                             }
                         },
                         new ElementDefinition("Patient.extension")
