@@ -1539,7 +1539,7 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     // If normalizing, then elem.Base.Path refers to the defining profile (e.g. DomainResource),
                     // whereas baseDef refers to the immediate base profile (e.g. Patient)
-                    Debug.Assert(elem.Base == null || ElementDefinitionNavigator.IsCandidateBaseElementPath(elem.Base.Path, baseDef.Path));
+                    Debug.Assert(elem.Base == null || ElementDefinitionNavigator.IsCandidateBasePath(elem.Base.Path, baseDef.Path));
                     hasConstraints = HasConstraints(elem, baseDef);
                 }
                 var isValid = hasChanges == hasConstraints;

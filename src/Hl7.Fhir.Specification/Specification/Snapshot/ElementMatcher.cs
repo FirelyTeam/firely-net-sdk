@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             var typeSliceShorthand = diffNav.PathName;
 
             // Try to match nameXXXXX to name[x]
-            var matchingChoice = choiceNames.SingleOrDefault(xName => ElementDefinitionNavigator.IsRenamedChoiceElement(xName, typeSliceShorthand));
+            var matchingChoice = choiceNames.SingleOrDefault(xName => ElementDefinitionNavigator.IsRenamedChoiceTypeElement(xName, typeSliceShorthand));
 
             if (matchingChoice != null)
             {
@@ -213,7 +213,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             // - base element has a type choice (value[x])
             // - Single derived element is constrained to single type and renamed (valueString)
             // - This is NOT a type slice => derived profile cannot contain multiple renamed elements!
-#if true
             var result = new List<MatchInfo>() { match };
 
             if (snapNav.Current.IsChoice())
@@ -221,7 +220,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var bm = diffNav.Bookmark();
                 while (diffNav.MoveToNext())
                 {
-                    if (snapNav.IsRenamedChoiceElement(diffNav.PathName))
+                    if (snapNav.IsRenamedChoiceTypeElement(diffNav.PathName))
                     {
                         match = new MatchInfo()
                         {
@@ -244,33 +243,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     }
                 }
             }
-
             return result;
-#else
-
-            if (snapNav.Current.IsChoice() && (snapNav.PathName == diffNav.PathName || snapNav.IsRenamedChoiceElement(diffNav.PathName)))
-            {
-                // Verify that the differential contains only a single type slice constraint
-                // Generate a warning if the profile contains multiple type slice constraints (invalid)
-
-                var prevDiffElemName = previousElementName(diffNav);
-                if (snapNav.PathName == prevDiffElemName || snapNav.IsRenamedChoiceElement(prevDiffElemName))
-                {
-                    Debug.Print($"[{nameof(ElementMatcher)}.{nameof(constructMatch)}] Warning! Differential contains multiple constraints on choice type, path = '{diffNav.Path}'. Shortcut notation only allows a single type constraint, otherwise must use type slicing.");
-
-#if MULTIPLE_RENAMED_CHOICE_TYPES
-                    match.Issue = SnapshotGenerator.CreateIssueInvalidChoiceConstraint(diffNav.Current);
-#else
-                    match.Action = MatchAction.Invalid;
-                    match.Issue = SnapshotGenerator.CreateIssueInvalidChoiceConstraint(diffNav.Current);
-                    return new List<MatchInfo>() { match };
-#endif
-                }
-            }
-
-            // Easiest case - one to one match, without slicing involved
-            return new List<MatchInfo>() { match };
-#endif
         }
 
         // [WMR 20160902] Represents a new element definition with no matching base element (for core resource & datatype definitions)

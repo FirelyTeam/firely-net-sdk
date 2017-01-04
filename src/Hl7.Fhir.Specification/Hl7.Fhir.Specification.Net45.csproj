@@ -76,6 +76,7 @@
       <Link>Support\StringExtensions.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyVersionInfo.cs" />
+    <Compile Include="Specification\Navigation\ElementDefinitionNavigationFunctions.cs" />
     <Compile Include="Specification\Navigation\ElementNavigatorSlicingExtensions.cs" />
     <Compile Include="Specification\Snapshot\SnapshotElementIdGenerator.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorAnnotations.cs" />

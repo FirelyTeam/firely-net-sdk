@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     // [WMR 20160906] WRONG! Must also handle snap.Path="Extension.value[x]" vs. diff.Path="Extension.extension.value[x]
                     // if (snap.Path.Substring(0, snap.Path.Length - 3) + diff.Type.First().Code.ToString().Capitalize() != diff.Path)
-                    if (!ElementDefinitionNavigator.IsCandidateBaseElementPath(snap.Path, diff.Path))
+                    if (!ElementDefinitionNavigator.IsCandidateBasePath(snap.Path, diff.Path))
                     {
                         throw Error.InvalidOperation($"Invalid operation in snapshot generator. Path cannot be changed from '{snap.Path}' to '{diff.Path}', since the type is sliced to '{diff.Type.First().Code}'");
                     }
