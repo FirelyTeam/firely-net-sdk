@@ -2498,7 +2498,6 @@ namespace Hl7.Fhir.Specification.Tests
         public void TestSlicingEntryWithChilren()
         {
             var sd = _testResolver.FindStructureDefinition(@"http://example.org/StructureDefinition/DocumentComposition");
-
             Assert.IsNotNull(sd);
 
             // dumpReferences(sd);
@@ -2519,6 +2518,98 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(BindingStrength.Required, verifier.CurrentElement.Binding.Strength);
             Assert.AreEqual("http://example.org/ValueSet/SectionTitles", (verifier.CurrentElement.Binding.ValueSet as ResourceReference)?.Reference);
         }
+
+        [TestMethod]
+        public void TestObservationProfileWithExtensions()
+        {
+            var obs = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyCustomObservation");
+            Assert.IsNotNull(obs);
+
+            StructureDefinition expanded;
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            _generator.PrepareElement += elementHandler;
+            try
+            {
+                generateSnapshotAndCompare(obs, out expanded);
+            }
+            finally
+            {
+                _generator.PrepareElement -= elementHandler;
+            }
+
+            dumpOutcome(_generator.Outcome);
+
+            var elems = expanded.Snapshot.Element;
+            dumpElements(elems);
+            dumpBaseElems(elems);
+
+            // Verify that the snapshot contains three extension elements 
+            var obsExtensions = elems.Where(e => e.Path == "Observation.extension").ToList();
+            Assert.IsNotNull(obsExtensions);
+            Assert.AreEqual(4, obsExtensions.Count); // 1 extension slice + 3 extensions
+
+            var extSliceElem = obsExtensions[0];
+            Assert.IsNotNull(extSliceElem);
+            Assert.IsNotNull(extSliceElem.Slicing);
+            Assert.AreEqual("url", extSliceElem.Slicing.Discriminator.FirstOrDefault());
+
+            var labelExtElem = obsExtensions[1];
+            Assert.IsNotNull(labelExtElem);
+            Assert.AreEqual(@"http://example.org/fhir/StructureDefinition/ObservationLabelExtension", labelExtElem.Type.FirstOrDefault().Profile.FirstOrDefault());
+
+            var locationExtElem = obsExtensions[2];
+            Assert.IsNotNull(locationExtElem);
+            Assert.AreEqual(@"http://example.org/fhir/StructureDefinition/ObservationLocationExtension", locationExtElem.Type.FirstOrDefault().Profile.FirstOrDefault());
+
+            var otherExtElem = obsExtensions[3];
+            Assert.IsNotNull(otherExtElem);
+            Assert.AreEqual(@"http://example.org/fhir/StructureDefinition/SomeOtherExtension", otherExtElem.Type.FirstOrDefault().Profile.FirstOrDefault());
+
+            var labelExt = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/ObservationLabelExtension");
+            Assert.IsNotNull(labelExt);
+            Assert.IsFalse(labelExt.HasSnapshot);
+            //dumpElements(labelExt.Snapshot.Element);
+
+            var locationExt = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/ObservationLocationExtension");
+            Assert.IsNotNull(locationExt);
+            Assert.IsFalse(locationExt.HasSnapshot);
+            //dumpElements(locationExt.Snapshot.Element);
+
+            // Third extension element maps to an unresolved extension definition
+            var otherExt = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/SomeOtherExtension");
+            Assert.IsNull(otherExt);
+
+            // Now verify the snapshot
+            // First two extension elements should have been merged from the snapshot root Extension element of the associated extension definition 
+            var coreExtension = _testResolver.FindStructureDefinitionForCoreType(FHIRDefinedType.Extension);
+            Assert.IsNotNull(coreExtension);
+            Assert.IsTrue(coreExtension.HasSnapshot);
+            var coreExtensionRootElem = coreExtension.Snapshot.Element[0];
+
+            var labelExtRootElem = labelExt.Differential.Element[0];
+            Assert.AreEqual(1, labelExtElem.Min);                                           // Explicit Observation profile constraint
+            Assert.AreEqual(labelExtRootElem.Max, labelExtElem.Max);                        // Inherited from external ObservationLabelExtension root element
+            Assert.AreEqual(coreExtensionRootElem.Definition, labelExtElem.Definition);     // Inherited from Observation.extension base element
+            Assert.AreEqual(labelExtRootElem.Comments, labelExtElem.Comments);              // Inherited from external ObservationLabelExtension root element
+
+            var locationExtRootElem = locationExt.Differential.Element[0];
+            Assert.AreEqual(0, locationExtElem.Min);                                        // Inherited from external ObservationLabelExtension root element
+            Assert.AreEqual("1", locationExtElem.Max);                                      // Explicit Observation profile constraint
+            Assert.AreEqual(coreExtensionRootElem.Definition, locationExtElem.Definition);  // Inherited from Observation.extension base element
+            Assert.AreEqual(locationExtRootElem.Comments, locationExtElem.Comments);        // Inherited from external ObservationLocationExtension root element
+
+            // Last (unresolved) extension element should have been merged with Observation.extension
+            var coreObservation = _testResolver.FindStructureDefinitionForCoreType(FHIRDefinedType.Observation);
+            Assert.IsNotNull(coreObservation);
+            Assert.IsTrue(coreObservation.HasSnapshot);
+            var coreObsExtensionElem = coreObservation.Snapshot.Element.FirstOrDefault(e => e.Path == "Observation.extension");
+            Assert.IsNotNull(coreObsExtensionElem);
+            Assert.AreEqual(1, otherExtElem.Min);                                           // Explicit Observation profile constraint
+            Assert.AreEqual(coreObsExtensionElem.Max, otherExtElem.Max);                    // Inherited from Observation.extension base element
+            Assert.AreEqual(coreObsExtensionElem.Definition, otherExtElem.Definition);      // Inherited from Observation.extension base element
+            Assert.AreEqual(coreObsExtensionElem.Comments, otherExtElem.Comments);          // Inherited from Observation.extension base element
+        }
+
     }
 }
 

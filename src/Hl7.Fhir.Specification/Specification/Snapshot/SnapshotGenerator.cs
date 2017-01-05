@@ -658,9 +658,11 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 // Expand and merge (only!) the root element of the external type profile
                 // Note: full expansion may trigger recursion, e.g. Element.id => identifier => string => Element
-                // => only expand snapshot if required, otherwise just resolve/generate the root element
                 var typeRootElem = getSnapshotRootElement(typeStructure, primaryDiffTypeProfile, diffNode);
                 if (typeRootElem == null) { return false; }
+
+                // [WMR 20170105] Notify observers!
+                OnPrepareElement(snap.Current, typeStructure, typeRootElem);
 
                 // Rebase before merging
                 var rebasedRootElem = (ElementDefinition)typeRootElem.DeepCopy();
@@ -1125,9 +1127,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                 return null;
             }
 
+#if CACHE_ROOT_ELEMDEF
             // 1. Return previously generated, cached root element definition, if it exists
             var cachedRoot = sd.GetSnapshotRootElementAnnotation();
             if (cachedRoot != null) { return cachedRoot; }
+#endif
 
             // 2. Return root element definition from existing (pre-generated) snapshot, if it exists
             if (sd.HasSnapshot && (sd.Snapshot.IsCreatedBySnapshotGenerator() || !_settings.ForceExpandAll))
