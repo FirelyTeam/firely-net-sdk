@@ -12,10 +12,10 @@ namespace Hl7.Fhir.Specification.Navigation
 
         /// <summary>Determines if the element with the specified name represents a type slice for the current (choice) element.</summary>
         /// <returns><c>true</c> if the element name represents a type slice of the current element, <c>false</c> otherwise.</returns>
-        internal static bool IsRenamedChoiceElement(this ElementDefinitionNavigator nav, string diffName)
+        internal static bool IsRenamedChoiceTypeElement(this ElementDefinitionNavigator nav, string diffName)
         {
             if (nav == null) { throw Error.ArgumentNull("nav"); }
-            return ElementDefinitionNavigator.IsRenamedChoiceElement(nav.PathName, diffName);
+            return ElementDefinitionNavigator.IsRenamedChoiceTypeElement(nav.PathName, diffName);
         }
 
         // [WMR 20161212] NEW
