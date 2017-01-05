@@ -6,8 +6,11 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+#define BEFORE_EXPAND_ELEMENT_EVENT
+
 using System;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Specification.Navigation;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -91,20 +94,44 @@ namespace Hl7.Fhir.Specification.Snapshot
                 handler(this, args);
             }
         }
+
+
+        // [WMR 20170105] NEW
+
+        /// <summary>
+        /// An event that notifies clients when the snapshot generator must determine wether to expand a specific profile element.
+        /// The event handler can inspect and optionally modify the <see cref="SnapshotExpandElementEventArgs.MustExpand"/> flag.
+        /// If the flag equals <c>true</c>, then the snapshot generator will expand the current element.
+        /// </summary>
+        public event SnapshotExpandElementHandler BeforeExpandElement;
+
+        /// <summary>
+        /// Raise the <see cref="BeforeExpandElement"/> event to notify the client when deciding wether to expand the current element.
+        /// The client can modify the value of the <paramref name="mustExpand"/> parameter to control expansion of specific elements.
+        /// Warning: recursively expanding all profile elements may cause infinite recursion!
+        /// </summary>
+        internal void OnBeforeExpandElement(ElementDefinition element, bool hasChildren, ref bool mustExpand)
+        {
+            if (element == null) { throw new ArgumentNullException(nameof(element)); }
+
+            var handler = BeforeExpandElement;
+            if (handler != null)
+            {
+                var args = new SnapshotExpandElementEventArgs(element, hasChildren, mustExpand);
+                handler(this, args);
+                mustExpand = args.MustExpand;
+            }
+        }
     }
 
-    /// <summary>Event arguments for the <see cref="SnapshotConstraintHandler"/> event delegate.</summary>
-    public class SnapshotConstraintEventArgs : EventArgs
-    {
-        private readonly Element _element;
 
-        public SnapshotConstraintEventArgs(Element element) : base()
-        {
-            _element = element;
-        }
+    /// <summary>Event arguments for the <see cref="SnapshotConstraintHandler"/> event delegate.</summary>
+    public sealed class SnapshotConstraintEventArgs : EventArgs
+    {
+        public SnapshotConstraintEventArgs(Element element) : base() { Element = element; }
 
         /// <summary>Returns a reference to a constrained snapshot element definition or property.</summary>
-        public Element Element { get { return _element; } }
+        public Element Element { get; }
     }
 
     /// <summary>A delegate type for hooking up <see cref="SnapshotGenerator.Constraint"/> events.</summary>
@@ -112,22 +139,19 @@ namespace Hl7.Fhir.Specification.Snapshot
 
 
     /// <summary>Event arguments for the <see cref="SnapshotBaseProfileHandler"/> event delegate.</summary>
-    public class SnapshotBaseProfileEventArgs : EventArgs
+    public sealed class SnapshotBaseProfileEventArgs : EventArgs
     {
-        private readonly StructureDefinition _profile;
-        private readonly StructureDefinition _baseProfile;
-
         public SnapshotBaseProfileEventArgs(StructureDefinition profile, StructureDefinition baseProfile) : base()
         {
-            _profile = profile;
-            _baseProfile = baseProfile;
+            Profile = profile;
+            BaseProfile = baseProfile;
         }
 
         /// <summary>Returns a reference to a profile.</summary>
-        public StructureDefinition Profile { get { return _profile; } }
+        public StructureDefinition Profile { get; }
 
         /// <summary>Returns a reference to the associated base profile.</summary>
-        public StructureDefinition BaseProfile { get { return _baseProfile; } }
+        public StructureDefinition BaseProfile { get; }
 
     }
 
@@ -136,29 +160,50 @@ namespace Hl7.Fhir.Specification.Snapshot
 
 
     /// <summary>Event arguments for the <see cref="SnapshotElementHandler"/> event delegate.</summary>
-    public class SnapshotElementEventArgs : EventArgs
+    public sealed class SnapshotElementEventArgs : EventArgs
     {
-        private readonly ElementDefinition _element;
-        private readonly ElementDefinition _baseElement;
-        private readonly StructureDefinition _baseStructure;
-
         public SnapshotElementEventArgs(ElementDefinition element, StructureDefinition baseStructure, ElementDefinition baseElement) : base()
         {
-            _element = element;
-            _baseElement = baseElement;
-            _baseStructure = baseStructure;
+            Element = element;
+            BaseElement = baseElement;
+            BaseStructure = baseStructure;
         }
 
         /// <summary>Returns a reference to an element definition.</summary>
-        public ElementDefinition Element { get { return _element; } }
+        public ElementDefinition Element { get; }
 
         /// <summary>Returns a reference to the associated base element definition.</summary>
-        public ElementDefinition BaseElement { get { return _baseElement; } }
+        public ElementDefinition BaseElement { get; }
 
         /// <summary>Returns a reference to the associated base structure definition. The snapshot component contains the <see cref="BaseElement"/> instance.</summary>
-        public StructureDefinition BaseStructure { get { return _baseStructure; } }
+        public StructureDefinition BaseStructure { get; }
     }
 
     public delegate void SnapshotElementHandler(object sender, SnapshotElementEventArgs e);
+
+
+    /// <summary>Event arguments for the <see cref="SnapshotExpandElementHandler"/> event delegate.</summary>
+    public sealed class SnapshotExpandElementEventArgs : EventArgs
+    {
+        public SnapshotExpandElementEventArgs(ElementDefinition element, bool hasChildren, bool mustExpand) : base()
+        {
+            Element = element;
+            HasChildren = hasChildren;
+            MustExpand = mustExpand;
+        }
+
+        /// <summary>Returns a reference to the current element.</summary>
+        public ElementDefinition Element { get; }
+
+        /// <summary>Indicates wether the current element has any child elements.</summary>
+        public bool HasChildren { get; }
+
+        /// <summary>Gets or sets a boolean value that determines wether the snapshot generator should expand children of the current element.</summary>
+        public bool MustExpand { get; set; }
+    }
+
+    /// <summary>A delegate type for hooking up <see cref="SnapshotGenerator.BeforeExpandElement"/> events.</summary>
+    public delegate void SnapshotExpandElementHandler(object sender, SnapshotExpandElementEventArgs e);
+
 
 }

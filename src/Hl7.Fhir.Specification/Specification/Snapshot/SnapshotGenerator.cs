@@ -506,7 +506,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 // [WMR 20160905] If we failed to merge the type profile, then don't try to expand & merge any child constraints
             }
-            else if (diff.HasChildren)
+            // else if (diff.HasChildren)
+            else if (mustExpandElement(diff))
             {
                 if (!snap.HasChildren)
                 {
@@ -546,6 +547,16 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // => snapshot generator should add this
                 fixExtensionUrl(snap);
             }
+        }
+
+        // [WMR 20170105] New: determine wether to expand the current element
+        // Notify client to allow overriding the default behavior
+        bool mustExpandElement(ElementDefinitionNavigator diffNav)
+        {
+            var hasChildren = diffNav.HasChildren;
+            bool mustExpand = hasChildren;
+            OnBeforeExpandElement(diffNav.Current, hasChildren, ref mustExpand);
+            return mustExpand;
         }
 
         // Merge a differential ElementDefinition constraint into a snapshot ElementDefinition instance.
@@ -1000,7 +1011,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (!isValidProfile && typeCodeElem != null && (typeName = typeCodeElem.ObjectValue as string) != null)
             {
                 baseStructure = _resolver.GetStructureDefinitionForTypeCode(typeCodeElem);
-                // [WMR 20160906] Check if element type equals path (e.g. Resource root element), prevent endless recursion
+                // [WMR 20160906] Check if element type equals path (e.g. Resource root element), prevent infinite recursion
                 isValidProfile = (typeName == location.Path) ||
                     (
                         ensureSnapshot
@@ -1033,7 +1044,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (!verifyStructure(sd, profileUri, location)) { return false; }
             profileUri = sd.Url;
 
-            // Detect endless recursion
+            // Detect infinite recursion
             // Verify that the type profile is not already being expanded by a parent call higher up the call stack hierarchy
             // Special case: when recursing on Element, simply return true and continue; otherwise throw an exception
             var path = location != null ? location.Path : null;
