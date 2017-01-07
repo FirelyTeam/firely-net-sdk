@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        internal class BetterDecimalJsonTextWriter : JsonTextWriter
+        public class BetterDecimalJsonTextWriter : JsonTextWriter
         {
             public BetterDecimalJsonTextWriter(TextWriter textWriter) : base(textWriter)
             {
