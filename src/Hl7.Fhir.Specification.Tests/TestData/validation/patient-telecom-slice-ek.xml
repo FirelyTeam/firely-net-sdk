@@ -1,0 +1,110 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+	<url value="http://example.com/StructureDefinition/patient-telecom-slice-ek" />
+	<name value="patient-telecom-slice" />
+	<status value="draft" />
+	<description value="Slice Patient.telecom by multiple discriminators - based on an example by Chris Grenz." />
+	<fhirVersion value="1.0.2" />
+	<kind value="resource" />
+	<constrainedType value="Patient" />
+	<abstract value="false" />
+	<base value="http://hl7.org/fhir/StructureDefinition/Patient" />	
+	<differential>
+		<element>
+			<path value="Patient.telecom" />
+			<slicing>
+				<discriminator value="system" />
+				<discriminator value="use" />
+				<rules value="closed" />
+			</slicing>
+		</element>
+
+    <!-- First, slice into a homePhone = PHONE + HOME -->
+    <element>
+      <path value="Patient.telecom" />
+      <name value="homePhone" />
+    </element>
+
+    <element>
+			<path value="Patient.telecom.system" />
+			<name value="homePhone.system" />
+			<min value="1" />
+			<fixedCode value="phone" />
+		</element>
+		<element>
+			<path value="Patient.telecom.use" />
+			<name value="homePhone.use" />
+			<min value="1" />
+			<fixedCode value="home" />
+		</element>
+
+    <!-- First, slice into a homePhone = PHONE + MOBILE -->
+    <element>
+      <path value="Patient.telecom" />
+      <name value="mobilePhone" />
+    </element>
+
+    <element>
+			<path value="Patient.telecom.system" />
+			<name value="mobilePhone.system" />
+			<min value="1" />
+			<fixedCode value="phone" />
+		</element>
+		<element>
+			<path value="Patient.telecom.use" />
+			<name value="mobilePhone.use" />
+			<min value="1" />
+			<fixedCode value="mobile" />
+		</element>
+
+    <!-- Now, the emails. homeEmail = EMAIL + HOME -->
+    <element>
+      <path value="Patient.telecom" />
+      <name value="homeEmail" />
+    </element>
+
+    <element>
+			<path value="Patient.telecom.system" />
+			<name value="homeEmail.system" />
+			<min value="1" />
+			<fixedCode value="email" />
+		</element>
+		<element>
+			<path value="Patient.telecom.use" />
+			<name value="homeEmail.use" />
+			<min value="1" />
+			<fixedCode value="home" />
+		</element>
+
+    <!-- Finally, wokrEmail = EMAIL + WORK -->
+    <element>
+      <path value="Patient.telecom" />
+      <name value="workEmail" />
+    </element>
+
+    <element>
+			<path value="Patient.telecom.system" />
+			<name value="workEmail.system" />
+			<min value="1" />
+			<fixedCode value="email" />
+		</element>
+		<element>
+			<path value="Patient.telecom.use" />
+			<name value="workEmail.use" />
+			<min value="1" />
+			<fixedCode value="work" />
+		</element>
+
+    <!-- A category with just pager, no constraints on telecom.use
+    <element>
+			<path value="Patient.telecom" />
+			<name value="pager" />
+			<comments value="Only one of the two discriminators fixed." />
+		</element>
+		<element>
+			<path value="Patient.telecom.system" />
+			<name value="pager.system" />
+			<min value="1" />
+			<fixedCode value="pager" />
+		</element> -->
+	</differential>
+</StructureDefinition>

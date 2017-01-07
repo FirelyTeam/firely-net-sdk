@@ -7,20 +7,20 @@
  */
 
 using Hl7.ElementModel;
-using Hl7.Fhir.FluentPath;
+using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Support;
-using Hl7.FluentPath;
+using Hl7.FhirPath;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
-using Time = Hl7.FluentPath.Time;
+using Time = Hl7.FhirPath.Time;
 
 namespace Hl7.Fhir.Validation
 {
@@ -80,14 +80,14 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-
         internal OperationOutcome Validate(IElementNavigator instance, ElementDefinitionNavigator definition)
         {
             return Validate(instance, new[] { definition });
         }
 
 
-        // This is the one and only main internal entry point for all validations
+        // This is the one and only main internal entry point for all validations, which in its term
+        // will call step 1 in the validator, the function 
         internal OperationOutcome Validate(IElementNavigator instance, IEnumerable<ElementDefinitionNavigator> definitions)
         {
             var outcome = new OperationOutcome();
@@ -118,6 +118,8 @@ namespace Hl7.Fhir.Validation
             return () => validateElement(nav, instance);
         }
 
+
+     //   private OperationOutcome validateElement(ElementDefinitionNavigator definition, IElementNavigator instance)
 
         private OperationOutcome validateElement(ElementDefinitionNavigator definition, IElementNavigator instance)
         {
@@ -172,8 +174,6 @@ namespace Hl7.Fhir.Validation
                         Trace(outcome, "ElementDefinition has no child, nor does it specify a type or nameReference to validate the instance data against", Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE_OR_NAMEREF, instance);
                 }
 
-                outcome.Add(ValidateSlices(definition, instance));
-
                 outcome.Add(this.ValidateFixed(elementConstraints, instance));
                 outcome.Add(this.ValidatePattern(elementConstraints, instance));
                 outcome.Add(this.ValidateMinMaxValue(elementConstraints, instance));
@@ -214,7 +214,7 @@ namespace Hl7.Fhir.Validation
 
             foreach (var constraintElement in definition.Constraint)
             {
-                var fpExpression = constraintElement.GetFluentPathConstraint();
+                var fpExpression = constraintElement.GetFhirPathConstraint();
 
                 if (fpExpression != null)
                 {
@@ -234,33 +234,13 @@ namespace Hl7.Fhir.Validation
                     }
                     catch (Exception e)
                     {
-                        Trace(outcome, $"Evaluation of FluentPath for constraint '{constraintElement.Key}' failed: {e.Message}",
-                                        Issue.PROFILE_ELEMENTDEF_INVALID_FLUENTPATH_EXPRESSION, instance);
+                        Trace(outcome, $"Evaluation of FhirPath for constraint '{constraintElement.Key}' failed: {e.Message}",
+                                        Issue.PROFILE_ELEMENTDEF_INVALID_FHIRPATH_EXPRESSION, instance);
                     }
                 }
                 else
-                    Trace(outcome, $"Encountered an invariant ({constraintElement.Key}) that has no FluentPath expression, skipping validation of this constraint",
-                                Issue.UNSUPPORTED_CONSTRAINT_WITHOUT_FLUENTPATH, instance);
-            }
-
-            return outcome;
-        }
-
-        internal OperationOutcome ValidateSlices(ElementDefinitionNavigator definition, IElementNavigator instance)
-        {
-            var outcome = new OperationOutcome();
-
-            if (definition.Current.Slicing != null)
-            {
-                // This is the slicing entry
-                // TODO: Find my siblings and try to validate the content against
-                // them. There should be exactly one slice validating against the
-                // content, otherwise the slicing is ambiguous. If there's no match
-                // we fail validation as well. 
-                // For now, we do not handle slices
-                if (definition.Current.Slicing != null)
-                    Trace(outcome, "ElementDefinition uses slicing, which is not yet supported. Instance has not been validated against " +
-                            "any of the slices", Issue.UNAVAILABLE_REFERENCED_PROFILE, instance);
+                    Trace(outcome, $"Encountered an invariant ({constraintElement.Key}) that has no FhirPath expression, skipping validation of this constraint",
+                                Issue.UNSUPPORTED_CONSTRAINT_WITHOUT_FHIRPATH, instance);
             }
 
             return outcome;
@@ -418,10 +398,10 @@ namespace Hl7.Fhir.Validation
                 return XmlConvert.ToString((decimal)val);
             else if (val is bool)
                 return (bool)val ? "true" : "false";
-            else if (val is Hl7.FluentPath.Time)
-                return ((Hl7.FluentPath.Time)val).ToString();
-            else if (val is Hl7.FluentPath.PartialDateTime)
-                return ((Hl7.FluentPath.PartialDateTime)val).ToString();
+            else if (val is Hl7.FhirPath.Time)
+                return ((Hl7.FhirPath.Time)val).ToString();
+            else if (val is Hl7.FhirPath.PartialDateTime)
+                return ((Hl7.FhirPath.PartialDateTime)val).ToString();
             else
                 return val.ToString();
         }

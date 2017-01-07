@@ -53,8 +53,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Hl7.FluentPath, Version=0.4.0.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Hl7.FluentPath.0.4.0-alpha3\lib\net45\Hl7.FluentPath.dll</HintPath>
+    <Reference Include="Hl7.FhirPath, Version=0.4.0.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hl7.FhirPath.0.4.0\lib\net45\Hl7.FhirPath.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -72,12 +72,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FhirPath\PocoElementNavigator.cs" />
+    <Compile Include="FhirPath\PocoNavigator.cs" />
+    <Compile Include="FhirPath\PocoNavigatorExtensions.cs" />
     <Compile Include="Model\ElementDefinition.cs" />
     <Compile Include="..\hl7.fhir.specification\validation\Cardinality.cs">
       <Link>Validation\Cardinality.cs</Link>
     </Compile>
-    <Compile Include="FluentPath\PocoElementNavigator.cs" />
-    <Compile Include="FluentPath\PocoNavigator.cs" />
     <Compile Include="Model\Generated\MessageDefinition.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
@@ -342,7 +343,6 @@
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Support\CanonicalUrlConflictException.cs" />
-    <Compile Include="FluentPath\PocoNavigatorExtensions.cs" />
     <Compile Include="Model\ElementDefinitionExtensions.cs" />
     <Compile Include="Support\EnumUtility.cs" />
     <Compile Include="Model\IValue.cs" />

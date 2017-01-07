@@ -16,9 +16,9 @@ using System.Xml;
 using System.Collections.Generic;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
-using Hl7.Fhir.FluentPath;
+using Hl7.Fhir.FhirPath;
 using Hl7.ElementModel;
-using Hl7.FluentPath;
+using Hl7.FhirPath;
 using Hl7.Fhir.Validation;
 using Hl7.Fhir.Support;
 
@@ -49,7 +49,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             OperationOutcome level2 = new OperationOutcome();
 
-            level2.AddIssue(Issue.UNSUPPORTED_CONSTRAINT_WITHOUT_FLUENTPATH.ToIssueComponent("A test warning at level 2", "Patient.active[0].id[0]"));
+            level2.AddIssue(Issue.UNSUPPORTED_CONSTRAINT_WITHOUT_FHIRPATH.ToIssueComponent("A test warning at level 2", "Patient.active[0].id[0]"));
             level2.AddIssue(Issue.CONTENT_ELEMENT_MUST_MATCH_TYPE.ToIssueComponent("Another test error at level 2", "Patient.active[0].id[0]"));
 
             level1.Include(level2);

@@ -1,0 +1,15 @@
+<!-- this is all valid -->
+<List xmlns="http://hl7.org/fhir">
+  <!-- another comment -->
+  <id value="val1"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <p>This is some narrative</p>
+       <object value="false"/>
+    </div>
+  </text>
+  <status value="current"/>
+  <mode value="changes"/>
+</List>
+<!-- ending comment -->

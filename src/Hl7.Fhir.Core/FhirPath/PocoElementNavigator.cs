@@ -13,7 +13,7 @@ using Hl7.Fhir.Model;
 using Hl7.ElementModel;
 using Hl7.Fhir.Support;
 
-namespace Hl7.Fhir.FluentPath
+namespace Hl7.Fhir.FhirPath
 {
     public class PocoElementNavigator
     {

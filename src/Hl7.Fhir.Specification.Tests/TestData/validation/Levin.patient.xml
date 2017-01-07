@@ -11,9 +11,6 @@
             <p>MRN: 123456. Male, 24-Sept 1932</p>
         </div>
     </text>
-    <extension url="http://example.org/StructureDefinition/trials">
-        <valueCode value="renal"/>
-    </extension>
     <identifier>
         <use value="usual"/>
         <type>

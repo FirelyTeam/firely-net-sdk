@@ -1,0 +1,231 @@
+{
+	"validator-tests": {
+		"Json": {
+			"bundle-good.json": {
+				"errorCount": 0
+			},
+			"group-choice-bad1.json": {
+				"errorCount": 2,
+				"errors": ["/Group/characteristic (line 10, col21) Unrecognised property '@value' ",
+				"Group.characteristic (line 6, col6) Element 'Group.characteristic.value[x]': minimum required = 1, but only found 0"]
+			},
+			"group-choice-bad2.json": {
+				"errorCount": 2,
+				"errors": ["/Group/characteristic (line 10, col25) Unrecognised property '@valueInteger' ",
+				"Group.characteristic (line 6, col6) Element 'Group.characteristic.value[x]': minimum required = 1, but only found 0 "]
+			},
+			"group-choice-bad3.json": {
+				"errorCount": 2,
+				"errors": ["/Group/characteristic/value[x] (line 10, col25) Error parsing JSON: the primitive value must be a boolean ",
+				"Group.characteristic.valueBoolean (line 10, col25) boolean values must be 'true' or 'false' "]
+			},
+			"group-choice-empty.json": {
+				"errorCount": 1,
+				"errors": ["(document) Error parsing JSON: Error parsing JSON source: Unexpected JSON syntax at Line 8 (path=[//characteristic[]/characteristicvalueBoolean]) "]
+			},
+			"group-choice-good.json": {
+				"errorCount": 0
+			},
+			"group-minimal-tiny.json": {
+				"errorCount": 0
+			},
+			"group-minimal.json": {
+				"errorCount": 0
+			},
+			"list-bad-syntax.json": {
+				"errorCount": 1,
+				"errors": ["(document) Error parsing JSON: Error parsing JSON source: Unexpected JSON syntax at Line 7 (path=[/_id]) "]
+			},
+			"list-contained-bad.json": {
+				"errorCount": 1,
+				"errors": ["List.subject SHALL have a local reference if the resource is provided inline ( (url: [pat]; ids: [org.hl7.fhir.dstu3.metamodel.Element@2b71e916])) [reference.startsWith('#').not() or (reference.substring(1).trace('url') in %resource.contained.id.trace('ids'))] "]
+			},
+			"list-contained.json": {
+				"errorCount": 0
+			},
+			"list-empty1.json": {
+				"errorCount": 2,
+				"errors": ["/List/entry (line 7, col6) Object must have some content ",
+				"List.entry (line 7, col6) Element 'List.entry.item': minimum required = 1, but only found 0 "]
+			},
+			"list-empty2.json": {
+				"errorCount": 0
+			},
+			"list-extension1.json": {
+				"errorCount": 0
+			},
+			"list-extension2.json": {
+				"errorCount": 1,
+				"errors": ["/List/status/extension (line 18, col8) Unrecognised property '@valueCodeX' "]
+			},
+			"list-minimal.json": {
+				"errorCount": 0
+			},
+			"list-unknown-prop.json": {
+				"errorCount": 1,
+				"errors": ["/List (line 12, col23) Unrecognised property '@other' "]
+			},
+			"list-wrong-code.json": {
+				"errorCount": 1,
+				"errors": ["List.status (line 4, col24) The value provided ('current1') is not in the value set http://hl7.org/fhir/ValueSet/list-status (http://hl7.org/fhir/ValueSet/list-status, and a code is required from this value set "]
+			},
+			"list-wrong-order.json": {
+				"errorCount": 0
+			},
+			"list-xhtml-attribute.json": {
+				"errorCount": 1,
+				"errors": ["List.text.div (line 15, col4) Illegal attribute name in the XHTML ('onClick' on 'p') "]
+			},
+			"list-xhtml-correct1.json": {
+				"errorCount": 0
+			},
+			"list-xhtml-correct2.json": {
+				"errorCount": 0
+			},
+			"list-xhtml-element.json": {
+				"errorCount": 2,
+				"errors": ["List.text.div (line 15, col4) Illegal element name in the XHTML ('object') ",
+				"List.text.div (line 15, col4) Illegal attribute name in the XHTML ('value' on 'object') "]
+			},
+			"list-xhtml-syntax.json": {
+				"errorCount": 1,
+				"errors": ["/List/text/div (line 15, col4) Error parsing XHTML: Malformed XHTML: Found "</pa>" expecting "</p>" at line 2 column 37 "]
+			},
+			"list-xhtml-wrongns1.json": {
+				"errorCount": 1,
+				"errors": ["List.text.div (line 15, col4) Wrong namespace on the XHTML ('http://www.w3.org/1999/xhtmlx') "]
+			},
+			"list-xhtml-wrongns2.json": {
+				"errorCount": 1,
+				"errors": ["List.text.div (line 15, col4) Wrong namespace on the XHTML ('null') "]
+			},
+			"list-xhtml-xxe.json": {
+				"errorCount": 1,
+				"errors": ["/List/text/div (line 7, col4) Error parsing XHTML: Malformed XHTML: Found a DocType declaration, and these are not allowed (XXE security vulnerability protection) "]
+			}
+		},
+		"Xml": {
+			"bundle-good.xml": {
+				"errorCount": 0
+			},
+			"group-choice-bad1.xml": {
+				"errorCount": 2,
+				"errors": ["Undefined element \'value\"",
+				"Element \'Group.characteristic.value[x]\': minimum required = 1, but only found 0"]
+			},
+			"group-choice-bad2.xml": {
+				"errorCount": 1,
+				"errors": ["The element valueInteger is illegal. Valid types at this point are CodeableConcept, boolean, Quantity, Range"]
+			},
+			"group-choice-bad3.xml": {
+				"errorCount": 1,
+				"errors": ["boolean values must be \'true\' or \'false\'"]
+			},
+			"group-choice-empty.xml": {
+				"errorCount": 1,
+				"errors": ["Element must have some content"]
+			},
+			"group-choice-good.xml": {
+				"errorCount": 0
+			},
+			"group-minimal.xml": {
+				"errorCount": 0
+			},
+			"list-bad-syntax.xml": {
+				"errorCount": 1,
+				"errors": ["org.xml.sax.SAXParseException; lineNumber: 7; columnNumber: 3; The element type \"id\" must be terminated by the matching end-tag \"</id>\"."]
+			},
+			"list-contained-bad.xml": {
+				"errorCount": 1,
+				"errors": ["SHALL have a local reference if the resource is provided inline ( (url: [pat]; ids: [org.hl7.fhir.dstu3.metamodel.Element@1b7cc17c])) [reference.startsWith(\'#\').not() or (reference.substring(1).trace(\'url\') in %resource.contained.id.trace(\'ids\'))]"]
+			},
+			"list-contained.xml": {
+				"errorCount": 0
+			},
+			"list-empty1.xml": {
+				"errorCount": 2,
+				"errors": ["Element must have some content",
+				"Element \'List.entry.item\': minimum required = 1, but only found 0"]
+			},
+			"list-empty2.xml": {
+				"errorCount": 2,
+				"errors": ["Element must have some content",
+				"Element \'List.entry.item\': minimum required = 1, but only found 0"]
+			},
+			"list-extension.xml": {
+				"errorCount": 0
+			},
+			"list-minimal.xml": {
+				"errorCount": 0
+			},
+			"list-text.xml": {
+				"errorCount": 1,
+				"errors": ["Text should not be present"]
+			},
+			"list-unknown-attr.xml": {
+				"errorCount": 1,
+				"errors": ["Undefined attribute \'@other\'"]
+			},
+			"list-unknown-element.xml": {
+				"errorCount": 1,
+				"errors": ["Undefined element \'mode1\""]
+			},
+			"list-wrong-code.xml": {
+				"errorCount": 1,
+				"errors": ["The value provided (\'current1\') is not in the value set http://hl7.org/fhir/ValueSet/list-status (http://hl7.org/fhir/ValueSet/list-status, and a code is required from this value set"]
+			},
+			"list-wrong-ns.xml": {
+				"errorCount": 1,
+				"errors": ["This does not appear to be a FHIR resource (unknown namespace/name \'http://hl7.org/fhir1::List\')"]
+			},
+			"list-wrong-ns1.xml": {
+				"errorCount": 1,
+				"errors": ["Wrong namespace - expected \'http://hl7.org/fhir\'"]
+			},
+			"list-wrong-ns2.xml": {
+				"errorCount": 1,
+				"errors": ["Wrong namespace - expected \'http://hl7.org/fhir\'"]
+			},
+			"list-wrong-order.xml": {
+				"errorCount": 1,
+				"errors": ["Element \"status\" is out of order"]
+			},
+			"list-xhtml-attribute.xml": {
+				"errorCount": 1,
+				"errors": ["Illegal attribute name in the XHTML (\'onClick\' on \'p\')"]
+			},
+			"list-xhtml-correct1.xml": {
+				"errorCount": 0
+			},
+			"list-xhtml-correct2.xml": {
+				"errorCount": 0
+			},
+			"list-xhtml-element.xml": {
+				"errorCount": 2,
+				"errors": ["Illegal element name in the XHTML (\'object\')",
+				"Illegal attribute name in the XHTML (\'value\' on \'object\')"]
+			},
+			"list-xhtml-wrongns1.xml": {
+				"errorCount": 1,
+				"errors": ["Wrong namespace on the XHTML (\'http://www.w3.org/1999/xhtmlx\')"]
+			},
+			"list-xhtml-wrongns2.xml": {
+				"errorCount": 1,
+				"errors": ["Wrong namespace on the XHTML (\'http://www.w3.org/1999/xhtmlx\')"]
+			},
+			"list-xhtml-wrongns3.xml": {
+				"errorCount": 1,
+				"errors": ["Wrong namespace on the XHTML (\'http://hl7.org/fhir\')"]
+			},
+			"list-xhtml-xxe1.xml": {
+				"errorCount": 1,
+				"errors": ["org.xml.sax.SAXParseException; lineNumber: 1; columnNumber: 10; DOCTYPE is disallowed when the feature \"http://apache.org/xml/features/disallow-doctype-decl\" set to true."]
+			},
+			"list-xhtml-xxe2.xml": {
+				"errorCount": 1,
+				"errors": ["Error reported by XML parser processing null: Scanner State 24 not Recognized "]
+			},
+			
+		}
+	}
+}

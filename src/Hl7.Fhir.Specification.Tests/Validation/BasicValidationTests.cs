@@ -308,7 +308,7 @@ namespace Hl7.Fhir.Validation
             var report = _validator.Validate(questionnaire);
             Assert.IsFalse(report.Success);
             Assert.AreEqual(19, report.Errors);
-            Assert.AreEqual(3, report.Warnings);           // 3x narrative constraint with no fluentpath
+            Assert.AreEqual(3, report.Warnings);           // 3x narrative constraint with no fhirpath
         }
 
 

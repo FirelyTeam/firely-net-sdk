@@ -22,8 +22,8 @@ using Hl7.Fhir.Serialization;
 using System.IO.Compression;
 using Hl7.Fhir.Validation;
 using System.ComponentModel.DataAnnotations;
-using Hl7.Fhir.FluentPath;
-using Hl7.FluentPath;
+using Hl7.Fhir.FhirPath;
+using Hl7.FhirPath;
 
 namespace HealthConnex.Fhir.Server.Tests
 {
@@ -144,7 +144,7 @@ namespace HealthConnex.Fhir.Server.Tests
                 {
                     if (t2 != null)
                     {
-                        if (t2 is Hl7.Fhir.FluentPath.PocoNavigator && (t2 as Hl7.Fhir.FluentPath.PocoNavigator).FhirValue != null)
+                        if (t2 is Hl7.Fhir.FhirPath.PocoNavigator && (t2 as Hl7.Fhir.FhirPath.PocoNavigator).FhirValue != null)
                         {
                             // Validate the type of data returned against the type of search parameter
                             //     Debug.Write(index.Resource + "." + index.Name + ": ");
@@ -152,7 +152,7 @@ namespace HealthConnex.Fhir.Server.Tests
                             exampleSearchValues[key]++;
                             // System.Diagnostics.Trace.WriteLine(string.Format("{0}: {1}", xpath.Value, t2.AsStringRepresentation()));
                         }
-                        else if (t2.Value is Hl7.FluentPath.ConstantValue)
+                        else if (t2.Value is Hl7.FhirPath.ConstantValue)
                         {
                             //     Debug.Write(index.Resource + "." + index.Name + ": ");
                             //     Debug.WriteLine((t2.Value as Hl7.FluentPath.ConstantValue).Value);

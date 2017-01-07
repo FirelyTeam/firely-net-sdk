@@ -7,14 +7,14 @@
  */
 
 using Hl7.Fhir.Model;
-using Hl7.FluentPath;
-using Hl7.FluentPath.Expressions;
+using Hl7.FhirPath;
+using Hl7.FhirPath.Expressions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Hl7.Fhir.FluentPath
+namespace Hl7.Fhir.FhirPath
 {
     public static class PocoNavigatorExtensions
     {
@@ -24,11 +24,11 @@ namespace Hl7.Fhir.FluentPath
             if (!_fhirSymbolTableExtensionsAdded)
             {
                 _fhirSymbolTableExtensionsAdded = true;
-                Hl7.FluentPath.FluentPathCompiler.DefaultSymbolTable.AddFhirExtensions();
+                Hl7.FhirPath.FhirPathCompiler.DefaultSymbolTable.AddFhirExtensions();
             }
         }
 
-        // TODO: Add support for the custom fluentpath function hasValue() on the default symbol table
+        // TODO: Add support for the custom fhirpath function hasValue() on the default symbol table
         //
         public static SymbolTable AddFhirExtensions(this SymbolTable t)
         {
@@ -58,14 +58,14 @@ namespace Hl7.Fhir.FluentPath
                 if (r == null)
                     return null;
 
-                if (r is Hl7.Fhir.FluentPath.PocoNavigator && (r as Hl7.Fhir.FluentPath.PocoNavigator).FhirValue != null)
+                if (r is Hl7.Fhir.FhirPath.PocoNavigator && (r as Hl7.Fhir.FhirPath.PocoNavigator).FhirValue != null)
                 {
                     return ((PocoNavigator)r).FhirValue;
                 }
                 object result;
-                if (r.Value is Hl7.FluentPath.ConstantValue)
+                if (r.Value is Hl7.FhirPath.ConstantValue)
                 {
-                    result = (r.Value as Hl7.FluentPath.ConstantValue).Value;
+                    result = (r.Value as Hl7.FhirPath.ConstantValue).Value;
                 }
                 else
                 {

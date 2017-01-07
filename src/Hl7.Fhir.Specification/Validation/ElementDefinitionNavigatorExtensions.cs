@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Validation
 
     internal static class ElementDefinitionNavigatorExtensions
     {
-        public static string GetFluentPathConstraint(this ElementDefinition.ConstraintComponent cc)
+        public static string GetFhirPathConstraint(this ElementDefinition.ConstraintComponent cc)
         {
             return cc.GetStringExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression");
         }

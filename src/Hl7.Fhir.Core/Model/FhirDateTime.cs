@@ -28,7 +28,7 @@
 
 */
 
-using Hl7.FluentPath;
+using Hl7.FhirPath;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
         }
 
 
-        public Hl7.FluentPath.PartialDateTime? ToPartialDateTime()
+        public Hl7.FhirPath.PartialDateTime? ToPartialDateTime()
         {
             if (Value != null)
                 return PartialDateTime.Parse(Value);
