@@ -352,6 +352,7 @@ namespace Hl7.Fhir.Specification.Tests
             var typeCode = type?.Code;
             return typeCode.HasValue
                    && element.Type.Count == 1
+                   && typeCode.Value != FHIRDefinedType.BackboneElement
                    && ModelInfo.IsDataType(typeCode.Value)
                    && (
                     // Only expand extension elements with a custom name or profile
@@ -359,8 +360,7 @@ namespace Hl7.Fhir.Specification.Tests
                     typeCode.Value != FHIRDefinedType.Extension
                     || type.Profile.Any()
                     || element.Name != null
-                   )
-                   && typeCode.Value != FHIRDefinedType.BackboneElement;
+                   );
         }
 
         [TestMethod]
@@ -2633,7 +2633,8 @@ namespace Hl7.Fhir.Specification.Tests
         {
             // Same as TestObservationProfileWithExtensions, but with full expansion of all complex elements (inc. extensions!)
 
-            var obs = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyCustomObservation");
+            // var obs = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyCustomObservation");
+            var obs = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyCustomObservation3");
             Assert.IsNotNull(obs);
 
             StructureDefinition expanded;
@@ -2686,11 +2687,11 @@ namespace Hl7.Fhir.Specification.Tests
 
             var labelExt = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/ObservationLabelExtension");
             Assert.IsNotNull(labelExt);
-            Assert.AreEqual(expandAll, labelExt.HasSnapshot);
+            if (expandAll) { Assert.AreEqual(true, labelExt.HasSnapshot); }
 
             var locationExt = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/ObservationLocationExtension");
             Assert.IsNotNull(locationExt);
-            Assert.AreEqual(expandAll, locationExt.HasSnapshot);
+            if (expandAll) { Assert.AreEqual(true, locationExt.HasSnapshot); }
 
             // Third extension element maps to an unresolved extension definition
             var otherExt = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/SomeOtherExtension");
