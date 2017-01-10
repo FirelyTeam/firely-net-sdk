@@ -32,6 +32,7 @@
   <contextType value="datatype"/>
   <context value="ContactPoint"/>
   <base value="http://hl7.org/fhir/StructureDefinition/Extension"/>
+  <!--
   <snapshot>
     <element>
       <path value="Extension"/>
@@ -135,6 +136,7 @@
       </mapping>
     </element>
   </snapshot>
+  -->
   <differential>
     <element>
       <path value="Extension"/>
@@ -155,13 +157,15 @@
         <map value="No RIM equivalent"/>
       </mapping>
     </element>
+	
     <element>
       <path value="Extension.extension"/>
-      <!--
+	  <!--
       <name value="extension"/>
-      -->
+	  -->
       <max value="0"/>
     </element>
+	
     <element>
       <path value="Extension.url"/>
       <type>

@@ -173,8 +173,11 @@ namespace Hl7.Fhir.Specification.Tests
             // Ambiguous... snapshot generator slicing logic cannot handle this...
 
             // [WMR 20161222] Example by EK from validator
-            var sd = _testResolver.FindStructureDefinition(@"http://example.org/StructureDefinition/DocumentComposition");
+            // var sd = _testResolver.FindStructureDefinition(@"http://example.org/StructureDefinition/DocumentComposition");
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Composition");
+
+            // [WMR 20170110] Test problematic extension
+            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/us-core-direct");
 
             Assert.IsNotNull(sd);
 
@@ -2705,12 +2708,14 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(labelExtRootElem.Max, labelExtElem.Max);                        // Inherited from external ObservationLabelExtension root element
             Assert.AreEqual(coreExtensionRootElem.Definition, labelExtElem.Definition);     // Inherited from Observation.extension base element
             Assert.AreEqual(labelExtRootElem.Comments, labelExtElem.Comments);              // Inherited from external ObservationLabelExtension root element
+            verifyProfileExtensionBaseElement(labelExtElem);
 
             var locationExtRootElem = locationExt.Differential.Element[0];
             Assert.AreEqual(0, locationExtElem.Min);                                        // Inherited from external ObservationLabelExtension root element
             Assert.AreEqual("1", locationExtElem.Max);                                      // Explicit Observation profile constraint
             Assert.AreEqual(coreExtensionRootElem.Definition, locationExtElem.Definition);  // Inherited from Observation.extension base element
             Assert.AreEqual(locationExtRootElem.Comments, locationExtElem.Comments);        // Inherited from external ObservationLocationExtension root element
+            verifyProfileExtensionBaseElement(locationExtElem);
 
             // Last (unresolved) extension element should have been merged with Observation.extension
             var coreObservation = _testResolver.FindStructureDefinitionForCoreType(FHIRDefinedType.Observation);
@@ -2722,8 +2727,17 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(coreObsExtensionElem.Max, otherExtElem.Max);                    // Inherited from Observation.extension base element
             Assert.AreEqual(coreObsExtensionElem.Definition, otherExtElem.Definition);      // Inherited from Observation.extension base element
             Assert.AreEqual(coreObsExtensionElem.Comments, otherExtElem.Comments);          // Inherited from Observation.extension base element
+            verifyProfileExtensionBaseElement(coreObsExtensionElem);
         }
 
+        void verifyProfileExtensionBaseElement(ElementDefinition extElem)
+        {
+            var baseElem = extElem.Annotation<BaseDefAnnotation>().BaseElementDefinition;
+            Assert.IsNotNull(baseElem);
+            Assert.AreEqual(baseElem.Short, extElem.Short);
+            Assert.AreEqual(baseElem.Comments, extElem.Comments);
+            // Assert.AreEqual(baseElem.Alias, extElem.Alias);
+        }
 
     }
 }
