@@ -121,13 +121,7 @@ namespace Hl7.Fhir.Validation
             Assert.Contains("Instance count for 'Patient.telecom.use' is 1", repr);
         }
 
-        // [WMR 20161219] Snapshot generator now emits (re-)slices in correct order
-        // However the validator slice bucket matching algorithm seems incorrect
-        // First telecom entry (Phone/Home) is matched by all three slices (0,1,2)... wrong!
-        // Second telecom entry is matched by slice 1 => before last match index (2) => invalid for ordered slice
-
-        [Fact(Skip ="[WMR 20161219] TODO: Fix bucket assignment")]
-        // [Fact]
+        [Fact]
         public void TestBucketAssignment()
         {
             var s = createSliceDefs() as SliceGroupBucket;
@@ -164,7 +158,7 @@ namespace Hl7.Fhir.Validation
             Assert.Equal("+31-20-6707070", s.Members.Last().Values("value").Single()); // in the open-at-end slice
         }
 
-        [Fact(Skip = "[WMR 20161219] TODO: Fix bucket assignment")]
+        [Fact]
         public void TestTelecomReslicing()
         {
             var p = new Patient();
