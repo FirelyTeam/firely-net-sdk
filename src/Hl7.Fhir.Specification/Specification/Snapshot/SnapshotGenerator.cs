@@ -456,11 +456,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
 #if CACHE_ROOT_ELEMDEF_ASSERT
                 // DEBUG / VERIFY: merge results should be equal to cached ElemDef instance
-                if (_settings.MergeTypeProfiles)
-                {
-                    isValid = mergeTypeProfiles(snap, diff);
-                }
-
+                isValid = mergeTypeProfiles(snap, diff);
                 mergeElementDefinition(snap.Current, diff.Current);
                 var currentRootClone = (ElementDefinition)snap.Current.DeepCopy();
                 var cachedRootClone = (ElementDefinition)cachedRootElemDef.DeepCopy();
@@ -492,10 +488,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 #else
             // First merge constraints from element type profile, if it exists
             var isValid = true;
-            if (_settings.MergeTypeProfiles)
-            {
-                isValid = mergeTypeProfiles(snap, diff);
-            }
+            isValid = mergeTypeProfiles(snap, diff);
 
             // Then merge constraints from base profile
             mergeElementDefinition(snap.Current, diff.Current);
@@ -633,8 +626,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                     return false;
                 }
 
-                // [WMR 20160915] Also notify about type profiles?
-                // OnPrepareElement(snap.Current, typeStructure, typeStructure.Snapshot.Element[0]);
+                // [WMR 20170110] Also notify about type profiles!
+                OnPrepareElement(snap.Current, typeStructure, typeStructure.Snapshot.Element[0]);
 
                 // Clone and rebase
                 var rebasePath = diff.Path;

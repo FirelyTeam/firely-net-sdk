@@ -414,7 +414,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             var match = new MatchInfo() { DiffBookmark = diffNav.Bookmark() };
 
-            if (discriminators == null || discriminators.Count > 1 || discriminators.FirstOrDefault() != "url")
+            // [WMR 20170110] Accept missing slicing component, e.g. to close the extension slice: Extension.extension { max = 0 }
+            // if (discriminators == null || discriminators.Count > 1 || discriminators.FirstOrDefault() != "url")
+            if (discriminators != null && (discriminators.Count != 1 || discriminators.FirstOrDefault() != "url"))
             {
                 // Invalid extension discriminator; generate issue and ignore
                 Debug.Print($"[{nameof(ElementMatcher)}.{nameof(matchExtensionSlice)}] Warning! Invalid discriminator for extension slice (path = '{diffNav.Path}') - must be 'url'.");

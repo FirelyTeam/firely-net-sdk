@@ -1502,7 +1502,9 @@
     <element>
       <path value="Patient.extension" />
       <name value="MyExtension1" />
+      <!--
       <definition value="Optional Extensions Element - found in all resources." />
+      -->
       <min value="0" />
       <max value="*" />
       <type>
@@ -1513,7 +1515,9 @@
     <element>
       <path value="Patient.extension" />
       <name value="MyExtension2" />
+      <!--
       <definition value="Optional Extensions Element - found in all resources." />
+      -->
       <min value="0" />
       <max value="*" />
       <type>
@@ -1531,7 +1535,9 @@
     <element>
       <path value="Patient.contact.extension" />
       <name value="MyExtension1" />
+      <!--
       <definition value="Optional Extensions Element - found in all resources." />
+      -->
       <min value="0" />
       <max value="*" />
       <type>
