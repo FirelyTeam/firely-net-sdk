@@ -626,7 +626,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     return false;
                 }
 
-                // [WMR 20170110] Also notify about type profiles!
+                // [WMR 20170110] Also notify about type profiles
                 OnPrepareElement(snap.Current, typeStructure, typeStructure.Snapshot.Element[0]);
 
                 // Clone and rebase
@@ -665,7 +665,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var typeRootElem = getSnapshotRootElement(typeStructure, primaryDiffTypeProfile, diffNode);
                 if (typeRootElem == null) { return false; }
 
-                // [WMR 20170105] Notify observers!
+                // [WMR 20170110] Also notify about type profiles
                 OnPrepareElement(snap.Current, typeStructure, typeRootElem);
 
                 // Rebase before merging
@@ -674,8 +674,12 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // Merge the type profile root element; no need to expand children
                 mergeElementDefinition(snap.Current, rebasedRootElem);
-
             }
+
+            // [WMR 20170111] Notify about merged base element (base profile | type profile), before merging diff constraints
+            var mergedBaseElem = (ElementDefinition)snap.Current.DeepCopy();
+            OnPrepareElement(snap.Current, null, mergedBaseElem);
+
             return true;
         }
 
