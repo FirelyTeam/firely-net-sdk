@@ -177,7 +177,9 @@ namespace Hl7.Fhir.Specification.Tests
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Composition");
 
             // [WMR 20170110] Test problematic extension
-            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/us-core-direct");
+            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/us-core-direct");
+
+            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Account");
 
             Assert.IsNotNull(sd);
 
@@ -2736,8 +2738,9 @@ namespace Hl7.Fhir.Specification.Tests
             var baseElem = extElem.Annotation<BaseDefAnnotation>().BaseElementDefinition;
             Assert.IsNotNull(baseElem);
             Assert.AreEqual(baseElem.Short, extElem.Short);
+            Assert.AreEqual(baseElem.Definition, extElem.Definition);
             Assert.AreEqual(baseElem.Comments, extElem.Comments);
-            // Assert.AreEqual(baseElem.Alias, extElem.Alias);
+            Assert.IsTrue(baseElem.Alias.SequenceEqual(extElem.Alias));
         }
 
     }
