@@ -21603,7 +21603,7 @@
         <base value="Location" />
         <type value="string" />
         <description value="A (portion of the) name of the location or alias" />
-        <expression value="Location.name or Location.alias" />
+        <expression value="Location.name | Location.alias" />
         <xpath value="f:Location/f:name | f:Location/f:alias" />
         <xpathUsage value="normal" />
       </SearchParameter>
@@ -26970,7 +26970,7 @@
         <base value="Organization" />
         <type value="string" />
         <description value="A portion of the organization's name, or alias" />
-        <expression value="Organization.name or Organization.alias" />
+        <expression value="Organization.name | Organization.alias" />
         <xpath value="f:Organization/f:name | f:Organization/f:alias" />
         <xpathUsage value="normal" />
       </SearchParameter>
@@ -27523,7 +27523,7 @@
         <base value="Patient" />
         <type value="token" />
         <description value="Multiple Resources:   * [PractitionerRole](practitionerrole.html): A value in an email contact * [RelatedPerson](relatedperson.html): A value in an email contact * [Practitioner](practitioner.html): A value in an email contact * [Person](person.html): A value in an email contact * [Patient](patient.html): A value in an email contact " />
-        <expression value="PractitionerRole.telecom.where(system='email') | RelatedPerson.telecom.where(system='email') | Practitioner.telecom.where(system='email') or Practitioner.role.telecom.where(system='email') | Person.telecom.where(system='email') | Patient.telecom.where(system='email')" />
+        <expression value="PractitionerRole.telecom.where(system='email') | RelatedPerson.telecom.where(system='email') | Practitioner.telecom.where(system='email') | Practitioner.role.telecom.where(system='email') | Person.telecom.where(system='email') | Patient.telecom.where(system='email')" />
         <xpath value="f:PractitionerRole/f:telecom[system/@value='email'] | f:RelatedPerson/f:telecom[system/@value='email'] | f:Practitioner/f:telecom[system/@value='email'] | f:Practitioner/f:role/f:telecom[system/@value='email'] | f:Person/f:telecom[system/@value='email'] | f:Patient/f:telecom[system/@value='email']" />
         <xpathUsage value="normal" />
       </SearchParameter>
@@ -27867,7 +27867,7 @@
         <base value="Patient" />
         <type value="token" />
         <description value="Multiple Resources:   * [PractitionerRole](practitionerrole.html): A value in a phone contact * [RelatedPerson](relatedperson.html): A value in a phone contact * [Practitioner](practitioner.html): A value in a phone contact * [Person](person.html): A value in a phone contact * [Patient](patient.html): A value in a phone contact " />
-        <expression value="PractitionerRole.telecom.where(system='phone') | RelatedPerson.telecom.where(system='phone') | Practitioner.telecom.where(system='phone') or Practitioner.role.telecom.where(system='phone') | Person.telecom.where(system='phone') | Patient.telecom.where(system='phone')" />
+        <expression value="PractitionerRole.telecom.where(system='phone') | RelatedPerson.telecom.where(system='phone') | Practitioner.telecom.where(system='phone') | Practitioner.role.telecom.where(system='phone') | Person.telecom.where(system='phone') | Patient.telecom.where(system='phone')" />
         <xpath value="f:PractitionerRole/f:telecom[system/@value='phone'] | f:RelatedPerson/f:telecom[system/@value='phone'] | f:Practitioner/f:telecom[system/@value='phone'] | f:Practitioner/f:role/f:telecom[system/@value='phone'] | f:Person/f:telecom[system/@value='phone'] | f:Patient/f:telecom[system/@value='phone']" />
         <xpathUsage value="normal" />
       </SearchParameter>

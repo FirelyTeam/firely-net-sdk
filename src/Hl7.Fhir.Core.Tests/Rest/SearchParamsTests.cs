@@ -25,6 +25,30 @@ namespace Hl7.Fhir.Test.Rest
 #endif    
     {
         [TestMethod]
+        public void CheckAllSearchFhirPathExpressions()
+        {
+            int errorsFound = 0;
+            foreach (var item in ModelInfo.SearchParameters)
+            {
+                string expression = item.Expression;
+                if (string.IsNullOrEmpty(expression))
+                {
+                    System.Diagnostics.Trace.WriteLine(String.Format("Search parameter {0}.{1} ({2}) has no expression",
+                        item.Resource, item.Name, item.Type.ToString()));
+                    continue;
+                }
+                if (expression.Contains(" or "))
+                {
+                    System.Diagnostics.Trace.WriteLine(String.Format("Search parameter {0}.{1} ({2}) should not contain an 'or' statement",
+                        item.Resource, item.Name, item.Type.ToString()));
+                    System.Diagnostics.Trace.WriteLine("\t" + item.Expression);
+                    errorsFound++;
+                }
+            }
+            Assert.AreEqual(0, errorsFound, "Invalid FhirPath expression in search parameters");
+        }
+
+        [TestMethod]
         public void CountSetToNullAndGet()
         {
             var q = new SearchParams();
