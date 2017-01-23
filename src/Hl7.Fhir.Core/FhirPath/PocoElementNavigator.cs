@@ -101,17 +101,23 @@ namespace Hl7.Fhir.FhirPath
                             return (long)(_pocoElement as PositiveInt).Value.Value;
                         return null;
                     }
+                    else if ((_pocoElement is UnsignedInt))
+                    {
+                        if ((_pocoElement as UnsignedInt).Value.HasValue)
+                            return (long)(_pocoElement as UnsignedInt).Value.Value;
+                        return null;
+                    }
                     else if (_pocoElement is Primitive)
                         return ((Primitive)_pocoElement).ObjectValue;
                     else
                         return null;
                 }
-                catch(FormatException)
+                catch (FormatException)
                 {
                     // If it fails, just return the unparsed shit
                     // Todo: add sentinel class!
                     return (_pocoElement as Primitive)?.ObjectValue;
-        }
+                }
 
             }
         }
@@ -162,50 +168,52 @@ namespace Hl7.Fhir.FhirPath
 
         public IEnumerable<PocoElementNavigator> Children()
         {
-            // Cache children
-            if (_children != null) return _children;
-
-            // If this is a primitive, there are no children
-            if (_pocoElement == null) return Enumerable.Empty<PocoElementNavigator>();
-
-            _children = new List<PocoElementNavigator>();
-
-            var mapping = GetMappingForType(_pocoElement.GetType());
-
-            if (mapping == null)
-                throw Error.NotSupported(String.Format("Unknown type '{0}' encountered", _pocoElement.GetType().Name));
-
-            foreach (var item in mapping.PropertyMappings)
+            lock (this)
             {
-                // Don't expose "value" as a child, that's our ValueProvider.Value (if we're a primitive)
-                if (item.IsPrimitive && item.Name == "value")
-                    continue;
+                // Cache children
+                if (_children != null) return _children;
 
-                var itemValue = item.GetValue(_pocoElement);
+                // If this is a primitive, there are no children
+                if (_pocoElement == null) return Enumerable.Empty<PocoElementNavigator>();
 
-                if (itemValue != null)
+                _children = new List<PocoElementNavigator>();
+
+                var mapping = GetMappingForType(_pocoElement.GetType());
+
+                if (mapping == null)
+                    throw Error.NotSupported(String.Format("Unknown type '{0}' encountered", _pocoElement.GetType().Name));
+
+                foreach (var item in mapping.PropertyMappings)
                 {
-                    if (item.IsCollection)
+                    // Don't expose "value" as a child, that's our ValueProvider.Value (if we're a primitive)
+                    if (item.IsPrimitive && item.Name == "value")
+                        continue;
+
+                    var itemValue = item.GetValue(_pocoElement);
+
+                    if (itemValue != null)
                     {
-                        foreach (var colItem in (itemValue as System.Collections.IList))
+                        if (item.IsCollection)
                         {
-                            if (colItem != null)
+                            foreach (var colItem in (itemValue as System.Collections.IList))
                             {
-                                _children.Add(new PocoElementNavigator(item, (Base)colItem));
+                                if (colItem != null)
+                                {
+                                    _children.Add(new PocoElementNavigator(item, (Base)colItem));
+                                }
                             }
                         }
-                    }
-                    else
-                    {
-                        if (itemValue is string)
-                            // The special case for the 'url' and 'id' properties, which are primitive strings
-                            _children.Add(new PocoElementNavigator(item, (string)itemValue));
                         else
-                            _children.Add(new PocoElementNavigator(item, (Base)itemValue));
+                        {
+                            if (itemValue is string)
+                                // The special case for the 'url' and 'id' properties, which are primitive strings
+                                _children.Add(new PocoElementNavigator(item, (string)itemValue));
+                            else
+                                _children.Add(new PocoElementNavigator(item, (Base)itemValue));
+                        }
                     }
                 }
             }
-
             return _children;
         }
     }
