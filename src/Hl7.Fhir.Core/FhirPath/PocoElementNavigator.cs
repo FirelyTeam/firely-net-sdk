@@ -32,16 +32,18 @@ namespace Hl7.Fhir.FhirPath
             _pocoElement = value;
             PropMap = null;
             Name = name;
+            _arrayIndex = 0;
         }
 
         // For Normal element properties representing a FHIR type
-        internal PocoElementNavigator(Introspection.PropertyMapping map, Base value)
+        internal PocoElementNavigator(Introspection.PropertyMapping map, Base value, int arrayIndex)
         {
             if (value == null) throw Error.ArgumentNull("value");
 
             _pocoElement = value;
             PropMap = map;
             Name = map.Name;
+            _arrayIndex = arrayIndex;
         }
 
         // For properties representing primitive strings (id, url, div), as
@@ -53,10 +55,12 @@ namespace Hl7.Fhir.FhirPath
             _string = value;
             PropMap = map;
             Name = map.Name;
+            _arrayIndex = 0;
         }
 
         private Base _pocoElement;
         private string _string;
+        internal int _arrayIndex; // this is only for the ShortPath implementation eg Patient.Name[1].Family (its the 1 here)
 
         public string Name { get; private set; }
         public Introspection.PropertyMapping PropMap { get; private set; }
@@ -188,11 +192,13 @@ namespace Hl7.Fhir.FhirPath
                 {
                     if (item.IsCollection)
                     {
+                        int nIndex = 0;
                         foreach (var colItem in (itemValue as System.Collections.IList))
                         {
                             if (colItem != null)
                             {
-                                _children.Add(new PocoElementNavigator(item, (Base)colItem));
+                                _children.Add(new PocoElementNavigator(item, (Base)colItem, nIndex));
+                                nIndex++;
                             }
                         }
                     }
@@ -202,7 +208,7 @@ namespace Hl7.Fhir.FhirPath
                             // The special case for the 'url' and 'id' properties, which are primitive strings
                             _children.Add(new PocoElementNavigator(item, (string)itemValue));
                         else
-                            _children.Add(new PocoElementNavigator(item, (Base)itemValue));
+                            _children.Add(new PocoElementNavigator(item, (Base)itemValue, 0));
                     }
                 }
             }
