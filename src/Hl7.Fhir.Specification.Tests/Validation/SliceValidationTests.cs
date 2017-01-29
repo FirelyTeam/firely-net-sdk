@@ -15,6 +15,7 @@ using Xunit;
 
 namespace Hl7.Fhir.Validation
 {
+    [Trait("Category", "Validation")]
     public class SliceValidationTests : IClassFixture<ValidationFixture>
     {
         private IResourceResolver _resolver;
@@ -33,6 +34,8 @@ namespace Hl7.Fhir.Validation
             Assert.NotNull(sd);
             var snapgen = new SnapshotGenerator(_resolver);
             snapgen.Update(sd);
+
+            // sd.Snapshot.Element.Where(e => e.Path.EndsWith(".telecom")).Select(e=>e.Path + " : " + e.Name ?? "").ToArray()
 
             var nav = new ElementDefinitionNavigator(sd);
             var success = nav.JumpToFirst("Patient.telecom");
@@ -92,45 +95,6 @@ namespace Hl7.Fhir.Validation
         }
 
         [Fact]
-        public void TestBucketAssignment()
-        {
-            var s = createSliceDefs() as SliceGroupBucket;
-
-            var p = new Patient();
-            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Phone, Use = ContactPoint.ContactPointUse.Home, Value = "+31-6-39015765" });
-            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Email, Use = ContactPoint.ContactPointUse.Work, Value = "e.kramer@furore.com" });
-            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Other, Use = ContactPoint.ContactPointUse.Temp, Value = "skype://crap" });
-            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Other, Use = ContactPoint.ContactPointUse.Home, Value = "http://nu.nl" });
-            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Fax, Use = ContactPoint.ContactPointUse.Work, Value = "+31-20-6707070" });
-            var pnav = new PocoNavigator(p) as IElementNavigator;
-
-            var telecoms = pnav.GetChildrenByName("telecom");
-
-            foreach(var telecom in telecoms)
-                Assert.True(s.Add(telecom));
-
-            var outcome = s.Validate(_validator, pnav);
-            Assert.True(outcome.Success);
-            Assert.Equal(0, outcome.Warnings);
-            
-            Assert.Equal("+31-6-39015765", s.ChildSlices[0].Members.Single().Values("value").Single());
-
-            // Note, order of buckets have been switched around because of bug in snapshot generator - fix when that has been fixed
-
-            var emailBucket = s.ChildSlices[1] as SliceGroupBucket;
-            Assert.Equal("e.kramer@furore.com", emailBucket.Members.Single().Values("value").Single());
-            Assert.False(emailBucket.ChildSlices[0].Members.Any());
-            Assert.Equal("e.kramer@furore.com", emailBucket.ChildSlices[1].Members.Single().Values("value").Single());
-           
-            var otherBucket = s.ChildSlices[2] as SliceGroupBucket;
-            Assert.Equal("http://nu.nl", otherBucket.ChildSlices[0].Members.Single().Values("value").Single());
-            Assert.False(otherBucket.ChildSlices[1].Members.Any());
-            Assert.Equal("skype://crap", otherBucket.Members.First().Values("value").Single()); // in the open slice - find it on other bucket, not child
-
-            Assert.Equal("+31-20-6707070", s.Members.Last().Values("value").Single()); // in the open-at-end slice
-        }
-
-        [Fact]
         public void TestDiscriminatedTelecomSliceUse()
         {
             var p = new Patient();
@@ -154,9 +118,45 @@ namespace Hl7.Fhir.Validation
             var repr = outcome.ToString();
             Assert.Contains("matches slice 'Patient.telecom:phone', but this is out of order for group 'Patient.telecom'", repr);
             Assert.Contains("Value is not exactly equal to fixed value 'work'", repr);
-            Assert.Contains("Instance count for 'Patient.telecom.use' is 1", repr);            
+            Assert.Contains("Instance count for 'Patient.telecom.use' is 1", repr);
         }
 
+        [Fact]
+        public void TestBucketAssignment()
+        {
+            var s = createSliceDefs() as SliceGroupBucket;
+
+            var p = new Patient();
+            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Phone, Use = ContactPoint.ContactPointUse.Home, Value = "+31-6-39015765" });
+            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Email, Use = ContactPoint.ContactPointUse.Work, Value = "e.kramer@furore.com" });
+            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Other, Use = ContactPoint.ContactPointUse.Temp, Value = "skype://crap" });
+            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Other, Use = ContactPoint.ContactPointUse.Home, Value = "http://nu.nl" });
+            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Fax, Use = ContactPoint.ContactPointUse.Work, Value = "+31-20-6707070" });
+            var pnav = new PocoNavigator(p) as IElementNavigator;
+
+            var telecoms = pnav.GetChildrenByName("telecom");
+
+            foreach(var telecom in telecoms)
+                Assert.True(s.Add(telecom));
+
+            var outcome = s.Validate(_validator, pnav);
+            Assert.True(outcome.Success);
+            Assert.Equal(0, outcome.Warnings);
+            
+            Assert.Equal("+31-6-39015765", s.ChildSlices[0].Members.Single().Values("value").Single());
+
+            var emailBucket = s.ChildSlices[1] as SliceGroupBucket;
+            Assert.Equal("e.kramer@furore.com", emailBucket.Members.Single().Values("value").Single());
+            Assert.False(emailBucket.ChildSlices[0].Members.Any());
+            Assert.Equal("e.kramer@furore.com", emailBucket.ChildSlices[1].Members.Single().Values("value").Single());
+           
+            var otherBucket = s.ChildSlices[2] as SliceGroupBucket;
+            Assert.Equal("http://nu.nl", otherBucket.ChildSlices[0].Members.Single().Values("value").Single());
+            Assert.False(otherBucket.ChildSlices[1].Members.Any());
+            Assert.Equal("skype://crap", otherBucket.Members.First().Values("value").Single()); // in the open slice - find it on other bucket, not child
+
+            Assert.Equal("+31-20-6707070", s.Members.Last().Values("value").Single()); // in the open-at-end slice
+        }
 
         [Fact]
         public void TestTelecomReslicing()

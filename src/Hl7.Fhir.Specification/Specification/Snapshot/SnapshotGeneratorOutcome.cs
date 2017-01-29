@@ -8,13 +8,11 @@
 
 using System;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Validation;
 using Hl7.ElementModel;
 using Hl7.Fhir.Support;
+using System.Linq;
 
-// [WMR 20160907] TODO: Add StructureDefinition.url value to issue data
-// Requires global access to the current StructDef url => now provided by recursion checker
-// TODO: Create unit tests to evaluate behavior for different kinds of errors, e.g.
+// [WMR 20160907] TODO: Create unit tests to evaluate behavior for different kinds of errors, e.g.
 // - unresolved external (type/extension) profile
 // - invalid element order
 // - invalid constraint element (no base)
@@ -43,45 +41,30 @@ namespace Hl7.Fhir.Specification.Snapshot
         // INamedNode.Path should also return indices, e.g. root.elem[0].elem[1]
         sealed class ElementDefinitionNamedNode : IElementNavigator
         {
-            private readonly ElementDefinition _elemDef;
+            // [WMR 20161213] Don't save reference to ElementDefinition, don't keep instance alive
+            readonly string _path;
+            string _name;
+
             public ElementDefinitionNamedNode(ElementDefinition elementDef)
             {
                 if (elementDef == null) { throw Error.ArgumentNull(nameof(elementDef)); }
-                _elemDef = elementDef;
+                _path = elementDef.Path;
+                _name = elementDef.Name;
             }
-            public string Name => _elemDef.Name;
-            public string Path => _elemDef.Path;
+            public string Name => _name;
+            public string Path => _path;
 
-            public string TypeName
-            {
-                get
-                {
-                    throw new NotImplementedException();
-                }
-            }
+            public string TypeName => ModelInfo.FhirTypeToFhirTypeName(FHIRDefinedType.ElementDefinition); // _elemDef.TypeName;
 
-            public object Value
-            {
-                get
-                {
-                    throw new NotImplementedException();
-                }
-            }
+            public object Value { get { throw new NotImplementedException(); } }
 
-            public IElementNavigator Clone()
-            {
-                throw new NotImplementedException();
-            }
+            public IElementNavigator Clone() { throw new NotImplementedException(); }
 
-            public bool MoveToFirstChild()
-            {
-                throw new NotImplementedException();
-            }
+            public bool MoveToFirstChild() { throw new NotImplementedException(); }
 
-            public bool MoveToNext()
-            {
-                throw new NotImplementedException();
-            }
+            public bool MoveToNext() { throw new NotImplementedException(); }
+
+            public override string ToString() => string.IsNullOrEmpty(Name) ? $"'{Path}'" : $"'{Path}' : '{Name}'";
         }
 
         static IElementNavigator ToNamedNode(ElementDefinition elementDef) => new ElementDefinitionNamedNode(elementDef);
@@ -91,10 +74,16 @@ namespace Hl7.Fhir.Specification.Snapshot
         OperationOutcome.IssueComponent addIssue(Issue issue, string message, IElementNavigator location = null, string profileUrl = null)
         {
             if (issue == null) { throw Error.ArgumentNull(nameof(issue)); }
+            return addIssue(issue.ToIssueComponent(message, location), profileUrl);
+        }
+
+        OperationOutcome.IssueComponent addIssue(OperationOutcome.IssueComponent component, string profileUrl = null)
+        {
+            if (component == null) { throw Error.ArgumentNull(nameof(component)); }
             if (_outcome == null) { _outcome = new OperationOutcome(); }
-            var component = _outcome.AddIssue(issue.ToIssueComponent(message, location));
             // Return current profile url in Diagnostics field
             component.Diagnostics = profileUrl ?? CurrentProfileUri;
+            _outcome.AddIssue(component);
             return component;
         }
 
@@ -105,12 +94,13 @@ namespace Hl7.Fhir.Specification.Snapshot
         // This is not allowed if an element supports multiple element types; must use slicing!
         public static readonly Issue PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT = Issue.Create(10000, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
 
-        void addIssueInvalidChoiceConstraint(ElementDefinition elementDef) { addIssueInvalidChoiceConstraint(ToNamedNode(elementDef)); }
-        void addIssueInvalidChoiceConstraint(IElementNavigator location)
+        void addIssueInvalidChoiceConstraint(ElementDefinition elementDef) { addIssue(CreateIssueInvalidChoiceConstraint(elementDef)); }
+
+        internal static OperationOutcome.IssueComponent CreateIssueInvalidChoiceConstraint(ElementDefinition elementDef)
         {
-            addIssue(
-                PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT,
-                $"Differential specifies constraint on choice element '{location?.Path}' without using type slice.",
+            var location = ToNamedNode(elementDef);
+            return PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT.ToIssueComponent(
+                $"Differential specifies constraint on choice element {location} without using type slice.",
                 location
             );
         }
@@ -125,17 +115,19 @@ namespace Hl7.Fhir.Specification.Snapshot
         //{
         //    addIssue(
         //        PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT,
-        //        $"Differential specifies invalid child constraints on leaf element '{location?.Path}'.",
+        //        $"Differential specifies invalid child constraints on leaf element {location}.",
         //        location
         //    );
         //}
 
-        void addIssueInvalidNameReference(ElementDefinition elementDef, string name) { addIssueInvalidNameReference(ToNamedNode(elementDef), name); }
-        void addIssueInvalidNameReference(IElementNavigator location, string name)
+        void addIssueInvalidNameReference(ElementDefinition elementDef) { addIssue(CreateIssueInvalidNameReference(elementDef)); }
+
+        public static OperationOutcome.IssueComponent CreateIssueInvalidNameReference(ElementDefinition elementDef)
         {
-            addIssue(
-                PROFILE_ELEMENTDEF_INVALID_TYPEPROFILE_NAMEREF,
-                $"Element '{location?.Path}' has a nameReference to '{name}', which cannot be found in the StructureDefinition.",
+            var location = ToNamedNode(elementDef);
+            var nameRef = elementDef.NameReference;
+            return PROFILE_ELEMENTDEF_INVALID_TYPEPROFILE_NAMEREF.ToIssueComponent(
+                $"Element {location} has a nameReference to '{nameRef}', which cannot be found in the StructureDefinition.",
                 location
             );
         }
@@ -145,7 +137,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             addIssue(
                 Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE_OR_NAMEREF,
-                $"Element '{(location != null ? location.Path : null)}' has neither a type nor a nameReference.",
+                $"Element {location} has neither a type nor a nameReference.",
                 location
             );
         }
@@ -163,7 +155,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             );
         }
 
-        // "The slicing entry in the differential at '{0}' indicates an slice, but the base element is not a repeating or choice element"
+        // "The slicing entry in the differential at '{0}' indicates a slice, but the base element is not a repeating or choice element"
         public static readonly Issue PROFILE_ELEMENTDEF_INVALID_SLICE = Issue.Create(10003, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
 
         void addIssueInvalidSlice(ElementDefinition elementDef) { addIssueInvalidSlice(ToNamedNode(elementDef)); }
@@ -171,7 +163,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             addIssue(
                 PROFILE_ELEMENTDEF_INVALID_SLICE,
-                $"The slicing entry in the differential at '{location?.Path}' indicates an slice, but the base element is not a repeating or choice element",
+                $"The slicing entry in the differential at {location} indicates a slice, but the base element is not a repeating or choice element",
                 location
             );
         }
@@ -179,15 +171,17 @@ namespace Hl7.Fhir.Specification.Snapshot
         // "The slice group at '{0}' does not start with a slice entry element"
         public static readonly Issue PROFILE_ELEMENTDEF_MISSING_SLICE_ENTRY = Issue.Create(10004, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Required);
 
-        void addIssueMissingSliceEntry(ElementDefinition elementDef) { addIssueMissingSliceEntry(ToNamedNode(elementDef)); }
-        void addIssueMissingSliceEntry(IElementNavigator location)
+        public static OperationOutcome.IssueComponent CreateIssueMissingSliceEntry(ElementDefinition elementDef)
         {
-            addIssue(
-                PROFILE_ELEMENTDEF_INVALID_TYPEPROFILE_NAMEREF,
-                $"The slice group at '{location?.Path}' does not start with a slice entry element",
+            var location = ToNamedNode(elementDef);
+            return PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT.ToIssueComponent(
+                $"The slice group at {location} does not start with a slice entry element",
                 location
             );
         }
+
+        void addIssueMissingSliceEntry(ElementDefinition elementDef) { addIssue(CreateIssueMissingSliceEntry(elementDef)); }
+
 
         // "Differential specification for core resource or datatype definitions does not start with root element definition."
         // public static readonly Issue PROFILE_NO_ROOT = Issue.Create(10004, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
@@ -199,14 +193,14 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         // "Unresolved profile reference. Cannot locate the type profile for element '{0}'.\r\nProfile url = '{1}'".FormatWith(diff.Path, primaryDiffTypeProfile)
         // Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE
-        void addIssueProfileNotFound(string profileUrl) { addIssueProfileNotFound((IElementNavigator)null, profileUrl); }
-        void addIssueProfileNotFound(ElementDefinition elementDef, string profileUrl) { addIssueProfileNotFound(ToNamedNode(elementDef), profileUrl); }
+        void addIssueProfileNotFound(string profileUrl) { addIssueProfileNotFound(null, profileUrl); }
+        // void addIssueProfileNotFound(ElementDefinition elementDef, string profileUrl) { addIssueProfileNotFound(ToNamedNode(elementDef), profileUrl); }
         void addIssueProfileNotFound(IElementNavigator location, string profileUrl)
         {
             if (profileUrl == null) { throw Error.ArgumentNull(nameof(profileUrl)); }
             if (location != null)
             {
-                addIssue(Issue.UNAVAILABLE_REFERENCED_PROFILE, $"Unable to resolve reference to profile '{profileUrl}' for element '{location.Path}'", location, profileUrl);
+                addIssue(Issue.UNAVAILABLE_REFERENCED_PROFILE, $"Unable to resolve reference to profile '{profileUrl}' for element {location}", location, profileUrl);
             }
             else
             {
@@ -217,7 +211,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // "Resolved the external profile with url '{0}', but it does not contain a snapshot representation."
         // Issue.UNAVAILABLE_NEED_SNAPSHOT
 
-        void addIssueProfileHasNoSnapshot(ElementDefinition elementDef, string profileUrl) { addIssueProfileHasNoSnapshot(ToNamedNode(elementDef), profileUrl); }
+        //void addIssueProfileHasNoSnapshot(ElementDefinition elementDef, string profileUrl) { addIssueProfileHasNoSnapshot(ToNamedNode(elementDef), profileUrl); }
         void addIssueProfileHasNoSnapshot(IElementNavigator location, string profileUrl)
         {
             if (profileUrl == null) { throw Error.ArgumentNull(nameof(profileUrl)); }
@@ -231,11 +225,46 @@ namespace Hl7.Fhir.Specification.Snapshot
             addIssue(Issue.UNAVAILABLE_SNAPSHOT_GENERATION_FAILED, $"Snapshot generation failed for profile with url '{profileUrl}'.", null, profileUrl);
         }
 
-        void addIssueProfileHasNoDifferential(ElementDefinition elementDef, string profileUrl) { addIssueProfileHasNoDifferential(ToNamedNode(elementDef), profileUrl); }
+        //void addIssueProfileHasNoDifferential(ElementDefinition elementDef, string profileUrl) { addIssueProfileHasNoDifferential(ToNamedNode(elementDef), profileUrl); }
         void addIssueProfileHasNoDifferential(IElementNavigator location, string profileUrl)
         {
             if (profileUrl == null) { throw Error.ArgumentNull(nameof(profileUrl)); }
             addIssue(Issue.UNAVAILABLE_NEED_DIFFERENTIAL, $"The resolved external profile with url '{profileUrl}' has no differential.", location, profileUrl);
+        }
+
+        public static readonly Issue PROFILE_ELEMENTDEF_INVALID_EXTENSION_DISCRIMINATOR = Issue.Create(10006, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+
+        public static OperationOutcome.IssueComponent CreateIssueInvalidExtensionSlicingDiscriminator(ElementDefinition elementDef)
+        {
+            var location = ToNamedNode(elementDef);
+            var discriminators = elementDef.Slicing?.Discriminator;
+            var sDiscriminators = discriminators != null && discriminators.Any() ? string.Join("|", elementDef.Slicing?.Discriminator) : "(missing)";
+            return PROFILE_ELEMENTDEF_INVALID_EXTENSION_DISCRIMINATOR.ToIssueComponent(
+                $"Extension element {location} defines an invalid slicing discriminator: '{sDiscriminators}'. Extensions are always sliced on 'url'.",
+                location
+            );
+        }
+
+        public static readonly Issue PROFILE_ELEMENTDEF_TYPESLICE_WITHOUT_TYPE = Issue.Create(10007, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Required);
+
+        public static OperationOutcome.IssueComponent CreateIssueTypeSliceWithoutType(ElementDefinition elementDef)
+        {
+            var location = ToNamedNode(elementDef);
+            return PROFILE_ELEMENTDEF_TYPESLICE_WITHOUT_TYPE.ToIssueComponent(
+                $"Element {location} is part of a @type slice group, but the element itself has no type.",
+                location
+            );
+        }
+
+        public static readonly Issue PROFILE_ELEMENTDEF_INVALID_SLICE_WITHOUT_NAME = Issue.Create(10008, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Required);
+
+        public static OperationOutcome.IssueComponent CreateIssueSliceWithoutName(ElementDefinition elementDef)
+        {
+            var location = ToNamedNode(elementDef);
+            return PROFILE_ELEMENTDEF_INVALID_SLICE_WITHOUT_NAME.ToIssueComponent(
+                $"Element {location} defines a slice without a name. Individual slices must always have a unique name, except extensions.",
+                location
+            );
         }
 
     }

@@ -9,6 +9,7 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -18,7 +19,7 @@ namespace Hl7.Fhir.Specification.Snapshot
     {
         #region Annotation: Created By Snapshot Generator
 
-        /// <summary>Annotation to mark generated elements, so we can prevent duplicate re-generation.</summary>
+        /// <summary>Annotation to mark a generated element, so we can prevent duplicate re-generation.</summary>
         sealed class CreatedBySnapshotGeneratorAnnotation
         {
             public DateTime Created { get; }
@@ -31,9 +32,58 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Determines if the specified element was created by the <see cref="SnapshotGenerator"/>.</summary>
         /// <param name="elem">A FHIR <see cref="Element"/>.</param>
         /// <returns><c>true</c> if the element was created by the <see cref="SnapshotGenerator"/>, or <c>false</c> otherwise.</returns>
-        public static bool IsCreatedBySnapshotGenerator(this Element elem) => elem?.Annotation<CreatedBySnapshotGeneratorAnnotation>() != null;
+        public static bool IsCreatedBySnapshotGenerator(this Element elem) => elem != null && elem.HasAnnotation<CreatedBySnapshotGeneratorAnnotation>();
 
         #endregion
+
+        #region Annotation: Differential Constraint
+
+        /// <summary>
+        /// Indicates elements and properties in the <see cref="StructureDefinition.SnapshotComponent"/>
+        /// that are constrained by the <see cref="StructureDefinition.DifferentialComponent"/>.
+        /// </summary>
+        sealed class ConstrainedByDifferentialAnnotation
+        {
+            //
+        }
+
+        /// <summary>Annotate the specified snapshot element to indicate that it is constrained by the differential.</summary>
+        internal static void SetConstrainedByDifferential(this Base element)
+        {
+            element?.AddAnnotation(new ConstrainedByDifferentialAnnotation());
+        }
+
+        /// <summary>Remove any existing differential constraint annotation from the specified snapshot element.</summary>
+        internal static void ClearConstrainedByDifferential(this Base element)
+        {
+            element?.RemoveAnnotations<ConstrainedByDifferentialAnnotation>();
+        }
+
+        /// <summary>Recursively remove any existing differential constraint annotations from the specified snapshot element and all it's children.</summary>
+        internal static void ClearAllConstrainedByDifferential(this Base element)
+        {
+            if (element == null) { throw Error.ArgumentNull(nameof(element)); }
+            element.ClearConstrainedByDifferential();
+            foreach (var child in element.Children)
+            {
+                child.ClearAllConstrainedByDifferential();
+            }
+        }
+
+        /// <summary>Recursively remove any existing differential constraint annotations from the specified snapshot elements and all their children.</summary>
+        internal static void ClearAllConstrainedByDifferential<T>(this List<T> elements) where T : Base
+        {
+            if (elements == null) { throw Error.ArgumentNull(nameof(elements)); }
+            foreach (var elem in elements)
+            {
+                elem.ClearAllConstrainedByDifferential();
+            }
+        }
+
+        public static bool IsConstrainedByDifferential(this Element elem) => elem != null && elem.HasAnnotation<ConstrainedByDifferentialAnnotation>();
+
+        #endregion
+
 
         #region Annotation: Snapshot ElementDefinition
 

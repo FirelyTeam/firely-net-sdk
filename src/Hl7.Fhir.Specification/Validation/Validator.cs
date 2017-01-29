@@ -6,6 +6,9 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+// [WMR 20161219] Save and reuse existing instance, so generator can detect & handle recursion
+#define REUSE_SNAPSHOT_GENERATOR
+
 using Hl7.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
@@ -33,7 +36,30 @@ namespace Hl7.Fhir.Validation
         public event EventHandler<OnSnapshotNeededEventArgs> OnSnapshotNeeded;
         public event EventHandler<OnResolveResourceReferenceEventArgs> OnExternalResolutionNeeded;
 
-        internal ScopeTracker ScopeTracker = new ScopeTracker();  
+        internal ScopeTracker ScopeTracker = new ScopeTracker();
+
+#if REUSE_SNAPSHOT_GENERATOR
+        SnapshotGenerator _snapshotGenerator;
+
+        SnapshotGenerator SnapshotGenerator
+        {
+            get
+            {
+                if (_snapshotGenerator == null)
+                {
+                    var resolver = Settings.ResourceResolver;
+                    if (resolver != null)
+                    {
+                        SnapshotGeneratorSettings settings = Settings.GenerateSnapshotSettings ?? SnapshotGeneratorSettings.Default;
+                        _snapshotGenerator = new SnapshotGenerator(resolver, settings);
+                    }
+
+                }
+                return _snapshotGenerator;
+            }
+        }
+#endif
+
         public Validator(ValidationSettings settings)
         {
             Settings = settings;
@@ -48,6 +74,10 @@ namespace Hl7.Fhir.Validation
             var newValidator = new Validator(Settings);
             newValidator.OnSnapshotNeeded = this.OnSnapshotNeeded;
             newValidator.OnExternalResolutionNeeded = this.OnExternalResolutionNeeded;
+
+#if REUSE_SNAPSHOT_GENERATOR
+            newValidator._snapshotGenerator = this._snapshotGenerator;
+#endif
 
             return newValidator;
         }
@@ -70,7 +100,7 @@ namespace Hl7.Fhir.Validation
 
         public OperationOutcome Validate(IElementNavigator instance, params StructureDefinition[] structureDefinitions)
         {
-            return Validate(instance, (IEnumerable<StructureDefinition>) structureDefinitions );
+            return Validate(instance, (IEnumerable<StructureDefinition>)structureDefinitions);
         }
 
         public OperationOutcome Validate(IElementNavigator instance, IEnumerable<StructureDefinition> structureDefinitions)
@@ -86,7 +116,7 @@ namespace Hl7.Fhir.Validation
             var outcome = processor.Process();
 
             // Note: only start validating if the profiles are complete and consistent
-            if(outcome.Success)
+            if (outcome.Success)
                 outcome.Add(Validate(instance, processor.Result));
 
             return outcome;
@@ -131,7 +161,7 @@ namespace Hl7.Fhir.Validation
         }
 
 
-     //   private OperationOutcome validateElement(ElementDefinitionNavigator definition, IElementNavigator instance)
+        //   private OperationOutcome validateElement(ElementDefinitionNavigator definition, IElementNavigator instance)
 
         private OperationOutcome validateElement(ElementDefinitionNavigator definition, IElementNavigator instance)
         {
@@ -301,7 +331,7 @@ namespace Hl7.Fhir.Validation
             else
                 return definition.Type.First().Code.Value;
         }
-  
+
 
         internal OperationOutcome ValidateNameReference(ElementDefinition definition, ElementDefinitionNavigator allDefinitions, IElementNavigator instance)
         {
@@ -322,7 +352,7 @@ namespace Hl7.Fhir.Validation
 
             return outcome;
         }
-        
+
         internal OperationOutcome VerifyPrimitiveContents(ElementDefinition definition, IElementNavigator instance)
         {
             var outcome = new OperationOutcome();
@@ -432,7 +462,7 @@ namespace Hl7.Fhir.Validation
                     return args.Result;
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Trace(outcome, "External resolution of '{reference}' caused an error: " + e.Message, Issue.UNAVAILABLE_REFERENCED_RESOURCE, instance);
             }
@@ -444,10 +474,10 @@ namespace Hl7.Fhir.Validation
                 try
                 {
                     var poco = Settings.ResourceResolver.ResolveByUri(reference);
-                    if(poco != null)
+                    if (poco != null)
                         return new PocoNavigator(poco);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     Trace(outcome, $"Resolution of reference '{reference}' using the Resolver API failed: " + e.Message, Issue.UNAVAILABLE_REFERENCED_RESOURCE, instance);
                 }
@@ -481,11 +511,20 @@ namespace Hl7.Fhir.Validation
             }
 
             // Else, expand, depending on our configuration
+#if REUSE_SNAPSHOT_GENERATOR
+            var generator = this.SnapshotGenerator;
+            if (generator != null)
+            {
+                generator.Update(definition);
+#else
             if (Settings.ResourceResolver != null)
             {
-                SnapshotGeneratorSettings settings = Settings.GenerateSnapshotSettings ?? SnapshotGeneratorSettings.Default;
 
+                SnapshotGeneratorSettings settings = Settings.GenerateSnapshotSettings ?? SnapshotGeneratorSettings.Default;
                 (new SnapshotGenerator(Settings.ResourceResolver, settings)).Update(definition);
+
+#endif
+
 #if DUMP_SNAPSHOTS
 
                 string xml = FhirSerializer.SerializeResourceToXml(definition);
@@ -494,6 +533,7 @@ namespace Hl7.Fhir.Validation
                 File.WriteAllText(@"c:\temp\validation\" + name + ".StructureDefinition.xml", xml);
 #endif
             }
+
         }
     }
 

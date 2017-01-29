@@ -7,17 +7,16 @@
  */
 
 
+using Hl7.Fhir.Introspection;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
 using System.Text;
-using System.Xml;
-using Hl7.Fhir.Model;
-
 
 namespace Hl7.Fhir.Model
 {
-    public partial class ElementDefinition 
+    // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+    [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
+    public partial class ElementDefinition
     {
         public ElementDefinition()
         {
@@ -27,6 +26,18 @@ namespace Hl7.Fhir.Model
         public ElementDefinition(string path)
         {
             Path = path;
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [NotMapped]
+        string DebuggerDisplay
+        {
+            get {
+                StringBuilder sb = new StringBuilder(128);
+                sb.AppendFormat("Path='{0}'", Path);
+                if (Name != null) { sb.AppendFormat(" Name='{0}'", Name); }
+                return sb.ToString();
+            }
         }
     }
 }
