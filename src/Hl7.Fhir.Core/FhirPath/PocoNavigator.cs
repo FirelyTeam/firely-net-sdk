@@ -249,11 +249,14 @@ namespace Hl7.Fhir.FhirPath
         {
             if (Current.Children().Any())
             {
-                _parentPath = Path;
-                _parentShortPath = ShortPath;
-                _parentCommonPath = CommonPath;
-                _siblings = Current.Children() as List<PocoElementNavigator>;
-                _index = 0;
+                lock(this)
+                {
+                    _parentPath = Path;
+                    _parentShortPath = ShortPath;
+                    _parentCommonPath = CommonPath;
+                    _siblings = Current.Children() as List<PocoElementNavigator>;
+                    _index = 0;
+                }
                 return true;
             }
 
@@ -287,13 +290,15 @@ namespace Hl7.Fhir.FhirPath
         public IElementNavigator Clone()
         {
             var result = new PocoNavigator();
-
-            result._siblings = this._siblings;
-            result._index = this._index;
-            result._parentPath = this._parentPath;
-            result._parentShortPath = this._parentShortPath;
-            result._parentCommonPath = this._parentCommonPath;
-            // Console.WriteLine("Cloning: {0}", this.GetName());
+            lock (this)
+            {
+                result._siblings = this._siblings;
+                result._index = this._index;
+                result._parentPath = this._parentPath;
+                result._parentShortPath = this._parentShortPath;
+                result._parentCommonPath = this._parentCommonPath;
+                // Console.WriteLine("Cloning: {0}", this.GetName());
+            }
             return result;
         }
     }
