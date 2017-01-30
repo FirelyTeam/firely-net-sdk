@@ -154,11 +154,10 @@ namespace Hl7.Fhir.Model
 
             var entry = Link.FirstOrDefault(e => rel.Equals(e.Relation, StringComparison.OrdinalIgnoreCase));
 
-            var uriString = uri.IsAbsoluteUri ? uri.AbsoluteUri : uri.OriginalString;
             if (entry != null)
-                entry.Url = uriString;
+                entry.Url = uri.ToString();
             else
-                Link.Add(new LinkComponent() { Relation = rel, Url = uriString });
+                Link.Add(new LinkComponent() { Relation = rel, Url = uri.ToString() });
         }
 
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
