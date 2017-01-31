@@ -1036,6 +1036,25 @@ namespace Hl7.Fhir.Tests.Rest
             }
 
         }
+
+        [TestMethod]
+        public void TestAuthenticationOnBefore()
+        {
+            FhirClient validationFhirClient = new FhirClient("https://sqlonfhir.azurewebsites.net/fhir");
+            validationFhirClient.OnBeforeRequest += (object sender, BeforeRequestEventArgs e) =>
+            {
+                e.RawRequest.Headers.Add("Authorization", "Bearer bad-bearer");
+            };
+            try
+            {
+                var output = validationFhirClient.ValidateResource(new Patient());
+
+            }
+            catch(FhirOperationException ex)
+            {
+                Assert.IsTrue(ex.Status == HttpStatusCode.Forbidden || ex.Status == HttpStatusCode.Unauthorized, "Excpeted a security exception");
+            }
+        }
     }
 
 }

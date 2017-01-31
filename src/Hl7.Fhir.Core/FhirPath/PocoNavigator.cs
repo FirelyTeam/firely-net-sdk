@@ -116,8 +116,8 @@ namespace Hl7.Fhir.FhirPath
                 }
                 else
                 {
-                    int myIndex = _siblings.Where(s => s.Name == Current.Name).ToList().IndexOf(Current);
-                    return _parentPath + ".{0}[{1}]".FormatWith(Current.Name, myIndex);
+                    // int myIndex = _siblings.Where(s => s.Name == Current.Name).ToList().IndexOf(Current);
+                    return _parentPath + ".{0}[{1}]".FormatWith(Current.Name, Current._arrayIndex);
                 }
             }
         }
@@ -140,8 +140,8 @@ namespace Hl7.Fhir.FhirPath
                     // Needs to consider that the index might be irrelevant
                     if (Current.PropMap.IsCollection)
                     {
-                        int myIndex = _siblings.Where(s => s.Name == Current.Name).ToList().IndexOf(Current);
-                        return _parentShortPath + ".{0}[{1}]".FormatWith(Current.Name, myIndex);
+                        // int myIndex = _siblings.Where(s => s.Name == Current.Name).ToList().IndexOf(Current);
+                        return _parentShortPath + ".{0}[{1}]".FormatWith(Current.Name, Current._arrayIndex);
                     }
                     return _parentShortPath + ".{0}".FormatWith(Current.Name);
                 }
@@ -237,8 +237,8 @@ namespace Hl7.Fhir.FhirPath
                             var item = Current.FhirValue as Extension;
                             return _parentCommonPath + ".{0}('{1}')".FormatWith(Current.Name, item.Url);
                         }
-                        int myIndex = _siblings.Where(s => s.Name == Current.Name).ToList().IndexOf(Current);
-                        return _parentCommonPath + ".{0}[{1}]".FormatWith(Current.Name, myIndex);
+                        // int myIndex = _siblings.Where(s => s.Name == Current.Name).ToList().IndexOf(Current);
+                        return _parentCommonPath + ".{0}[{1}]".FormatWith(Current.Name, Current._arrayIndex);
                     }
                     return _parentCommonPath + ".{0}".FormatWith(Current.Name);
                 }
@@ -249,11 +249,14 @@ namespace Hl7.Fhir.FhirPath
         {
             if (Current.Children().Any())
             {
-                _parentPath = Path;
-                _parentShortPath = ShortPath;
-                _parentCommonPath = CommonPath;
-                _siblings = Current.Children().ToList();
-                _index = 0;
+                lock(this)
+                {
+                    _parentPath = Path;
+                    _parentShortPath = ShortPath;
+                    _parentCommonPath = CommonPath;
+                    _siblings = Current.Children() as List<PocoElementNavigator>;
+                    _index = 0;
+                }
                 return true;
             }
 
@@ -268,11 +271,11 @@ namespace Hl7.Fhir.FhirPath
         /// </returns>
         public bool MoveToNext()
         {
-            if(_siblings.Count > _index+1)
+            if (_siblings.Count > _index+1)
             { 
-                string oldName = Current.Name;
+                // string oldName = Current.Name;
                 _index++;
-                string newName = Current.Name;
+                // string newName = Current.Name;
                 // Console.WriteLine("Move Next: {0} -> {1}", oldName, newName);
                 return true;
             }
@@ -287,13 +290,15 @@ namespace Hl7.Fhir.FhirPath
         public IElementNavigator Clone()
         {
             var result = new PocoNavigator();
-
-            result._siblings = this._siblings;
-            result._index = this._index;
-            result._parentPath = this._parentPath;
-            result._parentShortPath = this._parentShortPath;
-            result._parentCommonPath = this._parentCommonPath;
-            // Console.WriteLine("Cloning: {0}", this.GetName());
+            lock (this)
+            {
+                result._siblings = this._siblings;
+                result._index = this._index;
+                result._parentPath = this._parentPath;
+                result._parentShortPath = this._parentShortPath;
+                result._parentCommonPath = this._parentCommonPath;
+                // Console.WriteLine("Cloning: {0}", this.GetName());
+            }
             return result;
         }
     }
