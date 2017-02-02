@@ -21,7 +21,7 @@ using System.Runtime.InteropServices;
 [assembly: CLSCompliant(true)]
 
 #if RELEASE
-[assembly: AssemblyKeyFileAttribute(@"..\..\fhir-net-api\src\FhirNetApi.snk")]
+[assembly: AssemblyKeyFileAttribute(@"FhirNetApi.snk")]
 #else
 [assembly: InternalsVisibleTo("Hl7.FhirPath.Tests")]
 #endif
