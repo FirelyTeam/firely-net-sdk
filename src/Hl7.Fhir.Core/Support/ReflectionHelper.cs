@@ -23,10 +23,13 @@ namespace Hl7.Fhir.Support
             // Always return false if either Type is null
             if (CurrentType == null || TypeToCompareWith == null)
                 return false;
-
-
+#if PORTABLE45 || NETSTANDARD
+            // Return the result of the assignability test
+            return TypeToCompareWith.GetTypeInfo().IsAssignableFrom(CurrentType.GetTypeInfo());
+#else
             // Return the result of the assignability test
             return TypeToCompareWith.IsAssignableFrom(CurrentType);
+#endif
         }
 
 
@@ -39,7 +42,7 @@ namespace Hl7.Fhir.Support
         public static T GetAttributeOnEnum<T>(this Enum enumVal) where T : System.Attribute
         {
             var type = enumVal.GetType();
-#if PORTABLE45
+#if PORTABLE45 || NETSTANDARD
             var memInfo = type.GetTypeInfo().GetDeclaredField(enumVal.ToString());
 #else
             var memInfo = type.GetField(enumVal.ToString());
@@ -53,8 +56,8 @@ namespace Hl7.Fhir.Support
         {
             if (t == null) throw Error.ArgumentNull("t");
 
-#if PORTABLE45
-			return t.GetRuntimeProperties(); //(BindingFlags.Instance | BindingFlags.Public);
+#if PORTABLE45 || NETSTANDARD
+            return t.GetRuntimeProperties(); //(BindingFlags.Instance | BindingFlags.Public);
             // return t.GetTypeInfo().DeclaredProperties.Union(t.GetTypeInfo().BaseType.GetTypeInfo().DeclaredProperties); //(BindingFlags.Instance | BindingFlags.Public);
 #else
             return t.GetProperties(BindingFlags.Instance | BindingFlags.Public);
@@ -66,7 +69,7 @@ namespace Hl7.Fhir.Support
             if (t == null) throw Error.ArgumentNull("t");
             if (name == null) throw Error.ArgumentNull("name");
 
-#if PORTABLE45
+#if PORTABLE45 || NETSTANDARD
             return t.GetRuntimeProperty(name);
 #else
             return t.GetProperty(name, BindingFlags.Instance | BindingFlags.Public);
@@ -78,7 +81,7 @@ namespace Hl7.Fhir.Support
             if (t == null) throw Error.ArgumentNull("t");
             if (name == null) throw Error.ArgumentNull("name");
 
-#if PORTABLE45
+#if PORTABLE45 || NETSTANDARD
             return t.GetRuntimeMethod(name,arguments);
 #else
             return t.GetMethod(name, arguments);
@@ -89,8 +92,8 @@ namespace Hl7.Fhir.Support
         {
             if (t == null) throw Error.ArgumentNull("t");
 
-#if PORTABLE45
-			if (t.GetTypeInfo().IsValueType)
+#if PORTABLE45 || NETSTANDARD
+            if (t.GetTypeInfo().IsValueType)
                 return true;
 #else
             if (t.IsValueType)
@@ -102,7 +105,7 @@ namespace Hl7.Fhir.Support
 
         internal static ConstructorInfo GetDefaultPublicConstructor(Type t)
         {
-#if PORTABLE45
+#if PORTABLE45 || NETSTANDARD
             return t.GetTypeInfo().DeclaredConstructors.FirstOrDefault(s => s.GetParameters().Length == 0 && s.IsPublic && !s.IsStatic);
 #else
             BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public;
@@ -115,8 +118,8 @@ namespace Hl7.Fhir.Support
         {
             if (type == null) throw Error.ArgumentNull("type");
 
-#if PORTABLE45
-			return (type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>));
+#if PORTABLE45 || NETSTANDARD
+            return (type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>));
 #else
             return (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>));
 #endif
@@ -128,7 +131,7 @@ namespace Hl7.Fhir.Support
 
             if (IsNullableType(type))
             {
-#if PORTABLE45
+#if PORTABLE45 || NETSTANDARD
                 return type.GenericTypeArguments[0];
 #else
                 return type.GetGenericArguments()[0];
@@ -152,8 +155,8 @@ namespace Hl7.Fhir.Support
 
         public static bool IsClosedGenericType(Type type)
         {
-#if PORTABLE45
-			return type.GetTypeInfo().IsGenericType && !type.GetTypeInfo().ContainsGenericParameters;
+#if PORTABLE45 || NETSTANDARD
+            return type.GetTypeInfo().IsGenericType && !type.GetTypeInfo().ContainsGenericParameters;
 #else
             return type.IsGenericType && !type.ContainsGenericParameters;
 #endif
@@ -162,8 +165,8 @@ namespace Hl7.Fhir.Support
 
         public static bool IsOpenGenericTypeDefinition(Type type)
         {
-#if PORTABLE45
-			return type.GetTypeInfo().IsGenericTypeDefinition;
+#if PORTABLE45 || NETSTANDARD
+            return type.GetTypeInfo().IsGenericTypeDefinition;
 #else
             return type.IsGenericTypeDefinition;
 #endif
@@ -195,14 +198,18 @@ namespace Hl7.Fhir.Support
                 //if (genericListType.IsGenericTypeDefinition)
                 //throw Error.Argument("type", "Type {0} is not a collection.", type.Name);
 
-#if PORTABLE45
-				return genericListType.GetTypeInfo().GenericTypeArguments[0];
+#if PORTABLE45 || NETSTANDARD
+                return genericListType.GetTypeInfo().GenericTypeArguments[0];
+            }
+            else if (typeof(IEnumerable).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo()))
+            {
 #else
                 return genericListType.GetGenericArguments()[0];
-#endif
             }
             else if (typeof(IEnumerable).IsAssignableFrom(type))
             {
+#endif
+
                 return null;
             }
             else
@@ -210,7 +217,6 @@ namespace Hl7.Fhir.Support
                 throw Error.Argument("type", "Type {0} is not a collection.".FormatWith(type.Name));
             }
         }
-
         public static bool ImplementsGenericDefinition(Type type, Type genericInterfaceDefinition)
         {
             Type implementingType;
@@ -222,21 +228,21 @@ namespace Hl7.Fhir.Support
             if (type == null) throw Error.ArgumentNull("type");
             if (genericInterfaceDefinition == null) throw Error.ArgumentNull("genericInterfaceDefinition");
 
-#if PORTABLE45
-			if (!genericInterfaceDefinition.GetTypeInfo().IsInterface || !genericInterfaceDefinition.GetTypeInfo().IsGenericTypeDefinition)
+#if PORTABLE45 || NETSTANDARD
+            if (!genericInterfaceDefinition.GetTypeInfo().IsInterface || !genericInterfaceDefinition.GetTypeInfo().IsGenericTypeDefinition)
 #else
             if (!genericInterfaceDefinition.IsInterface || !genericInterfaceDefinition.IsGenericTypeDefinition)
 #endif
                 throw Error.Argument("genericInterfaceDefinition", "'{0}' is not a generic interface definition.".FormatWith(genericInterfaceDefinition.Name));
 
-#if PORTABLE45
-			if (type.GetTypeInfo().IsInterface)
+#if PORTABLE45 || NETSTANDARD
+            if (type.GetTypeInfo().IsInterface)
 #else
             if (type.IsInterface)
 #endif
             {
-#if PORTABLE45
-				if (type.GetTypeInfo().IsGenericType)
+#if PORTABLE45 || NETSTANDARD
+                if (type.GetTypeInfo().IsGenericType)
 #else
                 if (type.IsGenericType)
 #endif
@@ -251,14 +257,14 @@ namespace Hl7.Fhir.Support
                 }
             }
 
-#if PORTABLE45
-			foreach (Type i in type.GetTypeInfo().ImplementedInterfaces)
+#if PORTABLE45 || NETSTANDARD
+            foreach (Type i in type.GetTypeInfo().ImplementedInterfaces)
 #else
             foreach (Type i in type.GetInterfaces())
 #endif
             {
-#if PORTABLE45
-				if (i.GetTypeInfo().IsGenericType)
+#if PORTABLE45 || NETSTANDARD
+                if (i.GetTypeInfo().IsGenericType)
 #else
                 if (i.IsGenericType)
 #endif
@@ -295,7 +301,7 @@ namespace Hl7.Fhir.Support
 
         internal static bool IsEnum(this Type t)
         {
-#if PORTABLE45
+#if PORTABLE45 || NETSTANDARD
 			return t.GetTypeInfo().IsEnum;
 #else
             return t.IsEnum;
@@ -303,8 +309,8 @@ namespace Hl7.Fhir.Support
         }
         #endregion
 
-#if PORTABLE45
-		internal static T GetAttribute<T>(Type type) where T : Attribute
+#if PORTABLE45 || NETSTANDARD
+        internal static T GetAttribute<T>(Type type) where T : Attribute
 		{
 			var attr = type.GetTypeInfo().GetCustomAttribute<T>();
 			return (T)attr;
@@ -313,8 +319,8 @@ namespace Hl7.Fhir.Support
 
         internal static T GetAttribute<T>(MemberInfo member) where T : Attribute
         {
-#if PORTABLE45
-			var attr = member.GetCustomAttribute<T>();
+#if PORTABLE45 || NETSTANDARD
+            var attr = member.GetCustomAttribute<T>();
 #else
             var attr = Attribute.GetCustomAttribute(member, typeof(T));
 #endif
@@ -323,8 +329,8 @@ namespace Hl7.Fhir.Support
 
         internal static ICollection<T> GetAttributes<T>(MemberInfo member) where T : Attribute
         {
-#if PORTABLE45
-			var attr = member.GetCustomAttributes<T>();
+#if PORTABLE45 || NETSTANDARD
+            var attr = member.GetCustomAttributes<T>();
 #else
             var attr = Attribute.GetCustomAttributes(member, typeof(T));
 #endif
@@ -336,8 +342,8 @@ namespace Hl7.Fhir.Support
         {
             if (t == null) throw Error.ArgumentNull("t");
 
-#if PORTABLE45
-			return t.GetTypeInfo().DeclaredFields.Where(a => a.IsPublic && a.IsStatic);
+#if PORTABLE45 || NETSTANDARD
+            return t.GetTypeInfo().DeclaredFields.Where(a => a.IsPublic && a.IsStatic);
 #else
             return t.GetFields(BindingFlags.Public | BindingFlags.Static);
 #endif
@@ -353,7 +359,7 @@ namespace Hl7.Fhir.Support
         public static string PrettyTypeName(Type t)
         {
             // http://stackoverflow.com/questions/1533115/get-generictype-name-in-good-format-using-reflection-on-c-sharp#answer-25287378 
-#if PORTABLE45
+#if PORTABLE45 || NETSTANDARD
             return t.GetTypeInfo().IsGenericType ? string.Format( 
                 "{0}<{1}>", t.Name.Substring(0, t.Name.LastIndexOf("`", StringComparison.CurrentCulture)), 
                 string.Join(", ", t.GetTypeInfo().GenericTypeParameters.ToList().Select(PrettyTypeName))) 

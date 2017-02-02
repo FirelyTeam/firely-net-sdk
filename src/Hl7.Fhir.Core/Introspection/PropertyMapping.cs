@@ -56,8 +56,8 @@ namespace Hl7.Fhir.Introspection
 
             PropertyMapping result = new PropertyMapping();
 
-#if PORTABLE45
-			var elementAttr = prop.GetCustomAttribute<FhirElementAttribute>();
+#if PORTABLE45 || NETSTANDARD
+            var elementAttr = prop.GetCustomAttribute<FhirElementAttribute>();
             var cardinalityAttr = prop.GetCustomAttribute<Validation.CardinalityAttribute>();
 #else
             var elementAttr = (FhirElementAttribute)Attribute.GetCustomAttribute(prop, typeof(FhirElementAttribute));
@@ -104,8 +104,8 @@ namespace Hl7.Fhir.Introspection
 
         private static string determinePropertyName(PropertyInfo prop)
         {
-#if PORTABLE45
-			var elementAttr = prop.GetCustomAttribute<FhirElementAttribute>();
+#if PORTABLE45 || NETSTANDARD
+            var elementAttr = prop.GetCustomAttribute<FhirElementAttribute>();
 #else
 			var elementAttr = (FhirElementAttribute)Attribute.GetCustomAttribute(prop, typeof(FhirElementAttribute));
 #endif
@@ -134,8 +134,8 @@ namespace Hl7.Fhir.Introspection
 
         private static bool isPrimitiveValueElement(PropertyInfo prop)
         {
-#if PORTABLE45
-			var valueElementAttr = prop.GetCustomAttribute<FhirElementAttribute>();
+#if PORTABLE45 || NETSTANDARD
+            var valueElementAttr = prop.GetCustomAttribute<FhirElementAttribute>();
 #else
 			var valueElementAttr = (FhirElementAttribute)Attribute.GetCustomAttribute(prop, typeof(FhirElementAttribute));
 #endif

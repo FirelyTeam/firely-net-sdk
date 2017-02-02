@@ -161,10 +161,12 @@ namespace Hl7.Fhir.Serialization
             return resultRE;
         }
 
-#if PORTABLE45
+#if PORTABLE45 || NETSTANDARD1_1
         private static Regex _re = new Regex("(&[a-zA-Z0-9]+;)", RegexOptions.CultureInvariant);
-#else
+#elif NET45 || NETSTANDARD1_2
         private static Regex _re = new Regex("(&[a-zA-Z0-9]+;)", RegexOptions.Compiled | RegexOptions.CultureInvariant);
+#else
+        Unknown platform
 #endif
         private static Dictionary<string, string> _xmlReplacements;
         private static Dictionary<string, string> getXmlReplacements()

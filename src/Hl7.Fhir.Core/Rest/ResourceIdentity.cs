@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Rest
     ///   * Anchor: just the "logical id"
     /// 
     /// </summary>
-#if !PORTABLE45
+#if !PORTABLE45 && !NETSTANDARD
     [SerializableAttribute]
 #endif
     [System.Diagnostics.DebuggerDisplay(@"\{ResourceType={ResourceType} Id={Id} VersionId={VersionId} Base={BaseUri} ToString={ToString()}")]

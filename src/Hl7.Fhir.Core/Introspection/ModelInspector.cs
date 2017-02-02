@@ -6,15 +6,10 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.Contracts;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace Hl7.Fhir.Introspection
 {
@@ -34,22 +29,22 @@ namespace Hl7.Fhir.Introspection
         {
             if (assembly == null) throw Error.ArgumentNull("assembly");
 
-#if PORTABLE45
+#if PORTABLE45 || NETSTANDARD
 			if (assembly.GetCustomAttribute<NotMappedAttribute>() != null) return;
 #else
             if (Attribute.GetCustomAttribute(assembly, typeof(NotMappedAttribute)) != null) return;
 #endif
 
-#if PORTABLE45
-			IEnumerable<Type> exportedTypes = assembly.ExportedTypes;
+#if PORTABLE45 || NETSTANDARD
+            IEnumerable<Type> exportedTypes = assembly.ExportedTypes;
 #else
 			Type[] exportedTypes = assembly.GetExportedTypes();
 #endif
 			foreach (Type type in exportedTypes)
             {
                 // Don't import types marked with [NotMapped]
-#if PORTABLE45
-				if (type.GetTypeInfo().GetCustomAttribute<NotMappedAttribute>() != null) continue;
+#if PORTABLE45 || NETSTANDARD
+                if (type.GetTypeInfo().GetCustomAttribute<NotMappedAttribute>() != null) continue;
 #else
                 if (Attribute.GetCustomAttribute(type, typeof(NotMappedAttribute)) != null) continue;
 #endif

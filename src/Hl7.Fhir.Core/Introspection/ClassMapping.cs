@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Introspection
             if(ReflectionHelper.IsClosedGenericType(type))
             {
                 name += "<";
-#if PORTABLE45
+#if PORTABLE45 || NETSTANDARD
 				name += String.Join(",", type.GenericTypeArguments.Select(arg => arg.FullName));
 #else
                 name += String.Join(",", type.GetGenericArguments().Select(arg => arg.FullName));
@@ -209,25 +209,33 @@ namespace Hl7.Fhir.Introspection
 
         public static bool IsFhirResource(Type type)
         {
+#if NETSTANDARD
+            var attr = ReflectionHelper.GetAttribute<FhirTypeAttribute>(type.GetTypeInfo());
+            return typeof(Resource).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo())
+                   || (attr != null && attr.IsResource);
+#else
             var attr = ReflectionHelper.GetAttribute<FhirTypeAttribute>(type);
-
             return typeof(Resource).IsAssignableFrom(type)
-                    || (attr != null && attr.IsResource);
+                   || (attr != null && attr.IsResource);
+#endif
+
         }
 
         public static bool IsMappableType(Type type)
         {
-            var hasAttribute = type.IsDefined(typeof(FhirTypeAttribute),false);
-
-            if(!hasAttribute) return false;
-
-#if PORTABLE45
-			if (type.GetTypeInfo().IsAbstract)
+#if NETSTANDARD
+            var hasAttribute = type.GetTypeInfo().IsDefined(typeof(FhirTypeAttribute), false);
 #else
-			if (type.IsAbstract)
+            var hasAttribute = type.IsDefined(typeof(FhirTypeAttribute), false);
+#endif
+            if (!hasAttribute) return false;
+
+#if PORTABLE45 || NETSTANDARD
+            if (type.GetTypeInfo().IsAbstract)
+#else
+            if (type.IsAbstract)
 #endif
                 throw Error.Argument("type", "Type {0} is marked as a mappable tpe, but is abstract so cannot be used directly to represent a FHIR datatype".FormatWith(type.Name));
-
 
             // Open generic type definitions can never appear as roots of objects
             // to parse. In instances, they will either have been used in closed type definitions

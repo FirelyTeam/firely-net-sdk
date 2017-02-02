@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Support
                 if (me.Value.Length == 8 && !me.Value.Contains("-"))
                 {
                     string newValue = me.Value.Insert(4, "-").Insert(7, "-");
-#if !PORTABLE45
+#if !PORTABLE45 && !NETSTANDARD
                     System.Diagnostics.Trace.WriteLine(String.Format("Invalid Date [{0}] was encountered, processing it as though it was [{1}]", me.Value, newValue));
 #endif
                     if (DateTime.TryParse(newValue, out result))
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Support
                 if (me.Value.Length == 8 && !me.Value.Contains("-"))
                 {
                     string newValue = me.Value.Insert(4, "-").Insert(7, "-");
-#if !PORTABLE45
+#if !PORTABLE45 && !NETSTANDARD
                     System.Diagnostics.Trace.WriteLine(String.Format("Invalid Date [{0}] was encountered, processing it as though it was [{1}]", me.Value, newValue));
 #endif
                     if (DateTime.TryParse(newValue, out result))

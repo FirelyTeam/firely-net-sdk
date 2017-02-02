@@ -1,37 +1,11 @@
-using System;
 using System.Reflection;
-using System.Resources;
-using System.Runtime.InteropServices;
-using System.Security;
+using System.Runtime.CompilerServices;
 
-// General Information about an assembly is controlled through the following 
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
-#if DOTNET
-[assembly: AssemblyTitle("Hl7.Fhir.DSTU2.Core Portable dotnet")]
-#elif PORTABLE45
-[assembly: AssemblyTitle("Hl7.Fhir.DSTU2.Core Portable .Net 4.5")]
-#elif NET45
-[assembly: AssemblyTitle("Hl7.Fhir.DSTU2.Core .Net 4.5")]
-#elif NET40
-[assembly: AssemblyTitle("Hl7.Fhir.DSTU2.Core .Net 4.0")]
+#if !SIGNED
+[assembly: InternalsVisibleTo("Hl7.Fhir.Core.Tests")]
 #else
-#error No valid constant for target framework defined (NET40, NET45, or PORTABLE45)
+// Enable execution of unit tests on Release Assembly. See: https://msdn.microsoft.com/en-us/library/0tke9fxk.aspx
+// Sign with a confidential key. Make internals visible to unit tests signed with a unit-test key.
+[assembly:AssemblyKeyFileAttribute("..\\FhirNetApi.snk")]
+[assembly: InternalsVisibleTo("Hl7.Fhir.Core.Tests, PublicKey=00240000048000009400000006020000002400005253413100040000010001001717D77343870ECA52515A2FF9BA7EF2FF314F2F1E651F4A069401E35193D4D5124B33379A6380D510239044F012F720D395064192157EAE8F67B3E4D524B79DAADEBD4E65CE67DB327949B77BF26CA6C0F97C4CA1A578811202A537E4D112FFFB2E42E852AFDD71C3295C694911CDF0535F709B72BA172C40A2B1F2B607FFDC")]
 #endif
-
-[assembly: AssemblyDescription("Core .NET support for working with HL7 FHIR. Supports FHIR DSTU2 (1.0)")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyProduct("FHIR")]
-[assembly: AssemblyCopyright("Copyright Ewout Kramer and collaborators 2016")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
-[assembly: NeutralResourcesLanguage("en")]
-[assembly: ComVisible(false)]
-
-
-// This assembly is not fully CLSCompliant, but this triggers compiler warnings to avoid the issue as described here, when mixing C# and VB
-// https://msdn.microsoft.com/en-us/library/ms235408(v=vs.90).aspx
-[assembly: CLSCompliant(true)]
-
-// Version information is contained in separate file, see:
-// http://blogs.msdn.com/b/jjameson/archive/2009/04/03/best-practices-for-net-assembly-versioning.aspx

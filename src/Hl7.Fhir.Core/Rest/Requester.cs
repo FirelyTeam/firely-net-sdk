@@ -62,15 +62,16 @@ namespace Hl7.Fhir.Rest
         {
             if (interaction == null) throw Error.ArgumentNull("interaction");
             bool compressRequestBody = false;
-#if !PORTABLE45
+#if !PORTABLE45 && !NETSTANDARD
             compressRequestBody = CompressRequestBody; // PCL doesn't support compression at the moment
 #endif
 
             byte[] outBody;
             var request = interaction.ToHttpRequest(Prefer, PreferredFormat, UseFormatParameter, compressRequestBody, out outBody);
 
-#if !PORTABLE45
+#if !PORTABLE45 && !NETSTANDARD
             request.Timeout = Timeout;
+
             if (PreferCompressedResponses)
             {
                 request.Headers.Add("Accept-Encoding", "gzip, deflate");
@@ -145,7 +146,7 @@ namespace Hl7.Fhir.Rest
             {
                 byte[] body = null;
                 var respStream = response.GetResponseStream();
-#if !PORTABLE45
+#if !PORTABLE45 && !NETSTANDARD
                 if (response.ContentEncoding == "gzip")
                 {
                     using (var decompressed = new GZipStream(respStream, CompressionMode.Decompress, true))
