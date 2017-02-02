@@ -369,7 +369,8 @@ namespace Hl7.Fhir.Model
             /// A resource in the bundle
             /// </summary>
             [FhirElement("resource", InSummary=true, Order=60, Choice=ChoiceType.ResourceChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
             [DataMember]
             public Hl7.Fhir.Model.Resource Resource
             {

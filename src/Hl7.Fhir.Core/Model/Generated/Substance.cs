@@ -209,7 +209,8 @@ namespace Hl7.Fhir.Model
             /// A component of the substance
             /// </summary>
             [FhirElement("substance", InSummary=true, Order=50)]
-            [References("Substance")]
+            [CLSCompliant(false)]
+			[References("Substance")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Substance

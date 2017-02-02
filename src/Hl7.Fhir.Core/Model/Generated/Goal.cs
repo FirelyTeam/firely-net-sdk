@@ -127,7 +127,8 @@ namespace Hl7.Fhir.Model
             /// Code or observation that resulted from goal
             /// </summary>
             [FhirElement("result", Order=40, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element Result
             {
@@ -214,7 +215,8 @@ namespace Hl7.Fhir.Model
         /// Who this goal is intended for
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=100)]
-        [References("Patient","Group","Organization")]
+        [CLSCompliant(false)]
+		[References("Patient","Group","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -228,7 +230,8 @@ namespace Hl7.Fhir.Model
         /// When goal pursuit begins
         /// </summary>
         [FhirElement("start", InSummary=true, Order=110, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.CodeableConcept))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.CodeableConcept))]
         [DataMember]
         public Hl7.Fhir.Model.Element Start
         {
@@ -242,7 +245,8 @@ namespace Hl7.Fhir.Model
         /// Reach goal on or before
         /// </summary>
         [FhirElement("target", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Duration))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Duration))]
         [DataMember]
         public Hl7.Fhir.Model.Element Target
         {
@@ -381,7 +385,8 @@ namespace Hl7.Fhir.Model
         /// Who's responsible for creating Goal?
         /// </summary>
         [FhirElement("author", InSummary=true, Order=180)]
-        [References("Patient","Practitioner","RelatedPerson")]
+        [CLSCompliant(false)]
+		[References("Patient","Practitioner","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
         {
@@ -408,7 +413,8 @@ namespace Hl7.Fhir.Model
         /// Issues addressed by this goal
         /// </summary>
         [FhirElement("addresses", Order=200)]
-        [References("Condition","Observation","MedicationStatement","NutritionOrder","ProcedureRequest","RiskAssessment")]
+        [CLSCompliant(false)]
+		[References("Condition","Observation","MedicationStatement","NutritionOrder","ProcedureRequest","RiskAssessment")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Addresses

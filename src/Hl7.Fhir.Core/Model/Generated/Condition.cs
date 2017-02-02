@@ -122,7 +122,8 @@ namespace Hl7.Fhir.Model
             /// Formal record of assessment
             /// </summary>
             [FhirElement("assessment", InSummary=true, Order=50)]
-            [References("ClinicalImpression","DiagnosticReport","Observation")]
+            [CLSCompliant(false)]
+			[References("ClinicalImpression","DiagnosticReport","Observation")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> Assessment
@@ -220,7 +221,8 @@ namespace Hl7.Fhir.Model
             /// Supporting information found elsewhere
             /// </summary>
             [FhirElement("detail", InSummary=true, Order=50)]
-            [References()]
+            [CLSCompliant(false)]
+			[References()]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> Detail
@@ -312,7 +314,8 @@ namespace Hl7.Fhir.Model
         /// Who has the condition?
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=100)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -327,7 +330,8 @@ namespace Hl7.Fhir.Model
         /// Encounter when condition first asserted
         /// </summary>
         [FhirElement("encounter", InSummary=true, Order=110)]
-        [References("Encounter")]
+        [CLSCompliant(false)]
+		[References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
         {
@@ -341,7 +345,8 @@ namespace Hl7.Fhir.Model
         /// Person who asserts this condition
         /// </summary>
         [FhirElement("asserter", InSummary=true, Order=120)]
-        [References("Practitioner","Patient")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Asserter
         {
@@ -492,7 +497,8 @@ namespace Hl7.Fhir.Model
         /// Estimated or actual date,  date-time, or age
         /// </summary>
         [FhirElement("onset", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
         public Hl7.Fhir.Model.Element Onset
         {
@@ -506,7 +512,8 @@ namespace Hl7.Fhir.Model
         /// If/when in resolution/remission
         /// </summary>
         [FhirElement("abatement", InSummary=true, Order=200, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
         public Hl7.Fhir.Model.Element Abatement
         {

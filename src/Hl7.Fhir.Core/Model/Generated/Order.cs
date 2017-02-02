@@ -199,7 +199,8 @@ namespace Hl7.Fhir.Model
         /// Patient this order is about
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=110)]
-        [References("Patient","Group","Device","Substance")]
+        [CLSCompliant(false)]
+		[References("Patient","Group","Device","Substance")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -213,7 +214,8 @@ namespace Hl7.Fhir.Model
         /// Who initiated the order
         /// </summary>
         [FhirElement("source", InSummary=true, Order=120)]
-        [References("Practitioner","Organization")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Source
         {
@@ -227,7 +229,8 @@ namespace Hl7.Fhir.Model
         /// Who is intended to fulfill the order
         /// </summary>
         [FhirElement("target", InSummary=true, Order=130)]
-        [References("Organization","Device","Practitioner")]
+        [CLSCompliant(false)]
+		[References("Organization","Device","Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Target
         {
@@ -241,7 +244,8 @@ namespace Hl7.Fhir.Model
         /// Text - why the order was made
         /// </summary>
         [FhirElement("reason", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element Reason
         {
@@ -268,7 +272,8 @@ namespace Hl7.Fhir.Model
         /// What action is being ordered
         /// </summary>
         [FhirElement("detail", InSummary=true, Order=160)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Detail

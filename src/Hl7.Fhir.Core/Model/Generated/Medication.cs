@@ -179,7 +179,8 @@ namespace Hl7.Fhir.Model
             /// The product contained
             /// </summary>
             [FhirElement("item", Order=40)]
-            [References("Substance","Medication")]
+            [CLSCompliant(false)]
+			[References("Substance","Medication")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Item
@@ -508,7 +509,8 @@ namespace Hl7.Fhir.Model
             /// A product in the package
             /// </summary>
             [FhirElement("item", Order=40)]
-            [References("Medication")]
+            [CLSCompliant(false)]
+			[References("Medication")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Item
@@ -644,7 +646,8 @@ namespace Hl7.Fhir.Model
         /// Manufacturer of the item
         /// </summary>
         [FhirElement("manufacturer", InSummary=true, Order=110)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Manufacturer
         {

@@ -263,7 +263,8 @@ namespace Hl7.Fhir.Model
             /// Who recorded or did this
             /// </summary>
             [FhirElement("actor", Order=70)]
-            [References("Practitioner","Device")]
+            [CLSCompliant(false)]
+			[References("Practitioner","Device")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Actor
             {
@@ -369,7 +370,8 @@ namespace Hl7.Fhir.Model
             /// If this item relates to specific specimens
             /// </summary>
             [FhirElement("specimen", Order=50)]
-            [References("Specimen")]
+            [CLSCompliant(false)]
+			[References("Specimen")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> Specimen
@@ -518,7 +520,8 @@ namespace Hl7.Fhir.Model
         /// Who and/or what test is about
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=90)]
-        [References("Patient","Group","Location","Device")]
+        [CLSCompliant(false)]
+		[References("Patient","Group","Location","Device")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -533,7 +536,8 @@ namespace Hl7.Fhir.Model
         /// Who ordered the test
         /// </summary>
         [FhirElement("orderer", InSummary=true, Order=100)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Orderer
         {
@@ -561,7 +565,8 @@ namespace Hl7.Fhir.Model
         /// The encounter that this diagnostic order is associated with
         /// </summary>
         [FhirElement("encounter", InSummary=true, Order=120)]
-        [References("Encounter")]
+        [CLSCompliant(false)]
+		[References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
         {
@@ -589,7 +594,8 @@ namespace Hl7.Fhir.Model
         /// Additional clinical information
         /// </summary>
         [FhirElement("supportingInformation", Order=140)]
-        [References("Observation","Condition","DocumentReference")]
+        [CLSCompliant(false)]
+		[References("Observation","Condition","DocumentReference")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> SupportingInformation
@@ -604,7 +610,8 @@ namespace Hl7.Fhir.Model
         /// If the whole order relates to specific specimens
         /// </summary>
         [FhirElement("specimen", Order=150)]
-        [References("Specimen")]
+        [CLSCompliant(false)]
+		[References("Specimen")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Specimen

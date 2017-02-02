@@ -737,7 +737,8 @@ namespace Hl7.Fhir.Model
         /// Use this instead
         /// </summary>
         [FhirElement("replacedBy", Order=210)]
-        [References("NamingSystem")]
+        [CLSCompliant(false)]
+		[References("NamingSystem")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference ReplacedBy
         {

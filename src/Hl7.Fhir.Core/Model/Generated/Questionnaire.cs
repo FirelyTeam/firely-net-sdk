@@ -660,7 +660,8 @@ namespace Hl7.Fhir.Model
             /// Valueset containing permitted answers
             /// </summary>
             [FhirElement("options", Order=100)]
-            [References("ValueSet")]
+            [CLSCompliant(false)]
+			[References("ValueSet")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Options
             {

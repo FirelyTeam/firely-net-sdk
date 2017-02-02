@@ -450,7 +450,8 @@ namespace Hl7.Fhir.Model
             /// Direct reference to resource
             /// </summary>
             [FhirElement("reference", InSummary=true, Order=50)]
-            [References("Practitioner","Organization","Device","Patient","RelatedPerson")]
+            [CLSCompliant(false)]
+			[References("Practitioner","Organization","Device","Patient","RelatedPerson")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Reference
             {
@@ -574,7 +575,8 @@ namespace Hl7.Fhir.Model
             /// Where
             /// </summary>
             [FhirElement("location", Order=100)]
-            [References("Location")]
+            [CLSCompliant(false)]
+			[References("Location")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Location
             {
@@ -1048,7 +1050,8 @@ namespace Hl7.Fhir.Model
             /// Specific instance of resource (e.g. versioned)
             /// </summary>
             [FhirElement("reference", InSummary=true, Order=50)]
-            [References()]
+            [CLSCompliant(false)]
+			[References()]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Reference
             {

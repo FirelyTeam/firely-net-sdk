@@ -57,7 +57,8 @@ namespace Hl7.Fhir.Model
         /// Patient
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=90)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient

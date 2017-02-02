@@ -168,7 +168,8 @@ namespace Hl7.Fhir.Model
             /// Actual entry
             /// </summary>
             [FhirElement("item", Order=70)]
-            [References()]
+            [CLSCompliant(false)]
+			[References()]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Item
@@ -313,7 +314,8 @@ namespace Hl7.Fhir.Model
         /// If all resources have the same subject
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=120)]
-        [References("Patient","Group","Device","Location")]
+        [CLSCompliant(false)]
+		[References("Patient","Group","Device","Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -327,7 +329,8 @@ namespace Hl7.Fhir.Model
         /// Who and/or what defined the list contents (aka Author)
         /// </summary>
         [FhirElement("source", InSummary=true, Order=130)]
-        [References("Practitioner","Patient","Device")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Patient","Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Source
         {
@@ -341,7 +344,8 @@ namespace Hl7.Fhir.Model
         /// Context in which list created
         /// </summary>
         [FhirElement("encounter", Order=140)]
-        [References("Encounter")]
+        [CLSCompliant(false)]
+		[References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
         {

@@ -770,7 +770,8 @@ namespace Hl7.Fhir.Model
             /// Required Conformance
             /// </summary>
             [FhirElement("conformance", Order=90)]
-            [References("Conformance")]
+            [CLSCompliant(false)]
+			[References("Conformance")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Conformance
@@ -935,7 +936,8 @@ namespace Hl7.Fhir.Model
             /// Reference of the resource
             /// </summary>
             [FhirElement("resource", Order=60)]
-            [References()]
+            [CLSCompliant(false)]
+			[References()]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Resource
             {
@@ -3638,7 +3640,8 @@ namespace Hl7.Fhir.Model
         /// Reference of the validation profile
         /// </summary>
         [FhirElement("profile", Order=250)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Profile

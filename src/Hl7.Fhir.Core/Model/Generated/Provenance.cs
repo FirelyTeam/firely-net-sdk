@@ -111,7 +111,8 @@ namespace Hl7.Fhir.Model
             /// Individual, device or organization playing role
             /// </summary>
             [FhirElement("actor", InSummary=true, Order=50)]
-            [References("Practitioner","RelatedPerson","Patient","Device","Organization")]
+            [CLSCompliant(false)]
+			[References("Practitioner","RelatedPerson","Patient","Device","Organization")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Actor
             {
@@ -547,7 +548,8 @@ namespace Hl7.Fhir.Model
         /// Target Reference(s) (usually version specific)
         /// </summary>
         [FhirElement("target", InSummary=true, Order=90)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Target
@@ -635,7 +637,8 @@ namespace Hl7.Fhir.Model
         /// Where the activity occurred, if relevant
         /// </summary>
         [FhirElement("location", InSummary=true, Order=140)]
-        [References("Location")]
+        [CLSCompliant(false)]
+		[References("Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Location
         {

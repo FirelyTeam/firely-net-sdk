@@ -280,7 +280,8 @@ namespace Hl7.Fhir.Model
             /// Who attested the composition
             /// </summary>
             [FhirElement("party", InSummary=true, Order=60)]
-            [References("Patient","Practitioner","Organization")]
+            [CLSCompliant(false)]
+			[References("Patient","Practitioner","Organization")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Party
             {
@@ -395,7 +396,8 @@ namespace Hl7.Fhir.Model
             /// The event(s) being documented
             /// </summary>
             [FhirElement("detail", InSummary=true, Order=60)]
-            [References()]
+            [CLSCompliant(false)]
+			[References()]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> Detail
@@ -587,7 +589,8 @@ namespace Hl7.Fhir.Model
             /// A reference to data that supports this section
             /// </summary>
             [FhirElement("entry", Order=90)]
-            [References()]
+            [CLSCompliant(false)]
+			[References()]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> Entry
@@ -887,7 +890,8 @@ namespace Hl7.Fhir.Model
         /// Who and/or what the composition is about
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=160)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -902,7 +906,8 @@ namespace Hl7.Fhir.Model
         /// Who and/or what authored the composition
         /// </summary>
         [FhirElement("author", InSummary=true, Order=170)]
-        [References("Practitioner","Device","Patient","RelatedPerson")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Device","Patient","RelatedPerson")]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Author
@@ -931,7 +936,8 @@ namespace Hl7.Fhir.Model
         /// Organization which maintains the composition
         /// </summary>
         [FhirElement("custodian", InSummary=true, Order=190)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Custodian
         {
@@ -959,7 +965,8 @@ namespace Hl7.Fhir.Model
         /// Context of the Composition
         /// </summary>
         [FhirElement("encounter", InSummary=true, Order=210)]
-        [References("Encounter")]
+        [CLSCompliant(false)]
+		[References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
         {

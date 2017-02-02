@@ -116,7 +116,8 @@ namespace Hl7.Fhir.Model
         /// Appointment this response relates to
         /// </summary>
         [FhirElement("appointment", InSummary=true, Order=100)]
-        [References("Appointment")]
+        [CLSCompliant(false)]
+		[References("Appointment")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Appointment
@@ -209,7 +210,8 @@ namespace Hl7.Fhir.Model
         /// Person, Location/HealthcareService or Device
         /// </summary>
         [FhirElement("actor", InSummary=true, Order=140)]
-        [References("Patient","Practitioner","RelatedPerson","Device","HealthcareService","Location")]
+        [CLSCompliant(false)]
+		[References("Patient","Practitioner","RelatedPerson","Device","HealthcareService","Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Actor
         {

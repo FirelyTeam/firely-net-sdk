@@ -85,7 +85,8 @@ namespace Hl7.Fhir.Model
         /// The resource this Schedule resource is providing availability information for. These are expected to usually be one of HealthcareService, Location, Practitioner, Device, Patient or RelatedPerson
         /// </summary>
         [FhirElement("actor", InSummary=true, Order=110)]
-        [References("Patient","Practitioner","RelatedPerson","Device","HealthcareService","Location")]
+        [CLSCompliant(false)]
+		[References("Patient","Practitioner","RelatedPerson","Device","HealthcareService","Location")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Actor

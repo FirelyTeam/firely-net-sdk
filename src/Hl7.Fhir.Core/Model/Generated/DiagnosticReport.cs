@@ -147,7 +147,8 @@ namespace Hl7.Fhir.Model
             /// Reference to the image source
             /// </summary>
             [FhirElement("link", InSummary=true, Order=50)]
-            [References("Media")]
+            [CLSCompliant(false)]
+			[References("Media")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Link
@@ -299,7 +300,8 @@ namespace Hl7.Fhir.Model
         /// The subject of the report, usually, but not always, the patient
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=130)]
-        [References("Patient","Group","Device","Location")]
+        [CLSCompliant(false)]
+		[References("Patient","Group","Device","Location")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -314,7 +316,8 @@ namespace Hl7.Fhir.Model
         /// Health care event when test ordered
         /// </summary>
         [FhirElement("encounter", InSummary=true, Order=140)]
-        [References("Encounter")]
+        [CLSCompliant(false)]
+		[References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
         {
@@ -328,7 +331,8 @@ namespace Hl7.Fhir.Model
         /// Clinically Relevant time/time-period for report
         /// </summary>
         [FhirElement("effective", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Element Effective
@@ -376,7 +380,8 @@ namespace Hl7.Fhir.Model
         /// Responsible Diagnostic Service
         /// </summary>
         [FhirElement("performer", InSummary=true, Order=170)]
-        [References("Practitioner","Organization")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Organization")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Performer
@@ -391,7 +396,8 @@ namespace Hl7.Fhir.Model
         /// What was requested
         /// </summary>
         [FhirElement("request", Order=180)]
-        [References("DiagnosticOrder","ProcedureRequest","ReferralRequest")]
+        [CLSCompliant(false)]
+		[References("DiagnosticOrder","ProcedureRequest","ReferralRequest")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Request
@@ -406,7 +412,8 @@ namespace Hl7.Fhir.Model
         /// Specimens this report is based on
         /// </summary>
         [FhirElement("specimen", Order=190)]
-        [References("Specimen")]
+        [CLSCompliant(false)]
+		[References("Specimen")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Specimen
@@ -421,7 +428,8 @@ namespace Hl7.Fhir.Model
         /// Observations - simple, or complex nested groups
         /// </summary>
         [FhirElement("result", Order=200)]
-        [References("Observation")]
+        [CLSCompliant(false)]
+		[References("Observation")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Result
@@ -436,7 +444,8 @@ namespace Hl7.Fhir.Model
         /// Reference to full details of imaging associated with the diagnostic report
         /// </summary>
         [FhirElement("imagingStudy", Order=210)]
-        [References("ImagingStudy","ImagingObjectSelection")]
+        [CLSCompliant(false)]
+		[References("ImagingStudy","ImagingObjectSelection")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> ImagingStudy

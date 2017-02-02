@@ -986,7 +986,8 @@ namespace Hl7.Fhir.Model
             /// Speed with which the formula is provided per period of time
             /// </summary>
             [FhirElement("rate", Order=60, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.SimpleQuantity),typeof(Hl7.Fhir.Model.Ratio))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.SimpleQuantity),typeof(Hl7.Fhir.Model.Ratio))]
             [DataMember]
             public Hl7.Fhir.Model.Element Rate
             {
@@ -1067,7 +1068,8 @@ namespace Hl7.Fhir.Model
         /// The person who requires the diet, formula or nutritional supplement
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=90)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -1082,7 +1084,8 @@ namespace Hl7.Fhir.Model
         /// Who ordered the diet, formula or nutritional supplement
         /// </summary>
         [FhirElement("orderer", InSummary=true, Order=100)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Orderer
         {
@@ -1110,7 +1113,8 @@ namespace Hl7.Fhir.Model
         /// The encounter associated with this nutrition order
         /// </summary>
         [FhirElement("encounter", Order=120)]
-        [References("Encounter")]
+        [CLSCompliant(false)]
+		[References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
         {
@@ -1189,7 +1193,8 @@ namespace Hl7.Fhir.Model
         /// List of the patient's food and nutrition-related allergies and intolerances
         /// </summary>
         [FhirElement("allergyIntolerance", Order=150)]
-        [References("AllergyIntolerance")]
+        [CLSCompliant(false)]
+		[References("AllergyIntolerance")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> AllergyIntolerance

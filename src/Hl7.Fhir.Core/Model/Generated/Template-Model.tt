@@ -311,11 +311,13 @@ if(!abstractType) {
             /// </summary>
             [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nComponentPropNum #><#= pd.PropType == "Hl7.Fhir.Model.Element" ? ", Choice=ChoiceType.DatatypeChoice" : pd.PropType == "Hl7.Fhir.Model.Resource" ? ", Choice=ChoiceType.ResourceChoice" : "" #>)]
 <# if (pd.PropType == "Hl7.Fhir.Model.ResourceReference" && pd.ReferenceTargets != null) {#>
-            [References(<#= pd.ReferenceTargets #>)]
+            [CLSCompliant(false)]
+			[References(<#= pd.ReferenceTargets #>)]
 <# }
 #>
 <# if (!string.IsNullOrEmpty(pd.AllowedTypes)) {#>
-            [AllowedTypes(<#= pd.AllowedTypes #>)]
+            [CLSCompliant(false)]
+			[AllowedTypes(<#= pd.AllowedTypes #>)]
 <# }
 #>
 <# if (pd.CardMax == "*" || pd.CardMin != "0") {#>
@@ -467,11 +469,13 @@ if(!abstractType) {
         /// </summary>
         [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nPropNum #><#= pd.PropType == "Hl7.Fhir.Model.Element" ? ", Choice=ChoiceType.DatatypeChoice" : pd.PropType == "Hl7.Fhir.Model.Resource" ? ", Choice=ChoiceType.ResourceChoice" : "" #>)]
 <# if (pd.PropType == "Hl7.Fhir.Model.ResourceReference") {#>
-        [References(<#= pd.ReferenceTargets #>)]
+        [CLSCompliant(false)]
+		[References(<#= pd.ReferenceTargets #>)]
 <# }
 #>
 <# if (!string.IsNullOrEmpty(pd.AllowedTypes)) {#>
-        [AllowedTypes(<#= pd.AllowedTypes #>)]
+        [CLSCompliant(false)]
+		[AllowedTypes(<#= pd.AllowedTypes #>)]
 <# }
 #>
 <# if (pd.CardMax != "1" || pd.CardMin != "0") {#>

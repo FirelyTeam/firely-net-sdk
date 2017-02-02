@@ -207,7 +207,8 @@ namespace Hl7.Fhir.Model
             /// Plan relationship exists with
             /// </summary>
             [FhirElement("plan", Order=50)]
-            [References("CarePlan")]
+            [CLSCompliant(false)]
+			[References("CarePlan")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Plan
@@ -305,7 +306,8 @@ namespace Hl7.Fhir.Model
             /// Who is involved
             /// </summary>
             [FhirElement("member", Order=50)]
-            [References("Practitioner","RelatedPerson","Patient","Organization")]
+            [CLSCompliant(false)]
+			[References("Practitioner","RelatedPerson","Patient","Organization")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Member
             {
@@ -389,7 +391,8 @@ namespace Hl7.Fhir.Model
             /// Appointments, orders, etc.
             /// </summary>
             [FhirElement("actionResulting", Order=40)]
-            [References()]
+            [CLSCompliant(false)]
+			[References()]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> ActionResulting
@@ -418,7 +421,8 @@ namespace Hl7.Fhir.Model
             /// Activity details defined in specific resource
             /// </summary>
             [FhirElement("reference", Order=60)]
-            [References("Appointment","CommunicationRequest","DeviceUseRequest","DiagnosticOrder","MedicationOrder","NutritionOrder","Order","ProcedureRequest","ProcessRequest","ReferralRequest","SupplyRequest","VisionPrescription")]
+            [CLSCompliant(false)]
+			[References("Appointment","CommunicationRequest","DeviceUseRequest","DiagnosticOrder","MedicationOrder","NutritionOrder","Order","ProcedureRequest","ProcessRequest","ReferralRequest","SupplyRequest","VisionPrescription")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Reference
             {
@@ -563,7 +567,8 @@ namespace Hl7.Fhir.Model
             /// Condition triggering need for activity
             /// </summary>
             [FhirElement("reasonReference", Order=70)]
-            [References("Condition")]
+            [CLSCompliant(false)]
+			[References("Condition")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> ReasonReference
@@ -578,7 +583,8 @@ namespace Hl7.Fhir.Model
             /// Goals this activity relates to
             /// </summary>
             [FhirElement("goal", Order=80)]
-            [References("Goal")]
+            [CLSCompliant(false)]
+			[References("Goal")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> Goal
@@ -671,7 +677,8 @@ namespace Hl7.Fhir.Model
             /// When activity is to occur
             /// </summary>
             [FhirElement("scheduled", Order=120, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirString))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
             public Hl7.Fhir.Model.Element Scheduled
             {
@@ -685,7 +692,8 @@ namespace Hl7.Fhir.Model
             /// Where it should happen
             /// </summary>
             [FhirElement("location", Order=130)]
-            [References("Location")]
+            [CLSCompliant(false)]
+			[References("Location")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Location
             {
@@ -699,7 +707,8 @@ namespace Hl7.Fhir.Model
             /// Who will be responsible?
             /// </summary>
             [FhirElement("performer", Order=140)]
-            [References("Practitioner","Organization","RelatedPerson","Patient")]
+            [CLSCompliant(false)]
+			[References("Practitioner","Organization","RelatedPerson","Patient")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> Performer
@@ -714,7 +723,8 @@ namespace Hl7.Fhir.Model
             /// What is to be administered/supplied
             /// </summary>
             [FhirElement("product", Order=150, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element Product
             {
@@ -915,7 +925,8 @@ namespace Hl7.Fhir.Model
         /// Who care plan is for
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=100)]
-        [References("Patient","Group")]
+        [CLSCompliant(false)]
+		[References("Patient","Group")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -962,7 +973,8 @@ namespace Hl7.Fhir.Model
         /// Created in context of
         /// </summary>
         [FhirElement("context", InSummary=true, Order=120)]
-        [References("Encounter","EpisodeOfCare")]
+        [CLSCompliant(false)]
+		[References("Encounter","EpisodeOfCare")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Context
         {
@@ -989,7 +1001,8 @@ namespace Hl7.Fhir.Model
         /// Who is responsible for contents of the plan
         /// </summary>
         [FhirElement("author", InSummary=true, Order=140)]
-        [References("Patient","Practitioner","RelatedPerson","Organization")]
+        [CLSCompliant(false)]
+		[References("Patient","Practitioner","RelatedPerson","Organization")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Author
@@ -1082,7 +1095,8 @@ namespace Hl7.Fhir.Model
         /// Health issues this plan addresses
         /// </summary>
         [FhirElement("addresses", InSummary=true, Order=180)]
-        [References("Condition")]
+        [CLSCompliant(false)]
+		[References("Condition")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Addresses
@@ -1097,7 +1111,8 @@ namespace Hl7.Fhir.Model
         /// Information considered as part of plan
         /// </summary>
         [FhirElement("support", Order=190)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Support
@@ -1140,7 +1155,8 @@ namespace Hl7.Fhir.Model
         /// Desired outcome of plan
         /// </summary>
         [FhirElement("goal", Order=220)]
-        [References("Goal")]
+        [CLSCompliant(false)]
+		[References("Goal")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Goal

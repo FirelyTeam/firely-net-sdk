@@ -55,7 +55,8 @@ namespace Hl7.Fhir.Model
         /// Individual responsible for the annotation
         /// </summary>
         [FhirElement("author", InSummary=true, Order=30, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.FhirString))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
         public Hl7.Fhir.Model.Element Author
         {

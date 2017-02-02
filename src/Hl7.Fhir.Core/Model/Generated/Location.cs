@@ -485,7 +485,8 @@ namespace Hl7.Fhir.Model
         /// Organization responsible for provisioning and upkeep
         /// </summary>
         [FhirElement("managingOrganization", InSummary=true, Order=190)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference ManagingOrganization
         {
@@ -499,7 +500,8 @@ namespace Hl7.Fhir.Model
         /// Another Location this one is physically part of
         /// </summary>
         [FhirElement("partOf", Order=200)]
-        [References("Location")]
+        [CLSCompliant(false)]
+		[References("Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference PartOf
         {

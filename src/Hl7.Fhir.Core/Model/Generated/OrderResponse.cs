@@ -134,7 +134,8 @@ namespace Hl7.Fhir.Model
         /// The order that this is a response to
         /// </summary>
         [FhirElement("request", InSummary=true, Order=100)]
-        [References("Order")]
+        [CLSCompliant(false)]
+		[References("Order")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Request
@@ -181,7 +182,8 @@ namespace Hl7.Fhir.Model
         /// Who made the response
         /// </summary>
         [FhirElement("who", InSummary=true, Order=120)]
-        [References("Practitioner","Organization","Device")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Organization","Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Who
         {
@@ -260,7 +262,8 @@ namespace Hl7.Fhir.Model
         /// Details of the outcome of performing the order
         /// </summary>
         [FhirElement("fulfillment", InSummary=true, Order=150)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Fulfillment

@@ -721,7 +721,8 @@ namespace Hl7.Fhir.Model
             /// Location of the resource
             /// </summary>
             [FhirElement("source", InSummary=true, Order=80, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element Source
@@ -736,7 +737,8 @@ namespace Hl7.Fhir.Model
             /// Resource this is an example of (if applicable)
             /// </summary>
             [FhirElement("exampleFor", Order=90)]
-            [References("StructureDefinition")]
+            [CLSCompliant(false)]
+			[References("StructureDefinition")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference ExampleFor
             {
@@ -869,7 +871,8 @@ namespace Hl7.Fhir.Model
             /// Profile that all resources must conform to
             /// </summary>
             [FhirElement("profile", InSummary=true, Order=50)]
-            [References("StructureDefinition")]
+            [CLSCompliant(false)]
+			[References("StructureDefinition")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Profile
