@@ -152,12 +152,6 @@
     <Compile Include="XPath\XPath2Context.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.Net45.csproj">
-      <Project>{92cc9186-0a21-4e06-b11f-907584fbfd81}</Project>
-      <Name>Hl7.Fhir.Core.Net45</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
     <None Include="specification.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -165,6 +159,12 @@
   </ItemGroup>
   <ItemGroup>
     <FhirConformance Include="data\*.*" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj">
+      <Project>{1e26fe9d-eef8-4c39-b54f-6ca12f7c7ca5}</Project>
+      <Name>Hl7.Fhir.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="BeforeBuild" Inputs="@(FhirConformance)" Outputs="specification.zip">

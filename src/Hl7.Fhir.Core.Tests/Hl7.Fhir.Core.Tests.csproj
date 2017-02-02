@@ -149,9 +149,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.Portable45.csproj">
+    <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj">
       <Project>{1e26fe9d-eef8-4c39-b54f-6ca12f7c7ca5}</Project>
-      <Name>Hl7.Fhir.Core.Portable45</Name>
+      <Name>Hl7.Fhir.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
