@@ -9,7 +9,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         [Fact]
         public void CanReadThroughNavigator()
         {
-            var tpXml = System.IO.File.ReadAllText("TestData\\fp-test-patient.xml");
+            var tpXml = TestData.ReadTextFile("fp-test-patient.xml");
 
             var nav = XmlDomFhirNavigator.Create(tpXml);
 

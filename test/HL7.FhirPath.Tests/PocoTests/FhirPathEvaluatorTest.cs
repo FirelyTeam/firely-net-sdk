@@ -22,6 +22,7 @@ using System.IO;
 using Xunit.Abstractions;
 using Hl7.FhirPath.Functions;
 using Furore.Support;
+using System.Reflection;
 
 namespace Hl7.FhirPath.Tests
 {
@@ -33,19 +34,20 @@ namespace Hl7.FhirPath.Tests
         public int Counter = 0;
         public XDocument Xdoc;
 
+    
         public PatientFixture()
         {
             var parser = new Hl7.Fhir.Serialization.FhirXmlParser();
+            var tpXml = TestData.ReadTextFile("fp-test-patient.xml");
 
-            var tpXml = System.IO.File.ReadAllText("TestData\\fp-test-patient.xml");
             var patient = parser.Parse<Patient>(tpXml);
             TestInput = new PocoNavigator(patient);
 
-            tpXml = System.IO.File.ReadAllText("TestData\\questionnaire-example.xml");
+            tpXml = TestData.ReadTextFile("questionnaire-example.xml");
             var quest = parser.Parse<Questionnaire>(tpXml);
             Questionnaire = new PocoNavigator(quest);
 
-            tpXml = System.IO.File.ReadAllText("TestData\\uuid.profile.xml");
+            tpXml = TestData.ReadTextFile("uuid.profile.xml");
             var uuid = parser.Parse<StructureDefinition>(tpXml);
             UuidProfile = new PocoNavigator(uuid);
 
@@ -63,6 +65,7 @@ namespace Hl7.FhirPath.Tests
 
         public void Dispose()
         {
+            Directory.CreateDirectory(@"c:\temp");
             Save(Xdoc, @"c:\temp\csharp-tests.xml");
         }
 
@@ -600,7 +603,7 @@ namespace Hl7.FhirPath.Tests
             for (int i = 0; i < 1000; i++)
             {
                 var next = random.Next(0, 10000);
-                expression = "Patient.name[{0}]".FormatWith(next);
+                expression = $"Patient.name[{next}]";
                 fixture.TestInput.Select(expression);
             }
             sw.Stop();

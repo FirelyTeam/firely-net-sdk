@@ -329,7 +329,7 @@ namespace Hl7.FhirPath.Tests
             // obsolete:
             // Bundle b = (Bundle)FhirParser.ParseResourceFromXml(File.ReadAllText("TestData\\extension-definitions.xml"));
             var parser = new FhirXmlParser();
-            Model.Bundle b = parser.Parse<Model.Bundle>(File.ReadAllText("TestData\\extension-definitions.xml"));
+            Model.Bundle b = parser.Parse<Model.Bundle>(TestData.ReadTextFile("extension-definitions.xml"));
 
             foreach (Model.Bundle.EntryComponent be in b.Entry)
             {

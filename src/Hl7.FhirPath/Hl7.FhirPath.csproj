@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>This library contains a runtime environment for executing HL7 FhirPath queries and invariants. It is used by the HL7 .NET FHIR API (https://www.nuget.org/packages/Hl7.Fhir.DSTU2) to run validation for the HL7 FHIR object model.</Description>
+    <Copyright>(C) 2016 Furore (fhir.furore.com)</Copyright>
+    <AssemblyTitle>HL7 FhirPath evaluator</AssemblyTitle>
+    <NeutralLanguage>en-us</NeutralLanguage>
+    <VersionPrefix>0.4.0</VersionPrefix>
+    <Authors>Ewout Kramer (e.kramer@furore.com) and contributors</Authors>
+    <TargetFrameworks>net40;net45;netstandard1.0</TargetFrameworks>
+    <AssemblyName>Hl7.FhirPath</AssemblyName>
+    <PackageId>Hl7.FhirPath</PackageId>
+    <PackageTags>HL7;FluentPath;FhirPath;query language;CQL;FHIR</PackageTags>
+    <PackageIconUrl>https://raw.githubusercontent.com/ewoutkramer/fhir-net-fhirpath/master/icon-fhir-32.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/ewoutkramer/fhir-net-fhirpath</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/ewoutkramer/fhir-net-fhirpath/master/LICENSE</PackageLicenseUrl>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.0' ">
+    <DefineConstants>$(DefineConstants);NETSTANDARD</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.0' ">
+    <PackageReference Include="NETStandard.Library" Version="1.6.0" />
+  </ItemGroup>
+
+</Project>
