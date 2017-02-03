@@ -18,18 +18,10 @@ using Hl7.Fhir.Rest;
 namespace Hl7.Fhir.Tests.Rest
 {
     [TestClass]
-#if PORTABLE45
-    public class PortableOperationsTests
-#else
     public class OperationsTests
-#endif
 
     {
-#if PORTABLE45
-        string testEndpoint = PortableFhirClientTests.testEndpoint.OriginalString;
-#else
         string testEndpoint = FhirClientTests.testEndpoint.OriginalString;
-#endif
 
         [TestMethod] 
         [TestCategory("IntegrationTest")]
