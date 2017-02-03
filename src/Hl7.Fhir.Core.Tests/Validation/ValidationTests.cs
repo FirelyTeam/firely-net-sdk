@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Tests.Validation
             validateErrorOrFail(enc, true, membername: "Value");
         }
 
-#if PORTABLE45
+#if PORTABLE45 || NETCore
         [TestMethod, Ignore]    // XHtml validation not available in portable library
 #else
         [TestMethod]

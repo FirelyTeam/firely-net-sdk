@@ -81,11 +81,15 @@ namespace Hl7.Fhir.Tests.Serialization
                                     failedInvariantCodes.Add(item.Details.Coding[0].Code, 1);
                                 else
                                     failedInvariantCodes[item.Details.Coding[0].Code]++;
+#if !NETCore
                                 Trace.WriteLine("\t" + item.Details.Coding[0].Code + ": " + item.Details.Text);
+#endif
                             }
+#if !NETCore
                             Trace.WriteLine("-------------------------");
                             Trace.WriteLine(FhirSerializer.SerializeResourceToXml(resource));
                             Trace.WriteLine("-------------------------");
+#endif
                         }
                         if (outcome.Issue.Count != 0)
                         {
@@ -115,16 +119,24 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestCategory("LongRunner")]
         public void ValidateInvariantAllExamplesWithOtherConstraints()
         {
+#if NETCore
+            string examplesZip = $@"{AppContext.BaseDirectory}\TestData\examples.zip";
+            string profiles = $@"{AppContext.BaseDirectory}\TestData\profiles-others.xml";
+#else
             string examplesZip = @"TestData\examples.zip";
+            string profiles = @"TestData\profiles-others.xml";
+           
+#endif
             FhirXmlParser parser = new FhirXmlParser();
             int errorCount = 0;
             int testFileCount = 0;
             Dictionary<string, int> failedInvariantCodes = new Dictionary<string, int>();
             List<String> checkedCode = new List<string>();
 
+
             Bundle otherSDs;
             Dictionary<string, List<ElementDefinition.ConstraintComponent>> invariantCache = new Dictionary<string, List<ElementDefinition.ConstraintComponent>>();
-            using (Stream streamOther = File.OpenRead(@"TestData\profiles-others.xml"))
+            using (Stream streamOther = File.OpenRead(profiles))
             {
                 otherSDs = new Fhir.Serialization.FhirXmlParser().Parse<Bundle>(SerializationUtil.XmlReaderFromStream(streamOther));
                 foreach (StructureDefinition resource in otherSDs.Entry.Select(e => e.Resource).Where(r => r != null && r is StructureDefinition))
@@ -235,13 +247,16 @@ namespace Hl7.Fhir.Tests.Serialization
                                     failedInvariantCodes.Add(item.Details.Coding[0].Code, 1);
                                 else
                                     failedInvariantCodes[item.Details.Coding[0].Code]++;
+#if !NETCore
                                 Trace.WriteLine("\t" + item.Details.Coding[0].Code + ": " + item.Details.Text);
                                 Trace.WriteLine("\t" + item.Diagnostics);
+#endif
                             }
+#if !NETCore
                             Trace.WriteLine("-------------------------");
                             Trace.WriteLine(FhirSerializer.SerializeResourceToXml(resource));
                             Trace.WriteLine("-------------------------");
-
+#endif
                             // count the issue
                             errorCount++;
                         }

@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsFalse(factory.CanCreate(typeof(TestCreateArgConstructor)));
 
             // Cannot create interface types
-            Assert.IsFalse(factory.CanCreate(typeof(ICloneable)));
+            Assert.IsFalse(factory.CanCreate(typeof(IEnumerable)));
 
             // Cannot create arrays, since we don't know size upfront
             Assert.IsFalse(factory.CanCreate(typeof(int[])));

@@ -9,42 +9,30 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.IO;
 using System.Xml;
-using System.Xml.Linq;
-using Newtonsoft.Json;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
-using System.IO.Compression;
-using Hl7.Fhir.Validation;
-using System.ComponentModel.DataAnnotations;
 using Hl7.FhirPath;
 
 namespace Hl7.Fhir.Tests.Model
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableValidateSearchExtractionAllExamplesTest
-#else
     public class ValidateSearchExtractionAllExamplesTest
-#endif
     {
         [TestMethod]
         [TestCategory("LongRunner")]
         public void SearchExtractionAllExamples()
         {
-            string examplesZip = @"TestData\examples.zip";
-
             FhirXmlParser parser = new FhirXmlParser();
             int errorCount = 0;
             int testFileCount = 0;
             Dictionary<String, int> exampleSearchValues = new Dictionary<string, int>();
             Dictionary<string, int> failedInvariantCodes = new Dictionary<string, int>();
-            var zip = ZipFile.OpenRead(examplesZip);
+            var zip = TestDataHelper.ReadTestZip("examples.zip");
+
             using (zip)
             {
                 foreach (var entry in zip.Entries)
@@ -80,6 +68,7 @@ namespace Hl7.Fhir.Tests.Model
             }
 
             var missingSearchValues = exampleSearchValues.Where(i => i.Value == 0);
+
             if (missingSearchValues.Count() > 0)
             {
                 Debug.WriteLine(String.Format("\r\n------------------\r\nValidation failed, missing data in {0} of {1} search parameters", missingSearchValues.Count(), exampleSearchValues.Count));

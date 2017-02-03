@@ -42,12 +42,16 @@ namespace Hl7.Fhir.Tests.Rest
         [TestInitialize]
         public void TestInitialize()
         {
+            #if !NETCore
             System.Diagnostics.Trace.WriteLine("Testing against fhir server: " + testEndpoint);
+            #endif
         }
 
         public static void DebugDumpBundle(Hl7.Fhir.Model.Bundle b)
         {
+            #if !NETCore
             System.Diagnostics.Trace.WriteLine(String.Format("--------------------------------------------\r\nBundle Type: {0} ({1} total items, {2} included)", b.Type.ToString(), b.Total, (b.Entry != null ? b.Entry.Count.ToString() : "-")));
+         
             if (b.Entry != null)
             {
                 foreach (var item in b.Entry)
@@ -65,6 +69,7 @@ namespace Hl7.Fhir.Tests.Rest
                     }
                 }
             }
+            #endif
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
@@ -198,13 +203,14 @@ namespace Hl7.Fhir.Tests.Rest
 			Assert.AreEqual("Den Burg", loc.Resource.Address.City);
 		}
 #endif
+
         public static void Compression_OnBeforeRequestGZip(object sender, BeforeRequestEventArgs e)
         {
             if (e.RawRequest != null)
             {
                 // e.RawRequest.AutomaticDecompression = System.Net.DecompressionMethods.Deflate | System.Net.DecompressionMethods.GZip;
                 e.RawRequest.Headers.Remove("Accept-Encoding");
-                e.RawRequest.Headers.Add("Accept-Encoding", "gzip");
+                e.RawRequest.Headers["Accept-Encoding"] = "gzip";
             }
         }
 
@@ -214,7 +220,7 @@ namespace Hl7.Fhir.Tests.Rest
             {
                 // e.RawRequest.AutomaticDecompression = System.Net.DecompressionMethods.Deflate | System.Net.DecompressionMethods.GZip;
                 e.RawRequest.Headers.Remove("Accept-Encoding");
-                e.RawRequest.Headers.Add("Accept-Encoding", "deflate");
+                e.RawRequest.Headers["Accept-Encoding"] = "deflate";
             }
         }
 
@@ -224,7 +230,7 @@ namespace Hl7.Fhir.Tests.Rest
             {
                 // e.RawRequest.AutomaticDecompression = System.Net.DecompressionMethods.Deflate | System.Net.DecompressionMethods.GZip;
                 e.RawRequest.Headers.Remove("Accept-Encoding");
-                e.RawRequest.Headers.Add("Accept-Encoding", "gzip, deflate");
+                e.RawRequest.Headers["Accept-Encoding"] =  "gzip, deflate";
             }
         }
 
@@ -234,7 +240,7 @@ namespace Hl7.Fhir.Tests.Rest
             FhirClient client = new FhirClient("http://sqlonfhir-dstu2.azurewebsites.net/fhir"); // testEndpoint);
             Bundle result;
 
-#if !PORTABLE45
+#if !PORTABLE45 && !NETCore
             client.CompressRequestBody = true;
             client.OnBeforeRequest += Compression_OnBeforeRequestGZip;
             client.OnAfterResponse += Client_OnAfterResponse;
@@ -243,14 +249,17 @@ namespace Hl7.Fhir.Tests.Rest
             client.OnAfterResponse -= Client_OnAfterResponse;
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Entry.Count() > 10, "Test should use testdata with more than 10 reports");
+#if !NETCore
             client.OnBeforeRequest -= Compression_OnBeforeRequestZipOrDeflate;
 
             client.OnBeforeRequest += Compression_OnBeforeRequestZipOrDeflate;
+#endif
             result = client.Search<DiagnosticReport>(pageSize: 10);
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Entry.Count <= 10);
+#if !NETCore
             client.OnBeforeRequest -= Compression_OnBeforeRequestGZip;
-
+#endif
             var withSubject =
                 result.Entry.ByResourceType<DiagnosticReport>().FirstOrDefault(dr => dr.Subject != null);
             Assert.IsNotNull(withSubject, "Test should use testdata with a report with a subject");
@@ -269,8 +278,9 @@ namespace Hl7.Fhir.Tests.Rest
             //Assert.IsNotNull(result.Entry.Single(entry => entry.Resource.ResourceIdentity().ResourceType ==
             //            typeof(Patient).GetCollectionName()));
 
-
+#if !NETCore
             client.OnBeforeRequest += Compression_OnBeforeRequestDeflate;
+#endif
             result = client.Search<Patient>(new string[] { "name=Chalmers", "name=Peter" });
 
             Assert.IsNotNull(result);
@@ -436,7 +446,7 @@ namespace Hl7.Fhir.Tests.Rest
         public void CreateEditDelete()
         {
             FhirClient client = new FhirClient(testEndpoint);
-#if !PORTABLE45
+#if !PORTABLE45 && !NETCore
             client.OnBeforeRequest += Compression_OnBeforeRequestZipOrDeflate;
             // client.CompressRequestBody = true;
 #endif
@@ -575,7 +585,9 @@ namespace Hl7.Fhir.Tests.Rest
             CreateEditDelete(); // this test does a create, update, update, delete (4 operations)
 
             FhirClient client = new FhirClient(testEndpoint);
+#if !NETCore
             System.Diagnostics.Trace.WriteLine("History of this specific patient since just before the create, update, update, delete (4 operations)");
+#endif
             Bundle history = client.History(createdTestPatientUrl);
             Assert.IsNotNull(history);
             DebugDumpBundle(history);
@@ -587,7 +599,9 @@ namespace Hl7.Fhir.Tests.Rest
             //// Now, assume no one is quick enough to insert something between now and the next
             //// tests....
 
+#if !NETCore
             System.Diagnostics.Trace.WriteLine("\r\nHistory on the patient type");
+#endif
             history = client.TypeHistory("Patient", timestampBeforeCreationAndDeletions);
             Assert.IsNotNull(history);
             DebugDumpBundle(history);
@@ -595,7 +609,9 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 
+#if !NETCore
             System.Diagnostics.Trace.WriteLine("\r\nHistory on the patient type (using the generic method in the client)");
+#endif
             history = client.TypeHistory<Patient>(timestampBeforeCreationAndDeletions, summary: SummaryType.True);
             Assert.IsNotNull(history);
             DebugDumpBundle(history);
@@ -603,7 +619,9 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 
+#if !NETCore
             System.Diagnostics.Trace.WriteLine("\r\nWhole system history since the start of this test");
+#endif
             history = client.WholeSystemHistory(timestampBeforeCreationAndDeletions);
             Assert.IsNotNull(history);
             DebugDumpBundle(history);
@@ -1043,7 +1061,7 @@ namespace Hl7.Fhir.Tests.Rest
             FhirClient validationFhirClient = new FhirClient("https://sqlonfhir.azurewebsites.net/fhir");
             validationFhirClient.OnBeforeRequest += (object sender, BeforeRequestEventArgs e) =>
             {
-                e.RawRequest.Headers.Add("Authorization", "Bearer bad-bearer");
+                e.RawRequest.Headers["Authorization"] = "Bearer bad-bearer";
             };
             try
             {

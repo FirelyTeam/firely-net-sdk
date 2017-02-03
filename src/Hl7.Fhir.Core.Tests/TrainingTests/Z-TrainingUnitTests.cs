@@ -88,7 +88,9 @@ namespace FHIR.Server.Tests
             ResourceIdentity ri = ResourceIdentity.Build(
                     new Uri("http://sqlonfhir.azurewebsites.net/fhir"),
                     "Patient", "45", "1");
+#if !NETCore
             Trace.WriteLine(ri.WithoutVersion().OriginalString);
+#endif
         }
 
         [TestMethod, TestCategory("Training")]
@@ -109,6 +111,7 @@ namespace FHIR.Server.Tests
             };
         }
 
+#if !NETCore
         public void ParseElementDefinitionConstraint()
         {
             string constraint = "";
@@ -146,6 +149,7 @@ namespace FHIR.Server.Tests
                 newConst.AddExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString(expression));
             }
         }
+#endif
 
         [TestMethod, TestCategory("Training")]
         public void TestParameters()

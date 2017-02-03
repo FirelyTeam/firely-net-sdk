@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 [assembly: NeutralResourcesLanguage("en")]
 [assembly: ComVisible(false)]
 
-[assembly: AssemblyVersion("1.0.*")]   // Stick test version to always 1.0, i.e. "pseudo-strong naming"
+[assembly: AssemblyVersion("1.0.0.0")]   // Stick test version to always 1.0, i.e. "pseudo-strong naming"
 
 // Sign this for trusted friendship to tested Assembly. See: https://msdn.microsoft.com/en-us/library/bb385180.aspx
 #if SIGNED

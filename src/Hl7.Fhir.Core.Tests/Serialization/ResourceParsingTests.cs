@@ -139,9 +139,9 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual("superman", p.GenderElement.ObjectValue);
         }
 
-#if !PORTABLE45
-        // This test doesn't work on the portable framework due to the 
-        // JSON parser on mobile doesn't handle the large decimal values
+#if !NETCore
+        // This test doesn't work on the portable framework due to the
+        // JSON parser not handling large decimal values
         [TestMethod]
         public void EdgecaseRoundtrip()
         {

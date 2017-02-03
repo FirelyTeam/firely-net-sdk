@@ -8,28 +8,18 @@
 
 using Hl7.Fhir.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 using Hl7.Fhir.Serialization;
-using System.Xml;
+using static Hl7.Fhir.Tests.TestDataHelper;
 
 namespace Hl7.Fhir.Tests.Model
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableDeepMatchTest
-#else
     public class DeepMatchTest
-#endif
     {
         [TestMethod]
         public void CheckMatchDeepCopied()
         {
-            string xml = File.ReadAllText(@"TestData\TestPatient.xml");
+            string xml = ReadTestData("TestPatient.xml");
 
             var p = new FhirXmlParser().Parse<Patient>(xml);
             var p2 = (Patient)p.DeepCopy();
@@ -41,7 +31,7 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void CheckComparePrimitiveChanged()
         {
-            string xml = File.ReadAllText(@"TestData\TestPatient.xml");
+            string xml = ReadTestData("TestPatient.xml");
 
             var p = new FhirXmlParser().Parse<Patient>(xml);
             var p2 = (Patient)p.DeepCopy();
@@ -65,7 +55,7 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void CheckCompareListChanged()
         {
-            string xml = File.ReadAllText(@"TestData\TestPatient.xml");
+            string xml = ReadTestData("TestPatient.xml");
 
             var p = new FhirXmlParser().Parse<Patient>(xml);
             var p2 = (Patient)p.DeepCopy();
