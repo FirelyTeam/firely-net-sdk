@@ -26,23 +26,18 @@ using System.ComponentModel.DataAnnotations;
 namespace Hl7.Fhir.Tests.Serialization
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableValidateAllExamplesTest
-#else
     public class ValidateAllExamplesTest
-#endif
     {
         [TestMethod]
         [TestCategory("LongRunner")]
         public void ValidateInvariantAllExamples()
         {
-            string examplesZip = @"TestData\examples.zip";
             FhirXmlParser parser = new FhirXmlParser();
             int errorCount = 0;
             int testFileCount = 0;
             Dictionary<string, int> failedInvariantCodes = new Dictionary<string, int>();
 
-            var zip = ZipFile.OpenRead(examplesZip);
+            var zip = TestDataHelper.ReadTestZip("examples.zip");
             using (zip)
             {
                 foreach (var entry in zip.Entries)
@@ -81,15 +76,13 @@ namespace Hl7.Fhir.Tests.Serialization
                                     failedInvariantCodes.Add(item.Details.Coding[0].Code, 1);
                                 else
                                     failedInvariantCodes[item.Details.Coding[0].Code]++;
-#if !NETCore
+
                                 Trace.WriteLine("\t" + item.Details.Coding[0].Code + ": " + item.Details.Text);
-#endif
                             }
-#if !NETCore
+
                             Trace.WriteLine("-------------------------");
                             Trace.WriteLine(FhirSerializer.SerializeResourceToXml(resource));
                             Trace.WriteLine("-------------------------");
-#endif
                         }
                         if (outcome.Issue.Count != 0)
                         {

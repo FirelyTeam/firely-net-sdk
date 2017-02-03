@@ -19,11 +19,7 @@ using Hl7.Fhir.Validation;
 namespace Hl7.Fhir.Tests.Validation
 {
     [TestClass]
-#if PORTABLE45
-    public class PortableValidationTests
-#else
     public class ValidationTests
-#endif
     {
         [TestMethod]
         public void TestIdValidation()
@@ -196,11 +192,7 @@ namespace Hl7.Fhir.Tests.Validation
             validateErrorOrFail(enc, true, membername: "Value");
         }
 
-#if PORTABLE45 || NETCore
         [TestMethod, Ignore]    // XHtml validation not available in portable library
-#else
-        [TestMethod]
-#endif
         public void TestXhtmlValidation()
         {
             var p = new Patient();

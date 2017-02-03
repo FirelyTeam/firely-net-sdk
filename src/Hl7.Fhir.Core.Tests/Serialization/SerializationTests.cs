@@ -19,11 +19,7 @@ using System.Globalization;
 namespace Hl7.Fhir.Tests.Serialization
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableSerializationTests
-#else
     public class SerializationTests
-#endif
     {
         private const string metaXml = "<meta xmlns=\"http://hl7.org/fhir\"><versionId value=\"3141\" /><lastUpdated value=\"2014-12-24T16:30:56.031+01:00\" /></meta>";
         private readonly Meta metaPoco = new Meta { LastUpdated = new DateTimeOffset(2014, 12, 24, 16, 30, 56, 31, new TimeSpan(1, 0, 0)), VersionId = "3141" };
@@ -195,7 +191,7 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void HandleCommentsJson()
         {
-            string json = File.ReadAllText(@"TestData\TestPatient.json");
+            string json = TestDataHelper.ReadTestData("TestPatient.json");
 
             var pat = FhirJsonParser.Parse<Patient>(json);
 
@@ -215,7 +211,7 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod, Ignore]
         public void HandleCommentsXml()
         {
-            string xml = File.ReadAllText(@"TestData\TestPatient.xml");
+            string xml = TestDataHelper.ReadTestData("TestPatient.xml");
 
             var pat = FhirXmlParser.Parse<Patient>(xml);
 
@@ -371,7 +367,7 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void SerializeUnknownEnums()
         {
-            string xml = File.ReadAllText(@"TestData\TestPatient.xml");
+            string xml = TestDataHelper.ReadTestData("TestPatient.xml");
             var pser = new FhirXmlParser();
             var p = pser.Parse<Patient>(xml);
             string outp = FhirSerializer.SerializeResourceToXml(p);
@@ -396,7 +392,7 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             // var res = new ValueSet() { Url = "http://example.org/fhir/ValueSet/MyValueSetExample" };
 
-            string json = File.ReadAllText(@"TestData\valueset-v2-0717.json");
+            string json = TestDataHelper.ReadTestData(@"valueset-v2-0717.json");
             Assert.IsNotNull(json);
             var parser = new FhirJsonParser();
             var vs = parser.Parse<ValueSet>(json);

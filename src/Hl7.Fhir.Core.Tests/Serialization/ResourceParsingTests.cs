@@ -17,14 +17,9 @@ using System.Collections.Generic;
 namespace Hl7.Fhir.Tests.Serialization
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableResourceParsingTests
-#else
     public class ResourceParsingTests
-#endif
     {
         [TestMethod]
-        //public void AcceptXsiStuffOnRoot()
         public void ConfigureFailOnUnknownMember()
         {
             var xml = "<Patient xmlns='http://hl7.org/fhir'><daytona></daytona></Patient>";
@@ -98,7 +93,7 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void AcceptUnknownEnums()
         {
-            string xml = File.ReadAllText(@"TestData\TestPatient.xml");
+            string xml = TestDataHelper.ReadTestData("TestPatient.xml");
             var pser = new FhirXmlParser();
 
             // Assume that we can happily read the patient gender when enums are enforced
@@ -139,13 +134,13 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual("superman", p.GenderElement.ObjectValue);
         }
 
-#if !NETCore
-        // This test doesn't work on the portable framework due to the
-        // JSON parser not handling large decimal values
+        // This test doesn't work on netcore due to the
+        // JSON parser not handling large decimal values, so edit the file to skip the large decimal
+        // and remove the Ignore here.
         [TestMethod]
         public void EdgecaseRoundtrip()
         {
-            string json = File.ReadAllText(@"TestData\json-edge-cases.json");
+            string json = TestDataHelper.ReadTestData("json-edge-cases.json");
             var tempPath = Path.GetTempPath();
 
             var poco = FhirJsonParser.Parse<Resource>(json);
@@ -164,7 +159,6 @@ namespace Hl7.Fhir.Tests.Serialization
             JsonAssert.AreSame("edgecase.json", json, json2, errors);
             Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content\r\n" + String.Join("\r\n", errors));
         }
-#endif
 
         [TestMethod]
         public void ContainedBaseIsNotAddedToId()

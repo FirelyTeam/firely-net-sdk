@@ -18,11 +18,7 @@ using Hl7.Fhir.Introspection;
 namespace Hl7.Fhir.Tests.Serialization
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableDefaultModelFactoryTest
-#else
 	public class DefaultModelFactoryTest
-#endif
     {    
         [TestMethod]
         public void TestSupportedTypes()

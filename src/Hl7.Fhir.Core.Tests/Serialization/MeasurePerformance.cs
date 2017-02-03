@@ -18,20 +18,13 @@ using Hl7.Fhir.Serialization;
 namespace Hl7.Fhir.Tests.Serialization
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableMeasurePerformance
-#else
 	public class MeasurePerformance
-#endif
     {
         [TestMethod]
         public void RunPerfTest()
         {
-            string xml = File.ReadAllText(@"TestData\TestPatient.xml");
-            string json = File.ReadAllText(@"TestData\TestPatient.json");
-
-            //string xml = Hl7.Fhir.Core.Tests.Properties.TestResources.TestPatientXml;
-            //string json = Hl7.Fhir.Core.Tests.Properties.TestResources.TestPatientJson;
+            string xml = TestDataHelper.ReadTestData("TestPatient.xml");
+            string json = TestDataHelper.ReadTestData(@"TestPatient.json");
 
             var once = new FhirXmlParser().Parse<Resource>(xml);
 

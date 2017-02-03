@@ -15,11 +15,7 @@ namespace Hl7.Fhir.Tests.Serialization
 {
    
     [TestClass]
-#if PORTABLE45
-	public class PortableClassFactoryListTest
-#else
 	public class ClassFactoryListTest
-#endif
     {
         [TestMethod]
         public void FindModelClassFactory()
@@ -39,20 +35,13 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
-#if !NETCore
-        [ExpectedException(typeof(InvalidOperationException))]
-#endif
         public void FailWhenNoFactoryFound()
         {
             ModelFactoryList facs = new ModelFactoryList();
 
             facs.Add(new SpecificModelClassFactory());
 
-#if NETCore
             Assert.ThrowsException<InvalidOperationException>(() => facs.FindFactory(typeof (GenericModelClass)));
-#else
-            var result = facs.FindFactory(typeof(GenericModelClass));
-#endif
         }
     }
 
