@@ -12,7 +12,7 @@
 		<element>
 			<path value="Patient.telecom" />
 			<slicing>
-				<discriminator value="system" />
+				<!-- NB: discriminator-less matching -->
 				<ordered value="true" />
 				<rules value="openAtEnd" />
 			</slicing>

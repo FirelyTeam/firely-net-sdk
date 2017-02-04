@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2017, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -12,10 +12,13 @@ using System.Linq;
 using System.Text;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Navigation
 {
-    public class ElementDefinitionNavigator
+    // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+    [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
+    public partial class ElementDefinitionNavigator
     {
         internal ElementDefinitionNavigator()
         {
@@ -319,21 +322,16 @@ namespace Hl7.Fhir.Specification.Navigation
         //
         //----------------------------------
 
-
-        public Bookmark Bookmark()
-        {
-            return new Bookmark() { data = Current };
-        }
-
+        public Bookmark Bookmark() => new Bookmark(Current, OrdinalPosition);
 
         public bool IsAtBookmark(Bookmark bookmark)
         {
-            if (bookmark.data == null)
-                return OrdinalPosition == null;
-
             var elem = bookmark.data as ElementDefinition;
-
-            return this.Current == elem;
+            if (elem == null)
+            {
+                return OrdinalPosition == null;
+            }
+            return object.ReferenceEquals(Current, elem);
         }
 
         public bool ReturnToBookmark(Bookmark bookmark)
@@ -343,26 +341,33 @@ namespace Hl7.Fhir.Specification.Navigation
                 OrdinalPosition = null;
                 return true;
             }
-            else
+
+            var elem = bookmark.data as ElementDefinition;
+            if (elem == null) { return false; }
+
+            // If the bookmark has an index, then try to use it
+            var index = bookmark.index.GetValueOrDefault(-1);
+            if (index > -1 && index < Count)
             {
-                var elem = bookmark.data as ElementDefinition;
-
-                if (elem == null) return false;
-
-                var index = Elements.IndexOf(elem);
-
-                if (index != -1)
+                // Verify: element at index is a match?
+                if (object.ReferenceEquals(Elements[index], bookmark.data))
                 {
                     OrdinalPosition = index;
                     return true;
                 }
-                else
-                    return false;
+                // No match; e.g. element list was modified after creating bookmark
             }
+
+            // Otherwise scan the element list for the bookmarked element
+            index = Elements.IndexOf(elem);
+            if (index != -1)
+            {
+                OrdinalPosition = index;
+                return true;
+            }
+
+            return false;
         }
-
-
-
 
         //----------------------------------
         //
@@ -541,148 +546,19 @@ namespace Hl7.Fhir.Specification.Navigation
             return new List<ElementDefinition>(Elements);
         }
 
-        private static bool isDeeperPath(string me, string that) => NumberOfParts(that) > NumberOfParts(me);
-
-        /// <summary>Determines if the specified element paths represent sibling elements.</summary>
-        public static bool IsSibling(string me, string him) => GetParentPath(me) == GetParentPath(him);
-
-        /// <summary>Determines if the specified child path represent a direct child of the specified parent path.</summary>
-        public static bool IsDirectChildPath(string parent, string child) => IsChildPath(parent, child) && child.IndexOf('.', parent.Length + 1) == -1;
-        // => return child.StartsWith(parent + ".") && child.IndexOf('.', parent.Length + 1) == -1;
-        // A child with a single path segment, is "root" and child of "no" parent
-        //if (parent == String.Empty && child.IndexOf('.') == -1) return true;
-
-        /// <summary>Determines if the specified child path represent a (direct/grand) child of the specified parent path.</summary>
-        public static bool IsChildPath(string parent, string child) => child.StartsWith(parent + ".");
-
-        public static string GetParentPath(string child)
+        // public override string ToString()
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        string DebuggerDisplay
         {
-            var dot = child.LastIndexOf(".");
-            return dot != -1 ? child.Substring(0, dot) : String.Empty;
-        }
-
-        internal static bool IsChoiceElement(string elementName)
-        {
-            return elementName.EndsWith("[x]");
-        }
-
-        /// <summary>Determines if an element name matches a choice element name in the base profile.</summary>
-        /// <param name="baseName">A base element name.</param>
-        /// <param name="newName">An derived element name.</param>
-        /// <example>Match "value[x]" and "valueCodeableConcept"</example>
-        internal static bool IsRenamedChoiceElement(string baseName, string newName)
-        {
-            return baseName != null
-                && newName != null
-                && IsChoiceElement(baseName)
-                && String.Compare(baseName, 0, newName, 0, baseName.Length - 3) == 0 && newName.Length > baseName.Length;
-        }
-
-        /// <summary>Determines if the specified element path matches a base element path.</summary>
-        /// <param name="baseElementPath">A base element path.</param>
-        /// <param name="elementPath">An derived element path.</param>
-        /// <example>
-        /// IsCandidateBaseElementPath("DomainResource.meta", "Patient.meta")
-        /// IsCandidateBaseElementPath("Extension.value[x]", "Extension.valueBoolean")
-        /// IsCandidateBaseElementPath("Element.id", "Extension.url.id")
-        /// </example>
-        internal static bool IsCandidateBaseElementPath(string baseElementPath, string elementPath)
-        {
-            // var root = GetPathRoot(elementPath);
-            // var rebased = ReplacePathRoot(baseElementPath, root);
-            // return elementPath == rebased || IsRenamedChoiceElement(rebased, elementPath);
-            var dot1 = baseElementPath != null ? baseElementPath.LastIndexOf('.') : -1;
-            var dot2 = elementPath != null ? elementPath.LastIndexOf('.') : -1;
-
-            if (dot1 > 0 && dot2 > 0)
+            get
             {
-                var basePathPart = baseElementPath.Substring(dot1 + 1);
-                var pathPart = elementPath.Substring(dot2 + 1);
-                return basePathPart == pathPart || IsRenamedChoiceElement(basePathPart, pathPart);
-            }
-            return !string.IsNullOrEmpty(baseElementPath)
-                && !string.IsNullOrEmpty(elementPath)
-                && dot1 == -1 && dot2 == -1;
-            // && !ModelInfo.IsCoreModelType(baseElementPath);
-        }
-
-        /// <summary>Determines if the specified element path represents a root element.</summary>
-        public static bool IsRootPath(string path) => !string.IsNullOrEmpty(path) && !path.Contains('.');
-
-        /// <summary>Determines if the specified element path represents a (modifier) extension element.</summary>
-        public static bool IsExtensionPath(string path) => !string.IsNullOrEmpty(path) && (path.EndsWith(".extension") || path.EndsWith(".modifierExtension"));
-
-        /// <summary>Returns the root component of the specified element path.</summary>
-        /// <param name="path">An element path.</param>
-        /// <returns>A root path.</returns>
-        public static string GetPathRoot(string path)
-        {
-            var dot = path.IndexOf('.');
-            return dot > 0 ? path.Substring(0, dot) : path;
-        }
-
-        /// <summary>Replace the root component of the specified element path.</summary>
-        /// <param name="path">An element path.</param>
-        /// <param name="newRoot">The new path root.</param>
-        /// <returns>An element path.</returns>
-        public static string ReplacePathRoot(string path, string newRoot)
-        {
-            var dot = path.IndexOf('.');
-            return dot > 0 ? newRoot + path.Substring(dot) : newRoot;
-        }
-
-        internal static int NumberOfParts(string path)
-        {
-            var count = 1;
-            for (var i = 0; i < path.Length; i++)
-                if (path[i] == '.') count++;
-
-            return count;
-        }
-
-        // [WMR 20160917] New
-        public static string GetLastPathComponent(string path)
-        {
-            if (string.IsNullOrEmpty(path)) return string.Empty;
-            var pos = path.LastIndexOf(".");
-            return pos > -1 ? path.Substring(pos + 1) : path;
-        }
-
-        // [WMR 20161013] New
-        private const string RESLICE_NAME_SEPARATOR = "/";
-
-        /// <summary>Determines if the specified element name represents a reslice: "slice/reslice".</summary>
-        public static bool IsResliceName(string sliceName) => sliceName != null && sliceName.Contains(RESLICE_NAME_SEPARATOR);
-
-        /// <summary>Extracts the name of the base slice from a reslicing constraint name.</summary>
-        /// <returns>The name of the base slice, or <c>null</c>.</returns>
-        /// <example>
-        /// <code>GetBaseSliceName("slice/reslice")</code>
-        /// Returns: "slice"
-        /// </example>
-        public static string GetBaseSliceName(string resliceName)
-        {
-            if (resliceName != null)
-            {
-                var pos = resliceName.LastIndexOf(RESLICE_NAME_SEPARATOR);
-                if (pos >= 0)
+                var output = new StringBuilder();
+                foreach (var elem in Elements)
                 {
-                    return resliceName.Substring(0, pos);
+                    output.AppendFormat("{0}{1}\r\n", elem == Current ? "*" : "", elem.Path);
                 }
+                return output.ToString();
             }
-            return null;
-        }
-
-        public override string ToString()
-        {
-            var output = new StringBuilder();
-
-            foreach (var elem in Elements)
-            {
-                output.AppendFormat("{0}{1}" + Environment.NewLine, elem == Current ? "*" : "", elem.Path);
-            }
-
-            return output.ToString();
         }
     }
 }

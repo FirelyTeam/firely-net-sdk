@@ -93,6 +93,7 @@
     </Compile>
     <Compile Include="JsonNavigatorTests.cs" />
     <Compile Include="JTokenExtensionsTests.cs" />
+    <Compile Include="SnapshotElementMatcherTests.cs" />
     <Compile Include="Source\ResolverAndSourceExtensionTests.cs" />
     <Compile Include="Source\ConformanceSourceTests.cs" />
     <Compile Include="Source\ArtifactSourceTests.cs" />
@@ -115,6 +116,21 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="TestData\snapshot-test\Chris Grenz\codeable-with-systems-profile.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\Ewout\DocumentComposition.structuredefinition.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\WMR\MyCustomObservation.structuredefinition.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\WMR\MyCustomObservation3.structuredefinition.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\WMR\ObservationLabelExtension.structuredefinition.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\WMR\ObservationLocationExtension.structuredefinition.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\validation\patient-telecom-reslice-ek.xml">
@@ -926,6 +942,12 @@
     <None Include="TestData\TestPatient.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Content Include="TestData\validation\patient-ck.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\validation\organization-ck.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.Net45.csproj">

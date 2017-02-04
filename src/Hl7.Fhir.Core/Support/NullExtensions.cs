@@ -8,32 +8,44 @@
 
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Support
 {
     public static class NullExtensions
     {
-        public static bool IsNullOrEmpty(this IList list)
-        {
-            if (list == null) { return true; }
+#if true
+        // Note: argument needs to be strongly typed (List<T>, not IList<T>) in order to prevent resolving conflicts with generic method below
 
-            return list.Count == 0;
-        }
+        /// <summary>Determines if the list is <c>null</c> or empty.</summary>
+        public static bool IsNullOrEmpty(this IList list) => list == null || list.Count == 0;
 
-        public static bool IsNullOrEmpty(this Primitive element)
+        /// <summary>
+        /// Determines if the element is <c>null</c> or empty.
+        /// For primitive values, verifies that the value equals <c>null</c>.
+        /// For primitive string values, verifies that the string value is <c>null</c> or empty.
+        /// Recursively verifies that all <see cref="Base.Children"/> instances are <c>null</c> or empty.
+        /// </summary>
+
+        public static bool IsNullOrEmpty(this Base element)
         {
             if (element == null) { return true; }
 
-            if (element.ObjectValue != null) { return false; }
+            IStringValue ss;
+            Primitive pp;
+            var isEmpty = (ss = element as IStringValue) != null ? string.IsNullOrEmpty(ss.Value)
+                : (pp = element as Primitive) != null ? pp.ObjectValue == null
+                : true;
 
-            // Recursively check all child elements
-            return element.Children.All(e => e.IsNullOrEmpty());
+            // Note: Children collection includes extensions
+            return isEmpty && !element.Children.Any(c => !c.IsNullOrEmpty());
         }
+
+#else
+        /// <summary>Determines if the list is <c>null</c> or empty.</summary>
+        public static bool IsNullOrEmpty(this IList list) => list == null || list.Count == 0;
+
 
         /// <summary>Determines if the element is <c>null</c> or empty.</summary>
         /// <param name="element">A <see cref="Base"/> instance.</param>
@@ -43,10 +55,6 @@ namespace Hl7.Fhir.Support
         /// </returns>
         public static bool IsNullOrEmpty(this Base element)
         {
-            // Actually, we shoud really check all members...
-            // return element == null;
-
-            // [WMR 20161019] New
             if (element == null) { return true; }
 
             // If the element is a primitive, then check ObjectValue
@@ -54,8 +62,29 @@ namespace Hl7.Fhir.Support
             if (p != null) { return p.IsNullOrEmpty(); }
 
             // Recursively check all child elements
-            return element.Children.All(e => e.IsNullOrEmpty());
+            return isChildrenEmpty(element);
         }
 
+        /// <summary>Determines if the primitive element is <c>null</c> or empty.</summary>
+        /// <param name="element">A <see cref="Primitive"/> element instance.</param>
+        /// <returns>
+        /// Returns <c>true</c> if the element is <c>null</c>, or if it has no value and no child extensions.
+        /// Returns <c>false</c> if the element has a non-empty value and/or one or more extensions.
+        /// </returns>
+        public static bool IsNullOrEmpty(this Primitive element)
+        {
+            if (element == null) { return true; }
+
+            // If the element is a string, then check Value, otherwise ObjectValue
+            var s = element as IStringValue;
+            var isEmpty = s != null ? string.IsNullOrEmpty(s.Value) : element.ObjectValue == null;
+
+            return isEmpty && isChildrenEmpty(element);
+        }
+
+        /// <summary>Determines if the child element collection is empty.</summary>
+        static bool isChildrenEmpty(Base element) => element?.Children.All(e => e.IsNullOrEmpty()) ?? true;
+
+#endif
     }
 }

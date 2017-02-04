@@ -10,6 +10,7 @@ using System.Linq;
 namespace Hl7.Fhir.Validation
 {
     [TestClass]
+    
     public class ScopeTrackerTests
     {
         [TestInitialize]

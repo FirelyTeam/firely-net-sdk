@@ -12,6 +12,7 @@ using System.Xml.Linq;
 using System;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Validation
 {
@@ -62,7 +63,7 @@ namespace Hl7.Fhir.Validation
 
             Assert.IsTrue(ChildNameMatcher.NameMatches("active", data));
             Assert.IsTrue(ChildNameMatcher.NameMatches("activeBoolean", data));
-            Assert.IsFalse(ChildNameMatcher.NameMatches("activeDateTime", data));
+            Assert.IsFalse(ChildNameMatcher.NameMatches("activeDateTime", data)); 
             Assert.IsTrue(ChildNameMatcher.NameMatches("active[x]", data));
             Assert.IsFalse(ChildNameMatcher.NameMatches("activate", data));
         }
@@ -307,8 +308,8 @@ namespace Hl7.Fhir.Validation
             //      http://validationtest.org/fhir/StructureDefinition/QuestionnaireWithFixedType
             var report = _validator.Validate(questionnaire);
             Assert.IsFalse(report.Success);
-            Assert.AreEqual(19, report.Errors);
-            Assert.AreEqual(3, report.Warnings);           // 3x narrative constraint with no fhirpath
+            Assert.AreEqual(35, report.Errors);
+            Assert.AreEqual(0, report.Warnings);           // 3x narrative constraint with no fhirpath
         }
 
 
@@ -360,7 +361,7 @@ namespace Hl7.Fhir.Validation
 
             var report = _validator.Validate(careplan, careplanSd);
             Assert.IsTrue(report.Success);
-            Assert.AreEqual(3, report.Warnings);            // 3x invariant
+            Assert.AreEqual(0, report.Warnings);            // 3x invariant
         }
 
 
@@ -460,7 +461,7 @@ namespace Hl7.Fhir.Validation
 
             var report = _validator.Validate(cpDoc.CreateReader());
             Assert.IsTrue(report.Success);
-            Assert.AreEqual(3, report.Warnings);            // 3x missing invariant
+            Assert.AreEqual(0, report.Warnings);            // 3x missing invariant
 
             // Damage the document by removing the mandated 'status' element
             cpDoc.Element(XName.Get("CarePlan", "http://hl7.org/fhir")).Elements(XName.Get("status", "http://hl7.org/fhir")).Remove();
@@ -515,6 +516,31 @@ namespace Hl7.Fhir.Validation
 
 
         [TestMethod]
+        public void ValidateExtensionExamples()
+        {
+            var levinXml = File.ReadAllText(@"TestData\validation\Levin.patient.xml");
+            var levin = (new FhirXmlParser()).Parse<Patient>(levinXml);
+            Assert.IsNotNull(levin);
+
+            var report = _validator.Validate(levin);
+
+            Assert.IsTrue(report.Success);
+            Assert.AreEqual(0, report.Warnings);
+
+            // Now, rename the mandatory NCT sub-extension
+            levin.Extension[1].Extension[0].Url = "NCTX";
+            report = _validator.Validate(levin);
+            Assert.IsFalse(report.Success);
+            Assert.IsTrue(report.ToString().Contains("Instance count for 'Extension.extension:NCT' is 0"));
+
+            levin.Extension[1].Extension[0].Url = "NCT";
+            levin.Extension[1].Extension[1].Value = new FhirString("wrong!");
+            report = _validator.Validate(levin);
+            Assert.IsFalse(report.Success);
+            Assert.IsTrue(report.ToString().Contains("The declared type of the element (Period) is incompatible with that of the instance ('string')"));
+        }
+
+        [TestMethod]
         public void ValidateBundleExample()
         {
             var bundle = _source.ResolveByUri("http://example.org/examples/Bundle/MainBundle");
@@ -523,11 +549,9 @@ namespace Hl7.Fhir.Validation
             var report = _validator.Validate(bundle);
 
             Assert.IsTrue(report.Success);
-            Assert.AreEqual(22, report.Warnings);
+            Assert.AreEqual(1, report.Warnings);
         }
-
-
-
+    
 
         internal class BundleExampleResolver : IResourceResolver
         {
@@ -539,7 +563,8 @@ namespace Hl7.Fhir.Validation
             }
             public Resource ResolveByCanonicalUri(string uri)
             {
-                throw new NotImplementedException();
+                // throw new NotImplementedException(); // Slow, pollutes debug output window
+                return null;
             }
 
             public Resource ResolveByUri(string uri)
@@ -558,6 +583,146 @@ namespace Hl7.Fhir.Validation
             }
 
         }
+
+        class InMemoryResourceResolver : IResourceResolver
+        {
+            ILookup<string, Resource> _resources;
+
+            public InMemoryResourceResolver(IEnumerable<Resource> profiles)
+            {
+                _resources = profiles.ToLookup(r => getResourceUri(r), r => r as Resource);
+            }
+
+            public InMemoryResourceResolver(Resource profile) : this(new Resource[] { profile }) { }
+
+            public Resource ResolveByCanonicalUri(string uri) => null;
+
+            public Resource ResolveByUri(string uri) => _resources[uri].FirstOrDefault();
+
+            // cf. ResourceStreamScanner.StreamResources
+            static string getResourceUri(Resource res) => res.TypeName + "/" + res.Id;
+        }
+
+        // [WMR 20161220] Example by Christiaan Knaap
+        // Causes stack overflow exception in validator when processing the related Organization profile
+        // TypeRefValidationExtensions.ValidateTypeReferences needs to detect and handle recursion
+        // Example: Organization.partOf => Organization
+        [TestMethod]
+        public void TestPatientWithOrganization()
+        {
+            // DirectorySource (and ResourceStreamScanner) does not support json...
+            // var source = new DirectorySource(@"TestData\validation");
+            // var res = source.ResolveByUri("Patient/pat1"); // cf. "Patient/Levin"
+
+            var jsonPatient = File.ReadAllText(@"TestData\validation\patient-ck.json");
+            var parser = new FhirJsonParser();
+            var patient = parser.Parse<Patient>(jsonPatient);
+            Assert.IsNotNull(patient);
+
+            var jsonOrganization = File.ReadAllText(@"TestData\validation\organization-ck.json");
+            var organization = parser.Parse<Organization>(jsonOrganization);
+            Assert.IsNotNull(organization);
+
+            var resources = new Resource[] { patient, organization };
+            var memResolver = new InMemoryResourceResolver(resources);
+
+            // [WMR 20161220] Validator always uses existing snapshots if present
+            // ProfilePreprocessor.GenerateSnapshots:
+            // if (!sd.HasSnapshot) { ... snapshotGenerator(sd) ... }
+
+            // Create custom source to properly force snapshot expansion
+            // Run validator on instance
+            // Afterwards, verify that instance profile has been expanded
+
+            var source = new CachedResolver(
+                // Clear snapshots after initial load
+                // This will force the validator to regenerate all snapshots
+                new ClearSnapshotResolver(
+                    new MultiResolver(
+                        // new BundleExampleResolver(@"TestData\validation"),
+                        // new DirectorySource(@"TestData\validation"),
+                        // new TestProfileArtifactSource(),
+                        memResolver,
+                        new ZipSource("specification.zip"))));
+
+            var ctx = new ValidationSettings()
+            {
+                ResourceResolver = source,
+                GenerateSnapshot = true,
+                EnableXsdValidation = true,
+                Trace = false,
+                ResolveExteralReferences = true
+            };
+
+            var validator = new Validator(ctx);
+
+            var report = validator.Validate(patient);
+            Assert.IsTrue(report.Success);
+
+            // Assert.AreEqual(4, report.Warnings);
+
+            // To check for ele-1 constraints on expanded Patient snapshot:
+            // source.FindStructureDefinitionForCoreType(FHIRDefinedType.Patient).Snapshot.Element.Select(e=>e.Path + " : " + e.Constraint.FirstOrDefault()?.Key ?? "").ToArray()
+            var patientStructDef = source.FindStructureDefinitionForCoreType(FHIRAllTypes.Patient);
+            Assert.IsNotNull(patientStructDef);
+            Assert.IsTrue(patientStructDef.HasSnapshot);
+            assertElementConstraints(patientStructDef.Snapshot.Element);
+        }
+
+        // Verify aggregated element constraints
+        static void assertElementConstraints(List<ElementDefinition> patientElems)
+        {
+            foreach (var elem in patientElems)
+            {
+                if (elem.IsRootElement())
+                {
+                    // DomainResource constraints dom-1 ... dom-4 are defined in reversed order (specification.zip/profile-resources.xml)
+                    // Assert.AreEqual("dom-4", elem.Constraint.FirstOrDefault()?.Key);
+                    var constraintKeys = elem.Constraint.Select(c => c.Key).ToList();
+                    Assert.IsTrue(constraintKeys.Contains("dom-1"));
+                    Assert.IsTrue(constraintKeys.Contains("dom-2"));
+                    Assert.IsTrue(constraintKeys.Contains("dom-3"));
+                    Assert.IsTrue(constraintKeys.Contains("dom-4"));
+                }
+                else if (!elem.Path.EndsWith(".contained"))
+                {
+                    // ele-1 should always be the first constraint
+                    Assert.AreEqual("ele-1", elem.Constraint.FirstOrDefault()?.Key);
+                }
+            }
+        }
+
+        class ClearSnapshotResolver : IResourceResolver
+        {
+            IResourceResolver _resolver;
+            public ClearSnapshotResolver(IResourceResolver resolver)
+            {
+                _resolver = resolver;
+            }
+
+            public Resource ResolveByCanonicalUri(string uri)
+            {
+                var result = _resolver.ResolveByCanonicalUri(uri);
+                return clearSnapshot(result);
+            }
+
+            public Resource ResolveByUri(string uri)
+            {
+                var result = _resolver.ResolveByUri(uri);
+                return clearSnapshot(result);
+            }
+
+            private static Resource clearSnapshot(Resource result)
+            {
+                var sd = result as StructureDefinition;
+                if (sd != null && sd.HasSnapshot)
+                {
+                    sd.Snapshot = null;
+                }
+                return result;
+            }
+        }
+
     }
 }
 

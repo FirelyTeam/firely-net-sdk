@@ -7,18 +7,17 @@
  */
 
 
+using Hl7.Fhir.Introspection;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
+using System.Runtime.Serialization;
 using System.Text;
-using System.Xml;
-using Hl7.Fhir.Model;
-
 
 namespace Hl7.Fhir.Model
 {
-    [System.Diagnostics.DebuggerDisplay(@"\{Path= {Path} ElementId={ElementId} ContentRef={ContentReference}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
-    public partial class ElementDefinition 
+    // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+    [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
+    public partial class ElementDefinition
     {
         public ElementDefinition()
         {
@@ -28,6 +27,30 @@ namespace Hl7.Fhir.Model
         public ElementDefinition(string path)
         {
             Path = path;
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [NotMapped]
+        string DebuggerDisplay
+        {
+            get {
+                StringBuilder sb = new StringBuilder(128);
+                sb.AppendFormat("Path='{0}'", Path);
+                if (SliceName != null) { sb.AppendFormat(" SliceName='{0}'", SliceName); }
+                return sb.ToString();
+            }
+        }
+
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        [Obsolete("Property was renamed to SliceName", true)]
+        public string Name
+        {
+            get { return SliceName; }
+            set
+            {
+                SliceName = value;
+            }
         }
     }
 }

@@ -539,6 +539,146 @@ namespace Hl7.Fhir.Specification.Tests
             e.Add(new ElementDefinition() { Path = "A.D" });
             return struc;
         }
+
+        // [WMR 20161215] Test slicing helper methods
+
+        [TestMethod]
+        public void TestIsResliceOf()
+        {
+            Assert.IsTrue(ElementDefinitionNavigator.IsResliceOf("1/1", "1"));
+            Assert.IsTrue(ElementDefinitionNavigator.IsResliceOf("1/2", "1"));
+
+            Assert.IsFalse(ElementDefinitionNavigator.IsResliceOf("1/1", "2"));
+            Assert.IsFalse(ElementDefinitionNavigator.IsResliceOf("2/1", "1"));
+            Assert.IsFalse(ElementDefinitionNavigator.IsResliceOf("1/", "1")); // Invalid...
+
+            Assert.IsFalse(ElementDefinitionNavigator.IsResliceOf("1", ""));
+            Assert.IsFalse(ElementDefinitionNavigator.IsResliceOf("1", null));
+            Assert.IsFalse(ElementDefinitionNavigator.IsResliceOf("", "1"));
+            Assert.IsFalse(ElementDefinitionNavigator.IsResliceOf(null, "1"));
+
+            Assert.IsTrue(ElementDefinitionNavigator.IsResliceOf("1/1/1", "1/1"));
+            Assert.IsTrue(ElementDefinitionNavigator.IsResliceOf("1/1/2", "1/1"));
+
+            Assert.IsFalse(ElementDefinitionNavigator.IsResliceOf("1/2/1", "1/1"));
+            Assert.IsFalse(ElementDefinitionNavigator.IsResliceOf("2/1/1", "1/1"));
+            Assert.IsFalse(ElementDefinitionNavigator.IsResliceOf("1/1/1", "1/2"));
+        }
+
+        [TestMethod]
+        public void TestIsSiblingSliceOf()
+        {
+            Assert.IsTrue(ElementDefinitionNavigator.IsSiblingSliceOf("1", null));
+            Assert.IsTrue(ElementDefinitionNavigator.IsSiblingSliceOf(null, "1"));
+            Assert.IsTrue(ElementDefinitionNavigator.IsSiblingSliceOf("1", ""));
+            Assert.IsTrue(ElementDefinitionNavigator.IsSiblingSliceOf("", "1"));
+
+            Assert.IsTrue(ElementDefinitionNavigator.IsSiblingSliceOf("1", "2"));
+            Assert.IsTrue(ElementDefinitionNavigator.IsSiblingSliceOf("2", "1"));
+            Assert.IsFalse(ElementDefinitionNavigator.IsSiblingSliceOf("1", "1"));
+
+            Assert.IsTrue(ElementDefinitionNavigator.IsSiblingSliceOf("1/2", "1/1"));
+            Assert.IsTrue(ElementDefinitionNavigator.IsSiblingSliceOf("1/1", "1/2"));
+            Assert.IsFalse(ElementDefinitionNavigator.IsSiblingSliceOf("1/1", "1/1"));
+
+            Assert.IsTrue(ElementDefinitionNavigator.IsSiblingSliceOf("1/1/1", "1/1/2"));
+            Assert.IsTrue(ElementDefinitionNavigator.IsSiblingSliceOf("1/1/2", "1/1/1"));
+            Assert.IsFalse(ElementDefinitionNavigator.IsSiblingSliceOf("1/1/1", "1/1/1"));
+
+            Assert.IsFalse(ElementDefinitionNavigator.IsSiblingSliceOf(null, null));
+            Assert.IsFalse(ElementDefinitionNavigator.IsSiblingSliceOf("", ""));
+
+            Assert.IsFalse(ElementDefinitionNavigator.IsSiblingSliceOf(null, "1/1"));
+            Assert.IsFalse(ElementDefinitionNavigator.IsSiblingSliceOf("1/1", null));
+            Assert.IsFalse(ElementDefinitionNavigator.IsSiblingSliceOf("", "1/1"));
+            Assert.IsFalse(ElementDefinitionNavigator.IsSiblingSliceOf("1/1", ""));
+
+            Assert.IsFalse(ElementDefinitionNavigator.IsSiblingSliceOf("1", "1/1"));
+            //Assert.IsFalse(ElementDefinitionNavigator.IsSiblingSliceOf("1/", "1/1")); // Invalid
+            Assert.IsFalse(ElementDefinitionNavigator.IsSiblingSliceOf("1/1", "1/1"));
+            Assert.IsFalse(ElementDefinitionNavigator.IsSiblingSliceOf("1/1/", "1/1")); // Invalid
+            Assert.IsFalse(ElementDefinitionNavigator.IsSiblingSliceOf("1/2/", "1/1")); // Invalid
+            Assert.IsFalse(ElementDefinitionNavigator.IsSiblingSliceOf("1/1/1", "1/1"));
+            Assert.IsFalse(ElementDefinitionNavigator.IsSiblingSliceOf("1/2/1", "1/1"));
+        }
+
+        [TestMethod]
+        public void TestGetBaseSliceName()
+        {
+            Assert.AreEqual(null, ElementDefinitionNavigator.GetBaseSliceName(null));
+            Assert.AreEqual(null, ElementDefinitionNavigator.GetBaseSliceName(""));
+            Assert.AreEqual(null, ElementDefinitionNavigator.GetBaseSliceName("1"));
+            Assert.AreEqual("1", ElementDefinitionNavigator.GetBaseSliceName("1/"));
+            Assert.AreEqual("1", ElementDefinitionNavigator.GetBaseSliceName("1/1"));
+            Assert.AreEqual("1", ElementDefinitionNavigator.GetBaseSliceName("1/2"));
+            Assert.AreEqual("1/1", ElementDefinitionNavigator.GetBaseSliceName("1/1/")); // Invalid
+            Assert.AreEqual("1/1", ElementDefinitionNavigator.GetBaseSliceName("1/1/1"));
+            Assert.AreEqual("1/1", ElementDefinitionNavigator.GetBaseSliceName("1/1/2"));
+            Assert.AreEqual("1/2", ElementDefinitionNavigator.GetBaseSliceName("1/2/1"));
+            Assert.AreEqual("2/1", ElementDefinitionNavigator.GetBaseSliceName("2/1/1"));
+        }
+
+        [TestMethod]
+        public void TestSlicingMoves()
+        {
+            var struc = new StructureDefinition();
+            struc.Snapshot = new StructureDefinition.SnapshotComponent();
+            struc.Snapshot.Element = new List<ElementDefinition>();
+            var e = struc.Snapshot.Element;
+
+            e.Add(new ElementDefinition() { Path = "A" });
+            e.Add(new ElementDefinition() { Path = "A.B" });
+            e.Add(new ElementDefinition() { Path = "A.B", SliceName = "1" });
+            e.Add(new ElementDefinition() { Path = "A.B", SliceName = "2" });
+            e.Add(new ElementDefinition() { Path = "A.B", SliceName = "2/2" });
+            e.Add(new ElementDefinition() { Path = "A.B", SliceName = "3" });
+            e.Add(new ElementDefinition() { Path = "A.C" });
+            e.Add(new ElementDefinition() { Path = "A.C", SliceName = "1" });
+            e.Add(new ElementDefinition() { Path = "A.C", SliceName = "1/1" });
+            e.Add(new ElementDefinition() { Path = "A.C", SliceName = "1/1/1" });
+            e.Add(new ElementDefinition() { Path = "A.C", SliceName = "1/1/2" });
+            e.Add(new ElementDefinition() { Path = "A.C", SliceName = "1/2" });
+            e.Add(new ElementDefinition() { Path = "A.C", SliceName = "1/3" });
+            e.Add(new ElementDefinition() { Path = "A.C", SliceName = "2" });
+            e.Add(new ElementDefinition() { Path = "A.D" });
+
+            var nav = new ElementDefinitionNavigator(struc);
+
+            nav.MoveToFirstChild();     // A
+            Assert.IsTrue(nav.MoveToChild("B"));
+            Assert.IsTrue(nav.MoveToNextSlice());
+            Assert.AreEqual(nav.Current.SliceName, "1");
+            Assert.IsTrue(nav.MoveToNextSlice());
+            Assert.AreEqual(nav.Current.SliceName, "2");
+            Assert.IsTrue(nav.MoveToNextSlice());
+            Assert.AreEqual(nav.Current.SliceName, "3");
+            Assert.IsFalse(nav.MoveToNextSlice());
+
+            Assert.IsTrue(nav.MoveToNext("C"));
+            Assert.IsTrue(nav.MoveToNextSlice());
+            Assert.AreEqual(nav.Current.SliceName, "1");
+            Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
+            Assert.AreEqual(nav.Current.SliceName, "1/1");
+
+            var bm = nav.Bookmark();
+            Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
+            Assert.AreEqual(nav.Current.SliceName, "1/1/1");
+            Assert.IsTrue(nav.MoveToNextSlice());
+            Assert.AreEqual(nav.Current.SliceName, "1/1/2");
+            Assert.IsFalse(nav.MoveToNextSlice());
+            Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
+            Assert.AreEqual(nav.Current.SliceName, "1/2");
+            Assert.IsTrue(nav.MoveToNextSlice());
+            Assert.AreEqual(nav.Current.SliceName, "1/3");
+            Assert.IsFalse(nav.MoveToNextSlice());
+            Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
+            Assert.AreEqual(nav.Current.SliceName, "2");
+
+            Assert.IsTrue(nav.MoveToNext("D"));
+            Assert.IsFalse(nav.MoveToNext());
+        }
+
+
     }
 
     //public static class PocoEvaluatorExtensions

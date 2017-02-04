@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             Debug.Assert(elem != null);
 
             // Determine if the current element matches the current base element
-            if (baseNav.PathName == nav.PathName || ElementDefinitionNavigator.IsRenamedChoiceElement(baseNav.PathName, nav.PathName))
+            if (baseNav.PathName == nav.PathName || ElementDefinitionNavigator.IsRenamedChoiceTypeElement(baseNav.PathName, nav.PathName))
             {
                 // Match!
 

@@ -70,7 +70,8 @@ namespace Hl7.Fhir.Specification.Source
             }
         }
 
-
+        /// <summary>Returns the content directory as specified to the constructor.</summary>
+        public string ContentDirectory => _contentDirectory;
 
         private bool _filesPrepared = false;
         private List<string> _artifactFilePaths;

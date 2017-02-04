@@ -6,9 +6,13 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+// [WMR 20161219] Save and reuse existing instance, so generator can detect & handle recursion
+#define REUSE_SNAPSHOT_GENERATOR
+
 using Hl7.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
@@ -17,6 +21,7 @@ using Hl7.Fhir.Support;
 using Hl7.FhirPath;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -32,6 +37,29 @@ namespace Hl7.Fhir.Validation
         public event EventHandler<OnResolveResourceReferenceEventArgs> OnExternalResolutionNeeded;
 
         internal ScopeTracker ScopeTracker = new ScopeTracker();
+
+#if REUSE_SNAPSHOT_GENERATOR
+        SnapshotGenerator _snapshotGenerator;
+
+        SnapshotGenerator SnapshotGenerator
+        {
+            get
+            {
+                if (_snapshotGenerator == null)
+                {
+                    var resolver = Settings.ResourceResolver;
+                    if (resolver != null)
+                    {
+                        SnapshotGeneratorSettings settings = Settings.GenerateSnapshotSettings ?? SnapshotGeneratorSettings.Default;
+                        _snapshotGenerator = new SnapshotGenerator(resolver, settings);
+                    }
+
+                }
+                return _snapshotGenerator;
+            }
+        }
+#endif
+
         public Validator(ValidationSettings settings)
         {
             Settings = settings;
@@ -40,6 +68,20 @@ namespace Hl7.Fhir.Validation
         public Validator() : this(ValidationSettings.Default)
         {
         }
+
+        internal Validator NewInstance()
+        {
+            var newValidator = new Validator(Settings);
+            newValidator.OnSnapshotNeeded = this.OnSnapshotNeeded;
+            newValidator.OnExternalResolutionNeeded = this.OnExternalResolutionNeeded;
+
+#if REUSE_SNAPSHOT_GENERATOR
+            newValidator._snapshotGenerator = this._snapshotGenerator;
+#endif
+
+            return newValidator;
+        }
+
 
         public OperationOutcome Validate(IElementNavigator instance)
         {
@@ -119,7 +161,7 @@ namespace Hl7.Fhir.Validation
         }
 
 
-     //   private OperationOutcome validateElement(ElementDefinitionNavigator definition, IElementNavigator instance)
+        //   private OperationOutcome validateElement(ElementDefinitionNavigator definition, IElementNavigator instance)
 
         private OperationOutcome validateElement(ElementDefinitionNavigator definition, IElementNavigator instance)
         {
@@ -469,12 +511,29 @@ namespace Hl7.Fhir.Validation
             }
 
             // Else, expand, depending on our configuration
+#if REUSE_SNAPSHOT_GENERATOR
+            var generator = this.SnapshotGenerator;
+            if (generator != null)
+            {
+                generator.Update(definition);
+#else
             if (Settings.ResourceResolver != null)
             {
-                SnapshotGeneratorSettings settings = Settings.GenerateSnapshotSettings ?? SnapshotGeneratorSettings.Default;
 
+                SnapshotGeneratorSettings settings = Settings.GenerateSnapshotSettings ?? SnapshotGeneratorSettings.Default;
                 (new SnapshotGenerator(Settings.ResourceResolver, settings)).Update(definition);
+
+#endif
+
+#if DUMP_SNAPSHOTS
+
+                string xml = FhirSerializer.SerializeResourceToXml(definition);
+                string name = definition.Id ?? definition.Name.Replace(" ", "");
+
+                File.WriteAllText(@"c:\temp\validation\" + name + ".StructureDefinition.xml", xml);
+#endif
             }
+
         }
     }
 

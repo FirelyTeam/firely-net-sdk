@@ -10,6 +10,7 @@ using Hl7.ElementModel;
 
 namespace Hl7.Fhir.Validation
 {
+    [Trait("Category", "Validation")]
     public class BindingValidationTests : IClassFixture<ValidationFixture>
     {
         private IResourceResolver _resolver;

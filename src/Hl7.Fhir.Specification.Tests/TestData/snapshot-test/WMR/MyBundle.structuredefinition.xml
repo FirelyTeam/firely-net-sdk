@@ -1896,7 +1896,7 @@
         <profile value="http://example.org/fhir/StructureDefinition/MyBundle" />
       </type>
     </element>
-	  <!-- [WMR 20160809] Causes endless recursion in snapshot generator... -->
+	  <!-- [WMR 20160809] Causes infinite recursion in snapshot generator... -->
     <element>
       <path value="Bundle.entry.resource.id" />
       <fixedString value="123" />

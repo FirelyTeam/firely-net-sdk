@@ -15,6 +15,7 @@ using Xunit;
 
 namespace Hl7.Fhir.Validation
 {
+    [Trait("Category", "Validation")]
     public class SliceValidationTests : IClassFixture<ValidationFixture>
     {
         private IResourceResolver _resolver;
@@ -33,6 +34,8 @@ namespace Hl7.Fhir.Validation
             Assert.NotNull(sd);
             var snapgen = new SnapshotGenerator(_resolver);
             snapgen.Update(sd);
+
+            // sd.Snapshot.Element.Where(e => e.Path.EndsWith(".telecom")).Select(e=>e.Path + " : " + e.Name ?? "").ToArray()
 
             var nav = new ElementDefinitionNavigator(sd);
             var success = nav.JumpToFirst("Patient.telecom");
@@ -79,12 +82,6 @@ namespace Hl7.Fhir.Validation
             Assert.IsType<SliceBucket>(email.Entry);
             Assert.Equal(2, email.ChildSlices.Count);
 
-            // Does not succeed yet since the snapshot generator reverses de re-slices
-            // FIX - remove when Michel has fixed the problem with the snapshot generator
-            var swap = email.ChildSlices[1];
-            email.ChildSlices[1] = email.ChildSlices[0];
-            email.ChildSlices[0] = swap;
-
             Assert.IsType<SliceBucket>(email.ChildSlices[0]);
             Assert.Equal("Patient.telecom:email/home", email.ChildSlices[0].Name);
 
@@ -95,6 +92,33 @@ namespace Hl7.Fhir.Validation
             var other = slice.ChildSlices[2] as SliceGroupBucket;
             Assert.Equal("Patient.telecom:other", other.Name);
             Assert.Equal(ElementDefinition.SlicingRules.Open, other.Rules);
+        }
+
+        [Fact]
+        public void TestDiscriminatedTelecomSliceUse()
+        {
+            var p = new Patient();
+
+            // Incorrect "home" use for slice "phone"
+            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Phone, Use = ContactPoint.ContactPointUse.Home, Value = "e.kramer@furore.com" });
+
+            // Incorrect use of "use" for slice "other"
+            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Other, Use = ContactPoint.ContactPointUse.Home, Value = "http://nu.nl" });
+
+            // Correct use of slice "other"
+            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Other, Value = "http://nu.nl" });
+
+            // Correct "work" use for slice "phone", but out of order
+            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Phone, Use = ContactPoint.ContactPointUse.Work, Value = "ewout@di.nl" });
+
+            var outcome = _validator.Validate(p, "http://example.com/StructureDefinition/patient-telecom-slice-ek");
+            Assert.False(outcome.Success);
+            Assert.Equal(3, outcome.Errors);
+            Assert.Equal(0, outcome.Warnings);
+            var repr = outcome.ToString();
+            Assert.Contains("matches slice 'Patient.telecom:phone', but this is out of order for group 'Patient.telecom'", repr);
+            Assert.Contains("Value is not exactly equal to fixed value 'work'", repr);
+            Assert.Contains("Instance count for 'Patient.telecom.use' is 1", repr);
         }
 
         [Fact]
@@ -113,7 +137,7 @@ namespace Hl7.Fhir.Validation
             var telecoms = pnav.GetChildrenByName("telecom");
 
             foreach(var telecom in telecoms)
-                Assert.True(s.Add(telecom).Success);
+                Assert.True(s.Add(telecom));
 
             var outcome = s.Validate(_validator, pnav);
             Assert.True(outcome.Success);
@@ -121,28 +145,26 @@ namespace Hl7.Fhir.Validation
             
             Assert.Equal("+31-6-39015765", s.ChildSlices[0].Members.Single().Values("value").Single());
 
-            // Note, order of buckets have been switched around because of bug in snapshot generator - fix when that has been fixed
-
             var emailBucket = s.ChildSlices[1] as SliceGroupBucket;
             Assert.Equal("e.kramer@furore.com", emailBucket.Members.Single().Values("value").Single());
-            Assert.Equal("e.kramer@furore.com", emailBucket.ChildSlices[0].Members.Single().Values("value").Single());
-            Assert.False(emailBucket.ChildSlices[1].Members.Any());
-
+            Assert.False(emailBucket.ChildSlices[0].Members.Any());
+            Assert.Equal("e.kramer@furore.com", emailBucket.ChildSlices[1].Members.Single().Values("value").Single());
+           
             var otherBucket = s.ChildSlices[2] as SliceGroupBucket;
-            Assert.Equal("http://nu.nl", otherBucket.ChildSlices[1].Members.Single().Values("value").Single());
-            Assert.False(otherBucket.ChildSlices[0].Members.Any());
+            Assert.Equal("http://nu.nl", otherBucket.ChildSlices[0].Members.Single().Values("value").Single());
+            Assert.False(otherBucket.ChildSlices[1].Members.Any());
             Assert.Equal("skype://crap", otherBucket.Members.First().Values("value").Single()); // in the open slice - find it on other bucket, not child
 
             Assert.Equal("+31-20-6707070", s.Members.Last().Values("value").Single()); // in the open-at-end slice
         }
 
         [Fact]
-        public void TestIncorrectTelecomSliceUse()
+        public void TestTelecomReslicing()
         {
             var p = new Patient();
 
             // Incorrect "old" use for closed slice telecom:email
-            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Email, Use = ContactPoint.ContactPointUse.Work, Value = "e.kramer@furore.com" });
+            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Email, Use = ContactPoint.ContactPointUse.Home, Value = "e.kramer@furore.com" });
             p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Email, Use = ContactPoint.ContactPointUse.Old, Value = "ewout@di.nl" });
 
             // Too many for telecom:other/home

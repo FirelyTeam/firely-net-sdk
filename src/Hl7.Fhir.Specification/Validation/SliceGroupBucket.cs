@@ -26,13 +26,13 @@ namespace Hl7.Fhir.Validation
             if (root.Current.Slicing == null)
                 return entryBucket;
             else
-                return CreateGroup(root, validator, entryBucket);
+                return CreateGroup(root, validator, entryBucket, atRoot: true);
         }
 
-        public static IBucket CreateGroup(ElementDefinitionNavigator root, Validator validator, IBucket entryBucket)
+        public static IBucket CreateGroup(ElementDefinitionNavigator root, Validator validator, IBucket entryBucket, bool atRoot)
         {
             var childDiscriminators = root.Current.Slicing.Discriminator.ToArray();
-            var slices = root.FindMemberSlices();
+            var slices = root.FindMemberSlices(atRoot);
             var bm = root.Bookmark();
             var subs = new List<IBucket>();
 
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Validation
                 if (root.Current.Slicing == null)
                     subs.Add(subBucket);
                 else
-                    subs.Add(CreateGroup(root, validator, subBucket));
+                    subs.Add(CreateGroup(root, validator, subBucket, atRoot: false));
             }
 
             root.ReturnToBookmark(bm);
@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Validation
 
         public IList<IElementNavigator> Members => Entry.Members;
 
-        public OperationOutcome Add(IElementNavigator candidate)
+        public bool Add(IElementNavigator candidate)
         {
             return Entry.Add(candidate);
         }
@@ -114,9 +114,9 @@ namespace Hl7.Fhir.Validation
                 for(var sliceNumber = 0; sliceNumber < ChildSlices.Count; sliceNumber++)
                 {
                     var sliceName = ChildSlices[sliceNumber].Name;
-                    var sliceOutcome = ChildSlices[sliceNumber].Add(candidate);
+                    var success = ChildSlices[sliceNumber].Add(candidate);
 
-                    if (sliceOutcome.Success)
+                    if (success)
                     {
                         // The instance matched a slice that we have already passed, if order matters, 
                         // this is not allowed

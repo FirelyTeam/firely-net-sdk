@@ -15,7 +15,7 @@ using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
-    // [WMR 20160917] NEW - (re-)generate ElementId values
+    // [WMR 20160917] STU3: (re-)generate ElementId values
     // Syntax: [path[:name][.path[:name]...]]
     // - Element.ElementId has the exact same number of components as Element.Path
     // - Components are separated by the dot character "."
@@ -24,6 +24,7 @@ namespace Hl7.Fhir.Specification.Snapshot
     // Notes:
     // - slice name may not contain dot characters "." !
     // - for re-slicing, the slice name can be of the form "OrignalSlice/Reslice"
+    // - DSTU2: id has regex  [A-Za-z0-9\-\.]{1,64} => cannot use proposed id scheme
 
     public partial class SnapshotGenerator
     {
@@ -50,7 +51,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         static void generateChildElementsId(ElementDefinitionNavigator nav, bool force = false)
         {
             var parent = nav.Current;
-            Debug.Print($"[{nameof(generateChildElementsId)}] '{(parent != null ? parent.Path : "[root]")}'");
+            // Debug.Print($"[{nameof(generateChildElementsId)}] '{(parent != null ? parent.Path : "[root]")}'");
             var bm = nav.Bookmark();
             if (nav.MoveToFirstChild())
             {

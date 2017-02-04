@@ -1,6 +1,7 @@
 ﻿using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -11,128 +12,129 @@ namespace Hl7.Fhir.Specification.Navigation
 
         /// <summary>Determines if the element with the specified name represents a type slice for the current (choice) element.</summary>
         /// <returns><c>true</c> if the element name represents a type slice of the current element, <c>false</c> otherwise.</returns>
-        internal static bool IsCandidateTypeSlice(this ElementDefinitionNavigator nav, string diffName)
+        internal static bool IsRenamedChoiceTypeElement(this ElementDefinitionNavigator nav, string diffName)
         {
             if (nav == null) { throw Error.ArgumentNull("nav"); }
-            return ElementDefinitionNavigator.IsRenamedChoiceElement(nav.PathName, diffName);
+            return ElementDefinitionNavigator.IsRenamedChoiceTypeElement(nav.PathName, diffName);
         }
 
-        /// <summary>Move the navigator to the next type slice of the (choice) element with the specified name, if it exists.</summary>
+        // [WMR 20161212] NEW
+
+        // '' => ''                             found unnamed sibling (extension)
+        // '' => A                              found sibling
+        // '' => A/1                            not a sibling => return false
+        // A => ( A/1 => A/2 => ) B             found sibling
+        // A/1 => ( A/1/1 => A/1/2 => ) A/2     found sibling
+        // A/1 => ( A/1/1 => A/1/2 => ) B       not a sibling => return false
+
+        /// <summary>
+        /// Advance the navigator to the immediately following slicing constraint in the current slice group, at any (re)slicing level.
+        /// Skip any existing child elements.
+        /// Otherwise remain positioned at the current element.
+        /// </summary>
         /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
-        public static bool MoveToNextTypeSlice(this ElementDefinitionNavigator nav, string name)
+        public static bool MoveToNextSliceAtAnyLevel(this ElementDefinitionNavigator nav) => nav.MoveToNext(nav.PathName);
+
+        /// <summary>
+        /// Advance the navigator forward to the slicing constraint in the current slice group with the specified slice name, if it exists.
+        /// Otherwise remain positioned at the current element.
+        /// </summary>
+        /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
+        public static bool MoveToNextSliceAtAnyLevel(this ElementDefinitionNavigator nav, string sliceName)
         {
-            if (nav == null) { throw Error.ArgumentNull("nav"); }
             var bm = nav.Bookmark();
-
-            while (nav.MoveToNext())
+            while (nav.MoveToNextSliceAtAnyLevel())
             {
-                if (ElementDefinitionNavigator.IsRenamedChoiceElement(name, nav.PathName)) return true;
+                if (StringComparer.Ordinal.Equals(nav.Current.SliceName, sliceName))
+                {
+                    return true;
+                }
             }
-
             nav.ReturnToBookmark(bm);
             return false;
         }
 
-        /// <summary>Move to last direct child element with same path as current element.</summary>
-        /// <param name="nav">An <see cref="ElementDefinitionNavigator"/> instance.</param>
-        /// <param name="sliceName">The optional target slice name, or <c>null</c>. Used for reslicing.</param>
-        /// <returns><c>true</c> if the cursor has moved at least a single element, <c>false</c> otherwise</returns>
-        public static bool MoveToLastSlice(this ElementDefinitionNavigator nav, string sliceName)
+        /// <summary>
+        /// Advance the navigator to the next slice in the current slice group and on the current slicing level.
+        /// Skip any existing child elements and/or child reslicing constraints.
+        /// Otherwise remain positioned at the current element.
+        /// </summary>
+        /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
+        public static bool MoveToNextSlice(this ElementDefinitionNavigator nav)
         {
             if (nav == null) { throw Error.ArgumentNull("nav"); }
-            if (nav.Current == null) { throw Error.Argument("nav", "Cannot move to last slice. Current node is not set."); }
-            // if (nav.Current.Base == null) { throw Error.Argument("nav", "Cannot move to last slice. Current node has no Base.path component (path '{0}').".FormatWith(nav.Path)); }
+            if (nav.Current == null) { throw Error.Argument("nav", "Cannot move to navigator next slice. Current node is not set."); }
 
             var bm = nav.Bookmark();
-            var basePath = nav.Current.Base != null ? nav.Current.Base.Path : nav.Path;
-            // if (string.IsNullOrEmpty(basePath)) { throw Error.Argument("nav", "Cannot move to last slice. Current node has no Base.path component (path '{0}').".FormatWith(nav.Path)); }
 
-            var result = false;
-            // while (nav.MoveToNext())
-            do
+            var name = nav.PathName;
+            var startSliceName = nav.Current.SliceName;
+            var startBaseSliceName = ElementDefinitionNavigator.GetBaseSliceName(startSliceName);
+            while (nav.MoveToNext(name))
             {
-                var baseComp = nav.Current.Base != null ? nav.Current.Base.Path : nav.Path;
-                if (baseComp != null && (baseComp == basePath || ElementDefinitionNavigator.IsRenamedChoiceElement(basePath, baseComp)))
+                var sliceName = nav.Current.SliceName;
+                // Handle unnamed slices, eg. extensions
+                if (startSliceName == null && sliceName == null) { return true; }
+
+                if (ElementDefinitionNavigator.IsSiblingSliceOf(startSliceName, sliceName))
                 {
-                    if (sliceName == null || nav.Current.SliceName == sliceName)
-                    {
-                        // Match, advance cursor
-                        bm = nav.Bookmark();
-                        result = true;
-                    }
-                    // Otherwise advance to next slice entry
+                    return true;
                 }
-                else
+
+                if (startBaseSliceName != null && sliceName.Length > startBaseSliceName.Length && !sliceName.StartsWith(startBaseSliceName))
                 {
-                    // Mismatch, back up to previous element and exit
-                    nav.ReturnToBookmark(bm);
                     break;
                 }
-            } while (nav.MoveToNext());
-            return result;
+            }
+
+            // No match, restore original position
+            nav.ReturnToBookmark(bm);
+            return false;
         }
 
         /// <summary>
-        /// If the current element has the specified name, then maintain position and return true.
-        /// Otherwise move to the next sibling element with the specified slice name, if it exists.
+        /// Enumerate any succeeding direct child slices of the specified element.
+        /// Skip any intermediate child elements and re-slice elements.
+        /// When finished, return the navigator to the initial position.
         /// </summary>
-        /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
-        public static bool MoveToNextSlice(this ElementDefinitionNavigator nav, string sliceName)
-        {
-            if (nav == null) { throw Error.ArgumentNull("nav"); }
-            if (nav.Current == null) { throw Error.Argument("nav", "Cannot move to next slice. Current node is not set."); }
-
-            var bm = nav.Bookmark();
-            var basePath = nav.Current.Base != null ? nav.Current.Base.Path : nav.Path;
-
-            var result = false;
-            do
-            {
-                var baseComp = nav.Current.Base != null ? nav.Current.Base.Path : nav.Path;
-                if (baseComp != null && (baseComp == basePath || ElementDefinitionNavigator.IsRenamedChoiceElement(basePath, baseComp)))
-                {
-                    if (nav.Current.SliceName == sliceName)
-                    {
-                        // Match!
-                        result = true;
-                        break;
-                    }
-                }
-                else
-                {
-                    // Mismatch, back up to previous element and exit
-                    nav.ReturnToBookmark(bm);
-                    break;
-                }
-            } while (nav.MoveToNext());
-            return result;
-        }
-
-
-        //TODO: Discuss with Michel why he uses Base path (or definition path), instead of just definition path
-        internal static IEnumerable<Bookmark> FindMemberSlices(this ElementDefinitionNavigator intro)
+        /// <param name="intro"></param>
+        /// <param name="atRoot">Specify <c>true</c> for finding direct (simple) slices, or <c>false</c> for finding re-slices.</param>
+        /// <returns>A sequence of <see cref="Bookmark"/> instances.</returns>
+        internal static IEnumerable<Bookmark> FindMemberSlices(this ElementDefinitionNavigator intro, bool atRoot)
         {
             var bm = intro.Bookmark();
-            var path = intro.Current.Path;
-            var name = intro.Current.SliceName;
-            var result = new List<Bookmark>();
 
-            while (intro.MoveToNext() && intro.Path == path)
+            var path = intro.Current.Path;
+            var pathName = intro.PathName;
+            var name = intro.Current.SliceName;
+
+            while (intro.MoveToNext(pathName))
             {
-                if (name == null)
+                var curName = intro.Current.SliceName;
+                if (atRoot)
                 {
-                    // If this is the "root" slice-intro for the group (the un-resliced original element), my slices
-                    // would be the unnamed slices (though this is strictly seen not correct, every slice needs a name)
+                    // Is this the slice-intro of the un-resliced original element? Then my name == null or
+                    // (in DSTU2) my name has no slicing separator (since name is used both for slicing and
+                    // re-use of constraints, e.g. Composition.section.name, just == null is not enough)
+                    // I am the root slice, my slices would be the unnamed slices (though this is strictly seen not correct, every slice needs a name)
                     // and every slice with a non-resliced name
-                    if (intro.Current.SliceName == null) yield return intro.Bookmark();
-                    if (!ElementDefinitionNavigator.IsResliceName(intro.Current.SliceName)) yield return intro.Bookmark();
+                    if (curName == null)
+                    {
+                        yield return intro.Bookmark();
+                    }
+                    if (!ElementDefinitionNavigator.IsResliceName(curName))
+                    {
+                        yield return intro.Bookmark();
+                    }
                 }
                 else
                 {
                     // Else, if I am a named slice, I am a slice myself, but also the intro to a nested re-sliced group,
                     // so include only my children in my group...
-                    if (ElementDefinitionNavigator.GetBaseSliceName(intro.Current.SliceName) == name)
+                    if (ElementDefinitionNavigator.IsResliceOf(curName, name))
+                    {
                         yield return intro.Bookmark();
+                    }
                 }
                 
                 // Else...there might be something wrong, I need to add logic here to find slices that are out of 

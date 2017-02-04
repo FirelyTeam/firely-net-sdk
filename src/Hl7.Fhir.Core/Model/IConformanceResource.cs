@@ -67,6 +67,10 @@ namespace Hl7.Fhir.Model
         Hl7.Fhir.Model.FhirString VersionElement { get; set; }
     }
 
+    public partial class StructureDefinition : IConformanceResource
+    {
+
+    }
 
     public partial class DataElement : IConformanceResource
     {
