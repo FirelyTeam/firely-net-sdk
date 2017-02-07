@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             return result;
         }
 
-        /// <summary>Given a list of element definitions, expand the definition of a single element.</summary>
+        /// <summary>Recursively expand (the children of) a single element definition.</summary>
         /// <param name="elements">A <see cref="StructureDefinition.SnapshotComponent"/> or <see cref="StructureDefinition.DifferentialComponent"/> instance.</param>
         /// <param name="element">The element to expand. Should be part of <paramref name="elements"/>.</param>
         /// <returns>A new, expanded list of <see cref="ElementDefinition"/> instances.</returns>
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             return ExpandElement(elements.Element, element);
         }
 
-        /// <summary>Given a list of element definitions, expand the definition of a single element.</summary>
+        /// <summary>Recursively expand (the children of) a single element definition.</summary>
         /// <param name="elements">A list of <see cref="ElementDefinition"/> instances, taken from snapshot or differential.</param>
         /// <param name="element">The element to expand. Should be part of <paramref name="elements"/>.</param>
         /// <returns>A new, expanded list of <see cref="ElementDefinition"/> instances.</returns>
@@ -149,6 +149,28 @@ namespace Hl7.Fhir.Specification.Snapshot
             return nav.Elements;
         }
 
+        /// <summary>Recursively expand (the children of) a single element definition.</summary>
+        /// <param name="nav">An <see cref="ElementDefinitionNavigator"/> instance positioned on the target element to be expanded.</param>
+        /// <returns><c>true</c> if the element is succesfully expanded, or <c>false</c> otherwise.</returns>
+        /// <exception cref="ArgumentException">The specified navigator is not positioned on an element.</exception>
+        public bool ExpandElement(ElementDefinitionNavigator nav)
+        {
+            if (nav == null) { throw Error.ArgumentNull(nameof(nav)); }
+            if (nav.Current == null) { throw Error.Argument(nameof(nav), "The specified navigator is not positioned on an element."); }
+
+            clearIssues();
+
+            // Must initialize recursion checker, because element expansion may recurse on external type profile
+            _stack.OnStartRecursion();
+            try
+            {
+                return expandElement(nav);
+            }
+            finally
+            {
+                _stack.OnFinishRecursion();
+            }
+        }
 
         // ***** Private Interface *****
 

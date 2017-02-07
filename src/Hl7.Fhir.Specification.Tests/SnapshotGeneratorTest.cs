@@ -253,7 +253,7 @@ namespace Hl7.Fhir.Specification.Tests
             var elems = sd.Snapshot.Element;
             Assert.AreEqual("Patient.identifier", elems[9].Path);
             Assert.AreEqual("Patient.active", elems[10].Path);
-            var expanded = expandAllComplexElements(sd.Differential.Element);
+            var expanded = expandAllComplexElements(sd.Snapshot.Element);
             Assert.IsNotNull(expanded);
 
             var tempPath = Path.GetTempPath();
@@ -265,8 +265,10 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 Debug.WriteLine("{0}  |  {1}", elem.Path, elem.Base != null ? elem.Base.Path : null);
             }
-            int i = 0;
-            Assert.AreEqual("Patient.identifier", expanded[++i].Path);
+
+            int i = expanded.FindIndex(e => e.Path == "Patient.identifier");
+            Assert.IsTrue(i > -1);
+            // Assert.AreEqual("Patient.identifier", expanded[++i].Path);
             Assert.AreEqual("Patient.identifier.id", expanded[++i].Path);
             Assert.AreEqual("Patient.identifier.extension", expanded[++i].Path);
             Assert.AreEqual("Patient.identifier.use", expanded[++i].Path);
@@ -306,8 +308,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         IList<ElementDefinition> expandAllComplexElements(IList<ElementDefinition> elements)
         {
-            IList<ElementDefinition> expanded = elements.DeepCopy().ToList();
-            var nav = new ElementDefinitionNavigator(expanded);
+            var nav = new ElementDefinitionNavigator(elements);
             // Skip root element
             if (nav.MoveToFirstChild() && nav.MoveToFirstChild())
             {
@@ -315,34 +316,24 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     _generator = new SnapshotGenerator(_testResolver, _settings);
                 }
-                expandAllComplexChildElements(ref expanded, ref nav);
+                expandAllComplexChildElements(nav);
+                return nav.Elements;
             }
-            return expanded;
+            return elements;
         }
 
-        void expandAllComplexChildElements(ref IList<ElementDefinition> expanded, ref ElementDefinitionNavigator nav)
+        void expandAllComplexChildElements(ElementDefinitionNavigator nav)
         {
             do
             {
-                var elem = nav.Current;
-                if (isExpandableElement(elem))
+                Debug.Print("[expandAllComplexChildElements] " + nav.Path);
+                if (nav.HasChildren || (isExpandableElement(nav.Current) && _generator.ExpandElement(nav)))
                 {
-                    expanded = _generator.ExpandElement(expanded, elem);
-                    // Must re-initialize the navigator... bit inefficient
-                    nav = new ElementDefinitionNavigator(expanded);
-                    if (!nav.MoveTo(elem))
+                    var bm = nav.Bookmark();
+                    if (nav.MoveToFirstChild())
                     {
-                        // Shouldn't happen...?
-                        throw new InvalidOperationException("SnapshotGenerator.ExpandElement returned an invalid result.");
-                    }
-                }
-                if (nav.MoveToFirstChild())
-                {
-                    expandAllComplexChildElements(ref expanded, ref nav);
-                    if (!nav.MoveToParent())
-                    {
-                        // Shouldn't happen...?
-                        throw new InvalidOperationException("expandAllComplexChildElements returned an invalid navigator.");
+                        expandAllComplexChildElements(nav);
+                        Assert.IsTrue(nav.ReturnToBookmark(bm));
                     }
                 }
             } while (nav.MoveToNext());
@@ -369,6 +360,9 @@ namespace Hl7.Fhir.Specification.Tests
         public void TestExpandAllComplexElementsWithEvent()
         {
             // [WMR 20170105] New - hook new BeforeExpand event in order to force full expansion of all complex elements
+            // Note: BeforeExpandElement is only raised for diff constraints, not for all snapshot elements...!
+            // => Cannot use this to fully expand a sparse diff
+            // => first generate regular snapshot, then re-run on result to expand all
 
             var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Patient");
             Assert.IsNotNull(sd);
@@ -2742,7 +2736,22 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(baseElem.Comments, extElem.Comments);
             Assert.IsTrue(baseElem.Alias.SequenceEqual(extElem.Alias));
         }
+    }
 
+    public static class IListExtensions
+    {
+        public static int FindIndex<T>(this IList<T> list, Predicate<T> match)
+        {
+            if (list == null) { throw new ArgumentNullException(nameof(list)); }
+            if (match == null) { throw new ArgumentNullException(nameof(match)); }
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (match(list[i])) { return i; }
+            }
+
+            return -1;
+        }
     }
 }
 
