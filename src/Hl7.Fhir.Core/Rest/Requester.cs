@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Rest
             byte[] outBody;
             var request = interaction.ToHttpRequest(Prefer, PreferredFormat, UseFormatParameter, compressRequestBody, out outBody);
 
-#if !PORTABLE45 && !NETSTANDARD
+#if DOTNETFW
             request.Timeout = Timeout;
 #endif
 
@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Rest
             {
                 byte[] body = null;
                 var respStream = response.GetResponseStream();
-#if PORTABLE45 || NETSTANDARD
+#if !DOTNETFW
                 var contentEncoding = response.Headers["Content-Encoding"];
 #else
                 var contentEncoding = response.ContentEncoding;

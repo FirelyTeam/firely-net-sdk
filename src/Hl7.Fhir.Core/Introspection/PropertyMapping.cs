@@ -56,13 +56,8 @@ namespace Hl7.Fhir.Introspection
 
             PropertyMapping result = new PropertyMapping();
 
-#if PORTABLE45 || NETSTANDARD
             var elementAttr = prop.GetCustomAttribute<FhirElementAttribute>();
             var cardinalityAttr = prop.GetCustomAttribute<Validation.CardinalityAttribute>();
-#else
-            var elementAttr = (FhirElementAttribute)Attribute.GetCustomAttribute(prop, typeof(FhirElementAttribute));
-            var cardinalityAttr = (Validation.CardinalityAttribute)Attribute.GetCustomAttribute(prop, typeof(Validation.CardinalityAttribute));
-#endif
 
             result.Name = determinePropertyName(prop);
             result.ReturnType = prop.PropertyType;
@@ -104,11 +99,7 @@ namespace Hl7.Fhir.Introspection
 
         private static string determinePropertyName(PropertyInfo prop)
         {
-#if PORTABLE45 || NETSTANDARD
             var elementAttr = prop.GetCustomAttribute<FhirElementAttribute>();
-#else
-			var elementAttr = (FhirElementAttribute)Attribute.GetCustomAttribute(prop, typeof(FhirElementAttribute));
-#endif
 
             if(elementAttr != null && elementAttr.Name != null)
                 return elementAttr.Name;
@@ -134,11 +125,7 @@ namespace Hl7.Fhir.Introspection
 
         private static bool isPrimitiveValueElement(PropertyInfo prop)
         {
-#if PORTABLE45 || NETSTANDARD
             var valueElementAttr = prop.GetCustomAttribute<FhirElementAttribute>();
-#else
-			var valueElementAttr = (FhirElementAttribute)Attribute.GetCustomAttribute(prop, typeof(FhirElementAttribute));
-#endif
             var isValueElement = valueElementAttr != null && valueElementAttr.IsPrimitiveValue;
 
             if(isValueElement && !isAllowedNativeTypeForDataTypeValue(prop.PropertyType))

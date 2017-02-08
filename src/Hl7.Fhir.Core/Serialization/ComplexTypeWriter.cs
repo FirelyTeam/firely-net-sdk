@@ -135,21 +135,12 @@ namespace Hl7.Fhir.Serialization
             Type serializationType = value.GetType();
             if (!prop.IsPrimitive && false)
             {
-#if PORTABLE45 || NETSTANDARD
                 Type baseType = serializationType.GetTypeInfo().BaseType;
                 while (baseType != typeof(Element) && baseType != typeof(object))
                 {
                     serializationType = baseType;
                     baseType = baseType.GetTypeInfo().BaseType;
                 }
-#else
-                Type baseType = serializationType.BaseType;
-                while (baseType != typeof(Element) && baseType != typeof(object))
-                {
-                    serializationType = baseType;
-                    baseType = baseType.BaseType;
-                }
-#endif
             }
 
             return serializationType;

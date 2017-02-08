@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Rest
     {
         internal static void WriteBody(this HttpWebRequest request, bool CompressRequestBody, byte[] data)
         {
-#if PORTABLE45 || NETSTANDARD
+#if !DOTNETFW
             Stream outs = null;
             //outs = request.GetRequestStreamAsync().Result;
             //outs.Write(data, 0, (int)data.Length);
@@ -175,7 +175,7 @@ namespace Hl7.Fhir.Rest
 
             if (!async.IsCompleted)
             {
-#if !PORTABLE45 && !NETSTANDARD
+#if DOTNETFW
                 ThreadPool.RegisterWaitForSingleObject(async.AsyncWaitHandle, new WaitOrTimerCallback(TimeoutCallback), req, req.Timeout, true);
 #endif
 

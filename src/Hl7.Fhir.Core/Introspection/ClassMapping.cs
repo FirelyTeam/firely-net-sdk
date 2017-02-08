@@ -178,14 +178,14 @@ namespace Hl7.Fhir.Introspection
 
         private static string getProfile(Type type)
         {
-            var attr = ReflectionHelper.GetAttribute<FhirTypeAttribute>(type);
+            var attr = type.GetTypeInfo().GetCustomAttribute<FhirTypeAttribute>();
          
             return attr != null ? attr.Profile : null;
         }
 
         private static string collectTypeName(Type type)
         {
-            var attr = ReflectionHelper.GetAttribute<FhirTypeAttribute>(type);
+            var attr = type.GetTypeInfo().GetCustomAttribute<FhirTypeAttribute>();
             string name;
 
             if (attr != null && attr.Name != null)
@@ -196,11 +196,8 @@ namespace Hl7.Fhir.Introspection
             if(ReflectionHelper.IsClosedGenericType(type))
             {
                 name += "<";
-#if PORTABLE45 || NETSTANDARD
-				name += String.Join(",", type.GenericTypeArguments.Select(arg => arg.FullName));
-#else
-                name += String.Join(",", type.GetGenericArguments().Select(arg => arg.FullName));
-#endif
+                //name += String.Join(",", type.GetGenericArguments().Select(arg => arg.FullName));
+                name += String.Join(",", type.GenericTypeArguments.Select(arg => arg.FullName));
 				name += ">";
 			}
 
@@ -209,32 +206,22 @@ namespace Hl7.Fhir.Introspection
 
         public static bool IsFhirResource(Type type)
         {
-#if NETSTANDARD
             var attr = ReflectionHelper.GetAttribute<FhirTypeAttribute>(type.GetTypeInfo());
             return typeof(Resource).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo())
                    || (attr != null && attr.IsResource);
-#else
-            var attr = ReflectionHelper.GetAttribute<FhirTypeAttribute>(type);
-            return typeof(Resource).IsAssignableFrom(type)
-                   || (attr != null && attr.IsResource);
-#endif
-
+            //var attr = ReflectionHelper.GetAttribute<FhirTypeAttribute>(type);
+            //return typeof(Resource).IsAssignableFrom(type)
+            //       || (attr != null && attr.IsResource);
         }
+
 
         public static bool IsMappableType(Type type)
         {
-#if NETSTANDARD
             var hasAttribute = type.GetTypeInfo().IsDefined(typeof(FhirTypeAttribute), false);
-#else
-            var hasAttribute = type.IsDefined(typeof(FhirTypeAttribute), false);
-#endif
+
             if (!hasAttribute) return false;
 
-#if PORTABLE45 || NETSTANDARD
             if (type.GetTypeInfo().IsAbstract)
-#else
-            if (type.IsAbstract)
-#endif
                 throw Error.Argument("type", "Type {0} is marked as a mappable tpe, but is abstract so cannot be used directly to represent a FHIR datatype".FormatWith(type.Name));
 
             // Open generic type definitions can never appear as roots of objects

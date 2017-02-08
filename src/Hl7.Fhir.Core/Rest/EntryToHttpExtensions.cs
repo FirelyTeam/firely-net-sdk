@@ -53,10 +53,10 @@ namespace Hl7.Fhir.Rest
 
             if (interaction.IfMatch != null) request.Headers["If-Match"] = interaction.IfMatch;
             if (interaction.IfNoneMatch != null) request.Headers["If-None-Match"] = interaction.IfNoneMatch;
-#if PORTABLE45  || NETSTANDARD
-            if (interaction.IfModifiedSince != null) request.Headers["If-Modified-Since"] = interaction.IfModifiedSince.Value.UtcDateTime.ToString();
-#else
+#if DOTNETFW
             if (interaction.IfModifiedSince != null) request.IfModifiedSince = interaction.IfModifiedSince.Value.UtcDateTime;
+#else
+            if (interaction.IfModifiedSince != null) request.Headers["If-Modified-Since"] = interaction.IfModifiedSince.Value.UtcDateTime.ToString();
 #endif
             if (interaction.IfNoneExist != null) request.Headers["If-None-Exist"] = interaction.IfNoneExist;
 
@@ -67,8 +67,8 @@ namespace Hl7.Fhir.Rest
 
             if (entry.Resource != null)
                 setBodyAndContentType(request, entry.Resource, format, CompressRequestBody, out body);
-#if !PORTABLE45 && !NETSTANDARD
             // PCL doesn't support setting the length (and in this case will be empty anyway)
+#if DOTNETFW
             else
                 request.ContentLength = 0;
 #endif
@@ -89,11 +89,7 @@ namespace Hl7.Fhir.Rest
             {
                 try
                 {
-#if PORTABLE45 || NETSTANDARD
 					System.Reflection.PropertyInfo prop = request.GetType().GetRuntimeProperty("UserAgent");
-#else
-                    System.Reflection.PropertyInfo prop = request.GetType().GetProperty("UserAgent");
-#endif
 
                     if (prop != null)
                         prop.SetValue(request, agent, null);
