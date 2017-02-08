@@ -9,20 +9,22 @@ namespace Hl7.Fhir.Tests
 {
     internal class TestDataHelper
     {
-        public static string ReadTestData(string filename)
+        public static string GetFullPathForExample(string filename)
         {
             string location = typeof(TestDataHelper).GetTypeInfo().Assembly.Location;
             var path = Path.GetDirectoryName(location);
-            string file = Path.Combine(path, "TestData", filename);
+            return Path.Combine(path, "TestData", filename);
+        }
+
+        public static string ReadTestData(string filename)
+        {
+            string file = GetFullPathForExample(filename);
             return File.ReadAllText(file);
         }
 
         public static ZipArchive ReadTestZip(string filename)
         {
-            string location = typeof(TestDataHelper).GetTypeInfo().Assembly.Location;
-            var path = Path.GetDirectoryName(location);
-            string file = Path.Combine(path, "TestData", filename);
-
+            string file = GetFullPathForExample(filename);
             return ZipFile.OpenRead(file);
         }
 

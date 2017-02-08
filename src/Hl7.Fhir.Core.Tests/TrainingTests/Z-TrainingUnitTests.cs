@@ -111,7 +111,6 @@ namespace FHIR.Server.Tests
             };
         }
 
-#if !NETCore
         public void ParseElementDefinitionConstraint()
         {
             string constraint = "";
@@ -149,7 +148,6 @@ namespace FHIR.Server.Tests
                 newConst.AddExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString(expression));
             }
         }
-#endif
 
         [TestMethod, TestCategory("Training")]
         public void TestParameters()
