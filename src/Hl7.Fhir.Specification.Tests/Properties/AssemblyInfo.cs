@@ -7,7 +7,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Hl7.Fhir.Specification.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Hl7.Fhir.Specification.Tests")]
 [assembly: AssemblyCopyright("Copyright © Ewout Kramer and collaborators 2016")]
 [assembly: AssemblyTrademark("")]
@@ -18,7 +17,7 @@ using System.Runtime.InteropServices;
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 
-[assembly: AssemblyVersion("1.0.*")]    // Stick test version to always 1.0, i.e. "pseudo-strong naming"
+[assembly: AssemblyVersion("1.0.0.0")]    // Stick test version to always 1.0, i.e. "pseudo-strong naming"
 
 // Sign this for trusted friendship to tested Assembly. See: https://msdn.microsoft.com/en-us/library/bb385180.aspx
 #if SIGNED

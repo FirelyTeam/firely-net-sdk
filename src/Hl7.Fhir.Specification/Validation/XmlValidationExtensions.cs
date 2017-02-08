@@ -21,7 +21,7 @@ using System.Xml.Schema;
 
 namespace Hl7.Fhir.Validation
 {
-#if NET45
+#if NET_XSD_SCHEMA
 
     /// <summary>
     /// Add support for validating against Base subclasses (instead of IElementNavigator) to the Validator

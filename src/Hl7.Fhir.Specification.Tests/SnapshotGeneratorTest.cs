@@ -439,7 +439,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var isExpandable = isExpandableElement(e.Element);
 
-            Debug.Print("[beforeExpandElementHandler] #{0} '{1}' - HasChildren = {2} - MustExpand = {3} => {4}"
+            Debug.WriteLine("[beforeExpandElementHandler] #{0} '{1}' - HasChildren = {2} - MustExpand = {3} => {4}"
                 .FormatWith(e.Element.GetHashCode(), e.Element.Path, e.HasChildren, e.MustExpand, isExpandable));
 
             // Never clear flag if already set by snapshot generator...!
@@ -468,7 +468,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
             catch (Exception ex)
             {
-                Debug.Print("{0}: {1}".FormatWith(ex.GetType().Name, ex.Message));
+                Debug.WriteLine("{0}: {1}".FormatWith(ex.GetType().Name, ex.Message));
                 exceptionRaised = ex is NotSupportedException;
             }
             Assert.IsTrue(exceptionRaised);
@@ -540,7 +540,7 @@ namespace Hl7.Fhir.Specification.Tests
                 _elements = sd.Snapshot.Element;
                 _pos = 0;
                 var ann = sd.Annotation<OriginInformation>();
-                Debug.Print($"Assert structure: url = '{sd.Url}' - origin = '{ann.Origin}'");
+                Debug.WriteLine($"Assert structure: url = '{sd.Url}' - origin = '{ann.Origin}'");
             }
 
             public ElementVerifier(IList<ElementDefinition> elements, SnapshotGeneratorSettings settings)
@@ -1100,7 +1100,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
             catch (InvalidOperationException ex)
             {
-                Debug.Print(ex.Message);
+                Debug.WriteLine(ex.Message);
                 exceptionRaised = true;
             }
             Assert.IsTrue(exceptionRaised);
@@ -1123,7 +1123,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var tree = DifferentialTreeConstructor.MakeTree(elements);
             Assert.IsNotNull(tree);
-            Debug.Print(string.Join(Environment.NewLine, tree.Select(e => $"{e.Path} : '{e.Name}'")));
+            Debug.WriteLine(string.Join(Environment.NewLine, tree.Select(e => $"{e.Path} : '{e.Name}'")));
 
             Assert.AreEqual(10, tree.Count);
             var verifier = new ElementVerifier(tree, _settings);
@@ -1148,7 +1148,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(sd);
             var tree = DifferentialTreeConstructor.MakeTree(sd.Differential.Element);
             Assert.IsNotNull(tree);
-            Debug.Print(string.Join(Environment.NewLine, tree.Select(e => $"{e.Path} : '{e.Name}'")));
+            Debug.WriteLine(string.Join(Environment.NewLine, tree.Select(e => $"{e.Path} : '{e.Name}'")));
         }
 
         // [WMR 20160802] Unit tests for SnapshotGenerator.ExpandElement
@@ -1396,7 +1396,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Conditional("DEBUG")]
         static void dumpBaseElems(IList<ElementDefinition> elements)
         {
-            Debug.Print(string.Join(Environment.NewLine,
+            Debug.WriteLine(string.Join(Environment.NewLine,
                 elements.Select(e =>
                 {
                     var bea = e.Annotation<BaseDefAnnotation>();
@@ -1422,8 +1422,8 @@ namespace Hl7.Fhir.Specification.Tests
                 Debug.WriteLine("StructureDefinition '{0}' ('{1}')".FormatWith(sd.Name, sd.Url));
                 Debug.WriteLine("Base = '{0}'".FormatWith(sd.Base));
                 // Debug.Indent();
-                Debug.Print("Element.Id | Element.Path | Element.Base.Path");
-                Debug.Print(new string('=', 100));
+                Debug.WriteLine("Element.Id | Element.Path | Element.Base.Path");
+                Debug.WriteLine(new string('=', 100));
                 foreach (var elem in sd.Snapshot.Element)
                 {
                     Debug.WriteLine("{0}  |  {1}  |  {2}", elem.ElementId, elem.Path, elem.Base != null ? elem.Base.Path : null);
@@ -1437,12 +1437,12 @@ namespace Hl7.Fhir.Specification.Tests
         {
             if (outcome != null)
             {
-                Debug.Print("===== OperationOutcome: {0} issues", outcome.Issue.Count);
+                Debug.WriteLine("===== OperationOutcome: {0} issues", outcome.Issue.Count);
                 for (int i = 0; i < outcome.Issue.Count; i++)
                 {
                     dumpIssue(outcome.Issue[i], i);
                 }
-                Debug.Print("==================================");
+                Debug.WriteLine("==================================");
             }
         }
 

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.XPath;
-using System.Xml.Xsl;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+
+#if NET_XSD_SCHEMA
+
 using Hl7.Fhir.XPath;
 
 namespace Hl7.Fhir.Specification.Tests
@@ -108,3 +110,4 @@ namespace Hl7.Fhir.Specification.Tests
         //}        
     }
 }
+#endif

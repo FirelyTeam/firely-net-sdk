@@ -29,9 +29,6 @@
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="XPath\*.*" />
-  </ItemGroup>
-  <ItemGroup>
     <FhirConformance Include="data\*.*" />
   </ItemGroup>
   <ItemGroup>
