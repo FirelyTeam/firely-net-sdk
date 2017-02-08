@@ -21,9 +21,18 @@ namespace Hl7.Fhir.Validation
             return cc.GetStringExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression");
         }
 
+
+#if NETSTANDARD1_1
+        public static int Count(this string s, Func<char, bool> predicate)
+        {
+            return s.ToCharArray().Where(predicate).Count();
+        }
+#endif
+
         public static bool IsPrimitiveValueConstraint(this ElementDefinition ed)
         {
             var path = ed.Path;
+
             return path.Count(c => c == '.') == 1 &&
                         path.EndsWith(".value") &&
                         Char.IsLower(path[0]);

@@ -12,7 +12,7 @@ using System;
 namespace Hl7.Fhir.Specification.Snapshot
 {
     /// <summary>Configuration settings for the <see cref="SnapshotGenerator"/> class.</summary>
-    public sealed class SnapshotGeneratorSettings : ICloneable
+    public sealed class SnapshotGeneratorSettings
     {
         /// <summary>Default configuration settings for the <see cref="SnapshotGenerator"/> class.</summary>
         public static readonly SnapshotGeneratorSettings Default = new SnapshotGeneratorSettings()
