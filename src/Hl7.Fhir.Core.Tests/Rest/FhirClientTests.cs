@@ -1037,19 +1037,24 @@ namespace Hl7.Fhir.Tests.Rest
 
         }
 
-        /*
-        // HL7 WGM San Antonio - Gunther Meyer
-        // https://github.com/ewoutkramer/fhir-net-api/issues/289
         [TestMethod]
-        [Ignore]
-        public void TestSearch()
+        public void TestAuthenticationOnBefore()
         {
-            var endpoint = "http://52.26.91.242:80"; // /Organization
-            var client = new FhirClient(endpoint);
-            var providerList = client.Search("Organization", new string[] { "name=a" });
-            Assert.IsNotNull(providerList);
+            FhirClient validationFhirClient = new FhirClient("https://sqlonfhir.azurewebsites.net/fhir");
+            validationFhirClient.OnBeforeRequest += (object sender, BeforeRequestEventArgs e) =>
+            {
+                e.RawRequest.Headers.Add("Authorization", "Bearer bad-bearer");
+            };
+            try
+            {
+                var output = validationFhirClient.ValidateResource(new Patient());
+
+            }
+            catch(FhirOperationException ex)
+            {
+                Assert.IsTrue(ex.Status == HttpStatusCode.Forbidden || ex.Status == HttpStatusCode.Unauthorized, "Excpeted a security exception");
+            }
         }
-        */
 
     }
 

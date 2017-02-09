@@ -50,6 +50,11 @@ namespace Hl7.Fhir.Serialization
             return WrapXmlReader(XmlReader.Create(new StringReader(SerializationUtil.SanitizeXml(xml))));
         }
 
+        public static JsonWriter CreateJsonTextWriter(TextWriter writer)
+        {
+            return new Hl7.Fhir.Serialization.FhirSerializer.BetterDecimalJsonTextWriter(writer);
+        }
+
         public static XmlReader XmlReaderFromStream(Stream input)
         {
             if (input.Position != 0)
