@@ -1734,22 +1734,22 @@ namespace Hl7.Fhir.Specification.Tests
                 elem = elems.FirstOrDefault(e => e.Path == "Patient.identifier.use");
                 Assert.IsNotNull(elem);
                 Assert.AreEqual(1, elem.Min);
-                Assert.IsTrue(elem.HasDifferentialConstraints());
-                Assert.IsTrue(elem.MinElement.IsConstrainedByDifferential());
+                Assert.IsTrue(elem.HasDiffConstraintAnnotations());
+                Assert.IsTrue(elem.MinElement.IsConstrainedByDiff());
 
                 // Patient.identifier.value::short is overriden by patient profile
                 elem = elems.FirstOrDefault(e => e.Path == "Patient.identifier.value");
                 Assert.IsNotNull(elem);
                 Assert.AreEqual("A custom identifier value", elem.Short);
-                Assert.IsTrue(elem.HasDifferentialConstraints());
-                Assert.IsTrue(elem.ShortElement.IsConstrainedByDifferential());
+                Assert.IsTrue(elem.HasDiffConstraintAnnotations());
+                Assert.IsTrue(elem.ShortElement.IsConstrainedByDiff());
 
                 // Patient.identifier.system::min is inherited from custom type profile, not overriden by patient profile
                 elem = elems.FirstOrDefault(e => e.Path == "Patient.identifier.system");
                 Assert.IsNotNull(elem);
                 Assert.AreEqual(1, elem.Min);
-                Assert.IsFalse(elem.HasDifferentialConstraints());
-                Assert.IsFalse(elem.MinElement.IsConstrainedByDifferential());
+                Assert.IsFalse(elem.HasDiffConstraintAnnotations());
+                Assert.IsFalse(elem.MinElement.IsConstrainedByDiff());
 
             }
             finally
@@ -1816,20 +1816,23 @@ namespace Hl7.Fhir.Specification.Tests
 
                 Assert.AreEqual("extension", elem.Name);
                 Assert.AreEqual("1", elem.Max); // Inline profile constraint overriding the extension definition
-                Assert.IsTrue(elem.MaxElement.IsConstrainedByDifferential());
-                Assert.IsTrue(elem.HasDifferentialConstraints());
-                Assert.IsTrue(elem.IsConstrainedByDifferential());
+                Assert.IsTrue(elem.MaxElement.IsConstrainedByDiff());
+                Assert.IsTrue(elem.HasDiffConstraintAnnotations());
+                Assert.IsTrue(elem.IsConstrainedByDiff());
                 var baseElem = elem.Annotation<BaseDefAnnotation>()?.BaseElementDefinition;
                 Assert.IsNotNull(baseElem);
                 Assert.AreEqual("*", baseElem.Max);             // Verify that max property is not inherited from base element = Extension root element
                 Assert.AreEqual(baseElem.Short, elem.Short);    // Verify that short property is inherited
-                Assert.IsFalse(elem.ShortElement.IsConstrainedByDifferential());
+                Assert.IsFalse(elem.ShortElement.IsConstrainedByDiff());
+                // Profile overrides the definition property of the extension definition root element 
+                Assert.AreNotEqual(baseElem.Definition, elem.Definition);
+                Assert.IsTrue(elem.DefinitionElement.IsConstrainedByDiff());
 
                 Assert.IsTrue(nav.MoveToFirstChild());
 
                 Assert.IsTrue(nav.MoveToNext("url"));
                 elem = nav.Current;
-                Assert.IsFalse(elem.HasDifferentialConstraints());
+                Assert.IsFalse(elem.HasDiffConstraintAnnotations());
                 var uri = elem.Fixed as FhirUri;
                 Assert.IsNotNull(uri);
                 Assert.AreEqual(extensionDefinitionUrl, uri.Value);
@@ -1837,13 +1840,15 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsTrue(nav.MoveToNext("valueString"));
                 elem = nav.Current;
                 Assert.AreEqual(1, elem.Min);            // Inline profile constraint overriding the extension definition
-                Assert.IsTrue(elem.MinElement.IsConstrainedByDifferential());
-                Assert.IsTrue(elem.HasDifferentialConstraints());
+                Assert.IsTrue(elem.MinElement.IsConstrainedByDiff());
+                Assert.IsTrue(elem.HasDiffConstraintAnnotations());
                 baseElem = elem.Annotation<BaseDefAnnotation>()?.BaseElementDefinition;
                 Assert.IsNotNull(baseElem);
                 Assert.AreEqual(0, baseElem.Min);               // Verify that min property is not inherited from base element = Extension.valueString
                 Assert.AreEqual(baseElem.Short, elem.Short);    // Verify that short property is inherited
-                Assert.IsFalse(elem.ShortElement.IsConstrainedByDifferential());
+                Assert.IsFalse(elem.ShortElement.IsConstrainedByDiff());
+                Assert.AreEqual(baseElem.Definition, elem.Definition);    // Verify that definition property is inherited
+                Assert.IsFalse(elem.DefinitionElement.IsConstrainedByDiff());
             }
             finally
             {
@@ -1904,7 +1909,7 @@ namespace Hl7.Fhir.Specification.Tests
             if (elem != null)
             {
                 // var changed = elem.GetChangedByDiff() == true;
-                var changed = elem.IsConstrainedByDifferential();
+                var changed = elem.IsConstrainedByDiff();
                 Debug.Assert(!_settings.AnnotateDifferentialConstraints || changed);
                 Debug.Print("[SnapshotConstraintHandler] #{0} '{1}'{2}".FormatWith(elem.GetHashCode(), elem.Path, changed ? " CHANGED!" : null));
             }
@@ -1945,7 +1950,7 @@ namespace Hl7.Fhir.Specification.Tests
                 bool? hasConstraintAnnotations = null;
                 if (settings.AnnotateDifferentialConstraints)
                 {
-                    hasConstraintAnnotations = elem.HasDifferentialConstraints();
+                    hasConstraintAnnotations = elem.HasDiffConstraintAnnotations();
                     isValid &= hasConstraints == hasConstraintAnnotations;
                 }
 
@@ -1979,10 +1984,10 @@ namespace Hl7.Fhir.Specification.Tests
             baseClone.Base = elem.Base;
 
             // Also ignore any Changed extensions on base and diff
-            elemClone.RemoveAllChangedByDiff();
-            baseClone.RemoveAllChangedByDiff();
-            elemClone.ClearAllConstrainedByDifferential();
-            baseClone.ClearAllConstrainedByDifferential();
+            elemClone.RemoveAllConstrainedByDiffExtensions();
+            baseClone.RemoveAllConstrainedByDiffExtensions();
+            elemClone.RemoveAllConstrainedByDiffAnnotations();
+            baseClone.RemoveAllConstrainedByDiffAnnotations();
 
             var result = !baseClone.IsExactly(elemClone);
             return result;
@@ -2077,7 +2082,7 @@ namespace Hl7.Fhir.Specification.Tests
         // static bool isChanged(IExtendable extendable) => extendable != null && extendable.GetChangedByDiff() == true;
 
         static bool hasChanges<T>(IList<T> elements) where T : Element => elements != null ? elements.Any(e => isChanged(e)) : false;
-        static bool isChanged(Element elem) => elem != null && elem.IsConstrainedByDifferential();
+        static bool isChanged(Element elem) => elem != null && elem.IsConstrainedByDiff();
 
         [TestMethod]
         public void TestExpandCoreArtifacts()

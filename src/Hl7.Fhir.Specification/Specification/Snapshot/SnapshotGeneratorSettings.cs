@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2017, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         /// <summary>
         /// Enable this setting to annotate all elements and properties in the snapshot that are constrained by the differential
-        /// using the <see cref="SnapshotGeneratorAnnotations.ConstrainedByDifferentialAnnotation"/>.
+        /// using the <see cref="SnapshotGeneratorAnnotations.ConstrainedByDiffAnnotation"/>.
         /// </summary>
         public bool AnnotateDifferentialConstraints { get; set; }
 
