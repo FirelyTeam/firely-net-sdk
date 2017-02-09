@@ -121,6 +121,15 @@
     <Content Include="TestData\snapshot-test\Ewout\DocumentComposition.structuredefinition.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="TestData\snapshot-test\Marten\nl-core-humanname-snapshot.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\Marten\nl-core-patient-snapshot.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\WMR\CustomIdentifier.structuredefinition.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestData\snapshot-test\WMR\MyCustomObservation.structuredefinition.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -131,6 +140,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\snapshot-test\WMR\ObservationLocationExtension.structuredefinition.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\WMR\PatientExtension.structuredefinition.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\WMR\PatientWithCustomIdentifier.structuredefinition.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\WMR\PatientWithExplicitCoreIdentifierProfile.structuredefinition.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\WMR\PatientWithExtension.structuredefinition.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\validation\patient-telecom-reslice-ek.xml">

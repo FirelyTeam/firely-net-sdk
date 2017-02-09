@@ -181,6 +181,9 @@ namespace Hl7.Fhir.Specification.Tests
 
             var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Account");
 
+            // var sd = _testResolver.FindStructureDefinition(@"http://fhir.nl/fhir/StructureDefinition/nl-core-patient");
+            // var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/PatientWithExtension");
+
             Assert.IsNotNull(sd);
 
             // dumpReferences(sd);
@@ -348,11 +351,11 @@ namespace Hl7.Fhir.Specification.Tests
                    && typeCode.Value != FHIRDefinedType.BackboneElement
                    && ModelInfo.IsDataType(typeCode.Value)
                    && (
-                    // Only expand extension elements with a custom name or profile
-                    // Do NOT expand the core Extension.extension element, as this will trigger infinite recursion
-                    typeCode.Value != FHIRDefinedType.Extension
-                    || type.Profile.Any()
-                    || element.Name != null
+                        // Only expand extension elements with a custom name or profile
+                        // Do NOT expand the core Extension.extension element, as this will trigger infinite recursion
+                        typeCode.Value != FHIRDefinedType.Extension
+                        || type.Profile.Any()
+                        || element.Name != null
                    );
         }
 
@@ -365,6 +368,8 @@ namespace Hl7.Fhir.Specification.Tests
             // => first generate regular snapshot, then re-run on result to expand all
 
             var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Patient");
+            // var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/PatientWithCustomIdentifier");
+
             Assert.IsNotNull(sd);
 
             // generateSnapshot(sd);
@@ -1466,26 +1471,31 @@ namespace Hl7.Fhir.Specification.Tests
             // the external type profile.
 
             var source = _testResolver;
+            Assert.IsNotNull(source);
 
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/daf-condition");
-            // var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/StructureDefinition/patient-with-extensions");
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/sdc-questionnaire");
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/shareablevalueset");
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-goal");
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
-            // var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyLocation");
-            // var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyPatient");
-            // var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyExtension1");
+            // var sd = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/daf-condition");
+            // var sd = source.FindStructureDefinition(@"http://example.com/fhir/StructureDefinition/patient-with-extensions");
+            // var sd = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/sdc-questionnaire");
+            // var sd = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
+            // var sd = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/shareablevalueset");
+            // var sd = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-goal");
+            // var sd = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
+            // var sd = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyLocation");
+            // var sd = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyPatient");
+            // var sd = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyExtension1");
 
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Element");
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Patient");
-            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Extension");
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Meta");
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Money");
+            // var sd = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Element");
+            // var sd = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Patient");
+            // var sd = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Extension");
+            // var sd = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Meta");
+            // var sd = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Money");
 
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-basic-guidance-action");
+            // var sd = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-basic-guidance-action");
 
+            // var sd = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/PatientWithExtension");
+            // var sd = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/PatientWithCustomIdentifier");
+
+            var sd = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/CustomIdentifier");
 
             Assert.IsNotNull(sd);
             // dumpReferences(sd);
@@ -1558,6 +1568,292 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
+        [TestMethod]
+        public void TestBaseAnnotations_ExplicitCoreTypeProfile()
+        {
+            // Verify processing of explicit core element type profile in differential
+            // e.g. if the differential specifies explicit core type profile url
+            // Example: Patient.identifier type = { Code : Identifier, Profile : "http://hl7.org/fhir/StructureDefinition/Identifier" } }
+            // Snapshot generator should ignore this, i.e. NOT treat this as a constraint
+
+            var source = _testResolver;
+            Assert.IsNotNull(source);
+            var sd = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/PatientWithExplicitCoreIdentifierProfile");
+
+            Assert.IsNotNull(sd);
+            // dumpReferences(sd);
+
+            // Patient.identifier should reference the default core Identifier type profile
+            var elem = sd.Differential.Element.FirstOrDefault(e => e.Path == "Patient.identifier");
+            Assert.IsNotNull(elem);
+            var typeProfileUrl = elem.Type.FirstOrDefault().Profile.FirstOrDefault();
+            Assert.IsNotNull(typeProfileUrl);
+            Assert.AreEqual(typeProfileUrl, ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Identifier));
+
+            var settings = new SnapshotGeneratorSettings(_settings);
+            settings.AnnotateDifferentialConstraints = true;
+            _generator = new SnapshotGenerator(source, settings);
+
+            try
+            {
+                _generator.PrepareBaseProfile += profileHandler;
+                _generator.PrepareElement += elementHandler;
+                _generator.Constraint += constraintHandler;
+
+                StructureDefinition expanded;
+                generateSnapshotAndCompare(sd, out expanded);
+                dumpOutcome(_generator.Outcome);
+                Assert.IsTrue(expanded.HasSnapshot);
+                Assert.IsTrue(expanded.Snapshot.IsCreatedBySnapshotGenerator());
+                assertBaseDefs(expanded, settings);
+
+                // Verify that the snapshot generator also expanded the referenced core Identifier type profile
+                var sdType = source.FindStructureDefinitionForCoreType(FHIRDefinedType.Identifier);
+                Assert.IsNotNull(sdType);
+                Assert.IsTrue(sdType.HasSnapshot);
+                Assert.IsTrue(sdType.Snapshot.IsCreatedBySnapshotGenerator());
+
+                // Verify the snapshot expansion of the Patient.identifier element
+                elem = expanded.Snapshot.Element.FirstOrDefault(e => e.Path == "Patient.identifier");
+                Assert.IsNotNull(elem);
+                var baseElem = elem.Annotation<BaseDefAnnotation>()?.BaseElementDefinition;
+                Assert.IsNotNull(baseElem);
+                Assert.AreEqual(elem.Path, baseElem.Path); // Base = core Patient.identifier element
+                // Note: diff elem is not exactly equal to base elem (due to reduntant type profile constraint)
+                // hasConstraints and hasChanges methods aren't smart enough to detect redundant constraints
+                var hasConstraints = SnapshotGeneratorTest.hasConstraints(elem, baseElem);
+                Assert.IsTrue(hasConstraints);      
+                Assert.IsTrue(hasChanges(elem));
+
+                // Verify base annotations on Patient.identifier subtree
+                var elems = expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Patient.identifier.")).ToList();
+                for (int i = 0; i < elems.Count; i++)
+                {
+                    elem = elems[i];
+                    Assert.IsNotNull(elem);
+                    baseElem = elem.Annotation<BaseDefAnnotation>()?.BaseElementDefinition;
+                    Assert.IsNotNull(baseElem);
+                    hasConstraints = SnapshotGeneratorTest.hasConstraints(elem, baseElem);
+                    // Only the .use child element has a profile diff constraint
+                    bool isConstrained = elem.Path == "Patient.identifier.use";
+                    Assert.AreEqual(isConstrained, hasConstraints);
+                    Assert.AreEqual(isConstrained, hasChanges(elem));
+
+                    // Verify that base element annotations reference the associated child element in Core Identifier profile
+                    Assert.AreEqual("Patient." + baseElem.Path.Uncapitalize(), elem.Path);
+                }
+
+            }
+            finally
+            {
+                // Detach event handlers
+                _generator.Constraint -= constraintHandler;
+                _generator.PrepareElement -= elementHandler;
+                _generator.PrepareBaseProfile -= profileHandler;
+            }
+        }
+
+        [TestMethod]
+        public void TestBaseAnnotations_CustomTypeProfile()
+        {
+            // Verify generated base annotations for a profile that references an external element type profile
+            // e.g. Patient profile with a custom Identifier profile on the Patient.identifier element
+
+            var source = _testResolver;
+            Assert.IsNotNull(source);
+            var sd = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/PatientWithCustomIdentifier");
+
+            Assert.IsNotNull(sd);
+            // dumpReferences(sd);
+
+            // Patient.identifier should reference an external type profile
+            var elem = sd.Differential.Element.FirstOrDefault(e => e.Path == "Patient.identifier");
+            Assert.IsNotNull(elem);
+            var typeProfileUrl = elem.Type.FirstOrDefault().Profile.FirstOrDefault();
+            Assert.IsNotNull(typeProfileUrl);
+
+            var settings = new SnapshotGeneratorSettings(_settings);
+            settings.AnnotateDifferentialConstraints = true;
+            _generator = new SnapshotGenerator(source, settings);
+
+            try
+            {
+                _generator.PrepareBaseProfile += profileHandler;
+                _generator.PrepareElement += elementHandler;
+                _generator.Constraint += constraintHandler;
+
+                StructureDefinition expanded;
+                generateSnapshotAndCompare(sd, out expanded);
+                dumpOutcome(_generator.Outcome);
+                Assert.IsTrue(expanded.HasSnapshot);
+                Assert.IsTrue(expanded.Snapshot.IsCreatedBySnapshotGenerator());
+                assertBaseDefs(expanded, settings);
+
+                // Verify that the snapshot generator also expanded the referenced external custom Identifier type profile
+                var sdType = source.FindStructureDefinition(typeProfileUrl);
+                Assert.IsNotNull(sdType);
+                Assert.IsTrue(sdType.HasSnapshot);
+                Assert.IsTrue(sdType.Snapshot.IsCreatedBySnapshotGenerator());
+                assertBaseDefs(sdType, settings);
+
+                // Verify the snapshot expansion of the Patient.identifier element
+                elem = expanded.Snapshot.Element.FirstOrDefault(e => e.Path == "Patient.identifier");
+                Assert.IsNotNull(elem);
+                var baseElem = elem.Annotation<BaseDefAnnotation>()?.BaseElementDefinition;
+                Assert.IsNotNull(baseElem);
+                Assert.AreEqual(elem.Path, baseElem.Path); // Base = core Patient.identifier element
+                // Note: diff elem is not exactly equal to base elem (due to reduntant type profile constraint)
+                // hasConstraints and hasChanges methods aren't smart enough to detect redundant constraints
+                var hasConstraints = SnapshotGeneratorTest.hasConstraints(elem, baseElem);
+                Assert.IsTrue(hasConstraints);
+
+                // Verify base annotations on Patient.identifier subtree
+                var elems = expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Patient.identifier.")).ToList();
+                for (int i = 0; i < elems.Count; i++)
+                {
+                    elem = elems[i];
+                    Assert.IsNotNull(elem);
+                    baseElem = elem.Annotation<BaseDefAnnotation>()?.BaseElementDefinition;
+                    Assert.IsNotNull(baseElem);
+                    hasConstraints = SnapshotGeneratorTest.hasConstraints(elem, baseElem);
+                    // Only the .use child element has a profile diff constraint
+                    bool isConstrained = elem.Path == "Patient.identifier.use" || elem.Path == "Patient.identifier.value";
+                    Assert.AreEqual(isConstrained, hasConstraints);
+                    Assert.AreEqual(isConstrained, hasChanges(elem));
+
+                    // Verify that base element annotations reference the associated child element in custom Identifier profile
+                    // Assert.AreEqual("Patient." + baseElem.Path.Uncapitalize(), elem.Path);
+
+                    // Verify correct base element annotations
+                    // Should point to rebased custom type element (same path)
+                    Assert.AreEqual(baseElem.Path, elem.Path);
+                }
+
+                // Verify specific element constraints
+                // Patient.identifier.use::min is overriden by patient profile
+                elem = elems.FirstOrDefault(e => e.Path == "Patient.identifier.use");
+                Assert.IsNotNull(elem);
+                Assert.AreEqual(1, elem.Min);
+                Assert.IsTrue(elem.HasDifferentialConstraints());
+                Assert.IsTrue(elem.MinElement.IsConstrainedByDifferential());
+
+                // Patient.identifier.value::short is overriden by patient profile
+                elem = elems.FirstOrDefault(e => e.Path == "Patient.identifier.value");
+                Assert.IsNotNull(elem);
+                Assert.AreEqual("A custom identifier value", elem.Short);
+                Assert.IsTrue(elem.HasDifferentialConstraints());
+                Assert.IsTrue(elem.ShortElement.IsConstrainedByDifferential());
+
+                // Patient.identifier.system::min is inherited from custom type profile, not overriden by patient profile
+                elem = elems.FirstOrDefault(e => e.Path == "Patient.identifier.system");
+                Assert.IsNotNull(elem);
+                Assert.AreEqual(1, elem.Min);
+                Assert.IsFalse(elem.HasDifferentialConstraints());
+                Assert.IsFalse(elem.MinElement.IsConstrainedByDifferential());
+
+            }
+            finally
+            {
+                // Detach event handlers
+                _generator.Constraint -= constraintHandler;
+                _generator.PrepareElement -= elementHandler;
+                _generator.PrepareBaseProfile -= profileHandler;
+            }
+        }
+
+        [TestMethod]
+        public void TestBaseAnnotations_InlineExtension()
+        {
+            // Verify generated base annotations for a profile that references an external extension definition profile
+
+            var source = _testResolver;
+            Assert.IsNotNull(source);
+            var sd = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/PatientWithExtension");
+
+            Assert.IsNotNull(sd);
+            // dumpReferences(sd);
+
+            // Patient profile should reference an external extension definition, fetch the url
+            var elem = sd.Differential.Element.FirstOrDefault(e => e.Path == "Patient.extension" && e.Slicing == null);
+            Assert.IsNotNull(elem);
+            var extensionDefinitionUrl = elem.Type.FirstOrDefault().Profile.FirstOrDefault();
+            Assert.IsNotNull(extensionDefinitionUrl);
+
+            var settings = new SnapshotGeneratorSettings(_settings);
+            settings.AnnotateDifferentialConstraints = true;
+            _generator = new SnapshotGenerator(source, settings);
+
+            try
+            {
+                _generator.PrepareBaseProfile += profileHandler;
+                _generator.PrepareElement += elementHandler;
+                _generator.Constraint += constraintHandler;
+
+                StructureDefinition expanded;
+                generateSnapshotAndCompare(sd, out expanded);
+                dumpOutcome(_generator.Outcome);
+                Assert.IsTrue(expanded.HasSnapshot);
+                Assert.IsTrue(expanded.Snapshot.IsCreatedBySnapshotGenerator());
+                assertBaseDefs(expanded, settings);
+
+                // Verify that the snapshot generator also expanded the referenced external extension definition
+                var sdExtension = source.FindStructureDefinition(extensionDefinitionUrl);
+                Assert.IsNotNull(sdExtension);
+                Assert.IsTrue(sdExtension.HasSnapshot);
+                Assert.IsTrue(sdExtension.Snapshot.IsCreatedBySnapshotGenerator());
+                assertBaseDefs(sdExtension, settings);
+
+                // Verify correct merging of inline profile constraints overriding the extension definition
+                var nav = new ElementDefinitionNavigator(expanded);
+                Assert.IsTrue(nav.MoveToFirstChild());
+                Assert.IsTrue(nav.MoveToFirstChild());
+                Assert.IsTrue(nav.MoveToNext("extension"));
+                Assert.IsNotNull(nav.Current.Slicing);  // Extension slicing entry
+                Assert.IsTrue(nav.MoveToNext("extension"));
+                elem = nav.Current;
+                Assert.IsNull(elem.Slicing);    // First extension
+                Assert.AreEqual(elem.PrimaryTypeProfile(), extensionDefinitionUrl);
+
+                Assert.AreEqual("extension", elem.Name);
+                Assert.AreEqual("1", elem.Max); // Inline profile constraint overriding the extension definition
+                Assert.IsTrue(elem.MaxElement.IsConstrainedByDifferential());
+                Assert.IsTrue(elem.HasDifferentialConstraints());
+                Assert.IsTrue(elem.IsConstrainedByDifferential());
+                var baseElem = elem.Annotation<BaseDefAnnotation>()?.BaseElementDefinition;
+                Assert.IsNotNull(baseElem);
+                Assert.AreEqual("*", baseElem.Max);             // Verify that max property is not inherited from base element = Extension root element
+                Assert.AreEqual(baseElem.Short, elem.Short);    // Verify that short property is inherited
+                Assert.IsFalse(elem.ShortElement.IsConstrainedByDifferential());
+
+                Assert.IsTrue(nav.MoveToFirstChild());
+
+                Assert.IsTrue(nav.MoveToNext("url"));
+                elem = nav.Current;
+                Assert.IsFalse(elem.HasDifferentialConstraints());
+                var uri = elem.Fixed as FhirUri;
+                Assert.IsNotNull(uri);
+                Assert.AreEqual(extensionDefinitionUrl, uri.Value);
+
+                Assert.IsTrue(nav.MoveToNext("valueString"));
+                elem = nav.Current;
+                Assert.AreEqual(1, elem.Min);            // Inline profile constraint overriding the extension definition
+                Assert.IsTrue(elem.MinElement.IsConstrainedByDifferential());
+                Assert.IsTrue(elem.HasDifferentialConstraints());
+                baseElem = elem.Annotation<BaseDefAnnotation>()?.BaseElementDefinition;
+                Assert.IsNotNull(baseElem);
+                Assert.AreEqual(0, baseElem.Min);               // Verify that min property is not inherited from base element = Extension.valueString
+                Assert.AreEqual(baseElem.Short, elem.Short);    // Verify that short property is inherited
+                Assert.IsFalse(elem.ShortElement.IsConstrainedByDifferential());
+            }
+            finally
+            {
+                // Detach event handlers
+                _generator.Constraint -= constraintHandler;
+                _generator.PrepareElement -= elementHandler;
+                _generator.PrepareBaseProfile -= profileHandler;
+            }
+        }
+
 
         // [WMR 20160816] Test custom annotations containing associated base definitions
         class BaseDefAnnotation
@@ -1583,6 +1879,9 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var elem = e.Element;
             Assert.IsNotNull(elem);
+
+            // Assert.IsNotNull(elem.Base);
+
             var ann = elem.Annotation<BaseDefAnnotation>();
             // We want to annotate a reference to the matching base element from the (immediate) base profile.
             // When the snapshot generator expands external profiles, then this handler is called once for each
@@ -1627,25 +1926,33 @@ namespace Hl7.Fhir.Specification.Tests
             foreach (var elem in elems)
             {
                 // Each element should have a valid Base component, unless the profile is a core type/resource definition (no base)
-                Assert.IsTrue(!isConstraint || elem.Base != null);
+                // Assert.IsTrue(!isConstraint || elem.Base != null);
 
                 var ann = elem.Annotation<BaseDefAnnotation>();
                 var baseDef = ann != null ? ann.BaseElementDefinition : null;
                 Assert.AreNotEqual(elem, baseDef);
 
-                var hasChanges = HasChanges(elem);
+                var hasChanges = SnapshotGeneratorTest.hasChanges(elem);
                 var hasConstraints = false;
                 if (baseDef != null) // && elem.Base != null)
                 {
                     // If normalizing, then elem.Base.Path refers to the defining profile (e.g. DomainResource),
                     // whereas baseDef refers to the immediate base profile (e.g. Patient)
                     Debug.Assert(elem.Base == null || ElementDefinitionNavigator.IsCandidateBasePath(elem.Base.Path, baseDef.Path));
-                    hasConstraints = HasConstraints(elem, baseDef);
+                    hasConstraints = SnapshotGeneratorTest.hasConstraints(elem, baseDef);
                 }
                 var isValid = hasChanges == hasConstraints;
+                bool? hasConstraintAnnotations = null;
+                if (settings.AnnotateDifferentialConstraints)
+                {
+                    hasConstraintAnnotations = elem.HasDifferentialConstraints();
+                    isValid &= hasConstraints == hasConstraintAnnotations;
+                }
+
                 Debug.WriteLine("{0,10}  |  {1}  |  {2,-12}  |  {3,-50}  |  {4,-40}  |  {5,-40}  |  {6,10}  |  {7}",
                     elem.GetHashCode(),
-                    hasConstraints ? "+" : "-",
+                    (hasConstraints ? "+" : "-")
+                    + (hasConstraintAnnotations.HasValue ? (hasConstraintAnnotations.Value ? " (+)" : " (-)") : null),
                     getChangeDescription(elem),
                     elem.Path,
                     elem.Base != null ? elem.Base.Path : null,
@@ -1661,7 +1968,7 @@ namespace Hl7.Fhir.Specification.Tests
         // Utility function to compare element and base element
         // Path, Base and CHANGED_BY_DIFF_EXT extension are excluded from comparison
         // Returns true if the element has any other constraints on base
-        static bool HasConstraints(ElementDefinition elem, ElementDefinition baseElem)
+        static bool hasConstraints(ElementDefinition elem, ElementDefinition baseElem)
         {
             var elemClone = (ElementDefinition)elem.DeepCopy();
             var baseClone = (ElementDefinition)baseElem.DeepCopy();
@@ -1682,7 +1989,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         // Returns true if the specified element or any of its' components contain the CHANGED_BY_DIFF_EXT extension
-        static bool HasChanges(ElementDefinition elem)
+        static bool hasChanges(ElementDefinition elem)
         {
             return isChanged(elem)
                 || hasChanges(elem.AliasElement)

@@ -10,6 +10,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -71,7 +72,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         /// <summary>Recursively remove any existing differential constraint annotations from the specified snapshot elements and all their children.</summary>
-        internal static void ClearAllConstrainedByDifferential<T>(this List<T> elements) where T : Base
+        internal static void ClearAllConstrainedByDifferential<T>(this IEnumerable<T> elements) where T : Base
         {
             if (elements == null) { throw Error.ArgumentNull(nameof(elements)); }
             foreach (var elem in elements)
@@ -80,7 +81,19 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
-        public static bool IsConstrainedByDifferential(this Element elem) => elem != null && elem.HasAnnotation<ConstrainedByDifferentialAnnotation>();
+        /// <summary>
+        /// Determines if the specified element is annotated as being constrained by the differential.
+        /// Note that this method is non-recursive; only the specified element itself is inspected, child element annotations are ignored.
+        /// Use <seealso cref="HasDifferentialConstraints"/> to perform a recursive check.
+        /// </summary>
+        public static bool IsConstrainedByDifferential(this Base elem) => elem != null && elem.HasAnnotation<ConstrainedByDifferentialAnnotation>();
+
+        /// <summary>Determines if the specified element or any of it's children is annotated as being constrained by the differential.</summary>
+        public static bool HasDifferentialConstraints(this Base elem)
+            => elem != null && (
+                elem.HasAnnotation<ConstrainedByDifferentialAnnotation>()
+                || elem.Children.Any(e => e.HasDifferentialConstraints())
+            );
 
         #endregion
 
