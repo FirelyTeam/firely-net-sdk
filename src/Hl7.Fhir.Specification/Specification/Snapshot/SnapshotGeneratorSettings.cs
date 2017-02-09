@@ -17,10 +17,10 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Default configuration settings for the <see cref="SnapshotGenerator"/> class.</summary>
         public static readonly SnapshotGeneratorSettings Default = new SnapshotGeneratorSettings()
         {
-            ExpandExternalProfiles = true,
-            ForceExpandAll = false,                     // Only enable this when using a cached source...
-            MarkChanges = false,                        // Enabled by Simplifier
-            AnnotateDifferentialConstraints = false,    // For snapshot rendering
+            GenerateSnapshotForExternalProfiles = true,
+            ForceRegenerateSnapshots = false,           // Only enable this when using a cached source...!
+            GenerateExtensionsOnConstraints = false,    // Enabled by Simplifier (not used...)
+            GenerateAnnotationsOnConstraints = false,   // For snapshot rendering
             GenerateElementIds = false                  // for STU3
             // MergeTypeProfiles = true
         };
@@ -42,45 +42,50 @@ namespace Hl7.Fhir.Specification.Snapshot
         public void CopyTo(SnapshotGeneratorSettings other)
         {
             if (other == null) { throw Error.ArgumentNull(nameof(other)); }
-            other.ExpandExternalProfiles = ExpandExternalProfiles;
-            other.ForceExpandAll = ForceExpandAll;
-            other.MarkChanges = MarkChanges;
-            other.AnnotateDifferentialConstraints = AnnotateDifferentialConstraints;
+            other.GenerateSnapshotForExternalProfiles = GenerateSnapshotForExternalProfiles;
+            other.ForceRegenerateSnapshots = ForceRegenerateSnapshots;
+            other.GenerateExtensionsOnConstraints = GenerateExtensionsOnConstraints;
+            other.GenerateAnnotationsOnConstraints = GenerateAnnotationsOnConstraints;
             other.GenerateElementIds = GenerateElementIds;
             // other.MergeTypeProfiles = MergeTypeProfiles;
         }
 
         /// <summary>
-        /// If enabled (default), the snapshot generator will automatically generate the snapshot component of any referenced external profiles on demand if necessary.
+        /// If enabled (default), the snapshot generator will automatically generate the snapshot component
+        /// of any referenced external profiles on demand if necessary.
         /// If disabled, then skip the merging of any external type profiles without a snapshot component.
         /// </summary>
-        public bool ExpandExternalProfiles { get; set; }
+        public bool GenerateSnapshotForExternalProfiles { get; set; } // ExpandExternalProfiles
 
         /// <summary>
-        /// EXPERIMENTAL!
         /// Force expansion of all external profiles, disregarding any existing snapshot components.
         /// If enabled, the snapshot generator will re-generate the snapshot components of all the core resource and datatype profiles
         /// as well as of all other referenced external profiles.
-        /// Re-generated snapshots are annotated to prevent duplicate re-generation (assuming a CachedArtifactSource).
-        /// If disabled (default), then the snapshot generator relies on the existing snapshot components.
+        /// Re-generated snapshots are annotated to prevent duplicate re-generation (assuming the provided resource resolver uses caching).
+        /// If disabled (default), then the snapshot generator relies on existing snapshot components, if they exist.
         /// </summary>
-        public bool ForceExpandAll { get; set; }
+        public bool ForceRegenerateSnapshots { get; set; } // ForceExpandAll
 
         /// <summary>
-        /// Enable this setting to mark all elements in the snapshot that are constrained with respect to the base profile.
-        /// The snapshot generator will decorate all changed elements with a special extension
-        /// (canonical url "http://hl7.org/fhir/StructureDefinition/changedByDifferential").
+        /// Enable this setting to add a custom <see cref="SnapshotGeneratorExtensions.CONSTRAINED_BY_DIFF_EXT"/> extension
+        /// to elements and properties in the snapshot that are constrained by the differential with respect to the base profile.
         /// <br />
         /// Note that this extension only applies to the containing profile and should NOT be inherited by derived profiles.
         /// The FHIR API snapshot generator explicitly removes and re-generates these extensions for each profile.
+        /// The <seealso cref="SnapshotGeneratorExtensions"/> class provides utility methods to read and/or remove the generated extensions.
         /// </summary>
-        public bool MarkChanges { get; set; }
+        public bool GenerateExtensionsOnConstraints { get; set; } // MarkChanges
 
-        /// <summary>
-        /// Enable this setting to annotate all elements and properties in the snapshot that are constrained by the differential
-        /// using the <see cref="SnapshotGeneratorAnnotations.ConstrainedByDiffAnnotation"/>.
-        /// </summary>
-        public bool AnnotateDifferentialConstraints { get; set; }
+        /// <summary>Enable this setting to annotate all elements and properties in the snapshot that are constrained by the differential.</summary>
+        /// <remarks>The <seealso cref="SnapshotGeneratorAnnotations"/> class provides utility methods to read and/or remove the generated annotations.</remarks>
+        public bool GenerateAnnotationsOnConstraints { get; set; } // AnnotateDifferentialConstraints
+
+        /// <summary>Enable this setting to automatically generate missing element id values.</summary>
+        /// <remarks>
+        /// The generated element ids conform to the STU3 FHIR specification.
+        /// Do NOT enable this setting for DSTU2!
+        /// </remarks>
+        public bool GenerateElementIds { get; set; }
 
         // [WMR 20161004] Always try to merge element type profiles
 
@@ -91,10 +96,5 @@ namespace Hl7.Fhir.Specification.Snapshot
         // </summary>
         // <remarks>See GForge #9791</remarks>
         // public bool MergeTypeProfiles { get; set; }
-
-        // [WMR 20161115] New
-        /// <summary>Enable this setting to automatically generate missing element id values.</summary>
-        /// <remarks>The generated element ids conform to the STU3 FHIR specification.</remarks>
-        public bool GenerateElementIds { get; set; }
     }
 }

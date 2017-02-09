@@ -23,13 +23,24 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// </summary>
         struct ElementDefnMerger
         {
-            /// <summary>Merges two <see cref="ElementDefinition"/> instances. Existing diff properties override associated snap properties.</summary>
+            /// <summary>Merge two <see cref="ElementDefinition"/> instances. Existing diff properties override associated snap properties.</summary>
             public static void Merge(SnapshotGenerator generator, ElementDefinition snap, ElementDefinition diff)
             {
                 var merger = new ElementDefnMerger(generator);
                 merger.merge(snap, diff);
             }
 
+            // [WMR 20170209] TODO: Merge global mapping components
+#if false
+            /// <summary>Merge two lists of global <see cref="StructureDefinition.MappingComponent"/> definitions.</summary>
+            public static List<StructureDefinition.MappingComponent> Merge(SnapshotGenerator generator,
+                List<StructureDefinition.MappingComponent> snap, List<StructureDefinition.MappingComponent> diff)
+            {
+                var merger = new ElementDefnMerger(generator);
+                // Merge global mapping definitions having the same (unique) mapping id
+                return merger.mergeCollection(snap, diff, (a, b) => a.Identity == b.Identity);
+            }
+#endif
             SnapshotGenerator _generator;
 
             ElementDefnMerger(SnapshotGenerator generator)

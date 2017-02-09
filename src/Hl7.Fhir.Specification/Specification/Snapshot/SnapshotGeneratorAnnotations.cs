@@ -51,13 +51,15 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Annotate the specified snapshot element to indicate that it is constrained by the differential.</summary>
         internal static void SetConstrainedByDiffAnnotation(this Base element)
         {
-            element?.AddAnnotation(new ConstrainedByDiffAnnotation());
+            if (element == null) { throw Error.ArgumentNull(nameof(element)); }
+            element.AddAnnotation(new ConstrainedByDiffAnnotation());
         }
 
         /// <summary>Remove any existing differential constraint annotation from the specified snapshot element.</summary>
         internal static void RemoveConstrainedByDiffAnnotation(this Base element)
         {
-            element?.RemoveAnnotations<ConstrainedByDiffAnnotation>();
+            if (element == null) { throw Error.ArgumentNull(nameof(element)); }
+            element.RemoveAnnotations<ConstrainedByDiffAnnotation>();
         }
 
         /// <summary>Recursively remove any existing differential constraint annotations from the specified snapshot element and all it's children.</summary>

@@ -28,7 +28,6 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
 using System.Diagnostics;
 using Hl7.ElementModel;
-using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -38,9 +37,14 @@ namespace Hl7.Fhir.Specification.Snapshot
 
     public sealed partial class SnapshotGenerator
     {
-        private readonly IResourceResolver _resolver;
-        private readonly SnapshotGeneratorSettings _settings;
-        private readonly SnapshotRecursionStack _stack = new SnapshotRecursionStack();
+        // TODO: Properly test SnapshotGenerator for multi-threading support
+        // Each thread should create a separate instance
+        // But all instances should share a common IResourceResolver instance
+        // TODO: Probably also need to share a common recursion stack...
+
+        readonly IResourceResolver _resolver;
+        readonly SnapshotGeneratorSettings _settings;
+        readonly SnapshotRecursionStack _stack = new SnapshotRecursionStack();
 
         public SnapshotGenerator(IResourceResolver resolver, SnapshotGeneratorSettings settings) // : this()
         {
@@ -73,6 +77,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                 Element = Generate(structure)
             };
             structure.Snapshot.SetCreatedBySnapshotGenerator();
+
+            // [WMR 20170209] TODO: also merge global StructureDefinition.Mapping components
+            // structure.Mappings = ElementDefnMerger.Merge(...)
         }
 
         /// <summary>
@@ -216,7 +223,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
 
                 // [WMR 20161208] Handle missing differential
-                var location = differential.Element.Count > 0 ? ToNamedNode(differential.Element[0]) : null;
+                var location = differential.Element.Count > 0 ? differential.Element[0].ToNamedNode() : null;
                 if (!ensureSnapshot(baseStructure, structure.Base, location))
                 {
                     // Fatal error...
@@ -309,14 +316,11 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (!String.IsNullOrEmpty(defn.NameReference))
             {
                 var sourceNav = new ElementDefinitionNavigator(nav);
-                var success = sourceNav.JumpToNameReference(defn.NameReference);
-
-                if (!success)
+                if (!sourceNav.JumpToNameReference(defn.NameReference))
                 {
                     addIssueInvalidNameReference(defn);
                     return false;
                 }
-
                 nav.CopyChildren(sourceNav);
             }
             else if (defn.Type == null || defn.Type.Count == 0)
@@ -342,31 +346,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     var baseSnap = baseStructure.Snapshot;
                     var baseNav = new ElementDefinitionNavigator(baseSnap.Element);
-                    baseNav.MoveToFirstChild();
-#if true
+                    if (!baseNav.MoveToFirstChild())
+                    {
+                        addIssueProfileHasNoSnapshot(defn.ToNamedNode(), baseStructure.Url);
+                    }
                     // [WMR 20170208] NEW - Move common logic to separate method, also used by mergeTypeProfiles
                     copyChildren(nav, baseNav, baseStructure);
-#else
-                    nav.CopyChildren(baseNav);
-
-                    // Fix the copied elements and notify observers
-                    var pos = nav.OrdinalPosition.Value;
-                    for (int i = 1; i < baseSnap.Element.Count; i++)
-                    {
-                        var elem = nav.Elements[pos + i];
-                        var baseElem = baseSnap.Element[i];
-
-                        // [WMR 20160826] Never inherit Changed extension from base profile!
-                        elem.RemoveAllChangedByDiff();
-                        elem.ClearAllConstrainedByDifferential();
-
-                        // [WMR 20160902] Initialize empty ElementDefinition.Base components if necessary
-                        // [WMR 20160906] Always regenerate! Cannot reuse cloned base components
-                        elem.EnsureBaseComponent(baseElem, true);
-
-                        OnPrepareElement(elem, baseStructure, baseElem);
-                    }
-#endif
                 }
             }
 
@@ -652,7 +637,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             var typeStructure = _resolver.FindStructureDefinition(primaryDiffTypeProfile);
-            var diffNode = ToNamedNode(diff.Current);
+            var diffNode = diff.Current.ToNamedNode();
 
             // [WMR 20170207] Notify observers, allow event subscribers to force expansion (even if no diff constraints)
             // Note: if the element is to be expanded, then always merge full snapshot of the external type profile (!)
@@ -1051,11 +1036,11 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         void markChangedByDiff(Element element)
         {
-            if (_settings.MarkChanges)
+            if (_settings.GenerateExtensionsOnConstraints)
             {
                 element.SetConstrainedByDiffExtension();
             }
-            if (_settings.AnnotateDifferentialConstraints)
+            if (_settings.GenerateAnnotationsOnConstraints)
             {
                 element.SetConstrainedByDiffAnnotation();
             }
@@ -1077,7 +1062,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Expand snapshot and generate ElementDefinition.Base components if necessary
         StructureDefinition getStructureForTypeRef(ElementDefinition elementDef, ElementDefinition.TypeRefComponent typeRef, bool ensureSnapshot)
         {
-            var location = ToNamedNode(elementDef);
+            var location = elementDef.ToNamedNode();
             StructureDefinition baseStructure = null;
 
             // [WMR 20160720] Handle custom type profiles (GForge #9791)
@@ -1143,8 +1128,8 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             try
             {
-                if (_settings.ExpandExternalProfiles
-                    && (sd.Snapshot == null || (_settings.ForceExpandAll && !sd.Snapshot.IsCreatedBySnapshotGenerator()))
+                if (_settings.GenerateSnapshotForExternalProfiles
+                    && (sd.Snapshot == null || (_settings.ForceRegenerateSnapshots && !sd.Snapshot.IsCreatedBySnapshotGenerator()))
                 )
                 {
                     // Automatically expand external profiles on demand
@@ -1209,7 +1194,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             typeProfile = getStructureForTypeRef(elementDef, typeRef, false);
             if (typeProfile != null)
             {
-                return getSnapshotRootElement(typeProfile, typeProfile.Url, ToNamedNode(elementDef));
+                return getSnapshotRootElement(typeProfile, typeProfile.Url, elementDef.ToNamedNode());
             }
             return null;
         }
@@ -1236,7 +1221,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 #endif
 
             // 2. Return root element definition from existing (pre-generated) snapshot, if it exists
-            if (sd.HasSnapshot && (sd.Snapshot.IsCreatedBySnapshotGenerator() || !_settings.ForceExpandAll))
+            if (sd.HasSnapshot && (sd.Snapshot.IsCreatedBySnapshotGenerator() || !_settings.ForceRegenerateSnapshots))
             {
                 // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - use existing root element definition from snapshot: #{sd.Snapshot.Element[0].GetHashCode()}");
                 // No need to save root ElemDef annotation, as the snapshot has already been fully expanded
@@ -1282,7 +1267,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - recursively resolve root element definition from base profile '{baseProfileUri}' ...");
             var sdBase = _resolver.FindStructureDefinition(baseProfileUri);
-            var baseRoot = getSnapshotRootElement(sdBase, baseProfileUri, ToNamedNode(diffRoot)); // Recursion!
+            var baseRoot = getSnapshotRootElement(sdBase, baseProfileUri, diffRoot.ToNamedNode()); // Recursion!
             if (baseRoot == null)
             {
                 addIssueSnapshotGenerationFailed(baseProfileUri);

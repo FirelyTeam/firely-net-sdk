@@ -91,10 +91,10 @@ namespace Hl7.Fhir.Specification.Tests
         readonly SnapshotGeneratorSettings _settings = new SnapshotGeneratorSettings()
         {
             // Throw on unresolved profile references; must include in TestData folder
-            ExpandExternalProfiles = true,
-            ForceExpandAll = true,
-            MarkChanges = false,
-            AnnotateDifferentialConstraints = false,
+            GenerateSnapshotForExternalProfiles = true,
+            ForceRegenerateSnapshots = true,
+            GenerateExtensionsOnConstraints = false,
+            GenerateAnnotationsOnConstraints = false,
             GenerateElementIds = false // STU3
         };
 
@@ -899,7 +899,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Explicitly disable expansion of external snapshots
             var settings = new SnapshotGeneratorSettings(_settings);
-            settings.ExpandExternalProfiles = false;
+            settings.GenerateSnapshotForExternalProfiles = false;
             _generator = new SnapshotGenerator(_testResolver, settings);
 
             StructureDefinition expanded;
@@ -1501,8 +1501,8 @@ namespace Hl7.Fhir.Specification.Tests
             // dumpReferences(sd);
 
             var settings = new SnapshotGeneratorSettings(_settings);
-            // settings.MarkChanges = true;
-            settings.AnnotateDifferentialConstraints = true;
+            // settings.GenerateExtensionsOnConstraints = true;
+            settings.GenerateAnnotationsOnConstraints = true;
             _generator = new SnapshotGenerator(source, settings);
 
             try
@@ -1591,7 +1591,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(typeProfileUrl, ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Identifier));
 
             var settings = new SnapshotGeneratorSettings(_settings);
-            settings.AnnotateDifferentialConstraints = true;
+            settings.GenerateAnnotationsOnConstraints = true;
             _generator = new SnapshotGenerator(source, settings);
 
             try
@@ -1673,7 +1673,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(typeProfileUrl);
 
             var settings = new SnapshotGeneratorSettings(_settings);
-            settings.AnnotateDifferentialConstraints = true;
+            settings.GenerateAnnotationsOnConstraints = true;
             _generator = new SnapshotGenerator(source, settings);
 
             try
@@ -1780,7 +1780,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(extensionDefinitionUrl);
 
             var settings = new SnapshotGeneratorSettings(_settings);
-            settings.AnnotateDifferentialConstraints = true;
+            settings.GenerateAnnotationsOnConstraints = true;
             _generator = new SnapshotGenerator(source, settings);
 
             try
@@ -1910,7 +1910,7 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 // var changed = elem.GetChangedByDiff() == true;
                 var changed = elem.IsConstrainedByDiff();
-                Debug.Assert(!_settings.AnnotateDifferentialConstraints || changed);
+                Debug.Assert(!_settings.GenerateAnnotationsOnConstraints || changed);
                 Debug.Print("[SnapshotConstraintHandler] #{0} '{1}'{2}".FormatWith(elem.GetHashCode(), elem.Path, changed ? " CHANGED!" : null));
             }
         }
@@ -1948,7 +1948,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
                 var isValid = hasChanges == hasConstraints;
                 bool? hasConstraintAnnotations = null;
-                if (settings.AnnotateDifferentialConstraints)
+                if (settings.GenerateAnnotationsOnConstraints)
                 {
                     hasConstraintAnnotations = elem.HasDiffConstraintAnnotations();
                     isValid &= hasConstraints == hasConstraintAnnotations;
