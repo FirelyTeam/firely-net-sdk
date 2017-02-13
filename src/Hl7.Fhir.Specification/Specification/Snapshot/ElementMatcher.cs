@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2017, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -492,7 +492,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
 
                 var diffProfile = diffProfiles.FirstOrDefault();
-                var profileRef = ProfileReference.FromUrl(diffProfile);
+                var profileRef = ProfileReference.Parse(diffProfile);
                 var result = profileRef.IsComplex
                     // Match on element name (for complex extension elements)
                     ? StringComparer.Ordinal.Equals(snapNav.Current.Name, profileRef.ElementName)

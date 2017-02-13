@@ -1055,6 +1055,7 @@ namespace Hl7.Fhir.Tests.Rest
                 Assert.IsTrue(ex.Status == HttpStatusCode.Forbidden || ex.Status == HttpStatusCode.Unauthorized, "Excpeted a security exception");
             }
         }
+
     }
 
 }

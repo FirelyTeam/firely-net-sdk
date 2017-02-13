@@ -1,17 +1,15 @@
 ﻿/* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2017, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
@@ -20,7 +18,7 @@ namespace Hl7.Fhir.Specification.Snapshot
     /// <summary>Internal helper class to detect and prevent recursive snapshot generation.</summary>
     sealed class SnapshotRecursionStack
     {
-        private Stack<SnapshotRecursionStackState> _stack;
+        Stack<SnapshotRecursionStackState> _stack;
 
         sealed class SnapshotRecursionStackState
         {
@@ -154,6 +152,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 throw Error.InvalidOperation($"Invalid snapshot generator state ({memberName}). Cannot operate on empty recursion stack.");
             }
         }
+
     }
 
 }
