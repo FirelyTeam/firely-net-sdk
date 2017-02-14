@@ -26,11 +26,7 @@ using System.Xml;
 namespace Hl7.Fhir.Specification.Tests
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableSnapshotGeneratorTest
-#else
     public class SnapshotGeneratorTest
-#endif
     {
         class TimingSource : IConformanceSource
         {

@@ -25,11 +25,7 @@ using Hl7.Fhir.Support;
 namespace Hl7.Fhir.Specification.Tests
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableOutcomeReportingTest
-#else
     public class OutcomeReportingTest
-#endif
     {
         [TestInitialize]
         public void Setup()

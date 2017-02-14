@@ -21,13 +21,8 @@ using System.Linq;
 namespace Hl7.Fhir.Specification.Tests
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableResourceResolverTests
-#else
     public class ResolverTests
-#endif
     {
-#if !PORTABLE45
         [ClassInitialize]
         public static void SetupSource(TestContext t)
         {
@@ -287,5 +282,4 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
     }
-#endif
 }
