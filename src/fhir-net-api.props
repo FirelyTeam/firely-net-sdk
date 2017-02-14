@@ -1,0 +1,29 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  
+  <!-- Solution-wide properties for NuGet packaging -->
+  <PropertyGroup>
+    <Version>1.0.0-alpha1</Version>
+    <Authors>Ewout Kramer (e.kramer@furore.com) and contributors</Authors>
+    <Company>Furore (http://fhir.furore.com)</Company>
+    <Copyright>Copyright 2016 Furore Health Informatics.  Contains materials (C) HL7 International</Copyright>
+    <PackageProjectUrl>https://github.com/ewoutkramer/fhir-net-api</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/icon-fhir-32.png</PackageIconUrl>
+    <PackageReleaseNotes>See http://ewoutkramer.github.io/fhir-net-api/whats-new.html</PackageReleaseNotes>
+  </PropertyGroup>
+  
+
+  <!-- Compiler settings -->
+  <PropertyGroup>
+    <LangVersion>6</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\FhirNetApi.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+</Project>

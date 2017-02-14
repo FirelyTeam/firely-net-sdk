@@ -1,25 +1,21 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
     <TargetFrameworks>net45;netstandard1.3</TargetFrameworks>
+  </PropertyGroup>
+
+  <Import Project="..\platforms.props" />
+  <Import Project="..\fhir-net-api.props" />
+
+  <PropertyGroup>
     <PackageId>Hl7.Fhir.Specification.DSTU2</PackageId>
     <Product>HL7 FHIR Additional functionality support API for DSTU2</Product>
     <Description>.NET additional support for working with HL7 FHIR. Supports FHIR DSTU2 (1.0).</Description>
     <Summary>This library offers additional support beyond core for HL7's FHIR standard (http://hl7.org/fhir). It contains functionality to working with FHIR's specification (meta)data such as profiles, profile-based validation and publication</Summary>
-    <Version>1.0.0-alpha1</Version>
-    <Authors>Ewout Kramer (e.kramer@furore.com) and contributors</Authors>
-    <Company>Furore (http://fhir.furore.com)</Company>
-    <Copyright>Copyright 2016 Furore Health Informatics.  Contains materials (C) HL7 International</Copyright>
-    <PackageProjectUrl>https://github.com/ewoutkramer/fhir-net-api</PackageProjectUrl>
-    <PackageReleaseNotes>DSTU2 release. See http://ewoutkramer.github.io/fhir-net-api/whats-new.html</PackageReleaseNotes>
-    <PackageIconUrl>https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/icon-fhir-32.png</PackageIconUrl>
     <PackageTags>HL7 FHIR Profile Metadata Validation Publication Schematron Schema</PackageTags>
     <AssemblyName>Hl7.Fhir.DSTU2.Specification</AssemblyName>
     <RootNamespace>Hl7.Fhir.Specification</RootNamespace>
-    <DocumentationFile>
-    </DocumentationFile>
-    <LangVersion>6</LangVersion>
   </PropertyGroup>
-  <Import Project="..\platforms.props" />
+
   <ItemGroup>
     <PackageReference Include="Hl7.FhirPath" Version="0.4.1" />
     <PackageReference Include="System.ComponentModel" Version="4.3.0" />
