@@ -16,6 +16,10 @@
     <RootNamespace>Hl7.Fhir</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+  </PropertyGroup>
+  
   <ItemGroup>
     <Compile Remove="Rest\SystemNetMimeContentType.cs" />
   </ItemGroup>

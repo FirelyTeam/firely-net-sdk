@@ -16,6 +16,11 @@
     <RootNamespace>Hl7.Fhir.Specification</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  
   <ItemGroup>
     <PackageReference Include="Hl7.FhirPath" Version="0.4.1" />
     <PackageReference Include="System.ComponentModel" Version="4.3.0" />
@@ -52,13 +57,6 @@
   <Target Name="BeforeBuild" Inputs="@(FhirConformance)" Outputs="specification.zip">
     <CleanSpecFiles DirectoryName="data" />
     <ZipDir ZipFileName="specification.zip" DirectoryName="data" />
-  </Target>
-  <Target Name="CopyPackage" AfterTargets="Pack">
-    <PropertyGroup>
-      <PackageOutputDirectory>..\..\dist</PackageOutputDirectory>
-    </PropertyGroup>
-    <MakeDir Directories="$(PackageOutputDirectory)" Condition="!Exists($(PackageOutputDirectory))" />
-    <Copy SourceFiles="$(OutputPath)\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="$(PackageOutputDirectory)" />
   </Target>
   <UsingTask TaskName="ZipDir" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v12.0.dll">
     <ParameterGroup>
