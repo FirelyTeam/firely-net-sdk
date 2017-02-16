@@ -222,9 +222,10 @@ namespace Hl7.Fhir.Tests.Rest
             }
         }
 
-        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest"),Ignore]
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void Search()
         {
+            // an endpoint that is known to support compression
             FhirClient client = new FhirClient("http://sqlonfhir-dstu2.azurewebsites.net/fhir"); // testEndpoint);
             Bundle result;
 
@@ -475,7 +476,7 @@ namespace Hl7.Fhir.Tests.Rest
             }
         }
 
-        [TestMethod,Ignore]
+        [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         //Test for github issue https://github.com/ewoutkramer/fhir-net-api/issues/145
         public void Create_ObservationWithValueAsSimpleQuantity_ReadReturnsValueAsQuantity()
