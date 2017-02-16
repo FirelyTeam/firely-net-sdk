@@ -19,6 +19,9 @@
 // - Enforce/verify Slicing.Rule = Closed / OpenAtEnd
 // - Test error handling: gracefully handle invalid input, report issue
 
+// [WMR 20170216] Prevent slices on non-repeating non-choice type elements (max = 1)
+// #define REJECT_SLICE_NONREPEATING_ELEMENT
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -811,12 +814,17 @@ namespace Hl7.Fhir.Specification.Snapshot
             // snap is located at the base definition of the element that will become sliced. But snap is not yet sliced.
 
             // Before we start, is the base element sliceable?
+            // [WMR 20170216] Accept slices on non-repeating non-choice elements
+            // Ewout: no reason to reject; e.g. derived profile can limit sliced base element cardinality to 0...1
+            // Vadim: may introduce issues for code generators...
+#if REJECT_SLICE_NONREPEATING_ELEMENT
             if (!snap.Current.IsRepeating() && !snap.Current.IsChoice())
             {
                 var location = getSliceLocation(diff, diff.Current) ?? snap.Current;
                 addIssueInvalidSlice(location);
                 return;
             }
+#endif
 
             // Note: slicing introduction element may be missing from differential => null
             ElementDefinition slicingEntry = diff.Current;
