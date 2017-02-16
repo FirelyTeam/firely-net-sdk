@@ -1584,7 +1584,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(elem);
             var typeProfileUrl = elem.Type.FirstOrDefault().Profile.FirstOrDefault();
             Assert.IsNotNull(typeProfileUrl);
-            Assert.AreEqual(typeProfileUrl, ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Identifier));
+            Assert.AreEqual(typeProfileUrl, ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Identifier));
 
             var settings = new SnapshotGeneratorSettings(_settings);
             settings.GenerateAnnotationsOnConstraints = true;
@@ -1604,7 +1604,7 @@ namespace Hl7.Fhir.Specification.Tests
                 assertBaseDefs(expanded, settings);
 
                 // Verify that the snapshot generator also expanded the referenced core Identifier type profile
-                var sdType = source.FindStructureDefinitionForCoreType(FHIRDefinedType.Identifier);
+                var sdType = source.FindStructureDefinitionForCoreType(FHIRAllTypes.Identifier);
                 Assert.IsNotNull(sdType);
                 Assert.IsTrue(sdType.HasSnapshot);
                 Assert.IsTrue(sdType.Snapshot.IsCreatedBySnapshotGenerator());
@@ -1665,7 +1665,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Patient.identifier should reference an external type profile
             var elem = sd.Differential.Element.FirstOrDefault(e => e.Path == "Patient.identifier");
             Assert.IsNotNull(elem);
-            var typeProfileUrl = elem.Type.FirstOrDefault().Profile.FirstOrDefault();
+            var typeProfileUrl = elem.Type.FirstOrDefault().Profile;
             Assert.IsNotNull(typeProfileUrl);
 
             var settings = new SnapshotGeneratorSettings(_settings);
@@ -1772,7 +1772,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Patient profile should reference an external extension definition, fetch the url
             var elem = sd.Differential.Element.FirstOrDefault(e => e.Path == "Patient.extension" && e.Slicing == null);
             Assert.IsNotNull(elem);
-            var extensionDefinitionUrl = elem.Type.FirstOrDefault().Profile.FirstOrDefault();
+            var extensionDefinitionUrl = elem.Type.FirstOrDefault().Profile;
             Assert.IsNotNull(extensionDefinitionUrl);
 
             var settings = new SnapshotGeneratorSettings(_settings);
@@ -1810,7 +1810,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsNull(elem.Slicing);    // First extension
                 Assert.AreEqual(elem.PrimaryTypeProfile(), extensionDefinitionUrl);
 
-                Assert.AreEqual("extension", elem.Name);
+                Assert.AreEqual("extension", elem.SliceName);
                 Assert.AreEqual("1", elem.Max); // Inline profile constraint overriding the extension definition
                 Assert.IsTrue(elem.MaxElement.IsConstrainedByDiff());
                 Assert.IsTrue(elem.HasDiffConstraintAnnotations());
