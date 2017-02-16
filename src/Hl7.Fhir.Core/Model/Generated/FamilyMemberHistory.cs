@@ -124,7 +124,8 @@ namespace Hl7.Fhir.Model
             /// When condition first manifested
             /// </summary>
             [FhirElement("onset", Order=60, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirString))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
             public Hl7.Fhir.Model.Element Onset
             {
@@ -234,7 +235,8 @@ namespace Hl7.Fhir.Model
         /// Patient history is about
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=100)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -392,7 +394,8 @@ namespace Hl7.Fhir.Model
         /// (approximate) date of birth
         /// </summary>
         [FhirElement("born", Order=160, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirString))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
         public Hl7.Fhir.Model.Element Born
         {
@@ -406,7 +409,8 @@ namespace Hl7.Fhir.Model
         /// (approximate) age
         /// </summary>
         [FhirElement("age", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
         public Hl7.Fhir.Model.Element Age
         {
@@ -452,7 +456,8 @@ namespace Hl7.Fhir.Model
         /// Dead? How old/when?
         /// </summary>
         [FhirElement("deceased", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirString))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
         public Hl7.Fhir.Model.Element Deceased
         {

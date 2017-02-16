@@ -351,7 +351,8 @@ namespace Hl7.Fhir.Model
             /// For patient-list reports, the patients in this population
             /// </summary>
             [FhirElement("patients", Order=60)]
-            [References("List")]
+            [CLSCompliant(false)]
+			[References("List")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Patients
             {
@@ -749,7 +750,8 @@ namespace Hl7.Fhir.Model
             /// For patient-list reports, the patients in this population
             /// </summary>
             [FhirElement("patients", Order=60)]
-            [References("List")]
+            [CLSCompliant(false)]
+			[References("List")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Patients
             {
@@ -996,7 +998,8 @@ namespace Hl7.Fhir.Model
             /// For patient-list reports, the patients in this population
             /// </summary>
             [FhirElement("patients", Order=60)]
-            [References("List")]
+            [CLSCompliant(false)]
+			[References("List")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Patients
             {
@@ -1075,7 +1078,8 @@ namespace Hl7.Fhir.Model
         /// Measure that was evaluated
         /// </summary>
         [FhirElement("measure", InSummary=true, Order=90)]
-        [References("Measure")]
+        [CLSCompliant(false)]
+		[References("Measure")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Measure
@@ -1123,7 +1127,8 @@ namespace Hl7.Fhir.Model
         /// Optional Patient
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=110)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
         {
@@ -1216,7 +1221,8 @@ namespace Hl7.Fhir.Model
         /// Reporting Organization
         /// </summary>
         [FhirElement("reportingOrganization", InSummary=true, Order=150)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference ReportingOrganization
         {
@@ -1244,7 +1250,8 @@ namespace Hl7.Fhir.Model
         /// Evaluated Resources
         /// </summary>
         [FhirElement("evaluatedResources", Order=170)]
-        [References("Bundle")]
+        [CLSCompliant(false)]
+		[References("Bundle")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference EvaluatedResources
         {

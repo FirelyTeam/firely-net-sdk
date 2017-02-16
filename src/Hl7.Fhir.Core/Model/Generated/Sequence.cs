@@ -188,7 +188,8 @@ namespace Hl7.Fhir.Model
             /// A Pointer to another Sequence entity as reference sequence
             /// </summary>
             [FhirElement("referenceSeqPointer", InSummary=true, Order=70)]
-            [References("Sequence")]
+            [CLSCompliant(false)]
+			[References("Sequence")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference ReferenceSeqPointer
             {
@@ -584,7 +585,8 @@ namespace Hl7.Fhir.Model
             /// Pointer to observed variant information
             /// </summary>
             [FhirElement("variantPointer", InSummary=true, Order=90)]
-            [References("Observation")]
+            [CLSCompliant(false)]
+			[References("Observation")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference VariantPointer
             {
@@ -2005,7 +2007,8 @@ namespace Hl7.Fhir.Model
         /// Who and/or what this is about
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=120)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
         {
@@ -2019,7 +2022,8 @@ namespace Hl7.Fhir.Model
         /// Specimen used for sequencing
         /// </summary>
         [FhirElement("specimen", InSummary=true, Order=130)]
-        [References("Specimen")]
+        [CLSCompliant(false)]
+		[References("Specimen")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Specimen
         {
@@ -2033,7 +2037,8 @@ namespace Hl7.Fhir.Model
         /// The method for sequencing
         /// </summary>
         [FhirElement("device", InSummary=true, Order=140)]
-        [References("Device")]
+        [CLSCompliant(false)]
+		[References("Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Device
         {
@@ -2047,7 +2052,8 @@ namespace Hl7.Fhir.Model
         /// Who should be responsible for test result
         /// </summary>
         [FhirElement("performer", InSummary=true, Order=150)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Performer
         {
@@ -2193,7 +2199,8 @@ namespace Hl7.Fhir.Model
         /// Pointer to next atomic sequence
         /// </summary>
         [FhirElement("pointer", InSummary=true, Order=230)]
-        [References("Sequence")]
+        [CLSCompliant(false)]
+		[References("Sequence")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Pointer

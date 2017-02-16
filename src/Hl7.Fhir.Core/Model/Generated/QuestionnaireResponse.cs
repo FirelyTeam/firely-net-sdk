@@ -194,7 +194,8 @@ namespace Hl7.Fhir.Model
             /// The subject this group's answers are about
             /// </summary>
             [FhirElement("subject", Order=70)]
-            [References()]
+            [CLSCompliant(false)]
+			[References()]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Subject
             {
@@ -320,7 +321,8 @@ namespace Hl7.Fhir.Model
             /// Single-valued answer to the question
             /// </summary>
             [FhirElement("value", Order=40, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Coding),typeof(Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Coding),typeof(Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
             {
@@ -422,7 +424,8 @@ namespace Hl7.Fhir.Model
         /// Request fulfilled by this QuestionnaireResponse
         /// </summary>
         [FhirElement("basedOn", InSummary=true, Order=100)]
-        [References("DiagnosticRequest","ReferralRequest","CarePlan")]
+        [CLSCompliant(false)]
+		[References("DiagnosticRequest","ReferralRequest","CarePlan")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> BasedOn
@@ -437,7 +440,8 @@ namespace Hl7.Fhir.Model
         /// Part of this action
         /// </summary>
         [FhirElement("parent", InSummary=true, Order=110)]
-        [References("Observation","Procedure")]
+        [CLSCompliant(false)]
+		[References("Observation","Procedure")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Parent
@@ -452,7 +456,8 @@ namespace Hl7.Fhir.Model
         /// Form being answered
         /// </summary>
         [FhirElement("questionnaire", InSummary=true, Order=120)]
-        [References("Questionnaire")]
+        [CLSCompliant(false)]
+		[References("Questionnaire")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Questionnaire
         {
@@ -499,7 +504,8 @@ namespace Hl7.Fhir.Model
         /// The subject of the questions
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=140)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -513,7 +519,8 @@ namespace Hl7.Fhir.Model
         /// Encounter or Episode during which questionnaire was completed
         /// </summary>
         [FhirElement("context", InSummary=true, Order=150)]
-        [References("Encounter","EpisodeOfCare")]
+        [CLSCompliant(false)]
+		[References("Encounter","EpisodeOfCare")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Context
         {
@@ -527,7 +534,8 @@ namespace Hl7.Fhir.Model
         /// Person who received and recorded the answers
         /// </summary>
         [FhirElement("author", InSummary=true, Order=160)]
-        [References("Device","Practitioner","Patient","RelatedPerson")]
+        [CLSCompliant(false)]
+		[References("Device","Practitioner","Patient","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
         {
@@ -573,7 +581,8 @@ namespace Hl7.Fhir.Model
         /// The person who answered the questions
         /// </summary>
         [FhirElement("source", InSummary=true, Order=180)]
-        [References("Patient","Practitioner","RelatedPerson")]
+        [CLSCompliant(false)]
+		[References("Patient","Practitioner","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Source
         {

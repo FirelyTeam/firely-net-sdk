@@ -26,23 +26,18 @@ using System.ComponentModel.DataAnnotations;
 namespace Hl7.Fhir.Tests.Serialization
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableValidateAllExamplesTest
-#else
     public class ValidateAllExamplesTest
-#endif
     {
         [TestMethod]
         [TestCategory("LongRunner")]
         public void ValidateInvariantAllExamples()
         {
-            string examplesZip = @"TestData\examples.zip";
             FhirXmlParser parser = new FhirXmlParser();
             int errorCount = 0;
             int testFileCount = 0;
             Dictionary<string, int> failedInvariantCodes = new Dictionary<string, int>();
 
-            var zip = ZipFile.OpenRead(examplesZip);
+            var zip = TestDataHelper.ReadTestZip("examples.zip");
             using (zip)
             {
                 foreach (var entry in zip.Entries)
@@ -81,8 +76,10 @@ namespace Hl7.Fhir.Tests.Serialization
                                     failedInvariantCodes.Add(item.Details.Coding[0].Code, 1);
                                 else
                                     failedInvariantCodes[item.Details.Coding[0].Code]++;
+
                                 Trace.WriteLine("\t" + item.Details.Coding[0].Code + ": " + item.Details.Text);
                             }
+
                             Trace.WriteLine("-------------------------");
                             Trace.WriteLine(FhirSerializer.SerializeResourceToXml(resource));
                             Trace.WriteLine("-------------------------");
@@ -115,16 +112,18 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestCategory("LongRunner")]
         public void ValidateInvariantAllExamplesWithOtherConstraints()
         {
-            string examplesZip = @"TestData\examples.zip";
+           string profiles = TestDataHelper.GetFullPathForExample("profiles-others.xml");
+
             FhirXmlParser parser = new FhirXmlParser();
             int errorCount = 0;
             int testFileCount = 0;
             Dictionary<string, int> failedInvariantCodes = new Dictionary<string, int>();
             List<String> checkedCode = new List<string>();
 
+
             Bundle otherSDs;
             Dictionary<string, List<ElementDefinition.ConstraintComponent>> invariantCache = new Dictionary<string, List<ElementDefinition.ConstraintComponent>>();
-            using (Stream streamOther = File.OpenRead(@"TestData\profiles-others.xml"))
+            using (Stream streamOther = File.OpenRead(profiles))
             {
                 otherSDs = new Fhir.Serialization.FhirXmlParser().Parse<Bundle>(SerializationUtil.XmlReaderFromStream(streamOther));
                 foreach (StructureDefinition resource in otherSDs.Entry.Select(e => e.Resource).Where(r => r != null && r is StructureDefinition))
@@ -166,7 +165,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 }
             }
 
-            var zip = ZipFile.OpenRead(examplesZip);
+            var zip = TestDataHelper.ReadTestZip("examples.zip");
             using (zip)
             {
                 foreach (var entry in zip.Entries)
@@ -235,13 +234,16 @@ namespace Hl7.Fhir.Tests.Serialization
                                     failedInvariantCodes.Add(item.Details.Coding[0].Code, 1);
                                 else
                                     failedInvariantCodes[item.Details.Coding[0].Code]++;
+#if DOTNETFW
                                 Trace.WriteLine("\t" + item.Details.Coding[0].Code + ": " + item.Details.Text);
                                 Trace.WriteLine("\t" + item.Diagnostics);
+#endif
                             }
+#if DOTNETFW
                             Trace.WriteLine("-------------------------");
                             Trace.WriteLine(FhirSerializer.SerializeResourceToXml(resource));
                             Trace.WriteLine("-------------------------");
-
+#endif
                             // count the issue
                             errorCount++;
                         }

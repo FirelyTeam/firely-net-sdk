@@ -137,7 +137,8 @@ namespace Hl7.Fhir.Model
         /// Request fulfilled by this request
         /// </summary>
         [FhirElement("basedOn", Order=100)]
-        [References("ReferralRequest","CarePlan","DiagnosticRequest","ProcedureRequest")]
+        [CLSCompliant(false)]
+		[References("ReferralRequest","CarePlan","DiagnosticRequest","ProcedureRequest")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> BasedOn
@@ -257,7 +258,8 @@ namespace Hl7.Fhir.Model
         /// Patient referred to care or transfer
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=160)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
         {
@@ -271,7 +273,8 @@ namespace Hl7.Fhir.Model
         /// Originating encounter
         /// </summary>
         [FhirElement("context", Order=170)]
-        [References("Encounter","EpisodeOfCare")]
+        [CLSCompliant(false)]
+		[References("Encounter","EpisodeOfCare")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Context
         {
@@ -330,7 +333,8 @@ namespace Hl7.Fhir.Model
         /// Requester of referral / transfer of care
         /// </summary>
         [FhirElement("requester", InSummary=true, Order=200)]
-        [References("Practitioner","Organization","Patient")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Organization","Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Requester
         {
@@ -357,7 +361,8 @@ namespace Hl7.Fhir.Model
         /// Receiver of referral / transfer of care request
         /// </summary>
         [FhirElement("recipient", InSummary=true, Order=220)]
-        [References("Practitioner","Organization")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Organization")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Recipient
@@ -431,7 +436,8 @@ namespace Hl7.Fhir.Model
         /// Additonal information to support referral or transfer of care request
         /// </summary>
         [FhirElement("supportingInformation", InSummary=true, Order=260)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> SupportingInformation

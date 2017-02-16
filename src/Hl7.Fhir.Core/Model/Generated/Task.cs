@@ -145,7 +145,8 @@ namespace Hl7.Fhir.Model
             /// Individual asking for task
             /// </summary>
             [FhirElement("agent", InSummary=true, Order=40)]
-            [References("Device","Organization","Patient","Practitioner","RelatedPerson")]
+            [CLSCompliant(false)]
+			[References("Device","Organization","Patient","Practitioner","RelatedPerson")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Agent
@@ -160,7 +161,8 @@ namespace Hl7.Fhir.Model
             /// Organization individual is acting for
             /// </summary>
             [FhirElement("onBehalfOf", Order=50)]
-            [References("Organization")]
+            [CLSCompliant(false)]
+			[References("Organization")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference OnBehalfOf
             {
@@ -287,7 +289,8 @@ namespace Hl7.Fhir.Model
             /// For whom is fulfillment sought?
             /// </summary>
             [FhirElement("recipient", Order=60)]
-            [References("Patient","Practitioner","RelatedPerson","Group","Organization")]
+            [CLSCompliant(false)]
+			[References("Patient","Practitioner","RelatedPerson","Group","Organization")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> Recipient
@@ -388,7 +391,8 @@ namespace Hl7.Fhir.Model
             /// Content to use in performing the task
             /// </summary>
             [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Address),typeof(Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Count),typeof(Distance),typeof(Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Money),typeof(Hl7.Fhir.Model.Period),typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Meta))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Address),typeof(Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Count),typeof(Distance),typeof(Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Money),typeof(Hl7.Fhir.Model.Period),typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Meta))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
@@ -485,7 +489,8 @@ namespace Hl7.Fhir.Model
             /// Result of output
             /// </summary>
             [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Address),typeof(Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Count),typeof(Distance),typeof(Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Money),typeof(Hl7.Fhir.Model.Period),typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Meta))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Address),typeof(Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Count),typeof(Distance),typeof(Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Money),typeof(Hl7.Fhir.Model.Period),typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Meta))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
@@ -575,7 +580,8 @@ namespace Hl7.Fhir.Model
         /// Formal definition of task
         /// </summary>
         [FhirElement("definition", InSummary=true, Order=100, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element Definition
         {
@@ -589,7 +595,8 @@ namespace Hl7.Fhir.Model
         /// Request fulfilled by this task
         /// </summary>
         [FhirElement("basedOn", InSummary=true, Order=110)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> BasedOn
@@ -617,7 +624,8 @@ namespace Hl7.Fhir.Model
         /// Composite task
         /// </summary>
         [FhirElement("partOf", InSummary=true, Order=130)]
-        [References("Task")]
+        [CLSCompliant(false)]
+		[References("Task")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> PartOf
@@ -801,7 +809,8 @@ namespace Hl7.Fhir.Model
         /// What task is acting on
         /// </summary>
         [FhirElement("focus", InSummary=true, Order=210)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Focus
         {
@@ -815,7 +824,8 @@ namespace Hl7.Fhir.Model
         /// Beneficiary of the Task
         /// </summary>
         [FhirElement("for", InSummary=true, Order=220)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference For
         {
@@ -829,7 +839,8 @@ namespace Hl7.Fhir.Model
         /// Healthcare event during which this task originated
         /// </summary>
         [FhirElement("context", InSummary=true, Order=230)]
-        [References("Encounter","EpisodeOfCare")]
+        [CLSCompliant(false)]
+		[References("Encounter","EpisodeOfCare")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Context
         {
@@ -947,7 +958,8 @@ namespace Hl7.Fhir.Model
         /// Task Owner
         /// </summary>
         [FhirElement("owner", InSummary=true, Order=290)]
-        [References("Device","Organization","Patient","Practitioner","RelatedPerson")]
+        [CLSCompliant(false)]
+		[References("Device","Organization","Patient","Practitioner","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Owner
         {
@@ -988,7 +1000,8 @@ namespace Hl7.Fhir.Model
         /// Key events in history of the Task
         /// </summary>
         [FhirElement("relevantHistory", Order=320)]
-        [References("Provenance")]
+        [CLSCompliant(false)]
+		[References("Provenance")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> RelevantHistory

@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Hl7.Fhir.Introspection;
-#if !PORTABLE45 || NET45
+#if DOTNETFW
 using System.Runtime.Serialization;
 #endif
 using Hl7.Fhir.Model;
@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Rest
     ///   * Anchor: just the "logical id"
     /// 
     /// </summary>
-#if !PORTABLE45
+#if DOTNETFW
     [SerializableAttribute]
 #endif
     [System.Diagnostics.DebuggerDisplay(@"\{ResourceType={ResourceType} Id={Id} VersionId={VersionId} Base={BaseUri} ToString={ToString()}")]

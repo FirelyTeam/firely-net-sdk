@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 if (baseUrl != null)
                 {
                     var baseDef = _resolver.FindStructureDefinition(baseUrl);
-                    if (ensureSnapshot(baseDef, baseUrl, ToNamedNode(elem)))
+                    if (ensureSnapshot(baseDef, baseUrl, elem.ToNamedNode()))
                     {
                         baseNav = new ElementDefinitionNavigator(baseDef);
                         if (baseNav.MoveToFirstChild())

@@ -411,7 +411,8 @@ namespace Hl7.Fhir.Model
             /// Resource for the actor (or group, by role)
             /// </summary>
             [FhirElement("reference", Order=50)]
-            [References("Device","Group","CareTeam","Organization","Patient","Practitioner","RelatedPerson")]
+            [CLSCompliant(false)]
+			[References("Device","Group","CareTeam","Organization","Patient","Practitioner","RelatedPerson")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Reference
@@ -527,7 +528,8 @@ namespace Hl7.Fhir.Model
             /// The actual data reference
             /// </summary>
             [FhirElement("reference", InSummary=true, Order=50)]
-            [References()]
+            [CLSCompliant(false)]
+			[References()]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Reference
@@ -708,7 +710,8 @@ namespace Hl7.Fhir.Model
         /// Who the consent applies to
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=140)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -723,7 +726,8 @@ namespace Hl7.Fhir.Model
         /// Who is agreeing to the policy and exceptions
         /// </summary>
         [FhirElement("consentor", InSummary=true, Order=150)]
-        [References("Organization","Patient","Practitioner","RelatedPerson")]
+        [CLSCompliant(false)]
+		[References("Organization","Patient","Practitioner","RelatedPerson")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Consentor
@@ -738,7 +742,8 @@ namespace Hl7.Fhir.Model
         /// Organization that manages the consent
         /// </summary>
         [FhirElement("organization", InSummary=true, Order=160)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Organization
         {
@@ -752,7 +757,8 @@ namespace Hl7.Fhir.Model
         /// Source from which this consent is taken
         /// </summary>
         [FhirElement("source", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element Source
         {
@@ -799,7 +805,8 @@ namespace Hl7.Fhir.Model
         /// Whose access is controlled by the policy
         /// </summary>
         [FhirElement("recipient", InSummary=true, Order=190)]
-        [References("Device","Group","Organization","Patient","Practitioner","RelatedPerson","CareTeam")]
+        [CLSCompliant(false)]
+		[References("Device","Group","Organization","Patient","Practitioner","RelatedPerson","CareTeam")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Recipient

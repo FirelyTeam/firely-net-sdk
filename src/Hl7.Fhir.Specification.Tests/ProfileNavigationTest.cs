@@ -23,11 +23,7 @@ using Hl7.FhirPath;
 namespace Hl7.Fhir.Specification.Tests
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableProfileNavigationTest
-#else
     public class ProfileNavigationTest
-#endif
     {
         private IResourceResolver _source;
 

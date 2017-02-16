@@ -18,13 +18,8 @@ using Hl7.Fhir.Specification.Source;
 namespace Hl7.Fhir.Specification.Tests
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableArtifactSourceTests
-#else
     public class ArtifactSourceTests
-#endif
     {
-#if !PORTABLE45
         [TestMethod]
         public void ZipCacherShouldCache()
         {
@@ -77,7 +72,6 @@ namespace Hl7.Fhir.Specification.Tests
             File.SetLastWriteTime(zipFile, DateTime.Now);
             Assert.IsFalse(fa.IsActual());
         }
-#endif
 
         private void copy(string dir, string file, string outputDir)
         {

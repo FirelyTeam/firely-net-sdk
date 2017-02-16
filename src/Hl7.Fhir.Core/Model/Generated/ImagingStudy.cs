@@ -998,7 +998,8 @@ namespace Hl7.Fhir.Model
         /// Who the images are of
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=140)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -1013,7 +1014,8 @@ namespace Hl7.Fhir.Model
         /// Originating context
         /// </summary>
         [FhirElement("context", InSummary=true, Order=150)]
-        [References("Encounter","EpisodeOfCare")]
+        [CLSCompliant(false)]
+		[References("Encounter","EpisodeOfCare")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Context
         {
@@ -1059,7 +1061,8 @@ namespace Hl7.Fhir.Model
         /// Request fulfilled
         /// </summary>
         [FhirElement("basedOn", InSummary=true, Order=170)]
-        [References("ReferralRequest","CarePlan","DiagnosticRequest","ProcedureRequest")]
+        [CLSCompliant(false)]
+		[References("ReferralRequest","CarePlan","DiagnosticRequest","ProcedureRequest")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> BasedOn
@@ -1074,7 +1077,8 @@ namespace Hl7.Fhir.Model
         /// Referring physician
         /// </summary>
         [FhirElement("referrer", InSummary=true, Order=180)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Referrer
         {
@@ -1088,7 +1092,8 @@ namespace Hl7.Fhir.Model
         /// Who interpreted images
         /// </summary>
         [FhirElement("interpreter", InSummary=true, Order=190)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Interpreter
@@ -1183,7 +1188,8 @@ namespace Hl7.Fhir.Model
         /// Type of procedure performed
         /// </summary>
         [FhirElement("procedure", InSummary=true, Order=230)]
-        [References("Procedure")]
+        [CLSCompliant(false)]
+		[References("Procedure")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Procedure

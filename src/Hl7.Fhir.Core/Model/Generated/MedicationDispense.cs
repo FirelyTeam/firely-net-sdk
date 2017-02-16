@@ -131,7 +131,8 @@ namespace Hl7.Fhir.Model
             /// Who is responsible for the substitution
             /// </summary>
             [FhirElement("responsibleParty", Order=60)]
-            [References("Practitioner")]
+            [CLSCompliant(false)]
+			[References("Practitioner")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> ResponsibleParty
@@ -256,7 +257,8 @@ namespace Hl7.Fhir.Model
         /// What medication was supplied
         /// </summary>
         [FhirElement("medication", InSummary=true, Order=110, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Element Medication
@@ -271,7 +273,8 @@ namespace Hl7.Fhir.Model
         /// Who the dispense is for
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=120)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
         {
@@ -285,7 +288,8 @@ namespace Hl7.Fhir.Model
         /// Information that supports the dispensing of the medication
         /// </summary>
         [FhirElement("supportingInformation", Order=130)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> SupportingInformation
@@ -300,7 +304,8 @@ namespace Hl7.Fhir.Model
         /// Practitioner responsible for dispensing medication
         /// </summary>
         [FhirElement("dispenser", Order=140)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Dispenser
         {
@@ -314,7 +319,8 @@ namespace Hl7.Fhir.Model
         /// Organization responsible for the dispense of the medication
         /// </summary>
         [FhirElement("dispensingOrganization", Order=150)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference DispensingOrganization
         {
@@ -328,7 +334,8 @@ namespace Hl7.Fhir.Model
         /// Medication order that authorizes the dispense
         /// </summary>
         [FhirElement("authorizingPrescription", Order=160)]
-        [References("MedicationRequest")]
+        [CLSCompliant(false)]
+		[References("MedicationRequest")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> AuthorizingPrescription
@@ -446,7 +453,8 @@ namespace Hl7.Fhir.Model
         /// Where the medication was sent
         /// </summary>
         [FhirElement("destination", Order=220)]
-        [References("Location")]
+        [CLSCompliant(false)]
+		[References("Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Destination
         {
@@ -460,7 +468,8 @@ namespace Hl7.Fhir.Model
         /// Who collected the medication
         /// </summary>
         [FhirElement("receiver", Order=230)]
-        [References("Patient","Practitioner")]
+        [CLSCompliant(false)]
+		[References("Patient","Practitioner")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Receiver
@@ -516,7 +525,8 @@ namespace Hl7.Fhir.Model
         /// A list of events of interest in the lifecycle
         /// </summary>
         [FhirElement("eventHistory", Order=270)]
-        [References("Provenance")]
+        [CLSCompliant(false)]
+		[References("Provenance")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> EventHistory

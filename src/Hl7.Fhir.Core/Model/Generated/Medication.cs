@@ -177,7 +177,8 @@ namespace Hl7.Fhir.Model
             /// The product contained
             /// </summary>
             [FhirElement("item", Order=40, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element Item
@@ -500,7 +501,8 @@ namespace Hl7.Fhir.Model
             /// The item in the package
             /// </summary>
             [FhirElement("item", Order=40, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element Item
@@ -634,7 +636,8 @@ namespace Hl7.Fhir.Model
         /// Manufacturer of the item
         /// </summary>
         [FhirElement("manufacturer", InSummary=true, Order=110)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Manufacturer
         {

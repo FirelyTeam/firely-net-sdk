@@ -265,7 +265,8 @@ namespace Hl7.Fhir.Model
         /// Target of the request
         /// </summary>
         [FhirElement("target", Order=120)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Target
         {
@@ -311,7 +312,8 @@ namespace Hl7.Fhir.Model
         /// Responsible practitioner
         /// </summary>
         [FhirElement("provider", Order=140)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Provider
         {
@@ -325,7 +327,8 @@ namespace Hl7.Fhir.Model
         /// Responsible organization
         /// </summary>
         [FhirElement("organization", Order=150)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Organization
         {
@@ -339,7 +342,8 @@ namespace Hl7.Fhir.Model
         /// Request reference
         /// </summary>
         [FhirElement("request", Order=160)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Request
         {
@@ -353,7 +357,8 @@ namespace Hl7.Fhir.Model
         /// Response reference
         /// </summary>
         [FhirElement("response", Order=170)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Response
         {

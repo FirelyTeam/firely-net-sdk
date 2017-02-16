@@ -1,7 +1,7 @@
 ﻿
 
 //
-// Model Generated on Tue, 06 Dec 2016 16:29:18 GMT for FHIR v1.8.0
+// Model Generated on Thu, 16 Feb 2017 23:21:36 GMT for FHIR v1.8.0
 //
 // Generated Shared Enumeration: ResourceType
 	// Used in model class (resource): CapabilityStatement.rest.resource.type

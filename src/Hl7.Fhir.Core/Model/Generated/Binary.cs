@@ -90,7 +90,8 @@ namespace Hl7.Fhir.Model
         /// Access Control Management
         /// </summary>
         [FhirElement("securityContext", InSummary=true, Order=60)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference SecurityContext
         {

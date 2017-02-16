@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
             /// Valueset for the filter
             /// </summary>
             [FhirElement("valueSet", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+			[CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element ValueSet
@@ -282,6 +283,7 @@ namespace Hl7.Fhir.Model
             /// The value of the filter, as a Period, DateTime, or Duration value
             /// </summary>
             [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+			[CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Duration))]
             [DataMember]
             public Hl7.Fhir.Model.Element Value

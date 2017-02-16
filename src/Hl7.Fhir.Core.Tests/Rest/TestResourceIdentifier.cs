@@ -14,11 +14,7 @@ using Hl7.Fhir.Model;
 namespace Hl7.Fhir.Test
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableTestResourceIdentifier
-#else
     public class TestResourceIdentifier
-#endif
     {
         [TestMethod]
         public void TestBuild()

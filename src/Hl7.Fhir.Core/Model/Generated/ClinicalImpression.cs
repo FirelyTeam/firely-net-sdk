@@ -105,7 +105,8 @@ namespace Hl7.Fhir.Model
             /// Record of a specific investigation
             /// </summary>
             [FhirElement("item", Order=50)]
-            [References("Observation","QuestionnaireResponse","FamilyMemberHistory","DiagnosticReport","RiskAssessment","ImagingStudy")]
+            [CLSCompliant(false)]
+			[References("Observation","QuestionnaireResponse","FamilyMemberHistory","DiagnosticReport","RiskAssessment","ImagingStudy")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> Item
@@ -188,7 +189,8 @@ namespace Hl7.Fhir.Model
             /// What was found
             /// </summary>
             [FhirElement("item", Order=40, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element Item
@@ -388,7 +390,8 @@ namespace Hl7.Fhir.Model
         /// Patient or group assessed
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=130)]
-        [References("Patient","Group")]
+        [CLSCompliant(false)]
+		[References("Patient","Group")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -403,7 +406,8 @@ namespace Hl7.Fhir.Model
         /// The clinician performing the assessment
         /// </summary>
         [FhirElement("assessor", InSummary=true, Order=140)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Assessor
         {
@@ -449,7 +453,8 @@ namespace Hl7.Fhir.Model
         /// Time of assessment
         /// </summary>
         [FhirElement("effective", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
         public Hl7.Fhir.Model.Element Effective
         {
@@ -463,7 +468,8 @@ namespace Hl7.Fhir.Model
         /// Encounter or Episode created from
         /// </summary>
         [FhirElement("context", InSummary=true, Order=170)]
-        [References("Encounter","EpisodeOfCare")]
+        [CLSCompliant(false)]
+		[References("Encounter","EpisodeOfCare")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Context
         {
@@ -477,7 +483,8 @@ namespace Hl7.Fhir.Model
         /// Reference to last assessment
         /// </summary>
         [FhirElement("previous", Order=180)]
-        [References("ClinicalImpression")]
+        [CLSCompliant(false)]
+		[References("ClinicalImpression")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Previous
         {
@@ -491,7 +498,8 @@ namespace Hl7.Fhir.Model
         /// Relevant impressions of patient state
         /// </summary>
         [FhirElement("problem", InSummary=true, Order=190)]
-        [References("Condition","AllergyIntolerance")]
+        [CLSCompliant(false)]
+		[References("Condition","AllergyIntolerance")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Problem
@@ -613,7 +621,8 @@ namespace Hl7.Fhir.Model
         /// RiskAssessment expressing likely outcome
         /// </summary>
         [FhirElement("prognosisReference", Order=250)]
-        [References("RiskAssessment")]
+        [CLSCompliant(false)]
+		[References("RiskAssessment")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> PrognosisReference
@@ -628,7 +637,8 @@ namespace Hl7.Fhir.Model
         /// Action taken as part of assessment procedure
         /// </summary>
         [FhirElement("action", Order=260)]
-        [References("ReferralRequest","ProcedureRequest","Procedure","MedicationRequest","DiagnosticRequest","Appointment")]
+        [CLSCompliant(false)]
+		[References("ReferralRequest","ProcedureRequest","Procedure","MedicationRequest","DiagnosticRequest","Appointment")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Action

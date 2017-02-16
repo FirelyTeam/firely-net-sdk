@@ -71,7 +71,8 @@ namespace Hl7.Fhir.Model
         /// Protocol or definition
         /// </summary>
         [FhirElement("definition", InSummary=true, Order=100)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Definition
@@ -86,7 +87,8 @@ namespace Hl7.Fhir.Model
         /// What request fulfills
         /// </summary>
         [FhirElement("basedOn", InSummary=true, Order=110)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> BasedOn
@@ -101,7 +103,8 @@ namespace Hl7.Fhir.Model
         /// What request replaces
         /// </summary>
         [FhirElement("replaces", InSummary=true, Order=120)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Replaces
@@ -241,7 +244,8 @@ namespace Hl7.Fhir.Model
         /// Individual the test is ordered for
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=180)]
-        [References("Patient","Group","Location","Device")]
+        [CLSCompliant(false)]
+		[References("Patient","Group","Location","Device")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -256,7 +260,8 @@ namespace Hl7.Fhir.Model
         /// Encounter or Episode during which request was created
         /// </summary>
         [FhirElement("context", InSummary=true, Order=190)]
-        [References("Encounter","EpisodeOfCare")]
+        [CLSCompliant(false)]
+		[References("Encounter","EpisodeOfCare")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Context
         {
@@ -270,7 +275,8 @@ namespace Hl7.Fhir.Model
         /// When testing should occur
         /// </summary>
         [FhirElement("occurrence", InSummary=true, Order=200, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
         [DataMember]
         public Hl7.Fhir.Model.Element Occurrence
         {
@@ -316,7 +322,8 @@ namespace Hl7.Fhir.Model
         /// Who/what is requesting diagnostics
         /// </summary>
         [FhirElement("requester", InSummary=true, Order=220)]
-        [References("Device","Practitioner","Organization")]
+        [CLSCompliant(false)]
+		[References("Device","Practitioner","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Requester
         {
@@ -343,7 +350,8 @@ namespace Hl7.Fhir.Model
         /// Requested perfomer
         /// </summary>
         [FhirElement("performer", InSummary=true, Order=240)]
-        [References("Practitioner","Organization","Patient","Device","RelatedPerson")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Organization","Patient","Device","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Performer
         {
@@ -371,7 +379,8 @@ namespace Hl7.Fhir.Model
         /// Explanation/Justification for test
         /// </summary>
         [FhirElement("reasonReference", InSummary=true, Order=260)]
-        [References("Condition","Observation")]
+        [CLSCompliant(false)]
+		[References("Condition","Observation")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> ReasonReference
@@ -386,7 +395,8 @@ namespace Hl7.Fhir.Model
         /// Additional clinical information
         /// </summary>
         [FhirElement("supportingInformation", Order=270)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> SupportingInformation
@@ -415,7 +425,8 @@ namespace Hl7.Fhir.Model
         /// Request provenance
         /// </summary>
         [FhirElement("relevantHistory", Order=290)]
-        [References("Provenance")]
+        [CLSCompliant(false)]
+		[References("Provenance")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> RelevantHistory

@@ -99,39 +99,39 @@ namespace Hl7.Fhir.Serialization
         
         private static object convertXmlStringToPrimitive(Type to, string value)
         {
-            if(typeof(Boolean).IsAssignableFrom(to))
+            if(typeof(Boolean) == to)
                 return XmlConvert.ToBoolean(value);
-            if(typeof(Byte).IsAssignableFrom(to))
+            if(typeof(Byte) == to)
                 return XmlConvert.ToByte(value);        // Not used in FHIR serialization
-            if(typeof(Char).IsAssignableFrom(to))
+            if(typeof(Char) == to)
                 return XmlConvert.ToChar(value);        // Not used in FHIR serialization
-            if(typeof(DateTime).IsAssignableFrom(to))
+            if(typeof(DateTime) == to)
                 return XmlConvert.ToDateTimeOffset(value); // TODO: should handle FHIR's "instant" datatype
-            if(typeof(Decimal).IsAssignableFrom(to))
+            if(typeof(Decimal) == to)
                 return XmlConvert.ToDecimal(value);
-            if(typeof(Double).IsAssignableFrom(to))
+            if(typeof(Double) == to)
                 return XmlConvert.ToDouble(value);      // Could lead to loss in precision
-            if(typeof(Int16).IsAssignableFrom(to))
+            if(typeof(Int16) == to)
                 return XmlConvert.ToInt16(value);       // Could lead to loss in precision
-            if(typeof(Int32).IsAssignableFrom(to))
+            if(typeof(Int32) == to)
                 return XmlConvert.ToInt32(value);
-            if(typeof(Int64).IsAssignableFrom(to))
+            if(typeof(Int64) == to)
                 return XmlConvert.ToInt64(value);       // Not used in FHIR serialization
-            if(typeof(SByte).IsAssignableFrom(to))
+            if(typeof(SByte) == to)
                 return XmlConvert.ToSByte(value);       // Not used in FHIR serialization
-            if(typeof(Single).IsAssignableFrom(to))
+            if(typeof(Single) == to)
                 return XmlConvert.ToSingle(value);      // Not used in FHIR serialization
-            if(typeof(UInt16).IsAssignableFrom(to))
+            if(typeof(UInt16) == to)
                 return XmlConvert.ToUInt16(value);      // Not used in FHIR serialization
-            if(typeof(UInt32).IsAssignableFrom(to))
+            if(typeof(UInt32) == to)
                 return XmlConvert.ToUInt32(value);      // Not used in FHIR serialization
-            if(typeof(UInt64).IsAssignableFrom(to))
+            if(typeof(UInt64) == to)
                 return XmlConvert.ToUInt64(value);      // Not used in FHIR serialization
-            if(typeof(byte[]).IsAssignableFrom(to))
+            if(typeof(byte[]) == to)
                 return System.Convert.FromBase64String(value);
-            if (typeof(DateTimeOffset).IsAssignableFrom(to))
+            if (typeof(DateTimeOffset) == to)
                 return XmlConvert.ToDateTimeOffset(value);
-            if(typeof(System.Uri).IsAssignableFrom(to))
+            if(typeof(System.Uri) == to)
                 return new Uri(value, UriKind.RelativeOrAbsolute);
             if (to.IsEnum())
             {
@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Serialization
 
         public static bool CanConvert(Type type)
         {
-#if PORTABLE45
+#if !DOTNETFW
 			// We support all primitive .NET types in the serializer
 			if (type == typeof(Boolean)
 				|| type == typeof(Byte)

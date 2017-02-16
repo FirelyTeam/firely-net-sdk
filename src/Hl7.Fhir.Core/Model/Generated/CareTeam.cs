@@ -77,7 +77,8 @@ namespace Hl7.Fhir.Model
             /// Who is involved
             /// </summary>
             [FhirElement("member", InSummary=true, Order=50)]
-            [References("Practitioner","RelatedPerson","Patient","Organization")]
+            [CLSCompliant(false)]
+			[References("Practitioner","RelatedPerson","Patient","Organization")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Member
             {
@@ -242,7 +243,8 @@ namespace Hl7.Fhir.Model
         /// Who care team is for
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=130)]
-        [References("Patient","Group")]
+        [CLSCompliant(false)]
+		[References("Patient","Group")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -283,7 +285,8 @@ namespace Hl7.Fhir.Model
         /// Organization responsible for the care team
         /// </summary>
         [FhirElement("managingOrganization", InSummary=true, Order=160)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> ManagingOrganization

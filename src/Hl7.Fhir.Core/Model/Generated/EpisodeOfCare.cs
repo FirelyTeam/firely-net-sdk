@@ -298,7 +298,8 @@ namespace Hl7.Fhir.Model
         /// Conditions/problems/diagnoses this episode of care is for
         /// </summary>
         [FhirElement("condition", Order=130)]
-        [References("Condition")]
+        [CLSCompliant(false)]
+		[References("Condition")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Condition
@@ -313,7 +314,8 @@ namespace Hl7.Fhir.Model
         /// Patient for this episode of care
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=140)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -328,7 +330,8 @@ namespace Hl7.Fhir.Model
         /// Organization that assumes care
         /// </summary>
         [FhirElement("managingOrganization", InSummary=true, Order=150)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference ManagingOrganization
         {
@@ -355,7 +358,8 @@ namespace Hl7.Fhir.Model
         /// Originating Referral Request(s)
         /// </summary>
         [FhirElement("referralRequest", Order=170)]
-        [References("ReferralRequest")]
+        [CLSCompliant(false)]
+		[References("ReferralRequest")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> ReferralRequest
@@ -370,7 +374,8 @@ namespace Hl7.Fhir.Model
         /// Care manager/care co-ordinator for the patient
         /// </summary>
         [FhirElement("careManager", Order=180)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference CareManager
         {
@@ -384,7 +389,8 @@ namespace Hl7.Fhir.Model
         /// Other practitioners facilitating this episode of care
         /// </summary>
         [FhirElement("team", Order=190)]
-        [References("CareTeam")]
+        [CLSCompliant(false)]
+		[References("CareTeam")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Team
@@ -399,7 +405,8 @@ namespace Hl7.Fhir.Model
         /// The set of accounts that may be used for billing for this EpisodeOfCare
         /// </summary>
         [FhirElement("account", Order=200)]
-        [References("Account")]
+        [CLSCompliant(false)]
+		[References("Account")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Account

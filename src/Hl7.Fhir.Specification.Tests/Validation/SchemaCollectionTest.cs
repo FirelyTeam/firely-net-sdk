@@ -21,7 +21,7 @@ using Hl7.Fhir.Specification.Source;
 
 namespace Hl7.Fhir.Specification.Tests
 {
-#if !PORTABLE45
+#if NET_XSD_SCHEMA
     [TestClass]
     public class SchemaCollectionTest
     {

@@ -348,7 +348,8 @@ namespace Hl7.Fhir.Model
         /// Patient to whom Device is affixed
         /// </summary>
         [FhirElement("patient", Order=190)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
         {
@@ -362,7 +363,8 @@ namespace Hl7.Fhir.Model
         /// Organization responsible for device
         /// </summary>
         [FhirElement("owner", Order=200)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Owner
         {
@@ -390,7 +392,8 @@ namespace Hl7.Fhir.Model
         /// Where the resource is found
         /// </summary>
         [FhirElement("location", Order=220)]
-        [References("Location")]
+        [CLSCompliant(false)]
+		[References("Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Location
         {

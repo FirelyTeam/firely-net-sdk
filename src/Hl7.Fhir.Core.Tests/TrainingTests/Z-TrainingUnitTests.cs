@@ -88,7 +88,9 @@ namespace FHIR.Server.Tests
             ResourceIdentity ri = ResourceIdentity.Build(
                     new Uri("http://sqlonfhir.azurewebsites.net/fhir"),
                     "Patient", "45", "1");
+#if NET_CONSOLE
             Trace.WriteLine(ri.WithoutVersion().OriginalString);
+#endif
         }
 
         [TestMethod, TestCategory("Training")]

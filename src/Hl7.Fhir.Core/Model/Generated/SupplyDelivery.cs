@@ -129,7 +129,8 @@ namespace Hl7.Fhir.Model
         /// Patient for whom the item is supplied
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=110)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
         {
@@ -169,7 +170,8 @@ namespace Hl7.Fhir.Model
         /// Medication, Substance, or Device supplied
         /// </summary>
         [FhirElement("suppliedItem", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element SuppliedItem
         {
@@ -183,7 +185,8 @@ namespace Hl7.Fhir.Model
         /// Dispenser
         /// </summary>
         [FhirElement("supplier", InSummary=true, Order=150)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Supplier
         {
@@ -242,7 +245,8 @@ namespace Hl7.Fhir.Model
         /// Where the Supply was sent
         /// </summary>
         [FhirElement("destination", InSummary=true, Order=180)]
-        [References("Location")]
+        [CLSCompliant(false)]
+		[References("Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Destination
         {
@@ -256,7 +260,8 @@ namespace Hl7.Fhir.Model
         /// Who collected the Supply
         /// </summary>
         [FhirElement("receiver", InSummary=true, Order=190)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Receiver

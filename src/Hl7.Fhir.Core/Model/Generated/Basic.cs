@@ -85,7 +85,8 @@ namespace Hl7.Fhir.Model
         /// Identifies the focus of this resource
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=110)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -131,7 +132,8 @@ namespace Hl7.Fhir.Model
         /// Who created
         /// </summary>
         [FhirElement("author", InSummary=true, Order=130)]
-        [References("Practitioner","Patient","RelatedPerson")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Patient","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
         {

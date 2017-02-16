@@ -78,7 +78,8 @@ namespace Hl7.Fhir.Model
             /// Likelihood of specified outcome
             /// </summary>
             [FhirElement("probability", Order=50, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept))]
             [DataMember]
             public Hl7.Fhir.Model.Element Probability
             {
@@ -124,7 +125,8 @@ namespace Hl7.Fhir.Model
             /// Timeframe or age range
             /// </summary>
             [FhirElement("when", Order=70, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range))]
             [DataMember]
             public Hl7.Fhir.Model.Element When
             {
@@ -256,7 +258,8 @@ namespace Hl7.Fhir.Model
         /// Request fulfilled by this assessment
         /// </summary>
         [FhirElement("basedOn", Order=100)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference BasedOn
         {
@@ -270,7 +273,8 @@ namespace Hl7.Fhir.Model
         /// Part of this occurrence
         /// </summary>
         [FhirElement("parent", Order=110)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Parent
         {
@@ -330,7 +334,8 @@ namespace Hl7.Fhir.Model
         /// Who/what does assessment apply to?
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=140)]
-        [References("Patient","Group")]
+        [CLSCompliant(false)]
+		[References("Patient","Group")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -344,7 +349,8 @@ namespace Hl7.Fhir.Model
         /// Where was assessment performed?
         /// </summary>
         [FhirElement("context", InSummary=true, Order=150)]
-        [References("Encounter","EpisodeOfCare")]
+        [CLSCompliant(false)]
+		[References("Encounter","EpisodeOfCare")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Context
         {
@@ -358,7 +364,8 @@ namespace Hl7.Fhir.Model
         /// When was assessment made?
         /// </summary>
         [FhirElement("occurrence", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
         public Hl7.Fhir.Model.Element Occurrence
         {
@@ -372,7 +379,8 @@ namespace Hl7.Fhir.Model
         /// Condition assessed
         /// </summary>
         [FhirElement("condition", InSummary=true, Order=170)]
-        [References("Condition")]
+        [CLSCompliant(false)]
+		[References("Condition")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Condition
         {
@@ -386,7 +394,8 @@ namespace Hl7.Fhir.Model
         /// Who did assessment?
         /// </summary>
         [FhirElement("performer", InSummary=true, Order=180)]
-        [References("Practitioner","Device")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Performer
         {
@@ -400,7 +409,8 @@ namespace Hl7.Fhir.Model
         /// Why the assessment was necessary?
         /// </summary>
         [FhirElement("reason", Order=190, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element Reason
         {
@@ -427,7 +437,8 @@ namespace Hl7.Fhir.Model
         /// Information used in assessment
         /// </summary>
         [FhirElement("basis", Order=210)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Basis

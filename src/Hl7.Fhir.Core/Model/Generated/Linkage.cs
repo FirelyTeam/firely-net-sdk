@@ -199,7 +199,8 @@ namespace Hl7.Fhir.Model
         /// Who is responsible for linkages
         /// </summary>
         [FhirElement("author", InSummary=true, Order=90)]
-        [References("Practitioner","Organization")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
         {

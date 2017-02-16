@@ -230,6 +230,7 @@ namespace Hl7.Fhir.Model
             /// Length/Range of lengths, or (Start and/or end) limits
             /// </summary>
             [FhirElement("bounds", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+			[CLSCompliant(false)]
             [AllowedTypes(typeof(Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
             public Hl7.Fhir.Model.Element Bounds

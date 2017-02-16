@@ -157,7 +157,8 @@ namespace Hl7.Fhir.Model
         /// Who/What this Media is a record of
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=130)]
-        [References("Patient","Practitioner","Group","Device","Specimen")]
+        [CLSCompliant(false)]
+		[References("Patient","Practitioner","Group","Device","Specimen")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -171,7 +172,8 @@ namespace Hl7.Fhir.Model
         /// The person who generated the image
         /// </summary>
         [FhirElement("operator", InSummary=true, Order=140)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Operator
         {

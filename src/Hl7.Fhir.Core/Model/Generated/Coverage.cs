@@ -608,7 +608,8 @@ namespace Hl7.Fhir.Model
         /// Owner of the policy
         /// </summary>
         [FhirElement("policyHolder", InSummary=true, Order=120)]
-        [References("Patient","RelatedPerson","Organization")]
+        [CLSCompliant(false)]
+		[References("Patient","RelatedPerson","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference PolicyHolder
         {
@@ -622,7 +623,8 @@ namespace Hl7.Fhir.Model
         /// Subscriber to the policy
         /// </summary>
         [FhirElement("subscriber", InSummary=true, Order=130)]
-        [References("Patient","RelatedPerson")]
+        [CLSCompliant(false)]
+		[References("Patient","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subscriber
         {
@@ -668,7 +670,8 @@ namespace Hl7.Fhir.Model
         /// Plan Beneficiary
         /// </summary>
         [FhirElement("beneficiary", InSummary=true, Order=150)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Beneficiary
         {
@@ -708,7 +711,8 @@ namespace Hl7.Fhir.Model
         /// Identifier for the plan or agreement issuer
         /// </summary>
         [FhirElement("payor", InSummary=true, Order=180)]
-        [References("Organization","Patient","RelatedPerson")]
+        [CLSCompliant(false)]
+		[References("Organization","Patient","RelatedPerson")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Payor
@@ -864,7 +868,8 @@ namespace Hl7.Fhir.Model
         /// Contract details
         /// </summary>
         [FhirElement("contract", Order=240)]
-        [References("Contract")]
+        [CLSCompliant(false)]
+		[References("Contract")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Contract

@@ -1962,7 +1962,8 @@ namespace Hl7.Fhir.Model
             /// Required Capability Statement
             /// </summary>
             [FhirElement("capabilities", Order=100)]
-            [References("CapabilityStatement")]
+            [CLSCompliant(false)]
+			[References("CapabilityStatement")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Capabilities
@@ -2129,7 +2130,8 @@ namespace Hl7.Fhir.Model
             /// Reference of the resource
             /// </summary>
             [FhirElement("resource", Order=60)]
-            [References()]
+            [CLSCompliant(false)]
+			[References()]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Resource
             {
@@ -2564,7 +2566,8 @@ namespace Hl7.Fhir.Model
             /// Assert rule resource reference
             /// </summary>
             [FhirElement("resource", Order=40)]
-            [References()]
+            [CLSCompliant(false)]
+			[References()]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Resource
@@ -2794,7 +2797,8 @@ namespace Hl7.Fhir.Model
             /// Assert ruleset resource reference
             /// </summary>
             [FhirElement("resource", Order=40)]
-            [References()]
+            [CLSCompliant(false)]
+			[References()]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Resource
@@ -6308,7 +6312,8 @@ namespace Hl7.Fhir.Model
         /// Reference of the validation profile
         /// </summary>
         [FhirElement("profile", Order=280)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Profile

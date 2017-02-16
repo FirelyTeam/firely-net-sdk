@@ -83,7 +83,8 @@ namespace Hl7.Fhir.Model
         /// Reference to device used
         /// </summary>
         [FhirElement("device", InSummary=true, Order=110)]
-        [References("Device")]
+        [CLSCompliant(false)]
+		[References("Device")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Device
@@ -191,7 +192,8 @@ namespace Hl7.Fhir.Model
         /// Patient using device
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=160)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -206,7 +208,8 @@ namespace Hl7.Fhir.Model
         /// How often  the device was used
         /// </summary>
         [FhirElement("timing", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
         [DataMember]
         public Hl7.Fhir.Model.Element Timing
         {

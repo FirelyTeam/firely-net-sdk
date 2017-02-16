@@ -16,11 +16,7 @@ using System.Linq;
 namespace Hl7.Fhir.Test
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableReferenceExtensionsTest
-#else
     public class ReferenceExtensionsTest
-#endif
     {
         [TestMethod]
         public void GetAbsoluteUri()

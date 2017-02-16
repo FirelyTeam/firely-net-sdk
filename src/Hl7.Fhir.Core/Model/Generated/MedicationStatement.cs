@@ -176,7 +176,8 @@ namespace Hl7.Fhir.Model
         /// What medication was taken
         /// </summary>
         [FhirElement("medication", InSummary=true, Order=110, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Element Medication
@@ -191,7 +192,8 @@ namespace Hl7.Fhir.Model
         /// Who is/was taking  the medication
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=120)]
-        [References("Patient","Group")]
+        [CLSCompliant(false)]
+		[References("Patient","Group")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -206,7 +208,8 @@ namespace Hl7.Fhir.Model
         /// Over what period was medication consumed?
         /// </summary>
         [FhirElement("effective", InSummary=true, Order=130, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
         public Hl7.Fhir.Model.Element Effective
         {
@@ -220,7 +223,8 @@ namespace Hl7.Fhir.Model
         /// Person or organization that provided the information about the taking of this medication
         /// </summary>
         [FhirElement("informationSource", Order=140)]
-        [References("Patient","Practitioner","RelatedPerson","Organization")]
+        [CLSCompliant(false)]
+		[References("Patient","Practitioner","RelatedPerson","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference InformationSource
         {
@@ -234,7 +238,8 @@ namespace Hl7.Fhir.Model
         /// Additional supporting information
         /// </summary>
         [FhirElement("derivedFrom", Order=150)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> DerivedFrom
@@ -341,7 +346,8 @@ namespace Hl7.Fhir.Model
         /// Condition or observation that supports why the medication is being/was taken
         /// </summary>
         [FhirElement("reasonForUseReference", Order=200)]
-        [References("Condition","Observation")]
+        [CLSCompliant(false)]
+		[References("Condition","Observation")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> ReasonForUseReference

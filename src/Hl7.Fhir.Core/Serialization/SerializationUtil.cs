@@ -161,10 +161,10 @@ namespace Hl7.Fhir.Serialization
             return resultRE;
         }
 
-#if PORTABLE45
-        private static Regex _re = new Regex("(&[a-zA-Z0-9]+;)", RegexOptions.CultureInvariant);
-#else
+#if NET_REGEX_COMPILE
         private static Regex _re = new Regex("(&[a-zA-Z0-9]+;)", RegexOptions.Compiled | RegexOptions.CultureInvariant);
+#else
+        private static Regex _re = new Regex("(&[a-zA-Z0-9]+;)", RegexOptions.CultureInvariant);
 #endif
         private static Dictionary<string, string> _xmlReplacements;
         private static Dictionary<string, string> getXmlReplacements()

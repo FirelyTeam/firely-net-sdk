@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2017, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -420,7 +420,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (discriminators != null && (discriminators.Count != 1 || discriminators.FirstOrDefault() != "url"))
             {
                 // Invalid extension discriminator; generate issue and ignore
-                Debug.Print($"[{nameof(ElementMatcher)}.{nameof(matchExtensionSlice)}] Warning! Invalid discriminator for extension slice (path = '{diffNav.Path}') - must be 'url'.");
+                Debug.WriteLine($"[{nameof(ElementMatcher)}.{nameof(matchExtensionSlice)}] Warning! Invalid discriminator for extension slice (path = '{diffNav.Path}') - must be 'url'.");
 
                 match.Issue = SnapshotGenerator.CreateIssueInvalidExtensionSlicingDiscriminator(diffNav.Current);
             }
@@ -453,7 +453,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             var diffTypeCodes = diffNav.Current.Type.Select(t => t.Code).ToList();
             if (diffTypeCodes.Count == 0)
             {
-                Debug.Print($"[{nameof(ElementMatcher)}.{nameof(matchSliceByTypeCode)}] Error! Element '{diffNav.Path}' is part of a @type slice group, but the element itself has no type.");
+                Debug.WriteLine($"[{nameof(ElementMatcher)}.{nameof(matchSliceByTypeCode)}] Error! Element '{diffNav.Path}' is part of a @type slice group, but the element itself has no type.");
 
                 match.BaseBookmark = defaultBase;
                 match.Action = MatchAction.Invalid;

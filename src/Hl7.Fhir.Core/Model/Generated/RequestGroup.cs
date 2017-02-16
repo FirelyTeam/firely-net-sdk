@@ -261,7 +261,8 @@ namespace Hl7.Fhir.Model
             /// When the action should take place
             /// </summary>
             [FhirElement("timing", Order=130, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Timing))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Timing))]
             [DataMember]
             public Hl7.Fhir.Model.Element Timing
             {
@@ -275,7 +276,8 @@ namespace Hl7.Fhir.Model
             /// Participant
             /// </summary>
             [FhirElement("participant", Order=140)]
-            [References("Patient","Person","Practitioner","RelatedPerson")]
+            [CLSCompliant(false)]
+			[References("Patient","Person","Practitioner","RelatedPerson")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> Participant
@@ -463,7 +465,8 @@ namespace Hl7.Fhir.Model
             /// The target of the action
             /// </summary>
             [FhirElement("resource", Order=210)]
-            [References()]
+            [CLSCompliant(false)]
+			[References()]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Resource
             {
@@ -879,7 +882,8 @@ namespace Hl7.Fhir.Model
             /// Time offset for the relationship
             /// </summary>
             [FhirElement("offset", Order=60, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Duration),typeof(Hl7.Fhir.Model.Range))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Duration),typeof(Hl7.Fhir.Model.Range))]
             [DataMember]
             public Hl7.Fhir.Model.Element Offset
             {
@@ -971,7 +975,8 @@ namespace Hl7.Fhir.Model
         /// Subject of the request group
         /// </summary>
         [FhirElement("subject", Order=100)]
-        [References("Patient","Group")]
+        [CLSCompliant(false)]
+		[References("Patient","Group")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -985,7 +990,8 @@ namespace Hl7.Fhir.Model
         /// Encounter or Episode for the request group
         /// </summary>
         [FhirElement("context", Order=110)]
-        [References("Encounter","EpisodeOfCare")]
+        [CLSCompliant(false)]
+		[References("Encounter","EpisodeOfCare")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Context
         {
@@ -1031,7 +1037,8 @@ namespace Hl7.Fhir.Model
         /// Device or practitioner that authored the request group
         /// </summary>
         [FhirElement("author", Order=130)]
-        [References("Device","Practitioner")]
+        [CLSCompliant(false)]
+		[References("Device","Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
         {
@@ -1045,7 +1052,8 @@ namespace Hl7.Fhir.Model
         /// Reason for the request group
         /// </summary>
         [FhirElement("reason", Order=140, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element Reason
         {

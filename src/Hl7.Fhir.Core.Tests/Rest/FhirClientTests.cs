@@ -11,23 +11,15 @@ using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Xml;
 using System.Net;
-using System.IO;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
-using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Tests.Rest
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableFhirClientTests
-#else
     public class FhirClientTests
-#endif
     {
         //public static Uri testEndpoint = new Uri("http://spark-dstu3.furore.com/fhir");
         //public static Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
@@ -48,6 +40,7 @@ namespace Hl7.Fhir.Tests.Rest
         public static void DebugDumpBundle(Hl7.Fhir.Model.Bundle b)
         {
             System.Diagnostics.Trace.WriteLine(String.Format("--------------------------------------------\r\nBundle Type: {0} ({1} total items, {2} included)", b.Type.ToString(), b.Total, (b.Entry != null ? b.Entry.Count.ToString() : "-")));
+         
             if (b.Entry != null)
             {
                 foreach (var item in b.Entry)
@@ -183,7 +176,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.AreEqual("Den Burg", loc.Address.City);
         }
 
-#if PORTABLE45z
+#if NO_ASYNC_ANYMORE
 		[TestMethod, TestCategory("FhirClient")]
 		public void ReadRelativeAsync()
 		{
@@ -199,13 +192,14 @@ namespace Hl7.Fhir.Tests.Rest
 			Assert.AreEqual("Den Burg", loc.Resource.Address.City);
 		}
 #endif
+
         public static void Compression_OnBeforeRequestGZip(object sender, BeforeRequestEventArgs e)
         {
             if (e.RawRequest != null)
             {
                 // e.RawRequest.AutomaticDecompression = System.Net.DecompressionMethods.Deflate | System.Net.DecompressionMethods.GZip;
                 e.RawRequest.Headers.Remove("Accept-Encoding");
-                e.RawRequest.Headers.Add("Accept-Encoding", "gzip");
+                e.RawRequest.Headers["Accept-Encoding"] = "gzip";
             }
         }
 
@@ -215,7 +209,7 @@ namespace Hl7.Fhir.Tests.Rest
             {
                 // e.RawRequest.AutomaticDecompression = System.Net.DecompressionMethods.Deflate | System.Net.DecompressionMethods.GZip;
                 e.RawRequest.Headers.Remove("Accept-Encoding");
-                e.RawRequest.Headers.Add("Accept-Encoding", "deflate");
+                e.RawRequest.Headers["Accept-Encoding"] = "deflate";
             }
         }
 
@@ -225,7 +219,7 @@ namespace Hl7.Fhir.Tests.Rest
             {
                 // e.RawRequest.AutomaticDecompression = System.Net.DecompressionMethods.Deflate | System.Net.DecompressionMethods.GZip;
                 e.RawRequest.Headers.Remove("Accept-Encoding");
-                e.RawRequest.Headers.Add("Accept-Encoding", "gzip, deflate");
+                e.RawRequest.Headers["Accept-Encoding"] =  "gzip, deflate";
             }
         }
 
@@ -235,21 +229,22 @@ namespace Hl7.Fhir.Tests.Rest
             FhirClient client = new FhirClient(testEndpoint);
             Bundle result;
 
-#if !PORTABLE45
             client.CompressRequestBody = true;
             client.OnBeforeRequest += Compression_OnBeforeRequestGZip;
             client.OnAfterResponse += Client_OnAfterResponse;
-#endif
+
             result = client.Search<DiagnosticReport>();
             client.OnAfterResponse -= Client_OnAfterResponse;
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Entry.Count() > 10, "Test should use testdata with more than 10 reports");
-            client.OnBeforeRequest -= Compression_OnBeforeRequestZipOrDeflate;
 
+            client.OnBeforeRequest -= Compression_OnBeforeRequestZipOrDeflate;
             client.OnBeforeRequest += Compression_OnBeforeRequestZipOrDeflate;
+
             result = client.Search<DiagnosticReport>(pageSize: 10);
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Entry.Count <= 10);
+
             client.OnBeforeRequest -= Compression_OnBeforeRequestGZip;
 
             var withSubject =
@@ -272,6 +267,7 @@ namespace Hl7.Fhir.Tests.Rest
 
 
             client.OnBeforeRequest += Compression_OnBeforeRequestDeflate;
+
             result = client.Search<Patient>(new string[] { "name=Chalmers", "name=Peter" });
 
             Assert.IsNotNull(result);
@@ -284,7 +280,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.AreEqual("gzip", e.RawResponse.Headers[HttpResponseHeader.ContentEncoding]);
         }
 
-#if PORTABLE45z
+#if NO_ASYNC_ANYMORE
         [TestMethod, TestCategory("FhirClient")]
         public void SearchAsync()
         {
@@ -322,6 +318,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsTrue(result.Entry.Count > 0);
         }
 #endif
+
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void Paging()
@@ -437,10 +434,10 @@ namespace Hl7.Fhir.Tests.Rest
         public void CreateEditDelete()
         {
             FhirClient client = new FhirClient(testEndpoint);
-#if !PORTABLE45
+
             client.OnBeforeRequest += Compression_OnBeforeRequestZipOrDeflate;
             // client.CompressRequestBody = true;
-#endif
+
             var pat = client.Read<Patient>("Patient/example");
             pat.Id = null;
             pat.Identifier.Clear();
@@ -482,7 +479,7 @@ namespace Hl7.Fhir.Tests.Rest
             }
         }
 
-        [TestMethod,Ignore]
+        [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         //Test for github issue https://github.com/ewoutkramer/fhir-net-api/issues/145
         public void Create_ObservationWithValueAsSimpleQuantity_ReadReturnsValueAsQuantity()
@@ -504,7 +501,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsInstanceOfType(fe.Value, typeof(Quantity));
         }
 
-#if PORTABLE45z
+#if NO_ASYNC_ANYMORE
 		/// <summary>
 		/// This test is also used as a "setup" test for the History test.
 		/// If you change the number of operations in here, this will make the History test fail.
@@ -579,7 +576,9 @@ namespace Hl7.Fhir.Tests.Rest
             CreateEditDelete(); // this test does a create, update, update, delete (4 operations)
 
             FhirClient client = new FhirClient(testEndpoint);
+
             System.Diagnostics.Trace.WriteLine("History of this specific patient since just before the create, update, update, delete (4 operations)");
+
             Bundle history = client.History(createdTestPatientUrl);
             Assert.IsNotNull(history);
             DebugDumpBundle(history);
@@ -591,13 +590,15 @@ namespace Hl7.Fhir.Tests.Rest
             //// Now, assume no one is quick enough to insert something between now and the next
             //// tests....
 
+
             System.Diagnostics.Trace.WriteLine("\r\nHistory on the patient type");
             history = client.TypeHistory("Patient", timestampBeforeCreationAndDeletions.ToUniversalTime());
             Assert.IsNotNull(history);
             DebugDumpBundle(history);
-            Assert.AreEqual(4, history.Entry.Count());
+            Assert.AreEqual(4, history.Entry.Count());   // there's a race condition here, sometimes this is 5. 
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
+
 
             System.Diagnostics.Trace.WriteLine("\r\nHistory on the patient type (using the generic method in the client)");
             history = client.TypeHistory<Patient>(timestampBeforeCreationAndDeletions.ToUniversalTime(), summary: SummaryType.True);
@@ -1055,7 +1056,7 @@ namespace Hl7.Fhir.Tests.Rest
             FhirClient validationFhirClient = new FhirClient("https://sqlonfhir.azurewebsites.net/fhir");
             validationFhirClient.OnBeforeRequest += (object sender, BeforeRequestEventArgs e) =>
             {
-                e.RawRequest.Headers.Add("Authorization", "Bearer bad-bearer");
+                e.RawRequest.Headers["Authorization"] = "Bearer bad-bearer";
             };
             try
             {
@@ -1067,6 +1068,7 @@ namespace Hl7.Fhir.Tests.Rest
                 Assert.IsTrue(ex.Status == HttpStatusCode.Forbidden || ex.Status == HttpStatusCode.Unauthorized, "Excpeted a security exception");
             }
         }
+
     }
 
 }

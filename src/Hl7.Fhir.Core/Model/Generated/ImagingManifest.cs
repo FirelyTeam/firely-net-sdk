@@ -97,7 +97,8 @@ namespace Hl7.Fhir.Model
             /// Reference to ImagingStudy
             /// </summary>
             [FhirElement("imagingStudy", InSummary=true, Order=50)]
-            [References("ImagingStudy")]
+            [CLSCompliant(false)]
+			[References("ImagingStudy")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference ImagingStudy
             {
@@ -737,7 +738,8 @@ namespace Hl7.Fhir.Model
         /// Patient of the selected objects
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=100)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -784,7 +786,8 @@ namespace Hl7.Fhir.Model
         /// Author (human or machine)
         /// </summary>
         [FhirElement("author", InSummary=true, Order=120)]
-        [References("Practitioner","Device","Organization","Patient","RelatedPerson")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Device","Organization","Patient","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
         {

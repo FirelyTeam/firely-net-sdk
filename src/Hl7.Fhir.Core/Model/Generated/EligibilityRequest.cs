@@ -116,7 +116,8 @@ namespace Hl7.Fhir.Model
         /// The subject of the Products and Services
         /// </summary>
         [FhirElement("patient", Order=120)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
         {
@@ -130,7 +131,8 @@ namespace Hl7.Fhir.Model
         /// Estimated date or dates of Service
         /// </summary>
         [FhirElement("serviced", Order=130, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
         public Hl7.Fhir.Model.Element Serviced
         {
@@ -176,7 +178,8 @@ namespace Hl7.Fhir.Model
         /// Author
         /// </summary>
         [FhirElement("enterer", Order=150)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Enterer
         {
@@ -190,7 +193,8 @@ namespace Hl7.Fhir.Model
         /// Responsible practitioner
         /// </summary>
         [FhirElement("provider", Order=160)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Provider
         {
@@ -204,7 +208,8 @@ namespace Hl7.Fhir.Model
         /// Responsible organization
         /// </summary>
         [FhirElement("organization", Order=170)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Organization
         {
@@ -218,7 +223,8 @@ namespace Hl7.Fhir.Model
         /// Target
         /// </summary>
         [FhirElement("insurer", Order=180)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Insurer
         {
@@ -232,7 +238,8 @@ namespace Hl7.Fhir.Model
         /// Servicing Facility
         /// </summary>
         [FhirElement("facility", Order=190)]
-        [References("Location")]
+        [CLSCompliant(false)]
+		[References("Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Facility
         {
@@ -246,7 +253,8 @@ namespace Hl7.Fhir.Model
         /// Insurance or medical plan
         /// </summary>
         [FhirElement("coverage", Order=200)]
-        [References("Coverage")]
+        [CLSCompliant(false)]
+		[References("Coverage")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Coverage
         {

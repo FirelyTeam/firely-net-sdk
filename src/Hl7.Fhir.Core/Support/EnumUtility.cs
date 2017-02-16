@@ -147,13 +147,13 @@ namespace Hl7.Fhir.Introspection
 
             public static bool IsMappableEnum(Type t)
             {
-                return t.IsEnum() && ReflectionHelper.GetAttribute<FhirEnumerationAttribute>(t) != null;
+                return t.IsEnum() &&  t.GetTypeInfo().GetCustomAttribute<FhirEnumerationAttribute>() != null;
             }
 
 
             private static string getEnumName(Type t)
             {
-                var attr = ReflectionHelper.GetAttribute<FhirEnumerationAttribute>(t);
+                var attr = t.GetTypeInfo().GetCustomAttribute<FhirEnumerationAttribute>();
 
                 if (attr != null)
                     return attr.BindingName;

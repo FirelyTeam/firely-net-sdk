@@ -186,7 +186,8 @@ namespace Hl7.Fhir.Model
             /// Intended dispenser
             /// </summary>
             [FhirElement("performer", Order=80)]
-            [References("Organization")]
+            [CLSCompliant(false)]
+			[References("Organization")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Performer
             {
@@ -401,7 +402,8 @@ namespace Hl7.Fhir.Model
         /// Protocol or definition
         /// </summary>
         [FhirElement("definition", InSummary=true, Order=100)]
-        [References("ActivityDefinition","PlanDefinition")]
+        [CLSCompliant(false)]
+		[References("ActivityDefinition","PlanDefinition")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Definition
@@ -416,7 +418,8 @@ namespace Hl7.Fhir.Model
         /// What request fulfills
         /// </summary>
         [FhirElement("basedOn", InSummary=true, Order=110)]
-        [References("CarePlan","DiagnosticRequest","MedicationRequest","ProcedureRequest","ReferralRequest")]
+        [CLSCompliant(false)]
+		[References("CarePlan","DiagnosticRequest","MedicationRequest","ProcedureRequest","ReferralRequest")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> BasedOn
@@ -490,7 +493,8 @@ namespace Hl7.Fhir.Model
         /// Medication to be taken
         /// </summary>
         [FhirElement("medication", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Element Medication
@@ -505,7 +509,8 @@ namespace Hl7.Fhir.Model
         /// Who prescription is for
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=160)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -520,7 +525,8 @@ namespace Hl7.Fhir.Model
         /// Created during encounter/admission/stay
         /// </summary>
         [FhirElement("context", Order=170)]
-        [References("Encounter","EpisodeOfCare")]
+        [CLSCompliant(false)]
+		[References("Encounter","EpisodeOfCare")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Context
         {
@@ -534,7 +540,8 @@ namespace Hl7.Fhir.Model
         /// Information to support ordering of the medication
         /// </summary>
         [FhirElement("supportingInformation", Order=180)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> SupportingInformation
@@ -581,7 +588,8 @@ namespace Hl7.Fhir.Model
         /// Who ordered the initial medication(s)
         /// </summary>
         [FhirElement("requester", InSummary=true, Order=200)]
-        [References("Practitioner","Organization","Patient","RelatedPerson","Device")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Organization","Patient","RelatedPerson","Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Requester
         {
@@ -609,7 +617,8 @@ namespace Hl7.Fhir.Model
         /// Condition or Observation that supports why the prescription is being written
         /// </summary>
         [FhirElement("reasonReference", Order=220)]
-        [References("Condition","Observation")]
+        [CLSCompliant(false)]
+		[References("Condition","Observation")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> ReasonReference
@@ -691,7 +700,8 @@ namespace Hl7.Fhir.Model
         /// An order/prescription that this supersedes
         /// </summary>
         [FhirElement("priorPrescription", Order=280)]
-        [References("MedicationRequest")]
+        [CLSCompliant(false)]
+		[References("MedicationRequest")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference PriorPrescription
         {
@@ -705,7 +715,8 @@ namespace Hl7.Fhir.Model
         /// A list of events of interest in the lifecycle
         /// </summary>
         [FhirElement("eventHistory", Order=290)]
-        [References("Provenance")]
+        [CLSCompliant(false)]
+		[References("Provenance")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> EventHistory

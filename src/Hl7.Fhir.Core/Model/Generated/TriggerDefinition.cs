@@ -171,7 +171,8 @@ namespace Hl7.Fhir.Model
         /// Timing of the event
         /// </summary>
         [FhirElement("eventTiming", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime))]
         [DataMember]
         public Hl7.Fhir.Model.Element EventTiming
         {

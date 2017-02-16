@@ -127,6 +127,21 @@ namespace Hl7.Fhir.Specification.Navigation
             return elem.PrimaryTypeProfiles();
         }
 
+        /// <summary>Returns the explicit primary type profile, if specified, or otherwise the core profile url for the specified type code.</summary>
+        public static string TypeProfile(this ElementDefinition.TypeRefComponent elemType)
+        {
+            string profile = null;
+            if (elemType != null)
+            {
+                profile = elemType.Profile.FirstOrDefault();
+                if (profile == null && elemType.Code.HasValue)
+                {
+                    profile = ModelInfo.CanonicalUriForFhirCoreType(elemType.Code.Value);
+                }
+            }
+            return profile;
+        }
+
         /// <summary>Returns the type code of the primary element type, or <c>null</c>.</summary>
         public static FHIRAllTypes? PrimaryTypeCode(this ElementDefinition elem)
         {

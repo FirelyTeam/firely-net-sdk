@@ -588,7 +588,8 @@ namespace Hl7.Fhir.Model
         /// Operation to invoke
         /// </summary>
         [FhirElement("operationDefinition", Order=330)]
-        [References("OperationDefinition")]
+        [CLSCompliant(false)]
+		[References("OperationDefinition")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference OperationDefinition
         {

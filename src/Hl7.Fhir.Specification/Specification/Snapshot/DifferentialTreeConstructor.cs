@@ -1,4 +1,12 @@
-﻿// #define DUMPOUTPUT
+﻿/* 
+ * Copyright (c) 2017, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+ 
+// #define DUMPOUTPUT
 
 // EXPERIMENTAL
 //
@@ -35,21 +43,12 @@
 //
 // * change exceptions to operation issues...?
 
-/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
- * See the file CONTRIBUTORS for details.
- * 
- * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
- */
-
 using System;
 using System.Collections.Generic;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
 using System.Diagnostics;
-using System.Linq;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {

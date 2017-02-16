@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Hl7.Fhir.Specification.STU3</id>
-    <version>0.91.0-alpha1</version>
+    <version>0.91.2-alpha1</version>
     <title>HL7 FHIR Additional functionality support API for STU3</title>
     <authors>Ewout Kramer (e.kramer@furore.com) and contributors</authors>
     <owners>Furore (http://fhir.furore.com). Contains materials (C) Hl7 International</owners>
@@ -22,7 +22,7 @@
         <dependency id="Hl7.FhirPath" version="0.4.0" />
       </group>
       <group targetFramework="net40">
-        <dependency id="Hl7.Fhir.STU3" version="0.91.0-alpha1" />
+        <dependency id="Hl7.Fhir.STU3" version="0.91.2-alpha1" />
         <dependency id="Newtonsoft.Json" version="8.0.2" />
         <dependency id="SharpZipLib" version="0.86.0" />
         <dependency id="Hl7.FhirPath" version="0.4.0" />

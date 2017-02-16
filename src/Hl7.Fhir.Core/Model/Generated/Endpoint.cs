@@ -181,7 +181,8 @@ namespace Hl7.Fhir.Model
         /// Organization that manages this endpoint (may not be the organization that exposes the endpoint)
         /// </summary>
         [FhirElement("managingOrganization", InSummary=true, Order=120)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference ManagingOrganization
         {

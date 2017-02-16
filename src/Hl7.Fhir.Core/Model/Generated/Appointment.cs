@@ -162,7 +162,8 @@ namespace Hl7.Fhir.Model
             /// Person, Location/HealthcareService or Device
             /// </summary>
             [FhirElement("actor", InSummary=true, Order=50)]
-            [References("Patient","Practitioner","RelatedPerson","Device","HealthcareService","Location")]
+            [CLSCompliant(false)]
+			[References("Patient","Practitioner","RelatedPerson","Device","HealthcareService","Location")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Actor
             {
@@ -584,7 +585,8 @@ namespace Hl7.Fhir.Model
         /// If provided, then no schedule and start/end values MUST match slot
         /// </summary>
         [FhirElement("slot", Order=210)]
-        [References("Slot")]
+        [CLSCompliant(false)]
+		[References("Slot")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Slot

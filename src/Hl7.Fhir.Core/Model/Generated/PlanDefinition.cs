@@ -303,7 +303,8 @@ namespace Hl7.Fhir.Model
             /// When the action should take place
             /// </summary>
             [FhirElement("timing", Order=160, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Timing))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Timing))]
             [DataMember]
             public Hl7.Fhir.Model.Element Timing
             {
@@ -523,7 +524,8 @@ namespace Hl7.Fhir.Model
             /// Description of the activity to be performed
             /// </summary>
             [FhirElement("activityDefinition", Order=240)]
-            [References("ActivityDefinition")]
+            [CLSCompliant(false)]
+			[References("ActivityDefinition")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference ActivityDefinition
             {
@@ -537,7 +539,8 @@ namespace Hl7.Fhir.Model
             /// Transform to apply the template
             /// </summary>
             [FhirElement("transform", Order=250)]
-            [References("StructureMap")]
+            [CLSCompliant(false)]
+			[References("StructureMap")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Transform
             {
@@ -987,7 +990,8 @@ namespace Hl7.Fhir.Model
             /// Time offset for the relationship
             /// </summary>
             [FhirElement("offset", Order=60, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Duration),typeof(Hl7.Fhir.Model.Range))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Duration),typeof(Hl7.Fhir.Model.Range))]
             [DataMember]
             public Hl7.Fhir.Model.Element Offset
             {
@@ -1786,7 +1790,8 @@ namespace Hl7.Fhir.Model
         /// Logic used by the plan definition
         /// </summary>
         [FhirElement("library", Order=320)]
-        [References("Library")]
+        [CLSCompliant(false)]
+		[References("Library")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Library

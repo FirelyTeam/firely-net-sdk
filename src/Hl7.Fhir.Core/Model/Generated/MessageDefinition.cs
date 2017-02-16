@@ -97,7 +97,8 @@ namespace Hl7.Fhir.Model
             /// Profile that must be adhered to by focus
             /// </summary>
             [FhirElement("profile", Order=50)]
-            [References("StructureDefinition")]
+            [CLSCompliant(false)]
+			[References("StructureDefinition")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Profile
             {
@@ -251,7 +252,8 @@ namespace Hl7.Fhir.Model
             /// MessageDefinition for response
             /// </summary>
             [FhirElement("message", Order=40)]
-            [References("MessageDefinition")]
+            [CLSCompliant(false)]
+			[References("MessageDefinition")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Message
@@ -679,7 +681,8 @@ namespace Hl7.Fhir.Model
         /// Definition this one is based on
         /// </summary>
         [FhirElement("base", InSummary=true, Order=230)]
-        [References("MessageDefinition")]
+        [CLSCompliant(false)]
+		[References("MessageDefinition")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Base
         {
@@ -693,7 +696,8 @@ namespace Hl7.Fhir.Model
         /// Protocol/workflow this is part of
         /// </summary>
         [FhirElement("parent", InSummary=true, Order=240)]
-        [References("ActivityDefinition","PlanDefinition")]
+        [CLSCompliant(false)]
+		[References("ActivityDefinition","PlanDefinition")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Parent
@@ -708,7 +712,8 @@ namespace Hl7.Fhir.Model
         /// Takes the place of
         /// </summary>
         [FhirElement("replaces", InSummary=true, Order=250)]
-        [References("MessageDefinition")]
+        [CLSCompliant(false)]
+		[References("MessageDefinition")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Replaces

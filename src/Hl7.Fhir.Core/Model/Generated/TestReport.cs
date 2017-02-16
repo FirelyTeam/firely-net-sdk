@@ -1334,7 +1334,8 @@ namespace Hl7.Fhir.Model
         /// Reference to the  version-specific TestScript that was executed to produce this TestReport
         /// </summary>
         [FhirElement("testScript", InSummary=true, Order=140)]
-        [References("TestScript")]
+        [CLSCompliant(false)]
+		[References("TestScript")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference TestScript

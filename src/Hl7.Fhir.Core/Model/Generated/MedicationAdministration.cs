@@ -187,7 +187,8 @@ namespace Hl7.Fhir.Model
             /// Dose quantity per unit of time
             /// </summary>
             [FhirElement("rate", Order=90, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SimpleQuantity))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SimpleQuantity))]
             [DataMember]
             public Hl7.Fhir.Model.Element Rate
             {
@@ -325,7 +326,8 @@ namespace Hl7.Fhir.Model
         /// What was administered
         /// </summary>
         [FhirElement("medication", InSummary=true, Order=110, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Element Medication
@@ -340,7 +342,8 @@ namespace Hl7.Fhir.Model
         /// Who received medication
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=120)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -355,7 +358,8 @@ namespace Hl7.Fhir.Model
         /// Encounter administered as part of
         /// </summary>
         [FhirElement("encounter", Order=130)]
-        [References("Encounter")]
+        [CLSCompliant(false)]
+		[References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
         {
@@ -369,7 +373,8 @@ namespace Hl7.Fhir.Model
         /// Additional information to support administration
         /// </summary>
         [FhirElement("supportingInformation", Order=140)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> SupportingInformation
@@ -384,7 +389,8 @@ namespace Hl7.Fhir.Model
         /// Start and end time of administration
         /// </summary>
         [FhirElement("effective", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Element Effective
@@ -399,7 +405,8 @@ namespace Hl7.Fhir.Model
         /// Who administered substance
         /// </summary>
         [FhirElement("performer", Order=160)]
-        [References("Practitioner","Patient","RelatedPerson")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Patient","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Performer
         {
@@ -413,7 +420,8 @@ namespace Hl7.Fhir.Model
         /// Condition or Observation that supports why the medication was administered
         /// </summary>
         [FhirElement("reasonReference", Order=170)]
-        [References("Condition","Observation")]
+        [CLSCompliant(false)]
+		[References("Condition","Observation")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> ReasonReference
@@ -428,7 +436,8 @@ namespace Hl7.Fhir.Model
         /// Request administration performed against
         /// </summary>
         [FhirElement("prescription", Order=180)]
-        [References("MedicationRequest")]
+        [CLSCompliant(false)]
+		[References("MedicationRequest")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Prescription
         {
@@ -502,7 +511,8 @@ namespace Hl7.Fhir.Model
         /// Device used to administer
         /// </summary>
         [FhirElement("device", Order=220)]
-        [References("Device")]
+        [CLSCompliant(false)]
+		[References("Device")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Device
@@ -544,7 +554,8 @@ namespace Hl7.Fhir.Model
         /// A list of events of interest in the lifecycle
         /// </summary>
         [FhirElement("eventHistory", Order=250)]
-        [References("Provenance")]
+        [CLSCompliant(false)]
+		[References("Provenance")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> EventHistory

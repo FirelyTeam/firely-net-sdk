@@ -117,7 +117,8 @@ namespace Hl7.Fhir.Model
             /// Who participated
             /// </summary>
             [FhirElement("who", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element Who
@@ -132,7 +133,8 @@ namespace Hl7.Fhir.Model
             /// On behalf of
             /// </summary>
             [FhirElement("onBehalfOf", Order=60, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element OnBehalfOf
             {
@@ -268,7 +270,8 @@ namespace Hl7.Fhir.Model
             /// Identity of entity
             /// </summary>
             [FhirElement("reference", InSummary=true, Order=50)]
-            [References()]
+            [CLSCompliant(false)]
+			[References()]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Reference
@@ -362,7 +365,8 @@ namespace Hl7.Fhir.Model
         /// Target Reference(s) (usually version specific)
         /// </summary>
         [FhirElement("target", InSummary=true, Order=90)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Target
@@ -450,7 +454,8 @@ namespace Hl7.Fhir.Model
         /// Where the activity occurred, if relevant
         /// </summary>
         [FhirElement("location", Order=140)]
-        [References("Location")]
+        [CLSCompliant(false)]
+		[References("Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Location
         {

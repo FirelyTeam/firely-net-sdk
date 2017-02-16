@@ -64,7 +64,8 @@ namespace Hl7.Fhir.Model
             /// Updated Coverage details
             /// </summary>
             [FhirElement("coverage", Order=40)]
-            [References("Coverage")]
+            [CLSCompliant(false)]
+			[References("Coverage")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Coverage
             {
@@ -78,7 +79,8 @@ namespace Hl7.Fhir.Model
             /// Contract details
             /// </summary>
             [FhirElement("contract", Order=50)]
-            [References("Contract")]
+            [CLSCompliant(false)]
+			[References("Contract")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Contract
             {
@@ -464,7 +466,8 @@ namespace Hl7.Fhir.Model
             /// Benefits allowed
             /// </summary>
             [FhirElement("benefit", Order=50, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Money))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Money))]
             [DataMember]
             public Hl7.Fhir.Model.Element Benefit
             {
@@ -478,7 +481,8 @@ namespace Hl7.Fhir.Model
             /// Benefits used
             /// </summary>
             [FhirElement("benefitUsed", Order=60, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Money))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Money))]
             [DataMember]
             public Hl7.Fhir.Model.Element BenefitUsed
             {
@@ -713,7 +717,8 @@ namespace Hl7.Fhir.Model
         /// Responsible practitioner
         /// </summary>
         [FhirElement("requestProvider", Order=120)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference RequestProvider
         {
@@ -727,7 +732,8 @@ namespace Hl7.Fhir.Model
         /// Responsible organization
         /// </summary>
         [FhirElement("requestOrganization", Order=130)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference RequestOrganization
         {
@@ -741,7 +747,8 @@ namespace Hl7.Fhir.Model
         /// Eligibility reference
         /// </summary>
         [FhirElement("request", Order=140)]
-        [References("EligibilityRequest")]
+        [CLSCompliant(false)]
+		[References("EligibilityRequest")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Request
         {
@@ -800,7 +807,8 @@ namespace Hl7.Fhir.Model
         /// Insurer
         /// </summary>
         [FhirElement("insurer", Order=170)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Insurer
         {

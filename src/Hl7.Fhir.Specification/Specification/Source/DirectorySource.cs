@@ -18,7 +18,7 @@ using Hl7.Fhir.Rest;
 
 namespace Hl7.Fhir.Specification.Source
 {
-#if !PORTABLE45
+#if NET_FILESYSTEM
     /// <summary>
     /// Reads FHIR artifacts (Profiles, ValueSets, ...) from directories with individual files
     /// </summary>
@@ -61,8 +61,11 @@ namespace Hl7.Fhir.Specification.Source
         {
             get
             {
+#if DOTNETFW
                 var codebase = AppDomain.CurrentDomain.BaseDirectory;
-
+#else
+                var codebase = AppContext.BaseDirectory;
+#endif
                 if (Directory.Exists(codebase))
                     return codebase;
                 else
@@ -288,4 +291,4 @@ namespace Hl7.Fhir.Specification.Source
     }
 
 #endif
-}
+            }

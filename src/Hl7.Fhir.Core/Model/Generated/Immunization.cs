@@ -213,7 +213,8 @@ namespace Hl7.Fhir.Model
             /// Additional information on reaction
             /// </summary>
             [FhirElement("detail", Order=50)]
-            [References("Observation")]
+            [CLSCompliant(false)]
+			[References("Observation")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Detail
             {
@@ -395,7 +396,8 @@ namespace Hl7.Fhir.Model
             /// Who is responsible for protocol
             /// </summary>
             [FhirElement("authority", Order=60)]
-            [References("Organization")]
+            [CLSCompliant(false)]
+			[References("Organization")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Authority
             {
@@ -692,7 +694,8 @@ namespace Hl7.Fhir.Model
         /// Who was immunized
         /// </summary>
         [FhirElement("patient", Order=130)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -786,7 +789,8 @@ namespace Hl7.Fhir.Model
         /// Who administered vaccine
         /// </summary>
         [FhirElement("performer", Order=170)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Performer
         {
@@ -800,7 +804,8 @@ namespace Hl7.Fhir.Model
         /// Who ordered vaccination
         /// </summary>
         [FhirElement("requester", Order=180)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Requester
         {
@@ -814,7 +819,8 @@ namespace Hl7.Fhir.Model
         /// Encounter administered as part of
         /// </summary>
         [FhirElement("encounter", Order=190)]
-        [References("Encounter")]
+        [CLSCompliant(false)]
+		[References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
         {
@@ -828,7 +834,8 @@ namespace Hl7.Fhir.Model
         /// Vaccine manufacturer
         /// </summary>
         [FhirElement("manufacturer", Order=200)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Manufacturer
         {
@@ -842,7 +849,8 @@ namespace Hl7.Fhir.Model
         /// Where vaccination occurred
         /// </summary>
         [FhirElement("location", Order=210)]
-        [References("Location")]
+        [CLSCompliant(false)]
+		[References("Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Location
         {

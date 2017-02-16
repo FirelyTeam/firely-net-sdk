@@ -249,7 +249,8 @@ namespace Hl7.Fhir.Model
         /// The profile of the parameter, any
         /// </summary>
         [FhirElement("profile", InSummary=true, Order=90)]
-        [References("StructureDefinition")]
+        [CLSCompliant(false)]
+		[References("StructureDefinition")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Profile
         {

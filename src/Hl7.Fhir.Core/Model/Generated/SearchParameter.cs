@@ -235,7 +235,8 @@ namespace Hl7.Fhir.Model
             /// Defines how the part works
             /// </summary>
             [FhirElement("definition", Order=40)]
-            [References("SearchParameter")]
+            [CLSCompliant(false)]
+			[References("SearchParameter")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Definition

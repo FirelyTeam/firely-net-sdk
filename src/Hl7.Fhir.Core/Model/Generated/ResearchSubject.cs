@@ -161,7 +161,8 @@ namespace Hl7.Fhir.Model
         /// Study subject is part of
         /// </summary>
         [FhirElement("study", InSummary=true, Order=120)]
-        [References("ResearchStudy")]
+        [CLSCompliant(false)]
+		[References("ResearchStudy")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Study
@@ -176,7 +177,8 @@ namespace Hl7.Fhir.Model
         /// Who is part of study
         /// </summary>
         [FhirElement("individual", InSummary=true, Order=130)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Individual
@@ -255,7 +257,8 @@ namespace Hl7.Fhir.Model
         /// Agreement to participate in study
         /// </summary>
         [FhirElement("consent", Order=160)]
-        [References("Consent")]
+        [CLSCompliant(false)]
+		[References("Consent")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Consent
         {

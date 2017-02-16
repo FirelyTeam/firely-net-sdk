@@ -422,7 +422,8 @@ namespace Hl7.Fhir.Model
         /// Organization that provides this service
         /// </summary>
         [FhirElement("providedBy", InSummary=true, Order=110)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference ProvidedBy
         {
@@ -477,7 +478,8 @@ namespace Hl7.Fhir.Model
         /// Location(s) where service may be provided
         /// </summary>
         [FhirElement("location", InSummary=true, Order=150)]
-        [References("Location")]
+        [CLSCompliant(false)]
+		[References("Location")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Location
@@ -615,7 +617,8 @@ namespace Hl7.Fhir.Model
         /// Location(s) service is inteded for/available to
         /// </summary>
         [FhirElement("coverageArea", Order=210)]
-        [References("Location")]
+        [CLSCompliant(false)]
+		[References("Location")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> CoverageArea
@@ -874,7 +877,8 @@ namespace Hl7.Fhir.Model
         /// Technical endpoints providing access to services operated for the location
         /// </summary>
         [FhirElement("endpoint", Order=330)]
-        [References("Endpoint")]
+        [CLSCompliant(false)]
+		[References("Endpoint")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Endpoint

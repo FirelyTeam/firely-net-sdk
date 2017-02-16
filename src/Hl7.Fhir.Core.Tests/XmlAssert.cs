@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Tests
     {
         public static void AreSame(string filename, XDocument expected, XDocument actual)
         {
-            areSame(filename, actual.Root.Name.LocalName, expected.Root, actual.Root);
+            areSame(actual.Root.Name.LocalName, expected.Root, actual.Root);
         }
 
         public static void AreSame(string filename, string expected, string actual)
@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Tests
             AreSame(filename, exp, act);
         }
 
-        private static void areSame(string filename, string context, XElement expected, XElement actual)
+        private static void areSame(string context, XElement expected, XElement actual)
         {
             //if (expected.Name.ToString() != actual.Name.ToString())
             //    throw new AssertFailedException(String.Format("Expected element '{0}', actual '{1}' at '{2}'",
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Tests
                     counter = 0;
                 }
 
-                areSame(filename, context + "." + ex.Name.LocalName + String.Format("[{0}]", counter), ex, ac);
+                areSame(context + "." + ex.Name.LocalName + String.Format("[{0}]", counter), ex, ac);
                 counter++;
             }
         }

@@ -338,7 +338,8 @@ namespace Hl7.Fhir.Model
         /// The organization of which this organization forms a part
         /// </summary>
         [FhirElement("partOf", InSummary=true, Order=160)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference PartOf
         {
@@ -366,7 +367,8 @@ namespace Hl7.Fhir.Model
         /// Technical endpoints providing access to services operated for the organization
         /// </summary>
         [FhirElement("endpoint", Order=180)]
-        [References("Endpoint")]
+        [CLSCompliant(false)]
+		[References("Endpoint")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Endpoint

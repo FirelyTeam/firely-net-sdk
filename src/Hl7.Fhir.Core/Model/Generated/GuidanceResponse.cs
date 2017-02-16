@@ -141,7 +141,8 @@ namespace Hl7.Fhir.Model
         /// A reference to a knowledge module
         /// </summary>
         [FhirElement("module", InSummary=true, Order=110)]
-        [References("ServiceDefinition")]
+        [CLSCompliant(false)]
+		[References("ServiceDefinition")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Module
@@ -189,7 +190,8 @@ namespace Hl7.Fhir.Model
         /// Patient the request was performed for
         /// </summary>
         [FhirElement("subject", Order=130)]
-        [References("Patient","Group")]
+        [CLSCompliant(false)]
+		[References("Patient","Group")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -203,7 +205,8 @@ namespace Hl7.Fhir.Model
         /// Encounter or Episode during which the response was returned
         /// </summary>
         [FhirElement("context", Order=140)]
-        [References("Encounter","EpisodeOfCare")]
+        [CLSCompliant(false)]
+		[References("Encounter","EpisodeOfCare")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Context
         {
@@ -249,7 +252,8 @@ namespace Hl7.Fhir.Model
         /// Device returning the guidance
         /// </summary>
         [FhirElement("performer", Order=160)]
-        [References("Device")]
+        [CLSCompliant(false)]
+		[References("Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Performer
         {
@@ -263,7 +267,8 @@ namespace Hl7.Fhir.Model
         /// Reason for the response
         /// </summary>
         [FhirElement("reason", Order=170, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element Reason
         {
@@ -291,7 +296,8 @@ namespace Hl7.Fhir.Model
         /// Messages resulting from the evaluation of the artifact or artifacts
         /// </summary>
         [FhirElement("evaluationMessage", Order=190)]
-        [References("OperationOutcome")]
+        [CLSCompliant(false)]
+		[References("OperationOutcome")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> EvaluationMessage
@@ -306,7 +312,8 @@ namespace Hl7.Fhir.Model
         /// The output parameters of the evaluation, if any
         /// </summary>
         [FhirElement("outputParameters", Order=200)]
-        [References("Parameters")]
+        [CLSCompliant(false)]
+		[References("Parameters")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference OutputParameters
         {
@@ -320,7 +327,8 @@ namespace Hl7.Fhir.Model
         /// Proposed actions, if any
         /// </summary>
         [FhirElement("result", Order=210)]
-        [References("CarePlan","RequestGroup")]
+        [CLSCompliant(false)]
+		[References("CarePlan","RequestGroup")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Result
         {

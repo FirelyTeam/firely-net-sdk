@@ -10,10 +10,12 @@ using System;
 using System.Collections.Generic;
 using Hl7.Fhir.Model;
 using System.IO;
+using System.Reflection;
+
 
 namespace Hl7.Fhir.Specification.Source
 {
-#if !PORTABLE45
+#if NET_COMPRESSION
 
     /// <summary>
     /// Reads FHIR artifacts (Profiles, ValueSets, ...) from validation.zip/validation-min.zip
@@ -135,4 +137,4 @@ namespace Hl7.Fhir.Specification.Source
     }
 
 #endif
-}
+    }

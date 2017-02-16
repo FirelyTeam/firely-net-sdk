@@ -21,13 +21,8 @@ using System.Linq;
 namespace Hl7.Fhir.Specification.Tests
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableResourceResolverTests
-#else
     public class ResolverTests
-#endif
     {
-#if !PORTABLE45
         [ClassInitialize]
         public static void SetupSource(TestContext t)
         {
@@ -270,7 +265,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
             catch (CanonicalUrlConflictException ex)
             {
-                Debug.Print("{0}:\r\n{1}", ex.GetType().Name, ex.Message);
+                Debug.WriteLine("{0}:\r\n{1}", ex.GetType().Name, ex.Message);
                 Assert.IsNotNull(ex.Conflicts);
                 Assert.AreEqual(1, ex.Conflicts.Length);
                 var conflict = ex.Conflicts[0];
@@ -288,5 +283,4 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
     }
-#endif
 }

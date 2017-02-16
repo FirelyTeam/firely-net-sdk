@@ -422,7 +422,8 @@ namespace Hl7.Fhir.Model
         /// Practitioner that is able to provide the defined services for the organation
         /// </summary>
         [FhirElement("practitioner", InSummary=true, Order=110)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Practitioner
         {
@@ -436,7 +437,8 @@ namespace Hl7.Fhir.Model
         /// Organization where the roles are available
         /// </summary>
         [FhirElement("organization", InSummary=true, Order=120)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Organization
         {
@@ -478,7 +480,8 @@ namespace Hl7.Fhir.Model
         /// The location(s) at which this practitioner provides care
         /// </summary>
         [FhirElement("location", InSummary=true, Order=150)]
-        [References("Location")]
+        [CLSCompliant(false)]
+		[References("Location")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Location
@@ -493,7 +496,8 @@ namespace Hl7.Fhir.Model
         /// The list of healthcare services that this worker provides for this role's Organization/Location(s)
         /// </summary>
         [FhirElement("healthcareService", Order=160)]
-        [References("HealthcareService")]
+        [CLSCompliant(false)]
+		[References("HealthcareService")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> HealthcareService
@@ -595,7 +599,8 @@ namespace Hl7.Fhir.Model
         /// Technical endpoints providing access to services operated for the practitioner with this role
         /// </summary>
         [FhirElement("endpoint", Order=220)]
-        [References("Endpoint")]
+        [CLSCompliant(false)]
+		[References("Endpoint")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Endpoint

@@ -133,7 +133,8 @@ namespace Hl7.Fhir.Model
             /// Message part content
             /// </summary>
             [FhirElement("content", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element Content
@@ -232,7 +233,8 @@ namespace Hl7.Fhir.Model
         /// Message sender
         /// </summary>
         [FhirElement("sender", InSummary=true, Order=110)]
-        [References("Device","Organization","Patient","Practitioner","RelatedPerson")]
+        [CLSCompliant(false)]
+		[References("Device","Organization","Patient","Practitioner","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Sender
         {
@@ -246,7 +248,8 @@ namespace Hl7.Fhir.Model
         /// Message recipient
         /// </summary>
         [FhirElement("recipient", InSummary=true, Order=120)]
-        [References("Device","Organization","Patient","Practitioner","RelatedPerson","Group","CareTeam")]
+        [CLSCompliant(false)]
+		[References("Device","Organization","Patient","Practitioner","RelatedPerson","Group","CareTeam")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Recipient
@@ -289,7 +292,8 @@ namespace Hl7.Fhir.Model
         /// An individual who requested a communication
         /// </summary>
         [FhirElement("requester", InSummary=true, Order=150)]
-        [References("Practitioner","Patient","RelatedPerson")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Patient","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Requester
         {
@@ -335,7 +339,8 @@ namespace Hl7.Fhir.Model
         /// Focal resources
         /// </summary>
         [FhirElement("topic", InSummary=true, Order=170)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Topic
@@ -350,7 +355,8 @@ namespace Hl7.Fhir.Model
         /// Encounter or episode leading to message
         /// </summary>
         [FhirElement("context", InSummary=true, Order=180)]
-        [References("Encounter","EpisodeOfCare")]
+        [CLSCompliant(false)]
+		[References("Encounter","EpisodeOfCare")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Context
         {
@@ -364,7 +370,8 @@ namespace Hl7.Fhir.Model
         /// When scheduled
         /// </summary>
         [FhirElement("scheduled", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
         public Hl7.Fhir.Model.Element Scheduled
         {
@@ -424,7 +431,8 @@ namespace Hl7.Fhir.Model
         /// Focus of message
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=220)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {

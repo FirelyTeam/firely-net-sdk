@@ -1760,7 +1760,8 @@ namespace Hl7.Fhir.Model
             /// Insurance information
             /// </summary>
             [FhirElement("coverage", Order=60)]
-            [References("Coverage")]
+            [CLSCompliant(false)]
+			[References("Coverage")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Coverage
@@ -1840,7 +1841,8 @@ namespace Hl7.Fhir.Model
             /// Adjudication results
             /// </summary>
             [FhirElement("claimResponse", Order=90)]
-            [References("ClaimResponse")]
+            [CLSCompliant(false)]
+			[References("ClaimResponse")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference ClaimResponse
             {
@@ -2009,7 +2011,8 @@ namespace Hl7.Fhir.Model
         /// Insurer
         /// </summary>
         [FhirElement("insurer", Order=120)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Insurer
         {
@@ -2023,7 +2026,8 @@ namespace Hl7.Fhir.Model
         /// Responsible practitioner
         /// </summary>
         [FhirElement("requestProvider", Order=130)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference RequestProvider
         {
@@ -2037,7 +2041,8 @@ namespace Hl7.Fhir.Model
         /// Responsible organization
         /// </summary>
         [FhirElement("requestOrganization", Order=140)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference RequestOrganization
         {
@@ -2051,7 +2056,8 @@ namespace Hl7.Fhir.Model
         /// Id of resource triggering adjudication
         /// </summary>
         [FhirElement("request", Order=150)]
-        [References("Claim")]
+        [CLSCompliant(false)]
+		[References("Claim")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Request
         {
@@ -2257,7 +2263,8 @@ namespace Hl7.Fhir.Model
         /// Request for additional information
         /// </summary>
         [FhirElement("communicationRequest", Order=290)]
-        [References("CommunicationRequest")]
+        [CLSCompliant(false)]
+		[References("CommunicationRequest")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> CommunicationRequest

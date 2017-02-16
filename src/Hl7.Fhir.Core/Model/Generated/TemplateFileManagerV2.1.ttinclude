@@ -269,7 +269,7 @@ public class TemplateFileManager
             }
         }
 
-		projectSyncAction.EndInvoke(projectSyncAction.BeginInvoke(list, null, null));
+		projectSyncAction(list);
 		this.CleanUpTemplatePlaceholders();
 		var items = VSHelper.GetOutputFilesAsProjectItems(this.dte, list);
 		this.WriteVsProperties(items, list);
@@ -519,7 +519,7 @@ public class TemplateFileManager
         }
 
         // run on worker thread to prevent T4 calling back into VS
-        checkOutAction.EndInvoke(checkOutAction.BeginInvoke(fileName, null, null));
+        checkOutAction(fileName);
     }
 }
 

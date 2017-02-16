@@ -721,7 +721,8 @@ namespace Hl7.Fhir.Model
         /// Who the sensitivity is for
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=160)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -736,7 +737,8 @@ namespace Hl7.Fhir.Model
         /// When allergy or intolerance was identified
         /// </summary>
         [FhirElement("onset", Order=170, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Age),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Age),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
         public Hl7.Fhir.Model.Element Onset
         {
@@ -782,7 +784,8 @@ namespace Hl7.Fhir.Model
         /// Who recorded the sensitivity
         /// </summary>
         [FhirElement("recorder", Order=190)]
-        [References("Practitioner","Patient")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Recorder
         {
@@ -796,7 +799,8 @@ namespace Hl7.Fhir.Model
         /// Source of the information about the allergy
         /// </summary>
         [FhirElement("asserter", InSummary=true, Order=200)]
-        [References("Patient","RelatedPerson","Practitioner")]
+        [CLSCompliant(false)]
+		[References("Patient","RelatedPerson","Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Asserter
         {

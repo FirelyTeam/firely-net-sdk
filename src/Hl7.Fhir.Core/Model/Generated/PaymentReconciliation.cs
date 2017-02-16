@@ -78,7 +78,8 @@ namespace Hl7.Fhir.Model
             /// Claim
             /// </summary>
             [FhirElement("request", Order=50)]
-            [References()]
+            [CLSCompliant(false)]
+			[References()]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Request
             {
@@ -92,7 +93,8 @@ namespace Hl7.Fhir.Model
             /// Claim Response
             /// </summary>
             [FhirElement("response", Order=60)]
-            [References()]
+            [CLSCompliant(false)]
+			[References()]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Response
             {
@@ -106,7 +108,8 @@ namespace Hl7.Fhir.Model
             /// Submitter
             /// </summary>
             [FhirElement("submitter", Order=70)]
-            [References("Organization")]
+            [CLSCompliant(false)]
+			[References("Organization")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Submitter
             {
@@ -120,7 +123,8 @@ namespace Hl7.Fhir.Model
             /// Payee
             /// </summary>
             [FhirElement("payee", Order=80)]
-            [References("Organization")]
+            [CLSCompliant(false)]
+			[References("Organization")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Payee
             {
@@ -464,7 +468,8 @@ namespace Hl7.Fhir.Model
         /// Insurer
         /// </summary>
         [FhirElement("organization", Order=130)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Organization
         {
@@ -478,7 +483,8 @@ namespace Hl7.Fhir.Model
         /// Claim reference
         /// </summary>
         [FhirElement("request", Order=140)]
-        [References("ProcessRequest")]
+        [CLSCompliant(false)]
+		[References("ProcessRequest")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Request
         {
@@ -537,7 +543,8 @@ namespace Hl7.Fhir.Model
         /// Responsible practitioner
         /// </summary>
         [FhirElement("requestProvider", Order=170)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference RequestProvider
         {
@@ -551,7 +558,8 @@ namespace Hl7.Fhir.Model
         /// Responsible organization
         /// </summary>
         [FhirElement("requestOrganization", Order=180)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference RequestOrganization
         {

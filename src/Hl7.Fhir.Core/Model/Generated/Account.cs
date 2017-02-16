@@ -91,7 +91,8 @@ namespace Hl7.Fhir.Model
             /// Responsible entity
             /// </summary>
             [FhirElement("party", InSummary=true, Order=40)]
-            [References("Patient","RelatedPerson","Organization")]
+            [CLSCompliant(false)]
+			[References("Patient","RelatedPerson","Organization")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Party
@@ -346,7 +347,8 @@ namespace Hl7.Fhir.Model
         /// The party(s) that are responsible for covering the payment of this account
         /// </summary>
         [FhirElement("coverage", InSummary=true, Order=160)]
-        [References("Coverage")]
+        [CLSCompliant(false)]
+		[References("Coverage")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Coverage
@@ -374,7 +376,8 @@ namespace Hl7.Fhir.Model
         /// What is account tied to?
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=180)]
-        [References("Patient","Device","Practitioner","Location","HealthcareService","Organization")]
+        [CLSCompliant(false)]
+		[References("Patient","Device","Practitioner","Location","HealthcareService","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -388,7 +391,8 @@ namespace Hl7.Fhir.Model
         /// Who is responsible?
         /// </summary>
         [FhirElement("owner", InSummary=true, Order=190)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Owner
         {

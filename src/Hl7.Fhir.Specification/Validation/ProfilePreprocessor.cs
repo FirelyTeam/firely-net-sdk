@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Validation
             {
                 var urlDeclaration = instance.GetChildrenByName("url").FirstOrDefault()?.Value as string;
 
-                if (urlDeclaration != null && urlDeclaration.StartsWith("http://",StringComparison.InvariantCultureIgnoreCase)) _profiles.AddStatedProfile(urlDeclaration);
+                if (urlDeclaration != null && urlDeclaration.StartsWith("http://",StringComparison.OrdinalIgnoreCase)) _profiles.AddStatedProfile(urlDeclaration);
             }
 
             if (additionalProfiles != null) _profiles.AddStatedProfile(additionalProfiles);

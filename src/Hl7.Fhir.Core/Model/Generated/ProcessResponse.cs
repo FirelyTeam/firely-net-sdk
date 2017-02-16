@@ -248,7 +248,8 @@ namespace Hl7.Fhir.Model
         /// Authoring Organization
         /// </summary>
         [FhirElement("organization", Order=120)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Organization
         {
@@ -262,7 +263,8 @@ namespace Hl7.Fhir.Model
         /// Request reference
         /// </summary>
         [FhirElement("request", Order=130)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Request
         {
@@ -321,7 +323,8 @@ namespace Hl7.Fhir.Model
         /// Responsible Practitioner
         /// </summary>
         [FhirElement("requestProvider", Order=160)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference RequestProvider
         {
@@ -335,7 +338,8 @@ namespace Hl7.Fhir.Model
         /// Responsible organization
         /// </summary>
         [FhirElement("requestOrganization", Order=170)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference RequestOrganization
         {
@@ -390,7 +394,8 @@ namespace Hl7.Fhir.Model
         /// Request for additional information
         /// </summary>
         [FhirElement("communicationRequest", Order=210)]
-        [References("CommunicationRequest")]
+        [CLSCompliant(false)]
+		[References("CommunicationRequest")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> CommunicationRequest

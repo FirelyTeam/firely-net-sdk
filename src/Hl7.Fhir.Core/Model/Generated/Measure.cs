@@ -1496,7 +1496,8 @@ namespace Hl7.Fhir.Model
         /// Logic used by the measure
         /// </summary>
         [FhirElement("library", Order=310)]
-        [References("Library")]
+        [CLSCompliant(false)]
+		[References("Library")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Library

@@ -516,7 +516,8 @@ namespace Hl7.Fhir.Model
         /// Organization responsible for provisioning and upkeep
         /// </summary>
         [FhirElement("managingOrganization", InSummary=true, Order=200)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference ManagingOrganization
         {
@@ -530,7 +531,8 @@ namespace Hl7.Fhir.Model
         /// Another Location this one is physically part of
         /// </summary>
         [FhirElement("partOf", Order=210)]
-        [References("Location")]
+        [CLSCompliant(false)]
+		[References("Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference PartOf
         {
@@ -544,7 +546,8 @@ namespace Hl7.Fhir.Model
         /// Technical endpoints providing access to services operated for the location
         /// </summary>
         [FhirElement("endpoint", Order=220)]
-        [References("Endpoint")]
+        [CLSCompliant(false)]
+		[References("Endpoint")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Endpoint

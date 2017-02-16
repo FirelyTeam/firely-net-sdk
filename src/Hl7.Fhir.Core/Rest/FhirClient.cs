@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-#if !PORTABLE45
+#if NET_COMPRESSION
         /// <summary>
         /// This will do 2 things:
         /// 1. Add the header Accept-Encoding: gzip, deflate
@@ -930,7 +930,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
-#if (PORTABLE45 || NET45) && BRIAN
+#if BRIAN
 #region << Async operations >>
 
 

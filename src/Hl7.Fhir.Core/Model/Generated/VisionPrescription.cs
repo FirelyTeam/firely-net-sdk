@@ -627,7 +627,8 @@ namespace Hl7.Fhir.Model
         /// Who prescription is for
         /// </summary>
         [FhirElement("patient", Order=110)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
         {
@@ -641,7 +642,8 @@ namespace Hl7.Fhir.Model
         /// Created during encounter / admission / stay
         /// </summary>
         [FhirElement("encounter", Order=120)]
-        [References("Encounter")]
+        [CLSCompliant(false)]
+		[References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
         {
@@ -687,7 +689,8 @@ namespace Hl7.Fhir.Model
         /// Who authorizes the vision product
         /// </summary>
         [FhirElement("prescriber", Order=140)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Prescriber
         {
@@ -701,7 +704,8 @@ namespace Hl7.Fhir.Model
         /// Reason or indication for writing the prescription
         /// </summary>
         [FhirElement("reason", Order=150, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element Reason
         {

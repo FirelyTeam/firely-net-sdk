@@ -851,7 +851,8 @@ namespace Hl7.Fhir.Model
         /// Logic used by the asset
         /// </summary>
         [FhirElement("library", Order=310)]
-        [References("Library")]
+        [CLSCompliant(false)]
+		[References("Library")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Library
@@ -911,7 +912,8 @@ namespace Hl7.Fhir.Model
         /// When activity is to occur
         /// </summary>
         [FhirElement("timing", Order=340, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Timing))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Timing))]
         [DataMember]
         public Hl7.Fhir.Model.Element Timing
         {
@@ -925,7 +927,8 @@ namespace Hl7.Fhir.Model
         /// Where it should happen
         /// </summary>
         [FhirElement("location", Order=350)]
-        [References("Location")]
+        [CLSCompliant(false)]
+		[References("Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Location
         {
@@ -972,7 +975,8 @@ namespace Hl7.Fhir.Model
         /// What's administered/supplied
         /// </summary>
         [FhirElement("product", Order=370, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
         [DataMember]
         public Hl7.Fhir.Model.Element Product
         {
@@ -1027,7 +1031,8 @@ namespace Hl7.Fhir.Model
         /// Transform to apply the template
         /// </summary>
         [FhirElement("transform", Order=410)]
-        [References("StructureMap")]
+        [CLSCompliant(false)]
+		[References("StructureMap")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Transform
         {

@@ -254,7 +254,8 @@ namespace Hl7.Fhir.Model
         /// The related resource
         /// </summary>
         [FhirElement("resource", InSummary=true, Order=80)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Resource
         {

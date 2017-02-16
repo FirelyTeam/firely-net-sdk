@@ -64,7 +64,8 @@ namespace Hl7.Fhir.Model
             /// Contents of this set of documents
             /// </summary>
             [FhirElement("p", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element P
@@ -156,7 +157,8 @@ namespace Hl7.Fhir.Model
             /// Related Resource
             /// </summary>
             [FhirElement("ref", InSummary=true, Order=50)]
-            [References()]
+            [CLSCompliant(false)]
+			[References()]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Ref
             {
@@ -258,7 +260,8 @@ namespace Hl7.Fhir.Model
         /// The subject of the set of documents
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=110)]
-        [References("Patient","Practitioner","Group","Device")]
+        [CLSCompliant(false)]
+		[References("Patient","Practitioner","Group","Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -272,7 +275,8 @@ namespace Hl7.Fhir.Model
         /// Intended to get notified about this set of documents
         /// </summary>
         [FhirElement("recipient", InSummary=true, Order=120)]
-        [References("Patient","Practitioner","RelatedPerson","Organization")]
+        [CLSCompliant(false)]
+		[References("Patient","Practitioner","RelatedPerson","Organization")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Recipient
@@ -300,7 +304,8 @@ namespace Hl7.Fhir.Model
         /// Who and/or what authored the manifest
         /// </summary>
         [FhirElement("author", InSummary=true, Order=140)]
-        [References("Practitioner","Organization","Device","Patient","RelatedPerson")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Organization","Device","Patient","RelatedPerson")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Author

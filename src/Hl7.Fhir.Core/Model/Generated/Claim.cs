@@ -97,7 +97,8 @@ namespace Hl7.Fhir.Model
             /// Reference to the related claim
             /// </summary>
             [FhirElement("claim", Order=40)]
-            [References("Claim")]
+            [CLSCompliant(false)]
+			[References("Claim")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Claim
             {
@@ -236,7 +237,8 @@ namespace Hl7.Fhir.Model
             /// Party to receive the payable
             /// </summary>
             [FhirElement("party", Order=60)]
-            [References("Practitioner","Organization","Patient","RelatedPerson")]
+            [CLSCompliant(false)]
+			[References("Practitioner","Organization","Patient","RelatedPerson")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Party
             {
@@ -355,7 +357,8 @@ namespace Hl7.Fhir.Model
             /// Provider individual or organization
             /// </summary>
             [FhirElement("provider", Order=50)]
-            [References("Practitioner","Organization")]
+            [CLSCompliant(false)]
+			[References("Practitioner","Organization")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Provider
@@ -535,7 +538,8 @@ namespace Hl7.Fhir.Model
             /// When it occurred
             /// </summary>
             [FhirElement("timing", Order=60, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
             public Hl7.Fhir.Model.Element Timing
             {
@@ -549,7 +553,8 @@ namespace Hl7.Fhir.Model
             /// Additional Data or supporting information
             /// </summary>
             [FhirElement("value", Order=70, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Quantity),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Quantity),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
             {
@@ -689,7 +694,8 @@ namespace Hl7.Fhir.Model
             /// Patient's diagnosis
             /// </summary>
             [FhirElement("diagnosis", Order=50, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element Diagnosis
@@ -872,7 +878,8 @@ namespace Hl7.Fhir.Model
             /// Patient's list of procedures performed
             /// </summary>
             [FhirElement("procedure", Order=60, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element Procedure
@@ -1025,7 +1032,8 @@ namespace Hl7.Fhir.Model
             /// Insurance information
             /// </summary>
             [FhirElement("coverage", Order=60)]
-            [References("Coverage")]
+            [CLSCompliant(false)]
+			[References("Coverage")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Coverage
@@ -1105,7 +1113,8 @@ namespace Hl7.Fhir.Model
             /// Adjudication results
             /// </summary>
             [FhirElement("claimResponse", Order=90)]
-            [References("ClaimResponse")]
+            [CLSCompliant(false)]
+			[References("ClaimResponse")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference ClaimResponse
             {
@@ -1249,7 +1258,8 @@ namespace Hl7.Fhir.Model
             /// Accident Place
             /// </summary>
             [FhirElement("location", Order=60, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element Location
             {
@@ -1567,7 +1577,8 @@ namespace Hl7.Fhir.Model
             /// Date or dates of Service
             /// </summary>
             [FhirElement("serviced", Order=140, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
             public Hl7.Fhir.Model.Element Serviced
             {
@@ -1581,7 +1592,8 @@ namespace Hl7.Fhir.Model
             /// Place of service
             /// </summary>
             [FhirElement("location", Order=150, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element Location
             {
@@ -1666,7 +1678,8 @@ namespace Hl7.Fhir.Model
             /// Unique Device Identifier
             /// </summary>
             [FhirElement("udi", Order=200)]
-            [References("Device")]
+            [CLSCompliant(false)]
+			[References("Device")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> Udi
@@ -2050,7 +2063,8 @@ namespace Hl7.Fhir.Model
             /// Unique Device Identifier
             /// </summary>
             [FhirElement("udi", Order=140)]
-            [References("Device")]
+            [CLSCompliant(false)]
+			[References("Device")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> Udi
@@ -2358,7 +2372,8 @@ namespace Hl7.Fhir.Model
             /// Unique Device Identifier
             /// </summary>
             [FhirElement("udi", Order=140)]
-            [References("Device")]
+            [CLSCompliant(false)]
+			[References("Device")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> Udi
@@ -2724,7 +2739,8 @@ namespace Hl7.Fhir.Model
         /// The subject of the Products and Services
         /// </summary>
         [FhirElement("patient", Order=140)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
         {
@@ -2783,7 +2799,8 @@ namespace Hl7.Fhir.Model
         /// Author
         /// </summary>
         [FhirElement("enterer", Order=170)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Enterer
         {
@@ -2797,7 +2814,8 @@ namespace Hl7.Fhir.Model
         /// Target
         /// </summary>
         [FhirElement("insurer", Order=180)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Insurer
         {
@@ -2811,7 +2829,8 @@ namespace Hl7.Fhir.Model
         /// Responsible provider
         /// </summary>
         [FhirElement("provider", Order=190)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Provider
         {
@@ -2825,7 +2844,8 @@ namespace Hl7.Fhir.Model
         /// Responsible organization
         /// </summary>
         [FhirElement("organization", Order=200)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Organization
         {
@@ -2879,7 +2899,8 @@ namespace Hl7.Fhir.Model
         /// Prescription
         /// </summary>
         [FhirElement("prescription", Order=240)]
-        [References("MedicationRequest","VisionPrescription")]
+        [CLSCompliant(false)]
+		[References("MedicationRequest","VisionPrescription")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Prescription
         {
@@ -2893,7 +2914,8 @@ namespace Hl7.Fhir.Model
         /// Original Prescription
         /// </summary>
         [FhirElement("originalPrescription", Order=250)]
-        [References("MedicationRequest")]
+        [CLSCompliant(false)]
+		[References("MedicationRequest")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference OriginalPrescription
         {
@@ -2920,7 +2942,8 @@ namespace Hl7.Fhir.Model
         /// Treatment Referral
         /// </summary>
         [FhirElement("referral", Order=270)]
-        [References("ReferralRequest")]
+        [CLSCompliant(false)]
+		[References("ReferralRequest")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Referral
         {
@@ -2934,7 +2957,8 @@ namespace Hl7.Fhir.Model
         /// Servicing Facility
         /// </summary>
         [FhirElement("facility", Order=280)]
-        [References("Location")]
+        [CLSCompliant(false)]
+		[References("Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Facility
         {

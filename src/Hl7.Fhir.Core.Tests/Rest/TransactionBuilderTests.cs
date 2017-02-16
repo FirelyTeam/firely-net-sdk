@@ -15,11 +15,7 @@ using Hl7.Fhir.Model;
 namespace Hl7.Fhir.Test
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableTransactionBuilderTests
-#else
     public class TransactionBuilderTests
-#endif
     {
         [TestMethod]
         public void TestBuild()

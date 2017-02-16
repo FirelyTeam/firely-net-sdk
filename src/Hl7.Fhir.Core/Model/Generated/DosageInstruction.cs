@@ -146,7 +146,8 @@ namespace Hl7.Fhir.Model
         /// Take "as needed" (for x)
         /// </summary>
         [FhirElement("asNeeded", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
         [DataMember]
         public Hl7.Fhir.Model.Element AsNeeded
         {
@@ -199,7 +200,8 @@ namespace Hl7.Fhir.Model
         /// Amount of medication per dose
         /// </summary>
         [FhirElement("dose", InSummary=true, Order=110, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Quantity))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Quantity))]
         [DataMember]
         public Hl7.Fhir.Model.Element Dose
         {
@@ -252,7 +254,8 @@ namespace Hl7.Fhir.Model
         /// Amount of medication per unit of time
         /// </summary>
         [FhirElement("rate", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Range),typeof(Quantity))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Range),typeof(Quantity))]
         [DataMember]
         public Hl7.Fhir.Model.Element Rate
         {

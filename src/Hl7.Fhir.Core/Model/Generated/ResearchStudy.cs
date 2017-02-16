@@ -298,7 +298,8 @@ namespace Hl7.Fhir.Model
         /// Steps followed in executing study
         /// </summary>
         [FhirElement("protocol", InSummary=true, Order=110)]
-        [References("PlanDefinition")]
+        [CLSCompliant(false)]
+		[References("PlanDefinition")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Protocol
@@ -313,7 +314,8 @@ namespace Hl7.Fhir.Model
         /// Part of larger study
         /// </summary>
         [FhirElement("partOf", InSummary=true, Order=120)]
-        [References("ResearchStudy")]
+        [CLSCompliant(false)]
+		[References("ResearchStudy")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> PartOf
@@ -458,7 +460,8 @@ namespace Hl7.Fhir.Model
         /// Inclusion &amp; exclusion criteria
         /// </summary>
         [FhirElement("enrollment", InSummary=true, Order=210)]
-        [References("Group")]
+        [CLSCompliant(false)]
+		[References("Group")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Enrollment
@@ -486,7 +489,8 @@ namespace Hl7.Fhir.Model
         /// Organization responsible for the study
         /// </summary>
         [FhirElement("sponsor", InSummary=true, Order=230)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Sponsor
         {
@@ -500,7 +504,8 @@ namespace Hl7.Fhir.Model
         /// Individual responsible for the study
         /// </summary>
         [FhirElement("principalInvestigator", InSummary=true, Order=240)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference PrincipalInvestigator
         {
@@ -514,7 +519,8 @@ namespace Hl7.Fhir.Model
         /// Location involved in study execution
         /// </summary>
         [FhirElement("site", InSummary=true, Order=250)]
-        [References("Location")]
+        [CLSCompliant(false)]
+		[References("Location")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Site

@@ -97,7 +97,8 @@ namespace Hl7.Fhir.Model
             /// Who collected the specimen
             /// </summary>
             [FhirElement("collector", InSummary=true, Order=40)]
-            [References("Practitioner")]
+            [CLSCompliant(false)]
+			[References("Practitioner")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Collector
             {
@@ -111,7 +112,8 @@ namespace Hl7.Fhir.Model
             /// Collection time
             /// </summary>
             [FhirElement("collected", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
             public Hl7.Fhir.Model.Element Collected
             {
@@ -289,7 +291,8 @@ namespace Hl7.Fhir.Model
             /// Material used in the processing step
             /// </summary>
             [FhirElement("additive", Order=60)]
-            [References("Substance")]
+            [CLSCompliant(false)]
+			[References("Substance")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> Additive
@@ -304,7 +307,8 @@ namespace Hl7.Fhir.Model
             /// Date and time of specimen treatment
             /// </summary>
             [FhirElement("time", Order=70, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
             public Hl7.Fhir.Model.Element Time
             {
@@ -479,7 +483,8 @@ namespace Hl7.Fhir.Model
             /// Additive associated with container
             /// </summary>
             [FhirElement("additive", Order=90, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element Additive
             {
@@ -642,7 +647,8 @@ namespace Hl7.Fhir.Model
         /// Where the specimen came from. This may be from the patient(s) or from the environment or a device
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=130)]
-        [References("Patient","Group","Device","Substance")]
+        [CLSCompliant(false)]
+		[References("Patient","Group","Device","Substance")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -689,7 +695,8 @@ namespace Hl7.Fhir.Model
         /// Specimen from which this specimen originated
         /// </summary>
         [FhirElement("parent", Order=150)]
-        [References("Specimen")]
+        [CLSCompliant(false)]
+		[References("Specimen")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Parent
@@ -704,7 +711,8 @@ namespace Hl7.Fhir.Model
         /// Why the specimen was collected
         /// </summary>
         [FhirElement("request", Order=160)]
-        [References("DiagnosticRequest","ProcedureRequest")]
+        [CLSCompliant(false)]
+		[References("DiagnosticRequest","ProcedureRequest")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Request
