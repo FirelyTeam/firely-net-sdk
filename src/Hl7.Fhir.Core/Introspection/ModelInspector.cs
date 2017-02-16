@@ -29,25 +29,15 @@ namespace Hl7.Fhir.Introspection
         {
             if (assembly == null) throw Error.ArgumentNull("assembly");
 
-#if PORTABLE45 || NETSTANDARD
-			if (assembly.GetCustomAttribute<NotMappedAttribute>() != null) return;
-#else
-            if (Attribute.GetCustomAttribute(assembly, typeof(NotMappedAttribute)) != null) return;
-#endif
+            if (assembly.GetCustomAttribute<NotMappedAttribute>() != null) return;
 
-#if PORTABLE45 || NETSTANDARD
             IEnumerable<Type> exportedTypes = assembly.ExportedTypes;
-#else
-			Type[] exportedTypes = assembly.GetExportedTypes();
-#endif
-			foreach (Type type in exportedTypes)
+
+            foreach (Type type in exportedTypes)
             {
                 // Don't import types marked with [NotMapped]
-#if PORTABLE45 || NETSTANDARD
+
                 if (type.GetTypeInfo().GetCustomAttribute<NotMappedAttribute>() != null) continue;
-#else
-                if (Attribute.GetCustomAttribute(type, typeof(NotMappedAttribute)) != null) continue;
-#endif
 
                 // Map a Fhir Datatype
                 if (ClassMapping.IsMappableType(type))

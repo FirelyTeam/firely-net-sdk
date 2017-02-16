@@ -1,23 +1,25 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
     <TargetFrameworks>net45;netstandard1.1;netstandard1.3</TargetFrameworks>
+  </PropertyGroup>
+  
+  <Import Project="..\platforms.props" />
+  <Import Project="..\fhir-net-api.props" />
+
+  <PropertyGroup>
     <PackageId>Hl7.Fhir.DSTU2</PackageId>
     <Product>HL7 FHIR Core support API for DSTU2</Product>
     <Description>Core .NET support for working with HL7 FHIR. Supports FHIR DSTU2 (1.0)</Description>
-    <Version>1.0.0-alpha1</Version>
-    <Authors>Ewout Kramer (e.kramer@furore.com) and contributors</Authors>
-    <Company>Furore (http://fhir.furore.com)</Company>
-    <Copyright>Copyright 2016 Furore Health Informatics.  Contains materials (C) HL7 International</Copyright>
-    <PackageProjectUrl>https://github.com/ewoutkramer/fhir-net-api</PackageProjectUrl>
-    <PackageReleaseNotes>DSTU2 release. See http://ewoutkramer.github.io/fhir-net-api/whats-new.html</PackageReleaseNotes>
-    <PackageIconUrl>https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/icon-fhir-32.png</PackageIconUrl>
+    <Summary>This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the core functionality to working with RESTful FHIR servers: POCO classes for FHIR, parsing/serialization of FHIR data and a FhirClient for easy access to FHIR servers.</Summary>
     <PackageTags>HL7 FHIR REST parse serialize class model</PackageTags>
     <AssemblyName>Hl7.Fhir.DSTU2.Core</AssemblyName>
     <RootNamespace>Hl7.Fhir</RootNamespace>
-    <DocumentationFile>
-    </DocumentationFile>
-    <LangVersion>6</LangVersion>
   </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+  </PropertyGroup>
+  
   <ItemGroup>
     <Compile Remove="Rest\SystemNetMimeContentType.cs" />
   </ItemGroup>
@@ -26,6 +28,7 @@
     <PackageReference Include="System.ComponentModel" Version="4.3.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.3.0" />
     <PackageReference Include="System.ComponentModel.Primitives" Version="4.3.0" />
+    <PackageReference Include="System.Net.Http" Version="4.3.0" />
     <PackageReference Include="System.Net.Requests" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
   </ItemGroup>
@@ -39,15 +42,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
-    <DefineConstants>$(DefineConstants);NET45</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.1' ">
-    <DefineConstants>$(DefineConstants);NETSTANDARD1_1;NETSTANDARD</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
-    <DefineConstants>$(DefineConstants);NETSTANDARD1_3;NETSTANDARD</DefineConstants>
-  </PropertyGroup>
   <ItemGroup>
     <None Include="Validation\xhtml\fhir-xhtml.xsd" />
     <None Include="Validation\xhtml\xml.xsd" />

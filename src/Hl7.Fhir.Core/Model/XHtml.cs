@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
             try
             {
                 // There is currently no validation in the portable .net
-#if !PORTABLE45 && !NETSTANDARD
+#if NET_XSD_SCHEMA
                 var doc = SerializationUtil.XDocumentFromXmlText(value as string);
                 doc.Validate(_xhtmlSchemaSet.Value, validationEventHandler: null);
 #endif
@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
             }
         }
 
-#if !PORTABLE45 && !NETSTANDARD
+#if NET_XSD_SCHEMA
         private static Lazy<XmlSchemaSet> _xhtmlSchemaSet = new Lazy<XmlSchemaSet>(compileXhtmlSchema, true);
 
         private static XmlSchemaSet compileXhtmlSchema()

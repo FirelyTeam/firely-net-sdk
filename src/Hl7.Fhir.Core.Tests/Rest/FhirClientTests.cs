@@ -593,7 +593,7 @@ namespace Hl7.Fhir.Tests.Rest
             history = client.TypeHistory("Patient", timestampBeforeCreationAndDeletions);
             Assert.IsNotNull(history);
             DebugDumpBundle(history);
-            Assert.AreEqual(4, history.Entry.Count());
+            Assert.AreEqual(4, history.Entry.Count());   // there's a race condition here, sometimes this is 5. 
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 
@@ -1060,6 +1060,7 @@ namespace Hl7.Fhir.Tests.Rest
                 Assert.IsTrue(ex.Status == HttpStatusCode.Forbidden || ex.Status == HttpStatusCode.Unauthorized, "Excpeted a security exception");
             }
         }
+
     }
 
 }

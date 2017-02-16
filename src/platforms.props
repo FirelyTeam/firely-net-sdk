@@ -1,0 +1,63 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <NetStandard10>NET_REFLECTION</NetStandard10>
+    <NetStandard11>$(NetStandard10);NET_COMPRESSION;NET_HTTPCLIENT;NET_CONCURRENT_COLL;NET_LINQ_PAR</NetStandard11>
+    <NetStandard12>$(NetStandard11);NET_THREADTINGTIMER</NetStandard12>
+    <NetStandard13>$(NetStandard12);NET_FILESYSTEM;NET_CONSOLE;NET_THREADPOOL;NET_CRYPTO;NET_WEBSOCK;NET_PROCESS;NET_SOCKETS;NET_ASYNC_LOCAL</NetStandard13>
+    <NetStandard14>$(NetStandard13);NET_ISOLATED_STORAGE;NET_REGEX_COMPILE</NetStandard14>
+    <NetStandard15>$(NetStandard14);NET_ASSEMBLY_LOAD_CTX</NetStandard15>
+    <NetFramework45>$(NetStandard11);NET_REGEX_COMPILE;NET_FILESYSTEM;NET_CONSOLE;NET_THREADPOOL;NET_CRYPTO;NET_WEBSOCK;NET_PROCESS;NET_DRAWING;NET_SYSTEM_WEB;NET_WPF;NET_WINFORMS;NET_WCF;NET_XSD_SCHEMA</NetFramework45>
+    <NetFramework451>$(NetStandard12);$(NetFramework45)</NetFramework451>
+    <NetFramework452>$(NetStandard12);$(NetFramework451)</NetFramework452>
+    <NetFramework46>$(NetStandard13);$(NetFramework452)</NetFramework46>
+    <NetFramework461>$(NetStandard14);$(NetFramework46)</NetFramework461>
+    <NetFramework462>$(NetStandard15);$(NetFramework461)</NetFramework462>
+    <WindowsUP>$(NetStandard13);NET_GPS;NET_XAML</WindowsUP>
+    <NetCoreApp10>$(NetStandard15)</NetCoreApp10>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.0' ">
+    <DefineConstants>$(DefineConstants);$(NetStandard10)</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.1' ">
+    <DefineConstants>$(DefineConstants);$(NetStandard11)</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.2' ">
+    <DefineConstants>$(DefineConstants);$(NetStandard12)</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
+    <DefineConstants>$(DefineConstants);$(NetStandard13)</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
+    <DefineConstants>$(DefineConstants);$(NetStandard14)</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.5' ">
+    <DefineConstants>$(DefineConstants);$(NetStandard15)</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <DefineConstants>$(DefineConstants);$(NetFramework45);DOTNETFW</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net451' ">
+    <DefineConstants>$(DefineConstants);$(NetFramework451);DOTNETFW</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net452' ">
+    <DefineConstants>$(DefineConstants);$(NetFramework452);DOTNETFW</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net46' ">
+    <DefineConstants>$(DefineConstants);$(NetFramework46);DOTNETFW</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net461' ">
+    <DefineConstants>$(DefineConstants);$(NetFramework461);DOTNETFW</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net462' ">
+    <DefineConstants>$(DefineConstants);$(NetFramework462);DOTNETFW</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'uap' ">
+    <DefineConstants>$(DefineConstants);$(WindowsUP)</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'uap' Or '$(TargetFramework)' == 'uap10' ">
+    <DefineConstants>$(DefineConstants);$(WindowsUP)</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">
+    <DefineConstants>$(DefineConstants);$(NetStandard15)</DefineConstants>
+  </PropertyGroup>
+</Project>

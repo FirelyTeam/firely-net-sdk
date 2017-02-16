@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Specification.Navigation
         /// <summary>Initialize a new <see cref="ProfileReference"/> instance from the specified url.</summary>
         /// <param name="url">A resource reference to a profile.</param>
         /// <returns>A new <see cref="ProfileReference"/> structure.</returns>
-        public static ProfileReference FromUrl(string url)  => new ProfileReference(url);
+        public static ProfileReference Parse(string url)  => new ProfileReference(url);
 
         /// <summary>Returns the canonical url of the profile.</summary>
         public string CanonicalUrl { get; }

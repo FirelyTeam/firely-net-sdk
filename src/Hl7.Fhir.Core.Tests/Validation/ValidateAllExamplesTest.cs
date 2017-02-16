@@ -112,14 +112,8 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestCategory("LongRunner")]
         public void ValidateInvariantAllExamplesWithOtherConstraints()
         {
-#if NETCore
-            string examplesZip = $@"{AppContext.BaseDirectory}\TestData\examples.zip";
-            string profiles = $@"{AppContext.BaseDirectory}\TestData\profiles-others.xml";
-#else
-            string examplesZip = @"TestData\examples.zip";
-            string profiles = @"TestData\profiles-others.xml";
-           
-#endif
+           string profiles = TestDataHelper.GetFullPathForExample("profiles-others.xml");
+
             FhirXmlParser parser = new FhirXmlParser();
             int errorCount = 0;
             int testFileCount = 0;
@@ -171,7 +165,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 }
             }
 
-            var zip = ZipFile.OpenRead(examplesZip);
+            var zip = TestDataHelper.ReadTestZip("examples.zip");
             using (zip)
             {
                 foreach (var entry in zip.Entries)
@@ -240,12 +234,12 @@ namespace Hl7.Fhir.Tests.Serialization
                                     failedInvariantCodes.Add(item.Details.Coding[0].Code, 1);
                                 else
                                     failedInvariantCodes[item.Details.Coding[0].Code]++;
-#if !NETCore
+#if DOTNETFW
                                 Trace.WriteLine("\t" + item.Details.Coding[0].Code + ": " + item.Details.Text);
                                 Trace.WriteLine("\t" + item.Diagnostics);
 #endif
                             }
-#if !NETCore
+#if DOTNETFW
                             Trace.WriteLine("-------------------------");
                             Trace.WriteLine(FhirSerializer.SerializeResourceToXml(resource));
                             Trace.WriteLine("-------------------------");

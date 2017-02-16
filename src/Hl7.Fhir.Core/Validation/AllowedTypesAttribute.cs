@@ -56,11 +56,7 @@ namespace Hl7.Fhir.Validation
         {
             if (item != null)
             {
-#if PORTABLE45 || NETSTANDARD
                 if (!Types.Any(type => type.GetTypeInfo().IsAssignableFrom(item.GetType().GetTypeInfo())))
-#else
-                if (!Types.Any(type => type.IsAssignableFrom(item.GetType())))
-#endif
                     return DotNetAttributeValidation.BuildResult(context, "Value is of type {0}, which is not an allowed choice", item.GetType());
             }
 

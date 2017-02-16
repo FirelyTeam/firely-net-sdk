@@ -12,6 +12,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+
+#if NET_XSD_SCHEMA
 using System.Xml.XPath;
 using Hl7.Fhir.Support;
 using Newtonsoft.Json;
@@ -500,3 +502,4 @@ namespace Hl7.Fhir.XPath
         }
     }
 }
+#endif
