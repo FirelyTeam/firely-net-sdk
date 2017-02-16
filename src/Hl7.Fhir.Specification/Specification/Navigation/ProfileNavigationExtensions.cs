@@ -133,10 +133,10 @@ namespace Hl7.Fhir.Specification.Navigation
             string profile = null;
             if (elemType != null)
             {
-                profile = elemType.Profile.FirstOrDefault();
-                if (profile == null && elemType.Code.HasValue)
+                profile = elemType.Profile;
+                if (profile == null && elemType.Code != null)
                 {
-                    profile = ModelInfo.CanonicalUriForFhirCoreType(elemType.Code.Value);
+                    profile = ModelInfo.CanonicalUriForFhirCoreType(elemType.Code);
                 }
             }
             return profile;

@@ -223,7 +223,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
 
                 // [WMR 20161208] Handle missing differential
-                var location = differential.Element.Count > 0 ? ToNamedNode(differential.Element[0]) : null;
+                var location = differential.Element.Count > 0 ? differential.Element[0].ToNamedNode() : null;
                 if (!ensureSnapshot(baseStructure, structure.BaseDefinition, location))
                 {
                     // Fatal error...
@@ -598,7 +598,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // By default, use strategy (A): ignore custom type profile, merge from base
         // If mergeTypeProfiles is enabled, then first merge custom type profile before merging base
 
-        static readonly string DomainResource_Extension_Path = ModelInfo.FhirTypeToFhirTypeName(FHIRDefinedType.DomainResource) + ".extension";
+        static readonly string DomainResource_Extension_Path = ModelInfo.FhirTypeToFhirTypeName(FHIRAllTypes.DomainResource) + ".extension";
 
         // Resolve the type profile of the currently selected element and merge into snapshot
         bool mergeTypeProfiles(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
@@ -616,7 +616,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             // if (primarySnapType == null) { return true; }
 
             var primaryDiffTypeProfile = primaryDiffType.Profile;
-            var primarySnapTypeProfile = primarySnapType != null ? primarySnapType.Profile : null;
 
             // [WMR 20170208] Ignore explicit diff profile if it matches the (implied) base type profile
             // e.g. if the differential specifies explicit core type profile url

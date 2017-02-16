@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         internal static OperationOutcome.IssueComponent CreateIssueInvalidNameReference(ElementDefinition elementDef)
         {
-            var location = ToNamedNode(elementDef);
+            var location = elementDef.ToNamedNode();
             var nameRef = elementDef.ContentReference;
             return PROFILE_ELEMENTDEF_INVALID_TYPEPROFILE_NAMEREF.ToIssueComponent(
                 $"Element {location} has a nameReference to '{nameRef}', which cannot be found in the StructureDefinition.",

@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Specification.Source
             throw new FileNotFoundException("Cannot create a ZipArtifactSource for the core specification: specification.zip was not found");
         }
 
-        private readonly string CACHE_KEY = "FhirArtifactCache-STU3-" + typeof(ZipSource).Assembly.GetName().Version.ToString();
+        private readonly string CACHE_KEY = "FhirArtifactCache-STU3-" + typeof(ZipSource).GetTypeInfo().Assembly.GetName().Version.ToString();
        
         private bool _prepared = false;
         private string _mask;

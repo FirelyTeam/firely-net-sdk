@@ -493,7 +493,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
 
                 var diffProfile = diffProfiles;
-                var profileRef = ProfileReference.FromUrl(diffProfile);
+                var profileRef = ProfileReference.Parse(diffProfile);
                 var result = profileRef.IsComplex
                     // Match on element name (for complex extension elements)
                     ? StringComparer.Ordinal.Equals(snapNav.Current.SliceName, profileRef.ElementName)
