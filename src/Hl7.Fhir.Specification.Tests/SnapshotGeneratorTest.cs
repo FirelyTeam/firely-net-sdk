@@ -3046,6 +3046,38 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(baseElem.Comments, extElem.Comments);
             Assert.IsTrue(baseElem.Alias.SequenceEqual(extElem.Alias));
         }
+
+        // [WMR 20170213] New - issue reported by Marten - cannot slice Organization.type ?
+        // Specifically, snapshot generator drops the slicing component from the slice entry element
+        // Explanation: Organization.type is not a list (max = 1) and not a choice type => slicing is not allowed!
+        [TestMethod]
+        [Ignore]
+        public void TestOrganizationTypeSlice()
+        {
+            var org = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MySlicedOrganization");
+            Assert.IsNotNull(org);
+
+            StructureDefinition expanded;
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            _generator.PrepareElement += elementHandler;
+            try
+            {
+                generateSnapshotAndCompare(org, out expanded);
+            }
+            finally
+            {
+                _generator.PrepareElement -= elementHandler;
+            }
+
+            dumpOutcome(_generator.Outcome);
+
+            var elems = expanded.Snapshot.Element;
+            dumpElements(elems);
+            //dumpBaseElems(elems);
+
+            // TODO: Verify slice
+
+        }
     }
 
     public static class IListExtensions
