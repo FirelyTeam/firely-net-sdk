@@ -242,12 +242,15 @@ namespace Hl7.Fhir.Specification.Snapshot
                 if (!structure.IsConstraint)
                 {
                     var rootElem = differential.Element.FirstOrDefault();
-                    if (!rootElem.IsRootElement())
+                    if (rootElem != null)
                     {
-                        // Fatal error...
-                        throw Error.Argument(nameof(structure), $"Invalid argument. The specified StructureDefinition defines a new model (not a constraint on another profile), but the differential component does not start at the root element definition.");
+                        if (!rootElem.IsRootElement())
+                        {
+                            // Fatal error...
+                            throw Error.Argument(nameof(structure), $"Invalid argument. The specified StructureDefinition defines a new model (not a constraint on another profile), but the differential component does not start at the root element definition.");
+                        }
+                        snapshot.Rebase(rootElem.Path);
                     }
-                    snapshot.Rebase(rootElem.Path);
                 }
 
                 // Ensure that ElementDefinition.Base components in base StructureDef are propertly initialized
