@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Aug 11, 2016 03:44+0000 for FHIR v1.6.0 
+  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -51,32 +51,37 @@
         <xs:sequence>
           <xs:element name="url" minOccurs="0" maxOccurs="1" type="uri">
             <xs:annotation>
-              <xs:documentation xml:lang="en">An absolute URL that is used to identify this code system when it is referenced in a specification, model, design or an instance. This SHALL be a URL, SHOULD be globally unique, and SHOULD be an address at which this code system is (or will be) published. This is used in [Coding]{datatypes.html#Coding}.system.</xs:documentation>
+              <xs:documentation xml:lang="en">An absolute URL that is used to identify this code system when it is referenced in a specification, model, design or an instance. This SHALL be a URL, SHOULD be globally unique, and SHOULD be an address at which this code system is (or will be) published. The URL SHOULD include the major version of the code system. For more information see [Technical and Business Versions](resource.html#versions). This is used in [Coding]{datatypes.html#Coding}.system.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="identifier" minOccurs="0" maxOccurs="1" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Formal identifier that is used to identify this code system when it is represented in other formats, or referenced in a specification, model, design or an instance.</xs:documentation>
+              <xs:documentation xml:lang="en">A formal identifier that is used to identify this code system when it is represented in other formats, or referenced in a specification, model, design or an instance.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="version" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Used to identify this version of the code system when it is referenced in a specification, model, design or instance (e.g. Coding.version). This is an arbitrary value managed by the profile author manually and the value should be a timestamp. This is used in [Coding]{datatypes.html#Coding}.version.</xs:documentation>
+              <xs:documentation xml:lang="en">The identifier that is used to identify this version of the code system when it is referenced in a specification, model, design or instance. This is an arbitrary value managed by the code system author and is not expected to be globally unique. For example, it might be a timestamp (e.g. yyyymmdd) if a managed version is not available. There is also no expectation that versions are orderable. This is used in [Coding]{datatypes.html#Coding}.version.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="name" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A free text natural language name describing the code system.</xs:documentation>
+              <xs:documentation xml:lang="en">A natural language name identifying the code system. This name should be usable as an identifier for the module by machine processing applications such as code generation.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="status" minOccurs="1" maxOccurs="1" type="ConformanceResourceStatus">
+          <xs:element name="title" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The status of the code system.</xs:documentation>
+              <xs:documentation xml:lang="en">A short, descriptive, user-friendly title for the code system.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="status" minOccurs="1" maxOccurs="1" type="PublicationStatus">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The status of this code system. Enables tracking the life-cycle of the content.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="experimental" minOccurs="0" maxOccurs="1" type="boolean">
             <xs:annotation>
-              <xs:documentation xml:lang="en">This CodeSystem was authored for testing purposes (or education/evaluation/marketing), and is not intended to be used for genuine usage.</xs:documentation>
+              <xs:documentation xml:lang="en">A flag to indicate that this code system is authored for testing purposes (or education/evaluation/marketing), and is not intended to be used for genuine usage.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="publisher" minOccurs="0" maxOccurs="1" type="string">
@@ -84,32 +89,37 @@
               <xs:documentation xml:lang="en">The name of the individual or organization that published the code system.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="contact" type="CodeSystem.Contact" minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="contact" minOccurs="0" maxOccurs="unbounded" type="ContactDetail">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Contacts to assist a user in finding and communicating with the publisher.</xs:documentation>
+              <xs:documentation xml:lang="en">Contact details to assist a user in finding and communicating with the publisher.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="date" minOccurs="0" maxOccurs="1" type="dateTime">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The date that the code system status was last changed. The date must change when the business version changes, if it does, and it must change if the status code changes. In addition, it should change when the substantive content of the implementation guide changes (e.g. the 'content logical definition').</xs:documentation>
+              <xs:documentation xml:lang="en">The date  (and optionally time) when the code system was published. The date must change when the business version changes, if it does, and it must change if the status code changes. In addition, it should change when the substantive content of the code system changes.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="description" minOccurs="0" maxOccurs="1" type="markdown">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A free text natural language description of the use of the code system - reason for definition, &quot;the semantic space&quot; to be included in the code system, conditions of use, etc. The description may include a list of expected usages for the code system and can also describe the approach taken to build the code system.</xs:documentation>
+              <xs:documentation xml:lang="en">A free text natural language description of the code system from the consumer's perspective.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="useContext" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="useContext" minOccurs="0" maxOccurs="unbounded" type="UsageContext">
             <xs:annotation>
               <xs:documentation xml:lang="en">The content was developed with a focus and intent of supporting the contexts that are listed. These terms may be used to assist with indexing and searching of code system definitions.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="requirements" minOccurs="0" maxOccurs="1" type="markdown">
+          <xs:element name="jurisdiction" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Explains why this code system is needed and why it has been constrained as it has.</xs:documentation>
+              <xs:documentation xml:lang="en">A jurisdiction in which the code system is intended to be used.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="copyright" minOccurs="0" maxOccurs="1" type="string">
+          <xs:element name="purpose" minOccurs="0" maxOccurs="1" type="markdown">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Explains why this code system is needed and why it has been designed as it has.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="copyright" minOccurs="0" maxOccurs="1" type="markdown">
             <xs:annotation>
               <xs:documentation xml:lang="en">A copyright statement relating to the code system and/or its contents. Copyright statements are generally legal restrictions on the use and publishing of the code system.</xs:documentation>
            </xs:annotation>
@@ -162,27 +172,6 @@
           <xs:element name="concept" type="CodeSystem.Concept" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">Concepts that are in the code system. The concept definitions are inherently hierarchical, but the definitions must be consulted to determine what the meaning of the hierarchical relationships are.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:complexType name="CodeSystem.Contact">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">A code system resource specifies a set of codes drawn from one or more code systems.</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="BackboneElement">
-        <xs:sequence>
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="string">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The name of an individual to contact regarding the code system.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="telecom" minOccurs="0" maxOccurs="unbounded" type="ContactPoint">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Contact details for individual (if a name was provided) or the publisher.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -285,7 +274,7 @@
           </xs:element>
           <xs:element name="concept" type="CodeSystem.Concept" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Defines children of a concept to produce a hierarchy of concepts. The nature of the relationships is variable (is-a/contains/categorizes) and can only be determined by examining the definitions of the concepts.</xs:documentation>
+              <xs:documentation xml:lang="en">Defines children of a concept to produce a hierarchy of concepts. The nature of the relationships is variable (is-a/contains/categorizes) - see hierarchyMeaning.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -397,9 +386,9 @@
           <xs:documentation xml:lang="en">Grouped By</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="subsumes">
+      <xs:enumeration value="is-a">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Subsumes</xs:documentation>
+          <xs:documentation xml:lang="en">Is-A</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="part-of">

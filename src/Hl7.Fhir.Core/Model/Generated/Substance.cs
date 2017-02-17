@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,6 +53,33 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "Substance"; } }
         
+        /// <summary>
+        /// Substance status
+        /// (url: http://hl7.org/fhir/ValueSet/substance-status)
+        /// </summary>
+        [FhirEnumeration("SubstanceStatus")]
+        public enum SubstanceStatus
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/substance-status)
+            /// </summary>
+            [EnumLiteral("active"), Description("Active")]
+            Active,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/substance-status)
+            /// </summary>
+            [EnumLiteral("inactive"), Description("Inactive")]
+            Inactive,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/substance-status)
+            /// </summary>
+            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
+            EnteredInError,
+        }
+
         [FhirType("InstanceComponent")]
         [DataContract]
         public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -323,9 +350,41 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Code;
         
         /// <summary>
+        /// active | inactive | entered-in-error
+        /// </summary>
+        [FhirElement("status", InSummary=true, Order=120)]
+        [DataMember]
+        public Code<Hl7.Fhir.Model.Substance.SubstanceStatus> StatusElement
+        {
+            get { return _StatusElement; }
+            set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+        }
+        
+        private Code<Hl7.Fhir.Model.Substance.SubstanceStatus> _StatusElement;
+        
+        /// <summary>
+        /// active | inactive | entered-in-error
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.Substance.SubstanceStatus? Status
+        {
+            get { return StatusElement != null ? StatusElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  StatusElement = null; 
+                else
+                  StatusElement = new Code<Hl7.Fhir.Model.Substance.SubstanceStatus>(value);
+                OnPropertyChanged("Status");
+            }
+        }
+        
+        /// <summary>
         /// Textual description of the substance, comments
         /// </summary>
-        [FhirElement("description", InSummary=true, Order=120)]
+        [FhirElement("description", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -357,7 +416,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If this describes a specific package/container of the substance
         /// </summary>
-        [FhirElement("instance", InSummary=true, Order=130)]
+        [FhirElement("instance", InSummary=true, Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Substance.InstanceComponent> Instance
@@ -371,7 +430,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Composition information about the substance
         /// </summary>
-        [FhirElement("ingredient", InSummary=true, Order=140)]
+        [FhirElement("ingredient", InSummary=true, Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Substance.IngredientComponent> Ingredient
@@ -399,6 +458,7 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Substance.SubstanceStatus>)StatusElement.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(Instance != null) dest.Instance = new List<Hl7.Fhir.Model.Substance.InstanceComponent>(Instance.DeepCopy());
                 if(Ingredient != null) dest.Ingredient = new List<Hl7.Fhir.Model.Substance.IngredientComponent>(Ingredient.DeepCopy());
@@ -422,6 +482,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(Category, otherT.Category)) return false;
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.Matches(Instance, otherT.Instance)) return false;
             if( !DeepComparable.Matches(Ingredient, otherT.Ingredient)) return false;
@@ -438,6 +499,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.IsExactly(Instance, otherT.Instance)) return false;
             if( !DeepComparable.IsExactly(Ingredient, otherT.Ingredient)) return false;
@@ -454,6 +516,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				foreach (var elem in Category) { if (elem != null) yield return elem; }
 				if (Code != null) yield return Code;
+				if (StatusElement != null) yield return StatusElement;
 				if (DescriptionElement != null) yield return DescriptionElement;
 				foreach (var elem in Instance) { if (elem != null) yield return elem; }
 				foreach (var elem in Ingredient) { if (elem != null) yield return elem; }

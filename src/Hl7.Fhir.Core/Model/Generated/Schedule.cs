@@ -37,12 +37,12 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// A container for slot(s) of time that may be available for booking appointments
+    /// A container for slots of time that may be available for booking appointments
     /// </summary>
     [FhirType("Schedule", IsResource=true)]
     [DataContract]
@@ -146,15 +146,15 @@ namespace Hl7.Fhir.Model
         [FhirElement("actor", InSummary=true, Order=140)]
         [CLSCompliant(false)]
 		[References("Patient","Practitioner","RelatedPerson","Device","HealthcareService","Location")]
-        [Cardinality(Min=1,Max=1)]
+        [Cardinality(Min=1,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Actor
+        public List<Hl7.Fhir.Model.ResourceReference> Actor
         {
-            get { return _Actor; }
+            get { if(_Actor==null) _Actor = new List<Hl7.Fhir.Model.ResourceReference>(); return _Actor; }
             set { _Actor = value; OnPropertyChanged("Actor"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Actor;
+        private List<Hl7.Fhir.Model.ResourceReference> _Actor;
         
         /// <summary>
         /// The period of time that the slots that are attached to this Schedule resource cover (even if none exist). These  cover the amount of time that an organization's planning horizon; the interval for which they are currently accepting appointments. This does not define a "template" for planning outside these dates
@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Period _PlanningHorizon;
         
         /// <summary>
-        /// Comments on the availability to describe any extended information. Such as custom constraints on the slot(s) that may be associated
+        /// Comments on the availability to describe any extended information. Such as custom constraints on the slots that may be associated
         /// </summary>
         [FhirElement("comment", Order=160)]
         [DataMember]
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _CommentElement;
         
         /// <summary>
-        /// Comments on the availability to describe any extended information. Such as custom constraints on the slot(s) that may be associated
+        /// Comments on the availability to describe any extended information. Such as custom constraints on the slots that may be associated
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -220,7 +220,7 @@ namespace Hl7.Fhir.Model
                 if(ServiceCategory != null) dest.ServiceCategory = (Hl7.Fhir.Model.CodeableConcept)ServiceCategory.DeepCopy();
                 if(ServiceType != null) dest.ServiceType = new List<Hl7.Fhir.Model.CodeableConcept>(ServiceType.DeepCopy());
                 if(Specialty != null) dest.Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(Specialty.DeepCopy());
-                if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopy();
+                if(Actor != null) dest.Actor = new List<Hl7.Fhir.Model.ResourceReference>(Actor.DeepCopy());
                 if(PlanningHorizon != null) dest.PlanningHorizon = (Hl7.Fhir.Model.Period)PlanningHorizon.DeepCopy();
                 if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
                 return dest;
@@ -281,7 +281,7 @@ namespace Hl7.Fhir.Model
 				if (ServiceCategory != null) yield return ServiceCategory;
 				foreach (var elem in ServiceType) { if (elem != null) yield return elem; }
 				foreach (var elem in Specialty) { if (elem != null) yield return elem; }
-				if (Actor != null) yield return Actor;
+				foreach (var elem in Actor) { if (elem != null) yield return elem; }
 				if (PlanningHorizon != null) yield return PlanningHorizon;
 				if (CommentElement != null) yield return CommentElement;
             }

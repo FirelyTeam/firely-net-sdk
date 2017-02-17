@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,6 +53,45 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "CareTeam"; } }
         
+        /// <summary>
+        /// Indicates the status of the care team.
+        /// (url: http://hl7.org/fhir/ValueSet/care-team-status)
+        /// </summary>
+        [FhirEnumeration("CareTeamStatus")]
+        public enum CareTeamStatus
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/care-team-status)
+            /// </summary>
+            [EnumLiteral("proposed"), Description("Proposed")]
+            Proposed,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/care-team-status)
+            /// </summary>
+            [EnumLiteral("active"), Description("Active")]
+            Active,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/care-team-status)
+            /// </summary>
+            [EnumLiteral("suspended"), Description("Suspended")]
+            Suspended,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/care-team-status)
+            /// </summary>
+            [EnumLiteral("inactive"), Description("Inactive")]
+            Inactive,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/care-team-status)
+            /// </summary>
+            [EnumLiteral("entered-in-error"), Description("Entered In Error")]
+            EnteredInError,
+        }
+
         [FhirType("ParticipantComponent")]
         [DataContract]
         public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -78,7 +117,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("member", InSummary=true, Order=50)]
             [CLSCompliant(false)]
-			[References("Practitioner","RelatedPerson","Patient","Organization")]
+			[References("Practitioner","RelatedPerson","Patient","Organization","CareTeam")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Member
             {
@@ -89,9 +128,24 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.ResourceReference _Member;
             
             /// <summary>
+            /// Organization of the practitioner
+            /// </summary>
+            [FhirElement("onBehalfOf", InSummary=true, Order=60)]
+            [CLSCompliant(false)]
+			[References("Organization")]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference OnBehalfOf
+            {
+                get { return _OnBehalfOf; }
+                set { _OnBehalfOf = value; OnPropertyChanged("OnBehalfOf"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _OnBehalfOf;
+            
+            /// <summary>
             /// Time period of participant
             /// </summary>
-            [FhirElement("period", Order=60)]
+            [FhirElement("period", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.Period Period
             {
@@ -110,6 +164,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopy();
                     if(Member != null) dest.Member = (Hl7.Fhir.Model.ResourceReference)Member.DeepCopy();
+                    if(OnBehalfOf != null) dest.OnBehalfOf = (Hl7.Fhir.Model.ResourceReference)OnBehalfOf.DeepCopy();
                     if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                     return dest;
                 }
@@ -130,6 +185,7 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Role, otherT.Role)) return false;
                 if( !DeepComparable.Matches(Member, otherT.Member)) return false;
+                if( !DeepComparable.Matches(OnBehalfOf, otherT.OnBehalfOf)) return false;
                 if( !DeepComparable.Matches(Period, otherT.Period)) return false;
                 
                 return true;
@@ -143,6 +199,7 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Role, otherT.Role)) return false;
                 if( !DeepComparable.IsExactly(Member, otherT.Member)) return false;
+                if( !DeepComparable.IsExactly(OnBehalfOf, otherT.OnBehalfOf)) return false;
                 if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
                 
                 return true;
@@ -159,6 +216,7 @@ namespace Hl7.Fhir.Model
                     // ParticipantComponent elements
                     if (Role != null) yield return Role;
                     if (Member != null) yield return Member;
+                    if (OnBehalfOf != null) yield return OnBehalfOf;
                     if (Period != null) yield return Period;
                 }
             }
@@ -181,17 +239,36 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// active | suspended | inactive | entered in error
+        /// proposed | active | suspended | inactive | entered-in-error
         /// </summary>
         [FhirElement("status", InSummary=true, Order=100)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Status
+        public Code<Hl7.Fhir.Model.CareTeam.CareTeamStatus> StatusElement
         {
-            get { return _Status; }
-            set { _Status = value; OnPropertyChanged("Status"); }
+            get { return _StatusElement; }
+            set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Status;
+        private Code<Hl7.Fhir.Model.CareTeam.CareTeamStatus> _StatusElement;
+        
+        /// <summary>
+        /// proposed | active | suspended | inactive | entered-in-error
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.CareTeam.CareTeamStatus? Status
+        {
+            get { return StatusElement != null ? StatusElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  StatusElement = null; 
+                else
+                  StatusElement = new Code<Hl7.Fhir.Model.CareTeam.CareTeamStatus>(value);
+                OnPropertyChanged("Status");
+            }
+        }
         
         /// <summary>
         /// Type of team
@@ -255,9 +332,24 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
+        /// Encounter or episode associated with CareTeam
+        /// </summary>
+        [FhirElement("context", InSummary=true, Order=140)]
+        [CLSCompliant(false)]
+		[References("Encounter","EpisodeOfCare")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Context
+        {
+            get { return _Context; }
+            set { _Context = value; OnPropertyChanged("Context"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Context;
+        
+        /// <summary>
         /// Time period team covers
         /// </summary>
-        [FhirElement("period", InSummary=true, Order=140)]
+        [FhirElement("period", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
@@ -270,7 +362,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Members of the team
         /// </summary>
-        [FhirElement("participant", Order=150)]
+        [FhirElement("participant", Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CareTeam.ParticipantComponent> Participant
@@ -282,9 +374,39 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CareTeam.ParticipantComponent> _Participant;
         
         /// <summary>
+        /// Why the care team exists
+        /// </summary>
+        [FhirElement("reasonCode", Order=170)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
+        {
+            get { if(_ReasonCode==null) _ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ReasonCode; }
+            set { _ReasonCode = value; OnPropertyChanged("ReasonCode"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _ReasonCode;
+        
+        /// <summary>
+        /// Why the care team exists
+        /// </summary>
+        [FhirElement("reasonReference", Order=180)]
+        [CLSCompliant(false)]
+		[References("Condition")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> ReasonReference
+        {
+            get { if(_ReasonReference==null) _ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(); return _ReasonReference; }
+            set { _ReasonReference = value; OnPropertyChanged("ReasonReference"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _ReasonReference;
+        
+        /// <summary>
         /// Organization responsible for the care team
         /// </summary>
-        [FhirElement("managingOrganization", InSummary=true, Order=160)]
+        [FhirElement("managingOrganization", InSummary=true, Order=190)]
         [CLSCompliant(false)]
 		[References("Organization")]
         [Cardinality(Min=0,Max=-1)]
@@ -297,11 +419,35 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.ResourceReference> _ManagingOrganization;
         
+        /// <summary>
+        /// Comments made about the CareTeam
+        /// </summary>
+        [FhirElement("note", Order=200)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Annotation> Note
+        {
+            get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+            set { _Note = value; OnPropertyChanged("Note"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Annotation> _Note;
+        
+
+        public static ElementDefinition.ConstraintComponent CareTeam_CTM_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "participant.all(onBehalfOf.exists() implies (member.resolve() is Practitioner))",
+            Key = "ctm-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "CareTeam.participant.onBehalfOf can only be populated when CareTeam.participant.member is a Practitioner",
+            Xpath = "contains(f:member, '/Practitioner') or not(exists(f:onBehalfOf))"
+        };
 
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
 
+            InvariantConstraints.Add(CareTeam_CTM_1);
         }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -312,13 +458,17 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.CareTeam.CareTeamStatus>)StatusElement.DeepCopy();
                 if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.CareTeam.ParticipantComponent>(Participant.DeepCopy());
+                if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
+                if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonReference.DeepCopy());
                 if(ManagingOrganization != null) dest.ManagingOrganization = new List<Hl7.Fhir.Model.ResourceReference>(ManagingOrganization.DeepCopy());
+                if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 return dest;
             }
             else
@@ -337,13 +487,17 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.Matches(Status, otherT.Status)) return false;
+            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(Category, otherT.Category)) return false;
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.Matches(Context, otherT.Context)) return false;
             if( !DeepComparable.Matches(Period, otherT.Period)) return false;
             if( !DeepComparable.Matches(Participant, otherT.Participant)) return false;
+            if( !DeepComparable.Matches(ReasonCode, otherT.ReasonCode)) return false;
+            if( !DeepComparable.Matches(ReasonReference, otherT.ReasonReference)) return false;
             if( !DeepComparable.Matches(ManagingOrganization, otherT.ManagingOrganization)) return false;
+            if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             
             return true;
         }
@@ -355,13 +509,17 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.IsExactly(Status, otherT.Status)) return false;
+            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
             if( !DeepComparable.IsExactly(Participant, otherT.Participant)) return false;
+            if( !DeepComparable.IsExactly(ReasonCode, otherT.ReasonCode)) return false;
+            if( !DeepComparable.IsExactly(ReasonReference, otherT.ReasonReference)) return false;
             if( !DeepComparable.IsExactly(ManagingOrganization, otherT.ManagingOrganization)) return false;
+            if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             
             return true;
         }
@@ -373,13 +531,17 @@ namespace Hl7.Fhir.Model
             {
 				// CareTeam elements
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-				if (Status != null) yield return Status;
+				if (StatusElement != null) yield return StatusElement;
 				foreach (var elem in Category) { if (elem != null) yield return elem; }
 				if (NameElement != null) yield return NameElement;
 				if (Subject != null) yield return Subject;
+				if (Context != null) yield return Context;
 				if (Period != null) yield return Period;
 				foreach (var elem in Participant) { if (elem != null) yield return elem; }
+				foreach (var elem in ReasonCode) { if (elem != null) yield return elem; }
+				foreach (var elem in ReasonReference) { if (elem != null) yield return elem; }
 				foreach (var elem in ManagingOrganization) { if (elem != null) yield return elem; }
+				foreach (var elem in Note) { if (elem != null) yield return elem; }
             }
         }
     }

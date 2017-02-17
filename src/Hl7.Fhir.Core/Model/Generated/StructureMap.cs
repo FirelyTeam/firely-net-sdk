@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -87,6 +87,33 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
+        /// If this is the default rule set to apply for thie source type, or this combination of types
+        /// (url: http://hl7.org/fhir/ValueSet/map-group-type-mode)
+        /// </summary>
+        [FhirEnumeration("StructureMapGroupTypeMode")]
+        public enum StructureMapGroupTypeMode
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/map-group-type-mode)
+            /// </summary>
+            [EnumLiteral("none"), Description("Not a Default")]
+            None,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/map-group-type-mode)
+            /// </summary>
+            [EnumLiteral("types"), Description("Default for Type Combination")]
+            Types,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/map-group-type-mode)
+            /// </summary>
+            [EnumLiteral("type-and-types"), Description("Default for type + combination")]
+            TypeAndTypes,
+        }
+
+        /// <summary>
         /// Mode for this instance of data
         /// (url: http://hl7.org/fhir/ValueSet/map-input-mode)
         /// </summary>
@@ -105,6 +132,45 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("target"), Description("Target Instance")]
             Target,
+        }
+
+        /// <summary>
+        /// If field is a list, how to manage the source
+        /// (url: http://hl7.org/fhir/ValueSet/map-source-list-mode)
+        /// </summary>
+        [FhirEnumeration("StructureMapSourceListMode")]
+        public enum StructureMapSourceListMode
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/map-source-list-mode)
+            /// </summary>
+            [EnumLiteral("first"), Description("First")]
+            First,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/map-source-list-mode)
+            /// </summary>
+            [EnumLiteral("not_first"), Description("All but the first")]
+            Not_first,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/map-source-list-mode)
+            /// </summary>
+            [EnumLiteral("last"), Description("Last")]
+            Last,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/map-source-list-mode)
+            /// </summary>
+            [EnumLiteral("not_last"), Description("All but the last")]
+            Not_last,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/map-source-list-mode)
+            /// </summary>
+            [EnumLiteral("only_one"), Description("Enforce only one")]
+            Only_one,
         }
 
         /// <summary>
@@ -129,30 +195,36 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// If field is a list, how to manage the list
-        /// (url: http://hl7.org/fhir/ValueSet/map-list-mode)
+        /// If field is a list, how to manage the production
+        /// (url: http://hl7.org/fhir/ValueSet/map-target-list-mode)
         /// </summary>
-        [FhirEnumeration("StructureMapListMode")]
-        public enum StructureMapListMode
+        [FhirEnumeration("StructureMapTargetListMode")]
+        public enum StructureMapTargetListMode
         {
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/map-list-mode)
+            /// (system: http://hl7.org/fhir/map-target-list-mode)
             /// </summary>
             [EnumLiteral("first"), Description("First")]
             First,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/map-list-mode)
+            /// (system: http://hl7.org/fhir/map-target-list-mode)
             /// </summary>
             [EnumLiteral("share"), Description("Share")]
             Share,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/map-list-mode)
+            /// (system: http://hl7.org/fhir/map-target-list-mode)
             /// </summary>
             [EnumLiteral("last"), Description("Last")]
             Last,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/map-target-list-mode)
+            /// </summary>
+            [EnumLiteral("collate"), Description("Collate")]
+            Collate,
         }
 
         /// <summary>
@@ -340,9 +412,41 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// Name for type in this map
+            /// </summary>
+            [FhirElement("alias", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString AliasElement
+            {
+                get { return _AliasElement; }
+                set { _AliasElement = value; OnPropertyChanged("AliasElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _AliasElement;
+            
+            /// <summary>
+            /// Name for type in this map
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Alias
+            {
+                get { return AliasElement != null ? AliasElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        AliasElement = null; 
+                    else
+                        AliasElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Alias");
+                }
+            }
+            
+            /// <summary>
             /// Documentation on use of structure
             /// </summary>
-            [FhirElement("documentation", Order=60)]
+            [FhirElement("documentation", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DocumentationElement
             {
@@ -380,6 +484,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
                     if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.StructureMap.StructureMapModelMode>)ModeElement.DeepCopy();
+                    if(AliasElement != null) dest.AliasElement = (Hl7.Fhir.Model.FhirString)AliasElement.DeepCopy();
                     if(DocumentationElement != null) dest.DocumentationElement = (Hl7.Fhir.Model.FhirString)DocumentationElement.DeepCopy();
                     return dest;
                 }
@@ -400,6 +505,7 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
                 if( !DeepComparable.Matches(ModeElement, otherT.ModeElement)) return false;
+                if( !DeepComparable.Matches(AliasElement, otherT.AliasElement)) return false;
                 if( !DeepComparable.Matches(DocumentationElement, otherT.DocumentationElement)) return false;
                 
                 return true;
@@ -413,6 +519,7 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
                 if( !DeepComparable.IsExactly(ModeElement, otherT.ModeElement)) return false;
+                if( !DeepComparable.IsExactly(AliasElement, otherT.AliasElement)) return false;
                 if( !DeepComparable.IsExactly(DocumentationElement, otherT.DocumentationElement)) return false;
                 
                 return true;
@@ -429,6 +536,7 @@ namespace Hl7.Fhir.Model
                     // StructureComponent elements
                     if (UrlElement != null) yield return UrlElement;
                     if (ModeElement != null) yield return ModeElement;
+                    if (AliasElement != null) yield return AliasElement;
                     if (DocumentationElement != null) yield return DocumentationElement;
                 }
             }
@@ -509,9 +617,42 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// none | types | type-and-types
+            /// </summary>
+            [FhirElement("typeMode", InSummary=true, Order=60)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.StructureMap.StructureMapGroupTypeMode> TypeModeElement
+            {
+                get { return _TypeModeElement; }
+                set { _TypeModeElement = value; OnPropertyChanged("TypeModeElement"); }
+            }
+            
+            private Code<Hl7.Fhir.Model.StructureMap.StructureMapGroupTypeMode> _TypeModeElement;
+            
+            /// <summary>
+            /// none | types | type-and-types
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.StructureMap.StructureMapGroupTypeMode? TypeMode
+            {
+                get { return TypeModeElement != null ? TypeModeElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        TypeModeElement = null; 
+                    else
+                        TypeModeElement = new Code<Hl7.Fhir.Model.StructureMap.StructureMapGroupTypeMode>(value);
+                    OnPropertyChanged("TypeMode");
+                }
+            }
+            
+            /// <summary>
             /// Documentation for this group
             /// </summary>
-            [FhirElement("documentation", InSummary=true, Order=60)]
+            [FhirElement("documentation", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DocumentationElement
             {
@@ -543,7 +684,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Named instance provided when invoking the map
             /// </summary>
-            [FhirElement("input", InSummary=true, Order=70)]
+            [FhirElement("input", InSummary=true, Order=80)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.StructureMap.InputComponent> Input
@@ -557,7 +698,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Transform Rule from source to target
             /// </summary>
-            [FhirElement("rule", InSummary=true, Order=80)]
+            [FhirElement("rule", InSummary=true, Order=90)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.StructureMap.RuleComponent> Rule
@@ -577,6 +718,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.Id)NameElement.DeepCopy();
                     if(ExtendsElement != null) dest.ExtendsElement = (Hl7.Fhir.Model.Id)ExtendsElement.DeepCopy();
+                    if(TypeModeElement != null) dest.TypeModeElement = (Code<Hl7.Fhir.Model.StructureMap.StructureMapGroupTypeMode>)TypeModeElement.DeepCopy();
                     if(DocumentationElement != null) dest.DocumentationElement = (Hl7.Fhir.Model.FhirString)DocumentationElement.DeepCopy();
                     if(Input != null) dest.Input = new List<Hl7.Fhir.Model.StructureMap.InputComponent>(Input.DeepCopy());
                     if(Rule != null) dest.Rule = new List<Hl7.Fhir.Model.StructureMap.RuleComponent>(Rule.DeepCopy());
@@ -599,6 +741,7 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
                 if( !DeepComparable.Matches(ExtendsElement, otherT.ExtendsElement)) return false;
+                if( !DeepComparable.Matches(TypeModeElement, otherT.TypeModeElement)) return false;
                 if( !DeepComparable.Matches(DocumentationElement, otherT.DocumentationElement)) return false;
                 if( !DeepComparable.Matches(Input, otherT.Input)) return false;
                 if( !DeepComparable.Matches(Rule, otherT.Rule)) return false;
@@ -614,6 +757,7 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
                 if( !DeepComparable.IsExactly(ExtendsElement, otherT.ExtendsElement)) return false;
+                if( !DeepComparable.IsExactly(TypeModeElement, otherT.TypeModeElement)) return false;
                 if( !DeepComparable.IsExactly(DocumentationElement, otherT.DocumentationElement)) return false;
                 if( !DeepComparable.IsExactly(Input, otherT.Input)) return false;
                 if( !DeepComparable.IsExactly(Rule, otherT.Rule)) return false;
@@ -632,6 +776,7 @@ namespace Hl7.Fhir.Model
                     // GroupComponent elements
                     if (NameElement != null) yield return NameElement;
                     if (ExtendsElement != null) yield return ExtendsElement;
+                    if (TypeModeElement != null) yield return TypeModeElement;
                     if (DocumentationElement != null) yield return DocumentationElement;
                     foreach (var elem in Input) { if (elem != null) yield return elem; }
                     foreach (var elem in Rule) { if (elem != null) yield return elem; }
@@ -1060,42 +1205,9 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "SourceComponent"; } }
             
             /// <summary>
-            /// Whether this rule applies if the source isn't found
-            /// </summary>
-            [FhirElement("required", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirBoolean RequiredElement
-            {
-                get { return _RequiredElement; }
-                set { _RequiredElement = value; OnPropertyChanged("RequiredElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirBoolean _RequiredElement;
-            
-            /// <summary>
-            /// Whether this rule applies if the source isn't found
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public bool? Required
-            {
-                get { return RequiredElement != null ? RequiredElement.Value : null; }
-                set
-                {
-                    if (!value.HasValue)
-                        RequiredElement = null; 
-                    else
-                        RequiredElement = new Hl7.Fhir.Model.FhirBoolean(value);
-                    OnPropertyChanged("Required");
-                }
-            }
-            
-            /// <summary>
             /// Type or variable this rule applies to
             /// </summary>
-            [FhirElement("context", InSummary=true, Order=50)]
+            [FhirElement("context", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Id ContextElement
@@ -1126,42 +1238,9 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// type | variable
-            /// </summary>
-            [FhirElement("contextType", InSummary=true, Order=60)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Code<Hl7.Fhir.Model.StructureMap.StructureMapContextType> ContextTypeElement
-            {
-                get { return _ContextTypeElement; }
-                set { _ContextTypeElement = value; OnPropertyChanged("ContextTypeElement"); }
-            }
-            
-            private Code<Hl7.Fhir.Model.StructureMap.StructureMapContextType> _ContextTypeElement;
-            
-            /// <summary>
-            /// type | variable
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.StructureMap.StructureMapContextType? ContextType
-            {
-                get { return ContextTypeElement != null ? ContextTypeElement.Value : null; }
-                set
-                {
-                    if (!value.HasValue)
-                        ContextTypeElement = null; 
-                    else
-                        ContextTypeElement = new Code<Hl7.Fhir.Model.StructureMap.StructureMapContextType>(value);
-                    OnPropertyChanged("ContextType");
-                }
-            }
-            
-            /// <summary>
             /// Specified minimum cardinality
             /// </summary>
-            [FhirElement("min", InSummary=true, Order=70)]
+            [FhirElement("min", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.Integer MinElement
             {
@@ -1193,7 +1272,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Specified maximum cardinality (number or *)
             /// </summary>
-            [FhirElement("max", InSummary=true, Order=80)]
+            [FhirElement("max", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString MaxElement
             {
@@ -1225,7 +1304,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Type for this source
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=90)]
+            [FhirElement("type", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString TypeElement
             {
@@ -1255,9 +1334,24 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// Default value if no value exists
+            /// </summary>
+            [FhirElement("defaultValue", InSummary=true, Order=80, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Address),typeof(Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Count),typeof(Distance),typeof(Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Money),typeof(Hl7.Fhir.Model.Period),typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Meta))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element DefaultValue
+            {
+                get { return _DefaultValue; }
+                set { _DefaultValue = value; OnPropertyChanged("DefaultValue"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _DefaultValue;
+            
+            /// <summary>
             /// Optional field for this source
             /// </summary>
-            [FhirElement("element", InSummary=true, Order=100)]
+            [FhirElement("element", InSummary=true, Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ElementElement
             {
@@ -1287,25 +1381,25 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// first | share | last
+            /// first | not_first | last | not_last | only_one
             /// </summary>
-            [FhirElement("listMode", InSummary=true, Order=110)]
+            [FhirElement("listMode", InSummary=true, Order=100)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.StructureMap.StructureMapListMode> ListModeElement
+            public Code<Hl7.Fhir.Model.StructureMap.StructureMapSourceListMode> ListModeElement
             {
                 get { return _ListModeElement; }
                 set { _ListModeElement = value; OnPropertyChanged("ListModeElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.StructureMap.StructureMapListMode> _ListModeElement;
+            private Code<Hl7.Fhir.Model.StructureMap.StructureMapSourceListMode> _ListModeElement;
             
             /// <summary>
-            /// first | share | last
+            /// first | not_first | last | not_last | only_one
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.StructureMap.StructureMapListMode? ListMode
+            public Hl7.Fhir.Model.StructureMap.StructureMapSourceListMode? ListMode
             {
                 get { return ListModeElement != null ? ListModeElement.Value : null; }
                 set
@@ -1313,7 +1407,7 @@ namespace Hl7.Fhir.Model
                     if (!value.HasValue)
                         ListModeElement = null; 
                     else
-                        ListModeElement = new Code<Hl7.Fhir.Model.StructureMap.StructureMapListMode>(value);
+                        ListModeElement = new Code<Hl7.Fhir.Model.StructureMap.StructureMapSourceListMode>(value);
                     OnPropertyChanged("ListMode");
                 }
             }
@@ -1321,7 +1415,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Named context for field, if a field is specified
             /// </summary>
-            [FhirElement("variable", InSummary=true, Order=120)]
+            [FhirElement("variable", InSummary=true, Order=110)]
             [DataMember]
             public Hl7.Fhir.Model.Id VariableElement
             {
@@ -1351,9 +1445,9 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// FluentPath expression  - must be true or the rule does not apply
+            /// FHIRPath expression  - must be true or the rule does not apply
             /// </summary>
-            [FhirElement("condition", InSummary=true, Order=130)]
+            [FhirElement("condition", InSummary=true, Order=120)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ConditionElement
             {
@@ -1364,7 +1458,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _ConditionElement;
             
             /// <summary>
-            /// FluentPath expression  - must be true or the rule does not apply
+            /// FHIRPath expression  - must be true or the rule does not apply
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1383,9 +1477,9 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// FluentPath expression  - must be true or the mapping engine throws an error instead of completing
+            /// FHIRPath expression  - must be true or the mapping engine throws an error instead of completing
             /// </summary>
-            [FhirElement("check", InSummary=true, Order=140)]
+            [FhirElement("check", InSummary=true, Order=130)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString CheckElement
             {
@@ -1396,7 +1490,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _CheckElement;
             
             /// <summary>
-            /// FluentPath expression  - must be true or the mapping engine throws an error instead of completing
+            /// FHIRPath expression  - must be true or the mapping engine throws an error instead of completing
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1421,14 +1515,13 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(RequiredElement != null) dest.RequiredElement = (Hl7.Fhir.Model.FhirBoolean)RequiredElement.DeepCopy();
                     if(ContextElement != null) dest.ContextElement = (Hl7.Fhir.Model.Id)ContextElement.DeepCopy();
-                    if(ContextTypeElement != null) dest.ContextTypeElement = (Code<Hl7.Fhir.Model.StructureMap.StructureMapContextType>)ContextTypeElement.DeepCopy();
                     if(MinElement != null) dest.MinElement = (Hl7.Fhir.Model.Integer)MinElement.DeepCopy();
                     if(MaxElement != null) dest.MaxElement = (Hl7.Fhir.Model.FhirString)MaxElement.DeepCopy();
                     if(TypeElement != null) dest.TypeElement = (Hl7.Fhir.Model.FhirString)TypeElement.DeepCopy();
+                    if(DefaultValue != null) dest.DefaultValue = (Hl7.Fhir.Model.Element)DefaultValue.DeepCopy();
                     if(ElementElement != null) dest.ElementElement = (Hl7.Fhir.Model.FhirString)ElementElement.DeepCopy();
-                    if(ListModeElement != null) dest.ListModeElement = (Code<Hl7.Fhir.Model.StructureMap.StructureMapListMode>)ListModeElement.DeepCopy();
+                    if(ListModeElement != null) dest.ListModeElement = (Code<Hl7.Fhir.Model.StructureMap.StructureMapSourceListMode>)ListModeElement.DeepCopy();
                     if(VariableElement != null) dest.VariableElement = (Hl7.Fhir.Model.Id)VariableElement.DeepCopy();
                     if(ConditionElement != null) dest.ConditionElement = (Hl7.Fhir.Model.FhirString)ConditionElement.DeepCopy();
                     if(CheckElement != null) dest.CheckElement = (Hl7.Fhir.Model.FhirString)CheckElement.DeepCopy();
@@ -1449,12 +1542,11 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(RequiredElement, otherT.RequiredElement)) return false;
                 if( !DeepComparable.Matches(ContextElement, otherT.ContextElement)) return false;
-                if( !DeepComparable.Matches(ContextTypeElement, otherT.ContextTypeElement)) return false;
                 if( !DeepComparable.Matches(MinElement, otherT.MinElement)) return false;
                 if( !DeepComparable.Matches(MaxElement, otherT.MaxElement)) return false;
                 if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
+                if( !DeepComparable.Matches(DefaultValue, otherT.DefaultValue)) return false;
                 if( !DeepComparable.Matches(ElementElement, otherT.ElementElement)) return false;
                 if( !DeepComparable.Matches(ListModeElement, otherT.ListModeElement)) return false;
                 if( !DeepComparable.Matches(VariableElement, otherT.VariableElement)) return false;
@@ -1470,12 +1562,11 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(RequiredElement, otherT.RequiredElement)) return false;
                 if( !DeepComparable.IsExactly(ContextElement, otherT.ContextElement)) return false;
-                if( !DeepComparable.IsExactly(ContextTypeElement, otherT.ContextTypeElement)) return false;
                 if( !DeepComparable.IsExactly(MinElement, otherT.MinElement)) return false;
                 if( !DeepComparable.IsExactly(MaxElement, otherT.MaxElement)) return false;
                 if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
+                if( !DeepComparable.IsExactly(DefaultValue, otherT.DefaultValue)) return false;
                 if( !DeepComparable.IsExactly(ElementElement, otherT.ElementElement)) return false;
                 if( !DeepComparable.IsExactly(ListModeElement, otherT.ListModeElement)) return false;
                 if( !DeepComparable.IsExactly(VariableElement, otherT.VariableElement)) return false;
@@ -1494,12 +1585,11 @@ namespace Hl7.Fhir.Model
                     // BackboneElement elements
                     foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // SourceComponent elements
-                    if (RequiredElement != null) yield return RequiredElement;
                     if (ContextElement != null) yield return ContextElement;
-                    if (ContextTypeElement != null) yield return ContextTypeElement;
                     if (MinElement != null) yield return MinElement;
                     if (MaxElement != null) yield return MaxElement;
                     if (TypeElement != null) yield return TypeElement;
+                    if (DefaultValue != null) yield return DefaultValue;
                     if (ElementElement != null) yield return ElementElement;
                     if (ListModeElement != null) yield return ListModeElement;
                     if (VariableElement != null) yield return VariableElement;
@@ -1647,26 +1737,26 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// first | share | last
+            /// first | share | last | collate
             /// </summary>
             [FhirElement("listMode", InSummary=true, Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Code<Hl7.Fhir.Model.StructureMap.StructureMapListMode>> ListModeElement
+            public List<Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>> ListModeElement
             {
-                get { if(_ListModeElement==null) _ListModeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.StructureMap.StructureMapListMode>>(); return _ListModeElement; }
+                get { if(_ListModeElement==null) _ListModeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>>(); return _ListModeElement; }
                 set { _ListModeElement = value; OnPropertyChanged("ListModeElement"); }
             }
             
-            private List<Code<Hl7.Fhir.Model.StructureMap.StructureMapListMode>> _ListModeElement;
+            private List<Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>> _ListModeElement;
             
             /// <summary>
-            /// first | share | last
+            /// first | share | last | collate
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public IEnumerable<Hl7.Fhir.Model.StructureMap.StructureMapListMode?> ListMode
+            public IEnumerable<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode?> ListMode
             {
                 get { return ListModeElement != null ? ListModeElement.Select(elem => elem.Value) : null; }
                 set
@@ -1674,7 +1764,7 @@ namespace Hl7.Fhir.Model
                     if (value == null)
                         ListModeElement = null; 
                     else
-                        ListModeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.StructureMap.StructureMapListMode>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.StructureMap.StructureMapListMode>(elem)));
+                        ListModeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>(elem)));
                     OnPropertyChanged("ListMode");
                 }
             }
@@ -1768,7 +1858,7 @@ namespace Hl7.Fhir.Model
                     if(ContextTypeElement != null) dest.ContextTypeElement = (Code<Hl7.Fhir.Model.StructureMap.StructureMapContextType>)ContextTypeElement.DeepCopy();
                     if(ElementElement != null) dest.ElementElement = (Hl7.Fhir.Model.FhirString)ElementElement.DeepCopy();
                     if(VariableElement != null) dest.VariableElement = (Hl7.Fhir.Model.Id)VariableElement.DeepCopy();
-                    if(ListModeElement != null) dest.ListModeElement = new List<Code<Hl7.Fhir.Model.StructureMap.StructureMapListMode>>(ListModeElement.DeepCopy());
+                    if(ListModeElement != null) dest.ListModeElement = new List<Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>>(ListModeElement.DeepCopy());
                     if(ListRuleIdElement != null) dest.ListRuleIdElement = (Hl7.Fhir.Model.Id)ListRuleIdElement.DeepCopy();
                     if(TransformElement != null) dest.TransformElement = (Code<Hl7.Fhir.Model.StructureMap.StructureMapTransform>)TransformElement.DeepCopy();
                     if(Parameter != null) dest.Parameter = new List<Hl7.Fhir.Model.StructureMap.ParameterComponent>(Parameter.DeepCopy());
@@ -1963,7 +2053,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Names of variables to pass to the rule or group
+            /// Variable to pass to the rule or group
             /// </summary>
             [FhirElement("variable", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=-1)]
@@ -1977,7 +2067,7 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.FhirString> _VariableElement;
             
             /// <summary>
-            /// Names of variables to pass to the rule or group
+            /// Variable to pass to the rule or group
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -2478,7 +2568,7 @@ namespace Hl7.Fhir.Model
             Key = "smp-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Must have a contextType if you have a context",
-            Xpath = "not(f:/context)) or (f:/contextType)"
+            Xpath = "not(f:/context) or (f:/contextType)"
         };
 
         public static ElementDefinition.ConstraintComponent StructureMap_SMP_1 = new ElementDefinition.ConstraintComponent()
@@ -2487,7 +2577,7 @@ namespace Hl7.Fhir.Model
             Key = "smp-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Can only have a element if you have a context",
-            Xpath = "not(f:/element)) or (f:/context)"
+            Xpath = "not(f:/element) or (f:/context)"
         };
 
         public override void AddDefaultConstraints()

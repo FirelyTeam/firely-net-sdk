@@ -293,20 +293,8 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// Determines if the specified <see cref="Type"/> instance represents a FHIR conformance resource type,
-        /// i.e. if it equals one of the following types:
-        /// <list type="bullet">
-        /// <item>Conformance</item>
-        /// <item>StructureDefinition</item>
-        /// <item>ValueSet</item>
-        /// <item>ConceptMap</item>
-        /// <item>DataElement</item>
-        /// <item>OperationDefinition</item>
-        /// <item>SearchParameter</item>
-        /// <item>NamingSystem</item>
-        /// <item>ImplementationGuide</item>
-        /// <item>TestScript</item>
-        /// </list>
+        /// Determines if the specified <see cref="FHIRAllTypes"/> value represents a FHIR conformance resource type
+        /// (resources under the Conformance/Terminology/Implementation Support header in resourcelist.html)
         /// </summary>
         public static bool IsConformanceResource(Type type)
         {
@@ -314,20 +302,8 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// Determines if the specified value represents a the type name of a FHIR conformance resource,
-        /// i.e. if the value equals one of the following strings:
-        /// <list type="bullet">
-        /// <item>Conformance</item>
-        /// <item>StructureDefinition</item>
-        /// <item>ValueSet</item>
-        /// <item>ConceptMap</item>
-        /// <item>DataElement</item>
-        /// <item>OperationDefinition</item>
-        /// <item>SearchParameter</item>
-        /// <item>NamingSystem</item>
-        /// <item>ImplementationGuide</item>
-        /// <item>TestScript</item>
-        /// </list>
+        /// Determines if the specified <see cref="FHIRAllTypes"/> value represents a FHIR conformance resource type
+        /// (resources under the Conformance/Terminology/Implementation Support header in resourcelist.html)
         /// </summary>
         public static bool IsConformanceResource(string name)
         {
@@ -342,20 +318,8 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// Determines if the specified <see cref="FHIRAllTypes"/> value represents a FHIR conformance resource type,
-        /// i.e. if it equals one of the following values:
-        /// <list type="bullet">
-        /// <item>FHIRAllTypes.Conformance</item>
-        /// <item>FHIRAllTypes.StructureDefinition</item>
-        /// <item>FHIRAllTypes.ValueSet</item>
-        /// <item>FHIRAllTypes.ConceptMap</item>
-        /// <item>FHIRAllTypes.DataElement</item>
-        /// <item>FHIRAllTypes.OperationDefinition</item>
-        /// <item>FHIRAllTypes.SearchParameter</item>
-        /// <item>FHIRAllTypes.NamingSystem</item>
-        /// <item>FHIRAllTypes.ImplementationGuide</item>
-        /// <item>FHIRAllTypes.TestScript</item>
-        /// </list>
+        /// Determines if the specified <see cref="FHIRAllTypes"/> value represents a FHIR conformance resource type
+        /// (resources under the Conformance/Terminology/Implementation Support header in resourcelist.html)
         /// </summary>
         public static bool IsConformanceResource(FHIRAllTypes type)
         {
@@ -366,16 +330,22 @@ namespace Hl7.Fhir.Model
 
         public static readonly FHIRAllTypes[] ConformanceResources = 
         {
-            FHIRAllTypes.CapabilityStatement,
             FHIRAllTypes.StructureDefinition,
-            FHIRAllTypes.ValueSet,
-            FHIRAllTypes.ConceptMap,
+            FHIRAllTypes.StructureMap,
             FHIRAllTypes.DataElement,
+            FHIRAllTypes.CapabilityStatement,
+            FHIRAllTypes.MessageDefinition,
             FHIRAllTypes.OperationDefinition,
             FHIRAllTypes.SearchParameter,
-            FHIRAllTypes.NamingSystem,
+            FHIRAllTypes.CompartmentDefinition,
             FHIRAllTypes.ImplementationGuide,
-            FHIRAllTypes.TestScript
+            FHIRAllTypes.CodeSystem,
+            FHIRAllTypes.ValueSet,
+            FHIRAllTypes.ConceptMap,
+            FHIRAllTypes.ExpansionProfile,
+            FHIRAllTypes.NamingSystem,
+            FHIRAllTypes.TestScript,
+            FHIRAllTypes.TestReport
         };
 
         /// <summary>Determines if the specified value represents the name of a core Resource, Datatype or primitive.</summary>

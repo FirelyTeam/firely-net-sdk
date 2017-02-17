@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Aug 11, 2016 03:44+0000 for FHIR v1.6.0 
+  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -94,9 +94,9 @@
               <xs:documentation xml:lang="en">Details concerning the specimen collection.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="treatment" type="Specimen.Treatment" minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="processing" type="Specimen.Processing" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Details concerning treatment and processing steps for the specimen.</xs:documentation>
+              <xs:documentation xml:lang="en">Details concerning processing and processing steps for the specimen.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="container" type="Specimen.Container" minOccurs="0" maxOccurs="unbounded">
@@ -151,7 +151,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:complexType name="Specimen.Treatment">
+  <xs:complexType name="Specimen.Processing">
     <xs:annotation>
       <xs:documentation xml:lang="en">A sample to be used for analysis.</xs:documentation>
     </xs:annotation>
@@ -175,7 +175,7 @@
           </xs:element>
           <xs:choice minOccurs="0" maxOccurs="1" >
             <xs:annotation>
-              <xs:documentation xml:lang="en">A record of the time or period when the specimen treatment occurred.  For example the time of sample fixation or the period of time the sample was in formalin.</xs:documentation>
+              <xs:documentation xml:lang="en">A record of the time or period when the specimen processing occurred.  For example the time of sample fixation or the period of time the sample was in formalin.</xs:documentation>
             </xs:annotation>
             <xs:element name="timeDateTime" type="dateTime"/>
             <xs:element name="timePeriod" type="Period"/>

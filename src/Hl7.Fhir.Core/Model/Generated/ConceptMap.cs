@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -122,6 +122,33 @@ namespace Hl7.Fhir.Model
             Disjoint,
         }
 
+        /// <summary>
+        /// Defines which action to take if there is no match in the group.
+        /// (url: http://hl7.org/fhir/ValueSet/conceptmap-unmapped-mode)
+        /// </summary>
+        [FhirEnumeration("ConceptMapGroupUnmappedMode")]
+        public enum ConceptMapGroupUnmappedMode
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/conceptmap-unmapped-mode)
+            /// </summary>
+            [EnumLiteral("provided"), Description("Provided Code")]
+            Provided,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/conceptmap-unmapped-mode)
+            /// </summary>
+            [EnumLiteral("fixed"), Description("Fixed Code")]
+            Fixed,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/conceptmap-unmapped-mode)
+            /// </summary>
+            [EnumLiteral("other-map"), Description("Other Map")]
+            OtherMap,
+        }
+
         [FhirType("GroupComponent")]
         [DataContract]
         public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -133,7 +160,6 @@ namespace Hl7.Fhir.Model
             /// Code System (if value set crosses code systems)
             /// </summary>
             [FhirElement("source", Order=40)]
-            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri SourceElement
             {
@@ -272,6 +298,19 @@ namespace Hl7.Fhir.Model
             
             private List<Hl7.Fhir.Model.ConceptMap.SourceElementComponent> _Element;
             
+            /// <summary>
+            /// When no match in the mappings
+            /// </summary>
+            [FhirElement("unmapped", Order=90)]
+            [DataMember]
+            public Hl7.Fhir.Model.ConceptMap.UnmappedComponent Unmapped
+            {
+                get { return _Unmapped; }
+                set { _Unmapped = value; OnPropertyChanged("Unmapped"); }
+            }
+            
+            private Hl7.Fhir.Model.ConceptMap.UnmappedComponent _Unmapped;
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as GroupComponent;
@@ -284,6 +323,7 @@ namespace Hl7.Fhir.Model
                     if(TargetElement != null) dest.TargetElement = (Hl7.Fhir.Model.FhirUri)TargetElement.DeepCopy();
                     if(TargetVersionElement != null) dest.TargetVersionElement = (Hl7.Fhir.Model.FhirString)TargetVersionElement.DeepCopy();
                     if(Element != null) dest.Element = new List<Hl7.Fhir.Model.ConceptMap.SourceElementComponent>(Element.DeepCopy());
+                    if(Unmapped != null) dest.Unmapped = (Hl7.Fhir.Model.ConceptMap.UnmappedComponent)Unmapped.DeepCopy();
                     return dest;
                 }
                 else
@@ -306,6 +346,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(TargetElement, otherT.TargetElement)) return false;
                 if( !DeepComparable.Matches(TargetVersionElement, otherT.TargetVersionElement)) return false;
                 if( !DeepComparable.Matches(Element, otherT.Element)) return false;
+                if( !DeepComparable.Matches(Unmapped, otherT.Unmapped)) return false;
                 
                 return true;
             }
@@ -321,6 +362,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(TargetElement, otherT.TargetElement)) return false;
                 if( !DeepComparable.IsExactly(TargetVersionElement, otherT.TargetVersionElement)) return false;
                 if( !DeepComparable.IsExactly(Element, otherT.Element)) return false;
+                if( !DeepComparable.IsExactly(Unmapped, otherT.Unmapped)) return false;
                 
                 return true;
             }
@@ -339,6 +381,7 @@ namespace Hl7.Fhir.Model
                     if (TargetElement != null) yield return TargetElement;
                     if (TargetVersionElement != null) yield return TargetVersionElement;
                     foreach (var elem in Element) { if (elem != null) yield return elem; }
+                    if (Unmapped != null) yield return Unmapped;
                 }
             }
             
@@ -385,9 +428,41 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// Display for the code
+            /// </summary>
+            [FhirElement("display", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString DisplayElement
+            {
+                get { return _DisplayElement; }
+                set { _DisplayElement = value; OnPropertyChanged("DisplayElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _DisplayElement;
+            
+            /// <summary>
+            /// Display for the code
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Display
+            {
+                get { return DisplayElement != null ? DisplayElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        DisplayElement = null; 
+                    else
+                        DisplayElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Display");
+                }
+            }
+            
+            /// <summary>
             /// Concept in target system for element
             /// </summary>
-            [FhirElement("target", Order=50)]
+            [FhirElement("target", Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ConceptMap.TargetElementComponent> Target
@@ -406,6 +481,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
+                    if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
                     if(Target != null) dest.Target = new List<Hl7.Fhir.Model.ConceptMap.TargetElementComponent>(Target.DeepCopy());
                     return dest;
                 }
@@ -425,6 +501,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
+                if( !DeepComparable.Matches(DisplayElement, otherT.DisplayElement)) return false;
                 if( !DeepComparable.Matches(Target, otherT.Target)) return false;
                 
                 return true;
@@ -437,6 +514,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
+                if( !DeepComparable.IsExactly(DisplayElement, otherT.DisplayElement)) return false;
                 if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
                 
                 return true;
@@ -452,6 +530,7 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // SourceElementComponent elements
                     if (CodeElement != null) yield return CodeElement;
+                    if (DisplayElement != null) yield return DisplayElement;
                     foreach (var elem in Target) { if (elem != null) yield return elem; }
                 }
             }
@@ -499,9 +578,41 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// Display for the code
+            /// </summary>
+            [FhirElement("display", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString DisplayElement
+            {
+                get { return _DisplayElement; }
+                set { _DisplayElement = value; OnPropertyChanged("DisplayElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _DisplayElement;
+            
+            /// <summary>
+            /// Display for the code
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Display
+            {
+                get { return DisplayElement != null ? DisplayElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        DisplayElement = null; 
+                    else
+                        DisplayElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Display");
+                }
+            }
+            
+            /// <summary>
             /// relatedto | equivalent | equal | wider | subsumes | narrower | specializes | inexact | unmatched | disjoint
             /// </summary>
-            [FhirElement("equivalence", Order=50)]
+            [FhirElement("equivalence", Order=60)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ConceptMap.ConceptMapEquivalence> EquivalenceElement
             {
@@ -533,7 +644,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Description of status/issues in mapping
             /// </summary>
-            [FhirElement("comments", Order=60)]
+            [FhirElement("comments", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString CommentsElement
             {
@@ -565,7 +676,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Other elements required for this mapping (from context)
             /// </summary>
-            [FhirElement("dependsOn", Order=70)]
+            [FhirElement("dependsOn", Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent> DependsOn
@@ -577,9 +688,41 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent> _DependsOn;
             
             /// <summary>
+            /// Display for the code
+            /// </summary>
+            [FhirElement("dependsOndisplay", Order=90)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString DependsOndisplayElement
+            {
+                get { return _DependsOndisplayElement; }
+                set { _DependsOndisplayElement = value; OnPropertyChanged("DependsOndisplayElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _DependsOndisplayElement;
+            
+            /// <summary>
+            /// Display for the code
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string DependsOndisplay
+            {
+                get { return DependsOndisplayElement != null ? DependsOndisplayElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        DependsOndisplayElement = null; 
+                    else
+                        DependsOndisplayElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("DependsOndisplay");
+                }
+            }
+            
+            /// <summary>
             /// Other concepts that this mapping also produces
             /// </summary>
-            [FhirElement("product", Order=80)]
+            [FhirElement("product", Order=100)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent> Product
@@ -598,9 +741,11 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
+                    if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
                     if(EquivalenceElement != null) dest.EquivalenceElement = (Code<Hl7.Fhir.Model.ConceptMap.ConceptMapEquivalence>)EquivalenceElement.DeepCopy();
                     if(CommentsElement != null) dest.CommentsElement = (Hl7.Fhir.Model.FhirString)CommentsElement.DeepCopy();
                     if(DependsOn != null) dest.DependsOn = new List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent>(DependsOn.DeepCopy());
+                    if(DependsOndisplayElement != null) dest.DependsOndisplayElement = (Hl7.Fhir.Model.FhirString)DependsOndisplayElement.DeepCopy();
                     if(Product != null) dest.Product = new List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent>(Product.DeepCopy());
                     return dest;
                 }
@@ -620,9 +765,11 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
+                if( !DeepComparable.Matches(DisplayElement, otherT.DisplayElement)) return false;
                 if( !DeepComparable.Matches(EquivalenceElement, otherT.EquivalenceElement)) return false;
                 if( !DeepComparable.Matches(CommentsElement, otherT.CommentsElement)) return false;
                 if( !DeepComparable.Matches(DependsOn, otherT.DependsOn)) return false;
+                if( !DeepComparable.Matches(DependsOndisplayElement, otherT.DependsOndisplayElement)) return false;
                 if( !DeepComparable.Matches(Product, otherT.Product)) return false;
                 
                 return true;
@@ -635,9 +782,11 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
+                if( !DeepComparable.IsExactly(DisplayElement, otherT.DisplayElement)) return false;
                 if( !DeepComparable.IsExactly(EquivalenceElement, otherT.EquivalenceElement)) return false;
                 if( !DeepComparable.IsExactly(CommentsElement, otherT.CommentsElement)) return false;
                 if( !DeepComparable.IsExactly(DependsOn, otherT.DependsOn)) return false;
+                if( !DeepComparable.IsExactly(DependsOndisplayElement, otherT.DependsOndisplayElement)) return false;
                 if( !DeepComparable.IsExactly(Product, otherT.Product)) return false;
                 
                 return true;
@@ -653,9 +802,11 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // TargetElementComponent elements
                     if (CodeElement != null) yield return CodeElement;
+                    if (DisplayElement != null) yield return DisplayElement;
                     if (EquivalenceElement != null) yield return EquivalenceElement;
                     if (CommentsElement != null) yield return CommentsElement;
                     foreach (var elem in DependsOn) { if (elem != null) yield return elem; }
+                    if (DependsOndisplayElement != null) yield return DependsOndisplayElement;
                     foreach (var elem in Product) { if (elem != null) yield return elem; }
                 }
             }
@@ -827,6 +978,211 @@ namespace Hl7.Fhir.Model
                     if (PropertyElement != null) yield return PropertyElement;
                     if (SystemElement != null) yield return SystemElement;
                     if (CodeElement != null) yield return CodeElement;
+                }
+            }
+            
+        }
+        
+        
+        [FhirType("UnmappedComponent")]
+        [DataContract]
+        public partial class UnmappedComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "UnmappedComponent"; } }
+            
+            /// <summary>
+            /// provided | fixed | other-map
+            /// </summary>
+            [FhirElement("mode", Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.ConceptMap.ConceptMapGroupUnmappedMode> ModeElement
+            {
+                get { return _ModeElement; }
+                set { _ModeElement = value; OnPropertyChanged("ModeElement"); }
+            }
+            
+            private Code<Hl7.Fhir.Model.ConceptMap.ConceptMapGroupUnmappedMode> _ModeElement;
+            
+            /// <summary>
+            /// provided | fixed | other-map
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.ConceptMap.ConceptMapGroupUnmappedMode? Mode
+            {
+                get { return ModeElement != null ? ModeElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        ModeElement = null; 
+                    else
+                        ModeElement = new Code<Hl7.Fhir.Model.ConceptMap.ConceptMapGroupUnmappedMode>(value);
+                    OnPropertyChanged("Mode");
+                }
+            }
+            
+            /// <summary>
+            /// Fixed code when mode = fixed
+            /// </summary>
+            [FhirElement("code", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.Code CodeElement
+            {
+                get { return _CodeElement; }
+                set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
+            }
+            
+            private Hl7.Fhir.Model.Code _CodeElement;
+            
+            /// <summary>
+            /// Fixed code when mode = fixed
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Code
+            {
+                get { return CodeElement != null ? CodeElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        CodeElement = null; 
+                    else
+                        CodeElement = new Hl7.Fhir.Model.Code(value);
+                    OnPropertyChanged("Code");
+                }
+            }
+            
+            /// <summary>
+            /// Display for the code
+            /// </summary>
+            [FhirElement("display", Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString DisplayElement
+            {
+                get { return _DisplayElement; }
+                set { _DisplayElement = value; OnPropertyChanged("DisplayElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _DisplayElement;
+            
+            /// <summary>
+            /// Display for the code
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Display
+            {
+                get { return DisplayElement != null ? DisplayElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        DisplayElement = null; 
+                    else
+                        DisplayElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Display");
+                }
+            }
+            
+            /// <summary>
+            /// Canonical URL for other concept map
+            /// </summary>
+            [FhirElement("url", Order=70)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirUri UrlElement
+            {
+                get { return _UrlElement; }
+                set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirUri _UrlElement;
+            
+            /// <summary>
+            /// Canonical URL for other concept map
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Url
+            {
+                get { return UrlElement != null ? UrlElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        UrlElement = null; 
+                    else
+                        UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("Url");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as UnmappedComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.ConceptMap.ConceptMapGroupUnmappedMode>)ModeElement.DeepCopy();
+                    if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
+                    if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
+                    if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new UnmappedComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as UnmappedComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(ModeElement, otherT.ModeElement)) return false;
+                if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
+                if( !DeepComparable.Matches(DisplayElement, otherT.DisplayElement)) return false;
+                if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as UnmappedComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(ModeElement, otherT.ModeElement)) return false;
+                if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
+                if( !DeepComparable.IsExactly(DisplayElement, otherT.DisplayElement)) return false;
+                if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // UnmappedComponent elements
+                    if (ModeElement != null) yield return ModeElement;
+                    if (CodeElement != null) yield return CodeElement;
+                    if (DisplayElement != null) yield return DisplayElement;
+                    if (UrlElement != null) yield return UrlElement;
                 }
             }
             
@@ -1238,11 +1594,31 @@ namespace Hl7.Fhir.Model
             Xpath = "exists(f:comments) or not(exists(f:equivalence)) or ((f:equivalence/@value != 'narrower') and (f:equivalence/@value != 'inexact'))"
         };
 
+        public static ElementDefinition.ConstraintComponent ConceptMap_CMD_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "group.unmapped.all((mode = 'other-map') implies url.exists())",
+            Key = "cmd-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the mode is 'other-map', a code must be provided",
+            Xpath = "(f:mode/@value != 'other-map') or exists(f:url)"
+        };
+
+        public static ElementDefinition.ConstraintComponent ConceptMap_CMD_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "group.unmapped.all((mode = 'fixed') implies code.exists())",
+            Key = "cmd-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the mode is 'fixed', a code must be provided",
+            Xpath = "(f:mode/@value != 'fixed') or exists(f:code)"
+        };
+
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
 
             InvariantConstraints.Add(ConceptMap_CMD_1);
+            InvariantConstraints.Add(ConceptMap_CMD_3);
+            InvariantConstraints.Add(ConceptMap_CMD_2);
         }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)

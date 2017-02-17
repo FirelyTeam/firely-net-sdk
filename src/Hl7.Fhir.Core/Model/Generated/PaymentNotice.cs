@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -239,7 +239,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Organization;
         
         /// <summary>
-        /// Status of the payment
+        /// Whether payment has been sent or cleared
         /// </summary>
         [FhirElement("paymentStatus", Order=180)]
         [DataMember]

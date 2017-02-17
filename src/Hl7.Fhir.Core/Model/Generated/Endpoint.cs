@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -146,9 +146,23 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Protocol/Profile/Standard to be used with this endpoint connection
+        /// </summary>
+        [FhirElement("connectionType", InSummary=true, Order=110)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.Coding ConnectionType
+        {
+            get { return _ConnectionType; }
+            set { _ConnectionType = value; OnPropertyChanged("ConnectionType"); }
+        }
+        
+        private Hl7.Fhir.Model.Coding _ConnectionType;
+        
+        /// <summary>
         /// A name that this endpoint can be identified by
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=110)]
+        [FhirElement("name", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
         {
@@ -180,7 +194,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Organization that manages this endpoint (may not be the organization that exposes the endpoint)
         /// </summary>
-        [FhirElement("managingOrganization", InSummary=true, Order=120)]
+        [FhirElement("managingOrganization", InSummary=true, Order=130)]
         [CLSCompliant(false)]
 		[References("Organization")]
         [DataMember]
@@ -195,7 +209,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contact details for source (e.g. troubleshooting)
         /// </summary>
-        [FhirElement("contact", Order=130)]
+        [FhirElement("contact", Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ContactPoint> Contact
@@ -209,7 +223,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Interval the endpoint is expected to be operational
         /// </summary>
-        [FhirElement("period", InSummary=true, Order=140)]
+        [FhirElement("period", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
@@ -218,20 +232,6 @@ namespace Hl7.Fhir.Model
         }
         
         private Hl7.Fhir.Model.Period _Period;
-        
-        /// <summary>
-        /// Protocol/Profile/Standard to be used with this endpoint connection
-        /// </summary>
-        [FhirElement("connectionType", InSummary=true, Order=150)]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Hl7.Fhir.Model.Coding ConnectionType
-        {
-            get { return _ConnectionType; }
-            set { _ConnectionType = value; OnPropertyChanged("ConnectionType"); }
-        }
-        
-        private Hl7.Fhir.Model.Coding _ConnectionType;
         
         /// <summary>
         /// The type of content that may be used at this endpoint (e.g. XDS Discharge summaries)
@@ -346,38 +346,6 @@ namespace Hl7.Fhir.Model
             }
         }
         
-        /// <summary>
-        /// PKI Public keys to support secure communications
-        /// </summary>
-        [FhirElement("publicKey", Order=200)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString PublicKeyElement
-        {
-            get { return _PublicKeyElement; }
-            set { _PublicKeyElement = value; OnPropertyChanged("PublicKeyElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _PublicKeyElement;
-        
-        /// <summary>
-        /// PKI Public keys to support secure communications
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string PublicKey
-        {
-            get { return PublicKeyElement != null ? PublicKeyElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  PublicKeyElement = null; 
-                else
-                  PublicKeyElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("PublicKey");
-            }
-        }
-        
 
         public override void AddDefaultConstraints()
         {
@@ -394,16 +362,15 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>)StatusElement.DeepCopy();
+                if(ConnectionType != null) dest.ConnectionType = (Hl7.Fhir.Model.Coding)ConnectionType.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopy();
                 if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ContactPoint>(Contact.DeepCopy());
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                if(ConnectionType != null) dest.ConnectionType = (Hl7.Fhir.Model.Coding)ConnectionType.DeepCopy();
                 if(PayloadType != null) dest.PayloadType = new List<Hl7.Fhir.Model.CodeableConcept>(PayloadType.DeepCopy());
                 if(PayloadMimeTypeElement != null) dest.PayloadMimeTypeElement = new List<Hl7.Fhir.Model.Code>(PayloadMimeTypeElement.DeepCopy());
                 if(AddressElement != null) dest.AddressElement = (Hl7.Fhir.Model.FhirUri)AddressElement.DeepCopy();
                 if(HeaderElement != null) dest.HeaderElement = new List<Hl7.Fhir.Model.FhirString>(HeaderElement.DeepCopy());
-                if(PublicKeyElement != null) dest.PublicKeyElement = (Hl7.Fhir.Model.FhirString)PublicKeyElement.DeepCopy();
                 return dest;
             }
             else
@@ -423,16 +390,15 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.Matches(ConnectionType, otherT.ConnectionType)) return false;
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.Matches(ManagingOrganization, otherT.ManagingOrganization)) return false;
             if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
             if( !DeepComparable.Matches(Period, otherT.Period)) return false;
-            if( !DeepComparable.Matches(ConnectionType, otherT.ConnectionType)) return false;
             if( !DeepComparable.Matches(PayloadType, otherT.PayloadType)) return false;
             if( !DeepComparable.Matches(PayloadMimeTypeElement, otherT.PayloadMimeTypeElement)) return false;
             if( !DeepComparable.Matches(AddressElement, otherT.AddressElement)) return false;
             if( !DeepComparable.Matches(HeaderElement, otherT.HeaderElement)) return false;
-            if( !DeepComparable.Matches(PublicKeyElement, otherT.PublicKeyElement)) return false;
             
             return true;
         }
@@ -445,16 +411,15 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.IsExactly(ConnectionType, otherT.ConnectionType)) return false;
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.IsExactly(ManagingOrganization, otherT.ManagingOrganization)) return false;
             if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
-            if( !DeepComparable.IsExactly(ConnectionType, otherT.ConnectionType)) return false;
             if( !DeepComparable.IsExactly(PayloadType, otherT.PayloadType)) return false;
             if( !DeepComparable.IsExactly(PayloadMimeTypeElement, otherT.PayloadMimeTypeElement)) return false;
             if( !DeepComparable.IsExactly(AddressElement, otherT.AddressElement)) return false;
             if( !DeepComparable.IsExactly(HeaderElement, otherT.HeaderElement)) return false;
-            if( !DeepComparable.IsExactly(PublicKeyElement, otherT.PublicKeyElement)) return false;
             
             return true;
         }
@@ -467,16 +432,15 @@ namespace Hl7.Fhir.Model
 				// Endpoint elements
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
+				if (ConnectionType != null) yield return ConnectionType;
 				if (NameElement != null) yield return NameElement;
 				if (ManagingOrganization != null) yield return ManagingOrganization;
 				foreach (var elem in Contact) { if (elem != null) yield return elem; }
 				if (Period != null) yield return Period;
-				if (ConnectionType != null) yield return ConnectionType;
 				foreach (var elem in PayloadType) { if (elem != null) yield return elem; }
 				foreach (var elem in PayloadMimeTypeElement) { if (elem != null) yield return elem; }
 				if (AddressElement != null) yield return AddressElement;
 				foreach (var elem in HeaderElement) { if (elem != null) yield return elem; }
-				if (PublicKeyElement != null) yield return PublicKeyElement;
             }
         }
     }

@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -84,8 +84,111 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("cancelled"), Description("Cancelled")]
             Cancelled,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/supplyrequest-status)
+            /// </summary>
+            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
+            EnteredInError,
         }
 
+        [FhirType("OrderedItemComponent")]
+        [DataContract]
+        public partial class OrderedItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "OrderedItemComponent"; } }
+            
+            /// <summary>
+            /// The requested amount of the item indicated
+            /// </summary>
+            [FhirElement("quantity", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Quantity Quantity
+            {
+                get { return _Quantity; }
+                set { _Quantity = value; OnPropertyChanged("Quantity"); }
+            }
+            
+            private Quantity _Quantity;
+            
+            /// <summary>
+            /// Medication, Substance, or Device requested to be supplied
+            /// </summary>
+            [FhirElement("item", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Item
+            {
+                get { return _Item; }
+                set { _Item = value; OnPropertyChanged("Item"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _Item;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as OrderedItemComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Quantity != null) dest.Quantity = (Quantity)Quantity.DeepCopy();
+                    if(Item != null) dest.Item = (Hl7.Fhir.Model.Element)Item.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new OrderedItemComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as OrderedItemComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
+                if( !DeepComparable.Matches(Item, otherT.Item)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as OrderedItemComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
+                if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // OrderedItemComponent elements
+                    if (Quantity != null) yield return Quantity;
+                    if (Item != null) yield return Item;
+                }
+            }
+            
+        }
+        
+        
         [FhirType("WhenComponent")]
         [DataContract]
         public partial class WhenComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -256,7 +359,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
-        /// requested | completed | failed | cancelled
+        /// requested | completed | failed | cancelled | entered-in-error
         /// </summary>
         [FhirElement("status", InSummary=true, Order=130)]
         [DataMember]
@@ -269,7 +372,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.SupplyRequest.SupplyRequestStatus> _StatusElement;
         
         /// <summary>
-        /// requested | completed | failed | cancelled
+        /// requested | completed | failed | cancelled | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -301,19 +404,17 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Kind;
         
         /// <summary>
-        /// Medication, Substance, or Device requested to be supplied
+        /// The item being requested
         /// </summary>
-        [FhirElement("orderedItem", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
-        [CLSCompliant(false)]
-		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [FhirElement("orderedItem", InSummary=true, Order=150)]
         [DataMember]
-        public Hl7.Fhir.Model.Element OrderedItem
+        public Hl7.Fhir.Model.SupplyRequest.OrderedItemComponent OrderedItem
         {
             get { return _OrderedItem; }
             set { _OrderedItem = value; OnPropertyChanged("OrderedItem"); }
         }
         
-        private Hl7.Fhir.Model.Element _OrderedItem;
+        private Hl7.Fhir.Model.SupplyRequest.OrderedItemComponent _OrderedItem;
         
         /// <summary>
         /// Who is intended to fulfill the request
@@ -359,6 +460,36 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.SupplyRequest.WhenComponent _When;
         
+        /// <summary>
+        /// The origin of the supply
+        /// </summary>
+        [FhirElement("from", InSummary=true, Order=190)]
+        [CLSCompliant(false)]
+		[References("Organization","Location")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference From
+        {
+            get { return _From; }
+            set { _From = value; OnPropertyChanged("From"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _From;
+        
+        /// <summary>
+        /// The destination of the supply
+        /// </summary>
+        [FhirElement("to", InSummary=true, Order=200)]
+        [CLSCompliant(false)]
+		[References("Organization","Location","Patient")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference To
+        {
+            get { return _To; }
+            set { _To = value; OnPropertyChanged("To"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _To;
+        
 
         public override void AddDefaultConstraints()
         {
@@ -379,10 +510,12 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.SupplyRequest.SupplyRequestStatus>)StatusElement.DeepCopy();
                 if(Kind != null) dest.Kind = (Hl7.Fhir.Model.CodeableConcept)Kind.DeepCopy();
-                if(OrderedItem != null) dest.OrderedItem = (Hl7.Fhir.Model.Element)OrderedItem.DeepCopy();
+                if(OrderedItem != null) dest.OrderedItem = (Hl7.Fhir.Model.SupplyRequest.OrderedItemComponent)OrderedItem.DeepCopy();
                 if(Supplier != null) dest.Supplier = new List<Hl7.Fhir.Model.ResourceReference>(Supplier.DeepCopy());
                 if(Reason != null) dest.Reason = (Hl7.Fhir.Model.Element)Reason.DeepCopy();
                 if(When != null) dest.When = (Hl7.Fhir.Model.SupplyRequest.WhenComponent)When.DeepCopy();
+                if(From != null) dest.From = (Hl7.Fhir.Model.ResourceReference)From.DeepCopy();
+                if(To != null) dest.To = (Hl7.Fhir.Model.ResourceReference)To.DeepCopy();
                 return dest;
             }
             else
@@ -410,6 +543,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Supplier, otherT.Supplier)) return false;
             if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
             if( !DeepComparable.Matches(When, otherT.When)) return false;
+            if( !DeepComparable.Matches(From, otherT.From)) return false;
+            if( !DeepComparable.Matches(To, otherT.To)) return false;
             
             return true;
         }
@@ -430,6 +565,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Supplier, otherT.Supplier)) return false;
             if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
             if( !DeepComparable.IsExactly(When, otherT.When)) return false;
+            if( !DeepComparable.IsExactly(From, otherT.From)) return false;
+            if( !DeepComparable.IsExactly(To, otherT.To)) return false;
             
             return true;
         }
@@ -450,6 +587,8 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Supplier) { if (elem != null) yield return elem; }
 				if (Reason != null) yield return Reason;
 				if (When != null) yield return When;
+				if (From != null) yield return From;
+				if (To != null) yield return To;
             }
         }
     }

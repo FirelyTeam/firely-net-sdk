@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -273,7 +273,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Over what time-period is fulfillment sought
+            /// When fulfillment sought
             /// </summary>
             [FhirElement("period", Order=50)]
             [DataMember]
@@ -696,7 +696,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _BusinessStatus;
         
         /// <summary>
-        /// proposed | planned | actionable +
+        /// proposal | plan | order +
         /// </summary>
         [FhirElement("intent", InSummary=true, Order=170)]
         [Cardinality(Min=1,Max=1)]
@@ -710,7 +710,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.RequestIntent> _IntentElement;
         
         /// <summary>
-        /// proposed | planned | actionable +
+        /// proposal | plan | order +
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -955,7 +955,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _PerformerType;
         
         /// <summary>
-        /// Task Owner
+        /// Responsible individual
         /// </summary>
         [FhirElement("owner", InSummary=true, Order=290)]
         [CLSCompliant(false)]

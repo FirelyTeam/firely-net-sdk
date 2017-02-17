@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Aug 11, 2016 03:44+0000 for FHIR v1.6.0 
+  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -56,7 +56,7 @@
           </xs:element>
           <xs:element name="status" minOccurs="1" maxOccurs="1" type="EncounterStatus">
             <xs:annotation>
-              <xs:documentation xml:lang="en">planned | arrived | in-progress | onleave | finished | cancelled | entered-in-error.</xs:documentation>
+              <xs:documentation xml:lang="en">planned | arrived | triaged | in-progress | onleave | finished | cancelled +.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="statusHistory" type="Encounter.StatusHistory" minOccurs="0" maxOccurs="unbounded">
@@ -69,6 +69,13 @@
               <xs:documentation xml:lang="en">inpatient | outpatient | ambulatory | emergency +.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="classHistory" type="Encounter.ClassHistory" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The class history permits the tracking of the encounters transitions without needing to go  through the resource history.
+
+This would be used for a case where an admission starts of as an emergency encounter, then transisions into an inpatient scenario. Doing this and not restarting a new encounter ensures that any lab/diagnostic results can more easily follow the patient and not require re-processing and not get lost or cancelled during a kindof discharge from emergency to inpatient.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="type" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">Specific type of encounter (e.g. e-mail consultation, surgical day-care, skilled nursing, rehabilitation).</xs:documentation>
@@ -79,9 +86,9 @@
               <xs:documentation xml:lang="en">Indicates the urgency of the encounter.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="patient" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="subject" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The patient present at the encounter.</xs:documentation>
+              <xs:documentation xml:lang="en">The patient ro group present at the encounter.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="episodeOfCare" minOccurs="0" maxOccurs="unbounded" type="Reference">
@@ -162,12 +169,33 @@
         <xs:sequence>
           <xs:element name="status" minOccurs="1" maxOccurs="1" type="EncounterStatus">
             <xs:annotation>
-              <xs:documentation xml:lang="en">planned | arrived | in-progress | onleave | finished | cancelled | entered-in-error.</xs:documentation>
+              <xs:documentation xml:lang="en">planned | arrived | triaged | in-progress | onleave | finished | cancelled +.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="period" minOccurs="1" maxOccurs="1" type="Period">
             <xs:annotation>
               <xs:documentation xml:lang="en">The time that the episode was in the specified status.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Encounter.ClassHistory">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">An interaction between a patient and healthcare provider(s) for the purpose of providing healthcare service(s) or assessing the health status of a patient.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="class" minOccurs="1" maxOccurs="1" type="Coding">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">inpatient | outpatient | ambulatory | emergency +.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="period" minOccurs="1" maxOccurs="1" type="Period">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The time that the episode was in the specified class.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -188,7 +216,7 @@
           </xs:element>
           <xs:element name="period" minOccurs="0" maxOccurs="1" type="Period">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The period of time that the specified participant was present during the encounter. These can overlap or be sub-sets of the overall encounters period.</xs:documentation>
+              <xs:documentation xml:lang="en">The period of time that the specified participant participated in the encounter. These can overlap or be sub-sets of the overall encounter's period.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="individual" minOccurs="0" maxOccurs="1" type="Reference">
@@ -244,7 +272,7 @@
           </xs:element>
           <xs:element name="specialArrangement" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Wheelchair, translator, stretcher, etc.</xs:documentation>
+              <xs:documentation xml:lang="en">Any special requests that have been made for this hospitalization encounter, such as the provision of specific equipment or other things.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="destination" minOccurs="0" maxOccurs="1" type="Reference">
@@ -339,6 +367,11 @@
           <xs:documentation xml:lang="en">Arrived</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="triaged">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Triaged</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="in-progress">
         <xs:annotation>
           <xs:documentation xml:lang="en">In Progress</xs:documentation>
@@ -362,6 +395,11 @@
       <xs:enumeration value="entered-in-error">
         <xs:annotation>
           <xs:documentation xml:lang="en">Entered in Error</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="unknown">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Unknown</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>

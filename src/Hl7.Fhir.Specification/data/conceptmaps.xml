@@ -2,7 +2,7 @@
 <Bundle xmlns="http://hl7.org/fhir">
   <id value="conceptmaps" />
   <meta>
-    <lastUpdated value="2016-08-11T03:44:00.907+00:00" />
+    <lastUpdated value="2017-02-17T13:27:25.219+00:00" />
   </meta>
   <type value="collection" />
   <entry>
@@ -22,7 +22,7 @@
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
-            <system value="other" />
+            <system value="url" />
             <value value="http://hl7.org/fhir" />
           </telecom>
           <telecom>
@@ -30,7 +30,7 @@
             <value value="fhir@lists.hl7.org" />
           </telecom>
         </contact>
-        <date value="2016-08-11T03:44:00+00:00" />
+        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/observation-relationshiptypes" />
         </sourceReference>
@@ -103,7 +103,7 @@
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
-            <system value="other" />
+            <system value="url" />
             <value value="http://hl7.org/fhir" />
           </telecom>
           <telecom>
@@ -111,7 +111,7 @@
             <value value="fhir@lists.hl7.org" />
           </telecom>
         </contact>
-        <date value="2016-08-11T03:44:00+00:00" />
+        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/address-use" />
         </sourceReference>
@@ -176,7 +176,7 @@
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
-            <system value="other" />
+            <system value="url" />
             <value value="http://hl7.org/fhir" />
           </telecom>
           <telecom>
@@ -184,7 +184,7 @@
             <value value="fhir@lists.hl7.org" />
           </telecom>
         </contact>
-        <date value="2016-08-11T03:44:00+00:00" />
+        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/contact-point-use" />
         </sourceReference>
@@ -256,7 +256,7 @@
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
-            <system value="other" />
+            <system value="url" />
             <value value="http://hl7.org/fhir" />
           </telecom>
           <telecom>
@@ -264,7 +264,7 @@
             <value value="fhir@lists.hl7.org" />
           </telecom>
         </contact>
-        <date value="2016-08-11T03:44:00+00:00" />
+        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/contact-point-use" />
         </sourceReference>
@@ -322,7 +322,7 @@
         <name value="v2 map for AdministrativeGender" />
         <status value="draft" />
         <publisher value="HL7 (FHIR Project)" />
-        <date value="2016-08-11T03:44:00+00:00" />
+        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/administrative-gender" />
         </sourceReference>
@@ -385,7 +385,7 @@
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
-            <system value="other" />
+            <system value="url" />
             <value value="http://hl7.org/fhir" />
           </telecom>
           <telecom>
@@ -393,7 +393,7 @@
             <value value="fhir@lists.hl7.org" />
           </telecom>
         </contact>
-        <date value="2016-08-11T03:44:00+00:00" />
+        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/address-type" />
         </sourceReference>
@@ -422,23 +422,23 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-procedure-status-v3" />
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-medication-request-status-v3" />
     <resource>
       <ConceptMap>
-        <id value="cm-procedure-status-v3" />
+        <id value="cm-medication-request-status-v3" />
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
-        <url value="http://hl7.org/fhir/ConceptMap/cm-procedure-status-v3" />
-        <name value="v3 map for ProcedureStatus" />
+        <url value="http://hl7.org/fhir/ConceptMap/cm-medication-request-status-v3" />
+        <name value="v3 map for MedicationRequestStatus" />
         <status value="draft" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
-            <system value="other" />
+            <system value="url" />
             <value value="http://hl7.org/fhir" />
           </telecom>
           <telecom>
@@ -446,27 +446,34 @@
             <value value="fhir@lists.hl7.org" />
           </telecom>
         </contact>
-        <date value="2016-08-11T03:44:00+00:00" />
+        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
-          <reference value="http://hl7.org/fhir/ValueSet/procedure-status" />
+          <reference value="http://hl7.org/fhir/ValueSet/medication-request-status" />
         </sourceReference>
         <targetReference>
           <reference value="http://hl7.org/fhir/ValueSet/v3-ActStatus" />
         </targetReference>
         <group>
-          <source value="http://hl7.org/fhir/procedure-status" />
+          <source value="http://hl7.org/fhir/medication-request-status" />
           <target value="http://hl7.org/fhir/v3/ActStatus" />
           <element>
-            <code value="in-progress" />
+            <code value="active" />
             <target>
               <code value="active" />
               <equivalence value="equal" />
             </target>
           </element>
           <element>
-            <code value="aborted" />
+            <code value="on-hold" />
             <target>
-              <code value="aborted" />
+              <code value="suspended" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="cancelled" />
+            <target>
+              <code value="cancelled" />
               <equivalence value="equal" />
             </target>
           </element>
@@ -481,6 +488,20 @@
             <code value="entered-in-error" />
             <target>
               <code value="nullified" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="stopped" />
+            <target>
+              <code value="aborted" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="draft" />
+            <target>
+              <code value="new" />
               <equivalence value="equal" />
             </target>
           </element>
@@ -503,7 +524,7 @@
         <name value="v3 map for AdministrativeGender" />
         <status value="draft" />
         <publisher value="HL7 (FHIR Project)" />
-        <date value="2016-08-11T03:44:00+00:00" />
+        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/administrative-gender" />
         </sourceReference>
@@ -560,7 +581,7 @@
         <name value="v3 map for DataAbsentReason" />
         <status value="draft" />
         <publisher value="HL7 (FHIR Project)" />
-        <date value="2016-08-11T03:44:00+00:00" />
+        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/data-absent-reason" />
         </sourceReference>
@@ -654,7 +675,7 @@
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
-            <system value="other" />
+            <system value="url" />
             <value value="http://hl7.org/fhir" />
           </telecom>
           <telecom>
@@ -662,7 +683,7 @@
             <value value="fhir@lists.hl7.org" />
           </telecom>
         </contact>
-        <date value="2016-08-11T03:44:00+00:00" />
+        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/name-use" />
         </sourceReference>
@@ -744,7 +765,7 @@
         <name value="v3 map for DocumentReferenceStatus" />
         <status value="draft" />
         <publisher value="HL7 (FHIR Project)" />
-        <date value="2016-08-11T03:44:00+00:00" />
+        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/document-reference-status" />
         </sourceReference>
@@ -796,7 +817,7 @@
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
-            <system value="other" />
+            <system value="url" />
             <value value="http://hl7.org/fhir" />
           </telecom>
           <telecom>
@@ -804,7 +825,7 @@
             <value value="fhir@lists.hl7.org" />
           </telecom>
         </contact>
-        <date value="2016-08-11T03:44:00+00:00" />
+        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/name-use" />
         </sourceReference>
@@ -884,7 +905,7 @@
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
-            <system value="other" />
+            <system value="url" />
             <value value="http://hl7.org/fhir" />
           </telecom>
           <telecom>
@@ -892,7 +913,7 @@
             <value value="fhir@lists.hl7.org" />
           </telecom>
         </contact>
-        <date value="2016-08-11T03:44:00+00:00" />
+        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/detectedissue-severity" />
         </sourceReference>
@@ -944,7 +965,7 @@
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
-            <system value="other" />
+            <system value="url" />
             <value value="http://hl7.org/fhir" />
           </telecom>
           <telecom>
@@ -952,7 +973,7 @@
             <value value="fhir@lists.hl7.org" />
           </telecom>
         </contact>
-        <date value="2016-08-11T03:44:00+00:00" />
+        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/medication-admin-status" />
         </sourceReference>
@@ -1002,87 +1023,6 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-medication-order-status-v3" />
-    <resource>
-      <ConceptMap>
-        <id value="cm-medication-order-status-v3" />
-        <text>
-          <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <url value="http://hl7.org/fhir/ConceptMap/cm-medication-order-status-v3" />
-        <name value="v3 map for MedicationOrderStatus" />
-        <status value="draft" />
-        <publisher value="HL7 (FHIR Project)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-          <telecom>
-            <system value="email" />
-            <value value="fhir@lists.hl7.org" />
-          </telecom>
-        </contact>
-        <date value="2016-08-11T03:44:00+00:00" />
-        <sourceReference>
-          <reference value="http://hl7.org/fhir/ValueSet/medication-order-status" />
-        </sourceReference>
-        <targetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/v3-ActStatus" />
-        </targetReference>
-        <group>
-          <source value="http://hl7.org/fhir/medication-order-status" />
-          <target value="http://hl7.org/fhir/v3/ActStatus" />
-          <element>
-            <code value="active" />
-            <target>
-              <code value="active" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-          <element>
-            <code value="on-hold" />
-            <target>
-              <code value="suspended" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-          <element>
-            <code value="completed" />
-            <target>
-              <code value="completed" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-          <element>
-            <code value="entered-in-error" />
-            <target>
-              <code value="nullified" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-          <element>
-            <code value="stopped" />
-            <target>
-              <code value="aborted" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-          <element>
-            <code value="draft" />
-            <target>
-              <code value="new" />
-              <equivalence value="equal" />
-            </target>
-          </element>
-        </group>
-      </ConceptMap>
-    </resource>
-  </entry>
-  <entry>
     <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-contact-point-system-v2" />
     <resource>
       <ConceptMap>
@@ -1099,7 +1039,7 @@
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
-            <system value="other" />
+            <system value="url" />
             <value value="http://hl7.org/fhir" />
           </telecom>
           <telecom>
@@ -1107,7 +1047,7 @@
             <value value="fhir@lists.hl7.org" />
           </telecom>
         </contact>
-        <date value="2016-08-11T03:44:00+00:00" />
+        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/contact-point-system" />
         </sourceReference>
@@ -1147,7 +1087,7 @@
             </target>
           </element>
           <element>
-            <code value="other" />
+            <code value="url" />
             <target>
               <code value="Internet" />
               <equivalence value="narrower" />
@@ -1175,7 +1115,7 @@
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
-            <system value="other" />
+            <system value="url" />
             <value value="http://hl7.org/fhir" />
           </telecom>
           <telecom>
@@ -1183,7 +1123,7 @@
             <value value="fhir@lists.hl7.org" />
           </telecom>
         </contact>
-        <date value="2016-08-11T03:44:00+00:00" />
+        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/medication-dispense-status" />
         </sourceReference>
@@ -1249,7 +1189,7 @@
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
-            <system value="other" />
+            <system value="url" />
             <value value="http://hl7.org/fhir" />
           </telecom>
           <telecom>
@@ -1257,7 +1197,7 @@
             <value value="fhir@lists.hl7.org" />
           </telecom>
         </contact>
-        <date value="2016-08-11T03:44:00+00:00" />
+        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/composition-status" />
         </sourceReference>
@@ -1316,7 +1256,7 @@
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
-            <system value="other" />
+            <system value="url" />
             <value value="http://hl7.org/fhir" />
           </telecom>
           <telecom>
@@ -1324,7 +1264,7 @@
             <value value="fhir@lists.hl7.org" />
           </telecom>
         </contact>
-        <date value="2016-08-11T03:44:00+00:00" />
+        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/address-use" />
         </sourceReference>
@@ -1384,7 +1324,7 @@
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
-            <system value="other" />
+            <system value="url" />
             <value value="http://hl7.org/fhir" />
           </telecom>
           <telecom>
@@ -1392,7 +1332,7 @@
             <value value="fhir@lists.hl7.org" />
           </telecom>
         </contact>
-        <date value="2016-08-11T03:44:00+00:00" />
+        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/medication-statement-status" />
         </sourceReference>
@@ -1447,7 +1387,7 @@
       <ConceptMap>
         <id value="101" />
         <meta>
-          <lastUpdated value="2016-08-11T03:44:00.907+00:00" />
+          <lastUpdated value="2017-02-17T13:27:25.219+00:00" />
         </meta>
         <text>
           <status value="generated" />
@@ -1468,16 +1408,22 @@
         <contact>
           <name value="FHIR project team (example)" />
           <telecom>
-            <system value="other" />
+            <system value="url" />
             <value value="http://hl7.org/fhir" />
           </telecom>
         </contact>
         <date value="2012-06-13" />
         <description value="A mapping between the FHIR and HL7 v3 AddressUse Code systems" />
         <useContext>
-          <text value="for CDA Usage" />
+          <code>
+            <system value="http://hl7.org/fhir/usage-context-type" />
+            <code value="venue" />
+          </code>
+          <valueCodeableConcept>
+            <text value="for CDA Usage" />
+          </valueCodeableConcept>
         </useContext>
-        <requirements value="To help implementers map from HL7 v3/CDA to FHIR" />
+        <purpose value="To help implementers map from HL7 v3/CDA to FHIR" />
         <copyright value="Creative Commons 0" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/address-use" />
@@ -1490,36 +1436,43 @@
           <target value="http://hl7.org/fhir/v3/AddressUse" />
           <element>
             <code value="home" />
+            <display value="home" />
             <target>
               <code value="H" />
-            </target>
-          </element>
-          <element>
-            <code value="home" />
-            <target>
-              <code value="H" />
+              <display value="home" />
             </target>
           </element>
           <element>
             <code value="work" />
+            <display value="work" />
             <target>
               <code value="WP" />
+              <display value="work place" />
             </target>
           </element>
           <element>
             <code value="temp" />
+            <display value="temp" />
             <target>
               <code value="TMP" />
+              <display value="temporary address" />
             </target>
           </element>
           <element>
             <code value="old" />
+            <display value="old" />
             <target>
               <code value="BAD" />
+              <display value="bad address" />
               <equivalence value="disjoint" />
               <comments value="In the HL7 v3 AD, old is handled by the usablePeriod element, but you have to provide a time, there's no simple equivalent of flagging an address as old" />
             </target>
           </element>
+          <unmapped>
+            <mode value="fixed" />
+            <code value="temp" />
+            <display value="temp" />
+          </unmapped>
         </group>
       </ConceptMap>
     </resource>
@@ -1530,7 +1483,7 @@
       <ConceptMap>
         <id value="103" />
         <meta>
-          <lastUpdated value="2016-08-11T03:44:00.907+00:00" />
+          <lastUpdated value="2017-02-17T13:27:25.219+00:00" />
         </meta>
         <text>
           <status value="generated" />
@@ -1551,23 +1504,23 @@
         <contact>
           <name value="FHIR project team (example)" />
           <telecom>
-            <system value="other" />
+            <system value="url" />
             <value value="http://hl7.org/fhir" />
           </telecom>
         </contact>
         <date value="2012-06-13" />
         <description value="Example rule-based mappings between SNOMED CT to ICD-10-CM for fracture of ulna" />
-        <useContext>
+        <jurisdiction>
           <coding>
             <system value="http://unstats.un.org/unsd/methods/m49/m49.htm" />
             <code value="840" />
             <display value="United States of America" />
           </coding>
-        </useContext>
-        <requirements value="Show example rule based mappings" />
+        </jurisdiction>
+        <purpose value="Show example rule based mappings" />
         <copyright value="Creative Commons 0" />
         <sourceReference>
-          <reference value="http://snomed.info/sct" />
+          <reference value="http://snomed.info/id?fhir_vs" />
         </sourceReference>
         <targetReference>
           <reference value="http://hl7.org/fhir/sid/icd-10-us" />
@@ -1602,7 +1555,7 @@
       <ConceptMap>
         <id value="102" />
         <meta>
-          <lastUpdated value="2016-08-11T03:44:00.907+00:00" />
+          <lastUpdated value="2017-02-17T13:27:25.219+00:00" />
         </meta>
         <text>
           <status value="generated" />
@@ -1618,13 +1571,13 @@
         <publisher value="FHIR project team (original source: LabMCoP)" />
         <contact>
           <telecom>
-            <system value="other" />
+            <system value="url" />
             <value value="http://hl7.org/fhir" />
           </telecom>
         </contact>
         <contact>
           <telecom>
-            <system value="other" />
+            <system value="url" />
             <value value="http://www.phconnect.org/group/laboratorymessagingcommunityofpractice/forum/attachment/download?id=3649725%3AUploadedFile%3A145786" />
           </telecom>
         </contact>
@@ -1633,7 +1586,7 @@
           <reference value="http://hl7.org/fhir/ValueSet/v2-0487" />
         </sourceReference>
         <targetReference>
-          <reference value="http://snomed.info/id" />
+          <reference value="http://snomed.info/id?fhir_vs" />
         </targetReference>
         <group>
           <source value="http://hl7.org/fhir/v2/0487" />

@@ -127,66 +127,6 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The type of participant for the action
-    /// (url: http://hl7.org/fhir/ValueSet/action-participant-type)
-    /// </summary>
-    [FhirEnumeration("PlanActionParticipantType")]
-    public enum PlanActionParticipantType
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/action-participant-type)
-        /// </summary>
-        [EnumLiteral("patient"), Description("Patient")]
-        Patient,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/action-participant-type)
-        /// </summary>
-        [EnumLiteral("practitioner"), Description("Practitioner")]
-        Practitioner,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/action-participant-type)
-        /// </summary>
-        [EnumLiteral("related-person"), Description("Related Person")]
-        RelatedPerson,
-    }
-
-    /// <summary>
-    /// The Participation status of an appointment.
-    /// (url: http://hl7.org/fhir/ValueSet/participationstatus)
-    /// </summary>
-    [FhirEnumeration("ParticipationStatus")]
-    public enum ParticipationStatus
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/participationstatus)
-        /// </summary>
-        [EnumLiteral("accepted"), Description("Accepted")]
-        Accepted,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/participationstatus)
-        /// </summary>
-        [EnumLiteral("declined"), Description("Declined")]
-        Declined,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/participationstatus)
-        /// </summary>
-        [EnumLiteral("tentative"), Description("Tentative")]
-        Tentative,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/participationstatus)
-        /// </summary>
-        [EnumLiteral("needs-action"), Description("Needs Action")]
-        NeedsAction,
-    }
-
-    /// <summary>
     /// One of the resource types defined as part of FHIR.
     /// (url: http://hl7.org/fhir/ValueSet/resource-types)
     /// </summary>
@@ -205,6 +145,12 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("ActivityDefinition"), Description("ActivityDefinition")]
         ActivityDefinition,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
+        [EnumLiteral("AdverseEvent"), Description("AdverseEvent")]
+        AdverseEvent,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -271,6 +217,18 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("CareTeam"), Description("CareTeam")]
         CareTeam,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
+        [EnumLiteral("Catalog"), Description("Catalog")]
+        Catalog,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
+        [EnumLiteral("ChargeItem"), Description("ChargeItem")]
+        ChargeItem,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -383,8 +341,8 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
         /// </summary>
-        [EnumLiteral("DeviceUseRequest"), Description("DeviceUseRequest")]
-        DeviceUseRequest,
+        [EnumLiteral("DeviceRequest"), Description("DeviceRequest")]
+        DeviceRequest,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -397,12 +355,6 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("DiagnosticReport"), Description("DiagnosticReport")]
         DiagnosticReport,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/resource-types)
-        /// </summary>
-        [EnumLiteral("DiagnosticRequest"), Description("DiagnosticRequest")]
-        DiagnosticRequest,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -493,6 +445,12 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("Goal"), Description("Goal")]
         Goal,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
+        [EnumLiteral("GraphDefinition"), Description("GraphDefinition")]
+        GraphDefinition,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -635,8 +593,8 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
         /// </summary>
-        [EnumLiteral("NutritionRequest"), Description("NutritionRequest")]
-        NutritionRequest,
+        [EnumLiteral("NutritionOrder"), Description("NutritionOrder")]
+        NutritionOrder,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -898,6 +856,66 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
+    /// The type of participant for the action
+    /// (url: http://hl7.org/fhir/ValueSet/action-participant-type)
+    /// </summary>
+    [FhirEnumeration("ActionParticipantType")]
+    public enum ActionParticipantType
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/action-participant-type)
+        /// </summary>
+        [EnumLiteral("patient"), Description("Patient")]
+        Patient,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/action-participant-type)
+        /// </summary>
+        [EnumLiteral("practitioner"), Description("Practitioner")]
+        Practitioner,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/action-participant-type)
+        /// </summary>
+        [EnumLiteral("related-person"), Description("Related Person")]
+        RelatedPerson,
+    }
+
+    /// <summary>
+    /// The Participation status of an appointment.
+    /// (url: http://hl7.org/fhir/ValueSet/participationstatus)
+    /// </summary>
+    [FhirEnumeration("ParticipationStatus")]
+    public enum ParticipationStatus
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/participationstatus)
+        /// </summary>
+        [EnumLiteral("accepted"), Description("Accepted")]
+        Accepted,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/participationstatus)
+        /// </summary>
+        [EnumLiteral("declined"), Description("Declined")]
+        Declined,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/participationstatus)
+        /// </summary>
+        [EnumLiteral("tentative"), Description("Tentative")]
+        Tentative,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/participationstatus)
+        /// </summary>
+        [EnumLiteral("needs-action"), Description("Needs Action")]
+        NeedsAction,
+    }
+
+    /// <summary>
     /// Data types allowed to be used for search parameters.
     /// (url: http://hl7.org/fhir/ValueSet/search-param-type)
     /// </summary>
@@ -1015,30 +1033,54 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The processing mode that applies to this list
-    /// (url: http://hl7.org/fhir/ValueSet/list-mode)
+    /// Codes identifying the stage lifecycle stage of a event
+    /// (url: http://hl7.org/fhir/ValueSet/event-status)
     /// </summary>
-    [FhirEnumeration("ListMode")]
-    public enum ListMode
+    [FhirEnumeration("EventStatus")]
+    public enum EventStatus
     {
         /// <summary>
         /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/list-mode)
+        /// (system: http://hl7.org/fhir/event-status)
         /// </summary>
-        [EnumLiteral("working"), Description("Working List")]
-        Working,
+        [EnumLiteral("preparation"), Description("Preparation")]
+        Preparation,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/list-mode)
+        /// (system: http://hl7.org/fhir/event-status)
         /// </summary>
-        [EnumLiteral("snapshot"), Description("Snapshot List")]
-        Snapshot,
+        [EnumLiteral("in-progress"), Description("In Progress")]
+        InProgress,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/list-mode)
+        /// (system: http://hl7.org/fhir/event-status)
         /// </summary>
-        [EnumLiteral("changes"), Description("Change List")]
-        Changes,
+        [EnumLiteral("suspended"), Description("Suspended")]
+        Suspended,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/event-status)
+        /// </summary>
+        [EnumLiteral("aborted"), Description("Aborted")]
+        Aborted,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/event-status)
+        /// </summary>
+        [EnumLiteral("completed"), Description("Completed")]
+        Completed,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/event-status)
+        /// </summary>
+        [EnumLiteral("entered-in-error"), Description("Entered in Error")]
+        EnteredInError,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/event-status)
+        /// </summary>
+        [EnumLiteral("unknown"), Description("Unknown")]
+        Unknown,
     }
 
     /// <summary>
@@ -1093,63 +1135,6 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Codes indicating the degree of authority/intentionality associated with a request
-    /// (url: http://hl7.org/fhir/ValueSet/request-intent)
-    /// </summary>
-    [FhirEnumeration("RequestIntent")]
-    public enum RequestIntent
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/request-intent)
-        /// </summary>
-        [EnumLiteral("proposal"), Description("Proposal")]
-        Proposal,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/request-intent)
-        /// </summary>
-        [EnumLiteral("plan"), Description("Plan")]
-        Plan,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/request-intent)
-        /// </summary>
-        [EnumLiteral("order"), Description("Order")]
-        Order,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/request-intent)
-        /// </summary>
-        [EnumLiteral("original-order"), Description("Original Order")]
-        OriginalOrder,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/request-intent)
-        /// </summary>
-        [EnumLiteral("reflex-order"), Description("Reflex Order")]
-        ReflexOrder,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/request-intent)
-        /// </summary>
-        [EnumLiteral("filler-order"), Description("Filler Order")]
-        FillerOrder,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/request-intent)
-        /// </summary>
-        [EnumLiteral("instance-order"), Description("Instance Order")]
-        InstanceOrder,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/request-intent)
-        /// </summary>
-        [EnumLiteral("option"), Description("Option")]
-        Option,
-    }
-
-    /// <summary>
     /// The clinical priority of a diagnostic order.
     /// (url: http://hl7.org/fhir/ValueSet/request-priority)
     /// </summary>
@@ -1172,14 +1157,113 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/request-priority)
         /// </summary>
-        [EnumLiteral("stat"), Description("Stat")]
-        Stat,
+        [EnumLiteral("asap"), Description("ASAP")]
+        Asap,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/request-priority)
         /// </summary>
-        [EnumLiteral("asap"), Description("ASAP")]
-        Asap,
+        [EnumLiteral("stat"), Description("STAT")]
+        Stat,
+    }
+
+    /// <summary>
+    /// Which compartment a compartmnet definition describes
+    /// (url: http://hl7.org/fhir/ValueSet/compartment-type)
+    /// </summary>
+    [FhirEnumeration("CompartmentType")]
+    public enum CompartmentType
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/compartment-type)
+        /// </summary>
+        [EnumLiteral("Patient"), Description("Patient")]
+        Patient,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/compartment-type)
+        /// </summary>
+        [EnumLiteral("Encounter"), Description("Encounter")]
+        Encounter,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/compartment-type)
+        /// </summary>
+        [EnumLiteral("RelatedPerson"), Description("RelatedPerson")]
+        RelatedPerson,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/compartment-type)
+        /// </summary>
+        [EnumLiteral("Practitioner"), Description("Practitioner")]
+        Practitioner,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/compartment-type)
+        /// </summary>
+        [EnumLiteral("Device"), Description("Device")]
+        Device,
+    }
+
+    /// <summary>
+    /// The workflow/clinical status of the composition.
+    /// (url: http://hl7.org/fhir/ValueSet/composition-status)
+    /// </summary>
+    [FhirEnumeration("CompositionStatus")]
+    public enum CompositionStatus
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/composition-status)
+        /// </summary>
+        [EnumLiteral("preliminary"), Description("Preliminary")]
+        Preliminary,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/composition-status)
+        /// </summary>
+        [EnumLiteral("final"), Description("Final")]
+        Final,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/composition-status)
+        /// </summary>
+        [EnumLiteral("amended"), Description("Amended")]
+        Amended,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/composition-status)
+        /// </summary>
+        [EnumLiteral("entered-in-error"), Description("Entered in Error")]
+        EnteredInError,
+    }
+
+    /// <summary>
+    /// The processing mode that applies to this list
+    /// (url: http://hl7.org/fhir/ValueSet/list-mode)
+    /// </summary>
+    [FhirEnumeration("ListMode")]
+    public enum ListMode
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/list-mode)
+        /// </summary>
+        [EnumLiteral("working"), Description("Working List")]
+        Working,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/list-mode)
+        /// </summary>
+        [EnumLiteral("snapshot"), Description("Snapshot List")]
+        Snapshot,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/list-mode)
+        /// </summary>
+        [EnumLiteral("changes"), Description("Change List")]
+        Changes,
     }
 
     /// <summary>
@@ -1328,7 +1412,13 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/observation-status)
         /// </summary>
-        [EnumLiteral("cancelled"), Description("cancelled")]
+        [EnumLiteral("corrected"), Description("Corrected")]
+        Corrected,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/observation-status)
+        /// </summary>
+        [EnumLiteral("cancelled"), Description("Cancelled")]
         Cancelled,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
@@ -1340,7 +1430,7 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/observation-status)
         /// </summary>
-        [EnumLiteral("unknown"), Description("Unknown Status")]
+        [EnumLiteral("unknown"), Description("Unknown")]
         Unknown,
     }
 
@@ -1454,8 +1544,8 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/data-types)
         /// </summary>
-        [EnumLiteral("DosageInstruction"), Description("DosageInstruction")]
-        DosageInstruction,
+        [EnumLiteral("Dosage"), Description("Dosage")]
+        Dosage,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/data-types)
@@ -1712,6 +1802,12 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
         /// </summary>
+        [EnumLiteral("AdverseEvent"), Description("AdverseEvent")]
+        AdverseEvent,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
         [EnumLiteral("AllergyIntolerance"), Description("AllergyIntolerance")]
         AllergyIntolerance,
         /// <summary>
@@ -1774,6 +1870,18 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("CareTeam"), Description("CareTeam")]
         CareTeam,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
+        [EnumLiteral("Catalog"), Description("Catalog")]
+        Catalog,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
+        [EnumLiteral("ChargeItem"), Description("ChargeItem")]
+        ChargeItem,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -1886,8 +1994,8 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
         /// </summary>
-        [EnumLiteral("DeviceUseRequest"), Description("DeviceUseRequest")]
-        DeviceUseRequest,
+        [EnumLiteral("DeviceRequest"), Description("DeviceRequest")]
+        DeviceRequest,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -1900,12 +2008,6 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("DiagnosticReport"), Description("DiagnosticReport")]
         DiagnosticReport,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/resource-types)
-        /// </summary>
-        [EnumLiteral("DiagnosticRequest"), Description("DiagnosticRequest")]
-        DiagnosticRequest,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -1996,6 +2098,12 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("Goal"), Description("Goal")]
         Goal,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
+        [EnumLiteral("GraphDefinition"), Description("GraphDefinition")]
+        GraphDefinition,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -2138,8 +2246,8 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
         /// </summary>
-        [EnumLiteral("NutritionRequest"), Description("NutritionRequest")]
-        NutritionRequest,
+        [EnumLiteral("NutritionOrder"), Description("NutritionOrder")]
+        NutritionOrder,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -2449,8 +2557,8 @@ namespace Hl7.Fhir.Model
     /// Defines the kinds of conditions that can appear on actions
     /// (url: http://hl7.org/fhir/ValueSet/action-condition-kind)
     /// </summary>
-    [FhirEnumeration("PlanActionConditionKind")]
-    public enum PlanActionConditionKind
+    [FhirEnumeration("ActionConditionKind")]
+    public enum ActionConditionKind
     {
         /// <summary>
         /// MISSING DESCRIPTION<br/>
@@ -2476,8 +2584,8 @@ namespace Hl7.Fhir.Model
     /// Defines the types of relationships between actions
     /// (url: http://hl7.org/fhir/ValueSet/action-relationship-type)
     /// </summary>
-    [FhirEnumeration("PlanActionRelationshipType")]
-    public enum PlanActionRelationshipType
+    [FhirEnumeration("ActionRelationshipType")]
+    public enum ActionRelationshipType
     {
         /// <summary>
         /// MISSING DESCRIPTION<br/>
@@ -2539,8 +2647,8 @@ namespace Hl7.Fhir.Model
     /// Defines organization behavior of a group
     /// (url: http://hl7.org/fhir/ValueSet/action-grouping-behavior)
     /// </summary>
-    [FhirEnumeration("PlanActionGroupingBehavior")]
-    public enum PlanActionGroupingBehavior
+    [FhirEnumeration("ActionGroupingBehavior")]
+    public enum ActionGroupingBehavior
     {
         /// <summary>
         /// MISSING DESCRIPTION<br/>
@@ -2566,8 +2674,8 @@ namespace Hl7.Fhir.Model
     /// Defines selection behavior of a group
     /// (url: http://hl7.org/fhir/ValueSet/action-selection-behavior)
     /// </summary>
-    [FhirEnumeration("PlanActionSelectionBehavior")]
-    public enum PlanActionSelectionBehavior
+    [FhirEnumeration("ActionSelectionBehavior")]
+    public enum ActionSelectionBehavior
     {
         /// <summary>
         /// MISSING DESCRIPTION<br/>
@@ -2611,8 +2719,8 @@ namespace Hl7.Fhir.Model
     /// Defines requiredness behavior for selecting an action or an action group
     /// (url: http://hl7.org/fhir/ValueSet/action-required-behavior)
     /// </summary>
-    [FhirEnumeration("PlanActionRequiredBehavior")]
-    public enum PlanActionRequiredBehavior
+    [FhirEnumeration("ActionRequiredBehavior")]
+    public enum ActionRequiredBehavior
     {
         /// <summary>
         /// MISSING DESCRIPTION<br/>
@@ -2638,8 +2746,8 @@ namespace Hl7.Fhir.Model
     /// Defines selection frequency behavior for an action or group
     /// (url: http://hl7.org/fhir/ValueSet/action-precheck-behavior)
     /// </summary>
-    [FhirEnumeration("PlanActionPrecheckBehavior")]
-    public enum PlanActionPrecheckBehavior
+    [FhirEnumeration("ActionPrecheckBehavior")]
+    public enum ActionPrecheckBehavior
     {
         /// <summary>
         /// MISSING DESCRIPTION<br/>
@@ -2659,8 +2767,8 @@ namespace Hl7.Fhir.Model
     /// Defines behavior for an action or a group for how many times that item may be repeated
     /// (url: http://hl7.org/fhir/ValueSet/action-cardinality-behavior)
     /// </summary>
-    [FhirEnumeration("PlanActionCardinalityBehavior")]
-    public enum PlanActionCardinalityBehavior
+    [FhirEnumeration("ActionCardinalityBehavior")]
+    public enum ActionCardinalityBehavior
     {
         /// <summary>
         /// MISSING DESCRIPTION<br/>
@@ -2674,6 +2782,63 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("multiple"), Description("Multiple")]
         Multiple,
+    }
+
+    /// <summary>
+    /// Codes indicating the degree of authority/intentionality associated with a request
+    /// (url: http://hl7.org/fhir/ValueSet/request-intent)
+    /// </summary>
+    [FhirEnumeration("RequestIntent")]
+    public enum RequestIntent
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/request-intent)
+        /// </summary>
+        [EnumLiteral("proposal"), Description("Proposal")]
+        Proposal,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/request-intent)
+        /// </summary>
+        [EnumLiteral("plan"), Description("Plan")]
+        Plan,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/request-intent)
+        /// </summary>
+        [EnumLiteral("order"), Description("Order")]
+        Order,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/request-intent)
+        /// </summary>
+        [EnumLiteral("original-order"), Description("Original Order")]
+        OriginalOrder,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/request-intent)
+        /// </summary>
+        [EnumLiteral("reflex-order"), Description("Reflex Order")]
+        ReflexOrder,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/request-intent)
+        /// </summary>
+        [EnumLiteral("filler-order"), Description("Filler Order")]
+        FillerOrder,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/request-intent)
+        /// </summary>
+        [EnumLiteral("instance-order"), Description("Instance Order")]
+        InstanceOrder,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/request-intent)
+        /// </summary>
+        [EnumLiteral("option"), Description("Option")]
+        Option,
     }
 
 }

@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Aug 11, 2016 03:44+0000 for FHIR v1.6.0 
+  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -49,9 +49,9 @@
     <xs:complexContent>
       <xs:extension base="DomainResource">
         <xs:sequence>
-          <xs:element name="criteria" minOccurs="1" maxOccurs="1" type="string">
+          <xs:element name="status" minOccurs="1" maxOccurs="1" type="SubscriptionStatus">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The rules that the server should use to determine when to generate notifications for this subscription.</xs:documentation>
+              <xs:documentation xml:lang="en">The status of the subscription, which marks the server state for managing the subscription.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="contact" minOccurs="0" maxOccurs="unbounded" type="ContactPoint">
@@ -59,14 +59,19 @@
               <xs:documentation xml:lang="en">Contact details for a human to contact about the subscription. The primary use of this for system administrator troubleshooting.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="end" minOccurs="0" maxOccurs="1" type="instant">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The time for the server to turn the subscription off.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="reason" minOccurs="1" maxOccurs="1" type="string">
             <xs:annotation>
               <xs:documentation xml:lang="en">A description of why this subscription is defined.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="status" minOccurs="1" maxOccurs="1" type="SubscriptionStatus">
+          <xs:element name="criteria" minOccurs="1" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The status of the subscription, which marks the server state for managing the subscription.</xs:documentation>
+              <xs:documentation xml:lang="en">The rules that the server should use to determine when to generate notifications for this subscription.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="error" minOccurs="0" maxOccurs="1" type="string">
@@ -77,11 +82,6 @@
           <xs:element name="channel" type="Subscription.Channel" minOccurs="1" maxOccurs="1">
             <xs:annotation>
               <xs:documentation xml:lang="en">Details where to send notifications when resources are received that meet the criteria.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="end" minOccurs="0" maxOccurs="1" type="instant">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The time for the server to turn the subscription off.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="tag" minOccurs="0" maxOccurs="unbounded" type="Coding">
@@ -115,7 +115,7 @@
               <xs:documentation xml:lang="en">The mime type to send the payload in - either application/fhir+xml, or application/fhir+json. If the payload is not present, then there is no payload in the notification, just a notification.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="header" minOccurs="0" maxOccurs="1" type="string">
+          <xs:element name="header" minOccurs="0" maxOccurs="unbounded" type="string">
             <xs:annotation>
               <xs:documentation xml:lang="en">Additional headers / information to send as part of the notification.</xs:documentation>
            </xs:annotation>

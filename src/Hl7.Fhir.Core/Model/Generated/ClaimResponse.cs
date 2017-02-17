@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -245,7 +245,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _Category;
             
             /// <summary>
-            /// Adjudication reason
+            /// Explanation of Adjudication outcome
             /// </summary>
             [FhirElement("reason", Order=50)]
             [DataMember]
@@ -445,7 +445,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Detail adjudication
+            /// Detail level adjudication details
             /// </summary>
             [FhirElement("adjudication", Order=60)]
             [Cardinality(Min=0,Max=-1)]
@@ -615,7 +615,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Subdetail adjudication
+            /// Subdetail level adjudication details
             /// </summary>
             [FhirElement("adjudication", Order=60)]
             [Cardinality(Min=0,Max=-1)]
@@ -1370,7 +1370,7 @@ namespace Hl7.Fhir.Model
             private Money _Adjustment;
             
             /// <summary>
-            /// Reason for Payment adjustment
+            /// Explanation for the non-claim adjustment
             /// </summary>
             [FhirElement("adjustmentReason", Order=60)]
             [DataMember]
@@ -1415,7 +1415,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Payment amount
+            /// Payable amount after adjustment
             /// </summary>
             [FhirElement("amount", Order=80)]
             [DataMember]
@@ -1428,7 +1428,7 @@ namespace Hl7.Fhir.Model
             private Money _Amount;
             
             /// <summary>
-            /// Payment identifier
+            /// Identifier of the payment instrument
             /// </summary>
             [FhirElement("identifier", Order=90)]
             [DataMember]
@@ -1525,7 +1525,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "NoteComponent"; } }
             
             /// <summary>
-            /// Note Number for this note
+            /// Sequence Number for this note
             /// </summary>
             [FhirElement("number", Order=40)]
             [DataMember]
@@ -1538,7 +1538,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.PositiveInt _NumberElement;
             
             /// <summary>
-            /// Note Number for this note
+            /// Sequence Number for this note
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1602,7 +1602,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Language
+            /// Language if different from the resource
             /// </summary>
             [FhirElement("language", Order=70)]
             [DataMember]
@@ -2008,7 +2008,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Insurer
+        /// Insurance issuing organization
         /// </summary>
         [FhirElement("insurer", Order=120)]
         [CLSCompliant(false)]
@@ -2248,16 +2248,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Processing notes
         /// </summary>
-        [FhirElement("note", Order=280)]
+        [FhirElement("processNote", Order=280)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ClaimResponse.NoteComponent> Note
+        public List<Hl7.Fhir.Model.ClaimResponse.NoteComponent> ProcessNote
         {
-            get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.ClaimResponse.NoteComponent>(); return _Note; }
-            set { _Note = value; OnPropertyChanged("Note"); }
+            get { if(_ProcessNote==null) _ProcessNote = new List<Hl7.Fhir.Model.ClaimResponse.NoteComponent>(); return _ProcessNote; }
+            set { _ProcessNote = value; OnPropertyChanged("ProcessNote"); }
         }
         
-        private List<Hl7.Fhir.Model.ClaimResponse.NoteComponent> _Note;
+        private List<Hl7.Fhir.Model.ClaimResponse.NoteComponent> _ProcessNote;
         
         /// <summary>
         /// Request for additional information
@@ -2322,7 +2322,7 @@ namespace Hl7.Fhir.Model
                 if(Payment != null) dest.Payment = (Hl7.Fhir.Model.ClaimResponse.PaymentComponent)Payment.DeepCopy();
                 if(Reserved != null) dest.Reserved = (Hl7.Fhir.Model.Coding)Reserved.DeepCopy();
                 if(Form != null) dest.Form = (Hl7.Fhir.Model.CodeableConcept)Form.DeepCopy();
-                if(Note != null) dest.Note = new List<Hl7.Fhir.Model.ClaimResponse.NoteComponent>(Note.DeepCopy());
+                if(ProcessNote != null) dest.ProcessNote = new List<Hl7.Fhir.Model.ClaimResponse.NoteComponent>(ProcessNote.DeepCopy());
                 if(CommunicationRequest != null) dest.CommunicationRequest = new List<Hl7.Fhir.Model.ResourceReference>(CommunicationRequest.DeepCopy());
                 if(Insurance != null) dest.Insurance = new List<Hl7.Fhir.Model.ClaimResponse.InsuranceComponent>(Insurance.DeepCopy());
                 return dest;
@@ -2361,7 +2361,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Payment, otherT.Payment)) return false;
             if( !DeepComparable.Matches(Reserved, otherT.Reserved)) return false;
             if( !DeepComparable.Matches(Form, otherT.Form)) return false;
-            if( !DeepComparable.Matches(Note, otherT.Note)) return false;
+            if( !DeepComparable.Matches(ProcessNote, otherT.ProcessNote)) return false;
             if( !DeepComparable.Matches(CommunicationRequest, otherT.CommunicationRequest)) return false;
             if( !DeepComparable.Matches(Insurance, otherT.Insurance)) return false;
             
@@ -2393,7 +2393,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Payment, otherT.Payment)) return false;
             if( !DeepComparable.IsExactly(Reserved, otherT.Reserved)) return false;
             if( !DeepComparable.IsExactly(Form, otherT.Form)) return false;
-            if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
+            if( !DeepComparable.IsExactly(ProcessNote, otherT.ProcessNote)) return false;
             if( !DeepComparable.IsExactly(CommunicationRequest, otherT.CommunicationRequest)) return false;
             if( !DeepComparable.IsExactly(Insurance, otherT.Insurance)) return false;
             
@@ -2425,7 +2425,7 @@ namespace Hl7.Fhir.Model
 				if (Payment != null) yield return Payment;
 				if (Reserved != null) yield return Reserved;
 				if (Form != null) yield return Form;
-				foreach (var elem in Note) { if (elem != null) yield return elem; }
+				foreach (var elem in ProcessNote) { if (elem != null) yield return elem; }
 				foreach (var elem in CommunicationRequest) { if (elem != null) yield return elem; }
 				foreach (var elem in Insurance) { if (elem != null) yield return elem; }
             }

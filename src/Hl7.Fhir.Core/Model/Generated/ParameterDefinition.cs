@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// input | output
+        /// in | out
         /// </summary>
         [FhirElement("use", InSummary=true, Order=40)]
         [Cardinality(Min=1,Max=1)]
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.OperationParameterUse> _UseElement;
         
         /// <summary>
-        /// input | output
+        /// in | out
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

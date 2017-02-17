@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,45 +53,6 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "CompartmentDefinition"; } }
         
-        /// <summary>
-        /// Which compartment a compartmnet definition describes
-        /// (url: http://hl7.org/fhir/ValueSet/compartment-type)
-        /// </summary>
-        [FhirEnumeration("CompartmentType")]
-        public enum CompartmentType
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/compartment-type)
-            /// </summary>
-            [EnumLiteral("Patient"), Description("Patient")]
-            Patient,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/compartment-type)
-            /// </summary>
-            [EnumLiteral("Encounter"), Description("Encounter")]
-            Encounter,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/compartment-type)
-            /// </summary>
-            [EnumLiteral("RelatedPerson"), Description("RelatedPerson")]
-            RelatedPerson,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/compartment-type)
-            /// </summary>
-            [EnumLiteral("Practitioner"), Description("Practitioner")]
-            Practitioner,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/compartment-type)
-            /// </summary>
-            [EnumLiteral("Device"), Description("Device")]
-            Device,
-        }
-
         [FhirType("ResourceComponent")]
         [DataContract]
         public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -563,13 +524,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("code", InSummary=true, Order=210)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.CompartmentDefinition.CompartmentType> CodeElement
+        public Code<Hl7.Fhir.Model.CompartmentType> CodeElement
         {
             get { return _CodeElement; }
             set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.CompartmentDefinition.CompartmentType> _CodeElement;
+        private Code<Hl7.Fhir.Model.CompartmentType> _CodeElement;
         
         /// <summary>
         /// Patient | Encounter | RelatedPerson | Practitioner | Device
@@ -577,7 +538,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.CompartmentDefinition.CompartmentType? Code
+        public Hl7.Fhir.Model.CompartmentType? Code
         {
             get { return CodeElement != null ? CodeElement.Value : null; }
             set
@@ -585,7 +546,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                   CodeElement = null; 
                 else
-                  CodeElement = new Code<Hl7.Fhir.Model.CompartmentDefinition.CompartmentType>(value);
+                  CodeElement = new Code<Hl7.Fhir.Model.CompartmentType>(value);
                 OnPropertyChanged("Code");
             }
         }
@@ -663,7 +624,7 @@ namespace Hl7.Fhir.Model
                 if(Purpose != null) dest.Purpose = (Hl7.Fhir.Model.Markdown)Purpose.DeepCopy();
                 if(UseContext != null) dest.UseContext = new List<UsageContext>(UseContext.DeepCopy());
                 if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
-                if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.CompartmentDefinition.CompartmentType>)CodeElement.DeepCopy();
+                if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.CompartmentType>)CodeElement.DeepCopy();
                 if(SearchElement != null) dest.SearchElement = (Hl7.Fhir.Model.FhirBoolean)SearchElement.DeepCopy();
                 if(Resource != null) dest.Resource = new List<Hl7.Fhir.Model.CompartmentDefinition.ResourceComponent>(Resource.DeepCopy());
                 return dest;

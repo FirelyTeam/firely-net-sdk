@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -76,6 +76,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-status)
             /// </summary>
+            [EnumLiteral("triaged"), Description("Triaged")]
+            Triaged,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/encounter-status)
+            /// </summary>
             [EnumLiteral("in-progress"), Description("In Progress")]
             InProgress,
             /// <summary>
@@ -102,6 +108,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("entered-in-error"), Description("Entered in Error")]
             EnteredInError,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/encounter-status)
+            /// </summary>
+            [EnumLiteral("unknown"), Description("Unknown")]
+            Unknown,
         }
 
         /// <summary>
@@ -145,7 +157,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "StatusHistoryComponent"; } }
             
             /// <summary>
-            /// planned | arrived | in-progress | onleave | finished | cancelled | entered-in-error
+            /// planned | arrived | triaged | in-progress | onleave | finished | cancelled +
             /// </summary>
             [FhirElement("status", Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -159,7 +171,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.Encounter.EncounterStatus> _StatusElement;
             
             /// <summary>
-            /// planned | arrived | in-progress | onleave | finished | cancelled | entered-in-error
+            /// planned | arrived | triaged | in-progress | onleave | finished | cancelled +
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -245,6 +257,102 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // StatusHistoryComponent elements
                     if (StatusElement != null) yield return StatusElement;
+                    if (Period != null) yield return Period;
+                }
+            }
+            
+        }
+        
+        
+        [FhirType("ClassHistoryComponent")]
+        [DataContract]
+        public partial class ClassHistoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "ClassHistoryComponent"; } }
+            
+            /// <summary>
+            /// inpatient | outpatient | ambulatory | emergency +
+            /// </summary>
+            [FhirElement("class", Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.Coding Class
+            {
+                get { return _Class; }
+                set { _Class = value; OnPropertyChanged("Class"); }
+            }
+            
+            private Hl7.Fhir.Model.Coding _Class;
+            
+            /// <summary>
+            /// The time that the episode was in the specified class
+            /// </summary>
+            [FhirElement("period", Order=50)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.Period Period
+            {
+                get { return _Period; }
+                set { _Period = value; OnPropertyChanged("Period"); }
+            }
+            
+            private Hl7.Fhir.Model.Period _Period;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ClassHistoryComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Class != null) dest.Class = (Hl7.Fhir.Model.Coding)Class.DeepCopy();
+                    if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ClassHistoryComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ClassHistoryComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Class, otherT.Class)) return false;
+                if( !DeepComparable.Matches(Period, otherT.Period)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ClassHistoryComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Class, otherT.Class)) return false;
+                if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ClassHistoryComponent elements
+                    if (Class != null) yield return Class;
                     if (Period != null) yield return Period;
                 }
             }
@@ -774,7 +882,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// planned | arrived | in-progress | onleave | finished | cancelled | entered-in-error
+        /// planned | arrived | triaged | in-progress | onleave | finished | cancelled +
         /// </summary>
         [FhirElement("status", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
@@ -788,7 +896,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.Encounter.EncounterStatus> _StatusElement;
         
         /// <summary>
-        /// planned | arrived | in-progress | onleave | finished | cancelled | entered-in-error
+        /// planned | arrived | triaged | in-progress | onleave | finished | cancelled +
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -834,9 +942,23 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Coding _Class;
         
         /// <summary>
+        /// List of past encounter classes
+        /// </summary>
+        [FhirElement("classHistory", Order=130)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Encounter.ClassHistoryComponent> ClassHistory
+        {
+            get { if(_ClassHistory==null) _ClassHistory = new List<Hl7.Fhir.Model.Encounter.ClassHistoryComponent>(); return _ClassHistory; }
+            set { _ClassHistory = value; OnPropertyChanged("ClassHistory"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Encounter.ClassHistoryComponent> _ClassHistory;
+        
+        /// <summary>
         /// Specific type of encounter
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=130)]
+        [FhirElement("type", InSummary=true, Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -850,7 +972,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Indicates the urgency of the encounter
         /// </summary>
-        [FhirElement("priority", Order=140)]
+        [FhirElement("priority", Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Priority
         {
@@ -861,24 +983,24 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Priority;
         
         /// <summary>
-        /// The patient present at the encounter
+        /// The patient ro group present at the encounter
         /// </summary>
-        [FhirElement("patient", InSummary=true, Order=150)]
+        [FhirElement("subject", InSummary=true, Order=160)]
         [CLSCompliant(false)]
-		[References("Patient")]
+		[References("Patient","Group")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Patient
+        public Hl7.Fhir.Model.ResourceReference Subject
         {
-            get { return _Patient; }
-            set { _Patient = value; OnPropertyChanged("Patient"); }
+            get { return _Subject; }
+            set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Patient;
+        private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// Episode(s) of care that this encounter should be recorded against
         /// </summary>
-        [FhirElement("episodeOfCare", InSummary=true, Order=160)]
+        [FhirElement("episodeOfCare", InSummary=true, Order=170)]
         [CLSCompliant(false)]
 		[References("EpisodeOfCare")]
         [Cardinality(Min=0,Max=-1)]
@@ -894,7 +1016,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The ReferralRequest that initiated this encounter
         /// </summary>
-        [FhirElement("incomingReferral", Order=170)]
+        [FhirElement("incomingReferral", Order=180)]
         [CLSCompliant(false)]
 		[References("ReferralRequest")]
         [Cardinality(Min=0,Max=-1)]
@@ -910,7 +1032,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// List of participants involved in the encounter
         /// </summary>
-        [FhirElement("participant", InSummary=true, Order=180)]
+        [FhirElement("participant", InSummary=true, Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Encounter.ParticipantComponent> Participant
@@ -924,7 +1046,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The appointment that scheduled this encounter
         /// </summary>
-        [FhirElement("appointment", InSummary=true, Order=190)]
+        [FhirElement("appointment", InSummary=true, Order=200)]
         [CLSCompliant(false)]
 		[References("Appointment")]
         [DataMember]
@@ -939,7 +1061,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The start and end time of the encounter
         /// </summary>
-        [FhirElement("period", Order=200)]
+        [FhirElement("period", Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
@@ -952,7 +1074,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Quantity of time the encounter lasted (less time absent)
         /// </summary>
-        [FhirElement("length", Order=210)]
+        [FhirElement("length", Order=220)]
         [DataMember]
         public Duration Length
         {
@@ -965,7 +1087,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reason the encounter takes place (code)
         /// </summary>
-        [FhirElement("reason", InSummary=true, Order=220)]
+        [FhirElement("reason", InSummary=true, Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Reason
@@ -979,7 +1101,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reason the encounter takes place (resource)
         /// </summary>
-        [FhirElement("indication", Order=230)]
+        [FhirElement("indication", Order=240)]
         [CLSCompliant(false)]
 		[References("Condition","Procedure")]
         [Cardinality(Min=0,Max=-1)]
@@ -995,7 +1117,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The set of accounts that may be used for billing for this Encounter
         /// </summary>
-        [FhirElement("account", Order=240)]
+        [FhirElement("account", Order=250)]
         [CLSCompliant(false)]
 		[References("Account")]
         [Cardinality(Min=0,Max=-1)]
@@ -1011,7 +1133,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Details about the admission to a healthcare service
         /// </summary>
-        [FhirElement("hospitalization", Order=250)]
+        [FhirElement("hospitalization", Order=260)]
         [DataMember]
         public Hl7.Fhir.Model.Encounter.HospitalizationComponent Hospitalization
         {
@@ -1024,7 +1146,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// List of locations where the patient has been
         /// </summary>
-        [FhirElement("location", Order=260)]
+        [FhirElement("location", Order=270)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Encounter.LocationComponent> Location
@@ -1038,7 +1160,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The custodian organization of this Encounter record
         /// </summary>
-        [FhirElement("serviceProvider", Order=270)]
+        [FhirElement("serviceProvider", Order=280)]
         [CLSCompliant(false)]
 		[References("Organization")]
         [DataMember]
@@ -1053,7 +1175,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Another Encounter this encounter is part of
         /// </summary>
-        [FhirElement("partOf", Order=280)]
+        [FhirElement("partOf", Order=290)]
         [CLSCompliant(false)]
 		[References("Encounter")]
         [DataMember]
@@ -1083,9 +1205,10 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Encounter.EncounterStatus>)StatusElement.DeepCopy();
                 if(StatusHistory != null) dest.StatusHistory = new List<Hl7.Fhir.Model.Encounter.StatusHistoryComponent>(StatusHistory.DeepCopy());
                 if(Class != null) dest.Class = (Hl7.Fhir.Model.Coding)Class.DeepCopy();
+                if(ClassHistory != null) dest.ClassHistory = new List<Hl7.Fhir.Model.Encounter.ClassHistoryComponent>(ClassHistory.DeepCopy());
                 if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
                 if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopy();
-                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(EpisodeOfCare != null) dest.EpisodeOfCare = new List<Hl7.Fhir.Model.ResourceReference>(EpisodeOfCare.DeepCopy());
                 if(IncomingReferral != null) dest.IncomingReferral = new List<Hl7.Fhir.Model.ResourceReference>(IncomingReferral.DeepCopy());
                 if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.Encounter.ParticipantComponent>(Participant.DeepCopy());
@@ -1120,9 +1243,10 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(StatusHistory, otherT.StatusHistory)) return false;
             if( !DeepComparable.Matches(Class, otherT.Class)) return false;
+            if( !DeepComparable.Matches(ClassHistory, otherT.ClassHistory)) return false;
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
             if( !DeepComparable.Matches(Priority, otherT.Priority)) return false;
-            if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(EpisodeOfCare, otherT.EpisodeOfCare)) return false;
             if( !DeepComparable.Matches(IncomingReferral, otherT.IncomingReferral)) return false;
             if( !DeepComparable.Matches(Participant, otherT.Participant)) return false;
@@ -1150,9 +1274,10 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(StatusHistory, otherT.StatusHistory)) return false;
             if( !DeepComparable.IsExactly(Class, otherT.Class)) return false;
+            if( !DeepComparable.IsExactly(ClassHistory, otherT.ClassHistory)) return false;
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
             if( !DeepComparable.IsExactly(Priority, otherT.Priority)) return false;
-            if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(EpisodeOfCare, otherT.EpisodeOfCare)) return false;
             if( !DeepComparable.IsExactly(IncomingReferral, otherT.IncomingReferral)) return false;
             if( !DeepComparable.IsExactly(Participant, otherT.Participant)) return false;
@@ -1180,9 +1305,10 @@ namespace Hl7.Fhir.Model
 				if (StatusElement != null) yield return StatusElement;
 				foreach (var elem in StatusHistory) { if (elem != null) yield return elem; }
 				if (Class != null) yield return Class;
+				foreach (var elem in ClassHistory) { if (elem != null) yield return elem; }
 				foreach (var elem in Type) { if (elem != null) yield return elem; }
 				if (Priority != null) yield return Priority;
-				if (Patient != null) yield return Patient;
+				if (Subject != null) yield return Subject;
 				foreach (var elem in EpisodeOfCare) { if (elem != null) yield return elem; }
 				foreach (var elem in IncomingReferral) { if (elem != null) yield return elem; }
 				foreach (var elem in Participant) { if (elem != null) yield return elem; }

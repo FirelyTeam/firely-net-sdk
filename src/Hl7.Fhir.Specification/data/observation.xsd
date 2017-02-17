@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Aug 11, 2016 03:44+0000 for FHIR v1.6.0 
+  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -51,7 +51,12 @@
         <xs:sequence>
           <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A unique identifier for the simple observation instance.</xs:documentation>
+              <xs:documentation xml:lang="en">A unique identifier assigned to this observation.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="basedOn" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A plan, proposal or order that is fulfilled in whole or in part by this event.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="status" minOccurs="1" maxOccurs="1" type="ObservationStatus">
@@ -74,7 +79,7 @@
               <xs:documentation xml:lang="en">The patient, or group of patients, location, or device whose characteristics (direct or indirect) are described by the observation and into whose record the observation is placed.  Comments: Indirect characteristics may be those of a specimen, fetus, donor,  other observer (for example a relative or EMT), or any observation made about the subject.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="encounter" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="context" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">The healthcare event  (e.g. a patient and healthcare provider interaction) during which this observation is made.</xs:documentation>
            </xs:annotation>
@@ -103,6 +108,7 @@
             <xs:element name="valueQuantity" type="Quantity"/>
             <xs:element name="valueCodeableConcept" type="CodeableConcept"/>
             <xs:element name="valueString" type="string"/>
+            <xs:element name="valueBoolean" type="boolean"/>
             <xs:element name="valueRange" type="Range"/>
             <xs:element name="valueRatio" type="Ratio"/>
             <xs:element name="valueSampledData" type="SampledData"/>
@@ -182,9 +188,14 @@
               <xs:documentation xml:lang="en">The value of the high bound of the reference range.  The high bound of the reference range endpoint is inclusive of the value (e.g.  reference range is &gt;=5 - &lt;=9).   If the high bound is omitted,  it is assumed to be meaningless (e.g. reference range is &gt;= 2.3).</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="meaning" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Codes to indicate the the target population this reference range applies to.  For example, a reference range may be based on the normal population or a particular sex, race, therapeutic status, or endocrine or reproductive status.</xs:documentation>
+              <xs:documentation xml:lang="en">Codes to indicate the what part of targeted reference population it applies to. For example the normal or therapeutic range.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="appliesTo" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Codes to indicate the the target population this reference range applies to.  For example, a reference range may be based on the normal population or a particular sex or race.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="age" minOccurs="0" maxOccurs="1" type="Range">
@@ -335,9 +346,14 @@
           <xs:documentation xml:lang="en">Amended</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="corrected">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Corrected</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="cancelled">
         <xs:annotation>
-          <xs:documentation xml:lang="en">cancelled</xs:documentation>
+          <xs:documentation xml:lang="en">Cancelled</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="entered-in-error">
@@ -347,7 +363,7 @@
       </xs:enumeration>
       <xs:enumeration value="unknown">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Unknown Status</xs:documentation>
+          <xs:documentation xml:lang="en">Unknown</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>

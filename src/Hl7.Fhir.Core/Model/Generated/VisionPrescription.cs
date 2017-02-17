@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,6 +53,60 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "VisionPrescription"; } }
         
+        /// <summary>
+        /// A coded concept listing the eye codes.
+        /// (url: http://hl7.org/fhir/ValueSet/vision-eye-codes)
+        /// </summary>
+        [FhirEnumeration("VisionEyes")]
+        public enum VisionEyes
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/vision-eye-codes)
+            /// </summary>
+            [EnumLiteral("right"), Description("Right Eye")]
+            Right,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/vision-eye-codes)
+            /// </summary>
+            [EnumLiteral("left"), Description("Left Eye")]
+            Left,
+        }
+
+        /// <summary>
+        /// A coded concept listing the base codes.
+        /// (url: http://hl7.org/fhir/ValueSet/vision-base-codes)
+        /// </summary>
+        [FhirEnumeration("VisionBase")]
+        public enum VisionBase
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/vision-base-codes)
+            /// </summary>
+            [EnumLiteral("up"), Description("Up")]
+            Up,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/vision-base-codes)
+            /// </summary>
+            [EnumLiteral("down"), Description("Down")]
+            Down,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/vision-base-codes)
+            /// </summary>
+            [EnumLiteral("in"), Description("In")]
+            In,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/vision-base-codes)
+            /// </summary>
+            [EnumLiteral("out"), Description("Out")]
+            Out,
+        }
+
         [FhirType("DispenseComponent")]
         [DataContract]
         public partial class DispenseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -78,13 +132,32 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("eye", Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Eye
+            public Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes> EyeElement
             {
-                get { return _Eye; }
-                set { _Eye = value; OnPropertyChanged("Eye"); }
+                get { return _EyeElement; }
+                set { _EyeElement = value; OnPropertyChanged("EyeElement"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _Eye;
+            private Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes> _EyeElement;
+            
+            /// <summary>
+            /// right | left
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.VisionPrescription.VisionEyes? Eye
+            {
+                get { return EyeElement != null ? EyeElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        EyeElement = null; 
+                    else
+                        EyeElement = new Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes>(value);
+                    OnPropertyChanged("Eye");
+                }
+            }
             
             /// <summary>
             /// Lens sphere
@@ -219,13 +292,32 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("base", Order=100)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Base
+            public Code<Hl7.Fhir.Model.VisionPrescription.VisionBase> BaseElement
             {
-                get { return _Base; }
-                set { _Base = value; OnPropertyChanged("Base"); }
+                get { return _BaseElement; }
+                set { _BaseElement = value; OnPropertyChanged("BaseElement"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _Base;
+            private Code<Hl7.Fhir.Model.VisionPrescription.VisionBase> _BaseElement;
+            
+            /// <summary>
+            /// up | down | in | out
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.VisionPrescription.VisionBase? Base
+            {
+                get { return BaseElement != null ? BaseElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        BaseElement = null; 
+                    else
+                        BaseElement = new Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>(value);
+                    OnPropertyChanged("Base");
+                }
+            }
             
             /// <summary>
             /// Lens add
@@ -436,33 +528,15 @@ namespace Hl7.Fhir.Model
             /// Notes for coatings
             /// </summary>
             [FhirElement("note", Order=180)]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString NoteElement
+            public List<Hl7.Fhir.Model.Annotation> Note
             {
-                get { return _NoteElement; }
-                set { _NoteElement = value; OnPropertyChanged("NoteElement"); }
+                get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+                set { _Note = value; OnPropertyChanged("Note"); }
             }
             
-            private Hl7.Fhir.Model.FhirString _NoteElement;
-            
-            /// <summary>
-            /// Notes for coatings
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Note
-            {
-                get { return NoteElement != null ? NoteElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        NoteElement = null; 
-                    else
-                        NoteElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Note");
-                }
-            }
+            private List<Hl7.Fhir.Model.Annotation> _Note;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -472,12 +546,12 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Product != null) dest.Product = (Hl7.Fhir.Model.CodeableConcept)Product.DeepCopy();
-                    if(Eye != null) dest.Eye = (Hl7.Fhir.Model.CodeableConcept)Eye.DeepCopy();
+                    if(EyeElement != null) dest.EyeElement = (Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes>)EyeElement.DeepCopy();
                     if(SphereElement != null) dest.SphereElement = (Hl7.Fhir.Model.FhirDecimal)SphereElement.DeepCopy();
                     if(CylinderElement != null) dest.CylinderElement = (Hl7.Fhir.Model.FhirDecimal)CylinderElement.DeepCopy();
                     if(AxisElement != null) dest.AxisElement = (Hl7.Fhir.Model.Integer)AxisElement.DeepCopy();
                     if(PrismElement != null) dest.PrismElement = (Hl7.Fhir.Model.FhirDecimal)PrismElement.DeepCopy();
-                    if(Base != null) dest.Base = (Hl7.Fhir.Model.CodeableConcept)Base.DeepCopy();
+                    if(BaseElement != null) dest.BaseElement = (Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>)BaseElement.DeepCopy();
                     if(AddElement != null) dest.AddElement = (Hl7.Fhir.Model.FhirDecimal)AddElement.DeepCopy();
                     if(PowerElement != null) dest.PowerElement = (Hl7.Fhir.Model.FhirDecimal)PowerElement.DeepCopy();
                     if(BackCurveElement != null) dest.BackCurveElement = (Hl7.Fhir.Model.FhirDecimal)BackCurveElement.DeepCopy();
@@ -485,7 +559,7 @@ namespace Hl7.Fhir.Model
                     if(Duration != null) dest.Duration = (Hl7.Fhir.Model.SimpleQuantity)Duration.DeepCopy();
                     if(ColorElement != null) dest.ColorElement = (Hl7.Fhir.Model.FhirString)ColorElement.DeepCopy();
                     if(BrandElement != null) dest.BrandElement = (Hl7.Fhir.Model.FhirString)BrandElement.DeepCopy();
-                    if(NoteElement != null) dest.NoteElement = (Hl7.Fhir.Model.FhirString)NoteElement.DeepCopy();
+                    if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                     return dest;
                 }
                 else
@@ -504,12 +578,12 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Product, otherT.Product)) return false;
-                if( !DeepComparable.Matches(Eye, otherT.Eye)) return false;
+                if( !DeepComparable.Matches(EyeElement, otherT.EyeElement)) return false;
                 if( !DeepComparable.Matches(SphereElement, otherT.SphereElement)) return false;
                 if( !DeepComparable.Matches(CylinderElement, otherT.CylinderElement)) return false;
                 if( !DeepComparable.Matches(AxisElement, otherT.AxisElement)) return false;
                 if( !DeepComparable.Matches(PrismElement, otherT.PrismElement)) return false;
-                if( !DeepComparable.Matches(Base, otherT.Base)) return false;
+                if( !DeepComparable.Matches(BaseElement, otherT.BaseElement)) return false;
                 if( !DeepComparable.Matches(AddElement, otherT.AddElement)) return false;
                 if( !DeepComparable.Matches(PowerElement, otherT.PowerElement)) return false;
                 if( !DeepComparable.Matches(BackCurveElement, otherT.BackCurveElement)) return false;
@@ -517,7 +591,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(Duration, otherT.Duration)) return false;
                 if( !DeepComparable.Matches(ColorElement, otherT.ColorElement)) return false;
                 if( !DeepComparable.Matches(BrandElement, otherT.BrandElement)) return false;
-                if( !DeepComparable.Matches(NoteElement, otherT.NoteElement)) return false;
+                if( !DeepComparable.Matches(Note, otherT.Note)) return false;
                 
                 return true;
             }
@@ -529,12 +603,12 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Product, otherT.Product)) return false;
-                if( !DeepComparable.IsExactly(Eye, otherT.Eye)) return false;
+                if( !DeepComparable.IsExactly(EyeElement, otherT.EyeElement)) return false;
                 if( !DeepComparable.IsExactly(SphereElement, otherT.SphereElement)) return false;
                 if( !DeepComparable.IsExactly(CylinderElement, otherT.CylinderElement)) return false;
                 if( !DeepComparable.IsExactly(AxisElement, otherT.AxisElement)) return false;
                 if( !DeepComparable.IsExactly(PrismElement, otherT.PrismElement)) return false;
-                if( !DeepComparable.IsExactly(Base, otherT.Base)) return false;
+                if( !DeepComparable.IsExactly(BaseElement, otherT.BaseElement)) return false;
                 if( !DeepComparable.IsExactly(AddElement, otherT.AddElement)) return false;
                 if( !DeepComparable.IsExactly(PowerElement, otherT.PowerElement)) return false;
                 if( !DeepComparable.IsExactly(BackCurveElement, otherT.BackCurveElement)) return false;
@@ -542,7 +616,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Duration, otherT.Duration)) return false;
                 if( !DeepComparable.IsExactly(ColorElement, otherT.ColorElement)) return false;
                 if( !DeepComparable.IsExactly(BrandElement, otherT.BrandElement)) return false;
-                if( !DeepComparable.IsExactly(NoteElement, otherT.NoteElement)) return false;
+                if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
                 
                 return true;
             }
@@ -557,12 +631,12 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // DispenseComponent elements
                     if (Product != null) yield return Product;
-                    if (Eye != null) yield return Eye;
+                    if (EyeElement != null) yield return EyeElement;
                     if (SphereElement != null) yield return SphereElement;
                     if (CylinderElement != null) yield return CylinderElement;
                     if (AxisElement != null) yield return AxisElement;
                     if (PrismElement != null) yield return PrismElement;
-                    if (Base != null) yield return Base;
+                    if (BaseElement != null) yield return BaseElement;
                     if (AddElement != null) yield return AddElement;
                     if (PowerElement != null) yield return PowerElement;
                     if (BackCurveElement != null) yield return BackCurveElement;
@@ -570,7 +644,7 @@ namespace Hl7.Fhir.Model
                     if (Duration != null) yield return Duration;
                     if (ColorElement != null) yield return ColorElement;
                     if (BrandElement != null) yield return BrandElement;
-                    if (NoteElement != null) yield return NoteElement;
+                    foreach (var elem in Note) { if (elem != null) yield return elem; }
                 }
             }
             

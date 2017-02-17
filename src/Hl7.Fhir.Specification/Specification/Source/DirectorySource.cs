@@ -250,14 +250,14 @@ namespace Hl7.Fhir.Specification.Source
                 return null;
         }
 
-        public ValueSet FindValueSetBySystem(string system)
+        public CodeSystem FindCodeSystemByValueSet(string system)
         {
             prepareResources();
 
-            var info = _resourceScanInformation.SingleOrDefault(ci => ci.ValueSetSystem == system);
+            var info = _resourceScanInformation.SingleOrDefault(ci => ci.CodeSystemValueSet == system);
             if (info == null) return null;
 
-            return getResourceFromScannedSource(info) as ValueSet;
+            return getResourceFromScannedSource(info) as CodeSystem;
         }
 
         public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri=null, string targetUri=null)

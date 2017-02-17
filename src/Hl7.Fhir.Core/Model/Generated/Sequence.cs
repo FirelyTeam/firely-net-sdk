@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -64,20 +64,20 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/quality-type)
             /// </summary>
-            [EnumLiteral("INDEL"), Description("INDEL Comparison")]
-            INDEL,
+            [EnumLiteral("indel"), Description("INDEL Comparison")]
+            Indel,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/quality-type)
             /// </summary>
-            [EnumLiteral("SNP"), Description("SNP Comparison")]
-            SNP,
+            [EnumLiteral("snp"), Description("SNP Comparison")]
+            Snp,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/quality-type)
             /// </summary>
-            [EnumLiteral("UNKNOWN"), Description("UNKNOWN Comparison")]
-            UNKNOWN,
+            [EnumLiteral("unknown"), Description("UNKNOWN Comparison")]
+            Unknown,
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.ResourceReference _ReferenceSeqPointer;
             
             /// <summary>
-            /// A Reference Sequence string
+            /// A string to represent reference sequence
             /// </summary>
             [FhirElement("referenceSeqString", InSummary=true, Order=80)]
             [DataMember]
@@ -213,7 +213,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _ReferenceSeqStringElement;
             
             /// <summary>
-            /// A Reference Sequence string
+            /// A string to represent reference sequence
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -518,7 +518,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Allele of reference sequence
+            /// Allele in the reference sequence
             /// </summary>
             [FhirElement("referenceAllele", InSummary=true, Order=70)]
             [DataMember]
@@ -531,7 +531,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _ReferenceAlleleElement;
             
             /// <summary>
-            /// Allele of reference sequence
+            /// Allele in the reference sequence
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -681,7 +681,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "QualityComponent"; } }
             
             /// <summary>
-            /// INDEL | SNP | UNKNOWN
+            /// indel | snp | unknown
             /// </summary>
             [FhirElement("type", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -695,7 +695,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.Sequence.qualityType> _TypeElement;
             
             /// <summary>
-            /// INDEL | SNP | UNKNOWN
+            /// indel | snp | unknown
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -791,7 +791,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Quality score
+            /// Quality score for the comparison
             /// </summary>
             [FhirElement("score", InSummary=true, Order=80)]
             [DataMember]
@@ -804,7 +804,7 @@ namespace Hl7.Fhir.Model
             private Quantity _Score;
             
             /// <summary>
-            /// Method for quality
+            /// Method to get quality
             /// </summary>
             [FhirElement("method", InSummary=true, Order=90)]
             [DataMember]
@@ -977,7 +977,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Precision
+            /// Precision of comparison
             /// </summary>
             [FhirElement("precision", InSummary=true, Order=150)]
             [DataMember]
@@ -990,7 +990,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirDecimal _PrecisionElement;
             
             /// <summary>
-            /// Precision
+            /// Precision of comparison
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1009,7 +1009,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Recall
+            /// Recall of comparison
             /// </summary>
             [FhirElement("recall", InSummary=true, Order=160)]
             [DataMember]
@@ -1022,7 +1022,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirDecimal _RecallElement;
             
             /// <summary>
-            /// Recall
+            /// Recall of comparison
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1254,7 +1254,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Name of the repository
+            /// Repository's name
             /// </summary>
             [FhirElement("name", InSummary=true, Order=60)]
             [DataMember]
@@ -1267,7 +1267,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _NameElement;
             
             /// <summary>
-            /// Name of the repository
+            /// Repository's name
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1458,472 +1458,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StructureVariantComponent")]
-        [DataContract]
-        public partial class StructureVariantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "StructureVariantComponent"; } }
-            
-            /// <summary>
-            /// Precision of boundaries
-            /// </summary>
-            [FhirElement("precisionOfBoundaries", InSummary=true, Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString PrecisionOfBoundariesElement
-            {
-                get { return _PrecisionOfBoundariesElement; }
-                set { _PrecisionOfBoundariesElement = value; OnPropertyChanged("PrecisionOfBoundariesElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _PrecisionOfBoundariesElement;
-            
-            /// <summary>
-            /// Precision of boundaries
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string PrecisionOfBoundaries
-            {
-                get { return PrecisionOfBoundariesElement != null ? PrecisionOfBoundariesElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        PrecisionOfBoundariesElement = null; 
-                    else
-                        PrecisionOfBoundariesElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("PrecisionOfBoundaries");
-                }
-            }
-            
-            /// <summary>
-            /// Structural Variant reported aCGH ratio
-            /// </summary>
-            [FhirElement("reportedaCGHRatio", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirDecimal ReportedaCGHRatioElement
-            {
-                get { return _ReportedaCGHRatioElement; }
-                set { _ReportedaCGHRatioElement = value; OnPropertyChanged("ReportedaCGHRatioElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirDecimal _ReportedaCGHRatioElement;
-            
-            /// <summary>
-            /// Structural Variant reported aCGH ratio
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public decimal? ReportedaCGHRatio
-            {
-                get { return ReportedaCGHRatioElement != null ? ReportedaCGHRatioElement.Value : null; }
-                set
-                {
-                    if (!value.HasValue)
-                        ReportedaCGHRatioElement = null; 
-                    else
-                        ReportedaCGHRatioElement = new Hl7.Fhir.Model.FhirDecimal(value);
-                    OnPropertyChanged("ReportedaCGHRatio");
-                }
-            }
-            
-            /// <summary>
-            /// Structural Variant Length
-            /// </summary>
-            [FhirElement("length", InSummary=true, Order=60)]
-            [DataMember]
-            public Hl7.Fhir.Model.Integer LengthElement
-            {
-                get { return _LengthElement; }
-                set { _LengthElement = value; OnPropertyChanged("LengthElement"); }
-            }
-            
-            private Hl7.Fhir.Model.Integer _LengthElement;
-            
-            /// <summary>
-            /// Structural Variant Length
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public int? Length
-            {
-                get { return LengthElement != null ? LengthElement.Value : null; }
-                set
-                {
-                    if (!value.HasValue)
-                        LengthElement = null; 
-                    else
-                        LengthElement = new Hl7.Fhir.Model.Integer(value);
-                    OnPropertyChanged("Length");
-                }
-            }
-            
-            /// <summary>
-            /// Structural variant outer
-            /// </summary>
-            [FhirElement("outer", InSummary=true, Order=70)]
-            [DataMember]
-            public Hl7.Fhir.Model.Sequence.OuterComponent Outer
-            {
-                get { return _Outer; }
-                set { _Outer = value; OnPropertyChanged("Outer"); }
-            }
-            
-            private Hl7.Fhir.Model.Sequence.OuterComponent _Outer;
-            
-            /// <summary>
-            /// Structural variant inner
-            /// </summary>
-            [FhirElement("inner", InSummary=true, Order=80)]
-            [DataMember]
-            public Hl7.Fhir.Model.Sequence.InnerComponent Inner
-            {
-                get { return _Inner; }
-                set { _Inner = value; OnPropertyChanged("Inner"); }
-            }
-            
-            private Hl7.Fhir.Model.Sequence.InnerComponent _Inner;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as StructureVariantComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(PrecisionOfBoundariesElement != null) dest.PrecisionOfBoundariesElement = (Hl7.Fhir.Model.FhirString)PrecisionOfBoundariesElement.DeepCopy();
-                    if(ReportedaCGHRatioElement != null) dest.ReportedaCGHRatioElement = (Hl7.Fhir.Model.FhirDecimal)ReportedaCGHRatioElement.DeepCopy();
-                    if(LengthElement != null) dest.LengthElement = (Hl7.Fhir.Model.Integer)LengthElement.DeepCopy();
-                    if(Outer != null) dest.Outer = (Hl7.Fhir.Model.Sequence.OuterComponent)Outer.DeepCopy();
-                    if(Inner != null) dest.Inner = (Hl7.Fhir.Model.Sequence.InnerComponent)Inner.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new StructureVariantComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as StructureVariantComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(PrecisionOfBoundariesElement, otherT.PrecisionOfBoundariesElement)) return false;
-                if( !DeepComparable.Matches(ReportedaCGHRatioElement, otherT.ReportedaCGHRatioElement)) return false;
-                if( !DeepComparable.Matches(LengthElement, otherT.LengthElement)) return false;
-                if( !DeepComparable.Matches(Outer, otherT.Outer)) return false;
-                if( !DeepComparable.Matches(Inner, otherT.Inner)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as StructureVariantComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(PrecisionOfBoundariesElement, otherT.PrecisionOfBoundariesElement)) return false;
-                if( !DeepComparable.IsExactly(ReportedaCGHRatioElement, otherT.ReportedaCGHRatioElement)) return false;
-                if( !DeepComparable.IsExactly(LengthElement, otherT.LengthElement)) return false;
-                if( !DeepComparable.IsExactly(Outer, otherT.Outer)) return false;
-                if( !DeepComparable.IsExactly(Inner, otherT.Inner)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // StructureVariantComponent elements
-                    if (PrecisionOfBoundariesElement != null) yield return PrecisionOfBoundariesElement;
-                    if (ReportedaCGHRatioElement != null) yield return ReportedaCGHRatioElement;
-                    if (LengthElement != null) yield return LengthElement;
-                    if (Outer != null) yield return Outer;
-                    if (Inner != null) yield return Inner;
-                }
-            }
-            
-        }
-        
-        
-        [FhirType("OuterComponent")]
-        [DataContract]
-        public partial class OuterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "OuterComponent"; } }
-            
-            /// <summary>
-            /// Structural Variant Outer Start
-            /// </summary>
-            [FhirElement("start", InSummary=true, Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.Integer StartElement
-            {
-                get { return _StartElement; }
-                set { _StartElement = value; OnPropertyChanged("StartElement"); }
-            }
-            
-            private Hl7.Fhir.Model.Integer _StartElement;
-            
-            /// <summary>
-            /// Structural Variant Outer Start
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public int? Start
-            {
-                get { return StartElement != null ? StartElement.Value : null; }
-                set
-                {
-                    if (!value.HasValue)
-                        StartElement = null; 
-                    else
-                        StartElement = new Hl7.Fhir.Model.Integer(value);
-                    OnPropertyChanged("Start");
-                }
-            }
-            
-            /// <summary>
-            /// Structural Variant Outer End
-            /// </summary>
-            [FhirElement("end", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.Integer EndElement
-            {
-                get { return _EndElement; }
-                set { _EndElement = value; OnPropertyChanged("EndElement"); }
-            }
-            
-            private Hl7.Fhir.Model.Integer _EndElement;
-            
-            /// <summary>
-            /// Structural Variant Outer End
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public int? End
-            {
-                get { return EndElement != null ? EndElement.Value : null; }
-                set
-                {
-                    if (!value.HasValue)
-                        EndElement = null; 
-                    else
-                        EndElement = new Hl7.Fhir.Model.Integer(value);
-                    OnPropertyChanged("End");
-                }
-            }
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as OuterComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.Integer)StartElement.DeepCopy();
-                    if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Integer)EndElement.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new OuterComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as OuterComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(StartElement, otherT.StartElement)) return false;
-                if( !DeepComparable.Matches(EndElement, otherT.EndElement)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as OuterComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(StartElement, otherT.StartElement)) return false;
-                if( !DeepComparable.IsExactly(EndElement, otherT.EndElement)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // OuterComponent elements
-                    if (StartElement != null) yield return StartElement;
-                    if (EndElement != null) yield return EndElement;
-                }
-            }
-            
-        }
-        
-        
-        [FhirType("InnerComponent")]
-        [DataContract]
-        public partial class InnerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "InnerComponent"; } }
-            
-            /// <summary>
-            /// Structural Variant Inner Start
-            /// </summary>
-            [FhirElement("start", InSummary=true, Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.Integer StartElement
-            {
-                get { return _StartElement; }
-                set { _StartElement = value; OnPropertyChanged("StartElement"); }
-            }
-            
-            private Hl7.Fhir.Model.Integer _StartElement;
-            
-            /// <summary>
-            /// Structural Variant Inner Start
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public int? Start
-            {
-                get { return StartElement != null ? StartElement.Value : null; }
-                set
-                {
-                    if (!value.HasValue)
-                        StartElement = null; 
-                    else
-                        StartElement = new Hl7.Fhir.Model.Integer(value);
-                    OnPropertyChanged("Start");
-                }
-            }
-            
-            /// <summary>
-            /// Structural Variant Inner End
-            /// </summary>
-            [FhirElement("end", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.Integer EndElement
-            {
-                get { return _EndElement; }
-                set { _EndElement = value; OnPropertyChanged("EndElement"); }
-            }
-            
-            private Hl7.Fhir.Model.Integer _EndElement;
-            
-            /// <summary>
-            /// Structural Variant Inner End
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public int? End
-            {
-                get { return EndElement != null ? EndElement.Value : null; }
-                set
-                {
-                    if (!value.HasValue)
-                        EndElement = null; 
-                    else
-                        EndElement = new Hl7.Fhir.Model.Integer(value);
-                    OnPropertyChanged("End");
-                }
-            }
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as InnerComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.Integer)StartElement.DeepCopy();
-                    if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Integer)EndElement.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new InnerComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as InnerComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(StartElement, otherT.StartElement)) return false;
-                if( !DeepComparable.Matches(EndElement, otherT.EndElement)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as InnerComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(StartElement, otherT.StartElement)) return false;
-                if( !DeepComparable.IsExactly(EndElement, otherT.EndElement)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // InnerComponent elements
-                    if (StartElement != null) yield return StartElement;
-                    if (EndElement != null) yield return EndElement;
-                }
-            }
-            
-        }
-        
-        
         /// <summary>
         /// Unique ID for this particular sequence. This is a FHIR-defined id
         /// </summary>
@@ -1939,7 +1473,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// AA | DNA | RNA
+        /// aa | dna | rna
         /// </summary>
         [FhirElement("type", InSummary=true, Order=100)]
         [DataMember]
@@ -1952,7 +1486,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Code _TypeElement;
         
         /// <summary>
-        /// AA | DNA | RNA
+        /// aa | dna | rna
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -2077,7 +1611,7 @@ namespace Hl7.Fhir.Model
         private Quantity _Quantity;
         
         /// <summary>
-        /// Reference sequence
+        /// A sequence used as reference
         /// </summary>
         [FhirElement("referenceSeq", InSummary=true, Order=170)]
         [DataMember]
@@ -2090,7 +1624,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Sequence.ReferenceSeqComponent _ReferenceSeq;
         
         /// <summary>
-        /// Sequence variant
+        /// Variant in sequence
         /// </summary>
         [FhirElement("variant", InSummary=true, Order=180)]
         [Cardinality(Min=0,Max=-1)]
@@ -2104,7 +1638,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Sequence.VariantComponent> _Variant;
         
         /// <summary>
-        /// Observed sequence
+        /// Sequence that was observed
         /// </summary>
         [FhirElement("observedSeq", InSummary=true, Order=190)]
         [DataMember]
@@ -2117,7 +1651,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _ObservedSeqElement;
         
         /// <summary>
-        /// Observed sequence
+        /// Sequence that was observed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -2136,7 +1670,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Sequence quality
+        /// An set of value as quality of sequence
         /// </summary>
         [FhirElement("quality", InSummary=true, Order=200)]
         [Cardinality(Min=0,Max=-1)]
@@ -2211,20 +1745,6 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.ResourceReference> _Pointer;
         
-        /// <summary>
-        /// Structural variant
-        /// </summary>
-        [FhirElement("structureVariant", InSummary=true, Order=240)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.Sequence.StructureVariantComponent> StructureVariant
-        {
-            get { if(_StructureVariant==null) _StructureVariant = new List<Hl7.Fhir.Model.Sequence.StructureVariantComponent>(); return _StructureVariant; }
-            set { _StructureVariant = value; OnPropertyChanged("StructureVariant"); }
-        }
-        
-        private List<Hl7.Fhir.Model.Sequence.StructureVariantComponent> _StructureVariant;
-        
 
         public static ElementDefinition.ConstraintComponent Sequence_SEQ_3 = new ElementDefinition.ConstraintComponent()
         {
@@ -2294,7 +1814,6 @@ namespace Hl7.Fhir.Model
                 if(ReadCoverageElement != null) dest.ReadCoverageElement = (Hl7.Fhir.Model.Integer)ReadCoverageElement.DeepCopy();
                 if(Repository != null) dest.Repository = new List<Hl7.Fhir.Model.Sequence.RepositoryComponent>(Repository.DeepCopy());
                 if(Pointer != null) dest.Pointer = new List<Hl7.Fhir.Model.ResourceReference>(Pointer.DeepCopy());
-                if(StructureVariant != null) dest.StructureVariant = new List<Hl7.Fhir.Model.Sequence.StructureVariantComponent>(StructureVariant.DeepCopy());
                 return dest;
             }
             else
@@ -2327,7 +1846,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(ReadCoverageElement, otherT.ReadCoverageElement)) return false;
             if( !DeepComparable.Matches(Repository, otherT.Repository)) return false;
             if( !DeepComparable.Matches(Pointer, otherT.Pointer)) return false;
-            if( !DeepComparable.Matches(StructureVariant, otherT.StructureVariant)) return false;
             
             return true;
         }
@@ -2353,7 +1871,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(ReadCoverageElement, otherT.ReadCoverageElement)) return false;
             if( !DeepComparable.IsExactly(Repository, otherT.Repository)) return false;
             if( !DeepComparable.IsExactly(Pointer, otherT.Pointer)) return false;
-            if( !DeepComparable.IsExactly(StructureVariant, otherT.StructureVariant)) return false;
             
             return true;
         }
@@ -2379,7 +1896,6 @@ namespace Hl7.Fhir.Model
 				if (ReadCoverageElement != null) yield return ReadCoverageElement;
 				foreach (var elem in Repository) { if (elem != null) yield return elem; }
 				foreach (var elem in Pointer) { if (elem != null) yield return elem; }
-				foreach (var elem in StructureVariant) { if (elem != null) yield return elem; }
             }
         }
     }

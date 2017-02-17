@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -470,7 +470,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
         
         /// <summary>
-        /// Descriptional topics for the library
+        /// E.g. Education, Treatment, Assessment, etc
         /// </summary>
         [FhirElement("topic", Order=260)]
         [Cardinality(Min=0,Max=-1)]

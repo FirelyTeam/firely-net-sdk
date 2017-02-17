@@ -105,10 +105,10 @@ namespace Hl7.Fhir.Specification.Source
             return _filesSource.ListResourceUris(filter);
         }
 
-        public ValueSet FindValueSetBySystem(string system)
+        public CodeSystem FindCodeSystemByValueSet(string system)
         {
             prepare();
-            return _filesSource.FindValueSetBySystem(system);
+            return _filesSource.FindCodeSystemByValueSet(system);
         }
 
         public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)

@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -582,7 +582,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// If provided, then no schedule and start/end values MUST match slot
+        /// The slots that this appointment is filling
         /// </summary>
         [FhirElement("slot", Order=210)]
         [CLSCompliant(false)]

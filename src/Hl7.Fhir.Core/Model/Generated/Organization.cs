@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -232,14 +232,15 @@ namespace Hl7.Fhir.Model
         /// Kind of organization
         /// </summary>
         [FhirElement("type", InSummary=true, Order=110)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Type
+        public List<Hl7.Fhir.Model.CodeableConcept> Type
         {
-            get { return _Type; }
+            get { if(_Type==null) _Type = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Type; }
             set { _Type = value; OnPropertyChanged("Type"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Type;
+        private List<Hl7.Fhir.Model.CodeableConcept> _Type;
         
         /// <summary>
         /// Name used for the organization
@@ -425,7 +426,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
-                if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
+                if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(AliasElement != null) dest.AliasElement = new List<Hl7.Fhir.Model.FhirString>(AliasElement.DeepCopy());
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
@@ -492,7 +493,7 @@ namespace Hl7.Fhir.Model
 				// Organization elements
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (ActiveElement != null) yield return ActiveElement;
-				if (Type != null) yield return Type;
+				foreach (var elem in Type) { if (elem != null) yield return elem; }
 				if (NameElement != null) yield return NameElement;
 				foreach (var elem in AliasElement) { if (elem != null) yield return elem; }
 				foreach (var elem in Telecom) { if (elem != null) yield return elem; }

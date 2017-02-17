@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -249,7 +249,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "AllowedResponseComponent"; } }
             
             /// <summary>
-            /// MessageDefinition for response
+            /// Reference to allowed message definition response
             /// </summary>
             [FhirElement("message", Order=40)]
             [CLSCompliant(false)]
@@ -371,9 +371,22 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Additional identifier for the message definition
+        /// </summary>
+        [FhirElement("identifier", InSummary=true, Order=100)]
+        [DataMember]
+        public Hl7.Fhir.Model.Identifier Identifier
+        {
+            get { return _Identifier; }
+            set { _Identifier = value; OnPropertyChanged("Identifier"); }
+        }
+        
+        private Hl7.Fhir.Model.Identifier _Identifier;
+        
+        /// <summary>
         /// Business version of the message definition
         /// </summary>
-        [FhirElement("version", InSummary=true, Order=100)]
+        [FhirElement("version", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString VersionElement
         {
@@ -405,7 +418,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name for this message definition (Computer friendly)
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=110)]
+        [FhirElement("name", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
         {
@@ -437,7 +450,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name for this message definition (Human friendly)
         /// </summary>
-        [FhirElement("title", InSummary=true, Order=120)]
+        [FhirElement("title", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TitleElement
         {
@@ -469,7 +482,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// draft | active | retired
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=130)]
+        [FhirElement("status", InSummary=true, Order=140)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -502,7 +515,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If for testing purposes, not real usage
         /// </summary>
-        [FhirElement("experimental", InSummary=true, Order=140)]
+        [FhirElement("experimental", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
         {
@@ -534,7 +547,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date this was last changed
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=150)]
+        [FhirElement("date", InSummary=true, Order=160)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
@@ -567,7 +580,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of the publisher (Organization or individual)
         /// </summary>
-        [FhirElement("publisher", InSummary=true, Order=160)]
+        [FhirElement("publisher", InSummary=true, Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
         {
@@ -599,7 +612,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contact details for the publisher
         /// </summary>
-        [FhirElement("contact", InSummary=true, Order=170)]
+        [FhirElement("contact", InSummary=true, Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<ContactDetail> Contact
@@ -613,7 +626,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Natural language description of the message definition
         /// </summary>
-        [FhirElement("description", InSummary=true, Order=180)]
+        [FhirElement("description", InSummary=true, Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown Description
         {
@@ -626,7 +639,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Content intends to support these contexts
         /// </summary>
-        [FhirElement("useContext", InSummary=true, Order=190)]
+        [FhirElement("useContext", InSummary=true, Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<UsageContext> UseContext
@@ -640,7 +653,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Intended jurisdiction for message definition (if applicable)
         /// </summary>
-        [FhirElement("jurisdiction", InSummary=true, Order=200)]
+        [FhirElement("jurisdiction", InSummary=true, Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -654,7 +667,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Why this message definition is defined
         /// </summary>
-        [FhirElement("purpose", InSummary=true, Order=210)]
+        [FhirElement("purpose", InSummary=true, Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown Purpose
         {
@@ -667,7 +680,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Use and/or publishing restrictions
         /// </summary>
-        [FhirElement("copyright", Order=220)]
+        [FhirElement("copyright", Order=230)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown Copyright
         {
@@ -680,7 +693,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Definition this one is based on
         /// </summary>
-        [FhirElement("base", InSummary=true, Order=230)]
+        [FhirElement("base", InSummary=true, Order=240)]
         [CLSCompliant(false)]
 		[References("MessageDefinition")]
         [DataMember]
@@ -695,7 +708,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Protocol/workflow this is part of
         /// </summary>
-        [FhirElement("parent", InSummary=true, Order=240)]
+        [FhirElement("parent", InSummary=true, Order=250)]
         [CLSCompliant(false)]
 		[References("ActivityDefinition","PlanDefinition")]
         [Cardinality(Min=0,Max=-1)]
@@ -711,7 +724,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Takes the place of
         /// </summary>
-        [FhirElement("replaces", InSummary=true, Order=250)]
+        [FhirElement("replaces", InSummary=true, Order=260)]
         [CLSCompliant(false)]
 		[References("MessageDefinition")]
         [Cardinality(Min=0,Max=-1)]
@@ -727,7 +740,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Event type
         /// </summary>
-        [FhirElement("event", InSummary=true, Order=260)]
+        [FhirElement("event", InSummary=true, Order=270)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Event
@@ -741,7 +754,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Consequence | Currency | Notification
         /// </summary>
-        [FhirElement("category", InSummary=true, Order=270)]
+        [FhirElement("category", InSummary=true, Order=280)]
         [DataMember]
         public Code<Hl7.Fhir.Model.MessageSignificanceCategory> CategoryElement
         {
@@ -773,7 +786,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Resource(s) that are the subject of the event
         /// </summary>
-        [FhirElement("focus", InSummary=true, Order=280)]
+        [FhirElement("focus", InSummary=true, Order=290)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MessageDefinition.FocusComponent> Focus
@@ -787,7 +800,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Is a response required?
         /// </summary>
-        [FhirElement("responseRequired", Order=290)]
+        [FhirElement("responseRequired", Order=300)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ResponseRequiredElement
         {
@@ -819,7 +832,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Responses to this message
         /// </summary>
-        [FhirElement("allowedResponse", Order=300)]
+        [FhirElement("allowedResponse", Order=310)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MessageDefinition.AllowedResponseComponent> AllowedResponse
@@ -855,6 +868,7 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
+                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
@@ -894,6 +908,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(VersionElement, otherT.VersionElement)) return false;
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
@@ -926,6 +941,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(VersionElement, otherT.VersionElement)) return false;
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
@@ -958,6 +974,7 @@ namespace Hl7.Fhir.Model
             {
 				// MessageDefinition elements
 				if (UrlElement != null) yield return UrlElement;
+				if (Identifier != null) yield return Identifier;
 				if (VersionElement != null) yield return VersionElement;
 				if (NameElement != null) yield return NameElement;
 				if (TitleElement != null) yield return TitleElement;

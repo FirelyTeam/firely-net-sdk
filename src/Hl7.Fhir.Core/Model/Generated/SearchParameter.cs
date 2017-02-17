@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -769,7 +769,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Markdown _Description;
         
         /// <summary>
-        /// FluentPath expression that extracts the values
+        /// FHIRPath expression that extracts the values
         /// </summary>
         [FhirElement("expression", Order=250)]
         [DataMember]
@@ -782,7 +782,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _ExpressionElement;
         
         /// <summary>
-        /// FluentPath expression that extracts the values
+        /// FHIRPath expression that extracts the values
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

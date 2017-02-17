@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -235,12 +235,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TreatmentComponent")]
+        [FhirType("ProcessingComponent")]
         [DataContract]
-        public partial class TreatmentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ProcessingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "TreatmentComponent"; } }
+            public override string TypeName { get { return "ProcessingComponent"; } }
             
             /// <summary>
             /// Textual description of procedure
@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Indicates the treatment or processing step  applied to the specimen
+            /// Indicates the treatment step  applied to the specimen
             /// </summary>
             [FhirElement("procedure", Order=50)]
             [DataMember]
@@ -304,7 +304,7 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.ResourceReference> _Additive;
             
             /// <summary>
-            /// Date and time of specimen treatment
+            /// Date and time of specimen processing
             /// </summary>
             [FhirElement("time", Order=70, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
@@ -320,7 +320,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as TreatmentComponent;
+                var dest = other as ProcessingComponent;
                 
                 if (dest != null)
                 {
@@ -337,12 +337,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new TreatmentComponent());
+                return CopyTo(new ProcessingComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as TreatmentComponent;
+                var otherT = other as ProcessingComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -356,7 +356,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as TreatmentComponent;
+                var otherT = other as ProcessingComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -376,7 +376,7 @@ namespace Hl7.Fhir.Model
                 {
                     // BackboneElement elements
                     foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // TreatmentComponent elements
+                    // ProcessingComponent elements
                     if (DescriptionElement != null) yield return DescriptionElement;
                     if (Procedure != null) yield return Procedure;
                     foreach (var elem in Additive) { if (elem != null) yield return elem; }
@@ -712,7 +712,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("request", Order=160)]
         [CLSCompliant(false)]
-		[References("DiagnosticRequest","ProcedureRequest")]
+		[References("ProcedureRequest")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Request
@@ -737,18 +737,18 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Specimen.CollectionComponent _Collection;
         
         /// <summary>
-        /// Treatment and processing step details
+        /// Processing and processing step details
         /// </summary>
-        [FhirElement("treatment", Order=180)]
+        [FhirElement("processing", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Specimen.TreatmentComponent> Treatment
+        public List<Hl7.Fhir.Model.Specimen.ProcessingComponent> Processing
         {
-            get { if(_Treatment==null) _Treatment = new List<Hl7.Fhir.Model.Specimen.TreatmentComponent>(); return _Treatment; }
-            set { _Treatment = value; OnPropertyChanged("Treatment"); }
+            get { if(_Processing==null) _Processing = new List<Hl7.Fhir.Model.Specimen.ProcessingComponent>(); return _Processing; }
+            set { _Processing = value; OnPropertyChanged("Processing"); }
         }
         
-        private List<Hl7.Fhir.Model.Specimen.TreatmentComponent> _Treatment;
+        private List<Hl7.Fhir.Model.Specimen.ProcessingComponent> _Processing;
         
         /// <summary>
         /// Direct container of specimen (tube/slide, etc.)
@@ -801,7 +801,7 @@ namespace Hl7.Fhir.Model
                 if(Parent != null) dest.Parent = new List<Hl7.Fhir.Model.ResourceReference>(Parent.DeepCopy());
                 if(Request != null) dest.Request = new List<Hl7.Fhir.Model.ResourceReference>(Request.DeepCopy());
                 if(Collection != null) dest.Collection = (Hl7.Fhir.Model.Specimen.CollectionComponent)Collection.DeepCopy();
-                if(Treatment != null) dest.Treatment = new List<Hl7.Fhir.Model.Specimen.TreatmentComponent>(Treatment.DeepCopy());
+                if(Processing != null) dest.Processing = new List<Hl7.Fhir.Model.Specimen.ProcessingComponent>(Processing.DeepCopy());
                 if(Container != null) dest.Container = new List<Hl7.Fhir.Model.Specimen.ContainerComponent>(Container.DeepCopy());
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 return dest;
@@ -830,7 +830,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Parent, otherT.Parent)) return false;
             if( !DeepComparable.Matches(Request, otherT.Request)) return false;
             if( !DeepComparable.Matches(Collection, otherT.Collection)) return false;
-            if( !DeepComparable.Matches(Treatment, otherT.Treatment)) return false;
+            if( !DeepComparable.Matches(Processing, otherT.Processing)) return false;
             if( !DeepComparable.Matches(Container, otherT.Container)) return false;
             if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             
@@ -852,7 +852,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Parent, otherT.Parent)) return false;
             if( !DeepComparable.IsExactly(Request, otherT.Request)) return false;
             if( !DeepComparable.IsExactly(Collection, otherT.Collection)) return false;
-            if( !DeepComparable.IsExactly(Treatment, otherT.Treatment)) return false;
+            if( !DeepComparable.IsExactly(Processing, otherT.Processing)) return false;
             if( !DeepComparable.IsExactly(Container, otherT.Container)) return false;
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             
@@ -874,7 +874,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Parent) { if (elem != null) yield return elem; }
 				foreach (var elem in Request) { if (elem != null) yield return elem; }
 				if (Collection != null) yield return Collection;
-				foreach (var elem in Treatment) { if (elem != null) yield return elem; }
+				foreach (var elem in Processing) { if (elem != null) yield return elem; }
 				foreach (var elem in Container) { if (elem != null) yield return elem; }
 				foreach (var elem in Note) { if (elem != null) yield return elem; }
             }

@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -403,24 +403,39 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
-        /// The clinician performing the assessment
+        /// Encounter or Episode created from
         /// </summary>
-        [FhirElement("assessor", InSummary=true, Order=140)]
+        [FhirElement("context", InSummary=true, Order=140)]
         [CLSCompliant(false)]
-		[References("Practitioner")]
+		[References("Encounter","EpisodeOfCare")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Assessor
+        public Hl7.Fhir.Model.ResourceReference Context
         {
-            get { return _Assessor; }
-            set { _Assessor = value; OnPropertyChanged("Assessor"); }
+            get { return _Context; }
+            set { _Context = value; OnPropertyChanged("Context"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Assessor;
+        private Hl7.Fhir.Model.ResourceReference _Context;
+        
+        /// <summary>
+        /// Time of assessment
+        /// </summary>
+        [FhirElement("effective", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+        [DataMember]
+        public Hl7.Fhir.Model.Element Effective
+        {
+            get { return _Effective; }
+            set { _Effective = value; OnPropertyChanged("Effective"); }
+        }
+        
+        private Hl7.Fhir.Model.Element _Effective;
         
         /// <summary>
         /// When the assessment was documented
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=150)]
+        [FhirElement("date", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -450,34 +465,19 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Time of assessment
+        /// The clinician performing the assessment
         /// </summary>
-        [FhirElement("effective", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("assessor", InSummary=true, Order=170)]
         [CLSCompliant(false)]
-		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+		[References("Practitioner")]
         [DataMember]
-        public Hl7.Fhir.Model.Element Effective
+        public Hl7.Fhir.Model.ResourceReference Assessor
         {
-            get { return _Effective; }
-            set { _Effective = value; OnPropertyChanged("Effective"); }
+            get { return _Assessor; }
+            set { _Assessor = value; OnPropertyChanged("Assessor"); }
         }
         
-        private Hl7.Fhir.Model.Element _Effective;
-        
-        /// <summary>
-        /// Encounter or Episode created from
-        /// </summary>
-        [FhirElement("context", InSummary=true, Order=170)]
-        [CLSCompliant(false)]
-		[References("Encounter","EpisodeOfCare")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Context
-        {
-            get { return _Context; }
-            set { _Context = value; OnPropertyChanged("Context"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Context;
+        private Hl7.Fhir.Model.ResourceReference _Assessor;
         
         /// <summary>
         /// Reference to last assessment
@@ -638,7 +638,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("action", Order=260)]
         [CLSCompliant(false)]
-		[References("ReferralRequest","ProcedureRequest","Procedure","MedicationRequest","DiagnosticRequest","Appointment")]
+		[References("ReferralRequest","ProcedureRequest","Procedure","MedicationRequest","Appointment")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Action
@@ -682,10 +682,10 @@ namespace Hl7.Fhir.Model
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-                if(Assessor != null) dest.Assessor = (Hl7.Fhir.Model.ResourceReference)Assessor.DeepCopy();
-                if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
-                if(Effective != null) dest.Effective = (Hl7.Fhir.Model.Element)Effective.DeepCopy();
                 if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
+                if(Effective != null) dest.Effective = (Hl7.Fhir.Model.Element)Effective.DeepCopy();
+                if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
+                if(Assessor != null) dest.Assessor = (Hl7.Fhir.Model.ResourceReference)Assessor.DeepCopy();
                 if(Previous != null) dest.Previous = (Hl7.Fhir.Model.ResourceReference)Previous.DeepCopy();
                 if(Problem != null) dest.Problem = new List<Hl7.Fhir.Model.ResourceReference>(Problem.DeepCopy());
                 if(Investigation != null) dest.Investigation = new List<Hl7.Fhir.Model.ClinicalImpression.InvestigationComponent>(Investigation.DeepCopy());
@@ -718,10 +718,10 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
-            if( !DeepComparable.Matches(Assessor, otherT.Assessor)) return false;
-            if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
-            if( !DeepComparable.Matches(Effective, otherT.Effective)) return false;
             if( !DeepComparable.Matches(Context, otherT.Context)) return false;
+            if( !DeepComparable.Matches(Effective, otherT.Effective)) return false;
+            if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
+            if( !DeepComparable.Matches(Assessor, otherT.Assessor)) return false;
             if( !DeepComparable.Matches(Previous, otherT.Previous)) return false;
             if( !DeepComparable.Matches(Problem, otherT.Problem)) return false;
             if( !DeepComparable.Matches(Investigation, otherT.Investigation)) return false;
@@ -747,10 +747,10 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
-            if( !DeepComparable.IsExactly(Assessor, otherT.Assessor)) return false;
-            if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
-            if( !DeepComparable.IsExactly(Effective, otherT.Effective)) return false;
             if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
+            if( !DeepComparable.IsExactly(Effective, otherT.Effective)) return false;
+            if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
+            if( !DeepComparable.IsExactly(Assessor, otherT.Assessor)) return false;
             if( !DeepComparable.IsExactly(Previous, otherT.Previous)) return false;
             if( !DeepComparable.IsExactly(Problem, otherT.Problem)) return false;
             if( !DeepComparable.IsExactly(Investigation, otherT.Investigation)) return false;
@@ -776,10 +776,10 @@ namespace Hl7.Fhir.Model
 				if (Code != null) yield return Code;
 				if (DescriptionElement != null) yield return DescriptionElement;
 				if (Subject != null) yield return Subject;
-				if (Assessor != null) yield return Assessor;
-				if (DateElement != null) yield return DateElement;
-				if (Effective != null) yield return Effective;
 				if (Context != null) yield return Context;
+				if (Effective != null) yield return Effective;
+				if (DateElement != null) yield return DateElement;
+				if (Assessor != null) yield return Assessor;
 				if (Previous != null) yield return Previous;
 				foreach (var elem in Problem) { if (elem != null) yield return elem; }
 				foreach (var elem in Investigation) { if (elem != null) yield return elem; }

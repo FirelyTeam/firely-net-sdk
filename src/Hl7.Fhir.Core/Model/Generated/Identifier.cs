@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
-        /// The namespace for the identifier
+        /// The namespace for the identifier value
         /// </summary>
         [FhirElement("system", InSummary=true, Order=50)]
         [DataMember]
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirUri _SystemElement;
         
         /// <summary>
-        /// The namespace for the identifier
+        /// The namespace for the identifier value
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

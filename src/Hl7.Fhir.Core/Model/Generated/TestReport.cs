@@ -37,12 +37,12 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Describes a set of tests
+    /// Describes the results of a TestScript execution
     /// </summary>
     [FhirType("TestReport", IsResource=true)]
     [DataContract]
@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "TestReport"; } }
         
         /// <summary>
-        /// The execution status of the TestReport.
+        /// The current status of the test report.
         /// (url: http://hl7.org/fhir/ValueSet/report-status-codes)
         /// </summary>
         [FhirEnumeration("TestReportStatus")]
@@ -64,20 +64,59 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/report-status-codes)
             /// </summary>
-            [EnumLiteral("complete"), Description("complete")]
-            Complete,
+            [EnumLiteral("completed"), Description("Completed")]
+            Completed,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/report-status-codes)
             /// </summary>
-            [EnumLiteral("pending"), Description("pending")]
+            [EnumLiteral("in-progress"), Description("In Progress")]
+            InProgress,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/report-status-codes)
+            /// </summary>
+            [EnumLiteral("waiting"), Description("Waiting")]
+            Waiting,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/report-status-codes)
+            /// </summary>
+            [EnumLiteral("stopped"), Description("Stopped")]
+            Stopped,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/report-status-codes)
+            /// </summary>
+            [EnumLiteral("entered-in-error"), Description("Entered In Error")]
+            EnteredInError,
+        }
+
+        /// <summary>
+        /// The reported execution result.
+        /// (url: http://hl7.org/fhir/ValueSet/report-result-codes)
+        /// </summary>
+        [FhirEnumeration("TestReportResult")]
+        public enum TestReportResult
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/report-result-codes)
+            /// </summary>
+            [EnumLiteral("pass"), Description("Pass")]
+            Pass,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/report-result-codes)
+            /// </summary>
+            [EnumLiteral("fail"), Description("Fail")]
+            Fail,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/report-result-codes)
+            /// </summary>
+            [EnumLiteral("pending"), Description("Pending")]
             Pending,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/report-status-codes)
-            /// </summary>
-            [EnumLiteral("error"), Description("error")]
-            Error,
         }
 
         /// <summary>
@@ -91,58 +130,58 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/report-participant-type)
             /// </summary>
-            [EnumLiteral("test-engine"), Description("test-engine")]
+            [EnumLiteral("test-engine"), Description("Test Engine")]
             TestEngine,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/report-participant-type)
             /// </summary>
-            [EnumLiteral("client"), Description("client")]
+            [EnumLiteral("client"), Description("Client")]
             Client,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/report-participant-type)
             /// </summary>
-            [EnumLiteral("server"), Description("server")]
+            [EnumLiteral("server"), Description("Server")]
             Server,
         }
 
         /// <summary>
         /// The results of executing an action.
-        /// (url: http://hl7.org/fhir/ValueSet/report-result-codes)
+        /// (url: http://hl7.org/fhir/ValueSet/report-action-result-codes)
         /// </summary>
-        [FhirEnumeration("TestReportResultCodes")]
-        public enum TestReportResultCodes
+        [FhirEnumeration("TestReportActionResult")]
+        public enum TestReportActionResult
         {
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/report-result-codes)
+            /// (system: http://hl7.org/fhir/report-action-result-codes)
             /// </summary>
-            [EnumLiteral("pass"), Description("pass")]
+            [EnumLiteral("pass"), Description("Pass")]
             Pass,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/report-result-codes)
+            /// (system: http://hl7.org/fhir/report-action-result-codes)
             /// </summary>
-            [EnumLiteral("skip"), Description("skip")]
+            [EnumLiteral("skip"), Description("Skip")]
             Skip,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/report-result-codes)
+            /// (system: http://hl7.org/fhir/report-action-result-codes)
             /// </summary>
-            [EnumLiteral("fail"), Description("fail")]
+            [EnumLiteral("fail"), Description("Fail")]
             Fail,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/report-result-codes)
+            /// (system: http://hl7.org/fhir/report-action-result-codes)
             /// </summary>
-            [EnumLiteral("warning"), Description("warning")]
+            [EnumLiteral("warning"), Description("Warning")]
             Warning,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/report-result-codes)
+            /// (system: http://hl7.org/fhir/report-action-result-codes)
             /// </summary>
-            [EnumLiteral("error"), Description("error")]
+            [EnumLiteral("error"), Description("Error")]
             Error,
         }
 
@@ -501,13 +540,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("result", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.TestReport.TestReportResultCodes> ResultElement
+            public Code<Hl7.Fhir.Model.TestReport.TestReportActionResult> ResultElement
             {
                 get { return _ResultElement; }
                 set { _ResultElement = value; OnPropertyChanged("ResultElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.TestReport.TestReportResultCodes> _ResultElement;
+            private Code<Hl7.Fhir.Model.TestReport.TestReportActionResult> _ResultElement;
             
             /// <summary>
             /// pass | skip | fail | warning | error
@@ -515,7 +554,7 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.TestReport.TestReportResultCodes? Result
+            public Hl7.Fhir.Model.TestReport.TestReportActionResult? Result
             {
                 get { return ResultElement != null ? ResultElement.Value : null; }
                 set
@@ -523,7 +562,7 @@ namespace Hl7.Fhir.Model
                     if (!value.HasValue)
                         ResultElement = null; 
                     else
-                        ResultElement = new Code<Hl7.Fhir.Model.TestReport.TestReportResultCodes>(value);
+                        ResultElement = new Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>(value);
                     OnPropertyChanged("Result");
                 }
             }
@@ -580,7 +619,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(ResultElement != null) dest.ResultElement = (Code<Hl7.Fhir.Model.TestReport.TestReportResultCodes>)ResultElement.DeepCopy();
+                    if(ResultElement != null) dest.ResultElement = (Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>)ResultElement.DeepCopy();
                     if(Message != null) dest.Message = (Hl7.Fhir.Model.Markdown)Message.DeepCopy();
                     if(DetailElement != null) dest.DetailElement = (Hl7.Fhir.Model.FhirUri)DetailElement.DeepCopy();
                     return dest;
@@ -651,13 +690,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("result", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.TestReport.TestReportResultCodes> ResultElement
+            public Code<Hl7.Fhir.Model.TestReport.TestReportActionResult> ResultElement
             {
                 get { return _ResultElement; }
                 set { _ResultElement = value; OnPropertyChanged("ResultElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.TestReport.TestReportResultCodes> _ResultElement;
+            private Code<Hl7.Fhir.Model.TestReport.TestReportActionResult> _ResultElement;
             
             /// <summary>
             /// pass | skip | fail | warning | error
@@ -665,7 +704,7 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.TestReport.TestReportResultCodes? Result
+            public Hl7.Fhir.Model.TestReport.TestReportActionResult? Result
             {
                 get { return ResultElement != null ? ResultElement.Value : null; }
                 set
@@ -673,7 +712,7 @@ namespace Hl7.Fhir.Model
                     if (!value.HasValue)
                         ResultElement = null; 
                     else
-                        ResultElement = new Code<Hl7.Fhir.Model.TestReport.TestReportResultCodes>(value);
+                        ResultElement = new Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>(value);
                     OnPropertyChanged("Result");
                 }
             }
@@ -730,7 +769,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(ResultElement != null) dest.ResultElement = (Code<Hl7.Fhir.Model.TestReport.TestReportResultCodes>)ResultElement.DeepCopy();
+                    if(ResultElement != null) dest.ResultElement = (Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>)ResultElement.DeepCopy();
                     if(Message != null) dest.Message = (Hl7.Fhir.Model.Markdown)Message.DeepCopy();
                     if(DetailElement != null) dest.DetailElement = (Hl7.Fhir.Model.FhirString)DetailElement.DeepCopy();
                     return dest;
@@ -1234,7 +1273,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// complete | pending | error
+        /// completed | in-progress | waiting | stopped | entered-in-error
         /// </summary>
         [FhirElement("status", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=1)]
@@ -1248,7 +1287,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.TestReport.TestReportStatus> _StatusElement;
         
         /// <summary>
-        /// complete | pending | error
+        /// completed | in-progress | waiting | stopped | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1267,9 +1306,58 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Reference to the  version-specific TestScript that was executed to produce this TestReport
+        /// </summary>
+        [FhirElement("testScript", InSummary=true, Order=120)]
+        [CLSCompliant(false)]
+		[References("TestScript")]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference TestScript
+        {
+            get { return _TestScript; }
+            set { _TestScript = value; OnPropertyChanged("TestScript"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _TestScript;
+        
+        /// <summary>
+        /// pass | fail | pending
+        /// </summary>
+        [FhirElement("result", InSummary=true, Order=130)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Code<Hl7.Fhir.Model.TestReport.TestReportResult> ResultElement
+        {
+            get { return _ResultElement; }
+            set { _ResultElement = value; OnPropertyChanged("ResultElement"); }
+        }
+        
+        private Code<Hl7.Fhir.Model.TestReport.TestReportResult> _ResultElement;
+        
+        /// <summary>
+        /// pass | fail | pending
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.TestReport.TestReportResult? Result
+        {
+            get { return ResultElement != null ? ResultElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  ResultElement = null; 
+                else
+                  ResultElement = new Code<Hl7.Fhir.Model.TestReport.TestReportResult>(value);
+                OnPropertyChanged("Result");
+            }
+        }
+        
+        /// <summary>
         /// The final score (percentage of tests passed) resulting from the execution of the TestScript
         /// </summary>
-        [FhirElement("score", InSummary=true, Order=120)]
+        [FhirElement("score", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDecimal ScoreElement
         {
@@ -1301,7 +1389,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of the tester producing this report (Organization or individual)
         /// </summary>
-        [FhirElement("tester", InSummary=true, Order=130)]
+        [FhirElement("tester", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TesterElement
         {
@@ -1331,25 +1419,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Reference to the  version-specific TestScript that was executed to produce this TestReport
-        /// </summary>
-        [FhirElement("testScript", InSummary=true, Order=140)]
-        [CLSCompliant(false)]
-		[References("TestScript")]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference TestScript
-        {
-            get { return _TestScript; }
-            set { _TestScript = value; OnPropertyChanged("TestScript"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _TestScript;
-        
-        /// <summary>
         /// When the TestScript was executed and this TestReport was generated
         /// </summary>
-        [FhirElement("issued", InSummary=true, Order=150)]
+        [FhirElement("issued", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime IssuedElement
         {
@@ -1381,7 +1453,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A participant in the test execution, either the execution engine, a client, or a server
         /// </summary>
-        [FhirElement("participant", Order=160)]
+        [FhirElement("participant", Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.TestReport.ParticipantComponent> Participant
@@ -1395,7 +1467,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The results of the series of required setup operations before the tests were executed
         /// </summary>
-        [FhirElement("setup", Order=170)]
+        [FhirElement("setup", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.TestReport.SetupComponent Setup
         {
@@ -1408,7 +1480,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A test executed from the test script
         /// </summary>
-        [FhirElement("test", Order=180)]
+        [FhirElement("test", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.TestReport.TestComponent> Test
@@ -1422,7 +1494,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The results of running the series of required clean up steps
         /// </summary>
-        [FhirElement("teardown", Order=190)]
+        [FhirElement("teardown", Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.TestReport.TeardownComponent Teardown
         {
@@ -1469,9 +1541,10 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.TestReport.TestReportStatus>)StatusElement.DeepCopy();
+                if(TestScript != null) dest.TestScript = (Hl7.Fhir.Model.ResourceReference)TestScript.DeepCopy();
+                if(ResultElement != null) dest.ResultElement = (Code<Hl7.Fhir.Model.TestReport.TestReportResult>)ResultElement.DeepCopy();
                 if(ScoreElement != null) dest.ScoreElement = (Hl7.Fhir.Model.FhirDecimal)ScoreElement.DeepCopy();
                 if(TesterElement != null) dest.TesterElement = (Hl7.Fhir.Model.FhirString)TesterElement.DeepCopy();
-                if(TestScript != null) dest.TestScript = (Hl7.Fhir.Model.ResourceReference)TestScript.DeepCopy();
                 if(IssuedElement != null) dest.IssuedElement = (Hl7.Fhir.Model.FhirDateTime)IssuedElement.DeepCopy();
                 if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.TestReport.ParticipantComponent>(Participant.DeepCopy());
                 if(Setup != null) dest.Setup = (Hl7.Fhir.Model.TestReport.SetupComponent)Setup.DeepCopy();
@@ -1497,9 +1570,10 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.Matches(TestScript, otherT.TestScript)) return false;
+            if( !DeepComparable.Matches(ResultElement, otherT.ResultElement)) return false;
             if( !DeepComparable.Matches(ScoreElement, otherT.ScoreElement)) return false;
             if( !DeepComparable.Matches(TesterElement, otherT.TesterElement)) return false;
-            if( !DeepComparable.Matches(TestScript, otherT.TestScript)) return false;
             if( !DeepComparable.Matches(IssuedElement, otherT.IssuedElement)) return false;
             if( !DeepComparable.Matches(Participant, otherT.Participant)) return false;
             if( !DeepComparable.Matches(Setup, otherT.Setup)) return false;
@@ -1518,9 +1592,10 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.IsExactly(TestScript, otherT.TestScript)) return false;
+            if( !DeepComparable.IsExactly(ResultElement, otherT.ResultElement)) return false;
             if( !DeepComparable.IsExactly(ScoreElement, otherT.ScoreElement)) return false;
             if( !DeepComparable.IsExactly(TesterElement, otherT.TesterElement)) return false;
-            if( !DeepComparable.IsExactly(TestScript, otherT.TestScript)) return false;
             if( !DeepComparable.IsExactly(IssuedElement, otherT.IssuedElement)) return false;
             if( !DeepComparable.IsExactly(Participant, otherT.Participant)) return false;
             if( !DeepComparable.IsExactly(Setup, otherT.Setup)) return false;
@@ -1539,9 +1614,10 @@ namespace Hl7.Fhir.Model
 				if (Identifier != null) yield return Identifier;
 				if (NameElement != null) yield return NameElement;
 				if (StatusElement != null) yield return StatusElement;
+				if (TestScript != null) yield return TestScript;
+				if (ResultElement != null) yield return ResultElement;
 				if (ScoreElement != null) yield return ScoreElement;
 				if (TesterElement != null) yield return TesterElement;
-				if (TestScript != null) yield return TestScript;
 				if (IssuedElement != null) yield return IssuedElement;
 				foreach (var elem in Participant) { if (elem != null) yield return elem; }
 				if (Setup != null) yield return Setup;

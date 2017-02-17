@@ -353,7 +353,8 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Match current snapshot and differential slice elements
         // Returns an initialized MatchInfo with action = Merge | Add
         // defaultBase represents the base element for newly introduced slices
-        static MatchInfo matchSlice(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, List<string> discriminators, Bookmark defaultBase)
+        static MatchInfo matchSlice(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, 
+                    List<ElementDefinition.DiscriminatorComponent> discriminators, Bookmark defaultBase)
         {
             Debug.Assert(diffNav.Current.Slicing == null); // Caller must handle reslicing
 
@@ -389,7 +390,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 return matchExtensionSlice(snapNav, diffNav, discriminators, defaultBase);
             }
 
-            else if (discriminators.Count == 1 && isTypeDiscriminator(discriminators[0]))
+            else if (discriminators.Count == 1 && discriminators[0].Type == ElementDefinition.DiscriminatorType.Type)
             {
                 // Discriminator = @type => match on ElementDefinition.Type[0].Code
                 return matchSliceByTypeCode(snapNav, diffNav, defaultBase);
@@ -411,13 +412,14 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Match current snapshot and differential extension slice elements on extension type profile
         // Returns an initialized MatchInfo with action = Merge | Add
         // defaultBase represents the base element for newly introduced slices
-        static MatchInfo matchExtensionSlice(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, List<string> discriminators, Bookmark defaultBase)
+        static MatchInfo matchExtensionSlice(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, 
+            List<ElementDefinition.DiscriminatorComponent> discriminators, Bookmark defaultBase)
         {
             var match = new MatchInfo() { DiffBookmark = diffNav.Bookmark() };
 
             // [WMR 20170110] Accept missing slicing component, e.g. to close the extension slice: Extension.extension { max = 0 }
             // if (discriminators == null || discriminators.Count > 1 || discriminators.FirstOrDefault() != "url")
-            if (discriminators != null && (discriminators.Count != 1 || discriminators.FirstOrDefault() != "url"))
+            if (discriminators != null && (discriminators.Count != 1 || isUrlDiscriminator(discriminators.FirstOrDefault())))
             {
                 // Invalid extension discriminator; generate issue and ignore
                 Debug.WriteLine($"[{nameof(ElementMatcher)}.{nameof(matchExtensionSlice)}] Warning! Invalid discriminator for extension slice (path = '{diffNav.Path}') - must be 'url'.");
@@ -532,20 +534,22 @@ namespace Hl7.Fhir.Specification.Snapshot
         static readonly string UrlDiscriminator = "url";
 
         /// <summary>Determines if the specified value equals the special predefined discriminator for slicing on element type profile.</summary>
-        static bool isProfileDiscriminator(string discriminator) => StringComparer.Ordinal.Equals(discriminator, ProfileDiscriminator);
+        static bool isProfileDiscriminator(ElementDefinition.DiscriminatorComponent discriminator) => discriminator.Type == ElementDefinition.DiscriminatorType.Profile;
 
         /// <summary>Determines if the specified value equals the special predefined discriminator for slicing on element type.</summary>
-        static bool isTypeDiscriminator(string discriminator) => StringComparer.Ordinal.Equals(discriminator, TypeDiscriminator);
+        static bool isTypeDiscriminator(ElementDefinition.DiscriminatorComponent discriminator) => discriminator.Type == ElementDefinition.DiscriminatorType.Type;
 
-        /// <summary>Determines if the specified value equals the special predefined discriminator for slicing on element type and profile.</summary>
-        static bool isTypeAndProfileDiscriminator(string discriminator) => StringComparer.Ordinal.Equals(discriminator, TypeAndProfileDiscriminator);
+        //EK: Commented out since this combination is not valid/has never been valid?  In any case we did not consider it
+        //when composing the new DiscriminatorType valueset.
+        ///// <summary>Determines if the specified value equals the special predefined discriminator for slicing on element type and profile.</summary>
+        //static bool isTypeAndProfileDiscriminator(string discriminator) => StringComparer.Ordinal.Equals(discriminator, TypeAndProfileDiscriminator);
 
         /// <summary>Determines if the specified value equals the fixed default discriminator for slicing extension elements.</summary>
-        static bool isUrlDiscriminator(string discriminator) => StringComparer.Ordinal.Equals(discriminator, UrlDiscriminator);
+        static bool isUrlDiscriminator(ElementDefinition.DiscriminatorComponent discriminator) => StringComparer.Ordinal.Equals(discriminator.Path, UrlDiscriminator);
 
         // [WMR 20160801]
         // Determine if the specified discriminator(s) match on (type and) profile
-        static bool isTypeProfileDiscriminator(IEnumerable<string> discriminators)
+        static bool isTypeProfileDiscriminator(IEnumerable<ElementDefinition.DiscriminatorComponent> discriminators)
         {
             if (discriminators != null)
             {
@@ -553,7 +557,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                 if (ar.Length == 1)
                 {
                     // return isUrlDiscriminator(ar[0]) || isTypeAndProfileDiscriminator(ar[0]) || isProfileDiscriminator(ar[0]);
-                    return isTypeAndProfileDiscriminator(ar[0]) || isProfileDiscriminator(ar[0]);
+                    //return isTypeAndProfileDiscriminator(ar[0]) || isProfileDiscriminator(ar[0]);
+                    //EK: isTypeAndProfileDescriminator can no longer appear since the new valueset for discriminator type
+                    //does not include that combination
+                    return isProfileDiscriminator(ar[0]);
                 }
                 else if (ar.Length == 2)
                 {

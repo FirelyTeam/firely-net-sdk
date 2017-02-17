@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _Specialty;
         
         /// <summary>
-        /// The style of appointment or patient that has been booked in the slot (not service type)
+        /// The style of appointment or patient that may be booked in the slot (not service type)
         /// </summary>
         [FhirElement("appointmentType", InSummary=true, Order=130)]
         [DataMember]

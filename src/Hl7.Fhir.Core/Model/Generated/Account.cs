@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -80,6 +80,122 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
+        [FhirType("CoverageComponent")]
+        [DataContract]
+        public partial class CoverageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "CoverageComponent"; } }
+            
+            /// <summary>
+            /// The party(s) that are responsible for covering the payment of this account
+            /// </summary>
+            [FhirElement("coverage", InSummary=true, Order=40)]
+            [CLSCompliant(false)]
+			[References("Coverage")]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Coverage
+            {
+                get { return _Coverage; }
+                set { _Coverage = value; OnPropertyChanged("Coverage"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Coverage;
+            
+            /// <summary>
+            /// The priority of the coverage in the context of this account
+            /// </summary>
+            [FhirElement("priority", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.PositiveInt PriorityElement
+            {
+                get { return _PriorityElement; }
+                set { _PriorityElement = value; OnPropertyChanged("PriorityElement"); }
+            }
+            
+            private Hl7.Fhir.Model.PositiveInt _PriorityElement;
+            
+            /// <summary>
+            /// The priority of the coverage in the context of this account
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public int? Priority
+            {
+                get { return PriorityElement != null ? PriorityElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        PriorityElement = null; 
+                    else
+                        PriorityElement = new Hl7.Fhir.Model.PositiveInt(value);
+                    OnPropertyChanged("Priority");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as CoverageComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Coverage != null) dest.Coverage = (Hl7.Fhir.Model.ResourceReference)Coverage.DeepCopy();
+                    if(PriorityElement != null) dest.PriorityElement = (Hl7.Fhir.Model.PositiveInt)PriorityElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new CoverageComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as CoverageComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Coverage, otherT.Coverage)) return false;
+                if( !DeepComparable.Matches(PriorityElement, otherT.PriorityElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as CoverageComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Coverage, otherT.Coverage)) return false;
+                if( !DeepComparable.IsExactly(PriorityElement, otherT.PriorityElement)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // CoverageComponent elements
+                    if (Coverage != null) yield return Coverage;
+                    if (PriorityElement != null) yield return PriorityElement;
+                }
+            }
+            
+        }
+        
+        
         [FhirType("GuarantorComponent")]
         [DataContract]
         public partial class GuarantorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -90,7 +206,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Responsible entity
             /// </summary>
-            [FhirElement("party", InSummary=true, Order=40)]
+            [FhirElement("party", Order=40)]
             [CLSCompliant(false)]
 			[References("Patient","RelatedPerson","Organization")]
             [Cardinality(Min=1,Max=1)]
@@ -106,7 +222,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Credit or other hold applied
             /// </summary>
-            [FhirElement("onHold", InSummary=true, Order=50)]
+            [FhirElement("onHold", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean OnHoldElement
             {
@@ -138,7 +254,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Guarrantee account during
             /// </summary>
-            [FhirElement("period", InSummary=true, Order=60)]
+            [FhirElement("period", Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.Period Period
             {
@@ -228,54 +344,9 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// Human-readable label
-        /// </summary>
-        [FhirElement("name", InSummary=true, Order=100)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString NameElement
-        {
-            get { return _NameElement; }
-            set { _NameElement = value; OnPropertyChanged("NameElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _NameElement;
-        
-        /// <summary>
-        /// Human-readable label
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Name
-        {
-            get { return NameElement != null ? NameElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  NameElement = null; 
-                else
-                  NameElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Name");
-            }
-        }
-        
-        /// <summary>
-        /// E.g. patient, expense, depreciation
-        /// </summary>
-        [FhirElement("type", InSummary=true, Order=110)]
-        [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Type
-        {
-            get { return _Type; }
-            set { _Type = value; OnPropertyChanged("Type"); }
-        }
-        
-        private Hl7.Fhir.Model.CodeableConcept _Type;
-        
-        /// <summary>
         /// active | inactive | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=120)]
+        [FhirElement("status", InSummary=true, Order=100)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Account.AccountStatus> StatusElement
         {
@@ -305,9 +376,82 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// E.g. patient, expense, depreciation
+        /// </summary>
+        [FhirElement("type", InSummary=true, Order=110)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept Type
+        {
+            get { return _Type; }
+            set { _Type = value; OnPropertyChanged("Type"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _Type;
+        
+        /// <summary>
+        /// Human-readable label
+        /// </summary>
+        [FhirElement("name", InSummary=true, Order=120)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString NameElement
+        {
+            get { return _NameElement; }
+            set { _NameElement = value; OnPropertyChanged("NameElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _NameElement;
+        
+        /// <summary>
+        /// Human-readable label
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Name
+        {
+            get { return NameElement != null ? NameElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  NameElement = null; 
+                else
+                  NameElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Name");
+            }
+        }
+        
+        /// <summary>
+        /// What is account tied to?
+        /// </summary>
+        [FhirElement("subject", InSummary=true, Order=130)]
+        [CLSCompliant(false)]
+		[References("Patient","Device","Practitioner","Location","HealthcareService","Organization")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Subject
+        {
+            get { return _Subject; }
+            set { _Subject = value; OnPropertyChanged("Subject"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Subject;
+        
+        /// <summary>
+        /// Transaction window
+        /// </summary>
+        [FhirElement("period", InSummary=true, Order=140)]
+        [DataMember]
+        public Hl7.Fhir.Model.Period Period
+        {
+            get { return _Period; }
+            set { _Period = value; OnPropertyChanged("Period"); }
+        }
+        
+        private Hl7.Fhir.Model.Period _Period;
+        
+        /// <summary>
         /// Time window that transactions may be posted to this account
         /// </summary>
-        [FhirElement("active", InSummary=true, Order=130)]
+        [FhirElement("active", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.Period Active
         {
@@ -320,7 +464,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Base currency in which balance is tracked
         /// </summary>
-        [FhirElement("currency", InSummary=true, Order=140)]
+        [FhirElement("currency", Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Currency
         {
@@ -333,7 +477,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// How much is in account?
         /// </summary>
-        [FhirElement("balance", InSummary=true, Order=150)]
+        [FhirElement("balance", Order=170)]
         [DataMember]
         public Money Balance
         {
@@ -344,48 +488,18 @@ namespace Hl7.Fhir.Model
         private Money _Balance;
         
         /// <summary>
-        /// The party(s) that are responsible for covering the payment of this account
+        /// The party(s) that are responsible for covering the payment of this account, and what order should they be applied to the account
         /// </summary>
-        [FhirElement("coverage", InSummary=true, Order=160)]
-        [CLSCompliant(false)]
-		[References("Coverage")]
+        [FhirElement("coverage", InSummary=true, Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Coverage
+        public List<Hl7.Fhir.Model.Account.CoverageComponent> Coverage
         {
-            get { if(_Coverage==null) _Coverage = new List<Hl7.Fhir.Model.ResourceReference>(); return _Coverage; }
+            get { if(_Coverage==null) _Coverage = new List<Hl7.Fhir.Model.Account.CoverageComponent>(); return _Coverage; }
             set { _Coverage = value; OnPropertyChanged("Coverage"); }
         }
         
-        private List<Hl7.Fhir.Model.ResourceReference> _Coverage;
-        
-        /// <summary>
-        /// Transaction window
-        /// </summary>
-        [FhirElement("coveragePeriod", InSummary=true, Order=170)]
-        [DataMember]
-        public Hl7.Fhir.Model.Period CoveragePeriod
-        {
-            get { return _CoveragePeriod; }
-            set { _CoveragePeriod = value; OnPropertyChanged("CoveragePeriod"); }
-        }
-        
-        private Hl7.Fhir.Model.Period _CoveragePeriod;
-        
-        /// <summary>
-        /// What is account tied to?
-        /// </summary>
-        [FhirElement("subject", InSummary=true, Order=180)]
-        [CLSCompliant(false)]
-		[References("Patient","Device","Practitioner","Location","HealthcareService","Organization")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Subject
-        {
-            get { return _Subject; }
-            set { _Subject = value; OnPropertyChanged("Subject"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Subject;
+        private List<Hl7.Fhir.Model.Account.CoverageComponent> _Coverage;
         
         /// <summary>
         /// Who is responsible?
@@ -437,7 +551,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Responsible for the account
         /// </summary>
-        [FhirElement("guarantor", InSummary=true, Order=210)]
+        [FhirElement("guarantor", Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Account.GuarantorComponent> Guarantor
@@ -463,15 +577,15 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Account.AccountStatus>)StatusElement.DeepCopy();
+                if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
+                if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(Active != null) dest.Active = (Hl7.Fhir.Model.Period)Active.DeepCopy();
                 if(Currency != null) dest.Currency = (Hl7.Fhir.Model.Coding)Currency.DeepCopy();
                 if(Balance != null) dest.Balance = (Money)Balance.DeepCopy();
-                if(Coverage != null) dest.Coverage = new List<Hl7.Fhir.Model.ResourceReference>(Coverage.DeepCopy());
-                if(CoveragePeriod != null) dest.CoveragePeriod = (Hl7.Fhir.Model.Period)CoveragePeriod.DeepCopy();
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Coverage != null) dest.Coverage = new List<Hl7.Fhir.Model.Account.CoverageComponent>(Coverage.DeepCopy());
                 if(Owner != null) dest.Owner = (Hl7.Fhir.Model.ResourceReference)Owner.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(Guarantor != null) dest.Guarantor = new List<Hl7.Fhir.Model.Account.GuarantorComponent>(Guarantor.DeepCopy());
@@ -493,15 +607,15 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-            if( !DeepComparable.Matches(Type, otherT.Type)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+            if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.Matches(Period, otherT.Period)) return false;
             if( !DeepComparable.Matches(Active, otherT.Active)) return false;
             if( !DeepComparable.Matches(Currency, otherT.Currency)) return false;
             if( !DeepComparable.Matches(Balance, otherT.Balance)) return false;
             if( !DeepComparable.Matches(Coverage, otherT.Coverage)) return false;
-            if( !DeepComparable.Matches(CoveragePeriod, otherT.CoveragePeriod)) return false;
-            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(Owner, otherT.Owner)) return false;
             if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.Matches(Guarantor, otherT.Guarantor)) return false;
@@ -516,15 +630,15 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-            if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+            if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
             if( !DeepComparable.IsExactly(Active, otherT.Active)) return false;
             if( !DeepComparable.IsExactly(Currency, otherT.Currency)) return false;
             if( !DeepComparable.IsExactly(Balance, otherT.Balance)) return false;
             if( !DeepComparable.IsExactly(Coverage, otherT.Coverage)) return false;
-            if( !DeepComparable.IsExactly(CoveragePeriod, otherT.CoveragePeriod)) return false;
-            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(Owner, otherT.Owner)) return false;
             if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.IsExactly(Guarantor, otherT.Guarantor)) return false;
@@ -539,15 +653,15 @@ namespace Hl7.Fhir.Model
             {
 				// Account elements
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-				if (NameElement != null) yield return NameElement;
-				if (Type != null) yield return Type;
 				if (StatusElement != null) yield return StatusElement;
+				if (Type != null) yield return Type;
+				if (NameElement != null) yield return NameElement;
+				if (Subject != null) yield return Subject;
+				if (Period != null) yield return Period;
 				if (Active != null) yield return Active;
 				if (Currency != null) yield return Currency;
 				if (Balance != null) yield return Balance;
 				foreach (var elem in Coverage) { if (elem != null) yield return elem; }
-				if (CoveragePeriod != null) yield return CoveragePeriod;
-				if (Subject != null) yield return Subject;
 				if (Owner != null) yield return Owner;
 				if (DescriptionElement != null) yield return DescriptionElement;
 				foreach (var elem in Guarantor) { if (elem != null) yield return elem; }

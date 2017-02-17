@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -95,9 +95,25 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
+        /// Procedure that caused this media to be created
+        /// </summary>
+        [FhirElement("basedOn", InSummary=true, Order=100)]
+        [CLSCompliant(false)]
+		[References("ProcedureRequest")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> BasedOn
+        {
+            get { if(_BasedOn==null) _BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(); return _BasedOn; }
+            set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
+        
+        /// <summary>
         /// photo | video | audio
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=100)]
+        [FhirElement("type", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Media.DigitalMediaType> TypeElement
@@ -130,7 +146,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The type of acquisition equipment/process
         /// </summary>
-        [FhirElement("subtype", InSummary=true, Order=110)]
+        [FhirElement("subtype", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Subtype
         {
@@ -143,7 +159,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Imaging view, e.g. Lateral or Antero-posterior
         /// </summary>
-        [FhirElement("view", InSummary=true, Order=120)]
+        [FhirElement("view", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept View
         {
@@ -156,7 +172,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who/What this Media is a record of
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=130)]
+        [FhirElement("subject", InSummary=true, Order=140)]
         [CLSCompliant(false)]
 		[References("Patient","Practitioner","Group","Device","Specimen")]
         [DataMember]
@@ -169,9 +185,39 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
+        /// Encounter / Episode associated with media
+        /// </summary>
+        [FhirElement("context", InSummary=true, Order=150)]
+        [CLSCompliant(false)]
+		[References("Encounter","EpisodeOfCare")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Context
+        {
+            get { return _Context; }
+            set { _Context = value; OnPropertyChanged("Context"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Context;
+        
+        /// <summary>
+        /// When Media was collected
+        /// </summary>
+        [FhirElement("occurrence", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+        [DataMember]
+        public Hl7.Fhir.Model.Element Occurrence
+        {
+            get { return _Occurrence; }
+            set { _Occurrence = value; OnPropertyChanged("Occurrence"); }
+        }
+        
+        private Hl7.Fhir.Model.Element _Occurrence;
+        
+        /// <summary>
         /// The person who generated the image
         /// </summary>
-        [FhirElement("operator", InSummary=true, Order=140)]
+        [FhirElement("operator", InSummary=true, Order=170)]
         [CLSCompliant(false)]
 		[References("Practitioner")]
         [DataMember]
@@ -184,41 +230,51 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Operator;
         
         /// <summary>
-        /// Name of the device/manufacturer
+        /// Why was event performed?
         /// </summary>
-        [FhirElement("deviceName", InSummary=true, Order=150)]
+        [FhirElement("reasonCode", InSummary=true, Order=180)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString DeviceNameElement
+        public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
         {
-            get { return _DeviceNameElement; }
-            set { _DeviceNameElement = value; OnPropertyChanged("DeviceNameElement"); }
+            get { if(_ReasonCode==null) _ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ReasonCode; }
+            set { _ReasonCode = value; OnPropertyChanged("ReasonCode"); }
         }
         
-        private Hl7.Fhir.Model.FhirString _DeviceNameElement;
+        private List<Hl7.Fhir.Model.CodeableConcept> _ReasonCode;
         
         /// <summary>
-        /// Name of the device/manufacturer
+        /// Body part in media
         /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string DeviceName
+        [FhirElement("bodySite", InSummary=true, Order=190)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept BodySite
         {
-            get { return DeviceNameElement != null ? DeviceNameElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  DeviceNameElement = null; 
-                else
-                  DeviceNameElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("DeviceName");
-            }
+            get { return _BodySite; }
+            set { _BodySite = value; OnPropertyChanged("BodySite"); }
         }
+        
+        private Hl7.Fhir.Model.CodeableConcept _BodySite;
+        
+        /// <summary>
+        /// Observing Device
+        /// </summary>
+        [FhirElement("device", InSummary=true, Order=200)]
+        [CLSCompliant(false)]
+		[References("Device","DeviceMetric")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Device
+        {
+            get { return _Device; }
+            set { _Device = value; OnPropertyChanged("Device"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Device;
         
         /// <summary>
         /// Height of the image in pixels (photo/video)
         /// </summary>
-        [FhirElement("height", InSummary=true, Order=160)]
+        [FhirElement("height", InSummary=true, Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.PositiveInt HeightElement
         {
@@ -250,7 +306,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Width of the image in pixels (photo/video)
         /// </summary>
-        [FhirElement("width", InSummary=true, Order=170)]
+        [FhirElement("width", InSummary=true, Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.PositiveInt WidthElement
         {
@@ -282,7 +338,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Number of frames if > 1 (photo)
         /// </summary>
-        [FhirElement("frames", InSummary=true, Order=180)]
+        [FhirElement("frames", InSummary=true, Order=230)]
         [DataMember]
         public Hl7.Fhir.Model.PositiveInt FramesElement
         {
@@ -314,7 +370,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Length in seconds (audio / video)
         /// </summary>
-        [FhirElement("duration", InSummary=true, Order=190)]
+        [FhirElement("duration", InSummary=true, Order=240)]
         [DataMember]
         public Hl7.Fhir.Model.UnsignedInt DurationElement
         {
@@ -346,7 +402,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Actual Media - reference or data
         /// </summary>
-        [FhirElement("content", Order=200)]
+        [FhirElement("content", Order=250)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Attachment Content
@@ -356,6 +412,20 @@ namespace Hl7.Fhir.Model
         }
         
         private Hl7.Fhir.Model.Attachment _Content;
+        
+        /// <summary>
+        /// Comments made about the media
+        /// </summary>
+        [FhirElement("note", Order=260)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Annotation> Note
+        {
+            get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+            set { _Note = value; OnPropertyChanged("Note"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Annotation> _Note;
         
 
         public static ElementDefinition.ConstraintComponent Media_MDA_1 = new ElementDefinition.ConstraintComponent()
@@ -412,17 +482,23 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                if(BasedOn != null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Media.DigitalMediaType>)TypeElement.DeepCopy();
                 if(Subtype != null) dest.Subtype = (Hl7.Fhir.Model.CodeableConcept)Subtype.DeepCopy();
                 if(View != null) dest.View = (Hl7.Fhir.Model.CodeableConcept)View.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
+                if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.Element)Occurrence.DeepCopy();
                 if(Operator != null) dest.Operator = (Hl7.Fhir.Model.ResourceReference)Operator.DeepCopy();
-                if(DeviceNameElement != null) dest.DeviceNameElement = (Hl7.Fhir.Model.FhirString)DeviceNameElement.DeepCopy();
+                if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
+                if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableConcept)BodySite.DeepCopy();
+                if(Device != null) dest.Device = (Hl7.Fhir.Model.ResourceReference)Device.DeepCopy();
                 if(HeightElement != null) dest.HeightElement = (Hl7.Fhir.Model.PositiveInt)HeightElement.DeepCopy();
                 if(WidthElement != null) dest.WidthElement = (Hl7.Fhir.Model.PositiveInt)WidthElement.DeepCopy();
                 if(FramesElement != null) dest.FramesElement = (Hl7.Fhir.Model.PositiveInt)FramesElement.DeepCopy();
                 if(DurationElement != null) dest.DurationElement = (Hl7.Fhir.Model.UnsignedInt)DurationElement.DeepCopy();
                 if(Content != null) dest.Content = (Hl7.Fhir.Model.Attachment)Content.DeepCopy();
+                if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 return dest;
             }
             else
@@ -441,17 +517,23 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(BasedOn, otherT.BasedOn)) return false;
             if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.Matches(Subtype, otherT.Subtype)) return false;
             if( !DeepComparable.Matches(View, otherT.View)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.Matches(Context, otherT.Context)) return false;
+            if( !DeepComparable.Matches(Occurrence, otherT.Occurrence)) return false;
             if( !DeepComparable.Matches(Operator, otherT.Operator)) return false;
-            if( !DeepComparable.Matches(DeviceNameElement, otherT.DeviceNameElement)) return false;
+            if( !DeepComparable.Matches(ReasonCode, otherT.ReasonCode)) return false;
+            if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
+            if( !DeepComparable.Matches(Device, otherT.Device)) return false;
             if( !DeepComparable.Matches(HeightElement, otherT.HeightElement)) return false;
             if( !DeepComparable.Matches(WidthElement, otherT.WidthElement)) return false;
             if( !DeepComparable.Matches(FramesElement, otherT.FramesElement)) return false;
             if( !DeepComparable.Matches(DurationElement, otherT.DurationElement)) return false;
             if( !DeepComparable.Matches(Content, otherT.Content)) return false;
+            if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             
             return true;
         }
@@ -463,17 +545,23 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(BasedOn, otherT.BasedOn)) return false;
             if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.IsExactly(Subtype, otherT.Subtype)) return false;
             if( !DeepComparable.IsExactly(View, otherT.View)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
+            if( !DeepComparable.IsExactly(Occurrence, otherT.Occurrence)) return false;
             if( !DeepComparable.IsExactly(Operator, otherT.Operator)) return false;
-            if( !DeepComparable.IsExactly(DeviceNameElement, otherT.DeviceNameElement)) return false;
+            if( !DeepComparable.IsExactly(ReasonCode, otherT.ReasonCode)) return false;
+            if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
+            if( !DeepComparable.IsExactly(Device, otherT.Device)) return false;
             if( !DeepComparable.IsExactly(HeightElement, otherT.HeightElement)) return false;
             if( !DeepComparable.IsExactly(WidthElement, otherT.WidthElement)) return false;
             if( !DeepComparable.IsExactly(FramesElement, otherT.FramesElement)) return false;
             if( !DeepComparable.IsExactly(DurationElement, otherT.DurationElement)) return false;
             if( !DeepComparable.IsExactly(Content, otherT.Content)) return false;
+            if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             
             return true;
         }
@@ -485,17 +573,23 @@ namespace Hl7.Fhir.Model
             {
 				// Media elements
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				foreach (var elem in BasedOn) { if (elem != null) yield return elem; }
 				if (TypeElement != null) yield return TypeElement;
 				if (Subtype != null) yield return Subtype;
 				if (View != null) yield return View;
 				if (Subject != null) yield return Subject;
+				if (Context != null) yield return Context;
+				if (Occurrence != null) yield return Occurrence;
 				if (Operator != null) yield return Operator;
-				if (DeviceNameElement != null) yield return DeviceNameElement;
+				foreach (var elem in ReasonCode) { if (elem != null) yield return elem; }
+				if (BodySite != null) yield return BodySite;
+				if (Device != null) yield return Device;
 				if (HeightElement != null) yield return HeightElement;
 				if (WidthElement != null) yield return WidthElement;
 				if (FramesElement != null) yield return FramesElement;
 				if (DurationElement != null) yield return DurationElement;
 				if (Content != null) yield return Content;
+				foreach (var elem in Note) { if (elem != null) yield return elem; }
             }
         }
     }

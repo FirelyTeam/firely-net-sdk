@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -52,233 +52,6 @@ namespace Hl7.Fhir.Model
         public override ResourceType ResourceType { get { return ResourceType.Practitioner; } }
         [NotMapped]
         public override string TypeName { get { return "Practitioner"; } }
-        
-        [FhirType("RoleComponent")]
-        [DataContract]
-        public partial class RoleComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "RoleComponent"; } }
-            
-            /// <summary>
-            /// Organization where the roles are performed
-            /// </summary>
-            [FhirElement("organization", Order=40)]
-            [CLSCompliant(false)]
-			[References("Organization")]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Organization
-            {
-                get { return _Organization; }
-                set { _Organization = value; OnPropertyChanged("Organization"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _Organization;
-            
-            /// <summary>
-            /// Roles which this practitioner may perform
-            /// </summary>
-            [FhirElement("code", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Code
-            {
-                get { return _Code; }
-                set { _Code = value; OnPropertyChanged("Code"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Code;
-            
-            /// <summary>
-            /// Specific specialty of the practitioner
-            /// </summary>
-            [FhirElement("specialty", InSummary=true, Order=60)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.CodeableConcept> Specialty
-            {
-                get { if(_Specialty==null) _Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Specialty; }
-                set { _Specialty = value; OnPropertyChanged("Specialty"); }
-            }
-            
-            private List<Hl7.Fhir.Model.CodeableConcept> _Specialty;
-            
-            /// <summary>
-            /// Business Identifiers that are specific to a role/location
-            /// </summary>
-            [FhirElement("identifier", InSummary=true, Order=70)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.Identifier> Identifier
-            {
-                get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
-                set { _Identifier = value; OnPropertyChanged("Identifier"); }
-            }
-            
-            private List<Hl7.Fhir.Model.Identifier> _Identifier;
-            
-            /// <summary>
-            /// Contact details that are specific to the role/location/service
-            /// </summary>
-            [FhirElement("telecom", InSummary=true, Order=80)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.ContactPoint> Telecom
-            {
-                get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
-                set { _Telecom = value; OnPropertyChanged("Telecom"); }
-            }
-            
-            private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
-            
-            /// <summary>
-            /// The period during which the practitioner is authorized to perform in these role(s)
-            /// </summary>
-            [FhirElement("period", InSummary=true, Order=90)]
-            [DataMember]
-            public Hl7.Fhir.Model.Period Period
-            {
-                get { return _Period; }
-                set { _Period = value; OnPropertyChanged("Period"); }
-            }
-            
-            private Hl7.Fhir.Model.Period _Period;
-            
-            /// <summary>
-            /// The location(s) at which this practitioner provides care
-            /// </summary>
-            [FhirElement("location", Order=100)]
-            [CLSCompliant(false)]
-			[References("Location")]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.ResourceReference> Location
-            {
-                get { if(_Location==null) _Location = new List<Hl7.Fhir.Model.ResourceReference>(); return _Location; }
-                set { _Location = value; OnPropertyChanged("Location"); }
-            }
-            
-            private List<Hl7.Fhir.Model.ResourceReference> _Location;
-            
-            /// <summary>
-            /// The list of healthcare services that this worker provides for this role's Organization/Location(s)
-            /// </summary>
-            [FhirElement("healthcareService", Order=110)]
-            [CLSCompliant(false)]
-			[References("HealthcareService")]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.ResourceReference> HealthcareService
-            {
-                get { if(_HealthcareService==null) _HealthcareService = new List<Hl7.Fhir.Model.ResourceReference>(); return _HealthcareService; }
-                set { _HealthcareService = value; OnPropertyChanged("HealthcareService"); }
-            }
-            
-            private List<Hl7.Fhir.Model.ResourceReference> _HealthcareService;
-            
-            /// <summary>
-            /// Technical endpoints providing access to services operated for the PractitonerRole
-            /// </summary>
-            [FhirElement("endpoint", Order=120)]
-            [CLSCompliant(false)]
-			[References("Endpoint")]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.ResourceReference> Endpoint
-            {
-                get { if(_Endpoint==null) _Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(); return _Endpoint; }
-                set { _Endpoint = value; OnPropertyChanged("Endpoint"); }
-            }
-            
-            private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as RoleComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
-                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                    if(Specialty != null) dest.Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(Specialty.DeepCopy());
-                    if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                    if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
-                    if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                    if(Location != null) dest.Location = new List<Hl7.Fhir.Model.ResourceReference>(Location.DeepCopy());
-                    if(HealthcareService != null) dest.HealthcareService = new List<Hl7.Fhir.Model.ResourceReference>(HealthcareService.DeepCopy());
-                    if(Endpoint != null) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new RoleComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as RoleComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
-                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
-                if( !DeepComparable.Matches(Specialty, otherT.Specialty)) return false;
-                if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-                if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
-                if( !DeepComparable.Matches(Period, otherT.Period)) return false;
-                if( !DeepComparable.Matches(Location, otherT.Location)) return false;
-                if( !DeepComparable.Matches(HealthcareService, otherT.HealthcareService)) return false;
-                if( !DeepComparable.Matches(Endpoint, otherT.Endpoint)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as RoleComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
-                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
-                if( !DeepComparable.IsExactly(Specialty, otherT.Specialty)) return false;
-                if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-                if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
-                if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
-                if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
-                if( !DeepComparable.IsExactly(HealthcareService, otherT.HealthcareService)) return false;
-                if( !DeepComparable.IsExactly(Endpoint, otherT.Endpoint)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // RoleComponent elements
-                    if (Organization != null) yield return Organization;
-                    if (Code != null) yield return Code;
-                    foreach (var elem in Specialty) { if (elem != null) yield return elem; }
-                    foreach (var elem in Identifier) { if (elem != null) yield return elem; }
-                    foreach (var elem in Telecom) { if (elem != null) yield return elem; }
-                    if (Period != null) yield return Period;
-                    foreach (var elem in Location) { if (elem != null) yield return elem; }
-                    foreach (var elem in HealthcareService) { if (elem != null) yield return elem; }
-                    foreach (var elem in Endpoint) { if (elem != null) yield return elem; }
-                }
-            }
-            
-        }
-        
         
         [FhirType("QualificationComponent")]
         [DataContract]
@@ -579,23 +352,9 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Attachment> _Photo;
         
         /// <summary>
-        /// Roles/organizations the practitioner is associated with
-        /// </summary>
-        [FhirElement("role", Order=170)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.Practitioner.RoleComponent> Role
-        {
-            get { if(_Role==null) _Role = new List<Hl7.Fhir.Model.Practitioner.RoleComponent>(); return _Role; }
-            set { _Role = value; OnPropertyChanged("Role"); }
-        }
-        
-        private List<Hl7.Fhir.Model.Practitioner.RoleComponent> _Role;
-        
-        /// <summary>
         /// Qualifications obtained by training and certification
         /// </summary>
-        [FhirElement("qualification", Order=180)]
+        [FhirElement("qualification", Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Practitioner.QualificationComponent> Qualification
@@ -609,7 +368,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A language the practitioner is able to use in patient communication
         /// </summary>
-        [FhirElement("communication", Order=190)]
+        [FhirElement("communication", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Communication
@@ -642,7 +401,6 @@ namespace Hl7.Fhir.Model
                 if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopy();
                 if(BirthDateElement != null) dest.BirthDateElement = (Hl7.Fhir.Model.Date)BirthDateElement.DeepCopy();
                 if(Photo != null) dest.Photo = new List<Hl7.Fhir.Model.Attachment>(Photo.DeepCopy());
-                if(Role != null) dest.Role = new List<Hl7.Fhir.Model.Practitioner.RoleComponent>(Role.DeepCopy());
                 if(Qualification != null) dest.Qualification = new List<Hl7.Fhir.Model.Practitioner.QualificationComponent>(Qualification.DeepCopy());
                 if(Communication != null) dest.Communication = new List<Hl7.Fhir.Model.CodeableConcept>(Communication.DeepCopy());
                 return dest;
@@ -670,7 +428,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(GenderElement, otherT.GenderElement)) return false;
             if( !DeepComparable.Matches(BirthDateElement, otherT.BirthDateElement)) return false;
             if( !DeepComparable.Matches(Photo, otherT.Photo)) return false;
-            if( !DeepComparable.Matches(Role, otherT.Role)) return false;
             if( !DeepComparable.Matches(Qualification, otherT.Qualification)) return false;
             if( !DeepComparable.Matches(Communication, otherT.Communication)) return false;
             
@@ -691,7 +448,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(GenderElement, otherT.GenderElement)) return false;
             if( !DeepComparable.IsExactly(BirthDateElement, otherT.BirthDateElement)) return false;
             if( !DeepComparable.IsExactly(Photo, otherT.Photo)) return false;
-            if( !DeepComparable.IsExactly(Role, otherT.Role)) return false;
             if( !DeepComparable.IsExactly(Qualification, otherT.Qualification)) return false;
             if( !DeepComparable.IsExactly(Communication, otherT.Communication)) return false;
             
@@ -712,7 +468,6 @@ namespace Hl7.Fhir.Model
 				if (GenderElement != null) yield return GenderElement;
 				if (BirthDateElement != null) yield return BirthDateElement;
 				foreach (var elem in Photo) { if (elem != null) yield return elem; }
-				foreach (var elem in Role) { if (elem != null) yield return elem; }
 				foreach (var elem in Qualification) { if (elem != null) yield return elem; }
 				foreach (var elem in Communication) { if (elem != null) yield return elem; }
             }

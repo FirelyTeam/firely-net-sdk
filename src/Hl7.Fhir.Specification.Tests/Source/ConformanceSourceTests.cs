@@ -52,68 +52,105 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(0, conceptMaps.Count());
         }
 
-        // In STU3 we need to test both ValueSet and CodingSystem retrieval
-        [TestMethod,Ignore]
-        public void FindValueSets()
+        [TestMethod]
+        public void FindCodeSystem()
         {
-            // A Fhir valueset
-            var vs = source.FindValueSetBySystem("http://hl7.org/fhir/contact-point-system");
+            // A Fhir codesystem
+            var vs = source.FindCodeSystem("http://hl7.org/fhir/contact-point-system");
             Assert.IsNotNull(vs);
             Assert.IsNotNull(vs.Annotation<OriginInformation>());
 
             // A non-HL7 valueset
-            vs = source.FindValueSetBySystem("http://nema.org/dicom/dicm");
+            vs = source.FindCodeSystem("http://nema.org/dicom/dicm");
             Assert.IsNotNull(vs);
 
             // One from v2-tables
-            vs = source.FindValueSetBySystem("http://hl7.org/fhir/v2/0145");
+            vs = source.FindCodeSystem("http://hl7.org/fhir/v2/0145");
             Assert.IsNotNull(vs);
 
             // One from v3-codesystems
-            vs = source.FindValueSetBySystem("http://hl7.org/fhir/v3/ActCode");
+            vs = source.FindCodeSystem("http://hl7.org/fhir/v3/ActCode");
             Assert.IsNotNull(vs);
 
             // Something non-existent
-            vs = source.FindValueSetBySystem("http://nema.org/dicom/dicmQQQQ");
+            vs = source.FindCodeSystem("http://nema.org/dicom/dicmQQQQ");
+            Assert.IsNull(vs);
+        }
+
+
+        [TestMethod]
+        public void FindValueSets()
+        {
+            // A Fhir valueset
+            var vs = source.FindValueSet("http://hl7.org/fhir/ValueSet/contact-point-system");
+            Assert.IsNotNull(vs);
+            Assert.IsNotNull(vs.Annotation<OriginInformation>());
+
+            //EK: These seem to be no longer part of the spec
+            //// A non-HL7 valueset
+            //vs = source.FindValueSet("http://hl7.org/fhir/ValueSet/dicom-dcim");
+            //Assert.IsNotNull(vs);
+
+            // One from v2-tables
+            vs = source.FindValueSet("http://hl7.org/fhir/ValueSet/v2-0145");
+            Assert.IsNotNull(vs);
+
+            // One from v3-codesystems
+            vs = source.FindValueSet("http://hl7.org/fhir/ValueSet/v3-ActCode");
+            Assert.IsNotNull(vs);
+
+            // Something non-existent
+            vs = source.FindValueSet("http://hl7.org/fhir/ValueSet/crapQQQQ");
             Assert.IsNull(vs);
         }
 
         [TestMethod]
         public void FindNamingSystem()
         {
-            var ns = source.FindNamingSystem("2.16.840.1.113883.6.88");
+            var ns = source.FindNamingSystem("2.16.840.1.113883.4.1");
             Assert.IsNotNull(ns);
             Assert.IsNotNull(ns.Annotation<OriginInformation>());
 
-            ns = source.FindNamingSystem("http://www.nlm.nih.gov/research/umls/rxnorm");
+            ns = source.FindNamingSystem("http://hl7.org/fhir/sid/us-ssn");
             Assert.IsNotNull(ns);
-            Assert.AreEqual("RxNorm (US NLM)", ns.Name);
+            Assert.AreEqual("United States Social Security Number", ns.Name);
         }
     
         // Need to fix this for new conformance stuff in STU3
-        [TestMethod,Ignore]
+        [TestMethod]
         public void ListCanonicalUris()
         {
-            var vs = source.ListResourceUris(ResourceType.ValueSet); Assert.IsTrue(vs.Any());
-            var cm = source.ListResourceUris(ResourceType.ConceptMap); Assert.IsTrue(cm.Any());
-            var ns = source.ListResourceUris(ResourceType.NamingSystem); Assert.IsTrue(ns.Any());
             var sd = source.ListResourceUris(ResourceType.StructureDefinition); Assert.IsTrue(sd.Any());
+            var sm = source.ListResourceUris(ResourceType.StructureMap); Assert.IsFalse(sm.Any());
             var de = source.ListResourceUris(ResourceType.DataElement); Assert.IsTrue(de.Any());
             var cf = source.ListResourceUris(ResourceType.CapabilityStatement); Assert.IsTrue(cf.Any());
+            var md = source.ListResourceUris(ResourceType.MessageDefinition); Assert.IsFalse(md.Any());
             var od = source.ListResourceUris(ResourceType.OperationDefinition); Assert.IsTrue(od.Any());
             var sp = source.ListResourceUris(ResourceType.SearchParameter); Assert.IsTrue(sp.Any());
+            var cd = source.ListResourceUris(ResourceType.CompartmentDefinition); Assert.IsFalse(md.Any());
+            var ig = source.ListResourceUris(ResourceType.ImplementationGuide); Assert.IsFalse(ig.Any());
+
+            var cs = source.ListResourceUris(ResourceType.CodeSystem); Assert.IsTrue(cs.Any());
+            var vs = source.ListResourceUris(ResourceType.ValueSet); Assert.IsTrue(vs.Any());
+            var cm = source.ListResourceUris(ResourceType.ConceptMap); Assert.IsTrue(cm.Any());
+            var ep = source.ListResourceUris(ResourceType.ExpansionProfile); Assert.IsFalse(ep.Any());
+            var ns = source.ListResourceUris(ResourceType.NamingSystem); Assert.IsTrue(ns.Any());
+
             var all = source.ListResourceUris();
 
-            Assert.AreEqual(vs.Count() + cm.Count() + ns.Count() + sd.Count() + de.Count() + cf.Count() + od.Count() + sp.Count(), all.Count());
+            Assert.AreEqual(sd.Count() + sm.Count() + de.Count() + cf.Count() + md.Count() + od.Count() +
+                        sp.Count() + cd.Count() + ig.Count() + cs.Count() + vs.Count() + cm.Count() +
+                        ep.Count() + ns.Count(), all.Count());
 
-            Assert.IsTrue(vs.Contains("http://hl7.org/fhir/ValueSet/contact-point-system"));
-            Assert.IsTrue(cm.Contains("http://hl7.org/fhir/ConceptMap/v2-contact-point-use"));
-            Assert.IsTrue(ns.Contains("http://hl7.org/fhir/NamingSystem/tx-rxnorm"));
             Assert.IsTrue(sd.Contains("http://hl7.org/fhir/StructureDefinition/shareablevalueset"));
             Assert.IsTrue(de.Contains("http://hl7.org/fhir/DataElement/Device.manufactureDate"));
-            Assert.IsTrue(sp.Contains("http://hl7.org/fhir/SearchParameter/Condition-onset-info"));
+            Assert.IsTrue(cf.Contains("http://hl7.org/fhir/CapabilityStatement/base"));
             Assert.IsTrue(od.Contains("http://hl7.org/fhir/OperationDefinition/ValueSet-validate-code"));
-            Assert.IsTrue(cf.Contains("http://hl7.org/fhir/Conformance/base"));
+            Assert.IsTrue(sp.Contains("http://hl7.org/fhir/SearchParameter/Condition-onset-info"));
+            Assert.IsTrue(cs.Contains("http://hl7.org/fhir/CodeSystem/contact-point-system"));
+            Assert.IsTrue(vs.Contains("http://hl7.org/fhir/ValueSet/contact-point-system"));
+            Assert.IsTrue(cm.Contains("http://hl7.org/fhir/ConceptMap/cm-name-use-v2"));
+            Assert.IsTrue(ns.Contains("http://hl7.org/fhir/NamingSystem/us-ssn"));
         }
 
         [TestMethod]

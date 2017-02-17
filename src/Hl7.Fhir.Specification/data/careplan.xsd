@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Aug 11, 2016 03:44+0000 for FHIR v1.6.0 
+  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -54,9 +54,24 @@
               <xs:documentation xml:lang="en">This records identifiers associated with this care plan that are defined by business processes and/or used to refer to it when a direct URL reference to the resource itself is not appropriate (e.g. in CDA documents, or in written / printed documentation).</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="subject" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="definition" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Identifies the patient or group whose intended care is described by the plan.</xs:documentation>
+              <xs:documentation xml:lang="en">Identifies the protocol, questionnaire, guideline or other specification the care plan should be conducted in accordance with.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="basedOn" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A care plan that is fulfilled in whole or in part by this care plan.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="replaces" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Completed or terminated care plan whose function is taken by this new care plan.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="partOf" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A larger care plan of which this particular care plan is a component or step.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="status" minOccurs="1" maxOccurs="1" type="CarePlanStatus">
@@ -64,9 +79,34 @@
               <xs:documentation xml:lang="en">Indicates whether the plan is currently being acted upon, represents future intentions or is now a historical record.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="intent" minOccurs="1" maxOccurs="1" type="CarePlanIntent">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Indicates the level of authority/intentionality associated with the care plan and where the care plan fits into the workflow chain.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="category" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Identifies what &quot;kind&quot; of plan this is to support differentiation between multiple co-existing plans; e.g. &quot;Home health&quot;, &quot;psychiatric&quot;, &quot;asthma&quot;, &quot;disease management&quot;, &quot;wellness plan&quot;, etc.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="title" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Human-friendly name for the CarePlan.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="description" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A description of the scope and nature of the plan.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="subject" minOccurs="1" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Identifies the patient or group whose intended care is described by the plan.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="context" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Identifies the context in which this particular CarePlan is defined.</xs:documentation>
+              <xs:documentation xml:lang="en">Identifies the original context in which this particular CarePlan was created.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="period" minOccurs="0" maxOccurs="1" type="Period">
@@ -79,19 +119,9 @@
               <xs:documentation xml:lang="en">Identifies the individual(s) or ogranization who is responsible for the content of the care plan.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="modified" minOccurs="0" maxOccurs="1" type="dateTime">
+          <xs:element name="careTeam" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Identifies the most recent date on which the plan has been revised.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="category" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Identifies what &quot;kind&quot; of plan this is to support differentiation between multiple co-existing plans; e.g. &quot;Home health&quot;, &quot;psychiatric&quot;, &quot;asthma&quot;, &quot;disease management&quot;, &quot;wellness plan&quot;, etc.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="description" minOccurs="0" maxOccurs="1" type="string">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">A description of the scope and nature of the plan.</xs:documentation>
+              <xs:documentation xml:lang="en">Identifies all people and organizations who are expected to be involved in the care envisioned by this plan.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="addresses" minOccurs="0" maxOccurs="unbounded" type="Reference">
@@ -99,19 +129,9 @@
               <xs:documentation xml:lang="en">Identifies the conditions/problems/concerns/diagnoses/etc. whose management and/or mitigation are handled by this plan.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="support" minOccurs="0" maxOccurs="unbounded" type="Reference">
+          <xs:element name="supportingInfo" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Identifies portions of the patient's record that specifically influenced the formation of the plan.  These might include co-morbidities, recent procedures, limitations, recent assessments, etc.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="relatedPlan" type="CarePlan.RelatedPlan" minOccurs="0" maxOccurs="unbounded">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Identifies CarePlans with some sort of formal relationship to the current plan.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="careTeam" minOccurs="0" maxOccurs="unbounded" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Identifies all people and organizations who are expected to be involved in the care envisioned by this plan.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="goal" minOccurs="0" maxOccurs="unbounded" type="Reference">
@@ -124,30 +144,9 @@
               <xs:documentation xml:lang="en">Identifies a planned action to occur as part of the plan.  For example, a medication to be used, lab tests to perform, self-monitoring, education, etc.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="note" minOccurs="0" maxOccurs="1" type="Annotation">
+          <xs:element name="note" minOccurs="0" maxOccurs="unbounded" type="Annotation">
             <xs:annotation>
               <xs:documentation xml:lang="en">General notes about the care plan not covered elsewhere.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:complexType name="CarePlan.RelatedPlan">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">Describes the intention of how one or more practitioners intend to deliver care for a particular patient, group or community for a period of time, possibly limited to care for a specific condition or set of conditions.</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="BackboneElement">
-        <xs:sequence>
-          <xs:element name="code" minOccurs="0" maxOccurs="1" type="CarePlanRelationship">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Identifies the type of relationship this plan has to the target plan.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="plan" minOccurs="1" maxOccurs="1" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">A reference to the plan to which a relationship is asserted.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -161,14 +160,14 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="actionResulting" minOccurs="0" maxOccurs="unbounded" type="Reference">
+          <xs:element name="outcomeCodeableConcept" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Resources that describe follow-on actions resulting from the plan, such as drug prescriptions, encounter records, appointments, etc.</xs:documentation>
+              <xs:documentation xml:lang="en">Identifies the outcome at the point when the status of the activity is assessed.  For example, the outcome of an education activity could be patient understands (or not).</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="outcome" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="outcomeReference" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Results of the careplan activity.</xs:documentation>
+              <xs:documentation xml:lang="en">Details of the outcome or action resulting from the activity.  The reference to an &quot;event&quot; resource, such as Procedure or Encounter or Observation, is the result/outcome of the activity itself.  The activity can be conveyed using CarePlan.activity.detail OR using the CarePlan.activity.reference (a reference to a “request” resource).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="progress" minOccurs="0" maxOccurs="unbounded" type="Annotation">
@@ -214,7 +213,7 @@
           </xs:element>
           <xs:element name="reasonCode" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Provides the rationale that drove the inclusion of this particular activity as part of the plan.</xs:documentation>
+              <xs:documentation xml:lang="en">Provides the rationale that drove the inclusion of this particular activity as part of the plan or the reason why the activity was prohibited.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="reasonReference" minOccurs="0" maxOccurs="unbounded" type="Reference">
@@ -227,19 +226,19 @@
               <xs:documentation xml:lang="en">Internal reference that identifies the goals that this activity is intended to contribute towards meeting.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="status" minOccurs="0" maxOccurs="1" type="CarePlanActivityStatus">
+          <xs:element name="status" minOccurs="1" maxOccurs="1" type="CarePlanActivityStatus">
             <xs:annotation>
               <xs:documentation xml:lang="en">Identifies what progress is being made for the specific activity.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="statusReason" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="statusReason" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
               <xs:documentation xml:lang="en">Provides reason why the activity isn't yet started, is on hold, was cancelled, etc.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="prohibited" minOccurs="1" maxOccurs="1" type="boolean">
+          <xs:element name="prohibited" minOccurs="0" maxOccurs="1" type="boolean">
             <xs:annotation>
-              <xs:documentation xml:lang="en">If true, indicates that the described activity is one that must NOT be engaged in when following the plan.</xs:documentation>
+              <xs:documentation xml:lang="en">If true, indicates that the described activity is one that must NOT be engaged in when following the plan.  If false, indicates that the described activity is one that should be engaged in when following the plan.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:choice minOccurs="0" maxOccurs="1" >
@@ -286,43 +285,8 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="CarePlanRelationship-list">
-    <xs:restriction base="code-primitive">
-      <xs:enumeration value="includes">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Includes</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="replaces">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Replaces</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="fulfills">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Fulfills</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="CarePlanRelationship">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">Codes identifying the types of relationships between two plans.</xs:documentation>
-      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="Element">
-        <xs:attribute name="value" type="CarePlanRelationship-list" use="optional"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
   <xs:simpleType name="CarePlanStatus-list">
     <xs:restriction base="code-primitive">
-      <xs:enumeration value="proposed">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Proposed</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="draft">
         <xs:annotation>
           <xs:documentation xml:lang="en">Pending</xs:documentation>
@@ -333,14 +297,29 @@
           <xs:documentation xml:lang="en">Active</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="suspended">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Suspended</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="completed">
         <xs:annotation>
           <xs:documentation xml:lang="en">Completed</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="entered-in-error">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Entered In Error</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="cancelled">
         <xs:annotation>
           <xs:documentation xml:lang="en">Cancelled</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="unknown">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Unknown</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>
@@ -388,6 +367,11 @@
           <xs:documentation xml:lang="en">Cancelled</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="unknown">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Unknown</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="CarePlanActivityStatus">
@@ -398,6 +382,41 @@
     <xs:complexContent>
       <xs:extension base="Element">
         <xs:attribute name="value" type="CarePlanActivityStatus-list" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="CarePlanIntent-list">
+    <xs:restriction base="code-primitive">
+      <xs:enumeration value="proposal">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Proposal</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="plan">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Plan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="order">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Order</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="option">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Option</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="CarePlanIntent">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Codes indicating the degree of authority/intentionality associated with a care plan</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="CarePlanIntent-list" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

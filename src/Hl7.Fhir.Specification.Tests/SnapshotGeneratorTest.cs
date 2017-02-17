@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             public NamingSystem FindNamingSystem(string uniqueid) => measureDuration(() => _source.FindNamingSystem(uniqueid));
 
-            public ValueSet FindValueSetBySystem(string system) => measureDuration(() => _source.FindValueSetBySystem(system));
+            public CodeSystem FindCodeSystemByValueSet(string system) => measureDuration(() => _source.FindCodeSystemByValueSet(system));
 
             public IEnumerable<string> ListResourceUris(ResourceType? filter = default(ResourceType?)) => _source.ListResourceUris(filter);
             // => measureDuration(() => _source.ListResourceUris(filter));

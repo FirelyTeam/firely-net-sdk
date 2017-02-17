@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Element _Who;
             
             /// <summary>
-            /// On behalf of
+            /// Who the agent is representing
             /// </summary>
             [FhirElement("onBehalfOf", Order=60, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
@@ -269,18 +269,18 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Identity of entity
             /// </summary>
-            [FhirElement("reference", InSummary=true, Order=50)]
+            [FhirElement("what", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[References()]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Identifier))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Reference
+            public Hl7.Fhir.Model.Element What
             {
-                get { return _Reference; }
-                set { _Reference = value; OnPropertyChanged("Reference"); }
+                get { return _What; }
+                set { _What = value; OnPropertyChanged("What"); }
             }
             
-            private Hl7.Fhir.Model.ResourceReference _Reference;
+            private Hl7.Fhir.Model.Element _What;
             
             /// <summary>
             /// Entity is attributed to this agent
@@ -304,7 +304,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(RoleElement != null) dest.RoleElement = (Code<Hl7.Fhir.Model.Provenance.ProvenanceEntityRole>)RoleElement.DeepCopy();
-                    if(Reference != null) dest.Reference = (Hl7.Fhir.Model.ResourceReference)Reference.DeepCopy();
+                    if(What != null) dest.What = (Hl7.Fhir.Model.Element)What.DeepCopy();
                     if(Agent != null) dest.Agent = new List<Hl7.Fhir.Model.Provenance.AgentComponent>(Agent.DeepCopy());
                     return dest;
                 }
@@ -324,7 +324,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(RoleElement, otherT.RoleElement)) return false;
-                if( !DeepComparable.Matches(Reference, otherT.Reference)) return false;
+                if( !DeepComparable.Matches(What, otherT.What)) return false;
                 if( !DeepComparable.Matches(Agent, otherT.Agent)) return false;
                 
                 return true;
@@ -337,7 +337,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(RoleElement, otherT.RoleElement)) return false;
-                if( !DeepComparable.IsExactly(Reference, otherT.Reference)) return false;
+                if( !DeepComparable.IsExactly(What, otherT.What)) return false;
                 if( !DeepComparable.IsExactly(Agent, otherT.Agent)) return false;
                 
                 return true;
@@ -353,7 +353,7 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // EntityComponent elements
                     if (RoleElement != null) yield return RoleElement;
-                    if (Reference != null) yield return Reference;
+                    if (What != null) yield return What;
                     foreach (var elem in Agent) { if (elem != null) yield return elem; }
                 }
             }
@@ -424,51 +424,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Reason the activity is occurring
-        /// </summary>
-        [FhirElement("reason", Order=120)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.Coding> Reason
-        {
-            get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.Coding>(); return _Reason; }
-            set { _Reason = value; OnPropertyChanged("Reason"); }
-        }
-        
-        private List<Hl7.Fhir.Model.Coding> _Reason;
-        
-        /// <summary>
-        /// Activity that occurred
-        /// </summary>
-        [FhirElement("activity", Order=130)]
-        [DataMember]
-        public Hl7.Fhir.Model.Coding Activity
-        {
-            get { return _Activity; }
-            set { _Activity = value; OnPropertyChanged("Activity"); }
-        }
-        
-        private Hl7.Fhir.Model.Coding _Activity;
-        
-        /// <summary>
-        /// Where the activity occurred, if relevant
-        /// </summary>
-        [FhirElement("location", Order=140)]
-        [CLSCompliant(false)]
-		[References("Location")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Location
-        {
-            get { return _Location; }
-            set { _Location = value; OnPropertyChanged("Location"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Location;
-        
-        /// <summary>
         /// Policy or plan the activity was defined by
         /// </summary>
-        [FhirElement("policy", Order=150)]
+        [FhirElement("policy", Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirUri> PolicyElement
@@ -497,6 +455,48 @@ namespace Hl7.Fhir.Model
                 OnPropertyChanged("Policy");
             }
         }
+        
+        /// <summary>
+        /// Where the activity occurred, if relevant
+        /// </summary>
+        [FhirElement("location", Order=130)]
+        [CLSCompliant(false)]
+		[References("Location")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Location
+        {
+            get { return _Location; }
+            set { _Location = value; OnPropertyChanged("Location"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Location;
+        
+        /// <summary>
+        /// Reason the activity is occurring
+        /// </summary>
+        [FhirElement("reason", Order=140)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Coding> Reason
+        {
+            get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.Coding>(); return _Reason; }
+            set { _Reason = value; OnPropertyChanged("Reason"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Coding> _Reason;
+        
+        /// <summary>
+        /// Activity that occurred
+        /// </summary>
+        [FhirElement("activity", Order=150)]
+        [DataMember]
+        public Hl7.Fhir.Model.Coding Activity
+        {
+            get { return _Activity; }
+            set { _Activity = value; OnPropertyChanged("Activity"); }
+        }
+        
+        private Hl7.Fhir.Model.Coding _Activity;
         
         /// <summary>
         /// Actor involved
@@ -557,10 +557,10 @@ namespace Hl7.Fhir.Model
                 if(Target != null) dest.Target = new List<Hl7.Fhir.Model.ResourceReference>(Target.DeepCopy());
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(RecordedElement != null) dest.RecordedElement = (Hl7.Fhir.Model.Instant)RecordedElement.DeepCopy();
+                if(PolicyElement != null) dest.PolicyElement = new List<Hl7.Fhir.Model.FhirUri>(PolicyElement.DeepCopy());
+                if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
                 if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.Coding>(Reason.DeepCopy());
                 if(Activity != null) dest.Activity = (Hl7.Fhir.Model.Coding)Activity.DeepCopy();
-                if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
-                if(PolicyElement != null) dest.PolicyElement = new List<Hl7.Fhir.Model.FhirUri>(PolicyElement.DeepCopy());
                 if(Agent != null) dest.Agent = new List<Hl7.Fhir.Model.Provenance.AgentComponent>(Agent.DeepCopy());
                 if(Entity != null) dest.Entity = new List<Hl7.Fhir.Model.Provenance.EntityComponent>(Entity.DeepCopy());
                 if(Signature != null) dest.Signature = new List<Hl7.Fhir.Model.Signature>(Signature.DeepCopy());
@@ -584,10 +584,10 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Target, otherT.Target)) return false;
             if( !DeepComparable.Matches(Period, otherT.Period)) return false;
             if( !DeepComparable.Matches(RecordedElement, otherT.RecordedElement)) return false;
+            if( !DeepComparable.Matches(PolicyElement, otherT.PolicyElement)) return false;
+            if( !DeepComparable.Matches(Location, otherT.Location)) return false;
             if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
             if( !DeepComparable.Matches(Activity, otherT.Activity)) return false;
-            if( !DeepComparable.Matches(Location, otherT.Location)) return false;
-            if( !DeepComparable.Matches(PolicyElement, otherT.PolicyElement)) return false;
             if( !DeepComparable.Matches(Agent, otherT.Agent)) return false;
             if( !DeepComparable.Matches(Entity, otherT.Entity)) return false;
             if( !DeepComparable.Matches(Signature, otherT.Signature)) return false;
@@ -604,10 +604,10 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
             if( !DeepComparable.IsExactly(RecordedElement, otherT.RecordedElement)) return false;
+            if( !DeepComparable.IsExactly(PolicyElement, otherT.PolicyElement)) return false;
+            if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
             if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
             if( !DeepComparable.IsExactly(Activity, otherT.Activity)) return false;
-            if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
-            if( !DeepComparable.IsExactly(PolicyElement, otherT.PolicyElement)) return false;
             if( !DeepComparable.IsExactly(Agent, otherT.Agent)) return false;
             if( !DeepComparable.IsExactly(Entity, otherT.Entity)) return false;
             if( !DeepComparable.IsExactly(Signature, otherT.Signature)) return false;
@@ -624,10 +624,10 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Target) { if (elem != null) yield return elem; }
 				if (Period != null) yield return Period;
 				if (RecordedElement != null) yield return RecordedElement;
+				foreach (var elem in PolicyElement) { if (elem != null) yield return elem; }
+				if (Location != null) yield return Location;
 				foreach (var elem in Reason) { if (elem != null) yield return elem; }
 				if (Activity != null) yield return Activity;
-				if (Location != null) yield return Location;
-				foreach (var elem in PolicyElement) { if (elem != null) yield return elem; }
 				foreach (var elem in Agent) { if (elem != null) yield return elem; }
 				foreach (var elem in Entity) { if (elem != null) yield return elem; }
 				foreach (var elem in Signature) { if (elem != null) yield return elem; }

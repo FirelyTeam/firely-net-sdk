@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Aug 11, 2016 03:44+0000 for FHIR v1.6.0 
+  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -57,6 +57,11 @@
           <xs:element name="active" minOccurs="0" maxOccurs="1" type="boolean">
             <xs:annotation>
               <xs:documentation xml:lang="en">Whether this practitioner's record is in active use.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="period" minOccurs="0" maxOccurs="1" type="Period">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The period during which the person is authorized to act as a practitioner in these role(s) for the organization.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="practitioner" minOccurs="0" maxOccurs="1" type="Reference">
@@ -92,11 +97,6 @@
           <xs:element name="telecom" minOccurs="0" maxOccurs="unbounded" type="ContactPoint">
             <xs:annotation>
               <xs:documentation xml:lang="en">Contact details that are specific to the role/location/service.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="period" minOccurs="0" maxOccurs="1" type="Period">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The period during which the person is authorized to act as a practitioner in these role(s) for the organization.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="availableTime" type="PractitionerRole.AvailableTime" minOccurs="0" maxOccurs="unbounded">

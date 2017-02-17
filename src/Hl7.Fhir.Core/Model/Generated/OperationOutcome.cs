@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -421,7 +421,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// FluentPath of element(s) related to issue
+            /// FHIRPath of element(s) related to issue
             /// </summary>
             [FhirElement("expression", InSummary=true, Order=90)]
             [Cardinality(Min=0,Max=-1)]
@@ -435,7 +435,7 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.FhirString> _ExpressionElement;
             
             /// <summary>
-            /// FluentPath of element(s) related to issue
+            /// FHIRPath of element(s) related to issue
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]

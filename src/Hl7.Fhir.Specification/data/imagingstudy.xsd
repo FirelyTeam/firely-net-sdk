@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Aug 11, 2016 03:44+0000 for FHIR v1.6.0 
+  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -99,29 +99,34 @@
               <xs:documentation xml:lang="en">The requesting/referring physician.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="interpreter" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="interpreter" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Who read the study and interpreted the images or other content.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="baseLocation" type="ImagingStudy.BaseLocation" minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="endpoint" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Methods of accessing  (e.g., retrieving, viewing) the study.</xs:documentation>
+              <xs:documentation xml:lang="en">The network service providing access (e.g., query, view, or retrieval) for the study. See implementation notes for information about using DICOM endpoints. A study-level endpoint applies to each series in the study, unless overridden by a series-level endpoint with the same Endpoint.type.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="numberOfSeries" minOccurs="1" maxOccurs="1" type="unsignedInt">
+          <xs:element name="numberOfSeries" minOccurs="0" maxOccurs="1" type="unsignedInt">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Number of Series in Study.</xs:documentation>
+              <xs:documentation xml:lang="en">Number of Series in the Study. This value given may be larger than the number of series elements this Resource contains due to resource availability, security, or other factors. This element should be present if any series elements are present.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="numberOfInstances" minOccurs="1" maxOccurs="1" type="unsignedInt">
+          <xs:element name="numberOfInstances" minOccurs="0" maxOccurs="1" type="unsignedInt">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Number of SOP Instances in Study.</xs:documentation>
+              <xs:documentation xml:lang="en">Number of SOP Instances in Study. This value given may be larger than the number of instance elements this Resource contains due to resource availability, security, or other factors. This element should be present if any instance elements are present.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="procedure" minOccurs="0" maxOccurs="unbounded" type="Reference">
+          <xs:element name="procedureReference" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Type of procedure performed.</xs:documentation>
+              <xs:documentation xml:lang="en">A reference to the performed Procedure.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="procedureCode" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The code for the performed procedure type.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="reason" minOccurs="0" maxOccurs="1" type="CodeableConcept">
@@ -137,27 +142,6 @@
           <xs:element name="series" type="ImagingStudy.Series" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">Each study has one or more series of images or other content.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:complexType name="ImagingStudy.BaseLocation">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">Representation of the content produced in a DICOM imaging study. A study comprises a set of series, each of which includes a set of Service-Object Pair Instances (SOP Instances - images or other data) acquired or produced in a common context.  A series is of only one modality (e.g. X-ray, CT, MR, ultrasound), but a study may have multiple series of different modalities.</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="BackboneElement">
-        <xs:sequence>
-          <xs:element name="type" minOccurs="1" maxOccurs="1" type="Coding">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The service type for accessing (e.g., retrieving, viewing) the DICOM instances.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="url" minOccurs="1" maxOccurs="1" type="uri">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The service URL for accessing the study. The interpretation of the URL depends on the type of the service specified in ImagingManifest.study.baseLocation.type.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -191,9 +175,9 @@
               <xs:documentation xml:lang="en">A description of the series.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="numberOfInstances" minOccurs="1" maxOccurs="1" type="unsignedInt">
+          <xs:element name="numberOfInstances" minOccurs="0" maxOccurs="1" type="unsignedInt">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Number of SOP Instances in Series.</xs:documentation>
+              <xs:documentation xml:lang="en">Number of SOP Instances in Study. This value given may be larger than the number of instance elements this Resource contains due to resource availability, security, or other factors. This element should be present if any instance elements are present.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="availability" minOccurs="0" maxOccurs="1" type="InstanceAvailability">
@@ -201,9 +185,9 @@
               <xs:documentation xml:lang="en">Availability of series (online, offline or nearline).</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="baseLocation" type="ImagingStudy.BaseLocation1" minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="endpoint" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Methods of accessing (e.g. retrieving) the series.</xs:documentation>
+              <xs:documentation xml:lang="en">The network service providing access (e.g., query, view, or retrieval) for this series. See implementation notes for information about using DICOM endpoints. A series-level endpoint, if present, has precedence over a study-level endpoint with the same Endpoint.type.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="bodySite" minOccurs="0" maxOccurs="1" type="Coding">
@@ -221,30 +205,14 @@
               <xs:documentation xml:lang="en">The date and time the series was started.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="performer" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The physician or operator (often the radiology technician)  who performed the series. The performer is recorded at the series level, since each series in a study may be performed by a different practitioner, at different times, and using different devices. A series may be performed by multiple practitioners.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="instance" type="ImagingStudy.Instance" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">A single SOP Instance within the series, e.g. an image, or presentation state.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:complexType name="ImagingStudy.BaseLocation1">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">Representation of the content produced in a DICOM imaging study. A study comprises a set of series, each of which includes a set of Service-Object Pair Instances (SOP Instances - images or other data) acquired or produced in a common context.  A series is of only one modality (e.g. X-ray, CT, MR, ultrasound), but a study may have multiple series of different modalities.</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="BackboneElement">
-        <xs:sequence>
-          <xs:element name="type" minOccurs="1" maxOccurs="1" type="Coding">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The service type for accessing (e.g., retrieving) the DICOM instances.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="url" minOccurs="1" maxOccurs="1" type="uri">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The service URL for accessing the study. The interpretation of the URL depends on the type of the service specified in ImagingManifest.study.series.baseLocation.type.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>

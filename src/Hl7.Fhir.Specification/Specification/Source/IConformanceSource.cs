@@ -25,11 +25,13 @@ namespace Hl7.Fhir.Specification.Source
         IEnumerable<string> ListResourceUris(ResourceType? filter = null);
 
         /// <summary>
-        /// Find ValueSets that define codes for a Codesystem with the given system uri
+        /// Find a CodeSystem by a ValueSet canonical url that contains all codes from that codesystem.
         /// </summary>
         /// <param name="system"></param>
         /// <returns></returns>
-        ValueSet FindValueSetBySystem(string system);
+        /// <remarks>It is very common for valuesets to represent all codes from a specific/smaller code system. These
+        /// are indicated by he CodeSystem.valueSet element, which is searched here.</remarks>
+        CodeSystem FindCodeSystemByValueSet(string valueSetUri);
 
         /// <summary>
         /// Find ConceptMaps which map from the given sourceUri to the given targetUri

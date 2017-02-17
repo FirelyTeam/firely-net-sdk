@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -309,7 +309,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Select codes/concepts by their properties (including relationships)
             /// </summary>
-            [FhirElement("filter", Order=70)]
+            [FhirElement("filter", InSummary=true, Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ValueSet.FilterComponent> Filter
@@ -467,7 +467,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Text to display for this code for this value set
+            /// Text to display for this code for this value set in this valueset
             /// </summary>
             [FhirElement("display", Order=50)]
             [DataMember]
@@ -480,7 +480,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _DisplayElement;
             
             /// <summary>
-            /// Text to display for this code for this value set
+            /// Text to display for this code for this value set in this valueset
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -737,7 +737,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A property defined by the code system
             /// </summary>
-            [FhirElement("property", Order=40)]
+            [FhirElement("property", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Code PropertyElement
@@ -770,7 +770,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// = | is-a | descendent-of | is-not-a | regex | in | not-in | generalizes | exists
             /// </summary>
-            [FhirElement("op", Order=50)]
+            [FhirElement("op", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.FilterOperator> OpElement
@@ -801,9 +801,9 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Code from the system, or regex criteria
+            /// Code from the system, or regex criteria, or boolean value for exists
             /// </summary>
-            [FhirElement("value", Order=60)]
+            [FhirElement("value", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Code ValueElement
@@ -815,7 +815,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Code _ValueElement;
             
             /// <summary>
-            /// Code from the system, or regex criteria
+            /// Code from the system, or regex criteria, or boolean value for exists
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]

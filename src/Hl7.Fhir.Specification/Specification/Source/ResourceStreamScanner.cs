@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Specification.Source
                             ResourceType = EnumUtility.ParseLiteral<ResourceType>(res.Name.LocalName).Value,
                             ResourceUri =  fullUrl(res),
                             Canonical = getPrimitiveValueElement(res, "url"),
-                            ValueSetSystem = getValueSetSystem(res),
+                            CodeSystemValueSet = getCodeSystemValueSet(res),
                             UniqueIds = getUniqueIds(res),
                             ConceptMapSource = getCmSources(res),
                             ConceptMapTarget = getCmTargets(res),
@@ -53,16 +53,17 @@ namespace Hl7.Fhir.Specification.Source
                         });
         }
 
-        private string getValueSetSystem(XElement vs)
+        private string getCodeSystemValueSet(XElement vs)
         {
-            return vs.Elements(XmlNs.XFHIR + "codeSystem")
-                     .Elements(XmlNs.XFHIR + "system")
+            // On CodeSystem
+            return vs.Elements(XmlNs.XFHIR + "valueSet")
                      .Attributes("value")
                      .Select(a => a.Value).SingleOrDefault();
         }
 
         private string[] getUniqueIds(XElement ns)
         {
+            // On NamingSystem
             return ns.Elements(XmlNs.XFHIR + "uniqueId")
                      .Elements(XmlNs.XFHIR + "value")
                      .Attributes("value")
@@ -71,6 +72,7 @@ namespace Hl7.Fhir.Specification.Source
 
         private string[] getCmSources(XElement cm)
         {
+            // On ConceptMap
             return cm
                  .Elements(XmlNs.XFHIR + "sourceUri")
                  .Concat(cm
@@ -82,6 +84,7 @@ namespace Hl7.Fhir.Specification.Source
 
         private string[] getCmTargets(XElement cm)
         {
+            // On ConceptMap
             return cm
                  .Elements(XmlNs.XFHIR + "targetUri")
                  .Concat(cm
@@ -224,7 +227,7 @@ namespace Hl7.Fhir.Specification.Source
 
             public string Canonical { get; set; }
 
-            public string ValueSetSystem { get; set; }
+            public string CodeSystemValueSet { get; set; }
 
             public string[] UniqueIds { get; set; }
 

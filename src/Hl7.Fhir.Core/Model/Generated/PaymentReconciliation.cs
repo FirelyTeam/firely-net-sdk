@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.ResourceReference _Response;
             
             /// <summary>
-            /// Submitter
+            /// Organization which submitted the claim
             /// </summary>
             [FhirElement("submitter", Order=70)]
             [CLSCompliant(false)]
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.ResourceReference _Submitter;
             
             /// <summary>
-            /// Payee
+            /// Organization which is receiving the payment
             /// </summary>
             [FhirElement("payee", Order=80)]
             [CLSCompliant(false)]
@@ -167,7 +167,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Detail amount
+            /// Amount being paid
             /// </summary>
             [FhirElement("amount", Order=100)]
             [DataMember]
@@ -281,7 +281,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _Type;
             
             /// <summary>
-            /// Notes text
+            /// Comment on the processing
             /// </summary>
             [FhirElement("text", Order=50)]
             [DataMember]
@@ -294,7 +294,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _TextElement;
             
             /// <summary>
-            /// Notes text
+            /// Comment on the processing
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -570,7 +570,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _RequestOrganization;
         
         /// <summary>
-        /// Details
+        /// List of settlements
         /// </summary>
         [FhirElement("detail", Order=190)]
         [Cardinality(Min=0,Max=-1)]
@@ -610,18 +610,18 @@ namespace Hl7.Fhir.Model
         private Money _Total;
         
         /// <summary>
-        /// Note text
+        /// Processing comments
         /// </summary>
-        [FhirElement("note", Order=220)]
+        [FhirElement("processNote", Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.PaymentReconciliation.NotesComponent> Note
+        public List<Hl7.Fhir.Model.PaymentReconciliation.NotesComponent> ProcessNote
         {
-            get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.PaymentReconciliation.NotesComponent>(); return _Note; }
-            set { _Note = value; OnPropertyChanged("Note"); }
+            get { if(_ProcessNote==null) _ProcessNote = new List<Hl7.Fhir.Model.PaymentReconciliation.NotesComponent>(); return _ProcessNote; }
+            set { _ProcessNote = value; OnPropertyChanged("ProcessNote"); }
         }
         
-        private List<Hl7.Fhir.Model.PaymentReconciliation.NotesComponent> _Note;
+        private List<Hl7.Fhir.Model.PaymentReconciliation.NotesComponent> _ProcessNote;
         
 
         public override void AddDefaultConstraints()
@@ -650,7 +650,7 @@ namespace Hl7.Fhir.Model
                 if(Detail != null) dest.Detail = new List<Hl7.Fhir.Model.PaymentReconciliation.DetailsComponent>(Detail.DeepCopy());
                 if(Form != null) dest.Form = (Hl7.Fhir.Model.CodeableConcept)Form.DeepCopy();
                 if(Total != null) dest.Total = (Money)Total.DeepCopy();
-                if(Note != null) dest.Note = new List<Hl7.Fhir.Model.PaymentReconciliation.NotesComponent>(Note.DeepCopy());
+                if(ProcessNote != null) dest.ProcessNote = new List<Hl7.Fhir.Model.PaymentReconciliation.NotesComponent>(ProcessNote.DeepCopy());
                 return dest;
             }
             else
@@ -681,7 +681,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Detail, otherT.Detail)) return false;
             if( !DeepComparable.Matches(Form, otherT.Form)) return false;
             if( !DeepComparable.Matches(Total, otherT.Total)) return false;
-            if( !DeepComparable.Matches(Note, otherT.Note)) return false;
+            if( !DeepComparable.Matches(ProcessNote, otherT.ProcessNote)) return false;
             
             return true;
         }
@@ -705,7 +705,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Detail, otherT.Detail)) return false;
             if( !DeepComparable.IsExactly(Form, otherT.Form)) return false;
             if( !DeepComparable.IsExactly(Total, otherT.Total)) return false;
-            if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
+            if( !DeepComparable.IsExactly(ProcessNote, otherT.ProcessNote)) return false;
             
             return true;
         }
@@ -729,7 +729,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Detail) { if (elem != null) yield return elem; }
 				if (Form != null) yield return Form;
 				if (Total != null) yield return Total;
-				foreach (var elem in Note) { if (elem != null) yield return elem; }
+				foreach (var elem in ProcessNote) { if (elem != null) yield return elem; }
             }
         }
     }

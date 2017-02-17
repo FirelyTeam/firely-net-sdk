@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,93 +53,120 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "ActivityDefinition"; } }
         
-        /// <summary>
-        /// High-level categorization of the type of activity in a protocol.
-        /// (url: http://hl7.org/fhir/ValueSet/activity-definition-category)
-        /// </summary>
-        [FhirEnumeration("ActivityDefinitionCategory")]
-        public enum ActivityDefinitionCategory
+        [FhirType("ParticipantComponent")]
+        [DataContract]
+        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
+            [NotMapped]
+            public override string TypeName { get { return "ParticipantComponent"; } }
+            
             /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/activity-definition-category)
+            /// patient | practitioner | related-person
             /// </summary>
-            [EnumLiteral("communication"), Description("Communication")]
-            Communication,
+            [FhirElement("type", Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.ActionParticipantType> TypeElement
+            {
+                get { return _TypeElement; }
+                set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
+            }
+            
+            private Code<Hl7.Fhir.Model.ActionParticipantType> _TypeElement;
+            
             /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/activity-definition-category)
+            /// patient | practitioner | related-person
             /// </summary>
-            [EnumLiteral("device"), Description("Device")]
-            Device,
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.ActionParticipantType? Type
+            {
+                get { return TypeElement != null ? TypeElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        TypeElement = null; 
+                    else
+                        TypeElement = new Code<Hl7.Fhir.Model.ActionParticipantType>(value);
+                    OnPropertyChanged("Type");
+                }
+            }
+            
             /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/activity-definition-category)
+            /// E.g. Nurse, Surgeon, Parent, etc
             /// </summary>
-            [EnumLiteral("diagnostic"), Description("Diagnostic")]
-            Diagnostic,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/activity-definition-category)
-            /// </summary>
-            [EnumLiteral("diet"), Description("Diet")]
-            Diet,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/activity-definition-category)
-            /// </summary>
-            [EnumLiteral("drug"), Description("Drug")]
-            Drug,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/activity-definition-category)
-            /// </summary>
-            [EnumLiteral("encounter"), Description("Encounter")]
-            Encounter,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/activity-definition-category)
-            /// </summary>
-            [EnumLiteral("immunization"), Description("Immunization")]
-            Immunization,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/activity-definition-category)
-            /// </summary>
-            [EnumLiteral("observation"), Description("Observation")]
-            Observation,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/activity-definition-category)
-            /// </summary>
-            [EnumLiteral("procedure"), Description("Procedure")]
-            Procedure,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/activity-definition-category)
-            /// </summary>
-            [EnumLiteral("referral"), Description("Referral")]
-            Referral,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/activity-definition-category)
-            /// </summary>
-            [EnumLiteral("supply"), Description("Supply")]
-            Supply,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/activity-definition-category)
-            /// </summary>
-            [EnumLiteral("vision"), Description("Vision")]
-            Vision,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/activity-definition-category)
-            /// </summary>
-            [EnumLiteral("other"), Description("Other")]
-            Other,
-        }
+            [FhirElement("role", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Role
+            {
+                get { return _Role; }
+                set { _Role = value; OnPropertyChanged("Role"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Role;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ParticipantComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.ActionParticipantType>)TypeElement.DeepCopy();
+                    if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ParticipantComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ParticipantComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
+                if( !DeepComparable.Matches(Role, otherT.Role)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ParticipantComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
+                if( !DeepComparable.IsExactly(Role, otherT.Role)) return false;
+                
+                return true;
+            }
 
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ParticipantComponent elements
+                    if (TypeElement != null) yield return TypeElement;
+                    if (Role != null) yield return Role;
+                }
+            }
+            
+        }
+        
+        
         [FhirType("DynamicValueComponent")]
         [DataContract]
         public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -747,7 +774,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
         
         /// <summary>
-        /// Descriptional topics for the asset
+        /// E.g. Education, Treatment, Assessment, etc
         /// </summary>
         [FhirElement("topic", Order=250)]
         [Cardinality(Min=0,Max=-1)]
@@ -864,34 +891,34 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Library;
         
         /// <summary>
-        /// communication | device | diagnostic | diet | drug | encounter | immunization | observation | procedure | referral | supply | vision | other
+        /// Kind of resource
         /// </summary>
-        [FhirElement("category", Order=320)]
+        [FhirElement("kind", Order=320)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.ActivityDefinition.ActivityDefinitionCategory> CategoryElement
+        public Code<Hl7.Fhir.Model.ResourceType> KindElement
         {
-            get { return _CategoryElement; }
-            set { _CategoryElement = value; OnPropertyChanged("CategoryElement"); }
+            get { return _KindElement; }
+            set { _KindElement = value; OnPropertyChanged("KindElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.ActivityDefinition.ActivityDefinitionCategory> _CategoryElement;
+        private Code<Hl7.Fhir.Model.ResourceType> _KindElement;
         
         /// <summary>
-        /// communication | device | diagnostic | diet | drug | encounter | immunization | observation | procedure | referral | supply | vision | other
+        /// Kind of resource
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.ActivityDefinition.ActivityDefinitionCategory? Category
+        public Hl7.Fhir.Model.ResourceType? Kind
         {
-            get { return CategoryElement != null ? CategoryElement.Value : null; }
+            get { return KindElement != null ? KindElement.Value : null; }
             set
             {
                 if (!value.HasValue)
-                  CategoryElement = null; 
+                  KindElement = null; 
                 else
-                  CategoryElement = new Code<Hl7.Fhir.Model.ActivityDefinition.ActivityDefinitionCategory>(value);
-                OnPropertyChanged("Category");
+                  KindElement = new Code<Hl7.Fhir.Model.ResourceType>(value);
+                OnPropertyChanged("Kind");
             }
         }
         
@@ -939,37 +966,18 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Location;
         
         /// <summary>
-        /// patient | practitioner | related-person
+        /// Who should participate in the action
         /// </summary>
-        [FhirElement("participantType", Order=360)]
+        [FhirElement("participant", Order=360)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Code<Hl7.Fhir.Model.PlanActionParticipantType>> ParticipantTypeElement
+        public List<Hl7.Fhir.Model.ActivityDefinition.ParticipantComponent> Participant
         {
-            get { if(_ParticipantTypeElement==null) _ParticipantTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.PlanActionParticipantType>>(); return _ParticipantTypeElement; }
-            set { _ParticipantTypeElement = value; OnPropertyChanged("ParticipantTypeElement"); }
+            get { if(_Participant==null) _Participant = new List<Hl7.Fhir.Model.ActivityDefinition.ParticipantComponent>(); return _Participant; }
+            set { _Participant = value; OnPropertyChanged("Participant"); }
         }
         
-        private List<Code<Hl7.Fhir.Model.PlanActionParticipantType>> _ParticipantTypeElement;
-        
-        /// <summary>
-        /// patient | practitioner | related-person
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public IEnumerable<Hl7.Fhir.Model.PlanActionParticipantType?> ParticipantType
-        {
-            get { return ParticipantTypeElement != null ? ParticipantTypeElement.Select(elem => elem.Value) : null; }
-            set
-            {
-                if (value == null)
-                  ParticipantTypeElement = null; 
-                else
-                  ParticipantTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.PlanActionParticipantType>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.PlanActionParticipantType>(elem)));
-                OnPropertyChanged("ParticipantType");
-            }
-        }
+        private List<Hl7.Fhir.Model.ActivityDefinition.ParticipantComponent> _Participant;
         
         /// <summary>
         /// What's administered/supplied
@@ -1002,16 +1010,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Detailed dosage instructions
         /// </summary>
-        [FhirElement("dosageInstruction", Order=390)]
+        [FhirElement("dosage", Order=390)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<DosageInstruction> DosageInstruction
+        public List<Dosage> Dosage
         {
-            get { if(_DosageInstruction==null) _DosageInstruction = new List<DosageInstruction>(); return _DosageInstruction; }
-            set { _DosageInstruction = value; OnPropertyChanged("DosageInstruction"); }
+            get { if(_Dosage==null) _Dosage = new List<Dosage>(); return _Dosage; }
+            set { _Dosage = value; OnPropertyChanged("Dosage"); }
         }
         
-        private List<DosageInstruction> _DosageInstruction;
+        private List<Dosage> _Dosage;
         
         /// <summary>
         /// What part of body to perform on
@@ -1093,14 +1101,14 @@ namespace Hl7.Fhir.Model
                 if(Copyright != null) dest.Copyright = (Hl7.Fhir.Model.Markdown)Copyright.DeepCopy();
                 if(RelatedArtifact != null) dest.RelatedArtifact = new List<RelatedArtifact>(RelatedArtifact.DeepCopy());
                 if(Library != null) dest.Library = new List<Hl7.Fhir.Model.ResourceReference>(Library.DeepCopy());
-                if(CategoryElement != null) dest.CategoryElement = (Code<Hl7.Fhir.Model.ActivityDefinition.ActivityDefinitionCategory>)CategoryElement.DeepCopy();
+                if(KindElement != null) dest.KindElement = (Code<Hl7.Fhir.Model.ResourceType>)KindElement.DeepCopy();
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Element)Timing.DeepCopy();
                 if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
-                if(ParticipantTypeElement != null) dest.ParticipantTypeElement = new List<Code<Hl7.Fhir.Model.PlanActionParticipantType>>(ParticipantTypeElement.DeepCopy());
+                if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.ActivityDefinition.ParticipantComponent>(Participant.DeepCopy());
                 if(Product != null) dest.Product = (Hl7.Fhir.Model.Element)Product.DeepCopy();
                 if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
-                if(DosageInstruction != null) dest.DosageInstruction = new List<DosageInstruction>(DosageInstruction.DeepCopy());
+                if(Dosage != null) dest.Dosage = new List<Dosage>(Dosage.DeepCopy());
                 if(BodySite != null) dest.BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(BodySite.DeepCopy());
                 if(Transform != null) dest.Transform = (Hl7.Fhir.Model.ResourceReference)Transform.DeepCopy();
                 if(DynamicValue != null) dest.DynamicValue = new List<Hl7.Fhir.Model.ActivityDefinition.DynamicValueComponent>(DynamicValue.DeepCopy());
@@ -1144,14 +1152,14 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Copyright, otherT.Copyright)) return false;
             if( !DeepComparable.Matches(RelatedArtifact, otherT.RelatedArtifact)) return false;
             if( !DeepComparable.Matches(Library, otherT.Library)) return false;
-            if( !DeepComparable.Matches(CategoryElement, otherT.CategoryElement)) return false;
+            if( !DeepComparable.Matches(KindElement, otherT.KindElement)) return false;
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             if( !DeepComparable.Matches(Timing, otherT.Timing)) return false;
             if( !DeepComparable.Matches(Location, otherT.Location)) return false;
-            if( !DeepComparable.Matches(ParticipantTypeElement, otherT.ParticipantTypeElement)) return false;
+            if( !DeepComparable.Matches(Participant, otherT.Participant)) return false;
             if( !DeepComparable.Matches(Product, otherT.Product)) return false;
             if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
-            if( !DeepComparable.Matches(DosageInstruction, otherT.DosageInstruction)) return false;
+            if( !DeepComparable.Matches(Dosage, otherT.Dosage)) return false;
             if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
             if( !DeepComparable.Matches(Transform, otherT.Transform)) return false;
             if( !DeepComparable.Matches(DynamicValue, otherT.DynamicValue)) return false;
@@ -1188,14 +1196,14 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Copyright, otherT.Copyright)) return false;
             if( !DeepComparable.IsExactly(RelatedArtifact, otherT.RelatedArtifact)) return false;
             if( !DeepComparable.IsExactly(Library, otherT.Library)) return false;
-            if( !DeepComparable.IsExactly(CategoryElement, otherT.CategoryElement)) return false;
+            if( !DeepComparable.IsExactly(KindElement, otherT.KindElement)) return false;
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             if( !DeepComparable.IsExactly(Timing, otherT.Timing)) return false;
             if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
-            if( !DeepComparable.IsExactly(ParticipantTypeElement, otherT.ParticipantTypeElement)) return false;
+            if( !DeepComparable.IsExactly(Participant, otherT.Participant)) return false;
             if( !DeepComparable.IsExactly(Product, otherT.Product)) return false;
             if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
-            if( !DeepComparable.IsExactly(DosageInstruction, otherT.DosageInstruction)) return false;
+            if( !DeepComparable.IsExactly(Dosage, otherT.Dosage)) return false;
             if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
             if( !DeepComparable.IsExactly(Transform, otherT.Transform)) return false;
             if( !DeepComparable.IsExactly(DynamicValue, otherT.DynamicValue)) return false;
@@ -1232,14 +1240,14 @@ namespace Hl7.Fhir.Model
 				if (Copyright != null) yield return Copyright;
 				foreach (var elem in RelatedArtifact) { if (elem != null) yield return elem; }
 				foreach (var elem in Library) { if (elem != null) yield return elem; }
-				if (CategoryElement != null) yield return CategoryElement;
+				if (KindElement != null) yield return KindElement;
 				if (Code != null) yield return Code;
 				if (Timing != null) yield return Timing;
 				if (Location != null) yield return Location;
-				foreach (var elem in ParticipantTypeElement) { if (elem != null) yield return elem; }
+				foreach (var elem in Participant) { if (elem != null) yield return elem; }
 				if (Product != null) yield return Product;
 				if (Quantity != null) yield return Quantity;
-				foreach (var elem in DosageInstruction) { if (elem != null) yield return elem; }
+				foreach (var elem in Dosage) { if (elem != null) yield return elem; }
 				foreach (var elem in BodySite) { if (elem != null) yield return elem; }
 				if (Transform != null) yield return Transform;
 				foreach (var elem in DynamicValue) { if (elem != null) yield return elem; }

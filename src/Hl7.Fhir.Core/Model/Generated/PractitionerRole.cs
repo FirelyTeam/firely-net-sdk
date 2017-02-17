@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -419,9 +419,22 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// The period during which the practitioner is authorized to perform in these role(s)
+        /// </summary>
+        [FhirElement("period", InSummary=true, Order=110)]
+        [DataMember]
+        public Hl7.Fhir.Model.Period Period
+        {
+            get { return _Period; }
+            set { _Period = value; OnPropertyChanged("Period"); }
+        }
+        
+        private Hl7.Fhir.Model.Period _Period;
+        
+        /// <summary>
         /// Practitioner that is able to provide the defined services for the organation
         /// </summary>
-        [FhirElement("practitioner", InSummary=true, Order=110)]
+        [FhirElement("practitioner", InSummary=true, Order=120)]
         [CLSCompliant(false)]
 		[References("Practitioner")]
         [DataMember]
@@ -436,7 +449,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Organization where the roles are available
         /// </summary>
-        [FhirElement("organization", InSummary=true, Order=120)]
+        [FhirElement("organization", InSummary=true, Order=130)]
         [CLSCompliant(false)]
 		[References("Organization")]
         [DataMember]
@@ -451,7 +464,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Roles which this practitioner may perform
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=130)]
+        [FhirElement("code", InSummary=true, Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Code
@@ -465,7 +478,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Specific specialty of the practitioner
         /// </summary>
-        [FhirElement("specialty", InSummary=true, Order=140)]
+        [FhirElement("specialty", InSummary=true, Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Specialty
@@ -479,7 +492,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The location(s) at which this practitioner provides care
         /// </summary>
-        [FhirElement("location", InSummary=true, Order=150)]
+        [FhirElement("location", InSummary=true, Order=160)]
         [CLSCompliant(false)]
 		[References("Location")]
         [Cardinality(Min=0,Max=-1)]
@@ -495,7 +508,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The list of healthcare services that this worker provides for this role's Organization/Location(s)
         /// </summary>
-        [FhirElement("healthcareService", Order=160)]
+        [FhirElement("healthcareService", Order=170)]
         [CLSCompliant(false)]
 		[References("HealthcareService")]
         [Cardinality(Min=0,Max=-1)]
@@ -511,7 +524,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contact details that are specific to the role/location/service
         /// </summary>
-        [FhirElement("telecom", InSummary=true, Order=170)]
+        [FhirElement("telecom", InSummary=true, Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ContactPoint> Telecom
@@ -521,19 +534,6 @@ namespace Hl7.Fhir.Model
         }
         
         private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
-        
-        /// <summary>
-        /// The period during which the practitioner is authorized to perform in these role(s)
-        /// </summary>
-        [FhirElement("period", InSummary=true, Order=180)]
-        [DataMember]
-        public Hl7.Fhir.Model.Period Period
-        {
-            get { return _Period; }
-            set { _Period = value; OnPropertyChanged("Period"); }
-        }
-        
-        private Hl7.Fhir.Model.Period _Period;
         
         /// <summary>
         /// Times the Service Site is available
@@ -627,6 +627,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
+                if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(Practitioner != null) dest.Practitioner = (Hl7.Fhir.Model.ResourceReference)Practitioner.DeepCopy();
                 if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
                 if(Code != null) dest.Code = new List<Hl7.Fhir.Model.CodeableConcept>(Code.DeepCopy());
@@ -634,7 +635,6 @@ namespace Hl7.Fhir.Model
                 if(Location != null) dest.Location = new List<Hl7.Fhir.Model.ResourceReference>(Location.DeepCopy());
                 if(HealthcareService != null) dest.HealthcareService = new List<Hl7.Fhir.Model.ResourceReference>(HealthcareService.DeepCopy());
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
-                if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(AvailableTime != null) dest.AvailableTime = new List<Hl7.Fhir.Model.PractitionerRole.AvailableTimeComponent>(AvailableTime.DeepCopy());
                 if(NotAvailable != null) dest.NotAvailable = new List<Hl7.Fhir.Model.PractitionerRole.NotAvailableComponent>(NotAvailable.DeepCopy());
                 if(AvailabilityExceptionsElement != null) dest.AvailabilityExceptionsElement = (Hl7.Fhir.Model.FhirString)AvailabilityExceptionsElement.DeepCopy();
@@ -658,6 +658,7 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(ActiveElement, otherT.ActiveElement)) return false;
+            if( !DeepComparable.Matches(Period, otherT.Period)) return false;
             if( !DeepComparable.Matches(Practitioner, otherT.Practitioner)) return false;
             if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
@@ -665,7 +666,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Location, otherT.Location)) return false;
             if( !DeepComparable.Matches(HealthcareService, otherT.HealthcareService)) return false;
             if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
-            if( !DeepComparable.Matches(Period, otherT.Period)) return false;
             if( !DeepComparable.Matches(AvailableTime, otherT.AvailableTime)) return false;
             if( !DeepComparable.Matches(NotAvailable, otherT.NotAvailable)) return false;
             if( !DeepComparable.Matches(AvailabilityExceptionsElement, otherT.AvailabilityExceptionsElement)) return false;
@@ -682,6 +682,7 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(ActiveElement, otherT.ActiveElement)) return false;
+            if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
             if( !DeepComparable.IsExactly(Practitioner, otherT.Practitioner)) return false;
             if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
@@ -689,7 +690,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
             if( !DeepComparable.IsExactly(HealthcareService, otherT.HealthcareService)) return false;
             if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
-            if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
             if( !DeepComparable.IsExactly(AvailableTime, otherT.AvailableTime)) return false;
             if( !DeepComparable.IsExactly(NotAvailable, otherT.NotAvailable)) return false;
             if( !DeepComparable.IsExactly(AvailabilityExceptionsElement, otherT.AvailabilityExceptionsElement)) return false;
@@ -706,6 +706,7 @@ namespace Hl7.Fhir.Model
 				// PractitionerRole elements
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (ActiveElement != null) yield return ActiveElement;
+				if (Period != null) yield return Period;
 				if (Practitioner != null) yield return Practitioner;
 				if (Organization != null) yield return Organization;
 				foreach (var elem in Code) { if (elem != null) yield return elem; }
@@ -713,7 +714,6 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Location) { if (elem != null) yield return elem; }
 				foreach (var elem in HealthcareService) { if (elem != null) yield return elem; }
 				foreach (var elem in Telecom) { if (elem != null) yield return elem; }
-				if (Period != null) yield return Period;
 				foreach (var elem in AvailableTime) { if (elem != null) yield return elem; }
 				foreach (var elem in NotAvailable) { if (elem != null) yield return elem; }
 				if (AvailabilityExceptionsElement != null) yield return AvailabilityExceptionsElement;

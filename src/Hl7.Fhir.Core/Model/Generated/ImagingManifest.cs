@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -111,16 +111,18 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Study access service endpoint
             /// </summary>
-            [FhirElement("baseLocation", Order=60)]
+            [FhirElement("endpoint", InSummary=true, Order=60)]
+            [CLSCompliant(false)]
+			[References("Endpoint")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ImagingManifest.StudyBaseLocationComponent> BaseLocation
+            public List<Hl7.Fhir.Model.ResourceReference> Endpoint
             {
-                get { if(_BaseLocation==null) _BaseLocation = new List<Hl7.Fhir.Model.ImagingManifest.StudyBaseLocationComponent>(); return _BaseLocation; }
-                set { _BaseLocation = value; OnPropertyChanged("BaseLocation"); }
+                get { if(_Endpoint==null) _Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(); return _Endpoint; }
+                set { _Endpoint = value; OnPropertyChanged("Endpoint"); }
             }
             
-            private List<Hl7.Fhir.Model.ImagingManifest.StudyBaseLocationComponent> _BaseLocation;
+            private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
             
             /// <summary>
             /// Series identity of the selected instances
@@ -145,7 +147,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(UidElement != null) dest.UidElement = (Hl7.Fhir.Model.Oid)UidElement.DeepCopy();
                     if(ImagingStudy != null) dest.ImagingStudy = (Hl7.Fhir.Model.ResourceReference)ImagingStudy.DeepCopy();
-                    if(BaseLocation != null) dest.BaseLocation = new List<Hl7.Fhir.Model.ImagingManifest.StudyBaseLocationComponent>(BaseLocation.DeepCopy());
+                    if(Endpoint != null) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopy());
                     if(Series != null) dest.Series = new List<Hl7.Fhir.Model.ImagingManifest.SeriesComponent>(Series.DeepCopy());
                     return dest;
                 }
@@ -166,7 +168,7 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(UidElement, otherT.UidElement)) return false;
                 if( !DeepComparable.Matches(ImagingStudy, otherT.ImagingStudy)) return false;
-                if( !DeepComparable.Matches(BaseLocation, otherT.BaseLocation)) return false;
+                if( !DeepComparable.Matches(Endpoint, otherT.Endpoint)) return false;
                 if( !DeepComparable.Matches(Series, otherT.Series)) return false;
                 
                 return true;
@@ -180,7 +182,7 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(UidElement, otherT.UidElement)) return false;
                 if( !DeepComparable.IsExactly(ImagingStudy, otherT.ImagingStudy)) return false;
-                if( !DeepComparable.IsExactly(BaseLocation, otherT.BaseLocation)) return false;
+                if( !DeepComparable.IsExactly(Endpoint, otherT.Endpoint)) return false;
                 if( !DeepComparable.IsExactly(Series, otherT.Series)) return false;
                 
                 return true;
@@ -197,123 +199,8 @@ namespace Hl7.Fhir.Model
                     // StudyComponent elements
                     if (UidElement != null) yield return UidElement;
                     if (ImagingStudy != null) yield return ImagingStudy;
-                    foreach (var elem in BaseLocation) { if (elem != null) yield return elem; }
+                    foreach (var elem in Endpoint) { if (elem != null) yield return elem; }
                     foreach (var elem in Series) { if (elem != null) yield return elem; }
-                }
-            }
-            
-        }
-        
-        
-        [FhirType("StudyBaseLocationComponent")]
-        [DataContract]
-        public partial class StudyBaseLocationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "StudyBaseLocationComponent"; } }
-            
-            /// <summary>
-            /// WADO-RS | WADO-URI | IID
-            /// </summary>
-            [FhirElement("type", Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.Coding Type
-            {
-                get { return _Type; }
-                set { _Type = value; OnPropertyChanged("Type"); }
-            }
-            
-            private Hl7.Fhir.Model.Coding _Type;
-            
-            /// <summary>
-            /// Study access URL
-            /// </summary>
-            [FhirElement("url", Order=50)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirUri UrlElement
-            {
-                get { return _UrlElement; }
-                set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirUri _UrlElement;
-            
-            /// <summary>
-            /// Study access URL
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Url
-            {
-                get { return UrlElement != null ? UrlElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        UrlElement = null; 
-                    else
-                        UrlElement = new Hl7.Fhir.Model.FhirUri(value);
-                    OnPropertyChanged("Url");
-                }
-            }
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as StudyBaseLocationComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Type != null) dest.Type = (Hl7.Fhir.Model.Coding)Type.DeepCopy();
-                    if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new StudyBaseLocationComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as StudyBaseLocationComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-                if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as StudyBaseLocationComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-                if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // StudyBaseLocationComponent elements
-                    if (Type != null) yield return Type;
-                    if (UrlElement != null) yield return UrlElement;
                 }
             }
             
@@ -363,16 +250,18 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Series access endpoint
             /// </summary>
-            [FhirElement("baseLocation", Order=50)]
+            [FhirElement("endpoint", InSummary=true, Order=50)]
+            [CLSCompliant(false)]
+			[References("Endpoint")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ImagingManifest.SeriesBaseLocationComponent> BaseLocation
+            public List<Hl7.Fhir.Model.ResourceReference> Endpoint
             {
-                get { if(_BaseLocation==null) _BaseLocation = new List<Hl7.Fhir.Model.ImagingManifest.SeriesBaseLocationComponent>(); return _BaseLocation; }
-                set { _BaseLocation = value; OnPropertyChanged("BaseLocation"); }
+                get { if(_Endpoint==null) _Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(); return _Endpoint; }
+                set { _Endpoint = value; OnPropertyChanged("Endpoint"); }
             }
             
-            private List<Hl7.Fhir.Model.ImagingManifest.SeriesBaseLocationComponent> _BaseLocation;
+            private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
             
             /// <summary>
             /// The selected instance
@@ -396,7 +285,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(UidElement != null) dest.UidElement = (Hl7.Fhir.Model.Oid)UidElement.DeepCopy();
-                    if(BaseLocation != null) dest.BaseLocation = new List<Hl7.Fhir.Model.ImagingManifest.SeriesBaseLocationComponent>(BaseLocation.DeepCopy());
+                    if(Endpoint != null) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopy());
                     if(Instance != null) dest.Instance = new List<Hl7.Fhir.Model.ImagingManifest.InstanceComponent>(Instance.DeepCopy());
                     return dest;
                 }
@@ -416,7 +305,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(UidElement, otherT.UidElement)) return false;
-                if( !DeepComparable.Matches(BaseLocation, otherT.BaseLocation)) return false;
+                if( !DeepComparable.Matches(Endpoint, otherT.Endpoint)) return false;
                 if( !DeepComparable.Matches(Instance, otherT.Instance)) return false;
                 
                 return true;
@@ -429,7 +318,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(UidElement, otherT.UidElement)) return false;
-                if( !DeepComparable.IsExactly(BaseLocation, otherT.BaseLocation)) return false;
+                if( !DeepComparable.IsExactly(Endpoint, otherT.Endpoint)) return false;
                 if( !DeepComparable.IsExactly(Instance, otherT.Instance)) return false;
                 
                 return true;
@@ -445,123 +334,8 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // SeriesComponent elements
                     if (UidElement != null) yield return UidElement;
-                    foreach (var elem in BaseLocation) { if (elem != null) yield return elem; }
+                    foreach (var elem in Endpoint) { if (elem != null) yield return elem; }
                     foreach (var elem in Instance) { if (elem != null) yield return elem; }
-                }
-            }
-            
-        }
-        
-        
-        [FhirType("SeriesBaseLocationComponent")]
-        [DataContract]
-        public partial class SeriesBaseLocationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "SeriesBaseLocationComponent"; } }
-            
-            /// <summary>
-            /// WADO-RS | WADO-URI | IID
-            /// </summary>
-            [FhirElement("type", Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.Coding Type
-            {
-                get { return _Type; }
-                set { _Type = value; OnPropertyChanged("Type"); }
-            }
-            
-            private Hl7.Fhir.Model.Coding _Type;
-            
-            /// <summary>
-            /// Series access URL
-            /// </summary>
-            [FhirElement("url", Order=50)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirUri UrlElement
-            {
-                get { return _UrlElement; }
-                set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirUri _UrlElement;
-            
-            /// <summary>
-            /// Series access URL
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Url
-            {
-                get { return UrlElement != null ? UrlElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        UrlElement = null; 
-                    else
-                        UrlElement = new Hl7.Fhir.Model.FhirUri(value);
-                    OnPropertyChanged("Url");
-                }
-            }
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as SeriesBaseLocationComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Type != null) dest.Type = (Hl7.Fhir.Model.Coding)Type.DeepCopy();
-                    if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new SeriesBaseLocationComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as SeriesBaseLocationComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-                if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as SeriesBaseLocationComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-                if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // SeriesBaseLocationComponent elements
-                    if (Type != null) yield return Type;
-                    if (UrlElement != null) yield return UrlElement;
                 }
             }
             
@@ -798,23 +572,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Author;
         
         /// <summary>
-        /// Reason for selection
-        /// </summary>
-        [FhirElement("title", InSummary=true, Order=130)]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Title
-        {
-            get { return _Title; }
-            set { _Title = value; OnPropertyChanged("Title"); }
-        }
-        
-        private Hl7.Fhir.Model.CodeableConcept _Title;
-        
-        /// <summary>
         /// Description text
         /// </summary>
-        [FhirElement("description", InSummary=true, Order=140)]
+        [FhirElement("description", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -846,7 +606,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Study identity of the selected instances
         /// </summary>
-        [FhirElement("study", InSummary=true, Order=150)]
+        [FhirElement("study", InSummary=true, Order=140)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ImagingManifest.StudyComponent> Study
@@ -875,7 +635,6 @@ namespace Hl7.Fhir.Model
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(AuthoringTimeElement != null) dest.AuthoringTimeElement = (Hl7.Fhir.Model.FhirDateTime)AuthoringTimeElement.DeepCopy();
                 if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
-                if(Title != null) dest.Title = (Hl7.Fhir.Model.CodeableConcept)Title.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(Study != null) dest.Study = new List<Hl7.Fhir.Model.ImagingManifest.StudyComponent>(Study.DeepCopy());
                 return dest;
@@ -899,7 +658,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
             if( !DeepComparable.Matches(AuthoringTimeElement, otherT.AuthoringTimeElement)) return false;
             if( !DeepComparable.Matches(Author, otherT.Author)) return false;
-            if( !DeepComparable.Matches(Title, otherT.Title)) return false;
             if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.Matches(Study, otherT.Study)) return false;
             
@@ -916,7 +674,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
             if( !DeepComparable.IsExactly(AuthoringTimeElement, otherT.AuthoringTimeElement)) return false;
             if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
-            if( !DeepComparable.IsExactly(Title, otherT.Title)) return false;
             if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.IsExactly(Study, otherT.Study)) return false;
             
@@ -933,7 +690,6 @@ namespace Hl7.Fhir.Model
 				if (Patient != null) yield return Patient;
 				if (AuthoringTimeElement != null) yield return AuthoringTimeElement;
 				if (Author != null) yield return Author;
-				if (Title != null) yield return Title;
 				if (DescriptionElement != null) yield return DescriptionElement;
 				foreach (var elem in Study) { if (elem != null) yield return elem; }
             }

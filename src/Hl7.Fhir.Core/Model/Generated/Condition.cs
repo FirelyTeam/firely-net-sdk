@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -244,20 +244,21 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Manifestation/symptom
             /// </summary>
-            [FhirElement("code", Order=40)]
+            [FhirElement("code", InSummary=true, Order=40)]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Code
+            public List<Hl7.Fhir.Model.CodeableConcept> Code
             {
-                get { return _Code; }
+                get { if(_Code==null) _Code = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Code; }
                 set { _Code = value; OnPropertyChanged("Code"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _Code;
+            private List<Hl7.Fhir.Model.CodeableConcept> _Code;
             
             /// <summary>
             /// Supporting information found elsewhere
             /// </summary>
-            [FhirElement("detail", Order=50)]
+            [FhirElement("detail", InSummary=true, Order=50)]
             [CLSCompliant(false)]
 			[References()]
             [Cardinality(Min=0,Max=-1)]
@@ -277,7 +278,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                    if(Code != null) dest.Code = new List<Hl7.Fhir.Model.CodeableConcept>(Code.DeepCopy());
                     if(Detail != null) dest.Detail = new List<Hl7.Fhir.Model.ResourceReference>(Detail.DeepCopy());
                     return dest;
                 }
@@ -323,7 +324,7 @@ namespace Hl7.Fhir.Model
                     // BackboneElement elements
                     foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // EvidenceComponent elements
-                    if (Code != null) yield return Code;
+                    foreach (var elem in Code) { if (elem != null) yield return elem; }
                     foreach (var elem in Detail) { if (elem != null) yield return elem; }
                 }
             }
@@ -440,7 +441,6 @@ namespace Hl7.Fhir.Model
         /// Identification of the condition, problem or diagnosis
         /// </summary>
         [FhirElement("code", InSummary=true, Order=140)]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
         {
@@ -483,7 +483,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Encounter when condition first asserted
         /// </summary>
-        [FhirElement("context", Order=170)]
+        [FhirElement("context", InSummary=true, Order=170)]
         [CLSCompliant(false)]
 		[References("Encounter","EpisodeOfCare")]
         [DataMember]
@@ -528,15 +528,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date record was believed accurate
         /// </summary>
-        [FhirElement("assertedDate", Order=200)]
+        [FhirElement("assertedDate", InSummary=true, Order=200)]
         [DataMember]
-        public Hl7.Fhir.Model.Date AssertedDateElement
+        public Hl7.Fhir.Model.FhirDateTime AssertedDateElement
         {
             get { return _AssertedDateElement; }
             set { _AssertedDateElement = value; OnPropertyChanged("AssertedDateElement"); }
         }
         
-        private Hl7.Fhir.Model.Date _AssertedDateElement;
+        private Hl7.Fhir.Model.FhirDateTime _AssertedDateElement;
         
         /// <summary>
         /// Date record was believed accurate
@@ -552,7 +552,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                   AssertedDateElement = null; 
                 else
-                  AssertedDateElement = new Hl7.Fhir.Model.Date(value);
+                  AssertedDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
                 OnPropertyChanged("AssertedDate");
             }
         }
@@ -620,7 +620,7 @@ namespace Hl7.Fhir.Model
             Key = "con-4",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "If condition is abated, then clinicalStatus must be either inactive, resolved, or remission",
-            Xpath = "xpath: not(f:abatementBoolean='true' or (not(exists(f:abatementBoolean)) and exists(*[starts-with(local-name(.), 'abatement')])) or f:clinicalStatus/@value=('resolved', 'remission', 'inactive')"
+            Xpath = "xpath: not(f:abatementBoolean='true' or (not(exists(f:abatementBoolean)) and exists(*[starts-with(local-name(.), 'abatement')])) or f:clinicalStatus/@value=('resolved', 'remission', 'inactive'))"
         };
 
         public static ElementDefinition.ConstraintComponent Condition_CON_3 = new ElementDefinition.ConstraintComponent()
@@ -678,7 +678,7 @@ namespace Hl7.Fhir.Model
                 if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
                 if(Onset != null) dest.Onset = (Hl7.Fhir.Model.Element)Onset.DeepCopy();
                 if(Abatement != null) dest.Abatement = (Hl7.Fhir.Model.Element)Abatement.DeepCopy();
-                if(AssertedDateElement != null) dest.AssertedDateElement = (Hl7.Fhir.Model.Date)AssertedDateElement.DeepCopy();
+                if(AssertedDateElement != null) dest.AssertedDateElement = (Hl7.Fhir.Model.FhirDateTime)AssertedDateElement.DeepCopy();
                 if(Asserter != null) dest.Asserter = (Hl7.Fhir.Model.ResourceReference)Asserter.DeepCopy();
                 if(Stage != null) dest.Stage = (Hl7.Fhir.Model.Condition.StageComponent)Stage.DeepCopy();
                 if(Evidence != null) dest.Evidence = new List<Hl7.Fhir.Model.Condition.EvidenceComponent>(Evidence.DeepCopy());

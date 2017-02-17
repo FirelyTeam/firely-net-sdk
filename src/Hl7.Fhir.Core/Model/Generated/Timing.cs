@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -133,6 +133,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("NIGHT"), Description("Night")]
             NIGHT,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/event-timing)
+            /// </summary>
+            [EnumLiteral("PHS"), Description("After Sleep")]
+            PHS,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/TimingEvent)
@@ -631,14 +637,15 @@ namespace Hl7.Fhir.Model
             /// Regular life events the event is tied to
             /// </summary>
             [FhirElement("when", InSummary=true, Order=170)]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.Timing.EventTiming> WhenElement
+            public List<Code<Hl7.Fhir.Model.Timing.EventTiming>> WhenElement
             {
-                get { return _WhenElement; }
+                get { if(_WhenElement==null) _WhenElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Timing.EventTiming>>(); return _WhenElement; }
                 set { _WhenElement = value; OnPropertyChanged("WhenElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.Timing.EventTiming> _WhenElement;
+            private List<Code<Hl7.Fhir.Model.Timing.EventTiming>> _WhenElement;
             
             /// <summary>
             /// Regular life events the event is tied to
@@ -646,15 +653,15 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.Timing.EventTiming? When
+            public IEnumerable<Hl7.Fhir.Model.Timing.EventTiming?> When
             {
-                get { return WhenElement != null ? WhenElement.Value : null; }
+                get { return WhenElement != null ? WhenElement.Select(elem => elem.Value) : null; }
                 set
                 {
-                    if (!value.HasValue)
+                    if (value == null)
                       WhenElement = null; 
                     else
-                      WhenElement = new Code<Hl7.Fhir.Model.Timing.EventTiming>(value);
+                      WhenElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Timing.EventTiming>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Timing.EventTiming>(elem)));
                     OnPropertyChanged("When");
                 }
             }
@@ -711,7 +718,7 @@ namespace Hl7.Fhir.Model
                     if(PeriodUnitElement != null) dest.PeriodUnitElement = (Code<Hl7.Fhir.Model.Timing.UnitsOfTime>)PeriodUnitElement.DeepCopy();
                     if(DayOfWeekElement != null) dest.DayOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(DayOfWeekElement.DeepCopy());
                     if(TimeOfDayElement != null) dest.TimeOfDayElement = new List<Hl7.Fhir.Model.Time>(TimeOfDayElement.DeepCopy());
-                    if(WhenElement != null) dest.WhenElement = (Code<Hl7.Fhir.Model.Timing.EventTiming>)WhenElement.DeepCopy();
+                    if(WhenElement != null) dest.WhenElement = new List<Code<Hl7.Fhir.Model.Timing.EventTiming>>(WhenElement.DeepCopy());
                     if(OffsetElement != null) dest.OffsetElement = (Hl7.Fhir.Model.UnsignedInt)OffsetElement.DeepCopy();
                     return dest;
                 }
@@ -795,7 +802,7 @@ namespace Hl7.Fhir.Model
                     if (PeriodUnitElement != null) yield return PeriodUnitElement;
                     foreach (var elem in DayOfWeekElement) { if (elem != null) yield return elem; }
                     foreach (var elem in TimeOfDayElement) { if (elem != null) yield return elem; }
-                    if (WhenElement != null) yield return WhenElement;
+                    foreach (var elem in WhenElement) { if (elem != null) yield return elem; }
                     if (OffsetElement != null) yield return OffsetElement;
                 }
             }

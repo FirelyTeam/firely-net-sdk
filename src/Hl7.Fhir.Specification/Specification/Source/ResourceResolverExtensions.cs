@@ -55,9 +55,7 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>
-        /// Tries to locate a valueset using a combined algorithm: first, the uri is used to find a valueset by system.
-        /// If that fails, the valueset is searched for by canonical url. Failing that, the function tries to locate the
-        /// valueset by resource url.
+        /// Find a ValueSet by canonical url
         /// </summary>
         /// <param name="source"></param>
         /// <param name="uri"></param>
@@ -65,6 +63,18 @@ namespace Hl7.Fhir.Specification.Source
         public static ValueSet FindValueSet(this IResourceResolver source, string uri)
         {
             return source.ResolveByCanonicalUri(uri) as ValueSet;
+        }
+
+
+        /// <summary>
+        /// Find a CodeSystem by canonical urlTries to locate a codesystem using a combined algorithm: first, the uri is used to find a valueset by system.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="uri"></param>
+        /// <returns></returns>
+        public static CodeSystem FindCodeSystem(this IResourceResolver source, string uri)
+        {
+            return source.ResolveByCanonicalUri(uri) as CodeSystem;
         }
 
 
@@ -76,8 +86,11 @@ namespace Hl7.Fhir.Specification.Source
             {
                 var resourceType = EnumUtility.ParseLiteral<ResourceType>(type);
                 // for some reason there is an issue with this StructureDefinition (needs fixing)
-                var uris = source.ListResourceUris(resourceType).Where(u => u != "http://hl7.org/fhir/us/sdc/StructureDefinition/sdc-questionnaire");
+                // EK: What needs fixing?   Re-enabling to see whether the bug still turns up.
+                // var uris = source.ListResourceUris(resourceType).Where(u => u != "http://hl7.org/fhir/us/sdc/StructureDefinition/sdc-questionnaire");
+                var uris = source.ListResourceUris(resourceType);
                 return uris.Select(u => source.ResolveByCanonicalUri(u) as T).Where(r => r != null);
+                
             }
             else
                 return null;

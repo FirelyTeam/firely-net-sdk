@@ -32,7 +32,15 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="SnapshotElementMatcherTests.cs" />
+    <Compile Remove="SnapshotGeneratorTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="..\Hl7.Fhir.Core.Tests\TestDataHelper.cs" Link="TestDataHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SnapshotElementMatcherTests.cs" />
+    <None Include="SnapshotGeneratorTest.cs" />
   </ItemGroup>
 
   <!-- Necessary to make the Test Explorer find the tests in this assembly -->

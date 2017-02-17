@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Aug 11, 2016 03:44+0000 for FHIR v1.6.0 
+  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -49,22 +49,29 @@
     <xs:complexContent>
       <xs:extension base="DomainResource">
         <xs:sequence>
-          <xs:element name="identifier" minOccurs="0" maxOccurs="1" type="Identifier">
+          <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
               <xs:documentation xml:lang="en">The business identifier for this task.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:choice minOccurs="0" maxOccurs="1" >
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A reference to a formal or informal definition of the task.  For example, a protocol, a step within a defined workflow definition, etc.</xs:documentation>
+            </xs:annotation>
+            <xs:element name="definitionUri" type="uri"/>
+            <xs:element name="definitionReference" type="Reference"/>
+          </xs:choice>
           <xs:element name="basedOn" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Identifies a plan, proposal or order that this task has been created in fulfillment of.</xs:documentation>
+              <xs:documentation xml:lang="en">BasedOn refers to a higher-level authorization that triggered the creation of the task.  It references a &quot;request&quot; resource such as a ProcedureRequest, MedicationRequest, ProcedureRequest, CarePlan, etc. which is distinct from the &quot;request&quot; resource the task is seeking to fulfil.  This latter resource is referenced by FocusOn.  For example, based on a ProcedureRequest (= BasedOn), a task is created to fulfil a procedureRequest ( = FocusOn ) to collect a specimen from a patient.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="requisition" minOccurs="0" maxOccurs="1" type="Identifier">
+          <xs:element name="groupIdentifier" minOccurs="0" maxOccurs="1" type="Identifier">
             <xs:annotation>
               <xs:documentation xml:lang="en">An identifier that links together multiple tasks and other requests that were created in the same context.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="parent" minOccurs="0" maxOccurs="unbounded" type="Reference">
+          <xs:element name="partOf" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Task that this particular task is part of.</xs:documentation>
            </xs:annotation>
@@ -84,19 +91,19 @@
               <xs:documentation xml:lang="en">Contains business-specific nuances of the business state.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="stage" minOccurs="1" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="intent" minOccurs="1" maxOccurs="1" type="code">
             <xs:annotation>
               <xs:documentation xml:lang="en">Indicates the &quot;level&quot; of actionability associated with the Task.  I.e. Is this a proposed task, a planned task, an actionable task, etc.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="priority" minOccurs="0" maxOccurs="1" type="code">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Indicates how quickly the Task should be addressed with respect to other requests.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="code" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">A name or code (or both) briefly describing what the task involves.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="priority" minOccurs="0" maxOccurs="1" type="TaskPriority">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The priority of the task among other tasks of the same type.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="description" minOccurs="0" maxOccurs="1" type="string">
@@ -119,29 +126,34 @@
               <xs:documentation xml:lang="en">The healthcare event  (e.g. a patient and healthcare provider interaction) during which this task was created.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="created" minOccurs="1" maxOccurs="1" type="dateTime">
+          <xs:element name="executionPeriod" minOccurs="0" maxOccurs="1" type="Period">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Identifies the time action was first taken against the task (start) and/or the time final action was taken against the task prior to marking it as completed (end).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="authoredOn" minOccurs="0" maxOccurs="1" type="dateTime">
             <xs:annotation>
               <xs:documentation xml:lang="en">The date and time this task was created.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="lastModified" minOccurs="1" maxOccurs="1" type="dateTime">
+          <xs:element name="lastModified" minOccurs="0" maxOccurs="1" type="dateTime">
             <xs:annotation>
               <xs:documentation xml:lang="en">The date and time of last modification to this task.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="requester" minOccurs="1" maxOccurs="1" type="Reference">
+          <xs:element name="requester" type="Task.Requester" minOccurs="0" maxOccurs="1">
             <xs:annotation>
               <xs:documentation xml:lang="en">The creator of the task.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="owner" minOccurs="0" maxOccurs="1" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The owner of this task.  The participant who can execute this task.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="performerType" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">The type of participant that can execute the task.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="owner" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Individual organization or Device currently responsible for task execution.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="reason" minOccurs="0" maxOccurs="1" type="CodeableConcept">
@@ -154,14 +166,14 @@
               <xs:documentation xml:lang="en">Free-text information captured about the task as it progresses.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="fulfillment" type="Task.Fulfillment" minOccurs="0" maxOccurs="1">
+          <xs:element name="relevantHistory" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Identifies any limitations on what part of a referenced task subject request should be actioned.</xs:documentation>
+              <xs:documentation xml:lang="en">Links to Provenance records for past versions of this Task that identify key state transitions or updates that are likely to be relevant to a user looking at the current version of the task.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="definition" minOccurs="0" maxOccurs="1" type="uri">
+          <xs:element name="restriction" type="Task.Restriction" minOccurs="0" maxOccurs="1">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A reference to a formal or informal definition of the task.  For example, a protocol, a step within a defined workflow definition, etc.</xs:documentation>
+              <xs:documentation xml:lang="en">If the Task.focus is a request resource and the task is seeking fulfillment (i.e is asking for the request to be actioned), this element identifies any limitations on what parts of the referenced request should be actioned.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="input" type="Task.Input" minOccurs="0" maxOccurs="unbounded">
@@ -178,7 +190,28 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:complexType name="Task.Fulfillment">
+  <xs:complexType name="Task.Requester">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">A task to be performed.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="agent" minOccurs="1" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The device, practitioner, etc. who initiated the task.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="onBehalfOf" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The organization the device or practitioner was acting on behalf of when they initiated the task.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Task.Restriction">
     <xs:annotation>
       <xs:documentation xml:lang="en">A task to be performed.</xs:documentation>
     </xs:annotation>
@@ -195,7 +228,7 @@
               <xs:documentation xml:lang="en">Over what time-period is fulfillment sought.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="recipients" minOccurs="0" maxOccurs="unbounded" type="Reference">
+          <xs:element name="recipient" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">For requests that are targeted to more than on potential recipient/target, for whom is fulfillment sought?</xs:documentation>
            </xs:annotation>
@@ -322,36 +355,6 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="TaskPriority-list">
-    <xs:restriction base="code-primitive">
-      <xs:enumeration value="low">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Low</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="normal">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Normal</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="high">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">High</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="TaskPriority">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">The task's priority</xs:documentation>
-      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="Element">
-        <xs:attribute name="value" type="TaskPriority-list" use="optional"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
   <xs:simpleType name="TaskStatus-list">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="draft">
@@ -384,6 +387,11 @@
           <xs:documentation xml:lang="en">Ready</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="cancelled">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Cancelled</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="in-progress">
         <xs:annotation>
           <xs:documentation xml:lang="en">In Progress</xs:documentation>
@@ -402,6 +410,11 @@
       <xs:enumeration value="completed">
         <xs:annotation>
           <xs:documentation xml:lang="en">Completed</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="entered-in-error">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Entered in Error</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>

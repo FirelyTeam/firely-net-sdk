@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -1129,9 +1129,22 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
+        /// Persistent identifier for the bundle
+        /// </summary>
+        [FhirElement("identifier", InSummary=true, Order=50)]
+        [DataMember]
+        public Hl7.Fhir.Model.Identifier Identifier
+        {
+            get { return _Identifier; }
+            set { _Identifier = value; OnPropertyChanged("Identifier"); }
+        }
+        
+        private Hl7.Fhir.Model.Identifier _Identifier;
+        
+        /// <summary>
         /// document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=50)]
+        [FhirElement("type", InSummary=true, Order=60)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Bundle.BundleType> TypeElement
@@ -1160,19 +1173,6 @@ namespace Hl7.Fhir.Model
                 OnPropertyChanged("Type");
             }
         }
-        
-        /// <summary>
-        /// Persistent identifier for the bundle
-        /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=60)]
-        [DataMember]
-        public Hl7.Fhir.Model.Identifier Identifier
-        {
-            get { return _Identifier; }
-            set { _Identifier = value; OnPropertyChanged("Identifier"); }
-        }
-        
-        private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
         /// If search, the total number of matches
@@ -1341,8 +1341,8 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Bundle.BundleType>)TypeElement.DeepCopy();
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
+                if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Bundle.BundleType>)TypeElement.DeepCopy();
                 if(TotalElement != null) dest.TotalElement = (Hl7.Fhir.Model.UnsignedInt)TotalElement.DeepCopy();
                 if(Link != null) dest.Link = new List<Hl7.Fhir.Model.Bundle.LinkComponent>(Link.DeepCopy());
                 if(Entry != null) dest.Entry = new List<Hl7.Fhir.Model.Bundle.EntryComponent>(Entry.DeepCopy());
@@ -1364,8 +1364,8 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.Matches(TotalElement, otherT.TotalElement)) return false;
             if( !DeepComparable.Matches(Link, otherT.Link)) return false;
             if( !DeepComparable.Matches(Entry, otherT.Entry)) return false;
@@ -1380,8 +1380,8 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.IsExactly(TotalElement, otherT.TotalElement)) return false;
             if( !DeepComparable.IsExactly(Link, otherT.Link)) return false;
             if( !DeepComparable.IsExactly(Entry, otherT.Entry)) return false;
@@ -1396,8 +1396,8 @@ namespace Hl7.Fhir.Model
             get
             {
 				// Bundle elements
-				if (TypeElement != null) yield return TypeElement;
 				if (Identifier != null) yield return Identifier;
+				if (TypeElement != null) yield return TypeElement;
 				if (TotalElement != null) yield return TotalElement;
 				foreach (var elem in Link) { if (elem != null) yield return elem; }
 				foreach (var elem in Entry) { if (elem != null) yield return elem; }

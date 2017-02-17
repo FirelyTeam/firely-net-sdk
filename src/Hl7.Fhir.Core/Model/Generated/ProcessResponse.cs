@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,12 +53,12 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "ProcessResponse"; } }
         
-        [FhirType("NoteComponent")]
+        [FhirType("ProcessNoteComponent")]
         [DataContract]
-        public partial class NoteComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ProcessNoteComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "NoteComponent"; } }
+            public override string TypeName { get { return "ProcessNoteComponent"; } }
             
             /// <summary>
             /// display | print | printoper
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _Type;
             
             /// <summary>
-            /// Notes text
+            /// Comment on the processing
             /// </summary>
             [FhirElement("text", Order=50)]
             [DataMember]
@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _TextElement;
             
             /// <summary>
-            /// Notes text
+            /// Comment on the processing
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as NoteComponent;
+                var dest = other as ProcessNoteComponent;
                 
                 if (dest != null)
                 {
@@ -122,12 +122,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new NoteComponent());
+                return CopyTo(new ProcessNoteComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as NoteComponent;
+                var otherT = other as ProcessNoteComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as NoteComponent;
+                var otherT = other as ProcessNoteComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -157,7 +157,7 @@ namespace Hl7.Fhir.Model
                 {
                     // BackboneElement elements
                     foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // NoteComponent elements
+                    // ProcessNoteComponent elements
                     if (Type != null) yield return Type;
                     if (TextElement != null) yield return TextElement;
                 }
@@ -363,18 +363,18 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Form;
         
         /// <summary>
-        /// Notes
+        /// Processing comments or additional requirements
         /// </summary>
-        [FhirElement("note", Order=190)]
+        [FhirElement("processNote", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ProcessResponse.NoteComponent> Note
+        public List<Hl7.Fhir.Model.ProcessResponse.ProcessNoteComponent> ProcessNote
         {
-            get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.ProcessResponse.NoteComponent>(); return _Note; }
-            set { _Note = value; OnPropertyChanged("Note"); }
+            get { if(_ProcessNote==null) _ProcessNote = new List<Hl7.Fhir.Model.ProcessResponse.ProcessNoteComponent>(); return _ProcessNote; }
+            set { _ProcessNote = value; OnPropertyChanged("ProcessNote"); }
         }
         
-        private List<Hl7.Fhir.Model.ProcessResponse.NoteComponent> _Note;
+        private List<Hl7.Fhir.Model.ProcessResponse.ProcessNoteComponent> _ProcessNote;
         
         /// <summary>
         /// Error code
@@ -430,7 +430,7 @@ namespace Hl7.Fhir.Model
                 if(RequestProvider != null) dest.RequestProvider = (Hl7.Fhir.Model.ResourceReference)RequestProvider.DeepCopy();
                 if(RequestOrganization != null) dest.RequestOrganization = (Hl7.Fhir.Model.ResourceReference)RequestOrganization.DeepCopy();
                 if(Form != null) dest.Form = (Hl7.Fhir.Model.CodeableConcept)Form.DeepCopy();
-                if(Note != null) dest.Note = new List<Hl7.Fhir.Model.ProcessResponse.NoteComponent>(Note.DeepCopy());
+                if(ProcessNote != null) dest.ProcessNote = new List<Hl7.Fhir.Model.ProcessResponse.ProcessNoteComponent>(ProcessNote.DeepCopy());
                 if(Error != null) dest.Error = new List<Hl7.Fhir.Model.CodeableConcept>(Error.DeepCopy());
                 if(CommunicationRequest != null) dest.CommunicationRequest = new List<Hl7.Fhir.Model.ResourceReference>(CommunicationRequest.DeepCopy());
                 return dest;
@@ -460,7 +460,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(RequestProvider, otherT.RequestProvider)) return false;
             if( !DeepComparable.Matches(RequestOrganization, otherT.RequestOrganization)) return false;
             if( !DeepComparable.Matches(Form, otherT.Form)) return false;
-            if( !DeepComparable.Matches(Note, otherT.Note)) return false;
+            if( !DeepComparable.Matches(ProcessNote, otherT.ProcessNote)) return false;
             if( !DeepComparable.Matches(Error, otherT.Error)) return false;
             if( !DeepComparable.Matches(CommunicationRequest, otherT.CommunicationRequest)) return false;
             
@@ -483,7 +483,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(RequestProvider, otherT.RequestProvider)) return false;
             if( !DeepComparable.IsExactly(RequestOrganization, otherT.RequestOrganization)) return false;
             if( !DeepComparable.IsExactly(Form, otherT.Form)) return false;
-            if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
+            if( !DeepComparable.IsExactly(ProcessNote, otherT.ProcessNote)) return false;
             if( !DeepComparable.IsExactly(Error, otherT.Error)) return false;
             if( !DeepComparable.IsExactly(CommunicationRequest, otherT.CommunicationRequest)) return false;
             
@@ -506,7 +506,7 @@ namespace Hl7.Fhir.Model
 				if (RequestProvider != null) yield return RequestProvider;
 				if (RequestOrganization != null) yield return RequestOrganization;
 				if (Form != null) yield return Form;
-				foreach (var elem in Note) { if (elem != null) yield return elem; }
+				foreach (var elem in ProcessNote) { if (elem != null) yield return elem; }
 				foreach (var elem in Error) { if (elem != null) yield return elem; }
 				foreach (var elem in CommunicationRequest) { if (elem != null) yield return elem; }
             }

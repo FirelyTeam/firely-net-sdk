@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "BenefitsComponent"; } }
             
             /// <summary>
-            /// Benefit Category
+            /// Type of services covered
             /// </summary>
             [FhirElement("category", Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _Category;
             
             /// <summary>
-            /// Benefit SubCategory
+            /// Detailed services covered within the type
             /// </summary>
             [FhirElement("subCategory", Order=50)]
             [DataMember]
@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Description of the benefit
+            /// Description of the benefit or services covered
             /// </summary>
             [FhirElement("description", Order=80)]
             [DataMember]
@@ -281,7 +281,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _DescriptionElement;
             
             /// <summary>
-            /// Description of the benefit
+            /// Description of the benefit or services covered
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -465,32 +465,32 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Benefits allowed
             /// </summary>
-            [FhirElement("benefit", Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("allowed", Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Money))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Benefit
+            public Hl7.Fhir.Model.Element Allowed
             {
-                get { return _Benefit; }
-                set { _Benefit = value; OnPropertyChanged("Benefit"); }
+                get { return _Allowed; }
+                set { _Allowed = value; OnPropertyChanged("Allowed"); }
             }
             
-            private Hl7.Fhir.Model.Element _Benefit;
+            private Hl7.Fhir.Model.Element _Allowed;
             
             /// <summary>
             /// Benefits used
             /// </summary>
-            [FhirElement("benefitUsed", Order=60, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("used", Order=60, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Money))]
             [DataMember]
-            public Hl7.Fhir.Model.Element BenefitUsed
+            public Hl7.Fhir.Model.Element Used
             {
-                get { return _BenefitUsed; }
-                set { _BenefitUsed = value; OnPropertyChanged("BenefitUsed"); }
+                get { return _Used; }
+                set { _Used = value; OnPropertyChanged("Used"); }
             }
             
-            private Hl7.Fhir.Model.Element _BenefitUsed;
+            private Hl7.Fhir.Model.Element _Used;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -500,8 +500,8 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                    if(Benefit != null) dest.Benefit = (Hl7.Fhir.Model.Element)Benefit.DeepCopy();
-                    if(BenefitUsed != null) dest.BenefitUsed = (Hl7.Fhir.Model.Element)BenefitUsed.DeepCopy();
+                    if(Allowed != null) dest.Allowed = (Hl7.Fhir.Model.Element)Allowed.DeepCopy();
+                    if(Used != null) dest.Used = (Hl7.Fhir.Model.Element)Used.DeepCopy();
                     return dest;
                 }
                 else
@@ -520,8 +520,8 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-                if( !DeepComparable.Matches(Benefit, otherT.Benefit)) return false;
-                if( !DeepComparable.Matches(BenefitUsed, otherT.BenefitUsed)) return false;
+                if( !DeepComparable.Matches(Allowed, otherT.Allowed)) return false;
+                if( !DeepComparable.Matches(Used, otherT.Used)) return false;
                 
                 return true;
             }
@@ -533,8 +533,8 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-                if( !DeepComparable.IsExactly(Benefit, otherT.Benefit)) return false;
-                if( !DeepComparable.IsExactly(BenefitUsed, otherT.BenefitUsed)) return false;
+                if( !DeepComparable.IsExactly(Allowed, otherT.Allowed)) return false;
+                if( !DeepComparable.IsExactly(Used, otherT.Used)) return false;
                 
                 return true;
             }
@@ -549,8 +549,8 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // BenefitComponent elements
                     if (Type != null) yield return Type;
-                    if (Benefit != null) yield return Benefit;
-                    if (BenefitUsed != null) yield return BenefitUsed;
+                    if (Allowed != null) yield return Allowed;
+                    if (Used != null) yield return Used;
                 }
             }
             
@@ -804,7 +804,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Insurer
+        /// Insurer issuing the coverage
         /// </summary>
         [FhirElement("insurer", Order=170)]
         [CLSCompliant(false)]
@@ -819,7 +819,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Insurer;
         
         /// <summary>
-        /// Coverage inforce
+        /// Coverage inforce indicator
         /// </summary>
         [FhirElement("inforce", Order=180)]
         [DataMember]
@@ -832,7 +832,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirBoolean _InforceElement;
         
         /// <summary>
-        /// Coverage inforce
+        /// Coverage inforce indicator
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Aug 11, 2016 03:44+0000 for FHIR v1.6.0 
+  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -51,22 +51,22 @@
         <xs:sequence>
           <xs:element name="url" minOccurs="0" maxOccurs="1" type="uri">
             <xs:annotation>
-              <xs:documentation xml:lang="en">An absolute URL that is used to identify this measure when it is referenced. This SHALL be a URL, SHOULD be globally unique, and SHOULD be an address at which this measure is (or will be) published.</xs:documentation>
+              <xs:documentation xml:lang="en">An absolute URL that is used to identify this measure when it is referenced in a specification, model, design or an instance. This SHALL be a URL, SHOULD be globally unique, and SHOULD be an address at which this measure is (or will be) published. The URL SHOULD include the major version of the measure. For more information see [Technical and Business Versions](resource.html#versions).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A logical identifier for the measure such as the CMS or NQF identifier. Note that at least one identifier is required for non-experimental active artifacts.</xs:documentation>
+              <xs:documentation xml:lang="en">A formal identifier that is used to identify this measure when it is represented in other formats, or referenced in a specification, model, design or an instance.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="version" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The version of the measure, if any. To provide a version consistent with the Decision Support Service specification, use the format Major.Minor.Revision (e.g. 1.0.0). For more information on versioning knowledge assets, refer to the Decision Support Service specification. Note that a version is required for non-experimental active artifacts.</xs:documentation>
+              <xs:documentation xml:lang="en">The identifier that is used to identify this version of the measure when it is referenced in a specification, model, design or instance. This is an arbitrary value managed by the measure author and is not expected to be globally unique. For example, it might be a timestamp (e.g. yyyymmdd) if a managed version is not available. There is also no expectation that versions are orderable. To provide a version consistent with the Decision Support Service specification, use the format Major.Minor.Revision (e.g. 1.0.0). For more information on versioning knowledge assets, refer to the Decision Support Service specification. Note that a version is required for non-experimental active artifacts.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="name" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A machine-friendly name for the measure. This name should be usable as an identifier for the measure by machine processing applications such as code generation.</xs:documentation>
+              <xs:documentation xml:lang="en">A natural language name identifying the measure. This name should be usable as an identifier for the module by machine processing applications such as code generation.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="title" minOccurs="0" maxOccurs="1" type="string">
@@ -74,24 +74,29 @@
               <xs:documentation xml:lang="en">A short, descriptive, user-friendly title for the measure.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="status" minOccurs="1" maxOccurs="1" type="code">
+          <xs:element name="status" minOccurs="1" maxOccurs="1" type="PublicationStatus">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The status of the measure.</xs:documentation>
+              <xs:documentation xml:lang="en">The status of this measure. Enables tracking the life-cycle of the content.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="experimental" minOccurs="0" maxOccurs="1" type="boolean">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Determines whether the measure was developed for testing purposes (or education/evaluation/marketing), and is not intended to be used in production environments.</xs:documentation>
+              <xs:documentation xml:lang="en">A flag to indicate that this measure is authored for testing purposes (or education/evaluation/marketing), and is not intended to be used for genuine usage.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="description" minOccurs="0" maxOccurs="1" type="string">
+          <xs:element name="date" minOccurs="0" maxOccurs="1" type="dateTime">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The date  (and optionally time) when the measure was published. The date must change when the business version changes, if it does, and it must change if the status code changes. In addition, it should change when the substantive content of the measure changes.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="description" minOccurs="0" maxOccurs="1" type="markdown">
             <xs:annotation>
               <xs:documentation xml:lang="en">A free text natural language description of the measure from the consumer's perspective.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="purpose" minOccurs="0" maxOccurs="1" type="string">
+          <xs:element name="purpose" minOccurs="0" maxOccurs="1" type="markdown">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A brief description of the purpose of the measure.</xs:documentation>
+              <xs:documentation xml:lang="en">Explains why this measure is needed and why it has been designed as it has.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="usage" minOccurs="0" maxOccurs="1" type="string">
@@ -99,29 +104,34 @@
               <xs:documentation xml:lang="en">A detailed description of how the measure is used from a clinical perspective.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="publicationDate" minOccurs="0" maxOccurs="1" type="date">
+          <xs:element name="approvalDate" minOccurs="0" maxOccurs="1" type="date">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The date on which the measure was published.</xs:documentation>
+              <xs:documentation xml:lang="en">The date on which the asset content was approved by the publisher. Approval happens once when the content is officially approved for usage.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="lastReviewDate" minOccurs="0" maxOccurs="1" type="date">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The date on which the measure content was last reviewed.</xs:documentation>
+              <xs:documentation xml:lang="en">The date on which the asset content was last reviewed. Review happens periodically after that, but doesn't change the original approval date.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="effectivePeriod" minOccurs="0" maxOccurs="1" type="Period">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The period during which the measure content is effective.</xs:documentation>
+              <xs:documentation xml:lang="en">The period during which the measure content was or is planned to be effective.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="coverage" minOccurs="0" maxOccurs="unbounded" type="UsageContext">
+          <xs:element name="useContext" minOccurs="0" maxOccurs="unbounded" type="UsageContext">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Specifies various attributes of the patient population for whom and/or environment of care in which, the measure is applicable.</xs:documentation>
+              <xs:documentation xml:lang="en">The content was developed with a focus and intent of supporting the contexts that are listed. These terms may be used to assist with indexing and searching of code system definitions.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="jurisdiction" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A jurisdiction in which the measure is intended to be used.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="topic" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Clinical topics related to the content of the measure.</xs:documentation>
+              <xs:documentation xml:lang="en">Descriptive topics related to the content of the measure. Topics provide a high-level categorization of the type of the measure that can be useful for filtering and searching.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="contributor" minOccurs="0" maxOccurs="unbounded" type="Contributor">
@@ -131,7 +141,7 @@
           </xs:element>
           <xs:element name="publisher" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The name of the individual or organization that published the measure (also known as the steward for the measure). This information is required for non-experimental active artifacts.</xs:documentation>
+              <xs:documentation xml:lang="en">The name of the individual or organization that published the measure.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="contact" minOccurs="0" maxOccurs="unbounded" type="ContactDetail">
@@ -139,14 +149,14 @@
               <xs:documentation xml:lang="en">Contact details to assist a user in finding and communicating with the publisher.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="copyright" minOccurs="0" maxOccurs="1" type="string">
+          <xs:element name="copyright" minOccurs="0" maxOccurs="1" type="markdown">
             <xs:annotation>
               <xs:documentation xml:lang="en">A copyright statement relating to the measure and/or its contents. Copyright statements are generally legal restrictions on the use and publishing of the measure.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="relatedResource" minOccurs="0" maxOccurs="unbounded" type="RelatedResource">
+          <xs:element name="relatedArtifact" minOccurs="0" maxOccurs="unbounded" type="RelatedArtifact">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Related resources such as additional documentation, justification, or bibliographic references.</xs:documentation>
+              <xs:documentation xml:lang="en">Related artifacts such as additional documentation, justification, or bibliographic references.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="library" minOccurs="0" maxOccurs="unbounded" type="Reference">
@@ -162,6 +172,11 @@
           <xs:element name="scoring" minOccurs="0" maxOccurs="1" type="MeasureScoring">
             <xs:annotation>
               <xs:documentation xml:lang="en">The measure scoring type, e.g. proportion, CV.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="compositeScoring" minOccurs="0" maxOccurs="1" type="CompositeMeasureScoring">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">If this is a composite measure, the scoring method used to combine the component measures to determine the composite score.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="type" minOccurs="0" maxOccurs="unbounded" type="MeasureType">
@@ -352,6 +367,41 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+  <xs:simpleType name="CompositeMeasureScoring-list">
+    <xs:restriction base="code-primitive">
+      <xs:enumeration value="opportunity">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Opportunity</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="all-or-nothing">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">All-or-nothing</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="linear">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Linear</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="weighted">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Weighted</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="CompositeMeasureScoring">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The composite scoring method of the measure</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="CompositeMeasureScoring-list" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
   <xs:simpleType name="MeasureType-list">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="process">
@@ -364,11 +414,26 @@
           <xs:documentation xml:lang="en">Outcome</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="structure">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Structure</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="patient-reported-outcome">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Patient Reported Outcome</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="composite">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Composite</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="MeasureType">
     <xs:annotation>
-      <xs:documentation xml:lang="en">The type of measure</xs:documentation>
+      <xs:documentation xml:lang="en">The type of measure (includes codes from 2.16.840.1.113883.1.11.20368)</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -479,9 +544,9 @@
           <xs:documentation xml:lang="en">Measure Population Exclusion</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="measure-score">
+      <xs:enumeration value="measure-observation">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Measure Score</xs:documentation>
+          <xs:documentation xml:lang="en">Measure Observation</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>

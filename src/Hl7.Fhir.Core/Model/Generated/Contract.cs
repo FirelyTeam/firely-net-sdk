@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.ResourceReference _Actor;
             
             /// <summary>
-            /// Contract  Agent Role
+            /// Role type of the agent
             /// </summary>
             [FhirElement("role", Order=50)]
             [Cardinality(Min=0,Max=-1)]
@@ -1607,7 +1607,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _SubType;
         
         /// <summary>
-        /// Contract Action
+        /// Action stipulated by this Contract
         /// </summary>
         [FhirElement("action", Order=190)]
         [Cardinality(Min=0,Max=-1)]
@@ -1621,7 +1621,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _Action;
         
         /// <summary>
-        /// Contract Action Reason
+        /// Rationale for the stiplulated action
         /// </summary>
         [FhirElement("actionReason", Order=200)]
         [Cardinality(Min=0,Max=-1)]
@@ -1635,7 +1635,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _ActionReason;
         
         /// <summary>
-        /// Contract Agent
+        /// Entity being ascribed responsibility
         /// </summary>
         [FhirElement("agent", Order=210)]
         [Cardinality(Min=0,Max=-1)]

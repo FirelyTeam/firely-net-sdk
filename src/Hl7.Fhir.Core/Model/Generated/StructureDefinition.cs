@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -1041,7 +1041,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// FluentPath invariants - when the extension can be used
+        /// FHIRPath invariants - when the extension can be used
         /// </summary>
         [FhirElement("contextInvariant", InSummary=true, Order=310)]
         [Cardinality(Min=0,Max=-1)]
@@ -1055,7 +1055,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.FhirString> _ContextInvariantElement;
         
         /// <summary>
-        /// FluentPath invariants - when the extension can be used
+        /// FHIRPath invariants - when the extension can be used
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1212,7 +1212,7 @@ namespace Hl7.Fhir.Model
             Key = "sdf-19",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Custom types can only be used in logical models",
-            Xpath = "(f:kind/@value = 'logical') or (true)"
+            Xpath = "f:kind/@value = 'logical' or count(f:differential/f:element/f:type/f:code[@value and not(matches(@value, '^[a-zA-Z0-9]+$'))]|f:snapshot/f:element/f:type/f:code[@value and not(matches(@value, '^[a-zA-Z0-9]+$'))]) =0"
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_16 = new ElementDefinition.ConstraintComponent()

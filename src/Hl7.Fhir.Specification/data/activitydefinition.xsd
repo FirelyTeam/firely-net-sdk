@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Aug 11, 2016 03:44+0000 for FHIR v1.6.0 
+  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -51,47 +51,52 @@
         <xs:sequence>
           <xs:element name="url" minOccurs="0" maxOccurs="1" type="uri">
             <xs:annotation>
-              <xs:documentation xml:lang="en">An absolute URL that is used to identify this asset when it is referenced. This SHALL be a URL, SHOULD be globally unique, and SHOULD be an address at which this asset is (or will be) published.</xs:documentation>
+              <xs:documentation xml:lang="en">An absolute URL that is used to identify this activity definition when it is referenced in a specification, model, design or an instance. This SHALL be a URL, SHOULD be globally unique, and SHOULD be an address at which this activity definition is (or will be) published. The URL SHOULD include the major version of the activity definition. For more information see [Technical and Business Versions](resource.html#versions).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A logical identifier for the asset such as the CMS or NQF identifiers for a measure. Note that at least one identifier is required for non-experimental active assets.</xs:documentation>
+              <xs:documentation xml:lang="en">A formal identifier that is used to identify this activity definition when it is represented in other formats, or referenced in a specification, model, design or an instance.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="version" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The version of the asset, if any. To provide a version consistent with the Decision Support Service specification, use the format Major.Minor.Revision (e.g. 1.0.0). For more information on versioning knowledge assets, refer to the Decision Support Service specification. Note that a version is required for non-experimental active assets.</xs:documentation>
+              <xs:documentation xml:lang="en">The identifier that is used to identify this version of the activity definition when it is referenced in a specification, model, design or instance. This is an arbitrary value managed by the activity definition author and is not expected to be globally unique. For example, it might be a timestamp (e.g. yyyymmdd) if a managed version is not available. There is also no expectation that versions are orderable. To provide a version consistent with the Decision Support Service specification, use the format Major.Minor.Revision (e.g. 1.0.0). For more information on versioning knowledge assets, refer to the Decision Support Service specification. Note that a version is required for non-experimental active assets.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="name" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A machine-friendly name for the asset. This name should be usable as an identifier for the asset by machine processing applications such as code generation.</xs:documentation>
+              <xs:documentation xml:lang="en">A natural language name identifying the activity definition. This name should be usable as an identifier for the module by machine processing applications such as code generation.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="title" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A short, descriptive, user-friendly title for the asset.</xs:documentation>
+              <xs:documentation xml:lang="en">A short, descriptive, user-friendly title for the activity definition.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="status" minOccurs="1" maxOccurs="1" type="code">
+          <xs:element name="status" minOccurs="1" maxOccurs="1" type="PublicationStatus">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The status of the asset.</xs:documentation>
+              <xs:documentation xml:lang="en">The status of this activity definition. Enables tracking the life-cycle of the content.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="experimental" minOccurs="0" maxOccurs="1" type="boolean">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Determines whether the asset was developed for testing purposes (or education/evaluation/marketing), and is not intended to be used in production environments.</xs:documentation>
+              <xs:documentation xml:lang="en">A flag to indicate that this activity definition is authored for testing purposes (or education/evaluation/marketing), and is not intended to be used for genuine usage.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="description" minOccurs="0" maxOccurs="1" type="string">
+          <xs:element name="date" minOccurs="0" maxOccurs="1" type="dateTime">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A free text natural language description of the asset from the consumer's perspective.</xs:documentation>
+              <xs:documentation xml:lang="en">The date  (and optionally time) when the activity definition was published. The date must change when the business version changes, if it does, and it must change if the status code changes. In addition, it should change when the substantive content of the activity definition changes.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="purpose" minOccurs="0" maxOccurs="1" type="string">
+          <xs:element name="description" minOccurs="0" maxOccurs="1" type="markdown">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A brief description of the purpose of the asset.</xs:documentation>
+              <xs:documentation xml:lang="en">A free text natural language description of the activity definition from the consumer's perspective.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="purpose" minOccurs="0" maxOccurs="1" type="markdown">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Explains why this activity definition is needed and why it has been designed as it has.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="usage" minOccurs="0" maxOccurs="1" type="string">
@@ -99,29 +104,34 @@
               <xs:documentation xml:lang="en">A detailed description of how the asset is used from a clinical perspective.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="publicationDate" minOccurs="0" maxOccurs="1" type="date">
+          <xs:element name="approvalDate" minOccurs="0" maxOccurs="1" type="date">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The date on which the asset was published.</xs:documentation>
+              <xs:documentation xml:lang="en">The date on which the asset content was approved by the publisher. Approval happens once when the content is officially approved for usage.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="lastReviewDate" minOccurs="0" maxOccurs="1" type="date">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The date on which the asset content was last reviewed.</xs:documentation>
+              <xs:documentation xml:lang="en">The date on which the asset content was last reviewed. Review happens periodically after that, but doesn't change the original approval date.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="effectivePeriod" minOccurs="0" maxOccurs="1" type="Period">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The period during which the asset content is effective.</xs:documentation>
+              <xs:documentation xml:lang="en">The period during which the activity definition content was or is planned to be effective.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="coverage" minOccurs="0" maxOccurs="unbounded" type="UsageContext">
+          <xs:element name="useContext" minOccurs="0" maxOccurs="unbounded" type="UsageContext">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Specifies various attributes of the patient population for whom and/or environment of care in which, the knowledge asset is applicable.</xs:documentation>
+              <xs:documentation xml:lang="en">The content was developed with a focus and intent of supporting the contexts that are listed. These terms may be used to assist with indexing and searching of code system definitions.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="jurisdiction" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A jurisdiction in which the activity definition is intended to be used.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="topic" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Clinical topics related to the content of the asset.</xs:documentation>
+              <xs:documentation xml:lang="en">Descriptive topics related to the content of the activity. Topics provide a high-level categorization of the activity that can be useful for filtering and searching.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="contributor" minOccurs="0" maxOccurs="unbounded" type="Contributor">
@@ -131,7 +141,7 @@
           </xs:element>
           <xs:element name="publisher" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The name of the individual or organization that published the asset (also known as the steward for the asset). This information is required for non-experimental active artifacts.</xs:documentation>
+              <xs:documentation xml:lang="en">The name of the individual or organization that published the activity definition.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="contact" minOccurs="0" maxOccurs="unbounded" type="ContactDetail">
@@ -139,14 +149,14 @@
               <xs:documentation xml:lang="en">Contact details to assist a user in finding and communicating with the publisher.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="copyright" minOccurs="0" maxOccurs="1" type="string">
+          <xs:element name="copyright" minOccurs="0" maxOccurs="1" type="markdown">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A copyright statement relating to the asset and/or its contents. Copyright statements are generally legal restrictions on the use and publishing of the asset.</xs:documentation>
+              <xs:documentation xml:lang="en">A copyright statement relating to the activity definition and/or its contents. Copyright statements are generally legal restrictions on the use and publishing of the activity definition.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="relatedResource" minOccurs="0" maxOccurs="unbounded" type="RelatedResource">
+          <xs:element name="relatedArtifact" minOccurs="0" maxOccurs="unbounded" type="RelatedArtifact">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Related resources such as additional documentation, justification, or bibliographic references.</xs:documentation>
+              <xs:documentation xml:lang="en">Related artifacts such as additional documentation, justification, or bibliographic references.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="library" minOccurs="0" maxOccurs="unbounded" type="Reference">
@@ -154,9 +164,9 @@
               <xs:documentation xml:lang="en">A reference to a Library resource containing any formal logic used by the asset.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="category" minOccurs="0" maxOccurs="1" type="ActivityDefinitionCategory">
+          <xs:element name="kind" minOccurs="0" maxOccurs="1" type="code">
             <xs:annotation>
-              <xs:documentation xml:lang="en">High-level categorization of the type of activity.</xs:documentation>
+              <xs:documentation xml:lang="en">A description of the kind of resource the activity definition is representing. For example, a MedicationRequest, a ProcedureRequest, or a CommunicationRequest. Typically, but not always, this is a Request resource.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="code" minOccurs="0" maxOccurs="1" type="CodeableConcept">
@@ -176,9 +186,9 @@
               <xs:documentation xml:lang="en">Identifies the facility where the activity will occur; e.g. home, hospital, specific clinic, etc.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="participantType" minOccurs="0" maxOccurs="unbounded" type="code">
+          <xs:element name="participant" type="ActivityDefinition.Participant" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The type of participant in the action.</xs:documentation>
+              <xs:documentation xml:lang="en">Indicates who should participate in performing the action described.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:choice minOccurs="0" maxOccurs="1" >
@@ -193,6 +203,16 @@
               <xs:documentation xml:lang="en">Identifies the quantity expected to be consumed at once (per dose, per meal, etc.).</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="dosage" minOccurs="0" maxOccurs="unbounded" type="Dosage">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Provides detailed dosage instructions in the same way that they are described for MedicationRequest resources.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="bodySite" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Indicates the sites on the subject's body where the procedure should be performed (I.e. the target sites).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="transform" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">A reference to a StructureMap resource that defines a transform that can be executed to produce the intent resource using the ActivityDefinition instance as the input.</xs:documentation>
@@ -201,6 +221,27 @@
           <xs:element name="dynamicValue" type="ActivityDefinition.DynamicValue" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">Dynamic values that will be evaluated to produce values for elements of the resulting resource. For example, if the dosage of a medication must be computed based on the patient's weight, a dynamic value would be used to specify an expression that calculated the weight, and the path on the intent resource that would contain the result.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ActivityDefinition.Participant">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">This resource allows for the definition of some activity to be performed, independent of a particular patient, practitioner, or other performance context.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="type" minOccurs="1" maxOccurs="1" type="code">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The type of participant in the action.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="role" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The role the participant should play in performing the described action.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -235,86 +276,6 @@
            </xs:annotation>
           </xs:element>
         </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:simpleType name="ActivityDefinitionCategory-list">
-    <xs:restriction base="code-primitive">
-      <xs:enumeration value="communication">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Communication</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="device">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Device</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="diagnostic">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Diagnostic</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="diet">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Diet</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="drug">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Drug</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="encounter">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Encounter</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="immunization">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Immunization</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="observation">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Observation</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="procedure">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Procedure</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="referral">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Referral</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="supply">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Supply</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="vision">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Vision</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="other">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Other</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="ActivityDefinitionCategory">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">High-level categorization of the type of activity in a protocol.</xs:documentation>
-      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="Element">
-        <xs:attribute name="value" type="ActivityDefinitionCategory-list" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

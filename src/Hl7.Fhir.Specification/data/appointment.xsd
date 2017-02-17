@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Aug 11, 2016 03:44+0000 for FHIR v1.6.0 
+  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -111,7 +111,7 @@
           </xs:element>
           <xs:element name="slot" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The slot that this appointment is filling. If provided then the schedule will not be provided as slots are not recursive, and the start/end values MUST be the same as from the slot.</xs:documentation>
+              <xs:documentation xml:lang="en">The slots from the participants' schedules that will be filled by the appointment.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="created" minOccurs="0" maxOccurs="1" type="dateTime">
@@ -127,6 +127,11 @@
           <xs:element name="participant" type="Appointment.Participant" minOccurs="1" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">List of participants involved in the appointment.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="requestedPeriod" minOccurs="0" maxOccurs="unbounded" type="Period">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A set of date ranges (potentially including times) that the appointment is preferred to be scheduled. When using these values, the minutes duration should be provided to indicate the length of the appointment to fill and populate the start/end times for the actual allocated time.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>

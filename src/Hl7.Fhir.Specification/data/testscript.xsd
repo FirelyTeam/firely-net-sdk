@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Aug 11, 2016 03:44+0000 for FHIR v1.6.0 
+  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -51,67 +51,77 @@
         <xs:sequence>
           <xs:element name="url" minOccurs="1" maxOccurs="1" type="uri">
             <xs:annotation>
-              <xs:documentation xml:lang="en">An absolute URL that is used to identify this Test Script. This SHALL be a URL, SHOULD be globally unique, and SHOULD be an address at which this Test Script is (or will be) published.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="version" minOccurs="0" maxOccurs="1" type="string">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The identifier that is used to identify this version of the TestScript. This is an arbitrary value managed by the TestScript author manually.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="name" minOccurs="1" maxOccurs="1" type="string">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">A free text natural language name identifying the TestScript.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="status" minOccurs="1" maxOccurs="1" type="ConformanceResourceStatus">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The status of the TestScript.</xs:documentation>
+              <xs:documentation xml:lang="en">An absolute URL that is used to identify this test script when it is referenced in a specification, model, design or an instance. This SHALL be a URL, SHOULD be globally unique, and SHOULD be an address at which this test script is (or will be) published. The URL SHOULD include the major version of the test script. For more information see [Technical and Business Versions](resource.html#versions).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="identifier" minOccurs="0" maxOccurs="1" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Identifier for the TestScript assigned for external purposes outside the context of FHIR.</xs:documentation>
+              <xs:documentation xml:lang="en">A formal identifier that is used to identify this test script when it is represented in other formats, or referenced in a specification, model, design or an instance.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="version" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The identifier that is used to identify this version of the test script when it is referenced in a specification, model, design or instance. This is an arbitrary value managed by the test script author and is not expected to be globally unique. For example, it might be a timestamp (e.g. yyyymmdd) if a managed version is not available. There is also no expectation that versions are orderable.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="name" minOccurs="1" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A natural language name identifying the test script. This name should be usable as an identifier for the module by machine processing applications such as code generation.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="title" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A short, descriptive, user-friendly title for the test script.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="status" minOccurs="1" maxOccurs="1" type="PublicationStatus">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The status of this test script. Enables tracking the life-cycle of the content.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="experimental" minOccurs="0" maxOccurs="1" type="boolean">
             <xs:annotation>
-              <xs:documentation xml:lang="en">This TestScript was authored for testing purposes (or education/evaluation/marketing), and is not intended to be used for genuine usage.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="publisher" minOccurs="0" maxOccurs="1" type="string">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The name of the individual or organization that published the Test Script.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="contact" type="TestScript.Contact" minOccurs="0" maxOccurs="unbounded">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Contacts to assist a user in finding and communicating with the publisher.</xs:documentation>
+              <xs:documentation xml:lang="en">A flag to indicate that this test script is authored for testing purposes (or education/evaluation/marketing), and is not intended to be used for genuine usage.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="date" minOccurs="0" maxOccurs="1" type="dateTime">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The date this version of the test tcript was published. The date must change when the business version changes, if it does, and it must change if the status code changes. In addition, it should change when the substantive content of the test cases change.</xs:documentation>
+              <xs:documentation xml:lang="en">The date  (and optionally time) when the test script was published. The date must change when the business version changes, if it does, and it must change if the status code changes. In addition, it should change when the substantive content of the test script changes.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="publisher" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The name of the individual or organization that published the test script.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="contact" minOccurs="0" maxOccurs="unbounded" type="ContactDetail">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Contact details to assist a user in finding and communicating with the publisher.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="description" minOccurs="0" maxOccurs="1" type="markdown">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A free text natural language description of the TestScript and its use.</xs:documentation>
+              <xs:documentation xml:lang="en">A free text natural language description of the test script from the consumer's perspective.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="useContext" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="useContext" minOccurs="0" maxOccurs="unbounded" type="UsageContext">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The content was developed with a focus and intent of supporting the contexts that are listed. These terms may be used to assist with indexing and searching of Test Scripts.</xs:documentation>
+              <xs:documentation xml:lang="en">The content was developed with a focus and intent of supporting the contexts that are listed. These terms may be used to assist with indexing and searching of code system definitions.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="requirements" minOccurs="0" maxOccurs="1" type="markdown">
+          <xs:element name="jurisdiction" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Explains why this Test Script is needed and why it's been constrained as it has.</xs:documentation>
+              <xs:documentation xml:lang="en">A jurisdiction in which the test script is intended to be used.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="copyright" minOccurs="0" maxOccurs="1" type="string">
+          <xs:element name="purpose" minOccurs="0" maxOccurs="1" type="markdown">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A copyright statement relating to the Test Script and/or its contents. Copyright statements are generally legal restrictions on the use and publishing of the details of the constraints and mappings.</xs:documentation>
+              <xs:documentation xml:lang="en">Explains why this test script is needed and why it has been designed as it has.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="copyright" minOccurs="0" maxOccurs="1" type="markdown">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A copyright statement relating to the test script and/or its contents. Copyright statements are generally legal restrictions on the use and publishing of the test script.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="origin" type="TestScript.Origin" minOccurs="0" maxOccurs="unbounded">
@@ -167,27 +177,6 @@
           <xs:element name="teardown" type="TestScript.Teardown" minOccurs="0" maxOccurs="1">
             <xs:annotation>
               <xs:documentation xml:lang="en">A series of operations required to clean up after the all the tests are executed (successfully or otherwise).</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:complexType name="TestScript.Contact">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">TestScript is a resource that specifies a suite of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="BackboneElement">
-        <xs:sequence>
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="string">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The name of an individual to contact regarding the Test Script.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="telecom" minOccurs="0" maxOccurs="unbounded" type="ContactPoint">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Contact details for individual (if a name was provided) or the publisher.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -315,9 +304,9 @@
               <xs:documentation xml:lang="en">Links to the FHIR specification that describes this interaction and the resources involved in more detail.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="conformance" minOccurs="1" maxOccurs="1" type="Reference">
+          <xs:element name="capabilities" minOccurs="1" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Minimum conformance required of server for test script to execute successfully.   If server does not meet at a minimum the reference conformance definition, then all tests in this script are skipped.</xs:documentation>
+              <xs:documentation xml:lang="en">Minimum capabilities required of server for test script to execute successfully.   If server does not meet at a minimum the referenced capability statement, then all tests in this script are skipped.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -367,14 +356,29 @@
               <xs:documentation xml:lang="en">A default, hard-coded, or user-defined value for this variable.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="description" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A free text natural language description of the variable and its purpose.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="expression" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The fluentpath expression to evaluate against the fixture body. When variables are defined, only one of either expression, headerField or path must be specified.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="headerField" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
               <xs:documentation xml:lang="en">Will be used to grab the HTTP header field value from the headers that sourceId is pointing to.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="hint" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Displayable text string with hint help information to the user when entering a default value.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="path" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">XPath or JSONPath against the fixture body.  When variables are defined, either headerField must be specified or path, but not both.</xs:documentation>
+              <xs:documentation xml:lang="en">XPath or JSONPath to evaluate against the fixture body.  When variables are defined, only one of either expression, headerField or path must be specified.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="sourceId" minOccurs="0" maxOccurs="1" type="id">
@@ -542,7 +546,7 @@
           </xs:element>
           <xs:element name="resource" minOccurs="0" maxOccurs="1" type="code">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The type of the resource.  See http://hl7-fhir.github.io/resourcelist.html.</xs:documentation>
+              <xs:documentation xml:lang="en">The type of the resource.  See http://build.fhir.org/resourcelist.html.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="label" minOccurs="0" maxOccurs="1" type="string">
@@ -588,6 +592,11 @@
           <xs:element name="requestHeader" type="TestScript.RequestHeader" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">Header elements would be used to set HTTP headers.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="requestId" minOccurs="0" maxOccurs="1" type="id">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The fixture id (maybe new) to map to the request.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="responseId" minOccurs="0" maxOccurs="1" type="id">
@@ -659,17 +668,27 @@
           </xs:element>
           <xs:element name="compareToSourceId" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Id of fixture used to compare the &quot;sourceId/path&quot; evaluations to.</xs:documentation>
+              <xs:documentation xml:lang="en">Id of the source fixture used as the contents to be evaluated by either the &quot;source/expression&quot; or &quot;sourceId/path&quot; definition.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="compareToSourceExpression" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The fluentpath expression to evaluate against the source fixture. When compareToSourceId is defined, either compareToSourceExpression or compareToSourcePath must be defined, but not both.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="compareToSourcePath" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">XPath or JSONPath expression against fixture used to compare the &quot;sourceId/path&quot; evaluations to.</xs:documentation>
+              <xs:documentation xml:lang="en">XPath or JSONPath expression to evaluate against the source fixture. When compareToSourceId is defined, either compareToSourceExpression or compareToSourcePath must be defined, but not both.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="contentType" minOccurs="0" maxOccurs="1" type="ContentType">
             <xs:annotation>
               <xs:documentation xml:lang="en">The content-type or mime-type to use for RESTful operation in the 'Content-Type' header.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="expression" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The fluentpath expression to be evaluated against the request or response message contents - HTTP headers and payload.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="headerField" minOccurs="0" maxOccurs="1" type="string">
@@ -689,12 +708,17 @@
           </xs:element>
           <xs:element name="operator" minOccurs="0" maxOccurs="1" type="AssertionOperatorType">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The operator type.</xs:documentation>
+              <xs:documentation xml:lang="en">The operator type defines the conditional behavior of the assert. If not defined, the default is equals.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="path" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
               <xs:documentation xml:lang="en">The XPath or JSONPath expression to be evaluated against the fixture representing the response received from server.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="requestMethod" minOccurs="0" maxOccurs="1" type="TestScriptRequestMethodCode">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The request method or HTTP operation code to compare against that used by the client system under test.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="requestURL" minOccurs="0" maxOccurs="1" type="string">
@@ -704,7 +728,7 @@
           </xs:element>
           <xs:element name="resource" minOccurs="0" maxOccurs="1" type="code">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The type of the resource.  See http://hl7-fhir.github.io/resourcelist.html.</xs:documentation>
+              <xs:documentation xml:lang="en">The type of the resource.  See http://build.fhir.org/resourcelist.html.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="response" minOccurs="0" maxOccurs="1" type="AssertionResponseTypes">
@@ -926,7 +950,7 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="operation" type="TestScript.Operation" minOccurs="0" maxOccurs="1">
+          <xs:element name="operation" type="TestScript.Operation" minOccurs="1" maxOccurs="1">
             <xs:annotation>
               <xs:documentation xml:lang="en">An operation would involve a REST request to a server.</xs:documentation>
            </xs:annotation>
@@ -1047,6 +1071,11 @@
           <xs:documentation xml:lang="en">notContains</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="eval">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">evaluate</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="AssertionOperatorType">
@@ -1132,6 +1161,51 @@
     <xs:complexContent>
       <xs:extension base="Element">
         <xs:attribute name="value" type="AssertionResponseTypes-list" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="TestScriptRequestMethodCode-list">
+    <xs:restriction base="code-primitive">
+      <xs:enumeration value="delete">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">DELETE</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="get">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">GET</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="options">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">OPTIONS</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="patch">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">PATCH</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="post">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">POST</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="put">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">PUT</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="TestScriptRequestMethodCode">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The allowable request method or HTTP operation codes.</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="TestScriptRequestMethodCode-list" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

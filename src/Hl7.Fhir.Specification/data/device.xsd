@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Aug 11, 2016 03:44+0000 for FHIR v1.6.0 
+  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -54,9 +54,9 @@
               <xs:documentation xml:lang="en">Unique instance identifiers assigned to a device by manufacturers other organizations or owners.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="udiCarrier" minOccurs="0" maxOccurs="1" type="Identifier">
+          <xs:element name="udi" type="Device.Udi" minOccurs="0" maxOccurs="1">
             <xs:annotation>
-              <xs:documentation xml:lang="en">[Unique device identifier (UDI)](device.html#5.11.3.2.2) barcode or rfid string assigned to device label or package.</xs:documentation>
+              <xs:documentation xml:lang="en">[Unique device identifier (UDI)](device.html#5.11.3.2.2) assigned to device label or package.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="status" minOccurs="0" maxOccurs="1" type="DeviceStatus">
@@ -64,7 +64,7 @@
               <xs:documentation xml:lang="en">Status of the Device availability.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="type" minOccurs="1" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">Code or identifier to identify a kind of device.</xs:documentation>
            </xs:annotation>
@@ -129,25 +129,89 @@
               <xs:documentation xml:lang="en">Descriptive information, usage information or implantation information that is not captured in an existing element.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="safety" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Provides additional safety characteristics about a medical device.  For example devices containing latex.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Device.Udi">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">This resource identifies an instance or a type of a manufactured item that is used in the provision of healthcare without being substantially changed through that activity. The device may be a medical or non-medical device.  Medical devices includes durable (reusable) medical equipment, implantable devices, as well as disposable equipment used for diagnostic, treatment, and research for healthcare and public health.  Non-medical devices may include items such as a machine, cellphone, computer, application, etc.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="deviceIdentifier" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The device identifier (DI) is a mandatory, fixed portion of a UDI that identifies the labeler and the specific version or model of a device.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="name" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Name of device as used in labeling or catalog.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="jurisdiction" minOccurs="0" maxOccurs="1" type="uri">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The identity of the authoritative source for UDI generation within a  jurisdiction.  All UDIs are globally unique within a single namespace. with the appropriate repository uri as the system.  For example,  UDIs of devices managed in the U.S. by the FDA, the value is  http://hl7.org/fhir/NamingSystem/fda-udi.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="carrierHRF" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The full UDI carrier as the human readable form (HRF) representation of the barcode string as printed on the packaging of the device.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="carrierAIDC" minOccurs="0" maxOccurs="1" type="base64Binary">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The full UDI carrier of the Automatic Identification and Data Capture (AIDC) technology representation of the barcode string as printed on the packaging of the device - E.g a barcode or RFID.   Because of limitations on character sets in XML and the need to round-trip JSON data through XML, AIDC Formats *SHALL* be base64 encoded.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="issuer" minOccurs="0" maxOccurs="1" type="uri">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Organization that is charged with issuing UDIs for devices.  For example, the US FDA issuers include :
+1) GS1: 
+http://hl7.org/fhir/NamingSystem/gs1-di, 
+2) HIBCC:
+http://hl7.org/fhir/NamingSystem/hibcc-dI, 
+3) ICCBBA for blood containers:
+http://hl7.org/fhir/NamingSystem/iccbba-blood-di, 
+4) ICCBA for other devices:
+http://hl7.org/fhir/NamingSystem/iccbba-other-di.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="entryType" minOccurs="0" maxOccurs="1" type="UDIEntryType">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A coded entry to indicate how the data was entered.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
   <xs:simpleType name="DeviceStatus-list">
     <xs:restriction base="code-primitive">
-      <xs:enumeration value="available">
+      <xs:enumeration value="active">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Available</xs:documentation>
+          <xs:documentation xml:lang="en">Active</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="not-available">
+      <xs:enumeration value="inactive">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Not Available</xs:documentation>
+          <xs:documentation xml:lang="en">Inactive</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="entered-in-error">
         <xs:annotation>
           <xs:documentation xml:lang="en">Entered in Error</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="unknown">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Unknown</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>
@@ -160,6 +224,51 @@
     <xs:complexContent>
       <xs:extension base="Element">
         <xs:attribute name="value" type="DeviceStatus-list" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="UDIEntryType-list">
+    <xs:restriction base="code-primitive">
+      <xs:enumeration value="barcode">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">BarCode</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="rfid">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">RFID</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="manual">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Manual</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="card">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Card</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="self-reported">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Self Reported</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="unknown">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Unknown</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="UDIEntryType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Codes to identify how udi data was entered</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="UDIEntryType-list" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

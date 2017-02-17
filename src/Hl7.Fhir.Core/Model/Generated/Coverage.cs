@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -592,7 +592,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Type of coverage
+        /// Type of coverage such as medical or accident
         /// </summary>
         [FhirElement("type", InSummary=true, Order=110)]
         [DataMember]
@@ -726,15 +726,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional coverage classifications
         /// </summary>
-        [FhirElement("group", Order=190)]
+        [FhirElement("grouping", Order=190)]
         [DataMember]
-        public Hl7.Fhir.Model.Coverage.GroupComponent Group
+        public Hl7.Fhir.Model.Coverage.GroupComponent Grouping
         {
-            get { return _Group; }
-            set { _Group = value; OnPropertyChanged("Group"); }
+            get { return _Grouping; }
+            set { _Grouping = value; OnPropertyChanged("Grouping"); }
         }
         
-        private Hl7.Fhir.Model.Coverage.GroupComponent _Group;
+        private Hl7.Fhir.Model.Coverage.GroupComponent _Grouping;
         
         /// <summary>
         /// Dependent number
@@ -904,7 +904,7 @@ namespace Hl7.Fhir.Model
                 if(Relationship != null) dest.Relationship = (Hl7.Fhir.Model.CodeableConcept)Relationship.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(Payor != null) dest.Payor = new List<Hl7.Fhir.Model.ResourceReference>(Payor.DeepCopy());
-                if(Group != null) dest.Group = (Hl7.Fhir.Model.Coverage.GroupComponent)Group.DeepCopy();
+                if(Grouping != null) dest.Grouping = (Hl7.Fhir.Model.Coverage.GroupComponent)Grouping.DeepCopy();
                 if(DependentElement != null) dest.DependentElement = (Hl7.Fhir.Model.FhirString)DependentElement.DeepCopy();
                 if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.FhirString)SequenceElement.DeepCopy();
                 if(OrderElement != null) dest.OrderElement = (Hl7.Fhir.Model.PositiveInt)OrderElement.DeepCopy();
@@ -937,7 +937,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Relationship, otherT.Relationship)) return false;
             if( !DeepComparable.Matches(Period, otherT.Period)) return false;
             if( !DeepComparable.Matches(Payor, otherT.Payor)) return false;
-            if( !DeepComparable.Matches(Group, otherT.Group)) return false;
+            if( !DeepComparable.Matches(Grouping, otherT.Grouping)) return false;
             if( !DeepComparable.Matches(DependentElement, otherT.DependentElement)) return false;
             if( !DeepComparable.Matches(SequenceElement, otherT.SequenceElement)) return false;
             if( !DeepComparable.Matches(OrderElement, otherT.OrderElement)) return false;
@@ -963,7 +963,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Relationship, otherT.Relationship)) return false;
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
             if( !DeepComparable.IsExactly(Payor, otherT.Payor)) return false;
-            if( !DeepComparable.IsExactly(Group, otherT.Group)) return false;
+            if( !DeepComparable.IsExactly(Grouping, otherT.Grouping)) return false;
             if( !DeepComparable.IsExactly(DependentElement, otherT.DependentElement)) return false;
             if( !DeepComparable.IsExactly(SequenceElement, otherT.SequenceElement)) return false;
             if( !DeepComparable.IsExactly(OrderElement, otherT.OrderElement)) return false;
@@ -989,7 +989,7 @@ namespace Hl7.Fhir.Model
 				if (Relationship != null) yield return Relationship;
 				if (Period != null) yield return Period;
 				foreach (var elem in Payor) { if (elem != null) yield return elem; }
-				if (Group != null) yield return Group;
+				if (Grouping != null) yield return Grouping;
 				if (DependentElement != null) yield return DependentElement;
 				if (SequenceElement != null) yield return SequenceElement;
 				if (OrderElement != null) yield return OrderElement;

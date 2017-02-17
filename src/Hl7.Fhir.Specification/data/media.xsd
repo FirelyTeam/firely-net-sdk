@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Aug 11, 2016 03:44+0000 for FHIR v1.6.0 
+  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -54,6 +54,11 @@
               <xs:documentation xml:lang="en">Identifiers associated with the image - these may include identifiers for the image itself, identifiers for the context of its collection (e.g. series ids) and context ids such as accession numbers or other workflow identifiers.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="basedOn" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A procedure that is fulfilled in whole or in part by the creation of this media.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="type" minOccurs="1" maxOccurs="1" type="DigitalMediaType">
             <xs:annotation>
               <xs:documentation xml:lang="en">Whether the media is a photo (still image), an audio recording, or a video recording.</xs:documentation>
@@ -74,14 +79,36 @@
               <xs:documentation xml:lang="en">Who/What this Media is a record of.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="context" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The encounter or episode of care that establishes the context for this media.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:choice minOccurs="0" maxOccurs="1" >
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The date and time(s) at which the media was collected.</xs:documentation>
+            </xs:annotation>
+            <xs:element name="occurrenceDateTime" type="dateTime"/>
+            <xs:element name="occurrencePeriod" type="Period"/>
+          </xs:choice>
           <xs:element name="operator" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">The person who administered the collection of the image.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="deviceName" minOccurs="0" maxOccurs="1" type="string">
+          <xs:element name="reasonCode" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The name of the device / manufacturer of the device  that was used to make the recording.</xs:documentation>
+              <xs:documentation xml:lang="en">Describes why the event occurred in coded or textual form.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="bodySite" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Indicates the site on the subject's body where the media was collected (i.e. the target site).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="device" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The device used to collect the media.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="height" minOccurs="0" maxOccurs="1" type="positiveInt">
@@ -107,6 +134,11 @@
           <xs:element name="content" minOccurs="1" maxOccurs="1" type="Attachment">
             <xs:annotation>
               <xs:documentation xml:lang="en">The actual content of the media - inline or by direct reference to the media source file.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="note" minOccurs="0" maxOccurs="unbounded" type="Annotation">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Comments made about the media by the performer, subject or other participants.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>

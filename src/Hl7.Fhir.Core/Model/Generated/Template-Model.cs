@@ -1,12 +1,15 @@
 ﻿
 
 //
-// Model Generated on Thu, 16 Feb 2017 23:21:36 GMT for FHIR v1.8.0
+// Model Generated on Fri, 17 Feb 2017 16:21:17 GMT for FHIR v1.9.0
 //
 // Generated Shared Enumeration: ResourceType
+	// Used in model class (resource): ActivityDefinition.kind
 	// Used in model class (resource): CapabilityStatement.rest.resource.type
 	// Used in model class (resource): CapabilityStatement.messaging.event.focus
 	// Used in model class (resource): CompartmentDefinition.resource.code
+	// Used in model class (resource): GraphDefinition.start
+	// Used in model class (resource): GraphDefinition.link.target.type
 	// Used in model class (resource): ImplementationGuide.global.type
 	// Used in model class (resource): ImplementationGuide.page.type
 	// Used in model class (resource): MessageDefinition.focus.code
@@ -23,16 +26,20 @@
 	// Used in model class (resource): CodeSystem.filter.operator
 	// Used in model class (resource): ValueSet.compose.include.filter.op
 
-// Generated Shared Enumeration: PlanActionSelectionBehavior
+// Generated Shared Enumeration: ActionSelectionBehavior
 	// Used in model class (resource): PlanDefinition.actionDefinition.selectionBehavior
 	// Used in model class (resource): RequestGroup.action.selectionBehavior
 
 // Generated Shared Enumeration: RequestPriority
-	// Used in model class (resource): DiagnosticRequest.priority
+	// Used in model class (resource): CommunicationRequest.priority
+	// Used in model class (resource): DeviceRequest.priority
+	// Used in model class (resource): ProcedureRequest.priority
+	// Used in model class (resource): ReferralRequest.priority
 	// Used in model class (resource): Task.priority
 
 // Generated Shared Enumeration: RequestIntent
-	// Used in model class (resource): DiagnosticRequest.intent
+	// Used in model class (resource): ProcedureRequest.intent
+	// Used in model class (resource): ReferralRequest.intent
 	// Used in model class (resource): Task.intent
 
 // Generated Shared Enumeration: AdministrativeGender
@@ -43,7 +50,11 @@
 	// Used in model class (resource): Practitioner.gender
 	// Used in model class (resource): RelatedPerson.gender
 
-// Generated Shared Enumeration: PlanActionGroupingBehavior
+// Generated Shared Enumeration: EventStatus
+	// Used in model class (resource): Communication.status
+	// Used in model class (resource): Procedure.status
+
+// Generated Shared Enumeration: ActionGroupingBehavior
 	// Used in model class (resource): PlanDefinition.actionDefinition.groupingBehavior
 	// Used in model class (resource): RequestGroup.action.groupingBehavior
 
@@ -51,7 +62,7 @@
 	// Used in model class (resource): Observation.status
 	// Used in model class (resource): RiskAssessment.status
 
-// Generated Shared Enumeration: PlanActionPrecheckBehavior
+// Generated Shared Enumeration: ActionPrecheckBehavior
 	// Used in model class (resource): PlanDefinition.actionDefinition.precheckBehavior
 	// Used in model class (resource): RequestGroup.action.precheckBehavior
 
@@ -87,24 +98,28 @@
 	// Used in model class (resource): ProcessResponse.status
 	// Used in model class (resource): VisionPrescription.status
 
-// Generated Shared Enumeration: PlanActionCardinalityBehavior
+// Generated Shared Enumeration: ActionCardinalityBehavior
 	// Used in model class (resource): PlanDefinition.actionDefinition.cardinalityBehavior
 	// Used in model class (resource): RequestGroup.action.cardinalityBehavior
 
-// Generated Shared Enumeration: PlanActionConditionKind
+// Generated Shared Enumeration: ActionConditionKind
 	// Used in model class (resource): PlanDefinition.actionDefinition.condition.kind
 	// Used in model class (resource): RequestGroup.action.condition.kind
 
-// Generated Shared Enumeration: PlanActionParticipantType
-	// Used in model class (resource): ActivityDefinition.participantType
-	// Used in model class (resource): PlanDefinition.actionDefinition.participantType
+// Generated Shared Enumeration: CompartmentType
+	// Used in model class (resource): CompartmentDefinition.code
+	// Used in model class (resource): GraphDefinition.link.target.compartment.code
+
+// Generated Shared Enumeration: ActionParticipantType
+	// Used in model class (resource): ActivityDefinition.participant.type
+	// Used in model class (resource): PlanDefinition.actionDefinition.participant.type
 
 // Generated Shared Enumeration: DaysOfWeek
 	// Used in model class (resource): HealthcareService.availableTime.daysOfWeek
 	// Used in model class (resource): PractitionerRole.availableTime.daysOfWeek
 	// Used in model class (type): Timing.repeat.dayOfWeek
 
-// Generated Shared Enumeration: PlanActionRelationshipType
+// Generated Shared Enumeration: ActionRelationshipType
 	// Used in model class (resource): PlanDefinition.actionDefinition.relatedAction.relationship
 	// Used in model class (resource): RequestGroup.action.relatedAction.relationship
 
@@ -113,10 +128,16 @@
 	// Used in model class (resource): DocumentReference.status
 
 // Generated Shared Enumeration: RequestStatus
-	// Used in model class (resource): DeviceUseRequest.status
-	// Used in model class (resource): DiagnosticRequest.status
+	// Used in model class (resource): CommunicationRequest.status
+	// Used in model class (resource): DeviceRequest.status
+	// Used in model class (resource): ProcedureRequest.status
+	// Used in model class (resource): ReferralRequest.status
 
-// Generated Shared Enumeration: PlanActionRequiredBehavior
+// Generated Shared Enumeration: CompositionStatus
+	// Used in model class (resource): Composition.status
+	// Used in model class (resource): DocumentReference.docStatus
+
+// Generated Shared Enumeration: ActionRequiredBehavior
 	// Used in model class (resource): PlanDefinition.actionDefinition.requiredBehavior
 	// Used in model class (resource): RequestGroup.action.requiredBehavior
 
@@ -138,6 +159,7 @@
 	// Used in model class (resource): ConceptMap.status
 	// Used in model class (resource): DataElement.status
 	// Used in model class (resource): ExpansionProfile.status
+	// Used in model class (resource): GraphDefinition.status
 	// Used in model class (resource): ImplementationGuide.status
 	// Used in model class (resource): Library.status
 	// Used in model class (resource): Measure.status
@@ -194,7 +216,7 @@
 // Hl7.Fhir.Core\Model\Generated\OperationOutcome.cs
 // Hl7.Fhir.Core\Model\Generated\OperationDefinition.cs
 // Hl7.Fhir.Core\Model\Generated\Observation.cs
-// Hl7.Fhir.Core\Model\Generated\NutritionRequest.cs
+// Hl7.Fhir.Core\Model\Generated\NutritionOrder.cs
 // Hl7.Fhir.Core\Model\Generated\NamingSystem.cs
 // Hl7.Fhir.Core\Model\Generated\MessageHeader.cs
 // Hl7.Fhir.Core\Model\Generated\MessageDefinition.cs
@@ -218,6 +240,7 @@
 // Hl7.Fhir.Core\Model\Generated\HealthcareService.cs
 // Hl7.Fhir.Core\Model\Generated\GuidanceResponse.cs
 // Hl7.Fhir.Core\Model\Generated\Group.cs
+// Hl7.Fhir.Core\Model\Generated\GraphDefinition.cs
 // Hl7.Fhir.Core\Model\Generated\Goal.cs
 // Hl7.Fhir.Core\Model\Generated\Flag.cs
 // Hl7.Fhir.Core\Model\Generated\FamilyMemberHistory.cs
@@ -232,10 +255,9 @@
 // Hl7.Fhir.Core\Model\Generated\EligibilityRequest.cs
 // Hl7.Fhir.Core\Model\Generated\DocumentReference.cs
 // Hl7.Fhir.Core\Model\Generated\DocumentManifest.cs
-// Hl7.Fhir.Core\Model\Generated\DiagnosticRequest.cs
 // Hl7.Fhir.Core\Model\Generated\DiagnosticReport.cs
 // Hl7.Fhir.Core\Model\Generated\DeviceUseStatement.cs
-// Hl7.Fhir.Core\Model\Generated\DeviceUseRequest.cs
+// Hl7.Fhir.Core\Model\Generated\DeviceRequest.cs
 // Hl7.Fhir.Core\Model\Generated\DeviceMetric.cs
 // Hl7.Fhir.Core\Model\Generated\DeviceComponent.cs
 // Hl7.Fhir.Core\Model\Generated\Device.cs
@@ -253,6 +275,8 @@
 // Hl7.Fhir.Core\Model\Generated\ClinicalImpression.cs
 // Hl7.Fhir.Core\Model\Generated\ClaimResponse.cs
 // Hl7.Fhir.Core\Model\Generated\Claim.cs
+// Hl7.Fhir.Core\Model\Generated\ChargeItem.cs
+// Hl7.Fhir.Core\Model\Generated\Catalog.cs
 // Hl7.Fhir.Core\Model\Generated\CareTeam.cs
 // Hl7.Fhir.Core\Model\Generated\CarePlan.cs
 // Hl7.Fhir.Core\Model\Generated\CapabilityStatement.cs
@@ -264,6 +288,7 @@
 // Hl7.Fhir.Core\Model\Generated\AppointmentResponse.cs
 // Hl7.Fhir.Core\Model\Generated\Appointment.cs
 // Hl7.Fhir.Core\Model\Generated\AllergyIntolerance.cs
+// Hl7.Fhir.Core\Model\Generated\AdverseEvent.cs
 // Hl7.Fhir.Core\Model\Generated\ActivityDefinition.cs
 // Hl7.Fhir.Core\Model\Generated\Account.cs
 // Hl7.Fhir.Core\Model\Generated\Parameters.cs

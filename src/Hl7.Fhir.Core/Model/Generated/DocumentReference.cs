@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -228,15 +228,14 @@ namespace Hl7.Fhir.Model
             /// Format/content rules for the document
             /// </summary>
             [FhirElement("format", InSummary=true, Order=50)]
-            [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Coding> Format
+            public Hl7.Fhir.Model.Coding Format
             {
-                get { if(_Format==null) _Format = new List<Hl7.Fhir.Model.Coding>(); return _Format; }
+                get { return _Format; }
                 set { _Format = value; OnPropertyChanged("Format"); }
             }
             
-            private List<Hl7.Fhir.Model.Coding> _Format;
+            private Hl7.Fhir.Model.Coding _Format;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -246,7 +245,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Attachment != null) dest.Attachment = (Hl7.Fhir.Model.Attachment)Attachment.DeepCopy();
-                    if(Format != null) dest.Format = new List<Hl7.Fhir.Model.Coding>(Format.DeepCopy());
+                    if(Format != null) dest.Format = (Hl7.Fhir.Model.Coding)Format.DeepCopy();
                     return dest;
                 }
                 else
@@ -292,7 +291,7 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // ContentComponent elements
                     if (Attachment != null) yield return Attachment;
-                    foreach (var elem in Format) { if (elem != null) yield return elem; }
+                    if (Format != null) yield return Format;
                 }
             }
             
@@ -798,13 +797,32 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("docStatus", InSummary=true, Order=200)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept DocStatus
+        public Code<Hl7.Fhir.Model.CompositionStatus> DocStatusElement
         {
-            get { return _DocStatus; }
-            set { _DocStatus = value; OnPropertyChanged("DocStatus"); }
+            get { return _DocStatusElement; }
+            set { _DocStatusElement = value; OnPropertyChanged("DocStatusElement"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _DocStatus;
+        private Code<Hl7.Fhir.Model.CompositionStatus> _DocStatusElement;
+        
+        /// <summary>
+        /// preliminary | final | appended | amended | entered-in-error
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.CompositionStatus? DocStatus
+        {
+            get { return DocStatusElement != null ? DocStatusElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  DocStatusElement = null; 
+                else
+                  DocStatusElement = new Code<Hl7.Fhir.Model.CompositionStatus>(value);
+                OnPropertyChanged("DocStatus");
+            }
+        }
         
         /// <summary>
         /// Relationships to other documents
@@ -918,7 +936,7 @@ namespace Hl7.Fhir.Model
                 if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
                 if(IndexedElement != null) dest.IndexedElement = (Hl7.Fhir.Model.Instant)IndexedElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DocumentReferenceStatus>)StatusElement.DeepCopy();
-                if(DocStatus != null) dest.DocStatus = (Hl7.Fhir.Model.CodeableConcept)DocStatus.DeepCopy();
+                if(DocStatusElement != null) dest.DocStatusElement = (Code<Hl7.Fhir.Model.CompositionStatus>)DocStatusElement.DeepCopy();
                 if(RelatesTo != null) dest.RelatesTo = new List<Hl7.Fhir.Model.DocumentReference.RelatesToComponent>(RelatesTo.DeepCopy());
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(SecurityLabel != null) dest.SecurityLabel = new List<Hl7.Fhir.Model.CodeableConcept>(SecurityLabel.DeepCopy());
@@ -952,7 +970,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.Matches(IndexedElement, otherT.IndexedElement)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.Matches(DocStatus, otherT.DocStatus)) return false;
+            if( !DeepComparable.Matches(DocStatusElement, otherT.DocStatusElement)) return false;
             if( !DeepComparable.Matches(RelatesTo, otherT.RelatesTo)) return false;
             if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.Matches(SecurityLabel, otherT.SecurityLabel)) return false;
@@ -979,7 +997,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
             if( !DeepComparable.IsExactly(IndexedElement, otherT.IndexedElement)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.IsExactly(DocStatus, otherT.DocStatus)) return false;
+            if( !DeepComparable.IsExactly(DocStatusElement, otherT.DocStatusElement)) return false;
             if( !DeepComparable.IsExactly(RelatesTo, otherT.RelatesTo)) return false;
             if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.IsExactly(SecurityLabel, otherT.SecurityLabel)) return false;
@@ -1006,7 +1024,7 @@ namespace Hl7.Fhir.Model
 				if (CreatedElement != null) yield return CreatedElement;
 				if (IndexedElement != null) yield return IndexedElement;
 				if (StatusElement != null) yield return StatusElement;
-				if (DocStatus != null) yield return DocStatus;
+				if (DocStatusElement != null) yield return DocStatusElement;
 				foreach (var elem in RelatesTo) { if (elem != null) yield return elem; }
 				if (DescriptionElement != null) yield return DescriptionElement;
 				foreach (var elem in SecurityLabel) { if (elem != null) yield return elem; }

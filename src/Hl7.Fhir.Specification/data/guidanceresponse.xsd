@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Aug 11, 2016 03:44+0000 for FHIR v1.6.0 
+  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -111,7 +111,7 @@
               <xs:documentation xml:lang="en">The output parameters of the evaluation, if any. Many modules will result in the return of specific resources such as procedure or communication requests that are returned as part of the operation result. However, modules may define specific outputs that would be returned as the result of the evaluation, and these would be returned in this element.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="action" type="GuidanceResponse.Action" minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="result" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">The actions, if any, produced by the evaluation of the artifact.</xs:documentation>
            </xs:annotation>
@@ -119,144 +119,6 @@
           <xs:element name="dataRequirement" minOccurs="0" maxOccurs="unbounded" type="DataRequirement">
             <xs:annotation>
               <xs:documentation xml:lang="en">If the evaluation could not be completed due to lack of information, or additional information would potentially result in a more accurate response, this element will a description of the data required in order to proceed with the evaluation. A subsequent request to the service should include this data.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:complexType name="GuidanceResponse.Action">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">A guidance response is the formal response to a guidance request, including any output parameters returned by the evaluation, as well as the description of any proposed actions to be taken.</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="BackboneElement">
-        <xs:sequence>
-          <xs:element name="actionIdentifier" minOccurs="0" maxOccurs="1" type="Identifier">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">A unique identifier for the action. The identifier SHALL be unique within the container in which it appears, and MAY be universally unique.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="label" minOccurs="0" maxOccurs="1" type="string">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">A user-visible label for the action.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="title" minOccurs="0" maxOccurs="1" type="string">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The title of the action displayed to a user.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="description" minOccurs="0" maxOccurs="1" type="string">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">A short description of the action used to provide a summary to display to the user.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="textEquivalent" minOccurs="0" maxOccurs="1" type="string">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">A text equivalent of the action to be performed. This provides a human-interpretable description of the action when the definition is consumed by a system that may not be capable of interpreting it dynamically.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="concept" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The concept represented by this action or its sub-actions.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="documentation" minOccurs="0" maxOccurs="unbounded" type="RelatedResource">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Didactic or other informational resources associated with the action that can be provided to the CDS recipient. Information resources can include inline text commentary and links to web resources.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="relatedAction" type="GuidanceResponse.RelatedAction" minOccurs="0" maxOccurs="1">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">A relationship to another action such as &quot;before&quot; or &quot;30-60 minutes after start of&quot;.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:choice minOccurs="0" maxOccurs="1" >
-            <xs:annotation>
-              <xs:documentation xml:lang="en">An optional value describing when the action should be performed.</xs:documentation>
-            </xs:annotation>
-            <xs:element name="timingDateTime" type="dateTime"/>
-            <xs:element name="timingPeriod" type="Period"/>
-            <xs:element name="timingDuration" type="Duration"/>
-            <xs:element name="timingRange" type="Range"/>
-          </xs:choice>
-          <xs:element name="participant" minOccurs="0" maxOccurs="unbounded" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The participant in the action.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="type" minOccurs="0" maxOccurs="1" type="Coding">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The type of action to perform (create, update, remove).</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="groupingBehavior" minOccurs="0" maxOccurs="1" type="code">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Defines the grouping behavior for the action and its children.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="selectionBehavior" minOccurs="0" maxOccurs="1" type="code">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Defines the selection behavior for the action and its children.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="requiredBehavior" minOccurs="0" maxOccurs="1" type="code">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Defines the requiredness behavior for the action.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="precheckBehavior" minOccurs="0" maxOccurs="1" type="code">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Defines whether the action should usually be preselected.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="cardinalityBehavior" minOccurs="0" maxOccurs="1" type="code">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Defines whether the action can be selected multiple times.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="resource" minOccurs="0" maxOccurs="1" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The resource that is the target of the action (e.g. CommunicationRequest).</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="action" type="GuidanceResponse.Action" minOccurs="0" maxOccurs="unbounded">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Sub actions.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:complexType name="GuidanceResponse.RelatedAction">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">A guidance response is the formal response to a guidance request, including any output parameters returned by the evaluation, as well as the description of any proposed actions to be taken.</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="BackboneElement">
-        <xs:sequence>
-          <xs:element name="actionIdentifier" minOccurs="1" maxOccurs="1" type="Identifier">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The unique identifier of the related action.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="relationship" minOccurs="1" maxOccurs="1" type="code">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The relationship of this action to the related action.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:choice minOccurs="0" maxOccurs="1" >
-            <xs:annotation>
-              <xs:documentation xml:lang="en">A duration or range of durations to apply to the relationship. For example, 30-60 minutes before.</xs:documentation>
-            </xs:annotation>
-            <xs:element name="offsetDuration" type="Duration"/>
-            <xs:element name="offsetRange" type="Range"/>
-          </xs:choice>
-          <xs:element name="anchor" minOccurs="0" maxOccurs="1" type="code">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">An optional indicator for how the relationship is anchored to the related action. For example &quot;before the start&quot; or &quot;before the end&quot; of the related action.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>

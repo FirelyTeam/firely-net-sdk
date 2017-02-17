@@ -37,12 +37,12 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Process request
+    /// Request to perform some action on or in regards to an existing resource
     /// </summary>
     [FhirType("ProcessRequest", IsResource=true)]
     [DataContract]
@@ -262,7 +262,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Target of the request
+        /// Party which is the target of the request
         /// </summary>
         [FhirElement("target", Order=120)]
         [CLSCompliant(false)]
@@ -339,7 +339,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Organization;
         
         /// <summary>
-        /// Request reference
+        /// Reference to the Request resource
         /// </summary>
         [FhirElement("request", Order=160)]
         [CLSCompliant(false)]
@@ -354,7 +354,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Request;
         
         /// <summary>
-        /// Response reference
+        /// Reference to the Response resource
         /// </summary>
         [FhirElement("response", Order=170)]
         [CLSCompliant(false)]
@@ -369,7 +369,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Response;
         
         /// <summary>
-        /// Nullify
+        /// Remove history
         /// </summary>
         [FhirElement("nullify", Order=180)]
         [DataMember]
@@ -382,7 +382,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirBoolean _NullifyElement;
         
         /// <summary>
-        /// Nullify
+        /// Remove history
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -513,7 +513,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Period
+        /// Selection period
         /// </summary>
         [FhirElement("period", Order=230)]
         [DataMember]

@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -142,8 +142,8 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("DosageInstruction"), Description("DosageInstruction")]
-            DosageInstruction,
+            [EnumLiteral("Dosage"), Description("Dosage")]
+            Dosage,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
@@ -400,6 +400,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
+            [EnumLiteral("AdverseEvent"), Description("AdverseEvent")]
+            AdverseEvent,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
             [EnumLiteral("AllergyIntolerance"), Description("AllergyIntolerance")]
             AllergyIntolerance,
             /// <summary>
@@ -462,6 +468,18 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("CareTeam"), Description("CareTeam")]
             CareTeam,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("Catalog"), Description("Catalog")]
+            Catalog,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("ChargeItem"), Description("ChargeItem")]
+            ChargeItem,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -574,8 +592,8 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("DeviceUseRequest"), Description("DeviceUseRequest")]
-            DeviceUseRequest,
+            [EnumLiteral("DeviceRequest"), Description("DeviceRequest")]
+            DeviceRequest,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -588,12 +606,6 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("DiagnosticReport"), Description("DiagnosticReport")]
             DiagnosticReport,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
-            [EnumLiteral("DiagnosticRequest"), Description("DiagnosticRequest")]
-            DiagnosticRequest,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -684,6 +696,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("Goal"), Description("Goal")]
             Goal,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("GraphDefinition"), Description("GraphDefinition")]
+            GraphDefinition,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -826,8 +844,8 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("NutritionRequest"), Description("NutritionRequest")]
-            NutritionRequest,
+            [EnumLiteral("NutritionOrder"), Description("NutritionOrder")]
+            NutritionOrder,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -1215,6 +1233,51 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("eval"), Description("evaluate")]
             Eval,
+        }
+
+        /// <summary>
+        /// The allowable request method or HTTP operation codes.
+        /// (url: http://hl7.org/fhir/ValueSet/http-operations)
+        /// </summary>
+        [FhirEnumeration("TestScriptRequestMethodCode")]
+        public enum TestScriptRequestMethodCode
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/http-operations)
+            /// </summary>
+            [EnumLiteral("delete"), Description("DELETE")]
+            Delete,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/http-operations)
+            /// </summary>
+            [EnumLiteral("get"), Description("GET")]
+            Get,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/http-operations)
+            /// </summary>
+            [EnumLiteral("options"), Description("OPTIONS")]
+            Options,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/http-operations)
+            /// </summary>
+            [EnumLiteral("patch"), Description("PATCH")]
+            Patch,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/http-operations)
+            /// </summary>
+            [EnumLiteral("post"), Description("POST")]
+            Post,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/http-operations)
+            /// </summary>
+            [EnumLiteral("put"), Description("PUT")]
+            Put,
         }
 
         /// <summary>
@@ -2311,7 +2374,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// The fhirpath expression against the fixture body
+            /// The fluentpath expression against the fixture body
             /// </summary>
             [FhirElement("expression", Order=70)]
             [DataMember]
@@ -2324,7 +2387,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _ExpressionElement;
             
             /// <summary>
-            /// The fhirpath expression against the fixture body
+            /// The fluentpath expression against the fixture body
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -4173,7 +4236,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// The fhirpath expression to evaluate against the source fixture
+            /// The fluentpath expression to evaluate against the source fixture
             /// </summary>
             [FhirElement("compareToSourceExpression", Order=80)]
             [DataMember]
@@ -4186,7 +4249,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _CompareToSourceExpressionElement;
             
             /// <summary>
-            /// The fhirpath expression to evaluate against the source fixture
+            /// The fluentpath expression to evaluate against the source fixture
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -4269,7 +4332,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// The fhirpath expression to be evaluated
+            /// The fluentpath expression to be evaluated
             /// </summary>
             [FhirElement("expression", Order=110)]
             [DataMember]
@@ -4282,7 +4345,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _ExpressionElement;
             
             /// <summary>
-            /// The fhirpath expression to be evaluated
+            /// The fluentpath expression to be evaluated
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -4461,9 +4524,41 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// delete | get | options | patch | post | put
+            /// </summary>
+            [FhirElement("requestMethod", Order=170)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.TestScript.TestScriptRequestMethodCode> RequestMethodElement
+            {
+                get { return _RequestMethodElement; }
+                set { _RequestMethodElement = value; OnPropertyChanged("RequestMethodElement"); }
+            }
+            
+            private Code<Hl7.Fhir.Model.TestScript.TestScriptRequestMethodCode> _RequestMethodElement;
+            
+            /// <summary>
+            /// delete | get | options | patch | post | put
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.TestScript.TestScriptRequestMethodCode? RequestMethod
+            {
+                get { return RequestMethodElement != null ? RequestMethodElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        RequestMethodElement = null; 
+                    else
+                        RequestMethodElement = new Code<Hl7.Fhir.Model.TestScript.TestScriptRequestMethodCode>(value);
+                    OnPropertyChanged("RequestMethod");
+                }
+            }
+            
+            /// <summary>
             /// Request URL comparison value
             /// </summary>
-            [FhirElement("requestURL", Order=170)]
+            [FhirElement("requestURL", Order=180)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString RequestURLElement
             {
@@ -4495,7 +4590,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Resource type
             /// </summary>
-            [FhirElement("resource", Order=180)]
+            [FhirElement("resource", Order=190)]
             [DataMember]
             public Code<Hl7.Fhir.Model.TestScript.FHIRDefinedType> ResourceElement
             {
@@ -4527,7 +4622,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// okay | created | noContent | notModified | bad | forbidden | notFound | methodNotAllowed | conflict | gone | preconditionFailed | unprocessable
             /// </summary>
-            [FhirElement("response", Order=190)]
+            [FhirElement("response", Order=200)]
             [DataMember]
             public Code<Hl7.Fhir.Model.TestScript.AssertionResponseTypes> ResponseElement
             {
@@ -4559,7 +4654,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// HTTP response code to test
             /// </summary>
-            [FhirElement("responseCode", Order=200)]
+            [FhirElement("responseCode", Order=210)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ResponseCodeElement
             {
@@ -4591,7 +4686,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The reference to a TestScript.rule
             /// </summary>
-            [FhirElement("rule", Order=210)]
+            [FhirElement("rule", Order=220)]
             [DataMember]
             public Hl7.Fhir.Model.TestScript.ActionAssertRuleComponent Rule
             {
@@ -4604,7 +4699,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The reference to a TestScript.ruleset
             /// </summary>
-            [FhirElement("ruleset", Order=220)]
+            [FhirElement("ruleset", Order=230)]
             [DataMember]
             public Hl7.Fhir.Model.TestScript.ActionAssertRulesetComponent Ruleset
             {
@@ -4617,7 +4712,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Fixture Id of source expression or headerField
             /// </summary>
-            [FhirElement("sourceId", Order=230)]
+            [FhirElement("sourceId", Order=240)]
             [DataMember]
             public Hl7.Fhir.Model.Id SourceIdElement
             {
@@ -4649,7 +4744,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Profile Id of validation profile reference
             /// </summary>
-            [FhirElement("validateProfileId", Order=240)]
+            [FhirElement("validateProfileId", Order=250)]
             [DataMember]
             public Hl7.Fhir.Model.Id ValidateProfileIdElement
             {
@@ -4681,7 +4776,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The value to compare to
             /// </summary>
-            [FhirElement("value", Order=250)]
+            [FhirElement("value", Order=260)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ValueElement
             {
@@ -4713,7 +4808,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Will this assert produce a warning only on error?
             /// </summary>
-            [FhirElement("warningOnly", Order=260)]
+            [FhirElement("warningOnly", Order=270)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean WarningOnlyElement
             {
@@ -4762,6 +4857,7 @@ namespace Hl7.Fhir.Model
                     if(NavigationLinksElement != null) dest.NavigationLinksElement = (Hl7.Fhir.Model.FhirBoolean)NavigationLinksElement.DeepCopy();
                     if(OperatorElement != null) dest.OperatorElement = (Code<Hl7.Fhir.Model.TestScript.AssertionOperatorType>)OperatorElement.DeepCopy();
                     if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopy();
+                    if(RequestMethodElement != null) dest.RequestMethodElement = (Code<Hl7.Fhir.Model.TestScript.TestScriptRequestMethodCode>)RequestMethodElement.DeepCopy();
                     if(RequestURLElement != null) dest.RequestURLElement = (Hl7.Fhir.Model.FhirString)RequestURLElement.DeepCopy();
                     if(ResourceElement != null) dest.ResourceElement = (Code<Hl7.Fhir.Model.TestScript.FHIRDefinedType>)ResourceElement.DeepCopy();
                     if(ResponseElement != null) dest.ResponseElement = (Code<Hl7.Fhir.Model.TestScript.AssertionResponseTypes>)ResponseElement.DeepCopy();
@@ -4802,6 +4898,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(NavigationLinksElement, otherT.NavigationLinksElement)) return false;
                 if( !DeepComparable.Matches(OperatorElement, otherT.OperatorElement)) return false;
                 if( !DeepComparable.Matches(PathElement, otherT.PathElement)) return false;
+                if( !DeepComparable.Matches(RequestMethodElement, otherT.RequestMethodElement)) return false;
                 if( !DeepComparable.Matches(RequestURLElement, otherT.RequestURLElement)) return false;
                 if( !DeepComparable.Matches(ResourceElement, otherT.ResourceElement)) return false;
                 if( !DeepComparable.Matches(ResponseElement, otherT.ResponseElement)) return false;
@@ -4835,6 +4932,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(NavigationLinksElement, otherT.NavigationLinksElement)) return false;
                 if( !DeepComparable.IsExactly(OperatorElement, otherT.OperatorElement)) return false;
                 if( !DeepComparable.IsExactly(PathElement, otherT.PathElement)) return false;
+                if( !DeepComparable.IsExactly(RequestMethodElement, otherT.RequestMethodElement)) return false;
                 if( !DeepComparable.IsExactly(RequestURLElement, otherT.RequestURLElement)) return false;
                 if( !DeepComparable.IsExactly(ResourceElement, otherT.ResourceElement)) return false;
                 if( !DeepComparable.IsExactly(ResponseElement, otherT.ResponseElement)) return false;
@@ -4871,6 +4969,7 @@ namespace Hl7.Fhir.Model
                     if (NavigationLinksElement != null) yield return NavigationLinksElement;
                     if (OperatorElement != null) yield return OperatorElement;
                     if (PathElement != null) yield return PathElement;
+                    if (RequestMethodElement != null) yield return RequestMethodElement;
                     if (RequestURLElement != null) yield return RequestURLElement;
                     if (ResourceElement != null) yield return ResourceElement;
                     if (ResponseElement != null) yield return ResponseElement;
@@ -6109,9 +6208,41 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Date this was last changed
+        /// </summary>
+        [FhirElement("date", InSummary=true, Order=160)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirDateTime DateElement
+        {
+            get { return _DateElement; }
+            set { _DateElement = value; OnPropertyChanged("DateElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirDateTime _DateElement;
+        
+        /// <summary>
+        /// Date this was last changed
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Date
+        {
+            get { return DateElement != null ? DateElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  DateElement = null; 
+                else
+                  DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("Date");
+            }
+        }
+        
+        /// <summary>
         /// Name of the publisher (Organization or individual)
         /// </summary>
-        [FhirElement("publisher", InSummary=true, Order=160)]
+        [FhirElement("publisher", InSummary=true, Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
         {
@@ -6143,7 +6274,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contact details for the publisher
         /// </summary>
-        [FhirElement("contact", InSummary=true, Order=170)]
+        [FhirElement("contact", InSummary=true, Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<ContactDetail> Contact
@@ -6153,38 +6284,6 @@ namespace Hl7.Fhir.Model
         }
         
         private List<ContactDetail> _Contact;
-        
-        /// <summary>
-        /// Date this was last changed
-        /// </summary>
-        [FhirElement("date", InSummary=true, Order=180)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime DateElement
-        {
-            get { return _DateElement; }
-            set { _DateElement = value; OnPropertyChanged("DateElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirDateTime _DateElement;
-        
-        /// <summary>
-        /// Date this was last changed
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Date
-        {
-            get { return DateElement != null ? DateElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  DateElement = null; 
-                else
-                  DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
-                OnPropertyChanged("Date");
-            }
-        }
         
         /// <summary>
         /// Natural language description of the test script
@@ -6445,11 +6544,11 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_5 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "setup.action.assert.all(contentType.count() + expression.count() + headerField.count() + minimumId.count() + navigationLinks.count() + path.count() + resource.count() + responseCode.count() + response.count() + rule.count() + ruleset.count() + validateProfileId.count() <=1)",
+            Expression = "setup.action.assert.all(contentType.count() + expression.count() + headerField.count() + minimumId.count() + navigationLinks.count() + path.count() + requestMethod.count() + resource.count() + responseCode.count() + response.count() + rule.count() + ruleset.count() + validateProfileId.count() <=1)",
             Key = "inv-5",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Only a single assertion SHALL be present within setup action assert element.",
-            Xpath = "count(f:contentType) + count(f:expression) + count(f:headerField) + count(f:minimumId) + count(f:navigationLinks) + count(f:path) + count(f:resource) + count(f:responseCode) + count(f:response) + count(f:rule) + count(f:ruleset) + count(f:validateProfileId)  <=1"
+            Xpath = "count(f:contentType) + count(f:expression) + count(f:headerField) + count(f:minimumId) + count(f:navigationLinks) + count(f:path) + count(f:requestMethod) + count(f:resource) + count(f:responseCode) + count(f:response) + count(f:rule) + count(f:ruleset) + count(f:validateProfileId)  <=1"
         };
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_10 = new ElementDefinition.ConstraintComponent()
@@ -6490,11 +6589,11 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_6 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "test.action.assert.all(contentType.count() + expression.count() + headerField.count() + minimumId.count() + navigationLinks.count() + path.count() + resource.count() + responseCode.count() + response.count() + rule.count() + ruleset.count() + validateProfileId.count() <=1)",
+            Expression = "test.action.assert.all(contentType.count() + expression.count() + headerField.count() + minimumId.count() + navigationLinks.count() + path.count() + requestMethod.count() + resource.count() + responseCode.count() + response.count() + rule.count() + ruleset.count() + validateProfileId.count() <=1)",
             Key = "inv-6",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Only a single assertion SHALL be present within test action assert element.",
-            Xpath = "count(f:contentType) + count(f:expression) + count(f:headerField) + count(f:minimumId) + count(f:navigationLinks) + count(f:path) + count(f:resource) + count(f:responseCode) + count(f:response) + count(f:rule) + count(f:ruleset) + count(f:validateProfileId)  <=1"
+            Xpath = "count(f:contentType) + count(f:expression) + count(f:headerField) + count(f:minimumId) + count(f:navigationLinks) + count(f:path) + count(f:requestMethod) + count(f:resource) + count(f:responseCode) + count(f:response) + count(f:rule) + count(f:ruleset) + count(f:validateProfileId)  <=1"
         };
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_11 = new ElementDefinition.ConstraintComponent()
@@ -6557,9 +6656,9 @@ namespace Hl7.Fhir.Model
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopy();
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
+                if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
                 if(Contact != null) dest.Contact = new List<ContactDetail>(Contact.DeepCopy());
-                if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(Description != null) dest.Description = (Hl7.Fhir.Model.Markdown)Description.DeepCopy();
                 if(UseContext != null) dest.UseContext = new List<UsageContext>(UseContext.DeepCopy());
                 if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
@@ -6600,9 +6699,9 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(ExperimentalElement, otherT.ExperimentalElement)) return false;
+            if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.Matches(PublisherElement, otherT.PublisherElement)) return false;
             if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
-            if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.Matches(Description, otherT.Description)) return false;
             if( !DeepComparable.Matches(UseContext, otherT.UseContext)) return false;
             if( !DeepComparable.Matches(Jurisdiction, otherT.Jurisdiction)) return false;
@@ -6636,9 +6735,9 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(ExperimentalElement, otherT.ExperimentalElement)) return false;
+            if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.IsExactly(PublisherElement, otherT.PublisherElement)) return false;
             if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
-            if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
             if( !DeepComparable.IsExactly(UseContext, otherT.UseContext)) return false;
             if( !DeepComparable.IsExactly(Jurisdiction, otherT.Jurisdiction)) return false;
@@ -6672,9 +6771,9 @@ namespace Hl7.Fhir.Model
 				if (TitleElement != null) yield return TitleElement;
 				if (StatusElement != null) yield return StatusElement;
 				if (ExperimentalElement != null) yield return ExperimentalElement;
+				if (DateElement != null) yield return DateElement;
 				if (PublisherElement != null) yield return PublisherElement;
 				foreach (var elem in Contact) { if (elem != null) yield return elem; }
-				if (DateElement != null) yield return DateElement;
 				if (Description != null) yield return Description;
 				foreach (var elem in UseContext) { if (elem != null) yield return elem; }
 				foreach (var elem in Jurisdiction) { if (elem != null) yield return elem; }

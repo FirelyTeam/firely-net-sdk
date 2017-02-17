@@ -1,6 +1,6 @@
 ﻿
 //
-// Model Generated on Thu, 16 Feb 2017 23:21:25 GMT for FHIR v1.8.0
+// Model Generated on Fri, 17 Feb 2017 16:21:44 GMT for FHIR v1.9.0
 //
 // Generated Shared Enumeration: ResourceType
 
@@ -9,7 +9,7 @@
 
 // Generated Shared Enumeration: FilterOperator
 
-// Generated Shared Enumeration: PlanActionSelectionBehavior
+// Generated Shared Enumeration: ActionSelectionBehavior
 
 // Generated Shared Enumeration: RequestPriority
 
@@ -17,11 +17,13 @@
 
 // Generated Shared Enumeration: AdministrativeGender
 
-// Generated Shared Enumeration: PlanActionGroupingBehavior
+// Generated Shared Enumeration: EventStatus
+
+// Generated Shared Enumeration: ActionGroupingBehavior
 
 // Generated Shared Enumeration: ObservationStatus
 
-// Generated Shared Enumeration: PlanActionPrecheckBehavior
+// Generated Shared Enumeration: ActionPrecheckBehavior
 
 // Generated Shared Enumeration: BindingStrength
 	// Used in model class (type): ElementDefinition.binding.strength
@@ -34,22 +36,26 @@
 
 // Generated Shared Enumeration: FinancialResourceStatusCodes
 
-// Generated Shared Enumeration: PlanActionCardinalityBehavior
+// Generated Shared Enumeration: ActionCardinalityBehavior
 
-// Generated Shared Enumeration: PlanActionConditionKind
+// Generated Shared Enumeration: ActionConditionKind
 
-// Generated Shared Enumeration: PlanActionParticipantType
+// Generated Shared Enumeration: CompartmentType
+
+// Generated Shared Enumeration: ActionParticipantType
 
 // Generated Shared Enumeration: DaysOfWeek
 	// Used in model class (type): Timing.repeat.dayOfWeek
 
-// Generated Shared Enumeration: PlanActionRelationshipType
+// Generated Shared Enumeration: ActionRelationshipType
 
 // Generated Shared Enumeration: DocumentReferenceStatus
 
 // Generated Shared Enumeration: RequestStatus
 
-// Generated Shared Enumeration: PlanActionRequiredBehavior
+// Generated Shared Enumeration: CompositionStatus
+
+// Generated Shared Enumeration: ActionRequiredBehavior
 
 // Generated Shared Enumeration: MessageSignificanceCategory
 

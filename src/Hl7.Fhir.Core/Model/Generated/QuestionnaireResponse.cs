@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.8.0
+// Generated for FHIR v1.9.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -84,6 +84,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("entered-in-error"), Description("Entered In Error")]
             EnteredInError,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/questionnaire-answers-status)
+            /// </summary>
+            [EnumLiteral("stopped"), Description("Stopped")]
+            Stopped,
         }
 
         [FhirType("ItemComponent")]
@@ -322,7 +328,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("value", Order=40, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Coding),typeof(Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Coding),typeof(Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
             {
@@ -425,7 +431,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("basedOn", InSummary=true, Order=100)]
         [CLSCompliant(false)]
-		[References("DiagnosticRequest","ReferralRequest","CarePlan")]
+		[References("ReferralRequest","CarePlan")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> BasedOn
@@ -468,7 +474,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Questionnaire;
         
         /// <summary>
-        /// in-progress | completed | amended | entered-in-error
+        /// in-progress | completed | amended | entered-in-error | stopped
         /// </summary>
         [FhirElement("status", InSummary=true, Order=130)]
         [Cardinality(Min=1,Max=1)]
@@ -482,7 +488,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus> _StatusElement;
         
         /// <summary>
-        /// in-progress | completed | amended | entered-in-error
+        /// in-progress | completed | amended | entered-in-error | stopped
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

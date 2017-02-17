@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Aug 11, 2016 03:44+0000 for FHIR v1.6.0 
+  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -51,27 +51,27 @@
         <xs:sequence>
           <xs:element name="url" minOccurs="0" maxOccurs="1" type="uri">
             <xs:annotation>
-              <xs:documentation xml:lang="en">An absolute URL that is used to identify this asset when it is referenced. This SHALL be a URL, SHOULD be globally unique, and SHOULD be an address at which this asset is (or will be) published.</xs:documentation>
+              <xs:documentation xml:lang="en">An absolute URL that is used to identify this plan definition when it is referenced in a specification, model, design or an instance. This SHALL be a URL, SHOULD be globally unique, and SHOULD be an address at which this plan definition is (or will be) published. The URL SHOULD include the major version of the plan definition. For more information see [Technical and Business Versions](resource.html#versions).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A logical identifier for the asset such as the CMS or NQF identifiers for a measure artifact. Note that at least one identifier is required for non-experimental active artifacts.</xs:documentation>
+              <xs:documentation xml:lang="en">A formal identifier that is used to identify this plan definition when it is represented in other formats, or referenced in a specification, model, design or an instance.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="version" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The version of the asset, if any. To provide a version consistent with the Decision Support Service specification, use the format Major.Minor.Revision (e.g. 1.0.0). For more information on versioning knowledge assets, refer to the Decision Support Service specification. Note that a version is required for non-experimental active artifacts.</xs:documentation>
+              <xs:documentation xml:lang="en">The identifier that is used to identify this version of the plan definition when it is referenced in a specification, model, design or instance. This is an arbitrary value managed by the plan definition author and is not expected to be globally unique. For example, it might be a timestamp (e.g. yyyymmdd) if a managed version is not available. There is also no expectation that versions are orderable. To provide a version consistent with the Decision Support Service specification, use the format Major.Minor.Revision (e.g. 1.0.0). For more information on versioning knowledge assets, refer to the Decision Support Service specification. Note that a version is required for non-experimental active artifacts.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="name" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A machine-friendly name for the asset. This name should be usable as an identifier for the asset by machine processing applications such as code generation.</xs:documentation>
+              <xs:documentation xml:lang="en">A natural language name identifying the plan definition. This name should be usable as an identifier for the module by machine processing applications such as code generation.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="title" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A short, descriptive, user-friendly title for the asset.</xs:documentation>
+              <xs:documentation xml:lang="en">A short, descriptive, user-friendly title for the plan definition.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableConcept">
@@ -79,24 +79,29 @@
               <xs:documentation xml:lang="en">The type of asset the plan definition represents, e.g. an order set, protocol, or event-condition-action rule.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="status" minOccurs="1" maxOccurs="1" type="code">
+          <xs:element name="status" minOccurs="1" maxOccurs="1" type="PublicationStatus">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The status of the asset.</xs:documentation>
+              <xs:documentation xml:lang="en">The status of this plan definition. Enables tracking the life-cycle of the content.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="experimental" minOccurs="0" maxOccurs="1" type="boolean">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Determines whether the asset was developed for testing purposes (or education/evaluation/marketing), and is not intended to be used in production environments.</xs:documentation>
+              <xs:documentation xml:lang="en">A flag to indicate that this plan definition is authored for testing purposes (or education/evaluation/marketing), and is not intended to be used for genuine usage.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="description" minOccurs="0" maxOccurs="1" type="string">
+          <xs:element name="date" minOccurs="0" maxOccurs="1" type="dateTime">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A free text natural language description of the asset from the consumer's perspective.</xs:documentation>
+              <xs:documentation xml:lang="en">The date  (and optionally time) when the plan definition was published. The date must change when the business version changes, if it does, and it must change if the status code changes. In addition, it should change when the substantive content of the plan definition changes.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="purpose" minOccurs="0" maxOccurs="1" type="string">
+          <xs:element name="description" minOccurs="0" maxOccurs="1" type="markdown">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A brief description of the purpose of the asset.</xs:documentation>
+              <xs:documentation xml:lang="en">A free text natural language description of the plan definition from the consumer's perspective.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="purpose" minOccurs="0" maxOccurs="1" type="markdown">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Explains why this plan definition is needed and why it has been designed as it has.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="usage" minOccurs="0" maxOccurs="1" type="string">
@@ -104,29 +109,34 @@
               <xs:documentation xml:lang="en">A detailed description of how the asset is used from a clinical perspective.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="publicationDate" minOccurs="0" maxOccurs="1" type="date">
+          <xs:element name="approvalDate" minOccurs="0" maxOccurs="1" type="date">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The date on which the asset was published.</xs:documentation>
+              <xs:documentation xml:lang="en">The date on which the asset content was approved by the publisher. Approval happens once when the content is officially approved for usage.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="lastReviewDate" minOccurs="0" maxOccurs="1" type="date">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The date on which the asset content was last reviewed.</xs:documentation>
+              <xs:documentation xml:lang="en">The date on which the asset content was last reviewed. Review happens periodically after that, but doesn't change the original approval date.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="effectivePeriod" minOccurs="0" maxOccurs="1" type="Period">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The period during which the asset content is effective.</xs:documentation>
+              <xs:documentation xml:lang="en">The period during which the plan definition content was or is planned to be effective.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="coverage" minOccurs="0" maxOccurs="unbounded" type="UsageContext">
+          <xs:element name="useContext" minOccurs="0" maxOccurs="unbounded" type="UsageContext">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Specifies various attributes of the patient population for whom and/or environment of care in which, the asset is applicable.</xs:documentation>
+              <xs:documentation xml:lang="en">The content was developed with a focus and intent of supporting the contexts that are listed. These terms may be used to assist with indexing and searching of code system definitions.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="jurisdiction" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A jurisdiction in which the plan definition is intended to be used.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="topic" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Clinical topics related to the content of the asset.</xs:documentation>
+              <xs:documentation xml:lang="en">Descriptive topics related to the content of the plan definition. Topics provide a high-level categorization of the definition that can be useful for filtering and searching.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="contributor" minOccurs="0" maxOccurs="unbounded" type="Contributor">
@@ -136,7 +146,7 @@
           </xs:element>
           <xs:element name="publisher" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The name of the individual or organization that published the asset (also known as the steward for the asset). This information is required for non-experimental active artifacts.</xs:documentation>
+              <xs:documentation xml:lang="en">The name of the individual or organization that published the plan definition.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="contact" minOccurs="0" maxOccurs="unbounded" type="ContactDetail">
@@ -144,14 +154,14 @@
               <xs:documentation xml:lang="en">Contact details to assist a user in finding and communicating with the publisher.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="copyright" minOccurs="0" maxOccurs="1" type="string">
+          <xs:element name="copyright" minOccurs="0" maxOccurs="1" type="markdown">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A copyright statement relating to the asset and/or its contents. Copyright statements are generally legal restrictions on the use and publishing of the asset.</xs:documentation>
+              <xs:documentation xml:lang="en">A copyright statement relating to the plan definition and/or its contents. Copyright statements are generally legal restrictions on the use and publishing of the plan definition.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="relatedResource" minOccurs="0" maxOccurs="unbounded" type="RelatedResource">
+          <xs:element name="relatedArtifact" minOccurs="0" maxOccurs="unbounded" type="RelatedArtifact">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Related resources such as additional documentation, justification, or bibliographic references.</xs:documentation>
+              <xs:documentation xml:lang="en">Related artifacts such as additional documentation, justification, or bibliographic references.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="library" minOccurs="0" maxOccurs="unbounded" type="Reference">
@@ -159,9 +169,89 @@
               <xs:documentation xml:lang="en">A reference to a Library resource containing any formal logic used by the plan definition.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="goalDefinition" type="PlanDefinition.GoalDefinition" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Goals that describe what the activities within the plan are intended to achieve. For example, weight loss, restoring an activity of daily living, obtaining herd immunity via immunization, meeting a process improvement objective, etc.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="actionDefinition" type="PlanDefinition.ActionDefinition" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">An action to be taken as part of the plan.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PlanDefinition.GoalDefinition">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact. The resource is general enough to support the description of a broad range of clinical artifacts such as clinical decision support rules, order sets and protocols.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="category" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Indicates a category the goal falls within.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="description" minOccurs="1" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Human-readable and/or coded description of a specific desired objective of care, such as &quot;control blood pressure&quot; or &quot;negotiate an obstacle course&quot; or &quot;dance with child at wedding&quot;.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="priority" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Identifies the expected level of importance associated with reaching/sustaining the defined goal.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="start" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The event after which the goal should begin being pursued.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="addresses" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Identifies problems, conditions, issues, or concerns the goal is intended to address.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="documentation" minOccurs="0" maxOccurs="unbounded" type="RelatedArtifact">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Didactic or other informational resources associated with the goal that provide further supporting information about the goal. Information resources can include inline text commentary and links to web resources.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="target" type="PlanDefinition.Target" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Indicates what should be done and within what timeframe.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PlanDefinition.Target">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact. The resource is general enough to support the description of a broad range of clinical artifacts such as clinical decision support rules, order sets and protocols.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="measure" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The parameter whose value is to be tracked, e.g. body weigth, blood pressure, or hemoglobin A1c level.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:choice minOccurs="0" maxOccurs="1" >
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The target value of the measure to be achieved to signify fulfillment of the goal, e.g. 150 pounds or 7.0%. Either the high or low or both values of the range can be specified. Whan a low value is missing, it indicates that the goal is achieved at any value at or below the high value. Similarly, if the high value is missing, it indicates that the goal is achieved at any value at or above the low value.</xs:documentation>
+            </xs:annotation>
+            <xs:element name="detailQuantity" type="Quantity"/>
+            <xs:element name="detailRange" type="Range"/>
+            <xs:element name="detailCodeableConcept" type="CodeableConcept"/>
+          </xs:choice>
+          <xs:element name="due" minOccurs="0" maxOccurs="1" type="Duration">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Indicates the timeframe after the start of the goal in which the goal should be met.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -175,11 +265,6 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="actionIdentifier" minOccurs="0" maxOccurs="1" type="Identifier">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">A unique identifier for the action. The identifier SHALL be unique within the container in which it appears, and MAY be universally unique.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="label" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
               <xs:documentation xml:lang="en">A user-visible label for the action.</xs:documentation>
@@ -200,14 +285,24 @@
               <xs:documentation xml:lang="en">A text equivalent of the action to be performed. This provides a human-interpretable description of the action when the definition is consumed by a system that may not be capable of interpreting it dynamically.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="concept" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="code" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The concept represented by this action or its sub-actions.</xs:documentation>
+              <xs:documentation xml:lang="en">A code that provides meaning for the action or action group. For example, a section may have a LOINC code for a the section of a documentation template.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="documentation" minOccurs="0" maxOccurs="unbounded" type="RelatedResource">
+          <xs:element name="reason" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A description of why this action is necessary or appropriate.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="documentation" minOccurs="0" maxOccurs="unbounded" type="RelatedArtifact">
             <xs:annotation>
               <xs:documentation xml:lang="en">Didactic or other informational resources associated with the action that can be provided to the CDS recipient. Information resources can include inline text commentary and links to web resources.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="goalId" minOccurs="0" maxOccurs="unbounded" type="id">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Identifies goals that this action supports. The reference must be to a goalDefinition element defined within this plan definition.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="triggerDefinition" minOccurs="0" maxOccurs="unbounded" type="TriggerDefinition">
@@ -215,9 +310,19 @@
               <xs:documentation xml:lang="en">A description of when the action should be triggered.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="condition" type="PlanDefinition.Condition" minOccurs="0" maxOccurs="1">
+          <xs:element name="condition" type="PlanDefinition.Condition" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">An expression specifying whether or not the action is applicable in a given context.</xs:documentation>
+              <xs:documentation xml:lang="en">An expression that describes applicability criteria, or start/stop conditions for the action.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="input" minOccurs="0" maxOccurs="unbounded" type="DataRequirement">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines input data requirements for the action.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="output" minOccurs="0" maxOccurs="unbounded" type="DataRequirement">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the outputs of the action, if any.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="relatedAction" type="PlanDefinition.RelatedAction" minOccurs="0" maxOccurs="unbounded">
@@ -235,9 +340,9 @@
             <xs:element name="timingRange" type="Range"/>
             <xs:element name="timingTiming" type="Timing"/>
           </xs:choice>
-          <xs:element name="participantType" minOccurs="0" maxOccurs="unbounded" type="PlanActionParticipantType">
+          <xs:element name="participant" type="PlanDefinition.Participant" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The type of participant in the action.</xs:documentation>
+              <xs:documentation xml:lang="en">Indicates who should participate in performing the action described.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="type" minOccurs="0" maxOccurs="1" type="Coding">
@@ -245,34 +350,34 @@
               <xs:documentation xml:lang="en">The type of action to perform (create, update, remove).</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="groupingBehavior" minOccurs="0" maxOccurs="1" type="PlanActionGroupingBehavior">
+          <xs:element name="groupingBehavior" minOccurs="0" maxOccurs="1" type="ActionGroupingBehavior">
             <xs:annotation>
               <xs:documentation xml:lang="en">Defines the grouping behavior for the action and its children.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="selectionBehavior" minOccurs="0" maxOccurs="1" type="PlanActionSelectionBehavior">
+          <xs:element name="selectionBehavior" minOccurs="0" maxOccurs="1" type="ActionSelectionBehavior">
             <xs:annotation>
               <xs:documentation xml:lang="en">Defines the selection behavior for the action and its children.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="requiredBehavior" minOccurs="0" maxOccurs="1" type="PlanActionRequiredBehavior">
+          <xs:element name="requiredBehavior" minOccurs="0" maxOccurs="1" type="ActionRequiredBehavior">
             <xs:annotation>
               <xs:documentation xml:lang="en">Defines the requiredness behavior for the action.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="precheckBehavior" minOccurs="0" maxOccurs="1" type="PlanActionPrecheckBehavior">
+          <xs:element name="precheckBehavior" minOccurs="0" maxOccurs="1" type="ActionPrecheckBehavior">
             <xs:annotation>
               <xs:documentation xml:lang="en">Defines whether the action should usually be preselected.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="cardinalityBehavior" minOccurs="0" maxOccurs="1" type="PlanActionCardinalityBehavior">
+          <xs:element name="cardinalityBehavior" minOccurs="0" maxOccurs="1" type="ActionCardinalityBehavior">
             <xs:annotation>
               <xs:documentation xml:lang="en">Defines whether the action can be selected multiple times.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="activityDefinition" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="definition" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A reference to an ActivityDefinition that describes the action to be taken in detail.</xs:documentation>
+              <xs:documentation xml:lang="en">A reference to an ActivityDefinition that describes the action to be taken in detail, or a PlanDefinition that describes a series of actions to be taken.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="transform" minOccurs="0" maxOccurs="1" type="Reference">
@@ -301,6 +406,11 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
+          <xs:element name="kind" minOccurs="1" maxOccurs="1" type="ActionConditionKind">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The kind of condition.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="description" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
               <xs:documentation xml:lang="en">A brief, natural language description of the condition that effectively communicates the intended semantics.</xs:documentation>
@@ -327,12 +437,12 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="actionIdentifier" minOccurs="1" maxOccurs="1" type="Identifier">
+          <xs:element name="actionId" minOccurs="1" maxOccurs="1" type="id">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The unique identifier of the related action.</xs:documentation>
+              <xs:documentation xml:lang="en">The element id of the related action.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="relationship" minOccurs="1" maxOccurs="1" type="PlanActionRelationshipType">
+          <xs:element name="relationship" minOccurs="1" maxOccurs="1" type="ActionRelationshipType">
             <xs:annotation>
               <xs:documentation xml:lang="en">The relationship of this action to the related action.</xs:documentation>
            </xs:annotation>
@@ -344,9 +454,25 @@
             <xs:element name="offsetDuration" type="Duration"/>
             <xs:element name="offsetRange" type="Range"/>
           </xs:choice>
-          <xs:element name="anchor" minOccurs="0" maxOccurs="1" type="PlanActionRelationshipAnchor">
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PlanDefinition.Participant">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact. The resource is general enough to support the description of a broad range of clinical artifacts such as clinical decision support rules, order sets and protocols.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="type" minOccurs="1" maxOccurs="1" type="ActionParticipantType">
             <xs:annotation>
-              <xs:documentation xml:lang="en">An optional indicator for how the relationship is anchored to the related action. For example &quot;before the start&quot; or &quot;before the end&quot; of the related action.</xs:documentation>
+              <xs:documentation xml:lang="en">The type of participant in the action.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="role" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The role the participant should play in performing the described action.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -384,7 +510,157 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="PlanActionSelectionBehavior-list">
+  <xs:simpleType name="ActionRequiredBehavior-list">
+    <xs:restriction base="code-primitive">
+      <xs:enumeration value="must">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Must</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="could">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Could</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="must-unless-documented">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Must Unless Documented</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ActionRequiredBehavior">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines requiredness behavior for selecting an action or an action group</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="ActionRequiredBehavior-list" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="ActionRelationshipType-list">
+    <xs:restriction base="code-primitive">
+      <xs:enumeration value="before-start">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Before Start</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="before">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Before</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="before-end">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Before End</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="concurrent-with-start">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Concurrent With Start</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="concurrent">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Concurrent</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="concurrent-with-end">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Concurrent With End</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="after-start">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">After Start</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="after">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">After</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="after-end">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">After End</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ActionRelationshipType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines the types of relationships between actions</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="ActionRelationshipType-list" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="ActionParticipantType-list">
+    <xs:restriction base="code-primitive">
+      <xs:enumeration value="patient">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Patient</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="practitioner">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Practitioner</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="related-person">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Related Person</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ActionParticipantType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The type of participant for the action</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="ActionParticipantType-list" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="ActionGroupingBehavior-list">
+    <xs:restriction base="code-primitive">
+      <xs:enumeration value="visual-group">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Visual Group</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="logical-group">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Logical Group</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="sentence-group">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Sentence Group</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ActionGroupingBehavior">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines organization behavior of a group</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="ActionGroupingBehavior-list" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="ActionSelectionBehavior-list">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="any">
         <xs:annotation>
@@ -418,18 +694,18 @@
       </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
-  <xs:complexType name="PlanActionSelectionBehavior">
+  <xs:complexType name="ActionSelectionBehavior">
     <xs:annotation>
       <xs:documentation xml:lang="en">Defines selection behavior of a group</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="PlanActionSelectionBehavior-list" use="optional"/>
+        <xs:attribute name="value" type="ActionSelectionBehavior-list" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="PlanActionCardinalityBehavior-list">
+  <xs:simpleType name="ActionCardinalityBehavior-list">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="single">
         <xs:annotation>
@@ -443,163 +719,18 @@
       </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
-  <xs:complexType name="PlanActionCardinalityBehavior">
+  <xs:complexType name="ActionCardinalityBehavior">
     <xs:annotation>
       <xs:documentation xml:lang="en">Defines behavior for an action or a group for how many times that item may be repeated</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="PlanActionCardinalityBehavior-list" use="optional"/>
+        <xs:attribute name="value" type="ActionCardinalityBehavior-list" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="PlanActionRequiredBehavior-list">
-    <xs:restriction base="code-primitive">
-      <xs:enumeration value="must">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Must</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="could">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Could</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="must-unless-documented">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Must Unless Documented</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="PlanActionRequiredBehavior">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">Defines requiredness behavior for selecting an action or an action group</xs:documentation>
-      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="Element">
-        <xs:attribute name="value" type="PlanActionRequiredBehavior-list" use="optional"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:simpleType name="PlanActionParticipantType-list">
-    <xs:restriction base="code-primitive">
-      <xs:enumeration value="patient">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Patient</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="practitioner">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Practitioner</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="related-person">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Related Person</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="PlanActionParticipantType">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">The type of participant for the action</xs:documentation>
-      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="Element">
-        <xs:attribute name="value" type="PlanActionParticipantType-list" use="optional"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:simpleType name="PlanActionGroupingBehavior-list">
-    <xs:restriction base="code-primitive">
-      <xs:enumeration value="visual-group">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Visual Group</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="logical-group">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Logical Group</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="sentence-group">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Sentence Group</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="PlanActionGroupingBehavior">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">Defines organization behavior of a group</xs:documentation>
-      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="Element">
-        <xs:attribute name="value" type="PlanActionGroupingBehavior-list" use="optional"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:simpleType name="PlanActionRelationshipAnchor-list">
-    <xs:restriction base="code-primitive">
-      <xs:enumeration value="start">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Start</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="end">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">End</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="PlanActionRelationshipAnchor">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">Defines possible anchors for the relationship between actions</xs:documentation>
-      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="Element">
-        <xs:attribute name="value" type="PlanActionRelationshipAnchor-list" use="optional"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:simpleType name="PlanActionRelationshipType-list">
-    <xs:restriction base="code-primitive">
-      <xs:enumeration value="before">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Before</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="after">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">After</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="concurrent">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Concurrent</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="PlanActionRelationshipType">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">Defines the types of relationships between actions</xs:documentation>
-      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="Element">
-        <xs:attribute name="value" type="PlanActionRelationshipType-list" use="optional"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:simpleType name="PlanActionPrecheckBehavior-list">
+  <xs:simpleType name="ActionPrecheckBehavior-list">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="yes">
         <xs:annotation>
@@ -613,14 +744,44 @@
       </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
-  <xs:complexType name="PlanActionPrecheckBehavior">
+  <xs:complexType name="ActionPrecheckBehavior">
     <xs:annotation>
       <xs:documentation xml:lang="en">Defines selection frequency behavior for an action or group</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="PlanActionPrecheckBehavior-list" use="optional"/>
+        <xs:attribute name="value" type="ActionPrecheckBehavior-list" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="ActionConditionKind-list">
+    <xs:restriction base="code-primitive">
+      <xs:enumeration value="applicability">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Applicability</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="start">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Start</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="stop">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Stop</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ActionConditionKind">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines the kinds of conditions that can appear on actions</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="ActionConditionKind-list" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Aug 11, 2016 03:44+0000 for FHIR v1.6.0 
+  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -51,7 +51,12 @@
         <xs:sequence>
           <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The local ID assigned to the report by the order filler, usually by the Information System of the diagnostic service provider.</xs:documentation>
+              <xs:documentation xml:lang="en">Identifiers assigned to this reprot by the performer or other systems.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="basedOn" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Details concerning a test or procedure requested.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="status" minOccurs="1" maxOccurs="1" type="DiagnosticReportStatus">
@@ -69,36 +74,31 @@
               <xs:documentation xml:lang="en">A code or name that describes this diagnostic report.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="subject" minOccurs="1" maxOccurs="1" type="Reference">
+          <xs:element name="subject" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">The subject of the report. Usually, but not always, this is a patient. However diagnostic services also perform analyses on specimens collected from a variety of other sources.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="encounter" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="context" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The link to the health care event (encounter) when the order was made.</xs:documentation>
+              <xs:documentation xml:lang="en">The healthcare event  (e.g. a patient and healthcare provider interaction) which this DiagnosticReport per is about.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:choice minOccurs="1" maxOccurs="1" >
+          <xs:choice minOccurs="0" maxOccurs="1" >
             <xs:annotation>
               <xs:documentation xml:lang="en">The time or time-period the observed values are related to. When the subject of the report is a patient, this is usually either the time of the procedure or of specimen collection(s), but very often the source of the date/time is not known, only the date/time itself.</xs:documentation>
             </xs:annotation>
             <xs:element name="effectiveDateTime" type="dateTime"/>
             <xs:element name="effectivePeriod" type="Period"/>
           </xs:choice>
-          <xs:element name="issued" minOccurs="1" maxOccurs="1" type="instant">
+          <xs:element name="issued" minOccurs="0" maxOccurs="1" type="instant">
             <xs:annotation>
               <xs:documentation xml:lang="en">The date and time that this version of the report was released from the source diagnostic service.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="performer" minOccurs="1" maxOccurs="unbounded" type="Reference">
+          <xs:element name="performer" type="DiagnosticReport.Performer" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The diagnostic service that is responsible for issuing the report.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="request" minOccurs="0" maxOccurs="unbounded" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Details concerning a test or procedure requested.</xs:documentation>
+              <xs:documentation xml:lang="en">Indicates who or what participated in producing the report.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="specimen" minOccurs="0" maxOccurs="unbounded" type="Reference">
@@ -140,6 +140,27 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+  <xs:complexType name="DiagnosticReport.Performer">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The findings and interpretation of diagnostic  tests performed on patients, groups of patients, devices, and locations, and/or specimens derived from these. The report includes clinical context such as requesting and provider information, and some mix of atomic results, images, textual and coded interpretations, and formatted representation of diagnostic reports.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="role" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Describes the type of participation (e.g.  a responsible party, author, or verifier).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="actor" minOccurs="1" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The reference to the  practitioner or organization involved in producing the report. For example, the diagnostic service that is responsible for issuing the report.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
   <xs:complexType name="DiagnosticReport.Image">
     <xs:annotation>
       <xs:documentation xml:lang="en">The findings and interpretation of diagnostic  tests performed on patients, groups of patients, devices, and locations, and/or specimens derived from these. The report includes clinical context such as requesting and provider information, and some mix of atomic results, images, textual and coded interpretations, and formatted representation of diagnostic reports.</xs:documentation>
@@ -173,9 +194,19 @@
           <xs:documentation xml:lang="en">Partial</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="preliminary">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Preliminary</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="final">
         <xs:annotation>
           <xs:documentation xml:lang="en">Final</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="amended">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Amended</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="corrected">
@@ -196,6 +227,11 @@
       <xs:enumeration value="entered-in-error">
         <xs:annotation>
           <xs:documentation xml:lang="en">Entered in Error</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="unknown">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Unknown</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>
