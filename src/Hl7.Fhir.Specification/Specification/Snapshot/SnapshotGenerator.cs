@@ -345,19 +345,39 @@ namespace Hl7.Fhir.Specification.Snapshot
             else // if (defn.Type.Count == 1)
             {
                 // [WMR 20160720] Handle custom type profiles (GForge #9791)
-                StructureDefinition baseStructure = getStructureForElementType(defn, true);
+                StructureDefinition typeStructure = getStructureForElementType(defn, true);
 
                 // [WMR 20170208] TODO: Expand profile snapshot if necessary
-                if (baseStructure != null && baseStructure.HasSnapshot)
+                if (typeStructure != null && typeStructure.HasSnapshot)
                 {
-                    var baseSnap = baseStructure.Snapshot;
-                    var baseNav = new ElementDefinitionNavigator(baseSnap.Element);
-                    if (!baseNav.MoveToFirstChild())
+                    var typeSnap = typeStructure.Snapshot;
+                    var typeNav = new ElementDefinitionNavigator(typeSnap.Element);
+                    if (!typeNav.MoveToFirstChild())
                     {
-                        addIssueProfileHasNoSnapshot(defn.ToNamedNode(), baseStructure.Url);
+                        addIssueProfileHasNoSnapshot(defn.ToNamedNode(), typeStructure.Url);
                     }
                     // [WMR 20170208] NEW - Move common logic to separate method, also used by mergeTypeProfiles
-                    copyChildren(nav, baseNav, baseStructure);
+
+                    // [WMR 20170220] If profile element has no children, then copy child elements from type structure into profile
+                    if (!copyChildren(nav, typeNav, typeStructure))
+                    {
+                        // Otherwise merge type structure onto profile elements (cf. mergeTypeProfiles)
+
+                        // [WMR 20170220] Can this happen?
+                        // TODO: Create unit test to trigger this situation
+                        Debug.Fail($"[{nameof(SnapshotGenerator)}.{nameof(expandElement)}] TODO...");
+
+                        // [WMR 20170220] WRONG...?
+                        // Must merge nav on top of typeNav, not the other way around...
+                        mergeElement(nav, typeNav);
+
+                        // 1. Fully expand the snapshot of the external type profile
+                        // 2. Clone, rebase and copy children into referencing profile below the referencing parent element
+                        // 2. On top of that, merge base profile constraints (taken from the snapshot)
+                        // 3. On top of that, merge profile differential constraints
+
+                        // mergeElementDefinition(snap.Current, diffElem);
+                    }
                 }
             }
 
@@ -758,27 +778,34 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// Copy child elements from <paramref name="typeNav"/> to <paramref name="nav"/>.
         /// Remove existing annotations, fix Base components, notify listeners.
         /// </summary>
-        void copyChildren(ElementDefinitionNavigator nav, ElementDefinitionNavigator typeNav, StructureDefinition typeStructure)
+        bool copyChildren(ElementDefinitionNavigator nav, ElementDefinitionNavigator typeNav, StructureDefinition typeStructure)
         {
-            nav.CopyChildren(typeNav);
-
-            // Fix the copied elements and notify observers
-            var pos = nav.OrdinalPosition.Value;
-            for (int i = 1; i < typeNav.Elements.Count; i++)
+            // [WMR 20170220] CopyChildren returns false if nav already has children
+            if (nav.CopyChildren(typeNav))
             {
-                var elem = nav.Elements[pos + i];
-                var typeElem = typeNav.Elements[i];
+                // Fix the copied elements and notify observers
+                var pos = nav.OrdinalPosition.Value;
+                for (int i = 1; i < typeNav.Elements.Count; i++)
+                {
+                    // [WMR 20170220] Problem: nav and typeNav structure can differ
+                    // e.g. both can have separate extensions, slices etc.
 
-                // [WMR 20160826] Never inherit Changed extension from base profile!
-                elem.RemoveAllConstrainedByDiffExtensions();
-                elem.RemoveAllConstrainedByDiffAnnotations();
+                    var elem = nav.Elements[pos + i];
+                    var typeElem = typeNav.Elements[i];
 
-                // [WMR 20160902] Initialize empty ElementDefinition.Base components if necessary
-                // [WMR 20160906] Always regenerate! Cannot reuse cloned base components
-                elem.EnsureBaseComponent(typeElem, true);
+                    // [WMR 20160826] Never inherit Changed extension from base profile!
+                    elem.RemoveAllConstrainedByDiffExtensions();
+                    elem.RemoveAllConstrainedByDiffAnnotations();
 
-                OnPrepareElement(elem, typeStructure, typeElem);
+                    // [WMR 20160902] Initialize empty ElementDefinition.Base components if necessary
+                    // [WMR 20160906] Always regenerate! Cannot reuse cloned base components
+                    elem.EnsureBaseComponent(typeElem, true);
+
+                    OnPrepareElement(elem, typeStructure, typeElem);
+                }
+                return true;
             }
+            return false;
         }
 
         static void fixExtensionUrl(ElementDefinitionNavigator nav)

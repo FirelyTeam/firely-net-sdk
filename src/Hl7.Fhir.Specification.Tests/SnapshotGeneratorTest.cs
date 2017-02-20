@@ -132,10 +132,10 @@ namespace Hl7.Fhir.Specification.Tests
         public void GenerateExtensionSnapshot()
         {
             // var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/string-translation");
-            var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/StructureDefinition/patient-research-authorization");
+            // var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/StructureDefinition/patient-research-authorization");
             // var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/StructureDefinition/patient-legal-case");
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/us-core-religion");
-            // var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/string-translation");
+            var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/string-translation");
 
             Assert.IsNotNull(sd);
             // dumpReferences(sd);
@@ -181,7 +181,6 @@ namespace Hl7.Fhir.Specification.Tests
 
             var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Account");
 
-            // var sd = _testResolver.FindStructureDefinition(@"http://fhir.nl/fhir/StructureDefinition/nl-core-patient");
             // var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/PatientWithExtension");
 
             Assert.IsNotNull(sd);
@@ -391,7 +390,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             foreach (var elem in elems)
             {
-                Debug.WriteLine("{0}  |  {1}", elem.Path, elem.Base != null ? elem.Base.Path : null);
+                Debug.WriteLine("{0}  |  {1}", elem.Path, elem.Base?.Path);
             }
 
             int i = elems.FindIndex(e => e.Path == "Patient.identifier");
@@ -424,6 +423,49 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("Patient.identifier.assigner.extension", elems[++i].Path);
             Assert.AreEqual("Patient.identifier.assigner.reference", elems[++i].Path);
             Assert.AreEqual("Patient.identifier.assigner.display", elems[++i].Path);
+
+            for (int j = 1; j < elems.Count; j++)
+            {
+                if (isExpandableElement(elems[j]))
+                {
+                    verifyExpandElement(elems[j], elems, elems);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void TestCoreOrganizationNL()
+        {
+            // core-organization-nl references extension core-address-nl
+            // BUG: expanded extension child elements have incorrect .Base.Path ...?!
+            // e.g. Organization.address.type - Base = Organization.address.use
+            // Fixed by adding conditional to copyChildren
+
+            var sd = _testResolver.FindStructureDefinition(@"http://fhir.nl/fhir/StructureDefinition/nl-core-organization");
+            Assert.IsNotNull(sd);
+
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            _generator.PrepareElement += elementHandler;
+            _generator.BeforeExpandElement += beforeExpandElementHandler;
+            StructureDefinition expanded = null;
+            try
+            {
+                generateSnapshotAndCompare(sd, out expanded);
+            }
+            finally
+            {
+                _generator.PrepareElement -= elementHandler;
+                _generator.BeforeExpandElement -= beforeExpandElementHandler;
+            }
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+            var elems = expanded.Snapshot.Element;
+
+            foreach (var elem in elems)
+            {
+                Debug.WriteLine("{0}  |  {1}", elem.Path, elem.Base?.Path);
+            }
 
             for (int j = 1; j < elems.Count; j++)
             {
@@ -480,10 +522,10 @@ namespace Hl7.Fhir.Specification.Tests
 
             // cqif-guidanceartifact profile is derived from cqif-knowledgemodule
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
-            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/sdc-questionnaire");
+            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/sdc-questionnaire");
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-goal");
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-patient");
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-encounter");
+            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-encounter");
 
             Assert.IsNotNull(sd);
             // dumpReferences(sd);
@@ -1275,56 +1317,59 @@ namespace Hl7.Fhir.Specification.Tests
                     ? _testResolver.FindStructureDefinition(elemProfile)
                     : _testResolver.FindStructureDefinitionForCoreType(elemTypeCode);
 
-                Assert.IsNotNull(sdType);
-                Assert.IsNotNull(sdType.Snapshot);
-                Assert.IsNotNull(sdType.Snapshot.Element);
-                Assert.IsTrue(sdType.Snapshot.Element.Count > 0);
-
-                // Debug.WriteLine("\r\nType:");
-                // Debug.WriteLine(string.Join(Environment.NewLine, sdType.Snapshot.Element.Select(e => e.Path)));
-
-                sdType.Snapshot.Rebase(expandElemPath);
-                var typeElems = sdType.Snapshot.Element;
-
-                var nav = new ElementDefinitionNavigator(result);
-                //Assert.IsTrue(result.Count == elems.Count + typeElems.Count - 1);
-                //if (elem.Name == null)
-                //{
-                //    Assert.IsTrue(result.Where(e => e.Path.StartsWith(expandElemPath)).Count() == typeElems.Count);
-                //}
-                //else
-                if (elem.Name != null)
+                // [WMR 20170220] External type profile may not be available
+                // Assert.IsNotNull(sdType);
+                if (sdType != null)
                 {
-                    // The expanded element represents a slice
-                    // var nav = new ElementDefinitionNavigator(result);
-                    nav.JumpToNameReference(elem.Name);
-                    var cnt = 1;
+                    Assert.IsNotNull(sdType.Snapshot);
+                    Assert.IsNotNull(sdType.Snapshot.Element);
+                    Assert.IsTrue(sdType.Snapshot.Element.Count > 0);
+
+                    // Debug.WriteLine("\r\nType:");
+                    // Debug.WriteLine(string.Join(Environment.NewLine, sdType.Snapshot.Element.Select(e => e.Path)));
+
+                    sdType.Snapshot.Rebase(expandElemPath);
+                    var typeElems = sdType.Snapshot.Element;
+
+                    var nav = new ElementDefinitionNavigator(result);
+                    //Assert.IsTrue(result.Count == elems.Count + typeElems.Count - 1);
+                    //if (elem.Name == null)
+                    //{
+                    //    Assert.IsTrue(result.Where(e => e.Path.StartsWith(expandElemPath)).Count() == typeElems.Count);
+                    //}
+                    //else
+                    if (elem.NameReference != null)
+                    {
+                        // Name reference (not a slice)
+                        Assert.IsTrue(nav.JumpToNameReference(elem.NameReference));
+                        var cnt = 1;
+                        Assert.IsTrue(nav.MoveToFirstChild());
+                        do
+                        {
+                            Assert.AreEqual(typeElems[cnt++].Path, nav.Path);
+                        } while (nav.MoveToNext());
+                        Assert.AreEqual(typeElems.Count, cnt);
+                    }
+
+                    nav.Reset();
+                    Assert.IsTrue(nav.MoveTo(elem));
                     Assert.IsTrue(nav.MoveToFirstChild());
+                    var typeNav = new ElementDefinitionNavigator(typeElems);
+                    Assert.IsTrue(typeNav.MoveTo(typeNav.Elements[0]));
+                    Assert.IsTrue(typeNav.MoveToFirstChild());
                     do
                     {
-                        Assert.AreEqual(typeElems[cnt++].Path, nav.Path);
-                    } while (nav.MoveToNext());
-                    Assert.AreEqual(typeElems.Count, cnt);
+                        var path = typeNav.Path;
+                        Assert.IsTrue(nav.Path.EndsWith(path, StringComparison.OrdinalIgnoreCase));
+                        if (!nav.MoveToNext())
+                        {
+                            Debug.Assert(!typeNav.MoveToNext());
+                            break;
+                        }
+                        Debug.Assert(typeNav.MoveToNext());
+
+                    } while (true);
                 }
-
-                nav.Reset();
-                Assert.IsTrue(nav.MoveTo(elem));
-                Assert.IsTrue(nav.MoveToFirstChild());
-                var typeNav = new ElementDefinitionNavigator(typeElems);
-                Assert.IsTrue(typeNav.MoveTo(typeNav.Elements[0]));
-                Assert.IsTrue(typeNav.MoveToFirstChild());
-                do
-                {
-                    var path = typeNav.Path;
-                    Assert.IsTrue(nav.Path.EndsWith(path, StringComparison.OrdinalIgnoreCase));
-                    if (!nav.MoveToNext())
-                    {
-                        Debug.Assert(!typeNav.MoveToNext());
-                        break;
-                    }
-                    Debug.Assert(typeNav.MoveToNext());
-
-                } while (true);
 
 
             }
@@ -1425,7 +1470,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Debug.Print(new string('=', 100));
                 foreach (var elem in sd.Snapshot.Element)
                 {
-                    Debug.WriteLine("{0}  |  {1}  |  {2}", elem.ElementId, elem.Path, elem.Base != null ? elem.Base.Path : null);
+                    Debug.WriteLine("{0}  |  {1}  |  {2}", elem.ElementId, elem.Path, elem.Base?.Path);
                 }
                 // Debug.Unindent();
             }
@@ -1483,6 +1528,7 @@ namespace Hl7.Fhir.Specification.Tests
             // var sd = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyLocation");
             // var sd = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyPatient");
             // var sd = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyExtension1");
+            // var sd = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/CarePlan");
 
             // var sd = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Element");
             // var sd = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Patient");
