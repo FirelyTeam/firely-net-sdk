@@ -107,10 +107,21 @@ namespace Hl7.Fhir.Specification.Source
         bool _resourcesPrepared = false;
         private List<ResourceStreamScanner.ResourceScanInformation> _resourceScanInformation;
 
+        // [WMR 20170217] Ignore invalid xml files, aggregate parsing errors
+        // https://github.com/ewoutkramer/fhir-net-api/issues/301
+        public struct ErrorInfo
+        {
+            public ErrorInfo(string fileName, XmlException error) { FileName = fileName; Error = error; }
+            public string FileName { get; }
+            public XmlException Error { get; }
+        }
 
-        /// <summary>
-        /// Scan all xml files found by prepareFiles and find conformance resources + their id
-        /// </summary>
+        ErrorInfo[] _errors = new ErrorInfo[0];
+
+        /// <summary>Returns an array of runtime errors that occured while parsing the resources.</summary>
+        public ErrorInfo[] Errors => _errors;
+
+        /// <summary>Scan all xml files found by prepareFiles and find conformance resources and their id.</summary>
         private void prepareResources()
         {
             if (_resourcesPrepared) return;
@@ -119,6 +130,7 @@ namespace Hl7.Fhir.Specification.Source
 
             _resourceScanInformation = new List<ResourceStreamScanner.ResourceScanInformation>();
 
+            var errors = new List<ErrorInfo>();
             foreach (var file in _artifactFilePaths.Where(af => Path.GetExtension(af) == ".xml"))
             {
                 try
@@ -126,11 +138,14 @@ namespace Hl7.Fhir.Specification.Source
                     var scannedInformation = readInformationFromFile(file);
                     _resourceScanInformation.AddRange(scannedInformation);
                 }
-                catch (XmlException)
+                catch (XmlException e)
                 {
-                    throw;      // Just ignore crappy xml
+                    // throw;      // Just ignore crappy xml
+                    errors.Add(new ErrorInfo(file, e));    // Log the exception
                 }
+                // Don't catch other exceptions (fatal error)
             }
+            _errors = errors.ToArray();
 
             // Check for duplicate canonical urls, this is forbidden within a single source (and actually, universally,
             // but if another source has the same url, the order of polling in the MultiArtifactSource matters)
