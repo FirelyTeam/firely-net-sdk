@@ -3126,6 +3126,77 @@ namespace Hl7.Fhir.Specification.Tests
             // TODO: Verify slice
 
         }
+
+        // [WMR 2017024] NEW: Test for bug with snapshot expansion of ElementDefinition.Binding (reported by NHS)
+        // If the diff constrains only Binding.Strength, then snapshot also contains only Binding.Strength - WRONG!
+        // Expected: snapshot contains inherited properties from base, i.e. description, valueSetUri/valueSetReference
+        [TestMethod]
+        public void TestElementBinding()
+        {
+            var sd = new StructureDefinition()
+            {
+                ConstrainedType = FHIRDefinedType.Encounter,
+                Base = ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Encounter),
+                Name = "MyTestEncounter",
+                Url = "http://example.org/fhir/StructureDefinition/MyTestEncounter",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Encounter.type")
+                        {
+
+                            // Default binding on Encounter.type:
+                            //
+                            // <binding>
+                            //   <strength value="example" />
+                            //   <description value="The type of encounter" />
+                            //   <valueSetReference>
+                            //     <reference value="http://hl7.org/fhir/ValueSet/encounter-type" />
+                            //   </valueSetReference>
+                            // </binding>
+
+                            Binding = new ElementDefinition.BindingComponent()
+                            {
+                                // Constrain strength from Example to Preferred
+                                Strength = BindingStrength.Preferred
+                            }
+                        }
+                    }
+
+                }
+            };
+
+            var resolver = new InMemoryProfileResolver(sd);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            _generator = new SnapshotGenerator(multiResolver);
+            StructureDefinition expanded = null;
+
+            generateSnapshotAndCompare(sd, out expanded);
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            var profileElem = expanded.Snapshot.Element.FirstOrDefault(e => e.Path == "Encounter.type");
+            Assert.IsNotNull(profileElem);
+            var profileBinding = profileElem.Binding;
+            Assert.IsNotNull(profileBinding);
+
+            Assert.AreEqual(BindingStrength.Preferred, profileBinding.Strength);
+
+            var sdEncounter = _testResolver.FindStructureDefinitionForCoreType(FHIRDefinedType.Encounter);
+            Assert.IsNotNull(sdEncounter);
+            Assert.IsTrue(sdEncounter.HasSnapshot);
+
+            var baseElem = sdEncounter.Snapshot.Element.FirstOrDefault(e => e.Path == "Encounter.type");
+            Assert.IsNotNull(baseElem);
+            var baseBinding = baseElem.Binding;
+            Assert.IsNotNull(baseBinding);
+
+            Assert.AreEqual(BindingStrength.Example, baseBinding.Strength);
+
+            Assert.AreEqual(baseBinding.Description, profileBinding.Description);
+            Assert.IsTrue(baseBinding.ValueSet.IsExactly(profileBinding.ValueSet));
+        }
     }
 
     public static class IListExtensions

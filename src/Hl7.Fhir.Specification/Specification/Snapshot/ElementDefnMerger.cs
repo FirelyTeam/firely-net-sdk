@@ -227,18 +227,37 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             T mergeComplexAttribute<T>(T snap, T diff) where T : Element
             {
-                //TODO: The next != null should be IsNullOrEmpty(), but we don't have that yet for complex types
-                // [WMR 20160718] Handle snap == null
-                // if (diff != null && !diff.IsExactly(snap))
-                // if (diff != null && (snap == null || !diff.IsExactly(snap)))
+#if true
+                var result = snap;
+                if (!diff.IsNullOrEmpty())
+                {
+                    if (snap.IsNullOrEmpty())
+                    {
+                        result = (T)diff.DeepCopy();
+                        onConstraint(result);
+                    }
+                    else if (!diff.IsExactly(snap))
+                    {
+                        // Clone base and recursively copy all non-null diff props over base props
+                        // So effectively the result inherits all missing properties from base
+                        result = (T)snap.DeepCopy();
+                        diff.CopyTo(result);
+                        onConstraint(result);
+                    }
+                }
+                return result;
+#else
                 if (!diff.IsNullOrEmpty() && (snap.IsNullOrEmpty() || !diff.IsExactly(snap)))
                 {
+                    // [WMR 20170224] WRONG! Must recursively merge missing child properties from base
                     var result = (T)diff.DeepCopy();
+
                     onConstraint(result);
                     return result;
                 }
                 else
                     return snap;
+#endif
             }
 
             List<T> mergeCollection<T>(List<T> snap, List<T> diff, Func<T, T, bool> elemComparer) where T : Element
