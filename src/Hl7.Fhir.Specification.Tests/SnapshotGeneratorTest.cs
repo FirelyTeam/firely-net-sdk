@@ -2895,6 +2895,8 @@ namespace Hl7.Fhir.Specification.Tests
         {
             ILookup<string, Resource> _resources;
 
+            public InMemoryProfileResolver(params IConformanceResource[] profiles) : this(profiles.AsEnumerable()) { }
+
             public InMemoryProfileResolver(IEnumerable<IConformanceResource> profiles)
             {
                 _resources = profiles.ToLookup(r => r.Url, r => r as Resource);
@@ -3197,6 +3199,90 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(baseBinding.Description, profileBinding.Description);
             Assert.IsTrue(baseBinding.ValueSet.IsExactly(profileBinding.ValueSet));
         }
+
+        // [WMR 2017024] NEW: Snapshot generator should reject profile extensions mapped to a StructureDefinition that is not an Extension definition.
+        // Reported by Thomas Tveit Rosenlund: https://simplifier.net/Velferdsteknologi2/FlagVFT (geoPositions)
+        // Don't expand; emit outcome issue
+        [TestMethod]
+        public void TestInvalidProfileExtensionTarget()
+        {
+            var sdLocation = new StructureDefinition()
+            {
+                ConstrainedType = FHIRDefinedType.Location,
+                Base = ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Location),
+                Name = "MyTestLocation",
+                Url = "http://example.org/fhir/StructureDefinition/MyTestLocation",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition()
+                        {
+                            Path = "Location.partOf",
+                            Max = "0"
+                        }
+                    }
+                }
+            };
+
+            var sdFlag = new StructureDefinition()
+            {
+                ConstrainedType = FHIRDefinedType.Flag,
+                Base = ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Flag),
+                Name = "MyTestFlag",
+                Url = "http://example.org/fhir/StructureDefinition/MyTestFlag",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Flag.extension")
+                        {
+                            Slicing = new ElementDefinition.SlicingComponent()
+                            {
+                                Discriminator = new string[] { "url" },
+                                Rules = ElementDefinition.SlicingRules.Open
+                            }
+                        },
+                        new ElementDefinition("Flag.extension")
+                        {
+                            Name = "geopositions",
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = FHIRDefinedType.Extension,
+                                    // INVALID - Map extension element to non-extension definition
+                                    Profile = new string[] { sdLocation.Url }
+                                }
+
+                            }
+                        }
+                    }
+
+                }
+            };
+
+            var resolver = new InMemoryProfileResolver(sdLocation, sdFlag);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+            _generator.BeforeExpandElement += beforeExpandElementHandler;
+            StructureDefinition expanded = null;
+            try
+            {
+                generateSnapshotAndCompare(sdFlag, out expanded);
+            }
+            finally
+            {
+                _generator.BeforeExpandElement -= beforeExpandElementHandler;
+            }
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            dumpOutcome(_generator.Outcome);
+            dumpElements(expanded.Snapshot.Element);
+        }
+
     }
 
     public static class IListExtensions

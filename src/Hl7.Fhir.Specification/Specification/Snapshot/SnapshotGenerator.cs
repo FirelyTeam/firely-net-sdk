@@ -31,6 +31,7 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
 using System.Diagnostics;
 using Hl7.ElementModel;
+using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -663,6 +664,14 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             var typeStructure = _resolver.FindStructureDefinition(primaryDiffTypeProfile);
+
+            // [WMR 20170224] Verify that the resolved StructureDefinition is compatible with the element type
+            if (!isValidTypeConstraint(typeStructure, primarySnapType.Code))
+            {
+                addIssueInvalidProfileType(diff.Current, typeStructure);
+                return false;
+            }
+
             var diffNode = diff.Current.ToNamedNode();
 
             // [WMR 20170207] Notify observers, allow event subscribers to force expansion (even if no diff constraints)
@@ -748,6 +757,28 @@ namespace Hl7.Fhir.Specification.Snapshot
             OnPrepareElement(snap.Current, null, mergedBaseElem);
 
             return true;
+        }
+
+        /// <summary>Determines if the specified <see cref="StructureDefinition"/> is compatible with type <param name="baseType"/>.</summary>
+        /// <returns><c>true</c> if the profile type is equal to or derived from the specified type, or <c>false</c> otherwise.</returns>
+        bool isValidTypeConstraint(StructureDefinition sd, FHIRDefinedType? baseType)
+        {
+            // Recursively walk up the base profile hierarchy until we find a profile on baseType
+            // TODO: Cache results...
+
+            if (baseType == null) { return true; }
+            if (sd == null) { return true; }
+
+            // DSTU2: sd.ConstrainedType is empty for core definitions => resolve from sd.Name
+            // STU3: sd.Type is always specified, including for core definitions
+            var sdType = sd.ConstrainedType ?? ModelInfo.FhirTypeNameToFhirType(sd?.Name);
+            if (sdType == null) { return false; }
+
+            if (sdType == baseType) { return true; }
+            if (sd.Base == null) { return false; }
+            var sdBase = _resolver.FindStructureDefinition(sd.Base);
+            if (sdBase == null) { return false; }
+            return isValidTypeConstraint(sdBase, baseType);
         }
 
         // [WMR 20170209] HACK
