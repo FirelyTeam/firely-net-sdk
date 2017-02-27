@@ -3289,6 +3289,25 @@ namespace Hl7.Fhir.Specification.Tests
             dumpElements(expanded.Snapshot.Element);
         }
 
+        // Verify extension constraint on choice type element w/o type slice
+        [TestMethod]
+        public void TestZibProcedure()
+        {
+            var sd = _testResolver.FindStructureDefinition("http://nictiz.nl/fhir/StructureDefinition/zib-Procedure");
+            Assert.IsNotNull(sd);
+            assertContainsElement(sd.Differential, "Procedure.request.extension", "RequestedBy");
+
+            StructureDefinition expanded = null;
+            generateSnapshotAndCompare(sd, out expanded);
+            dumpOutcome(_generator.Outcome);
+
+            Assert.IsTrue(expanded.HasSnapshot);
+            dumpElements(expanded.Snapshot.Element);
+
+            // Verify that the snapshot contains the extension on Procedure.request (w/o type slice)
+            assertContainsElement(expanded.Snapshot, "Procedure.request.extension", "RequestedBy");
+        }
+
     }
 
     public static class IListExtensions
