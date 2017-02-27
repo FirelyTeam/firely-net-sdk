@@ -3280,6 +3280,12 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(expanded.HasSnapshot);
 
             dumpOutcome(_generator.Outcome);
+
+            Assert.IsNotNull(_generator.Outcome);
+            Assert.IsNotNull(_generator.Outcome.Issue);
+            Assert.AreEqual(2, _generator.Outcome.Issue.Count);
+            assertIssue(_generator.Outcome.Issue[1], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_PROFILE_TYPE);
+
             dumpElements(expanded.Snapshot.Element);
         }
 
