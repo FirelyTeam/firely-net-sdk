@@ -31,6 +31,7 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
 using System.Diagnostics;
 using Hl7.ElementModel;
+using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -663,6 +664,14 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             var typeStructure = _resolver.FindStructureDefinition(primaryDiffTypeProfile);
+
+            // [WMR 20170224] Verify that the resolved StructureDefinition is compatible with the element type
+            if (!_resolver.IsValidTypeProfile(primarySnapType.Code, typeStructure))
+            {
+                addIssueInvalidProfileType(diff.Current, typeStructure);
+                return false;
+            }
+
             var diffNode = diff.Current.ToNamedNode();
 
             // [WMR 20170207] Notify observers, allow event subscribers to force expansion (even if no diff constraints)

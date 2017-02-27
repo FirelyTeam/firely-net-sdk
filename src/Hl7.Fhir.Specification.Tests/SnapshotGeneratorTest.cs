@@ -2895,6 +2895,8 @@ namespace Hl7.Fhir.Specification.Tests
         {
             ILookup<string, Resource> _resources;
 
+            public InMemoryProfileResolver(params IConformanceResource[] profiles) : this(profiles.AsEnumerable()) { }
+
             public InMemoryProfileResolver(IEnumerable<IConformanceResource> profiles)
             {
                 _resources = profiles.ToLookup(r => r.Url, r => r as Resource);
@@ -3126,6 +3128,167 @@ namespace Hl7.Fhir.Specification.Tests
             // TODO: Verify slice
 
         }
+
+        // [WMR 2017024] NEW: Test for bug with snapshot expansion of ElementDefinition.Binding (reported by NHS)
+        // If the diff constrains only Binding.Strength, then snapshot also contains only Binding.Strength - WRONG!
+        // Expected: snapshot contains inherited properties from base, i.e. description, valueSetUri/valueSetReference
+        [TestMethod]
+        public void TestElementBinding()
+        {
+            var sd = new StructureDefinition()
+            {
+                ConstrainedType = FHIRDefinedType.Encounter,
+                Base = ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Encounter),
+                Name = "MyTestEncounter",
+                Url = "http://example.org/fhir/StructureDefinition/MyTestEncounter",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Encounter.type")
+                        {
+
+                            // Default binding on Encounter.type:
+                            //
+                            // <binding>
+                            //   <strength value="example" />
+                            //   <description value="The type of encounter" />
+                            //   <valueSetReference>
+                            //     <reference value="http://hl7.org/fhir/ValueSet/encounter-type" />
+                            //   </valueSetReference>
+                            // </binding>
+
+                            Binding = new ElementDefinition.BindingComponent()
+                            {
+                                // Constrain strength from Example to Preferred
+                                Strength = BindingStrength.Preferred
+                            }
+                        }
+                    }
+
+                }
+            };
+
+            var resolver = new InMemoryProfileResolver(sd);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            _generator = new SnapshotGenerator(multiResolver);
+            StructureDefinition expanded = null;
+
+            generateSnapshotAndCompare(sd, out expanded);
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            var profileElem = expanded.Snapshot.Element.FirstOrDefault(e => e.Path == "Encounter.type");
+            Assert.IsNotNull(profileElem);
+            var profileBinding = profileElem.Binding;
+            Assert.IsNotNull(profileBinding);
+
+            Assert.AreEqual(BindingStrength.Preferred, profileBinding.Strength);
+
+            var sdEncounter = _testResolver.FindStructureDefinitionForCoreType(FHIRDefinedType.Encounter);
+            Assert.IsNotNull(sdEncounter);
+            Assert.IsTrue(sdEncounter.HasSnapshot);
+
+            var baseElem = sdEncounter.Snapshot.Element.FirstOrDefault(e => e.Path == "Encounter.type");
+            Assert.IsNotNull(baseElem);
+            var baseBinding = baseElem.Binding;
+            Assert.IsNotNull(baseBinding);
+
+            Assert.AreEqual(BindingStrength.Example, baseBinding.Strength);
+
+            Assert.AreEqual(baseBinding.Description, profileBinding.Description);
+            Assert.IsTrue(baseBinding.ValueSet.IsExactly(profileBinding.ValueSet));
+        }
+
+        // [WMR 2017024] NEW: Snapshot generator should reject profile extensions mapped to a StructureDefinition that is not an Extension definition.
+        // Reported by Thomas Tveit Rosenlund: https://simplifier.net/Velferdsteknologi2/FlagVFT (geoPositions)
+        // Don't expand; emit outcome issue
+        [TestMethod]
+        public void TestInvalidProfileExtensionTarget()
+        {
+            var sdLocation = new StructureDefinition()
+            {
+                ConstrainedType = FHIRDefinedType.Location,
+                Base = ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Location),
+                Name = "MyTestLocation",
+                Url = "http://example.org/fhir/StructureDefinition/MyTestLocation",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition()
+                        {
+                            Path = "Location.partOf",
+                            Max = "0"
+                        }
+                    }
+                }
+            };
+
+            var sdFlag = new StructureDefinition()
+            {
+                ConstrainedType = FHIRDefinedType.Flag,
+                Base = ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Flag),
+                Name = "MyTestFlag",
+                Url = "http://example.org/fhir/StructureDefinition/MyTestFlag",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Flag.extension")
+                        {
+                            Slicing = new ElementDefinition.SlicingComponent()
+                            {
+                                Discriminator = new string[] { "url" },
+                                Rules = ElementDefinition.SlicingRules.Open
+                            }
+                        },
+                        new ElementDefinition("Flag.extension")
+                        {
+                            Name = "geopositions",
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = FHIRDefinedType.Extension,
+                                    // INVALID - Map extension element to non-extension definition
+                                    Profile = new string[] { sdLocation.Url }
+                                }
+
+                            }
+                        }
+                    }
+
+                }
+            };
+
+            var resolver = new InMemoryProfileResolver(sdLocation, sdFlag);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+            _generator.BeforeExpandElement += beforeExpandElementHandler;
+            StructureDefinition expanded = null;
+            try
+            {
+                generateSnapshotAndCompare(sdFlag, out expanded);
+            }
+            finally
+            {
+                _generator.BeforeExpandElement -= beforeExpandElementHandler;
+            }
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            dumpOutcome(_generator.Outcome);
+
+            Assert.IsNotNull(_generator.Outcome);
+            Assert.IsNotNull(_generator.Outcome.Issue);
+            Assert.AreEqual(2, _generator.Outcome.Issue.Count);
+            assertIssue(_generator.Outcome.Issue[1], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_PROFILE_TYPE);
+
+            dumpElements(expanded.Snapshot.Element);
+        }
+
     }
 
     public static class IListExtensions
