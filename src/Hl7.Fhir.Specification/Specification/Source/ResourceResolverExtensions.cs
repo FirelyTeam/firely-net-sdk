@@ -122,10 +122,10 @@ namespace Hl7.Fhir.Specification.Source
         public static bool IsValidTypeProfile(this IResourceResolver resolver, FHIRDefinedType? type, StructureDefinition profile)
         {
             if (resolver == null) { throw new ArgumentNullException(nameof(resolver)); }
-            return isValidTypeProfile(resolver, new Stack<string>(), type, profile);
+            return isValidTypeProfile(resolver, new HashSet<string>(), type, profile);
         }
 
-        static bool isValidTypeProfile(this IResourceResolver resolver, Stack<string> recursionStack, FHIRDefinedType? type, StructureDefinition profile)
+        static bool isValidTypeProfile(this IResourceResolver resolver, HashSet<string> recursionStack, FHIRDefinedType? type, StructureDefinition profile)
         {
             // Recursively walk up the base profile hierarchy until we find a profile on baseType
             if (type == null) { return true; }
@@ -142,15 +142,13 @@ namespace Hl7.Fhir.Specification.Source
             if (sdBase == null) { return false; }
             if (sdBase.Url == null) { return false; } // Shouldn't happen...
 
-            // [WMR 20170227] TODO: Detect/prevent endless recursion... e.g. B.Base = A and A.Base = B
-            // if (recursionStack == null) { recursionStack = new Stack<string>(); }
-            if (recursionStack.Contains(sdBase.Url))
+            // Detect/prevent endless recursion... e.g. X.Base = Y and Y.Base = X
+            if (!recursionStack.Add(sdBase.Url))
             {
                 throw Error.InvalidOperation(
                     $"Recursive profile dependency detected. Base profile hierarchy:\r\n{string.Join("\r\n", recursionStack)}"
                 );
             }
-            recursionStack.Push(sdBase.Url);
 
             return isValidTypeProfile(resolver, recursionStack, type, sdBase);
         }
