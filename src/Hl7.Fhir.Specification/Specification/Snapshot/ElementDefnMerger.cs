@@ -238,10 +238,20 @@ namespace Hl7.Fhir.Specification.Snapshot
                     }
                     else if (!diff.IsExactly(snap))
                     {
-                        // Clone base and recursively copy all non-null diff props over base props
-                        // So effectively the result inherits all missing properties from base
-                        result = (T)snap.DeepCopy();
-                        diff.CopyTo(result);
+                        if (snap.GetType().IsAssignableFrom(diff.GetType()))
+                        {
+                            // [WMR 20170227] Diff type is equal to or derived from snap type
+                            // Clone base and recursively copy all non-null diff props over base props
+                            // So effectively the result inherits all missing properties from base
+                            result = (T)snap.DeepCopy();
+                            diff.CopyTo(result);
+                        }
+                        else
+                        {
+                            // [WMR 20170227] Diff type is incompatible with snap type (?)
+                            // diff fully replaces snap
+                            result = (T)diff.DeepCopy();
+                        }
                         onConstraint(result);
                     }
                 }
