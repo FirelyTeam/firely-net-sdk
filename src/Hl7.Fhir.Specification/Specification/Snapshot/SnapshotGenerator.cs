@@ -336,11 +336,33 @@ namespace Hl7.Fhir.Specification.Snapshot
                 if (!nav.Current.IsRootElement())
                 {
                     addIssueNoTypeOrNameReference(defn);
+                    return false;
                 }
             }
             else if (defn.Type.Count > 1)
             {
-                addIssueInvalidChoiceConstraint(defn);
+                // [WMR 20170227] NEW: Allow common extension constraints on choice type w/o type slice
+
+                // Ewout: allow if all the specified type references share a common type code
+                // WMR: Only expand common elements, i.e. .id | .extension | .modifierExtension
+                // Also verify that diff only specifies child constraints on common elements (.extension | .modifierExtension) ... ?
+                // Actually, we should determine the intersection of the specified type profiles... ouch
+
+                var distinctTypeCodes = defn.Type.Select(t => t.Code).Distinct().ToList();
+                if (distinctTypeCodes.Count == 1)
+                {
+                    // Different profiles for common base type => expand the common base type (w/o custom profile)
+                    var typeRef = new ElementDefinition.TypeRefComponent() { Code = distinctTypeCodes[0] };
+                    StructureDefinition typeStructure = getStructureForTypeRef(defn, typeRef, true);
+                    return expandElementType(nav, typeStructure);
+                }
+                else
+                {
+                    // Alternatively, we could try to expand the most specific common base profile, e.g. (Backbone)Element
+
+                    addIssueInvalidChoiceConstraint(defn);
+                    return false;
+                }
             }
 
             else // if (defn.Type.Count == 1)
@@ -348,41 +370,48 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // [WMR 20160720] Handle custom type profiles (GForge #9791)
                 StructureDefinition typeStructure = getStructureForElementType(defn, true);
 
-                // [WMR 20170208] TODO: Expand profile snapshot if necessary
-                if (typeStructure != null && typeStructure.HasSnapshot)
-                {
-                    var typeSnap = typeStructure.Snapshot;
-                    var typeNav = new ElementDefinitionNavigator(typeSnap.Element);
-                    if (!typeNav.MoveToFirstChild())
-                    {
-                        addIssueProfileHasNoSnapshot(defn.ToNamedNode(), typeStructure.Url);
-                    }
-                    // [WMR 20170208] NEW - Move common logic to separate method, also used by mergeTypeProfiles
-
-                    // [WMR 20170220] If profile element has no children, then copy child elements from type structure into profile
-                    if (!copyChildren(nav, typeNav, typeStructure))
-                    {
-                        // Otherwise merge type structure onto profile elements (cf. mergeTypeProfiles)
-
-                        // [WMR 20170220] Can this happen?
-                        // TODO: Create unit test to trigger this situation
-                        Debug.Fail($"[{nameof(SnapshotGenerator)}.{nameof(expandElement)}] TODO...");
-
-                        // [WMR 20170220] WRONG...?
-                        // Must merge nav on top of typeNav, not the other way around...
-                        mergeElement(nav, typeNav);
-
-                        // 1. Fully expand the snapshot of the external type profile
-                        // 2. Clone, rebase and copy children into referencing profile below the referencing parent element
-                        // 2. On top of that, merge base profile constraints (taken from the snapshot)
-                        // 3. On top of that, merge profile differential constraints
-
-                        // mergeElementDefinition(snap.Current, diffElem);
-                    }
-                }
+                return expandElementType(nav, typeStructure);
             }
 
             return true;
+        }
+
+        bool expandElementType(ElementDefinitionNavigator nav, StructureDefinition typeStructure)
+        {
+            // [WMR 20170208] TODO: Expand profile snapshot if necessary
+            if (typeStructure != null && typeStructure.HasSnapshot)
+            {
+                var typeSnap = typeStructure.Snapshot;
+                var typeNav = new ElementDefinitionNavigator(typeSnap.Element);
+                if (!typeNav.MoveToFirstChild())
+                {
+                    addIssueProfileHasNoSnapshot(nav.Current.ToNamedNode(), typeStructure.Url);
+                }
+                // [WMR 20170208] NEW - Move common logic to separate method, also used by mergeTypeProfiles
+
+                // [WMR 20170220] If profile element has no children, then copy child elements from type structure into profile
+                if (!copyChildren(nav, typeNav, typeStructure))
+                {
+                    // Otherwise merge type structure onto profile elements (cf. mergeTypeProfiles)
+
+                    // [WMR 20170220] Can this happen?
+                    // TODO: Create unit test to trigger this situation
+                    Debug.Fail($"[{nameof(SnapshotGenerator)}.{nameof(expandElementType)}] TODO...");
+
+                    // [WMR 20170220] WRONG...?
+                    // Must merge nav on top of typeNav, not the other way around...
+                    mergeElement(nav, typeNav);
+
+                    // 1. Fully expand the snapshot of the external type profile
+                    // 2. Clone, rebase and copy children into referencing profile below the referencing parent element
+                    // 2. On top of that, merge base profile constraints (taken from the snapshot)
+                    // 3. On top of that, merge profile differential constraints
+
+                    // mergeElementDefinition(snap.Current, diffElem);
+                }
+                return true;
+            }
+            return false;
         }
 
         /// <summary>Merge children of the currently selected element from differential into snapshot.</summary>
@@ -556,13 +585,17 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // have reduced the numer of types to 1. Still, if you don't do that, we cannot
                     // accept constraints on children, need to select a single type first...
 
-                    if (snap.Current.Type.Count > 1)
+                    // [WMR 20170227] REDUNDANT; checked by expandElement
+                    //if (snap.Current.Type.Count > 1)
+                    //{
+                    //    addIssueInvalidChoiceConstraint(snap.Current);
+                    //    return;
+                    //}
+
+                    if (!expandElement(snap))
                     {
-                        addIssueInvalidChoiceConstraint(snap.Current);
                         return;
                     }
-
-                    expandElement(snap);
 
                     // [WMR 20160906] WRONG! Allowed for core resource & datatype definitions...
                     //if (!snap.HasChildren)

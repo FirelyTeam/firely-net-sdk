@@ -121,6 +121,12 @@
     <Content Include="TestData\snapshot-test\Ardon\nl-core-organization.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="TestData\snapshot-test\Ardon\zib-Procedure.structuredefinition.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\Ardon\zib-Procedure_Requester.structuredefinition.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestData\snapshot-test\Chris Grenz\codeable-with-systems-profile.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
