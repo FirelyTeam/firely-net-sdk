@@ -211,9 +211,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ResourceComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (CodeElement != null) yield return CodeElement;
                     foreach (var elem in ParamElement) { if (elem != null) yield return elem; }
                     if (DocumentationElement != null) yield return DocumentationElement;
@@ -693,7 +691,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// CompartmentDefinition elements
+                foreach (var item in base.Children) yield return item;
 				if (UrlElement != null) yield return UrlElement;
 				if (NameElement != null) yield return NameElement;
 				if (TitleElement != null) yield return TitleElement;

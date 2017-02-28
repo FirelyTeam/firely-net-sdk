@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                // Range elements
+                foreach (var item in base.Children) yield return item;
                 if (Low != null) yield return Low;
                 if (High != null) yield return High;
             }

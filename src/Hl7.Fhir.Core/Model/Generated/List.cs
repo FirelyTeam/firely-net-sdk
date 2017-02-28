@@ -236,9 +236,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // EntryComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Flag != null) yield return Flag;
                     if (DeletedElement != null) yield return DeletedElement;
                     if (DateElement != null) yield return DateElement;
@@ -614,7 +612,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// List elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
 				if (ModeElement != null) yield return ModeElement;

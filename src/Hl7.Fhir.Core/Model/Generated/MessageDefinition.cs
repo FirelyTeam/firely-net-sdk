@@ -228,9 +228,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // FocusComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (CodeElement != null) yield return CodeElement;
                     if (Profile != null) yield return Profile;
                     if (MinElement != null) yield return MinElement;
@@ -327,9 +325,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // AllowedResponseComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Message != null) yield return Message;
                     if (Situation != null) yield return Situation;
                 }
@@ -972,7 +968,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// MessageDefinition elements
+                foreach (var item in base.Children) yield return item;
 				if (UrlElement != null) yield return UrlElement;
 				if (Identifier != null) yield return Identifier;
 				if (VersionElement != null) yield return VersionElement;

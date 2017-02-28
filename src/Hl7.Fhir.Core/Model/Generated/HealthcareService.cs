@@ -245,9 +245,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // AvailableTimeComponent elements
+                    foreach (var item in base.Children) yield return item;
                     foreach (var elem in DaysOfWeekElement) { if (elem != null) yield return elem; }
                     if (AllDayElement != null) yield return AllDayElement;
                     if (AvailableStartTimeElement != null) yield return AvailableStartTimeElement;
@@ -361,9 +359,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // NotAvailableComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (DescriptionElement != null) yield return DescriptionElement;
                     if (During != null) yield return During;
                 }
@@ -979,7 +975,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// HealthcareService elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (ActiveElement != null) yield return ActiveElement;
 				if (ProvidedBy != null) yield return ProvidedBy;

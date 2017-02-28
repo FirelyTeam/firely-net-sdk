@@ -422,7 +422,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Slot elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (ServiceCategory != null) yield return ServiceCategory;
 				foreach (var elem in ServiceType) { if (elem != null) yield return elem; }

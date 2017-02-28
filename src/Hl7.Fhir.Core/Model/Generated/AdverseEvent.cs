@@ -301,9 +301,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // SuspectEntityComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Instance != null) yield return Instance;
                     if (CausalityElement != null) yield return CausalityElement;
                     if (CausalityAssessment != null) yield return CausalityAssessment;
@@ -703,7 +701,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// AdverseEvent elements
+                foreach (var item in base.Children) yield return item;
 				if (Identifier != null) yield return Identifier;
 				if (CategoryElement != null) yield return CategoryElement;
 				if (Type != null) yield return Type;

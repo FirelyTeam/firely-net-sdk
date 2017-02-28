@@ -244,9 +244,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // GroupComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Identifier != null) yield return Identifier;
                     foreach (var elem in Population) { if (elem != null) yield return elem; }
                     if (MeasureScoreElement != null) yield return MeasureScoreElement;
@@ -393,9 +391,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // PopulationComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Identifier != null) yield return Identifier;
                     if (Code != null) yield return Code;
                     if (CountElement != null) yield return CountElement;
@@ -490,9 +486,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // StratifierComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Identifier != null) yield return Identifier;
                     foreach (var elem in Stratum) { if (elem != null) yield return elem; }
                 }
@@ -640,9 +634,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // StratifierGroupComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (ValueElement != null) yield return ValueElement;
                     foreach (var elem in Population) { if (elem != null) yield return elem; }
                     if (MeasureScoreElement != null) yield return MeasureScoreElement;
@@ -788,9 +780,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // StratifierGroupPopulationComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Identifier != null) yield return Identifier;
                     if (Code != null) yield return Code;
                     if (CountElement != null) yield return CountElement;
@@ -1065,7 +1055,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// MeasureReport elements
+                foreach (var item in base.Children) yield return item;
 				if (Measure != null) yield return Measure;
 				if (TypeElement != null) yield return TypeElement;
 				if (Patient != null) yield return Patient;

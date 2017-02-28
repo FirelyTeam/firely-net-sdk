@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                // Identifier elements
+                foreach (var item in base.Children) yield return item;
                 if (UseElement != null) yield return UseElement;
                 if (Type != null) yield return Type;
                 if (SystemElement != null) yield return SystemElement;

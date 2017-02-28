@@ -184,9 +184,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ItemComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (TypeElement != null) yield return TypeElement;
                     if (Resource != null) yield return Resource;
                 }
@@ -325,7 +323,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Linkage elements
+                foreach (var item in base.Children) yield return item;
 				if (ActiveElement != null) yield return ActiveElement;
 				if (Author != null) yield return Author;
 				foreach (var elem in Item) { if (elem != null) yield return elem; }

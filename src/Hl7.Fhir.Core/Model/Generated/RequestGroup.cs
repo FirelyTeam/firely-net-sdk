@@ -575,9 +575,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ActionComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (LabelElement != null) yield return LabelElement;
                     if (TitleElement != null) yield return TitleElement;
                     if (DescriptionElement != null) yield return DescriptionElement;
@@ -794,9 +792,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ConditionComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (KindElement != null) yield return KindElement;
                     if (DescriptionElement != null) yield return DescriptionElement;
                     if (LanguageElement != null) yield return LanguageElement;
@@ -948,9 +944,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // RelatedActionComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (ActionIdElement != null) yield return ActionIdElement;
                     if (RelationshipElement != null) yield return RelationshipElement;
                     if (Offset != null) yield return Offset;
@@ -1177,7 +1171,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// RequestGroup elements
+                foreach (var item in base.Children) yield return item;
 				if (Identifier != null) yield return Identifier;
 				if (Subject != null) yield return Subject;
 				if (Context != null) yield return Context;

@@ -452,9 +452,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // SeriesComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (UidElement != null) yield return UidElement;
                     if (NumberElement != null) yield return NumberElement;
                     if (Modality != null) yield return Modality;
@@ -666,9 +664,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // InstanceComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (UidElement != null) yield return UidElement;
                     if (NumberElement != null) yield return NumberElement;
                     if (SopClassElement != null) yield return SopClassElement;
@@ -1171,7 +1167,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// ImagingStudy elements
+                foreach (var item in base.Children) yield return item;
 				if (UidElement != null) yield return UidElement;
 				if (Accession != null) yield return Accession;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }

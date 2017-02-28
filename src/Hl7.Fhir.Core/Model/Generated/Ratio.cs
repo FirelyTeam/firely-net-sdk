@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                // Ratio elements
+                foreach (var item in base.Children) yield return item;
                 if (Numerator != null) yield return Numerator;
                 if (Denominator != null) yield return Denominator;
             }

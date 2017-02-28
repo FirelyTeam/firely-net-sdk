@@ -243,9 +243,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // PredictionComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Outcome != null) yield return Outcome;
                     if (Probability != null) yield return Probability;
                     if (QualitativeRisk != null) yield return QualitativeRisk;
@@ -643,7 +641,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// RiskAssessment elements
+                foreach (var item in base.Children) yield return item;
 				if (Identifier != null) yield return Identifier;
 				if (BasedOn != null) yield return BasedOn;
 				if (Parent != null) yield return Parent;

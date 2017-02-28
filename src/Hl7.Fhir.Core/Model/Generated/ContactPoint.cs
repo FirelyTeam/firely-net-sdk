@@ -341,7 +341,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                // ContactPoint elements
+                foreach (var item in base.Children) yield return item;
                 if (SystemElement != null) yield return SystemElement;
                 if (ValueElement != null) yield return ValueElement;
                 if (UseElement != null) yield return UseElement;

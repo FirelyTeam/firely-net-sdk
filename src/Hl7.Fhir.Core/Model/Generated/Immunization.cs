@@ -160,9 +160,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // PractitionerComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Role != null) yield return Role;
                     if (Actor != null) yield return Actor;
                 }
@@ -256,9 +254,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ExplanationComponent elements
+                    foreach (var item in base.Children) yield return item;
                     foreach (var elem in Reason) { if (elem != null) yield return elem; }
                     foreach (var elem in ReasonNotGiven) { if (elem != null) yield return elem; }
                 }
@@ -406,9 +402,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ReactionComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (DateElement != null) yield return DateElement;
                     if (Detail != null) yield return Detail;
                     if (ReportedElement != null) yield return ReportedElement;
@@ -677,9 +671,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // VaccinationProtocolComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (DoseSequenceElement != null) yield return DoseSequenceElement;
                     if (DescriptionElement != null) yield return DescriptionElement;
                     if (Authority != null) yield return Authority;
@@ -1232,7 +1224,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Immunization elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
 				if (NotGivenElement != null) yield return NotGivenElement;

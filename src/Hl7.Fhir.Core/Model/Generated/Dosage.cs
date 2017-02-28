@@ -383,7 +383,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                // Dosage elements
+                foreach (var item in base.Children) yield return item;
                 if (SequenceElement != null) yield return SequenceElement;
                 if (TextElement != null) yield return TextElement;
                 foreach (var elem in AdditionalInstruction) { if (elem != null) yield return elem; }

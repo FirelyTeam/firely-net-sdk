@@ -155,9 +155,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ProcessNoteComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Type != null) yield return Type;
                     if (TextElement != null) yield return TextElement;
                 }
@@ -495,7 +493,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// ProcessResponse elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
 				if (CreatedElement != null) yield return CreatedElement;

@@ -251,7 +251,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                // TriggerDefinition elements
+                foreach (var item in base.Children) yield return item;
                 if (TypeElement != null) yield return TypeElement;
                 if (EventNameElement != null) yield return EventNameElement;
                 if (EventTiming != null) yield return EventTiming;

@@ -186,9 +186,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // PerformerComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Actor != null) yield return Actor;
                     if (OnBehalfOf != null) yield return OnBehalfOf;
                 }
@@ -336,9 +334,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // SubstitutionComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (WasSubstitutedElement != null) yield return WasSubstitutedElement;
                     if (Type != null) yield return Type;
                     foreach (var elem in Reason) { if (elem != null) yield return elem; }
@@ -902,7 +898,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// MedicationDispense elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				foreach (var elem in PartOf) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;

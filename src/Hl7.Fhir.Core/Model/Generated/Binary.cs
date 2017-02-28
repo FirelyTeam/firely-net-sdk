@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Binary elements
+                foreach (var item in base.Children) yield return item;
 				if (ContentTypeElement != null) yield return ContentTypeElement;
 				if (SecurityContext != null) yield return SecurityContext;
 				if (ContentElement != null) yield return ContentElement;

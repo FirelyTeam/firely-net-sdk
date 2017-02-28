@@ -429,7 +429,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Endpoint elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
 				if (ConnectionType != null) yield return ConnectionType;

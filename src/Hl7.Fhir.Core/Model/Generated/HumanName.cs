@@ -375,7 +375,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                // HumanName elements
+                foreach (var item in base.Children) yield return item;
                 if (UseElement != null) yield return UseElement;
                 if (TextElement != null) yield return TextElement;
                 if (FamilyElement != null) yield return FamilyElement;

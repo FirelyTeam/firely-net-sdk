@@ -194,9 +194,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // StudyComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (UidElement != null) yield return UidElement;
                     if (ImagingStudy != null) yield return ImagingStudy;
                     foreach (var elem in Endpoint) { if (elem != null) yield return elem; }
@@ -330,9 +328,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // SeriesComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (UidElement != null) yield return UidElement;
                     foreach (var elem in Endpoint) { if (elem != null) yield return elem; }
                     foreach (var elem in Instance) { if (elem != null) yield return elem; }
@@ -465,9 +461,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // InstanceComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (SopClassElement != null) yield return SopClassElement;
                     if (UidElement != null) yield return UidElement;
                 }
@@ -666,7 +660,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// ImagingManifest elements
+                foreach (var item in base.Children) yield return item;
 				if (Identifier != null) yield return Identifier;
 				if (Patient != null) yield return Patient;
 				if (AuthoringTimeElement != null) yield return AuthoringTimeElement;

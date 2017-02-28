@@ -392,9 +392,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // CalibrationComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (TypeElement != null) yield return TypeElement;
                     if (StateElement != null) yield return StateElement;
                     if (TimeElement != null) yield return TimeElement;
@@ -679,7 +677,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// DeviceMetric elements
+                foreach (var item in base.Children) yield return item;
 				if (Type != null) yield return Type;
 				if (Identifier != null) yield return Identifier;
 				if (Unit != null) yield return Unit;

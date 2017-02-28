@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                // ContactDetail elements
+                foreach (var item in base.Children) yield return item;
                 if (NameElement != null) yield return NameElement;
                 foreach (var elem in Telecom) { if (elem != null) yield return elem; }
             }

@@ -318,9 +318,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ChannelComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (TypeElement != null) yield return TypeElement;
                     if (EndpointElement != null) yield return EndpointElement;
                     if (PayloadElement != null) yield return PayloadElement;
@@ -610,7 +608,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Subscription elements
+                foreach (var item in base.Children) yield return item;
 				if (StatusElement != null) yield return StatusElement;
 				foreach (var elem in Contact) { if (elem != null) yield return elem; }
 				if (EndElement != null) yield return EndElement;

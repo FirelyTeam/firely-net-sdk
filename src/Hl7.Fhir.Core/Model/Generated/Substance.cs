@@ -198,9 +198,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // InstanceComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Identifier != null) yield return Identifier;
                     if (ExpiryElement != null) yield return ExpiryElement;
                     if (Quantity != null) yield return Quantity;
@@ -296,9 +294,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // IngredientComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Quantity != null) yield return Quantity;
                     if (Substance != null) yield return Substance;
                 }
@@ -512,7 +508,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Substance elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
 				foreach (var elem in Category) { if (elem != null) yield return elem; }

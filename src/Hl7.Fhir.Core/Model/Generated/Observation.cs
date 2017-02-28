@@ -265,9 +265,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ReferenceRangeComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Low != null) yield return Low;
                     if (High != null) yield return High;
                     if (Type != null) yield return Type;
@@ -385,9 +383,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // RelatedComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (TypeElement != null) yield return TypeElement;
                     if (Target != null) yield return Target;
                 }
@@ -531,9 +527,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ComponentComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Code != null) yield return Code;
                     if (Value != null) yield return Value;
                     if (DataAbsentReason != null) yield return DataAbsentReason;
@@ -1043,7 +1037,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Observation elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				foreach (var elem in BasedOn) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;

@@ -239,9 +239,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // FixedVersionComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (SystemElement != null) yield return SystemElement;
                     if (VersionElement != null) yield return VersionElement;
                     if (ModeElement != null) yield return ModeElement;
@@ -373,9 +371,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ExcludedSystemComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (SystemElement != null) yield return SystemElement;
                     if (VersionElement != null) yield return VersionElement;
                 }
@@ -467,9 +463,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // DesignationComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Include != null) yield return Include;
                     if (Exclude != null) yield return Exclude;
                 }
@@ -546,9 +540,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // DesignationIncludeComponent elements
+                    foreach (var item in base.Children) yield return item;
                     foreach (var elem in Designation) { if (elem != null) yield return elem; }
                 }
             }
@@ -658,9 +650,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // DesignationIncludeDesignationComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (LanguageElement != null) yield return LanguageElement;
                     if (Use != null) yield return Use;
                 }
@@ -737,9 +727,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // DesignationExcludeComponent elements
+                    foreach (var item in base.Children) yield return item;
                     foreach (var elem in Designation) { if (elem != null) yield return elem; }
                 }
             }
@@ -849,9 +837,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // DesignationExcludeDesignationComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (LanguageElement != null) yield return LanguageElement;
                     if (Use != null) yield return Use;
                 }
@@ -1588,7 +1574,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// ExpansionProfile elements
+                foreach (var item in base.Children) yield return item;
 				if (UrlElement != null) yield return UrlElement;
 				if (Identifier != null) yield return Identifier;
 				if (VersionElement != null) yield return VersionElement;

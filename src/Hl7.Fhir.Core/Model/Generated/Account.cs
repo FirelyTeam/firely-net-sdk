@@ -185,9 +185,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // CoverageComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Coverage != null) yield return Coverage;
                     if (PriorityElement != null) yield return PriorityElement;
                 }
@@ -317,9 +315,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // GuarantorComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Party != null) yield return Party;
                     if (OnHoldElement != null) yield return OnHoldElement;
                     if (Period != null) yield return Period;
@@ -635,7 +631,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Account elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
 				if (Type != null) yield return Type;

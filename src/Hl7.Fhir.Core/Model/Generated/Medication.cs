@@ -201,9 +201,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // IngredientComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Item != null) yield return Item;
                     if (IsActiveElement != null) yield return IsActiveElement;
                     if (Amount != null) yield return Amount;
@@ -314,9 +312,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // PackageComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Container != null) yield return Container;
                     foreach (var elem in Content) { if (elem != null) yield return elem; }
                     foreach (var elem in Batch) { if (elem != null) yield return elem; }
@@ -412,9 +408,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ContentComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Item != null) yield return Item;
                     if (Amount != null) yield return Amount;
                 }
@@ -544,9 +538,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // BatchComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (LotNumberElement != null) yield return LotNumberElement;
                     if (ExpirationDateElement != null) yield return ExpirationDateElement;
                 }
@@ -810,7 +802,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Medication elements
+                foreach (var item in base.Children) yield return item;
 				if (Code != null) yield return Code;
 				if (StatusElement != null) yield return StatusElement;
 				if (IsBrandElement != null) yield return IsBrandElement;

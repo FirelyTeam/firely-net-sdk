@@ -201,9 +201,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // MitigationComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Action != null) yield return Action;
                     if (DateElement != null) yield return DateElement;
                     if (Author != null) yield return Author;
@@ -543,7 +541,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// DetectedIssue elements
+                foreach (var item in base.Children) yield return item;
 				if (Identifier != null) yield return Identifier;
 				if (StatusElement != null) yield return StatusElement;
 				if (Category != null) yield return Category;

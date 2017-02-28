@@ -397,9 +397,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ReferenceSeqComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Chromosome != null) yield return Chromosome;
                     if (GenomeBuildElement != null) yield return GenomeBuildElement;
                     if (ReferenceSeqId != null) yield return ReferenceSeqId;
@@ -658,9 +656,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // VariantComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (StartElement != null) yield return StartElement;
                     if (EndElement != null) yield return EndElement;
                     if (ObservedAlleleElement != null) yield return ObservedAlleleElement;
@@ -1158,9 +1154,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // QualityComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (TypeElement != null) yield return TypeElement;
                     if (StandardSequence != null) yield return StandardSequence;
                     if (StartElement != null) yield return StartElement;
@@ -1443,9 +1437,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // RepositoryComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (TypeElement != null) yield return TypeElement;
                     if (UrlElement != null) yield return UrlElement;
                     if (NameElement != null) yield return NameElement;
@@ -1880,7 +1872,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Sequence elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (TypeElement != null) yield return TypeElement;
 				if (CoordinateSystemElement != null) yield return CoordinateSystemElement;

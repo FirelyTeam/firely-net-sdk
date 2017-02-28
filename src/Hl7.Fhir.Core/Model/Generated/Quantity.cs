@@ -303,7 +303,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                // Quantity elements
+                foreach (var item in base.Children) yield return item;
                 if (ValueElement != null) yield return ValueElement;
                 if (ComparatorElement != null) yield return ComparatorElement;
                 if (UnitElement != null) yield return UnitElement;

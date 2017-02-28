@@ -225,9 +225,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // CodeFilterComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (PathElement != null) yield return PathElement;
                     if (ValueSet != null) yield return ValueSet;
                     foreach (var elem in ValueCodeElement) { if (elem != null) yield return elem; }
@@ -343,9 +341,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // DateFilterComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (PathElement != null) yield return PathElement;
                     if (Value != null) yield return Value;
                 }
@@ -540,7 +536,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                // DataRequirement elements
+                foreach (var item in base.Children) yield return item;
                 if (TypeElement != null) yield return TypeElement;
                 foreach (var elem in ProfileElement) { if (elem != null) yield return elem; }
                 foreach (var elem in MustSupportElement) { if (elem != null) yield return elem; }

@@ -171,9 +171,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // SuppliedItemComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Quantity != null) yield return Quantity;
                     if (Item != null) yield return Item;
                 }
@@ -444,7 +442,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// SupplyDelivery elements
+                foreach (var item in base.Children) yield return item;
 				if (Identifier != null) yield return Identifier;
 				foreach (var elem in BasedOn) { if (elem != null) yield return elem; }
 				foreach (var elem in PartOf) { if (elem != null) yield return elem; }

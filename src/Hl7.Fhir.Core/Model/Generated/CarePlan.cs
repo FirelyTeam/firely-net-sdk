@@ -326,9 +326,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ActivityComponent elements
+                    foreach (var item in base.Children) yield return item;
                     foreach (var elem in OutcomeCodeableConcept) { if (elem != null) yield return elem; }
                     foreach (var elem in OutcomeReference) { if (elem != null) yield return elem; }
                     foreach (var elem in Progress) { if (elem != null) yield return elem; }
@@ -742,9 +740,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // DetailComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Category != null) yield return Category;
                     if (Definition != null) yield return Definition;
                     if (Code != null) yield return Code;
@@ -1261,7 +1257,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// CarePlan elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				foreach (var elem in Definition) { if (elem != null) yield return elem; }
 				foreach (var elem in BasedOn) { if (elem != null) yield return elem; }

@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                // Reference elements
+                foreach (var item in base.Children) yield return item;
                 if (ReferenceElement != null) yield return ReferenceElement;
                 if (Identifier != null) yield return Identifier;
                 if (DisplayElement != null) yield return DisplayElement;

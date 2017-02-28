@@ -450,7 +450,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// GuidanceResponse elements
+                foreach (var item in base.Children) yield return item;
 				if (RequestIdElement != null) yield return RequestIdElement;
 				if (Identifier != null) yield return Identifier;
 				if (Module != null) yield return Module;

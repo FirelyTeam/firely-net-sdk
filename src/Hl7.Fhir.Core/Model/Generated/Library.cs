@@ -740,7 +740,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Library elements
+                foreach (var item in base.Children) yield return item;
 				if (UrlElement != null) yield return UrlElement;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (VersionElement != null) yield return VersionElement;

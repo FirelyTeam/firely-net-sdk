@@ -221,9 +221,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // CollectionComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Collector != null) yield return Collector;
                     if (Collected != null) yield return Collected;
                     if (Quantity != null) yield return Quantity;
@@ -374,9 +372,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ProcessingComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (DescriptionElement != null) yield return DescriptionElement;
                     if (Procedure != null) yield return Procedure;
                     foreach (var elem in Additive) { if (elem != null) yield return elem; }
@@ -556,9 +552,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ContainerComponent elements
+                    foreach (var item in base.Children) yield return item;
                     foreach (var elem in Identifier) { if (elem != null) yield return elem; }
                     if (DescriptionElement != null) yield return DescriptionElement;
                     if (Type != null) yield return Type;
@@ -864,7 +858,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Specimen elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (AccessionIdentifier != null) yield return AccessionIdentifier;
 				if (StatusElement != null) yield return StatusElement;

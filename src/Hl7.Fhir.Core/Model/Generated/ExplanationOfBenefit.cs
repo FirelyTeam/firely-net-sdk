@@ -187,9 +187,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // RelatedClaimComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Claim != null) yield return Claim;
                     if (Relationship != null) yield return Relationship;
                     if (Reference != null) yield return Reference;
@@ -300,9 +298,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // PayeeComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Type != null) yield return Type;
                     if (ResourceType != null) yield return ResourceType;
                     if (Party != null) yield return Party;
@@ -484,9 +480,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // SupportingInformationComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (SequenceElement != null) yield return SequenceElement;
                     if (Category != null) yield return Category;
                     if (Code != null) yield return Code;
@@ -672,9 +666,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // CareTeamComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (SequenceElement != null) yield return SequenceElement;
                     if (Provider != null) yield return Provider;
                     if (ResponsibleElement != null) yield return ResponsibleElement;
@@ -825,9 +817,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // DiagnosisComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (SequenceElement != null) yield return SequenceElement;
                     if (Diagnosis != null) yield return Diagnosis;
                     foreach (var elem in Type) { if (elem != null) yield return elem; }
@@ -979,9 +969,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ProcedureComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (SequenceElement != null) yield return SequenceElement;
                     if (DateElement != null) yield return DateElement;
                     if (Procedure != null) yield return Procedure;
@@ -1096,9 +1084,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // InsuranceComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Coverage != null) yield return Coverage;
                     foreach (var elem in PreAuthRefElement) { if (elem != null) yield return elem; }
                 }
@@ -1227,9 +1213,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // AccidentComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (DateElement != null) yield return DateElement;
                     if (Type != null) yield return Type;
                     if (Location != null) yield return Location;
@@ -1812,9 +1796,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ItemComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (SequenceElement != null) yield return SequenceElement;
                     foreach (var elem in CareTeamLinkIdElement) { if (elem != null) yield return elem; }
                     foreach (var elem in DiagnosisLinkIdElement) { if (elem != null) yield return elem; }
@@ -1979,9 +1961,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // AdjudicationComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Category != null) yield return Category;
                     if (Reason != null) yield return Reason;
                     if (Amount != null) yield return Amount;
@@ -2350,9 +2330,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // DetailComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (SequenceElement != null) yield return SequenceElement;
                     if (Type != null) yield return Type;
                     if (Revenue != null) yield return Revenue;
@@ -2715,9 +2693,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // SubDetailComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (SequenceElement != null) yield return SequenceElement;
                     if (Type != null) yield return Type;
                     if (Revenue != null) yield return Revenue;
@@ -2976,9 +2952,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // AddedItemComponent elements
+                    foreach (var item in base.Children) yield return item;
                     foreach (var elem in SequenceLinkIdElement) { if (elem != null) yield return elem; }
                     if (Revenue != null) yield return Revenue;
                     if (Category != null) yield return Category;
@@ -3179,9 +3153,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // AddedItemsDetailComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Revenue != null) yield return Revenue;
                     if (Category != null) yield return Category;
                     if (Service != null) yield return Service;
@@ -3361,9 +3333,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // PaymentComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Type != null) yield return Type;
                     if (Adjustment != null) yield return Adjustment;
                     if (AdjustmentReason != null) yield return AdjustmentReason;
@@ -3529,9 +3499,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // NoteComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (NumberElement != null) yield return NumberElement;
                     if (Type != null) yield return Type;
                     if (TextElement != null) yield return TextElement;
@@ -3796,9 +3764,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // BenefitBalanceComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Category != null) yield return Category;
                     if (SubCategory != null) yield return SubCategory;
                     if (ExcludedElement != null) yield return ExcludedElement;
@@ -3918,9 +3884,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // BenefitComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Type != null) yield return Type;
                     if (Allowed != null) yield return Allowed;
                     if (Used != null) yield return Used;
@@ -4713,7 +4677,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// ExplanationOfBenefit elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
 				if (Type != null) yield return Type;

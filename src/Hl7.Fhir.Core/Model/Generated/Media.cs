@@ -571,7 +571,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Media elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				foreach (var elem in BasedOn) { if (elem != null) yield return elem; }
 				if (TypeElement != null) yield return TypeElement;

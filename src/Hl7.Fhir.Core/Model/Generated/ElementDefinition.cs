@@ -404,9 +404,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // SlicingComponent elements
+                    foreach (var item in base.Children) yield return item;
                     foreach (var elem in Discriminator) { if (elem != null) yield return elem; }
                     if (DescriptionElement != null) yield return DescriptionElement;
                     if (OrderedElement != null) yield return OrderedElement;
@@ -539,9 +537,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // DiscriminatorComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (TypeElement != null) yield return TypeElement;
                     if (PathElement != null) yield return PathElement;
                 }
@@ -708,9 +704,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BaseComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (PathElement != null) yield return PathElement;
                     if (MinElement != null) yield return MinElement;
                     if (MaxElement != null) yield return MaxElement;
@@ -947,9 +941,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // TypeRefComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (CodeElement != null) yield return CodeElement;
                     if (ProfileElement != null) yield return ProfileElement;
                     if (TargetProfileElement != null) yield return TargetProfileElement;
@@ -1066,9 +1058,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // ExampleComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (LabelElement != null) yield return LabelElement;
                     if (Value != null) yield return Value;
                 }
@@ -1376,9 +1366,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // ConstraintComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (KeyElement != null) yield return KeyElement;
                     if (RequirementsElement != null) yield return RequirementsElement;
                     if (SeverityElement != null) yield return SeverityElement;
@@ -1531,9 +1519,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // ElementDefinitionBindingComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (StrengthElement != null) yield return StrengthElement;
                     if (DescriptionElement != null) yield return DescriptionElement;
                     if (ValueSet != null) yield return ValueSet;
@@ -1700,9 +1686,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // MappingComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (IdentityElement != null) yield return IdentityElement;
                     if (LanguageElement != null) yield return LanguageElement;
                     if (MapElement != null) yield return MapElement;
@@ -2648,7 +2632,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                // ElementDefinition elements
+                foreach (var item in base.Children) yield return item;
                 if (PathElement != null) yield return PathElement;
                 foreach (var elem in RepresentationElement) { if (elem != null) yield return elem; }
                 if (SliceNameElement != null) yield return SliceNameElement;

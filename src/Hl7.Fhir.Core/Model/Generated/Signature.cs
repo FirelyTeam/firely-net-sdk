@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                // Signature elements
+                foreach (var item in base.Children) yield return item;
                 foreach (var elem in Type) { if (elem != null) yield return elem; }
                 if (WhenElement != null) yield return WhenElement;
                 if (Who != null) yield return Who;

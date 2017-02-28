@@ -325,7 +325,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                // ParameterDefinition elements
+                foreach (var item in base.Children) yield return item;
                 if (NameElement != null) yield return NameElement;
                 if (UseElement != null) yield return UseElement;
                 if (MinElement != null) yield return MinElement;

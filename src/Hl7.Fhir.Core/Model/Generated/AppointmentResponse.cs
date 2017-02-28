@@ -325,7 +325,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// AppointmentResponse elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (Appointment != null) yield return Appointment;
 				if (StartElement != null) yield return StartElement;

@@ -327,7 +327,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                // RelatedArtifact elements
+                foreach (var item in base.Children) yield return item;
                 if (TypeElement != null) yield return TypeElement;
                 if (DisplayElement != null) yield return DisplayElement;
                 if (CitationElement != null) yield return CitationElement;

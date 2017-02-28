@@ -123,9 +123,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ContentComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (P != null) yield return P;
                 }
             }
@@ -218,9 +216,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // RelatedComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Identifier != null) yield return Identifier;
                     if (Ref != null) yield return Ref;
                 }
@@ -559,7 +555,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// DocumentManifest elements
+                foreach (var item in base.Children) yield return item;
 				if (MasterIdentifier != null) yield return MasterIdentifier;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;

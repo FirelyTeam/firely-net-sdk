@@ -213,9 +213,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // AgentComponent elements
+                    foreach (var item in base.Children) yield return item;
                     foreach (var elem in Role) { if (elem != null) yield return elem; }
                     if (Who != null) yield return Who;
                     if (OnBehalfOf != null) yield return OnBehalfOf;
@@ -349,9 +347,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // EntityComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (RoleElement != null) yield return RoleElement;
                     if (What != null) yield return What;
                     foreach (var elem in Agent) { if (elem != null) yield return elem; }
@@ -620,7 +616,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Provenance elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Target) { if (elem != null) yield return elem; }
 				if (Period != null) yield return Period;
 				if (RecordedElement != null) yield return RecordedElement;

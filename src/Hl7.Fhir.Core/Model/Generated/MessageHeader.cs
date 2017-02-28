@@ -220,9 +220,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // MessageDestinationComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (NameElement != null) yield return NameElement;
                     if (Target != null) yield return Target;
                     if (EndpointElement != null) yield return EndpointElement;
@@ -440,9 +438,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // MessageSourceComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (NameElement != null) yield return NameElement;
                     if (SoftwareElement != null) yield return SoftwareElement;
                     if (VersionElement != null) yield return VersionElement;
@@ -595,9 +591,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ResponseComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (IdentifierElement != null) yield return IdentifierElement;
                     if (CodeElement != null) yield return CodeElement;
                     if (Details != null) yield return Details;
@@ -885,7 +879,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// MessageHeader elements
+                foreach (var item in base.Children) yield return item;
 				if (Event != null) yield return Event;
 				foreach (var elem in Destination) { if (elem != null) yield return elem; }
 				if (Receiver != null) yield return Receiver;

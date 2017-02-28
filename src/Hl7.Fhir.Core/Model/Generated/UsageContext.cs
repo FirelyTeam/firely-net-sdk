@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                // UsageContext elements
+                foreach (var item in base.Children) yield return item;
                 if (Code != null) yield return Code;
                 if (Value != null) yield return Value;
             }

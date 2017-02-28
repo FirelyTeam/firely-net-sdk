@@ -627,9 +627,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // DispenseComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Product != null) yield return Product;
                     if (EyeElement != null) yield return EyeElement;
                     if (SphereElement != null) yield return SphereElement;
@@ -877,7 +875,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// VisionPrescription elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
 				if (Patient != null) yield return Patient;

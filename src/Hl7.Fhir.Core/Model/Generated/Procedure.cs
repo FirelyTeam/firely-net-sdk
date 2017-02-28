@@ -157,9 +157,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // PerformerComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Role != null) yield return Role;
                     if (Actor != null) yield return Actor;
                     if (OnBehalfOf != null) yield return OnBehalfOf;
@@ -255,9 +253,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // FocalDeviceComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Action != null) yield return Action;
                     if (Manipulated != null) yield return Manipulated;
                 }
@@ -820,7 +816,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Procedure elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				foreach (var elem in Definition) { if (elem != null) yield return elem; }
 				foreach (var elem in BasedOn) { if (elem != null) yield return elem; }

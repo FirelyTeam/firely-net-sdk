@@ -290,9 +290,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // MappingComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (IdentityElement != null) yield return IdentityElement;
                     if (UriElement != null) yield return UriElement;
                     if (NameElement != null) yield return NameElement;
@@ -817,7 +815,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// DataElement elements
+                foreach (var item in base.Children) yield return item;
 				if (UrlElement != null) yield return UrlElement;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (VersionElement != null) yield return VersionElement;

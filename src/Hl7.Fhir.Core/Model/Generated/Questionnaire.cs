@@ -657,9 +657,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ItemComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (LinkIdElement != null) yield return LinkIdElement;
                     if (DefinitionElement != null) yield return DefinitionElement;
                     foreach (var elem in Code) { if (elem != null) yield return elem; }
@@ -821,9 +819,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // EnableWhenComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (QuestionElement != null) yield return QuestionElement;
                     if (HasAnswerElement != null) yield return HasAnswerElement;
                     if (Answer != null) yield return Answer;
@@ -903,9 +899,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // OptionComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Value != null) yield return Value;
                 }
             }
@@ -1405,7 +1399,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Questionnaire elements
+                foreach (var item in base.Children) yield return item;
 				if (UrlElement != null) yield return UrlElement;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (VersionElement != null) yield return VersionElement;

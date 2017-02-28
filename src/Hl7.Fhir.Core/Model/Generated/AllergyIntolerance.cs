@@ -410,9 +410,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ReactionComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Substance != null) yield return Substance;
                     foreach (var elem in Manifestation) { if (elem != null) yield return elem; }
                     if (DescriptionElement != null) yield return DescriptionElement;
@@ -864,7 +862,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// AllergyIntolerance elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (ClinicalStatusElement != null) yield return ClinicalStatusElement;
 				if (VerificationStatusElement != null) yield return VerificationStatusElement;

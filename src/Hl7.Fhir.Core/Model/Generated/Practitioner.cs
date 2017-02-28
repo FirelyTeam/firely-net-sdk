@@ -172,9 +172,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // QualificationComponent elements
+                    foreach (var item in base.Children) yield return item;
                     foreach (var elem in Identifier) { if (elem != null) yield return elem; }
                     if (Code != null) yield return Code;
                     if (Period != null) yield return Period;
@@ -459,7 +457,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Practitioner elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (ActiveElement != null) yield return ActiveElement;
 				foreach (var elem in Name) { if (elem != null) yield return elem; }

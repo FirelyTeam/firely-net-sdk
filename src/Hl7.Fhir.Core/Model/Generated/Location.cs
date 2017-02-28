@@ -259,9 +259,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // PositionComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (LongitudeElement != null) yield return LongitudeElement;
                     if (LatitudeElement != null) yield return LatitudeElement;
                     if (AltitudeElement != null) yield return AltitudeElement;
@@ -666,7 +664,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Location elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
 				if (OperationalStatus != null) yield return OperationalStatus;

@@ -205,9 +205,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ConditionComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Code != null) yield return Code;
                     if (Outcome != null) yield return Outcome;
                     if (Onset != null) yield return Onset;
@@ -721,7 +719,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// FamilyMemberHistory elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				foreach (var elem in Definition) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;

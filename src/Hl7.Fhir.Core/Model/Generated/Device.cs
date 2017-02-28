@@ -427,9 +427,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // UdiComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (DeviceIdentifierElement != null) yield return DeviceIdentifierElement;
                     if (NameElement != null) yield return NameElement;
                     if (JurisdictionElement != null) yield return JurisdictionElement;
@@ -927,7 +925,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Device elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (Udi != null) yield return Udi;
 				if (StatusElement != null) yield return StatusElement;

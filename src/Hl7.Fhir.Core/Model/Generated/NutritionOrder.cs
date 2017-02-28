@@ -287,9 +287,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // OralDietComponent elements
+                    foreach (var item in base.Children) yield return item;
                     foreach (var elem in Type) { if (elem != null) yield return elem; }
                     foreach (var elem in Schedule) { if (elem != null) yield return elem; }
                     foreach (var elem in Nutrient) { if (elem != null) yield return elem; }
@@ -385,9 +383,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // NutrientComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Modifier != null) yield return Modifier;
                     if (Amount != null) yield return Amount;
                 }
@@ -479,9 +475,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // TextureComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Modifier != null) yield return Modifier;
                     if (FoodType != null) yield return FoodType;
                 }
@@ -660,9 +654,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // SupplementComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Type != null) yield return Type;
                     if (ProductNameElement != null) yield return ProductNameElement;
                     foreach (var elem in Schedule) { if (elem != null) yield return elem; }
@@ -927,9 +919,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // EnteralFormulaComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (BaseFormulaType != null) yield return BaseFormulaType;
                     if (BaseFormulaProductNameElement != null) yield return BaseFormulaProductNameElement;
                     if (AdditiveType != null) yield return AdditiveType;
@@ -1046,9 +1036,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // AdministrationComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Schedule != null) yield return Schedule;
                     if (Quantity != null) yield return Quantity;
                     if (Rate != null) yield return Rate;
@@ -1363,7 +1351,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// NutritionOrder elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
 				if (Patient != null) yield return Patient;

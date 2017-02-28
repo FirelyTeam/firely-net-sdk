@@ -524,9 +524,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // GroupComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (GroupElement != null) yield return GroupElement;
                     if (GroupDisplayElement != null) yield return GroupDisplayElement;
                     if (SubGroupElement != null) yield return SubGroupElement;
@@ -978,7 +976,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Coverage elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
 				if (Type != null) yield return Type;

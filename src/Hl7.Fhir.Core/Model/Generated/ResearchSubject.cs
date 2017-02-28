@@ -342,7 +342,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// ResearchSubject elements
+                foreach (var item in base.Children) yield return item;
 				if (Identifier != null) yield return Identifier;
 				if (StatusElement != null) yield return StatusElement;
 				if (Period != null) yield return Period;

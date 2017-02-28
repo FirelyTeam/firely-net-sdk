@@ -344,7 +344,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// RelatedPerson elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (ActiveElement != null) yield return ActiveElement;
 				if (Patient != null) yield return Patient;

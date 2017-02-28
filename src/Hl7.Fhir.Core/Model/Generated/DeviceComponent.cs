@@ -246,9 +246,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ProductionSpecificationComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (SpecType != null) yield return SpecType;
                     if (ComponentId != null) yield return ComponentId;
                     if (ProductionSpecElement != null) yield return ProductionSpecElement;
@@ -515,7 +513,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// DeviceComponent elements
+                foreach (var item in base.Children) yield return item;
 				if (Type != null) yield return Type;
 				if (Identifier != null) yield return Identifier;
 				if (LastSystemChangeElement != null) yield return LastSystemChangeElement;

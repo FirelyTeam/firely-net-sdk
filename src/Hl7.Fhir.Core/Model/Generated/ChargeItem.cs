@@ -190,9 +190,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ParticipantComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Role != null) yield return Role;
                     if (Actor != null) yield return Actor;
                 }
@@ -746,7 +744,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// ChargeItem elements
+                foreach (var item in base.Children) yield return item;
 				if (Identifier != null) yield return Identifier;
 				foreach (var elem in DefinitionElement) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;

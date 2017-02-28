@@ -217,7 +217,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                // Contributor elements
+                foreach (var item in base.Children) yield return item;
                 if (TypeElement != null) yield return TypeElement;
                 if (NameElement != null) yield return NameElement;
                 foreach (var elem in Contact) { if (elem != null) yield return elem; }

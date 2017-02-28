@@ -330,9 +330,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // LinkComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (PathElement != null) yield return PathElement;
                     if (SliceNameElement != null) yield return SliceNameElement;
                     if (MinElement != null) yield return MinElement;
@@ -501,9 +499,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // TargetComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (TypeElement != null) yield return TypeElement;
                     if (ProfileElement != null) yield return ProfileElement;
                     foreach (var elem in Compartment) { if (elem != null) yield return elem; }
@@ -707,9 +703,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // CompartmentComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (CodeElement != null) yield return CodeElement;
                     if (RuleElement != null) yield return RuleElement;
                     if (ExpressionElement != null) yield return ExpressionElement;
@@ -1188,7 +1182,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// GraphDefinition elements
+                foreach (var item in base.Children) yield return item;
 				if (UrlElement != null) yield return UrlElement;
 				if (VersionElement != null) yield return VersionElement;
 				if (NameElement != null) yield return NameElement;

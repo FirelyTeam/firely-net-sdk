@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                // Annotation elements
+                foreach (var item in base.Children) yield return item;
                 if (Author != null) yield return Author;
                 if (TimeElement != null) yield return TimeElement;
                 if (TextElement != null) yield return TextElement;

@@ -295,9 +295,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // RecommendationComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (DateElement != null) yield return DateElement;
                     if (VaccineCode != null) yield return VaccineCode;
                     if (TargetDisease != null) yield return TargetDisease;
@@ -417,9 +415,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // DateCriterionComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Code != null) yield return Code;
                     if (ValueElement != null) yield return ValueElement;
                 }
@@ -602,9 +598,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ProtocolComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (DoseSequenceElement != null) yield return DoseSequenceElement;
                     if (DescriptionElement != null) yield return DescriptionElement;
                     if (Authority != null) yield return Authority;
@@ -728,7 +722,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// ImmunizationRecommendation elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (Patient != null) yield return Patient;
 				foreach (var elem in Recommendation) { if (elem != null) yield return elem; }
