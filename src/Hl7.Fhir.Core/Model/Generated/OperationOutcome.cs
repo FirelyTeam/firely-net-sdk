@@ -388,7 +388,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// XPath of element(s) related to issue
+            /// Path of element(s) related to issue
             /// </summary>
             [FhirElement("location", InSummary=true, Order=80)]
             [Cardinality(Min=0,Max=-1)]
@@ -402,7 +402,7 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.FhirString> _LocationElement;
             
             /// <summary>
-            /// XPath of element(s) related to issue
+            /// Path of element(s) related to issue
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]

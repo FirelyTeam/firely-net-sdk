@@ -235,17 +235,17 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Party to receive the payable
             /// </summary>
-            [FhirElement("party", Order=60, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("party", Order=60)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
+			[References("Practitioner","Organization","Patient","RelatedPerson")]
             [DataMember]
-            public Hl7.Fhir.Model.Element Party
+            public Hl7.Fhir.Model.ResourceReference Party
             {
                 get { return _Party; }
                 set { _Party = value; OnPropertyChanged("Party"); }
             }
             
-            private Hl7.Fhir.Model.Element _Party;
+            private Hl7.Fhir.Model.ResourceReference _Party;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(ResourceType != null) dest.ResourceType = (Hl7.Fhir.Model.CodeableConcept)ResourceType.DeepCopy();
-                    if(Party != null) dest.Party = (Hl7.Fhir.Model.Element)Party.DeepCopy();
+                    if(Party != null) dest.Party = (Hl7.Fhir.Model.ResourceReference)Party.DeepCopy();
                     return dest;
                 }
                 else
@@ -1623,9 +1623,25 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.CodeableConcept> _SubSite;
             
             /// <summary>
+            /// Encounters related to this billed item
+            /// </summary>
+            [FhirElement("encounter", Order=230)]
+            [CLSCompliant(false)]
+			[References("Encounter")]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ResourceReference> Encounter
+            {
+                get { if(_Encounter==null) _Encounter = new List<Hl7.Fhir.Model.ResourceReference>(); return _Encounter; }
+                set { _Encounter = value; OnPropertyChanged("Encounter"); }
+            }
+            
+            private List<Hl7.Fhir.Model.ResourceReference> _Encounter;
+            
+            /// <summary>
             /// List of note numbers which apply
             /// </summary>
-            [FhirElement("noteNumber", Order=230)]
+            [FhirElement("noteNumber", Order=240)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.PositiveInt> NoteNumberElement
@@ -1658,7 +1674,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Adjudication details
             /// </summary>
-            [FhirElement("adjudication", Order=240)]
+            [FhirElement("adjudication", Order=250)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ExplanationOfBenefit.AdjudicationComponent> Adjudication
@@ -1672,7 +1688,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Additional items
             /// </summary>
-            [FhirElement("detail", Order=250)]
+            [FhirElement("detail", Order=260)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ExplanationOfBenefit.DetailComponent> Detail
@@ -1709,6 +1725,7 @@ namespace Hl7.Fhir.Model
                     if(Udi != null) dest.Udi = new List<Hl7.Fhir.Model.ResourceReference>(Udi.DeepCopy());
                     if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableConcept)BodySite.DeepCopy();
                     if(SubSite != null) dest.SubSite = new List<Hl7.Fhir.Model.CodeableConcept>(SubSite.DeepCopy());
+                    if(Encounter != null) dest.Encounter = new List<Hl7.Fhir.Model.ResourceReference>(Encounter.DeepCopy());
                     if(NoteNumberElement != null) dest.NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(NoteNumberElement.DeepCopy());
                     if(Adjudication != null) dest.Adjudication = new List<Hl7.Fhir.Model.ExplanationOfBenefit.AdjudicationComponent>(Adjudication.DeepCopy());
                     if(Detail != null) dest.Detail = new List<Hl7.Fhir.Model.ExplanationOfBenefit.DetailComponent>(Detail.DeepCopy());
@@ -1748,6 +1765,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(Udi, otherT.Udi)) return false;
                 if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
                 if( !DeepComparable.Matches(SubSite, otherT.SubSite)) return false;
+                if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
                 if( !DeepComparable.Matches(NoteNumberElement, otherT.NoteNumberElement)) return false;
                 if( !DeepComparable.Matches(Adjudication, otherT.Adjudication)) return false;
                 if( !DeepComparable.Matches(Detail, otherT.Detail)) return false;
@@ -1780,6 +1798,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Udi, otherT.Udi)) return false;
                 if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
                 if( !DeepComparable.IsExactly(SubSite, otherT.SubSite)) return false;
+                if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
                 if( !DeepComparable.IsExactly(NoteNumberElement, otherT.NoteNumberElement)) return false;
                 if( !DeepComparable.IsExactly(Adjudication, otherT.Adjudication)) return false;
                 if( !DeepComparable.IsExactly(Detail, otherT.Detail)) return false;
@@ -1815,6 +1834,7 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Udi) { if (elem != null) yield return elem; }
                     if (BodySite != null) yield return BodySite;
                     foreach (var elem in SubSite) { if (elem != null) yield return elem; }
+                    foreach (var elem in Encounter) { if (elem != null) yield return elem; }
                     foreach (var elem in NoteNumberElement) { if (elem != null) yield return elem; }
                     foreach (var elem in Adjudication) { if (elem != null) yield return elem; }
                     foreach (var elem in Detail) { if (elem != null) yield return elem; }

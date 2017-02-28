@@ -474,6 +474,139 @@ namespace Hl7.Fhir.Model
         }
         
         
+        [FhirType("DiagnosisComponent")]
+        [DataContract]
+        public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "DiagnosisComponent"; } }
+            
+            /// <summary>
+            /// Reason the encounter takes place (resource)
+            /// </summary>
+            [FhirElement("condition", Order=40)]
+            [CLSCompliant(false)]
+			[References("Condition","Procedure")]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Condition
+            {
+                get { return _Condition; }
+                set { _Condition = value; OnPropertyChanged("Condition"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Condition;
+            
+            /// <summary>
+            /// Role that this diagnosis has within the encounter (e.g. admission, billing, discharge …)
+            /// </summary>
+            [FhirElement("role", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Role
+            {
+                get { return _Role; }
+                set { _Role = value; OnPropertyChanged("Role"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Role;
+            
+            /// <summary>
+            /// Ranking of the diagnosis (for each role type)
+            /// </summary>
+            [FhirElement("rank", Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.PositiveInt RankElement
+            {
+                get { return _RankElement; }
+                set { _RankElement = value; OnPropertyChanged("RankElement"); }
+            }
+            
+            private Hl7.Fhir.Model.PositiveInt _RankElement;
+            
+            /// <summary>
+            /// Ranking of the diagnosis (for each role type)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public int? Rank
+            {
+                get { return RankElement != null ? RankElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        RankElement = null; 
+                    else
+                        RankElement = new Hl7.Fhir.Model.PositiveInt(value);
+                    OnPropertyChanged("Rank");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as DiagnosisComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Condition != null) dest.Condition = (Hl7.Fhir.Model.ResourceReference)Condition.DeepCopy();
+                    if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopy();
+                    if(RankElement != null) dest.RankElement = (Hl7.Fhir.Model.PositiveInt)RankElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new DiagnosisComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as DiagnosisComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Condition, otherT.Condition)) return false;
+                if( !DeepComparable.Matches(Role, otherT.Role)) return false;
+                if( !DeepComparable.Matches(RankElement, otherT.RankElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as DiagnosisComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Condition, otherT.Condition)) return false;
+                if( !DeepComparable.IsExactly(Role, otherT.Role)) return false;
+                if( !DeepComparable.IsExactly(RankElement, otherT.RankElement)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // DiagnosisComponent elements
+                    if (Condition != null) yield return Condition;
+                    if (Role != null) yield return Role;
+                    if (RankElement != null) yield return RankElement;
+                }
+            }
+            
+        }
+        
+        
         [FhirType("HospitalizationComponent")]
         [DataContract]
         public partial class HospitalizationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -523,25 +656,9 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _AdmitSource;
             
             /// <summary>
-            /// The admitting diagnosis as reported by admitting practitioner
-            /// </summary>
-            [FhirElement("admittingDiagnosis", Order=70)]
-            [CLSCompliant(false)]
-			[References("Condition")]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.ResourceReference> AdmittingDiagnosis
-            {
-                get { if(_AdmittingDiagnosis==null) _AdmittingDiagnosis = new List<Hl7.Fhir.Model.ResourceReference>(); return _AdmittingDiagnosis; }
-                set { _AdmittingDiagnosis = value; OnPropertyChanged("AdmittingDiagnosis"); }
-            }
-            
-            private List<Hl7.Fhir.Model.ResourceReference> _AdmittingDiagnosis;
-            
-            /// <summary>
             /// The type of hospital re-admission that has occurred (if any). If the value is absent, then this is not identified as a readmission
             /// </summary>
-            [FhirElement("reAdmission", Order=80)]
+            [FhirElement("reAdmission", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept ReAdmission
             {
@@ -554,7 +671,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Diet preferences reported by the patient
             /// </summary>
-            [FhirElement("dietPreference", Order=90)]
+            [FhirElement("dietPreference", Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> DietPreference
@@ -568,7 +685,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Special courtesies (VIP, board member)
             /// </summary>
-            [FhirElement("specialCourtesy", Order=100)]
+            [FhirElement("specialCourtesy", Order=90)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> SpecialCourtesy
@@ -582,7 +699,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Wheelchair, translator, stretcher, etc.
             /// </summary>
-            [FhirElement("specialArrangement", Order=110)]
+            [FhirElement("specialArrangement", Order=100)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> SpecialArrangement
@@ -596,7 +713,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Location to which the patient is discharged
             /// </summary>
-            [FhirElement("destination", Order=120)]
+            [FhirElement("destination", Order=110)]
             [CLSCompliant(false)]
 			[References("Location")]
             [DataMember]
@@ -611,7 +728,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Category or kind of location after discharge
             /// </summary>
-            [FhirElement("dischargeDisposition", Order=130)]
+            [FhirElement("dischargeDisposition", Order=120)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept DischargeDisposition
             {
@@ -620,22 +737,6 @@ namespace Hl7.Fhir.Model
             }
             
             private Hl7.Fhir.Model.CodeableConcept _DischargeDisposition;
-            
-            /// <summary>
-            /// The final diagnosis given a patient before release from the hospital after all testing, surgery, and workup are complete
-            /// </summary>
-            [FhirElement("dischargeDiagnosis", Order=140)]
-            [CLSCompliant(false)]
-			[References("Condition")]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.ResourceReference> DischargeDiagnosis
-            {
-                get { if(_DischargeDiagnosis==null) _DischargeDiagnosis = new List<Hl7.Fhir.Model.ResourceReference>(); return _DischargeDiagnosis; }
-                set { _DischargeDiagnosis = value; OnPropertyChanged("DischargeDiagnosis"); }
-            }
-            
-            private List<Hl7.Fhir.Model.ResourceReference> _DischargeDiagnosis;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -647,14 +748,12 @@ namespace Hl7.Fhir.Model
                     if(PreAdmissionIdentifier != null) dest.PreAdmissionIdentifier = (Hl7.Fhir.Model.Identifier)PreAdmissionIdentifier.DeepCopy();
                     if(Origin != null) dest.Origin = (Hl7.Fhir.Model.ResourceReference)Origin.DeepCopy();
                     if(AdmitSource != null) dest.AdmitSource = (Hl7.Fhir.Model.CodeableConcept)AdmitSource.DeepCopy();
-                    if(AdmittingDiagnosis != null) dest.AdmittingDiagnosis = new List<Hl7.Fhir.Model.ResourceReference>(AdmittingDiagnosis.DeepCopy());
                     if(ReAdmission != null) dest.ReAdmission = (Hl7.Fhir.Model.CodeableConcept)ReAdmission.DeepCopy();
                     if(DietPreference != null) dest.DietPreference = new List<Hl7.Fhir.Model.CodeableConcept>(DietPreference.DeepCopy());
                     if(SpecialCourtesy != null) dest.SpecialCourtesy = new List<Hl7.Fhir.Model.CodeableConcept>(SpecialCourtesy.DeepCopy());
                     if(SpecialArrangement != null) dest.SpecialArrangement = new List<Hl7.Fhir.Model.CodeableConcept>(SpecialArrangement.DeepCopy());
                     if(Destination != null) dest.Destination = (Hl7.Fhir.Model.ResourceReference)Destination.DeepCopy();
                     if(DischargeDisposition != null) dest.DischargeDisposition = (Hl7.Fhir.Model.CodeableConcept)DischargeDisposition.DeepCopy();
-                    if(DischargeDiagnosis != null) dest.DischargeDiagnosis = new List<Hl7.Fhir.Model.ResourceReference>(DischargeDiagnosis.DeepCopy());
                     return dest;
                 }
                 else
@@ -675,14 +774,12 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(PreAdmissionIdentifier, otherT.PreAdmissionIdentifier)) return false;
                 if( !DeepComparable.Matches(Origin, otherT.Origin)) return false;
                 if( !DeepComparable.Matches(AdmitSource, otherT.AdmitSource)) return false;
-                if( !DeepComparable.Matches(AdmittingDiagnosis, otherT.AdmittingDiagnosis)) return false;
                 if( !DeepComparable.Matches(ReAdmission, otherT.ReAdmission)) return false;
                 if( !DeepComparable.Matches(DietPreference, otherT.DietPreference)) return false;
                 if( !DeepComparable.Matches(SpecialCourtesy, otherT.SpecialCourtesy)) return false;
                 if( !DeepComparable.Matches(SpecialArrangement, otherT.SpecialArrangement)) return false;
                 if( !DeepComparable.Matches(Destination, otherT.Destination)) return false;
                 if( !DeepComparable.Matches(DischargeDisposition, otherT.DischargeDisposition)) return false;
-                if( !DeepComparable.Matches(DischargeDiagnosis, otherT.DischargeDiagnosis)) return false;
                 
                 return true;
             }
@@ -696,14 +793,12 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(PreAdmissionIdentifier, otherT.PreAdmissionIdentifier)) return false;
                 if( !DeepComparable.IsExactly(Origin, otherT.Origin)) return false;
                 if( !DeepComparable.IsExactly(AdmitSource, otherT.AdmitSource)) return false;
-                if( !DeepComparable.IsExactly(AdmittingDiagnosis, otherT.AdmittingDiagnosis)) return false;
                 if( !DeepComparable.IsExactly(ReAdmission, otherT.ReAdmission)) return false;
                 if( !DeepComparable.IsExactly(DietPreference, otherT.DietPreference)) return false;
                 if( !DeepComparable.IsExactly(SpecialCourtesy, otherT.SpecialCourtesy)) return false;
                 if( !DeepComparable.IsExactly(SpecialArrangement, otherT.SpecialArrangement)) return false;
                 if( !DeepComparable.IsExactly(Destination, otherT.Destination)) return false;
                 if( !DeepComparable.IsExactly(DischargeDisposition, otherT.DischargeDisposition)) return false;
-                if( !DeepComparable.IsExactly(DischargeDiagnosis, otherT.DischargeDiagnosis)) return false;
                 
                 return true;
             }
@@ -720,14 +815,12 @@ namespace Hl7.Fhir.Model
                     if (PreAdmissionIdentifier != null) yield return PreAdmissionIdentifier;
                     if (Origin != null) yield return Origin;
                     if (AdmitSource != null) yield return AdmitSource;
-                    foreach (var elem in AdmittingDiagnosis) { if (elem != null) yield return elem; }
                     if (ReAdmission != null) yield return ReAdmission;
                     foreach (var elem in DietPreference) { if (elem != null) yield return elem; }
                     foreach (var elem in SpecialCourtesy) { if (elem != null) yield return elem; }
                     foreach (var elem in SpecialArrangement) { if (elem != null) yield return elem; }
                     if (Destination != null) yield return Destination;
                     if (DischargeDisposition != null) yield return DischargeDisposition;
-                    foreach (var elem in DischargeDiagnosis) { if (elem != null) yield return elem; }
                 }
             }
             
@@ -1099,20 +1192,18 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _Reason;
         
         /// <summary>
-        /// Reason the encounter takes place (resource)
+        /// The list of diagnosis relevant to this encounter
         /// </summary>
-        [FhirElement("indication", Order=240)]
-        [CLSCompliant(false)]
-		[References("Condition","Procedure")]
+        [FhirElement("diagnosis", InSummary=true, Order=240)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Indication
+        public List<Hl7.Fhir.Model.Encounter.DiagnosisComponent> Diagnosis
         {
-            get { if(_Indication==null) _Indication = new List<Hl7.Fhir.Model.ResourceReference>(); return _Indication; }
-            set { _Indication = value; OnPropertyChanged("Indication"); }
+            get { if(_Diagnosis==null) _Diagnosis = new List<Hl7.Fhir.Model.Encounter.DiagnosisComponent>(); return _Diagnosis; }
+            set { _Diagnosis = value; OnPropertyChanged("Diagnosis"); }
         }
         
-        private List<Hl7.Fhir.Model.ResourceReference> _Indication;
+        private List<Hl7.Fhir.Model.Encounter.DiagnosisComponent> _Diagnosis;
         
         /// <summary>
         /// The set of accounts that may be used for billing for this Encounter
@@ -1216,7 +1307,7 @@ namespace Hl7.Fhir.Model
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(Length != null) dest.Length = (Duration)Length.DeepCopy();
                 if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
-                if(Indication != null) dest.Indication = new List<Hl7.Fhir.Model.ResourceReference>(Indication.DeepCopy());
+                if(Diagnosis != null) dest.Diagnosis = new List<Hl7.Fhir.Model.Encounter.DiagnosisComponent>(Diagnosis.DeepCopy());
                 if(Account != null) dest.Account = new List<Hl7.Fhir.Model.ResourceReference>(Account.DeepCopy());
                 if(Hospitalization != null) dest.Hospitalization = (Hl7.Fhir.Model.Encounter.HospitalizationComponent)Hospitalization.DeepCopy();
                 if(Location != null) dest.Location = new List<Hl7.Fhir.Model.Encounter.LocationComponent>(Location.DeepCopy());
@@ -1254,7 +1345,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Period, otherT.Period)) return false;
             if( !DeepComparable.Matches(Length, otherT.Length)) return false;
             if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
-            if( !DeepComparable.Matches(Indication, otherT.Indication)) return false;
+            if( !DeepComparable.Matches(Diagnosis, otherT.Diagnosis)) return false;
             if( !DeepComparable.Matches(Account, otherT.Account)) return false;
             if( !DeepComparable.Matches(Hospitalization, otherT.Hospitalization)) return false;
             if( !DeepComparable.Matches(Location, otherT.Location)) return false;
@@ -1285,7 +1376,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
             if( !DeepComparable.IsExactly(Length, otherT.Length)) return false;
             if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
-            if( !DeepComparable.IsExactly(Indication, otherT.Indication)) return false;
+            if( !DeepComparable.IsExactly(Diagnosis, otherT.Diagnosis)) return false;
             if( !DeepComparable.IsExactly(Account, otherT.Account)) return false;
             if( !DeepComparable.IsExactly(Hospitalization, otherT.Hospitalization)) return false;
             if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
@@ -1316,7 +1407,7 @@ namespace Hl7.Fhir.Model
 				if (Period != null) yield return Period;
 				if (Length != null) yield return Length;
 				foreach (var elem in Reason) { if (elem != null) yield return elem; }
-				foreach (var elem in Indication) { if (elem != null) yield return elem; }
+				foreach (var elem in Diagnosis) { if (elem != null) yield return elem; }
 				foreach (var elem in Account) { if (elem != null) yield return elem; }
 				if (Hospitalization != null) yield return Hospitalization;
 				foreach (var elem in Location) { if (elem != null) yield return elem; }

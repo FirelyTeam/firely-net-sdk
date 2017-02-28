@@ -281,7 +281,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// The technical address for conneccting to this endpoint
+        /// The technical base address for connecting to this endpoint
         /// </summary>
         [FhirElement("address", InSummary=true, Order=180)]
         [Cardinality(Min=1,Max=1)]
@@ -295,7 +295,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirUri _AddressElement;
         
         /// <summary>
-        /// The technical address for conneccting to this endpoint
+        /// The technical base address for connecting to this endpoint
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

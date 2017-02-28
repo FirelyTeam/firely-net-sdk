@@ -61,22 +61,9 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ActionComponent"; } }
             
             /// <summary>
-            /// Unique identifier
-            /// </summary>
-            [FhirElement("actionIdentifier", Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.Identifier ActionIdentifier
-            {
-                get { return _ActionIdentifier; }
-                set { _ActionIdentifier = value; OnPropertyChanged("ActionIdentifier"); }
-            }
-            
-            private Hl7.Fhir.Model.Identifier _ActionIdentifier;
-            
-            /// <summary>
             /// User-visible label for the action (e.g. 1. or A.)
             /// </summary>
-            [FhirElement("label", Order=50)]
+            [FhirElement("label", Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString LabelElement
             {
@@ -108,7 +95,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// User-visible title
             /// </summary>
-            [FhirElement("title", Order=60)]
+            [FhirElement("title", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString TitleElement
             {
@@ -140,7 +127,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Short description of the action
             /// </summary>
-            [FhirElement("description", Order=70)]
+            [FhirElement("description", Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DescriptionElement
             {
@@ -172,7 +159,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Static text equivalent of the action, used if the dynamic aspects cannot be interpreted by the receiving system
             /// </summary>
-            [FhirElement("textEquivalent", Order=80)]
+            [FhirElement("textEquivalent", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString TextEquivalentElement
             {
@@ -204,7 +191,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Code representing the meaning of the action or sub-actions
             /// </summary>
-            [FhirElement("code", Order=90)]
+            [FhirElement("code", Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Code
@@ -218,7 +205,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Supporting documentation for the intended performer of the action
             /// </summary>
-            [FhirElement("documentation", Order=100)]
+            [FhirElement("documentation", Order=90)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<RelatedArtifact> Documentation
@@ -232,7 +219,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Whether or not the action is applicable
             /// </summary>
-            [FhirElement("condition", Order=110)]
+            [FhirElement("condition", Order=100)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.RequestGroup.ConditionComponent> Condition
@@ -246,7 +233,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Relationship to another action
             /// </summary>
-            [FhirElement("relatedAction", Order=120)]
+            [FhirElement("relatedAction", Order=110)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.RequestGroup.RelatedActionComponent> RelatedAction
@@ -260,7 +247,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// When the action should take place
             /// </summary>
-            [FhirElement("timing", Order=130, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("timing", Order=120, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Timing))]
             [DataMember]
@@ -273,9 +260,9 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Element _Timing;
             
             /// <summary>
-            /// Participant
+            /// Who should perform the action
             /// </summary>
-            [FhirElement("participant", Order=140)]
+            [FhirElement("participant", Order=130)]
             [CLSCompliant(false)]
 			[References("Patient","Person","Practitioner","RelatedPerson")]
             [Cardinality(Min=0,Max=-1)]
@@ -291,7 +278,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// create | update | remove | fire-event
             /// </summary>
-            [FhirElement("type", Order=150)]
+            [FhirElement("type", Order=140)]
             [DataMember]
             public Hl7.Fhir.Model.Coding Type
             {
@@ -304,7 +291,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// visual-group | logical-group | sentence-group
             /// </summary>
-            [FhirElement("groupingBehavior", Order=160)]
+            [FhirElement("groupingBehavior", Order=150)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ActionGroupingBehavior> GroupingBehaviorElement
             {
@@ -336,7 +323,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// any | all | all-or-none | exactly-one | at-most-one | one-or-more
             /// </summary>
-            [FhirElement("selectionBehavior", Order=170)]
+            [FhirElement("selectionBehavior", Order=160)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ActionSelectionBehavior> SelectionBehaviorElement
             {
@@ -368,7 +355,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// must | could | must-unless-documented
             /// </summary>
-            [FhirElement("requiredBehavior", Order=180)]
+            [FhirElement("requiredBehavior", Order=170)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ActionRequiredBehavior> RequiredBehaviorElement
             {
@@ -400,7 +387,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// yes | no
             /// </summary>
-            [FhirElement("precheckBehavior", Order=190)]
+            [FhirElement("precheckBehavior", Order=180)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ActionPrecheckBehavior> PrecheckBehaviorElement
             {
@@ -432,7 +419,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// single | multiple
             /// </summary>
-            [FhirElement("cardinalityBehavior", Order=200)]
+            [FhirElement("cardinalityBehavior", Order=190)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ActionCardinalityBehavior> CardinalityBehaviorElement
             {
@@ -464,7 +451,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The target of the action
             /// </summary>
-            [FhirElement("resource", Order=210)]
+            [FhirElement("resource", Order=200)]
             [CLSCompliant(false)]
 			[References()]
             [DataMember]
@@ -479,7 +466,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Sub action
             /// </summary>
-            [FhirElement("action", Order=220)]
+            [FhirElement("action", Order=210)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.RequestGroup.ActionComponent> Action
@@ -497,7 +484,6 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(ActionIdentifier != null) dest.ActionIdentifier = (Hl7.Fhir.Model.Identifier)ActionIdentifier.DeepCopy();
                     if(LabelElement != null) dest.LabelElement = (Hl7.Fhir.Model.FhirString)LabelElement.DeepCopy();
                     if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
@@ -533,7 +519,6 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(ActionIdentifier, otherT.ActionIdentifier)) return false;
                 if( !DeepComparable.Matches(LabelElement, otherT.LabelElement)) return false;
                 if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
                 if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
@@ -562,7 +547,6 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(ActionIdentifier, otherT.ActionIdentifier)) return false;
                 if( !DeepComparable.IsExactly(LabelElement, otherT.LabelElement)) return false;
                 if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
                 if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
@@ -594,7 +578,6 @@ namespace Hl7.Fhir.Model
                     // BackboneElement elements
                     foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // ActionComponent elements
-                    if (ActionIdentifier != null) yield return ActionIdentifier;
                     if (LabelElement != null) yield return LabelElement;
                     if (TitleElement != null) yield return TitleElement;
                     if (DescriptionElement != null) yield return DescriptionElement;
@@ -832,18 +815,37 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "RelatedActionComponent"; } }
             
             /// <summary>
-            /// Identifier of the related action
+            /// What action this is related to
             /// </summary>
-            [FhirElement("actionIdentifier", Order=40)]
+            [FhirElement("actionId", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Identifier ActionIdentifier
+            public Hl7.Fhir.Model.Id ActionIdElement
             {
-                get { return _ActionIdentifier; }
-                set { _ActionIdentifier = value; OnPropertyChanged("ActionIdentifier"); }
+                get { return _ActionIdElement; }
+                set { _ActionIdElement = value; OnPropertyChanged("ActionIdElement"); }
             }
             
-            private Hl7.Fhir.Model.Identifier _ActionIdentifier;
+            private Hl7.Fhir.Model.Id _ActionIdElement;
+            
+            /// <summary>
+            /// What action this is related to
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string ActionId
+            {
+                get { return ActionIdElement != null ? ActionIdElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        ActionIdElement = null; 
+                    else
+                        ActionIdElement = new Hl7.Fhir.Model.Id(value);
+                    OnPropertyChanged("ActionId");
+                }
+            }
             
             /// <summary>
             /// before-start | before | before-end | concurrent-with-start | concurrent | concurrent-with-end | after-start | after | after-end
@@ -900,7 +902,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(ActionIdentifier != null) dest.ActionIdentifier = (Hl7.Fhir.Model.Identifier)ActionIdentifier.DeepCopy();
+                    if(ActionIdElement != null) dest.ActionIdElement = (Hl7.Fhir.Model.Id)ActionIdElement.DeepCopy();
                     if(RelationshipElement != null) dest.RelationshipElement = (Code<Hl7.Fhir.Model.ActionRelationshipType>)RelationshipElement.DeepCopy();
                     if(Offset != null) dest.Offset = (Hl7.Fhir.Model.Element)Offset.DeepCopy();
                     return dest;
@@ -920,7 +922,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(ActionIdentifier, otherT.ActionIdentifier)) return false;
+                if( !DeepComparable.Matches(ActionIdElement, otherT.ActionIdElement)) return false;
                 if( !DeepComparable.Matches(RelationshipElement, otherT.RelationshipElement)) return false;
                 if( !DeepComparable.Matches(Offset, otherT.Offset)) return false;
                 
@@ -933,7 +935,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(ActionIdentifier, otherT.ActionIdentifier)) return false;
+                if( !DeepComparable.IsExactly(ActionIdElement, otherT.ActionIdElement)) return false;
                 if( !DeepComparable.IsExactly(RelationshipElement, otherT.RelationshipElement)) return false;
                 if( !DeepComparable.IsExactly(Offset, otherT.Offset)) return false;
                 
@@ -949,7 +951,7 @@ namespace Hl7.Fhir.Model
                     // BackboneElement elements
                     foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // RelatedActionComponent elements
-                    if (ActionIdentifier != null) yield return ActionIdentifier;
+                    if (ActionIdElement != null) yield return ActionIdElement;
                     if (RelationshipElement != null) yield return RelationshipElement;
                     if (Offset != null) yield return Offset;
                 }
@@ -972,7 +974,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
-        /// Subject of the request group
+        /// Who the request group is about
         /// </summary>
         [FhirElement("subject", Order=100)]
         [CLSCompliant(false)]

@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.DSTU3.csproj" />
+    <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.STU3.csproj" />
     <ProjectReference Include="..\Hl7.Fhir.Specification\Hl7.Fhir.Specification.csproj" />
   </ItemGroup>
   <ItemGroup>

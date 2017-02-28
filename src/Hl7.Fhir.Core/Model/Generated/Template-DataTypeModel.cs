@@ -1,7 +1,7 @@
 ﻿
 
 //
-// Model Generated on Fri, 17 Feb 2017 16:21:02 GMT for FHIR v1.9.0
+// Model Generated on Tue, 28 Feb 2017 11:37:28 GMT for FHIR v1.9.0
 //
 // Generated Shared Enumeration: ResourceType
 
@@ -57,6 +57,8 @@
 // Generated Shared Enumeration: CompositionStatus
 
 // Generated Shared Enumeration: ActionRequiredBehavior
+
+// Generated Shared Enumeration: DocumentRelationshipType
 
 // Generated Shared Enumeration: MessageSignificanceCategory
 

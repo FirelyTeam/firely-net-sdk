@@ -60,25 +60,106 @@
     <Compile Remove="Properties\Resources.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Model\Generated\Template-Bindings - Copy.cs">
+      <DependentUpon>Template-Bindings.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Model\Generated\Template-Bindings.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Template-Bindings.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Model\Generated\Template-Children - Copy.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Template-Children - Copy.ttinclude</DependentUpon>
+    </Compile>
+    <Compile Update="Model\Generated\Template-DataTypeModel - Copy.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Model\Generated\Template-DataTypeModel.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Model\Generated\Template-Model - Copy.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Model\Generated\Template-Model.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Model\Generated\Template-ModelInfo - Copy.cs">
+      <DependentUpon>Template-ModelInfo.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Model\Generated\Template-ModelInfo.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Template-ModelInfo.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Model\Generated\Template-ProfiledDataTypes - Copy.cs">
+      <DependentUpon>Template-ProfiledDataTypes.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Model\Generated\Template-ProfiledDataTypes.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Template-ProfiledDataTypes.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Model\Generated\Template-Bindings - Copy.tt">
+      <LastGenOutput>Template-Bindings.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
     <None Update="Model\Generated\Template-Bindings.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Template-Bindings.cs</LastGenOutput>
+    </None>
+    <None Update="Model\Generated\Template-Children - Copy.ttinclude">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Template-Children - Copy.cs</LastGenOutput>
     </None>
     <None Update="Model\Generated\Template-Children.ttinclude">
       <Generator>
       </Generator>
     </None>
+    <None Update="Model\Generated\Template-DataTypeModel - Copy.tt">
+      <LastGenOutput>Template-DataTypeModel.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
     <None Update="Model\Generated\Template-DataTypeModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Template-DataTypeModel.cs</LastGenOutput>
+    </None>
+    <None Update="Model\Generated\Template-Model - Copy.tt">
+      <LastGenOutput>Template-Model.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
     </None>
     <None Update="Model\Generated\Template-Model.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Template-Model.cs</LastGenOutput>
     </None>
+    <None Update="Model\Generated\Template-ModelInfo - Copy.tt">
+      <LastGenOutput>Template-ModelInfo.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
     <None Update="Model\Generated\Template-ModelInfo.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Template-ModelInfo.cs</LastGenOutput>
+    </None>
+    <None Update="Model\Generated\Template-ProfiledDataTypes - Copy.tt">
+      <LastGenOutput>Template-ProfiledDataTypes.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
     </None>
     <None Update="Model\Generated\Template-ProfiledDataTypes.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

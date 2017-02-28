@@ -221,12 +221,6 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
         /// </summary>
-        [EnumLiteral("Catalog"), Description("Catalog")]
-        Catalog,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/resource-types)
-        /// </summary>
         [EnumLiteral("ChargeItem"), Description("ChargeItem")]
         ChargeItem,
         /// <summary>
@@ -1240,6 +1234,39 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
+    /// The type of relationship between documents.
+    /// (url: http://hl7.org/fhir/ValueSet/document-relationship-type)
+    /// </summary>
+    [FhirEnumeration("DocumentRelationshipType")]
+    public enum DocumentRelationshipType
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/document-relationship-type)
+        /// </summary>
+        [EnumLiteral("replaces"), Description("Replaces")]
+        Replaces,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/document-relationship-type)
+        /// </summary>
+        [EnumLiteral("transforms"), Description("Transforms")]
+        Transforms,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/document-relationship-type)
+        /// </summary>
+        [EnumLiteral("signs"), Description("Signs")]
+        Signs,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/document-relationship-type)
+        /// </summary>
+        [EnumLiteral("appends"), Description("Appends")]
+        Appends,
+    }
+
+    /// <summary>
     /// The processing mode that applies to this list
     /// (url: http://hl7.org/fhir/ValueSet/list-mode)
     /// </summary>
@@ -1264,6 +1291,63 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("changes"), Description("Change List")]
         Changes,
+    }
+
+    /// <summary>
+    /// Codes providing the status of an observation.
+    /// (url: http://hl7.org/fhir/ValueSet/observation-status)
+    /// </summary>
+    [FhirEnumeration("ObservationStatus")]
+    public enum ObservationStatus
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/observation-status)
+        /// </summary>
+        [EnumLiteral("registered"), Description("Registered")]
+        Registered,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/observation-status)
+        /// </summary>
+        [EnumLiteral("preliminary"), Description("Preliminary")]
+        Preliminary,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/observation-status)
+        /// </summary>
+        [EnumLiteral("final"), Description("Final")]
+        Final,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/observation-status)
+        /// </summary>
+        [EnumLiteral("amended"), Description("Amended")]
+        Amended,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/observation-status)
+        /// </summary>
+        [EnumLiteral("corrected"), Description("Corrected")]
+        Corrected,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/observation-status)
+        /// </summary>
+        [EnumLiteral("cancelled"), Description("Cancelled")]
+        Cancelled,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/observation-status)
+        /// </summary>
+        [EnumLiteral("entered-in-error"), Description("Entered in Error")]
+        EnteredInError,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/observation-status)
+        /// </summary>
+        [EnumLiteral("unknown"), Description("Unknown")]
+        Unknown,
     }
 
     /// <summary>
@@ -1375,63 +1459,6 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("sun"), Description("Sunday")]
         Sun,
-    }
-
-    /// <summary>
-    /// Codes providing the status of an observation.
-    /// (url: http://hl7.org/fhir/ValueSet/observation-status)
-    /// </summary>
-    [FhirEnumeration("ObservationStatus")]
-    public enum ObservationStatus
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/observation-status)
-        /// </summary>
-        [EnumLiteral("registered"), Description("Registered")]
-        Registered,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/observation-status)
-        /// </summary>
-        [EnumLiteral("preliminary"), Description("Preliminary")]
-        Preliminary,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/observation-status)
-        /// </summary>
-        [EnumLiteral("final"), Description("Final")]
-        Final,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/observation-status)
-        /// </summary>
-        [EnumLiteral("amended"), Description("Amended")]
-        Amended,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/observation-status)
-        /// </summary>
-        [EnumLiteral("corrected"), Description("Corrected")]
-        Corrected,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/observation-status)
-        /// </summary>
-        [EnumLiteral("cancelled"), Description("Cancelled")]
-        Cancelled,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/observation-status)
-        /// </summary>
-        [EnumLiteral("entered-in-error"), Description("Entered in Error")]
-        EnteredInError,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/observation-status)
-        /// </summary>
-        [EnumLiteral("unknown"), Description("Unknown")]
-        Unknown,
     }
 
     /// <summary>
@@ -1870,12 +1897,6 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("CareTeam"), Description("CareTeam")]
         CareTeam,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/resource-types)
-        /// </summary>
-        [EnumLiteral("Catalog"), Description("Catalog")]
-        Catalog,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)

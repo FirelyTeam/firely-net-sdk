@@ -479,34 +479,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// SOP Instance UID
         /// </summary>
-        [FhirElement("uid", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [DataMember]
-        public Hl7.Fhir.Model.Oid UidElement
+        public Hl7.Fhir.Model.Identifier Identifier
         {
-            get { return _UidElement; }
-            set { _UidElement = value; OnPropertyChanged("UidElement"); }
+            get { return _Identifier; }
+            set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private Hl7.Fhir.Model.Oid _UidElement;
-        
-        /// <summary>
-        /// SOP Instance UID
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Uid
-        {
-            get { return UidElement != null ? UidElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  UidElement = null; 
-                else
-                  UidElement = new Hl7.Fhir.Model.Oid(value);
-                OnPropertyChanged("Uid");
-            }
-        }
+        private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
         /// Patient of the selected objects
@@ -631,7 +612,7 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(UidElement != null) dest.UidElement = (Hl7.Fhir.Model.Oid)UidElement.DeepCopy();
+                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(AuthoringTimeElement != null) dest.AuthoringTimeElement = (Hl7.Fhir.Model.FhirDateTime)AuthoringTimeElement.DeepCopy();
                 if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
@@ -654,7 +635,7 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(UidElement, otherT.UidElement)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
             if( !DeepComparable.Matches(AuthoringTimeElement, otherT.AuthoringTimeElement)) return false;
             if( !DeepComparable.Matches(Author, otherT.Author)) return false;
@@ -670,7 +651,7 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(UidElement, otherT.UidElement)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
             if( !DeepComparable.IsExactly(AuthoringTimeElement, otherT.AuthoringTimeElement)) return false;
             if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
@@ -686,7 +667,7 @@ namespace Hl7.Fhir.Model
             get
             {
 				// ImagingManifest elements
-				if (UidElement != null) yield return UidElement;
+				if (Identifier != null) yield return Identifier;
 				if (Patient != null) yield return Patient;
 				if (AuthoringTimeElement != null) yield return AuthoringTimeElement;
 				if (Author != null) yield return Author;

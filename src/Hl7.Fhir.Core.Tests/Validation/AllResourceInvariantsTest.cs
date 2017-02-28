@@ -34,7 +34,7 @@ namespace Hl7.Fhir.FhirPath
                         if (result.ErrorMessage.Contains("FATAL"))
                             failedExpressions += result.ErrorMessage + "\r\n";
 
-                        Debug.WriteLine(result.ErrorMessage);
+                        Console.WriteLine(result.ErrorMessage);
                     }
                     //if (results.Count() > 0)
 

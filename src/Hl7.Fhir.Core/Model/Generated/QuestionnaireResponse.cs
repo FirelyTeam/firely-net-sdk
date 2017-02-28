@@ -537,24 +537,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Context;
         
         /// <summary>
-        /// Person who received and recorded the answers
-        /// </summary>
-        [FhirElement("author", InSummary=true, Order=160)]
-        [CLSCompliant(false)]
-		[References("Device","Practitioner","Patient","RelatedPerson")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Author
-        {
-            get { return _Author; }
-            set { _Author = value; OnPropertyChanged("Author"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Author;
-        
-        /// <summary>
         /// Date this version was authored
         /// </summary>
-        [FhirElement("authored", InSummary=true, Order=170)]
+        [FhirElement("authored", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime AuthoredElement
         {
@@ -582,6 +567,21 @@ namespace Hl7.Fhir.Model
                 OnPropertyChanged("Authored");
             }
         }
+        
+        /// <summary>
+        /// Person who received and recorded the answers
+        /// </summary>
+        [FhirElement("author", InSummary=true, Order=170)]
+        [CLSCompliant(false)]
+		[References("Device","Practitioner","Patient","RelatedPerson")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Author
+        {
+            get { return _Author; }
+            set { _Author = value; OnPropertyChanged("Author"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Author;
         
         /// <summary>
         /// The person who answered the questions
@@ -643,8 +643,8 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>)StatusElement.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
-                if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
                 if(AuthoredElement != null) dest.AuthoredElement = (Hl7.Fhir.Model.FhirDateTime)AuthoredElement.DeepCopy();
+                if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
                 if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopy();
                 if(Item != null) dest.Item = new List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>(Item.DeepCopy());
                 return dest;
@@ -671,8 +671,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(Context, otherT.Context)) return false;
-            if( !DeepComparable.Matches(Author, otherT.Author)) return false;
             if( !DeepComparable.Matches(AuthoredElement, otherT.AuthoredElement)) return false;
+            if( !DeepComparable.Matches(Author, otherT.Author)) return false;
             if( !DeepComparable.Matches(Source, otherT.Source)) return false;
             if( !DeepComparable.Matches(Item, otherT.Item)) return false;
             
@@ -692,8 +692,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
-            if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
             if( !DeepComparable.IsExactly(AuthoredElement, otherT.AuthoredElement)) return false;
+            if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
             if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
             if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
             
@@ -713,8 +713,8 @@ namespace Hl7.Fhir.Model
 				if (StatusElement != null) yield return StatusElement;
 				if (Subject != null) yield return Subject;
 				if (Context != null) yield return Context;
-				if (Author != null) yield return Author;
 				if (AuthoredElement != null) yield return AuthoredElement;
+				if (Author != null) yield return Author;
 				if (Source != null) yield return Source;
 				foreach (var elem in Item) { if (elem != null) yield return elem; }
             }

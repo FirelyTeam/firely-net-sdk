@@ -283,6 +283,123 @@ namespace Hl7.Fhir.Model
         }
         
         
+        [FhirType("RelatesToComponent")]
+        [DataContract]
+        public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "RelatesToComponent"; } }
+            
+            /// <summary>
+            /// replaces | transforms | signs | appends
+            /// </summary>
+            [FhirElement("code", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.DocumentRelationshipType> CodeElement
+            {
+                get { return _CodeElement; }
+                set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
+            }
+            
+            private Code<Hl7.Fhir.Model.DocumentRelationshipType> _CodeElement;
+            
+            /// <summary>
+            /// replaces | transforms | signs | appends
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.DocumentRelationshipType? Code
+            {
+                get { return CodeElement != null ? CodeElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        CodeElement = null; 
+                    else
+                        CodeElement = new Code<Hl7.Fhir.Model.DocumentRelationshipType>(value);
+                    OnPropertyChanged("Code");
+                }
+            }
+            
+            /// <summary>
+            /// Target of the relationship
+            /// </summary>
+            [FhirElement("target", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Target
+            {
+                get { return _Target; }
+                set { _Target = value; OnPropertyChanged("Target"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _Target;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as RelatesToComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.DocumentRelationshipType>)CodeElement.DeepCopy();
+                    if(Target != null) dest.Target = (Hl7.Fhir.Model.Element)Target.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new RelatesToComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as RelatesToComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
+                if( !DeepComparable.Matches(Target, otherT.Target)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as RelatesToComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
+                if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // RelatesToComponent elements
+                    if (CodeElement != null) yield return CodeElement;
+                    if (Target != null) yield return Target;
+                }
+            }
+            
+        }
+        
+        
         [FhirType("EventComponent")]
         [DataContract]
         public partial class EventComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -884,9 +1001,23 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Custodian;
         
         /// <summary>
+        /// Relationships to other compositions/documents
+        /// </summary>
+        [FhirElement("relatesTo", InSummary=true, Order=210)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Composition.RelatesToComponent> RelatesTo
+        {
+            get { if(_RelatesTo==null) _RelatesTo = new List<Hl7.Fhir.Model.Composition.RelatesToComponent>(); return _RelatesTo; }
+            set { _RelatesTo = value; OnPropertyChanged("RelatesTo"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Composition.RelatesToComponent> _RelatesTo;
+        
+        /// <summary>
         /// The clinical service(s) being documented
         /// </summary>
-        [FhirElement("event", InSummary=true, Order=210)]
+        [FhirElement("event", InSummary=true, Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Composition.EventComponent> Event
@@ -900,7 +1031,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Composition is broken into sections
         /// </summary>
-        [FhirElement("section", Order=220)]
+        [FhirElement("section", Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Composition.SectionComponent> Section
@@ -957,6 +1088,7 @@ namespace Hl7.Fhir.Model
                 if(ConfidentialityElement != null) dest.ConfidentialityElement = (Code<Hl7.Fhir.Model.Composition.ConfidentialityClassification>)ConfidentialityElement.DeepCopy();
                 if(Attester != null) dest.Attester = new List<Hl7.Fhir.Model.Composition.AttesterComponent>(Attester.DeepCopy());
                 if(Custodian != null) dest.Custodian = (Hl7.Fhir.Model.ResourceReference)Custodian.DeepCopy();
+                if(RelatesTo != null) dest.RelatesTo = new List<Hl7.Fhir.Model.Composition.RelatesToComponent>(RelatesTo.DeepCopy());
                 if(Event != null) dest.Event = new List<Hl7.Fhir.Model.Composition.EventComponent>(Event.DeepCopy());
                 if(Section != null) dest.Section = new List<Hl7.Fhir.Model.Composition.SectionComponent>(Section.DeepCopy());
                 return dest;
@@ -988,6 +1120,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(ConfidentialityElement, otherT.ConfidentialityElement)) return false;
             if( !DeepComparable.Matches(Attester, otherT.Attester)) return false;
             if( !DeepComparable.Matches(Custodian, otherT.Custodian)) return false;
+            if( !DeepComparable.Matches(RelatesTo, otherT.RelatesTo)) return false;
             if( !DeepComparable.Matches(Event, otherT.Event)) return false;
             if( !DeepComparable.Matches(Section, otherT.Section)) return false;
             
@@ -1012,6 +1145,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(ConfidentialityElement, otherT.ConfidentialityElement)) return false;
             if( !DeepComparable.IsExactly(Attester, otherT.Attester)) return false;
             if( !DeepComparable.IsExactly(Custodian, otherT.Custodian)) return false;
+            if( !DeepComparable.IsExactly(RelatesTo, otherT.RelatesTo)) return false;
             if( !DeepComparable.IsExactly(Event, otherT.Event)) return false;
             if( !DeepComparable.IsExactly(Section, otherT.Section)) return false;
             
@@ -1036,6 +1170,7 @@ namespace Hl7.Fhir.Model
 				if (ConfidentialityElement != null) yield return ConfidentialityElement;
 				foreach (var elem in Attester) { if (elem != null) yield return elem; }
 				if (Custodian != null) yield return Custodian;
+				foreach (var elem in RelatesTo) { if (elem != null) yield return elem; }
 				foreach (var elem in Event) { if (elem != null) yield return elem; }
 				foreach (var elem in Section) { if (elem != null) yield return elem; }
             }

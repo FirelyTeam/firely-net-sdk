@@ -1,7 +1,7 @@
 ﻿
 
 //
-// Model Generated on Fri, 17 Feb 2017 16:21:17 GMT for FHIR v1.9.0
+// Model Generated on Tue, 28 Feb 2017 11:37:47 GMT for FHIR v1.9.0
 //
 // Generated Shared Enumeration: ResourceType
 	// Used in model class (resource): ActivityDefinition.kind
@@ -35,6 +35,7 @@
 	// Used in model class (resource): DeviceRequest.priority
 	// Used in model class (resource): ProcedureRequest.priority
 	// Used in model class (resource): ReferralRequest.priority
+	// Used in model class (resource): SupplyRequest.priority
 	// Used in model class (resource): Task.priority
 
 // Generated Shared Enumeration: RequestIntent
@@ -59,6 +60,7 @@
 	// Used in model class (resource): RequestGroup.action.groupingBehavior
 
 // Generated Shared Enumeration: ObservationStatus
+	// Used in model class (resource): DetectedIssue.status
 	// Used in model class (resource): Observation.status
 	// Used in model class (resource): RiskAssessment.status
 
@@ -86,7 +88,6 @@
 // Generated Shared Enumeration: FinancialResourceStatusCodes
 	// Used in model class (resource): Claim.status
 	// Used in model class (resource): ClaimResponse.status
-	// Used in model class (resource): Contract.status
 	// Used in model class (resource): Coverage.status
 	// Used in model class (resource): EligibilityRequest.status
 	// Used in model class (resource): EligibilityResponse.status
@@ -140,6 +141,10 @@
 // Generated Shared Enumeration: ActionRequiredBehavior
 	// Used in model class (resource): PlanDefinition.actionDefinition.requiredBehavior
 	// Used in model class (resource): RequestGroup.action.requiredBehavior
+
+// Generated Shared Enumeration: DocumentRelationshipType
+	// Used in model class (resource): Composition.relatesTo.code
+	// Used in model class (resource): DocumentReference.relatesTo.code
 
 // Generated Shared Enumeration: MessageSignificanceCategory
 	// Used in model class (resource): CapabilityStatement.messaging.event.category
@@ -276,7 +281,6 @@
 // Hl7.Fhir.Core\Model\Generated\ClaimResponse.cs
 // Hl7.Fhir.Core\Model\Generated\Claim.cs
 // Hl7.Fhir.Core\Model\Generated\ChargeItem.cs
-// Hl7.Fhir.Core\Model\Generated\Catalog.cs
 // Hl7.Fhir.Core\Model\Generated\CareTeam.cs
 // Hl7.Fhir.Core\Model\Generated\CarePlan.cs
 // Hl7.Fhir.Core\Model\Generated\CapabilityStatement.cs

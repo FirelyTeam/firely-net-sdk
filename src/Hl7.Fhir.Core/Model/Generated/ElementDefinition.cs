@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "ElementDefinition"; } }
         
         /// <summary>
-        /// How a property is represented on the wire.
+        /// How a property is represented when serialized.
         /// (url: http://hl7.org/fhir/ValueSet/property-representation)
         /// </summary>
         [FhirEnumeration("PropertyRepresentation")]
@@ -1936,15 +1936,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Comments about the use of this element
         /// </summary>
-        [FhirElement("comments", InSummary=true, Order=110)]
+        [FhirElement("comment", InSummary=true, Order=110)]
         [DataMember]
-        public Hl7.Fhir.Model.Markdown CommentsElement
+        public Hl7.Fhir.Model.Markdown CommentElement
         {
-            get { return _CommentsElement; }
-            set { _CommentsElement = value; OnPropertyChanged("CommentsElement"); }
+            get { return _CommentElement; }
+            set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
         }
         
-        private Hl7.Fhir.Model.Markdown _CommentsElement;
+        private Hl7.Fhir.Model.Markdown _CommentElement;
         
         /// <summary>
         /// Comments about the use of this element
@@ -1952,16 +1952,16 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string Comments
+        public string Comment
         {
-            get { return CommentsElement != null ? CommentsElement.Value : null; }
+            get { return CommentElement != null ? CommentElement.Value : null; }
             set
             {
                 if (value == null)
-                  CommentsElement = null; 
+                  CommentElement = null; 
                 else
-                  CommentsElement = new Hl7.Fhir.Model.Markdown(value);
-                OnPropertyChanged("Comments");
+                  CommentElement = new Hl7.Fhir.Model.Markdown(value);
+                OnPropertyChanged("Comment");
             }
         }
         
@@ -2035,13 +2035,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("min", InSummary=true, Order=140)]
         [DataMember]
-        public Hl7.Fhir.Model.Integer MinElement
+        public Hl7.Fhir.Model.UnsignedInt MinElement
         {
             get { return _MinElement; }
             set { _MinElement = value; OnPropertyChanged("MinElement"); }
         }
         
-        private Hl7.Fhir.Model.Integer _MinElement;
+        private Hl7.Fhir.Model.UnsignedInt _MinElement;
         
         /// <summary>
         /// Minimum Cardinality
@@ -2057,7 +2057,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                   MinElement = null; 
                 else
-                  MinElement = new Hl7.Fhir.Model.Integer(value);
+                  MinElement = new Hl7.Fhir.Model.UnsignedInt(value);
                 OnPropertyChanged("Min");
             }
         }
@@ -2524,10 +2524,10 @@ namespace Hl7.Fhir.Model
                 if(Slicing != null) dest.Slicing = (Hl7.Fhir.Model.ElementDefinition.SlicingComponent)Slicing.DeepCopy();
                 if(ShortElement != null) dest.ShortElement = (Hl7.Fhir.Model.FhirString)ShortElement.DeepCopy();
                 if(DefinitionElement != null) dest.DefinitionElement = (Hl7.Fhir.Model.Markdown)DefinitionElement.DeepCopy();
-                if(CommentsElement != null) dest.CommentsElement = (Hl7.Fhir.Model.Markdown)CommentsElement.DeepCopy();
+                if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.Markdown)CommentElement.DeepCopy();
                 if(RequirementsElement != null) dest.RequirementsElement = (Hl7.Fhir.Model.Markdown)RequirementsElement.DeepCopy();
                 if(AliasElement != null) dest.AliasElement = new List<Hl7.Fhir.Model.FhirString>(AliasElement.DeepCopy());
-                if(MinElement != null) dest.MinElement = (Hl7.Fhir.Model.Integer)MinElement.DeepCopy();
+                if(MinElement != null) dest.MinElement = (Hl7.Fhir.Model.UnsignedInt)MinElement.DeepCopy();
                 if(MaxElement != null) dest.MaxElement = (Hl7.Fhir.Model.FhirString)MaxElement.DeepCopy();
                 if(Base != null) dest.Base = (Hl7.Fhir.Model.ElementDefinition.BaseComponent)Base.DeepCopy();
                 if(ContentReferenceElement != null) dest.ContentReferenceElement = (Hl7.Fhir.Model.FhirUri)ContentReferenceElement.DeepCopy();
@@ -2573,7 +2573,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Slicing, otherT.Slicing)) return false;
             if( !DeepComparable.Matches(ShortElement, otherT.ShortElement)) return false;
             if( !DeepComparable.Matches(DefinitionElement, otherT.DefinitionElement)) return false;
-            if( !DeepComparable.Matches(CommentsElement, otherT.CommentsElement)) return false;
+            if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
             if( !DeepComparable.Matches(RequirementsElement, otherT.RequirementsElement)) return false;
             if( !DeepComparable.Matches(AliasElement, otherT.AliasElement)) return false;
             if( !DeepComparable.Matches(MinElement, otherT.MinElement)) return false;
@@ -2615,7 +2615,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Slicing, otherT.Slicing)) return false;
             if( !DeepComparable.IsExactly(ShortElement, otherT.ShortElement)) return false;
             if( !DeepComparable.IsExactly(DefinitionElement, otherT.DefinitionElement)) return false;
-            if( !DeepComparable.IsExactly(CommentsElement, otherT.CommentsElement)) return false;
+            if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
             if( !DeepComparable.IsExactly(RequirementsElement, otherT.RequirementsElement)) return false;
             if( !DeepComparable.IsExactly(AliasElement, otherT.AliasElement)) return false;
             if( !DeepComparable.IsExactly(MinElement, otherT.MinElement)) return false;
@@ -2657,7 +2657,7 @@ namespace Hl7.Fhir.Model
                 if (Slicing != null) yield return Slicing;
                 if (ShortElement != null) yield return ShortElement;
                 if (DefinitionElement != null) yield return DefinitionElement;
-                if (CommentsElement != null) yield return CommentsElement;
+                if (CommentElement != null) yield return CommentElement;
                 if (RequirementsElement != null) yield return RequirementsElement;
                 foreach (var elem in AliasElement) { if (elem != null) yield return elem; }
                 if (MinElement != null) yield return MinElement;

@@ -472,12 +472,6 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Catalog"), Description("Catalog")]
-            Catalog,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
             [EnumLiteral("ChargeItem"), Description("ChargeItem")]
             ChargeItem,
             /// <summary>

@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Period for the status
+            /// Duration the EpisodeOfCare was in the specified status
             /// </summary>
             [FhirElement("period", Order=50)]
             [Cardinality(Min=1,Max=1)]
@@ -219,8 +219,141 @@ namespace Hl7.Fhir.Model
         }
         
         
+        [FhirType("DiagnosisComponent")]
+        [DataContract]
+        public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "DiagnosisComponent"; } }
+            
+            /// <summary>
+            /// Conditions/problems/diagnoses this episode of care is for
+            /// </summary>
+            [FhirElement("condition", InSummary=true, Order=40)]
+            [CLSCompliant(false)]
+			[References("Condition")]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Condition
+            {
+                get { return _Condition; }
+                set { _Condition = value; OnPropertyChanged("Condition"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Condition;
+            
+            /// <summary>
+            /// Role that this diagnosis has within the episode of care (e.g. admission, billing, discharge …)
+            /// </summary>
+            [FhirElement("role", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Role
+            {
+                get { return _Role; }
+                set { _Role = value; OnPropertyChanged("Role"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Role;
+            
+            /// <summary>
+            /// Ranking of the diagnosis (for each role type)
+            /// </summary>
+            [FhirElement("rank", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.PositiveInt RankElement
+            {
+                get { return _RankElement; }
+                set { _RankElement = value; OnPropertyChanged("RankElement"); }
+            }
+            
+            private Hl7.Fhir.Model.PositiveInt _RankElement;
+            
+            /// <summary>
+            /// Ranking of the diagnosis (for each role type)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public int? Rank
+            {
+                get { return RankElement != null ? RankElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        RankElement = null; 
+                    else
+                        RankElement = new Hl7.Fhir.Model.PositiveInt(value);
+                    OnPropertyChanged("Rank");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as DiagnosisComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Condition != null) dest.Condition = (Hl7.Fhir.Model.ResourceReference)Condition.DeepCopy();
+                    if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopy();
+                    if(RankElement != null) dest.RankElement = (Hl7.Fhir.Model.PositiveInt)RankElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new DiagnosisComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as DiagnosisComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Condition, otherT.Condition)) return false;
+                if( !DeepComparable.Matches(Role, otherT.Role)) return false;
+                if( !DeepComparable.Matches(RankElement, otherT.RankElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as DiagnosisComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Condition, otherT.Condition)) return false;
+                if( !DeepComparable.IsExactly(Role, otherT.Role)) return false;
+                if( !DeepComparable.IsExactly(RankElement, otherT.RankElement)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // DiagnosisComponent elements
+                    if (Condition != null) yield return Condition;
+                    if (Role != null) yield return Role;
+                    if (RankElement != null) yield return RankElement;
+                }
+            }
+            
+        }
+        
+        
         /// <summary>
-        /// Identifier(s) for the EpisodeOfCare
+        /// Business Identifier(s) relevant for this EpisodeOfCare
         /// </summary>
         [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
@@ -267,7 +400,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Past list of status codes
+        /// Past list of status codes (the current status may be included to cover the start date of the status)
         /// </summary>
         [FhirElement("statusHistory", Order=110)]
         [Cardinality(Min=0,Max=-1)]
@@ -295,23 +428,21 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _Type;
         
         /// <summary>
-        /// Conditions/problems/diagnoses this episode of care is for
+        /// The list of diagnosis relevant to this episode of care
         /// </summary>
-        [FhirElement("condition", Order=130)]
-        [CLSCompliant(false)]
-		[References("Condition")]
+        [FhirElement("diagnosis", InSummary=true, Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Condition
+        public List<Hl7.Fhir.Model.EpisodeOfCare.DiagnosisComponent> Diagnosis
         {
-            get { if(_Condition==null) _Condition = new List<Hl7.Fhir.Model.ResourceReference>(); return _Condition; }
-            set { _Condition = value; OnPropertyChanged("Condition"); }
+            get { if(_Diagnosis==null) _Diagnosis = new List<Hl7.Fhir.Model.EpisodeOfCare.DiagnosisComponent>(); return _Diagnosis; }
+            set { _Diagnosis = value; OnPropertyChanged("Diagnosis"); }
         }
         
-        private List<Hl7.Fhir.Model.ResourceReference> _Condition;
+        private List<Hl7.Fhir.Model.EpisodeOfCare.DiagnosisComponent> _Diagnosis;
         
         /// <summary>
-        /// Patient for this episode of care
+        /// The patient who is the focus of this episode of care
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=140)]
         [CLSCompliant(false)]
@@ -435,7 +566,7 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>)StatusElement.DeepCopy();
                 if(StatusHistory != null) dest.StatusHistory = new List<Hl7.Fhir.Model.EpisodeOfCare.StatusHistoryComponent>(StatusHistory.DeepCopy());
                 if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
-                if(Condition != null) dest.Condition = new List<Hl7.Fhir.Model.ResourceReference>(Condition.DeepCopy());
+                if(Diagnosis != null) dest.Diagnosis = new List<Hl7.Fhir.Model.EpisodeOfCare.DiagnosisComponent>(Diagnosis.DeepCopy());
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
@@ -464,7 +595,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(StatusHistory, otherT.StatusHistory)) return false;
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-            if( !DeepComparable.Matches(Condition, otherT.Condition)) return false;
+            if( !DeepComparable.Matches(Diagnosis, otherT.Diagnosis)) return false;
             if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
             if( !DeepComparable.Matches(ManagingOrganization, otherT.ManagingOrganization)) return false;
             if( !DeepComparable.Matches(Period, otherT.Period)) return false;
@@ -486,7 +617,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(StatusHistory, otherT.StatusHistory)) return false;
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-            if( !DeepComparable.IsExactly(Condition, otherT.Condition)) return false;
+            if( !DeepComparable.IsExactly(Diagnosis, otherT.Diagnosis)) return false;
             if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
             if( !DeepComparable.IsExactly(ManagingOrganization, otherT.ManagingOrganization)) return false;
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
@@ -508,7 +639,7 @@ namespace Hl7.Fhir.Model
 				if (StatusElement != null) yield return StatusElement;
 				foreach (var elem in StatusHistory) { if (elem != null) yield return elem; }
 				foreach (var elem in Type) { if (elem != null) yield return elem; }
-				foreach (var elem in Condition) { if (elem != null) yield return elem; }
+				foreach (var elem in Diagnosis) { if (elem != null) yield return elem; }
 				if (Patient != null) yield return Patient;
 				if (ManagingOrganization != null) yield return ManagingOrganization;
 				if (Period != null) yield return Period;

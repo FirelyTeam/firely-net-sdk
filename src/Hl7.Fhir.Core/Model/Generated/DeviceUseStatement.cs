@@ -54,9 +54,54 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "DeviceUseStatement"; } }
         
         /// <summary>
+        /// A coded concept indicating the current status of a the Device Usage
+        /// (url: http://hl7.org/fhir/ValueSet/device-statement-status)
+        /// </summary>
+        [FhirEnumeration("DeviceUseStatementStatus")]
+        public enum DeviceUseStatementStatus
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/device-statement-status)
+            /// </summary>
+            [EnumLiteral("active"), Description("Active")]
+            Active,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/device-statement-status)
+            /// </summary>
+            [EnumLiteral("completed"), Description("Completed")]
+            Completed,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/device-statement-status)
+            /// </summary>
+            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
+            EnteredInError,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/device-statement-status)
+            /// </summary>
+            [EnumLiteral("intended"), Description("Intended")]
+            Intended,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/device-statement-status)
+            /// </summary>
+            [EnumLiteral("stopped"), Description("Stopped")]
+            Stopped,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/device-statement-status)
+            /// </summary>
+            [EnumLiteral("on-hold"), Description("On Hold")]
+            OnHold,
+        }
+
+        /// <summary>
         /// External identifier for this record
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -68,11 +113,44 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
+        /// active | completed | entered-in-error +
+        /// </summary>
+        [FhirElement("status", InSummary=true, Order=100)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Code<Hl7.Fhir.Model.DeviceUseStatement.DeviceUseStatementStatus> StatusElement
+        {
+            get { return _StatusElement; }
+            set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+        }
+        
+        private Code<Hl7.Fhir.Model.DeviceUseStatement.DeviceUseStatementStatus> _StatusElement;
+        
+        /// <summary>
+        /// active | completed | entered-in-error +
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.DeviceUseStatement.DeviceUseStatementStatus? Status
+        {
+            get { return StatusElement != null ? StatusElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  StatusElement = null; 
+                else
+                  StatusElement = new Code<Hl7.Fhir.Model.DeviceUseStatement.DeviceUseStatementStatus>(value);
+                OnPropertyChanged("Status");
+            }
+        }
+        
+        /// <summary>
         /// Patient using device
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=100)]
+        [FhirElement("subject", Order=110)]
         [CLSCompliant(false)]
-		[References("Patient")]
+		[References("Patient","Group")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -86,7 +164,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Period device was used
         /// </summary>
-        [FhirElement("whenUsed", InSummary=true, Order=110)]
+        [FhirElement("whenUsed", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.Period WhenUsed
         {
@@ -99,7 +177,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// How often  the device was used
         /// </summary>
-        [FhirElement("timing", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("timing", Order=130, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
         [DataMember]
@@ -114,7 +192,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When statement was recorded
         /// </summary>
-        [FhirElement("recordedOn", InSummary=true, Order=130)]
+        [FhirElement("recordedOn", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime RecordedOnElement
         {
@@ -144,9 +222,24 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Who made the statement
+        /// </summary>
+        [FhirElement("source", Order=150)]
+        [CLSCompliant(false)]
+		[References("Patient","Practitioner","RelatedPerson")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Source
+        {
+            get { return _Source; }
+            set { _Source = value; OnPropertyChanged("Source"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Source;
+        
+        /// <summary>
         /// Reference to device used
         /// </summary>
-        [FhirElement("device", InSummary=true, Order=140)]
+        [FhirElement("device", Order=160)]
         [CLSCompliant(false)]
 		[References("Device")]
         [Cardinality(Min=1,Max=1)]
@@ -162,7 +255,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Why device was used
         /// </summary>
-        [FhirElement("indication", InSummary=true, Order=150)]
+        [FhirElement("indication", Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Indication
@@ -176,7 +269,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Target body site
         /// </summary>
-        [FhirElement("bodySite", InSummary=true, Order=160)]
+        [FhirElement("bodySite", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept BodySite
         {
@@ -189,35 +282,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Addition details (comments, instructions)
         /// </summary>
-        [FhirElement("notes", InSummary=true, Order=170)]
+        [FhirElement("note", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.FhirString> NotesElement
+        public List<Hl7.Fhir.Model.Annotation> Note
         {
-            get { if(_NotesElement==null) _NotesElement = new List<Hl7.Fhir.Model.FhirString>(); return _NotesElement; }
-            set { _NotesElement = value; OnPropertyChanged("NotesElement"); }
+            get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+            set { _Note = value; OnPropertyChanged("Note"); }
         }
         
-        private List<Hl7.Fhir.Model.FhirString> _NotesElement;
-        
-        /// <summary>
-        /// Addition details (comments, instructions)
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public IEnumerable<string> Notes
-        {
-            get { return NotesElement != null ? NotesElement.Select(elem => elem.Value) : null; }
-            set
-            {
-                if (value == null)
-                  NotesElement = null; 
-                else
-                  NotesElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
-                OnPropertyChanged("Notes");
-            }
-        }
+        private List<Hl7.Fhir.Model.Annotation> _Note;
         
 
         public override void AddDefaultConstraints()
@@ -234,14 +308,16 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DeviceUseStatement.DeviceUseStatementStatus>)StatusElement.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(WhenUsed != null) dest.WhenUsed = (Hl7.Fhir.Model.Period)WhenUsed.DeepCopy();
                 if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Element)Timing.DeepCopy();
                 if(RecordedOnElement != null) dest.RecordedOnElement = (Hl7.Fhir.Model.FhirDateTime)RecordedOnElement.DeepCopy();
+                if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopy();
                 if(Device != null) dest.Device = (Hl7.Fhir.Model.ResourceReference)Device.DeepCopy();
                 if(Indication != null) dest.Indication = new List<Hl7.Fhir.Model.CodeableConcept>(Indication.DeepCopy());
                 if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableConcept)BodySite.DeepCopy();
-                if(NotesElement != null) dest.NotesElement = new List<Hl7.Fhir.Model.FhirString>(NotesElement.DeepCopy());
+                if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 return dest;
             }
             else
@@ -260,14 +336,16 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(WhenUsed, otherT.WhenUsed)) return false;
             if( !DeepComparable.Matches(Timing, otherT.Timing)) return false;
             if( !DeepComparable.Matches(RecordedOnElement, otherT.RecordedOnElement)) return false;
+            if( !DeepComparable.Matches(Source, otherT.Source)) return false;
             if( !DeepComparable.Matches(Device, otherT.Device)) return false;
             if( !DeepComparable.Matches(Indication, otherT.Indication)) return false;
             if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
-            if( !DeepComparable.Matches(NotesElement, otherT.NotesElement)) return false;
+            if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             
             return true;
         }
@@ -279,14 +357,16 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(WhenUsed, otherT.WhenUsed)) return false;
             if( !DeepComparable.IsExactly(Timing, otherT.Timing)) return false;
             if( !DeepComparable.IsExactly(RecordedOnElement, otherT.RecordedOnElement)) return false;
+            if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
             if( !DeepComparable.IsExactly(Device, otherT.Device)) return false;
             if( !DeepComparable.IsExactly(Indication, otherT.Indication)) return false;
             if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
-            if( !DeepComparable.IsExactly(NotesElement, otherT.NotesElement)) return false;
+            if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             
             return true;
         }
@@ -298,14 +378,16 @@ namespace Hl7.Fhir.Model
             {
 				// DeviceUseStatement elements
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (StatusElement != null) yield return StatusElement;
 				if (Subject != null) yield return Subject;
 				if (WhenUsed != null) yield return WhenUsed;
 				if (Timing != null) yield return Timing;
 				if (RecordedOnElement != null) yield return RecordedOnElement;
+				if (Source != null) yield return Source;
 				if (Device != null) yield return Device;
 				foreach (var elem in Indication) { if (elem != null) yield return elem; }
 				if (BodySite != null) yield return BodySite;
-				foreach (var elem in NotesElement) { if (elem != null) yield return elem; }
+				foreach (var elem in Note) { if (elem != null) yield return elem; }
             }
         }
     }

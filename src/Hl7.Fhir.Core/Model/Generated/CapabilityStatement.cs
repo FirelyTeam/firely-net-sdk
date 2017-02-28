@@ -2466,10 +2466,24 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// Messages supported by this system
+            /// </summary>
+            [FhirElement("supportedMessage", InSummary=true, Order=70)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.CapabilityStatement.SupportedMessageComponent> SupportedMessage
+            {
+                get { if(_SupportedMessage==null) _SupportedMessage = new List<Hl7.Fhir.Model.CapabilityStatement.SupportedMessageComponent>(); return _SupportedMessage; }
+                set { _SupportedMessage = value; OnPropertyChanged("SupportedMessage"); }
+            }
+            
+            private List<Hl7.Fhir.Model.CapabilityStatement.SupportedMessageComponent> _SupportedMessage;
+            
+            /// <summary>
             /// Declare support for this event
             /// </summary>
-            [FhirElement("event", InSummary=true, Order=70)]
-            [Cardinality(Min=1,Max=-1)]
+            [FhirElement("event", InSummary=true, Order=80)]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CapabilityStatement.EventComponent> Event
             {
@@ -2489,6 +2503,7 @@ namespace Hl7.Fhir.Model
                     if(Endpoint != null) dest.Endpoint = new List<Hl7.Fhir.Model.CapabilityStatement.EndpointComponent>(Endpoint.DeepCopy());
                     if(ReliableCacheElement != null) dest.ReliableCacheElement = (Hl7.Fhir.Model.UnsignedInt)ReliableCacheElement.DeepCopy();
                     if(DocumentationElement != null) dest.DocumentationElement = (Hl7.Fhir.Model.FhirString)DocumentationElement.DeepCopy();
+                    if(SupportedMessage != null) dest.SupportedMessage = new List<Hl7.Fhir.Model.CapabilityStatement.SupportedMessageComponent>(SupportedMessage.DeepCopy());
                     if(Event != null) dest.Event = new List<Hl7.Fhir.Model.CapabilityStatement.EventComponent>(Event.DeepCopy());
                     return dest;
                 }
@@ -2510,6 +2525,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(Endpoint, otherT.Endpoint)) return false;
                 if( !DeepComparable.Matches(ReliableCacheElement, otherT.ReliableCacheElement)) return false;
                 if( !DeepComparable.Matches(DocumentationElement, otherT.DocumentationElement)) return false;
+                if( !DeepComparable.Matches(SupportedMessage, otherT.SupportedMessage)) return false;
                 if( !DeepComparable.Matches(Event, otherT.Event)) return false;
                 
                 return true;
@@ -2524,6 +2540,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Endpoint, otherT.Endpoint)) return false;
                 if( !DeepComparable.IsExactly(ReliableCacheElement, otherT.ReliableCacheElement)) return false;
                 if( !DeepComparable.IsExactly(DocumentationElement, otherT.DocumentationElement)) return false;
+                if( !DeepComparable.IsExactly(SupportedMessage, otherT.SupportedMessage)) return false;
                 if( !DeepComparable.IsExactly(Event, otherT.Event)) return false;
                 
                 return true;
@@ -2541,6 +2558,7 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Endpoint) { if (elem != null) yield return elem; }
                     if (ReliableCacheElement != null) yield return ReliableCacheElement;
                     if (DocumentationElement != null) yield return DocumentationElement;
+                    foreach (var elem in SupportedMessage) { if (elem != null) yield return elem; }
                     foreach (var elem in Event) { if (elem != null) yield return elem; }
                 }
             }
@@ -2657,6 +2675,123 @@ namespace Hl7.Fhir.Model
                     // EndpointComponent elements
                     if (Protocol != null) yield return Protocol;
                     if (AddressElement != null) yield return AddressElement;
+                }
+            }
+            
+        }
+        
+        
+        [FhirType("SupportedMessageComponent")]
+        [DataContract]
+        public partial class SupportedMessageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "SupportedMessageComponent"; } }
+            
+            /// <summary>
+            /// sender | receiver
+            /// </summary>
+            [FhirElement("mode", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.CapabilityStatement.EventCapabilityMode> ModeElement
+            {
+                get { return _ModeElement; }
+                set { _ModeElement = value; OnPropertyChanged("ModeElement"); }
+            }
+            
+            private Code<Hl7.Fhir.Model.CapabilityStatement.EventCapabilityMode> _ModeElement;
+            
+            /// <summary>
+            /// sender | receiver
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.CapabilityStatement.EventCapabilityMode? Mode
+            {
+                get { return ModeElement != null ? ModeElement.Value : null; }
+                set
+                {
+                    if (!value.HasValue)
+                        ModeElement = null; 
+                    else
+                        ModeElement = new Code<Hl7.Fhir.Model.CapabilityStatement.EventCapabilityMode>(value);
+                    OnPropertyChanged("Mode");
+                }
+            }
+            
+            /// <summary>
+            /// Message supported by this system
+            /// </summary>
+            [FhirElement("definition", InSummary=true, Order=50)]
+            [CLSCompliant(false)]
+			[References("MessageDefinition")]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Definition
+            {
+                get { return _Definition; }
+                set { _Definition = value; OnPropertyChanged("Definition"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Definition;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as SupportedMessageComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.CapabilityStatement.EventCapabilityMode>)ModeElement.DeepCopy();
+                    if(Definition != null) dest.Definition = (Hl7.Fhir.Model.ResourceReference)Definition.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new SupportedMessageComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as SupportedMessageComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(ModeElement, otherT.ModeElement)) return false;
+                if( !DeepComparable.Matches(Definition, otherT.Definition)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as SupportedMessageComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(ModeElement, otherT.ModeElement)) return false;
+                if( !DeepComparable.IsExactly(Definition, otherT.Definition)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // SupportedMessageComponent elements
+                    if (ModeElement != null) yield return ModeElement;
+                    if (Definition != null) yield return Definition;
                 }
             }
             
@@ -3816,6 +3951,15 @@ namespace Hl7.Fhir.Model
             Xpath = "count(f:searchParam)=count(distinct-values(f:searchParam/f:name/@value))"
         };
 
+        public static ElementDefinition.ConstraintComponent CapabilityStatement_CPB_16 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "messaging.all(supportedMessage.empty() != event.empty())",
+            Key = "cpb-16",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Must have either supportedMessage or event, but not both",
+            Xpath = "exists(f:supportedMessage) != exists(f:event)"
+        };
+
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
@@ -3829,6 +3973,7 @@ namespace Hl7.Fhir.Model
             InvariantConstraints.Add(CapabilityStatement_CPB_1);
             InvariantConstraints.Add(CapabilityStatement_CPB_9);
             InvariantConstraints.Add(CapabilityStatement_CPB_12);
+            InvariantConstraints.Add(CapabilityStatement_CPB_16);
         }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)

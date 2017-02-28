@@ -102,8 +102,8 @@ namespace Hl7.Fhir.Model
         /// The availability status of the device.
         /// (url: http://hl7.org/fhir/ValueSet/device-status)
         /// </summary>
-        [FhirEnumeration("DeviceStatus")]
-        public enum DeviceStatus
+        [FhirEnumeration("FHIRDeviceStatus")]
+        public enum FHIRDeviceStatus
         {
             /// <summary>
             /// MISSING DESCRIPTION
@@ -475,13 +475,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("status", InSummary=true, Order=110)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.Device.DeviceStatus> StatusElement
+        public Code<Hl7.Fhir.Model.Device.FHIRDeviceStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.Device.DeviceStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.Device.FHIRDeviceStatus> _StatusElement;
         
         /// <summary>
         /// active | inactive | entered-in-error | unknown
@@ -489,7 +489,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.Device.DeviceStatus? Status
+        public Hl7.Fhir.Model.Device.FHIRDeviceStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -497,7 +497,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                   StatusElement = null; 
                 else
-                  StatusElement = new Code<Hl7.Fhir.Model.Device.DeviceStatus>(value);
+                  StatusElement = new Code<Hl7.Fhir.Model.Device.FHIRDeviceStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -842,7 +842,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Udi != null) dest.Udi = (Hl7.Fhir.Model.Device.UdiComponent)Udi.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Device.DeviceStatus>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Device.FHIRDeviceStatus>)StatusElement.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(LotNumberElement != null) dest.LotNumberElement = (Hl7.Fhir.Model.FhirString)LotNumberElement.DeepCopy();
                 if(ManufacturerElement != null) dest.ManufacturerElement = (Hl7.Fhir.Model.FhirString)ManufacturerElement.DeepCopy();

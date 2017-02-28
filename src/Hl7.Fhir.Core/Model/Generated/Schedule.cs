@@ -141,11 +141,11 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _Specialty;
         
         /// <summary>
-        /// The resource this Schedule resource is providing availability information for. These are expected to usually be one of HealthcareService, Location, Practitioner, Device, Patient or RelatedPerson
+        /// The resource this Schedule resource is providing availability information for. These are expected to usually be one of HealthcareService, Location, Practitioner, PractitionerRole, Device, Patient or RelatedPerson
         /// </summary>
         [FhirElement("actor", InSummary=true, Order=140)]
         [CLSCompliant(false)]
-		[References("Patient","Practitioner","RelatedPerson","Device","HealthcareService","Location")]
+		[References("Patient","Practitioner","PractitionerRole","RelatedPerson","Device","HealthcareService","Location")]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Actor

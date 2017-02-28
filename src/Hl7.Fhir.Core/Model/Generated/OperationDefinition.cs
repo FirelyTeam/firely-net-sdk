@@ -1280,7 +1280,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.OperationDefinition.ParameterComponent> _Parameter;
         
         /// <summary>
-        /// For generating overloaded methods in code
+        /// Define overloaded variants for when  generating code
         /// </summary>
         [FhirElement("overload", Order=310)]
         [Cardinality(Min=0,Max=-1)]

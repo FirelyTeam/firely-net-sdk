@@ -100,18 +100,18 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "AgentComponent"; } }
             
             /// <summary>
-            /// What the agents involvement was
+            /// What the agents role was
             /// </summary>
             [FhirElement("role", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public Hl7.Fhir.Model.Coding Role
+            public List<Hl7.Fhir.Model.CodeableConcept> Role
             {
-                get { return _Role; }
+                get { if(_Role==null) _Role = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Role; }
                 set { _Role = value; OnPropertyChanged("Role"); }
             }
             
-            private Hl7.Fhir.Model.Coding _Role;
+            private List<Hl7.Fhir.Model.CodeableConcept> _Role;
             
             /// <summary>
             /// Who participated
@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Role != null) dest.Role = (Hl7.Fhir.Model.Coding)Role.DeepCopy();
+                    if(Role != null) dest.Role = new List<Hl7.Fhir.Model.CodeableConcept>(Role.DeepCopy());
                     if(Who != null) dest.Who = (Hl7.Fhir.Model.Element)Who.DeepCopy();
                     if(OnBehalfOf != null) dest.OnBehalfOf = (Hl7.Fhir.Model.Element)OnBehalfOf.DeepCopy();
                     if(RelatedAgentType != null) dest.RelatedAgentType = (Hl7.Fhir.Model.CodeableConcept)RelatedAgentType.DeepCopy();
@@ -216,7 +216,7 @@ namespace Hl7.Fhir.Model
                     // BackboneElement elements
                     foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // AgentComponent elements
-                    if (Role != null) yield return Role;
+                    foreach (var elem in Role) { if (elem != null) yield return elem; }
                     if (Who != null) yield return Who;
                     if (OnBehalfOf != null) yield return OnBehalfOf;
                     if (RelatedAgentType != null) yield return RelatedAgentType;

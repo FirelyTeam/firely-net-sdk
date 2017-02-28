@@ -64,8 +64,14 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/link-type)
             /// </summary>
-            [EnumLiteral("replace"), Description("Replace")]
-            Replace,
+            [EnumLiteral("replaced-by"), Description("Replaced-by")]
+            ReplacedBy,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/link-type)
+            /// </summary>
+            [EnumLiteral("replaces"), Description("Replaces")]
+            Replaces,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/link-type)
@@ -532,7 +538,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.ResourceReference _Other;
             
             /// <summary>
-            /// replace | refer | seealso - type of link
+            /// replaced-by | replaces | refer | seealso - type of link
             /// </summary>
             [FhirElement("type", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
@@ -546,7 +552,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.Patient.LinkType> _TypeElement;
             
             /// <summary>
-            /// replace | refer | seealso - type of link
+            /// replaced-by | replaces | refer | seealso - type of link
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]

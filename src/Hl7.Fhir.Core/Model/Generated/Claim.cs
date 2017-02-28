@@ -1759,9 +1759,25 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.CodeableConcept> _SubSite;
             
             /// <summary>
+            /// Encounters related to this billed item
+            /// </summary>
+            [FhirElement("encounter", Order=230)]
+            [CLSCompliant(false)]
+			[References("Encounter")]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ResourceReference> Encounter
+            {
+                get { if(_Encounter==null) _Encounter = new List<Hl7.Fhir.Model.ResourceReference>(); return _Encounter; }
+                set { _Encounter = value; OnPropertyChanged("Encounter"); }
+            }
+            
+            private List<Hl7.Fhir.Model.ResourceReference> _Encounter;
+            
+            /// <summary>
             /// Additional items
             /// </summary>
-            [FhirElement("detail", Order=230)]
+            [FhirElement("detail", Order=240)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Claim.DetailComponent> Detail
@@ -1798,6 +1814,7 @@ namespace Hl7.Fhir.Model
                     if(Udi != null) dest.Udi = new List<Hl7.Fhir.Model.ResourceReference>(Udi.DeepCopy());
                     if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableConcept)BodySite.DeepCopy();
                     if(SubSite != null) dest.SubSite = new List<Hl7.Fhir.Model.CodeableConcept>(SubSite.DeepCopy());
+                    if(Encounter != null) dest.Encounter = new List<Hl7.Fhir.Model.ResourceReference>(Encounter.DeepCopy());
                     if(Detail != null) dest.Detail = new List<Hl7.Fhir.Model.Claim.DetailComponent>(Detail.DeepCopy());
                     return dest;
                 }
@@ -1835,6 +1852,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(Udi, otherT.Udi)) return false;
                 if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
                 if( !DeepComparable.Matches(SubSite, otherT.SubSite)) return false;
+                if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
                 if( !DeepComparable.Matches(Detail, otherT.Detail)) return false;
                 
                 return true;
@@ -1865,6 +1883,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Udi, otherT.Udi)) return false;
                 if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
                 if( !DeepComparable.IsExactly(SubSite, otherT.SubSite)) return false;
+                if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
                 if( !DeepComparable.IsExactly(Detail, otherT.Detail)) return false;
                 
                 return true;
@@ -1898,6 +1917,7 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Udi) { if (elem != null) yield return elem; }
                     if (BodySite != null) yield return BodySite;
                     foreach (var elem in SubSite) { if (elem != null) yield return elem; }
+                    foreach (var elem in Encounter) { if (elem != null) yield return elem; }
                     foreach (var elem in Detail) { if (elem != null) yield return elem; }
                 }
             }

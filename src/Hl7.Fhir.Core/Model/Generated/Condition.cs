@@ -481,7 +481,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
-        /// Encounter when condition first asserted
+        /// Encounter or episode when condition first asserted
         /// </summary>
         [FhirElement("context", InSummary=true, Order=170)]
         [CLSCompliant(false)]

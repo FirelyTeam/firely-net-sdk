@@ -196,9 +196,41 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
+        /// Whether this linkage assertion is active or not
+        /// </summary>
+        [FhirElement("active", InSummary=true, Order=90)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirBoolean ActiveElement
+        {
+            get { return _ActiveElement; }
+            set { _ActiveElement = value; OnPropertyChanged("ActiveElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirBoolean _ActiveElement;
+        
+        /// <summary>
+        /// Whether this linkage assertion is active or not
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public bool? Active
+        {
+            get { return ActiveElement != null ? ActiveElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  ActiveElement = null; 
+                else
+                  ActiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                OnPropertyChanged("Active");
+            }
+        }
+        
+        /// <summary>
         /// Who is responsible for linkages
         /// </summary>
-        [FhirElement("author", InSummary=true, Order=90)]
+        [FhirElement("author", InSummary=true, Order=100)]
         [CLSCompliant(false)]
 		[References("Practitioner","Organization")]
         [DataMember]
@@ -213,7 +245,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Item to be linked
         /// </summary>
-        [FhirElement("item", InSummary=true, Order=100)]
+        [FhirElement("item", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Linkage.ItemComponent> Item
@@ -225,10 +257,20 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Linkage.ItemComponent> _Item;
         
 
+        public static ElementDefinition.ConstraintComponent Linkage_LNK_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "item.count()>1",
+            Key = "lnk-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Must have at least two items",
+            Xpath = "count(f:item)>1"
+        };
+
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
 
+            InvariantConstraints.Add(Linkage_LNK_1);
         }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -238,6 +280,7 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
+                if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
                 if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
                 if(Item != null) dest.Item = new List<Hl7.Fhir.Model.Linkage.ItemComponent>(Item.DeepCopy());
                 return dest;
@@ -257,6 +300,7 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(ActiveElement, otherT.ActiveElement)) return false;
             if( !DeepComparable.Matches(Author, otherT.Author)) return false;
             if( !DeepComparable.Matches(Item, otherT.Item)) return false;
             
@@ -269,6 +313,7 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
+            if( !DeepComparable.IsExactly(ActiveElement, otherT.ActiveElement)) return false;
             if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
             if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
             
@@ -281,6 +326,7 @@ namespace Hl7.Fhir.Model
             get
             {
 				// Linkage elements
+				if (ActiveElement != null) yield return ActiveElement;
 				if (Author != null) yield return Author;
 				foreach (var elem in Item) { if (elem != null) yield return elem; }
             }

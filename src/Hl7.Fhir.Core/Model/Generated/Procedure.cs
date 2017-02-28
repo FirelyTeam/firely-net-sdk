@@ -449,7 +449,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
-        /// The encounter associated with the procedure
+        /// Encounter or episode associated with the procedure
         /// </summary>
         [FhirElement("context", InSummary=true, Order=190)]
         [CLSCompliant(false)]

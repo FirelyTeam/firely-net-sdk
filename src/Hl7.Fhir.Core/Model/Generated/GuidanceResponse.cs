@@ -90,6 +90,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("failure"), Description("Failure")]
             Failure,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/guidance-response-status)
+            /// </summary>
+            [EnumLiteral("entered-in-error"), Description("Entered In Error")]
+            EnteredInError,
         }
 
         /// <summary>
@@ -154,7 +160,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Module;
         
         /// <summary>
-        /// success | data-requested | data-required | in-progress | failure
+        /// success | data-requested | data-required | in-progress | failure | entered-in-error
         /// </summary>
         [FhirElement("status", InSummary=true, Order=120)]
         [Cardinality(Min=1,Max=1)]
@@ -168,7 +174,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.GuidanceResponse.GuidanceResponseStatus> _StatusElement;
         
         /// <summary>
-        /// success | data-requested | data-required | in-progress | failure
+        /// success | data-requested | data-required | in-progress | failure | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

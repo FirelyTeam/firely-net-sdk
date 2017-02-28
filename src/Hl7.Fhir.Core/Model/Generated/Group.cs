@@ -398,9 +398,41 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
+        /// Whether this group's record is in active use
+        /// </summary>
+        [FhirElement("active", InSummary=true, Order=100)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirBoolean ActiveElement
+        {
+            get { return _ActiveElement; }
+            set { _ActiveElement = value; OnPropertyChanged("ActiveElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirBoolean _ActiveElement;
+        
+        /// <summary>
+        /// Whether this group's record is in active use
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public bool? Active
+        {
+            get { return ActiveElement != null ? ActiveElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  ActiveElement = null; 
+                else
+                  ActiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                OnPropertyChanged("Active");
+            }
+        }
+        
+        /// <summary>
         /// person | animal | practitioner | device | medication | substance
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=100)]
+        [FhirElement("type", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Group.GroupType> TypeElement
@@ -433,7 +465,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Descriptive or actual
         /// </summary>
-        [FhirElement("actual", InSummary=true, Order=110)]
+        [FhirElement("actual", InSummary=true, Order=120)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ActualElement
@@ -460,38 +492,6 @@ namespace Hl7.Fhir.Model
                 else
                   ActualElement = new Hl7.Fhir.Model.FhirBoolean(value);
                 OnPropertyChanged("Actual");
-            }
-        }
-        
-        /// <summary>
-        /// Whether this group's record is in active use
-        /// </summary>
-        [FhirElement("active", InSummary=true, Order=120)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirBoolean ActiveElement
-        {
-            get { return _ActiveElement; }
-            set { _ActiveElement = value; OnPropertyChanged("ActiveElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirBoolean _ActiveElement;
-        
-        /// <summary>
-        /// Whether this group's record is in active use
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public bool? Active
-        {
-            get { return ActiveElement != null ? ActiveElement.Value : null; }
-            set
-            {
-                if (!value.HasValue)
-                  ActiveElement = null; 
-                else
-                  ActiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
-                OnPropertyChanged("Active");
             }
         }
         
@@ -625,9 +625,9 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Group.GroupType>)TypeElement.DeepCopy();
                 if(ActualElement != null) dest.ActualElement = (Hl7.Fhir.Model.FhirBoolean)ActualElement.DeepCopy();
-                if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(QuantityElement != null) dest.QuantityElement = (Hl7.Fhir.Model.UnsignedInt)QuantityElement.DeepCopy();
@@ -651,9 +651,9 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(ActiveElement, otherT.ActiveElement)) return false;
             if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.Matches(ActualElement, otherT.ActualElement)) return false;
-            if( !DeepComparable.Matches(ActiveElement, otherT.ActiveElement)) return false;
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.Matches(QuantityElement, otherT.QuantityElement)) return false;
@@ -670,9 +670,9 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(ActiveElement, otherT.ActiveElement)) return false;
             if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.IsExactly(ActualElement, otherT.ActualElement)) return false;
-            if( !DeepComparable.IsExactly(ActiveElement, otherT.ActiveElement)) return false;
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.IsExactly(QuantityElement, otherT.QuantityElement)) return false;
@@ -689,9 +689,9 @@ namespace Hl7.Fhir.Model
             {
 				// Group elements
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (ActiveElement != null) yield return ActiveElement;
 				if (TypeElement != null) yield return TypeElement;
 				if (ActualElement != null) yield return ActualElement;
-				if (ActiveElement != null) yield return ActiveElement;
 				if (Code != null) yield return Code;
 				if (NameElement != null) yield return NameElement;
 				if (QuantityElement != null) yield return QuantityElement;

@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("probability", Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept))]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Range))]
             [DataMember]
             public Hl7.Fhir.Model.Element Probability
             {
@@ -90,9 +90,22 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Element _Probability;
             
             /// <summary>
+            /// Likelihood of specified outcome as a qualitative value
+            /// </summary>
+            [FhirElement("qualitativeRisk", Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept QualitativeRisk
+            {
+                get { return _QualitativeRisk; }
+                set { _QualitativeRisk = value; OnPropertyChanged("QualitativeRisk"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _QualitativeRisk;
+            
+            /// <summary>
             /// Relative likelihood
             /// </summary>
-            [FhirElement("relativeRisk", Order=60)]
+            [FhirElement("relativeRisk", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal RelativeRiskElement
             {
@@ -124,7 +137,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Timeframe or age range
             /// </summary>
-            [FhirElement("when", Order=70, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("when", Order=80, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range))]
             [DataMember]
@@ -139,7 +152,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Explanation of prediction
             /// </summary>
-            [FhirElement("rationale", Order=80)]
+            [FhirElement("rationale", Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString RationaleElement
             {
@@ -177,6 +190,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Outcome != null) dest.Outcome = (Hl7.Fhir.Model.CodeableConcept)Outcome.DeepCopy();
                     if(Probability != null) dest.Probability = (Hl7.Fhir.Model.Element)Probability.DeepCopy();
+                    if(QualitativeRisk != null) dest.QualitativeRisk = (Hl7.Fhir.Model.CodeableConcept)QualitativeRisk.DeepCopy();
                     if(RelativeRiskElement != null) dest.RelativeRiskElement = (Hl7.Fhir.Model.FhirDecimal)RelativeRiskElement.DeepCopy();
                     if(When != null) dest.When = (Hl7.Fhir.Model.Element)When.DeepCopy();
                     if(RationaleElement != null) dest.RationaleElement = (Hl7.Fhir.Model.FhirString)RationaleElement.DeepCopy();
@@ -199,6 +213,7 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Outcome, otherT.Outcome)) return false;
                 if( !DeepComparable.Matches(Probability, otherT.Probability)) return false;
+                if( !DeepComparable.Matches(QualitativeRisk, otherT.QualitativeRisk)) return false;
                 if( !DeepComparable.Matches(RelativeRiskElement, otherT.RelativeRiskElement)) return false;
                 if( !DeepComparable.Matches(When, otherT.When)) return false;
                 if( !DeepComparable.Matches(RationaleElement, otherT.RationaleElement)) return false;
@@ -214,6 +229,7 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Outcome, otherT.Outcome)) return false;
                 if( !DeepComparable.IsExactly(Probability, otherT.Probability)) return false;
+                if( !DeepComparable.IsExactly(QualitativeRisk, otherT.QualitativeRisk)) return false;
                 if( !DeepComparable.IsExactly(RelativeRiskElement, otherT.RelativeRiskElement)) return false;
                 if( !DeepComparable.IsExactly(When, otherT.When)) return false;
                 if( !DeepComparable.IsExactly(RationaleElement, otherT.RationaleElement)) return false;
@@ -232,6 +248,7 @@ namespace Hl7.Fhir.Model
                     // PredictionComponent elements
                     if (Outcome != null) yield return Outcome;
                     if (Probability != null) yield return Probability;
+                    if (QualitativeRisk != null) yield return QualitativeRisk;
                     if (RelativeRiskElement != null) yield return RelativeRiskElement;
                     if (When != null) yield return When;
                     if (RationaleElement != null) yield return RationaleElement;
@@ -318,9 +335,22 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Evaluation mechanism
+        /// </summary>
+        [FhirElement("method", InSummary=true, Order=130)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept Method
+        {
+            get { return _Method; }
+            set { _Method = value; OnPropertyChanged("Method"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _Method;
+        
+        /// <summary>
         /// Type of assessment
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=130)]
+        [FhirElement("code", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
         {
@@ -333,7 +363,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who/what does assessment apply to?
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=140)]
+        [FhirElement("subject", InSummary=true, Order=150)]
         [CLSCompliant(false)]
 		[References("Patient","Group")]
         [DataMember]
@@ -348,7 +378,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where was assessment performed?
         /// </summary>
-        [FhirElement("context", InSummary=true, Order=150)]
+        [FhirElement("context", InSummary=true, Order=160)]
         [CLSCompliant(false)]
 		[References("Encounter","EpisodeOfCare")]
         [DataMember]
@@ -363,7 +393,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When was assessment made?
         /// </summary>
-        [FhirElement("occurrence", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("occurrence", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
@@ -378,7 +408,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Condition assessed
         /// </summary>
-        [FhirElement("condition", InSummary=true, Order=170)]
+        [FhirElement("condition", InSummary=true, Order=180)]
         [CLSCompliant(false)]
 		[References("Condition")]
         [DataMember]
@@ -393,7 +423,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who did assessment?
         /// </summary>
-        [FhirElement("performer", InSummary=true, Order=180)]
+        [FhirElement("performer", InSummary=true, Order=190)]
         [CLSCompliant(false)]
 		[References("Practitioner","Device")]
         [DataMember]
@@ -408,7 +438,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Why the assessment was necessary?
         /// </summary>
-        [FhirElement("reason", Order=190, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("reason", Order=200, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
@@ -419,19 +449,6 @@ namespace Hl7.Fhir.Model
         }
         
         private Hl7.Fhir.Model.Element _Reason;
-        
-        /// <summary>
-        /// Evaluation mechanism
-        /// </summary>
-        [FhirElement("method", InSummary=true, Order=200)]
-        [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Method
-        {
-            get { return _Method; }
-            set { _Method = value; OnPropertyChanged("Method"); }
-        }
-        
-        private Hl7.Fhir.Model.CodeableConcept _Method;
         
         /// <summary>
         /// Information used in assessment
@@ -546,6 +563,7 @@ namespace Hl7.Fhir.Model
                 if(BasedOn != null) dest.BasedOn = (Hl7.Fhir.Model.ResourceReference)BasedOn.DeepCopy();
                 if(Parent != null) dest.Parent = (Hl7.Fhir.Model.ResourceReference)Parent.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ObservationStatus>)StatusElement.DeepCopy();
+                if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
@@ -553,7 +571,6 @@ namespace Hl7.Fhir.Model
                 if(Condition != null) dest.Condition = (Hl7.Fhir.Model.ResourceReference)Condition.DeepCopy();
                 if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopy();
                 if(Reason != null) dest.Reason = (Hl7.Fhir.Model.Element)Reason.DeepCopy();
-                if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
                 if(Basis != null) dest.Basis = new List<Hl7.Fhir.Model.ResourceReference>(Basis.DeepCopy());
                 if(Prediction != null) dest.Prediction = new List<Hl7.Fhir.Model.RiskAssessment.PredictionComponent>(Prediction.DeepCopy());
                 if(MitigationElement != null) dest.MitigationElement = (Hl7.Fhir.Model.FhirString)MitigationElement.DeepCopy();
@@ -579,6 +596,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(BasedOn, otherT.BasedOn)) return false;
             if( !DeepComparable.Matches(Parent, otherT.Parent)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.Matches(Method, otherT.Method)) return false;
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(Context, otherT.Context)) return false;
@@ -586,7 +604,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Condition, otherT.Condition)) return false;
             if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
             if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
-            if( !DeepComparable.Matches(Method, otherT.Method)) return false;
             if( !DeepComparable.Matches(Basis, otherT.Basis)) return false;
             if( !DeepComparable.Matches(Prediction, otherT.Prediction)) return false;
             if( !DeepComparable.Matches(MitigationElement, otherT.MitigationElement)) return false;
@@ -605,6 +622,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(BasedOn, otherT.BasedOn)) return false;
             if( !DeepComparable.IsExactly(Parent, otherT.Parent)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.IsExactly(Method, otherT.Method)) return false;
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
@@ -612,7 +630,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Condition, otherT.Condition)) return false;
             if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
             if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
-            if( !DeepComparable.IsExactly(Method, otherT.Method)) return false;
             if( !DeepComparable.IsExactly(Basis, otherT.Basis)) return false;
             if( !DeepComparable.IsExactly(Prediction, otherT.Prediction)) return false;
             if( !DeepComparable.IsExactly(MitigationElement, otherT.MitigationElement)) return false;
@@ -631,6 +648,7 @@ namespace Hl7.Fhir.Model
 				if (BasedOn != null) yield return BasedOn;
 				if (Parent != null) yield return Parent;
 				if (StatusElement != null) yield return StatusElement;
+				if (Method != null) yield return Method;
 				if (Code != null) yield return Code;
 				if (Subject != null) yield return Subject;
 				if (Context != null) yield return Context;
@@ -638,7 +656,6 @@ namespace Hl7.Fhir.Model
 				if (Condition != null) yield return Condition;
 				if (Performer != null) yield return Performer;
 				if (Reason != null) yield return Reason;
-				if (Method != null) yield return Method;
 				foreach (var elem in Basis) { if (elem != null) yield return elem; }
 				foreach (var elem in Prediction) { if (elem != null) yield return elem; }
 				if (MitigationElement != null) yield return MitigationElement;
