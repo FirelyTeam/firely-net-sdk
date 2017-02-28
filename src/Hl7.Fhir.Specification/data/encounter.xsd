@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
+  Generated on Tue, Feb 28, 2017 07:41+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -126,9 +126,9 @@ This would be used for a case where an admission starts of as an emergency encou
               <xs:documentation xml:lang="en">Reason the encounter takes place, expressed as a code. For admissions, this can be used for a coded admission diagnosis.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="indication" minOccurs="0" maxOccurs="unbounded" type="Reference">
+          <xs:element name="diagnosis" type="Encounter.Diagnosis" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Reason the encounter takes place, as specified using information from another resource. For admissions, this is the admission diagnosis. The indication will typically be a Condition (with other resources referenced in the evidence.detail), or a Procedure.</xs:documentation>
+              <xs:documentation xml:lang="en">The list of diagnosis relevant to this encounter.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="account" minOccurs="0" maxOccurs="unbounded" type="Reference">
@@ -228,6 +228,32 @@ This would be used for a case where an admission starts of as an emergency encou
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+  <xs:complexType name="Encounter.Diagnosis">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">An interaction between a patient and healthcare provider(s) for the purpose of providing healthcare service(s) or assessing the health status of a patient.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="condition" minOccurs="1" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Reason the encounter takes place, as specified using information from another resource. For admissions, this is the admission diagnosis. The indication will typically be a Condition (with other resources referenced in the evidence.detail), or a Procedure.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="role" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Role that this diagnosis has within the encounter (e.g. admission, billing, discharge …).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="rank" minOccurs="0" maxOccurs="1" type="positiveInt">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Ranking of the diagnosis (for each role type).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
   <xs:complexType name="Encounter.Hospitalization">
     <xs:annotation>
       <xs:documentation xml:lang="en">An interaction between a patient and healthcare provider(s) for the purpose of providing healthcare service(s) or assessing the health status of a patient.</xs:documentation>
@@ -248,11 +274,6 @@ This would be used for a case where an admission starts of as an emergency encou
           <xs:element name="admitSource" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">From where patient was admitted (physician referral, transfer).</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="admittingDiagnosis" minOccurs="0" maxOccurs="unbounded" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The admitting diagnosis field is used to record the diagnosis codes as reported by admitting practitioner. This could be different or in addition to the conditions reported as reason-condition(s) for the encounter.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="reAdmission" minOccurs="0" maxOccurs="1" type="CodeableConcept">
@@ -283,11 +304,6 @@ This would be used for a case where an admission starts of as an emergency encou
           <xs:element name="dischargeDisposition" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">Category or kind of location after discharge.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="dischargeDiagnosis" minOccurs="0" maxOccurs="unbounded" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The final diagnosis given a patient before release from the hospital after all testing, surgery, and workup are complete.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>

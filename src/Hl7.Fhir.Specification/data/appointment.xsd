@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
+  Generated on Tue, Feb 28, 2017 07:41+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -79,9 +79,14 @@
               <xs:documentation xml:lang="en">The style of appointment or patient that has been booked in the slot (not service type).</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="reason" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="reason" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">The reason that this appointment is being scheduled. This is more clinical than administrative.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="indication" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Reason the appointment has been scheduled to take place, as specified using information from another resource. When the patient arrives and the encounter begins it may be used as the admission diagnosis. The indication will typically be a Condition (with other resources referenced in the evidence.detail), or a Procedure.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="priority" minOccurs="0" maxOccurs="1" type="unsignedInt">
@@ -92,6 +97,11 @@
           <xs:element name="description" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
               <xs:documentation xml:lang="en">The brief description of the appointment as would be shown on a subject line in a meeting request, or appointment list. Detailed or expanded information should be put in the comment field.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="supportingInformation" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Additional information to support the appointment provided when making the appointment.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="start" minOccurs="0" maxOccurs="1" type="instant">
@@ -122,6 +132,11 @@
           <xs:element name="comment" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
               <xs:documentation xml:lang="en">Additional comments about the appointment.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="incomingReferral" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The referral request this appointment is allocated to assess (incoming referral).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="participant" type="Appointment.Participant" minOccurs="1" maxOccurs="unbounded">

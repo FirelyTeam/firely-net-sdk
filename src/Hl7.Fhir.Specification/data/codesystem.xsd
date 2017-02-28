@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
+  Generated on Tue, Feb 28, 2017 07:41+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -84,6 +84,11 @@
               <xs:documentation xml:lang="en">A flag to indicate that this code system is authored for testing purposes (or education/evaluation/marketing), and is not intended to be used for genuine usage.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="date" minOccurs="0" maxOccurs="1" type="dateTime">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The date  (and optionally time) when the code system was published. The date must change when the business version changes, if it does, and it must change if the status code changes. In addition, it should change when the substantive content of the code system changes.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="publisher" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
               <xs:documentation xml:lang="en">The name of the individual or organization that published the code system.</xs:documentation>
@@ -92,11 +97,6 @@
           <xs:element name="contact" minOccurs="0" maxOccurs="unbounded" type="ContactDetail">
             <xs:annotation>
               <xs:documentation xml:lang="en">Contact details to assist a user in finding and communicating with the publisher.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="date" minOccurs="0" maxOccurs="1" type="dateTime">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The date  (and optionally time) when the code system was published. The date must change when the business version changes, if it does, and it must change if the status code changes. In addition, it should change when the substantive content of the code system changes.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="description" minOccurs="0" maxOccurs="1" type="markdown">
@@ -195,7 +195,7 @@
               <xs:documentation xml:lang="en">A description of how or why the filter is used.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="operator" minOccurs="1" maxOccurs="unbounded" type="code">
+          <xs:element name="operator" minOccurs="1" maxOccurs="unbounded" type="FilterOperator">
             <xs:annotation>
               <xs:documentation xml:lang="en">A list of operators that can be used with the filter.</xs:documentation>
            </xs:annotation>
@@ -334,6 +334,66 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+  <xs:simpleType name="FilterOperator-list">
+    <xs:restriction base="code-primitive">
+      <xs:enumeration value="=">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Equals</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="is-a">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Is A (by subsumption)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="descendent-of">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Descendent Of (by subsumption)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="is-not-a">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Not (Is A) (by subsumption)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="regex">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Regular Expression</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="in">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">In Set</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="not-in">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Not in Set</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="generalizes">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Generalizes (by Subsumption)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="exists">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Exists</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="FilterOperator">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The kind of operation to perform as a part of a property based filter.</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="FilterOperator-list" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
   <xs:simpleType name="PropertyType-list">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="code">
@@ -421,9 +481,9 @@
           <xs:documentation xml:lang="en">Not Present</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="examplar">
+      <xs:enumeration value="example">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Examplar</xs:documentation>
+          <xs:documentation xml:lang="en">Example</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="fragment">

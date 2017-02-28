@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
+  Generated on Tue, Feb 28, 2017 07:41+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -89,6 +89,11 @@
               <xs:documentation xml:lang="en">The date  (and optionally time) when the measure was published. The date must change when the business version changes, if it does, and it must change if the status code changes. In addition, it should change when the substantive content of the measure changes.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="publisher" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The name of the individual or organization that published the measure.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="description" minOccurs="0" maxOccurs="1" type="markdown">
             <xs:annotation>
               <xs:documentation xml:lang="en">A free text natural language description of the measure from the consumer's perspective.</xs:documentation>
@@ -111,7 +116,7 @@
           </xs:element>
           <xs:element name="lastReviewDate" minOccurs="0" maxOccurs="1" type="date">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The date on which the asset content was last reviewed. Review happens periodically after that, but doesn't change the original approval date.</xs:documentation>
+              <xs:documentation xml:lang="en">The date on which the asset content was last reviewed. Review happens periodically after approval, but doesn't change the original approval date.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="effectivePeriod" minOccurs="0" maxOccurs="1" type="Period">
@@ -139,11 +144,6 @@
               <xs:documentation xml:lang="en">A contributor to the content of the measure, including authors, editors, reviewers, and endorsers.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="publisher" minOccurs="0" maxOccurs="1" type="string">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The name of the individual or organization that published the measure.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="contact" minOccurs="0" maxOccurs="unbounded" type="ContactDetail">
             <xs:annotation>
               <xs:documentation xml:lang="en">Contact details to assist a user in finding and communicating with the publisher.</xs:documentation>
@@ -166,22 +166,22 @@
           </xs:element>
           <xs:element name="disclaimer" minOccurs="0" maxOccurs="1" type="markdown">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A disclaimer for the use of the measure.</xs:documentation>
+              <xs:documentation xml:lang="en">Notices and disclaimers regarding the use of the measure, or related to intellectual property (such as code systems) referenced by the measure.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="scoring" minOccurs="0" maxOccurs="1" type="MeasureScoring">
+          <xs:element name="scoring" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The measure scoring type, e.g. proportion, CV.</xs:documentation>
+              <xs:documentation xml:lang="en">Indicates how the calculation is performed for the measure, including proportion, ratio, continuous variable, and cohort. The value set is extensible, allowing additional measure scoring types to be represented.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="compositeScoring" minOccurs="0" maxOccurs="1" type="CompositeMeasureScoring">
+          <xs:element name="compositeScoring" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">If this is a composite measure, the scoring method used to combine the component measures to determine the composite score.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="type" minOccurs="0" maxOccurs="unbounded" type="MeasureType">
+          <xs:element name="type" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The measure type, e.g. process, outcome.</xs:documentation>
+              <xs:documentation xml:lang="en">Indicates whether the measure is used to examine a process, an outcome over time, a patient-reported outcome, or a structure measure such as utilization.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="riskAdjustment" minOccurs="0" maxOccurs="1" type="string">
@@ -191,27 +191,27 @@
           </xs:element>
           <xs:element name="rateAggregation" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A description of the rate aggregation for the measure.</xs:documentation>
+              <xs:documentation xml:lang="en">Describes how to combine the information calculated, based on logic in each of several populations, into one summarized result.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="rationale" minOccurs="0" maxOccurs="1" type="markdown">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The rationale for the measure.</xs:documentation>
+              <xs:documentation xml:lang="en">Provides a succint statement of the need for the measure. Usually includes statements pertaining to importance criterion: impact, gap in care, and evidence.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="clinicalRecommendationStatement" minOccurs="0" maxOccurs="1" type="markdown">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The clinical recommendation statement for the measure.</xs:documentation>
+              <xs:documentation xml:lang="en">Provides a summary of relevant clinical guidelines or other clinical recommendations supporting the measure.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="improvementNotation" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Improvement notation for the measure, e.g. higher score indicates better quality.</xs:documentation>
+              <xs:documentation xml:lang="en">Information on whether an increase or decrease in score is the preferred result (e.g., a higher score indicates better quality OR a lower score indicates better quality OR quality is whthin a range).</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="definition" minOccurs="0" maxOccurs="1" type="markdown">
+          <xs:element name="definition" minOccurs="0" maxOccurs="unbounded" type="markdown">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A narrative description of the complete measure calculation.</xs:documentation>
+              <xs:documentation xml:lang="en">Provides a description of an individual term used within the measure.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="guidance" minOccurs="0" maxOccurs="1" type="markdown">
@@ -281,14 +281,14 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="type" minOccurs="1" maxOccurs="1" type="MeasurePopulationType">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The type of population criteria.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="identifier" minOccurs="1" maxOccurs="1" type="Identifier">
+          <xs:element name="identifier" minOccurs="0" maxOccurs="1" type="Identifier">
             <xs:annotation>
               <xs:documentation xml:lang="en">A unique identifier for the population criteria. This identifier is used to report data against this criteria within the measure report.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="code" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The type of population criteria.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="name" minOccurs="0" maxOccurs="1" type="string">
@@ -317,7 +317,7 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="identifier" minOccurs="1" maxOccurs="1" type="Identifier">
+          <xs:element name="identifier" minOccurs="0" maxOccurs="1" type="Identifier">
             <xs:annotation>
               <xs:documentation xml:lang="en">The identifier for the stratifier used to coordinate the reported data back to this stratifier.</xs:documentation>
            </xs:annotation>
@@ -343,12 +343,12 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="identifier" minOccurs="1" maxOccurs="1" type="Identifier">
+          <xs:element name="identifier" minOccurs="0" maxOccurs="1" type="Identifier">
             <xs:annotation>
               <xs:documentation xml:lang="en">An identifier for the supplemental data.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="usage" minOccurs="0" maxOccurs="unbounded" type="MeasureDataUsage">
+          <xs:element name="usage" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">An indicator of the intended usage for the supplemental data element. Supplemental data indicates the data is additional information requested to augment the measure information. Risk adjustment factor indicates the data is additional information used to calculate risk adjustment factors when applying a risk model to the measure calculation.</xs:documentation>
            </xs:annotation>
@@ -364,201 +364,6 @@
            </xs:annotation>
           </xs:element>
         </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:simpleType name="CompositeMeasureScoring-list">
-    <xs:restriction base="code-primitive">
-      <xs:enumeration value="opportunity">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Opportunity</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="all-or-nothing">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">All-or-nothing</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="linear">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Linear</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="weighted">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Weighted</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="CompositeMeasureScoring">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">The composite scoring method of the measure</xs:documentation>
-      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="Element">
-        <xs:attribute name="value" type="CompositeMeasureScoring-list" use="optional"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:simpleType name="MeasureType-list">
-    <xs:restriction base="code-primitive">
-      <xs:enumeration value="process">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Process</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="outcome">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Outcome</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="structure">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Structure</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="patient-reported-outcome">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Patient Reported Outcome</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="composite">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Composite</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="MeasureType">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">The type of measure (includes codes from 2.16.840.1.113883.1.11.20368)</xs:documentation>
-      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="Element">
-        <xs:attribute name="value" type="MeasureType-list" use="optional"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:simpleType name="MeasureDataUsage-list">
-    <xs:restriction base="code-primitive">
-      <xs:enumeration value="supplemental-data">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Supplemental Data</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="risk-adjustment-factor">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Risk Adjustment Factor</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="MeasureDataUsage">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">The intended usage for supplemental data elements in the measure</xs:documentation>
-      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="Element">
-        <xs:attribute name="value" type="MeasureDataUsage-list" use="optional"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:simpleType name="MeasureScoring-list">
-    <xs:restriction base="code-primitive">
-      <xs:enumeration value="proportion">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Proportion</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="ratio">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Ratio</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="continuous-variable">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Continuous Variable</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="cohort">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Cohort</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="MeasureScoring">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">The scoring type of the measure</xs:documentation>
-      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="Element">
-        <xs:attribute name="value" type="MeasureScoring-list" use="optional"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:simpleType name="MeasurePopulationType-list">
-    <xs:restriction base="code-primitive">
-      <xs:enumeration value="initial-population">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Initial Population</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="numerator">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Numerator</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="numerator-exclusion">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Numerator Exclusion</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="denominator">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Denominator</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="denominator-exclusion">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Denominator Exclusion</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="denominator-exception">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Denominator Exception</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="measure-population">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Measure Population</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="measure-population-exclusion">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Measure Population Exclusion</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="measure-observation">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Measure Observation</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="MeasurePopulationType">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">The type of population</xs:documentation>
-      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="Element">
-        <xs:attribute name="value" type="MeasurePopulationType-list" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
+  Generated on Tue, Feb 28, 2017 07:41+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -69,7 +69,7 @@
               <xs:documentation xml:lang="en">A larger event of which this particular procedure is a component or step.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="status" minOccurs="1" maxOccurs="1" type="code">
+          <xs:element name="status" minOccurs="1" maxOccurs="1" type="EventStatus">
             <xs:annotation>
               <xs:documentation xml:lang="en">A code specifying the state of the procedure. Generally this will be in-progress or completed state.</xs:documentation>
            </xs:annotation>

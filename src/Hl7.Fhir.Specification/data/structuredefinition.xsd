@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
+  Generated on Tue, Feb 28, 2017 07:41+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -84,6 +84,11 @@
               <xs:documentation xml:lang="en">A flag to indicate that this structure definition is authored for testing purposes (or education/evaluation/marketing), and is not intended to be used for genuine usage.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="date" minOccurs="0" maxOccurs="1" type="dateTime">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The date  (and optionally time) when the structure definition was published. The date must change when the business version changes, if it does, and it must change if the status code changes. In addition, it should change when the substantive content of the structure definition changes.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="publisher" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
               <xs:documentation xml:lang="en">The name of the individual or organization that published the structure definition.</xs:documentation>
@@ -92,11 +97,6 @@
           <xs:element name="contact" minOccurs="0" maxOccurs="unbounded" type="ContactDetail">
             <xs:annotation>
               <xs:documentation xml:lang="en">Contact details to assist a user in finding and communicating with the publisher.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="date" minOccurs="0" maxOccurs="1" type="dateTime">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The date  (and optionally time) when the structure definition was published. The date must change when the business version changes, if it does, and it must change if the status code changes. In addition, it should change when the substantive content of the structure definition changes.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="description" minOccurs="0" maxOccurs="1" type="markdown">
@@ -215,7 +215,7 @@
               <xs:documentation xml:lang="en">A name for the specification that is being mapped to.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="comments" minOccurs="0" maxOccurs="1" type="string">
+          <xs:element name="comment" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
               <xs:documentation xml:lang="en">Comments about this mapping, including version notes, issues, scope limitations, and other important notes for usage.</xs:documentation>
            </xs:annotation>

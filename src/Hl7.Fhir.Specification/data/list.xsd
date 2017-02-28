@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
+  Generated on Tue, Feb 28, 2017 07:41+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -176,36 +176,6 @@
     <xs:complexContent>
       <xs:extension base="Element">
         <xs:attribute name="value" type="ListStatus-list" use="optional"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:simpleType name="ListMode-list">
-    <xs:restriction base="code-primitive">
-      <xs:enumeration value="working">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Working List</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="snapshot">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Snapshot List</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="changes">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Change List</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="ListMode">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">The processing mode that applies to this list</xs:documentation>
-      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="Element">
-        <xs:attribute name="value" type="ListMode-list" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

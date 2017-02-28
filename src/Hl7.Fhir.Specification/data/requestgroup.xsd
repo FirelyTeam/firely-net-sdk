@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
+  Generated on Tue, Feb 28, 2017 07:41+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -102,11 +102,6 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="actionIdentifier" minOccurs="0" maxOccurs="1" type="Identifier">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">A unique identifier for the action. The identifier SHALL be unique within the container in which it appears, and MAY be universally unique.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="label" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
               <xs:documentation xml:lang="en">A user-visible label for the action.</xs:documentation>
@@ -159,7 +154,7 @@
           </xs:choice>
           <xs:element name="participant" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The participant in the action.</xs:documentation>
+              <xs:documentation xml:lang="en">The participant that should perform or be responsible for this action.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="type" minOccurs="0" maxOccurs="1" type="Coding">
@@ -167,27 +162,27 @@
               <xs:documentation xml:lang="en">The type of action to perform (create, update, remove).</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="groupingBehavior" minOccurs="0" maxOccurs="1" type="code">
+          <xs:element name="groupingBehavior" minOccurs="0" maxOccurs="1" type="ActionGroupingBehavior">
             <xs:annotation>
               <xs:documentation xml:lang="en">Defines the grouping behavior for the action and its children.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="selectionBehavior" minOccurs="0" maxOccurs="1" type="code">
+          <xs:element name="selectionBehavior" minOccurs="0" maxOccurs="1" type="ActionSelectionBehavior">
             <xs:annotation>
               <xs:documentation xml:lang="en">Defines the selection behavior for the action and its children.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="requiredBehavior" minOccurs="0" maxOccurs="1" type="code">
+          <xs:element name="requiredBehavior" minOccurs="0" maxOccurs="1" type="ActionRequiredBehavior">
             <xs:annotation>
               <xs:documentation xml:lang="en">Defines the requiredness behavior for the action.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="precheckBehavior" minOccurs="0" maxOccurs="1" type="code">
+          <xs:element name="precheckBehavior" minOccurs="0" maxOccurs="1" type="ActionPrecheckBehavior">
             <xs:annotation>
               <xs:documentation xml:lang="en">Defines whether the action should usually be preselected.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="cardinalityBehavior" minOccurs="0" maxOccurs="1" type="code">
+          <xs:element name="cardinalityBehavior" minOccurs="0" maxOccurs="1" type="ActionCardinalityBehavior">
             <xs:annotation>
               <xs:documentation xml:lang="en">Defines whether the action can be selected multiple times.</xs:documentation>
            </xs:annotation>
@@ -213,7 +208,7 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="kind" minOccurs="1" maxOccurs="1" type="code">
+          <xs:element name="kind" minOccurs="1" maxOccurs="1" type="ActionConditionKind">
             <xs:annotation>
               <xs:documentation xml:lang="en">The kind of condition.</xs:documentation>
            </xs:annotation>
@@ -244,12 +239,12 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="actionIdentifier" minOccurs="1" maxOccurs="1" type="Identifier">
+          <xs:element name="actionId" minOccurs="1" maxOccurs="1" type="id">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The unique identifier of the related action.</xs:documentation>
+              <xs:documentation xml:lang="en">The element id of the action this is related to.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="relationship" minOccurs="1" maxOccurs="1" type="code">
+          <xs:element name="relationship" minOccurs="1" maxOccurs="1" type="ActionRelationshipType">
             <xs:annotation>
               <xs:documentation xml:lang="en">The relationship of this action to the related action.</xs:documentation>
            </xs:annotation>

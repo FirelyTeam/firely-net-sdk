@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
+  Generated on Tue, Feb 28, 2017 07:41+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -54,9 +54,14 @@
               <xs:documentation xml:lang="en">The Response business identifier.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="status" minOccurs="0" maxOccurs="1" type="code">
+          <xs:element name="status" minOccurs="0" maxOccurs="1" type="FinancialResourceStatusCodes">
             <xs:annotation>
               <xs:documentation xml:lang="en">The status of the resource instance.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="patient" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Patient Resource.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="created" minOccurs="0" maxOccurs="1" type="dateTime">

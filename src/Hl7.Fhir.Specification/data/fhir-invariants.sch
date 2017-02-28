@@ -42,6 +42,24 @@
     <sch:rule context="//f:Appointment/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
+    <sch:rule context="//f:Appointment/f:indication">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:Appointment/f:indication/f:identifier/f:period">
+      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:Appointment/f:indication/f:identifier/f:assigner">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:Appointment/f:supportingInformation">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:Appointment/f:supportingInformation/f:identifier/f:period">
+      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:Appointment/f:supportingInformation/f:identifier/f:assigner">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
     <sch:rule context="//f:Appointment/f:slot">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
@@ -49,6 +67,15 @@
       <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
     </sch:rule>
     <sch:rule context="//f:Appointment/f:slot/f:identifier/f:assigner">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:Appointment/f:incomingReferral">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:Appointment/f:incomingReferral/f:identifier/f:period">
+      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:Appointment/f:incomingReferral/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
     <sch:rule context="//f:Appointment/f:participant">
@@ -324,15 +351,6 @@
     <sch:rule context="//f:DocumentManifest/f:subject/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
-    <sch:rule context="//f:DocumentManifest/f:recipient">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:DocumentManifest/f:recipient/f:identifier/f:period">
-      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:DocumentManifest/f:recipient/f:identifier/f:assigner">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
     <sch:rule context="//f:DocumentManifest/f:author">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
@@ -340,6 +358,15 @@
       <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
     </sch:rule>
     <sch:rule context="//f:DocumentManifest/f:author/f:identifier/f:assigner">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:DocumentManifest/f:recipient">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:DocumentManifest/f:recipient/f:identifier/f:period">
+      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:DocumentManifest/f:recipient/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
     <sch:rule context="//f:DocumentManifest/f:content/f:pAttachment">
@@ -857,6 +884,18 @@
     <sch:rule context="//f:CapabilityStatement/f:rest/f:operation/f:definition/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
+    <sch:rule context="//f:CapabilityStatement/f:messaging">
+      <sch:assert test="exists(f:supportedMessage) != exists(f:event)">cpb-16: Must have either supportedMessage or event, but not both</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:CapabilityStatement/f:messaging/f:supportedMessage/f:definition">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:CapabilityStatement/f:messaging/f:supportedMessage/f:definition/f:identifier/f:period">
+      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:CapabilityStatement/f:messaging/f:supportedMessage/f:definition/f:identifier/f:assigner">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
     <sch:rule context="//f:CapabilityStatement/f:messaging/f:event/f:request">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
@@ -1171,15 +1210,6 @@
     <sch:rule context="//f:DocumentReference/f:author/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
-    <sch:rule context="//f:DocumentReference/f:custodian">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:DocumentReference/f:custodian/f:identifier/f:period">
-      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:DocumentReference/f:custodian/f:identifier//f:assigner">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
     <sch:rule context="//f:DocumentReference/f:authenticator">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
@@ -1187,6 +1217,15 @@
       <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
     </sch:rule>
     <sch:rule context="//f:DocumentReference/f:authenticator/f:identifier/f:assigner">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:DocumentReference/f:custodian">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:DocumentReference/f:custodian/f:identifier/f:period">
+      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:DocumentReference/f:custodian/f:identifier//f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
     <sch:rule context="//f:DocumentReference/f:relatesTo/f:target">
@@ -1293,6 +1332,12 @@
     <sch:rule context="//f:ImagingManifest/f:modifierExtension">
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
+    <sch:rule context="//f:ImagingManifest/f:identifier/f:period">
+      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:ImagingManifest/f:identifier/f:assigner">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
     <sch:rule context="//f:ImagingManifest/f:patient">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
@@ -1393,6 +1438,12 @@
     <sch:rule context="//f:MeasureReport/f:group/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
+    <sch:rule context="//f:MeasureReport/f:group/f:population/f:identifier/f:period">
+      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:MeasureReport/f:group/f:population/f:identifier/f:assigner">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
     <sch:rule context="//f:MeasureReport/f:group/f:population/f:patients">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
@@ -1408,28 +1459,19 @@
     <sch:rule context="//f:MeasureReport/f:group/f:stratifier/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
-    <sch:rule context="//f:MeasureReport/f:group/f:stratifier/f:group/f:population/f:patients">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:MeasureReport/f:group/f:stratifier/f:group/f:population/f:patients/f:identifier/f:period">
+    <sch:rule context="//f:MeasureReport/f:group/f:stratifier/f:stratum/f:population/f:identifier/f:period">
       <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
     </sch:rule>
-    <sch:rule context="//f:MeasureReport/f:group/f:stratifier/f:group/f:population/f:patients/f:identifier/f:assigner">
+    <sch:rule context="//f:MeasureReport/f:group/f:stratifier/f:stratum/f:population/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
-    <sch:rule context="//f:MeasureReport/f:group/f:supplementalData/f:identifier/f:period">
+    <sch:rule context="//f:MeasureReport/f:group/f:stratifier/f:stratum/f:population/f:patients">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:MeasureReport/f:group/f:stratifier/f:stratum/f:population/f:patients/f:identifier/f:period">
       <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
     </sch:rule>
-    <sch:rule context="//f:MeasureReport/f:group/f:supplementalData/f:identifier/f:assigner">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:MeasureReport/f:group/f:supplementalData/f:group/f:patients">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:MeasureReport/f:group/f:supplementalData/f:group/f:patients/f:identifier/f:period">
-      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:MeasureReport/f:group/f:supplementalData/f:group/f:patients/f:identifier/f:assigner">
+    <sch:rule context="//f:MeasureReport/f:group/f:stratifier/f:stratum/f:population/f:patients/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
     <sch:rule context="//f:MeasureReport/f:evaluatedResources">
@@ -1594,24 +1636,6 @@
     <sch:rule context="//f:SupplyRequest/f:modifierExtension">
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
-    <sch:rule context="//f:SupplyRequest/f:patient">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:SupplyRequest/f:patient/f:identifier/f:period">
-      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:SupplyRequest/f:patient/f:identifier/f:assigner">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:SupplyRequest/f:source">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:SupplyRequest/f:source/f:identifier/f:period">
-      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:SupplyRequest/f:source/f:identifier/f:assigner">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
     <sch:rule context="//f:SupplyRequest/f:identifier/f:period">
       <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
     </sch:rule>
@@ -1628,6 +1652,53 @@
       <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
     </sch:rule>
     <sch:rule context="//f:SupplyRequest/f:orderedItem/f:itemReference/f:identifier/f:assigner">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:SupplyRequest/f:occurrencePeriod">
+      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:SupplyRequest/f:occurrenceTiming/f:repeat">
+      <sch:assert test="not(exists(f:offset)) or exists(f:when)">tim-9: If there's an offset, there must be a when (and not C, CM, CD, CV)</sch:assert>
+      <sch:assert test="f:period/@value &gt;= 0 or not(f:period/@value)">tim-5: period SHALL be a non-negative value</sch:assert>
+      <sch:assert test="not(exists(f:periodMax)) or exists(f:period)">tim-6: If there's a periodMax, there must be a period</sch:assert>
+      <sch:assert test="not(exists(f:durationMax)) or exists(f:duration)">tim-7: If there's a durationMax, there must be a duration</sch:assert>
+      <sch:assert test="not(exists(f:countMax)) or exists(f:count)">tim-8: If there's a countMax, there must be a count</sch:assert>
+      <sch:assert test="not(exists(f:duration)) or exists(f:durationUnit)">tim-1: if there's a duration, there needs to be duration units</sch:assert>
+      <sch:assert test="not(exists(f:timeofDay)) or not(exists(f:when))">tim-10: If there's a timeOfDay, there cannot be be a when, or vice versa</sch:assert>
+      <sch:assert test="not(exists(f:period)) or exists(f:periodUnit)">tim-2: if there's a period, there needs to be period units</sch:assert>
+      <sch:assert test="f:duration/@value &gt;= 0 or not(f:duration/@value)">tim-4: duration SHALL be a non-negative value</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:SupplyRequest/f:occurrenceTiming/f:repeat/f:boundsDuration">
+      <sch:assert test="(f:code or not(f:value)) and (not(exists(f:system)) or f:system/@value='http://unitsofmeasure.org')">drt-1: There SHALL be a code if there is a value and it SHALL be an expression of time.  If system is present, it SHALL be UCUM.</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:SupplyRequest/f:occurrenceTiming/f:repeat/f:boundsRange">
+      <sch:assert test="not(exists(f:low/f:value/@value)) or not(exists(f:high/f:value/@value)) or (number(f:low/f:value/@value) &lt;= number(f:high/f:value/@value))">rng-2: If present, low SHALL have a lower value than high</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:SupplyRequest/f:occurrenceTiming/f:repeat/f:boundsRange/f:low">
+      <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:SupplyRequest/f:occurrenceTiming/f:repeat/f:boundsRange/f:high">
+      <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:SupplyRequest/f:occurrenceTiming/f:repeat/f:boundsPeriod">
+      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:SupplyRequest/f:requester/f:agent">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:SupplyRequest/f:requester/f:agent/f:identifier/f:period">
+      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:SupplyRequest/f:requester/f:agent/f:identifier/f:assigner">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:SupplyRequest/f:requester/f:onBehalfOf">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:SupplyRequest/f:requester/f:onBehalfOf/f:identifier/f:period">
+      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:SupplyRequest/f:requester/f:onBehalfOf/f:identifier//f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
     <sch:rule context="//f:SupplyRequest/f:supplier">
@@ -1648,48 +1719,22 @@
     <sch:rule context="//f:SupplyRequest/f:reasonReference/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
-    <sch:rule context="//f:SupplyRequest/f:when/f:schedule/f:repeat">
-      <sch:assert test="not(exists(f:offset)) or exists(f:when)">tim-9: If there's an offset, there must be a when (and not C, CM, CD, CV)</sch:assert>
-      <sch:assert test="f:period/@value &gt;= 0 or not(f:period/@value)">tim-5: period SHALL be a non-negative value</sch:assert>
-      <sch:assert test="not(exists(f:periodMax)) or exists(f:period)">tim-6: If there's a periodMax, there must be a period</sch:assert>
-      <sch:assert test="not(exists(f:durationMax)) or exists(f:duration)">tim-7: If there's a durationMax, there must be a duration</sch:assert>
-      <sch:assert test="not(exists(f:countMax)) or exists(f:count)">tim-8: If there's a countMax, there must be a count</sch:assert>
-      <sch:assert test="not(exists(f:duration)) or exists(f:durationUnit)">tim-1: if there's a duration, there needs to be duration units</sch:assert>
-      <sch:assert test="not(exists(f:timeofDay)) or not(exists(f:when))">tim-10: If there's a timeOfDay, there cannot be be a when, or vice versa</sch:assert>
-      <sch:assert test="not(exists(f:period)) or exists(f:periodUnit)">tim-2: if there's a period, there needs to be period units</sch:assert>
-      <sch:assert test="f:duration/@value &gt;= 0 or not(f:duration/@value)">tim-4: duration SHALL be a non-negative value</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:SupplyRequest/f:when/f:schedule/f:repeat/f:boundsDuration">
-      <sch:assert test="(f:code or not(f:value)) and (not(exists(f:system)) or f:system/@value='http://unitsofmeasure.org')">drt-1: There SHALL be a code if there is a value and it SHALL be an expression of time.  If system is present, it SHALL be UCUM.</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:SupplyRequest/f:when/f:schedule/f:repeat/f:boundsRange">
-      <sch:assert test="not(exists(f:low/f:value/@value)) or not(exists(f:high/f:value/@value)) or (number(f:low/f:value/@value) &lt;= number(f:high/f:value/@value))">rng-2: If present, low SHALL have a lower value than high</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:SupplyRequest/f:when/f:schedule/f:repeat/f:boundsRange/f:low">
-      <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:SupplyRequest/f:when/f:schedule/f:repeat/f:boundsRange/f:high">
-      <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:SupplyRequest/f:when/f:schedule/f:repeat/f:boundsPeriod">
-      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:SupplyRequest/f:from">
+    <sch:rule context="//f:SupplyRequest/f:deliverFrom">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
-    <sch:rule context="//f:SupplyRequest/f:from/f:identifier/f:period">
+    <sch:rule context="//f:SupplyRequest/f:deliverFrom/f:identifier/f:period">
       <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
     </sch:rule>
-    <sch:rule context="//f:SupplyRequest/f:from/f:identifier/f:assigner">
+    <sch:rule context="//f:SupplyRequest/f:deliverFrom/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
-    <sch:rule context="//f:SupplyRequest/f:to">
+    <sch:rule context="//f:SupplyRequest/f:deliverTo">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
-    <sch:rule context="//f:SupplyRequest/f:to/f:identifier/f:period">
+    <sch:rule context="//f:SupplyRequest/f:deliverTo/f:identifier/f:period">
       <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
     </sch:rule>
-    <sch:rule context="//f:SupplyRequest/f:to/f:identifier/f:assigner">
+    <sch:rule context="//f:SupplyRequest/f:deliverTo/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
   </sch:pattern>
@@ -3121,13 +3166,13 @@
     <sch:rule context="//f:Encounter/f:length">
       <sch:assert test="(f:code or not(f:value)) and (not(exists(f:system)) or f:system/@value='http://unitsofmeasure.org')">drt-1: There SHALL be a code if there is a value and it SHALL be an expression of time.  If system is present, it SHALL be UCUM.</sch:assert>
     </sch:rule>
-    <sch:rule context="//f:Encounter/f:indication">
+    <sch:rule context="//f:Encounter/f:diagnosis/f:condition">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
-    <sch:rule context="//f:Encounter/f:indication/f:identifier/f:period">
+    <sch:rule context="//f:Encounter/f:diagnosis/f:condition/f:identifier/f:period">
       <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
     </sch:rule>
-    <sch:rule context="//f:Encounter/f:indication/f:identifier/f:assigner">
+    <sch:rule context="//f:Encounter/f:diagnosis/f:condition/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
     <sch:rule context="//f:Encounter/f:account">
@@ -3154,15 +3199,6 @@
     <sch:rule context="//f:Encounter/f:hospitalization/f:origin/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
-    <sch:rule context="//f:Encounter/f:hospitalization/f:admittingDiagnosis">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:Encounter/f:hospitalization/f:admittingDiagnosis/f:identifier/f:period">
-      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:Encounter/f:hospitalization/f:admittingDiagnosis/f:identifier/f:assigner">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
     <sch:rule context="//f:Encounter/f:hospitalization/f:destination">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
@@ -3170,15 +3206,6 @@
       <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
     </sch:rule>
     <sch:rule context="//f:Encounter/f:hospitalization/f:destination/f:identifier/f:assigner">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:Encounter/f:hospitalization/f:dischargeDiagnosis">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:Encounter/f:hospitalization/f:dischargeDiagnosis/f:identifier/f:period">
-      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:Encounter/f:hospitalization/f:dischargeDiagnosis/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
     <sch:rule context="//f:Encounter/f:location/f:location">
@@ -3788,6 +3815,7 @@
       <sch:assert test="not(parent::f:contained and f:text)">dom-1: If the resource is contained in another resource, it SHALL NOT contain any narrative</sch:assert>
       <sch:assert test="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))">dom-4: If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated</sch:assert>
       <sch:assert test="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))">dom-3: If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource</sch:assert>
+      <sch:assert test="count(f:item)&gt;1">lnk-1: Must have at least two items</sch:assert>
     </sch:rule>
     <sch:rule context="//f:Linkage/f:text/h:div">
       <sch:assert test="not(descendant-or-self::*[not(local-name(.)=('a', 'abbr', 'acronym', 'b', 'big', 'blockquote', 'br', 'caption', 'cite', 'code', 'col', 'colgroup', 'dd', 'dfn', 'div', 'dl', 'dt', 'em', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'i', 'img', 'li', 'ol', 'p', 'pre', 'q', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'tr', 'tt', 'ul', 'var'))]) and not(descendant-or-self::*/@*[not(name(.)=('abbr', 'accesskey', 'align', 'alt', 'axis', 'bgcolor', 'border', 'cellhalign', 'cellpadding', 'cellspacing', 'cellvalign', 'char', 'charoff', 'charset', 'cite', 'class', 'colspan', 'compact', 'coords', 'dir', 'frame', 'headers', 'height', 'href', 'hreflang', 'hspace', 'id', 'lang', 'longdesc', 'name', 'nowrap', 'rel', 'rev', 'rowspan', 'rules', 'scope', 'shape', 'span', 'src', 'start', 'style', 'summary', 'tabindex', 'title', 'type', 'valign', 'value', 'vspace', 'width'))])">txt-1: The narrative SHALL contain only the basic html formatting elements and attributes described in chapters 7-11 (except section 4 of chapter 9) and 15 of the HTML 4.0 standard, &lt;a&gt; elements (either name or href), images and internally contained style attributes</sch:assert>
@@ -3883,6 +3911,15 @@
     <sch:rule context="//f:DeviceUseStatement/f:timingPeriod">
       <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
     </sch:rule>
+    <sch:rule context="//f:DeviceUseStatement/f:source">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:DeviceUseStatement/f:source/f:identifier/f:period">
+      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:DeviceUseStatement/f:source/f:identifier/f:assigner">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
     <sch:rule context="//f:DeviceUseStatement/f:device">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
@@ -3890,6 +3927,15 @@
       <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
     </sch:rule>
     <sch:rule context="//f:DeviceUseStatement/f:device/f:identifier/f:assigner">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:DeviceUseStatement/f:note/f:authorReference">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:DeviceUseStatement/f:note/f:authorReference/f:identifier/f:period">
+      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:DeviceUseStatement/f:note/f:authorReference/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
   </sch:pattern>
@@ -3965,12 +4011,6 @@
     <sch:rule context="//f:RequestGroup/f:action">
       <sch:assert test="exists(f:resource) != exists(f:action)">rqg-1: Must have resource or action but not both</sch:assert>
     </sch:rule>
-    <sch:rule context="//f:RequestGroup/f:action/f:actionIdentifier/f:period">
-      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:RequestGroup/f:action/f:actionIdentifier/f:assigner">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
     <sch:rule context="//f:RequestGroup/f:action/f:documentation/f:document">
       <sch:assert test="not(exists(f:data)) or exists(f:contentType)">att-1: It the Attachment has data, it SHALL have a contentType</sch:assert>
     </sch:rule>
@@ -3981,12 +4021,6 @@
       <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
     </sch:rule>
     <sch:rule context="//f:RequestGroup/f:action/f:documentation/f:resource/f:identifier/f:assigner">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:RequestGroup/f:action/f:relatedAction/f:actionIdentifier/f:period">
-      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:RequestGroup/f:action/f:relatedAction/f:actionIdentifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
     <sch:rule context="//f:RequestGroup/f:action/f:relatedAction/f:offsetDuration">
@@ -4899,19 +4933,13 @@
     <sch:rule context="//f:ExplanationOfBenefit/f:originalPrescription/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
-    <sch:rule context="//f:ExplanationOfBenefit/f:payee/f:partyIdentifier/f:period">
-      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:ExplanationOfBenefit/f:payee/f:partyIdentifier/f:assigner">
+    <sch:rule context="//f:ExplanationOfBenefit/f:payee/f:party">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
-    <sch:rule context="//f:ExplanationOfBenefit/f:payee/f:partyReference">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:ExplanationOfBenefit/f:payee/f:partyReference/f:identifier/f:period">
+    <sch:rule context="//f:ExplanationOfBenefit/f:payee/f:party/f:identifier/f:period">
       <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
     </sch:rule>
-    <sch:rule context="//f:ExplanationOfBenefit/f:payee/f:partyReference/f:identifier/f:assigner">
+    <sch:rule context="//f:ExplanationOfBenefit/f:payee/f:party/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
     <sch:rule context="//f:ExplanationOfBenefit/f:information/f:timingPeriod">
@@ -5017,6 +5045,15 @@
       <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
     </sch:rule>
     <sch:rule context="//f:ExplanationOfBenefit/f:item/f:udi/f:identifier/f:assigner">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:ExplanationOfBenefit/f:item/f:encounter">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:ExplanationOfBenefit/f:item/f:encounter/f:identifier/f:period">
+      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:ExplanationOfBenefit/f:item/f:encounter/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
     <sch:rule context="//f:ExplanationOfBenefit/f:item/f:adjudication/f:amount">
@@ -5674,7 +5711,7 @@
       <sch:assert test="not(exists(f:snapshot)) or (f:type/@value = f:snapshot/f:element[1]/f:path/@value)">sdf-11: If there's a type, its content must match the path name in the first element of a snapshot</sch:assert>
       <sch:assert test="count(*/f:element)=count(*/f:element/@id)">sdf-14: All element definitions must have an id</sch:assert>
       <sch:assert test="(f:derivation/@value = 'constraint') or (count(f:snapshot/f:element) = count(distinct-values(f:snapshot/f:element/f:path/@value)))">sdf-1: Element paths must be unique unless the structure is a constraint</sch:assert>
-      <sch:assert test="(f:derivation/@value = 'constraint') or (f:derivation/@value = 'logical') or (f:url/@value=concat('http://hl7.org/fhir/StructureDefinition/', f:id/@value))">sdf-7: If the structure describes a base Resource or Type, the URL has to start with &quot;http://hl7.org/fhir/StructureDefinition/&quot; and the tail must match the id</sch:assert>
+      <sch:assert test="(f:derivation/@value = 'constraint') or (f:kind/@value = 'logical') or (f:url/@value=concat('http://hl7.org/fhir/StructureDefinition/', f:id/@value))">sdf-7: If the structure describes a base Resource or Type, the URL has to start with &quot;http://hl7.org/fhir/StructureDefinition/&quot; and the tail must match the id</sch:assert>
       <sch:assert test="exists(f:snapshot) or exists(f:differential)">sdf-6: A structure must have either a differential, or a snapshot (or both)</sch:assert>
       <sch:assert test="not(f:type/@value = 'extension') or (f:derivation/@value = 'specialization') or (exists(f:context) and exists(f:contextType))">sdf-5: If the structure defines an extension then the structure must have context information</sch:assert>
       <sch:assert test="(f:abstract/@value=true()) or exists(f:baseDefinition)">sdf-4: If the structure is not abstract, then there SHALL be a baseDefinition</sch:assert>
@@ -5834,13 +5871,13 @@
     <sch:rule context="//f:EpisodeOfCare/f:statusHistory/f:period">
       <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
     </sch:rule>
-    <sch:rule context="//f:EpisodeOfCare/f:condition">
+    <sch:rule context="//f:EpisodeOfCare/f:diagnosis/f:condition">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
-    <sch:rule context="//f:EpisodeOfCare/f:condition/f:identifier/f:period">
+    <sch:rule context="//f:EpisodeOfCare/f:diagnosis/f:condition/f:identifier/f:period">
       <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
     </sch:rule>
-    <sch:rule context="//f:EpisodeOfCare/f:condition/f:identifier/f:assigner">
+    <sch:rule context="//f:EpisodeOfCare/f:diagnosis/f:condition/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
     <sch:rule context="//f:EpisodeOfCare/f:patient">
@@ -6208,7 +6245,7 @@
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
     <sch:rule context="//f:ConceptMap/f:group/f:element/f:target">
-      <sch:assert test="exists(f:comments) or not(exists(f:equivalence)) or ((f:equivalence/@value != 'narrower') and (f:equivalence/@value != 'inexact'))">cmd-1: If the map is narrower or inexact, there SHALL be some comments</sch:assert>
+      <sch:assert test="exists(f:comment) or not(exists(f:equivalence)) or ((f:equivalence/@value != 'narrower') and (f:equivalence/@value != 'inexact'))">cmd-1: If the map is narrower or inexact, there SHALL be some comments</sch:assert>
     </sch:rule>
     <sch:rule context="//f:ConceptMap/f:group/f:unmapped">
       <sch:assert test="(f:mode/@value != 'other-map') or exists(f:url)">cmd-3: If the mode is 'other-map', a code must be provided</sch:assert>
@@ -7448,88 +7485,6 @@
     </sch:rule>
     <sch:rule context="//f:CodeSystem/f:useContext/f:valueRange/f:high">
       <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Catalog</sch:title>
-    <sch:rule context="//f:Catalog">
-      <sch:assert test="not(parent::f:contained and f:contained)">dom-2: If the resource is contained in another resource, it SHALL NOT contain nested Resources</sch:assert>
-      <sch:assert test="not(parent::f:contained and f:text)">dom-1: If the resource is contained in another resource, it SHALL NOT contain any narrative</sch:assert>
-      <sch:assert test="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))">dom-4: If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated</sch:assert>
-      <sch:assert test="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))">dom-3: If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:Catalog/f:text/h:div">
-      <sch:assert test="not(descendant-or-self::*[not(local-name(.)=('a', 'abbr', 'acronym', 'b', 'big', 'blockquote', 'br', 'caption', 'cite', 'code', 'col', 'colgroup', 'dd', 'dfn', 'div', 'dl', 'dt', 'em', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'i', 'img', 'li', 'ol', 'p', 'pre', 'q', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'tr', 'tt', 'ul', 'var'))]) and not(descendant-or-self::*/@*[not(name(.)=('abbr', 'accesskey', 'align', 'alt', 'axis', 'bgcolor', 'border', 'cellhalign', 'cellpadding', 'cellspacing', 'cellvalign', 'char', 'charoff', 'charset', 'cite', 'class', 'colspan', 'compact', 'coords', 'dir', 'frame', 'headers', 'height', 'href', 'hreflang', 'hspace', 'id', 'lang', 'longdesc', 'name', 'nowrap', 'rel', 'rev', 'rowspan', 'rules', 'scope', 'shape', 'span', 'src', 'start', 'style', 'summary', 'tabindex', 'title', 'type', 'valign', 'value', 'vspace', 'width'))])">txt-1: The narrative SHALL contain only the basic html formatting elements and attributes described in chapters 7-11 (except section 4 of chapter 9) and 15 of the HTML 4.0 standard, &lt;a&gt; elements (either name or href), images and internally contained style attributes</sch:assert>
-      <sch:assert test="descendant::text()[normalize-space(.)!=''] or descendant::h:img[@src]">txt-2: The narrative SHALL have some non-whitespace content</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:Catalog/f:extension">
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:Catalog/f:modifierExtension">
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:Catalog/f:identifier/f:period">
-      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:Catalog/f:identifier/f:assigner">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:Catalog/f:document/f:provider">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:Catalog/f:document/f:provider/f:identifier/f:period">
-      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:Catalog/f:document/f:provider/f:identifier//f:assigner">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:Catalog/f:document/f:identifier/f:period">
-      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:Catalog/f:document/f:identifier/f:assigner">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:Catalog/f:document/f:contentVersion/f:period">
-      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:Catalog/f:document/f:contentVersion/f:assigner">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:Catalog/f:entry/f:referencedItem">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:Catalog/f:entry/f:referencedItem/f:identifier/f:period">
-      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:Catalog/f:entry/f:referencedItem/f:identifier/f:assigner">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:Catalog/f:entry/f:identifier/f:period">
-      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:Catalog/f:entry/f:identifier/f:assigner">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:Catalog/f:entry/f:additionalIdentifier/f:period">
-      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:Catalog/f:entry/f:additionalIdentifier/f:assigner">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:Catalog/f:entry/f:classification/f:period">
-      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:Catalog/f:entry/f:classification/f:assigner">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:Catalog/f:entry/f:relatedItem/f:identifier">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:Catalog/f:entry/f:relatedItem/f:identifier/f:identifier/f:period">
-      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:Catalog/f:entry/f:relatedItem/f:identifier/f:identifier/f:assigner">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
@@ -8917,6 +8872,15 @@
     <sch:rule context="//f:ClaimResponse/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
+    <sch:rule context="//f:ClaimResponse/f:patient">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:ClaimResponse/f:patient/f:identifier/f:period">
+      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:ClaimResponse/f:patient/f:identifier/f:assigner">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
     <sch:rule context="//f:ClaimResponse/f:insurer">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
@@ -10206,6 +10170,21 @@
     <sch:rule context="//f:Composition/f:custodian/f:identifier//f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
+    <sch:rule context="//f:Composition/f:relatesTo/f:targetIdentifier/f:period">
+      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:Composition/f:relatesTo/f:targetIdentifier/f:assigner">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:Composition/f:relatesTo/f:targetReference">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:Composition/f:relatesTo/f:targetReference/f:identifier/f:period">
+      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:Composition/f:relatesTo/f:targetReference/f:identifier/f:assigner">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
     <sch:rule context="//f:Composition/f:event/f:period">
       <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
     </sch:rule>
@@ -10254,6 +10233,12 @@
     <sch:rule context="//f:DetectedIssue/f:modifierExtension">
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
+    <sch:rule context="//f:DetectedIssue/f:identifier/f:period">
+      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:DetectedIssue/f:identifier/f:assigner">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
     <sch:rule context="//f:DetectedIssue/f:patient">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
@@ -10261,15 +10246,6 @@
       <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
     </sch:rule>
     <sch:rule context="//f:DetectedIssue/f:patient/f:identifier/f:assigner">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:DetectedIssue/f:implicated">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:DetectedIssue/f:implicated/f:identifier/f:period">
-      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:DetectedIssue/f:implicated/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
     <sch:rule context="//f:DetectedIssue/f:author">
@@ -10281,10 +10257,13 @@
     <sch:rule context="//f:DetectedIssue/f:author/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
-    <sch:rule context="//f:DetectedIssue/f:identifier/f:period">
+    <sch:rule context="//f:DetectedIssue/f:implicated">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:DetectedIssue/f:implicated/f:identifier/f:period">
       <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
     </sch:rule>
-    <sch:rule context="//f:DetectedIssue/f:identifier/f:assigner">
+    <sch:rule context="//f:DetectedIssue/f:implicated/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
     <sch:rule context="//f:DetectedIssue/f:mitigation/f:author">
@@ -11561,6 +11540,15 @@
     <sch:rule context="//f:Claim/f:item/f:udi/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
+    <sch:rule context="//f:Claim/f:item/f:encounter">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:Claim/f:item/f:encounter/f:identifier/f:period">
+      <sch:assert test="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)">per-1: If present, start SHALL have a lower value than end</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:Claim/f:item/f:encounter/f:identifier/f:assigner">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
     <sch:rule context="//f:Claim/f:item/f:detail/f:quantity">
       <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
     </sch:rule>
@@ -11663,7 +11651,7 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: What has happened over time</sch:title>
+    <sch:title>Extension: history</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/valueset-history']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -11674,14 +11662,14 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Place of Birth for patient</sch:title>
+    <sch:title>Extension: Birth Place</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/birthPlace']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: A concept map relevant to interpret this value set</sch:title>
+    <sch:title>Extension: map</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/valueset-map']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -11692,77 +11680,46 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Time Offest for interlacing</sch:title>
+    <sch:title>Extension: time-offset</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/observation-time-offset']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Clinical interpretations for variant</sch:title>
+    <sch:title>Extension: Interpretation</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/observation-geneticsInterpretation']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Status of internal processing</sch:title>
+    <sch:title>Extension: administrative-status</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/11179-de-administrative-status']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Post-mortem donor status</sch:title>
+    <sch:title>Extension: cadavericDonor</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/patient-cadavericDonor']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Clinical Management Description</sch:title>
+    <sch:title>Extension: management</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/openEHR-management']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: A definition for this code</sch:title>
+    <sch:title>Extension: definition</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/valueset-definition']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: The reason the order was rejected</sch:title>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/procedurerequest-reasonRejected']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: Date(/time) of first exposure to Substance</sch:title>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/openEHR-exposureDate']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: How long Manifestations persisted</sch:title>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/allergyintolerance-duration']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: code for string</sch:title>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-SC-coding']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: Instantiates protocol or definition</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/condition-definition']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -11777,35 +11734,75 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: A group of place of religious practice</sch:title>
+    <sch:title>Extension: reasonRejected</sch:title>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/procedurerequest-reasonRejected']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/goal-reasonRejected']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/devicerequest-reasonRejected']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/communicationrequest-reasonRejected']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern>
+    <sch:title>Extension: exposureDate</sch:title>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/openEHR-exposureDate']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern>
+    <sch:title>Extension: duration</sch:title>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/allergyintolerance-duration']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern>
+    <sch:title>Extension: SC-coding</sch:title>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-SC-coding']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern>
+    <sch:title>Extension: congregation</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/patient-congregation']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Are styles important for processing?</sch:title>
+    <sch:title>Extension: styleSensitive</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/rendering-styleSensitive']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Pointer to document related to data element</sch:title>
+    <sch:title>Extension: document-reference</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/11179-de-document-reference']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: houseNumberNumeric</sch:title>
+    <sch:title>Extension: ADXP-houseNumberNumeric</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-houseNumberNumeric']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Appearance order for user selection</sch:title>
+    <sch:title>Extension: conceptOrder</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/valueset-conceptOrder']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -11816,84 +11813,88 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Genomic source class</sch:title>
+    <sch:title>Extension: GenomicSourceClass</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/observation-geneticsGenomicSourceClass']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Purpose of rendered text</sch:title>
+    <sch:title>Extension: displayCategory</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: natural brother(s) &amp; natural sister(s) - genetic &amp; other</sch:title>
+    <sch:title>Extension: sibling</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/family-member-history-genetics-sibling']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: FHIR Path version of error location</sch:title>
+    <sch:title>Extension: expression</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/operationoutcome-expression']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/searchparameter-expression']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: When data element is &quot;valid&quot;</sch:title>
+    <sch:title>Extension: effective-period</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/11179-de-effective-period']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: FHIRPath that defines the selection criteria for a slice</sch:title>
+    <sch:title>Extension: selector</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/elementdefinition-selector']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Don't display to user</sch:title>
+    <sch:title>Extension: hidden</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/questionnaire-hidden']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: XML (Schema) type of attribute</sch:title>
+    <sch:title>Extension: xml-type</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-xml-type']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: streetName</sch:title>
+    <sch:title>Extension: ADXP-streetName</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetName']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The amount of radiation, as a range</sch:title>
+    <sch:title>Extension: radiationDose</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/imagingstudy-radiationDose']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: A details procedure progress</sch:title>
+    <sch:title>Extension: progressStatus</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/procedure-progressStatus']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Allele frequency</sch:title>
+    <sch:title>Extension: AllelicFrequency</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/observation-geneticsAllelicFrequency']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -11907,14 +11908,14 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Is code the DEC for the data element?</sch:title>
+    <sch:title>Extension: is-data-element-concept</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/11179-de-is-data-element-concept']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Preferred Contact</sch:title>
+    <sch:title>Extension: preferredContact</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/organization-preferredContact']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -11928,7 +11929,7 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Where did this content come from</sch:title>
+    <sch:title>Extension: sourceReference</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/valueset-sourceReference']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -11939,14 +11940,14 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Object Class Property</sch:title>
+    <sch:title>Extension: objectClassProperty</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/11179-objectClassProperty']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Reference to a trusted expansion</sch:title>
+    <sch:title>Extension: trusted-expansion</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/codesystem-trusted-expansion']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -11957,63 +11958,70 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: postBox</sch:title>
+    <sch:title>Extension: ADXP-postBox</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-postBox']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The target rate for the infusion</sch:title>
+    <sch:title>Extension: rateGoal</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/pharmacy-core-rateGoal']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The level of occurrence of a single DNA sequence variant within a set of chromosomes: Heteroplasmic / Homoplasmic / Homozygous / Heterozygous / Hemizygous</sch:title>
+    <sch:title>Extension: AllelicState</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/observation-geneticsAllelicState']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The type of user initiating the request</sch:title>
+    <sch:title>Extension: systemUserType</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/cqif-guidancesystemUserType']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Whether specified times must be followed as closely as possible</sch:title>
+    <sch:title>Extension: exact</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/timing-exact']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The period of time between rate increments</sch:title>
+    <sch:title>Extension: rateIncrementInterval</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/pharmacy-core-rateIncrementInterval']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The method of arrival of the patient into the facility</sch:title>
+    <sch:title>Extension: modeOfArrival</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/encounter-modeOfArrival']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The group which this usage context is part of</sch:title>
+    <sch:title>Extension: summaryOf</sch:title>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/diagnosticReport-summaryOf']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern>
+    <sch:title>Extension: group</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/usagecontext-group']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Supporting information</sch:title>
+    <sch:title>Extension: supportLink</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/questionnaire-supportLink']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -12027,53 +12035,57 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: houseNumber</sch:title>
+    <sch:title>Extension: ADXP-houseNumber</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-houseNumber']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Who answered question/group</sch:title>
+    <sch:title>Extension: author</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/questionnaireresponse-author']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/valueset-author']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/codesystem-author']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Why was event performed?</sch:title>
+    <sch:title>Extension: reasonReference</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/event-reasonReference']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/event-reasonCode']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Location Performed</sch:title>
+    <sch:title>Extension: locationPerformed</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/diagnosticReport-locationPerformed']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: buildingNumberSuffix</sch:title>
+    <sch:title>Extension: ADXP-buildingNumberSuffix</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-buildingNumberSuffix']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: RFC 3966 compliant telephone of fax number</sch:title>
+    <sch:title>Extension: TEL-address</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-TEL-address']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The body position during the observation</sch:title>
+    <sch:title>Extension: bodyPosition</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/observation-bodyPosition']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -12084,98 +12096,95 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Whether the concept has been deprecated</sch:title>
+    <sch:title>Extension: deprecated</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/codesystem-deprecated']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Template Status Code (more authoring statuses)</sch:title>
+    <sch:title>Extension: template-status</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-template-status']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: equivalent | equal | wider | subsumes | narrower | specializes | inexact | unmatched | disjoint</sch:title>
+    <sch:title>Extension: equivalence</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/elementdefinition-equivalence']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Mapping from permitted to transmitted</sch:title>
+    <sch:title>Extension: permitted-value-conceptmap</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/11179-permitted-value-conceptmap']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The reason the goal was not accepted</sch:title>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/goal-reasonRejected']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: The platform, methodology and software applied at the time of thegenotyping</sch:title>
+    <sch:title>Extension: Method</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/hla-genotyping-resultsMethod']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Implant Status</sch:title>
+    <sch:title>Extension: implant-status</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/device-implant-status']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: MPPS instance UID</sch:title>
+    <sch:title>Extension: MPPS</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/auditevent-MPPS']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Actual medication record, if known</sch:title>
+    <sch:title>Extension: administration</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/openEHR-administration']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Task(s) replaced by this Task</sch:title>
+    <sch:title>Extension: replaces</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/task-replaces']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/diagnosticReport-replaces']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Whether the patient needs an interpreter</sch:title>
+    <sch:title>Extension: interpreterRequired</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/patient-interpreterRequired']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Explanation for cancellation</sch:title>
+    <sch:title>Extension: reasonCancelled</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/encounter-reasonCancelled']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Amount of time individual was exposed to Substance</sch:title>
+    <sch:title>Extension: exposureDuration</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/openEHR-exposureDuration']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Comparison value for ordinal codes</sch:title>
+    <sch:title>Extension: ordinalValue</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/codesystem-ordinalValue']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -12190,77 +12199,84 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: String equivalent with markdown</sch:title>
+    <sch:title>Extension: markdown</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/rendering-markdown']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Meaning of the response option</sch:title>
+    <sch:title>Extension: optionCode</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/cqif-optionCode']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Last review date for the resource</sch:title>
+    <sch:title>Extension: lastReviewDate</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/resource-lastReviewDate']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Numerical value associated with the code</sch:title>
+    <sch:title>Extension: CO-value</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-CO-value']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Whether used on multiple resources</sch:title>
+    <sch:title>Extension: isCommonBinding</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Standard Deviation (same units as the quantity)</sch:title>
+    <sch:title>Extension: uncertainty</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-uncertainty']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Voorvoegsel derived from person's partner's surname</sch:title>
+    <sch:title>Extension: partner-prefix</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/humanname-partner-prefix']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Observations that confirm or refute</sch:title>
+    <sch:title>Extension: extends</sch:title>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/diagnosticReport-extends']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern>
+    <sch:title>Extension: test</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/openEHR-test']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: E.g. Fly-over, Table, Checkbox, Combo-box, Lookup, etc.</sch:title>
+    <sch:title>Extension: itemControl</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: horizontal | vertical</sch:title>
+    <sch:title>Extension: choiceOrientation</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The maximum amount of fluid to infuse</sch:title>
+    <sch:title>Extension: maxDeliveryVolume</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/pharmacy-core-maxDeliveryVolume']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -12274,7 +12290,7 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Extra warning about the correct use of the value set</sch:title>
+    <sch:title>Extension: warning</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/codesystem-warning']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -12285,98 +12301,98 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: direction</sch:title>
+    <sch:title>Extension: ADXP-direction</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-direction']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: If request was rejected, why?</sch:title>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/devicerequest-reasonRejected']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: Clinical Management Details</sch:title>
+    <sch:title>Extension: careplan</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/openEHR-careplan']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Study Protocol Identifier</sch:title>
+    <sch:title>Extension: studyprotocolIdentifier</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/questionnaire-studyprotocolIdentifier']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: delimiter</sch:title>
+    <sch:title>Extension: ADXP-delimiter</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-delimiter']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The task the system user is performing</sch:title>
+    <sch:title>Extension: systemUserTaskContext</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/cqif-guidancesystemUserTaskContext']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Mother's Maiden name</sch:title>
+    <sch:title>Extension: mothersMaidenName</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/patient-mothersMaidenName']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: ABC | IDE | SYL</sch:title>
+    <sch:title>Extension: EN-representation</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-EN-representation']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: precinct</sch:title>
+    <sch:title>Extension: ADXP-precinct</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-precinct']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Questionnaire to be ordered</sch:title>
+    <sch:title>Extension: questionnaireRequest</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/procedurerequest-questionnaireRequest']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Type of attachment</sch:title>
+    <sch:title>Extension: reasonCode</sch:title>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/event-reasonCode']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern>
+    <sch:title>Extension: mimeType</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/mimeType']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Html style value</sch:title>
+    <sch:title>Extension: style</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/rendering-style']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Portion of family name derived from father</sch:title>
+    <sch:title>Extension: fathers-family</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/humanname-fathers-family']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Who has used and how?</sch:title>
+    <sch:title>Extension: usage</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/valueset-usage']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -12387,70 +12403,70 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Probability Distribution Type for uncertainty</sch:title>
+    <sch:title>Extension: uncertaintyType</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-uncertaintyType']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Map that can populate this questionnaire</sch:title>
+    <sch:title>Extension: sourceStructureMap</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/questionnaire-sourceStructureMap']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Preferred display order of name parts</sch:title>
+    <sch:title>Extension: assembly-order</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/humanname-assembly-order']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The type of dose, e.g., loading.</sch:title>
+    <sch:title>Extension: doseType</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/pharmacy-core-doseType']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: What should be displayed to human (if default is not appropriate)</sch:title>
+    <sch:title>Extension: Rendered Value</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/rendered-value']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Purpose of the family member history</sch:title>
+    <sch:title>Extension: type</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/familymemberhistory-type']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The length of time for radiation exposure</sch:title>
+    <sch:title>Extension: radiationDuration</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/imagingstudy-radiationDuration']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Filter to apply when looking up references</sch:title>
+    <sch:title>Extension: referenceFilter</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/questionnaire-referenceFilter']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: DNA sequence variant ID</sch:title>
+    <sch:title>Extension: DNAVariantId</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/observation-geneticsDNAVariantId']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: E.g. &quot;(a)&quot;, &quot;1.&quot;, etc.</sch:title>
+    <sch:title>Extension: label</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/valueset-label']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -12459,20 +12475,16 @@
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/questionnaire-optionPrefix']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Time interval for medication administration</sch:title>
+    <sch:title>Extension: validityPeriod</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/medicationdispense-validityPeriod']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Alternative names</sch:title>
+    <sch:title>Extension: otherName</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/codesystem-otherName']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -12483,35 +12495,43 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Maximum Value Set (when strength = extensible)</sch:title>
+    <sch:title>Extension: maxValueSet</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/elementdefinition-maxValueSet']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: DNA region name</sch:title>
+    <sch:title>Extension: DNARegionName</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/observation-geneticsDNARegionName']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: deliveryInstallationType</sch:title>
+    <sch:title>Extension: ADXP-deliveryInstallationType</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-deliveryInstallationType']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The target point for this procedure</sch:title>
+    <sch:title>Extension: targetBodySite</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/procedure-targetBodySite']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/procedurerequest-targetBodySite']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/condition-targetBodySite']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Alias</sch:title>
+    <sch:title>Extension: alias</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/location-alias']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -12522,21 +12542,21 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Prompt for element phrased as question</sch:title>
+    <sch:title>Extension: question</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/elementdefinition-question']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The underlying FHIR data type</sch:title>
+    <sch:title>Extension: fhirType</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/questionnaire-fhirType']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Comment about the use of this code in this context</sch:title>
+    <sch:title>Extension: comments</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/valueset-comments']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -12547,49 +12567,53 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Map to artifacts that can be populated from this Questionnaire</sch:title>
+    <sch:title>Extension: targetStructureMap</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/questionnaire-targetStructureMap']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Additional confidentiality codes</sch:title>
+    <sch:title>Extension: otherConfidentiality</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/composition-clindoc-otherConfidentiality']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Regular expression pattern</sch:title>
+    <sch:title>Extension: regex</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/regex']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-regex']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: A library containing logic used by the artifact</sch:title>
+    <sch:title>Extension: library</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/cqif-library']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Option is exclusive</sch:title>
+    <sch:title>Extension: optionExclusive</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/questionnaire-optionExclusive']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Link to patient record</sch:title>
+    <sch:title>Extension: patient-record</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/familymemberhistory-patient-record']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: What's changed since the last &quot;business&quot; version?</sch:title>
+    <sch:title>Extension: change-description</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/11179-de-change-description']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -12603,21 +12627,21 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Reference to a contra-indication that is the basis for this error</sch:title>
+    <sch:title>Extension: detectedIssue</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/operationoutcome-detectedIssue']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: careOf</sch:title>
+    <sch:title>Extension: ADXP-careOf</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-careOf']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Indicates the state of development of the value set</sch:title>
+    <sch:title>Extension: workflowStatus</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/codesystem-workflowStatus']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -12628,14 +12652,14 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Who ordered the initial medication(s)</sch:title>
+    <sch:title>Extension: Prescriber</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/medicationstatement-Prescriber']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: deliveryModeIdentifier</sch:title>
+    <sch:title>Extension: ADXP-deliveryModeIdentifier</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-deliveryModeIdentifier']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -12649,70 +12673,74 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Anonymized state</sch:title>
+    <sch:title>Extension: Anonymized</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/auditevent-Anonymized']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Hinting information for the narrative generator</sch:title>
+    <sch:title>Extension: display-hint</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-display-hint']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The requested access point or points used for this procedure</sch:title>
+    <sch:title>Extension: approachBodySite</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/procedurerequest-approachBodySite']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/procedure-approachBodySite']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Code system not defined in a value set</sch:title>
+    <sch:title>Extension: supported-system</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/capabilitystatement-supported-system']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Map linking questions to DataElements</sch:title>
+    <sch:title>Extension: deMap</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/questionnaire-deMap']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: HGNC gene symbol</sch:title>
+    <sch:title>Extension: Gene</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/observation-geneticsGene']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Change in dosing rate per interval</sch:title>
+    <sch:title>Extension: rateIncrement</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/pharmacy-core-rateIncrement']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Urgency for collection</sch:title>
+    <sch:title>Extension: collectionPriority</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/specimen-collectionPriority']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Who submitted data element to registry</sch:title>
+    <sch:title>Extension: submitter-org</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/11179-de-submitter-org']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The expansion is incomplete because the full expansion is too large</sch:title>
+    <sch:title>Extension: toocostly</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/valueset-toocostly']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -12726,105 +12754,91 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: messageheader initiator requests a response</sch:title>
+    <sch:title>Extension: messageheader-response-request</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/messageheader-response-request']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Copy number variation</sch:title>
+    <sch:title>Extension: CopyNumberEvent</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/observation-geneticsCopyNumberEvent']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: deliveryInstallationArea</sch:title>
+    <sch:title>Extension: ADXP-deliveryInstallationArea</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-deliveryInstallationArea']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Event did not occur</sch:title>
+    <sch:title>Extension: notDone</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/event-notDone']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Patient Friendly Insructions</sch:title>
+    <sch:title>Extension: patientInstruction</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/devicerequest-patientInstruction']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Mark a warning invariant as 'best practice'</sch:title>
+    <sch:title>Extension: bestpractice</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Age that the allergy or intolerance resolved</sch:title>
+    <sch:title>Extension: resolutionAge</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/allergyintolerance-resolutionAge']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: capture | display | display-non-empty | capture-display | capture-display-non-empty</sch:title>
+    <sch:title>Extension: usageMode</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/questionnaire-usageMode']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Donation Identification Number (DIN)</sch:title>
+    <sch:title>Extension: din</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/device-din']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Number of refills allowed</sch:title>
+    <sch:title>Extension: refillsRemaining</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/pharmacy-core-refillsRemaining']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Computable Consent Language</sch:title>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/consent-Rules']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: Name of allele</sch:title>
+    <sch:title>Extension: AlleleName</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/observation-geneticsAlleleName']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Certainty that the substance was the cause of the manifestation</sch:title>
+    <sch:title>Extension: certainty</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/allergyintolerance-certainty']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Approximate time of observation</sch:title>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/observation-when']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: Human-specified notes and other documentation</sch:title>
+    <sch:title>Extension: comment</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/valueset-comment']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -12835,28 +12849,28 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Why the communication was not or could not be carried out</sch:title>
+    <sch:title>Extension: reasonNotPerformed</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/communication-reasonNotPerformed']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: List of possible owners of Task</sch:title>
+    <sch:title>Extension: candidateList</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/task-candidateList']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: deliveryInstallationQualifier</sch:title>
+    <sch:title>Extension: ADXP-deliveryInstallationQualifier</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-deliveryInstallationQualifier']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Url of Value set the code was chosen from</sch:title>
+    <sch:title>Extension: reference</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/valueset-reference']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -12867,21 +12881,14 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Whether the map can be interpreted in reverse</sch:title>
+    <sch:title>Extension: bidirectional</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/concept-bidirectional']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The requested target point for this procedure</sch:title>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/procedurerequest-targetBodySite']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: Qualitative change or trend in the measurement</sch:title>
+    <sch:title>Extension: delta</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/observation-delta']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -12892,158 +12899,148 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Who verified completion of form?</sch:title>
+    <sch:title>Extension: reviewer</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/questionnaireresponse-reviewer']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Langauge Translation (Localization)</sch:title>
+    <sch:title>Extension: Translation</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/translation']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: A location specific constraint</sch:title>
+    <sch:title>Extension: location</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/consent-location']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/openEHR-location']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The method used to perform the procedure</sch:title>
+    <sch:title>Extension: method</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/procedure-method']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The minimum quantity of substance per period</sch:title>
+    <sch:title>Extension: minDosePerPeriod</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/pharmacy-core-minDosePerPeriod']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: At least this many characters</sch:title>
+    <sch:title>Extension: minLength</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/minLength']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Portion of family name derived from mother</sch:title>
+    <sch:title>Extension: mothers-family</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/humanname-mothers-family']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The sequence number of the sample</sch:title>
+    <sch:title>Extension: sequenceNumber</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/specimen-sequenceNumber']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Reason referral was refused</sch:title>
+    <sch:title>Extension: reasonRefused</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/referralrequest-reasonRefused']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: Why the recipient could not be act upon the request</sch:title>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/communicationrequest-reasonRejected']">
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/procedurerequest-reasonRefused']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Acession Number</sch:title>
+    <sch:title>Extension: Accession</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/auditevent-Accession']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: User or Org actually involved in creating the value set content</sch:title>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/valueset-author']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/codesystem-author']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: Potential impact of the condition</sch:title>
+    <sch:title>Extension: criticality</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/condition-criticality']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The adoption status of the patient</sch:title>
+    <sch:title>Extension: adoptionInfo</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/patient-adoptionInfo']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Minimum Value Set (what system must support)</sch:title>
+    <sch:title>Extension: minValueSet</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/elementdefinition-minValueSet']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Explanation associated with refuted status</sch:title>
+    <sch:title>Extension: reasonRefuted</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/allergyintolerance-reasonRefuted']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Time of day of birth</sch:title>
+    <sch:title>Extension: birthTime</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/patient-birthTime']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Additional text for the summary presentation</sch:title>
+    <sch:title>Extension: addendumOf</sch:title>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/diagnosticReport-addendumOf']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern>
+    <sch:title>Extension: summary</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-summary']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Maximum digits after decimal</sch:title>
+    <sch:title>Extension: maxDecimalPlaces</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/maxDecimalPlaces']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Regex applies to the value</sch:title>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-regex']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: HGVS nomenclature for observed Amino Acid Change</sch:title>
+    <sch:title>Extension: AminoAcidChangeName</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/observation-geneticsAminoAcidChangeName']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: When the value set version should no longer be used</sch:title>
+    <sch:title>Extension: expirationDate</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/valueset-expirationDate']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -13054,140 +13051,140 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Extra information to use in performing request</sch:title>
+    <sch:title>Extension: supportingInfo</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/communicationrequest-supportingInfo']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: DNA sequence variant type</sch:title>
+    <sch:title>Extension: DNASequenceVariantType</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/observation-geneticsDNASequenceVariantType']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Permitted values</sch:title>
+    <sch:title>Extension: permitted-value-valueset</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/11179-permitted-value-valueset']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Allowed resource for reference</sch:title>
+    <sch:title>Extension: allowedResource</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/questionnaire-allowedResource']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Genetic markers, ethnicity, etc.</sch:title>
+    <sch:title>Extension: observation</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/family-member-history-genetics-observation']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The expansion is incomplete (because post-coordination)</sch:title>
+    <sch:title>Extension: unclosed</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/valueset-unclosed']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Reference to where the rule is defined</sch:title>
+    <sch:title>Extension: authority</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/operationoutcome-authority']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Must be &gt;= this value</sch:title>
+    <sch:title>Extension: minValue</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/minValue']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: How to mail contact</sch:title>
+    <sch:title>Extension: contact-address</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/11179-de-contact-address']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: unitID</sch:title>
+    <sch:title>Extension: ADXP-unitID</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-unitID']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The related item - e.g. a procedure</sch:title>
+    <sch:title>Extension: causedBy</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/procedure-causedBy']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: FHIRPath expression</sch:title>
+    <sch:title>Extension: fhirPathExpression</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/cqif-fhirPathExpression']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Mother(s) &amp; Father(s) - genetic &amp; other</sch:title>
+    <sch:title>Extension: parent</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/family-member-history-genetics-parent']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Why response was created</sch:title>
+    <sch:title>Extension: reason</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/questionnaireresponse-reason']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: A code that replaces this</sch:title>
+    <sch:title>Extension: replacedby</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/codesystem-replacedby']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Code system resource</sch:title>
+    <sch:title>Extension: system</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/valueset-system']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Resource with details for flag</sch:title>
+    <sch:title>Extension: detail</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/flag-detail']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Period</sch:title>
+    <sch:title>Extension: period</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/organization-period']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Code system name</sch:title>
+    <sch:title>Extension: systemName</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/valueset-systemName']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: When the value set version becomes Active and is available for use</sch:title>
+    <sch:title>Extension: effectiveDate</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/valueset-effectiveDate']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -13198,21 +13195,28 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: haploid</sch:title>
+    <sch:title>Extension: eventTiming</sch:title>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/observation-eventTiming']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern>
+    <sch:title>Extension: Haploid</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/hla-genotyping-resultsHaploid']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Nationality</sch:title>
+    <sch:title>Extension: nationality</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/patient-nationality']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Category from official resource list</sch:title>
+    <sch:title>Extension: category</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-category']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -13226,28 +13230,28 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Unit for numeric answer</sch:title>
+    <sch:title>Extension: unit</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/questionnaire-unit']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: deliveryAddressLine</sch:title>
+    <sch:title>Extension: ADXP-deliveryAddressLine</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-deliveryAddressLine']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Individual acceptance of goal</sch:title>
+    <sch:title>Extension: acceptance</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/goal-acceptance']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Descriptors and key terms for search</sch:title>
+    <sch:title>Extension: keyWord</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/valueset-keyWord']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -13258,179 +13262,175 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Conformance expectation</sch:title>
+    <sch:title>Extension: expectation</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: glstring</sch:title>
+    <sch:title>Extension: Glstring</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/hla-genotyping-resultsGlstring']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: context | classification</sch:title>
+    <sch:title>Extension: classification-or-context</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/11179-de-classification-or-context']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Contains Study</sch:title>
+    <sch:title>Extension: ParticipantObjectContainsStudy</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/auditevent-ParticipantObjectContainsStudy']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: NI | OTH | NINF | PINF | UNK | ASKU | NAV | NASK | TRC | MSK | NA | QS</sch:title>
+    <sch:title>Extension: nullFlavor</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-nullFlavor']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Nation(s) where the patient claims citizenship</sch:title>
+    <sch:title>Extension: citizenship</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/patient-citizenship']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: An initial value expression</sch:title>
+    <sch:title>Extension: initialValue</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/cqif-initialValue']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Questionnaire to populate a reference</sch:title>
+    <sch:title>Extension: lookupQuestionnaire</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/questionnaire-lookupQuestionnaire']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Amino Acid Change Type</sch:title>
+    <sch:title>Extension: AminoAcidChangeType</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/observation-geneticsAminoAcidChangeType']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Phase set identifier (UUID/OID)</sch:title>
+    <sch:title>Extension: PhaseSet</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/observation-geneticsPhaseSet']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: additionalLocator</sch:title>
+    <sch:title>Extension: ADXP-additionalLocator</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-additionalLocator']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Reference to policy/rule for this exception</sch:title>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/consent-basis']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: Object Class</sch:title>
+    <sch:title>Extension: objectClass</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/11179-objectClass']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Organization responsible for registry</sch:title>
+    <sch:title>Extension: registry-org</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/11179-de-registry-org']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Causes for this Condition</sch:title>
+    <sch:title>Extension: dueTo</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/condition-dueTo']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Advisory - name of Type for implementations</sch:title>
+    <sch:title>Extension: explicit-type-name</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Must be &lt;= this value</sch:title>
+    <sch:title>Extension: maxValue</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/maxValue']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Encrypted state</sch:title>
+    <sch:title>Extension: Encrypted</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/auditevent-Encrypted']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: streetNameBase</sch:title>
+    <sch:title>Extension: ADXP-streetNameBase</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetNameBase']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Functionality not allowed</sch:title>
+    <sch:title>Extension: optionPrefix</sch:title>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/questionnaire-optionPrefix']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern>
+    <sch:title>Extension: prohibited</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/capabilitystatement-prohibited']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: How likely this resource is to be a match</sch:title>
+    <sch:title>Extension: match-grade</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/match-grade']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Who published the mapping source</sch:title>
+    <sch:title>Extension: mapSourcePublisher</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/mapSourcePublisher']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: External Identifier associated with this element</sch:title>
+    <sch:title>Extension: validDate</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/identifier-validDate']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/elementdefinition-identifier']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The Species of the Service Animal</sch:title>
+    <sch:title>Extension: animalSpecies</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/practitioner-animalSpecies']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Exposure risk of adverse reaction (allergy or intolerance) to the specified substance/product</sch:title>
+    <sch:title>Extension: substanceExposureRisk</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/allergyintolerance-substanceExposureRisk']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -13438,77 +13438,70 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: If code is case sensitive</sch:title>
+    <sch:title>Extension: caseSensitive</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/valueset-caseSensitive']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Additional notes about any item in a structure definition</sch:title>
+    <sch:title>Extension: annotation</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-annotation']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Reason for refusal</sch:title>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/procedurerequest-reasonRefused']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: Number of SOP Instances refered to by this entity</sch:title>
+    <sch:title>Extension: NumberOfInstances</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/auditevent-NumberOfInstances']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Base Type for answer</sch:title>
+    <sch:title>Extension: baseType</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/questionnaire-baseType']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Portion derived from person's partner's surname</sch:title>
+    <sch:title>Extension: partner-name</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/humanname-partner-name']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: XML (Schema) type of attribute for RDF</sch:title>
+    <sch:title>Extension: rdf-type</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-rdf-type']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Pertains to goal</sch:title>
+    <sch:title>Extension: pertainsToGoal</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/goal-pertainsToGoal']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: StructureDefinition this is derived from</sch:title>
+    <sch:title>Extension: ancestor</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-ancestor']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Max size in MB</sch:title>
+    <sch:title>Extension: maxSize</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/maxSize']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: FMM Level (if no warnings)</sch:title>
+    <sch:title>Extension: fmm-no-warnings</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm-no-warnings']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -13522,133 +13515,119 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: User prompt for format</sch:title>
+    <sch:title>Extension: entryFormat</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/entryFormat']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Focal Subject</sch:title>
+    <sch:title>Extension: focal-subject</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/observation-focal-subject']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Body site of manifestations</sch:title>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/openEHR-location']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: Measure criteria for the resource</sch:title>
+    <sch:title>Extension: measureInfo</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/cqif-measureInfo']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Bibliographic citation for the resource</sch:title>
+    <sch:title>Extension: citation</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/cqif-citation']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Witness to Consent</sch:title>
+    <sch:title>Extension: Witness</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/consent-Witness']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Organization was acting for</sch:title>
+    <sch:title>Extension: OnBehalfOf</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/event-OnBehalfOf']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: specifiy namespace other than http://hl7.org/fhir</sch:title>
+    <sch:title>Extension: namespace</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The seriousness of the family member condition</sch:title>
+    <sch:title>Extension: severity</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/familymemberhistory-severity']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: When this exception applies</sch:title>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/consent-applies']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: Classification of the provider</sch:title>
+    <sch:title>Extension: classification</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/practitioner-classification']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Target anatomic location or structure</sch:title>
+    <sch:title>Extension: Body Site Instance</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/body-site-instance']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: SNOMED CT Description ID</sch:title>
+    <sch:title>Extension: sctdescid</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/coding-sctdescid']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The effective date range for the resource</sch:title>
+    <sch:title>Extension: effectivePeriod</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/resource-effectivePeriod']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: HGVS nomenclature for observed DNA sequence variant</sch:title>
+    <sch:title>Extension: DNASequenceVariantName</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/observation-geneticsDNASequenceVariantName']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: unitType</sch:title>
+    <sch:title>Extension: ADXP-unitType</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-unitType']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: BAD | CONF | HP | HV | DIR | PUB | PHYS | PST</sch:title>
+    <sch:title>Extension: AD-use</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-AD-use']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Indicator of primary specialty</sch:title>
+    <sch:title>Extension: primaryInd</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/practitionerrole-primaryInd']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The absolute geographic location</sch:title>
+    <sch:title>Extension: Geolocation</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/geolocation']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -13662,13 +13641,6 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Authorization Service</sch:title>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/consent-AuthorizationService']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
     <sch:title>Extension: preferred</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-preferred']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
@@ -13676,119 +13648,126 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: When resource approved by publisher</sch:title>
+    <sch:title>Extension: approvalDate</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/resource-approvalDate']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Conditions ruled out for this condition</sch:title>
+    <sch:title>Extension: ruledOut</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/condition-ruledOut']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The maximum rate of substance administration</sch:title>
+    <sch:title>Extension: maxDeliveryRate</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/pharmacy-core-maxDeliveryRate']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: HTTP header returned by the interaction</sch:title>
+    <sch:title>Extension: http-response-header</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/http-response-header']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The patient's participation in clinical trials</sch:title>
+    <sch:title>Extension: clinicalTrial</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/patient-clinicalTrial']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Suggested Name for code generation</sch:title>
+    <sch:title>Extension: bindingName</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Codes that this concept subsumes that have already been declared elsewhere</sch:title>
+    <sch:title>Extension: subsumes</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/codesystem-subsumes']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Agent that ordered the communication.</sch:title>
+    <sch:title>Extension: orderedBy</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/communicationrequest-orderedBy']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: streetNameType</sch:title>
+    <sch:title>Extension: ADXP-streetNameType</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetNameType']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: String equivalent with html markup</sch:title>
+    <sch:title>Extension: xhtml</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/rendering-xhtml']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: streetAddressLine</sch:title>
+    <sch:title>Extension: ADXP-streetAddressLine</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetAddressLine']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Goals related to this Goal</sch:title>
+    <sch:title>Extension: relationship</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/goal-relationship']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: censusTract</sch:title>
+    <sch:title>Extension: ADXP-censusTract</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-censusTract']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: An extensible Value Set specified in a parent profile</sch:title>
+    <sch:title>Extension: inheritedExtensibleValueSet</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/elementdefinition-inheritedExtensibleValueSet']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Page for this resource</sch:title>
+    <sch:title>Extension: page</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/implementationguide-page']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: ValueSet definition used to generate this expansion (logical URL)</sch:title>
+    <sch:title>Extension: expansionSource</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/valueset-expansionSource']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: An allowable parameter combination</sch:title>
+    <sch:title>Extension: identifier</sch:title>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/elementdefinition-identifier']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern>
+    <sch:title>Extension: search-parameter-combination</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/capabilitystatement-search-parameter-combination']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -13802,7 +13781,7 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: A consequence of the Condition</sch:title>
+    <sch:title>Extension: outcome</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/condition-outcome']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -13823,224 +13802,203 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Where server websocket end point is found</sch:title>
+    <sch:title>Extension: websocket</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/capabilitystatement-websocket']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: SOP Instance UID value</sch:title>
+    <sch:title>Extension: Instance</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/auditevent-Instance']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Precedent for this Condition</sch:title>
+    <sch:title>Extension: occurredFollowing</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/condition-occurredFollowing']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Notification Endpoint</sch:title>
+    <sch:title>Extension: NotificationEndpoint</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/consent-NotificationEndpoint']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Show mappings in the summary table with this name</sch:title>
+    <sch:title>Extension: table-name</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-table-name']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The strength of the recommendation</sch:title>
+    <sch:title>Extension: strengthOfRecommendation</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/cqif-strengthOfRecommendation']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: A calculated value</sch:title>
+    <sch:title>Extension: calculatedValue</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/cqif-calculatedValue']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: deliveryMode</sch:title>
+    <sch:title>Extension: ADXP-deliveryMode</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-deliveryMode']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Condition(s) limiting movement, senses, or activities</sch:title>
+    <sch:title>Extension: disability</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/patient-disability']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The access point or points used for this procedure</sch:title>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/procedure-approachBodySite']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: FMM Level</sch:title>
+    <sch:title>Extension: fmm</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Other associated conditions</sch:title>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/encounter-relatedCondition']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: Typical application route</sch:title>
+    <sch:title>Extension: usualRoute</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/medication-usualRoute']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Request fufilled by this condition</sch:title>
+    <sch:title>Extension: basedOn</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/condition-basedOn']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The quality of the evidence</sch:title>
+    <sch:title>Extension: qualityOfEvidence</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/cqif-qualityOfEvidence']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The distance this resource is from a provided location (geocode point)</sch:title>
+    <sch:title>Extension: location-distance</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/location-distance']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The length of the infusion</sch:title>
+    <sch:title>Extension: infuseOver</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/pharmacy-core-infuseOver']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The items the orderer requested</sch:title>
+    <sch:title>Extension: Item</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/procedurerequest-geneticsItem']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: CQL expression</sch:title>
+    <sch:title>Extension: cqlExpression</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/cqif-cqlExpression']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Whether quantity is a dry weight</sch:title>
+    <sch:title>Extension: isDryWeight</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/specimen-isDryWeight']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: The patient's professed religious affiliations</sch:title>
+    <sch:title>Extension: religion</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/patient-religion']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Allowed profile for reference</sch:title>
+    <sch:title>Extension: allowedProfile</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/questionnaire-allowedProfile']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Voorvoegsel derived from person's own surname</sch:title>
+    <sch:title>Extension: own-prefix</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/humanname-own-prefix']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Minimum repetitions</sch:title>
+    <sch:title>Extension: minOccurs</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/questionnaire-minOccurs']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Associates the structure definition with a collection of Data Elements</sch:title>
+    <sch:title>Extension: datadictionary</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/datadictionary']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Where to find code system</sch:title>
+    <sch:title>Extension: systemRef</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/valueset-systemRef']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Schedule followed</sch:title>
+    <sch:title>Extension: schedule</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/procedure-schedule']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: targetBodySite</sch:title>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/condition-targetBodySite']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: Text description about exposure to the Substance</sch:title>
+    <sch:title>Extension: exposureDescription</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/openEHR-exposureDescription']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: A condition expression</sch:title>
+    <sch:title>Extension: condition</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/cqif-condition']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Authorizer of the request</sch:title>
+    <sch:title>Extension: authorizedBy</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/procedurerequest-authorizedBy']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: UIDs of SOP classes referred to</sch:title>
+    <sch:title>Extension: SOPClass</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/auditevent-SOPClass']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
@@ -14054,197 +14012,187 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Attached media</sch:title>
+    <sch:title>Extension: media</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/communication-media']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: An alarm code</sch:title>
+    <sch:title>Extension: priority</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/flag-priority']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Key events in history of request</sch:title>
+    <sch:title>Extension: relevantHistory</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/communicationrequest-relevantHistory']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Special handling of the specimen</sch:title>
+    <sch:title>Extension: specialHandling</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/specimen-specialHandling']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Portion derived from person's own surname</sch:title>
+    <sch:title>Extension: own-name</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/humanname-own-name']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: FamilyHistory</sch:title>
+    <sch:title>Extension: FamilyMemberHistory</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/DiagnosticReport-geneticsFamilyMemberHistory']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Special status given the patient</sch:title>
+    <sch:title>Extension: importance</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/patient-importance']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Label for activity</sch:title>
+    <sch:title>Extension: activity-title</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/careplan-activity-title']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Units to use for measured value</sch:title>
+    <sch:title>Extension: allowedUnits</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/elementdefinition-allowedUnits']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Source value set for the coding</sch:title>
+    <sch:title>Extension: sourceValueSet</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/cqif-sourceValueSet']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Part of this condition</sch:title>
+    <sch:title>Extension: partOf</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/condition-partOf']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: Whether translations apply to this element</sch:title>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: The condition or state of the patient for this test</sch:title>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/procedurerequest-precondition']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: Time of processing</sch:title>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/specimen-processingTime']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: Owing Work Group</sch:title>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-wg']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: Associated Encounter</sch:title>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/encounter-associatedEncounter']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: Allele Database</sch:title>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/hla-genotyping-resultsAlleleDatabase']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: When (or if) the family member's condition resolved</sch:title>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/familymemberhistory-abatement']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: Maximum repetitions</sch:title>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/questionnaire-maxOccurs']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: The first incision time</sch:title>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/procedure-incisionDateTime']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: LS | AC | NB | PR | HON | BR | AD | SP | MID | CL | IN | VV</sch:title>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-EN-qualifier']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: Part of referenced event</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/event-partOf']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Source of a validation message</sch:title>
+    <sch:title>Extension: translatable</sch:title>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern>
+    <sch:title>Extension: precondition</sch:title>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/procedurerequest-precondition']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern>
+    <sch:title>Extension: processingTime</sch:title>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/specimen-processingTime']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern>
+    <sch:title>Extension: wg</sch:title>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-wg']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern>
+    <sch:title>Extension: associatedEncounter</sch:title>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/encounter-associatedEncounter']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern>
+    <sch:title>Extension: AlleleDatabase</sch:title>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/hla-genotyping-resultsAlleleDatabase']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern>
+    <sch:title>Extension: abatement</sch:title>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/familymemberhistory-abatement']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern>
+    <sch:title>Extension: maxOccurs</sch:title>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/questionnaire-maxOccurs']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern>
+    <sch:title>Extension: incisionDateTime</sch:title>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/procedure-incisionDateTime']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern>
+    <sch:title>Extension: EN-qualifier</sch:title>
+    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-EN-qualifier']">
+      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern>
+    <sch:title>Extension: issue-source</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-source']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: What type of performance was done</sch:title>
+    <sch:title>Extension: performerRole</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/event-performerRole']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Primary Diagnosis of this encounter (priority order - 1 = highest)</sch:title>
+    <sch:title>Extension: primaryDiagnosis</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/encounter-primaryDiagnosis']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Json type of value property</sch:title>
+    <sch:title>Extension: json-type</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-json-type']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Extension: Comments about response</sch:title>
+    <sch:title>Extension: note</sch:title>
     <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/questionnaireresponse-note']">
-      <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Extension: FHIR Path version of search path</sch:title>
-    <sch:rule context="//f:extension[@url='http://hl7.org/fhir/StructureDefinition/searchparameter-expression']">
       <sch:assert test="@value|f:*|h:div">ele-1: All FHIR elements must have a @value or children</sch:assert>
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">ext-1: Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>

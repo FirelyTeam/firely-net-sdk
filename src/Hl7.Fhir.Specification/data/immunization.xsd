@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
+  Generated on Tue, Feb 28, 2017 07:41+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -54,7 +54,7 @@
               <xs:documentation xml:lang="en">A unique identifier assigned to this immunization record.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="status" minOccurs="1" maxOccurs="1" type="code">
+          <xs:element name="status" minOccurs="1" maxOccurs="1" type="ImmunizationStatusCodes">
             <xs:annotation>
               <xs:documentation xml:lang="en">Indicates the current status of the vaccination event.</xs:documentation>
            </xs:annotation>
@@ -274,6 +274,31 @@
            </xs:annotation>
           </xs:element>
         </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="ImmunizationStatusCodes-list">
+    <xs:restriction base="code-primitive">
+      <xs:enumeration value="completed">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Completed</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="entered-in-error">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Entered in Error</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ImmunizationStatusCodes">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">A set of codes indicating the current status of an Immunization</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="ImmunizationStatusCodes-list" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

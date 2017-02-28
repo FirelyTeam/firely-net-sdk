@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
+  Generated on Tue, Feb 28, 2017 07:41+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -54,7 +54,7 @@
               <xs:documentation xml:lang="en">A unique identifier for this particular sequence instance. This is a FHIR-defined id.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="type" minOccurs="0" maxOccurs="1" type="sequenceType">
+          <xs:element name="type" minOccurs="0" maxOccurs="1" type="code">
             <xs:annotation>
               <xs:documentation xml:lang="en">Amino Acid Sequence/ DNA Sequence / RNA Sequence.</xs:documentation>
            </xs:annotation>
@@ -409,36 +409,6 @@
     <xs:complexContent>
       <xs:extension base="Element">
         <xs:attribute name="value" type="qualityType-list" use="optional"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:simpleType name="sequenceType-list">
-    <xs:restriction base="code-primitive">
-      <xs:enumeration value="aa">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">AA Sequence</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="dna">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">DNA Sequence</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="rna">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">RNA Sequence</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="sequenceType">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">Type if a sequence -- DNA, RNA, or amino acid sequence</xs:documentation>
-      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="Element">
-        <xs:attribute name="value" type="sequenceType-list" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

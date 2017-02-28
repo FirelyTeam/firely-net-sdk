@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
+  Generated on Tue, Feb 28, 2017 07:41+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -51,7 +51,7 @@
         <xs:sequence>
           <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Identifier(s) by which this EpisodeOfCare is known.</xs:documentation>
+              <xs:documentation xml:lang="en">The EpisodeOfCare may be known by different identifiers for different contexts of use, such as when an external agency is tracking the Episode for funding purposes.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="status" minOccurs="1" maxOccurs="1" type="EpisodeOfCareStatus">
@@ -69,14 +69,14 @@
               <xs:documentation xml:lang="en">A classification of the type of episode of care; e.g. specialist referral, disease management, type of funded care.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="condition" minOccurs="0" maxOccurs="unbounded" type="Reference">
+          <xs:element name="diagnosis" type="EpisodeOfCare.Diagnosis" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A list of conditions/problems/diagnoses that this episode of care is intended to be providing care for.</xs:documentation>
+              <xs:documentation xml:lang="en">The list of diagnosis relevant to this episode of care.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="patient" minOccurs="1" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The patient that this EpisodeOfCare applies to.</xs:documentation>
+              <xs:documentation xml:lang="en">The patient who is the focus of this episode of care.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="managingOrganization" minOccurs="0" maxOccurs="1" type="Reference">
@@ -128,6 +128,32 @@
           <xs:element name="period" minOccurs="1" maxOccurs="1" type="Period">
             <xs:annotation>
               <xs:documentation xml:lang="en">The period during this EpisodeOfCare that the specific status applied.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="EpisodeOfCare.Diagnosis">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">An association between a patient and an organization / healthcare provider(s) during which time encounters may occur. The managing organization assumes a level of responsibility for the patient during this time.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="condition" minOccurs="1" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A list of conditions/problems/diagnoses that this episode of care is intended to be providing care for.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="role" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Role that this diagnosis has within the episode of care (e.g. admission, billing, discharge …).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="rank" minOccurs="0" maxOccurs="1" type="positiveInt">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Ranking of the diagnosis (for each role type).</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>

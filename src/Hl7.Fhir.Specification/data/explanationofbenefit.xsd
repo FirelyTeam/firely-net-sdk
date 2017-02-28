@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
+  Generated on Tue, Feb 28, 2017 07:41+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -291,13 +291,11 @@
               <xs:documentation xml:lang="en">organization | patient | practitioner | relatedperson.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:choice minOccurs="0" maxOccurs="1" >
+          <xs:element name="party" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Party to be reimbursed: Subscriber, provider, other.</xs:documentation>
-            </xs:annotation>
-            <xs:element name="partyIdentifier" type="Identifier"/>
-            <xs:element name="partyReference" type="Reference"/>
-          </xs:choice>
+           </xs:annotation>
+          </xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -600,6 +598,11 @@
           <xs:element name="subSite" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">A region or surface of the site, eg. limb region or tooth surface(s).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="encounter" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A billed item may include goods or services provided in multiple encounters.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="noteNumber" minOccurs="0" maxOccurs="unbounded" type="positiveInt">

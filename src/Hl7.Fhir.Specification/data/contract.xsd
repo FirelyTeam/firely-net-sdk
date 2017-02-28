@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
+  Generated on Tue, Feb 28, 2017 07:41+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -54,7 +54,7 @@
               <xs:documentation xml:lang="en">Unique identifier for this Contract.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="status" minOccurs="0" maxOccurs="1" type="code">
+          <xs:element name="status" minOccurs="0" maxOccurs="1" type="ContractResourceStatusCodes">
             <xs:annotation>
               <xs:documentation xml:lang="en">The status of the resource instance.</xs:documentation>
            </xs:annotation>
@@ -107,6 +107,21 @@
           <xs:element name="actionReason" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">Reason for action stipulated by this Contract.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="decisionType" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The type of decision made by a grantor with respect to an offer made by a grantee.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="contentDerivative" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The minimal content derived from the basal information source at a specific stage in its lifecycle.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="securityLabel" minOccurs="0" maxOccurs="unbounded" type="Coding">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A set of security labels that define which resources are controlled by this consent. If more than one label is specified, all resources must have all the specified labels.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="agent" type="Contract.Agent" minOccurs="0" maxOccurs="unbounded">
@@ -302,6 +317,11 @@
               <xs:documentation xml:lang="en">Reason or purpose for the action stipulated by this Contract Provision.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="securityLabel" minOccurs="0" maxOccurs="unbounded" type="Coding">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A set of security labels that define which terms are controlled by this condition.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="agent" type="Contract.Agent1" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">An actor taking a role in an activity for which it can be assigned some degree of responsibility for the activity taking place.</xs:documentation>
@@ -451,6 +471,96 @@
             <xs:element name="contentReference" type="Reference"/>
           </xs:choice>
         </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="ContractResourceStatusCodes-list">
+    <xs:restriction base="code-primitive">
+      <xs:enumeration value="amended">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Amended</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="appended">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Appended</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cancelled">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Cancelled</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="disputed">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Disputed</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="entered-in-error">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Entered in Error</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="executable">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Executable</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="executed">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Executed</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="negotiable">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Negotiable</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="offered">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Offered</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="policy">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Policy</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="rejected">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Rejected</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="renewed">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Renewed</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="revoked">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Revoked</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="resolved">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Resolved</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="terminated">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Terminated</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ContractResourceStatusCodes">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">A code specifying the state of the resource instance.</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="ContractResourceStatusCodes-list" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

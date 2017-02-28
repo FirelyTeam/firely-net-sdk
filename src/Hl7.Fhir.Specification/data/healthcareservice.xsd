@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
+  Generated on Tue, Feb 28, 2017 07:41+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -64,12 +64,12 @@
               <xs:documentation xml:lang="en">The organization that provides this healthcare service.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="serviceCategory" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="category" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">Identifies the broad category of service being performed or delivered.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="serviceType" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="type" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">The specific type of service that may be delivered or performed.</xs:documentation>
            </xs:annotation>
@@ -84,7 +84,7 @@
               <xs:documentation xml:lang="en">The location(s) where this healthcare service may be provided.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="serviceName" minOccurs="0" maxOccurs="1" type="string">
+          <xs:element name="name" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
               <xs:documentation xml:lang="en">Further description of the service as it would be presented to a consumer while searching.</xs:documentation>
            </xs:annotation>
@@ -142,11 +142,6 @@
           <xs:element name="referralMethod" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">Ways that the service accepts referrals, if this is not provided then it is implied that no referral is required.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="publicKey" minOccurs="0" maxOccurs="1" type="string">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The public part of the 'keys' allocated to an Organization by an accredited body to support secure exchange of data over the internet. To be provided by the Organization, where available.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="appointmentRequired" minOccurs="0" maxOccurs="1" type="boolean">

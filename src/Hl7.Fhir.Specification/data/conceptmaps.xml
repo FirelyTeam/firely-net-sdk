@@ -2,7 +2,7 @@
 <Bundle xmlns="http://hl7.org/fhir">
   <id value="conceptmaps" />
   <meta>
-    <lastUpdated value="2017-02-17T13:27:25.219+00:00" />
+    <lastUpdated value="2017-02-28T07:41:33.123+00:00" />
   </meta>
   <type value="collection" />
   <entry>
@@ -19,6 +19,7 @@
         <url value="http://hl7.org/fhir/ConceptMap/cm-observation-relationshiptypes-v3" />
         <name value="v3 map for ObservationRelationshipType" />
         <status value="draft" />
+        <date value="2017-02-28T07:41:33+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -30,7 +31,6 @@
             <value value="fhir@lists.hl7.org" />
           </telecom>
         </contact>
-        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/observation-relationshiptypes" />
         </sourceReference>
@@ -100,6 +100,7 @@
         <url value="http://hl7.org/fhir/ConceptMap/cm-address-use-v3" />
         <name value="v3 map for AddressUse" />
         <status value="draft" />
+        <date value="2017-02-28T07:41:33+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -111,7 +112,6 @@
             <value value="fhir@lists.hl7.org" />
           </telecom>
         </contact>
-        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/address-use" />
         </sourceReference>
@@ -147,12 +147,12 @@
             <target>
               <code value="OLD" />
               <equivalence value="narrower" />
-              <comments value="Bad or Old" />
+              <comment value="Bad or Old" />
             </target>
             <target>
               <code value="BAD" />
               <equivalence value="narrower" />
-              <comments value="Bad or Old" />
+              <comment value="Bad or Old" />
             </target>
           </element>
         </group>
@@ -173,6 +173,7 @@
         <url value="http://hl7.org/fhir/ConceptMap/cm-contact-point-use-v3" />
         <name value="v3 map for ContactPointUse" />
         <status value="draft" />
+        <date value="2017-02-28T07:41:33+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -184,7 +185,6 @@
             <value value="fhir@lists.hl7.org" />
           </telecom>
         </contact>
-        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/contact-point-use" />
         </sourceReference>
@@ -220,12 +220,12 @@
             <target>
               <code value="OLD" />
               <equivalence value="narrower" />
-              <comments value="Old and Bad" />
+              <comment value="Old and Bad" />
             </target>
             <target>
               <code value="BAD" />
               <equivalence value="narrower" />
-              <comments value="Old and Bad" />
+              <comment value="Old and Bad" />
             </target>
           </element>
           <element>
@@ -253,6 +253,7 @@
         <url value="http://hl7.org/fhir/ConceptMap/cm-contact-point-use-v2" />
         <name value="v2 map for ContactPointUse" />
         <status value="draft" />
+        <date value="2017-02-28T07:41:33+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -264,7 +265,6 @@
             <value value="fhir@lists.hl7.org" />
           </telecom>
         </contact>
-        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/contact-point-use" />
         </sourceReference>
@@ -321,8 +321,8 @@
         <url value="http://hl7.org/fhir/ConceptMap/cm-administrative-gender-v2" />
         <name value="v2 map for AdministrativeGender" />
         <status value="draft" />
+        <date value="2017-02-28T07:41:33+00:00" />
         <publisher value="HL7 (FHIR Project)" />
-        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/administrative-gender" />
         </sourceReference>
@@ -382,6 +382,7 @@
         <url value="http://hl7.org/fhir/ConceptMap/cm-address-type-v3" />
         <name value="v3 map for AddressType" />
         <status value="draft" />
+        <date value="2017-02-28T07:41:33+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -393,7 +394,6 @@
             <value value="fhir@lists.hl7.org" />
           </telecom>
         </contact>
-        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/address-type" />
         </sourceReference>
@@ -435,6 +435,7 @@
         <url value="http://hl7.org/fhir/ConceptMap/cm-medication-request-status-v3" />
         <name value="v3 map for MedicationRequestStatus" />
         <status value="draft" />
+        <date value="2017-02-28T07:41:33+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -446,7 +447,6 @@
             <value value="fhir@lists.hl7.org" />
           </telecom>
         </contact>
-        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/medication-request-status" />
         </sourceReference>
@@ -523,8 +523,8 @@
         <url value="http://hl7.org/fhir/ConceptMap/cm-administrative-gender-v3" />
         <name value="v3 map for AdministrativeGender" />
         <status value="draft" />
+        <date value="2017-02-28T07:41:33+00:00" />
         <publisher value="HL7 (FHIR Project)" />
-        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/administrative-gender" />
         </sourceReference>
@@ -580,8 +580,8 @@
         <url value="http://hl7.org/fhir/ConceptMap/cm-data-absent-reason-v3" />
         <name value="v3 map for DataAbsentReason" />
         <status value="draft" />
+        <date value="2017-02-28T07:41:33+00:00" />
         <publisher value="HL7 (FHIR Project)" />
-        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/data-absent-reason" />
         </sourceReference>
@@ -672,6 +672,7 @@
         <url value="http://hl7.org/fhir/ConceptMap/cm-name-use-v2" />
         <name value="v2 map for NameUse" />
         <status value="draft" />
+        <date value="2017-02-28T07:41:33+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -683,7 +684,6 @@
             <value value="fhir@lists.hl7.org" />
           </telecom>
         </contact>
-        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/name-use" />
         </sourceReference>
@@ -764,8 +764,8 @@
         <url value="http://hl7.org/fhir/ConceptMap/cm-document-reference-status-v3" />
         <name value="v3 map for DocumentReferenceStatus" />
         <status value="draft" />
+        <date value="2017-02-28T07:41:33+00:00" />
         <publisher value="HL7 (FHIR Project)" />
-        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/document-reference-status" />
         </sourceReference>
@@ -814,6 +814,7 @@
         <url value="http://hl7.org/fhir/ConceptMap/cm-name-use-v3" />
         <name value="v3 map for NameUse" />
         <status value="draft" />
+        <date value="2017-02-28T07:41:33+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -825,7 +826,6 @@
             <value value="fhir@lists.hl7.org" />
           </telecom>
         </contact>
-        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/name-use" />
         </sourceReference>
@@ -902,6 +902,7 @@
         <url value="http://hl7.org/fhir/ConceptMap/cm-detectedissue-severity-v3" />
         <name value="v3 map for DetectedIssueSeverity" />
         <status value="draft" />
+        <date value="2017-02-28T07:41:33+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -913,7 +914,6 @@
             <value value="fhir@lists.hl7.org" />
           </telecom>
         </contact>
-        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/detectedissue-severity" />
         </sourceReference>
@@ -962,6 +962,7 @@
         <url value="http://hl7.org/fhir/ConceptMap/cm-medication-admin-status-v3" />
         <name value="v3 map for MedicationAdministrationStatus" />
         <status value="draft" />
+        <date value="2017-02-28T07:41:33+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -973,7 +974,6 @@
             <value value="fhir@lists.hl7.org" />
           </telecom>
         </contact>
-        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/medication-admin-status" />
         </sourceReference>
@@ -1036,6 +1036,7 @@
         <url value="http://hl7.org/fhir/ConceptMap/cm-contact-point-system-v2" />
         <name value="v2 map for ContactPointSystem" />
         <status value="draft" />
+        <date value="2017-02-28T07:41:33+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -1047,7 +1048,6 @@
             <value value="fhir@lists.hl7.org" />
           </telecom>
         </contact>
-        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/contact-point-system" />
         </sourceReference>
@@ -1076,7 +1076,7 @@
             <target>
               <code value="Internet" />
               <equivalence value="narrower" />
-              <comments value="for email addresses" />
+              <comment value="for email addresses" />
             </target>
           </element>
           <element>
@@ -1091,7 +1091,7 @@
             <target>
               <code value="Internet" />
               <equivalence value="narrower" />
-              <comments value="for non-email kinds of addresses" />
+              <comment value="for non-email kinds of addresses" />
             </target>
           </element>
         </group>
@@ -1112,6 +1112,7 @@
         <url value="http://hl7.org/fhir/ConceptMap/cm-medication-dispense-status-v3" />
         <name value="v3 map for MedicationDispenseStatus" />
         <status value="draft" />
+        <date value="2017-02-28T07:41:33+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -1123,7 +1124,6 @@
             <value value="fhir@lists.hl7.org" />
           </telecom>
         </contact>
-        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/medication-dispense-status" />
         </sourceReference>
@@ -1186,6 +1186,7 @@
         <url value="http://hl7.org/fhir/ConceptMap/cm-composition-status-v3" />
         <name value="v3 map for CompositionStatus" />
         <status value="draft" />
+        <date value="2017-02-28T07:41:33+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -1197,7 +1198,6 @@
             <value value="fhir@lists.hl7.org" />
           </telecom>
         </contact>
-        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/composition-status" />
         </sourceReference>
@@ -1253,6 +1253,7 @@
         <url value="http://hl7.org/fhir/ConceptMap/cm-address-use-v2" />
         <name value="v2 map for AddressUse" />
         <status value="draft" />
+        <date value="2017-02-28T07:41:33+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -1264,7 +1265,6 @@
             <value value="fhir@lists.hl7.org" />
           </telecom>
         </contact>
-        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/address-use" />
         </sourceReference>
@@ -1300,7 +1300,7 @@
             <target>
               <code value="BA" />
               <equivalence value="wider" />
-              <comments value="unclear about old addresses" />
+              <comment value="unclear about old addresses" />
             </target>
           </element>
         </group>
@@ -1321,6 +1321,7 @@
         <url value="http://hl7.org/fhir/ConceptMap/cm-medication-statement-status-v3" />
         <name value="v3 map for MedicationStatementStatus" />
         <status value="draft" />
+        <date value="2017-02-28T07:41:33+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -1332,7 +1333,6 @@
             <value value="fhir@lists.hl7.org" />
           </telecom>
         </contact>
-        <date value="2017-02-17T13:27:25+00:00" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/medication-statement-status" />
         </sourceReference>
@@ -1387,7 +1387,7 @@
       <ConceptMap>
         <id value="101" />
         <meta>
-          <lastUpdated value="2017-02-17T13:27:25.219+00:00" />
+          <lastUpdated value="2017-02-28T07:41:33.123+00:00" />
         </meta>
         <text>
           <status value="generated" />
@@ -1401,9 +1401,11 @@
           <value value="urn:uuid:53cd62ee-033e-414c-9f58-3ca97b5ffc3b" />
         </identifier>
         <version value="20120613" />
-        <name value="FHIR/v3 Address Use Mapping" />
+        <name value="FHIR-v3-Address-Use" />
+        <title value="FHIR/v3 Address Use Mapping" />
         <status value="draft" />
         <experimental value="true" />
+        <date value="2012-06-13" />
         <publisher value="HL7, Inc" />
         <contact>
           <name value="FHIR project team (example)" />
@@ -1412,7 +1414,6 @@
             <value value="http://hl7.org/fhir" />
           </telecom>
         </contact>
-        <date value="2012-06-13" />
         <description value="A mapping between the FHIR and HL7 v3 AddressUse Code systems" />
         <useContext>
           <code>
@@ -1425,12 +1426,8 @@
         </useContext>
         <purpose value="To help implementers map from HL7 v3/CDA to FHIR" />
         <copyright value="Creative Commons 0" />
-        <sourceReference>
-          <reference value="http://hl7.org/fhir/ValueSet/address-use" />
-        </sourceReference>
-        <targetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/v3-AddressUse" />
-        </targetReference>
+        <sourceUri value="http://hl7.org/fhir/ValueSet/address-use" />
+        <targetUri value="http://hl7.org/fhir/ValueSet/v3-AddressUse" />
         <group>
           <source value="http://hl7.org/fhir/address-use" />
           <target value="http://hl7.org/fhir/v3/AddressUse" />
@@ -1465,7 +1462,7 @@
               <code value="BAD" />
               <display value="bad address" />
               <equivalence value="disjoint" />
-              <comments value="In the HL7 v3 AD, old is handled by the usablePeriod element, but you have to provide a time, there's no simple equivalent of flagging an address as old" />
+              <comment value="In the HL7 v3 AD, old is handled by the usablePeriod element, but you have to provide a time, there's no simple equivalent of flagging an address as old" />
             </target>
           </element>
           <unmapped>
@@ -1483,7 +1480,7 @@
       <ConceptMap>
         <id value="103" />
         <meta>
-          <lastUpdated value="2017-02-17T13:27:25.219+00:00" />
+          <lastUpdated value="2017-02-28T07:41:33.123+00:00" />
         </meta>
         <text>
           <status value="generated" />
@@ -1500,6 +1497,7 @@
         <name value="SNOMED CT to ICD-10-CM mappings for fracture of ulna" />
         <status value="draft" />
         <experimental value="true" />
+        <date value="2012-06-13" />
         <publisher value="HL7, Inc" />
         <contact>
           <name value="FHIR project team (example)" />
@@ -1508,7 +1506,6 @@
             <value value="http://hl7.org/fhir" />
           </telecom>
         </contact>
-        <date value="2012-06-13" />
         <description value="Example rule-based mappings between SNOMED CT to ICD-10-CM for fracture of ulna" />
         <jurisdiction>
           <coding>
@@ -1535,14 +1532,14 @@
             <target>
               <code value="S52.209A" />
               <equivalence value="narrower" />
-              <comments value="The target mapping to ICD-10-CM is narrower, since additional patient data on the encounter (initial vs. subsequent) and fracture type is required for a valid ICD-10-CM mapping." />
+              <comment value="The target mapping to ICD-10-CM is narrower, since additional patient data on the encounter (initial vs. subsequent) and fracture type is required for a valid ICD-10-CM mapping." />
             </target>
           </element>
           <element>
             <target>
               <code value="S52.209D" />
               <equivalence value="narrower" />
-              <comments value="The target mapping to ICD-10-CM is narrower, since additional patient data on the encounter (initial vs. subsequent), fracture type and healing (for subsequent encounter) is required for a valid ICD-10-CM mapping." />
+              <comment value="The target mapping to ICD-10-CM is narrower, since additional patient data on the encounter (initial vs. subsequent), fracture type and healing (for subsequent encounter) is required for a valid ICD-10-CM mapping." />
             </target>
           </element>
         </group>
@@ -1555,7 +1552,7 @@
       <ConceptMap>
         <id value="102" />
         <meta>
-          <lastUpdated value="2017-02-17T13:27:25.219+00:00" />
+          <lastUpdated value="2017-02-28T07:41:33.123+00:00" />
         </meta>
         <text>
           <status value="generated" />
@@ -1568,6 +1565,7 @@
         <name value="Specimen mapping from v2 table 0487 to SNOMED CT" />
         <status value="draft" />
         <experimental value="false" />
+        <date value="2013-07-25" />
         <publisher value="FHIR project team (original source: LabMCoP)" />
         <contact>
           <telecom>
@@ -1581,7 +1579,6 @@
             <value value="http://www.phconnect.org/group/laboratorymessagingcommunityofpractice/forum/attachment/download?id=3649725%3AUploadedFile%3A145786" />
           </telecom>
         </contact>
-        <date value="2013-07-25" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/v2-0487" />
         </sourceReference>
@@ -1601,7 +1598,7 @@
             <code value="ACNFLD" />
             <target>
               <code value="119323008" />
-              <comments value="HL7 term is a historical term. mapped to Pus" />
+              <comment value="HL7 term is a historical term. mapped to Pus" />
               <product>
                 <property value="TypeModifier" />
                 <system value="http://snomed.info/sct" />
@@ -1641,21 +1638,21 @@
             <code value="ANGI" />
             <target>
               <code value="119312009" />
-              <comments value="TBD in detail" />
+              <comment value="TBD in detail" />
             </target>
           </element>
           <element>
             <code value="ARTC" />
             <target>
               <code value="119312009" />
-              <comments value="TBD in detail" />
+              <comment value="TBD in detail" />
             </target>
           </element>
           <element>
             <code value="ASERU" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="pending" />
+              <comment value="pending" />
             </target>
           </element>
           <element>
@@ -1673,21 +1670,21 @@
             <code value="ATTE" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD" />
+              <comment value="TBD" />
             </target>
           </element>
           <element>
             <code value="AUTOC" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD" />
+              <comment value="TBD" />
             </target>
           </element>
           <element>
             <code value="AUTP" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="This really is not a specimen per se - it is the state of the subject from whom the specimen is collected, so it should be used as a  specimen type modifier ONLY!. Often this is indicated with a special medical record number or other notation on the patient. needs to have specimen type (e.g. SPM-4) and source site (SPM.8) and spatial orientation (SPM.9)" />
+              <comment value="This really is not a specimen per se - it is the state of the subject from whom the specimen is collected, so it should be used as a  specimen type modifier ONLY!. Often this is indicated with a special medical record number or other notation on the patient. needs to have specimen type (e.g. SPM-4) and source site (SPM.8) and spatial orientation (SPM.9)" />
             </target>
           </element>
           <element>
@@ -1700,7 +1697,7 @@
             <code value="BCYST" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="submitted (PLR155) with parent of  167874004^knee joint synovial fluid (specimen), with specimen source topography 32361000^Popliteal fossa structure (body structure)" />
+              <comment value="submitted (PLR155) with parent of  167874004^knee joint synovial fluid (specimen), with specimen source topography 32361000^Popliteal fossa structure (body structure)" />
               <product>
                 <property value="http://snomed.info/id/3006873018" />
                 <system value="http://snomed.info/sct" />
@@ -1712,7 +1709,7 @@
             <code value="BITE" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="Submit for new term with parent 119365002" />
+              <comment value="Submit for new term with parent 119365002" />
             </target>
           </element>
           <element>
@@ -1763,7 +1760,7 @@
             <code value="BOWL" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="Don't use this term for human samples - use Stool instead. animal would use small intestinal contents, large intestinal contents" />
+              <comment value="Don't use this term for human samples - use Stool instead. animal would use small intestinal contents, large intestinal contents" />
             </target>
           </element>
           <element>
@@ -1871,14 +1868,14 @@
             <code value="CBITE" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="Submit for new term with parent 119365002" />
+              <comment value="Submit for new term with parent 119365002" />
             </target>
           </element>
           <element>
             <code value="CLIPP" />
             <target>
               <code value="119327009" />
-              <comments value="Be more specific use either: 119326000^hair specimen or 119327009^nail specimen" />
+              <comment value="Be more specific use either: 119326000^hair specimen or 119327009^nail specimen" />
             </target>
           </element>
           <element>
@@ -1925,21 +1922,21 @@
             <code value="CSCR" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="submit for new term with parent 119365002^Specimen from wound (specimen)" />
+              <comment value="submit for new term with parent 119365002^Specimen from wound (specimen)" />
             </target>
           </element>
           <element>
             <code value="CSERU" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="pending" />
+              <comment value="pending" />
             </target>
           </element>
           <element>
             <code value="CSITE" />
             <target>
               <code value="258507003" />
-              <comments value="Prefer to have aspirate of the pus oozing out from cleaned insertion site - if swab is all that can be obtained, then swab after cleaning, otherwise you may get a contaminated specimen and a falsely identified infected central line. Do not just swab the reddened area - that will just collect skin flora       " />
+              <comment value="Prefer to have aspirate of the pus oozing out from cleaned insertion site - if swab is all that can be obtained, then swab after cleaning, otherwise you may get a contaminated specimen and a falsely identified infected central line. Do not just swab the reddened area - that will just collect skin flora       " />
               <product>
                 <property value="TypeModifier" />
                 <system value="http://snomed.info/sct" />
@@ -1968,14 +1965,14 @@
             <code value="CSVR" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD - may use blood and SPM-6" />
+              <comment value="TBD - may use blood and SPM-6" />
             </target>
           </element>
           <element>
             <code value="CTP" />
             <target>
               <code value="119312009" />
-              <comments value="TBD in detail" />
+              <comment value="TBD in detail" />
             </target>
           </element>
           <element>
@@ -1988,7 +1985,7 @@
             <code value="CVPT" />
             <target>
               <code value="119312009" />
-              <comments value="TBD in detail" />
+              <comment value="TBD in detail" />
               <product>
                 <property value="TypeModifier" />
                 <system value="http://snomed.info/sct" />
@@ -2017,7 +2014,7 @@
             <code value="DBITE" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="Submit for new term with parent 119365002" />
+              <comment value="Submit for new term with parent 119365002" />
             </target>
           </element>
           <element>
@@ -2036,7 +2033,7 @@
             <code value="DEION" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD" />
+              <comment value="TBD" />
             </target>
           </element>
           <element>
@@ -2072,7 +2069,7 @@
             <code value="DRNG" />
             <target>
               <code value="258455001" />
-              <comments value="Historical term - consider what is being drained and indicate that in SPM-4 instead: not an acceptable specimen for micro - not specific enough term" />
+              <comment value="Historical term - consider what is being drained and indicate that in SPM-4 instead: not an acceptable specimen for micro - not specific enough term" />
               <product>
                 <property value="http://snomed.info/id/246380002" />
                 <system value="http://snomed.info/sct" />
@@ -2084,7 +2081,7 @@
             <code value="DRNGP" />
             <target>
               <code value="309051001" />
-              <comments value="Historical term - consider what is being drained and indicate that in SPM-4 instead" />
+              <comment value="Historical term - consider what is being drained and indicate that in SPM-4 instead" />
               <product>
                 <property value="http://snomed.info/id/246380002" />
                 <system value="http://snomed.info/sct" />
@@ -2118,14 +2115,14 @@
             <code value="EEYE" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD" />
+              <comment value="TBD" />
             </target>
           </element>
           <element>
             <code value="EFF" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD" />
+              <comment value="TBD" />
             </target>
           </element>
           <element>
@@ -2162,21 +2159,21 @@
             <code value="EOTH" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD" />
+              <comment value="TBD" />
             </target>
           </element>
           <element>
             <code value="ESOI" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD" />
+              <comment value="TBD" />
             </target>
           </element>
           <element>
             <code value="ESOS" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD" />
+              <comment value="TBD" />
             </target>
           </element>
           <element>
@@ -2199,7 +2196,7 @@
             <code value="ETTP" />
             <target>
               <code value="119312009" />
-              <comments value="TBD in detail" />
+              <comment value="TBD in detail" />
             </target>
           </element>
           <element>
@@ -2222,7 +2219,7 @@
             <code value="EWHI" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD" />
+              <comment value="TBD" />
             </target>
           </element>
           <element>
@@ -2235,7 +2232,7 @@
             <code value="EXS" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD" />
+              <comment value="TBD" />
             </target>
           </element>
           <element>
@@ -2248,7 +2245,7 @@
             <code value="FAW" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD" />
+              <comment value="TBD" />
             </target>
           </element>
           <element>
@@ -2289,7 +2286,7 @@
             <code value="FLT" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD" />
+              <comment value="TBD" />
             </target>
           </element>
           <element>
@@ -2308,14 +2305,14 @@
             <code value="FOLEY" />
             <target>
               <code value="119312009" />
-              <comments value="TBD in detail" />
+              <comment value="TBD in detail" />
             </target>
           </element>
           <element>
             <code value="FRS" />
             <target>
               <code value="258442002" />
-              <comments value="this term is not specific enough, choose from terms that more accurately describe the specimen" />
+              <comment value="this term is not specific enough, choose from terms that more accurately describe the specimen" />
               <product>
                 <property value="http://snomed.info/id/3006873018" />
                 <system value="http://snomed.info/sct" />
@@ -2338,7 +2335,7 @@
             <code value="FUR" />
             <target>
               <code value="119295008" />
-              <comments value="Further describe the sample as tissue or pus. or by the collection method. The term boil is not specifc to a body site - need to indicate source site (spm.8). preferred term is Aspirate_Boil" />
+              <comment value="Further describe the sample as tissue or pus. or by the collection method. The term boil is not specifc to a body site - need to indicate source site (spm.8). preferred term is Aspirate_Boil" />
               <product>
                 <property value="TypeModifier" />
                 <system value="http://snomed.info/sct" />
@@ -2399,7 +2396,7 @@
             <code value="GASD" />
             <target>
               <code value="258459007" />
-              <comments value="Historical term - consider what is being drained and indicate that in SPM-4 instead" />
+              <comment value="Historical term - consider what is being drained and indicate that in SPM-4 instead" />
               <product>
                 <property value="http://snomed.info/id/246380002" />
                 <system value="http://snomed.info/sct" />
@@ -2445,14 +2442,14 @@
             <code value="GROSH" />
             <target>
               <code value="119311002" />
-              <comments value="TBD in detail" />
+              <comment value="TBD in detail" />
             </target>
           </element>
           <element>
             <code value="GSOL" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD" />
+              <comment value="TBD" />
             </target>
           </element>
           <element>
@@ -2475,14 +2472,14 @@
             <code value="GT" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD" />
+              <comment value="TBD" />
             </target>
           </element>
           <element>
             <code value="GTUBE" />
             <target>
               <code value="258459007" />
-              <comments value="Historical term - consider what is being drained and indicate that in SPM-4 instead" />
+              <comment value="Historical term - consider what is being drained and indicate that in SPM-4 instead" />
               <product>
                 <property value="TypeModifier" />
                 <system value="http://snomed.info/sct" />
@@ -2504,7 +2501,7 @@
             <code value="HBITE" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="Submit for new term with parent 119365002" />
+              <comment value="Submit for new term with parent 119365002" />
             </target>
           </element>
           <element>
@@ -2522,14 +2519,14 @@
             <code value="HEMAQ" />
             <target>
               <code value="119312009" />
-              <comments value="TBD in detail" />
+              <comment value="TBD in detail" />
             </target>
           </element>
           <element>
             <code value="HEMO" />
             <target>
               <code value="119312009" />
-              <comments value="TBD in detail" />
+              <comment value="TBD in detail" />
             </target>
           </element>
           <element>
@@ -2548,7 +2545,7 @@
             <code value="HIC" />
             <target>
               <code value="119312009" />
-              <comments value="TBD in detail" />
+              <comment value="TBD in detail" />
               <product>
                 <property value="TypeModifier" />
                 <system value="http://snomed.info/sct" />
@@ -2571,7 +2568,7 @@
             <code value="IBITE" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="Submit for new term with parent 119365002" />
+              <comment value="Submit for new term with parent 119365002" />
             </target>
           </element>
           <element>
@@ -2584,7 +2581,7 @@
             <code value="IDC" />
             <target>
               <code value="119312009" />
-              <comments value="TBD in detail" />
+              <comment value="TBD in detail" />
             </target>
           </element>
           <element>
@@ -2597,7 +2594,7 @@
             <code value="ILEO" />
             <target>
               <code value="258455001" />
-              <comments value="Historical term - consider what is being drained and indicate that in SPM-4 instead: stool is what is expected, should use stool sample" />
+              <comment value="Historical term - consider what is being drained and indicate that in SPM-4 instead: stool is what is expected, should use stool sample" />
               <product>
                 <property value="TypeModifier" />
                 <system value="http://snomed.info/sct" />
@@ -2609,7 +2606,7 @@
             <code value="ILLEG" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD" />
+              <comment value="TBD" />
             </target>
           </element>
           <element>
@@ -2628,7 +2625,7 @@
             <code value="INFIL" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="This describes a morphologic abnormality, not a sample" />
+              <comment value="This describes a morphologic abnormality, not a sample" />
             </target>
           </element>
           <element>
@@ -2641,7 +2638,7 @@
             <code value="INTRD" />
             <target>
               <code value="119312009" />
-              <comments value="TBD in detail" />
+              <comment value="TBD in detail" />
             </target>
           </element>
           <element>
@@ -2654,14 +2651,14 @@
             <code value="IUD" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="pending" />
+              <comment value="pending" />
             </target>
           </element>
           <element>
             <code value="IVCAT" />
             <target>
               <code value="119312009" />
-              <comments value="TBD in detail" />
+              <comment value="TBD in detail" />
               <product>
                 <property value="TypeModifier" />
                 <system value="http://snomed.info/sct" />
@@ -2685,7 +2682,7 @@
             <code value="JEJU" />
             <target>
               <code value="258463000" />
-              <comments value="Historical term - consider what is being drained and indicate that in SPM-4 instead: stool is what is expected, should use stool sample" />
+              <comment value="Historical term - consider what is being drained and indicate that in SPM-4 instead: stool is what is expected, should use stool sample" />
               <product>
                 <property value="http://snomed.info/id/246380002" />
                 <system value="http://snomed.info/sct" />
@@ -2708,7 +2705,7 @@
             <code value="JP" />
             <target>
               <code value="309051001" />
-              <comments value="Historical term - consider what is being drained and indicate that in SPM-4 instead" />
+              <comment value="Historical term - consider what is being drained and indicate that in SPM-4 instead" />
               <product>
                 <property value="http://snomed.info/id/246380002" />
                 <system value="http://snomed.info/sct" />
@@ -2797,14 +2794,14 @@
             <code value="LENS2" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD" />
+              <comment value="TBD" />
             </target>
           </element>
           <element>
             <code value="LESN" />
             <target>
               <code value="309049000" />
-              <comments value="should be more specific what kind of lesion is observed - be more specific is it a wound, abscess, mass - specify! Ask SNOMED CT to mark it as a grouper term only (309049000)" />
+              <comment value="should be more specific what kind of lesion is observed - be more specific is it a wound, abscess, mass - specify! Ask SNOMED CT to mark it as a grouper term only (309049000)" />
             </target>
           </element>
           <element>
@@ -2817,14 +2814,14 @@
             <code value="LIQO" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD" />
+              <comment value="TBD" />
             </target>
           </element>
           <element>
             <code value="LSAC" />
             <target>
               <code value="258450006" />
-              <comments value="The HL7 term is a historical term Mapped to CSF obtained by lumbar puncture" />
+              <comment value="The HL7 term is a historical term Mapped to CSF obtained by lumbar puncture" />
               <product>
                 <property value="http://snomed.info/id/3006873018" />
                 <system value="http://snomed.info/sct" />
@@ -2836,7 +2833,7 @@
             <code value="MAHUR" />
             <target>
               <code value="119312009" />
-              <comments value="TBD in detail" />
+              <comment value="TBD in detail" />
             </target>
           </element>
           <element>
@@ -2877,7 +2874,7 @@
             <code value="NASDR" />
             <target>
               <code value="258474009" />
-              <comments value="Historical term - consider what is being drained and indicate that in SPM-4 instead" />
+              <comment value="Historical term - consider what is being drained and indicate that in SPM-4 instead" />
               <product>
                 <property value="http://snomed.info/id/246380002" />
                 <system value="http://snomed.info/sct" />
@@ -2894,7 +2891,7 @@
             <code value="NEDL" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD" />
+              <comment value="TBD" />
             </target>
           </element>
           <element>
@@ -2923,7 +2920,7 @@
             <code value="NGAST" />
             <target>
               <code value="258459007" />
-              <comments value="Historical term - consider what is being drained and indicate that in SPM-4 instead" />
+              <comment value="Historical term - consider what is being drained and indicate that in SPM-4 instead" />
               <product>
                 <property value="TypeModifier" />
                 <system value="http://snomed.info/sct" />
@@ -2951,7 +2948,7 @@
             <code value="NODUL" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="pending" />
+              <comment value="pending" />
             </target>
           </element>
           <element>
@@ -2970,7 +2967,7 @@
             <code value="ORL" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="be more precise use ulcer, tumor, vesicle" />
+              <comment value="be more precise use ulcer, tumor, vesicle" />
               <product>
                 <property value="http://snomed.info/id/3006873018" />
                 <system value="http://snomed.info/sct" />
@@ -2988,7 +2985,7 @@
             <code value="PACEM" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD" />
+              <comment value="TBD" />
             </target>
           </element>
           <element>
@@ -3007,7 +3004,7 @@
             <code value="PDTS" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="submitted for code" />
+              <comment value="submitted for code" />
             </target>
           </element>
           <element>
@@ -3025,7 +3022,7 @@
             <code value="PENIL" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="need to know what kind of lesion, so map to: UlcerTissue_penile, VesicleFluid_penile, Wound_penile, Mass tissue_penile, Necrotic tissue_penile, AbscessAspirate_penile, Anything else?" />
+              <comment value="need to know what kind of lesion, so map to: UlcerTissue_penile, VesicleFluid_penile, Wound_penile, Mass tissue_penile, Necrotic tissue_penile, AbscessAspirate_penile, Anything else?" />
               <product>
                 <property value="http://snomed.info/id/3006873018" />
                 <system value="http://snomed.info/sct" />
@@ -3095,7 +3092,7 @@
             <code value="PND" />
             <target>
               <code value="258439008" />
-              <comments value="Historical term -though in this case more often used for discharge" />
+              <comment value="Historical term -though in this case more often used for discharge" />
               <product>
                 <property value="http://snomed.info/id/246380002" />
                 <system value="http://snomed.info/sct" />
@@ -3145,14 +3142,14 @@
             <code value="POPLV" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD" />
+              <comment value="TBD" />
             </target>
           </element>
           <element>
             <code value="PORTA" />
             <target>
               <code value="119311002" />
-              <comments value="TBD in detail" />
+              <comment value="TBD in detail" />
             </target>
           </element>
           <element>
@@ -3222,7 +3219,7 @@
             <code value="QC3" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD" />
+              <comment value="TBD" />
             </target>
           </element>
           <element>
@@ -3235,14 +3232,14 @@
             <code value="RBITE" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="Submit for new term with parent: 119365002" />
+              <comment value="Submit for new term with parent: 119365002" />
             </target>
           </element>
           <element>
             <code value="RECT" />
             <target>
               <code value="119339001" />
-              <comments value="Historical term - consider what is being drained and indicate that in SPM-4 instead: stool is what is expected, should use stool sample" />
+              <comment value="Historical term - consider what is being drained and indicate that in SPM-4 instead: stool is what is expected, should use stool sample" />
               <product>
                 <property value="http://snomed.info/id/246380002" />
                 <system value="http://snomed.info/sct" />
@@ -3310,7 +3307,7 @@
             <code value="SCLV" />
             <target>
               <code value="119312009" />
-              <comments value="TBD in detail" />
+              <comment value="TBD in detail" />
               <product>
                 <property value="http://snomed.info/id/3006873018" />
                 <system value="http://snomed.info/sct" />
@@ -3345,7 +3342,7 @@
             <code value="SHU" />
             <target>
               <code value="119295008" />
-              <comments value="Preferred is aspiration with sterile syringe from inflamed area. Specify body location of shunt site" />
+              <comment value="Preferred is aspiration with sterile syringe from inflamed area. Specify body location of shunt site" />
               <product>
                 <property value="TypeModifier" />
                 <system value="http://snomed.info/sct" />
@@ -3378,14 +3375,14 @@
             <code value="SHUNT" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD" />
+              <comment value="TBD" />
             </target>
           </element>
           <element>
             <code value="SITE" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD" />
+              <comment value="TBD" />
             </target>
           </element>
           <element>
@@ -3432,21 +3429,21 @@
             <code value="SPRP" />
             <target>
               <code value="119312009" />
-              <comments value="TBD in detail" />
+              <comment value="TBD in detail" />
             </target>
           </element>
           <element>
             <code value="SPRPB" />
             <target>
               <code value="119312009" />
-              <comments value="TBD in detail" />
+              <comment value="TBD in detail" />
             </target>
           </element>
           <element>
             <code value="SPS" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD" />
+              <comment value="TBD" />
             </target>
           </element>
           <element>
@@ -3471,7 +3468,7 @@
             <code value="SPUT1" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD" />
+              <comment value="TBD" />
             </target>
           </element>
           <element>
@@ -3490,7 +3487,7 @@
             <code value="STER" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD" />
+              <comment value="TBD" />
             </target>
           </element>
           <element>
@@ -3536,7 +3533,7 @@
             <code value="SUMP" />
             <target>
               <code value="446562005" />
-              <comments value="Historical term - consider what is being drained and indicate that in SPM-4 instead" />
+              <comment value="Historical term - consider what is being drained and indicate that in SPM-4 instead" />
               <product>
                 <property value="http://snomed.info/id/246380002" />
                 <system value="http://snomed.info/sct" />
@@ -3559,14 +3556,14 @@
             <code value="SUTUR" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD" />
+              <comment value="TBD" />
             </target>
           </element>
           <element>
             <code value="SWGZ" />
             <target>
               <code value="119312009" />
-              <comments value="TBD in detail" />
+              <comment value="TBD in detail" />
             </target>
           </element>
           <element>
@@ -3601,7 +3598,7 @@
             <code value="TLC" />
             <target>
               <code value="119312009" />
-              <comments value="TBD in detail" />
+              <comment value="TBD in detail" />
             </target>
           </element>
           <element>
@@ -3665,7 +3662,7 @@
             <code value="TZANC" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="This is the name of a lab test. A skin sample is examined for viral inclusions." />
+              <comment value="This is the name of a lab test. A skin sample is examined for viral inclusions." />
             </target>
           </element>
           <element>
@@ -3739,7 +3736,7 @@
             <code value="URINP" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD" />
+              <comment value="TBD" />
             </target>
           </element>
           <element>
@@ -3752,7 +3749,7 @@
             <code value="USCOP" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="NEW specimenTERM 7" />
+              <comment value="NEW specimenTERM 7" />
               <product>
                 <property value="http://snomed.info/id/246380002" />
                 <system value="http://snomed.info/sct" />
@@ -3775,14 +3772,14 @@
             <code value="VASTIP" />
             <target>
               <code value="119312009" />
-              <comments value="TBD in detail" />
+              <comment value="TBD in detail" />
             </target>
           </element>
           <element>
             <code value="VENT" />
             <target>
               <code value="119312009" />
-              <comments value="TBD in detail" />
+              <comment value="TBD in detail" />
             </target>
           </element>
           <element>
@@ -3819,7 +3816,7 @@
             <code value="WB" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="Bloodbanking term ONLY now map to blood and the respective preservative" />
+              <comment value="Bloodbanking term ONLY now map to blood and the respective preservative" />
             </target>
           </element>
           <element>
@@ -3832,7 +3829,7 @@
             <code value="WICK" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD" />
+              <comment value="TBD" />
             </target>
           </element>
           <element>
@@ -3886,21 +3883,21 @@
             <code value="WWO" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD" />
+              <comment value="TBD" />
             </target>
           </element>
           <element>
             <code value="WWT" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="TBD" />
+              <comment value="TBD" />
             </target>
           </element>
           <element>
             <code value="CSITE" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="Prefer to have aspirate of the pus oozing out from cleaned insertion site - if swab is all that can be obtained, then swab after cleaning, otherwise you may get a contaminated specimen and a falsely identified infected central line. Do not just swab the reddened area - that will just collect skin flora" />
+              <comment value="Prefer to have aspirate of the pus oozing out from cleaned insertion site - if swab is all that can be obtained, then swab after cleaning, otherwise you may get a contaminated specimen and a falsely identified infected central line. Do not just swab the reddened area - that will just collect skin flora" />
               <product>
                 <property value="TypeModifier" />
                 <system value="http://snomed.info/sct" />
@@ -3922,7 +3919,7 @@
             <code value="CLIPP" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="Be more specific use either: 119326000^hair specimen, or 119327009^nail specimen" />
+              <comment value="Be more specific use either: 119326000^hair specimen, or 119327009^nail specimen" />
               <product>
                 <property value="TypeModifier" />
                 <system value="http://snomed.info/sct" />
@@ -3934,7 +3931,7 @@
             <code value="SHU" />
             <target>
               <equivalence value="unmatched" />
-              <comments value="assume swab from shunt site for mapping here - clean surface of skin prior to expressing the shunt site - preferred is aspiration with sterile syringe should use SPM.8 to specify body approximate match location of shunt site" />
+              <comment value="assume swab from shunt site for mapping here - clean surface of skin prior to expressing the shunt site - preferred is aspiration with sterile syringe should use SPM.8 to specify body approximate match location of shunt site" />
               <product>
                 <property value="TypeModifier" />
                 <system value="http://snomed.info/sct" />
@@ -3947,6 +3944,63 @@
               </product>
             </target>
           </element>
+        </group>
+      </ConceptMap>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/example2" />
+    <resource>
+      <ConceptMap>
+        <id value="example2" />
+        <meta>
+          <lastUpdated value="2017-02-28T07:41:33.123+00:00" />
+        </meta>
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/ConceptMap/example2" />
+        <name value="FHIR-exanple-2" />
+        <title value="FHIR Example 2" />
+        <status value="draft" />
+        <experimental value="true" />
+        <date value="2012-06-13" />
+        <publisher value="HL7, Inc" />
+        <contact>
+          <name value="FHIR project team (example)" />
+          <telecom>
+            <system value="url" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <description value="An example mapping" />
+        <purpose value="To illustrate mapping features" />
+        <sourceUri value="http://example.org/fhir/example1" />
+        <targetUri value="http://example.org/fhir/example2" />
+        <group>
+          <source value="http://example.org/fhir/example1" />
+          <target value="http://example.org/fhir/example2" />
+          <element>
+            <code value="code" />
+            <display value="Example Code" />
+            <target>
+              <code value="code2" />
+              <display value="Some Example Code" />
+              <equivalence value="equivalent" />
+              <dependsOn>
+                <property value="http://example.org/fhir/DataElement/example" />
+                <system value="http://example.org/fhir/example3" />
+                <code value="some-code" />
+              </dependsOn>
+            </target>
+          </element>
+          <unmapped>
+            <mode value="other-map" />
+            <url value="http://example.org/fhir/ConceptMap/map2" />
+          </unmapped>
         </group>
       </ConceptMap>
     </resource>

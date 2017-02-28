@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Fri, Feb 17, 2017 13:27+0000 for FHIR v1.9.0 
+  Generated on Tue, Feb 28, 2017 07:41+0000 for FHIR v1.9.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -341,7 +341,6 @@
       <xs:element ref="CapabilityStatement"/>
       <xs:element ref="CarePlan"/>
       <xs:element ref="CareTeam"/>
-      <xs:element ref="Catalog"/>
       <xs:element ref="ChargeItem"/>
       <xs:element ref="Claim"/>
       <xs:element ref="ClaimResponse"/>
@@ -2011,7 +2010,7 @@
   </xs:complexType>
   <xs:complexType name="Timing">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Specifies an event that may occur multiple times. Timing schedules are used to record when things are expected or requested to occur. The most common usage is in dosage instructions for medications. They are also used when planning care of various kinds.</xs:documentation>
+      <xs:documentation xml:lang="en">Specifies an event that may occur multiple times. Timing schedules are used to record when things are planned, expected or requested to occur. The most common usage is in dosage instructions for medications. They are also used when planning care of various kinds, and may be used for reporting the schedule to which past regular activities were carried out.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -2024,12 +2023,12 @@
           </xs:element>
           <xs:element name="repeat" type="Timing.Repeat" minOccurs="0" maxOccurs="1">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A set of rules that describe when the event should occur.</xs:documentation>
+              <xs:documentation xml:lang="en">A set of rules that describe when the event is scheduled.</xs:documentation>
             </xs:annotation>
           </xs:element>
           <xs:element name="code" type="CodeableConcept" minOccurs="0" maxOccurs="1">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A code for the timing pattern. Some codes such as BID are ubiquitous, but many institutions define their own additional codes. If a code is provided, the code is understood to be a complete statement of whatever is specified in the structured timing data, and either the code or the data may be used to interpret the Timing, with the exception that .repeat.bounds still applies over the code (and is not contained in the code).</xs:documentation>
+              <xs:documentation xml:lang="en">A code for the timing schedule. Some codes such as BID are ubiquitous, but many institutions define their own additional codes. If a code is provided, the code is understood to be a complete statement of whatever is specified in the structured timing data, and either the code or the data may be used to interpret the Timing, with the exception that .repeat.bounds still applies over the code (and is not contained in the code).</xs:documentation>
             </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -2038,7 +2037,7 @@
   </xs:complexType>
   <xs:complexType name="Timing.Repeat">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Specifies an event that may occur multiple times. Timing schedules are used to record when things are expected or requested to occur. The most common usage is in dosage instructions for medications. They are also used when planning care of various kinds.</xs:documentation>
+      <xs:documentation xml:lang="en">Specifies an event that may occur multiple times. Timing schedules are used to record when things are planned, expected or requested to occur. The most common usage is in dosage instructions for medications. They are also used when planning care of various kinds, and may be used for reporting the schedule to which past regular activities were carried out.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -2084,7 +2083,7 @@
           </xs:element>
           <xs:element name="frequencyMax" type="integer" minOccurs="0" maxOccurs="1">
             <xs:annotation>
-              <xs:documentation xml:lang="en">If present, indicates that the frequency is a range - so repeat between [frequency] and [frequencyMax] times within the period or period range.</xs:documentation>
+              <xs:documentation xml:lang="en">If present, indicates that the frequency is a range - so to repeat between [frequency] and [frequencyMax] times within the period or period range.</xs:documentation>
             </xs:annotation>
           </xs:element>
           <xs:element name="period" type="decimal" minOccurs="0" maxOccurs="1">
@@ -2334,7 +2333,7 @@
               <xs:documentation xml:lang="en">Provides a complete explanation of the meaning of the data element for human readability.  For the case of elements derived from existing elements (e.g. constraints), the definition SHALL be consistent with the base definition, but convey the meaning of the element in the particular context of use of the resource.</xs:documentation>
             </xs:annotation>
           </xs:element>
-          <xs:element name="comments" type="markdown" minOccurs="0" maxOccurs="1">
+          <xs:element name="comment" type="markdown" minOccurs="0" maxOccurs="1">
             <xs:annotation>
               <xs:documentation xml:lang="en">Explanatory notes and implementation guidance about the data element, including notes about how to use the data properly, exceptions to proper use, etc.</xs:documentation>
             </xs:annotation>
@@ -2349,7 +2348,7 @@
               <xs:documentation xml:lang="en">Identifies additional names by which this element might also be known.</xs:documentation>
             </xs:annotation>
           </xs:element>
-          <xs:element name="min" type="integer" minOccurs="0" maxOccurs="1">
+          <xs:element name="min" type="unsignedInt" minOccurs="0" maxOccurs="1">
             <xs:annotation>
               <xs:documentation xml:lang="en">The minimum number of times this element SHALL appear in the instance.</xs:documentation>
             </xs:annotation>
@@ -2902,7 +2901,7 @@
   </xs:simpleType>
   <xs:complexType name="PropertyRepresentation">
     <xs:annotation>
-      <xs:documentation xml:lang="en">How a property is represented on the wire.</xs:documentation>
+      <xs:documentation xml:lang="en">How a property is represented when serialized.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
