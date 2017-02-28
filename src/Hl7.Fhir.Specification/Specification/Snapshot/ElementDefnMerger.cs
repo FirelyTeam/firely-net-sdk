@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 snap.ShortElement = mergePrimitiveAttribute(snap.ShortElement, diff.ShortElement);
                 snap.DefinitionElement = mergePrimitiveAttribute(snap.DefinitionElement, diff.DefinitionElement, allowAppend: true);
-                snap.CommentsElement = mergePrimitiveAttribute(snap.CommentsElement, diff.CommentsElement, allowAppend: true);
+                snap.CommentElement = mergePrimitiveAttribute(snap.CommentElement, diff.CommentElement, allowAppend: true);
                 snap.RequirementsElement = mergePrimitiveAttribute(snap.RequirementsElement, diff.RequirementsElement, allowAppend: true);
                 snap.LabelElement = mergePrimitiveAttribute(snap.LabelElement, diff.LabelElement);
 

@@ -168,7 +168,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // Initialize new Base component from base element
                     elem.Base = createBaseComponent(
                         baseElem.MaxElement,
-                        baseElem.MinElement,
+                        new Integer(baseElem.MinElement.Value),         // TODO: this really needs to be aligned in the spec, see GF#12918
                         baseElem.PathElement
                     );
                 }
