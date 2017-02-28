@@ -390,7 +390,6 @@ namespace Hl7.Fhir.Tests.Serialization
         // However: http://www.hl7.org/implement/standards/fhir/narrative.html#Narrative
         // => div SHOULD accept plain text!
         [TestMethod]
-        [Ignore]
         public void SerializeValueSet()
         {
             // var res = new ValueSet() { Url = "http://example.org/fhir/ValueSet/MyValueSetExample" };
@@ -403,6 +402,22 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var xml = FhirSerializer.SerializeResourceToXml(vs);
             Assert.IsNotNull(xml);
+        }
+
+        [TestMethod]
+        public void TestClaimJsonSerialization()
+        {
+            var c = new Claim();
+            c.Payee = new Claim.PayeeComponent();
+            c.Payee.Type = new CodeableConcept(null, "test");
+            c.Payee.ResourceType = new Coding(null, "test2");
+            c.Payee.Party = new ResourceReference("Practitioner/example", "Example, Dr John");
+
+            string json = Hl7.Fhir.Serialization.FhirSerializer.SerializeResourceToJson(c);
+            var c2 = new FhirJsonParser().Parse<Claim>(json);
+            Assert.AreEqual("test", c2.Payee.Type.Coding[0].Code);
+            Assert.AreEqual("test2", c2.Payee.ResourceType.Code);
+            Assert.AreEqual("Practitioner/example", c2.Payee.Party.Reference);
         }
     }
 }
