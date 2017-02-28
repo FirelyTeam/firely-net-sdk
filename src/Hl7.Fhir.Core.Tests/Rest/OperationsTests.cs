@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("IntegrationTest")]
         public void InvokeLookupCoding()
         {
-            var client = new FhirClient("http://sqlonfhir-dstu2.azurewebsites.net/fhir"); // testEndpoint);
+            var client = new FhirClient(testEndpoint);
             var coding = new Coding("http://hl7.org/fhir/administrative-gender", "male");
 
             var expansion = client.ConceptLookup(coding);
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("IntegrationTest")]
         public void InvokeLookupCode()
         {
-            var client = new FhirClient("http://sqlonfhir-dstu2.azurewebsites.net/fhir"); // testEndpoint);
+            var client = new FhirClient(testEndpoint);
             var expansion = client.ConceptLookup(new Code("male"), new FhirUri("http://hl7.org/fhir/administrative-gender"));
 
             //Assert.AreEqual("male", expansion.GetSingleValue<FhirString>("name").Value);  // Returns empty currently on Grahame's server
