@@ -22,6 +22,7 @@ using Hl7.Fhir.Rest;
 using System.Text;
 using System.Xml;
 using Hl7.Fhir.Introspection;
+using static Hl7.Fhir.Model.ElementDefinition.DiscriminatorComponent;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -578,11 +579,30 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.Fail($"No matching element found for path '{path}'");
             }
 
-            public void AssertSlicing(IEnumerable<string> discriminator, ElementDefinition.SlicingRules? rules, bool? ordered)
+            public void AssertSlicing(ElementDefinition.DiscriminatorComponent discriminator, ElementDefinition.SlicingRules? rules, bool? ordered)
+            {
+                AssertSlicing(new ElementDefinition.DiscriminatorComponent[] { discriminator }, rules, ordered);
+            }
+
+            private class DiscriminatorEquality : IEqualityComparer<ElementDefinition.DiscriminatorComponent>
+            {
+                public bool Equals(ElementDefinition.DiscriminatorComponent x, ElementDefinition.DiscriminatorComponent y)
+                {
+                    return x.IsExactly(y);
+                }
+
+                public int GetHashCode(ElementDefinition.DiscriminatorComponent obj)
+                {
+                    return (obj.Type?.GetHashCode() ?? 0) ^ (obj.Path?.GetHashCode() ?? 0);
+                }
+            }
+
+            public void AssertSlicing(IEnumerable<ElementDefinition.DiscriminatorComponent> discriminator, ElementDefinition.SlicingRules? rules, bool? ordered)
             {
                 var slicing = Current.Slicing;
                 Assert.IsNotNull(slicing);
-                Assert.IsTrue(discriminator.SequenceEqual(slicing.Discriminator), $"Invalid discriminator for element with path '{Current.Path}' - Expected: '{string.Join(",", discriminator)}' Actual: '{string.Join(",", slicing.Discriminator)}' ");
+
+                Assert.IsTrue(discriminator.SequenceEqual(slicing.Discriminator, new DiscriminatorEquality()), $"Invalid discriminator for element with path '{Current.Path}' - Expected: '{string.Join(",", discriminator)}' Actual: '{string.Join(",", slicing.Discriminator)}' ");
                 Assert.AreEqual(slicing.Rules, rules);
                 Assert.AreEqual(slicing.Ordered, ordered);
             }
@@ -768,9 +788,9 @@ namespace Hl7.Fhir.Specification.Tests
             );
             verifier = new ElementVerifier(sd, _settings);
             verifier.VerifyElement("Patient.identifier", null, "Patient.identifier");
-            verifier.AssertSlicing(new string[] { "system" }, ElementDefinition.SlicingRules.Open, null);
+            verifier.AssertSlicing( ForValueSlice("system"), ElementDefinition.SlicingRules.Open, null);
             verifier.VerifyElement("Patient.identifier", "mrn", "Patient.identifier:mrn");
-            verifier.AssertSlicing(new string[] { "use" }, ElementDefinition.SlicingRules.Open, null);
+            verifier.AssertSlicing(ForValueSlice("use"), ElementDefinition.SlicingRules.Open, null);
             verifier.VerifyElement("Patient.identifier.extension", null, "Patient.identifier:mrn.extension");
             verifier.VerifyElement("Patient.identifier.extension", "mrn.issuingSite", "Patient.identifier:mrn.extension:issuingSite");
             verifier.VerifyElement("Patient.identifier.use", null, "Patient.identifier:mrn.use");
@@ -807,7 +827,7 @@ namespace Hl7.Fhir.Specification.Tests
             // However this is not necessary, as there are no child constraints on the extension
 
             // [WMR 20161216] TODO: Merge slicing entry
-            verifier.AssertSlicing(new string[] { "type.value[x]" }, ElementDefinition.SlicingRules.Open, null);
+            verifier.AssertSlicing(ForValueSlice("type.value[x]"), ElementDefinition.SlicingRules.Open, null);
 
             // [WMR 20161208] TODO...
 
@@ -816,7 +836,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // [WMR 20161216] TODO: Merge slicing entry
             verifier.VerifyElement("Patient.extension.extension", null, "Patient.extension:researchAuth/grandfatheredResAuth.extension");
-            verifier.AssertSlicing(new string[] { "url" }, ElementDefinition.SlicingRules.Open, false);
+            verifier.AssertSlicing(ForValueSlice("url"), ElementDefinition.SlicingRules.Open, false);
 
             // The reslice "researchAuth/grandfatheredResAuth" has a child element constraint on "type.value[x]"
             // Therefore the complex extension is fully expanded (child extensions: type, flag, date)
@@ -832,9 +852,9 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Slices inherited from base profile with url http://example.com/fhir/SD/patient-identifier-subslice
             verifier.VerifyElement("Patient.identifier", null, "Patient.identifier");
-            verifier.AssertSlicing(new string[] { "system" }, ElementDefinition.SlicingRules.Open, null);
+            verifier.AssertSlicing(ForValueSlice("system"), ElementDefinition.SlicingRules.Open, null);
             verifier.VerifyElement("Patient.identifier", "mrn", "Patient.identifier:mrn");
-            verifier.AssertSlicing(new string[] { "use" }, ElementDefinition.SlicingRules.Open, null);
+            verifier.AssertSlicing(ForValueSlice("use"), ElementDefinition.SlicingRules.Open, null);
             verifier.VerifyElement("Patient.identifier.extension", null, "Patient.identifier:mrn.extension");
             verifier.VerifyElement("Patient.identifier.extension", "mrn.issuingSite", "Patient.identifier:mrn.extension:issuingSite");
             verifier.VerifyElement("Patient.identifier.use", null, "Patient.identifier:mrn.use");
@@ -1997,7 +2017,7 @@ namespace Hl7.Fhir.Specification.Tests
                 || isChanged(elem.Base)
                 || isChanged(elem.Binding)
                 || hasChanges(elem.Code)
-                || isChanged(elem.CommentsElement)
+                || isChanged(elem.CommentElement)
                 || hasChanges(elem.ConditionElement)
                 || hasChanges(elem.Constraint)
                 || isChanged(elem.DefaultValue)
@@ -2039,7 +2059,7 @@ namespace Hl7.Fhir.Specification.Tests
             if (isChanged(element.Base)) { return "Base"; }
             if (isChanged(element.Binding)) { return "Binding"; }
             if (hasChanges(element.Code)) { return "Code"; }
-            if (isChanged(element.CommentsElement)) { return "Comments"; }
+            if (isChanged(element.CommentElement)) { return "Comments"; }
             if (hasChanges(element.ConditionElement)) { return "Condition"; }
             if (hasChanges(element.Constraint)) { return "Constraint"; }
             if (isChanged(element.DefaultValue)) { return "DefaultValue"; }
@@ -2542,7 +2562,7 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         Slicing = new ElementDefinition.SlicingComponent()
                         {
-                            Discriminator = new string[] { "@type" },
+                            Discriminator = new List<ElementDefinition.DiscriminatorComponent> { ForTypeSlice() },
                             Ordered = false,
                             Rules = ElementDefinition.SlicingRules.Open
                         }
@@ -2685,7 +2705,7 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         Slicing = new ElementDefinition.SlicingComponent()
                         {
-                            Discriminator = new string[] { "@type" },
+                            Discriminator = new List<ElementDefinition.DiscriminatorComponent> { ForTypeSlice() },
                             Ordered = false,
                             Rules = ElementDefinition.SlicingRules.Open
                         }
@@ -2921,7 +2941,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Verify that the snapshot includes the merged children of the slice entry element
             var verifier = new ElementVerifier(expanded, _settings);
             verifier.VerifyElement("Composition.section", null);
-            verifier.AssertSlicing(new string[] { "code" }, ElementDefinition.SlicingRules.Open, false);
+            verifier.AssertSlicing(ForValueSlice("code"), ElementDefinition.SlicingRules.Open, false);
             verifier.VerifyElement("Composition.section.title", null);
             verifier.VerifyElement("Composition.section.code", null);
             Assert.IsNotNull(verifier.CurrentElement.Binding);
@@ -3014,14 +3034,14 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(1, labelExtElem.Min);                                           // Explicit Observation profile constraint
             Assert.AreEqual(labelExtRootElem.Max, labelExtElem.Max);                        // Inherited from external ObservationLabelExtension root element
             Assert.AreEqual(coreExtensionRootElem.Definition, labelExtElem.Definition);     // Inherited from Observation.extension base element
-            Assert.AreEqual(labelExtRootElem.Comments, labelExtElem.Comments);              // Inherited from external ObservationLabelExtension root element
+            Assert.AreEqual(labelExtRootElem.Comment, labelExtElem.Comment);              // Inherited from external ObservationLabelExtension root element
             verifyProfileExtensionBaseElement(labelExtElem);
 
             var locationExtRootElem = locationExt.Differential.Element[0];
             Assert.AreEqual(0, locationExtElem.Min);                                        // Inherited from external ObservationLabelExtension root element
             Assert.AreEqual("1", locationExtElem.Max);                                      // Explicit Observation profile constraint
             Assert.AreEqual(coreExtensionRootElem.Definition, locationExtElem.Definition);  // Inherited from Observation.extension base element
-            Assert.AreEqual(locationExtRootElem.Comments, locationExtElem.Comments);        // Inherited from external ObservationLocationExtension root element
+            Assert.AreEqual(locationExtRootElem.Comment, locationExtElem.Comment);        // Inherited from external ObservationLocationExtension root element
             verifyProfileExtensionBaseElement(locationExtElem);
 
             // Last (unresolved) extension element should have been merged with Observation.extension
@@ -3033,7 +3053,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(1, otherExtElem.Min);                                           // Explicit Observation profile constraint
             Assert.AreEqual(coreObsExtensionElem.Max, otherExtElem.Max);                    // Inherited from Observation.extension base element
             Assert.AreEqual(coreObsExtensionElem.Definition, otherExtElem.Definition);      // Inherited from Observation.extension base element
-            Assert.AreEqual(coreObsExtensionElem.Comments, otherExtElem.Comments);          // Inherited from Observation.extension base element
+            Assert.AreEqual(coreObsExtensionElem.Comment, otherExtElem.Comment);          // Inherited from Observation.extension base element
             verifyProfileExtensionBaseElement(coreObsExtensionElem);
         }
 
@@ -3043,7 +3063,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(baseElem);
             Assert.AreEqual(baseElem.Short, extElem.Short);
             Assert.AreEqual(baseElem.Definition, extElem.Definition);
-            Assert.AreEqual(baseElem.Comments, extElem.Comments);
+            Assert.AreEqual(baseElem.Comment, extElem.Comment);
             Assert.IsTrue(baseElem.Alias.SequenceEqual(extElem.Alias));
         }
 

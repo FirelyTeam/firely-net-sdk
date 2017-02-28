@@ -9,6 +9,7 @@
 
 using Hl7.Fhir.Introspection;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.Serialization;
 using System.Text;
@@ -52,5 +53,24 @@ namespace Hl7.Fhir.Model
                 SliceName = value;
             }
         }
+
+        public partial class DiscriminatorComponent
+        {
+            public static DiscriminatorComponent ForTypeSlice()
+            {
+                return new DiscriminatorComponent { Type = DiscriminatorType.Type };
+            }
+
+            public static DiscriminatorComponent ForValueSlice(string path)
+            {
+                return new DiscriminatorComponent { Type = DiscriminatorType.Value, Path = path };
+            }
+
+            public List<DiscriminatorComponent> ToList()
+            {
+                return new List<DiscriminatorComponent> { this };
+            }
+        }
+
     }
 }

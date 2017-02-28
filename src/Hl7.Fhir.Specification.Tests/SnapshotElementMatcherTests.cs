@@ -15,6 +15,7 @@ using Hl7.Fhir.Specification.Navigation;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Hl7.Fhir.Introspection;
+using static Hl7.Fhir.Model.ElementDefinition.DiscriminatorComponent;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -149,7 +150,7 @@ namespace Hl7.Fhir.Specification.Tests
                             Type = new List<ElementDefinition.TypeRefComponent>() { new ElementDefinition.TypeRefComponent() { Code = FHIRAllTypes.Extension.GetLiteral() } },
                             Slicing = new ElementDefinition.SlicingComponent()
                             {
-                                Discriminator = new string[] { "url" }
+                                Discriminator = ForValueSlice("url").ToList()
                             }
                         },
                         new ElementDefinition("Patient.extension")
@@ -209,7 +210,7 @@ namespace Hl7.Fhir.Specification.Tests
                             Type = new List<ElementDefinition.TypeRefComponent>() { new ElementDefinition.TypeRefComponent() { Code = FHIRAllTypes.Extension.GetLiteral() } },
                             Slicing = new ElementDefinition.SlicingComponent()
                             {
-                                Discriminator = new string[] { "url" },
+                                Discriminator = ForValueSlice("url").ToList(),
                                 Rules = ElementDefinition.SlicingRules.Closed
                             }
                         },
@@ -272,7 +273,7 @@ namespace Hl7.Fhir.Specification.Tests
                             Type = new List<ElementDefinition.TypeRefComponent>() { new ElementDefinition.TypeRefComponent() { Code = FHIRAllTypes.Extension.GetLiteral() } },
                             Slicing = new ElementDefinition.SlicingComponent()
                             {
-                                Discriminator = new string[] { "url" }
+                                Discriminator = ForValueSlice("url").ToList()
                             }
                         },
                         new ElementDefinition("Patient.extension")
@@ -388,7 +389,8 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Extension"),
-                        new ElementDefinition("Extension.extension") { Slicing = new ElementDefinition.SlicingComponent() { Discriminator = new string[] {"url" } } },
+                        new ElementDefinition("Extension.extension") { Slicing = new ElementDefinition.SlicingComponent()
+                            { Discriminator = ForValueSlice("url").ToList() } },
                         new ElementDefinition("Extension.extension") { SliceName = "name" },
                         new ElementDefinition("Extension.extension.value")
                         {
@@ -463,7 +465,9 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Extension"),
-                        new ElementDefinition("Extension.extension") { Slicing = new ElementDefinition.SlicingComponent() { Discriminator = new string[] {"url" } } },
+                        new ElementDefinition("Extension.extension") {
+                            Slicing = new ElementDefinition.SlicingComponent()
+                            { Discriminator = ForValueSlice("url").ToList() } },
                         new ElementDefinition("Extension.extension") { SliceName = "name" },
                         new ElementDefinition("Extension.extension.value")
                         {
@@ -563,7 +567,8 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Patient"),
-                        new ElementDefinition("Patient.animal") { Slicing = new ElementDefinition.SlicingComponent() { Discriminator = new string[] { "species.coding.code" } } },
+                        new ElementDefinition("Patient.animal") { Slicing = new ElementDefinition.SlicingComponent()
+                        { Discriminator = ForValueSlice("species.coding.code").ToList() } },
                         new ElementDefinition("Patient.animal") { SliceName = "dog" }
                     }
                 }
@@ -603,7 +608,8 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Patient"),
-                        new ElementDefinition("Patient.animal") { Slicing = new ElementDefinition.SlicingComponent() { Discriminator = new string[] { "species.coding.code" } } },
+                        new ElementDefinition("Patient.animal") { Slicing = new ElementDefinition.SlicingComponent()
+                        { Discriminator = ForValueSlice("species.coding.code").ToList() } },
                         new ElementDefinition("Patient.animal") { SliceName = "dog" }
                     }
                 }
@@ -647,7 +653,8 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Patient"),
-                        new ElementDefinition("Patient.animal") { Slicing = new ElementDefinition.SlicingComponent() { Discriminator = new string[] { "species.coding.code" } } },
+                        new ElementDefinition("Patient.animal") { Slicing = new ElementDefinition.SlicingComponent()
+                        { Discriminator = ForValueSlice("species.coding.code").ToList() } },
                         new ElementDefinition("Patient.animal") { SliceName = "dog" }
                     }
                 }
@@ -690,7 +697,8 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Patient"),
-                        new ElementDefinition("Patient.animal") { Slicing = new ElementDefinition.SlicingComponent() { Discriminator = new string[] { "species.coding.code" } } },
+                        new ElementDefinition("Patient.animal") { Slicing = new ElementDefinition.SlicingComponent()
+                        { Discriminator = ForValueSlice("species.coding.code").ToList() } },
                         new ElementDefinition("Patient.animal") { SliceName = "dog" }
                     }
                 }
@@ -732,7 +740,8 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Patient"),
-                        new ElementDefinition("Patient.animal") { Slicing = new ElementDefinition.SlicingComponent() { Discriminator = new string[] { "species.coding.code" } } },
+                        new ElementDefinition("Patient.animal") { Slicing = new ElementDefinition.SlicingComponent()
+                        { Discriminator = ForValueSlice("species.coding.code").ToList() } },
                         new ElementDefinition("Patient.animal") { SliceName = "dog" }
                     }
                 }
@@ -779,7 +788,8 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Patient"),
-                        new ElementDefinition("Patient.animal") { Slicing = new ElementDefinition.SlicingComponent() { Discriminator = new string[] { "species.coding.code" } } },
+                        new ElementDefinition("Patient.animal") { Slicing = new ElementDefinition.SlicingComponent()
+                        { Discriminator = ForValueSlice("species.coding.code").ToList() } },
                         new ElementDefinition("Patient.animal") { SliceName = "dog" },
                         new ElementDefinition("Patient.animal") { SliceName = "cat" }
                     }
@@ -792,8 +802,10 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Patient"),
-                        new ElementDefinition("Patient.animal") { Slicing = new ElementDefinition.SlicingComponent() { Discriminator = new string[] { "species.coding.code" } } },
-                        new ElementDefinition("Patient.animal") { SliceName = "dog", Slicing = new ElementDefinition.SlicingComponent() { Discriminator = new string[] {  "breed" } } },
+                        new ElementDefinition("Patient.animal") { Slicing = new ElementDefinition.SlicingComponent()
+                        { Discriminator = ForValueSlice("species.coding.code").ToList() } },
+                        new ElementDefinition("Patient.animal") { SliceName = "dog", Slicing = new ElementDefinition.SlicingComponent()
+                        { Discriminator = ForValueSlice("breed").ToList() } },
                         new ElementDefinition("Patient.animal") { SliceName = "dog/schnautzer" },
                         new ElementDefinition("Patient.animal") { SliceName = "dog/dachshund" }
                     }
@@ -840,7 +852,8 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Patient"),
-                        new ElementDefinition("Patient.animal") { Slicing = new ElementDefinition.SlicingComponent() { Discriminator = new string[] { "species.coding.code" } } },
+                        new ElementDefinition("Patient.animal") { Slicing = new ElementDefinition.SlicingComponent()
+                        { Discriminator = ForValueSlice("species.coding.code").ToList() } },
                         new ElementDefinition("Patient.animal") { SliceName = "dog" },
                         new ElementDefinition("Patient.animal.breed"),
                         new ElementDefinition("Patient.animal") { SliceName = "cat" },
@@ -856,9 +869,11 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         new ElementDefinition("Patient"),
                         // Is slice entry required? We're not reslicing animal...
-                        new ElementDefinition("Patient.animal") { Slicing = new ElementDefinition.SlicingComponent() { Discriminator = new string[] { "species.coding.code" } } },
+                        new ElementDefinition("Patient.animal") { Slicing = new ElementDefinition.SlicingComponent()
+                        { Discriminator = ForValueSlice("species.coding.code").ToList() } },
                         new ElementDefinition("Patient.animal") { SliceName = "dog" },
-                        new ElementDefinition("Patient.animal.breed") { Slicing = new ElementDefinition.SlicingComponent() { Discriminator = new string[] { "coding.code" } } },
+                        new ElementDefinition("Patient.animal.breed") { Slicing = new ElementDefinition.SlicingComponent()
+                        { Discriminator = ForValueSlice("coding.code").ToList() } },
                         new ElementDefinition("Patient.animal.breed") { SliceName="schnautzer" },
                         new ElementDefinition("Patient.animal.breed") { SliceName="dachshund" },
                     }
