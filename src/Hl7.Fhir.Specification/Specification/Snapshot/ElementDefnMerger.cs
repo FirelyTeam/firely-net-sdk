@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 //    snap.ElementId = diff.ElementId;
                 //}
 
-                // representation cannot be overridden
+                // [EK 20170301] This used to be ambiguous, now (STU3) split in contentReference and sliceName
                 snap.SliceNameElement = mergePrimitiveAttribute(snap.SliceNameElement, diff.SliceNameElement);
             
                 // Codes are cumulative based on the code value
@@ -121,21 +121,27 @@ namespace Hl7.Fhir.Specification.Snapshot
                     foreach (var element in snap.Type) { onConstraint(snap); }
                 }
 
-                // ElementDefinition.nameReference cannot be overridden by a derived profile
-                // defaultValue and meaningWhenMissing can only be set in a resource/datatype/extension definition and cannot be overridden
+                // ElementDefinition.contentReference cannot be overridden by a derived profile                
 
                 snap.Fixed = mergeComplexAttribute(snap.Fixed, diff.Fixed);
                 snap.Pattern = mergeComplexAttribute(snap.Pattern, diff.Pattern);
-                // TODO: STU3 snapshot generation
-                // snap.Example = mergeComplexAttribute(snap.Example, diff.Example);
+
+                // Examples are cumulative based on the full value
+                snap.MaxLengthElement = mergePrimitiveAttribute(snap.MaxLengthElement, diff.MaxLengthElement);
+
+                // [EK 20170301] In STU3, this was turned into a collection
+                snap.Example = mergeCollection(snap.Example, diff.Example, (a, b) => a.IsExactly(b));
+
                 snap.MinValue = mergeComplexAttribute(snap.MinValue, diff.MinValue);
                 snap.MaxValue = mergeComplexAttribute(snap.MaxValue, diff.MaxValue);
                 
                 // [WMR 20160909] merge defaultValue and meaningWhenMissing, to handle core definitions; validator can detect invalid constraints
                 snap.DefaultValue = mergeComplexAttribute(snap.DefaultValue, diff.DefaultValue);
                 snap.MeaningWhenMissingElement = mergePrimitiveAttribute(snap.MeaningWhenMissingElement, diff.MeaningWhenMissingElement);
-
                 snap.MaxLengthElement = mergePrimitiveAttribute(snap.MaxLengthElement, diff.MaxLengthElement);
+
+                // [EK 20170301] Added this new STU3 element
+                snap.OrderMeaningElement = mergePrimitiveAttribute(snap.OrderMeaningElement, diff.OrderMeaningElement);
 
                 // TODO: [GG] what to do about conditions?  [EK] We have key, so merge Constraint and condition based on that?
                 // Constraints are cumulative, so they are always "new" (hence a constant false for the comparer)
@@ -170,6 +176,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // TODO: What happens to extensions present on an ElementDefinition that is overriding another?
                 // [WMR 20160907] Merge extensions... match on url, diff completely overrides snapshot
                 snap.Extension = mergeCollection(snap.Extension, diff.Extension, (s, d) => s.Url == d.Url);
+
+                // [EK 20170301] Added this after comparison with Java generated snapshot
+                snap.RepresentationElement = mergeCollection(snap.RepresentationElement, diff.RepresentationElement, (s, d) => s.IsExactly(d));
             }
 
             /// <summary>Notify clients about a snapshot element with differential constraints.</summary>
