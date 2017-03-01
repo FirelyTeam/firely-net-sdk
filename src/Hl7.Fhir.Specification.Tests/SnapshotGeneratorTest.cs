@@ -230,10 +230,15 @@ namespace Hl7.Fhir.Specification.Tests
             // [WMR 20170110] Test problematic extension
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/us-core-direct");
 
-            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Account");
+            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Questionnaire");
 
             // var sd = _testResolver.FindStructureDefinition(@"http://fhir.nl/fhir/StructureDefinition/nl-core-patient");
             // var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/PatientWithExtension");
+
+            // This is a profile (bodyweight) on a profile (vitalsigns) on an observation - including slicing
+            // http://hl7.org/fhir/StructureDefinition/vitalsigns
+            // http://hl7.org/fhir/StructureDefinition/bodyweight
+            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/bodyweight");
 
             Assert.IsNotNull(sd);
 
