@@ -27,60 +27,8 @@ using static Hl7.Fhir.Model.ElementDefinition.DiscriminatorComponent;
 namespace Hl7.Fhir.Specification.Tests
 {
     [TestClass]
-    public class SnapshotGeneratorTest
+    public partial class SnapshotGeneratorTest
     {
-        class TimingSource : IConformanceSource
-        {
-            IConformanceSource _source;
-            TimeSpan _duration = TimeSpan.Zero;
-
-            public TimingSource(IConformanceSource source) { _source = source; }
-
-            public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
-                => measureDuration(() => _source.FindConceptMaps(sourceUri, targetUri));
-
-            public NamingSystem FindNamingSystem(string uniqueid) => measureDuration(() => _source.FindNamingSystem(uniqueid));
-
-            public CodeSystem FindCodeSystemByValueSet(string system) => measureDuration(() => _source.FindCodeSystemByValueSet(system));
-
-            public IEnumerable<string> ListResourceUris(ResourceType? filter = default(ResourceType?)) => _source.ListResourceUris(filter);
-            // => measureDuration(() => _source.ListResourceUris(filter));
-
-            public Resource ResolveByCanonicalUri(string uri) => measureDuration(() => _source.ResolveByCanonicalUri(uri));
-
-            public Resource ResolveByUri(string uri) => measureDuration(() => _source.ResolveByUri(uri));
-
-            T measureDuration<T>(Func<T> f)
-            {
-                Stopwatch sw = new Stopwatch();
-                sw.Start();
-                var result = f();
-                sw.Stop();
-                _duration += sw.Elapsed;
-                return result;
-            }
-
-            public TimeSpan Duration => _duration;
-
-            public void Reset() { _duration = TimeSpan.Zero; }
-
-            public void ShowDuration(int count, TimeSpan totalDuration)
-            {
-                var totalMs = totalDuration.TotalMilliseconds;
-                var resolverMs = _duration.TotalMilliseconds;
-                var resolverFraction = resolverMs / totalMs;
-                var snapshotMs = totalMs - resolverMs;
-                var snapshotFraction = snapshotMs / totalMs;
-                // Debug.Print($"Generated {count} snapshots in {totalMs} ms = {sourceMs} ms (resolver) + {snapshotMs} (snapshot) ({perc:2}%), on average {avg} ms per snapshot.");
-                Console.WriteLine($"Generated {count} snapshots in {totalMs} ms = {resolverMs} ms (resolver) ({resolverFraction:P0}) + {snapshotMs} (snapshot) ({snapshotFraction:P0}).");
-                var totalAvg = totalMs / count;
-                var resolverAvg = resolverMs / count;
-                var snapshotAvg = snapshotMs / count;
-                Console.WriteLine($"Average per resource: {totalAvg} = {resolverAvg} ms (resolver) + {snapshotAvg} ms (snapshot)");
-            }
-
-        }
-
         SnapshotGenerator _generator;
         IResourceResolver _testResolver;
         TimingSource _source;
@@ -103,35 +51,141 @@ namespace Hl7.Fhir.Specification.Tests
             _testResolver = new CachedResolver(_source);
         }
 
-        // [WMR 20160718] Generate snapshot for extension definition fails with exception:
-        // System.ArgumentException: structure is not a constraint or extension
 
-#if false
+
         [TestMethod]
-        public void FindDerivedExtensions()
+        public void TestDifferentialTree()
         {
-            var sdUris = _source.ListResourceUris(ResourceType.StructureDefinition);
-            foreach (var uri in sdUris)
-            {
-                var sd = _source.FindStructureDefinition(uri);
-                if (sd.ConstrainedType == FHIRAllTypes.Extension && sd.Base != "http://hl7.org/fhir/StructureDefinition/Extension")
-                {
-                    var origin = sd.Annotation<OriginInformation>();
-                    Debug.Print($"Derived extension: uri = '{uri}' origin = '{origin?.Origin}'");
-                }
-            }
+            var e = new List<ElementDefinition>();
 
-            // var sdInfo = testSD.Annotation<OriginInformation>();
+            e.Add(new ElementDefinition() { Path = "A.B.C1" });
+            e.Add(new ElementDefinition() { Path = "A.B.C1", SliceName = "C1-A" }); // First slice of A.B.C1
+            e.Add(new ElementDefinition() { Path = "A.B.C2" });
+            e.Add(new ElementDefinition() { Path = "A.B", SliceName = "B-A" }); // First slice of A.B
+            e.Add(new ElementDefinition() { Path = "A.B.C1.D" });
+            e.Add(new ElementDefinition() { Path = "A.D.F" });
+
+            var tree = DifferentialTreeConstructor.MakeTree(e);
+            Assert.IsNotNull(tree);
+
+            var nav = new ElementDefinitionNavigator(tree);
+            Assert.AreEqual(10, nav.Count);
+
+            Assert.IsTrue(nav.MoveToChild("A"));
+            Assert.IsTrue(nav.MoveToChild("B"));
+            Assert.IsTrue(nav.MoveToChild("C1"));
+            Assert.IsTrue(nav.MoveToNext("C1"));
+            Assert.IsTrue(nav.MoveToNext("C2"));
+
+            Assert.IsTrue(nav.MoveToParent());  // 1st A.B
+            Assert.IsTrue(nav.MoveToNext() && nav.Path == "A.B");  // (now) 2nd A.B
+            Assert.IsTrue(nav.MoveToChild("C1"));
+            Assert.IsTrue(nav.MoveToChild("D"));
+
+            Assert.IsTrue(nav.MoveToParent());  // A.B.C1
+            Assert.IsTrue(nav.MoveToParent());  // A.B (2nd)
+            Assert.IsTrue(nav.MoveToNext() && nav.Path == "A.D");
+            Assert.IsTrue(nav.MoveToChild("F"));
         }
-#endif
 
+        [TestMethod]
+        public void TestDifferentialTreeMultipleRoots()
+        {
+            var elements = new List<ElementDefinition>();
+
+            elements.Add(new ElementDefinition() { Path = "Patient.identifier" });
+            elements.Add(new ElementDefinition() { Path = "Patient" });
+
+            bool exceptionRaised = false;
+            try
+            {
+                var tree = DifferentialTreeConstructor.MakeTree(elements);
+            }
+            catch (InvalidOperationException ex)
+            {
+                Debug.WriteLine(ex.Message);
+                exceptionRaised = true;
+            }
+            Assert.IsTrue(exceptionRaised);
+        }
+
+        // [WMR 20161012] Advanced unit test for DifferentialTreeConstructor with resliced input
+        [TestMethod]
+        public void TestDifferentialTreeForReslice()
+        {
+            var elements = new List<ElementDefinition>();
+
+            elements.Add(new ElementDefinition() { Path = "Patient.identifier" });
+            elements.Add(new ElementDefinition() { Path = "Patient.identifier", SliceName = "A" });
+            elements.Add(new ElementDefinition() { Path = "Patient.identifier.use" });
+            elements.Add(new ElementDefinition() { Path = "Patient.identifier", SliceName = "B/1" });
+            elements.Add(new ElementDefinition() { Path = "Patient.identifier.type" });
+            elements.Add(new ElementDefinition() { Path = "Patient.identifier", SliceName = "B/2" });
+            elements.Add(new ElementDefinition() { Path = "Patient.identifier.period.start" });
+            elements.Add(new ElementDefinition() { Path = "Patient.identifier", SliceName = "C/1" });
+
+            var tree = DifferentialTreeConstructor.MakeTree(elements);
+            Assert.IsNotNull(tree);
+            Debug.Print(string.Join(Environment.NewLine, tree.Select(e => $"{e.Path} : '{e.SliceName}'")));
+
+            Assert.AreEqual(10, tree.Count);
+            var verifier = new ElementVerifier(tree, _settings);
+
+            verifier.VerifyElement("Patient");                      // Added: root element
+            verifier.VerifyElement("Patient.identifier");
+            verifier.VerifyElement("Patient.identifier", "A");
+            verifier.VerifyElement("Patient.identifier.use");
+            verifier.VerifyElement("Patient.identifier", "B/1");
+            verifier.VerifyElement("Patient.identifier.type");
+            verifier.VerifyElement("Patient.identifier", "B/2");
+            verifier.VerifyElement("Patient.identifier.period");    // Added: parent element
+            verifier.VerifyElement("Patient.identifier.period.start");
+            verifier.VerifyElement("Patient.identifier", "C/1");
+        }
+
+        [TestMethod]
+        [Ignore]
+        public void DebugDifferentialTree()
+        {
+            var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/SD/patient-research-auth-reslice");
+            Assert.IsNotNull(sd);
+            var tree = DifferentialTreeConstructor.MakeTree(sd.Differential.Element);
+            Assert.IsNotNull(tree);
+            Debug.Print(string.Join(Environment.NewLine, tree.Select(e => $"{e.Path} : '{e.SliceName}'")));
+        }
+
+
+        [TestMethod]
+        public void TestExpandAllCoreTypes()
+        {
+            // Generate snapshots for all core types, in the original order as they are defined
+            // The Snapshot Generator should recursively process any referenced base/type profiles (e.g. Element, Extension)
+            var coreArtifactNames = ModelInfo.FhirCsTypeToString.Values;
+            var coreTypeUrls = coreArtifactNames.Where(t => !ModelInfo.IsKnownResource(t)).Select(t => "http://hl7.org/fhir/StructureDefinition/" + t).ToArray();
+            testExpandResources(coreTypeUrls.ToArray());
+        }
+
+        [TestMethod]
+        public void TestExpandAllCoreResources()
+        {
+            // Generate snapshots for all core resources, in the original order as they are defined
+            // The Snapshot Generator should recursively process any referenced base/type profiles (e.g. data types)
+            var coreResourceUrls = ModelInfo.SupportedResources.Select(t => "http://hl7.org/fhir/StructureDefinition/" + t);
+            testExpandResources(coreResourceUrls.ToArray());
+        }
+
+
+
+        /// <summary>
+        /// These are tests
+        /// </summary>
         [TestMethod]
         public void GenerateExtensionSnapshot()
         {
             // var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/string-translation");
-            var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/StructureDefinition/patient-research-authorization");
+            // var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/StructureDefinition/patient-research-authorization");
             // var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/StructureDefinition/patient-legal-case");
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/us-core-religion");
+            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/us-core-race");
             // var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/string-translation");
 
             Assert.IsNotNull(sd);
@@ -1065,106 +1119,6 @@ namespace Hl7.Fhir.Specification.Tests
 
         // Unit tests for DifferentialTreeConstructor
 
-        [TestMethod]
-        public void TestDifferentialTree()
-        {
-            var e = new List<ElementDefinition>();
-
-            e.Add(new ElementDefinition() { Path = "A.B.C1" });
-            e.Add(new ElementDefinition() { Path = "A.B.C1", SliceName = "C1-A" }); // First slice of A.B.C1
-            e.Add(new ElementDefinition() { Path = "A.B.C2" });
-            e.Add(new ElementDefinition() { Path = "A.B", SliceName = "B-A" }); // First slice of A.B
-            e.Add(new ElementDefinition() { Path = "A.B.C1.D" });
-            e.Add(new ElementDefinition() { Path = "A.D.F" });
-
-            var tree = DifferentialTreeConstructor.MakeTree(e);
-            Assert.IsNotNull(tree);
-
-            var nav = new ElementDefinitionNavigator(tree);
-            Assert.AreEqual(10, nav.Count);
-
-            Assert.IsTrue(nav.MoveToChild("A"));
-            Assert.IsTrue(nav.MoveToChild("B"));
-            Assert.IsTrue(nav.MoveToChild("C1"));
-            Assert.IsTrue(nav.MoveToNext("C1"));
-            Assert.IsTrue(nav.MoveToNext("C2"));
-
-            Assert.IsTrue(nav.MoveToParent());  // 1st A.B
-            Assert.IsTrue(nav.MoveToNext() && nav.Path == "A.B");  // (now) 2nd A.B
-            Assert.IsTrue(nav.MoveToChild("C1"));
-            Assert.IsTrue(nav.MoveToChild("D"));
-
-            Assert.IsTrue(nav.MoveToParent());  // A.B.C1
-            Assert.IsTrue(nav.MoveToParent());  // A.B (2nd)
-            Assert.IsTrue(nav.MoveToNext() && nav.Path == "A.D");
-            Assert.IsTrue(nav.MoveToChild("F"));
-        }
-
-        [TestMethod]
-        public void TestDifferentialTreeMultipleRoots()
-        {
-            var elements = new List<ElementDefinition>();
-
-            elements.Add(new ElementDefinition() { Path = "Patient.identifier" });
-            elements.Add(new ElementDefinition() { Path = "Patient" });
-
-            bool exceptionRaised = false;
-            try
-            {
-                var tree = DifferentialTreeConstructor.MakeTree(elements);
-            }
-            catch (InvalidOperationException ex)
-            {
-                Debug.WriteLine(ex.Message);
-                exceptionRaised = true;
-            }
-            Assert.IsTrue(exceptionRaised);
-        }
-
-        // [WMR 20161012] Advanced unit test for DifferentialTreeConstructor with resliced input
-        [TestMethod]
-        public void TestDifferentialTreeForReslice()
-        {
-            var elements = new List<ElementDefinition>();
-
-            elements.Add(new ElementDefinition() { Path = "Patient.identifier" });
-            elements.Add(new ElementDefinition() { Path = "Patient.identifier", SliceName = "A" });
-            elements.Add(new ElementDefinition() { Path = "Patient.identifier.use" });
-            elements.Add(new ElementDefinition() { Path = "Patient.identifier", SliceName = "B/1" });
-            elements.Add(new ElementDefinition() { Path = "Patient.identifier.type" });
-            elements.Add(new ElementDefinition() { Path = "Patient.identifier", SliceName = "B/2" });
-            elements.Add(new ElementDefinition() { Path = "Patient.identifier.period.start" });
-            elements.Add(new ElementDefinition() { Path = "Patient.identifier", SliceName = "C/1" });
-
-            var tree = DifferentialTreeConstructor.MakeTree(elements);
-            Assert.IsNotNull(tree);
-            Debug.Print(string.Join(Environment.NewLine, tree.Select(e => $"{e.Path} : '{e.SliceName}'")));
-
-            Assert.AreEqual(10, tree.Count);
-            var verifier = new ElementVerifier(tree, _settings);
-
-            verifier.VerifyElement("Patient");                      // Added: root element
-            verifier.VerifyElement("Patient.identifier");
-            verifier.VerifyElement("Patient.identifier", "A");
-            verifier.VerifyElement("Patient.identifier.use");
-            verifier.VerifyElement("Patient.identifier", "B/1");
-            verifier.VerifyElement("Patient.identifier.type");
-            verifier.VerifyElement("Patient.identifier", "B/2");
-            verifier.VerifyElement("Patient.identifier.period");    // Added: parent element
-            verifier.VerifyElement("Patient.identifier.period.start");
-            verifier.VerifyElement("Patient.identifier", "C/1");
-        }
-
-        [TestMethod]
-        [Ignore]
-        public void DebugDifferentialTree()
-        {
-            var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/SD/patient-research-auth-reslice");
-            Assert.IsNotNull(sd);
-            var tree = DifferentialTreeConstructor.MakeTree(sd.Differential.Element);
-            Assert.IsNotNull(tree);
-            Debug.Print(string.Join(Environment.NewLine, tree.Select(e => $"{e.Path} : '{e.SliceName}'")));
-        }
 
         // [WMR 20160802] Unit tests for SnapshotGenerator.ExpandElement
 
@@ -1205,7 +1159,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void TestExpandElement_QuestionnaireGroupGroup()
         {
             // Validate name reference expansion
-            testExpandElement(@"http://hl7.org/fhir/StructureDefinition/Questionnaire", "Questionnaire.group.group");
+            testExpandElement(@"http://hl7.org/fhir/StructureDefinition/Questionnaire", "Questionnaire.item.item");
         }
 
         [TestMethod]
@@ -2131,24 +2085,6 @@ namespace Hl7.Fhir.Specification.Tests
 
         }
 
-        [TestMethod]
-        public void TestExpandAllCoreTypes()
-        {
-            // Generate snapshots for all core types, in the original order as they are defined
-            // The Snapshot Generator should recursively process any referenced base/type profiles (e.g. Element, Extension)
-            var coreArtifactNames = ModelInfo.FhirCsTypeToString.Values;
-            var coreTypeUrls = coreArtifactNames.Where(t => !ModelInfo.IsKnownResource(t)).Select(t => "http://hl7.org/fhir/StructureDefinition/" + t).ToArray();
-            testExpandResources(coreTypeUrls.ToArray());
-        }
-
-        [TestMethod]
-        public void TestExpandAllCoreResources()
-        {
-            // Generate snapshots for all core resources, in the original order as they are defined
-            // The Snapshot Generator should recursively process any referenced base/type profiles (e.g. data types)
-            var coreResourceUrls = ModelInfo.SupportedResources.Select(t => "http://hl7.org/fhir/StructureDefinition/" + t);
-            testExpandResources(coreResourceUrls.ToArray());
-        }
 
         void testExpandResources(string[] profileUris)
         {

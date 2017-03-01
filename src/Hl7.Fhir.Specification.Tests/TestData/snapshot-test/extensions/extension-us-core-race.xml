@@ -3,29 +3,41 @@
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <id value="us-core-race"/>
   <url value="http://hl7.org/fhir/StructureDefinition/us-core-race"/>
-  <name value="A category of humans sharing history, origin or nationality"/>
+  <name value="US Core Race Extension"/>
+  <title value="US Core Race Extension"/>
   <status value="draft"/>
   <publisher value="Health Level Seven International (US Realm Steering Committee)"/>
   <contact>
     <telecom>
-      <system value="other"/>
+      <system value="url"/>
       <value value="http://www.hl7.org/Special/Committees/usrealm"/>
     </telecom>
   </contact>
   <date value="2013-12-03"/>
-  <description value="A code classifying the person into a named category of humans sharing common history, traits, geographical origin or nationality."/>
-  <fhirVersion value="1.0.2"/>
-  <kind value="datatype"/>
-  <constrainedType value="Extension"/>
+  <description value="Concepts classifying the person into a named category of humans sharing common history, traits, geographical origin or nationality.  The race codes used to represent these concepts are based upon the [CDC Race and Ethnicity Code Set Version 1.0](http://www.cdc.gov/phin/resources/vocabulary/index.html) which includes over 900 concepts for representing race and ethnicity of which 921 reference race.  The race concepts are grouped by and pre-mapped to the 5 OMB race categories:- American Indian or Alaska Native- Asian- Black or African American- Native Hawaiian or Other Pacific Islander- White."/>
+  <fhirVersion value="1.9.0"/>
+  <mapping>
+    <identity value="cda"/>
+    <uri value="http://hl7.org/v3/cda"/>
+    <name value="CDA (R2)"/>
+  </mapping>
+  <mapping>
+    <identity value="rim"/>
+    <uri value="http://hl7.org/v3"/>
+    <name value="RIM Mapping"/>
+  </mapping>
+  <kind value="complex-type"/>
   <abstract value="false"/>
   <contextType value="resource"/>
   <context value="Patient"/>
-  <base value="http://hl7.org/fhir/StructureDefinition/Extension"/>
+  <type value="Extension"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension"/>
+  <derivation value="constraint"/>
   <snapshot>
-    <element>
+    <element id="Extension:uscoreraceextension">
       <path value="Extension"/>
-      <short value="A category of humans sharing history, origin or nationality"/>
-      <definition value="A code classifying the person into a named category of humans sharing common history, traits, geographical origin or nationality."/>
+      <short value="US Core Race Extension"/>
+      <definition value="Concepts classifying the person into a named category of humans sharing common history, traits, geographical origin or nationality.  The race codes used to represent these concepts are based upon the [CDC Race and Ethnicity Code Set Version 1.0](http://www.cdc.gov/phin/resources/vocabulary/index.html) which includes over 900 concepts for representing race and ethnicity of which 921 reference race.  The race concepts are grouped by and pre-mapped to the 5 OMB race categories:- American Indian or Alaska Native- Asian- Black or African American- Native Hawaiian or Other Pacific Islander- White."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -33,39 +45,57 @@
         <min value="0"/>
         <max value="*"/>
       </base>
-      <type>
-        <code value="Extension"/>
-      </type>
+      <condition value="ele-1"/>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="children().count() &gt; id.count()"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="Element"/>
+      </constraint>
+      <constraint>
+        <key value="ext-1"/>
+        <severity value="error"/>
+        <human value="Must have either extensions or value[x], not both"/>
+        <expression value="extension.exists() != value.exists()"/>
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &#39;value&#39;)])"/>
+        <source value="Extension"/>
+      </constraint>
     </element>
-    <element>
+    <element id="Extension:uscoreraceextension.id">
       <path value="Extension.id"/>
       <representation value="xmlAttr"/>
       <short value="xml:id (or equivalent in JSON)"/>
-      <definition value="unique id for the element within a resource (for internal references)."/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
       <min value="0"/>
       <max value="1"/>
       <base>
-        <path value="Extension.id"/>
+        <path value="Element.id"/>
         <min value="0"/>
         <max value="1"/>
       </base>
       <type>
-        <code value="id"/>
+        <code value="string"/>
       </type>
       <mapping>
         <identity value="rim"/>
         <map value="n/a"/>
       </mapping>
     </element>
-    <element>
+    <element id="Extension:uscoreraceextension.extension">
       <path value="Extension.extension"/>
-      <name value="extension"/>
+      <slicing id="57">
+        <discriminator value="url"/>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
-      <max value="0"/>
+      <max value="*"/>
       <base>
-        <path value="Extension.extension"/>
+        <path value="Element.extension"/>
         <min value="0"/>
         <max value="*"/>
       </base>
@@ -73,12 +103,313 @@
         <code value="Extension"/>
       </type>
     </element>
-    <element>
+    <element id="Extension:uscoreraceextension.extension:ombcategory">
+      <path value="Extension.extension"/>
+      <sliceName value="ombCategory"/>
+      <short value="American Indian or Alaska Native|Asian|Black or African American|Native Hawaiian or Other Pacific Islander|White"/>
+      <definition value="The 5 race category codes according to the [OMB Standards for Maintaining, Collecting, and Presenting Federal Data on Race and Ethnicity, Statistical Policy Directive No. 15, as revised, October 30, 1997](https://www.whitehouse.gov/omb/fedreg_1997standards)."/>
+      <min value="1"/>
+      <max value="5"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <mapping>
+        <identity value="cda"/>
+        <map value="/ClinicalDocument/recordTarget/patientRole/patient/raceCode"/>
+      </mapping>
+    </element>
+    <element id="Extension:uscoreraceextension.extension:ombcategory.id">
+      <path value="Extension.extension.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Extension:uscoreraceextension.extension:ombcategory.extension:extension">
+      <path value="Extension.extension.extension"/>
+      <sliceName value="extension"/>
+      <short value="Extension"/>
+      <definition value="An Extension"/>
+      <min value="0"/>
+      <max value="0"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+    </element>
+    <element id="Extension:uscoreraceextension.extension:ombcategory.url">
+      <path value="Extension.extension.url"/>
+      <representation value="xmlAttr"/>
+      <short value="identifies the meaning of the extension"/>
+      <definition value="Source of the definition for the extension code - a logical name or a URL."/>
+      <comments value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition SHALL be a URI for the Structure Definition defining the extension."/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="Extension.url"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="uri"/>
+      </type>
+      <fixedUri value="ombCategory"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Extension:uscoreraceextension.extension:ombcategory.valueCoding">
+      <path value="Extension.extension.valueCoding"/>
+      <short value="Value of extension"/>
+      <definition value="Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)."/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="Extension.value[x]"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Coding"/>
+      </type>
+      <binding>
+        <strength value="required"/>
+        <description value="The 5 race category codes according to the [OMB Standards for Maintaining, Collecting, and Presenting Federal Data on Race and Ethnicity, Statistical Policy Directive No. 15, as revised, October 30, 1997](https://www.whitehouse.gov/omb/fedreg_1997standards)."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/omb-race"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Extension:uscoreraceextension.extension:detailed">
+      <path value="Extension.extension"/>
+      <sliceName value="detailed"/>
+      <short value="Extended race codes"/>
+      <definition value="The 900+ CDC race codes that are grouped under one of the 5 OMB race category codes:."/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <mapping>
+        <identity value="cda"/>
+        <map value="/ClinicalDocument/recordTarget/patientRole/patient/sdtc:raceCode"/>
+      </mapping>
+    </element>
+    <element id="Extension:uscoreraceextension.extension:detailed.id">
+      <path value="Extension.extension.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Extension:uscoreraceextension.extension:detailed.extension:extension">
+      <path value="Extension.extension.extension"/>
+      <sliceName value="extension"/>
+      <short value="Extension"/>
+      <definition value="An Extension"/>
+      <min value="0"/>
+      <max value="0"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+    </element>
+    <element id="Extension:uscoreraceextension.extension:detailed.url">
+      <path value="Extension.extension.url"/>
+      <representation value="xmlAttr"/>
+      <short value="identifies the meaning of the extension"/>
+      <definition value="Source of the definition for the extension code - a logical name or a URL."/>
+      <comments value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition SHALL be a URI for the Structure Definition defining the extension."/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="Extension.url"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="uri"/>
+      </type>
+      <fixedUri value="detailed"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Extension:uscoreraceextension.extension:detailed.valueCoding">
+      <path value="Extension.extension.valueCoding"/>
+      <short value="Value of extension"/>
+      <definition value="Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)."/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="Extension.value[x]"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Coding"/>
+      </type>
+      <binding>
+        <strength value="required"/>
+        <description value="The [900+ CDC Race codes](http://www.cdc.gov/phin/resources/vocabulary/index.html) that are grouped under one of the 5 OMB race category codes."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/detailed-race"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Extension:uscoreraceextension.extension:text">
+      <path value="Extension.extension"/>
+      <sliceName value="text"/>
+      <short value="Race Text"/>
+      <definition value="Plain text representation of the race concept(s)."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+    </element>
+    <element id="Extension:uscoreraceextension.extension:text.id">
+      <path value="Extension.extension.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Extension:uscoreraceextension.extension:text.extension:extension">
+      <path value="Extension.extension.extension"/>
+      <sliceName value="extension"/>
+      <short value="Extension"/>
+      <definition value="An Extension"/>
+      <min value="0"/>
+      <max value="0"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+    </element>
+    <element id="Extension:uscoreraceextension.extension:text.url">
+      <path value="Extension.extension.url"/>
+      <representation value="xmlAttr"/>
+      <short value="identifies the meaning of the extension"/>
+      <definition value="Source of the definition for the extension code - a logical name or a URL."/>
+      <comments value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition SHALL be a URI for the Structure Definition defining the extension."/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="Extension.url"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="uri"/>
+      </type>
+      <fixedUri value="text"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Extension:uscoreraceextension.extension:text.valueString">
+      <path value="Extension.extension.valueString"/>
+      <short value="Value of extension"/>
+      <definition value="Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)."/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="Extension.value[x]"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Extension:uscoreraceextension.url">
       <path value="Extension.url"/>
       <representation value="xmlAttr"/>
       <short value="identifies the meaning of the extension"/>
       <definition value="Source of the definition for the extension code - a logical name or a URL."/>
-      <comments value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition should be version specific.  This will ideally be the URI for the Resource Profile defining the extension, with the code for the extension after a #."/>
+      <comments value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition SHALL be a URI for the Structure Definition defining the extension."/>
       <min value="1"/>
       <max value="1"/>
       <base>
@@ -95,27 +426,131 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element>
-      <path value="Extension.valueCodeableConcept"/>
+    <element id="Extension:uscoreraceextension.value[x]">
+      <path value="Extension.value[x]"/>
       <short value="Value of extension"/>
       <definition value="Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)."/>
-      <min value="1"/>
-      <max value="1"/>
+      <min value="0"/>
+      <max value="0"/>
       <base>
         <path value="Extension.value[x]"/>
         <min value="0"/>
         <max value="1"/>
       </base>
       <type>
+        <code value="base64Binary"/>
+      </type>
+      <type>
+        <code value="boolean"/>
+      </type>
+      <type>
+        <code value="code"/>
+      </type>
+      <type>
+        <code value="date"/>
+      </type>
+      <type>
+        <code value="dateTime"/>
+      </type>
+      <type>
+        <code value="decimal"/>
+      </type>
+      <type>
+        <code value="id"/>
+      </type>
+      <type>
+        <code value="instant"/>
+      </type>
+      <type>
+        <code value="integer"/>
+      </type>
+      <type>
+        <code value="markdown"/>
+      </type>
+      <type>
+        <code value="oid"/>
+      </type>
+      <type>
+        <code value="positiveInt"/>
+      </type>
+      <type>
+        <code value="string"/>
+      </type>
+      <type>
+        <code value="time"/>
+      </type>
+      <type>
+        <code value="unsignedInt"/>
+      </type>
+      <type>
+        <code value="uri"/>
+      </type>
+      <type>
+        <code value="Address"/>
+      </type>
+      <type>
+        <code value="Age"/>
+      </type>
+      <type>
+        <code value="Annotation"/>
+      </type>
+      <type>
+        <code value="Attachment"/>
+      </type>
+      <type>
         <code value="CodeableConcept"/>
       </type>
-      <binding>
-        <strength value="required"/>
-        <description value="A code classifying the person into a named category of humans sharing common history, traits, geographical origin or nationality."/>
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/v3-Race"/>
-        </valueSetReference>
-      </binding>
+      <type>
+        <code value="Coding"/>
+      </type>
+      <type>
+        <code value="ContactPoint"/>
+      </type>
+      <type>
+        <code value="Count"/>
+      </type>
+      <type>
+        <code value="Distance"/>
+      </type>
+      <type>
+        <code value="Duration"/>
+      </type>
+      <type>
+        <code value="HumanName"/>
+      </type>
+      <type>
+        <code value="Identifier"/>
+      </type>
+      <type>
+        <code value="Money"/>
+      </type>
+      <type>
+        <code value="Period"/>
+      </type>
+      <type>
+        <code value="Quantity"/>
+      </type>
+      <type>
+        <code value="Range"/>
+      </type>
+      <type>
+        <code value="Ratio"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+      </type>
+      <type>
+        <code value="SampledData"/>
+      </type>
+      <type>
+        <code value="Signature"/>
+      </type>
+      <type>
+        <code value="Timing"/>
+      </type>
+      <type>
+        <code value="Meta"/>
+      </type>
       <mapping>
         <identity value="rim"/>
         <map value="N/A"/>
@@ -123,41 +558,136 @@
     </element>
   </snapshot>
   <differential>
-    <element>
+    <element id="Extension:uscoreraceextension">
       <path value="Extension"/>
-      <short value="A category of humans sharing history, origin or nationality"/>
-      <definition value="A code classifying the person into a named category of humans sharing common history, traits, geographical origin or nationality."/>
+      <short value="US Core Race Extension"/>
+      <definition value="Concepts classifying the person into a named category of humans sharing common history, traits, geographical origin or nationality.  The race codes used to represent these concepts are based upon the [CDC Race and Ethnicity Code Set Version 1.0](http://www.cdc.gov/phin/resources/vocabulary/index.html) which includes over 900 concepts for representing race and ethnicity of which 921 reference race.  The race concepts are grouped by and pre-mapped to the 5 OMB race categories:- American Indian or Alaska Native- Asian- Black or African American- Native Hawaiian or Other Pacific Islander- White."/>
+      <min value="0"/>
+      <max value="1"/>
+    </element>
+    <element id="Extension:uscoreraceextension.extension:ombcategory">
+      <path value="Extension.extension"/>
+      <sliceName value="ombCategory"/>
+      <short value="American Indian or Alaska Native|Asian|Black or African American|Native Hawaiian or Other Pacific Islander|White"/>
+      <definition value="The 5 race category codes according to the [OMB Standards for Maintaining, Collecting, and Presenting Federal Data on Race and Ethnicity, Statistical Policy Directive No. 15, as revised, October 30, 1997](https://www.whitehouse.gov/omb/fedreg_1997standards)."/>
+      <min value="1"/>
+      <max value="5"/>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <mapping>
+        <identity value="cda"/>
+        <map value="/ClinicalDocument/recordTarget/patientRole/patient/raceCode"/>
+      </mapping>
+    </element>
+    <element id="Extension:uscoreraceextension.extension:ombcategory.extension:extension">
+      <path value="Extension.extension.extension"/>
+      <sliceName value="extension"/>
+      <max value="0"/>
+    </element>
+    <element id="Extension:uscoreraceextension.extension:ombcategory.url">
+      <path value="Extension.extension.url"/>
+      <type>
+        <code value="uri"/>
+      </type>
+      <fixedUri value="ombCategory"/>
+    </element>
+    <element id="Extension:uscoreraceextension.extension:ombcategory.value[x]">
+      <path value="Extension.extension.value[x]"/>
+      <min value="1"/>
+      <type>
+        <code value="Coding"/>
+      </type>
+      <binding>
+        <strength value="required"/>
+        <description value="The 5 race category codes according to the [OMB Standards for Maintaining, Collecting, and Presenting Federal Data on Race and Ethnicity, Statistical Policy Directive No. 15, as revised, October 30, 1997](https://www.whitehouse.gov/omb/fedreg_1997standards)."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/omb-race"/>
+        </valueSetReference>
+      </binding>
+    </element>
+    <element id="Extension:uscoreraceextension.extension:detailed">
+      <path value="Extension.extension"/>
+      <sliceName value="detailed"/>
+      <short value="Extended race codes"/>
+      <definition value="The 900+ CDC race codes that are grouped under one of the 5 OMB race category codes:."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <mapping>
+        <identity value="cda"/>
+        <map value="/ClinicalDocument/recordTarget/patientRole/patient/sdtc:raceCode"/>
+      </mapping>
+    </element>
+    <element id="Extension:uscoreraceextension.extension:detailed.extension:extension">
+      <path value="Extension.extension.extension"/>
+      <sliceName value="extension"/>
+      <max value="0"/>
+    </element>
+    <element id="Extension:uscoreraceextension.extension:detailed.url">
+      <path value="Extension.extension.url"/>
+      <type>
+        <code value="uri"/>
+      </type>
+      <fixedUri value="detailed"/>
+    </element>
+    <element id="Extension:uscoreraceextension.extension:detailed.value[x]">
+      <path value="Extension.extension.value[x]"/>
+      <min value="1"/>
+      <type>
+        <code value="Coding"/>
+      </type>
+      <binding>
+        <strength value="required"/>
+        <description value="The [900+ CDC Race codes](http://www.cdc.gov/phin/resources/vocabulary/index.html) that are grouped under one of the 5 OMB race category codes."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/detailed-race"/>
+        </valueSetReference>
+      </binding>
+    </element>
+    <element id="Extension:uscoreraceextension.extension:text">
+      <path value="Extension.extension"/>
+      <sliceName value="text"/>
+      <short value="Race Text"/>
+      <definition value="Plain text representation of the race concept(s)."/>
       <min value="0"/>
       <max value="1"/>
       <type>
         <code value="Extension"/>
       </type>
     </element>
-    <element>
-      <path value="Extension.extension"/>
-      <name value="extension"/>
+    <element id="Extension:uscoreraceextension.extension:text.extension:extension">
+      <path value="Extension.extension.extension"/>
+      <sliceName value="extension"/>
       <max value="0"/>
     </element>
-    <element>
+    <element id="Extension:uscoreraceextension.extension:text.url">
+      <path value="Extension.extension.url"/>
+      <type>
+        <code value="uri"/>
+      </type>
+      <fixedUri value="text"/>
+    </element>
+    <element id="Extension:uscoreraceextension.extension:text.value[x]">
+      <path value="Extension.extension.value[x]"/>
+      <min value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+    <element id="Extension:uscoreraceextension.url">
       <path value="Extension.url"/>
       <type>
         <code value="uri"/>
       </type>
       <fixedUri value="http://hl7.org/fhir/StructureDefinition/us-core-race"/>
     </element>
-    <element>
+    <element id="Extension:uscoreraceextension.value[x]">
       <path value="Extension.value[x]"/>
-      <min value="1"/>
-      <type>
-        <code value="CodeableConcept"/>
-      </type>
-      <binding>
-        <strength value="required"/>
-        <description value="A code classifying the person into a named category of humans sharing common history, traits, geographical origin or nationality."/>
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/v3-Race"/>
-        </valueSetReference>
-      </binding>
+      <min value="0"/>
+      <max value="0"/>
     </element>
   </differential>
 </StructureDefinition>
