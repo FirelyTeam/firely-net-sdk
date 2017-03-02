@@ -171,11 +171,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // InstanceComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Identifier != null) yield return Identifier;
                     if (ExpiryElement != null) yield return ExpiryElement;
                     if (Quantity != null) yield return Quantity;
@@ -271,11 +267,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // IngredientComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Quantity != null) yield return Quantity;
                     if (Substance != null) yield return Substance;
                 }
@@ -454,17 +446,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// DomainResource elements
-				if (Text != null) yield return Text;
-				foreach (var elem in Contained) { if (elem != null) yield return elem; }
-				foreach (var elem in Extension) { if (elem != null) yield return elem; }
-				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-				// Substance elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				foreach (var elem in Category) { if (elem != null) yield return elem; }
 				if (Code != null) yield return Code;

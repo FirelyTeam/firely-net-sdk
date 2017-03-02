@@ -123,11 +123,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ContentComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (P != null) yield return P;
                 }
             }
@@ -220,11 +216,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // RelatedComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Identifier != null) yield return Identifier;
                     if (Ref != null) yield return Ref;
                 }
@@ -563,17 +555,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// DomainResource elements
-				if (Text != null) yield return Text;
-				foreach (var elem in Contained) { if (elem != null) yield return elem; }
-				foreach (var elem in Extension) { if (elem != null) yield return elem; }
-				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-				// DocumentManifest elements
+                foreach (var item in base.Children) yield return item;
 				if (MasterIdentifier != null) yield return MasterIdentifier;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (Subject != null) yield return Subject;

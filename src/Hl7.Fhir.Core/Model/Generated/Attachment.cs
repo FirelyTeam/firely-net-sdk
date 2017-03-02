@@ -375,9 +375,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                // Element elements
-                foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                // Attachment elements
+                foreach (var item in base.Children) yield return item;
                 if (ContentTypeElement != null) yield return ContentTypeElement;
                 if (LanguageElement != null) yield return LanguageElement;
                 if (DataElement != null) yield return DataElement;

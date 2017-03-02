@@ -237,11 +237,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // CharacteristicComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Code != null) yield return Code;
                     if (Value != null) yield return Value;
                     if (ExcludeElement != null) yield return ExcludeElement;
@@ -373,11 +369,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // MemberComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Entity != null) yield return Entity;
                     if (Period != null) yield return Period;
                     if (InactiveElement != null) yield return InactiveElement;
@@ -656,17 +648,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// DomainResource elements
-				if (Text != null) yield return Text;
-				foreach (var elem in Contained) { if (elem != null) yield return elem; }
-				foreach (var elem in Extension) { if (elem != null) yield return elem; }
-				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-				// Group elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (TypeElement != null) yield return TypeElement;
 				if (ActualElement != null) yield return ActualElement;

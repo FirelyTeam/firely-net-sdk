@@ -216,11 +216,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ContactComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (NameElement != null) yield return NameElement;
                     foreach (var elem in Telecom) { if (elem != null) yield return elem; }
                 }
@@ -421,11 +417,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // MappingComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (IdentityElement != null) yield return IdentityElement;
                     if (UriElement != null) yield return UriElement;
                     if (NameElement != null) yield return NameElement;
@@ -504,11 +496,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // SnapshotComponent elements
+                    foreach (var item in base.Children) yield return item;
                     foreach (var elem in Element) { if (elem != null) yield return elem; }
                 }
             }
@@ -584,11 +572,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // DifferentialComponent elements
+                    foreach (var item in base.Children) yield return item;
                     foreach (var elem in Element) { if (elem != null) yield return elem; }
                 }
             }
@@ -1519,17 +1503,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// DomainResource elements
-				if (Text != null) yield return Text;
-				foreach (var elem in Contained) { if (elem != null) yield return elem; }
-				foreach (var elem in Extension) { if (elem != null) yield return elem; }
-				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-				// StructureDefinition elements
+                foreach (var item in base.Children) yield return item;
 				if (UrlElement != null) yield return UrlElement;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (VersionElement != null) yield return VersionElement;
