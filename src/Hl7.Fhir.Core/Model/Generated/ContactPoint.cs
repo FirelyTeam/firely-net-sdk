@@ -329,9 +329,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                // Element elements
-                foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                // ContactPoint elements
+                foreach (var item in base.Children) yield return item;
                 if (SystemElement != null) yield return SystemElement;
                 if (ValueElement != null) yield return ValueElement;
                 if (UseElement != null) yield return UseElement;

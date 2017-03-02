@@ -147,9 +147,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                // Element elements
-                foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                // CodeableConcept elements
+                foreach (var item in base.Children) yield return item;
                 foreach (var elem in Coding) { if (elem != null) yield return elem; }
                 if (TextElement != null) yield return TextElement;
             }

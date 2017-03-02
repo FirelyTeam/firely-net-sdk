@@ -690,11 +690,9 @@
     </Content>
     <Content Include="Model\Generated\Template-Model.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-Model.cs</LastGenOutput>
     </Content>
     <Content Include="Model\Generated\Template-ModelInfo.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-ModelInfo.cs</LastGenOutput>
     </Content>
     <Content Include="Model\Generated\Template-ProfiledDataTypes.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

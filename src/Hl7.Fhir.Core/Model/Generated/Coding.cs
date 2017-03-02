@@ -270,9 +270,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                // Element elements
-                foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                // Coding elements
+                foreach (var item in base.Children) yield return item;
                 if (SystemElement != null) yield return SystemElement;
                 if (VersionElement != null) yield return VersionElement;
                 if (CodeElement != null) yield return CodeElement;
