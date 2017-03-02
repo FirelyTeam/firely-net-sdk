@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <meta>
+    <lastUpdated value="2017-02-08T11:26:26.445+01:00" />
+  </meta>
+  <text>
+    <status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml">
+  <p> A profile on Procedure. The concept Procedure indicates a therapeutic procedure undergone by the patient. If relevant, diagnostic procedures can be listed as well.  A procedure can be a simple blood pressure measurement, but also a complex heart surgery.</p>
+</div></text>
+  <url value="http://nictiz.nl/fhir/StructureDefinition/zib-Procedure" />
+  <name value="ZIB Procedure" />
+  <status value="draft" />
+  <publisher value="Nictiz" />
+  <date value="2017-01-11T13:30:03.2275207+01:00" />
+  <description value="Procedure as defined by the Dutch Clinical Building Block (Dutch: Zorginformatiebouwsteen or ZIB) version 3.0.&#xD;&#xA;&#xD;&#xA;The concept Procedure indicates a therapeutic procedure undergone by the patient. If relevant, diagnostic procedures can be listed as well. &#xD;&#xA;A procedure can be a simple blood pressure measurement, but also a complex heart surgery." />
+  <copyright value="CC0" />
+  <mapping>
+    <identity value="zib-overdrachtverrichting" />
+    <uri value="https://zibs.nl/wiki/OverdrachtVerrichting(NL)" />
+    <name value="Zorginformatiebouwsteen OverdrachtVerrichting" />
+  </mapping>
+  <kind value="resource" />
+  <constrainedType value="Procedure" />
+  <abstract value="false" />
+  <base value="http://hl7.org/fhir/StructureDefinition/Procedure" />
+  <differential>
+    <element>
+      <path value="Procedure" />
+    </element>
+    <element>
+      <path value="Procedure.subject" />
+      <type>
+        <code value="Reference" />
+        <profile value="http://fhir.nl/fhir/StructureDefinition/nl-core-patient" />
+      </type>
+    </element>
+    <element>
+      <path value="Procedure.code" />
+      <short value="ProcedureType" />
+      <definition value="The name of the procedure.&#xD;&#xA;&#xD;&#xA;As of 1 January 2013, all procedures in the primary process have to be documented with CBV codes. To meet this requirement, the DHD procedure thesaurus (CBV procedures set) is used to code procedures. It is possible that in addition to the CBV procedures set, the NIC will be used for nurse procedures and that a “coded value set” will be introduced for paramedic procedures." />
+      <alias value="VerrichtingType" />
+      <binding>
+        <strength value="extensible" />
+        <description value="The name of the procedure using the Verrichtingenthesaurus DHD." />
+        <valueSetReference>
+          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.14.1.2--20150401000000" />
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="zib-overdrachtverrichting" />
+        <map value="NL-CM:14.1.4" />
+      </mapping>
+    </element>
+    <element>
+      <path value="Procedure.code.coding.system" />
+      <min value="1" />
+    </element>
+    <element>
+      <path value="Procedure.code.coding.code" />
+      <min value="1" />
+    </element>
+    <element>
+      <path value="Procedure.bodySite" />
+      <short value="AnatomicalLocationOfTheProcedure" />
+      <definition value="Anatomical location which is the focus of the procedure." />
+      <binding>
+        <strength value="extensible" />
+        <description value="Anatomical location which is the focus of the procedure." />
+        <valueSetReference>
+          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.14.1.1--20150401000000" />
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="zib-overdrachtverrichting" />
+        <map value="NL-CM:14.1.8" />
+      </mapping>
+    </element>
+    <element>
+      <path value="Procedure.bodySite.coding.system" />
+      <min value="1" />
+    </element>
+    <element>
+      <path value="Procedure.bodySite.coding.code" />
+      <min value="1" />
+    </element>
+    <element>
+      <path value="Procedure.reasonReference" />
+      <type>
+        <code value="Reference" />
+        <profile value="http://nictiz.nl/fhir/StructureDefinition/zib-Concern" />
+      </type>
+    </element>
+    <element>
+      <path value="Procedure.performer" />
+      <slicing>
+        <discriminator value="@profile" />
+        <rules value="openAtEnd" />
+      </slicing>
+      <min value="2" />
+    </element>
+    <element>
+      <path value="Procedure.performer" />
+      <name value="HealthcarePractitioner" />
+      <short value="HealthcarePractitoner" />
+      <min value="1" />
+    </element>
+    <element>
+      <path value="Procedure.performer.actor" />
+      <short value="HealthcareProvider" />
+      <definition value="The healthcare center where the procedure was or is carried out." />
+      <alias value="Zorgverlener" />
+      <min value="1" />
+      <type>
+        <code value="Reference" />
+        <profile value="http://fhir.nl/fhir/StructureDefinition/nl-core-practitioner" />
+      </type>
+      <mapping>
+        <identity value="zib-overdrachtverrichting" />
+        <map value="NL-CM:14.1.6" />
+      </mapping>
+    </element>
+    <element>
+      <path value="Procedure.performer" />
+      <name value="HealthcareProvider" />
+      <short value="HealthcareProvider" />
+      <min value="1" />
+      <max value="1" />
+    </element>
+    <element>
+      <path value="Procedure.performer.actor" />
+      <short value="HealthcareProvider" />
+      <definition value="The healthcare center where the procedure was or is carried out." />
+      <alias value="Zorgaanbieder" />
+      <min value="1" />
+      <type>
+        <code value="Reference" />
+        <profile value="http://fhir.nl/fhir/StructureDefinition/nl-core-organization" />
+      </type>
+      <mapping>
+        <identity value="zib-overdrachtverrichting" />
+        <map value="NL-CM:14.1.5" />
+      </mapping>
+    </element>
+    <element>
+      <path value="Procedure.performedPeriod" />
+      <type>
+        <code value="Period" />
+      </type>
+    </element>
+    <element>
+      <path value="Procedure.performedPeriod.start" />
+      <short value="ProcedureStartDate" />
+      <definition value="The start date (and if possible start time) of the procedure. A ‘vague’ date, such as only the year, is permitted.&#xD;&#xA;The element offers the option to indicate the start of the period of a series of related procedures." />
+      <alias value="VerrichtingStartDatum" />
+      <mapping>
+        <identity value="zib-overdrachtverrichting" />
+        <map value=" NL-CM:14.1.2" />
+      </mapping>
+    </element>
+    <element>
+      <path value="Procedure.performedPeriod.end" />
+      <short value="ProcedureEndDate" />
+      <definition value="The end date (and if possible end time) of the procedure. A ‘vague’ date, such as only the year, is permitted.&#xD;&#xA;The element offers the option to indicate the end of the period of a series of related procedures." />
+      <alias value="VerrichtingEindDatum" />
+      <mapping>
+        <identity value="zib-overdrachtverrichting" />
+        <map value="NL-CM:14.1.3" />
+      </mapping>
+    </element>
+    <element>
+      <path value="Procedure.request.extension" />
+      <slicing>
+        <discriminator value="url" />
+        <rules value="open" />
+      </slicing>
+    </element>
+    <element>
+      <path value="Procedure.request.extension" />
+      <name value="RequestedBy" />
+      <short value="Base for all elements" />
+      <definition value="Optional Extensions Element - found in all resources." />
+      <min value="0" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://nictiz.nl/fhir/StructureDefinition/zib-Procedure-Requester" />
+      </type>
+    </element>
+    <element>
+      <path value="Procedure.focalDevice.manipulated" />
+      <short value="Product" />
+      <definition value="The product, the placing of which in or on the body is the purpose of the procedure, for example placing an implant." />
+      <alias value="Product" />
+      <type>
+        <code value="Reference" />
+        <profile value="http://nictiz.nl/fhir/StructureDefinition/zib-MedicalAid" />
+      </type>
+      <mapping>
+        <identity value="zib-overdrachtverrichting" />
+        <map value="NL-CM:14.1.7" />
+      </mapping>
+    </element>
+  </differential>
+</StructureDefinition>

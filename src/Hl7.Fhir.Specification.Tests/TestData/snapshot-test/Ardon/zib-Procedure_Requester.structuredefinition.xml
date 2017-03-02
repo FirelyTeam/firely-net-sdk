@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <meta>
+    <lastUpdated value="2017-02-08T10:55:11.195+01:00" />
+  </meta>
+  <text>
+    <status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml">
+  <p>An extension on Procedure to included the healthcare provider who requested the procedure. </p>
+</div></text>
+  <url value="http://nictiz.nl/fhir/StructureDefinition/zib-Procedure-Requester" />
+  <name value="ZIB Procedure Requester" />
+  <status value="draft" />
+  <publisher value="Nictiz" />
+  <date value="2017-02-06T17:00:22.0909822+01:00" />
+  <description value="The healthcare provider who requested the procedure." />
+  <requirements value="The Dutch Clinical Building Block (Dutch: Zorginformatiebouwsteen or ZIB) Procedure version 3.0 models a direct reference to the healthcare provider who requested the procedure. The Procedure resource does not include a reference to a Practitioner resource." />
+  <copyright value="CC0" />
+  <kind value="datatype" />
+  <constrainedType value="Extension" />
+  <abstract value="false" />
+  <contextType value="resource" />
+  <context value="Procedure.request" />
+  <base value="http://hl7.org/fhir/StructureDefinition/Extension" />
+  <differential>
+    <element>
+      <path value="Extension" />
+    </element>
+    <element>
+      <path value="Extension.url" />
+      <fixedUri value="http://nictiz.nl/fhir/StructureDefinition/zib-Procedure-Requester" />
+    </element>
+    <element>
+      <path value="Extension.valueReference" />
+      <short value="RequestedBy" />
+      <definition value="The healthcare provider who requested the procedure." />
+      <alias value="AangevraagdDoor" />
+      <type>
+        <code value="Reference" />
+        <profile value="http://fhir.nl/fhir/StructureDefinition/nl-core-practitioner" />
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>
