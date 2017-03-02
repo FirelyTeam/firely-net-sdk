@@ -7,8 +7,9 @@
  */
 
 using System.Xml;
-using Hl7.ElementModel;
+using Hl7.Fhir.ElementModel;
 using Furore.Support;
+using Hl7.Fhir.Model.Primitives;
 
 namespace Hl7.FhirPath.Functions
 {
@@ -89,8 +90,8 @@ namespace Hl7.FhirPath.Functions
                 return XmlConvert.ToString((decimal)val);
             else if (val is bool)
                 return (bool)val ? "true" : "false";
-            else if (val is Time)
-                return ((Time)val).ToString();
+            else if (val is PartialTime)
+                return ((PartialTime)val).ToString();
             else if (val is PartialDateTime)
                 return ((PartialDateTime)val).ToString();
 

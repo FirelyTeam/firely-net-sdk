@@ -10,8 +10,8 @@ using Hl7.FhirPath.Functions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Hl7.ElementModel;
 using Furore.Support;
+using Hl7.Fhir.ElementModel;
 
 namespace Hl7.FhirPath.Expressions
 {

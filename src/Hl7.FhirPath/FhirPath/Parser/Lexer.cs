@@ -6,6 +6,8 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.Primitives;
 using Sprache;
 using System;
 using System.Collections.Generic;
@@ -77,8 +79,8 @@ namespace Hl7.FhirPath.Parser
                                             (Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?  #Timezone
                                  ", RegexOptions.IgnorePatternWhitespace);
 
-        public static readonly Parser<Hl7.FhirPath.Time> Time =
-            Parse.Regex(TimeRegEx).Select(s => Hl7.FhirPath.Time.Parse(s.Substring(2)));
+        public static readonly Parser<PartialTime> Time =
+            Parse.Regex(TimeRegEx).Select(s => Time.Parse(s.Substring(2)));
 
         // NUMBER
         //   : [0-9]+('.' [0-9]+)?

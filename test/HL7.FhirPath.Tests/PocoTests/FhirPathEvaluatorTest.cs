@@ -16,13 +16,12 @@ using System.Diagnostics;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System.Xml.Linq;
-using Hl7.ElementModel;
 using Xunit;
 using System.IO;
 using Xunit.Abstractions;
-using Hl7.FhirPath.Functions;
 using Furore.Support;
-using System.Reflection;
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model.Primitives;
 
 namespace Hl7.FhirPath.Tests
 {
@@ -372,16 +371,11 @@ namespace Hl7.FhirPath.Tests
 
         public static string ToString(IElementNavigator nav)
         {
-            var result = "";
+            var result = nav.Name;
 
-            if (nav.IsNamedNode())
+            if (nav.Type != null)
             {
-                result = nav.Name;
-            }
-
-            if (nav.IsTypeProvider())
-            {
-                result += ": " + nav.TypeName;
+                result += ": " + nav.Type;
             }
 
             if (nav.Value != null) result += " = " + nav.Value;

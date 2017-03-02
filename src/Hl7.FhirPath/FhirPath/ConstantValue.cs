@@ -8,8 +8,9 @@
 
 using Hl7.FhirPath.Functions;
 using System;
-using Hl7.ElementModel;
 using Furore.Support;
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model.Primitives;
 
 namespace Hl7.FhirPath
 {
@@ -37,7 +38,7 @@ namespace Hl7.FhirPath
                 Value = PartialDateTime.FromDateTime((DateTime)value);
             else if (value is PartialDateTime)
                 Value = value;
-            else if (value is Time)
+            else if (value is PartialTime)
                 Value = value;
             else
                 throw Error.NotSupported("Don't know how to convert an instance of .NET type {0} (with value '{1}') to a FhirPath constant"
@@ -57,10 +58,9 @@ namespace Hl7.FhirPath
 
         public string Name
         {
-            // todo: it's not used. Should it throw NotImplemented instead?
             get
             {
-                return null;
+                return "@constantvalue@";
             }
         }
 
@@ -70,7 +70,7 @@ namespace Hl7.FhirPath
             private set;
         }
 
-        public string TypeName
+        public string Type
         {
             get
             {
@@ -84,7 +84,7 @@ namespace Hl7.FhirPath
                     return TypeInfo.Decimal.Name;
                 else if (Value is PartialDateTime)
                     return TypeInfo.DateTime.Name;
-                else if (Value is Time)
+                else if (Value is PartialTime)
                     return TypeInfo.Time.Name;
                 else
                     throw Error.NotSupported("Don't know how to derive the FhirPath typename for an instance of .NET type {0} (with value '{1}')"
@@ -92,11 +92,11 @@ namespace Hl7.FhirPath
             }
         }
 
-        public string Path
+        public string Location
         {
             get
             {
-                throw new NotImplementedException();
+                return "(constant value)";
             }
         }
 

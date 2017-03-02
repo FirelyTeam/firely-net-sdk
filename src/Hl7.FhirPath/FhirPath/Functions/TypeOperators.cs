@@ -8,33 +8,33 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Hl7.ElementModel;
+using Hl7.Fhir.ElementModel;
 using Furore.Support;
 
 namespace Hl7.FhirPath.Functions
 {
     internal static class TypeOperators
     {
-        public static bool Is(this IElementNavigator focus, string typeName)
+        public static bool Is(this IElementNavigator focus, string type)
         {
-            if (focus.IsTypeProvider())
+            if (focus.Type != null)
             {
-                return focus.TypeName == typeName;     // I have no information about classes/subclasses
+                return focus.Type == type;     // I have no information about classes/subclasses
             }
             else
-                throw Error.InvalidOperation("Is operator is called on data which does not support ITypeNameProvider");
+                throw Error.InvalidOperation("Is operator is called on untyped data");
         }
 
-        public static bool Is(this IEnumerable<IElementNavigator> f, string typeName)
+        public static bool Is(this IEnumerable<IElementNavigator> f, string type)
         {
             var focus = f.First();
 
-            if (focus.IsTypeProvider())
+            if (focus.Type == null)
             {
-                return focus.TypeName == typeName;     // I have no information about classes/subclasses
+                return focus.Type == type;     // I have no information about classes/subclasses
             }
             else
-                throw Error.InvalidOperation("Is operator is called on data which does not support ITypeNameProvider");
+                throw Error.InvalidOperation("Is operator is called on untyped data");
         }
 
 

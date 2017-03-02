@@ -15,13 +15,14 @@ using UriType = Hl7.Fhir.Model.FhirUri;
 using Hl7.Fhir.Serialization;
 using System.IO;
 using System.Xml.Linq;
-using Hl7.ElementModel;
+using Hl7.Fhir.ElementModel;
 using Model = Hl7.Fhir.Model;
 using Hl7.FhirPath.Functions;
 using Xunit;
 using Xunit.Sdk;
 using Xunit.Abstractions;
 using Furore.Support;
+using Hl7.Fhir.FhirPath;
 
 namespace Hl7.FhirPath.Tests
 {
@@ -106,7 +107,7 @@ namespace Hl7.FhirPath.Tests
         private void test(Model.Resource resource, String expression, IEnumerable<XElement> expected)
         {
             var tpXml = FhirSerializer.SerializeToXml(resource);
-            var npoco = new PocoNavigator(resource);
+            var npoco = new PocoElementNavigator(resource);
             //       FhirPathEvaluatorTest.Render(npoco);
 
             IEnumerable<IElementNavigator> actual = npoco.Select(expression);
@@ -119,7 +120,7 @@ namespace Hl7.FhirPath.Tests
         {
             var type = expected.Attribute("type").Value;
             var tp = (IElementNavigator)actual;
-            Assert.True(type == tp.TypeName, "incorrect output type");
+            Assert.True(type == tp.Type, "incorrect output type");
 
             if (expected.IsEmpty) return true;      // we are not checking the value
 

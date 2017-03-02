@@ -10,13 +10,29 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0-preview-20170106-08" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0-beta5-build1225" />
-    <PackageReference Include="xunit" Version="2.2.0-beta5-build3474" />
-    <PackageReference Include="Hl7.Fhir.DSTU2" Version="0.90.5" />
+    <Compile Remove="FhirPath\PocoElementNavigator.cs" />
+    <Compile Remove="FhirPath\PocoNavigator.cs" />
+    <Compile Remove="FhirPath\PocoNavigatorExtensions.cs" />
+    <Compile Remove="PocoTests\FhirPathEvaluatorTest.cs" />
+    <Compile Remove="PocoTests\FhirPathEvaluatorTestFromSpec.cs" />
+    <Compile Remove="PocoTests\FhirPathNavTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FhirPath\PocoElementNavigator.cs" />
+    <None Include="FhirPath\PocoNavigator.cs" />
+    <None Include="FhirPath\PocoNavigatorExtensions.cs" />
+    <None Include="PocoTests\FhirPathEvaluatorTest.cs" />
+    <None Include="PocoTests\FhirPathEvaluatorTestFromSpec.cs" />
+    <None Include="PocoTests\FhirPathNavTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
+    <PackageReference Include="xunit" Version="2.2.0" />
+    <PackageReference Include="Hl7.Fhir.DSTU2" Version="0.91.2-alpha4" />
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">
-    <PackageReference Include="Microsoft.NETCore.App" Version="1.0.3" />
+    <PackageReference Include="Microsoft.NETCore.App" Version="1.1.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Hl7.FhirPath\Hl7.FhirPath.csproj" />

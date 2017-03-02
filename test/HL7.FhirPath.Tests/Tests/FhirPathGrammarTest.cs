@@ -14,6 +14,7 @@ using Hl7.FhirPath.Expressions;
 using Sprache;
 
 using Xunit;
+using Hl7.Fhir.Model.Primitives;
 
 namespace Hl7.FhirPath.Tests
 {
@@ -29,7 +30,7 @@ namespace Hl7.FhirPath.Tests
             AssertParser.SucceedsMatch(parser, "3", new ConstantExpression(3L));
             AssertParser.SucceedsMatch(parser, "3.14", new ConstantExpression(3.14m));
             AssertParser.SucceedsMatch(parser, "@2013-12", new ConstantExpression(PartialDateTime.Parse("2013-12")));
-            AssertParser.SucceedsMatch(parser, "@T12:23:34Z", new ConstantExpression(Time.Parse("12:23:34Z")));
+            AssertParser.SucceedsMatch(parser, "@T12:23:34Z", new ConstantExpression(PartialTime.Parse("12:23:34Z")));
             AssertParser.SucceedsMatch(parser, "true", new ConstantExpression(true));
             AssertParser.SucceedsMatch(parser, "@2014-12-13T12:00:00+02:00", new ConstantExpression(PartialDateTime.Parse("2014-12-13T12:00:00+02:00")));
 

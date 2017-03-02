@@ -11,6 +11,7 @@ using Hl7.FhirPath;
 using Sprache;
 using Hl7.FhirPath.Parser;
 using Xunit;
+using Hl7.Fhir.Model.Primitives;
 
 namespace Hl7.FhirPath.Tests
 {
@@ -94,9 +95,9 @@ namespace Hl7.FhirPath.Tests
 
         }
 
-        private void SucceedsTime(Parser<Time> parser, string s)
+        private void SucceedsTime(Parser<PartialTime> parser, string s)
         {
-            AssertParser.SucceedsMatch(parser, s, Time.Parse(s.Substring(2)));
+            AssertParser.SucceedsMatch(parser, s, PartialTime.Parse(s.Substring(2)));
         }
 
         [Fact]

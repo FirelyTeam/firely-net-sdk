@@ -10,15 +10,21 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace Hl7.ElementModel
+namespace Hl7.Fhir.ElementModel
 {
 
-    //public interface IElementNode : INode<IElementNode>
-    //{
-    //    string Name { get; set; }
-    //    string TypeName { get; set; }
-    //    object Value { get; set; }
-    //    // string Path ???
-    //}
+    public interface IElementNode
+    {
+        IElementNode Parent { get; set; }
+
+        IList<IElementNode> Children { get; set; }
+
+        // TODO: Should reflect the properties present in IElementNavigator. Once that stabilizes, copy the code comments from
+        // there over to here
+        string Name { get; set; }
+        string Type { get; set; }
+        object Value { get; set; }
+        string Location { get; }
+    }
 
 }

@@ -9,15 +9,10 @@
 // To introduce the DSTU2 FHIR specification
 //extern alias dstu2;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Hl7.ElementModel;
-using Hl7.FhirPath;
-using Hl7.FhirPath.Expressions;
 using Xunit;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Introspection;
+using Hl7.Fhir.ElementModel;
 
 namespace Hl7.FhirPath.Tests
 {
@@ -43,7 +38,7 @@ namespace Hl7.FhirPath.Tests
             var data = patient.Children[0];
             Assert.Equal("active", data.Name);
             Assert.Equal(true, data.Value);
-            Assert.Equal("boolean", data.TypeName);
+            Assert.Equal("boolean", data.Type);
             Assert.Equal(4, data.Children.Count);
         }
 
@@ -51,12 +46,12 @@ namespace Hl7.FhirPath.Tests
         [Fact]
         public void TestPath()
         {
-            Assert.Equal("Patient", patient.PathString());
-            Assert.Equal("Patient.active[0]", patient.Children[0].PathString());
-            Assert.Equal("Patient.active[0].id[0]", patient.Children[0].Children[0].PathString());
-            Assert.Equal("Patient.active[0].id[1]", patient.Children[0].Children[1].PathString());
-            Assert.Equal("Patient.active[0].extension[0].value[0]", patient.Children[0].Children[2].Children[0].PathString());
-            Assert.Equal("Patient.active[0].extension[1].value[0]", patient.Children[0].Children[3].Children[0].PathString());
+            Assert.Equal("Patient", patient.Location);
+            Assert.Equal("Patient.active[0]", patient.Children[0].Location);
+            Assert.Equal("Patient.active[0].id[0]", patient.Children[0].Children[0].Location);
+            Assert.Equal("Patient.active[0].id[1]", patient.Children[0].Children[1].Location);
+            Assert.Equal("Patient.active[0].extension[0].value[0]", patient.Children[0].Children[2].Children[0].Location);
+            Assert.Equal("Patient.active[0].extension[1].value[0]", patient.Children[0].Children[3].Children[0].Location);
         }
 
         [Fact]
@@ -67,7 +62,7 @@ namespace Hl7.FhirPath.Tests
             Assert.Equal(nav.Name, "Patient");
             Assert.True(nav.MoveToFirstChild());
             Assert.Equal(nav.Name, "active");
-            Assert.Equal("boolean", nav.TypeName);
+            Assert.Equal("boolean", nav.Type);
             Assert.False(nav.MoveToNext());
 
             Assert.Equal(true, nav.Value);

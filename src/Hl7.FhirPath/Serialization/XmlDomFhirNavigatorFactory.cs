@@ -1,5 +1,5 @@
 ﻿using Furore.Support;
-using Hl7.ElementModel;
+using Hl7.Fhir.ElementModel;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -7,7 +7,7 @@ namespace Hl7.Fhir.Serialization
 {
     public partial struct XmlDomFhirNavigator
     {
-        public static ISerializedSourceNavigator Create(XmlReader reader)
+        public static IElementNavigator Create(XmlReader reader)
         {
             XDocument doc = null;
 
@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Serialization
             return new XmlDomFhirNavigator(doc.Root);
         }
 
-        public static ISerializedSourceNavigator Create(string xml)
+        public static IElementNavigator Create(string xml)
         {
             using (var reader = SerializationUtil.XmlReaderFromXmlText(xml))
             {

@@ -1,21 +1,21 @@
 using System.Linq;
 using System.Collections.Generic;
 
-namespace Hl7.ElementModel
+namespace Hl7.Fhir.ElementModel
 {
     public struct ElementNodeNavigator : IElementNavigator
     {
-        private IList<ElementNode> _siblings;
+        private IList<IElementNode> _siblings;
         private int _index;
 
-        public ElementNode Current
+        public IElementNode Current
         {
             get { return _siblings[_index]; }
         }
 
-        public ElementNodeNavigator(ElementNode wrapped)
+        public ElementNodeNavigator(IElementNode wrapped)
         {
-            _siblings = new List<ElementNode> { wrapped };
+            _siblings = new List<IElementNode> { wrapped };
             _index = 0;
         }
 
@@ -27,19 +27,19 @@ namespace Hl7.ElementModel
             }
         }
 
-        public string TypeName
+        public string Type
         {
             get
             {
-                return Current.TypeName;
+                return Current.Type;
             }
         }
 
-        public string Path
+        public string Location
         {
             get
             {
-                return Current.PathString();
+                return Current.BuildPath();
             }
         }
 

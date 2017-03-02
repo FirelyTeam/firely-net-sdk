@@ -2,11 +2,41 @@
 using System.Collections.Generic;
 using System;
 
-namespace Hl7.ElementModel
+namespace Hl7.Fhir.ElementModel
 {
 
     public static class ElementNavigatorExtensions
     {
+        public static IEnumerable<IElementNavigator> Children(this IElementNavigator navigator)
+        {
+            var nav = navigator.Clone();
+            if (nav.MoveToFirstChild())
+            {
+                do
+                {
+                    yield return nav.Clone();
+                }
+                while (nav.MoveToNext());
+            }
+        }
+
+        public static bool HasChildren(this IElementNavigator navigator)
+        {
+            var nav = navigator.Clone();
+
+            return nav.MoveToFirstChild();
+        }
+
+        public static IEnumerable<IElementNavigator> Descendants(this IElementNavigator element)
+        {
+            //TODO: Don't think this is performant with these nested yields
+            foreach (var child in element.Children())
+            {
+                yield return child;
+                foreach (var grandchild in child.Descendants()) yield return grandchild;
+            }
+        }
+
         public static IEnumerable<object> Values(this IElementNavigator navigator)
         {
             var nav = navigator.Clone();

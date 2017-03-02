@@ -8,7 +8,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Hl7.ElementModel;
+using Hl7.Fhir.ElementModel;
 using Furore.Support;
 
 namespace Hl7.FhirPath.Functions
@@ -87,13 +87,8 @@ namespace Hl7.FhirPath.Functions
             return elements.SelectMany(e => e.Navigate(name));
         }
 
-        public static IEnumerable<IElementNavigator> Navigate(this IElementNavigator element, string name)
-        {
-            if(!(element is IElementNavigator))
-                return FhirValueList.Empty;
-
-            var nav = (IElementNavigator)element;
-
+        public static IEnumerable<IElementNavigator> Navigate(this IElementNavigator nav, string name)
+        {       
             if (char.IsUpper(name[0]))
             {
 
@@ -102,21 +97,13 @@ namespace Hl7.FhirPath.Functions
 
                 // If we are at a resource, we should match a path that is possibly not rooted in the resource
                 // (e.g. doing "name.family" on a Patient is equivalent to "Patient.name.family")        
-                if (nav is IElementNavigator)
+                if (nav.Type == name)
                 {
-                    if (((IElementNavigator)nav).TypeName == name)
-                    {
-                        return new List<IElementNavigator>() { nav };
-                    }
-                    else
-                    {
-                        return Enumerable.Empty<IElementNavigator>();
-                    }
+                    return new List<IElementNavigator>() { nav };
                 }
                 else
                 {
-                    throw Error.InvalidOperation("Cannot verify whether the root object is of type '{0}'. ".FormatWith(name) +
-                        "You could try leaving out the resource name of the expression.");
+                    return Enumerable.Empty<IElementNavigator>();
                 }
             }
             else

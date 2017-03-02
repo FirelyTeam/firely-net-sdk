@@ -6,45 +6,30 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using System;
 using System.Collections.Generic;
 
-namespace Hl7.ElementModel
+namespace Hl7.Fhir.ElementModel
 {
 
-    public class ElementNode : INode<ElementNode>
+    public class ElementNode : IElementNode
     {
-        public ElementNode Parent { get; set; }
+        public IElementNode Parent { get; set;  }
+        public IList<IElementNode> Children { get; set; }
 
         public string Name { get; set; }
 
-        // todo: is this one necessary? We can calculate the path through the parent with INode<T>
-        //public string Path
-        //{
-        //    get
-        //    {
-        //        var myIndex = Parent != null ? Parent.Children.Where(c=> c.Name == Name).ToList().IndexOf(this) : -1;
-        //        var root = Parent != null ? Parent.Path + "." : "";
-        //        root += Name;
+        public string Type { get; set; }
 
-        //        if(myIndex >= 0)
-        //            root += "[{0}]".FormatWith(myIndex);
+        public object Value { get; set; }
 
-        //        return root;
-        //    }
+        public string Location => this.BuildPath();
 
-        //}
-
-        public string TypeName { get; set; }
-
-        public object Value { get;  set; }
-
-        public IList<ElementNode> Children { get; set; }
-
-        private ElementNode(string name, object value, string typeName, params ElementNode[] children)
+        private ElementNode(string name, object value, string type, params ElementNode[] children)
         {
             Name = name;
             Value = value;
-            TypeName = typeName;
+            Type = type;
             Children = children;
 
             foreach (var c in children) c.Parent = this;
@@ -55,9 +40,9 @@ namespace Hl7.ElementModel
             return new ElementNode(name, value, null, children);
         }
 
-        public static ElementNode Valued(string name, object value, string typeName, params ElementNode[] children)
+        public static ElementNode Valued(string name, object value, string type, params ElementNode[] children)
         {
-            return new ElementNode(name, value, typeName, children);
+            return new ElementNode(name, value, type, children);
         }
 
         public static ElementNode Node(string name, params ElementNode[] children)
@@ -65,9 +50,9 @@ namespace Hl7.ElementModel
             return new ElementNode(name, null, null, children);
         }
 
-        public static ElementNode Node(string name, string typeName, params ElementNode[] children)
+        public static ElementNode Node(string name, string type, params ElementNode[] children)
         {
-            return new ElementNode(name, null, typeName, children);
+            return new ElementNode(name, null, type, children);
         }
     }
 }

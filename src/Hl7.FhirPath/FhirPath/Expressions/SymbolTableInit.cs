@@ -11,7 +11,8 @@ using System.Linq;
 using System.Collections.Generic;
 using Hl7.FhirPath.Functions;
 using System.Text.RegularExpressions;
-using Hl7.ElementModel;
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model.Primitives;
 
 namespace Hl7.FhirPath.Expressions
 {
@@ -82,25 +83,25 @@ namespace Hl7.FhirPath.Expressions
             t.Add("binary.>", (object f, decimal a, decimal b) => a > b, doNullProp: true);
             t.Add("binary.>", (object f, string a, string b) => String.CompareOrdinal(a, b) > 0, doNullProp: true);
             t.Add("binary.>", (object f, PartialDateTime a, PartialDateTime b) => a > b, doNullProp: true);
-            t.Add("binary.>", (object f, Time a, Time b) => a > b, doNullProp: true);
+            t.Add("binary.>", (object f, PartialTime a, PartialTime b) => a > b, doNullProp: true);
 
             t.Add("binary.<", (object f, long a, long b) => a < b, doNullProp: true);
             t.Add("binary.<", (object f, decimal a, decimal b) => a < b, doNullProp: true);
             t.Add("binary.<", (object f, string a, string b) => String.CompareOrdinal(a, b) < 0, doNullProp: true);
             t.Add("binary.<", (object f, PartialDateTime a, PartialDateTime b) => a < b, doNullProp: true);
-            t.Add("binary.<", (object f, Time a, Time b) => a < b, doNullProp: true);
+            t.Add("binary.<", (object f, PartialTime a, PartialTime b) => a < b, doNullProp: true);
 
             t.Add("binary.<=", (object f, long a, long b) => a <= b, doNullProp: true);
             t.Add("binary.<=", (object f, decimal a, decimal b) => a <= b, doNullProp: true);
             t.Add("binary.<=", (object f, string a, string b) => String.CompareOrdinal(a, b) <= 0, doNullProp: true);
             t.Add("binary.<=", (object f, PartialDateTime a, PartialDateTime b) => a <= b, doNullProp: true);
-            t.Add("binary.<=", (object f, Time a, Time b) => a <= b, doNullProp: true);
+            t.Add("binary.<=", (object f, PartialTime a, PartialTime b) => a <= b, doNullProp: true);
 
             t.Add("binary.>=", (object f, long a, long b) => a >= b, doNullProp: true);
             t.Add("binary.>=", (object f, decimal a, decimal b) => a >= b, doNullProp: true);
             t.Add("binary.>=", (object f, string a, string b) => String.CompareOrdinal(a, b) >= 0, doNullProp: true);
             t.Add("binary.>=", (object f, PartialDateTime a, PartialDateTime b) => a >= b, doNullProp: true);
-            t.Add("binary.>=", (object f, Time a, Time b) => a >= b, doNullProp: true);
+            t.Add("binary.>=", (object f, PartialTime a, PartialTime b) => a >= b, doNullProp: true);
 
             t.Add("single", (IEnumerable<IElementNavigator> f) => f.Single(), doNullProp: true);
             t.Add("skip", (IEnumerable<IElementNavigator> f, long a) =>  f.Skip((int)a), doNullProp: true);

@@ -15,7 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Hl7.ElementModel;
+using Hl7.Fhir.ElementModel;
 using Hl7.FhirPath.Functions;
 
 namespace Hl7.FhirPath

@@ -1,4 +1,4 @@
-﻿using Hl7.ElementModel;
+﻿using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Serialization;
 using Xunit;
 
@@ -14,19 +14,19 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             var nav = XmlDomFhirNavigator.Create(tpXml);
 
             Assert.Equal("Patient", nav.Name);
-            Assert.Equal("Patient", nav.TypeName);
+            Assert.Equal("Patient", nav.Type);
 
             Assert.True(nav.MoveToFirstChild());
             Assert.Equal("xmlns", nav.Name);        // Yep, even those come through
 
             Assert.True(nav.MoveToNext());
             Assert.Equal("id", nav.Name);
-            Assert.Null(nav.TypeName);
+            Assert.Null(nav.Type);
             var id = nav.Clone();
 
             Assert.True(nav.MoveToFirstChild());
             Assert.Equal("value", nav.Name);
-            Assert.Equal("pat1", nav.Text);
+            Assert.Equal("pat1", nav.Value);
             Assert.False(nav.MoveToFirstChild());
             Assert.False(nav.MoveToNext());
 
@@ -37,14 +37,14 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             Assert.True(id.MoveToFirstChild()); // status
             Assert.True(id.MoveToNext());
             Assert.Equal("div", id.Name);
-            Assert.StartsWith("<div xmlns=", (string)id.Text);       // special handling of xhtml
+            Assert.StartsWith("<div xmlns=", (string)id.Value);       // special handling of xhtml
             Assert.False(id.MoveToFirstChild()); // cannot move into xhtml
             Assert.Equal("div", id.Name); // still on xhtml <div>
             Assert.False(id.MoveToNext());  // nothing more in <text>
             
             Assert.True(text.MoveToNext()); // contained
             Assert.Equal("contained", text.Name);
-            Assert.Equal("Patient", text.TypeName);
+            Assert.Equal("Patient", text.Type);
             Assert.True(text.MoveToFirstChild()); // id
             Assert.True(text.MoveToNext()); // identifier
             var identifier = text.Clone();
@@ -56,7 +56,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             Assert.Equal("value", text.Name);
             Assert.True(text.MoveToFirstChild());
             Assert.Equal("value", text.Name); // value.value
-            Assert.Equal("444222222", text.Text);
+            Assert.Equal("444222222", text.Value);
             Assert.False(text.MoveToNext());
 
             Assert.True(identifier.MoveToNext()); // active

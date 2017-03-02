@@ -7,8 +7,8 @@ using Hl7.FhirPath.Expressions;
 using Sprache;
 using System.Text;
 using System.Threading.Tasks;
-using Hl7.ElementModel;
 using Hl7.FhirPath.Functions;
+using Hl7.Fhir.ElementModel;
 
 namespace Hl7.FhirPath
 {

@@ -7,6 +7,7 @@
  */
 
 using Furore.Support;
+using Hl7.Fhir.Model.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -68,7 +69,7 @@ namespace Hl7.FhirPath.Expressions
                 ExpressionType = TypeInfo.Decimal;
             else if (Value is PartialDateTime)
                 ExpressionType = TypeInfo.DateTime;
-            else if (Value is Time)
+            else if (Value is PartialTime)
                 ExpressionType = TypeInfo.Time;
             else
                 throw Error.InvalidOperation("Internal logic error: encountered unmappable Value of type " + Value.GetType().Name);

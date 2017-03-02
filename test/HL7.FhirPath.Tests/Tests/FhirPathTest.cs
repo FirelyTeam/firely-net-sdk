@@ -16,24 +16,14 @@ using Sprache;
 using Hl7.FhirPath;
 using Hl7.FhirPath.Functions;
 using Xunit;
-using Hl7.ElementModel;
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Model.Primitives;
 
 namespace Hl7.FhirPath.Tests
 {
     public class FhirPathTest
     {
-        public IElementNavigator getTestData()
-        {
-            var tpXml = TestData.ReadTextFile("fp-test-patient.xml");
-            // var tree = TreeConstructor.FromXml(tpXml);
-            // var navigator = new TreeNavigator(tree);
-            // return navigator;
-
-            var patient = (new FhirXmlParser()).Parse<Hl7.Fhir.Model.Patient>(tpXml);
-            return new PocoNavigator(patient);
-        }
-
         [Fact]
         public void ConvertToInteger()
         {
@@ -96,28 +86,6 @@ namespace Hl7.FhirPath.Tests
             Assert.Equal((Int64)3, values.Item(2).Single().Value);
             Assert.Equal((Int64)1, values.First().Value);
             Assert.False(values.Item(100).Any());
-        }
-
-        [Fact]
-        public void TestNavigation()
-        {
-            var values = getTestData();
-
-            var r = values.Navigate("Patient");
-
-            var result = values.Navigate("Patient").Navigate("identifier").Navigate("use");
-            Assert.Equal(3, result.Count()); 
-            Assert.Equal("usual", result.First().Value);
-        }
-
-        [Fact]
-        public void TestNavigationALTERNATIVE()
-        {
-            var values = getTestData();
-
-            var result = values.Navigate("Patient").Navigate("identifier").Navigate("use");
-            Assert.Equal(3, result.Count());
-            Assert.Equal("usual", (string)result.First().Value);
         }
 
         [Fact]

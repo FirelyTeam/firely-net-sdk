@@ -12,8 +12,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Hl7.ElementModel;
-using Hl7.FhirPath;
+using Hl7.Fhir.ElementModel;
 using Hl7.FhirPath.Expressions;
 using Xunit;
 
@@ -148,7 +147,7 @@ namespace Hl7.FhirPath.Tests
             }
         }
 
-        public string Path
+        public string Location
         {
             get
             {
@@ -156,7 +155,7 @@ namespace Hl7.FhirPath.Tests
             }
         }
 
-        public string TypeName
+        public string Type
         {
             get
             {

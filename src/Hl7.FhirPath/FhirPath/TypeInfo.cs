@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Hl7.ElementModel;
+using Hl7.Fhir.ElementModel;
 using Furore.Support;
+using Hl7.Fhir.Model.Primitives;
 
 namespace Hl7.FhirPath
 {
@@ -65,7 +66,7 @@ namespace Hl7.FhirPath
                 return TypeInfo.Decimal;
             else if (nativeType == typeof(PartialDateTime))
                 return TypeInfo.DateTime;
-            else if (nativeType == typeof(Time))
+            else if (nativeType == typeof(PartialTime))
                 return TypeInfo.Time;
             else if (nativeType == typeof(IEnumerable<IElementNavigator>))
                 return TypeInfo.Any;
@@ -87,7 +88,7 @@ namespace Hl7.FhirPath
                 return true;
             else if (this == TypeInfo.DateTime && t == typeof(PartialDateTime))
                 return true;
-            else if (this == TypeInfo.Time && t == typeof(Time))
+            else if (this == TypeInfo.Time && t == typeof(PartialTime))
                 return true;
             else if (this == TypeInfo.Any && t == typeof(object))
                 return true;

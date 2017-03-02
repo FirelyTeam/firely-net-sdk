@@ -12,6 +12,7 @@ using System.Linq;
 using Sprache;
 using Hl7.FhirPath;
 using Xunit;
+using Hl7.Fhir.Model.Primitives;
 
 namespace Hl7.FhirPath.Tests
 {
@@ -47,16 +48,16 @@ namespace Hl7.FhirPath.Tests
         [Fact]
         public void TimeConstructor()
         {
-            Time.Parse("12:34:44+02:00");
-            Time.Parse("12:34:44");
-            Time.Parse("12:34:44Z");
+            PartialTime.Parse("12:34:44+02:00");
+            PartialTime.Parse("12:34:44");
+            PartialTime.Parse("12:34:44Z");
 
-            Time pd;
-            Assert.True(Time.TryParse("12:34:44Z", out pd));
-            Assert.Equal(pd, Time.Parse("12:34:44Z"));
+            PartialTime pd;
+            Assert.True(PartialTime.TryParse("12:34:44Z", out pd));
+            Assert.Equal(pd, PartialTime.Parse("12:34:44Z"));
             Assert.Equal("12:34:44Z", pd.ToString());
 
-            Assert.False(Time.TryParse("92:34:44Z", out pd));
+            Assert.False(PartialTime.TryParse("92:34:44Z", out pd));
         }
 
         [Fact]
@@ -65,9 +66,9 @@ namespace Hl7.FhirPath.Tests
             Assert.True(PartialDateTime.Parse("2012-03-04T13:00:00Z") > PartialDateTime.Parse("2012-03-04T12:00:00Z"));
             Assert.True(PartialDateTime.Parse("2012-03-04T13:00:00Z") < PartialDateTime.Parse("2012-03-04T18:00:00+02:00"));
 
-            Assert.True(Time.Parse("12:34:00+00:00") > Time.Parse("12:33:55+00:00"));
-            Assert.True(Time.Parse("13:00:00+00:00") < Time.Parse("15:01:00+02:00"));
-            Assert.True(Time.Parse("13:00:00+00:00") > Time.Parse("14:59:00+02:00"));
+            Assert.True(PartialTime.Parse("12:34:00+00:00") > PartialTime.Parse("12:33:55+00:00"));
+            Assert.True(PartialTime.Parse("13:00:00+00:00") < PartialTime.Parse("15:01:00+02:00"));
+            Assert.True(PartialTime.Parse("13:00:00+00:00") > PartialTime.Parse("14:59:00+02:00"));
         }
 
         [Fact]
@@ -80,9 +81,9 @@ namespace Hl7.FhirPath.Tests
             Assert.True(PartialDateTime.Parse("2015-01-01T13:40:50+00:10") != PartialDateTime.Parse("2015-01-01T13:40:50Z"));
             Assert.True(PartialDateTime.Parse("2015-01-01T13:40:50+00:10") != PartialDateTime.Parse("2015-01-01"));
 
-            Assert.True(Time.Parse("13:45:02Z") == Time.Parse("13:45:02+00:00"));
-            Assert.True(Time.Parse("13:45:02+01:00") == Time.Parse("13:45:02+01:00"));
-            Assert.True(Time.Parse("13:45:02+00:00") != Time.Parse("13:45:02+01:00"));
+            Assert.True(PartialTime.Parse("13:45:02Z") == PartialTime.Parse("13:45:02+00:00"));
+            Assert.True(PartialTime.Parse("13:45:02+01:00") == PartialTime.Parse("13:45:02+01:00"));
+            Assert.True(PartialTime.Parse("13:45:02+00:00") != PartialTime.Parse("13:45:02+01:00"));
         }
 
         [Fact]
@@ -92,9 +93,9 @@ namespace Hl7.FhirPath.Tests
             Assert.Equal(-1, PartialDateTime.Parse("2012-03-04T13:00:00Z").CompareTo(PartialDateTime.Parse("2012-03-04T18:00:00+02:00")));
             Assert.Equal(0,  PartialDateTime.Parse("2015-01-01").CompareTo(PartialDateTime.Parse("2015-01-01")));
 
-            Assert.Equal(1, Time.Parse("12:34:00+00:00").CompareTo(Time.Parse("12:33:55+00:00")));
-            Assert.Equal(-1, Time.Parse("13:00:00+00:00").CompareTo(Time.Parse("15:01:00+02:00")));
-            Assert.Equal(0, Time.Parse("13:45:02+01:00").CompareTo(Time.Parse("13:45:02+01:00")));
+            Assert.Equal(1, PartialTime.Parse("12:34:00+00:00").CompareTo(PartialTime.Parse("12:33:55+00:00")));
+            Assert.Equal(-1, PartialTime.Parse("13:00:00+00:00").CompareTo(PartialTime.Parse("15:01:00+02:00")));
+            Assert.Equal(0, PartialTime.Parse("13:45:02+01:00").CompareTo(PartialTime.Parse("13:45:02+01:00")));
         }
     }
 }

@@ -9,7 +9,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using Hl7.ElementModel;
+using Hl7.Fhir.ElementModel;
 using System.Text;
 
 namespace Hl7.FhirPath.Expressions

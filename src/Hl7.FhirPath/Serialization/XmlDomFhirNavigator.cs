@@ -7,7 +7,7 @@
 */
 
 using Furore.Support;
-using Hl7.ElementModel;
+using Hl7.Fhir.ElementModel;
 using System;
 using System.Linq;
 using System.Xml;
@@ -15,12 +15,19 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public partial struct XmlDomFhirNavigator : ISerializedSourceNavigator, IPositionProvider
+    public partial struct XmlDomFhirNavigator : IElementNavigator
     {
         internal XmlDomFhirNavigator(XObject current)
         {
             _current = current;
         }
+
+
+        public IElementNavigator Clone()
+        {
+            return new XmlDomFhirNavigator(_current);
+        }
+
 
 
         private XObject _current;
@@ -44,7 +51,7 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        public string TypeName
+        public string Type
         {
             get
             {
@@ -66,6 +73,7 @@ namespace Hl7.Fhir.Serialization
                     }
                 }
 
+                // Else, no type information available
                 return null;
             }
         }
@@ -76,7 +84,7 @@ namespace Hl7.Fhir.Serialization
             return Char.IsUpper(elementName.LocalName, 0) && elementName.Namespace == XmlNs.XFHIR;
         }
 
-        public string Text
+        public object Value
         {
             get
             {
@@ -94,17 +102,12 @@ namespace Hl7.Fhir.Serialization
             return (node as XElement)?.Name == XmlNs.XHTMLDIV;
         }
 
-        public string Path
+        public string Location
         {
             get
             {
                 throw new NotImplementedException();
             }
-        }
-
-        public ISerializedSourceNavigator Clone()
-        {
-            return new XmlDomFhirNavigator(_current);
         }
 
         public bool MoveToFirstChild()
@@ -214,6 +217,7 @@ namespace Hl7.Fhir.Serialization
             else
                 return null;
         }
+
     }
 }
 

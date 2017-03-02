@@ -11,7 +11,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Hl7.FhirPath;
-using Hl7.ElementModel;
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model.Primitives;
 
 namespace Hl7.FhirPath.Functions
 {
@@ -44,8 +45,8 @@ namespace Hl7.FhirPath.Functions
                     return (decimal)(long)l == (decimal)r;
                 else if (l.GetType() == typeof(decimal) && r.GetType() == typeof(long))
                     return (decimal)l == (decimal)(long)r;
-                else if (l.GetType() == typeof(Time) && r.GetType() == typeof(Time))
-                    return (Time)l == (Time)r;
+                else if (l.GetType() == typeof(PartialTime) && r.GetType() == typeof(PartialTime))
+                    return (PartialTime)l == (PartialTime)r;
                 else if (l.GetType() == typeof(PartialDateTime) && r.GetType() == typeof(PartialDateTime))
                     return (PartialDateTime)l == (PartialDateTime)r;
                 else
@@ -72,16 +73,8 @@ namespace Hl7.FhirPath.Functions
 
         private static bool namesAreEqual(IElementNavigator left, IElementNavigator right, bool useEquivalence = false)
         {
-            // If the values have names, compare them
-            if (left.IsNamedNode() && right.IsNamedNode())
-            // -- if (left is INamedNode && right is INamedNode)
-            {
-                //-- var lNP = (INamedNode)left;
-                //-- var rNP = (INamedNode)right;
-
-                if (useEquivalence && left.Name == "id") return true;      // don't compare 'id' elements for equivalence
-                if (left.Name != right.Name) return false;
-            }
+            if (useEquivalence && left.Name == "id") return true;      // don't compare 'id' elements for equivalence
+            if (left.Name != right.Name) return false;
 
             return true;
         }
@@ -115,8 +108,8 @@ namespace Hl7.FhirPath.Functions
                     return ((decimal)(long)l).IsEquivalentTo((decimal)r);
                 else if (l.GetType() == typeof(decimal) && r.GetType() == typeof(long))
                     return ((decimal)l).IsEquivalentTo((decimal)(long)r);
-                else if (l.GetType() == typeof(Time) && r.GetType() == typeof(Time))
-                    return ((Time)l).IsEquivalentTo((Time)r);
+                else if (l.GetType() == typeof(PartialTime) && r.GetType() == typeof(PartialTime))
+                    return ((PartialTime)l).IsEquivalentTo((PartialTime)r);
                 else if (l.GetType() == typeof(PartialDateTime) && r.GetType() == typeof(PartialDateTime))
                     return ((PartialDateTime)l).IsEquivalentTo((PartialDateTime)r);
                 else

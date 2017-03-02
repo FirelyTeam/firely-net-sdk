@@ -7,7 +7,7 @@
  */
 
 using System.Collections.Generic;
-using Hl7.ElementModel;
+using Hl7.Fhir.ElementModel;
 
 namespace Hl7.FhirPath.Expressions
 {
