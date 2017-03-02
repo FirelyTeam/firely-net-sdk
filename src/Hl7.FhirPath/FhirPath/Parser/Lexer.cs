@@ -80,7 +80,7 @@ namespace Hl7.FhirPath.Parser
                                  ", RegexOptions.IgnorePatternWhitespace);
 
         public static readonly Parser<PartialTime> Time =
-            Parse.Regex(TimeRegEx).Select(s => Time.Parse(s.Substring(2)));
+            Parse.Regex(TimeRegEx).Select(s => PartialTime.Parse(s.Substring(2)));
 
         // NUMBER
         //   : [0-9]+('.' [0-9]+)?

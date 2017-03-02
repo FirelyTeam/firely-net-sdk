@@ -46,6 +46,8 @@ namespace Hl7.Fhir.ElementModel
                     segments.Add(n.Name);
                 }
             }
+
+            segments.Reverse();
             return string.Join(".", segments);
         }
 

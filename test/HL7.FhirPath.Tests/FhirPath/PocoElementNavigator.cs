@@ -16,11 +16,26 @@ namespace Hl7.FhirPath.Tests
 {
     public class PocoElementNavigator
     {
+        //static Hl7.Fhir.Introspection.ClassMapping GetMappingForType(Type elementType)
+        //{
+        //    var inspector = Fhir.Serialization.BaseFhirParser.Inspector;
+        //    return inspector.ImportType(elementType);
+        //}
+
         static Hl7.Fhir.Introspection.ClassMapping GetMappingForType(Type elementType)
         {
-            var inspector = Fhir.Serialization.BaseFhirParser.Inspector;
-            return inspector.ImportType(elementType);
+            // var inspector = Serialization.BaseFhirParser.Inspector;
+            //return inspector.FindClassMappingByType(elementType);
+
+            ResourceReader rdr = new ResourceReader(null, null);
+            ModelInspector inspector;
+            var ti = rdr.GetType().GetField("_inspector", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+            inspector = ti.GetValue(rdr) as ModelInspector;
+
+            //return inspector.ImportType(elementType);
+            return inspector.FindClassMappingByType(elementType);
         }
+
 
         // For Normal element properties representing a FHIR type
         internal PocoElementNavigator(string name, Base value)
