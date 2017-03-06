@@ -359,6 +359,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 else
                 {
                     // Alternatively, we could try to expand the most specific common base profile, e.g. (Backbone)Element
+                    // TODO: Determine the intersection, i.e. the most specific common type that all types are derived from
 
                     addIssueInvalidChoiceConstraint(defn);
                     return false;

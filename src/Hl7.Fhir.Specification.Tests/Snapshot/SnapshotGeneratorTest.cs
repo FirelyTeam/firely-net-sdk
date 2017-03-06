@@ -32,58 +32,6 @@ namespace Hl7.Fhir.Specification.Tests
     public class SnapshotGeneratorTest
 #endif
     {
-        class TimingSource : IConformanceSource
-        {
-            IConformanceSource _source;
-            TimeSpan _duration = TimeSpan.Zero;
-
-            public TimingSource(IConformanceSource source) { _source = source; }
-
-            public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
-                => measureDuration(() => _source.FindConceptMaps(sourceUri, targetUri));
-
-            public NamingSystem FindNamingSystem(string uniqueid) => measureDuration(() => _source.FindNamingSystem(uniqueid));
-
-            public ValueSet FindValueSetBySystem(string system) => measureDuration(() => _source.FindValueSetBySystem(system));
-
-            public IEnumerable<string> ListResourceUris(ResourceType? filter = default(ResourceType?)) => _source.ListResourceUris(filter);
-            // => measureDuration(() => _source.ListResourceUris(filter));
-
-            public Resource ResolveByCanonicalUri(string uri) => measureDuration(() => _source.ResolveByCanonicalUri(uri));
-
-            public Resource ResolveByUri(string uri) => measureDuration(() => _source.ResolveByUri(uri));
-
-            T measureDuration<T>(Func<T> f)
-            {
-                Stopwatch sw = new Stopwatch();
-                sw.Start();
-                var result = f();
-                sw.Stop();
-                _duration += sw.Elapsed;
-                return result;
-            }
-
-            public TimeSpan Duration => _duration;
-
-            public void Reset() { _duration = TimeSpan.Zero; }
-
-            public void ShowDuration(int count, TimeSpan totalDuration)
-            {
-                var totalMs = totalDuration.TotalMilliseconds;
-                var resolverMs = _duration.TotalMilliseconds;
-                var resolverFraction = resolverMs / totalMs;
-                var snapshotMs = totalMs - resolverMs;
-                var snapshotFraction = snapshotMs / totalMs;
-                // Debug.Print($"Generated {count} snapshots in {totalMs} ms = {sourceMs} ms (resolver) + {snapshotMs} (snapshot) ({perc:2}%), on average {avg} ms per snapshot.");
-                Console.WriteLine($"Generated {count} snapshots in {totalMs} ms = {resolverMs} ms (resolver) ({resolverFraction:P0}) + {snapshotMs} (snapshot) ({snapshotFraction:P0}).");
-                var totalAvg = totalMs / count;
-                var resolverAvg = resolverMs / count;
-                var snapshotAvg = snapshotMs / count;
-                Console.WriteLine($"Average per resource: {totalAvg} = {resolverAvg} ms (resolver) + {snapshotAvg} ms (snapshot)");
-            }
-
-        }
-
         SnapshotGenerator _generator;
         IResourceResolver _testResolver;
         TimingSource _source;
@@ -563,77 +511,6 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 Assert.AreEqual(elementId, elem.ElementId, $"Invalid elementId in {label} component. Expected = '{elementId}', actual = '{elem.ElementId}'.");
             }
-        }
-
-        // Helper class to verify results
-        class ElementVerifier
-        {
-            IList<ElementDefinition> _elements;
-            ElementDefinition _current;
-            SnapshotGeneratorSettings _settings;
-            int _pos;
-
-            public ElementVerifier(StructureDefinition sd, SnapshotGeneratorSettings settings)
-            {
-                Assert.IsNotNull(sd);
-                Assert.IsTrue(sd.HasSnapshot);
-                _settings = settings;
-                _elements = sd.Snapshot.Element;
-                _pos = 0;
-                var ann = sd.Annotation<OriginInformation>();
-                Debug.Print($"Assert structure: url = '{sd.Url}' - origin = '{ann.Origin}'");
-            }
-
-            public ElementVerifier(IList<ElementDefinition> elements, SnapshotGeneratorSettings settings)
-            {
-                _settings = settings;
-                _elements = elements;
-                _settings = settings;
-                _pos = 0;
-            }
-
-            public ElementDefinition CurrentElement => _current;
-
-            // Find first element with matching path
-            // Continue at the final element position from the last call to this method (or 0)
-            // Search matching element in forward direction
-            // Optionally verify specified name / id / fixed value
-            public void VerifyElement(string path, string name = null, string elementId = null, Element fixedValue = null)
-            {
-                var elements = _elements;
-                while (_pos < _elements.Count)
-                {
-                    var element = _current = elements[_pos++];
-                    if (element.Path == path)
-                    {
-                        if (name != null)
-                        {
-                            Assert.AreEqual(name, element.Name, $"Invalid element name. Expected = '{name}', actual = '{element.Name}'.");
-                        }
-                        if (_settings.GenerateElementIds && elementId != null)
-                        {
-                            Assert.AreEqual(elementId, element.ElementId, $"Invalid elementId. Expected = '{elementId}', actual = '{element.ElementId}'.");
-                        }
-                        if (fixedValue != null)
-                        {
-                            Assert.IsTrue(element.Fixed != null && fixedValue.IsExactly(element.Fixed), $"Invalid fixed value. Expected = '{fixedValue}', actual = '{element.Fixed}'.");
-                        }
-                        return;
-                    }
-                }
-                Assert.Fail($"No matching element found for path '{path}'");
-            }
-
-            public void AssertSlicing(IEnumerable<string> discriminator, ElementDefinition.SlicingRules? rules, bool? ordered)
-            {
-                var slicing = Current.Slicing;
-                Assert.IsNotNull(slicing);
-                Assert.IsTrue(discriminator.SequenceEqual(slicing.Discriminator), $"Invalid discriminator for element with path '{Current.Path}' - Expected: '{string.Join(",", discriminator)}' Actual: '{string.Join(",", slicing.Discriminator)}' ");
-                Assert.AreEqual(slicing.Rules, rules);
-                Assert.AreEqual(slicing.Ordered, ordered);
-            }
-
-            public ElementDefinition Current => _current;
         }
 
         StructureDefinition generateSnapshot(string url, Action<StructureDefinition> preprocessor = null)
@@ -2891,24 +2768,6 @@ namespace Hl7.Fhir.Specification.Tests
             assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT);
         }
 
-        class InMemoryProfileResolver : IResourceResolver
-        {
-            ILookup<string, Resource> _resources;
-
-            public InMemoryProfileResolver(params IConformanceResource[] profiles) : this(profiles.AsEnumerable()) { }
-
-            public InMemoryProfileResolver(IEnumerable<IConformanceResource> profiles)
-            {
-                _resources = profiles.ToLookup(r => r.Url, r => r as Resource);
-            }
-
-            public InMemoryProfileResolver(IConformanceResource profile) : this(new IConformanceResource[] { profile }) { }
-
-            public Resource ResolveByCanonicalUri(string uri) => _resources[uri].FirstOrDefault();
-
-            public Resource ResolveByUri(string uri) => null;
-        }
-
         static StructureDefinition ClosedExtensionSliceObservationProfile => new StructureDefinition()
         {
             ConstrainedType = FHIRDefinedType.Observation,
@@ -3310,20 +3169,5 @@ namespace Hl7.Fhir.Specification.Tests
 
     }
 
-    public static class IListExtensions
-    {
-        public static int FindIndex<T>(this IList<T> list, Predicate<T> match)
-        {
-            if (list == null) { throw new ArgumentNullException(nameof(list)); }
-            if (match == null) { throw new ArgumentNullException(nameof(match)); }
-
-            for (int i = 0; i < list.Count; i++)
-            {
-                if (match(list[i])) { return i; }
-            }
-
-            return -1;
-        }
-    }
 }
 
