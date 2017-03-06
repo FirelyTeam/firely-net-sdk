@@ -9,6 +9,9 @@
 // Accept multiple renamed choice type elements (Chris Grenz)
 #define MULTIPLE_RENAMED_CHOICE_TYPES
 
+// [WMR 20170306] NEW - Merge slices with correct (unmerged) base element
+#define NEW_SLICE_BASE
+
 // [WMR 20161208] NEW
 // Ewout:
 // (1) Type slice: slicing constraints on choice type element "value[x]"
@@ -71,6 +74,11 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             /// <summary>Represents an element in the base profile.</summary>
             public Bookmark BaseBookmark;
+
+#if NEW_SLICE_BASE
+            // [WMR 20170306] NEW - For sliced elements, returns a clone of snap.Base
+            public ElementDefinitionNavigator SliceBaseNav;
+#endif
 
             /// <summary>Represents a matching element in the differential.</summary>
             public Bookmark DiffBookmark;
@@ -310,6 +318,15 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
             }
 
+#if NEW_SLICE_BASE
+            // [WMR 20170306] First save a copy of the original, unmerged base element(s) (recursively)
+            // Then process all the slices and merge with original element(s)
+            // Cannot use bookmark, as following slices will then be merged with already merged base element - WRONG!
+            var sliceBaseNav = new ElementDefinitionNavigator(new ElementDefinition[] { (ElementDefinition)snapNav.Current.DeepCopy() });
+            sliceBaseNav.MoveToFirstChild();
+            sliceBaseNav.CopyChildren(snapNav);
+#endif
+
             // Note: if slice entry is missing from diff, then we fall back to the inherited base slicing entry
             // Strictly not valid according to FHIR rules, but we can cope
             // Caller (SnapshotGenerator.makeSlice) should emit an issue PROFILE_ELEMENTDEF_MISSING_SLICE_ENTRY
@@ -334,9 +351,15 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
                 else
                 {
+#if NEW_SLICE_BASE
+                    // Create a separate base instance for each slice
+                    var match = matchSlice(snapNav, diffNav, discriminator, defaultBase, sliceBaseNav);
+#else
                     var match = matchSlice(snapNav, diffNav, discriminator, defaultBase);
-                    result.Add(match);
+#endif
 
+                    result.Add(match);
+                    
                     // Match to base slice? Then consume and advance to next
                     if (match.Action == MatchAction.Merge)
                     {
@@ -352,7 +375,11 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Match current snapshot and differential slice elements
         // Returns an initialized MatchInfo with action = Merge | Add
         // defaultBase represents the base element for newly introduced slices
-        static MatchInfo matchSlice(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, List<string> discriminators, Bookmark defaultBase)
+        static MatchInfo matchSlice(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, List<string> discriminators, Bookmark defaultBase
+#if NEW_SLICE_BASE
+            , ElementDefinitionNavigator sliceBaseNav
+#endif
+            )
         {
             Debug.Assert(diffNav.Current.Slicing == null); // Caller must handle reslicing
 
@@ -372,6 +399,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                 else
                 {
                     match.BaseBookmark = defaultBase;
+#if NEW_SLICE_BASE
+                    // [WMR 20170306] Merge with original, unmerged base element(s)
+                    match.SliceBaseNav = sliceBaseNav;
+#endif
                     match.Action = MatchAction.Add;
                 }
                 return match;

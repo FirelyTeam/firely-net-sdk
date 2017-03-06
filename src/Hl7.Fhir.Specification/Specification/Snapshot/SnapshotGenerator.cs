@@ -22,6 +22,9 @@
 // [WMR 20170216] Prevent slices on non-repeating non-choice type elements (max = 1)
 // #define REJECT_SLICE_NONREPEATING_ELEMENT
 
+// [WMR 20170306] NEW - Merge slices with correct (unmerged) base element
+#define NEW_SLICE_BASE
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -453,7 +456,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                             mergeElement(snap, diff);
                             break;
                         case ElementMatcher.MatchAction.Add:
+#if NEW_SLICE_BASE
+                            addSlice(snap, diff, match.SliceBaseNav);
+#else
                             addSlice(snap, diff);
+#endif
                             break;
                         case ElementMatcher.MatchAction.Slice:
                             startSlice(snap, diff);
@@ -1026,7 +1033,71 @@ namespace Hl7.Fhir.Specification.Snapshot
         //   'A/2'
         //            'A/1/3'    Add
         //   'C'
-        //            
+        //
+
+#if NEW_SLICE_BASE
+        void addSlice(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff, ElementDefinitionNavigator sliceBaseNav)
+        {
+            // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(addSlice)}] Base Path = '{snap.Path}' Base Slice Name = '{snap.Current.Name}' Diff Slice Name = {sliceName}");
+
+            // base has no name => diff is new slice; add after last existing slice (if any)
+            // base is named => diff is new reslice; add after last existing reslice (if any)
+
+            // Debug.Assert(diff.Current.Name != null);
+            Debug.Assert(snap.Current.Name == null
+                // [WMR 20161219] Handle Composition.section - has default name 'section' in core resource (name reference target for Composition.section.section)
+                || IsEqualPath(snap.Path, "Composition.section")
+                || diff.Current.Name == null
+                || ElementDefinitionNavigator.IsDirectResliceOf(diff.Current.Name, snap.Current.Name));
+
+            // Append the new slice constraint to the existing slice group
+            var lastSlice = findSliceAddPosition(snap, diff);
+            bool result = false;
+            if (sliceBaseNav != null)
+            {
+                result = sliceBaseNav.Current != null;
+                if (result) { result = snap.ReturnToBookmark(lastSlice); }
+                // Copy the original (unmerged) slice base element to snapshot
+                if (result) { result = snap.InsertAfter((ElementDefinition)sliceBaseNav.Current.DeepCopy()); }
+                // Recursively copy the original (unmerged) child elements, if necessary
+                if (result && sliceBaseNav.HasChildren) {
+                    if (mustExpandElement(diff))
+                    {
+                        // WRONG...! Now always expands the full sub structure
+                        // TODO: Recursively expand each nesting, if necessary
+                        result = snap.CopyChildren(sliceBaseNav);
+                    }
+                }
+            }
+            else
+            {
+                // WRONG...! Now always expands the full sub structure
+                // TODO: Recursively expand each nesting, if necessary
+                result = snap.DuplicateAfter(lastSlice);
+            }
+            if (!result)
+            {
+                throw Error.InvalidOperation($"Internal error in snapshot generator ({nameof(addSlice)}): cannot add slice '{diff.Current}' to snapshot.");
+            }
+
+            // [WMR 20161219] Handle invalid multiple renamed choice type constraints, e.g. { valueString, valueInteger }
+            // Snapshot base element has already been renamed by the first match => re-assign
+            if (!IsEqualPath(snap.PathName, diff.PathName))
+            {
+                snap.Current.Path = diff.Current.Path;
+            }
+
+            // Important: explicitly clear the slicing node in the copy!
+            snap.Current.Slicing = null;
+
+            // Notify clients about a snapshot element with differential constraints
+            OnConstraint(snap.Current);
+
+            // Merge differential
+            mergeElement(snap, diff);
+
+        }
+#else
         void addSlice(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
             // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(addSlice)}] Base Path = '{snap.Path}' Base Slice Name = '{snap.Current.Name}' Diff Slice Name = {sliceName}");
@@ -1063,6 +1134,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             mergeElement(snap, diff);
 
         }
+#endif
 
         // Search snapshot slice group for suitable position to add new diff slice
         // If the snapshot contains a matching base slice element, then append after reslice group
