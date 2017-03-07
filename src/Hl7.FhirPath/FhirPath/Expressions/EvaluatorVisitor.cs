@@ -9,7 +9,7 @@ using FP = Hl7.FhirPath.Expressions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Furore.Support;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.FhirPath.Expressions
 {

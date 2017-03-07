@@ -8,5 +8,5 @@ using System.Runtime.InteropServices;
 [assembly: CLSCompliant(true)]
 
 #if DEBUG
-[assembly: InternalsVisibleTo("Hl7.FhirPath.Tests")]
+[assembly: InternalsVisibleTo("Hl7.Fhir.Support.Tests")]
 #endif

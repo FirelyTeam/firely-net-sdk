@@ -9,7 +9,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.ElementModel;
-using Furore.Support;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.FhirPath.Functions
 {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Hl7.Fhir.ElementModel;
 using System.Diagnostics;
-using Furore.Support;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.FhirPath.Functions
 {

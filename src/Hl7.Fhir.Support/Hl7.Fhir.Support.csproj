@@ -7,12 +7,12 @@
   <Import Project="..\fhir-net-fhirpath.props" />
 
   <PropertyGroup>
-    <PackageId>Hl7.FhirPath</PackageId>
-    <Product>HL7 FhirPath evaluator</Product>
-    <Description>Runtime environment for executing HL7 FhirPath queries and invariants.</Description>
-    <Summary>This library contains a runtime environment for executing HL7 FhirPath queries and invariants. It is used by the HL7 .NET FHIR API (https://www.nuget.org/packages/Hl7.Fhir.DSTU2) to run validation for the HL7 FHIR object model.</Summary>
-    <PackageTags>HL7;FluentPath;FhirPath;query language;CQL;FHIR</PackageTags>
-    <AssemblyName>Hl7.FhirPath</AssemblyName>
+    <PackageId>Hl7.Fhir.Support</PackageId>
+    <Product>Common interfaces and classes used by all FHIR .NET assemblies</Product>
+    <Description>Common interfaces and classes used by all FHIR .NET assemblies</Description>
+    <Summary>Common interfaces and classes used by all FHIR .NET assemblies</Summary>
+    <PackageTags>HL7;FHIR;Elements;Utility</PackageTags>
+    <AssemblyName>Hl7.Fhir.Support</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -28,9 +28,5 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
   </ItemGroup>
 </Project>

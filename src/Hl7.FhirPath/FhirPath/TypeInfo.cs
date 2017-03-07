@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Hl7.Fhir.ElementModel;
-using Furore.Support;
 using Hl7.Fhir.Model.Primitives;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.FhirPath
 {

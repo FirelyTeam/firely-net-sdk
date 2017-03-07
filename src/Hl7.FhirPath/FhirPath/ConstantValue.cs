@@ -8,9 +8,9 @@
 
 using Hl7.FhirPath.Functions;
 using System;
-using Furore.Support;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model.Primitives;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.FhirPath
 {
