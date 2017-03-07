@@ -5,7 +5,7 @@
 * This file is licensed under the BSD 3-Clause license
 */
 
-using Hl7.ElementModel;
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System.Collections.Generic;
@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Support
 
         public static bool IsAt(this OperationOutcome.IssueComponent issue, IElementNavigator location)
         {
-            return issue.IsAt(location.Path);
+            return issue.IsAt(location.Location);
         }
 
     }

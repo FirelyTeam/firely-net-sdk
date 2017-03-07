@@ -1,12 +1,8 @@
-﻿using Hl7.ElementModel;
-using Hl7.Fhir.FhirPath;
+﻿using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hl7.Fhir
 {
@@ -29,26 +25,26 @@ namespace Hl7.Fhir
 
             var patient = new PocoNavigator(p);
 
-            Assert.AreEqual("Patient", patient.Path);
+            Assert.AreEqual("Patient", patient.Location);
 
             patient.MoveToFirstChild();
-            Assert.AreEqual("Patient.active[0]", patient.Path);
+            Assert.AreEqual("Patient.active[0]", patient.Location);
             Assert.AreEqual("Patient.active", patient.ShortPath);
 
             patient.MoveToFirstChild();
-            Assert.AreEqual("Patient.active[0].id[0]", patient.Path);
+            Assert.AreEqual("Patient.active[0].id[0]", patient.Location);
 
             Assert.IsTrue(patient.MoveToNext());
-            Assert.AreEqual("Patient.active[0].extension[0]", patient.Path);
+            Assert.AreEqual("Patient.active[0].extension[0]", patient.Location);
 
             PocoNavigator v1 = patient.Clone() as PocoNavigator;
             v1.MoveToFirstChild();
             v1.MoveToNext();
-            Assert.AreEqual("Patient.active[0].extension[0].value[0]", v1.Path);
+            Assert.AreEqual("Patient.active[0].extension[0].value[0]", v1.Location);
             Assert.AreEqual("Patient.active.extension[0].value", v1.ShortPath);
 
             PocoNavigator v2 = patient.Clone() as PocoNavigator; v2.MoveToNext(); v2.MoveToFirstChild(); v2.MoveToNext();
-            Assert.AreEqual("Patient.active[0].extension[1].value[0]", v2.Path);
+            Assert.AreEqual("Patient.active[0].extension[1].value[0]", v2.Location);
             Assert.AreEqual("Patient.active.extension[1].value", v2.ShortPath);
             Assert.AreEqual("Patient.active.extension('http://something.org').value", v1.CommonPath);
 
@@ -58,7 +54,7 @@ namespace Hl7.Fhir
             v3.MoveToNext();
             v3.MoveToNext();
             v3.MoveToFirstChild();
-            Assert.AreEqual("Patient.telecom[0].system[0]", v3.Path);
+            Assert.AreEqual("Patient.telecom[0].system[0]", v3.Location);
             Assert.AreEqual("Patient.telecom[0].system", v3.ShortPath);
             Assert.AreEqual("Patient.telecom.where(system='phone').system", v3.CommonPath);
         }

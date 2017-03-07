@@ -6,15 +6,14 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.ElementModel;
 using Hl7.Fhir.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Introspection;
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.FhirPath
 {
@@ -84,7 +83,7 @@ namespace Hl7.Fhir.FhirPath
         /// <summary>
         /// Return the FHIR TypeName
         /// </summary>
-        public string TypeName
+        public string Type
         {
             get
             {
@@ -106,7 +105,7 @@ namespace Hl7.Fhir.FhirPath
             }
         }
 
-        public string Path
+        public string Location
         {
             get
             {
@@ -251,7 +250,7 @@ namespace Hl7.Fhir.FhirPath
             {
                 lock(this)
                 {
-                    _parentPath = Path;
+                    _parentPath = Location;
                     _parentShortPath = ShortPath;
                     _parentCommonPath = CommonPath;
                     _siblings = Current.Children() as List<PocoElementNavigator>;

@@ -6,7 +6,7 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.ElementModel;
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
@@ -29,11 +29,11 @@ namespace Hl7.Fhir.Validation
         {
             _profileResolver = profileResolver;
             _snapshotGenerator = snapshotGenerator;
-            _path = instance.Path;
+            _path = instance.Location;
 
             _profiles = new ProfileAssertion(_path, _profileResolver);
 
-            if (instance.TypeName != null) _profiles.SetInstanceType(ModelInfo.CanonicalUriForFhirCoreType(instance.TypeName));
+            if (instance.Type != null) _profiles.SetInstanceType(ModelInfo.CanonicalUriForFhirCoreType(instance.Type));
             if (declaredTypeProfile != null) _profiles.SetDeclaredType(declaredTypeProfile);
 
             // This is only for resources, but I don't bother checking, since this will return empty anyway

@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Utility;
 #if DOTNETFW
 using System.Runtime.Serialization;
 #endif

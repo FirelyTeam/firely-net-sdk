@@ -17,6 +17,7 @@ using System.Xml.Linq;
 using System.Xml;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -161,26 +162,6 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-
-        internal class BetterDecimalJsonTextWriter : JsonTextWriter
-        {
-            public BetterDecimalJsonTextWriter(TextWriter textWriter) : base(textWriter)
-            {
-            }
-
-            public override void WriteValue(decimal value)
-            {
-                WriteRawValue(value.ToString(this.Culture));
-            }
-
-            public override void WriteValue(decimal? value)
-            {
-                if (value.HasValue)
-                    WriteRawValue(value.Value.ToString(this.Culture));
-                else
-                    WriteNull();
-            }
-        }
 
         private static string jsonWriterToString(Action<JsonWriter> serializer)
         {

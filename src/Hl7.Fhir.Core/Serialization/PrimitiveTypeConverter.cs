@@ -12,6 +12,7 @@ using Hl7.Fhir.Support;
 using Hl7.Fhir.Model;
 using System.Reflection;
 using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -94,7 +95,7 @@ namespace Hl7.Fhir.Serialization
             if (value is Enum)
                 return ((Enum)value).GetLiteral();
 
-            throw Error.NotSupported("Cannot convert {0} value '{1}' to string", value.GetType().Name, value);
+            throw Error.NotSupported($"Cannot convert '{value.GetType().Name}' value '{value}' to string");
         }
         
         private static object convertXmlStringToPrimitive(Type to, string value)
@@ -136,13 +137,13 @@ namespace Hl7.Fhir.Serialization
             if (to.IsEnum())
             {
                 var result = EnumUtility.ParseLiteral(value, to);
-                if(result == null)
-                    throw Error.NotSupported("String value '{0}' is not a known literal in enum '{1}'", value, to.Name);
+                if (result == null)
+                    throw Error.NotSupported($"String value '{value}' is not a known literal in enum '{to.Name}'");
 
                 return result;
             }
 
-            throw Error.NotSupported("Cannot convert string value '{0}' to a {1}", value, to.Name);
+            throw Error.NotSupported($"Cannot convert string value '{value}' to a {to.Name}");
         }
 
 

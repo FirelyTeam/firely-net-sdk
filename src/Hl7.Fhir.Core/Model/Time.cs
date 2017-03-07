@@ -42,10 +42,10 @@ namespace Hl7.Fhir.Model
     [System.Diagnostics.DebuggerDisplay(@"\{{Value}}")]
     public partial class Time : IStringValue
     {
-        public Hl7.FhirPath.Time? ToTime()
+        public Primitives.PartialTime? ToTime()
         {
             if (Value != null)
-                return Hl7.FhirPath.Time.Parse(Value);
+                return Primitives.PartialTime.Parse(Value);
             else
                 return null;
         }
@@ -66,7 +66,7 @@ namespace Hl7.Fhir.Model
             if (aValue == null) return bValue == null;
             if (bValue == null) return false;
 
-            return Hl7.FhirPath.Time.Parse(a.Value) > Hl7.FhirPath.Time.Parse(b.Value);
+            return Primitives.PartialTime.Parse(a.Value) > Primitives.PartialTime.Parse(b.Value);
         }
 
         public static bool operator >=(Time a, Time b)
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
             if (aValue == null) return bValue == null;
             if (bValue == null) return false;
 
-            return Hl7.FhirPath.Time.Parse(a.Value) >= Hl7.FhirPath.Time.Parse(b.Value);
+            return Primitives.PartialTime.Parse(a.Value) >= Primitives.PartialTime.Parse(b.Value);
         }
 
         public static bool operator <(Time a, Time b)
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
             if (aValue == null) return bValue == null;
             if (bValue == null) return false;
 
-            return Hl7.FhirPath.Time.Parse(a.Value) < Hl7.FhirPath.Time.Parse(b.Value);
+            return Primitives.PartialTime.Parse(a.Value) < Primitives.PartialTime.Parse(b.Value);
         }
 
         public static bool operator <=(Time a, Time b)
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
             if (aValue == null) return bValue == null;
             if (bValue == null) return false;
 
-            return Hl7.FhirPath.Time.Parse(a.Value) <= Hl7.FhirPath.Time.Parse(b.Value);
+            return Primitives.PartialTime.Parse(a.Value) <= Primitives.PartialTime.Parse(b.Value);
         }
 
         /// <summary>
@@ -136,8 +136,8 @@ namespace Hl7.Fhir.Model
 
                 if (this.Value == otherValue) return true; // Default reference/string comparison works in most cases
 
-                var left = Hl7.FhirPath.Time.Parse(Value);
-                var right = Hl7.FhirPath.Time.Parse(otherValue);
+                var left = Primitives.PartialTime.Parse(Value);
+                var right = Primitives.PartialTime.Parse(otherValue);
 
                 return left == right;
             }

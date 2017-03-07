@@ -6,12 +6,8 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using System.Linq;
-using System.Collections.Generic;
-using Hl7.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
-using System;
 
 namespace Hl7.Fhir.Validation
 {

@@ -22,7 +22,6 @@
 
   
   <ItemGroup>
-    <PackageReference Include="Hl7.FhirPath" Version="0.4.1" />
     <PackageReference Include="System.ComponentModel" Version="4.3.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.3.0" />
     <PackageReference Include="System.ComponentModel.Primitives" Version="4.3.0" />
@@ -37,10 +36,6 @@
     <None Remove="specification.zip" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Hl7.Fhir.Core\Support\Error.cs" Link="Support\Error.cs" />
-    <Compile Include="..\Hl7.Fhir.Core\Support\StringExtensions.cs" Link="Support\StringExtensions.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="install.ps1">
       <Pack>true</Pack>
       <PackagePath>tools</PackagePath>
@@ -52,6 +47,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\fhir-net-fhirpath\src\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
+    <ProjectReference Include="..\..\..\fhir-net-fhirpath\src\Hl7.FhirPath\Hl7.FhirPath.csproj" />
     <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.DSTU2.csproj" />
   </ItemGroup>
   <Target Name="BeforeBuild" Inputs="@(FhirConformance)" Outputs="specification.zip">

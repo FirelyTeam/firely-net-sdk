@@ -55,10 +55,10 @@ namespace Hl7.Fhir.Model
             return new Instant(DateTimeOffset.Now);
         }
 
-        public Hl7.FhirPath.PartialDateTime? ToPartialDateTime()
+        public Primitives.PartialDateTime? ToPartialDateTime()
         {
             if (Value != null)
-                return PartialDateTime.FromDateTime(Value.Value);
+                return Primitives.PartialDateTime.FromDateTime(Value.Value);
             else
                 return null;
         }
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Model
             if (aValue == null) return bValue == null;
             if (bValue == null) return false;
 
-            return PartialDateTime.FromDateTime(a.Value.Value) > PartialDateTime.FromDateTime(b.Value.Value);
+            return Primitives.PartialDateTime.FromDateTime(a.Value.Value) > Primitives.PartialDateTime.FromDateTime(b.Value.Value);
         }
 
         public static bool operator >=(Instant a, Instant b)
@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Model
             if (aValue == null) return bValue == null;
             if (bValue == null) return false;
 
-            return PartialDateTime.FromDateTime(a.Value.Value) >= PartialDateTime.FromDateTime(b.Value.Value);
+            return Primitives.PartialDateTime.FromDateTime(a.Value.Value) >= Primitives.PartialDateTime.FromDateTime(b.Value.Value);
         }
 
         public static bool operator <(Instant a, Instant b)
@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Model
             if (aValue == null) return bValue == null;
             if (bValue == null) return false;
 
-            return PartialDateTime.FromDateTime(a.Value.Value) < PartialDateTime.FromDateTime(b.Value.Value);
+            return Primitives.PartialDateTime.FromDateTime(a.Value.Value) < Primitives.PartialDateTime.FromDateTime(b.Value.Value);
         }
 
         public static bool operator <=(Instant a, Instant b)
@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Model
             if (aValue == null) return bValue == null;
             if (bValue == null) return false;
 
-            return PartialDateTime.FromDateTime(a.Value.Value) <= PartialDateTime.FromDateTime(b.Value.Value);
+            return Primitives.PartialDateTime.FromDateTime(a.Value.Value) <= Primitives.PartialDateTime.FromDateTime(b.Value.Value);
         }
 
         /// <summary>
@@ -152,8 +152,8 @@ namespace Hl7.Fhir.Model
 
                 if (this.Value == otherValue) return true; // Default reference/string comparison works in most cases
 
-                var left = PartialDateTime.FromDateTime(Value.Value);
-                var right = PartialDateTime.FromDateTime(otherValue.Value);
+                var left = Primitives.PartialDateTime.FromDateTime(Value.Value);
+                var right = Primitives.PartialDateTime.FromDateTime(otherValue.Value);
 
                 return left == right;
             }
