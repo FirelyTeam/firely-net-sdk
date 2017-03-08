@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             return sliceBase;
         }
 
-        static List<MatchInfo> constructSliceMatch(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
+        static List<MatchInfo> constructSliceMatch(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, ElementDefinitionNavigator sliceBase = null)
         {
             var result = new List<MatchInfo>();
 
@@ -327,7 +327,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     Action = MatchAction.Slice,
                     BaseBookmark = snapSliceEntry,
-                    DiffBookmark = diffIsSliced ? diffNav.Bookmark() : Bookmark.Empty
+                    DiffBookmark = diffIsSliced ? diffNav.Bookmark() : Bookmark.Empty,
+                    // [WMR 20170308] If this is a recursive call (e.g. named slice with slicing component = reslice),
+                    // then explicitly override default base with specified slice base element
+                    SliceBase = sliceBase
                 });
 
                 // Skip any existing slicing entry in the differential; below we process the actual slices
@@ -340,7 +343,10 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             // [WMR 20170308] NEW - Clone slice base element
-            var sliceBase = initSliceBase(snapNav);
+            if (sliceBase == null)
+            {
+                sliceBase = initSliceBase(snapNav);
+            }
 
             // ALTERNATIVE APPROACH
             // ElementMatcher should duplicate (unmerged!) snap base element, then return bookmark to new duplicate as slice base
@@ -370,10 +376,12 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             do
             {
+                // Named slice with a slice entry introduces a re-slice
                 if (diffNav.Current.Slicing != null)
                 {
-                    // Current slice introduces a re-slice; recursively collect
-                    var reslices = constructSliceMatch(snapNav, diffNav);
+                    // Recursively collect nested re-slice matches
+                    // Re-use the existing slice base for the internal re-slices defined within the same profile
+                    var reslices = constructSliceMatch(snapNav, diffNav, sliceBase);
                     result.AddRange(reslices);
                 }
                 else

@@ -3244,7 +3244,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public void TestSliceBase()
+        public void TestSliceBase_SlicedPatient()
         {
             var profile = SlicedPatientProfile;
 
@@ -3262,6 +3262,7 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 _generator.PrepareElement -= elementHandler;
             }
+            dumpOutcome(_generator.Outcome);
 
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
@@ -3305,6 +3306,366 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("ehr_id", nav.Current.Name);
             Assert.AreEqual(0, nav.Current.Min);
             Assert.AreEqual("2", nav.Current.Max);
+        }
+
+        static StructureDefinition NationalPatientProfile => new StructureDefinition()
+        {
+            ConstrainedType = FHIRDefinedType.Patient,
+            Base = ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Patient),
+            Name = "MyNationalPatient",
+            Url = "http://example.org/fhir/StructureDefinition/MyNationalPatient",
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("Patient.identifier")
+                    {
+                        Comments = "NationalPatientProfile"
+                    },
+                    new ElementDefinition("Patient.identifier.system")
+                    {
+                        Min = 1
+                    }
+                }
+            }
+        };
+
+        static StructureDefinition SlicedNationalPatientProfile => new StructureDefinition()
+        {
+            ConstrainedType = FHIRDefinedType.Patient,
+            Base = "http://example.org/fhir/StructureDefinition/MyNationalPatient",
+            Name = "SlicedNationalPatientProfile",
+            Url = "http://example.org/fhir/StructureDefinition/SlicedNationalPatientProfile",
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("Patient.identifier")
+                    {
+                        Slicing = new ElementDefinition.SlicingComponent()
+                        {
+                            Discriminator = new string[] { "system" },
+                            Ordered = false,
+                            Rules = ElementDefinition.SlicingRules.Open
+                        },
+                        Min = 1,
+                        // Append to comment inherited from base
+                        Comments = "...SlicedNationalPatientProfile"
+                    }
+                    // Slice: bsn
+                    ,new ElementDefinition("Patient.identifier")
+                    {
+                        Name = "bsn",
+                        Min = 1,
+                        Max = "1"
+                    },
+                    new ElementDefinition("Patient.identifier.system")
+                    {
+                        Fixed = new FhirUri("http://example.org/fhir/ValueSet/bsn")
+                    },
+                    // Slice: ehr_id
+                    new ElementDefinition("Patient.identifier")
+                    {
+                        Name = "ehr_id",
+                        Max = "2",
+#if false
+                        // Re-slice the ehr-id
+                        Slicing = new ElementDefinition.SlicingComponent()
+                        {
+                            Discriminator = new string[] { "use" },
+                            Ordered = true,
+                            Rules = ElementDefinition.SlicingRules.Closed
+                        }
+#endif
+                    },
+#if false
+                    // Reslice: ehr-id/temp
+                    new ElementDefinition("Patient.identifier")
+                    {
+                        Name = "ehr_id/temp",
+                        Max = "1",
+                    },
+                    new ElementDefinition("Patient.identifier.use")
+                    {
+                        // Fixed = new Code<Identifier.IdentifierUse>(Identifier.IdentifierUse.Temp)
+                        Fixed = new Code("temp")
+                    }
+#endif
+                }
+            }
+        };
+
+        [TestMethod]
+        public void TestSliceBase_SlicedNationalPatient()
+        {
+            var baseProfile = NationalPatientProfile;
+            var profile = SlicedNationalPatientProfile;
+
+            var resolver = new InMemoryProfileResolver(baseProfile, profile);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            _generator = new SnapshotGenerator(multiResolver);
+            StructureDefinition expanded = null;
+
+            _generator.PrepareElement += elementHandler;
+            try
+            {
+                generateSnapshotAndCompare(profile, out expanded);
+            }
+            finally
+            {
+                _generator.PrepareElement -= elementHandler;
+            }
+            dumpOutcome(_generator.Outcome);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            var identifierConstraints = expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Patient.identifier"));
+
+            dumpElements(identifierConstraints, "Constraints on Patient.identifier:");
+
+            var nationalPatientProfile = resolver.FindStructureDefinition(profile.Base);
+            Assert.IsNotNull(nationalPatientProfile);
+            Assert.IsTrue(nationalPatientProfile.HasSnapshot);
+            var nationalPatientIdentifierElem = nationalPatientProfile.Snapshot.Element.FirstOrDefault(e => e.Path == "Patient.identifier");
+            Assert.IsNotNull(nationalPatientIdentifierElem);
+            Debug.Print($"Base: #{nationalPatientIdentifierElem.GetHashCode()} '{nationalPatientIdentifierElem.Path}'");
+
+            dumpBaseElems(identifierConstraints);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.MoveToFirstChild());
+
+            // Verify slice entry
+            Assert.IsTrue(nav.MoveToChild("identifier"));
+            Assert.AreEqual(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+            Assert.IsNotNull(nav.Current.Slicing);
+            Assert.IsNull(nav.Current.Name);
+            Assert.AreEqual(1, nav.Current.Min);
+            Assert.AreEqual("*", nav.Current.Max);
+            // Slice entry should inherit Comments from base element, merged with diff constraints
+            Assert.AreEqual("NationalPatientProfile\r\nSlicedNationalPatientProfile", nav.Current.Comments);
+            // Slice entry should also inherit constraints on child elements from base element
+            var bm = nav.Bookmark();
+            Assert.IsTrue(nav.MoveToChild("system"));
+            Assert.AreEqual(nav.Current.Min, 1);
+            Assert.IsTrue(nav.ReturnToBookmark(bm));
+
+            // Verify slice "bsn"
+            Assert.IsTrue(nav.MoveToNextSlice());
+            Assert.AreEqual(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+            Assert.IsNull(nav.Current.Slicing);
+            Assert.AreEqual("bsn", nav.Current.Name);
+            Assert.AreEqual(1, nav.Current.Min);
+            Assert.AreEqual("1", nav.Current.Max);
+            // Named slices should inherit Comments from base element
+            Assert.AreEqual("NationalPatientProfile", nav.Current.Comments);
+            // Named slices should also inherit constraints on child elements from base element
+            bm = nav.Bookmark();
+            Assert.IsTrue(nav.MoveToChild("system"));
+            Assert.AreEqual(nav.Current.Min, 1);
+            // Should be merged with diff constraints on child elements
+            Assert.AreEqual((nav.Current.Fixed as FhirUri).Value, "http://example.org/fhir/ValueSet/bsn");
+            Assert.IsTrue(nav.ReturnToBookmark(bm));
+
+            // Verify slice "ehr_id"
+            Assert.IsTrue(nav.MoveToNextSlice());
+            Assert.AreEqual(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+            Assert.IsNull(nav.Current.Slicing);
+            Assert.AreEqual("ehr_id", nav.Current.Name);
+            Assert.AreEqual(0, nav.Current.Min);
+            Assert.AreEqual("2", nav.Current.Max);
+            // Named slices should inherit Comments from base element
+            Assert.AreEqual("NationalPatientProfile", nav.Current.Comments);
+            // Named slices should also inherit constraints on child elements from base element
+            bm = nav.Bookmark();
+            Assert.IsTrue(nav.MoveToChild("system"));
+            Assert.AreEqual(nav.Current.Min, 1);
+            Assert.IsTrue(nav.ReturnToBookmark(bm));
+
+#if false
+            // Verify re-slice "ehr_id/temp"
+            Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
+            Assert.AreEqual(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+            Assert.IsNull(nav.Current.Slicing);
+            Assert.AreEqual("ehr_id/temp", nav.Current.Name);
+            Assert.AreEqual(0, nav.Current.Min);
+            Assert.AreEqual("1", nav.Current.Max);
+            // Named slices should inherit Comments from base element
+            Assert.AreEqual("NationalPatientProfile", nav.Current.Comments);
+            // Named slices should also inherit constraints on child elements from base element
+            bm = nav.Bookmark();
+            Assert.IsTrue(nav.MoveToChild("system"));
+            Assert.AreEqual(nav.Current.Min, 1);
+            Assert.IsTrue(nav.ReturnToBookmark(bm));
+#endif
+        }
+
+        static StructureDefinition ReslicedNationalPatientProfile => new StructureDefinition()
+        {
+            ConstrainedType = FHIRDefinedType.Patient,
+            Base = "http://example.org/fhir/StructureDefinition/MyNationalPatient",
+            Name = "ReslicedNationalPatientProfile",
+            Url = "http://example.org/fhir/StructureDefinition/ReslicedNationalPatientProfile",
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("Patient.identifier")
+                    {
+                        Slicing = new ElementDefinition.SlicingComponent()
+                        {
+                            Discriminator = new string[] { "system" },
+                            Ordered = false,
+                            Rules = ElementDefinition.SlicingRules.Open
+                        },
+                        Min = 1,
+                        // Append to comment inherited from base
+                        Comments = "...SlicedNationalPatientProfile"
+                    }
+                    // Slice: bsn
+                    ,new ElementDefinition("Patient.identifier")
+                    {
+                        Name = "bsn",
+                        Min = 1,
+                        Max = "1"
+                    },
+                    new ElementDefinition("Patient.identifier.system")
+                    {
+                        Fixed = new FhirUri("http://example.org/fhir/ValueSet/bsn")
+                    },
+                    // Slice: ehr_id
+                    new ElementDefinition("Patient.identifier")
+                    {
+                        Name = "ehr_id",
+                        Max = "2",
+
+                        // Re-slice the ehr-id
+                        Slicing = new ElementDefinition.SlicingComponent()
+                        {
+                            Discriminator = new string[] { "use" },
+                            Ordered = true,
+                            Rules = ElementDefinition.SlicingRules.Closed
+                        }
+                    },
+
+                    // Reslice: ehr-id/temp
+                    new ElementDefinition("Patient.identifier")
+                    {
+                        Name = "ehr_id/temp",
+                        Max = "1",
+                    },
+                    new ElementDefinition("Patient.identifier.use")
+                    {
+                        // Fixed = new Code<Identifier.IdentifierUse>(Identifier.IdentifierUse.Temp)
+                        Fixed = new Code("temp")
+                    }
+                }
+            }
+        };
+
+        [TestMethod]
+        public void TestSliceBase_ReslicedNationalPatient()
+        {
+            var baseProfile = NationalPatientProfile;
+            var profile = ReslicedNationalPatientProfile;
+
+            var resolver = new InMemoryProfileResolver(baseProfile, profile);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            _generator = new SnapshotGenerator(multiResolver);
+            StructureDefinition expanded = null;
+
+            _generator.PrepareElement += elementHandler;
+            try
+            {
+                generateSnapshotAndCompare(profile, out expanded);
+            }
+            finally
+            {
+                _generator.PrepareElement -= elementHandler;
+            }
+            dumpOutcome(_generator.Outcome);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            var identifierConstraints = expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Patient.identifier"));
+
+            dumpElements(identifierConstraints, "Constraints on Patient.identifier:");
+
+            var nationalPatientProfile = resolver.FindStructureDefinition(profile.Base);
+            Assert.IsNotNull(nationalPatientProfile);
+            Assert.IsTrue(nationalPatientProfile.HasSnapshot);
+            var nationalPatientIdentifierElem = nationalPatientProfile.Snapshot.Element.FirstOrDefault(e => e.Path == "Patient.identifier");
+            Assert.IsNotNull(nationalPatientIdentifierElem);
+            Debug.Print($"Base: #{nationalPatientIdentifierElem.GetHashCode()} '{nationalPatientIdentifierElem.Path}'");
+
+            dumpBaseElems(identifierConstraints);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.MoveToFirstChild());
+
+            // Verify slice entry
+            Assert.IsTrue(nav.MoveToChild("identifier"));
+            Assert.AreEqual(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+            Assert.IsNotNull(nav.Current.Slicing);
+            Assert.IsNull(nav.Current.Name);
+            Assert.AreEqual(1, nav.Current.Min);
+            Assert.AreEqual("*", nav.Current.Max);
+            // Slice entry should inherit Comments from base element, merged with diff constraints
+            Assert.AreEqual("NationalPatientProfile\r\nSlicedNationalPatientProfile", nav.Current.Comments);
+            // Slice entry should also inherit constraints on child elements from base element
+            var bm = nav.Bookmark();
+            Assert.IsTrue(nav.MoveToChild("system"));
+            Assert.AreEqual(nav.Current.Min, 1);
+            Assert.IsTrue(nav.ReturnToBookmark(bm));
+
+            // Verify slice "bsn"
+            Assert.IsTrue(nav.MoveToNextSlice());
+            Assert.AreEqual(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+            Assert.IsNull(nav.Current.Slicing);
+            Assert.AreEqual("bsn", nav.Current.Name);
+            Assert.AreEqual(1, nav.Current.Min);
+            Assert.AreEqual("1", nav.Current.Max);
+            // Named slices should inherit Comments from base element
+            Assert.AreEqual("NationalPatientProfile", nav.Current.Comments);
+            // Named slices should also inherit constraints on child elements from base element
+            bm = nav.Bookmark();
+            Assert.IsTrue(nav.MoveToChild("system"));
+            Assert.AreEqual(nav.Current.Min, 1);
+            // Should be merged with diff constraints on child elements
+            Assert.AreEqual((nav.Current.Fixed as FhirUri).Value, "http://example.org/fhir/ValueSet/bsn");
+            Assert.IsTrue(nav.ReturnToBookmark(bm));
+
+            // Verify slice "ehr_id"
+            Assert.IsTrue(nav.MoveToNextSlice());
+            Assert.AreEqual(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+            Assert.IsNotNull(nav.Current.Slicing);
+            Assert.AreEqual("ehr_id", nav.Current.Name);
+            Assert.AreEqual(0, nav.Current.Min);
+            Assert.AreEqual("2", nav.Current.Max);
+            // Named slices should inherit Comments from base element
+            Assert.AreEqual("NationalPatientProfile", nav.Current.Comments);
+            // Named slices should also inherit constraints on child elements from base element
+            bm = nav.Bookmark();
+            Assert.IsTrue(nav.MoveToChild("system"));
+            Assert.AreEqual(nav.Current.Min, 1);
+            Assert.IsTrue(nav.ReturnToBookmark(bm));
+
+            // Verify re-slice "ehr_id/temp"
+            Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
+            Assert.AreEqual(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+            Assert.IsNull(nav.Current.Slicing);
+            Assert.AreEqual("ehr_id/temp", nav.Current.Name);
+            Assert.AreEqual(0, nav.Current.Min);
+            Assert.AreEqual("1", nav.Current.Max);
+            // Named slices should inherit Comments from base element
+            Assert.AreEqual("NationalPatientProfile", nav.Current.Comments);
+            // Named slices should also inherit constraints on child elements from base element
+            bm = nav.Bookmark();
+            Assert.IsTrue(nav.MoveToChild("system"));
+            Assert.AreEqual(nav.Current.Min, 1);
+            Assert.IsTrue(nav.ReturnToBookmark(bm));
         }
 
     }

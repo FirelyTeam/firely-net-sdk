@@ -456,7 +456,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                             addSlice(snap, diff, match.SliceBase);
                             break;
                         case ElementMatcher.MatchAction.Slice:
-                            startSlice(snap, diff);
+                            startSlice(snap, diff, match.SliceBase);
                             break;
                         case ElementMatcher.MatchAction.New:
                             // No matching base element; this is a new element definition
@@ -880,7 +880,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
-        void startSlice(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
+        void startSlice(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff, ElementDefinitionNavigator sliceBase)
         {
             // diff is now located at the first repeat of a slice, which is normally the slice entry
             // (Extension slices need not have a slicing entry)
@@ -949,8 +949,15 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (slicingEntry.Name != null && ElementDefinitionNavigator.IsSiblingSliceOf(snap.Current.Name, slicingEntry.Name))
             {
                 // Append the new slice constraint to the existing slice group
-                var lastSlice = findSliceAddPosition(snap, diff);
-                snap.DuplicateAfter(lastSlice);
+                if (sliceBase != null)
+                {
+                    addSliceBase(snap, diff, sliceBase);
+                }
+                else
+                {
+                    var lastSlice = findSliceAddPosition(snap, diff);
+                    snap.DuplicateAfter(lastSlice);
+                }
             }
 
             if (slicingEntry != null)
@@ -1048,6 +1055,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             // diff must specify constraints on existing slices in original order (just like regular elements)
             // diff can only append new slices after all constraints on existing slices
 
+            addSliceBase(snap, diff, sliceBase);
+/*
             var lastSlice = findSliceAddPosition(snap, diff);
             bool result = false;
 
@@ -1073,6 +1082,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 throw Error.InvalidOperation($"Internal error in snapshot generator ({nameof(addSlice)}): cannot add slice '{diff.Current}' to snapshot.");
             }
+*/
 
             // [WMR 20161219] Handle invalid multiple renamed choice type constraints, e.g. { valueString, valueInteger }
             // Snapshot base element has already been renamed by the first match => re-assign
@@ -1091,6 +1101,36 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Merge differential
             mergeElement(snap, diff);
 
+        }
+
+        void addSliceBase(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff, ElementDefinitionNavigator sliceBase)
+        {
+            var lastSlice = findSliceAddPosition(snap, diff);
+            bool result = false;
+
+            if (sliceBase == null || sliceBase.Current == null)
+            {
+                Debug.Fail("SHOULDN'T HAPPEN...");
+                throw Error.InvalidOperation($"Internal error in snapshot generator ({nameof(addSlice)}): slice base element is unavailable.");
+            }
+
+            result = snap.ReturnToBookmark(lastSlice);
+            // Copy the original (unmerged) slice base element to snapshot
+            if (result) { result = snap.InsertAfter((ElementDefinition)sliceBase.Current.DeepCopy()); }
+            // Recursively copy the original (unmerged) child elements, if necessary
+            if (result && sliceBase.HasChildren)
+            {
+                // Always copy all the existing constraints on child elements to snapshot ?
+                // if (mustExpandElement(diff))
+                // {
+                result = snap.CopyChildren(sliceBase);
+                // }
+            }
+
+            if (!result)
+            {
+                throw Error.InvalidOperation($"Internal error in snapshot generator ({nameof(addSlice)}): cannot add slice '{diff.Current}' to snapshot.");
+            }
         }
 
         // Search snapshot slice group for suitable position to add new diff slice
