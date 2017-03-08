@@ -1,4 +1,5 @@
-﻿using Hl7.Fhir.Support;
+﻿using Hl7.Fhir.Model;
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -142,6 +143,19 @@ namespace Hl7.Fhir.Specification.Navigation
             }
 
             intro.ReturnToBookmark(bm);
+        }
+
+        /// <summary>Recursively clone the current element and all it's children and return a new navigator for the resulting subtree.</summary>
+        /// <returns>A new <see cref="ElementDefinitionNavigator"/> instance that wraps the cloned element list.</returns>
+        internal static ElementDefinitionNavigator CloneSubtree(this ElementDefinitionNavigator nav)
+        {
+            if (nav == null) { throw new ArgumentNullException(nameof(nav)); }
+            if (nav.Current == null) { throw new ArgumentException(nameof(nav)); }
+
+            var result = new ElementDefinitionNavigator(new ElementDefinition[] { (ElementDefinition)nav.Current.DeepCopy() });
+            result.MoveToFirstChild();
+            result.CopyChildren(nav);
+            return result;
         }
 
     }

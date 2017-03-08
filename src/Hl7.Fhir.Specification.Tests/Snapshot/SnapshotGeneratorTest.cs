@@ -3178,6 +3178,12 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         // [WMR 20170306] Verify that the snapshot generator determines and merges the correct base element for slices
+        // * Slice entry is based on associated element in base profile with same path (and name)
+        //   Slice entry inherits constraints from base element; can only further constrain
+        //   Note: Base element may be a slice entry itself, or a named slice (in case of reslicing)
+        // * Named slices are based on associated element in base profile with same path and parent slice name (same name as preceding slice entry)
+        //   Same base element as preceding slice entry, but without the slicing component and with min = 0 (per definition for named slices, as they can be optional)
+
         //
         // Example:
         //
@@ -3197,19 +3203,10 @@ namespace Hl7.Fhir.Specification.Tests
         // - Patient.identifier:A/1               => Patient.identifier:A/1 in MyPatient
         // - Patient.identifier:A/2               => Patient.identifier:A/2 in MyPatient
         // - Patient.identifier:A/3               => Patient.identifier:A in MyPatient
-        // - Patient.identifier:B (reslice entry) => Patient.identifier:B in Patient
-        // - Patient.identifier:B/1               => Patient.identifier:B in Patient
-        // - Patient.identifier:B/2               => Patient.identifier:B in Patient
-        // - Patient.identifier:C                 => Patient.identifier in Patient
-        //
-        // Rules:
-        //
-        // 1. First try to find exact match in base profile with same path and name
-        //    Example: Patient.identifier:A/1 => Patient.identifier:A/1
-        // 2. Try to find closest match in base profile with same path and name prefix (for reslices)
-        //    Example: Patient.identifier:A/3 => Patient.identifier:A
-        // 3. Try to find closest match in base profile with same path
-        //    Example: Patient.identifier:B/1 => Patient.identifier
+        // - Patient.identifier:B (reslice entry) => Patient.identifier:B in MyPatient
+        // - Patient.identifier:B/1               => Patient.identifier:B in MyPatient
+        // - Patient.identifier:B/2               => Patient.identifier:B in MyPatient
+        // - Patient.identifier:C                 => Patient.identifier in MyPatient
 
         static StructureDefinition SlicedPatientProfile => new StructureDefinition()
         {
@@ -3234,6 +3231,7 @@ namespace Hl7.Fhir.Specification.Tests
                     ,new ElementDefinition("Patient.identifier")
                     {
                         Name = "bsn",
+                        Min = 1,
                         Max = "1"
                     }
                     ,new ElementDefinition("Patient.identifier")
@@ -3297,7 +3295,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(corePatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
             Assert.IsNull(nav.Current.Slicing);
             Assert.AreEqual("bsn", nav.Current.Name);
-            Assert.AreEqual(0, nav.Current.Min);
+            Assert.AreEqual(1, nav.Current.Min);
             Assert.AreEqual("1", nav.Current.Max);
 
             // Verify slice "ehr_id"
