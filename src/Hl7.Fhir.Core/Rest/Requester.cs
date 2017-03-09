@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Rest
 
         public Bundle.EntryComponent Execute(Bundle.EntryComponent interaction)
         {
-            if (interaction == null) throw Error.ArgumentNull("interaction");
+            if (interaction == null) throw Error.ArgumentNull(nameof(interaction));
             bool compressRequestBody = false;
 #if !PORTABLE45
             compressRequestBody = CompressRequestBody; // PCL doesn't support compression at the moment

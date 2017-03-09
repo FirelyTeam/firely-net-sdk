@@ -208,7 +208,7 @@ namespace Hl7.Fhir.Rest
         /// <exception cref="FhirOperationException">This will occur if conditional request returns a status 304 and optionally an OperationOutcome</exception>
         public TResource Read<TResource>(Uri location, string ifNoneMatch=null, DateTimeOffset? ifModifiedSince=null) where TResource : Resource
         {
-            if (location == null) throw Error.ArgumentNull("location");
+            if (location == null) throw Error.ArgumentNull(nameof(location));
 
             var id = verifyResourceIdentity(location, needId: true, needVid: false);
             Bundle tx;
@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Rest
         /// which will have the newest data, leaving the argument intact.</remarks>
         public TResource Refresh<TResource>(TResource current) where TResource : Resource
         {
-            if (current == null) throw Error.ArgumentNull("current");
+            if (current == null) throw Error.ArgumentNull(nameof(current));
 
             return Read<TResource>(ResourceIdentity.Build(current.TypeName, current.Id));
         }
@@ -272,8 +272,8 @@ namespace Hl7.Fhir.Rest
         /// created.</remarks>
         public TResource Update<TResource>(TResource resource, bool versionAware=false) where TResource : Resource
         {
-            if (resource == null) throw Error.ArgumentNull("resource");
-            if (resource.Id == null) throw Error.Argument("resource", "Resource needs a non-null Id to send the update to");
+            if (resource == null) throw Error.ArgumentNull(nameof(resource));
+            if (resource.Id == null) throw Error.Argument(nameof(resource), "Resource needs a non-null Id to send the update to");
 
             var upd = new TransactionBuilder(Endpoint);
 
@@ -298,8 +298,8 @@ namespace Hl7.Fhir.Rest
         /// If the criteria passed in condition do not match a resource a new resource with a server assigned id will be created.</remarks>
         public TResource Update<TResource>(TResource resource, SearchParams condition, bool versionAware = false) where TResource : Resource
         {
-            if (resource == null) throw Error.ArgumentNull("resource");
-            if (condition == null) throw Error.ArgumentNull("condition");
+            if (resource == null) throw Error.ArgumentNull(nameof(resource));
+            if (condition == null) throw Error.ArgumentNull(nameof(condition));
 
             var upd = new TransactionBuilder(Endpoint);
                 
@@ -330,7 +330,7 @@ namespace Hl7.Fhir.Rest
         /// already deleted).</returns>
         public void Delete(Uri location)
         {
-            if (location == null) throw Error.ArgumentNull("location");
+            if (location == null) throw Error.ArgumentNull(nameof(location));
 
             var id = verifyResourceIdentity(location, needId: true, needVid: false);
             var tx = new TransactionBuilder(Endpoint).Delete(id.ResourceType, id.Id).ToBundle();
@@ -351,8 +351,8 @@ namespace Hl7.Fhir.Rest
         /// <param name="resource">The resource to delete</param>
         public void Delete(Resource resource)
         {
-            if (resource == null) throw Error.ArgumentNull("entry");
-            if (resource.Id == null) throw Error.Argument("entry", "Entry must have an id");
+            if (resource == null) throw Error.ArgumentNull(nameof(resource));
+            if (resource.Id == null) throw Error.Argument(nameof(resource), "Entry must have an id");
 
             Delete(resource.ResourceIdentity(Endpoint).WithoutVersion());
         }
@@ -365,8 +365,8 @@ namespace Hl7.Fhir.Rest
         /// <param name="condition">Criteria to use to match the resource to delete.</param>
         public void Delete(string resourceType, SearchParams condition)
         {
-            if (resourceType == null) throw Error.ArgumentNull("resourceType");
-            if (condition == null) throw Error.ArgumentNull("condition");
+            if (resourceType == null) throw Error.ArgumentNull(nameof(resourceType));
+            if (condition == null) throw Error.ArgumentNull(nameof(condition));
 
             var tx = new TransactionBuilder(Endpoint).Delete(resourceType, condition).ToBundle();
             execute<Resource>(tx, HttpStatusCode.NoContent);
@@ -382,7 +382,7 @@ namespace Hl7.Fhir.Rest
         /// <typeparam name="TResource">The type of resource to create</typeparam>
         public TResource Create<TResource>(TResource resource) where TResource : Resource
         {
-            if (resource == null) throw Error.ArgumentNull("resource");
+            if (resource == null) throw Error.ArgumentNull(nameof(resource));
 
             var tx = new TransactionBuilder(Endpoint).Create(resource).ToBundle();
 
@@ -399,8 +399,8 @@ namespace Hl7.Fhir.Rest
         /// <typeparam name="TResource">The type of resource to create</typeparam>
         public TResource Create<TResource>(TResource resource, SearchParams condition) where TResource : Resource
         {
-            if (resource == null) throw Error.ArgumentNull("resource");
-            if (condition == null) throw Error.ArgumentNull("condition");
+            if (resource == null) throw Error.ArgumentNull(nameof(resource));
+            if (condition == null) throw Error.ArgumentNull(nameof(condition));
 
             var tx = new TransactionBuilder(Endpoint).Create(resource,condition).ToBundle();
 
@@ -458,7 +458,7 @@ namespace Hl7.Fhir.Rest
         /// ResourceEntries and DeletedEntries.</returns>
         public Bundle History(Uri location, DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False)
         {
-            if (location == null) throw Error.ArgumentNull("location");
+            if (location == null) throw Error.ArgumentNull(nameof(location));
 
             var id = verifyResourceIdentity(location, needId: true, needVid: false);
             return internalHistory(id.ResourceType, id.Id, since, pageSize, summary);
@@ -507,7 +507,7 @@ namespace Hl7.Fhir.Rest
         /// if an error occurred.</returns>
         public Bundle Transaction(Bundle bundle)
         {
-            if (bundle == null) throw new ArgumentNullException("bundle");
+            if (bundle == null) throw new ArgumentNullException(nameof(bundle));
 
             var tx = new TransactionBuilder(Endpoint).Transaction(bundle).ToBundle();
             return execute<Bundle>(tx, HttpStatusCode.OK);
@@ -516,13 +516,13 @@ namespace Hl7.Fhir.Rest
 
         public Resource WholeSystemOperation(string operationName, Parameters parameters = null, bool useGet = false)
         {
-            if (operationName == null) throw Error.ArgumentNull("operationName");
+            if (operationName == null) throw Error.ArgumentNull(nameof(operationName));
             return internalOperation(operationName, parameters: parameters, useGet: useGet);
         }
 
         public Resource TypeOperation<TResource>(string operationName, Parameters parameters = null, bool useGet = false) where TResource : Resource
         {
-            if (operationName == null) throw Error.ArgumentNull("operationName");
+            if (operationName == null) throw Error.ArgumentNull(nameof(operationName));
 
             // [WMR 20160421] GetResourceNameForType is obsolete
             // var typeName = ModelInfo.GetResourceNameForType(typeof(TResource));
@@ -533,16 +533,16 @@ namespace Hl7.Fhir.Rest
 
         public Resource TypeOperation(string operationName, string typeName, Parameters parameters = null, bool useGet = false)
         {
-            if (operationName == null) throw Error.ArgumentNull("operationName");
-            if (typeName == null) throw Error.ArgumentNull("typeName");
+            if (operationName == null) throw Error.ArgumentNull(nameof(operationName));
+            if (typeName == null) throw Error.ArgumentNull(nameof(typeName));
 
             return internalOperation(operationName, typeName, parameters: parameters, useGet: useGet);
         }
 
         public Resource InstanceOperation(Uri location, string operationName, Parameters parameters = null, bool useGet = false)
         {
-            if (location == null) throw Error.ArgumentNull("location");
-            if (operationName == null) throw Error.ArgumentNull("operationName");
+            if (location == null) throw Error.ArgumentNull(nameof(location));
+            if (operationName == null) throw Error.ArgumentNull(nameof(operationName));
 
             var id = verifyResourceIdentity(location, needId: true, needVid: false);
 
@@ -551,8 +551,8 @@ namespace Hl7.Fhir.Rest
 
         public Resource Operation(Uri location, string operationName, Parameters parameters = null, bool useGet = false)
         {
-            if (location == null) throw Error.ArgumentNull("location");
-            if (operationName == null) throw Error.ArgumentNull("operationName");
+            if (location == null) throw Error.ArgumentNull(nameof(location));
+            if (operationName == null) throw Error.ArgumentNull(nameof(operationName));
 
             var tx = new TransactionBuilder(Endpoint).EndpointOperation(new RestUrl(location), operationName, parameters, useGet).ToBundle();
 
@@ -561,7 +561,7 @@ namespace Hl7.Fhir.Rest
 
         public Resource Operation(Uri operation, Parameters parameters = null, bool useGet = false)
         {
-            if (operation == null) throw Error.ArgumentNull("operation");
+            if (operation == null) throw Error.ArgumentNull(nameof(operation));
 
             var tx = new TransactionBuilder(Endpoint).EndpointOperation(new RestUrl(operation), parameters, useGet).ToBundle();
 
@@ -598,7 +598,7 @@ namespace Hl7.Fhir.Rest
         /// <remarks>parameters to the method are simple, and are in the URL, and this is a GET operation</remarks>
         public Resource Get(Uri url)
         {
-            if (url == null) throw Error.ArgumentNull("url");
+            if (url == null) throw Error.ArgumentNull(nameof(url));
 
             var tx = new TransactionBuilder(Endpoint).Get(url).ToBundle();
             return execute<Resource>(tx, HttpStatusCode.OK);
@@ -612,14 +612,14 @@ namespace Hl7.Fhir.Rest
         /// <remarks>parameters to the method are simple, and are in the URL, and this is a GET operation</remarks>
         public Resource Get(string url)
         {
-            if (url == null) throw Error.ArgumentNull("url");
+            if (url == null) throw Error.ArgumentNull(nameof(url));
 
             return Get(new Uri(url, UriKind.RelativeOrAbsolute));
         }
 
 
 
-   
+
         ///// <summary>
         ///// Get all meta known by the FHIR server
         ///// </summary>
@@ -645,7 +645,7 @@ namespace Hl7.Fhir.Rest
         ///// <returns>A ResourceMetaComponent with all tags, profiles etc. known by the system for the given type</returns>
         //public Meta TypeMeta(string type)
         //{
-        //    if (type == null) throw Error.ArgumentNull("type");
+        //    if (type == null) throw Error.ArgumentNull(nameof(type));
 
         //    return internalGetMeta(type, null, null);
         //}
@@ -658,7 +658,7 @@ namespace Hl7.Fhir.Rest
         ///// <returns>A ResourceMetaComponent with all tags, profiles etc. known by the system for the given instance</returns>
         //public Meta Meta(Uri location)
         //{
-        //    if (location == null) throw Error.ArgumentNull("location");
+        //    if (location == null) throw Error.ArgumentNull(nameof(location));
 
         //    var collection = getResourceTypeFromLocation(location);
         //    var id = getIdFromLocation(location);
@@ -705,8 +705,8 @@ namespace Hl7.Fhir.Rest
         ///// not create a new version.</remarks>
         //public void AffixMeta(Uri location, Meta meta)
         //{
-        //    if (location == null) throw Error.ArgumentNull("location");
-        //    if (meta == null) throw Error.ArgumentNull("meta");
+        //    if (location == null) throw Error.ArgumentNull(nameof(location));
+        //    if (meta == null) throw Error.ArgumentNull(nameof(meta));
 
         //    var collection = getResourceTypeFromLocation(location);
         //    var id = getIdFromLocation(location);
@@ -730,8 +730,8 @@ namespace Hl7.Fhir.Rest
         ///// not create a new version.</remarks>
         //public void AffixMeta(string location, Meta meta)
         //{
-        //    if (location == null) throw Error.ArgumentNull("location");
-        //    if (meta == null) throw Error.ArgumentNull("meta");
+        //    if (location == null) throw Error.ArgumentNull(nameof(location));
+        //    if (meta == null) throw Error.ArgumentNull(nameof(meta));
 
         //    AffixMeta(new ResourceIdentity(location),meta);
         //}
@@ -746,8 +746,8 @@ namespace Hl7.Fhir.Rest
         ///// so does not create a new version.</remarks>
         //public void DeleteMeta(Uri location, Meta meta)
         //{
-        //    if (location == null) throw Error.ArgumentNull("location");
-        //    if (meta == null) throw Error.ArgumentNull("meta");
+        //    if (location == null) throw Error.ArgumentNull(nameof(location));
+        //    if (meta == null) throw Error.ArgumentNull(nameof(meta));
 
         //    var collection = getResourceTypeFromLocation(location);
         //    var id = getIdFromLocation(location);
@@ -766,9 +766,9 @@ namespace Hl7.Fhir.Rest
         {
             var result = new ResourceIdentity(location);
 
-            if (result.ResourceType == null) throw Error.Argument("location", "Must be a FHIR REST url containing the resource type in its path");
-            if (needId && result.Id == null) throw Error.Argument("location", "Must be a FHIR REST url containing the logical id in its path");
-            if (needVid && !result.HasVersion) throw Error.Argument("location", "Must be a FHIR REST url containing the version id in its path");
+            if (result.ResourceType == null) throw Error.Argument(nameof(location), "Must be a FHIR REST url containing the resource type in its path");
+            if (needId && result.Id == null) throw Error.Argument(nameof(location), "Must be a FHIR REST url containing the logical id in its path");
+            if (needVid && !result.HasVersion) throw Error.Argument(nameof(location), "Must be a FHIR REST url containing the version id in its path");
 
             return result;
         }
@@ -921,7 +921,7 @@ namespace Hl7.Fhir.Rest
 
 
 #if (PORTABLE45 || NET45) && BRIAN
-#region << Async operations >>
+        #region << Async operations >>
 
 
 		/// <summary>
@@ -949,7 +949,7 @@ namespace Hl7.Fhir.Rest
 		/// ResourceEntries and DeletedEntries.</returns>
 		public Task<Bundle> HistoryAsync(Uri location, DateTimeOffset? since = null, int? pageSize = null)
 		{
-			if (location == null) throw Error.ArgumentNull("location");
+			if (location == null) throw Error.ArgumentNull(nameof(location));
 
 			var collection = getCollectionFromLocation(location);
 			var id = getIdFromLocation(location);
@@ -959,7 +959,7 @@ namespace Hl7.Fhir.Rest
 
 		public Task<Bundle> HistoryAsync(string location, DateTimeOffset? since = null, int? pageSize = null)
 		{
-			if (location == null) throw Error.ArgumentNull("location");
+			if (location == null) throw Error.ArgumentNull(nameof(location));
 			Uri uri = new Uri(location, UriKind.Relative);
 
 			return HistoryAsync(uri, since, pageSize);
@@ -975,7 +975,7 @@ namespace Hl7.Fhir.Rest
 		/// ResourceEntries and DeletedEntries.</returns>
 		public Task<Bundle> HistoryAsync(BundleEntry entry, DateTimeOffset? since = null, int? pageSize = null)
 		{
-			if (entry == null) throw Error.ArgumentNull("entry");
+			if (entry == null) throw Error.ArgumentNull(nameof(entry));
 
 			return HistoryAsync(entry.Id, since, pageSize);
 		}
@@ -1045,9 +1045,9 @@ namespace Hl7.Fhir.Rest
 		/// failures occur.</returns>
 		public async Task<ValidateAsyncResult> TryValidateUpdateAsync<TResource>(TResource entry) where TResource : Resource, new()
 		{
-			if (entry == null) throw Error.ArgumentNull("entry");
-			if (entry.Resource == null) throw Error.Argument("entry", "Entry does not contain a Resource to validate");
-			if (entry.Id == null) throw Error.Argument("enry", "Entry needs a non-null entry.id to use for validation");
+			if (entry == null) throw Error.ArgumentNull(nameof(entry));
+			if (entry.Resource == null) throw Error.Argument(nameof(entry), "Entry does not contain a Resource to validate");
+			if (entry.Id == null) throw Error.Argument(nameof(entry), "Entry needs a non-null entry.id to use for validation");
 
 			var id = new ResourceIdentity(entry.Id);
 			var url = new RestUrl(Endpoint).Validate(id.Collection, id.Id);
@@ -1139,7 +1139,7 @@ namespace Hl7.Fhir.Rest
 		/// of all resources of the given Resource type</remarks>
 		public Task<Bundle> SearchAsync(string resource, string[] criteria = null, string[] includes = null, int? pageSize = null)
 		{
-			if (resource == null) throw Error.ArgumentNull("resource");
+			if (resource == null) throw Error.ArgumentNull(nameof(resource));
 
 			return SearchAsync(toQuery(resource, criteria, includes, pageSize));
 		}
@@ -1173,7 +1173,7 @@ namespace Hl7.Fhir.Rest
 		/// returned resource refers to.</remarks>
 		public Task<Bundle> SearchByIdAsync<TResource>(string id, string[] includes = null, int? pageSize = null) where TResource : Resource, new()
 		{
-			if (id == null) throw Error.ArgumentNull("id");
+			if (id == null) throw Error.ArgumentNull(nameof(id));
 
 			return SearchByIdAsync(typeof(TResource).GetCollectionName(), id, includes, pageSize);
 		}
@@ -1192,8 +1192,8 @@ namespace Hl7.Fhir.Rest
 		/// returned resource refers to.</remarks>
 		public Task<Bundle> SearchByIdAsync(string resource, string id, string[] includes = null, int? pageSize = null)
 		{
-			if (resource == null) throw Error.ArgumentNull("resource");
-			if (id == null) throw Error.ArgumentNull("id");
+			if (resource == null) throw Error.ArgumentNull(nameof(resource));
+			if (id == null) throw Error.ArgumentNull(nameof(id));
 
 			string criterium = Query.SEARCH_PARAM_ID + "=" + id;
 			return SearchAsync(toQuery(resource, new string[] { criterium }, includes, pageSize));
@@ -1208,7 +1208,7 @@ namespace Hl7.Fhir.Rest
 		/// the server did not have more results in that direction.</returns>
 		public Task<Bundle> ContinueAsync(Bundle current, PageDirection direction = PageDirection.Next)
 		{
-			if (current == null) throw Error.ArgumentNull("current");
+			if (current == null) throw Error.ArgumentNull(nameof(current));
 			if (current.Links == null) return null;
 
 			Uri continueAt = null;
@@ -1253,9 +1253,9 @@ namespace Hl7.Fhir.Rest
 		/// <remarks>The bundle must declare it is a Document, use Bundle.SetBundleType() to do so.</remarks>
 		public Task DocumentAsync(Bundle bundle)
 		{
-			if (bundle == null) throw Error.ArgumentNull("bundle");
+			if (bundle == null) throw Error.ArgumentNull(nameof(bundle));
 			if (bundle.GetBundleType() != BundleType.Document)
-				throw Error.Argument("bundle", "The bundle passed to the Document endpoint needs to be a document (use SetBundleType to do so)");
+				throw Error.Argument(nameof(bundle), "The bundle passed to the Document endpoint needs to be a document (use SetBundleType to do so)");
 
 			var url = new RestUrl(Endpoint).ToDocument();
 
@@ -1273,9 +1273,9 @@ namespace Hl7.Fhir.Rest
 		/// <remarks>The bundle must declare it is a Document or Message, use Bundle.SetBundleType() to do so.</remarks>       
 		public Task<Bundle> DeliverToMailboxAsync(Bundle bundle)
 		{
-			if (bundle == null) throw Error.ArgumentNull("bundle");
+			if (bundle == null) throw Error.ArgumentNull(nameof(bundle));
 			if (bundle.GetBundleType() != BundleType.Document && bundle.GetBundleType() != BundleType.Message)
-				throw Error.Argument("bundle", "The bundle passed to the Mailbox endpoint needs to be a document or message (use SetBundleType to do so)");
+				throw Error.Argument(nameof(bundle), "The bundle passed to the Mailbox endpoint needs to be a document or message (use SetBundleType to do so)");
 
 			var url = new RestUrl(_endpoint).ToMailbox();
 
@@ -1309,7 +1309,7 @@ namespace Hl7.Fhir.Rest
 		/// <returns>A list of Tags occuring for the given resource type</returns>
 		public Task<IEnumerable<Tag>> TypeTagsAsync(string type)
 		{
-			if (type == null) throw Error.ArgumentNull("type");
+			if (type == null) throw Error.ArgumentNull(nameof(type));
 
 			return internalGetTagsAsync(type, null, null);
 		}
@@ -1370,8 +1370,8 @@ namespace Hl7.Fhir.Rest
 		/// <remarks>Affixing tags to a resource (or version of the resource) is not considered an update, so does not create a new version.</remarks>
 		public Task AffixTagsAsync(Uri location, IEnumerable<Tag> tags)
 		{
-			if (location == null) throw Error.ArgumentNull("location");
-			if (tags == null) throw Error.ArgumentNull("tags");
+			if (location == null) throw Error.ArgumentNull(nameof(location));
+			if (tags == null) throw Error.ArgumentNull(nameof(tags));
 
 			var collection = getCollectionFromLocation(location);
 			var id = getIdFromLocation(location);
@@ -1394,8 +1394,8 @@ namespace Hl7.Fhir.Rest
         /// so does not create a new version.</remarks>
 		public Task DeleteTagsAsync(Uri location, IEnumerable<Tag> tags)
 		{
-			if (location == null) throw Error.ArgumentNull("location");
-			if (tags == null) throw Error.ArgumentNull("tags");
+			if (location == null) throw Error.ArgumentNull(nameof(location));
+			if (tags == null) throw Error.ArgumentNull(nameof(tags));
 
 			var collection = getCollectionFromLocation(location);
 			var id = getIdFromLocation(location);
@@ -1410,7 +1410,7 @@ namespace Hl7.Fhir.Rest
 		}
 
 
-#endregion
+        #endregion
 #endif
     }
 

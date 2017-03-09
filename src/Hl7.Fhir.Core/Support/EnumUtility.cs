@@ -119,8 +119,8 @@ namespace Hl7.Fhir.Introspection
 
             public static EnumMapping Create(Type enumType)
             {
-                if (enumType == null) throw Error.ArgumentNull("enumType");
-                if (!enumType.IsEnum()) throw Error.Argument("enumType", "Type {0} is not an enumerated type".FormatWith(enumType.Name));
+                if (enumType == null) throw Error.ArgumentNull(nameof(enumType));
+                if (!enumType.IsEnum()) throw Error.Argument(nameof(enumType), "Type {0} is not an enumerated type".FormatWith(enumType.Name));
 
                 var result = new EnumMapping();
 

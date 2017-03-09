@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Introspection
 
         public void Import(Assembly assembly)
         {
-            if (assembly == null) throw Error.ArgumentNull("assembly");
+            if (assembly == null) throw Error.ArgumentNull(nameof(assembly));
 
 #if PORTABLE45
 			if (assembly.GetCustomAttribute<NotMappedAttribute>() != null) return;
@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Introspection
             ClassMapping mapping = null;
 
             if(!ClassMapping.IsMappableType(type))
-                throw Error.Argument("type", "Type {0} is not a mappable Fhir datatype or resource".FormatWith(type.Name));
+                throw Error.Argument(nameof(type), "Type {0} is not a mappable Fhir datatype or resource".FormatWith(type.Name));
 
             lock (lockObject)
             {

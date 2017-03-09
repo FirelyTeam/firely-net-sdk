@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Rest
 
         private static void setBodyAndContentType(HttpWebRequest request, Resource data, ResourceFormat format, bool CompressRequestBody, out byte[] body)
         {
-            if (data == null) throw Error.ArgumentNull("data");
+            if (data == null) throw Error.ArgumentNull(nameof(data));
 
             if (data is Binary)
             {
