@@ -22,7 +22,7 @@ namespace Hl7.Fhir.FhirPath
     {
         public PocoNavigator(Base model)
         {
-            if (model == null) throw Error.ArgumentNull("model");
+            if (model == null) throw Error.ArgumentNull(nameof(model));
 
             //_current = new PocoElementNavigator(model.TypeName, model);
             _parentPath = "";

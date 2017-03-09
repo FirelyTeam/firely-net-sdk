@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Validation
             var nearestChild = FindNearestScope(child.Path);
 
             if(nearestChild == null)
-                throw Error.Argument("child",
+                throw Error.Argument(nameof(child),
                       "Tried to add a child with path '{0}' which is not part of this tree ('{1}')".FormatWith(child.Path, Path));
 
             if (nearestChild.Path == child.Path)
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Validation
             var scope = FindNearestScope(path);
 
             if (scope == null)
-                throw Error.Argument("child",
+                throw Error.Argument(nameof(path),
                       "Tried to remove a child with path '{0}' which is not part of this tree ('{1}')".FormatWith(path, Path));
 
             if(scope.Path == path && scope.Parent != null)
@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Validation
         //public bool Remove(Scope node)
         //{
         //    if (!node.Path.StartsWith(Path))
-        //        throw Error.Argument("node",
+        //        throw Error.Argument(nameof(node),
         //            "Tried to remove a node with path '{0}' that is not part of this tree ('{1}')".FormatWith(node.Path, Path));
 
         //    var childToRemove = Children.SingleOrDefault(c => node.Path == c.Path);
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Validation
         //    if (candidateParent != null)
         //        return candidateParent.Remove(node);
         //    else
-        //        throw Error.Argument("node",
+        //        throw Error.Argument(nameof(node),
         //            "Tried to remove an orphan child with path '{0}' from scope at path '{1}'".FormatWith(node.Path, Path));
 
         //}

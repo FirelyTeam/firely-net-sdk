@@ -41,14 +41,14 @@ namespace Hl7.Fhir.Specification.Source
 
         public Resource ResolveByUri(string url)
         {
-            if (url == null) throw Error.ArgumentNull("url");
+            if (url == null) throw Error.ArgumentNull(nameof(url));
 
             return _resourcesByUri.Get(url);
         }
 
         public Resource ResolveByCanonicalUri(string url)
         {
-            if (url == null) throw Error.ArgumentNull("url");
+            if (url == null) throw Error.ArgumentNull(nameof(url));
 
             return _resourcesByCanonical.Get(url);
         }

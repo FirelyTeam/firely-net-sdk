@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Serialization
 
         public void Serialize(object instance, Rest.SummaryType summary, bool contained = false, string root = null)
         {
-            if (instance == null) throw Error.ArgumentNull("instance");
+            if (instance == null) throw Error.ArgumentNull(nameof(instance));
 
             var mapping = _inspector.ImportType(instance.GetType());
 
