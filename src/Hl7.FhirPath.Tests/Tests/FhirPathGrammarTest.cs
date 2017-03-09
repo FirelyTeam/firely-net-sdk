@@ -85,6 +85,21 @@ namespace Hl7.FhirPath.Tests
 
         }
 
+        [Fact]
+        public void FhirPath_Gramm_Term_ExternalRef()
+        {
+            var parser = Grammar.Term.End();
+
+            AssertParser.SucceedsMatch(parser, "%\"ext-11179-de-is-data-element-concept\"",
+                new FunctionCallExpression(AxisExpression.That, "builtin.coreexturl", TypeInfo.String,
+                            new ConstantExpression("11179-de-is-data-element-concept")));
+
+            AssertParser.SucceedsMatch(parser, "%\"vs-administrative-gender\"",
+                new FunctionCallExpression(AxisExpression.That, "builtin.corevsurl", TypeInfo.String, 
+                    new ConstantExpression("administrative-gender")));
+        }
+
+
         private static readonly Expression patientName = new ChildExpression(new ChildExpression(AxisExpression.This, "Patient"), "name");
 
         [Fact]
