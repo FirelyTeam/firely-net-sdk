@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Specification.Source
 
         public DirectorySource(string contentDirectory, bool includeSubdirectories = false)
         {
-            if (contentDirectory == null) throw Error.ArgumentNull("contentDirectory");
+            if (contentDirectory == null) throw Error.ArgumentNull(nameof(contentDirectory));
 
             _contentDirectory = contentDirectory;
             _includeSubs = includeSubdirectories;
@@ -187,7 +187,7 @@ namespace Hl7.Fhir.Specification.Source
 
         public Stream LoadArtifactByName(string name)
         {
-            if (name == null) throw Error.ArgumentNull("name");
+            if (name == null) throw Error.ArgumentNull(nameof(name));
 
             prepareFiles();
 
@@ -214,7 +214,7 @@ namespace Hl7.Fhir.Specification.Source
 
         public Resource ResolveByUri(string uri)
         {
-            if (uri == null) throw Error.ArgumentNull("uri");
+            if (uri == null) throw Error.ArgumentNull(nameof(uri));
             prepareResources();
 
             var info = _resourceScanInformation.SingleOrDefault(ci => ci.ResourceUri == uri);
@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Specification.Source
 
         public Resource ResolveByCanonicalUri(string uri)
         {
-            if (uri == null) throw Error.ArgumentNull("uri");
+            if (uri == null) throw Error.ArgumentNull(nameof(uri));
             prepareResources();
 
             var info = _resourceScanInformation.SingleOrDefault(ci => ci.Canonical == uri);
@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Specification.Source
         public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri=null, string targetUri=null)
         {
             if (sourceUri == null && targetUri == null)
-                throw Error.ArgumentNull("sourceUri and targetUri cannot both be null");
+                throw Error.ArgumentNull(nameof(targetUri), "sourceUri and targetUri cannot both be null");
 
             prepareResources();
 
@@ -292,7 +292,7 @@ namespace Hl7.Fhir.Specification.Source
 
         public NamingSystem FindNamingSystem(string uniqueId)
         {
-            if (uniqueId == null) throw Error.ArgumentNull("uniqueId");
+            if (uniqueId == null) throw Error.ArgumentNull(nameof(uniqueId));
             prepareResources();
 
             var info = _resourceScanInformation.SingleOrDefault(ci => ci.UniqueIds.Contains(uniqueId));

@@ -93,7 +93,11 @@
     </Compile>
     <Compile Include="JsonNavigatorTests.cs" />
     <Compile Include="JTokenExtensionsTests.cs" />
-    <Compile Include="SnapshotElementMatcherTests.cs" />
+    <Compile Include="Snapshot\ElementVerifier.cs" />
+    <Compile Include="Snapshot\InMemoryProfileResolver.cs" />
+    <Compile Include="Snapshot\ListExtensions.cs" />
+    <Compile Include="Snapshot\SnapshotElementMatcherTests.cs" />
+    <Compile Include="Snapshot\TimingSource.cs" />
     <Compile Include="Source\ResolverAndSourceExtensionTests.cs" />
     <Compile Include="Source\ConformanceSourceTests.cs" />
     <Compile Include="Source\ArtifactSourceTests.cs" />
@@ -107,7 +111,7 @@
     <Compile Include="Validation\ScopeTrackerTests.cs" />
     <Compile Include="Validation\SchemaCollectionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SnapshotGeneratorTest.cs" />
+    <Compile Include="Snapshot\SnapshotGeneratorTest.cs" />
     <Compile Include="Source\ResourceResolverTests.cs" />
     <Compile Include="Validation\BasicValidationTests.cs" />
     <Compile Include="Validation\SliceValidationTests.cs" />
