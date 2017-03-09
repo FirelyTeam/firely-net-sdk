@@ -3668,6 +3668,167 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.ReturnToBookmark(bm));
         }
 
+        [TestMethod]
+        public void TestSliceBase_PatientTelecomResliceEK()
+        {
+            var dirSource = new DirectorySource("TestData/validation", false);
+            var source = new TimingSource(dirSource);
+            var resolver = new CachedResolver(source);
+            var multiResolver = new MultiResolver(resolver, _testResolver);
+
+            var profile = resolver.FindStructureDefinition("http://example.com/StructureDefinition/patient-telecom-reslice-ek");
+            Assert.IsNotNull(profile);
+
+            _generator = new SnapshotGenerator(multiResolver);
+            StructureDefinition expanded = null;
+
+            _generator.PrepareElement += elementHandler;
+            try
+            {
+                generateSnapshotAndCompare(profile, out expanded);
+            }
+            finally
+            {
+                _generator.PrepareElement -= elementHandler;
+            }
+            dumpOutcome(_generator.Outcome);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            dumpElements(expanded.Snapshot.Element);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.MoveToFirstChild());
+
+            // Patient.telecom slice entry
+            Assert.IsTrue(nav.MoveToChild("telecom"));
+            Assert.IsNotNull(nav.Current.Slicing);
+            Assert.AreEqual(true, nav.Current.Slicing.Ordered);
+            Assert.AreEqual(ElementDefinition.SlicingRules.OpenAtEnd, nav.Current.Slicing.Rules);
+            Assert.IsFalse(nav.Current.Slicing.Discriminator.Any());
+            Assert.AreEqual(1, nav.Current.Min);
+            Assert.AreEqual("5", nav.Current.Max);
+
+            // Patient.telecom:phone
+            Assert.IsTrue(nav.MoveToNext("telecom"));
+            Assert.AreEqual("phone", nav.Current.Name);
+            Assert.AreEqual(1, nav.Current.Min);
+            Assert.AreEqual("2", nav.Current.Max);
+            Assert.IsNull(nav.Current.Slicing);
+
+            // Patient.telecom.system
+            var bm = nav.Bookmark();
+            Assert.IsTrue(nav.MoveToChild("system"));
+            Assert.AreEqual(1, nav.Current.Min);
+            Assert.AreEqual("phone", (nav.Current.Fixed as Code)?.Value);
+            Assert.IsTrue(nav.ReturnToBookmark(bm));
+
+            // Patient.telecom:email
+            Assert.IsTrue(nav.MoveToNext("telecom"));
+            Assert.AreEqual("email", nav.Current.Name);
+            Assert.AreEqual(0, nav.Current.Min);
+            Assert.AreEqual("1", nav.Current.Max);
+            Assert.IsNotNull(nav.Current.Slicing);
+            Assert.AreEqual("system|use", string.Join("|", nav.Current.Slicing.Discriminator));
+            Assert.AreEqual(ElementDefinition.SlicingRules.Closed, nav.Current.Slicing.Rules);
+            // Assert.AreEqual(false, nav.Current.Slicing.Ordered);
+            Assert.IsNull(nav.Current.Slicing.Ordered);
+
+            // Patient.telecom.system
+            bm = nav.Bookmark();
+            Assert.IsTrue(nav.MoveToChild("system"));
+            Assert.AreEqual(1, nav.Current.Min);
+            Assert.AreEqual("email", (nav.Current.Fixed as Code)?.Value);
+            Assert.IsTrue(nav.ReturnToBookmark(bm));
+
+            // Patient.telecom:email/home
+            Assert.IsTrue(nav.MoveToNext("telecom"));
+            Assert.AreEqual("email/home", nav.Current.Name);
+            Assert.AreEqual(0, nav.Current.Min);
+            Assert.AreEqual("1", nav.Current.Max);
+            Assert.IsNull(nav.Current.Slicing);
+
+            // Patient.telecom.system
+            bm = nav.Bookmark();
+            Assert.IsTrue(nav.MoveToChild("system"));
+            Assert.AreEqual(1, nav.Current.Min);
+            Assert.AreEqual("email", (nav.Current.Fixed as Code)?.Value);
+            Assert.IsTrue(nav.MoveToNext("use"));
+            Assert.AreEqual(1, nav.Current.Min);
+            Assert.AreEqual("home", (nav.Current.Fixed as Code)?.Value);
+            Assert.IsTrue(nav.ReturnToBookmark(bm));
+
+            // Patient.telecom:email/work
+            Assert.IsTrue(nav.MoveToNext("telecom"));
+            Assert.AreEqual("email/work", nav.Current.Name);
+            Assert.AreEqual(0, nav.Current.Min);
+            Assert.AreEqual("1", nav.Current.Max);
+            Assert.IsNull(nav.Current.Slicing);
+
+            // Patient.telecom.system
+            bm = nav.Bookmark();
+            Assert.IsTrue(nav.MoveToChild("system"));
+            Assert.AreEqual(1, nav.Current.Min);
+            Assert.AreEqual("email", (nav.Current.Fixed as Code)?.Value);
+            Assert.IsTrue(nav.MoveToNext("use"));
+            Assert.AreEqual(1, nav.Current.Min);
+            Assert.AreEqual("work", (nav.Current.Fixed as Code)?.Value);
+            Assert.IsTrue(nav.ReturnToBookmark(bm));
+
+            // Patient.telecom:other
+            Assert.IsTrue(nav.MoveToNext("telecom"));
+            Assert.AreEqual("other", nav.Current.Name);
+            Assert.AreEqual(0, nav.Current.Min);
+            Assert.AreEqual("3", nav.Current.Max);
+            Assert.IsNotNull(nav.Current.Slicing);
+            Assert.AreEqual("system|use", string.Join("|", nav.Current.Slicing.Discriminator));
+            Assert.AreEqual(ElementDefinition.SlicingRules.Open, nav.Current.Slicing.Rules);
+            // Assert.AreEqual(false, nav.Current.Slicing.Ordered);
+            Assert.IsNull(nav.Current.Slicing.Ordered);
+
+            // Patient.telecom.system
+            bm = nav.Bookmark();
+            Assert.IsTrue(nav.MoveToChild("system"));
+            Assert.AreEqual(1, nav.Current.Min);
+            Assert.AreEqual("other", (nav.Current.Fixed as Code)?.Value);
+            Assert.IsTrue(nav.ReturnToBookmark(bm));
+
+            // Patient.telecom:other/home
+            Assert.IsTrue(nav.MoveToNext("telecom"));
+            Assert.AreEqual("other/home", nav.Current.Name);
+            Assert.AreEqual(0, nav.Current.Min);
+            Assert.AreEqual("1", nav.Current.Max);
+            Assert.IsNull(nav.Current.Slicing);
+
+            // Patient.telecom.system
+            bm = nav.Bookmark();
+            Assert.IsTrue(nav.MoveToChild("system"));
+            Assert.AreEqual(1, nav.Current.Min);
+            Assert.AreEqual("other", (nav.Current.Fixed as Code)?.Value);
+            Assert.IsTrue(nav.MoveToNext("use"));
+            Assert.AreEqual(1, nav.Current.Min);
+            Assert.AreEqual("home", (nav.Current.Fixed as Code)?.Value);
+            Assert.IsTrue(nav.ReturnToBookmark(bm));
+
+            // Patient.telecom:other/work
+            Assert.IsTrue(nav.MoveToNext("telecom"));
+            Assert.AreEqual("other/work", nav.Current.Name);
+            Assert.AreEqual(0, nav.Current.Min);
+            Assert.AreEqual("1", nav.Current.Max);
+            Assert.IsNull(nav.Current.Slicing);
+
+            // Patient.telecom.system
+            bm = nav.Bookmark();
+            Assert.IsTrue(nav.MoveToChild("system"));
+            Assert.AreEqual(1, nav.Current.Min);
+            Assert.AreEqual("other", (nav.Current.Fixed as Code)?.Value);
+            Assert.IsTrue(nav.MoveToNext("use"));
+            Assert.AreEqual(1, nav.Current.Min);
+            Assert.AreEqual("work", (nav.Current.Fixed as Code)?.Value);
+            Assert.IsTrue(nav.ReturnToBookmark(bm));
+        }
+
     }
 
 }

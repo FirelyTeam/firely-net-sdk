@@ -278,8 +278,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             return match;
         }
 
-        // [WMR 20170308] The snapshot generator initializes snapNav with base elements, then merges diff constraints on top of that.
-        // So after processing each element, the associated original base element is no longer available.
+        // [WMR 20170308] The snapshot generator initializes snapNav with base profile elements, then merges diff constraints on top of that.
+        // So after processing an element in snapNav, the original base element is no longer available.
         // However for sliced elements, we need to initialize the slice entry and all following named slices from the same base element.
         // Therefore we first clone the original, unmerged base element and it's children (recursively).
         // Now each slice match return a reference to the associated original base element, unaffected by further processing.
@@ -289,8 +289,9 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // Named slices never inherit a slicing component
             sliceBase.Current.Slicing = null;
+
             // Special rule for named slices: always reset minimum cardinality to 0 (don't inherit from base)
-            // Because even though slice entry may be required (min=1), profile can still define optional named slices (min = 0); must specify at least one
+            // Because even though slice entry may be required (min=1), a profile can still define optional named slices (min = 0); must specify at least one
             sliceBase.Current.Min = 0;
 
             return sliceBase;
@@ -413,7 +414,8 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Returns an initialized MatchInfo with action = Merge | Add
         static void matchSlice(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, List<string> discriminators, MatchInfo match)
         {
-            Debug.Assert(diffNav.Current.Slicing == null); // Caller must handle reslicing
+            Debug.Assert(match != null);                    // Caller should initialize match
+            Debug.Assert(diffNav.Current.Slicing == null);  // Caller must handle reslicing
 
             // 1. If the diff slice has a name, than match base slice by name
             var diffSliceName = diffNav.Current.Name;
