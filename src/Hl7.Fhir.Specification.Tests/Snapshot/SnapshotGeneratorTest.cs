@@ -3653,7 +3653,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.ReturnToBookmark(bm));
 
             // Verify re-slice "ehr_id/temp"
-            Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
+            Assert.IsTrue(nav.MoveToFirstReslice());
             Assert.AreEqual(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
             Assert.IsNull(nav.Current.Slicing);
             Assert.AreEqual("ehr_id/temp", nav.Current.Name);
@@ -3679,7 +3679,9 @@ namespace Hl7.Fhir.Specification.Tests
             var profile = resolver.FindStructureDefinition("http://example.com/StructureDefinition/patient-telecom-reslice-ek");
             Assert.IsNotNull(profile);
 
-            _generator = new SnapshotGenerator(multiResolver);
+            var settings = new SnapshotGeneratorSettings(_settings);
+            settings.GenerateElementIds = true;
+            _generator = new SnapshotGenerator(multiResolver, settings);
             StructureDefinition expanded = null;
 
             _generator.PrepareElement += elementHandler;
