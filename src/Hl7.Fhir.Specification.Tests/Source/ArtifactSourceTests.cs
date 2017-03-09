@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Specification.Tests
             File.Copy(Path.Combine(dir, file), Path.Combine(outputDir, file));
         }
 
-        private string prepareExampleDirectory()
+        private string prepareExampleDirectory(out int numFiles)
         {
             var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "specification.zip");
             var zip = new ZipCacher(zipFile);
@@ -99,6 +99,9 @@ namespace Hl7.Fhir.Specification.Tests
             Directory.CreateDirectory(Path.Combine(testPath, "sub"));
             copy(@"TestData", "TestPatient.json", testPath);
 
+            // If you add or remove files, please correct the numFiles here below
+            numFiles = 8 - 1;   // 8 files - 1 binary (which should be ignored)
+
             return testPath;
         }
 
@@ -108,7 +111,8 @@ namespace Hl7.Fhir.Specification.Tests
         [TestInitialize]
         public void SetupExampleDir()
         {
-            _testPath = prepareExampleDirectory();
+            int dummy;
+            _testPath = prepareExampleDirectory(out dummy);
         }
 
         [TestMethod]
@@ -168,11 +172,12 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void ReadsSubdirectories()
         {
-            var testPath = prepareExampleDirectory();
+            int numFiles;
+            var testPath = prepareExampleDirectory(out numFiles);
             var fa = new DirectorySource(testPath, includeSubdirectories: true);
             var names = fa.ListArtifactNames();
 
-            Assert.AreEqual(5, names.Count());
+            Assert.AreEqual(numFiles, names.Count());
             Assert.IsTrue(names.Contains("TestPatient.json"));
         }
 
