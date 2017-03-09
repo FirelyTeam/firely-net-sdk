@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Validation
             var scope = FindNearestScope(path);
 
             if (scope == null)
-                throw Error.Argument(nameof(child),
+                throw Error.Argument(nameof(path),
                       "Tried to remove a child with path '{0}' which is not part of this tree ('{1}')".FormatWith(path, Path));
 
             if(scope.Path == path && scope.Parent != null)
