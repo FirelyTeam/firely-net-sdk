@@ -988,7 +988,7 @@ namespace Hl7.Fhir.Tests.Rest
 
 
 
-        [TestMethod]
+        [TestMethod,Ignore]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void FhirVersionIsChecked()
         {

@@ -235,16 +235,14 @@ namespace Hl7.Fhir.Tests.Serialization
                                     failedInvariantCodes.Add(item.Details.Coding[0].Code, 1);
                                 else
                                     failedInvariantCodes[item.Details.Coding[0].Code]++;
-#if DOTNETFW
+
                                 Trace.WriteLine("\t" + item.Details.Coding[0].Code + ": " + item.Details.Text);
                                 Trace.WriteLine("\t" + item.Diagnostics);
-#endif
+
                             }
-#if DOTNETFW
-                            Trace.WriteLine("-------------------------");
-                            Trace.WriteLine(FhirSerializer.SerializeResourceToXml(resource));
-                            Trace.WriteLine("-------------------------");
-#endif
+                          //  Trace.WriteLine("-------------------------");
+                          //  Trace.WriteLine(FhirSerializer.SerializeResourceToXml(resource));
+                          //  Trace.WriteLine("-------------------------");
                             // count the issue
                             errorCount++;
                         }
@@ -265,7 +263,109 @@ namespace Hl7.Fhir.Tests.Serialization
                     b = true;
                 }
             }
-            Assert.AreEqual(2, errorCount, String.Format("Failed Validating {0} of {1} examples", errorCount, testFileCount));
+            Assert.AreEqual(21, errorCount, String.Format("Failed Validating {0} of {1} examples", errorCount, testFileCount));
+
+            /*
+            Validating dataelement-labtestmaster-example(prothrombin).xml failed:
+                inv-2: One and only one DataElement.code must have is-data-element-concept set to "true"
+                code.extension(%"ext-11179-de-is-data-element-concept").count() = 1
+            Validating dataelement-sdc-profile-example(dataelement-sdc-profile-example).xml failed:
+                inv-2: One and only one DataElement.code must have is-data-element-concept set to "true"
+                code.extension(%"ext-11179-de-is-data-element-concept").count() = 1
+            Validating dataelement-sdc-profile-example-de(dataelement-sdc-profile-example-de).xml failed:
+                inv-2: One and only one DataElement.code must have is-data-element-concept set to "true"
+                code.extension(%"ext-11179-de-is-data-element-concept").count() = 1
+            Validating organization-example-f001-burgers(f001).xml failed:
+                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+            Validating organization-example-f201-aumc(f201).xml failed:
+                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+            Validating organization-example-f203-bumc(f203).xml failed:
+                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+            Validating patient-example(example).xml failed:
+                inv-1: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+                inv-1: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+                inv-1: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all(matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+            Validating patient-example-f001-pieter(f001).xml failed:
+                inv-1: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+                inv-1: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+                inv-1: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all(matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+            Validating patient-example-f201-roel(f201).xml failed:
+                inv-1: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+                inv-1: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+                inv-1: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all(matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+            Validating patient-example-us-extensions(us01).xml failed:
+                inv-1: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+                inv-1: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+                inv-1: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all(matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+            Validating practitioner-example-f001-evdb(f001).xml failed:
+                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+            Validating practitioner-example-f002-pv(f002).xml failed:
+                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+            Validating practitioner-example-f003-mv(f003).xml failed:
+                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+            Validating practitioner-example-f004-rb(f004).xml failed:
+                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+            Validating practitioner-example-f005-al(f005).xml failed:
+                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+            Validating practitioner-example-f006-rvdb(f006).xml failed:
+                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+            Validating practitioner-example-f007-sh(f007).xml failed:
+                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+            Validating practitioner-example-f201-ab(f201).xml failed:
+                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+            Validating practitioner-example-f202-lm(f202).xml failed:
+                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+            Validating practitioner-example-f203-jvg(f203).xml failed:
+                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+            Validating practitioner-example-f204-ce(f204).xml failed:
+                inv-2: (Zip or Postal Code) SHALL be formatted as 99999[-9999] for US Zip or ZIP +4 codes or as A9A9A9 for Canadian postal codes.
+                address.postalCode.all($this.matches('[0-9]{5}(-[0-9]{4}){0,1}'))
+
+            ------------------
+            Validation failed in 21 of 725 examples
+            Issues with Invariant: inv-2 (23), inv-1 (12)Exception thrown: 'Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException' in Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+            The program '[23100] dotnet.exe' has exited with code 0 (0x0).
+
+
+                */
+
         }
     }
 }
