@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Rest
             if (location.IsAbsoluteUri)
             {
                 if (!new RestUrl(baseUrl).IsEndpointFor(location))
-                    throw Error.Argument("location", "Url is not located within the given base endpoint");
+                    throw Error.Argument(nameof(location), "Url is not located within the given base endpoint");
             }
             else
             {

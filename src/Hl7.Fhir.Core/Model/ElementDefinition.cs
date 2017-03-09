@@ -34,8 +34,14 @@ namespace Hl7.Fhir.Model
         {
             get {
                 StringBuilder sb = new StringBuilder(128);
-                sb.AppendFormat("Path='{0}'", Path);
-                if (Name != null) { sb.AppendFormat(" Name='{0}'", Name); }
+                // sb.AppendFormat("Path='{0}'", Path);
+                // if (Name != null) { sb.AppendFormat(" Name='{0}'", Name); }
+                sb.Append(Path);
+                if (Name != null)
+                {
+                    sb.Append(":");
+                    sb.Append(Name);
+                }
                 return sb.ToString();
             }
         }

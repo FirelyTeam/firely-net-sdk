@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Specification.Source
             if (sd == null) return null;
 
             if (!sd.IsExtension)
-                throw Error.Argument("uri", "Given uri exists as a StructureDefinition, but is not an extension");
+                throw Error.Argument(nameof(uri), "Given uri exists as a StructureDefinition, but is not an extension");
 
             if (sd.Snapshot == null && requireSnapshot)
                 return null;

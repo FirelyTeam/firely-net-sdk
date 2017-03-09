@@ -25,8 +25,8 @@ namespace Hl7.Fhir.Serialization
 
         public static object ConvertTo(object value, Type to)
         {
-            if(to == null) throw Error.ArgumentNull("to");
-            if(value == null) throw Error.ArgumentNull("value");
+            if(to == null) throw Error.ArgumentNull(nameof(to));
+            if(value == null) throw Error.ArgumentNull(nameof(value));
 
             // No conversion necessary...
             if (value.GetType() == to) return value;
