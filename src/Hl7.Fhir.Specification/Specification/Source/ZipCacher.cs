@@ -80,6 +80,10 @@ namespace Hl7.Fhir.Specification.Source
 
             ZipFile.ExtractToDirectory(_zipPath, dir.FullName);
 
+            // and also extract the contained zip in there too with all the xsds in there
+            if (File.Exists(Path.Combine(dir.FullName, "fhir-all-xsd.zip")))
+                ZipFile.ExtractToDirectory(Path.Combine(dir.FullName, "fhir-all-xsd.zip"), dir.FullName);
+
             // Set the last write time to be equal to the write time of the zip file,
             // this way, we can compare this time to the write times of newer zips and
             // detect we need a refresh
