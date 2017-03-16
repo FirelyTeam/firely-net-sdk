@@ -88,6 +88,7 @@
 			string resourceDescription = "";
 			string rawResourceName = resourceName;
 			string primitiveTypeName = null;
+			bool isConstraintProfile = ((e as System.Xml.XmlElement).SelectSingleNode("fhir:derivation[@value='constraint']", nsR) != null);
 
 			if ((e as System.Xml.XmlElement).SelectSingleNode("fhir:differential/fhir:element[fhir:path/@value='"+rawResourceName+"']/fhir:short/@value", nsR) != null)
 				resourceDescription = (e as System.Xml.XmlElement).SelectSingleNode("fhir:differential/fhir:element[fhir:path/@value='"+rawResourceName+"']/fhir:short/@value", nsR).Value;
@@ -165,7 +166,7 @@ namespace Hl7.Fhir.Model
     /// <#= resourceDescription.Replace("&", "&amp;") #>
     /// </summary>
 <# } 
-#>    [FhirType("<#= rawResourceName #>")]
+#>    [FhirType("<#= isConstraintProfile ? "Quantity" : rawResourceName #>")]
     public partial class <#= resourceName #> : Quantity
     {
         [NotMapped]
