@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.9.0
+// Generated for FHIR v3.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -64,31 +64,31 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/chargeitem-status)
             /// </summary>
-            [EnumLiteral("planned"), Description("planned")]
+            [EnumLiteral("planned"), Description("Planned")]
             Planned,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/chargeitem-status)
             /// </summary>
-            [EnumLiteral("billable"), Description("billable")]
+            [EnumLiteral("billable"), Description("Billable")]
             Billable,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/chargeitem-status)
             /// </summary>
-            [EnumLiteral("not-billable"), Description("not billable")]
+            [EnumLiteral("not-billable"), Description("Not billable")]
             NotBillable,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/chargeitem-status)
             /// </summary>
-            [EnumLiteral("aborted"), Description("aborted")]
+            [EnumLiteral("aborted"), Description("Aborted")]
             Aborted,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/chargeitem-status)
             /// </summary>
-            [EnumLiteral("billed"), Description("billed")]
+            [EnumLiteral("billed"), Description("Billed")]
             Billed,
             /// <summary>
             /// MISSING DESCRIPTION

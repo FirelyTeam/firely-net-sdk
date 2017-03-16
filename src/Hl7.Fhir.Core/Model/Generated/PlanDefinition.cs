@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.9.0
+// Generated for FHIR v3.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,12 +53,12 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "PlanDefinition"; } }
         
-        [FhirType("GoalDefinitionComponent")]
+        [FhirType("GoalComponent")]
         [DataContract]
-        public partial class GoalDefinitionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class GoalComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "GoalDefinitionComponent"; } }
+            public override string TypeName { get { return "GoalComponent"; } }
             
             /// <summary>
             /// E.g. Treatment, dietary, behavioral, etc
@@ -157,7 +157,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as GoalDefinitionComponent;
+                var dest = other as GoalComponent;
                 
                 if (dest != null)
                 {
@@ -177,12 +177,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new GoalDefinitionComponent());
+                return CopyTo(new GoalComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as GoalDefinitionComponent;
+                var otherT = other as GoalComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as GoalDefinitionComponent;
+                var otherT = other as GoalComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -345,12 +345,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ActionDefinitionComponent")]
+        [FhirType("ActionComponent")]
         [DataContract]
-        public partial class ActionDefinitionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ActionDefinitionComponent"; } }
+            public override string TypeName { get { return "ActionComponent"; } }
             
             /// <summary>
             /// User-visible label for the action (e.g. 1. or A.)
@@ -874,20 +874,20 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A sub-action
             /// </summary>
-            [FhirElement("actionDefinition", Order=280)]
+            [FhirElement("action", Order=280)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.PlanDefinition.ActionDefinitionComponent> ActionDefinition
+            public List<Hl7.Fhir.Model.PlanDefinition.ActionComponent> Action
             {
-                get { if(_ActionDefinition==null) _ActionDefinition = new List<Hl7.Fhir.Model.PlanDefinition.ActionDefinitionComponent>(); return _ActionDefinition; }
-                set { _ActionDefinition = value; OnPropertyChanged("ActionDefinition"); }
+                get { if(_Action==null) _Action = new List<Hl7.Fhir.Model.PlanDefinition.ActionComponent>(); return _Action; }
+                set { _Action = value; OnPropertyChanged("Action"); }
             }
             
-            private List<Hl7.Fhir.Model.PlanDefinition.ActionDefinitionComponent> _ActionDefinition;
+            private List<Hl7.Fhir.Model.PlanDefinition.ActionComponent> _Action;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ActionDefinitionComponent;
+                var dest = other as ActionComponent;
                 
                 if (dest != null)
                 {
@@ -916,7 +916,7 @@ namespace Hl7.Fhir.Model
                     if(Definition != null) dest.Definition = (Hl7.Fhir.Model.ResourceReference)Definition.DeepCopy();
                     if(Transform != null) dest.Transform = (Hl7.Fhir.Model.ResourceReference)Transform.DeepCopy();
                     if(DynamicValue != null) dest.DynamicValue = new List<Hl7.Fhir.Model.PlanDefinition.DynamicValueComponent>(DynamicValue.DeepCopy());
-                    if(ActionDefinition != null) dest.ActionDefinition = new List<Hl7.Fhir.Model.PlanDefinition.ActionDefinitionComponent>(ActionDefinition.DeepCopy());
+                    if(Action != null) dest.Action = new List<Hl7.Fhir.Model.PlanDefinition.ActionComponent>(Action.DeepCopy());
                     return dest;
                 }
                 else
@@ -925,12 +925,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ActionDefinitionComponent());
+                return CopyTo(new ActionComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ActionDefinitionComponent;
+                var otherT = other as ActionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -958,14 +958,14 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(Definition, otherT.Definition)) return false;
                 if( !DeepComparable.Matches(Transform, otherT.Transform)) return false;
                 if( !DeepComparable.Matches(DynamicValue, otherT.DynamicValue)) return false;
-                if( !DeepComparable.Matches(ActionDefinition, otherT.ActionDefinition)) return false;
+                if( !DeepComparable.Matches(Action, otherT.Action)) return false;
                 
                 return true;
             }
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ActionDefinitionComponent;
+                var otherT = other as ActionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -993,7 +993,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Definition, otherT.Definition)) return false;
                 if( !DeepComparable.IsExactly(Transform, otherT.Transform)) return false;
                 if( !DeepComparable.IsExactly(DynamicValue, otherT.DynamicValue)) return false;
-                if( !DeepComparable.IsExactly(ActionDefinition, otherT.ActionDefinition)) return false;
+                if( !DeepComparable.IsExactly(Action, otherT.Action)) return false;
                 
                 return true;
             }
@@ -1029,7 +1029,7 @@ namespace Hl7.Fhir.Model
                     if (Definition != null) yield return Definition;
                     if (Transform != null) yield return Transform;
                     foreach (var elem in DynamicValue) { if (elem != null) yield return elem; }
-                    foreach (var elem in ActionDefinition) { if (elem != null) yield return elem; }
+                    foreach (var elem in Action) { if (elem != null) yield return elem; }
                 }
             }
             
@@ -1783,7 +1783,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Name for this plan definition (Computer friendly)
+        /// Name for this plan definition (computer friendly)
         /// </summary>
         [FhirElement("name", InSummary=true, Order=120)]
         [DataMember]
@@ -1796,7 +1796,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _NameElement;
         
         /// <summary>
-        /// Name for this plan definition (Computer friendly)
+        /// Name for this plan definition (computer friendly)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1815,7 +1815,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Name for this plan definition (Human friendly)
+        /// Name for this plan definition (human friendly)
         /// </summary>
         [FhirElement("title", InSummary=true, Order=130)]
         [DataMember]
@@ -1828,7 +1828,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _TitleElement;
         
         /// <summary>
-        /// Name for this plan definition (Human friendly)
+        /// Name for this plan definition (human friendly)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1860,7 +1860,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
-        /// draft | active | retired
+        /// draft | active | retired | unknown
         /// </summary>
         [FhirElement("status", InSummary=true, Order=150)]
         [Cardinality(Min=1,Max=1)]
@@ -1874,7 +1874,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.PublicationStatus> _StatusElement;
         
         /// <summary>
-        /// draft | active | retired
+        /// draft | active | retired | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1957,7 +1957,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Name of the publisher (Organization or individual)
+        /// Name of the publisher (organization or individual)
         /// </summary>
         [FhirElement("publisher", InSummary=true, Order=180)]
         [DataMember]
@@ -1970,7 +1970,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _PublisherElement;
         
         /// <summary>
-        /// Name of the publisher (Organization or individual)
+        /// Name of the publisher (organization or individual)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1991,7 +1991,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Natural language description of the plan definition
         /// </summary>
-        [FhirElement("description", Order=190)]
+        [FhirElement("description", InSummary=true, Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown Description
         {
@@ -2239,30 +2239,30 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What the plan is trying to accomplish
         /// </summary>
-        [FhirElement("goalDefinition", Order=330)]
+        [FhirElement("goal", Order=330)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.PlanDefinition.GoalDefinitionComponent> GoalDefinition
+        public List<Hl7.Fhir.Model.PlanDefinition.GoalComponent> Goal
         {
-            get { if(_GoalDefinition==null) _GoalDefinition = new List<Hl7.Fhir.Model.PlanDefinition.GoalDefinitionComponent>(); return _GoalDefinition; }
-            set { _GoalDefinition = value; OnPropertyChanged("GoalDefinition"); }
+            get { if(_Goal==null) _Goal = new List<Hl7.Fhir.Model.PlanDefinition.GoalComponent>(); return _Goal; }
+            set { _Goal = value; OnPropertyChanged("Goal"); }
         }
         
-        private List<Hl7.Fhir.Model.PlanDefinition.GoalDefinitionComponent> _GoalDefinition;
+        private List<Hl7.Fhir.Model.PlanDefinition.GoalComponent> _Goal;
         
         /// <summary>
         /// Action defined by the plan
         /// </summary>
-        [FhirElement("actionDefinition", Order=340)]
+        [FhirElement("action", Order=340)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.PlanDefinition.ActionDefinitionComponent> ActionDefinition
+        public List<Hl7.Fhir.Model.PlanDefinition.ActionComponent> Action
         {
-            get { if(_ActionDefinition==null) _ActionDefinition = new List<Hl7.Fhir.Model.PlanDefinition.ActionDefinitionComponent>(); return _ActionDefinition; }
-            set { _ActionDefinition = value; OnPropertyChanged("ActionDefinition"); }
+            get { if(_Action==null) _Action = new List<Hl7.Fhir.Model.PlanDefinition.ActionComponent>(); return _Action; }
+            set { _Action = value; OnPropertyChanged("Action"); }
         }
         
-        private List<Hl7.Fhir.Model.PlanDefinition.ActionDefinitionComponent> _ActionDefinition;
+        private List<Hl7.Fhir.Model.PlanDefinition.ActionComponent> _Action;
         
 
         public override void AddDefaultConstraints()
@@ -2302,8 +2302,8 @@ namespace Hl7.Fhir.Model
                 if(Copyright != null) dest.Copyright = (Hl7.Fhir.Model.Markdown)Copyright.DeepCopy();
                 if(RelatedArtifact != null) dest.RelatedArtifact = new List<RelatedArtifact>(RelatedArtifact.DeepCopy());
                 if(Library != null) dest.Library = new List<Hl7.Fhir.Model.ResourceReference>(Library.DeepCopy());
-                if(GoalDefinition != null) dest.GoalDefinition = new List<Hl7.Fhir.Model.PlanDefinition.GoalDefinitionComponent>(GoalDefinition.DeepCopy());
-                if(ActionDefinition != null) dest.ActionDefinition = new List<Hl7.Fhir.Model.PlanDefinition.ActionDefinitionComponent>(ActionDefinition.DeepCopy());
+                if(Goal != null) dest.Goal = new List<Hl7.Fhir.Model.PlanDefinition.GoalComponent>(Goal.DeepCopy());
+                if(Action != null) dest.Action = new List<Hl7.Fhir.Model.PlanDefinition.ActionComponent>(Action.DeepCopy());
                 return dest;
             }
             else
@@ -2345,8 +2345,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Copyright, otherT.Copyright)) return false;
             if( !DeepComparable.Matches(RelatedArtifact, otherT.RelatedArtifact)) return false;
             if( !DeepComparable.Matches(Library, otherT.Library)) return false;
-            if( !DeepComparable.Matches(GoalDefinition, otherT.GoalDefinition)) return false;
-            if( !DeepComparable.Matches(ActionDefinition, otherT.ActionDefinition)) return false;
+            if( !DeepComparable.Matches(Goal, otherT.Goal)) return false;
+            if( !DeepComparable.Matches(Action, otherT.Action)) return false;
             
             return true;
         }
@@ -2381,8 +2381,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Copyright, otherT.Copyright)) return false;
             if( !DeepComparable.IsExactly(RelatedArtifact, otherT.RelatedArtifact)) return false;
             if( !DeepComparable.IsExactly(Library, otherT.Library)) return false;
-            if( !DeepComparable.IsExactly(GoalDefinition, otherT.GoalDefinition)) return false;
-            if( !DeepComparable.IsExactly(ActionDefinition, otherT.ActionDefinition)) return false;
+            if( !DeepComparable.IsExactly(Goal, otherT.Goal)) return false;
+            if( !DeepComparable.IsExactly(Action, otherT.Action)) return false;
             
             return true;
         }
@@ -2417,8 +2417,8 @@ namespace Hl7.Fhir.Model
 				if (Copyright != null) yield return Copyright;
 				foreach (var elem in RelatedArtifact) { if (elem != null) yield return elem; }
 				foreach (var elem in Library) { if (elem != null) yield return elem; }
-				foreach (var elem in GoalDefinition) { if (elem != null) yield return elem; }
-				foreach (var elem in ActionDefinition) { if (elem != null) yield return elem; }
+				foreach (var elem in Goal) { if (elem != null) yield return elem; }
+				foreach (var elem in Action) { if (elem != null) yield return elem; }
             }
         }
     }

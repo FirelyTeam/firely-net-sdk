@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.9.0
+// Generated for FHIR v3.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "ParameterDefinition"; } }
         
         /// <summary>
-        /// Parameter name
+        /// Name used to access the parameter value
         /// </summary>
         [FhirElement("name", InSummary=true, Order=30)]
         [DataMember]
@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Code _NameElement;
         
         /// <summary>
-        /// Parameter name
+        /// Name used to access the parameter value
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -213,7 +213,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Type for the parameter
+        /// What type of value
         /// </summary>
         [FhirElement("type", InSummary=true, Order=80)]
         [Cardinality(Min=1,Max=1)]
@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.FHIRAllTypes> _TypeElement;
         
         /// <summary>
-        /// Type for the parameter
+        /// What type of value
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -246,7 +246,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// The profile of the parameter, any
+        /// What profile the value is expected to be
         /// </summary>
         [FhirElement("profile", InSummary=true, Order=90)]
         [CLSCompliant(false)]

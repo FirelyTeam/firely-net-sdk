@@ -3,7 +3,7 @@
   "id": "v2-0717",
   "meta": {
     "profile": [
-      "http://hl7.org/fhir/StructureDefinition/valueset-shareable-definition"
+      "http://hl7.org/fhir/StructureDefinition/shareablevalueset"
     ]
   },
   "text": {

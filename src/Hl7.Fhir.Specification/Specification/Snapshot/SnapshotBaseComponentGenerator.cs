@@ -168,7 +168,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // Initialize new Base component from base element
                     elem.Base = createBaseComponent(
                         baseElem.MaxElement,
-                        new Integer(baseElem.MinElement.Value),         // TODO: this really needs to be aligned in the spec, see GF#12918
+                        baseElem.MinElement,
                         baseElem.PathElement
                     );
                 }
@@ -185,12 +185,12 @@ namespace Hl7.Fhir.Specification.Snapshot
             return root == "Resource" || root == "Element";
         }
 
-        static ElementDefinition.BaseComponent createBaseComponent(FhirString maxElement, Integer minElement, FhirString pathElement)
+        static ElementDefinition.BaseComponent createBaseComponent(FhirString maxElement, UnsignedInt minElement, FhirString pathElement)
         {
             var result = new ElementDefinition.BaseComponent()
             {
                 MaxElement = (FhirString)maxElement?.DeepCopy(),
-                MinElement = (Integer)minElement?.DeepCopy(),
+                MinElement = (UnsignedInt)minElement?.DeepCopy(),
                 PathElement = (FhirString)pathElement?.DeepCopy()
             };
             result.SetCreatedBySnapshotGenerator();

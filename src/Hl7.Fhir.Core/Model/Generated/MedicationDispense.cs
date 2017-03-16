@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.9.0
+// Generated for FHIR v3.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -688,7 +688,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.MedicationDispense.SubstitutionComponent _Substitution;
         
         /// <summary>
-        /// Clinical Issue with action
+        /// Clinical issue with action
         /// </summary>
         [FhirElement("detectedIssue", Order=290)]
         [CLSCompliant(false)]
@@ -751,7 +751,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Element _NotDoneReason;
         
         /// <summary>
-        /// A list of events of interest in the lifecycle
+        /// A list of releveant lifecycle events
         /// </summary>
         [FhirElement("eventHistory", Order=320)]
         [CLSCompliant(false)]

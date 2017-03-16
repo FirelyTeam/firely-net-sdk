@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.9.0
+// Generated for FHIR v3.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -592,13 +592,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("min", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Integer MinElement
+            public Hl7.Fhir.Model.UnsignedInt MinElement
             {
                 get { return _MinElement; }
                 set { _MinElement = value; OnPropertyChanged("MinElement"); }
             }
             
-            private Hl7.Fhir.Model.Integer _MinElement;
+            private Hl7.Fhir.Model.UnsignedInt _MinElement;
             
             /// <summary>
             /// Min cardinality of the base element
@@ -614,7 +614,7 @@ namespace Hl7.Fhir.Model
                     if (!value.HasValue)
                       MinElement = null; 
                     else
-                      MinElement = new Hl7.Fhir.Model.Integer(value);
+                      MinElement = new Hl7.Fhir.Model.UnsignedInt(value);
                     OnPropertyChanged("Min");
                 }
             }
@@ -660,7 +660,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopy();
-                    if(MinElement != null) dest.MinElement = (Hl7.Fhir.Model.Integer)MinElement.DeepCopy();
+                    if(MinElement != null) dest.MinElement = (Hl7.Fhir.Model.UnsignedInt)MinElement.DeepCopy();
                     if(MaxElement != null) dest.MaxElement = (Hl7.Fhir.Model.FhirString)MaxElement.DeepCopy();
                     return dest;
                 }
@@ -1634,6 +1634,38 @@ namespace Hl7.Fhir.Model
                 }
             }
             
+            /// <summary>
+            /// Comments about the mapping or its use
+            /// </summary>
+            [FhirElement("comment", InSummary=true, Order=70)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString CommentElement
+            {
+                get { return _CommentElement; }
+                set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _CommentElement;
+            
+            /// <summary>
+            /// Comments about the mapping or its use
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Comment
+            {
+                get { return CommentElement != null ? CommentElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                      CommentElement = null; 
+                    else
+                      CommentElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Comment");
+                }
+            }
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as MappingComponent;
@@ -1644,6 +1676,7 @@ namespace Hl7.Fhir.Model
                     if(IdentityElement != null) dest.IdentityElement = (Hl7.Fhir.Model.Id)IdentityElement.DeepCopy();
                     if(LanguageElement != null) dest.LanguageElement = (Hl7.Fhir.Model.Code)LanguageElement.DeepCopy();
                     if(MapElement != null) dest.MapElement = (Hl7.Fhir.Model.FhirString)MapElement.DeepCopy();
+                    if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
                     return dest;
                 }
                 else
@@ -1664,6 +1697,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(IdentityElement, otherT.IdentityElement)) return false;
                 if( !DeepComparable.Matches(LanguageElement, otherT.LanguageElement)) return false;
                 if( !DeepComparable.Matches(MapElement, otherT.MapElement)) return false;
+                if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
                 
                 return true;
             }
@@ -1677,6 +1711,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(IdentityElement, otherT.IdentityElement)) return false;
                 if( !DeepComparable.IsExactly(LanguageElement, otherT.LanguageElement)) return false;
                 if( !DeepComparable.IsExactly(MapElement, otherT.MapElement)) return false;
+                if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
                 
                 return true;
             }
@@ -1690,6 +1725,7 @@ namespace Hl7.Fhir.Model
                     if (IdentityElement != null) yield return IdentityElement;
                     if (LanguageElement != null) yield return LanguageElement;
                     if (MapElement != null) yield return MapElement;
+                    if (CommentElement != null) yield return CommentElement;
                 }
             }
             

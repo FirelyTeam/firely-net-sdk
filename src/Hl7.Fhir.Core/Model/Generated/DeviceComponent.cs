@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.9.0
+// Generated for FHIR v3.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ProductionSpecificationComponent"; } }
             
             /// <summary>
-            /// Specification type
+            /// Type or kind of production specification, for example serial number or software revision
             /// </summary>
             [FhirElement("specType", InSummary=true, Order=40)]
             [DataMember]
@@ -257,23 +257,9 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// What kind of component it is
-        /// </summary>
-        [FhirElement("type", InSummary=true, Order=90)]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Type
-        {
-            get { return _Type; }
-            set { _Type = value; OnPropertyChanged("Type"); }
-        }
-        
-        private Hl7.Fhir.Model.CodeableConcept _Type;
-        
-        /// <summary>
         /// Instance id assigned by the software stack
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=100)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
@@ -285,10 +271,23 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
+        /// What kind of component it is
+        /// </summary>
+        [FhirElement("type", InSummary=true, Order=100)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept Type
+        {
+            get { return _Type; }
+            set { _Type = value; OnPropertyChanged("Type"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _Type;
+        
+        /// <summary>
         /// Recent system change timestamp
         /// </summary>
         [FhirElement("lastSystemChange", InSummary=true, Order=110)]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Instant LastSystemChangeElement
         {
@@ -318,7 +317,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// A source device of this component
+        /// Top-level device resource link
         /// </summary>
         [FhirElement("source", InSummary=true, Order=120)]
         [CLSCompliant(false)]
@@ -348,7 +347,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Parent;
         
         /// <summary>
-        /// Component operational status
+        /// Current operational status of the component, for example On, Off or Standby
         /// </summary>
         [FhirElement("operationalStatus", InSummary=true, Order=140)]
         [Cardinality(Min=0,Max=-1)]
@@ -407,7 +406,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Production specification of the component
+        /// Specification details such as Component Revisions, or Serial Numbers
         /// </summary>
         [FhirElement("productionSpecification", InSummary=true, Order=170)]
         [Cardinality(Min=0,Max=-1)]
@@ -447,8 +446,8 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
+                if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(LastSystemChangeElement != null) dest.LastSystemChangeElement = (Hl7.Fhir.Model.Instant)LastSystemChangeElement.DeepCopy();
                 if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopy();
                 if(Parent != null) dest.Parent = (Hl7.Fhir.Model.ResourceReference)Parent.DeepCopy();
@@ -474,8 +473,8 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(Type, otherT.Type)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(Type, otherT.Type)) return false;
             if( !DeepComparable.Matches(LastSystemChangeElement, otherT.LastSystemChangeElement)) return false;
             if( !DeepComparable.Matches(Source, otherT.Source)) return false;
             if( !DeepComparable.Matches(Parent, otherT.Parent)) return false;
@@ -494,8 +493,8 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
             if( !DeepComparable.IsExactly(LastSystemChangeElement, otherT.LastSystemChangeElement)) return false;
             if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
             if( !DeepComparable.IsExactly(Parent, otherT.Parent)) return false;
@@ -514,8 +513,8 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.Children) yield return item;
-				if (Type != null) yield return Type;
 				if (Identifier != null) yield return Identifier;
+				if (Type != null) yield return Type;
 				if (LastSystemChangeElement != null) yield return LastSystemChangeElement;
 				if (Source != null) yield return Source;
 				if (Parent != null) yield return Parent;

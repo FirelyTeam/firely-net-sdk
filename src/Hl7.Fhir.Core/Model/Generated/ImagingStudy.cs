@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.9.0
+// Generated for FHIR v3.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -62,25 +62,25 @@ namespace Hl7.Fhir.Model
         {
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://nema.org/dicom/dicm)
+            /// (system: http://dicom.nema.org/resources/ontology/DCM)
             /// </summary>
             [EnumLiteral("ONLINE"), Description("Online")]
             ONLINE,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://nema.org/dicom/dicm)
+            /// (system: http://dicom.nema.org/resources/ontology/DCM)
             /// </summary>
             [EnumLiteral("OFFLINE"), Description("Offline")]
             OFFLINE,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://nema.org/dicom/dicm)
+            /// (system: http://dicom.nema.org/resources/ontology/DCM)
             /// </summary>
             [EnumLiteral("NEARLINE"), Description("Nearline")]
             NEARLINE,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://nema.org/dicom/dicm)
+            /// (system: http://dicom.nema.org/resources/ontology/DCM)
             /// </summary>
             [EnumLiteral("UNAVAILABLE"), Description("Unavailable")]
             UNAVAILABLE,
@@ -972,7 +972,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// The performed Procedure Reference
+        /// The performed Procedure reference
         /// </summary>
         [FhirElement("procedureReference", InSummary=true, Order=230)]
         [CLSCompliant(false)]

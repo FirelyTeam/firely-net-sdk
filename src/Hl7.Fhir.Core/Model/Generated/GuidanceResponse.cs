@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.9.0
+// Generated for FHIR v3.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The id of the request associated with this response, if any
         /// </summary>
-        [FhirElement("requestId", Order=90)]
+        [FhirElement("requestId", InSummary=true, Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.Id RequestIdElement
         {

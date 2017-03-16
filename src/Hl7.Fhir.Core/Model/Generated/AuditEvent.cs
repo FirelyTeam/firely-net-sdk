@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.9.0
+// Generated for FHIR v3.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "AuditEvent"; } }
         
         /// <summary>
-        /// Indicator for type of action performed during the event that generated the audit.
+        /// Indicator for type of action performed during the event that generated the event
         /// (url: http://hl7.org/fhir/ValueSet/audit-event-action)
         /// </summary>
         [FhirEnumeration("AuditEventAction")]

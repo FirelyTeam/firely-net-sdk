@@ -7,12 +7,15 @@
   <PropertyGroup>
     <PackageId>Hl7.Fhir.STU3</PackageId>
     <Product>HL7 FHIR Core support API for STU3</Product>
-    <Description>Core .NET support for working with HL7 FHIR. Supports FHIR STU3 Jan Connectathon (1.8)</Description>
+    <Description>Core .NET support for working with HL7 FHIR. Supports FHIR STU3 (3.0)</Description>
     <Summary>This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the core functionality to working with RESTful FHIR servers: POCO classes for FHIR, parsing/serialization of FHIR data and a FhirClient for easy access to FHIR servers.</Summary>
     <PackageTags>HL7 FHIR REST parse serialize class model</PackageTags>
     <AssemblyName>Hl7.Fhir.STU3.Core</AssemblyName>
     <RootNamespace>Hl7.Fhir</RootNamespace>
     <Copyright>Copyright 2017 Furore Health Informatics.  Contains materials (C) HL7 International</Copyright>
+    <AssemblyVersion>0.93.0.0</AssemblyVersion>
+    <FileVersion>0.93.0.0</FileVersion>
+    <Version>0.93.0-alpha1</Version>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>

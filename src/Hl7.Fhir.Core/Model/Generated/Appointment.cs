@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.9.0
+// Generated for FHIR v3.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -723,7 +723,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Appointment.ParticipantComponent> _Participant;
         
         /// <summary>
-        /// Potential date/time interval(s) requested to allocate the appointment during
+        /// Potential date/time interval(s) requested to allocate the appointment within
         /// </summary>
         [FhirElement("requestedPeriod", Order=280)]
         [Cardinality(Min=0,Max=-1)]

@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Tests.Model
                 errorCount++;
             }
 
-            Assert.IsTrue(216 >= errorCount, String.Format("Failed search parameter data extraction, missing data in {0} of {1} search parameters", missingSearchValues.Count(), exampleSearchValues.Count));
+            Assert.IsTrue(43 >= errorCount, String.Format("Failed search parameter data extraction, missing data in {0} of {1} search parameters", missingSearchValues.Count(), exampleSearchValues.Count));
             Assert.AreEqual(0, parserErrorCount, String.Format("Failed search parameter data extraction, {0} files failed parsing", parserErrorCount));
         }
 

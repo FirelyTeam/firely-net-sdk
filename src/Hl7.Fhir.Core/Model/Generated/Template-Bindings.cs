@@ -61,69 +61,12 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("retired"), Description("Retired")]
         Retired,
-    }
-
-    /// <summary>
-    /// The kind of operation to perform as a part of a property based filter.
-    /// (url: http://hl7.org/fhir/ValueSet/filter-operator)
-    /// </summary>
-    [FhirEnumeration("FilterOperator")]
-    public enum FilterOperator
-    {
         /// <summary>
         /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/filter-operator)
+        /// (system: http://hl7.org/fhir/publication-status)
         /// </summary>
-        [EnumLiteral("="), Description("Equals")]
-        Equal,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/filter-operator)
-        /// </summary>
-        [EnumLiteral("is-a"), Description("Is A (by subsumption)")]
-        IsA,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/filter-operator)
-        /// </summary>
-        [EnumLiteral("descendent-of"), Description("Descendent Of (by subsumption)")]
-        DescendentOf,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/filter-operator)
-        /// </summary>
-        [EnumLiteral("is-not-a"), Description("Not (Is A) (by subsumption)")]
-        IsNotA,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/filter-operator)
-        /// </summary>
-        [EnumLiteral("regex"), Description("Regular Expression")]
-        Regex,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/filter-operator)
-        /// </summary>
-        [EnumLiteral("in"), Description("In Set")]
-        In,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/filter-operator)
-        /// </summary>
-        [EnumLiteral("not-in"), Description("Not in Set")]
-        NotIn,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/filter-operator)
-        /// </summary>
-        [EnumLiteral("generalizes"), Description("Generalizes (by Subsumption)")]
-        Generalizes,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/filter-operator)
-        /// </summary>
-        [EnumLiteral("exists"), Description("Exists")]
-        Exists,
+        [EnumLiteral("unknown"), Description("Unknown")]
+        Unknown,
     }
 
     /// <summary>
@@ -1024,6 +967,69 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("entered-in-error"), Description("Entered in Error")]
         EnteredInError,
+    }
+
+    /// <summary>
+    /// The kind of operation to perform as a part of a property based filter.
+    /// (url: http://hl7.org/fhir/ValueSet/filter-operator)
+    /// </summary>
+    [FhirEnumeration("FilterOperator")]
+    public enum FilterOperator
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/filter-operator)
+        /// </summary>
+        [EnumLiteral("="), Description("Equals")]
+        Equal,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/filter-operator)
+        /// </summary>
+        [EnumLiteral("is-a"), Description("Is A (by subsumption)")]
+        IsA,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/filter-operator)
+        /// </summary>
+        [EnumLiteral("descendent-of"), Description("Descendent Of (by subsumption)")]
+        DescendentOf,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/filter-operator)
+        /// </summary>
+        [EnumLiteral("is-not-a"), Description("Not (Is A) (by subsumption)")]
+        IsNotA,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/filter-operator)
+        /// </summary>
+        [EnumLiteral("regex"), Description("Regular Expression")]
+        Regex,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/filter-operator)
+        /// </summary>
+        [EnumLiteral("in"), Description("In Set")]
+        In,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/filter-operator)
+        /// </summary>
+        [EnumLiteral("not-in"), Description("Not in Set")]
+        NotIn,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/filter-operator)
+        /// </summary>
+        [EnumLiteral("generalizes"), Description("Generalizes (by Subsumption)")]
+        Generalizes,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/filter-operator)
+        /// </summary>
+        [EnumLiteral("exists"), Description("Exists")]
+        Exists,
     }
 
     /// <summary>

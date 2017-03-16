@@ -42,9 +42,6 @@ PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\json-edge-cases.json" "$server/j
 
 PowerCurl "$srcdir\Hl7.Fhir.Specification\validation.xml.zip" "$server/definitions.xml.zip"
 
-copy "$srcdir\Hl7.Fhir.Core\Model\Source\profiles-resources.xml" "$srcdir\Hl7.Fhir.Specification.Tests\TestData\snapshot-test"
-copy "$srcdir\Hl7.Fhir.Core\Model\Source\profiles-types.xml" "$srcdir\Hl7.Fhir.Specification.Tests\TestData\snapshot-test"
-
 # Apply this transform to remove all the Meta sections from the profiles (to remove the LastUpdated tags) 
 # this makes it easier to see the actual changes between versions
 $xslt = New-Object System.Xml.Xsl.XslCompiledTransform;

@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.9.0
+// Generated for FHIR v3.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -735,7 +735,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Element _Medication;
         
         /// <summary>
-        /// Who or group prescription is for
+        /// Who or group medication request is for
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=180)]
         [CLSCompliant(false)]

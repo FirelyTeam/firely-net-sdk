@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.9.0
+// Generated for FHIR v3.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -513,15 +513,34 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Comments on the risk assessment
         /// </summary>
-        [FhirElement("note", Order=240)]
+        [FhirElement("comment", Order=240)]
         [DataMember]
-        public Hl7.Fhir.Model.Annotation Note
+        public Hl7.Fhir.Model.FhirString CommentElement
         {
-            get { return _Note; }
-            set { _Note = value; OnPropertyChanged("Note"); }
+            get { return _CommentElement; }
+            set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
         }
         
-        private Hl7.Fhir.Model.Annotation _Note;
+        private Hl7.Fhir.Model.FhirString _CommentElement;
+        
+        /// <summary>
+        /// Comments on the risk assessment
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Comment
+        {
+            get { return CommentElement != null ? CommentElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  CommentElement = null; 
+                else
+                  CommentElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Comment");
+            }
+        }
         
 
         public static ElementDefinition.ConstraintComponent RiskAssessment_RAS_2 = new ElementDefinition.ConstraintComponent()
@@ -572,7 +591,7 @@ namespace Hl7.Fhir.Model
                 if(Basis != null) dest.Basis = new List<Hl7.Fhir.Model.ResourceReference>(Basis.DeepCopy());
                 if(Prediction != null) dest.Prediction = new List<Hl7.Fhir.Model.RiskAssessment.PredictionComponent>(Prediction.DeepCopy());
                 if(MitigationElement != null) dest.MitigationElement = (Hl7.Fhir.Model.FhirString)MitigationElement.DeepCopy();
-                if(Note != null) dest.Note = (Hl7.Fhir.Model.Annotation)Note.DeepCopy();
+                if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
                 return dest;
             }
             else
@@ -605,7 +624,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Basis, otherT.Basis)) return false;
             if( !DeepComparable.Matches(Prediction, otherT.Prediction)) return false;
             if( !DeepComparable.Matches(MitigationElement, otherT.MitigationElement)) return false;
-            if( !DeepComparable.Matches(Note, otherT.Note)) return false;
+            if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
             
             return true;
         }
@@ -631,7 +650,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Basis, otherT.Basis)) return false;
             if( !DeepComparable.IsExactly(Prediction, otherT.Prediction)) return false;
             if( !DeepComparable.IsExactly(MitigationElement, otherT.MitigationElement)) return false;
-            if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
+            if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
             
             return true;
         }
@@ -657,7 +676,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Basis) { if (elem != null) yield return elem; }
 				foreach (var elem in Prediction) { if (elem != null) yield return elem; }
 				if (MitigationElement != null) yield return MitigationElement;
-				if (Note != null) yield return Note;
+				if (CommentElement != null) yield return CommentElement;
             }
         }
     }

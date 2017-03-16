@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.9.0
+// Generated for FHIR v3.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -244,7 +244,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("reference", Order=70)]
             [CLSCompliant(false)]
-			[References("Appointment","CommunicationRequest","DeviceRequest","MedicationRequest","NutritionOrder","Task","ProcessRequest","ReferralRequest","VisionPrescription","RequestGroup")]
+			[References("Appointment","CommunicationRequest","DeviceRequest","MedicationRequest","NutritionOrder","Task","ProcedureRequest","ReferralRequest","VisionPrescription","RequestGroup")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Reference
             {

@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.9.0
+// Generated for FHIR v3.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,33 +53,6 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "MeasureReport"; } }
         
-        /// <summary>
-        /// The type of the measure report
-        /// (url: http://hl7.org/fhir/ValueSet/measure-report-type)
-        /// </summary>
-        [FhirEnumeration("MeasureReportType")]
-        public enum MeasureReportType
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/measure-report-type)
-            /// </summary>
-            [EnumLiteral("individual"), Description("Individual")]
-            Individual,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/measure-report-type)
-            /// </summary>
-            [EnumLiteral("patient-list"), Description("Patient List")]
-            PatientList,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/measure-report-type)
-            /// </summary>
-            [EnumLiteral("summary"), Description("Summary")]
-            Summary,
-        }
-
         /// <summary>
         /// The status of the measure report
         /// (url: http://hl7.org/fhir/ValueSet/measure-report-status)
@@ -107,6 +80,33 @@ namespace Hl7.Fhir.Model
             Error,
         }
 
+        /// <summary>
+        /// The type of the measure report
+        /// (url: http://hl7.org/fhir/ValueSet/measure-report-type)
+        /// </summary>
+        [FhirEnumeration("MeasureReportType")]
+        public enum MeasureReportType
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/measure-report-type)
+            /// </summary>
+            [EnumLiteral("individual"), Description("Individual")]
+            Individual,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/measure-report-type)
+            /// </summary>
+            [EnumLiteral("patient-list"), Description("Patient List")]
+            PatientList,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/measure-report-type)
+            /// </summary>
+            [EnumLiteral("summary"), Description("Summary")]
+            Summary,
+        }
+
         [FhirType("GroupComponent")]
         [DataContract]
         public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "GroupComponent"; } }
             
             /// <summary>
-            /// Identifier of the population group being reported
+            /// What group of the measure
             /// </summary>
             [FhirElement("identifier", Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -143,9 +143,9 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.MeasureReport.PopulationComponent> _Population;
             
             /// <summary>
-            /// The measure score
+            /// What score this group achieved
             /// </summary>
-            [FhirElement("measureScore", Order=60)]
+            [FhirElement("measureScore", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal MeasureScoreElement
             {
@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirDecimal _MeasureScoreElement;
             
             /// <summary>
-            /// The measure score
+            /// What score this group achieved
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -263,7 +263,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "PopulationComponent"; } }
             
             /// <summary>
-            /// Identifier of the population being reported
+            /// Population identifier as defined in the measure
             /// </summary>
             [FhirElement("identifier", InSummary=true, Order=40)]
             [DataMember]
@@ -410,7 +410,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "StratifierComponent"; } }
             
             /// <summary>
-            /// Identifier of the stratifier
+            /// What stratifier of the group
             /// </summary>
             [FhirElement("identifier", Order=40)]
             [DataMember]
@@ -550,9 +550,9 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.MeasureReport.StratifierGroupPopulationComponent> _Population;
             
             /// <summary>
-            /// Score for this stratum
+            /// What score this stratum achieved
             /// </summary>
-            [FhirElement("measureScore", Order=60)]
+            [FhirElement("measureScore", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal MeasureScoreElement
             {
@@ -563,7 +563,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirDecimal _MeasureScoreElement;
             
             /// <summary>
-            /// Score for this stratum
+            /// What score this stratum achieved
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -652,7 +652,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "StratifierGroupPopulationComponent"; } }
             
             /// <summary>
-            /// Identifier of the population
+            /// Population identifier as defined in the measure
             /// </summary>
             [FhirElement("identifier", InSummary=true, Order=40)]
             [DataMember]
@@ -792,87 +792,22 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Measure that was evaluated
+        /// Additional identifier for the Report
         /// </summary>
-        [FhirElement("measure", InSummary=true, Order=90)]
-        [CLSCompliant(false)]
-		[References("Measure")]
-        [Cardinality(Min=1,Max=1)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Measure
+        public Hl7.Fhir.Model.Identifier Identifier
         {
-            get { return _Measure; }
-            set { _Measure = value; OnPropertyChanged("Measure"); }
+            get { return _Identifier; }
+            set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Measure;
-        
-        /// <summary>
-        /// individual | patient-list | summary
-        /// </summary>
-        [FhirElement("type", InSummary=true, Order=100)]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType> TypeElement
-        {
-            get { return _TypeElement; }
-            set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
-        }
-        
-        private Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType> _TypeElement;
-        
-        /// <summary>
-        /// individual | patient-list | summary
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.MeasureReport.MeasureReportType? Type
-        {
-            get { return TypeElement != null ? TypeElement.Value : null; }
-            set
-            {
-                if (!value.HasValue)
-                  TypeElement = null; 
-                else
-                  TypeElement = new Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType>(value);
-                OnPropertyChanged("Type");
-            }
-        }
-        
-        /// <summary>
-        /// Optional Patient
-        /// </summary>
-        [FhirElement("patient", InSummary=true, Order=110)]
-        [CLSCompliant(false)]
-		[References("Patient")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Patient
-        {
-            get { return _Patient; }
-            set { _Patient = value; OnPropertyChanged("Patient"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Patient;
-        
-        /// <summary>
-        /// Reporting period
-        /// </summary>
-        [FhirElement("period", InSummary=true, Order=120)]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Hl7.Fhir.Model.Period Period
-        {
-            get { return _Period; }
-            set { _Period = value; OnPropertyChanged("Period"); }
-        }
-        
-        private Hl7.Fhir.Model.Period _Period;
+        private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
         /// complete | pending | error
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=130)]
+        [FhirElement("status", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus> StatusElement
@@ -903,7 +838,71 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Date the report was generated
+        /// individual | patient-list | summary
+        /// </summary>
+        [FhirElement("type", InSummary=true, Order=110)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType> TypeElement
+        {
+            get { return _TypeElement; }
+            set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
+        }
+        
+        private Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType> _TypeElement;
+        
+        /// <summary>
+        /// individual | patient-list | summary
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.MeasureReport.MeasureReportType? Type
+        {
+            get { return TypeElement != null ? TypeElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  TypeElement = null; 
+                else
+                  TypeElement = new Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType>(value);
+                OnPropertyChanged("Type");
+            }
+        }
+        
+        /// <summary>
+        /// What measure was evaluated
+        /// </summary>
+        [FhirElement("measure", InSummary=true, Order=120)]
+        [CLSCompliant(false)]
+		[References("Measure")]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Measure
+        {
+            get { return _Measure; }
+            set { _Measure = value; OnPropertyChanged("Measure"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Measure;
+        
+        /// <summary>
+        /// What patient the report is for
+        /// </summary>
+        [FhirElement("patient", InSummary=true, Order=130)]
+        [CLSCompliant(false)]
+		[References("Patient")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Patient
+        {
+            get { return _Patient; }
+            set { _Patient = value; OnPropertyChanged("Patient"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Patient;
+        
+        /// <summary>
+        /// When the report was generated
         /// </summary>
         [FhirElement("date", InSummary=true, Order=140)]
         [DataMember]
@@ -916,7 +915,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
-        /// Date the report was generated
+        /// When the report was generated
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -935,7 +934,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Reporting Organization
+        /// Who is reporting the data
         /// </summary>
         [FhirElement("reportingOrganization", InSummary=true, Order=150)]
         [CLSCompliant(false)]
@@ -950,9 +949,23 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _ReportingOrganization;
         
         /// <summary>
+        /// What period the report covers
+        /// </summary>
+        [FhirElement("period", InSummary=true, Order=160)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.Period Period
+        {
+            get { return _Period; }
+            set { _Period = value; OnPropertyChanged("Period"); }
+        }
+        
+        private Hl7.Fhir.Model.Period _Period;
+        
+        /// <summary>
         /// Measure results for each group
         /// </summary>
-        [FhirElement("group", Order=160)]
+        [FhirElement("group", Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MeasureReport.GroupComponent> Group
@@ -966,7 +979,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What data was evaluated to produce the measure score
         /// </summary>
-        [FhirElement("evaluatedResources", Order=170)]
+        [FhirElement("evaluatedResources", Order=180)]
         [CLSCompliant(false)]
 		[References("Bundle")]
         [DataMember]
@@ -992,13 +1005,14 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Measure != null) dest.Measure = (Hl7.Fhir.Model.ResourceReference)Measure.DeepCopy();
-                if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType>)TypeElement.DeepCopy();
-                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
-                if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
+                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus>)StatusElement.DeepCopy();
+                if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType>)TypeElement.DeepCopy();
+                if(Measure != null) dest.Measure = (Hl7.Fhir.Model.ResourceReference)Measure.DeepCopy();
+                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(ReportingOrganization != null) dest.ReportingOrganization = (Hl7.Fhir.Model.ResourceReference)ReportingOrganization.DeepCopy();
+                if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(Group != null) dest.Group = new List<Hl7.Fhir.Model.MeasureReport.GroupComponent>(Group.DeepCopy());
                 if(EvaluatedResources != null) dest.EvaluatedResources = (Hl7.Fhir.Model.ResourceReference)EvaluatedResources.DeepCopy();
                 return dest;
@@ -1018,13 +1032,14 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(Measure, otherT.Measure)) return false;
-            if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
-            if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
-            if( !DeepComparable.Matches(Period, otherT.Period)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
+            if( !DeepComparable.Matches(Measure, otherT.Measure)) return false;
+            if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
             if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.Matches(ReportingOrganization, otherT.ReportingOrganization)) return false;
+            if( !DeepComparable.Matches(Period, otherT.Period)) return false;
             if( !DeepComparable.Matches(Group, otherT.Group)) return false;
             if( !DeepComparable.Matches(EvaluatedResources, otherT.EvaluatedResources)) return false;
             
@@ -1037,13 +1052,14 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(Measure, otherT.Measure)) return false;
-            if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
-            if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
-            if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
+            if( !DeepComparable.IsExactly(Measure, otherT.Measure)) return false;
+            if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
             if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.IsExactly(ReportingOrganization, otherT.ReportingOrganization)) return false;
+            if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
             if( !DeepComparable.IsExactly(Group, otherT.Group)) return false;
             if( !DeepComparable.IsExactly(EvaluatedResources, otherT.EvaluatedResources)) return false;
             
@@ -1056,13 +1072,14 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.Children) yield return item;
-				if (Measure != null) yield return Measure;
-				if (TypeElement != null) yield return TypeElement;
-				if (Patient != null) yield return Patient;
-				if (Period != null) yield return Period;
+				if (Identifier != null) yield return Identifier;
 				if (StatusElement != null) yield return StatusElement;
+				if (TypeElement != null) yield return TypeElement;
+				if (Measure != null) yield return Measure;
+				if (Patient != null) yield return Patient;
 				if (DateElement != null) yield return DateElement;
 				if (ReportingOrganization != null) yield return ReportingOrganization;
+				if (Period != null) yield return Period;
 				foreach (var elem in Group) { if (elem != null) yield return elem; }
 				if (EvaluatedResources != null) yield return EvaluatedResources;
             }

@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.9.0
+// Generated for FHIR v3.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Element _ValueSet;
             
             /// <summary>
-            /// Code value of the filter
+            /// What code is expected
             /// </summary>
             [FhirElement("valueCode", InSummary=true, Order=60)]
             [Cardinality(Min=0,Max=-1)]
@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.Code> _ValueCodeElement;
             
             /// <summary>
-            /// Code value of the filter
+            /// What code is expected
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Coding value of the filter
+            /// What Coding is expected
             /// </summary>
             [FhirElement("valueCoding", InSummary=true, Order=70)]
             [Cardinality(Min=0,Max=-1)]
@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.Coding> _ValueCoding;
             
             /// <summary>
-            /// CodeableConcept value of the filter
+            /// What CodeableConcept is expected
             /// </summary>
             [FhirElement("valueCodeableConcept", InSummary=true, Order=80)]
             [Cardinality(Min=0,Max=-1)]
@@ -450,7 +450,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Code filters for the data
+        /// What codes are expected
         /// </summary>
         [FhirElement("codeFilter", InSummary=true, Order=60)]
         [Cardinality(Min=0,Max=-1)]
@@ -464,7 +464,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent> _CodeFilter;
         
         /// <summary>
-        /// Date filters for the data
+        /// What dates/date ranges are expected
         /// </summary>
         [FhirElement("dateFilter", InSummary=true, Order=70)]
         [Cardinality(Min=0,Max=-1)]

@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.9.0
+// Generated for FHIR v3.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "PolicyComponent"; } }
             
             /// <summary>
-            /// Authority of policy
+            /// Enforcement source for policy
             /// </summary>
             [FhirElement("authority", Order=40)]
             [DataMember]
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirUri _AuthorityElement;
             
             /// <summary>
-            /// Authority of policy
+            /// Enforcement source for policy
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]

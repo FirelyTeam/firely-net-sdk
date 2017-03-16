@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.9.0
+// Generated for FHIR v3.0.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -332,7 +332,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Business Identifer for report
+        /// Business identifier for report
         /// </summary>
         [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
@@ -422,7 +422,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Code;
         
         /// <summary>
-        /// The subject of the report, usually, but not always, the patient
+        /// The subject of the report - usually, but not always, the patient
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=140)]
         [CLSCompliant(false)]
@@ -452,7 +452,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Context;
         
         /// <summary>
-        /// Clinically Relevant time/time-period for report
+        /// Clinically relevant time/time-period for report
         /// </summary>
         [FhirElement("effective", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
