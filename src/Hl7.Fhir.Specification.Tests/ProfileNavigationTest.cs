@@ -623,14 +623,15 @@ namespace Hl7.Fhir.Specification.Tests
             var e = struc.Snapshot.Element;
 
             e.Add(new ElementDefinition() { Path = "A" });
-            e.Add(new ElementDefinition() { Path = "A.B" });
+            e.Add(new ElementDefinition() { Path = "A.B", Slicing = new ElementDefinition.SlicingComponent() { } });
             e.Add(new ElementDefinition() { Path = "A.B", SliceName = "1" });
-            e.Add(new ElementDefinition() { Path = "A.B", SliceName = "2" });
+            e.Add(new ElementDefinition() { Path = "A.B", SliceName = "2", Slicing = new ElementDefinition.SlicingComponent() { } });
+            e.Add(new ElementDefinition() { Path = "A.B", SliceName = "2/1" });
             e.Add(new ElementDefinition() { Path = "A.B", SliceName = "2/2" });
             e.Add(new ElementDefinition() { Path = "A.B", SliceName = "3" });
-            e.Add(new ElementDefinition() { Path = "A.C" });
-            e.Add(new ElementDefinition() { Path = "A.C", SliceName = "1" });
-            e.Add(new ElementDefinition() { Path = "A.C", SliceName = "1/1" });
+            e.Add(new ElementDefinition() { Path = "A.C", Slicing = new ElementDefinition.SlicingComponent() { } });
+            e.Add(new ElementDefinition() { Path = "A.C", SliceName = "1", Slicing = new ElementDefinition.SlicingComponent() { } });
+            e.Add(new ElementDefinition() { Path = "A.C", SliceName = "1/1", Slicing = new ElementDefinition.SlicingComponent() { } });
             e.Add(new ElementDefinition() { Path = "A.C", SliceName = "1/1/1" });
             e.Add(new ElementDefinition() { Path = "A.C", SliceName = "1/1/2" });
             e.Add(new ElementDefinition() { Path = "A.C", SliceName = "1/2" });
@@ -649,20 +650,28 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.MoveToNextSlice());
             Assert.AreEqual(nav.Current.SliceName, "3");
             Assert.IsFalse(nav.MoveToNextSlice());
+            Assert.IsTrue(nav.MoveToPreviousSlice());
+            Assert.AreEqual(nav.Current.Name, "2");
 
             Assert.IsTrue(nav.MoveToNext("C"));
             Assert.IsTrue(nav.MoveToNextSlice());
             Assert.AreEqual(nav.Current.SliceName, "1");
-            Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
+            // Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
+            Assert.IsTrue(nav.MoveToFirstReslice());
             Assert.AreEqual(nav.Current.SliceName, "1/1");
 
             var bm = nav.Bookmark();
-            Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
+            // Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
+            Assert.IsTrue(nav.MoveToFirstReslice());
             Assert.AreEqual(nav.Current.SliceName, "1/1/1");
             Assert.IsTrue(nav.MoveToNextSlice());
             Assert.AreEqual(nav.Current.SliceName, "1/1/2");
             Assert.IsFalse(nav.MoveToNextSlice());
-            Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
+            Assert.IsTrue(nav.MoveToPreviousSlice());
+            Assert.AreEqual(nav.Current.SliceName, "1/1/1");
+            // Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
+            Assert.IsTrue(nav.ReturnToBookmark(bm));
+            Assert.IsTrue(nav.MoveToNextSlice());
             Assert.AreEqual(nav.Current.SliceName, "1/2");
             Assert.IsTrue(nav.MoveToNextSlice());
             Assert.AreEqual(nav.Current.SliceName, "1/3");

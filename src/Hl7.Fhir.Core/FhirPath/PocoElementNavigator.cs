@@ -26,7 +26,7 @@ namespace Hl7.Fhir.FhirPath
         // For the root element only
         internal PocoElementNavigator(string name, Base value)
         {
-            if (value == null) throw Error.ArgumentNull("value");
+            if (value == null) throw Error.ArgumentNull(nameof(value));
 
             _pocoElement = value;
             PropMap = null;
@@ -37,7 +37,7 @@ namespace Hl7.Fhir.FhirPath
         // For Normal element properties representing a FHIR type
         internal PocoElementNavigator(Introspection.PropertyMapping map, Base value, int arrayIndex)
         {
-            if (value == null) throw Error.ArgumentNull("value");
+            if (value == null) throw Error.ArgumentNull(nameof(value));
 
             _pocoElement = value;
             PropMap = map;
@@ -49,7 +49,7 @@ namespace Hl7.Fhir.FhirPath
         // rendered as attributes in the xml
         internal PocoElementNavigator(Introspection.PropertyMapping map, string value)
         {
-            if (value == null) throw Error.ArgumentNull("value");
+            if (value == null) throw Error.ArgumentNull(nameof(value));
 
             _string = value;
             PropMap = map;

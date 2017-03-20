@@ -361,6 +361,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 else
                 {
                     // Alternatively, we could try to expand the most specific common base profile, e.g. (Backbone)Element
+                    // TODO: Determine the intersection, i.e. the most specific common type that all types are derived from
 
                     addIssueInvalidChoiceConstraint(defn);
                     return false;
@@ -454,10 +455,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                             mergeElement(snap, diff);
                             break;
                         case ElementMatcher.MatchAction.Add:
-                            addSlice(snap, diff);
+                            addSlice(snap, diff, match.SliceBase);
                             break;
                         case ElementMatcher.MatchAction.Slice:
-                            startSlice(snap, diff);
+                            startSlice(snap, diff, match.SliceBase);
                             break;
                         case ElementMatcher.MatchAction.New:
                             // No matching base element; this is a new element definition
@@ -598,14 +599,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                     {
                         return;
                     }
-
-                    // [WMR 20160906] WRONG! Allowed for core resource & datatype definitions...
-                    //if (!snap.HasChildren)
-                    //{
-                    //    // Snapshot's element turns out not to be expandable, so we can't move to the desired path
-                    //    addIssueInvalidChildConstraint(snap.Current);
-                    //    return;
-                    //}
                 }
 
                 // Now, recursively merge the children
@@ -862,26 +855,20 @@ namespace Hl7.Fhir.Specification.Snapshot
                 if (profile != null)
                 {
                     var snapExtPos = nav.Bookmark();
-                    try
+                    if (nav.MoveToChild("url"))
                     {
-                        if (nav.MoveToChild("url"))
+                        var urlElem = nav.Current;
+                        if (urlElem != null && urlElem.Fixed == null)
                         {
-                            var urlElem = nav.Current;
-                            if (urlElem != null && urlElem.Fixed == null)
-                            {
-                                urlElem.Fixed = new FhirUri(profile);
-                            }
+                            urlElem.Fixed = new FhirUri(profile);
                         }
-                    }
-                    finally
-                    {
                         nav.ReturnToBookmark(snapExtPos);
                     }
                 }
             }
         }
 
-        void startSlice(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
+        void startSlice(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff, ElementDefinitionNavigator sliceBase)
         {
             // diff is now located at the first repeat of a slice, which is normally the slice entry
             // (Extension slices need not have a slicing entry)
@@ -923,20 +910,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
             }
 
-            // Handle new nested reslice in diff, for example:
-            //
-            //   Base     Diff       Operation
-            //   -----------------------------
-            //   ''       ''         Slice
-            //            'A'        Add
-            //            'B'        Add
-            //            'B/1'      Add
-            //            'B/2'      Add
-            //
-            // snap = { ... *Patient.telecom (slice entry), Patient.telecom : phone ... }
-            // diff = { ... *Patient.telecom : email (slice entry), Patient.telecom : email/home, Patient.telecom: email/work ... }
-            // => Duplicate base slice after last slice
-
             // [WMR 20161219] Handle Composition.section - has default name 'section' in core resource (name reference target for Composition.section.section)
             // Ambiguous in DSTU2... usually this would introduce a reslice of named slice 'section'
             // Note that STU3 introduces contentReference
@@ -950,8 +923,15 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (slicingEntry.SliceName != null && ElementDefinitionNavigator.IsSiblingSliceOf(snap.Current.SliceName, slicingEntry.SliceName))
             {
                 // Append the new slice constraint to the existing slice group
-                var lastSlice = findSliceAddPosition(snap, diff);
-                snap.DuplicateAfter(lastSlice);
+                if (sliceBase != null)
+                {
+                    addSliceBase(snap, diff, sliceBase);
+                }
+                else
+                {
+                    var lastSlice = findSliceAddPosition(snap, diff);
+                    snap.DuplicateAfter(lastSlice);
+                }
             }
 
             if (slicingEntry != null)
@@ -1027,8 +1007,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         //   'A/2'
         //            'A/1/3'    Add
         //   'C'
-        //            
-        void addSlice(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
+        //
+
+        void addSlice(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff, ElementDefinitionNavigator sliceBase)
         {
             // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(addSlice)}] Base Path = '{snap.Path}' Base Slice Name = '{snap.Current.Name}' Diff Slice Name = {sliceName}");
 
@@ -1043,9 +1024,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                 || ElementDefinitionNavigator.IsDirectResliceOf(diff.Current.SliceName, snap.Current.SliceName));
 
             // Append the new slice constraint to the existing slice group
-            // var lastSlice = findLastSlice(snap);
-            var lastSlice = findSliceAddPosition(snap, diff);
-            snap.DuplicateAfter(lastSlice);
+            // [WMR 20170308] TODO: Emit in-order
+            // Slice definitions in StructureDef are always ordered! (only instances may contain unordered slices)
+            // diff must specify constraints on existing slices in original order (just like regular elements)
+            // diff can only append new slices after all constraints on existing slices
+            addSliceBase(snap, diff, sliceBase);
 
             // [WMR 20161219] Handle invalid multiple renamed choice type constraints, e.g. { valueString, valueInteger }
             // Snapshot base element has already been renamed by the first match => re-assign
@@ -1055,7 +1038,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             // Important: explicitly clear the slicing node in the copy!
-            snap.Current.Slicing = null;
+            Debug.Assert(snap.Current.Slicing == null); // Taken care of by ElementMatcher.constructSliceMatch
+            // snap.Current.Slicing = null;
 
             // Notify clients about a snapshot element with differential constraints
             OnConstraint(snap.Current);
@@ -1063,6 +1047,36 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Merge differential
             mergeElement(snap, diff);
 
+        }
+
+        static void addSliceBase(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff, ElementDefinitionNavigator sliceBase)
+        {
+            var lastSlice = findSliceAddPosition(snap, diff);
+            bool result = false;
+
+            if (sliceBase == null || sliceBase.Current == null)
+            {
+                Debug.Fail("SHOULDN'T HAPPEN...");
+                throw Error.InvalidOperation($"Internal error in snapshot generator ({nameof(addSlice)}): slice base element is unavailable.");
+            }
+
+            result = snap.ReturnToBookmark(lastSlice);
+            // Copy the original (unmerged) slice base element to snapshot
+            if (result) { result = snap.InsertAfter((ElementDefinition)sliceBase.Current.DeepCopy()); }
+            // Recursively copy the original (unmerged) child elements, if necessary
+            if (result && sliceBase.HasChildren)
+            {
+                // Always copy all the existing constraints on child elements to snapshot ?
+                // if (mustExpandElement(diff))
+                // {
+                result = snap.CopyChildren(sliceBase);
+                // }
+            }
+
+            if (!result)
+            {
+                throw Error.InvalidOperation($"Internal error in snapshot generator ({nameof(addSlice)}): cannot add slice '{diff.Current}' to snapshot.");
+            }
         }
 
         // Search snapshot slice group for suitable position to add new diff slice

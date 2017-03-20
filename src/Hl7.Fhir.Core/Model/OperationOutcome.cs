@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Model
             return new OperationOutcome() {
                       Issue = new List<OperationOutcome.IssueComponent>()
                             { new OperationOutcome.IssueComponent() 
-                                    { Severity = severity, Diagnostics = message } 
+                                    { Severity = severity, Code = code, Diagnostics = message } 
                             } };
         }
 
