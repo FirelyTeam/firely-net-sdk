@@ -8,13 +8,13 @@
 		<uri value="http://hl7.org/v3" />
 		<name value="RIM" />
 	</mapping>
-	<kind value="datatype" />
-	<constrainedType value="Extension" />
+	<kind value="primitive-type" />
+	<type value="Extension" />
 	<abstract value="false" />
 	<contextType value="datatype" />
 	<context value="Extension.extension" />
 	<context value="Extension" />
-	<base value="http://hl7.org/fhir/StructureDefinition/Extension" />
+	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension" />
 	<snapshot>
 		<element>
 			<path value="Extension" />
@@ -51,7 +51,7 @@
 			<representation value="xmlAttr" />
 			<short value="xml:id (or equivalent in JSON)" />
 			<definition value="unique id for the element within a resource (for internal references)." />
-			<comments value="RFC 4122" />
+			<comment value="RFC 4122" />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -82,7 +82,7 @@
 			<path value="Extension.extension" />
 			<short value="Additional Content defined by implementations" />
 			<definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-			<comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+			<comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
 			<alias value="extensions" />
 			<alias value="user content" />
 			<min value="0" />
@@ -117,10 +117,10 @@
 		</element>
 		<element>
 			<path value="Extension.extension" />
-			<name value="name" />
+			<sliceName value="name" />
 			<short value="Additional Content defined by implementations" />
 			<definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-			<comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+			<comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
 			<alias value="extensions" />
 			<alias value="user content" />
 			<min value="1" />
@@ -156,10 +156,10 @@
 		<element>
 			<path value="Extension.extension.id" />
 			<representation value="xmlAttr" />
-			<name value="name.id" />
+			<sliceName value="name.id" />
 			<short value="xml:id (or equivalent in JSON)" />
 			<definition value="unique id for the element within a resource (for internal references)." />
-			<comments value="RFC 4122" />
+			<comment value="RFC 4122" />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -188,10 +188,10 @@
 		</element>
 		<element>
 			<path value="Extension.extension.extension" />
-			<name value="name.extension" />
+			<sliceName value="name.extension" />
 			<short value="Additional Content defined by implementations" />
 			<definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-			<comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+			<comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
 			<alias value="extensions" />
 			<alias value="user content" />
 			<min value="0" />
@@ -227,10 +227,10 @@
 		<element>
 			<path value="Extension.extension.url" />
 			<representation value="xmlAttr" />
-			<name value="name.url" />
+			<sliceName value="name.url" />
 			<short value="identifies the meaning of the extension" />
 			<definition value="Source of the definition for the extension code - a logical name or a URL." />
-			<comments value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition should be version specific.  This will ideally be the URI for the Resource Profile defining the extension, with the code for the extension after a #." />
+			<comment value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition should be version specific.  This will ideally be the URI for the Resource Profile defining the extension, with the code for the extension after a #." />
 			<min value="1" />
 			<max value="1" />
 			<base>
@@ -260,7 +260,7 @@
 		</element>
 		<element>
 			<path value="Extension.extension.value[x]" />
-			<name value="name.value[x]" />
+			<sliceName value="name.value[x]" />
 			<short value="Value of extension" />
 			<definition value="Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)." />
 			<min value="1" />
@@ -387,10 +387,10 @@
 		</element>
 		<element>
 			<path value="Extension.extension" />
-			<name value="version" />
+			<sliceName value="version" />
 			<short value="Additional Content defined by implementations" />
 			<definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-			<comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+			<comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
 			<alias value="extensions" />
 			<alias value="user content" />
 			<min value="0" />
@@ -426,10 +426,10 @@
 		<element>
 			<path value="Extension.extension.id" />
 			<representation value="xmlAttr" />
-			<name value="version.id" />
+			<sliceName value="version.id" />
 			<short value="xml:id (or equivalent in JSON)" />
 			<definition value="unique id for the element within a resource (for internal references)." />
-			<comments value="RFC 4122" />
+			<comment value="RFC 4122" />
 			<min value="0" />
 			<max value="1" />
 			<base>
@@ -458,10 +458,10 @@
 		</element>
 		<element>
 			<path value="Extension.extension.extension" />
-			<name value="version.extension" />
+			<sliceName value="version.extension" />
 			<short value="Additional Content defined by implementations" />
 			<definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-			<comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+			<comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
 			<alias value="extensions" />
 			<alias value="user content" />
 			<min value="0" />
@@ -497,10 +497,10 @@
 		<element>
 			<path value="Extension.extension.url" />
 			<representation value="xmlAttr" />
-			<name value="version.url" />
+			<sliceName value="version.url" />
 			<short value="identifies the meaning of the extension" />
 			<definition value="Source of the definition for the extension code - a logical name or a URL." />
-			<comments value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition should be version specific.  This will ideally be the URI for the Resource Profile defining the extension, with the code for the extension after a #." />
+			<comment value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition should be version specific.  This will ideally be the URI for the Resource Profile defining the extension, with the code for the extension after a #." />
 			<min value="1" />
 			<max value="1" />
 			<base>
@@ -530,7 +530,7 @@
 		</element>
 		<element>
 			<path value="Extension.extension.value[x]" />
-			<name value="version.value[x]" />
+			<sliceName value="version.value[x]" />
 			<short value="Value of extension" />
 			<definition value="Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)." />
 			<min value="0" />
@@ -660,7 +660,7 @@
 			<representation value="xmlAttr" />
 			<short value="identifies the meaning of the extension" />
 			<definition value="Source of the definition for the extension code - a logical name or a URL." />
-			<comments value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition should be version specific.  This will ideally be the URI for the Resource Profile defining the extension, with the code for the extension after a #." />
+			<comment value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition should be version specific.  This will ideally be the URI for the Resource Profile defining the extension, with the code for the extension after a #." />
 			<min value="1" />
 			<max value="1" />
 			<base>
@@ -822,28 +822,28 @@
 		</element>
 		<element>
 			<path value="Extension.extension" />
-			<name value="name" />
+			<sliceName value="name" />
 			<min value="1" />
 			<max value="1" />
 		</element>
 		<element>
 			<path value="Extension.extension.url" />
-			<name value="name.url" />
+			<sliceName value="name.url" />
 			<fixedUri value="name" />
 		</element>
 		<element>
 			<path value="Extension.extension.value[x]" />
-			<name value="name.value[x]" />
+			<sliceName value="name.value[x]" />
 			<min value="1" />
 		</element>
 		<element>
 			<path value="Extension.extension" />
-			<name value="version" />
+			<sliceName value="version" />
 			<max value="1" />
 		</element>
 		<element>
 			<path value="Extension.extension.url" />
-			<name value="version.url" />
+			<sliceName value="version.url" />
 			<fixedUri value="version" />
 		</element>
 	</differential>

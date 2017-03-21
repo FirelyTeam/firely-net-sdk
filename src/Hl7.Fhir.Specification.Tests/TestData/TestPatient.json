@@ -19,7 +19,7 @@
                 "James"
             ],
             "use": "official",
-            "family": ["Chalmers"]
+            "family": "Chalmers"
         },
         {
             "given": ["Jim"],
@@ -39,11 +39,7 @@
             "valueDecimal": 3.141592653589793
         }
     ],
-    "gender": {"coding": [{
-        "system": "http://hl7.org/fhir/v3/AdministrativeGender",
-        "code": "M",
-        "display": "Male"
-    }]},
+    "gender": "male",
     "birthDate": "1974-12",
     "deceasedBoolean": true,
     "_birthDate": {"extension": [{
@@ -55,7 +51,7 @@
         "line": ["534 Erewhon St"],
         "city": "PleasantVille",
         "state": "Vic",
-        "zip": "3999"
+        "postalCode": "3999"
     }],
     "maritalStatus": {"extension": [{
         "valueCode": "ASKU",
@@ -89,35 +85,7 @@
     ],
     "contact": [{
         "name": {
-            "family": [
-                null,
-                "du",
-                null,
-                "Marché",
-                null
-            ],
-            "_family": [
-                {"extension": [{
-                    "url": "http://hl7.org/fhir/Profileiso-21090#nullFlavor",
-                    "valueCode": "ASKU"
-                }]},
-                {
-                    "id": "a2",
-                    "extension": [{
-                        "url": "http://hl7.org/fhir/Profileiso-21090#qualifier",
-                        "valueCode": "VV"
-                    }]
-                },
-                {"extension": [{
-                    "url": "http://hl7.org/fhir/Profileiso-21090#nullFlavor",
-                    "valueCode": "ASKU"
-                }]},
-                null,
-                {"extension": [{
-                    "url": "http://hl7.org/fhir/Profileiso-21090#nullFlavor",
-                    "valueCode": "ASKU"
-                }]}
-            ],
+            "family": "du Marché",
             "_given": [
                 null,
                 {
@@ -144,7 +112,7 @@
             "value": "+33 (237) 998327"
         }]
     }],
-    "careProvider": [{"reference": "#org3141"}],
+    "generalPractitioner": [{"reference": "#org3141"}],
     "telecom": [
         {"use": "home"},
         {

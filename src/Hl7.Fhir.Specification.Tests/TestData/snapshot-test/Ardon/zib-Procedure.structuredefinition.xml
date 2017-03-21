@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <meta>
     <lastUpdated value="2017-02-08T11:26:26.445+01:00" />
@@ -20,9 +20,9 @@
     <name value="Zorginformatiebouwsteen OverdrachtVerrichting" />
   </mapping>
   <kind value="resource" />
-  <constrainedType value="Procedure" />
+  <type value="Procedure" />
   <abstract value="false" />
-  <base value="http://hl7.org/fhir/StructureDefinition/Procedure" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Procedure" />
   <differential>
     <element>
       <path value="Procedure" />
@@ -93,14 +93,14 @@
     <element>
       <path value="Procedure.performer" />
       <slicing>
-        <discriminator value="@profile" />
+        <discriminator><type value="value" /><path value="" /></discriminator>
         <rules value="openAtEnd" />
       </slicing>
       <min value="2" />
     </element>
     <element>
       <path value="Procedure.performer" />
-      <name value="HealthcarePractitioner" />
+      <sliceName value="HealthcarePractitioner" />
       <short value="HealthcarePractitoner" />
       <min value="1" />
     </element>
@@ -121,7 +121,7 @@
     </element>
     <element>
       <path value="Procedure.performer" />
-      <name value="HealthcareProvider" />
+      <sliceName value="HealthcareProvider" />
       <short value="HealthcareProvider" />
       <min value="1" />
       <max value="1" />
@@ -170,13 +170,13 @@
     <element>
       <path value="Procedure.request.extension" />
       <slicing>
-        <discriminator value="url" />
+        <discriminator><type value="value" /><path value="" /></discriminator>
         <rules value="open" />
       </slicing>
     </element>
     <element>
       <path value="Procedure.request.extension" />
-      <name value="RequestedBy" />
+      <sliceName value="RequestedBy" />
       <short value="Base for all elements" />
       <definition value="Optional Extensions Element - found in all resources." />
       <min value="0" />
