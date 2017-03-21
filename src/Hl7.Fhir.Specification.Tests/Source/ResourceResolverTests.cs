@@ -239,7 +239,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             //const string srcFileName = "extension-definitions.xml";
             const string dupFileName = "diagnosticorder-reason-duplicate";
-            const string url = "http://hl7.org/fhir/StructureDefinition/diagnosticrequest-reasonRejected";
+            const string url = "http://hl7.org/fhir/StructureDefinition/procedurerequest-reasonRejected";
 
             var za = ZipSource.CreateValidationSource();
 
