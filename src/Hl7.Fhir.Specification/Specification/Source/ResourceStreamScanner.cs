@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Specification.Source
 
         public XElement FindResourceByUri(string uri)
         {
-            if (uri == null) throw Error.ArgumentNull("uri");
+            if (uri == null) throw Error.ArgumentNull(nameof(uri));
 
             var resources = StreamResources();
 

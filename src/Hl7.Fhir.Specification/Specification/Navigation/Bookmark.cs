@@ -70,11 +70,9 @@ namespace Hl7.Fhir.Specification.Navigation
                 sb.Append(elemDef.Path);
                 if (elemDef.SliceName != null)
                 {
-                    sb.AppendFormat(" '{0}'", elemDef.SliceName);
+                    sb.Append(":");
+                    sb.Append(elemDef.SliceName);
                 }
-
-                //sb.AppendFormat("Path='{0}'", elemDef.Path);
-                //if (elemDef.Name != null) { sb.AppendFormat(" Name='{0}'", elemDef.Name); }
                 return sb.ToString();
             }
         }

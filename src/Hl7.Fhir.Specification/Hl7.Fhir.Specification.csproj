@@ -50,10 +50,19 @@
   <ItemGroup>
     <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.STU3.csproj" />
   </ItemGroup>
-  <Target Name="BeforeBuild" Inputs="@(FhirConformance)" Outputs="specification.zip">
+ 
+  <!--<Target Name="CreateSpecZip" BeforeTargets="Build">
+    <Message Text="(Re)creating specification.zip" Importance="high" />
+    <CleanSpecFiles DirectoryName="data" />
+    <ZipDir ZipFileName="specification.zip" DirectoryName="data" />
+  </Target>-->
+
+  <Target Name="CreateSpecZip" Inputs="@(FhirConformance)" Outputs="specification.zip" BeforeTargets="Build">
+    <Message Text="(Re)creating specification.zip" Importance="high" />
     <CleanSpecFiles DirectoryName="data" />
     <ZipDir ZipFileName="specification.zip" DirectoryName="data" />
   </Target>
+  
   <UsingTask TaskName="ZipDir" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v12.0.dll">
     <ParameterGroup>
       <ZipFileName ParameterType="System.String" Required="true" />
