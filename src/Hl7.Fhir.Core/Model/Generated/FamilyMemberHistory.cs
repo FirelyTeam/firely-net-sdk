@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Family member history did not occur
+        /// The taking of a family member's history did not occur
         /// </summary>
         [FhirElement("notDone", InSummary=true, Order=120)]
         [DataMember]
@@ -293,7 +293,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirBoolean _NotDoneElement;
         
         /// <summary>
-        /// Family member history did not occur
+        /// The taking of a family member's history did not occur
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

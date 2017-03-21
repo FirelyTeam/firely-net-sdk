@@ -42,7 +42,7 @@ using System.ComponentModel;
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// A manifest that defines a set of documents
+    /// A list that defines a set of documents
     /// </summary>
     [FhirType("DocumentManifest", IsResource=true)]
     [DataContract]

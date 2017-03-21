@@ -1067,7 +1067,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Logical uri to reference this implementation guide (globally unique)
+        /// Logical URI to reference this implementation guide (globally unique)
         /// </summary>
         [FhirElement("url", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
@@ -1081,7 +1081,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
-        /// Logical uri to reference this implementation guide (globally unique)
+        /// Logical URI to reference this implementation guide (globally unique)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1198,7 +1198,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// If for testing purposes, not real usage
+        /// For testing purposes, not real usage
         /// </summary>
         [FhirElement("experimental", InSummary=true, Order=130)]
         [DataMember]
@@ -1211,7 +1211,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirBoolean _ExperimentalElement;
         
         /// <summary>
-        /// If for testing purposes, not real usage
+        /// For testing purposes, not real usage
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1321,7 +1321,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Markdown _Description;
         
         /// <summary>
-        /// Content intends to support these contexts
+        /// Context the content is intended to support
         /// </summary>
         [FhirElement("useContext", InSummary=true, Order=180)]
         [Cardinality(Min=0,Max=-1)]

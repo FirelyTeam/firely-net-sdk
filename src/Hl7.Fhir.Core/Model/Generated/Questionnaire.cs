@@ -231,7 +231,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Corresponding Concept for this item in a terminology
+            /// Corresponding concept for this item in a terminology
             /// </summary>
             [FhirElement("code", InSummary=true, Order=60)]
             [Cardinality(Min=0,Max=-1)]
@@ -342,7 +342,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Only allow data when:
+            /// Only allow data when
             /// </summary>
             [FhirElement("enableWhen", InSummary=true, Order=100)]
             [Cardinality(Min=0,Max=-1)]
@@ -881,7 +881,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Logical uri to reference this questionnaire (globally unique)
+        /// Logical URI to reference this questionnaire (globally unique)
         /// </summary>
         [FhirElement("url", InSummary=true, Order=90)]
         [DataMember]
@@ -894,7 +894,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
-        /// Logical uri to reference this questionnaire (globally unique)
+        /// Logical URI to reference this questionnaire (globally unique)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1056,7 +1056,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// If for testing purposes, not real usage
+        /// For testing purposes, not real usage
         /// </summary>
         [FhirElement("experimental", InSummary=true, Order=150)]
         [DataMember]
@@ -1069,7 +1069,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirBoolean _ExperimentalElement;
         
         /// <summary>
-        /// If for testing purposes, not real usage
+        /// For testing purposes, not real usage
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1242,7 +1242,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// When the questionnaire is effective
+        /// When the questionnaire is expected to be used
         /// </summary>
         [FhirElement("effectivePeriod", InSummary=true, Order=220)]
         [DataMember]
@@ -1255,7 +1255,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Period _EffectivePeriod;
         
         /// <summary>
-        /// Content intends to support these contexts
+        /// Context the content is intended to support
         /// </summary>
         [FhirElement("useContext", InSummary=true, Order=230)]
         [Cardinality(Min=0,Max=-1)]

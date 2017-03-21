@@ -42,7 +42,7 @@ using System.ComponentModel;
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// A statement of system Capabilities
+    /// A statement of system capabilities
     /// </summary>
     [FhirType("CapabilityStatement", IsResource=true)]
     [DataContract]
@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// A set of flags that defines how references are supported
+        /// A set of flags that defines how references are supported.
         /// (url: http://hl7.org/fhir/ValueSet/reference-handling-policy)
         /// </summary>
         [FhirEnumeration("ReferenceHandlingPolicy")]
@@ -810,7 +810,7 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.CapabilityStatement.SystemInteractionComponent> _Interaction;
             
             /// <summary>
-            /// Search params for searching all resources
+            /// Search parameters for searching all resources
             /// </summary>
             [FhirElement("searchParam", Order=90)]
             [Cardinality(Min=0,Max=-1)]
@@ -1127,7 +1127,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "CertificateComponent"; } }
             
             /// <summary>
-            /// Mime type for certificate
+            /// Mime type for certificates
             /// </summary>
             [FhirElement("type", Order=40)]
             [DataMember]
@@ -1140,7 +1140,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Code _TypeElement;
             
             /// <summary>
-            /// Mime type for certificate
+            /// Mime type for certificates
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1655,7 +1655,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Search params supported by implementation
+            /// Search parameters supported by implementation
             /// </summary>
             [FhirElement("searchParam", Order=180)]
             [Cardinality(Min=0,Max=-1)]
@@ -3186,7 +3186,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Logical uri to reference this capability statement (globally unique)
+        /// Logical URI to reference this capability statement (globally unique)
         /// </summary>
         [FhirElement("url", InSummary=true, Order=90)]
         [DataMember]
@@ -3199,7 +3199,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
-        /// Logical uri to reference this capability statement (globally unique)
+        /// Logical URI to reference this capability statement (globally unique)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -3347,7 +3347,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// If for testing purposes, not real usage
+        /// For testing purposes, not real usage
         /// </summary>
         [FhirElement("experimental", InSummary=true, Order=140)]
         [DataMember]
@@ -3360,7 +3360,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirBoolean _ExperimentalElement;
         
         /// <summary>
-        /// If for testing purposes, not real usage
+        /// For testing purposes, not real usage
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -3471,7 +3471,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Markdown _Description;
         
         /// <summary>
-        /// Content intends to support these contexts
+        /// Context the content is intended to support
         /// </summary>
         [FhirElement("useContext", InSummary=true, Order=190)]
         [Cardinality(Min=0,Max=-1)]
@@ -3749,7 +3749,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Implementation Guide supported
+        /// Implementation guides supported
         /// </summary>
         [FhirElement("implementationGuide", InSummary=true, Order=310)]
         [Cardinality(Min=0,Max=-1)]
@@ -3763,7 +3763,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.FhirUri> _ImplementationGuideElement;
         
         /// <summary>
-        /// Implementation Guide supported
+        /// Implementation guides supported
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -3845,7 +3845,7 @@ namespace Hl7.Fhir.Model
             Expression = "rest.select(mode).isDistinct()",
             Key = "cpb-8",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "There can only be one REST declaration per mode",
+            Human = "There can only be one REST declaration per mode.",
             Xpath = "count(f:rest)=count(distinct-values(f:rest/f:mode/@value))"
         };
 
@@ -3854,7 +3854,7 @@ namespace Hl7.Fhir.Model
             Expression = "document.select(profile.reference&mode).isDistinct()",
             Key = "cpb-7",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "The set of documents must be unique by the combination of profile & mode",
+            Human = "The set of documents must be unique by the combination of profile and mode.",
             Xpath = "count(f:document[f:mode/@value='producer'])=count(distinct-values(f:document[f:mode/@value='producer']/f:profile/f:reference/@value)) and count(f:document[f:mode/@value='consumer'])=count(distinct-values(f:document[f:mode/@value='consumer']/f:profile/f:reference/@value))"
         };
 
@@ -3863,7 +3863,7 @@ namespace Hl7.Fhir.Model
             Expression = "implementation.empty() or kind != 'capability'",
             Key = "cpb-15",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Capability Statements of kind 'instance' do not have implementation elements",
+            Human = "Capability Statements of kind 'instance' do not have implementation elements.",
             Xpath = "not(exists(f:implementation)) or (f:kind/@value != 'capability')"
         };
 
@@ -3872,7 +3872,7 @@ namespace Hl7.Fhir.Model
             Expression = "messaging.endpoint.empty() or kind = 'instance'",
             Key = "cpb-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Messaging end-point is required (and is only permitted) when statement is for an implementation",
+            Human = "Messaging end-point is required (and is only permitted) when a statement is for an implementation.",
             Xpath = "not(exists(f:messaging/f:endpoint)) or f:kind/@value = 'instance'"
         };
 
@@ -3881,7 +3881,7 @@ namespace Hl7.Fhir.Model
             Expression = "(software.empty() and implementation.empty()) or kind != 'requirements'",
             Key = "cpb-14",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Capability Statements of kind 'requirements' do not have software or implementation elements",
+            Human = "Capability Statements of kind 'requirements' do not have software or implementation elements.",
             Xpath = "not(exists(f:software) or exists(f:implementation)) or (f:kind/@value != 'requirements')"
         };
 
@@ -3890,7 +3890,7 @@ namespace Hl7.Fhir.Model
             Expression = "(description.count() + software.count() + implementation.count()) > 0",
             Key = "cpb-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "A Capability Statement SHALL have at least one of description, software, or implementation",
+            Human = "A Capability Statement SHALL have at least one of description, software, or implementation element.",
             Xpath = "count(f:software | f:implementation | f:description) > 0"
         };
 
@@ -3899,7 +3899,7 @@ namespace Hl7.Fhir.Model
             Expression = "rest.exists() or messaging.exists() or document.exists()",
             Key = "cpb-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "A Capability Statement SHALL have at least one of REST, messaging or document",
+            Human = "A Capability Statement SHALL have at least one of REST, messaging or document element.",
             Xpath = "exists(f:rest) or exists(f:messaging) or exists(f:document)"
         };
 
@@ -3908,7 +3908,7 @@ namespace Hl7.Fhir.Model
             Expression = "rest.all(resource.select(type).isDistinct())",
             Key = "cpb-9",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "A given resource can only be described once per RESTful mode",
+            Human = "A given resource can only be described once per RESTful mode.",
             Xpath = "count(f:resource)=count(distinct-values(f:resource/f:type/@value))"
         };
 
@@ -3917,7 +3917,7 @@ namespace Hl7.Fhir.Model
             Expression = "rest.resource.all(searchParam.select(name).isDistinct())",
             Key = "cpb-12",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Search parameter names must be unique in the context of a resource",
+            Human = "Search parameter names must be unique in the context of a resource.",
             Xpath = "count(f:searchParam)=count(distinct-values(f:searchParam/f:name/@value))"
         };
 
@@ -3926,7 +3926,7 @@ namespace Hl7.Fhir.Model
             Expression = "messaging.all(supportedMessage.empty() != event.empty())",
             Key = "cpb-16",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Must have either supportedMessage or event, but not both",
+            Human = "A Capability Statement messaging element SHALL have either supportedMessage or event element, but not both.",
             Xpath = "exists(f:supportedMessage) != exists(f:event)"
         };
 

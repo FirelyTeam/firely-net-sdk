@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// Type for access of external uri
+        /// Type for access of external URI
         /// (url: http://hl7.org/fhir/ValueSet/repository-type)
         /// </summary>
         [FhirEnumeration("repositoryType")]
@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/repository-type)
             /// </summary>
-            [EnumLiteral("openapi"), Description("The url is the RESTful or other kind of API that can get access to the result.")]
+            [EnumLiteral("openapi"), Description("The URL is the RESTful or other kind of API that can access to the result.")]
             Openapi,
             /// <summary>
             /// MISSING DESCRIPTION
@@ -109,13 +109,13 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/repository-type)
             /// </summary>
-            [EnumLiteral("oauth"), Description("Result need to be fetched with API and need LOGIN( or cookies is required when visit the link of resource)")]
+            [EnumLiteral("oauth"), Description("Result need to be fetched with API and need LOGIN( or cookies are required when visiting the link of resource)")]
             Oauth,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/repository-type)
             /// </summary>
-            [EnumLiteral("other"), Description("Some other complicated or particular way to get resource from url.")]
+            [EnumLiteral("other"), Description("Some other complicated or particular way to get resource from URL.")]
             Other,
         }
 

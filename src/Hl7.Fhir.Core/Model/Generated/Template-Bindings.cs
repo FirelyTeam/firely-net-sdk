@@ -937,7 +937,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// This value set includes STatus codes.
+    /// This value set includes Status codes.
     /// (url: http://hl7.org/fhir/ValueSet/fm-status)
     /// </summary>
     [FhirEnumeration("FinancialResourceStatusCodes")]
@@ -1168,7 +1168,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Which compartment a compartmnet definition describes
+    /// Which compartment a compartment definition describes
     /// (url: http://hl7.org/fhir/ValueSet/compartment-type)
     /// </summary>
     [FhirEnumeration("CompartmentType")]

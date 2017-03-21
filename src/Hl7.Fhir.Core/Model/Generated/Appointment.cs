@@ -760,7 +760,7 @@ namespace Hl7.Fhir.Model
             Expression = "participant.all(type.exists() or actor.exists())",
             Key = "app-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Either the type or actor on the participant MUST be specified",
+            Human = "Either the type or actor on the participant SHALL be specified",
             Xpath = "(exists(f:type) or exists(f:actor))"
         };
 

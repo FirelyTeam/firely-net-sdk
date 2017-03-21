@@ -42,7 +42,7 @@ using System.ComponentModel;
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Investigation increase healthcare-related patient-independent knowledge
+    /// Investigation to increase healthcare-related patient-independent knowledge
     /// </summary>
     [FhirType("ResearchSubject", IsResource=true)]
     [DataContract]
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// Business Identifier for event
+        /// Business Identifier for research subject
         /// </summary>
         [FhirElement("identifier", InSummary=true, Order=90)]
         [DataMember]

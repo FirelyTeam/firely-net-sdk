@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Business Identifer for item
+        /// Business Identifier for item
         /// </summary>
         [FhirElement("identifier", InSummary=true, Order=90)]
         [DataMember]

@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// Real world event that the relating to the schedule.
+        /// Real world event relating to the schedule.
         /// (url: http://hl7.org/fhir/ValueSet/event-timing)
         /// </summary>
         [FhirEnumeration("EventTiming")]

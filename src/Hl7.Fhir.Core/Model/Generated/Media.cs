@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Media"; } }
         
         /// <summary>
-        /// Whether the Media is a photo, video, or audio
+        /// Whether the media is a photo, video, or audio
         /// (url: http://hl7.org/fhir/ValueSet/digital-media-type)
         /// </summary>
         [FhirEnumeration("DigitalMediaType")]

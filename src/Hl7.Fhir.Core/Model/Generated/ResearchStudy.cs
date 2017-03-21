@@ -42,7 +42,7 @@ using System.ComponentModel;
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Investigation increase healthcare-related patient-independent knowledge
+    /// Investigation to increase healthcare-related patient-independent knowledge
     /// </summary>
     [FhirType("ResearchStudy", IsResource=true)]
     [DataContract]
@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Categorization of arm
+            /// Categorization of study arm
             /// </summary>
             [FhirElement("code", Order=50)]
             [DataMember]
@@ -499,7 +499,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Sponsor;
         
         /// <summary>
-        /// Individual responsible for the study
+        /// The individual responsible for the study
         /// </summary>
         [FhirElement("principalInvestigator", InSummary=true, Order=240)]
         [CLSCompliant(false)]

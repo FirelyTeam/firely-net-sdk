@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// If this is the default rule set to apply for thie source type, or this combination of types
+        /// If this is the default rule set to apply for the source type, or this combination of types
         /// (url: http://hl7.org/fhir/ValueSet/map-group-type-mode)
         /// </summary>
         [FhirEnumeration("StructureMapGroupTypeMode")]
@@ -228,7 +228,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// How data is copied / created
+        /// How data is copied/created
         /// (url: http://hl7.org/fhir/ValueSet/map-transform)
         /// </summary>
         [FhirEnumeration("StructureMapTransform")]
@@ -550,7 +550,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "GroupComponent"; } }
             
             /// <summary>
-            /// Descriptive name for a user
+            /// Human-readable label
             /// </summary>
             [FhirElement("name", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -564,7 +564,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Id _NameElement;
             
             /// <summary>
-            /// Descriptive name for a user
+            /// Human-readable label
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -648,7 +648,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Documentation for this group
+            /// Additional description/explaination for group
             /// </summary>
             [FhirElement("documentation", InSummary=true, Order=70)]
             [DataMember]
@@ -661,7 +661,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _DocumentationElement;
             
             /// <summary>
-            /// Documentation for this group
+            /// Additional description/explaination for group
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1294,7 +1294,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Type for this source
+            /// Rule only applies if source has this type
             /// </summary>
             [FhirElement("type", InSummary=true, Order=70)]
             [DataMember]
@@ -1307,7 +1307,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _TypeElement;
             
             /// <summary>
-            /// Type for this source
+            /// Rule only applies if source has this type
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -2131,7 +2131,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Logical uri to reference this structure map (globally unique)
+        /// Logical URI to reference this structure map (globally unique)
         /// </summary>
         [FhirElement("url", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
@@ -2145,7 +2145,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
-        /// Logical uri to reference this structure map (globally unique)
+        /// Logical URI to reference this structure map (globally unique)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -2308,7 +2308,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// If for testing purposes, not real usage
+        /// For testing purposes, not real usage
         /// </summary>
         [FhirElement("experimental", InSummary=true, Order=150)]
         [DataMember]
@@ -2321,7 +2321,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirBoolean _ExperimentalElement;
         
         /// <summary>
-        /// If for testing purposes, not real usage
+        /// For testing purposes, not real usage
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -2431,7 +2431,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Markdown _Description;
         
         /// <summary>
-        /// Content intends to support these contexts
+        /// Context the content is intended to support
         /// </summary>
         [FhirElement("useContext", InSummary=true, Order=200)]
         [Cardinality(Min=0,Max=-1)]

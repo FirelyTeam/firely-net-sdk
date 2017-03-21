@@ -1072,7 +1072,7 @@
         <code value="description" />
         <base value="ActivityDefinition" />
         <type value="string" />
-        <description value="Text search against the description of the activity definition" />
+        <description value="The description of the activity definition" />
         <expression value="ActivityDefinition.description" />
         <xpath value="f:ActivityDefinition/f:description" />
         <xpathUsage value="normal" />
@@ -1105,7 +1105,7 @@
         <code value="effective" />
         <base value="ActivityDefinition" />
         <type value="date" />
-        <description value="Effective time associated with the activity definition" />
+        <description value="The time during which the activity definition is intended to be in use" />
         <expression value="ActivityDefinition.effectivePeriod" />
         <xpath value="f:ActivityDefinition/f:effectivePeriod" />
         <xpathUsage value="normal" />
@@ -1138,7 +1138,7 @@
         <code value="identifier" />
         <base value="ActivityDefinition" />
         <type value="token" />
-        <description value="External identifiers for the activity definition" />
+        <description value="External identifier for the activity definition" />
         <expression value="ActivityDefinition.identifier" />
         <xpath value="f:ActivityDefinition/f:identifier" />
         <xpathUsage value="normal" />
@@ -1171,7 +1171,7 @@
         <code value="jurisdiction" />
         <base value="ActivityDefinition" />
         <type value="token" />
-        <description value="Intended jurisdiction for activity definition" />
+        <description value="Intended jurisdiction for the activity definition" />
         <expression value="ActivityDefinition.jurisdiction" />
         <xpath value="f:ActivityDefinition/f:jurisdiction" />
         <xpathUsage value="normal" />
@@ -1204,7 +1204,7 @@
         <code value="name" />
         <base value="ActivityDefinition" />
         <type value="string" />
-        <description value="Name of the activity definition" />
+        <description value="Computationally friendly name of the activity definition" />
         <expression value="ActivityDefinition.name" />
         <xpath value="f:ActivityDefinition/f:name" />
         <xpathUsage value="normal" />
@@ -1601,7 +1601,7 @@
         <code value="title" />
         <base value="ActivityDefinition" />
         <type value="string" />
-        <description value="Text search against the title of the activity definition" />
+        <description value="The human-friendly name of the activity definition" />
         <expression value="ActivityDefinition.title" />
         <xpath value="f:ActivityDefinition/f:title" />
         <xpathUsage value="normal" />
@@ -1733,7 +1733,7 @@
         <code value="category" />
         <base value="AdverseEvent" />
         <type value="token" />
-        <description value="AE | PAE &#xA;An adverse event is an event that caused harm to a patient,  an adverse reaction is a something that is a subject-specific event that is a result of an exposure to a medication, food, device or environmental substance, a potential adverse event is something that occurred and that could have caused harm to a patient but did not" />
+        <description value="AE | PAE &#xD;An adverse event is an event that caused harm to a patient,  an adverse reaction is a something that is a subject-specific event that is a result of an exposure to a medication, food, device or environmental substance, a potential adverse event is something that occurred and that could have caused harm to a patient but did not" />
         <expression value="AdverseEvent.category" />
         <xpath value="f:AdverseEvent/f:category" />
         <xpathUsage value="normal" />
@@ -1766,7 +1766,7 @@
         <code value="date" />
         <base value="AdverseEvent" />
         <type value="date" />
-        <description value="AdverseEvent.date" />
+        <description value="When the event occurred" />
         <expression value="AdverseEvent.date" />
         <xpath value="f:AdverseEvent/f:date" />
         <xpathUsage value="normal" />
@@ -1799,7 +1799,7 @@
         <code value="location" />
         <base value="AdverseEvent" />
         <type value="reference" />
-        <description value="AdverseEvent.location" />
+        <description value="Location where adverse event occurred" />
         <expression value="AdverseEvent.location" />
         <xpath value="f:AdverseEvent/f:location" />
         <xpathUsage value="normal" />
@@ -1867,7 +1867,7 @@
         <code value="recorder" />
         <base value="AdverseEvent" />
         <type value="reference" />
-        <description value="AdverseEvent.recorder" />
+        <description value="Who recorded the adverse event" />
         <expression value="AdverseEvent.recorder" />
         <xpath value="f:AdverseEvent/f:recorder" />
         <xpathUsage value="normal" />
@@ -2007,7 +2007,7 @@
         <code value="substance" />
         <base value="AdverseEvent" />
         <type value="reference" />
-        <description value="AdverseEvent.suspectEntity.instance" />
+        <description value="Refers to the specific entity that caused the adverse event" />
         <expression value="AdverseEvent.suspectEntity.instance" />
         <xpath value="f:AdverseEvent/f:suspectEntity/f:instance" />
         <xpathUsage value="normal" />
@@ -4712,7 +4712,7 @@
         <code value="description" />
         <base value="CapabilityStatement" />
         <type value="string" />
-        <description value="Text search against the description of the capability statement" />
+        <description value="The description of the capability statement" />
         <expression value="CapabilityStatement.description" />
         <xpath value="f:CapabilityStatement/f:description" />
         <xpathUsage value="normal" />
@@ -4844,7 +4844,7 @@
         <code value="guide" />
         <base value="CapabilityStatement" />
         <type value="uri" />
-        <description value="Implementation Guide supported" />
+        <description value="Implementation guides supported" />
         <expression value="CapabilityStatement.implementationGuide" />
         <xpath value="f:CapabilityStatement/f:implementationGuide" />
         <xpathUsage value="normal" />
@@ -4877,7 +4877,7 @@
         <code value="jurisdiction" />
         <base value="CapabilityStatement" />
         <type value="token" />
-        <description value="Intended jurisdiction for capability statement" />
+        <description value="Intended jurisdiction for the capability statement" />
         <expression value="CapabilityStatement.jurisdiction" />
         <xpath value="f:CapabilityStatement/f:jurisdiction" />
         <xpathUsage value="normal" />
@@ -4943,7 +4943,7 @@
         <code value="name" />
         <base value="CapabilityStatement" />
         <type value="string" />
-        <description value="Name of the capability statement" />
+        <description value="Computationally friendly name of the capability statement" />
         <expression value="CapabilityStatement.name" />
         <xpath value="f:CapabilityStatement/f:name" />
         <xpathUsage value="normal" />
@@ -5209,7 +5209,7 @@
         <code value="title" />
         <base value="CapabilityStatement" />
         <type value="string" />
-        <description value="Text search against the title of the capability statement" />
+        <description value="The human-friendly name of the capability statement" />
         <expression value="CapabilityStatement.title" />
         <xpath value="f:CapabilityStatement/f:title" />
         <xpathUsage value="normal" />
@@ -6311,7 +6311,7 @@
         <code value="identifier" />
         <base value="ChargeItem" />
         <type value="token" />
-        <description value="Business Identifer for item" />
+        <description value="Business Identifier for item" />
         <expression value="ChargeItem.identifier" />
         <xpath value="f:ChargeItem/f:identifier" />
         <xpathUsage value="normal" />
@@ -7918,7 +7918,7 @@
         <code value="description" />
         <base value="CodeSystem" />
         <type value="string" />
-        <description value="Text search against the description of the code system" />
+        <description value="The description of the code system" />
         <expression value="CodeSystem.description" />
         <xpath value="f:CodeSystem/f:description" />
         <xpathUsage value="normal" />
@@ -7951,7 +7951,7 @@
         <code value="identifier" />
         <base value="CodeSystem" />
         <type value="token" />
-        <description value="External identifiers for the code system" />
+        <description value="External identifier for the code system" />
         <expression value="CodeSystem.identifier" />
         <xpath value="f:CodeSystem/f:identifier" />
         <xpathUsage value="normal" />
@@ -7984,7 +7984,7 @@
         <code value="jurisdiction" />
         <base value="CodeSystem" />
         <type value="token" />
-        <description value="Intended jurisdiction for code system" />
+        <description value="Intended jurisdiction for the code system" />
         <expression value="CodeSystem.jurisdiction" />
         <xpath value="f:CodeSystem/f:jurisdiction" />
         <xpathUsage value="normal" />
@@ -8050,7 +8050,7 @@
         <code value="name" />
         <base value="CodeSystem" />
         <type value="string" />
-        <description value="Name of the code system" />
+        <description value="Computationally friendly name of the code system" />
         <expression value="CodeSystem.name" />
         <xpath value="f:CodeSystem/f:name" />
         <xpathUsage value="normal" />
@@ -8182,7 +8182,7 @@
         <code value="title" />
         <base value="CodeSystem" />
         <type value="string" />
-        <description value="Text search against the title of the code system" />
+        <description value="The human-friendly name of the code system" />
         <expression value="CodeSystem.title" />
         <xpath value="f:CodeSystem/f:title" />
         <xpathUsage value="normal" />
@@ -9794,7 +9794,7 @@
         <code value="description" />
         <base value="CompartmentDefinition" />
         <type value="string" />
-        <description value="Text search against the description of the compartment definition" />
+        <description value="The description of the compartment definition" />
         <expression value="CompartmentDefinition.description" />
         <xpath value="f:CompartmentDefinition/f:description" />
         <xpathUsage value="normal" />
@@ -9827,7 +9827,7 @@
         <code value="jurisdiction" />
         <base value="CompartmentDefinition" />
         <type value="token" />
-        <description value="Intended jurisdiction for compartment definition" />
+        <description value="Intended jurisdiction for the compartment definition" />
         <expression value="CompartmentDefinition.jurisdiction" />
         <xpath value="f:CompartmentDefinition/f:jurisdiction" />
         <xpathUsage value="normal" />
@@ -9860,7 +9860,7 @@
         <code value="name" />
         <base value="CompartmentDefinition" />
         <type value="string" />
-        <description value="Name of the compartment definition" />
+        <description value="Computationally friendly name of the compartment definition" />
         <expression value="CompartmentDefinition.name" />
         <xpath value="f:CompartmentDefinition/f:name" />
         <xpathUsage value="normal" />
@@ -9992,7 +9992,7 @@
         <code value="title" />
         <base value="CompartmentDefinition" />
         <type value="string" />
-        <description value="Text search against the title of the compartment definition" />
+        <description value="The human-friendly name of the compartment definition" />
         <expression value="CompartmentDefinition.title" />
         <xpath value="f:CompartmentDefinition/f:title" />
         <xpathUsage value="normal" />
@@ -10839,7 +10839,7 @@
         <code value="description" />
         <base value="ConceptMap" />
         <type value="string" />
-        <description value="Text search against the description of the concept map" />
+        <description value="The description of the concept map" />
         <expression value="ConceptMap.description" />
         <xpath value="f:ConceptMap/f:description" />
         <xpathUsage value="normal" />
@@ -10872,7 +10872,7 @@
         <code value="identifier" />
         <base value="ConceptMap" />
         <type value="token" />
-        <description value="External identifiers for the concept map" />
+        <description value="External identifier for the concept map" />
         <expression value="ConceptMap.identifier" />
         <xpath value="f:ConceptMap/f:identifier" />
         <xpathUsage value="normal" />
@@ -10905,7 +10905,7 @@
         <code value="jurisdiction" />
         <base value="ConceptMap" />
         <type value="token" />
-        <description value="Intended jurisdiction for concept map" />
+        <description value="Intended jurisdiction for the concept map" />
         <expression value="ConceptMap.jurisdiction" />
         <xpath value="f:ConceptMap/f:jurisdiction" />
         <xpathUsage value="normal" />
@@ -10938,7 +10938,7 @@
         <code value="name" />
         <base value="ConceptMap" />
         <type value="string" />
-        <description value="Name of the concept map" />
+        <description value="Computationally friendly name of the concept map" />
         <expression value="ConceptMap.name" />
         <xpath value="f:ConceptMap/f:name" />
         <xpathUsage value="normal" />
@@ -11371,7 +11371,7 @@
         <code value="title" />
         <base value="ConceptMap" />
         <type value="string" />
-        <description value="Text search against the title of the concept map" />
+        <description value="The human-friendly name of the concept map" />
         <expression value="ConceptMap.title" />
         <xpath value="f:ConceptMap/f:title" />
         <xpathUsage value="normal" />
@@ -13864,7 +13864,7 @@
         <code value="identifier" />
         <base value="DataElement" />
         <type value="token" />
-        <description value="External identifiers for the data element" />
+        <description value="External identifier for the data element" />
         <expression value="DataElement.identifier" />
         <xpath value="f:DataElement/f:identifier" />
         <xpathUsage value="normal" />
@@ -13897,7 +13897,7 @@
         <code value="jurisdiction" />
         <base value="DataElement" />
         <type value="token" />
-        <description value="Intended jurisdiction for data element" />
+        <description value="Intended jurisdiction for the data element" />
         <expression value="DataElement.jurisdiction" />
         <xpath value="f:DataElement/f:jurisdiction" />
         <xpathUsage value="normal" />
@@ -13930,7 +13930,7 @@
         <code value="name" />
         <base value="DataElement" />
         <type value="string" />
-        <description value="Name of the data element" />
+        <description value="Computationally friendly name of the data element" />
         <expression value="DataElement.name" />
         <xpath value="f:DataElement/f:name" />
         <xpathUsage value="normal" />
@@ -14062,7 +14062,7 @@
         <code value="title" />
         <base value="DataElement" />
         <type value="string" />
-        <description value="Text search against the title of the data element" />
+        <description value="The human-friendly name of the data element" />
         <expression value="DataElement.title" />
         <xpath value="f:DataElement/f:title" />
         <xpathUsage value="normal" />
@@ -16985,7 +16985,7 @@
         <code value="event" />
         <base value="DocumentReference" />
         <type value="token" />
-        <description value="Main Clinical Acts Documented" />
+        <description value="Main clinical acts documented" />
         <expression value="DocumentReference.context.event" />
         <xpath value="f:DocumentReference/f:context/f:event" />
         <xpathUsage value="normal" />
@@ -17084,7 +17084,7 @@
         <code value="indexed" />
         <base value="DocumentReference" />
         <type value="date" />
-        <description value="When this document reference created" />
+        <description value="When this document reference was created" />
         <expression value="DocumentReference.indexed" />
         <xpath value="f:DocumentReference/f:indexed" />
         <xpathUsage value="normal" />
@@ -19360,7 +19360,7 @@
         <code value="description" />
         <base value="ExpansionProfile" />
         <type value="string" />
-        <description value="Text search against the description of the expansion profile" />
+        <description value="The description of the expansion profile" />
         <expression value="ExpansionProfile.description" />
         <xpath value="f:ExpansionProfile/f:description" />
         <xpathUsage value="normal" />
@@ -19393,7 +19393,7 @@
         <code value="identifier" />
         <base value="ExpansionProfile" />
         <type value="token" />
-        <description value="External identifiers for the expansion profile" />
+        <description value="External identifier for the expansion profile" />
         <expression value="ExpansionProfile.identifier" />
         <xpath value="f:ExpansionProfile/f:identifier" />
         <xpathUsage value="normal" />
@@ -19426,7 +19426,7 @@
         <code value="jurisdiction" />
         <base value="ExpansionProfile" />
         <type value="token" />
-        <description value="Intended jurisdiction for expansion profile" />
+        <description value="Intended jurisdiction for the expansion profile" />
         <expression value="ExpansionProfile.jurisdiction" />
         <xpath value="f:ExpansionProfile/f:jurisdiction" />
         <xpathUsage value="normal" />
@@ -19459,7 +19459,7 @@
         <code value="name" />
         <base value="ExpansionProfile" />
         <type value="string" />
-        <description value="Name of the expansion profile" />
+        <description value="Computationally friendly name of the expansion profile" />
         <expression value="ExpansionProfile.name" />
         <xpath value="f:ExpansionProfile/f:name" />
         <xpathUsage value="normal" />
@@ -20513,7 +20513,7 @@
         <code value="description" />
         <base value="GraphDefinition" />
         <type value="string" />
-        <description value="Text search against the description of the graph definition" />
+        <description value="The description of the graph definition" />
         <expression value="GraphDefinition.description" />
         <xpath value="f:GraphDefinition/f:description" />
         <xpathUsage value="normal" />
@@ -20546,7 +20546,7 @@
         <code value="jurisdiction" />
         <base value="GraphDefinition" />
         <type value="token" />
-        <description value="Intended jurisdiction for graph definition" />
+        <description value="Intended jurisdiction for the graph definition" />
         <expression value="GraphDefinition.jurisdiction" />
         <xpath value="f:GraphDefinition/f:jurisdiction" />
         <xpathUsage value="normal" />
@@ -20579,7 +20579,7 @@
         <code value="name" />
         <base value="GraphDefinition" />
         <type value="string" />
-        <description value="Name of the graph definition" />
+        <description value="Computationally friendly name of the graph definition" />
         <expression value="GraphDefinition.name" />
         <xpath value="f:GraphDefinition/f:name" />
         <xpathUsage value="normal" />
@@ -22999,7 +22999,7 @@
         <code value="description" />
         <base value="ImplementationGuide" />
         <type value="string" />
-        <description value="Text search against the description of the implementation guide" />
+        <description value="The description of the implementation guide" />
         <expression value="ImplementationGuide.description" />
         <xpath value="f:ImplementationGuide/f:description" />
         <xpathUsage value="normal" />
@@ -23032,7 +23032,7 @@
         <code value="experimental" />
         <base value="ImplementationGuide" />
         <type value="token" />
-        <description value="If for testing purposes, not real usage" />
+        <description value="For testing purposes, not real usage" />
         <expression value="ImplementationGuide.experimental" />
         <xpath value="f:ImplementationGuide/f:experimental" />
         <xpathUsage value="normal" />
@@ -23065,7 +23065,7 @@
         <code value="jurisdiction" />
         <base value="ImplementationGuide" />
         <type value="token" />
-        <description value="Intended jurisdiction for implementation guide" />
+        <description value="Intended jurisdiction for the implementation guide" />
         <expression value="ImplementationGuide.jurisdiction" />
         <xpath value="f:ImplementationGuide/f:jurisdiction" />
         <xpathUsage value="normal" />
@@ -23098,7 +23098,7 @@
         <code value="name" />
         <base value="ImplementationGuide" />
         <type value="string" />
-        <description value="Name of the implementation guide" />
+        <description value="Computationally friendly name of the implementation guide" />
         <expression value="ImplementationGuide.name" />
         <xpath value="f:ImplementationGuide/f:name" />
         <xpathUsage value="normal" />
@@ -23892,7 +23892,7 @@
         <code value="description" />
         <base value="Library" />
         <type value="string" />
-        <description value="Text search against the description of the library" />
+        <description value="The description of the library" />
         <expression value="Library.description" />
         <xpath value="f:Library/f:description" />
         <xpathUsage value="normal" />
@@ -23925,7 +23925,7 @@
         <code value="effective" />
         <base value="Library" />
         <type value="date" />
-        <description value="Effective time associated with the library" />
+        <description value="The time during which the library is intended to be in use" />
         <expression value="Library.effectivePeriod" />
         <xpath value="f:Library/f:effectivePeriod" />
         <xpathUsage value="normal" />
@@ -23958,7 +23958,7 @@
         <code value="identifier" />
         <base value="Library" />
         <type value="token" />
-        <description value="External identifiers for the library" />
+        <description value="External identifier for the library" />
         <expression value="Library.identifier" />
         <xpath value="f:Library/f:identifier" />
         <xpathUsage value="normal" />
@@ -23991,7 +23991,7 @@
         <code value="jurisdiction" />
         <base value="Library" />
         <type value="token" />
-        <description value="Intended jurisdiction for library" />
+        <description value="Intended jurisdiction for the library" />
         <expression value="Library.jurisdiction" />
         <xpath value="f:Library/f:jurisdiction" />
         <xpathUsage value="normal" />
@@ -24024,7 +24024,7 @@
         <code value="name" />
         <base value="Library" />
         <type value="string" />
-        <description value="Name of the library" />
+        <description value="Computationally friendly name of the library" />
         <expression value="Library.name" />
         <xpath value="f:Library/f:name" />
         <xpathUsage value="normal" />
@@ -24421,7 +24421,7 @@
         <code value="title" />
         <base value="Library" />
         <type value="string" />
-        <description value="Text search against the title of the library" />
+        <description value="The human-friendly name of the library" />
         <expression value="Library.title" />
         <xpath value="f:Library/f:title" />
         <xpathUsage value="normal" />
@@ -26019,7 +26019,7 @@
         <code value="description" />
         <base value="Measure" />
         <type value="string" />
-        <description value="Text search against the description of the measure" />
+        <description value="The description of the measure" />
         <expression value="Measure.description" />
         <xpath value="f:Measure/f:description" />
         <xpathUsage value="normal" />
@@ -26052,7 +26052,7 @@
         <code value="effective" />
         <base value="Measure" />
         <type value="date" />
-        <description value="Effective time associated with the measure" />
+        <description value="The time during which the measure is intended to be in use" />
         <expression value="Measure.effectivePeriod" />
         <xpath value="f:Measure/f:effectivePeriod" />
         <xpathUsage value="normal" />
@@ -26085,7 +26085,7 @@
         <code value="identifier" />
         <base value="Measure" />
         <type value="token" />
-        <description value="External identifiers for the measure" />
+        <description value="External identifier for the measure" />
         <expression value="Measure.identifier" />
         <xpath value="f:Measure/f:identifier" />
         <xpathUsage value="normal" />
@@ -26118,7 +26118,7 @@
         <code value="jurisdiction" />
         <base value="Measure" />
         <type value="token" />
-        <description value="Intended jurisdiction for measure" />
+        <description value="Intended jurisdiction for the measure" />
         <expression value="Measure.jurisdiction" />
         <xpath value="f:Measure/f:jurisdiction" />
         <xpathUsage value="normal" />
@@ -26151,7 +26151,7 @@
         <code value="name" />
         <base value="Measure" />
         <type value="string" />
-        <description value="Name of the measure" />
+        <description value="Computationally friendly name of the measure" />
         <expression value="Measure.name" />
         <xpath value="f:Measure/f:name" />
         <xpathUsage value="normal" />
@@ -26548,7 +26548,7 @@
         <code value="title" />
         <base value="Measure" />
         <type value="string" />
-        <description value="Text search against the title of the measure" />
+        <description value="The human-friendly name of the measure" />
         <expression value="Measure.title" />
         <xpath value="f:Measure/f:title" />
         <xpathUsage value="normal" />
@@ -28907,7 +28907,7 @@
         <code value="description" />
         <base value="MessageDefinition" />
         <type value="string" />
-        <description value="Text search against the description of the message definition" />
+        <description value="The description of the message definition" />
         <expression value="MessageDefinition.description" />
         <xpath value="f:MessageDefinition/f:description" />
         <xpathUsage value="normal" />
@@ -29006,7 +29006,7 @@
         <code value="identifier" />
         <base value="MessageDefinition" />
         <type value="token" />
-        <description value="External identifiers for the message definition" />
+        <description value="External identifier for the message definition" />
         <expression value="MessageDefinition.identifier" />
         <xpath value="f:MessageDefinition/f:identifier" />
         <xpathUsage value="normal" />
@@ -29039,7 +29039,7 @@
         <code value="jurisdiction" />
         <base value="MessageDefinition" />
         <type value="token" />
-        <description value="Intended jurisdiction for message definition" />
+        <description value="Intended jurisdiction for the message definition" />
         <expression value="MessageDefinition.jurisdiction" />
         <xpath value="f:MessageDefinition/f:jurisdiction" />
         <xpathUsage value="normal" />
@@ -29072,7 +29072,7 @@
         <code value="name" />
         <base value="MessageDefinition" />
         <type value="string" />
-        <description value="Name of the message definition" />
+        <description value="Computationally friendly name of the message definition" />
         <expression value="MessageDefinition.name" />
         <xpath value="f:MessageDefinition/f:name" />
         <xpathUsage value="normal" />
@@ -29171,7 +29171,7 @@
         <code value="title" />
         <base value="MessageDefinition" />
         <type value="string" />
-        <description value="Text search against the title of the message definition" />
+        <description value="The human-friendly name of the message definition" />
         <expression value="MessageDefinition.title" />
         <xpath value="f:MessageDefinition/f:title" />
         <xpathUsage value="normal" />
@@ -29956,7 +29956,7 @@
         <code value="description" />
         <base value="NamingSystem" />
         <type value="string" />
-        <description value="Text search against the description of the naming system" />
+        <description value="The description of the naming system" />
         <expression value="NamingSystem.description" />
         <xpath value="f:NamingSystem/f:description" />
         <xpathUsage value="normal" />
@@ -30022,7 +30022,7 @@
         <code value="jurisdiction" />
         <base value="NamingSystem" />
         <type value="token" />
-        <description value="Intended jurisdiction for naming system" />
+        <description value="Intended jurisdiction for the naming system" />
         <expression value="NamingSystem.jurisdiction" />
         <xpath value="f:NamingSystem/f:jurisdiction" />
         <xpathUsage value="normal" />
@@ -30088,7 +30088,7 @@
         <code value="name" />
         <base value="NamingSystem" />
         <type value="string" />
-        <description value="Name of the naming system" />
+        <description value="Computationally friendly name of the naming system" />
         <expression value="NamingSystem.name" />
         <xpath value="f:NamingSystem/f:name" />
         <xpathUsage value="normal" />
@@ -31929,7 +31929,7 @@
         <code value="description" />
         <base value="OperationDefinition" />
         <type value="string" />
-        <description value="Text search against the description of the operation definition" />
+        <description value="The description of the operation definition" />
         <expression value="OperationDefinition.description" />
         <xpath value="f:OperationDefinition/f:description" />
         <xpathUsage value="normal" />
@@ -31995,7 +31995,7 @@
         <code value="jurisdiction" />
         <base value="OperationDefinition" />
         <type value="token" />
-        <description value="Intended jurisdiction for operation definition" />
+        <description value="Intended jurisdiction for the operation definition" />
         <expression value="OperationDefinition.jurisdiction" />
         <xpath value="f:OperationDefinition/f:jurisdiction" />
         <xpathUsage value="normal" />
@@ -32061,7 +32061,7 @@
         <code value="name" />
         <base value="OperationDefinition" />
         <type value="string" />
-        <description value="Name of the operation definition" />
+        <description value="Computationally friendly name of the operation definition" />
         <expression value="OperationDefinition.name" />
         <xpath value="f:OperationDefinition/f:name" />
         <xpathUsage value="normal" />
@@ -35112,7 +35112,7 @@
         <code value="description" />
         <base value="PlanDefinition" />
         <type value="string" />
-        <description value="Text search against the description of the plan definition" />
+        <description value="The description of the plan definition" />
         <expression value="PlanDefinition.description" />
         <xpath value="f:PlanDefinition/f:description" />
         <xpathUsage value="normal" />
@@ -35145,7 +35145,7 @@
         <code value="effective" />
         <base value="PlanDefinition" />
         <type value="date" />
-        <description value="Effective time associated with the plan definition" />
+        <description value="The time during which the plan definition is intended to be in use" />
         <expression value="PlanDefinition.effectivePeriod" />
         <xpath value="f:PlanDefinition/f:effectivePeriod" />
         <xpathUsage value="normal" />
@@ -35178,7 +35178,7 @@
         <code value="identifier" />
         <base value="PlanDefinition" />
         <type value="token" />
-        <description value="External identifiers for the plan definition" />
+        <description value="External identifier for the plan definition" />
         <expression value="PlanDefinition.identifier" />
         <xpath value="f:PlanDefinition/f:identifier" />
         <xpathUsage value="normal" />
@@ -35211,7 +35211,7 @@
         <code value="jurisdiction" />
         <base value="PlanDefinition" />
         <type value="token" />
-        <description value="Intended jurisdiction for plan definition" />
+        <description value="Intended jurisdiction for the plan definition" />
         <expression value="PlanDefinition.jurisdiction" />
         <xpath value="f:PlanDefinition/f:jurisdiction" />
         <xpathUsage value="normal" />
@@ -35244,7 +35244,7 @@
         <code value="name" />
         <base value="PlanDefinition" />
         <type value="string" />
-        <description value="Name of the plan definition" />
+        <description value="Computationally friendly name of the plan definition" />
         <expression value="PlanDefinition.name" />
         <xpath value="f:PlanDefinition/f:name" />
         <xpathUsage value="normal" />
@@ -35641,7 +35641,7 @@
         <code value="title" />
         <base value="PlanDefinition" />
         <type value="string" />
-        <description value="Text search against the title of the plan definition" />
+        <description value="The human-friendly name of the plan definition" />
         <expression value="PlanDefinition.title" />
         <xpath value="f:PlanDefinition/f:title" />
         <xpathUsage value="normal" />
@@ -38354,7 +38354,7 @@
         <code value="code" />
         <base value="Questionnaire" />
         <type value="token" />
-        <description value="A code that corresponds to the questionnaire or one of its groups" />
+        <description value="A code that corresponds to one of its items in the questionnaire" />
         <expression value="Questionnaire.item.code" />
         <xpath value="f:Questionnaire/f:item/f:code" />
         <xpathUsage value="normal" />
@@ -38420,7 +38420,7 @@
         <code value="description" />
         <base value="Questionnaire" />
         <type value="string" />
-        <description value="Text search against the description of the questionnaire" />
+        <description value="The description of the questionnaire" />
         <expression value="Questionnaire.description" />
         <xpath value="f:Questionnaire/f:description" />
         <xpathUsage value="normal" />
@@ -38453,7 +38453,7 @@
         <code value="effective" />
         <base value="Questionnaire" />
         <type value="date" />
-        <description value="Effective time associated with the questionnaire" />
+        <description value="The time during which the questionnaire is intended to be in use" />
         <expression value="Questionnaire.effectivePeriod" />
         <xpath value="f:Questionnaire/f:effectivePeriod" />
         <xpathUsage value="normal" />
@@ -38486,7 +38486,7 @@
         <code value="identifier" />
         <base value="Questionnaire" />
         <type value="token" />
-        <description value="External identifiers for the questionnaire" />
+        <description value="External identifier for the questionnaire" />
         <expression value="Questionnaire.identifier" />
         <xpath value="f:Questionnaire/f:identifier" />
         <xpathUsage value="normal" />
@@ -38519,7 +38519,7 @@
         <code value="jurisdiction" />
         <base value="Questionnaire" />
         <type value="token" />
-        <description value="Intended jurisdiction for questionnaire" />
+        <description value="Intended jurisdiction for the questionnaire" />
         <expression value="Questionnaire.jurisdiction" />
         <xpath value="f:Questionnaire/f:jurisdiction" />
         <xpathUsage value="normal" />
@@ -38552,7 +38552,7 @@
         <code value="name" />
         <base value="Questionnaire" />
         <type value="string" />
-        <description value="Name of the questionnaire" />
+        <description value="Computationally friendly name of the questionnaire" />
         <expression value="Questionnaire.name" />
         <xpath value="f:Questionnaire/f:name" />
         <xpathUsage value="normal" />
@@ -38651,7 +38651,7 @@
         <code value="title" />
         <base value="Questionnaire" />
         <type value="string" />
-        <description value="Text search against the title of the questionnaire" />
+        <description value="The human-friendly name of the questionnaire" />
         <expression value="Questionnaire.title" />
         <xpath value="f:Questionnaire/f:title" />
         <xpathUsage value="normal" />
@@ -38787,7 +38787,7 @@
         <code value="authored" />
         <base value="QuestionnaireResponse" />
         <type value="date" />
-        <description value="When the questionnaire response was authored" />
+        <description value="When the questionnaire response was last changed" />
         <expression value="QuestionnaireResponse.authored" />
         <xpath value="f:QuestionnaireResponse/f:authored" />
         <xpathUsage value="normal" />
@@ -38856,7 +38856,7 @@
         <code value="context" />
         <base value="QuestionnaireResponse" />
         <type value="reference" />
-        <description value="Encounter or episode during which questionnaire response was authored" />
+        <description value="Encounter or episode associated with the questionnaire response" />
         <expression value="QuestionnaireResponse.context" />
         <xpath value="f:QuestionnaireResponse/f:context" />
         <xpathUsage value="normal" />
@@ -38924,7 +38924,7 @@
         <code value="parent" />
         <base value="QuestionnaireResponse" />
         <type value="reference" />
-        <description value="Procedure or observation this questionnaire response is part of" />
+        <description value="Procedure or observation this questionnaire response was performed as a part of" />
         <expression value="QuestionnaireResponse.parent" />
         <xpath value="f:QuestionnaireResponse/f:parent" />
         <xpathUsage value="normal" />
@@ -39027,7 +39027,7 @@
         <code value="source" />
         <base value="QuestionnaireResponse" />
         <type value="reference" />
-        <description value="The person who answered the questions" />
+        <description value="The individual providing the information reflected in the questionnaire respose" />
         <expression value="QuestionnaireResponse.source" />
         <xpath value="f:QuestionnaireResponse/f:source" />
         <xpathUsage value="normal" />
@@ -40747,7 +40747,7 @@
         <code value="principalinvestigator" />
         <base value="ResearchStudy" />
         <type value="reference" />
-        <description value="Individual responsible for the study" />
+        <description value="The individual responsible for the study" />
         <expression value="ResearchStudy.principalInvestigator" />
         <xpath value="f:ResearchStudy/f:principalInvestigator" />
         <xpathUsage value="normal" />
@@ -40982,7 +40982,7 @@
         <code value="identifier" />
         <base value="ResearchSubject" />
         <type value="token" />
-        <description value="Business Identifier for event" />
+        <description value="Business Identifier for research subject" />
         <expression value="ResearchSubject.identifier" />
         <xpath value="f:ResearchSubject/f:identifier" />
         <xpathUsage value="normal" />
@@ -41657,7 +41657,7 @@
         <code value="description" />
         <base value="SearchParameter" />
         <type value="string" />
-        <description value="Text search against the description of the search parameter" />
+        <description value="The description of the search parameter" />
         <expression value="SearchParameter.description" />
         <xpath value="f:SearchParameter/f:description" />
         <xpathUsage value="normal" />
@@ -41690,7 +41690,7 @@
         <code value="jurisdiction" />
         <base value="SearchParameter" />
         <type value="token" />
-        <description value="Intended jurisdiction for search parameter" />
+        <description value="Intended jurisdiction for the search parameter" />
         <expression value="SearchParameter.jurisdiction" />
         <xpath value="f:SearchParameter/f:jurisdiction" />
         <xpathUsage value="normal" />
@@ -41723,7 +41723,7 @@
         <code value="name" />
         <base value="SearchParameter" />
         <type value="string" />
-        <description value="Name of the search parameter" />
+        <description value="Computationally friendly name of the search parameter" />
         <expression value="SearchParameter.name" />
         <xpath value="f:SearchParameter/f:name" />
         <xpathUsage value="normal" />
@@ -42683,7 +42683,7 @@
         <code value="description" />
         <base value="ServiceDefinition" />
         <type value="string" />
-        <description value="Text search against the description of the service definition" />
+        <description value="The description of the service definition" />
         <expression value="ServiceDefinition.description" />
         <xpath value="f:ServiceDefinition/f:description" />
         <xpathUsage value="normal" />
@@ -42716,7 +42716,7 @@
         <code value="effective" />
         <base value="ServiceDefinition" />
         <type value="date" />
-        <description value="Effective time associated with the service definition" />
+        <description value="The time during which the service definition is intended to be in use" />
         <expression value="ServiceDefinition.effectivePeriod" />
         <xpath value="f:ServiceDefinition/f:effectivePeriod" />
         <xpathUsage value="normal" />
@@ -42749,7 +42749,7 @@
         <code value="identifier" />
         <base value="ServiceDefinition" />
         <type value="token" />
-        <description value="External identifiers for the service definition" />
+        <description value="External identifier for the service definition" />
         <expression value="ServiceDefinition.identifier" />
         <xpath value="f:ServiceDefinition/f:identifier" />
         <xpathUsage value="normal" />
@@ -42782,7 +42782,7 @@
         <code value="jurisdiction" />
         <base value="ServiceDefinition" />
         <type value="token" />
-        <description value="Intended jurisdiction for service definition" />
+        <description value="Intended jurisdiction for the service definition" />
         <expression value="ServiceDefinition.jurisdiction" />
         <xpath value="f:ServiceDefinition/f:jurisdiction" />
         <xpathUsage value="normal" />
@@ -42815,7 +42815,7 @@
         <code value="name" />
         <base value="ServiceDefinition" />
         <type value="string" />
-        <description value="Name of the service definition" />
+        <description value="Computationally friendly name of the service definition" />
         <expression value="ServiceDefinition.name" />
         <xpath value="f:ServiceDefinition/f:name" />
         <xpathUsage value="normal" />
@@ -43212,7 +43212,7 @@
         <code value="title" />
         <base value="ServiceDefinition" />
         <type value="string" />
-        <description value="Text search against the title of the service definition" />
+        <description value="The human-friendly name of the service definition" />
         <expression value="ServiceDefinition.title" />
         <xpath value="f:ServiceDefinition/f:title" />
         <xpathUsage value="normal" />
@@ -44111,7 +44111,7 @@
         <code value="description" />
         <base value="StructureDefinition" />
         <type value="string" />
-        <description value="Text search against the description of the structure definition" />
+        <description value="The description of the structure definition" />
         <expression value="StructureDefinition.description" />
         <xpath value="f:StructureDefinition/f:description" />
         <xpathUsage value="normal" />
@@ -44144,7 +44144,7 @@
         <code value="experimental" />
         <base value="StructureDefinition" />
         <type value="token" />
-        <description value="If for testing purposes, not real usage" />
+        <description value="For testing purposes, not real usage" />
         <expression value="StructureDefinition.experimental" />
         <xpath value="f:StructureDefinition/f:experimental" />
         <xpathUsage value="normal" />
@@ -44210,7 +44210,7 @@
         <code value="identifier" />
         <base value="StructureDefinition" />
         <type value="token" />
-        <description value="External identifiers for the structure definition" />
+        <description value="External identifier for the structure definition" />
         <expression value="StructureDefinition.identifier" />
         <xpath value="f:StructureDefinition/f:identifier" />
         <xpathUsage value="normal" />
@@ -44243,7 +44243,7 @@
         <code value="jurisdiction" />
         <base value="StructureDefinition" />
         <type value="token" />
-        <description value="Intended jurisdiction for structure definition" />
+        <description value="Intended jurisdiction for the structure definition" />
         <expression value="StructureDefinition.jurisdiction" />
         <xpath value="f:StructureDefinition/f:jurisdiction" />
         <xpathUsage value="normal" />
@@ -44342,7 +44342,7 @@
         <code value="name" />
         <base value="StructureDefinition" />
         <type value="string" />
-        <description value="Name of the structure definition" />
+        <description value="Computationally friendly name of the structure definition" />
         <expression value="StructureDefinition.name" />
         <xpath value="f:StructureDefinition/f:name" />
         <xpathUsage value="normal" />
@@ -44474,7 +44474,7 @@
         <code value="title" />
         <base value="StructureDefinition" />
         <type value="string" />
-        <description value="Text search against the title of the structure definition" />
+        <description value="The human-friendly name of the structure definition" />
         <expression value="StructureDefinition.title" />
         <xpath value="f:StructureDefinition/f:title" />
         <xpathUsage value="normal" />
@@ -44673,7 +44673,7 @@
         <code value="description" />
         <base value="StructureMap" />
         <type value="string" />
-        <description value="Text search against the description of the structure map" />
+        <description value="The description of the structure map" />
         <expression value="StructureMap.description" />
         <xpath value="f:StructureMap/f:description" />
         <xpathUsage value="normal" />
@@ -44706,7 +44706,7 @@
         <code value="identifier" />
         <base value="StructureMap" />
         <type value="token" />
-        <description value="External identifiers for the structure map" />
+        <description value="External identifier for the structure map" />
         <expression value="StructureMap.identifier" />
         <xpath value="f:StructureMap/f:identifier" />
         <xpathUsage value="normal" />
@@ -44739,7 +44739,7 @@
         <code value="jurisdiction" />
         <base value="StructureMap" />
         <type value="token" />
-        <description value="Intended jurisdiction for structure map" />
+        <description value="Intended jurisdiction for the structure map" />
         <expression value="StructureMap.jurisdiction" />
         <xpath value="f:StructureMap/f:jurisdiction" />
         <xpathUsage value="normal" />
@@ -44772,7 +44772,7 @@
         <code value="name" />
         <base value="StructureMap" />
         <type value="string" />
-        <description value="Name of the structure map" />
+        <description value="Computationally friendly name of the structure map" />
         <expression value="StructureMap.name" />
         <xpath value="f:StructureMap/f:name" />
         <xpathUsage value="normal" />
@@ -44871,7 +44871,7 @@
         <code value="title" />
         <base value="StructureMap" />
         <type value="string" />
-        <description value="Text search against the title of the structure map" />
+        <description value="The human-friendly name of the structure map" />
         <expression value="StructureMap.title" />
         <xpath value="f:StructureMap/f:title" />
         <xpathUsage value="normal" />
@@ -46961,7 +46961,7 @@
         <code value="description" />
         <base value="TestScript" />
         <type value="string" />
-        <description value="Text search against the description of the test script" />
+        <description value="The description of the test script" />
         <expression value="TestScript.description" />
         <xpath value="f:TestScript/f:description" />
         <xpathUsage value="normal" />
@@ -46994,7 +46994,7 @@
         <code value="identifier" />
         <base value="TestScript" />
         <type value="token" />
-        <description value="External identifiers for the test script" />
+        <description value="External identifier for the test script" />
         <expression value="TestScript.identifier" />
         <xpath value="f:TestScript/f:identifier" />
         <xpathUsage value="normal" />
@@ -47027,7 +47027,7 @@
         <code value="jurisdiction" />
         <base value="TestScript" />
         <type value="token" />
-        <description value="Intended jurisdiction for test script" />
+        <description value="Intended jurisdiction for the test script" />
         <expression value="TestScript.jurisdiction" />
         <xpath value="f:TestScript/f:jurisdiction" />
         <xpathUsage value="normal" />
@@ -47060,7 +47060,7 @@
         <code value="name" />
         <base value="TestScript" />
         <type value="string" />
-        <description value="Name of the test script" />
+        <description value="Computationally friendly name of the test script" />
         <expression value="TestScript.name" />
         <xpath value="f:TestScript/f:name" />
         <xpathUsage value="normal" />
@@ -47192,7 +47192,7 @@
         <code value="title" />
         <base value="TestScript" />
         <type value="string" />
-        <description value="Text search against the title of the test script" />
+        <description value="The human-friendly name of the test script" />
         <expression value="TestScript.title" />
         <xpath value="f:TestScript/f:title" />
         <xpathUsage value="normal" />
@@ -47324,7 +47324,7 @@
         <code value="description" />
         <base value="ValueSet" />
         <type value="string" />
-        <description value="Text search against the description of the value set" />
+        <description value="The description of the value set" />
         <expression value="ValueSet.description" />
         <xpath value="f:ValueSet/f:description" />
         <xpathUsage value="normal" />
@@ -47390,7 +47390,7 @@
         <code value="identifier" />
         <base value="ValueSet" />
         <type value="token" />
-        <description value="External identifiers for the value set" />
+        <description value="External identifier for the value set" />
         <expression value="ValueSet.identifier" />
         <xpath value="f:ValueSet/f:identifier" />
         <xpathUsage value="normal" />
@@ -47423,7 +47423,7 @@
         <code value="jurisdiction" />
         <base value="ValueSet" />
         <type value="token" />
-        <description value="Intended jurisdiction for value set" />
+        <description value="Intended jurisdiction for the value set" />
         <expression value="ValueSet.jurisdiction" />
         <xpath value="f:ValueSet/f:jurisdiction" />
         <xpathUsage value="normal" />
@@ -47456,7 +47456,7 @@
         <code value="name" />
         <base value="ValueSet" />
         <type value="string" />
-        <description value="Name of the value set" />
+        <description value="Computationally friendly name of the value set" />
         <expression value="ValueSet.name" />
         <xpath value="f:ValueSet/f:name" />
         <xpathUsage value="normal" />
@@ -47588,7 +47588,7 @@
         <code value="title" />
         <base value="ValueSet" />
         <type value="string" />
-        <description value="Text search against the title of the value set" />
+        <description value="The human-friendly name of the value set" />
         <expression value="ValueSet.title" />
         <xpath value="f:ValueSet/f:title" />
         <xpathUsage value="normal" />

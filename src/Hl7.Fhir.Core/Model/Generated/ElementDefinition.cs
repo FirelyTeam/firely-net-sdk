@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// Whether a reference needs to be version specific or version independent, or whetehr either can be used
+        /// Whether a reference needs to be version specific or version independent, or whether either can be used
         /// (url: http://hl7.org/fhir/ValueSet/reference-version-rules)
         /// </summary>
         [FhirEnumeration("ReferenceVersionRules")]
@@ -1733,7 +1733,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Path of the element in the heirarchy of elements
+        /// Path of the element in the hierarchy of elements
         /// </summary>
         [FhirElement("path", InSummary=true, Order=30)]
         [Cardinality(Min=1,Max=1)]
@@ -1747,7 +1747,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _PathElement;
         
         /// <summary>
-        /// Path of the element in the heirarchy of elements
+        /// Path of the element in the hierarchy of elements
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

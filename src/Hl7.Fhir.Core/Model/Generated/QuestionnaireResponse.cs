@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/questionnaire-answers-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered In Error")]
+            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
             EnteredInError,
             /// <summary>
             /// MISSING DESCRIPTION
@@ -533,7 +533,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Context;
         
         /// <summary>
-        /// Date this version was authored
+        /// Date the answers were gathered
         /// </summary>
         [FhirElement("authored", InSummary=true, Order=160)]
         [DataMember]
@@ -546,7 +546,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirDateTime _AuthoredElement;
         
         /// <summary>
-        /// Date this version was authored
+        /// Date the answers were gathered
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

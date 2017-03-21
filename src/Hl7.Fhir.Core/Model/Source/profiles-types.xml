@@ -1931,7 +1931,7 @@
             <value value="http://hl7.org/fhir" />
           </telecom>
         </contact>
-        <description value="Base StructureDefinition for oid type: An oid represented as a URI" />
+        <description value="Base StructureDefinition for oid type: An OID represented as a URI" />
         <fhirVersion value="3.0.0" />
         <kind value="primitive-type" />
         <abstract value="false" />
@@ -1942,7 +1942,7 @@
           <element id="oid">
             <path value="oid" />
             <short value="Primitive Type oid" />
-            <definition value="An oid represented as a URI" />
+            <definition value="An OID represented as a URI" />
             <comment value="RFC 3001. See also ISO/IEC 8824:1990 €" />
             <min value="0" />
             <max value="*" />
@@ -2029,7 +2029,7 @@
           <element id="oid">
             <path value="oid" />
             <short value="Primitive Type oid" />
-            <definition value="An oid represented as a URI" />
+            <definition value="An OID represented as a URI" />
             <comment value="RFC 3001. See also ISO/IEC 8824:1990 €" />
             <min value="0" />
             <max value="*" />
@@ -3102,7 +3102,7 @@
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px; white-space: nowrap; background-image: url(data: image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAyAAAAACCAYAAACg/LjIAAAAL0lEQVR42u3XsQ0AQAgCQHdl/xn8jxvYWB3JlTR0VJLa+OltBwAAYP6EEQAAgCsPVYVAgIJrA/sAAAAASUVORK5CYII=)" class="hierarchy">
                   <img src="data: image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAWCAYAAAABxvaqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wYeFzIs1vtcMQAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAE0lEQVQI12P4//8/AxMDAwNdCABMPwMo2ctnoQAAAABJRU5ErkJggg==" alt="." style="background-color: inherit" class="hierarchy" />
                   <img src="data: image/png;base64,R0lGODlhEAAQAMQfAOvGUf7ztuvPMf/78/fkl/Pbg+u8Rvjqteu2Pf3zxPz36Pz0z+vTmPzurPvuw/npofbjquvNefHVduuyN+uuMu3Oafbgjfnqvf/3zv/3xevPi+vRjP/20/bmsP///////yH5BAEAAB8ALAAAAAAQABAAAAV24CeOZGmepqeqqOgxjBZFa+19r4ftWQUAgqDgltthMshMIJAZ4jYDHsBARSAmFOJvq+g6HIdEFgcYmBWNxoNAsDjGHgBnmV5bCoUDHLBIq9sFEhIdcAYJdYASFRUQhQkLCwkOFwcdEBAXhVabE52ecDahKy0oIQA7" alt="." style="background-color: white; background-color: inherit" title="Element" class="hierarchy" /> 
-                  <a href="datatypes-definitions.html#Address" title="Address : An address expressed using postal conventions (as opposed to GPS or other location definition formats).  This data type may be used to convey addresses for use in delivering mail as well as for visiting locations and which might not be valid for mail delivery.  There are a variety of postal address formats defined around the world.">Address</a>
+                  <a href="datatypes-definitions.html#Address" title="Address : An address expressed using postal conventions (as opposed to GPS or other location definition formats).  This data type may be used to convey addresses for use in delivering mail as well as for visiting locations which might not be valid for mail delivery.  There are a variety of postal address formats defined around the world.">Address</a>
                   <a name="Address"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
@@ -3364,7 +3364,7 @@
           <element id="Address">
             <path value="Address" />
             <short value="An address expressed using postal conventions (as opposed to GPS or other location definition formats)" />
-            <definition value="An address expressed using postal conventions (as opposed to GPS or other location definition formats).  This data type may be used to convey addresses for use in delivering mail as well as for visiting locations and which might not be valid for mail delivery.  There are a variety of postal address formats defined around the world." />
+            <definition value="An address expressed using postal conventions (as opposed to GPS or other location definition formats).  This data type may be used to convey addresses for use in delivering mail as well as for visiting locations which might not be valid for mail delivery.  There are a variety of postal address formats defined around the world." />
             <comment value="Note: address is for postal addresses, not physical locations." />
             <min value="0" />
             <max value="*" />
@@ -3765,7 +3765,7 @@
           <element id="Address">
             <path value="Address" />
             <short value="An address expressed using postal conventions (as opposed to GPS or other location definition formats)" />
-            <definition value="An address expressed using postal conventions (as opposed to GPS or other location definition formats).  This data type may be used to convey addresses for use in delivering mail as well as for visiting locations and which might not be valid for mail delivery.  There are a variety of postal address formats defined around the world." />
+            <definition value="An address expressed using postal conventions (as opposed to GPS or other location definition formats).  This data type may be used to convey addresses for use in delivering mail as well as for visiting locations which might not be valid for mail delivery.  There are a variety of postal address formats defined around the world." />
             <comment value="Note: address is for postal addresses, not physical locations." />
             <min value="0" />
             <max value="*" />
@@ -8077,7 +8077,7 @@
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px; white-space: nowrap; background-image: url(data: image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAyAAAAACCAYAAACg/LjIAAAAL0lEQVR42u3XsQ0AQAgCQHdl/xn8jxvYWB3JlTR0VJLa+OltBwAAYP6EEQAAgCsPVYVAgIJrA/sAAAAASUVORK5CYII=)" class="hierarchy">
                   <img src="data: image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAWCAYAAAABxvaqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wYeFzIs1vtcMQAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAE0lEQVQI12P4//8/AxMDAwNdCABMPwMo2ctnoQAAAABJRU5ErkJggg==" alt="." style="background-color: inherit" class="hierarchy" />
                   <img src="data: image/png;base64,R0lGODlhEAAQAMQfAOvGUf7ztuvPMf/78/fkl/Pbg+u8Rvjqteu2Pf3zxPz36Pz0z+vTmPzurPvuw/npofbjquvNefHVduuyN+uuMu3Oafbgjfnqvf/3zv/3xevPi+vRjP/20/bmsP///////yH5BAEAAB8ALAAAAAAQABAAAAV24CeOZGmepqeqqOgxjBZFa+19r4ftWQUAgqDgltthMshMIJAZ4jYDHsBARSAmFOJvq+g6HIdEFgcYmBWNxoNAsDjGHgBnmV5bCoUDHLBIq9sFEhIdcAYJdYASFRUQhQkLCwkOFwcdEBAXhVabE52ecDahKy0oIQA7" alt="." style="background-color: white; background-color: inherit" title="Element" class="hierarchy" /> 
-                  <a href="metadatatypes-definitions.html#DataRequirement" title="DataRequirement : Describes a required data item for evaluation in terms of the type of data, and optional code- or date-based filters of the data.">DataRequirement</a>
+                  <a href="metadatatypes-definitions.html#DataRequirement" title="DataRequirement : Describes a required data item for evaluation in terms of the type of data, and optional code or date-based filters of the data.">DataRequirement</a>
                   <a name="DataRequirement"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
@@ -8454,7 +8454,7 @@
           <element id="DataRequirement">
             <path value="DataRequirement" />
             <short value="Describes a required data item" />
-            <definition value="Describes a required data item for evaluation in terms of the type of data, and optional code- or date-based filters of the data." />
+            <definition value="Describes a required data item for evaluation in terms of the type of data, and optional code or date-based filters of the data." />
             <min value="0" />
             <max value="*" />
             <condition value="ele-1" />
@@ -8797,7 +8797,7 @@
           <element id="DataRequirement">
             <path value="DataRequirement" />
             <short value="Describes a required data item" />
-            <definition value="Describes a required data item for evaluation in terms of the type of data, and optional code- or date-based filters of the data." />
+            <definition value="Describes a required data item for evaluation in terms of the type of data, and optional code or date-based filters of the data." />
             <min value="0" />
             <max value="*" />
           </element>
@@ -10905,7 +10905,7 @@
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
                   <a href="datatypes.html#string">string</a>
                 </td>
-                <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">Path of the element in the heirarchy of elements</td>
+                <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">Path of the element in the hierarchy of elements</td>
               </tr>
 
               <tr style="border: 0px #F0F0F0 solid; padding:0px; vertical-align: top; background-color: white;">
@@ -11481,7 +11481,7 @@
                   <img src="data: image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAWCAYAAADJqhx8AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wYeFzMPbYccAgAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAMElEQVQ4y+3OQREAIBDDwAv+PQcFFN5MIyCzqHMKUGVCpMFLK97heq+gggoq+EiwAVjvMhFGmlEUAAAAAElFTkSuQmCC" alt="." style="background-color: inherit" class="hierarchy" />
                   <img src="data: image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAWCAYAAADJqhx8AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wYeFzME+lXFigAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAANklEQVQ4y+3OsRUAIAjEUOL+O8cJABttJM11/x1qZAGqRBEVcNIqdWj1efDqQbb3HwwwwEfABmQUHSPM9dtDAAAAAElFTkSuQmCC" alt="." style="background-color: inherit" class="hierarchy" />
                   <img src="data: image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3gYBFzI0BrFQCwAAAERJREFUOMtj/P//PwMlgImBQjDwBrCcOnWKokBgYWBgYDCU+06W5i8MUggvnH/EOVJjAW4AuQHJ+O75LYqikXE0LzAAALePEntTkEoSAAAAAElFTkSuQmCC" alt="." style="background-color: white; background-color: inherit" title="Primitive Data Type" class="hierarchy" /> 
-                  <a href="elementdefinition-definitions.html#ElementDefinition.type.versioning" title="ElementDefinition.type.versioning : Whether this reference needs to be version specific or version independent, or whetehr either can be used.">versioning</a>
+                  <a href="elementdefinition-definitions.html#ElementDefinition.type.versioning" title="ElementDefinition.type.versioning : Whether this reference needs to be version specific or version independent, or whether either can be used.">versioning</a>
                   <a name="ElementDefinition.type.versioning"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
@@ -11493,7 +11493,7 @@
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">either | independent | specific
                   <br />
-                  <a href="valueset-reference-version-rules.html" title="Whether a reference needs to be version specific or version independent, or whetehr either can be used">ReferenceVersionRules</a> (
+                  <a href="valueset-reference-version-rules.html" title="Whether a reference needs to be version specific or version independent, or whether either can be used">ReferenceVersionRules</a> (
                   <a href="terminologies.html#required" title="To be conformant, the concept in this element SHALL be from the specified value set">Required</a>)
                 </td>
               </tr>
@@ -12652,7 +12652,7 @@
           </element>
           <element id="ElementDefinition.path">
             <path value="ElementDefinition.path" />
-            <short value="Path of the element in the heirarchy of elements" />
+            <short value="Path of the element in the hierarchy of elements" />
             <definition value="The path identifies the element and is expressed as a &quot;.&quot;-separated list of ancestor elements, beginning with the name of the resource or extension." />
             <min value="1" />
             <max value="1" />
@@ -13635,7 +13635,7 @@
           <element id="ElementDefinition.type.versioning">
             <path value="ElementDefinition.type.versioning" />
             <short value="either | independent | specific" />
-            <definition value="Whether this reference needs to be version specific or version independent, or whetehr either can be used." />
+            <definition value="Whether this reference needs to be version specific or version independent, or whether either can be used." />
             <comment value="The base specification never makes a rule as to which form is allowed, but implementation guides may do this." />
             <min value="0" />
             <max value="1" />
@@ -13649,7 +13649,7 @@
                 <valueString value="ReferenceVersionRules" />
               </extension>
               <strength value="required" />
-              <description value="Whether a reference needs to be version specific or version independent, or whetehr either can be used" />
+              <description value="Whether a reference needs to be version specific or version independent, or whether either can be used" />
               <valueSetReference>
                 <reference value="http://hl7.org/fhir/ValueSet/reference-version-rules" />
               </valueSetReference>
@@ -15159,7 +15159,7 @@
           </element>
           <element id="ElementDefinition.path">
             <path value="ElementDefinition.path" />
-            <short value="Path of the element in the heirarchy of elements" />
+            <short value="Path of the element in the hierarchy of elements" />
             <definition value="The path identifies the element and is expressed as a &quot;.&quot;-separated list of ancestor elements, beginning with the name of the resource or extension." />
             <min value="1" />
             <max value="1" />
@@ -15910,7 +15910,7 @@
           <element id="ElementDefinition.type.versioning">
             <path value="ElementDefinition.type.versioning" />
             <short value="either | independent | specific" />
-            <definition value="Whether this reference needs to be version specific or version independent, or whetehr either can be used." />
+            <definition value="Whether this reference needs to be version specific or version independent, or whether either can be used." />
             <comment value="The base specification never makes a rule as to which form is allowed, but implementation guides may do this." />
             <min value="0" />
             <max value="1" />
@@ -15924,7 +15924,7 @@
                 <valueString value="ReferenceVersionRules" />
               </extension>
               <strength value="required" />
-              <description value="Whether a reference needs to be version specific or version independent, or whetehr either can be used" />
+              <description value="Whether a reference needs to be version specific or version independent, or whether either can be used" />
               <valueSetReference>
                 <reference value="http://hl7.org/fhir/ValueSet/reference-version-rules" />
               </valueSetReference>
@@ -17145,7 +17145,7 @@
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px; white-space: nowrap; background-image: url(data: image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAyAAAAACCAYAAACg/LjIAAAAL0lEQVR42u3XsQ0AQAgCQHdl/xn8jxvYWB3JlTR0VJLa+OltBwAAYP6EEQAAgCsPVYVAgIJrA/sAAAAASUVORK5CYII=)" class="hierarchy">
                   <img src="data: image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAWCAYAAAABxvaqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wYeFzIs1vtcMQAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAE0lEQVQI12P4//8/AxMDAwNdCABMPwMo2ctnoQAAAABJRU5ErkJggg==" alt="." style="background-color: inherit" class="hierarchy" />
                   <img src="data: image/png;base64,R0lGODlhEAAQAMQfAOvGUf7ztuvPMf/78/fkl/Pbg+u8Rvjqteu2Pf3zxPz36Pz0z+vTmPzurPvuw/npofbjquvNefHVduuyN+uuMu3Oafbgjfnqvf/3zv/3xevPi+vRjP/20/bmsP///////yH5BAEAAB8ALAAAAAAQABAAAAV24CeOZGmepqeqqOgxjBZFa+19r4ftWQUAgqDgltthMshMIJAZ4jYDHsBARSAmFOJvq+g6HIdEFgcYmBWNxoNAsDjGHgBnmV5bCoUDHLBIq9sFEhIdcAYJdYASFRUQhQkLCwkOFwcdEBAXhVabE52ecDahKy0oIQA7" alt="." style="background-color: white; background-color: inherit" title="Element" class="hierarchy" /> 
-                  <a href="extensibility-definitions.html#Extension" title="Extension : Optional Extensions Element - found in all resources.">Extension</a>
+                  <a href="extensibility-definitions.html#Extension" title="Extension : Optional Extension Element - found in all resources.">Extension</a>
                   <a name="Extension"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
@@ -17235,7 +17235,7 @@
           <element id="Extension">
             <path value="Extension" />
             <short value="Optional Extensions Element" />
-            <definition value="Optional Extensions Element - found in all resources." />
+            <definition value="Optional Extension Element - found in all resources." />
             <min value="0" />
             <max value="*" />
             <condition value="ele-1" />
@@ -17459,7 +17459,7 @@
           <element id="Extension">
             <path value="Extension" />
             <short value="Optional Extensions Element" />
-            <definition value="Optional Extensions Element - found in all resources." />
+            <definition value="Optional Extension Element - found in all resources." />
             <min value="0" />
             <max value="*" />
             <constraint>
@@ -17747,7 +17747,7 @@
                   <a href="datatypes.html#string">string</a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">Given names (not always 'first'). Includes middle names
-                  <br />This repeating element order: Given Names appear in the correct order for presenting then name
+                  <br />This repeating element order: Given Names appear in the correct order for presenting the name
                 </td>
               </tr>
 
@@ -17767,7 +17767,7 @@
                   <a href="datatypes.html#string">string</a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">Parts that come before the name
-                  <br />This repeating element order: Prefixes appear in the correct order for presenting then name
+                  <br />This repeating element order: Prefixes appear in the correct order for presenting the name
                 </td>
               </tr>
 
@@ -17787,7 +17787,7 @@
                   <a href="datatypes.html#string">string</a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">Parts that come after the name
-                  <br />This repeating element order: Suffixes appear in the correct order for presenting then name
+                  <br />This repeating element order: Suffixes appear in the correct order for presenting the name
                 </td>
               </tr>
 
@@ -18032,7 +18032,7 @@
             <type>
               <code value="string" />
             </type>
-            <orderMeaning value="Given Names appear in the correct order for presenting then name" />
+            <orderMeaning value="Given Names appear in the correct order for presenting the name" />
             <isSummary value="true" />
             <mapping>
               <identity value="v2" />
@@ -18056,7 +18056,7 @@
             <type>
               <code value="string" />
             </type>
-            <orderMeaning value="Prefixes appear in the correct order for presenting then name" />
+            <orderMeaning value="Prefixes appear in the correct order for presenting the name" />
             <isSummary value="true" />
             <mapping>
               <identity value="v2" />
@@ -18080,7 +18080,7 @@
             <type>
               <code value="string" />
             </type>
-            <orderMeaning value="Suffixes appear in the correct order for presenting then name" />
+            <orderMeaning value="Suffixes appear in the correct order for presenting the name" />
             <isSummary value="true" />
             <mapping>
               <identity value="v2" />
@@ -18231,7 +18231,7 @@
             <type>
               <code value="string" />
             </type>
-            <orderMeaning value="Given Names appear in the correct order for presenting then name" />
+            <orderMeaning value="Given Names appear in the correct order for presenting the name" />
             <isSummary value="true" />
             <mapping>
               <identity value="v2" />
@@ -18255,7 +18255,7 @@
             <type>
               <code value="string" />
             </type>
-            <orderMeaning value="Prefixes appear in the correct order for presenting then name" />
+            <orderMeaning value="Prefixes appear in the correct order for presenting the name" />
             <isSummary value="true" />
             <mapping>
               <identity value="v2" />
@@ -18279,7 +18279,7 @@
             <type>
               <code value="string" />
             </type>
-            <orderMeaning value="Suffixes appear in the correct order for presenting then name" />
+            <orderMeaning value="Suffixes appear in the correct order for presenting the name" />
             <isSummary value="true" />
             <mapping>
               <identity value="v2" />
@@ -19465,7 +19465,7 @@
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px; white-space: nowrap; background-image: url(data: image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAyAAAAACCAYAAACg/LjIAAAAL0lEQVR42u3XsQ0AQAgCQHdl/xn8jxvYWB3JlTR0VJLa+OltBwAAYP6EEQAAgCsPVYVAgIJrA/sAAAAASUVORK5CYII=)" class="hierarchy">
                   <img src="data: image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAWCAYAAAABxvaqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wYeFzIs1vtcMQAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAE0lEQVQI12P4//8/AxMDAwNdCABMPwMo2ctnoQAAAABJRU5ErkJggg==" alt="." style="background-color: inherit" class="hierarchy" />
                   <img src="data: image/png;base64,R0lGODlhEAAQAOZ/APrkusOiYvvfqbiXWaV2G+jGhdq1b8GgYf3v1frw3vTUlsWkZNewbcSjY/DQkad4Hb6dXv3u0f3v1ObEgfPTlerJiP3w1v79+e7OkPrfrfnjuNOtZPrpydaxa+/YrvvdpP779ZxvFPvnwKKBQaFyF/369M2vdaqHRPz58/HNh/vowufFhfroxO3OkPrluv779tK0e6JzGProwvrow9m4eOnIifPTlPDPkP78+Naxaf3v0/zowfXRi+bFhLWUVv379/rnwPvszv3rye3LiPvnv+3MjPDasKiIS/789/3x2f747eXDg+7Mifvu0tu7f+/QkfDTnPXWmPrjsvrjtPbPgrqZW+/QlPz48K2EMv36866OUPvowat8Ivvgq/Pbrvzgq/PguvrgrqN0Gda2evfYm9+7d/rpw9q6e/LSku/Rl/XVl/LSlfrkt+zVqe7Wqv3x1/bNffbOf59wFdS6if3u0vrqyP3owPvepfXQivDQkO/PkKh9K7STVf779P///////yH5BAEAAH8ALAAAAAAQABAAAAfNgH+Cg36FfoOIhH4JBxBghYl/hQkNAV0IVT5GkJKLCwtQaSsSdx9aR26Gcwt2IkQaNRI6dBERIzCFDSgWSW8WCDkbBnoOQ3uFARc/JQJfCAZlT0x4ZFyFBxdNQT9ZCBNWKQoKUQ+FEDgcdTIAV14YDmg2CgSFA0hmQC5TLE4VRTdrKJAoxOeFCzZSwsw4U6BCizwUQhQyEaAPiAwCVNCY0FCNnA6GPAwYoETIFgY9loiRA4dToTYnsOxg8CBGHE6ICvEYQ4AKzkidfgoKBAA7" alt="." style="background-color: white; background-color: inherit" title="Data Type" class="hierarchy" /> 
-                  <a href="datatypes-definitions.html#Money" title="Money : An amount of economic utility in some recognised currency.">Money</a>
+                  <a href="datatypes-definitions.html#Money" title="Money : An amount of economic utility in some recognized currency.">Money</a>
                   <a name="Money"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
@@ -19476,7 +19476,7 @@
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
                   <a href="datatypes.html#Quantity">Quantity</a>
                 </td>
-                <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">An amount of economic utility in some recognised currency
+                <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">An amount of economic utility in some recognized currency
                   <br />
                   <span style="font-style: italic" title="mny-1">+ There SHALL be a code if there is a value and it SHALL be an expression of currency.  If system is present, it SHALL be ISO 4217 (system = "urn:iso:std:iso:4217" - currency).</span>
                   <br />Elements defined in Ancestors: 
@@ -19532,8 +19532,8 @@
         <snapshot>
           <element id="Money">
             <path value="Money" />
-            <short value="An amount of economic utility in some recognised currency" />
-            <definition value="An amount of economic utility in some recognised currency." />
+            <short value="An amount of economic utility in some recognized currency" />
+            <definition value="An amount of economic utility in some recognized currency." />
             <comment value="The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator." />
             <min value="0" />
             <max value="*" />
@@ -19763,8 +19763,8 @@
         <differential>
           <element id="Money">
             <path value="Money" />
-            <short value="An amount of economic utility in some recognised currency" />
-            <definition value="An amount of economic utility in some recognised currency." />
+            <short value="An amount of economic utility in some recognized currency" />
+            <definition value="An amount of economic utility in some recognized currency." />
             <min value="0" />
             <max value="*" />
             <constraint>
@@ -23515,7 +23515,7 @@
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px; white-space: nowrap; background-image: url(data: image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAyAAAAACCAYAAACg/LjIAAAAL0lEQVR42u3XsQ0AQAgCQHdl/xn8jxvYWB3JlTR0VJLa+OltBwAAYP6EEQAAgCsPVYVAgIJrA/sAAAAASUVORK5CYII=)" class="hierarchy">
                   <img src="data: image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAWCAYAAAABxvaqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wYeFzIs1vtcMQAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAE0lEQVQI12P4//8/AxMDAwNdCABMPwMo2ctnoQAAAABJRU5ErkJggg==" alt="." style="background-color: inherit" class="hierarchy" />
                   <img src="data: image/png;base64,R0lGODlhEAAQAMQfAOvGUf7ztuvPMf/78/fkl/Pbg+u8Rvjqteu2Pf3zxPz36Pz0z+vTmPzurPvuw/npofbjquvNefHVduuyN+uuMu3Oafbgjfnqvf/3zv/3xevPi+vRjP/20/bmsP///////yH5BAEAAB8ALAAAAAAQABAAAAV24CeOZGmepqeqqOgxjBZFa+19r4ftWQUAgqDgltthMshMIJAZ4jYDHsBARSAmFOJvq+g6HIdEFgcYmBWNxoNAsDjGHgBnmV5bCoUDHLBIq9sFEhIdcAYJdYASFRUQhQkLCwkOFwcdEBAXhVabE52ecDahKy0oIQA7" alt="." style="background-color: white; background-color: inherit" title="Element" class="hierarchy" /> 
-                  <a href="datatypes-definitions.html#Signature" title="Signature : A digital signature along with supporting context. The signature may be electronic/cryptographic in nature, or a graphical image representing a hand-written signature, or a signature process. Different Signature approaches have different utilities.">Signature</a>
+                  <a href="datatypes-definitions.html#Signature" title="Signature : A digital signature along with supporting context. The signature may be electronic/cryptographic in nature, or a graphical image representing a hand-written signature, or a signature process. Different signature approaches have different utilities.">Signature</a>
                   <a name="Signature"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy" />
@@ -23752,7 +23752,7 @@
           <element id="Signature">
             <path value="Signature" />
             <short value="A digital Signature - XML DigSig, JWT, Graphical image of signature, etc." />
-            <definition value="A digital signature along with supporting context. The signature may be electronic/cryptographic in nature, or a graphical image representing a hand-written signature, or a signature process. Different Signature approaches have different utilities." />
+            <definition value="A digital signature along with supporting context. The signature may be electronic/cryptographic in nature, or a graphical image representing a hand-written signature, or a signature process. Different signature approaches have different utilities." />
             <comment value="The elements of the Signature Resource are for ease of access of these elements. Foro digital signatures (Xml DigSig, JWT), the non-repudiation proof comes from the Signature  validation, which includes validation of the referenced objects (e.g. Resources) (a.k.a., Content) in the XML-Signature Detached form." />
             <min value="0" />
             <max value="*" />
@@ -23961,7 +23961,7 @@
           <element id="Signature">
             <path value="Signature" />
             <short value="A digital Signature - XML DigSig, JWT, Graphical image of signature, etc." />
-            <definition value="A digital signature along with supporting context. The signature may be electronic/cryptographic in nature, or a graphical image representing a hand-written signature, or a signature process. Different Signature approaches have different utilities." />
+            <definition value="A digital signature along with supporting context. The signature may be electronic/cryptographic in nature, or a graphical image representing a hand-written signature, or a signature process. Different signature approaches have different utilities." />
             <comment value="The elements of the Signature Resource are for ease of access of these elements. Foro digital signatures (Xml DigSig, JWT), the non-repudiation proof comes from the Signature  validation, which includes validation of the referenced objects (e.g. Resources) (a.k.a., Content) in the XML-Signature Detached form." />
             <min value="0" />
             <max value="*" />
@@ -24546,7 +24546,7 @@
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">Regular life events the event is tied to
                   <br />
-                  <a href="valueset-event-timing.html" title="Real world event that the relating to the schedule.">EventTiming</a> (
+                  <a href="valueset-event-timing.html" title="Real world event relating to the schedule.">EventTiming</a> (
                   <a href="terminologies.html#required" title="To be conformant, the concept in this element SHALL be from the specified value set">Required</a>)
                   <br />
                 </td>
@@ -25122,7 +25122,7 @@
                 <valueString value="EventTiming" />
               </extension>
               <strength value="required" />
-              <description value="Real world event that the relating to the schedule." />
+              <description value="Real world event relating to the schedule." />
               <valueSetReference>
                 <reference value="http://hl7.org/fhir/ValueSet/event-timing" />
               </valueSetReference>
@@ -25542,7 +25542,7 @@
                 <valueString value="EventTiming" />
               </extension>
               <strength value="required" />
-              <description value="Real world event that the relating to the schedule." />
+              <description value="Real world event relating to the schedule." />
               <valueSetReference>
                 <reference value="http://hl7.org/fhir/ValueSet/event-timing" />
               </valueSetReference>

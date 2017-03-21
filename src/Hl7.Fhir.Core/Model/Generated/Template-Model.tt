@@ -466,7 +466,7 @@ if(!abstractType) {
 		nPropNum += 10;
 #>
         /// <summary>
-        /// <#= pd.Summary.Replace("&", "&amp;").Replace("\r\n", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n        /// ") #>
+        /// <#= pd.Summary.Replace("&", "&amp;").Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n        /// ") #>
         /// </summary>
         [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nPropNum #><#= pd.PropType == "Hl7.Fhir.Model.Element" ? ", Choice=ChoiceType.DatatypeChoice" : pd.PropType == "Hl7.Fhir.Model.Resource" ? ", Choice=ChoiceType.ResourceChoice" : "" #>)]
 <# if (pd.PropType == "Hl7.Fhir.Model.ResourceReference") {#>
@@ -498,7 +498,7 @@ if(!abstractType) {
         {
 #>
         /// <summary>
-        /// <#= pd.Summary.Replace("&", "&amp;").Replace("\r\n", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n        /// ") #>
+        /// <#= pd.Summary.Replace("&", "&amp;").Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n        /// ") #>
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
 <# if (false && pd.CardMax != "1") {#>        [Cardinality(Min=<#= pd.CardMin #>,Max=<#= pd.CardMax.Replace("*", "-1") #>)] 

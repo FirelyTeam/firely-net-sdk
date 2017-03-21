@@ -42,7 +42,7 @@ using System.ComponentModel;
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Pure binary content defined by some other format than FHIR
+    /// Pure binary content defined by a format other than FHIR
     /// </summary>
     [FhirType("Binary", IsResource=true)]
     [DataContract]

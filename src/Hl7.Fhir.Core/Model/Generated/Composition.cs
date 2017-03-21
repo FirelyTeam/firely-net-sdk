@@ -172,7 +172,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// When composition attested
+            /// When the composition was attested
             /// </summary>
             [FhirElement("time", InSummary=true, Order=50)]
             [DataMember]
@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirDateTime _TimeElement;
             
             /// <summary>
-            /// When composition attested
+            /// When the composition was attested
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]

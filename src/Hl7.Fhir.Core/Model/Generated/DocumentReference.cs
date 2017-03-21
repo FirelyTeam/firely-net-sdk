@@ -284,7 +284,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.ResourceReference _Encounter;
             
             /// <summary>
-            /// Main Clinical Acts Documented
+            /// Main clinical acts documented
             /// </summary>
             [FhirElement("event", InSummary=true, Order=50)]
             [Cardinality(Min=0,Max=-1)]
@@ -705,7 +705,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// When this document reference created
+        /// When this document reference was created
         /// </summary>
         [FhirElement("indexed", InSummary=true, Order=170)]
         [Cardinality(Min=1,Max=1)]
@@ -719,7 +719,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Instant _IndexedElement;
         
         /// <summary>
-        /// When this document reference created
+        /// When this document reference was created
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

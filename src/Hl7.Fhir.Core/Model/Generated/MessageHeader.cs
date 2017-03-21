@@ -616,7 +616,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Coding _Event;
         
         /// <summary>
-        /// Message Destination Application(s)
+        /// Message destination application(s)
         /// </summary>
         [FhirElement("destination", InSummary=true, Order=100)]
         [Cardinality(Min=0,Max=-1)]
@@ -723,7 +723,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Author;
         
         /// <summary>
-        /// Message Source Application
+        /// Message source application
         /// </summary>
         [FhirElement("source", InSummary=true, Order=160)]
         [Cardinality(Min=1,Max=1)]

@@ -3642,7 +3642,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Each operation can have one ore more header elements
+            /// Each operation can have one or more header elements
             /// </summary>
             [FhirElement("requestHeader", Order=140)]
             [Cardinality(Min=0,Max=-1)]
@@ -5942,7 +5942,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Logical uri to reference this test script (globally unique)
+        /// Logical URI to reference this test script (globally unique)
         /// </summary>
         [FhirElement("url", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
@@ -5956,7 +5956,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
-        /// Logical uri to reference this test script (globally unique)
+        /// Logical URI to reference this test script (globally unique)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -6118,7 +6118,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// If for testing purposes, not real usage
+        /// For testing purposes, not real usage
         /// </summary>
         [FhirElement("experimental", InSummary=true, Order=150)]
         [DataMember]
@@ -6131,7 +6131,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirBoolean _ExperimentalElement;
         
         /// <summary>
-        /// If for testing purposes, not real usage
+        /// For testing purposes, not real usage
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -6241,7 +6241,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Markdown _Description;
         
         /// <summary>
-        /// Content intends to support these contexts
+        /// Context the content is intended to support
         /// </summary>
         [FhirElement("useContext", InSummary=true, Order=200)]
         [Cardinality(Min=0,Max=-1)]
@@ -6507,7 +6507,7 @@ namespace Hl7.Fhir.Model
             Expression = "setup.action.assert.all((response.empty() and responseCode.empty() and direction = 'request') or direction.empty() or direction = 'response')",
             Key = "inv-12",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Setup action assert response and response and responseCode SHALL be empty when direction equals request",
+            Human = "Setup action assert response and responseCode SHALL be empty when direction equals request",
             Xpath = "((count(f:response) + count(f:responseCode)) = 0 and (f:direction/@value='request')) or (count(f:direction) = 0) or (f:direction/@value='response')"
         };
 

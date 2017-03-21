@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Device"; } }
         
         /// <summary>
-        /// Codes to identify how udi data was entered
+        /// Codes to identify how UDI data was entered
         /// (url: http://hl7.org/fhir/ValueSet/udi-entry-type)
         /// </summary>
         [FhirEnumeration("UDIEntryType")]

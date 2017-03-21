@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// How an exception is statement is applied, as adding additional consent, or removing consent
+        /// How an exception statement is applied, such as adding additional consent or removing consent
         /// (url: http://hl7.org/fhir/ValueSet/consent-except-type)
         /// </summary>
         [FhirEnumeration("ConsentExceptType")]

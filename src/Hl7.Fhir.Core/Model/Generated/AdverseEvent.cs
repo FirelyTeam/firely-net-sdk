@@ -42,7 +42,7 @@ using System.ComponentModel;
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Actual or  potential/avoided event causing unintended physical injury resulting from or contributed to by medical care, a research study or other healthcare setting factors that requires additional monitoring, treatment, or hospitalization, or that results in death
+    /// Medical care, research study or other healthcare event causing physical injury
     /// </summary>
     [FhirType("AdverseEvent", IsResource=true)]
     [DataContract]
@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "AdverseEvent"; } }
         
         /// <summary>
-        /// Overall categorisation of the event e.g. real or potential
+        /// Overall categorization of the event, e.g. real or potential
         /// (url: http://hl7.org/fhir/ValueSet/adverse-event-category)
         /// </summary>
         [FhirEnumeration("AdverseEventCategory")]
@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "SuspectEntityComponent"; } }
             
             /// <summary>
-            /// AdverseEvent.suspectEntity.instance
+            /// Refers to the specific entity that caused the adverse event
             /// </summary>
             [FhirElement("instance", InSummary=true, Order=40)]
             [CLSCompliant(false)]
@@ -316,7 +316,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// AdverseEvent.identifier
+        /// Business identifier for the event
         /// </summary>
         [FhirElement("identifier", InSummary=true, Order=90)]
         [DataMember]
@@ -391,7 +391,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
-        /// AdverseEvent.date
+        /// When the event occurred
         /// </summary>
         [FhirElement("date", InSummary=true, Order=130)]
         [DataMember]
@@ -404,7 +404,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
-        /// AdverseEvent.date
+        /// When the event occurred
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -439,7 +439,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Reaction;
         
         /// <summary>
-        /// AdverseEvent.location
+        /// Location where adverse event occurred
         /// </summary>
         [FhirElement("location", InSummary=true, Order=150)]
         [CLSCompliant(false)]
@@ -480,7 +480,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Outcome;
         
         /// <summary>
-        /// AdverseEvent.recorder
+        /// Who recorded the adverse event
         /// </summary>
         [FhirElement("recorder", InSummary=true, Order=180)]
         [CLSCompliant(false)]
@@ -510,7 +510,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _EventParticipant;
         
         /// <summary>
-        /// AdverseEvent.description
+        /// Description of the adverse event
         /// </summary>
         [FhirElement("description", InSummary=true, Order=200)]
         [DataMember]
@@ -523,7 +523,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
         /// <summary>
-        /// AdverseEvent.description
+        /// Description of the adverse event
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -542,7 +542,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// AdverseEvent.suspectEntity
+        /// The suspected agent causing the adverse event
         /// </summary>
         [FhirElement("suspectEntity", InSummary=true, Order=210)]
         [Cardinality(Min=0,Max=-1)]
