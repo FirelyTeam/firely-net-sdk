@@ -651,7 +651,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(nav.Current.SliceName, "3");
             Assert.IsFalse(nav.MoveToNextSlice());
             Assert.IsTrue(nav.MoveToPreviousSlice());
-            Assert.AreEqual(nav.Current.Name, "2");
+            Assert.AreEqual(nav.Current.SliceName, "2");
 
             Assert.IsTrue(nav.MoveToNext("C"));
             Assert.IsTrue(nav.MoveToNextSlice());

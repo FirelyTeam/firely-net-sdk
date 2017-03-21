@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     if (name != null)
                     {
-                        Assert.AreEqual(name, element.Name, $"Invalid element name. Expected = '{name}', actual = '{element.Name}'.");
+                        Assert.AreEqual(name, element.SliceName, $"Invalid element name. Expected = '{name}', actual = '{element.SliceName}'.");
                     }
                     if (_settings.GenerateElementIds && elementId != null)
                     {
