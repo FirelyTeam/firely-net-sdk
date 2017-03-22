@@ -3834,7 +3834,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestElementMappings()
         {
-            var profile = _testResolver.FindStructureDefinition("http://hl7.no/fhir/StructureDefinition/kule-prescribing");
+            var profile = _testResolver.FindStructureDefinition("http://example.org/fhir/StructureDefinition/TestMedicationStatement-prescribing");
             Assert.IsNotNull(profile);
 
             var diffElem = profile.Differential.Element.FirstOrDefault(e => e.Path == "MedicationStatement.informationSource");

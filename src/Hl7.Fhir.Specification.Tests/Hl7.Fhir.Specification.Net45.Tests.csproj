@@ -143,7 +143,7 @@
     <Content Include="TestData\snapshot-test\Marten\nl-core-patient-snapshot.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\Vadim\KulePrescribing.structuredefinition.xml">
+    <Content Include="TestData\snapshot-test\Vadim\MedicationStatement-prescribing.structuredefinition.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\snapshot-test\WMR\CustomIdentifier.structuredefinition.xml">

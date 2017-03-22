@@ -1,20 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
-  <id value="kule-prescribing" />
+  <id value="ms-prescribing" />
   <meta>
     <lastUpdated value="2017-03-13T11:39:46.369+01:00" />
   </meta>
   <text>
     <status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml">
-  <p>A profile on MedicationStatement describing a prescription as defined by KULE Helse Vest Norwegian project, based on the national standard M1 eResept standard.</p>
+  <p>--- SNIP ---</p>
 </div></text>
-  <url value="http://hl7.no/fhir/StructureDefinition/kule-prescribing" />
-  <name value="KULE Prescribing" />
+  <url value="http://example.org/fhir/StructureDefinition/TestMedicationStatement-prescribing" />
+  <name value="Test MedicationStatement prescribing" />
   <status value="draft" />
   <experimental value="false" />
-  <publisher value="HL7 Norge" />
+  <publisher value="Test" />
   <date value="2017-01-27T13:11:14.8692835+01:00" />
-  <description value="A prescription as defined by KULE Helse Vest Norwegian project, based on the national standard M1 eResept standard." />
   <kind value="resource" />
   <constrainedType value="MedicationStatement" />
   <abstract value="false" />
@@ -22,10 +21,9 @@
   <differential>
     <element>
       <path value="MedicationStatement" />
-      <short value="KULE Prescribing profile." />
-      <definition value="A prescription as defined by KULE Helse Vest Norwegian project, based on the national standard M1 eResept standard." />
+      <short value="Prescribing profile." />
       <constraint>
-        <key value="kuleprescribing" />
+        <key value="ms-prescribing" />
         <severity value="error" />
         <human value="Reason not taken must be filled if wasNotTaken is true" />
         <xpath value="f:wasNotTaken/@value=false() or exists(f:wasNotTaken)" />
@@ -52,7 +50,7 @@
       </type>
       <mustSupport value="true" />
       <mapping>
-        <identity value="norway-kule-resept" />
+        <identity value="ms-resept-map" />
         <map value="Resept.Forskrivningsdato" />
       </mapping>
     </element>
@@ -74,7 +72,7 @@
         </valueSetReference>
       </binding>
       <mapping>
-        <identity value="norway-kule-resept" />
+        <identity value="ms-resept-map" />
         <map value="Resept.ReseptDokLegemiddel.Resept.Forskrivning.Bruk" />
       </mapping>
     </element>
@@ -96,11 +94,11 @@
       </type>
       <mustSupport value="true" />
       <mapping>
-        <identity value="norway-kule-resept" />
+        <identity value="ms-resept-map" />
         <map value="Resept.Instituert.Helseperson" />
       </mapping>
       <mapping>
-        <identity value="norway-kule-resept" />
+        <identity value="ms-resept-map" />
         <map value="Resept.Instituert.Organisasjon" />
       </mapping>
     </element>
@@ -155,7 +153,7 @@
         </valueSetReference>
       </binding>
       <mapping>
-        <identity value="norway-kule-resept" />
+        <identity value="ms-resept-map" />
         <map value="Resept.ReseptDokLegemiddel.Forskrivning.Bruksomrade" />
       </mapping>
     </element>
@@ -171,7 +169,7 @@
       <definition value="Time when the dosage starts." />
       <alias value="Starttidspunkt" />
       <mapping>
-        <identity value="norway-kule-resept" />
+        <identity value="ms-resept-map" />
         <map value="Resept.ReseptDokLegemiddel.Forskrivning.Dosering.Starttidspunkt" />
       </mapping>
     </element>
@@ -180,7 +178,7 @@
       <definition value="Time when the dosage ends." />
       <alias value="Sluttidspunkt" />
       <mapping>
-        <identity value="norway-kule-resept" />
+        <identity value="ms-resept-map" />
         <map value="Resept.ReseptDokLegemiddel.Forskrivning.Dosering.Sluttidspunkt" />
       </mapping>
     </element>
@@ -191,7 +189,7 @@
       <alias value="Merknad" />
       <mustSupport value="true" />
       <mapping>
-        <identity value="norway-kule-resept" />
+        <identity value="ms-resept-map" />
         <map value="Resept.EkspAnm.Merknad" />
       </mapping>
     </element>
@@ -199,14 +197,14 @@
       <path value="MedicationStatement.medicationReference" />
       <type>
         <code value="Reference" />
-        <profile value="http://hl7.no/fhir/StructureDefinition/kule-medication" />
+        <profile value="http://hl7.no/fhir/StructureDefinition/ms-medication" />
       </type>
       <mustSupport value="true" />
     </element>
     <element>
       <path value="MedicationStatement.dosage" />
       <constraint>
-        <key value="kuleprescribing-1" />
+        <key value="ms-prescribing-1" />
         <severity value="error" />
         <human value="Dosage must include a freetext if no structured dosage is used" />
         <xpath value="not(exists(f:text)) or not(exists(f:timing))" />
@@ -233,7 +231,7 @@
       </type>
       <mustSupport value="true" />
       <mapping>
-        <identity value="norway-kule-resept" />
+        <identity value="ms-resept-map" />
         <map value="Resept.ReseptDokLegemiddel.Forskrivning.Dosering.Doseringsregel.DoseresEtter" />
       </mapping>
     </element>
@@ -250,7 +248,7 @@
       </type>
       <mustSupport value="true" />
       <mapping>
-        <identity value="norway-kule-resept" />
+        <identity value="ms-resept-map" />
         <map value="Resept.ReseptDokLegemiddel.Forskrivning.Dosering.Doseringsregel.Merknad" />
       </mapping>
     </element>
@@ -292,7 +290,7 @@
       </type>
       <mustSupport value="true" />
       <mapping>
-        <identity value="norway-kule-resept" />
+        <identity value="ms-resept-map" />
         <map value="Resept.ReseptDokLegemiddel.Forskrivning.Kortdose" />
       </mapping>
     </element>
@@ -301,7 +299,7 @@
       <alias value="Merknad" />
       <mustSupport value="true" />
       <mapping>
-        <identity value="norway-kule-resept" />
+        <identity value="ms-resept-map" />
         <map value="Resept.ReseptDokLegemiddel.Forskrivning.Dosering.Doseringsregel.Merknad" />
       </mapping>
     </element>
@@ -330,7 +328,7 @@
       </type>
       <mustSupport value="true" />
       <mapping>
-        <identity value="norway-kule-resept" />
+        <identity value="ms-resept-map" />
         <map value="Resept.ReseptDokLegemiddel.Forskrivning.Dosering.DoseFastTidspunkt.GisEksakt" />
       </mapping>
     </element>
@@ -353,7 +351,7 @@
         </valueSetReference>
       </binding>
       <mapping>
-        <identity value="norway-kule-resept" />
+        <identity value="ms-resept-map" />
         <map value="Dose.Intervall" />
       </mapping>
     </element>
@@ -381,7 +379,7 @@
       </type>
       <mustSupport value="true" />
       <mapping>
-        <identity value="norway-kule-resept" />
+        <identity value="ms-resept-map" />
         <map value="Resept.ReseptDokLegemiddel.Forskrivning.Dosering.DoseFastTidspunkt.Klokkeslett" />
       </mapping>
     </element>
@@ -399,7 +397,7 @@
       </type>
       <mustSupport value="true" />
       <mapping>
-        <identity value="norway-kule-resept" />
+        <identity value="ms-resept-map" />
         <map value="Resept.ReseptDokLegemiddel.Forskrivning.Dosering.DoseFastTidspunkt.Tidsomrade" />
       </mapping>
     </element>
@@ -421,7 +419,7 @@
         </valueSetReference>
       </binding>
       <mapping>
-        <identity value="norway-kule-resept" />
+        <identity value="ms-resept-map" />
         <map value="Resept.ReseptDokLegemiddel.Forskrivning.Dosering.DoseFastTidspunkt.FastDose.FasteUkedager" />
       </mapping>
     </element>
@@ -439,7 +437,7 @@
       <alias value="Administrasjonsvei" />
       <mustSupport value="true" />
       <mapping>
-        <identity value="norway-kule-resept" />
+        <identity value="ms-resept-map" />
         <map value="Resept.ReseptDokLegemiddel.Forskrivning.typeLegemiddel.AdministreringLegemiddel.Administrasjonsvei" />
       </mapping>
     </element>
@@ -500,7 +498,7 @@
         </valueSetReference>
       </binding>
       <mapping>
-        <identity value="norway-kule-resept" />
+        <identity value="ms-resept-map" />
         <map value="Resept.ReseptDokLegemiddel.Forskrivning.Dosering.DoseFastTidspunkt.Dose.Infusjonshastighet.Volum" />
       </mapping>
     </element>
@@ -515,7 +513,7 @@
         </valueSetReference>
       </binding>
       <mapping>
-        <identity value="norway-kule-resept" />
+        <identity value="ms-resept-map" />
         <map value="Resept.ReseptDokLegemiddel.Forskrivning.Dosering.DoseFastTidspunkt.Dose.Infusjonshastighet.Tidsenhet" />
       </mapping>
     </element>
@@ -539,7 +537,7 @@
         </valueSetReference>
       </binding>
       <mapping>
-        <identity value="norway-kule-resept" />
+        <identity value="ms-resept-map" />
         <map value="Resept.ReseptDokLegemiddel.Forskrivning.Dosering.DoseFastTidspunkt.Dose.Infusjonshastighet.Volum" />
       </mapping>
     </element>
@@ -555,7 +553,7 @@
         </valueSetReference>
       </binding>
       <mapping>
-        <identity value="norway-kule-resept" />
+        <identity value="ms-resept-map" />
         <map value="Resept.ReseptDokLegemiddel.Forskrivning.Dosering.DoseFastTidspunkt.Dose.Infusjonshastighet.Volum" />
       </mapping>
     </element>
