@@ -3044,7 +3044,7 @@ namespace Hl7.Fhir.Specification.Tests
                             //   </valueSetReference>
                             // </binding>
 
-                            Binding = new ElementDefinition.BindingComponent()
+                            Binding = new ElementDefinition.ElementDefinitionBindingComponent()
                             {
                                 // Constrain strength from Example to Preferred
                                 Strength = BindingStrength.Preferred
