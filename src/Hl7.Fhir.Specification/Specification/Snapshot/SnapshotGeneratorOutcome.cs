@@ -99,6 +99,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // "Differential has a constraint on a choice element '{0}', but does so without using a type slice"
         // Differential specifies a constraint on a child element of a choice type element
         // This is not allowed if an element supports multiple element types; must use slicing!
+
         public static readonly Issue PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT = Issue.Create(10000, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
 
         void addIssueInvalidChoiceConstraint(ElementDefinition elementDef) { addIssue(CreateIssueInvalidChoiceConstraint(elementDef)); }
