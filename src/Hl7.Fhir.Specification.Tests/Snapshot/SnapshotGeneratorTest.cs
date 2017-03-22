@@ -1114,14 +1114,14 @@ namespace Hl7.Fhir.Specification.Tests
         public void TestExpandElement_QuestionnaireGroupGroup()
         {
             // Validate name reference expansion
-            testExpandElement(@"http://hl7.org/fhir/StructureDefinition/Questionnaire", "Questionnaire.group.group");
+            testExpandElement(@"http://hl7.org/fhir/StructureDefinition/Questionnaire", "Questionnaire.item");
         }
 
         [TestMethod]
         public void TestExpandElement_QuestionnaireGroupQuestionGroup()
         {
             // Validate name reference expansion
-            testExpandElement(@"http://hl7.org/fhir/StructureDefinition/Questionnaire", "Questionnaire.group.question.group");
+            testExpandElement(@"http://hl7.org/fhir/StructureDefinition/Questionnaire", "Questionnaire.item.item");
         }
 
         [TestMethod]
@@ -2800,6 +2800,7 @@ namespace Hl7.Fhir.Specification.Tests
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation),
             Name = "MyTestObservation",
             Url = "http://example.org/fhir/StructureDefinition/MyTestObservation",
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
             Differential = new StructureDefinition.DifferentialComponent()
             {
                 Element = new List<ElementDefinition>()

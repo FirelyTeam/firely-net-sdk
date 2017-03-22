@@ -1382,7 +1382,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("ElementDefinitionBindingComponent")]
         [DataContract]
-        public partial class ElementDefinitionBindingComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class BindingComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
             public override string TypeName { get { return "ElementDefinitionBindingComponent"; } }
@@ -1469,7 +1469,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ElementDefinitionBindingComponent;
+                var dest = other as BindingComponent;
                 
                 if (dest != null)
                 {
@@ -1485,12 +1485,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ElementDefinitionBindingComponent());
+                return CopyTo(new BindingComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ElementDefinitionBindingComponent;
+                var otherT = other as BindingComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -1503,7 +1503,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ElementDefinitionBindingComponent;
+                var otherT = other as BindingComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -2506,13 +2506,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("binding", InSummary=true, Order=330)]
         [DataMember]
-        public Hl7.Fhir.Model.ElementDefinition.ElementDefinitionBindingComponent Binding
+        public Hl7.Fhir.Model.ElementDefinition.BindingComponent Binding
         {
             get { return _Binding; }
             set { _Binding = value; OnPropertyChanged("Binding"); }
         }
         
-        private Hl7.Fhir.Model.ElementDefinition.ElementDefinitionBindingComponent _Binding;
+        private Hl7.Fhir.Model.ElementDefinition.BindingComponent _Binding;
         
         /// <summary>
         /// Map element to another set of definitions
@@ -2566,7 +2566,7 @@ namespace Hl7.Fhir.Model
                 if(MustSupportElement != null) dest.MustSupportElement = (Hl7.Fhir.Model.FhirBoolean)MustSupportElement.DeepCopy();
                 if(IsModifierElement != null) dest.IsModifierElement = (Hl7.Fhir.Model.FhirBoolean)IsModifierElement.DeepCopy();
                 if(IsSummaryElement != null) dest.IsSummaryElement = (Hl7.Fhir.Model.FhirBoolean)IsSummaryElement.DeepCopy();
-                if(Binding != null) dest.Binding = (Hl7.Fhir.Model.ElementDefinition.ElementDefinitionBindingComponent)Binding.DeepCopy();
+                if(Binding != null) dest.Binding = (Hl7.Fhir.Model.ElementDefinition.BindingComponent)Binding.DeepCopy();
                 if(Mapping != null) dest.Mapping = new List<Hl7.Fhir.Model.ElementDefinition.MappingComponent>(Mapping.DeepCopy());
                 return dest;
             }
