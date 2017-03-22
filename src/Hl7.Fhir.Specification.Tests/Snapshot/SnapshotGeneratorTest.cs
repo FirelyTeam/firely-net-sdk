@@ -2916,15 +2916,15 @@ namespace Hl7.Fhir.Specification.Tests
 
             var labelExtElem = obsExtensions[1];
             Assert.IsNotNull(labelExtElem);
-            Assert.AreEqual(@"http://example.org/fhir/StructureDefinition/ObservationLabelExtension", labelExtElem.Type.FirstOrDefault().Profile.FirstOrDefault());
+            Assert.AreEqual(@"http://example.org/fhir/StructureDefinition/ObservationLabelExtension", labelExtElem.Type.FirstOrDefault().Profile);
 
             var locationExtElem = obsExtensions[2];
             Assert.IsNotNull(locationExtElem);
-            Assert.AreEqual(@"http://example.org/fhir/StructureDefinition/ObservationLocationExtension", locationExtElem.Type.FirstOrDefault().Profile.FirstOrDefault());
+            Assert.AreEqual(@"http://example.org/fhir/StructureDefinition/ObservationLocationExtension", locationExtElem.Type.FirstOrDefault().Profile);
 
             var otherExtElem = obsExtensions[3];
             Assert.IsNotNull(otherExtElem);
-            Assert.AreEqual(@"http://example.org/fhir/StructureDefinition/SomeOtherExtension", otherExtElem.Type.FirstOrDefault().Profile.FirstOrDefault());
+            Assert.AreEqual(@"http://example.org/fhir/StructureDefinition/SomeOtherExtension", otherExtElem.Type.FirstOrDefault().Profile);
 
             var labelExt = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/ObservationLabelExtension");
             Assert.IsNotNull(labelExt);
