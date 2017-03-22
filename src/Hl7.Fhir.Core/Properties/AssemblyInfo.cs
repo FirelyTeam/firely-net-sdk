@@ -22,7 +22,7 @@ using System.Security;
 [assembly: AssemblyDescription("Core .NET support for working with HL7 FHIR. Supports FHIR DSTU2 (1.0)")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("FHIR")]
-[assembly: AssemblyCopyright("Copyright Ewout Kramer and collaborators 2016")]
+[assembly: AssemblyCopyright("Copyright © Ewout Kramer and collaborators 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]

@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Hl7.Fhir.Specification.Tests")]
-[assembly: AssemblyCopyright("Copyright © Ewout Kramer and collaborators 2016")]
+[assembly: AssemblyCopyright("Copyright © Ewout Kramer and collaborators 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
