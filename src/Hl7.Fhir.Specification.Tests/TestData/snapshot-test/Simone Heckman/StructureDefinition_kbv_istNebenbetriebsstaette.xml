@@ -26,6 +26,7 @@
   <contextType value="resource" />
   <context value="Organization" />
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension" />
+  <derivation value="constraint" />
   <snapshot>
     <element>
       <path value="Extension" />
@@ -122,7 +123,7 @@
         <code value="boolean" />
       </type>
       <patternCode value="(H|N)" />
-      <example><valueCode /></example>
+      <example><valueCode value="H=Hauptbetriebsstätte oder N=Nebenbetriebsstätte" /></example>
       <mapping>
         <identity value="rim" />
         <map value="N/A" />

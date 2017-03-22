@@ -15,6 +15,7 @@
 	<context value="Extension.extension" />
 	<context value="Extension" />
 	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension" />
+  <derivation value="constraint" />
 	<snapshot>
 		<element>
 			<path value="Extension" />

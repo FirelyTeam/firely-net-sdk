@@ -11,6 +11,7 @@
   <type value="Location" />
   <abstract value="false" />
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Location" />
+  <derivation value="constraint" />
   <snapshot>
     <element>
       <path value="Location" />
@@ -158,7 +159,7 @@
     <element>
       <path value="Location.extension" />
       <slicing>
-        <discriminator><type value="value" /><path value="" /></discriminator>
+        <discriminator><type value="value" /><path value="url" /></discriminator>
         <rules value="open" />
       </slicing>
       <short value="Extension" />
@@ -646,7 +647,7 @@
     <element>
       <path value="Location.extension" />
       <slicing>
-        <discriminator><type value="value" /><path value="" /></discriminator>
+        <discriminator><type value="value" /><path value="url" /></discriminator>
         <rules value="open" />
       </slicing>
     </element>

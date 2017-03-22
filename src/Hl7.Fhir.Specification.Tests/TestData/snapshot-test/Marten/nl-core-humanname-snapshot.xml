@@ -27,6 +27,7 @@
   <type value="HumanName" />
   <abstract value="false" />
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/HumanName" />
+  <derivation value="constraint" />
   <snapshot>
     <element>
       <path value="HumanName" />
@@ -44,7 +45,32 @@
         <code value="HumanName" />
       </type>
       <example><valueHumanName>
-        </valueHumanName></example>
+        <extension url="http://hl7.org/fhir/StructureDefinition/humanname-assembly-order">
+          <valueCode value="NL4" />
+        </extension>
+        <use value="official" />
+        <family value="Jongeneel-de Haas">
+          <extension url="http://hl7.org/fhir/StructureDefinition/humanname-own-name">
+            <valueString value="Jongeneel" />
+          </extension>
+          <extension url="http://hl7.org/fhir/StructureDefinition/humanname-partners-prefix">
+            <valueString value="de" />
+          </extension>
+          <extension url="http://hl7.org/fhir/StructureDefinition/humanname-partners-name">
+            <valueString value="Haas" />
+          </extension>
+        </family>
+        <given value="Irma">
+          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-EN-qualifier">
+            <valueCode value="CL" />
+          </extension>
+        </given>
+        <given value="I.">
+          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-EN-qualifier">
+            <valueCode value="IN" />
+          </extension>
+        </given>
+      </valueHumanName></example>
       <condition value="ele-1" />
       <constraint>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
@@ -126,7 +152,7 @@
     <element>
       <path value="HumanName.extension" />
       <slicing>
-        <discriminator><type value="value" /><path value="" /></discriminator>
+        <discriminator><type value="value" /><path value="url" /></discriminator>
         <rules value="open" />
       </slicing>
       <short value="Additional Content defined by implementations" />
@@ -370,7 +396,7 @@
     <element>
       <path value="HumanName.family.extension" />
       <slicing>
-        <discriminator><type value="value" /><path value="" /></discriminator>
+        <discriminator><type value="value" /><path value="url" /></discriminator>
         <rules value="open" />
       </slicing>
       <short value="Additional Content defined by implementations" />
@@ -671,7 +697,7 @@
     <element>
       <path value="HumanName.given.extension" />
       <slicing>
-        <discriminator><type value="value" /><path value="" /></discriminator>
+        <discriminator><type value="value" /><path value="url" /></discriminator>
         <rules value="open" />
       </slicing>
       <short value="Additional Content defined by implementations" />
@@ -1069,7 +1095,32 @@
         <code value="HumanName" />
       </type>
       <example><valueHumanName>
-        </valueHumanName></example>
+        <extension url="http://hl7.org/fhir/StructureDefinition/humanname-assembly-order">
+          <valueCode value="NL4" />
+        </extension>
+        <use value="official" />
+        <family value="Jongeneel-de Haas">
+          <extension url="http://hl7.org/fhir/StructureDefinition/humanname-own-name">
+            <valueString value="Jongeneel" />
+          </extension>
+          <extension url="http://hl7.org/fhir/StructureDefinition/humanname-partners-prefix">
+            <valueString value="de" />
+          </extension>
+          <extension url="http://hl7.org/fhir/StructureDefinition/humanname-partners-name">
+            <valueString value="Haas" />
+          </extension>
+        </family>
+        <given value="Irma">
+          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-EN-qualifier">
+            <valueCode value="CL" />
+          </extension>
+        </given>
+        <given value="I.">
+          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-EN-qualifier">
+            <valueCode value="IN" />
+          </extension>
+        </given>
+      </valueHumanName></example>
       <constraint>
         <key value="nl-core-humanname-1" />
         <severity value="error" />
@@ -1094,7 +1145,7 @@
     <element>
       <path value="HumanName.extension" />
       <slicing>
-        <discriminator><type value="value" /><path value="" /></discriminator>
+        <discriminator><type value="value" /><path value="url" /></discriminator>
         <rules value="open" />
       </slicing>
     </element>
@@ -1115,7 +1166,7 @@
     <element>
       <path value="HumanName.family.extension" />
       <slicing>
-        <discriminator><type value="value" /><path value="" /></discriminator>
+        <discriminator><type value="value" /><path value="url" /></discriminator>
         <rules value="open" />
       </slicing>
     </element>
@@ -1181,7 +1232,7 @@
     <element>
       <path value="HumanName.given.extension" />
       <slicing>
-        <discriminator><type value="value" /><path value="" /></discriminator>
+        <discriminator><type value="value" /><path value="url" /></discriminator>
         <rules value="open" />
       </slicing>
     </element>

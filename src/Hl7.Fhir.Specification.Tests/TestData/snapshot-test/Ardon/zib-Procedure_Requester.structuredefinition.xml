@@ -21,6 +21,7 @@
   <contextType value="resource" />
   <context value="Procedure.request" />
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension" />
+  <derivation value="constraint" />
   <differential>
     <element>
       <path value="Extension" />

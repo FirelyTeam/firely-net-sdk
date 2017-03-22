@@ -12,6 +12,7 @@
   <type value="Observation" />
   <abstract value="false" />
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Observation" />
+  <derivation value="constraint" />
   <differential>
     <element>
       <path value="Observation" />
@@ -19,7 +20,7 @@
     <element>
       <path value="Observation.extension" />
       <slicing>
-        <discriminator><type value="value" /><path value="" /></discriminator>
+        <discriminator><type value="value" /><path value="url" /></discriminator>
         <rules value="open" />
       </slicing>
     </element>

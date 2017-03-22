@@ -11,6 +11,7 @@
   <type value="Organization" />
   <abstract value="false" />
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Organization" />
+  <derivation value="constraint" />
   <differential>
     <element>
       <path value="Organization" />
@@ -18,7 +19,7 @@
     <element>
       <path value="Organization.identifier" />
       <slicing>
-        <discriminator><type value="value" /><path value="" /></discriminator>
+        <discriminator><type value="value" /><path value="type.coding.system" /></discriminator>
         <rules value="openAtEnd" />
       </slicing>
     </element>
@@ -33,7 +34,7 @@
     <element>
       <path value="Organization.type" />
       <slicing>
-        <discriminator><type value="value" /><path value="" /></discriminator>
+        <discriminator><type value="value" /><path value="coding.system" /></discriminator>
         <rules value="openAtEnd" />
       </slicing>
       <min value="1" />

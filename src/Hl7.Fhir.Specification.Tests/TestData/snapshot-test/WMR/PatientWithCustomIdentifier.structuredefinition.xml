@@ -12,6 +12,7 @@
   <type value="Patient" />
   <abstract value="false" />
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient" />
+  <derivation value="constraint" />
   <differential>
     <element>
       <path value="Patient" />

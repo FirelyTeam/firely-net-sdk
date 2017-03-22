@@ -16,6 +16,7 @@
 	<contextType value="resource" />
 	<context value="Patient.identifier" />
 	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension" />
+  <derivation value="constraint" />
 	<snapshot>
 		<element>
 			<path value="Extension" />

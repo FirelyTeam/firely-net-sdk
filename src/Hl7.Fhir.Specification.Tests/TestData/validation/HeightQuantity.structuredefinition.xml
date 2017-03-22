@@ -13,6 +13,7 @@
   <type value="Quantity" />
   <abstract value="false" />
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Quantity" />
+  <derivation value="constraint" />
   <differential>
     <element>
       <path value="Quantity" />

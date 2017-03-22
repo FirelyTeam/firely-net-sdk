@@ -32,6 +32,7 @@
 	<type value="Patient" />
 	<abstract value="false" />
 	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient" />
+  <derivation value="constraint" />
 	<snapshot>
 		<element>
 			<path value="Patient" />

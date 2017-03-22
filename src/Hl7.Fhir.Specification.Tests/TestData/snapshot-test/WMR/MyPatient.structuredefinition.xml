@@ -11,6 +11,7 @@
   <type value="Patient" />
   <abstract value="false" />
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient" />
+  <derivation value="constraint" />
   <snapshot>
     <element>
       <path value="Patient" />
@@ -163,7 +164,7 @@
     <element>
       <path value="Patient.extension" />
       <slicing>
-        <discriminator><type value="value" /><path value="" /></discriminator>
+        <discriminator><type value="value" /><path value="url" /></discriminator>
         <rules value="open" />
       </slicing>
       <short value="Extension" />
@@ -647,7 +648,7 @@
     <element>
       <path value="Patient.contact.extension" />
       <slicing>
-        <discriminator><type value="value" /><path value="" /></discriminator>
+        <discriminator><type value="value" /><path value="url" /></discriminator>
         <rules value="open" />
       </slicing>
       <short value="Extension" />
@@ -1495,7 +1496,7 @@
     <element>
       <path value="Patient.extension" />
       <slicing>
-        <discriminator><type value="value" /><path value="" /></discriminator>
+        <discriminator><type value="value" /><path value="url" /></discriminator>
         <rules value="open" />
       </slicing>
     </element>
@@ -1528,7 +1529,7 @@
     <element>
       <path value="Patient.contact.extension" />
       <slicing>
-        <discriminator><type value="value" /><path value="" /></discriminator>
+        <discriminator><type value="value" /><path value="url" /></discriminator>
         <rules value="open" />
       </slicing>
     </element>

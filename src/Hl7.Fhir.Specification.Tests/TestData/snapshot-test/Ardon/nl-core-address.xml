@@ -27,6 +27,7 @@
   <type value="Address" />
   <abstract value="false" />
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Address" />
+  <derivation value="constraint" />
   <differential>
     <element id="Address">
       <path value="Address" />
@@ -78,7 +79,7 @@
     <element id="Address.extension">
       <path value="Address.extension" />
       <slicing>
-        <discriminator><type value="value" /><path value="" /></discriminator>
+        <discriminator><type value="value" /><path value="url" /></discriminator>
         <rules value="openAtEnd" />
       </slicing>
     </element>
@@ -101,7 +102,7 @@
     <element id="Address.line.extension">
       <path value="Address.line.extension" />
       <slicing>
-        <discriminator><type value="value" /><path value="" /></discriminator>
+        <discriminator><type value="value" /><path value="url" /></discriminator>
         <rules value="openAtEnd" />
       </slicing>
     </element>

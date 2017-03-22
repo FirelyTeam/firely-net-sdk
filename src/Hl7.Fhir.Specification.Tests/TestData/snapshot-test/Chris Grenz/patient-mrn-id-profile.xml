@@ -23,6 +23,7 @@
 	<type value="Identifier" />
 	<abstract value="false" />
 	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Identifier" />
+  <derivation value="constraint" />
 	<snapshot>
 		<element>
 			<path value="Identifier" />

@@ -23,6 +23,7 @@
   <type value="Procedure" />
   <abstract value="false" />
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Procedure" />
+  <derivation value="constraint" />
   <differential>
     <element>
       <path value="Procedure" />
@@ -93,7 +94,7 @@
     <element>
       <path value="Procedure.performer" />
       <slicing>
-        <discriminator><type value="value" /><path value="" /></discriminator>
+        <discriminator><type value="profile" /></discriminator>
         <rules value="openAtEnd" />
       </slicing>
       <min value="2" />
@@ -170,7 +171,7 @@
     <element>
       <path value="Procedure.request.extension" />
       <slicing>
-        <discriminator><type value="value" /><path value="" /></discriminator>
+        <discriminator><type value="value" /><path value="url" /></discriminator>
         <rules value="open" />
       </slicing>
     </element>

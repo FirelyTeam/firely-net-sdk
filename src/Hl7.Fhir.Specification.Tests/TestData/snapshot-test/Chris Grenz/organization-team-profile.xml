@@ -28,6 +28,7 @@
 	<type value="Organization" />
 	<abstract value="false" />
 	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Organization" />
+  <derivation value="constraint" />
 	<snapshot>
 		<element>
 			<path value="Organization" />
