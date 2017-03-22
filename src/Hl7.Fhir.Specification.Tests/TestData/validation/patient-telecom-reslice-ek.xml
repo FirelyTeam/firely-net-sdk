@@ -7,8 +7,9 @@
 	<kind value="resource" />
 	<type value="Patient" />
 	<abstract value="false" />
-	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient" />	
-	<differential>
+	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient" />
+  <derivation value="constraint" />
+  <differential>
 		<element>
 			<path value="Patient.telecom" />
 			<slicing>
@@ -39,8 +40,8 @@
 			<path value="Patient.telecom" />
 			<sliceName value="email" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
-				<discriminator><type value="value" /><path value="" /></discriminator>				
+				<discriminator><type value="value" /><path value="system" /></discriminator>
+				<discriminator><type value="value" /><path value="use" /></discriminator>				
 				<rules value="closed" />				
 			</slicing>
 			<min value="0" />
@@ -94,8 +95,8 @@
 			<path value="Patient.telecom" />
 			<sliceName value="other" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
-				<discriminator><type value="value" /><path value="" /></discriminator>
+				<discriminator><type value="value" /><path value="system" /></discriminator>
+				<discriminator><type value="value" /><path value="use" /></discriminator>
 				<rules value="open" />
 			</slicing>
 			<min value="0" />

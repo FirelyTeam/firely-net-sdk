@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Specification.Tests
             // [WMR 20161005] This generated exceptions in an early version of the snapshot generator (fixed)
 
             StructureDefinition expanded;
-            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/measurereport");
+            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/MeasureReport");
             generateSnapshotAndCompare(sd, out expanded);
             dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
@@ -302,7 +302,7 @@ namespace Hl7.Fhir.Specification.Tests
                         // Only expand extension elements with a custom name or profile
                         // Do NOT expand the core Extension.extension element, as this will trigger infinite recursion
                         typeCode != FHIRAllTypes.Extension.GetLiteral()
-                        || type.Profile.Any()
+                        || !string.IsNullOrEmpty(type.Profile)
                         || element.SliceName != null
                    );
         }
@@ -793,7 +793,7 @@ namespace Hl7.Fhir.Specification.Tests
             var extensionElement = extensionElements.Skip(1).FirstOrDefault();
             var extensionType = extensionElement.Type.FirstOrDefault();
             Assert.IsNotNull(extensionType);
-            Assert.AreEqual(FHIRAllTypes.Extension, extensionType.Code);
+            Assert.AreEqual(FHIRAllTypes.Extension.GetLiteral(), extensionType.Code);
             Assert.IsNotNull(extensionType.Profile);
             var extDefUrl = extensionType.Profile;
             Assert.AreEqual(@"http://example.org/fhir/StructureDefinition/MyLocationExtension", extDefUrl);
@@ -1192,11 +1192,11 @@ namespace Hl7.Fhir.Specification.Tests
             if (elemType != null)
             {
                 // Validate type profile expansion
-                var elemTypeCode = elemType.Code.Value;
+                var elemTypeCode = elemType.Code;
                 Assert.IsNotNull(elemTypeCode);
 
                 var elemProfile = elemType.Profile;
-                var sdType = elemProfile != null && elemTypeCode != FHIRAllTypes.Reference
+                var sdType = elemProfile != null && elemTypeCode != FHIRAllTypes.Reference.GetLiteral()
                     ? _testResolver.FindStructureDefinition(elemProfile)
                     : _testResolver.FindStructureDefinitionForCoreType(elemTypeCode);
 
@@ -1515,7 +1515,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Patient.identifier should reference the default core Identifier type profile
             var elem = sd.Differential.Element.FirstOrDefault(e => e.Path == "Patient.identifier");
             Assert.IsNotNull(elem);
-            var typeProfileUrl = elem.Type.FirstOrDefault().Profile.FirstOrDefault();
+            var typeProfileUrl = elem.Type.FirstOrDefault().Profile;
             Assert.IsNotNull(typeProfileUrl);
             Assert.AreEqual(typeProfileUrl, ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Identifier));
 
@@ -1550,7 +1550,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.AreEqual(elem.Path, baseElem.Path); // Base = core Patient.identifier element
                 // Note: diff elem is not exactly equal to base elem (due to reduntant type profile constraint)
                 // hasConstraints and hasChanges methods aren't smart enough to detect redundant constraints
-                var hasConstraints = SnapshotGeneratorTest.hasConstraints(elem, baseElem);
+                var hasConstraints = SnapshotGeneratorTest2.hasConstraints(elem, baseElem);
                 Assert.IsTrue(hasConstraints);      
                 Assert.IsTrue(hasChanges(elem));
 
@@ -1562,7 +1562,7 @@ namespace Hl7.Fhir.Specification.Tests
                     Assert.IsNotNull(elem);
                     baseElem = elem.Annotation<BaseDefAnnotation>()?.BaseElementDefinition;
                     Assert.IsNotNull(baseElem);
-                    hasConstraints = SnapshotGeneratorTest.hasConstraints(elem, baseElem);
+                    hasConstraints = SnapshotGeneratorTest2.hasConstraints(elem, baseElem);
                     // Only the .use child element has a profile diff constraint
                     bool isConstrained = elem.Path == "Patient.identifier.use";
                     Assert.AreEqual(isConstrained, hasConstraints);
@@ -1633,7 +1633,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.AreEqual(elem.Path, baseElem.Path); // Base = core Patient.identifier element
                 // Note: diff elem is not exactly equal to base elem (due to reduntant type profile constraint)
                 // hasConstraints and hasChanges methods aren't smart enough to detect redundant constraints
-                var hasConstraints = SnapshotGeneratorTest.hasConstraints(elem, baseElem);
+                var hasConstraints = SnapshotGeneratorTest2.hasConstraints(elem, baseElem);
                 Assert.IsTrue(hasConstraints);
 
                 // Verify base annotations on Patient.identifier subtree
@@ -1644,7 +1644,7 @@ namespace Hl7.Fhir.Specification.Tests
                     Assert.IsNotNull(elem);
                     baseElem = elem.Annotation<BaseDefAnnotation>()?.BaseElementDefinition;
                     Assert.IsNotNull(baseElem);
-                    hasConstraints = SnapshotGeneratorTest.hasConstraints(elem, baseElem);
+                    hasConstraints = SnapshotGeneratorTest2.hasConstraints(elem, baseElem);
                     // Only the .use child element has a profile diff constraint
                     bool isConstrained = elem.Path == "Patient.identifier.use" || elem.Path == "Patient.identifier.value";
                     Assert.AreEqual(isConstrained, hasConstraints);
@@ -1857,7 +1857,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(elems);
             Assert.IsTrue(elems.Count > 0);
 
-            var isConstraint = sd.Type.HasValue;
+            var isConstraint = sd.Derivation == StructureDefinition.TypeDerivationRule.Constraint;
 
             Debug.Print("\r\nStructureDefinition '{0}' url = '{1}'", sd.Name, sd.Url);
             Debug.Print("# | Constraints? | Changed? | Element.Path | Element.Base.Path | BaseElement.Path | #Base | Invalid?");
@@ -1871,14 +1871,14 @@ namespace Hl7.Fhir.Specification.Tests
                 var baseDef = ann != null ? ann.BaseElementDefinition : null;
                 Assert.AreNotEqual(elem, baseDef);
 
-                var hasChanges = SnapshotGeneratorTest.hasChanges(elem);
+                var hasChanges = SnapshotGeneratorTest2.hasChanges(elem);
                 var hasConstraints = false;
                 if (baseDef != null) // && elem.Base != null)
                 {
                     // If normalizing, then elem.Base.Path refers to the defining profile (e.g. DomainResource),
                     // whereas baseDef refers to the immediate base profile (e.g. Patient)
                     Debug.Assert(elem.Base == null || ElementDefinitionNavigator.IsCandidateBasePath(elem.Base.Path, baseDef.Path));
-                    hasConstraints = SnapshotGeneratorTest.hasConstraints(elem, baseDef);
+                    hasConstraints = SnapshotGeneratorTest2.hasConstraints(elem, baseDef);
                 }
                 var isValid = hasChanges == hasConstraints;
                 bool? hasConstraintAnnotations = null;
@@ -1940,7 +1940,7 @@ namespace Hl7.Fhir.Specification.Tests
                 || hasChanges(elem.Constraint)
                 || isChanged(elem.DefaultValue)
                 || isChanged(elem.DefinitionElement)
-                || isChanged(elem.Example)
+                || hasChanges(elem.Example)
                 || hasChanges(elem.Extension)
                 || hasChanges(elem.FhirCommentsElement)
                 || isChanged(elem.Fixed)
@@ -1981,7 +1981,7 @@ namespace Hl7.Fhir.Specification.Tests
             if (hasChanges(element.Constraint)) { return "Constraint"; }
             if (isChanged(element.DefaultValue)) { return "DefaultValue"; }
             if (isChanged(element.DefinitionElement)) { return "Definition"; }
-            if (isChanged(element.Example)) { return "Example"; }
+            if (hasChanges(element.Example)) { return "Example"; }
             if (hasChanges(element.Extension)) { return "Extension"; }
             if (hasChanges(element.FhirCommentsElement)) { return "FhirComments"; }
             if (isChanged(element.Fixed)) { return "Fixed"; }
@@ -2191,7 +2191,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var originalElems = original.HasSnapshot ? original.Snapshot.Element : new List<ElementDefinition>();
             var expandedElems = expanded.HasSnapshot ? expanded.Snapshot.Element : new List<ElementDefinition>();
-            var isConstraint = expanded.Type.HasValue;
+            var isConstraint = expanded.Derivation == StructureDefinition.TypeDerivationRule.Constraint;
             Debug.Print("Original has {0} elements, expanded has {1} elements...".FormatWith(originalElems.Count, expandedElems.Count));
 
             // dumpBasePaths(original);
@@ -2223,7 +2223,7 @@ namespace Hl7.Fhir.Specification.Tests
                 //    verified &= verifyBasePath(expandedElems[0], originalElems[0], baseRootElemName);
                 //}
 
-                if (expanded.Kind == StructureDefinition.StructureDefinitionKind.Datatype)
+                if (expanded.Kind == StructureDefinition.StructureDefinitionKind.PrimitiveType)
                 {
                     if (rootElemName != "Element")
                     {
@@ -2235,6 +2235,10 @@ namespace Hl7.Fhir.Specification.Tests
                         verified &= verifyBasePath(expandedElems[1], originalElems[1], "Element.id");
                         verified &= verifyBasePath(expandedElems[2], originalElems[2], "Element.extension");
                     }
+                }
+                else if (expanded.Kind == StructureDefinition.StructureDefinitionKind.ComplexType)
+                {
+                    Assert.Fail("TODO: implement the complex-type");
                 }
                 else if (expanded.Kind == StructureDefinition.StructureDefinitionKind.Resource)
                 {
@@ -2470,6 +2474,7 @@ namespace Hl7.Fhir.Specification.Tests
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation),
             Name = "MyTestObservation",
             Url = "http://example.org/fhir/StructureDefinition/MyTestObservation",
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
             Differential = new StructureDefinition.DifferentialComponent()
             {
                 Element = new List<ElementDefinition>()
@@ -2478,7 +2483,11 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         Slicing = new ElementDefinition.SlicingComponent()
                         {
-                            Discriminator = new string[] { "@type" },
+                            // Discriminator = new string[] { "@type" },
+                            Discriminator = new ElementDefinition.DiscriminatorComponent[]
+                                { new ElementDefinition.DiscriminatorComponent
+                                    { Type = ElementDefinition.DiscriminatorType.Type }
+                                }.ToList(),
                             Ordered = false,
                             Rules = ElementDefinition.SlicingRules.Open
                         }
@@ -2535,7 +2544,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(nav.Current.Slicing);
             Assert.IsTrue(nav.MoveToNext());
             Assert.AreEqual(nav.PathName, "value[x]"); // valueString
-            Assert.AreEqual(nav.Current.Type.FirstOrDefault().Code, FHIRAllTypes.String);
+            Assert.AreEqual(nav.Current.Type.FirstOrDefault().Code, FHIRAllTypes.String.GetLiteral());
 
             // Add an additional type slice: { value[x], value[x] : String, value[x] : CodeableConcept }
             profile.Differential.Element.Add(
@@ -2560,10 +2569,10 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.MoveToChild("value[x]"));
             Assert.IsTrue(nav.MoveToNext());
             Assert.AreEqual(nav.PathName, "value[x]"); // valueString
-            Assert.AreEqual(nav.Current.Type.FirstOrDefault()?.Code, FHIRAllTypes.String);
+            Assert.AreEqual(nav.Current.Type.FirstOrDefault()?.Code, FHIRAllTypes.String.GetLiteral());
             Assert.IsTrue(nav.MoveToNext());
             Assert.AreEqual(nav.PathName, "value[x]"); // valueCodeableConcept
-            Assert.AreEqual(nav.Current.Type.FirstOrDefault()?.Code, FHIRAllTypes.CodeableConcept);
+            Assert.AreEqual(nav.Current.Type.FirstOrDefault()?.Code, FHIRAllTypes.CodeableConcept.GetLiteral());
         }
 
         [TestMethod]
@@ -2613,6 +2622,7 @@ namespace Hl7.Fhir.Specification.Tests
             BaseDefinition = ObservationTypeSliceProfile.Url,
             Name = "MyDerivedTestObservation",
             Url = "http://example.org/fhir/StructureDefinition/MyDerivedTestObservation",
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
             Differential = new StructureDefinition.DifferentialComponent()
             {
                 Element = new List<ElementDefinition>()
@@ -2621,7 +2631,11 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         Slicing = new ElementDefinition.SlicingComponent()
                         {
-                            Discriminator = new string[] { "@type" },
+                            // Discriminator = new string[] { "@type" },
+                            Discriminator = new ElementDefinition.DiscriminatorComponent[]
+                                { new ElementDefinition.DiscriminatorComponent
+                                    { Type = ElementDefinition.DiscriminatorType.Type }
+                                }.ToList(),
                             Ordered = false,
                             Rules = ElementDefinition.SlicingRules.Open
                         }
@@ -2675,12 +2689,12 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.MoveToChild("value[x]"));
             Assert.IsTrue(nav.MoveToNext());
             Assert.AreEqual(nav.PathName, "value[x]"); // valueString
-            Assert.AreEqual(nav.Current.Type.FirstOrDefault()?.Code, FHIRAllTypes.String);
+            Assert.AreEqual(nav.Current.Type.FirstOrDefault()?.Code, FHIRAllTypes.String.GetLiteral());
             // Derived profile REMOVES existing CodeableConcept type slice and introduces a new Integer type slice
             // Note: special rules for element types allow removal of inherited collection items
             Assert.IsTrue(nav.MoveToNext());
             Assert.AreEqual(nav.PathName, "value[x]"); // valueCodeableConcept
-            Assert.AreEqual(nav.Current.Type.FirstOrDefault()?.Code, FHIRAllTypes.Integer);
+            Assert.AreEqual(nav.Current.Type.FirstOrDefault()?.Code, FHIRAllTypes.Integer.GetLiteral());
         }
 
         // Choice type constraint, with element renaming
@@ -2690,6 +2704,7 @@ namespace Hl7.Fhir.Specification.Tests
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation),
             Name = "MyTestObservation",
             Url = "http://example.org/fhir/StructureDefinition/MyTestObservation",
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
             Differential = new StructureDefinition.DifferentialComponent()
             {
                 Element = new List<ElementDefinition>()
@@ -2731,7 +2746,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsFalse(nav.MoveToChild("value[x]")); // Should also be renamed to valueString in snapshot
             Assert.IsTrue(nav.MoveToChild("valueString"));
             Assert.IsNull(nav.Current.Slicing);
-            Assert.AreEqual(nav.Current.Type.FirstOrDefault().Code, FHIRAllTypes.String);
+            Assert.AreEqual(nav.Current.Type.FirstOrDefault().Code, FHIRAllTypes.String.GetLiteral());
         }
 
         [TestMethod]
@@ -2768,11 +2783,11 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsFalse(nav.MoveToChild("value[x]")); // Should also be renamed to valueString in snapshot
             Assert.IsTrue(nav.MoveToChild("valueString"));
             Assert.IsNull(nav.Current.Slicing);
-            Assert.AreEqual(nav.Current.Type.FirstOrDefault().Code, FHIRAllTypes.String);
+            Assert.AreEqual(nav.Current.Type.FirstOrDefault().Code, FHIRAllTypes.String.GetLiteral());
 
             Assert.IsTrue(nav.MoveToNext("valueInteger"));
             Assert.IsNull(nav.Current.Slicing);
-            Assert.AreEqual(nav.Current.Type.FirstOrDefault().Code, FHIRAllTypes.Integer);
+            Assert.AreEqual(nav.Current.Type.FirstOrDefault().Code, FHIRAllTypes.Integer.GetLiteral());
 
             Assert.IsNotNull(outcome);
             Assert.AreEqual(1, outcome.Issue.Count);
@@ -2897,7 +2912,7 @@ namespace Hl7.Fhir.Specification.Tests
             var extSliceElem = obsExtensions[0];
             Assert.IsNotNull(extSliceElem);
             Assert.IsNotNull(extSliceElem.Slicing);
-            Assert.AreEqual("url", extSliceElem.Slicing.Discriminator.FirstOrDefault());
+            Assert.AreEqual("url", extSliceElem.Slicing.Discriminator.FirstOrDefault().Path);
 
             var labelExtElem = obsExtensions[1];
             Assert.IsNotNull(labelExtElem);
@@ -3011,6 +3026,7 @@ namespace Hl7.Fhir.Specification.Tests
                 BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Encounter),
                 Name = "MyTestEncounter",
                 Url = "http://example.org/fhir/StructureDefinition/MyTestEncounter",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
                 Differential = new StructureDefinition.DifferentialComponent()
                 {
                     Element = new List<ElementDefinition>()
@@ -3109,7 +3125,11 @@ namespace Hl7.Fhir.Specification.Tests
                         {
                             Slicing = new ElementDefinition.SlicingComponent()
                             {
-                                Discriminator = new string[] { "url" },
+                                // Discriminator = new string[] { "url" },
+                                Discriminator = new ElementDefinition.DiscriminatorComponent[]
+                                { new ElementDefinition.DiscriminatorComponent
+                                    { Type = ElementDefinition.DiscriminatorType.Value, Path = "url" }
+                                }.ToList(),
                                 Rules = ElementDefinition.SlicingRules.Open
                             }
                         },
@@ -3215,6 +3235,7 @@ namespace Hl7.Fhir.Specification.Tests
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
             Name = "MySlicedPatient",
             Url = "http://example.org/fhir/StructureDefinition/MySlicedPatient",
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
             Differential = new StructureDefinition.DifferentialComponent()
             {
                 Element = new List<ElementDefinition>()
@@ -3223,7 +3244,11 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         Slicing = new ElementDefinition.SlicingComponent()
                         {
-                            Discriminator = new string[] { "system" },
+                            // Discriminator = new string[] { "system" },
+                            Discriminator = new ElementDefinition.DiscriminatorComponent[]
+                                { new ElementDefinition.DiscriminatorComponent
+                                    { Type = ElementDefinition.DiscriminatorType.Value, Path = "system" }
+                                }.ToList(),
                             Ordered = false,
                             Rules = ElementDefinition.SlicingRules.Open
                         },
@@ -3315,6 +3340,7 @@ namespace Hl7.Fhir.Specification.Tests
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
             Name = "MyNationalPatient",
             Url = "http://example.org/fhir/StructureDefinition/MyNationalPatient",
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
             Differential = new StructureDefinition.DifferentialComponent()
             {
                 Element = new List<ElementDefinition>()
@@ -3337,6 +3363,7 @@ namespace Hl7.Fhir.Specification.Tests
             BaseDefinition = "http://example.org/fhir/StructureDefinition/MyNationalPatient",
             Name = "SlicedNationalPatientProfile",
             Url = "http://example.org/fhir/StructureDefinition/SlicedNationalPatientProfile",
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
             Differential = new StructureDefinition.DifferentialComponent()
             {
                 Element = new List<ElementDefinition>()
@@ -3345,7 +3372,11 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         Slicing = new ElementDefinition.SlicingComponent()
                         {
-                            Discriminator = new string[] { "system" },
+                            // Discriminator = new string[] { "system" },
+                            Discriminator = new ElementDefinition.DiscriminatorComponent[]
+                                { new ElementDefinition.DiscriminatorComponent
+                                    { Type = ElementDefinition.DiscriminatorType.Value, Path = "system" }
+                                }.ToList(),
                             Ordered = false,
                             Rules = ElementDefinition.SlicingRules.Open
                         },
@@ -3508,6 +3539,7 @@ namespace Hl7.Fhir.Specification.Tests
             BaseDefinition = "http://example.org/fhir/StructureDefinition/MyNationalPatient",
             Name = "ReslicedNationalPatientProfile",
             Url = "http://example.org/fhir/StructureDefinition/ReslicedNationalPatientProfile",
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
             Differential = new StructureDefinition.DifferentialComponent()
             {
                 Element = new List<ElementDefinition>()
@@ -3516,7 +3548,10 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         Slicing = new ElementDefinition.SlicingComponent()
                         {
-                            Discriminator = new string[] { "system" },
+                            Discriminator = new ElementDefinition.DiscriminatorComponent[] 
+                                { new ElementDefinition.DiscriminatorComponent
+                                    { Type = ElementDefinition.DiscriminatorType.Value, Path = "system" }
+                                }.ToList(),
                             Ordered = false,
                             Rules = ElementDefinition.SlicingRules.Open
                         },
@@ -3544,7 +3579,11 @@ namespace Hl7.Fhir.Specification.Tests
                         // Re-slice the ehr-id
                         Slicing = new ElementDefinition.SlicingComponent()
                         {
-                            Discriminator = new string[] { "use" },
+                            // Discriminator = new string[] { "use" },
+                            Discriminator = new ElementDefinition.DiscriminatorComponent[]
+                                { new ElementDefinition.DiscriminatorComponent
+                                    { Type = ElementDefinition.DiscriminatorType.Value, Path = "use" }
+                                }.ToList(),
                             Ordered = true,
                             Rules = ElementDefinition.SlicingRules.Closed
                         }
@@ -3733,7 +3772,9 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(0, nav.Current.Min);
             Assert.AreEqual("1", nav.Current.Max);
             Assert.IsNotNull(nav.Current.Slicing);
-            Assert.AreEqual("system|use", string.Join("|", nav.Current.Slicing.Discriminator));
+            // TODO: BRIAN: Need to check that this is the correct assertion here
+            Assert.AreEqual("system|use", string.Join("|", nav.Current.Slicing.Discriminator.Select(s => s.Path)));
+            // Assert.AreEqual(1, nav.Current.Slicing.Discriminator.SelectMany(s => s.Type.Value).Count()));
             Assert.AreEqual(ElementDefinition.SlicingRules.Closed, nav.Current.Slicing.Rules);
             // Assert.AreEqual(false, nav.Current.Slicing.Ordered);
             Assert.IsNull(nav.Current.Slicing.Ordered);
@@ -3785,7 +3826,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(0, nav.Current.Min);
             Assert.AreEqual("3", nav.Current.Max);
             Assert.IsNotNull(nav.Current.Slicing);
-            Assert.AreEqual("system|use", string.Join("|", nav.Current.Slicing.Discriminator));
+            Assert.AreEqual("system|use", string.Join("|", nav.Current.Slicing.Discriminator.Select(p => p.Path)));
             Assert.AreEqual(ElementDefinition.SlicingRules.Open, nav.Current.Slicing.Rules);
             // Assert.AreEqual(false, nav.Current.Slicing.Ordered);
             Assert.IsNull(nav.Current.Slicing.Ordered);

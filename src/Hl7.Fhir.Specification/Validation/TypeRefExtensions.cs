@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Validation
 
         public static string GetDeclaredProfiles(this ElementDefinition.TypeRefComponent typeRef)
         {
-            if (typeRef.Profile.Any())
+            if (!System.String.IsNullOrEmpty(typeRef.Profile))
             {
                 return typeRef.Profile;     // Take the first, this will disappear in STU3 anyway
             }

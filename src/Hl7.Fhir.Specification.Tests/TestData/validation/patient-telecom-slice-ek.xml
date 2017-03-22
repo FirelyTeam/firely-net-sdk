@@ -8,11 +8,12 @@
 	<type value="Patient" />
 	<abstract value="false" />
 	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient" />	
+  <derivation value="constraint" />
 	<differential>
 		<element>
 			<path value="Patient.telecom" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
+				<discriminator><type value="value" /><path value="system" /></discriminator>
 				<ordered value="true" />
 				<rules value="open" />
 			</slicing>

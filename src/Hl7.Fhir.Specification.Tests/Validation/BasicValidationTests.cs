@@ -22,6 +22,9 @@ namespace Hl7.Fhir.Validation
         [TestInitialize]
         public void SetupSource()
         {
+            // Ensure the FHIR extensions are registered
+            Hl7.Fhir.FhirPath.PocoNavigatorExtensions.PrepareFhirSybolTableFunctions();
+
             _source = new CachedResolver(
                 new MultiResolver(
                     new BundleExampleResolver(@"TestData\validation"),
@@ -607,7 +610,7 @@ namespace Hl7.Fhir.Validation
         // Causes stack overflow exception in validator when processing the related Organization profile
         // TypeRefValidationExtensions.ValidateTypeReferences needs to detect and handle recursion
         // Example: Organization.partOf => Organization
-        [TestMethod,Ignore]
+        [TestMethod]
         public void TestPatientWithOrganization()
         {
             // DirectorySource (and ResourceStreamScanner) does not support json...

@@ -72,7 +72,8 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var slicing = Current.Slicing;
             Assert.IsNotNull(slicing);
-            Assert.IsTrue(discriminator.SequenceEqual(slicing.Discriminator), $"Invalid discriminator for element with path '{Current.Path}' - Expected: '{string.Join(",", discriminator)}' Actual: '{string.Join(",", slicing.Discriminator)}' ");
+            Assert.Fail("TODO: Fix the below assertion");
+            // Assert.IsTrue(discriminator.SequenceEqual(slicing.Discriminator), $"Invalid discriminator for element with path '{Current.Path}' - Expected: '{string.Join(",", discriminator)}' Actual: '{string.Join(",", slicing.Discriminator)}' ");
             Assert.AreEqual(slicing.Rules, rules);
             Assert.AreEqual(slicing.Ordered, ordered);
         }
