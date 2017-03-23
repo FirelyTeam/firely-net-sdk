@@ -733,7 +733,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // [WMR 20170321] HACK: Never copy elements names from the root element (e.g. SimpleQuantity)
                     if (typeNav.Current.NameElement != null)
                     {
-                        Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(mergeTypeProfiles)}] Explicitly prevent copying of root element name: {typeNav.Path} : '{typeNav.Current.Name}'");
+                        Debug.WriteLine($"[{nameof(SnapshotGenerator)}.{nameof(mergeTypeProfiles)}] Explicitly prevent copying of root element name: {typeNav.Path} : '{typeNav.Current.Name}'");
                         typeNav.Current.Name = null;
                     }
 
@@ -754,7 +754,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // => First renamed snap before merging diff
                 if (diff.PathName != snap.PathName)
                 {
-                    Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(mergeTypeProfiles)}] Rename snapshot element(s): {snap.Path} => '{diff.Path}'");
+                    Debug.WriteLine($"[{nameof(SnapshotGenerator)}.{nameof(mergeTypeProfiles)}] Rename snapshot element(s): {snap.Path} => '{diff.Path}'");
                     Debug.Assert(!snap.HasChildren);
                     snap.Current.Path = diff.Path;
                 }
