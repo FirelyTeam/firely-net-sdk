@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Feb 28, 2017 07:41+0000 for FHIR v1.9.0 
+  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -66,7 +66,7 @@
           </xs:element>
           <xs:element name="availability" minOccurs="0" maxOccurs="1" type="InstanceAvailability">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Availability of study (online, offline or nearline).</xs:documentation>
+              <xs:documentation xml:lang="en">Availability of study (online, offline, or nearline).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="modalityList" minOccurs="0" maxOccurs="unbounded" type="Coding">
@@ -81,12 +81,12 @@
           </xs:element>
           <xs:element name="context" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The encounter at which the request is initiated.</xs:documentation>
+              <xs:documentation xml:lang="en">The encounter or episode at which the request is initiated.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="started" minOccurs="0" maxOccurs="1" type="dateTime">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Date and Time the study started.</xs:documentation>
+              <xs:documentation xml:lang="en">Date and time the study started.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="basedOn" minOccurs="0" maxOccurs="unbounded" type="Reference">
@@ -116,7 +116,7 @@
           </xs:element>
           <xs:element name="numberOfInstances" minOccurs="0" maxOccurs="1" type="unsignedInt">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Number of SOP Instances in Study. This value given may be larger than the number of instance elements this Resource contains due to resource availability, security, or other factors. This element should be present if any instance elements are present.</xs:documentation>
+              <xs:documentation xml:lang="en">Number of SOP Instances in Study. This value given may be larger than the number of instance elements this resource contains due to resource availability, security, or other factors. This element should be present if any instance elements are present.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="procedureReference" minOccurs="0" maxOccurs="unbounded" type="Reference">
@@ -131,7 +131,7 @@
           </xs:element>
           <xs:element name="reason" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Description of clinical codition indicating why the ImagingStudy was requested.</xs:documentation>
+              <xs:documentation xml:lang="en">Description of clinical condition indicating why the ImagingStudy was requested.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="description" minOccurs="0" maxOccurs="1" type="string">
@@ -162,7 +162,7 @@
           </xs:element>
           <xs:element name="number" minOccurs="0" maxOccurs="1" type="unsignedInt">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The Numeric identifier of this series in the study.</xs:documentation>
+              <xs:documentation xml:lang="en">The numeric identifier of this series in the study.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="modality" minOccurs="1" maxOccurs="1" type="Coding">
@@ -177,7 +177,7 @@
           </xs:element>
           <xs:element name="numberOfInstances" minOccurs="0" maxOccurs="1" type="unsignedInt">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Number of SOP Instances in Study. This value given may be larger than the number of instance elements this Resource contains due to resource availability, security, or other factors. This element should be present if any instance elements are present.</xs:documentation>
+              <xs:documentation xml:lang="en">Number of SOP Instances in the Study. The value given may be larger than the number of instance elements this resource contains due to resource availability, security, or other factors. This element should be present if any instance elements are present.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="availability" minOccurs="0" maxOccurs="1" type="InstanceAvailability">
@@ -192,12 +192,12 @@
           </xs:element>
           <xs:element name="bodySite" minOccurs="0" maxOccurs="1" type="Coding">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Body part examined. See  DICOM Part 16 Annex L for the mapping from DICOM to Snomed CT.</xs:documentation>
+              <xs:documentation xml:lang="en">The anatomic structures examined. See DICOM Part 16 Annex L (http://dicom.nema.org/medical/dicom/current/output/chtml/part16/chapter_L.html) for DICOM to SNOMED-CT mappings. The bodySite may indicate the laterality of body part imaged; if so, it shall be consistent with any content of ImagingStudy.series.laterality.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="laterality" minOccurs="0" maxOccurs="1" type="Coding">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Laterality if body site is paired anatomic structure and laterality is not pre-coordinated in body site code.</xs:documentation>
+              <xs:documentation xml:lang="en">The laterality of the (possibly paired) anatomic structures examined. E.g., the left knee, both lungs, or unpaired abdomen. If present, shall be consistent with any laterality information indicated in ImagingStudy.series.bodySite.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="started" minOccurs="0" maxOccurs="1" type="dateTime">
@@ -212,7 +212,7 @@
           </xs:element>
           <xs:element name="instance" type="ImagingStudy.Instance" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A single SOP Instance within the series, e.g. an image, or presentation state.</xs:documentation>
+              <xs:documentation xml:lang="en">A single SOP instance within the series, e.g. an image, or presentation state.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>

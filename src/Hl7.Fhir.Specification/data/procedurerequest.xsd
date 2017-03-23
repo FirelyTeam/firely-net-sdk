@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Feb 28, 2017 07:41+0000 for FHIR v1.9.0 
+  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -38,12 +38,12 @@
   <xs:include schemaLocation="fhir-base.xsd"/>
   <xs:element name="ProcedureRequest" type="ProcedureRequest">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A record of a request for a diagnostic investigation service to be performed.</xs:documentation>
+      <xs:documentation xml:lang="en">A record of a request for diagnostic investigations, treatments, or operations to be performed.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:complexType name="ProcedureRequest">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A record of a request for a diagnostic investigation service to be performed.</xs:documentation>
+      <xs:documentation xml:lang="en">A record of a request for diagnostic investigations, treatments, or operations to be performed.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -190,14 +190,14 @@
   </xs:complexType>
   <xs:complexType name="ProcedureRequest.Requester">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A record of a request for a diagnostic investigation service to be performed.</xs:documentation>
+      <xs:documentation xml:lang="en">A record of a request for diagnostic investigations, treatments, or operations to be performed.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
           <xs:element name="agent" minOccurs="1" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The device, practitioner or organization. who initiated the request.</xs:documentation>
+              <xs:documentation xml:lang="en">The device, practitioner or organization who initiated the request.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="onBehalfOf" minOccurs="0" maxOccurs="1" type="Reference">

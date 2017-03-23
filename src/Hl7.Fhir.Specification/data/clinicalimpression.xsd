@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Feb 28, 2017 07:41+0000 for FHIR v1.9.0 
+  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -66,7 +66,7 @@
           </xs:element>
           <xs:element name="description" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A summary of the context and/or cause of the assessment - why / where was it peformed, and what patient events/status prompted it.</xs:documentation>
+              <xs:documentation xml:lang="en">A summary of the context and/or cause of the assessment - why / where was it performed, and what patient events/status prompted it.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="subject" minOccurs="1" maxOccurs="1" type="Reference">

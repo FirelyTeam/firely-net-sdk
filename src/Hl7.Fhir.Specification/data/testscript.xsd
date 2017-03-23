@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Feb 28, 2017 07:41+0000 for FHIR v1.9.0 
+  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -38,12 +38,12 @@
   <xs:include schemaLocation="fhir-base.xsd"/>
   <xs:element name="TestScript" type="TestScript">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestScript is a resource that specifies a suite of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
+      <xs:documentation xml:lang="en">A structured set of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:complexType name="TestScript">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestScript is a resource that specifies a suite of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
+      <xs:documentation xml:lang="en">A structured set of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -51,7 +51,7 @@
         <xs:sequence>
           <xs:element name="url" minOccurs="1" maxOccurs="1" type="uri">
             <xs:annotation>
-              <xs:documentation xml:lang="en">An absolute URL that is used to identify this test script when it is referenced in a specification, model, design or an instance. This SHALL be a URL, SHOULD be globally unique, and SHOULD be an address at which this test script is (or will be) published. The URL SHOULD include the major version of the test script. For more information see [Technical and Business Versions](resource.html#versions).</xs:documentation>
+              <xs:documentation xml:lang="en">An absolute URI that is used to identify this test script when it is referenced in a specification, model, design or an instance. This SHALL be a URL, SHOULD be globally unique, and SHOULD be an address at which this test script is (or will be) published. The URL SHOULD include the major version of the test script. For more information see [Technical and Business Versions](resource.html#versions).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="identifier" minOccurs="0" maxOccurs="1" type="Identifier">
@@ -61,7 +61,7 @@
           </xs:element>
           <xs:element name="version" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The identifier that is used to identify this version of the test script when it is referenced in a specification, model, design or instance. This is an arbitrary value managed by the test script author and is not expected to be globally unique. For example, it might be a timestamp (e.g. yyyymmdd) if a managed version is not available. There is also no expectation that versions are orderable.</xs:documentation>
+              <xs:documentation xml:lang="en">The identifier that is used to identify this version of the test script when it is referenced in a specification, model, design or instance. This is an arbitrary value managed by the test script author and is not expected to be globally unique. For example, it might be a timestamp (e.g. yyyymmdd) if a managed version is not available. There is also no expectation that versions can be placed in a lexicographical sequence.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="name" minOccurs="1" maxOccurs="1" type="string">
@@ -81,12 +81,12 @@
           </xs:element>
           <xs:element name="experimental" minOccurs="0" maxOccurs="1" type="boolean">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A flag to indicate that this test script is authored for testing purposes (or education/evaluation/marketing), and is not intended to be used for genuine usage.</xs:documentation>
+              <xs:documentation xml:lang="en">A boolean value to indicate that this test script is authored for testing purposes (or education/evaluation/marketing), and is not intended to be used for genuine usage.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="date" minOccurs="0" maxOccurs="1" type="dateTime">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The date  (and optionally time) when the test script was published. The date must change when the business version changes, if it does, and it must change if the status code changes. In addition, it should change when the substantive content of the test script changes.</xs:documentation>
+              <xs:documentation xml:lang="en">The date  (and optionally time) when the test script was published. The date must change if and when the business version changes and it must change if the status code changes. In addition, it should change when the substantive content of the test script changes.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="publisher" minOccurs="0" maxOccurs="1" type="string">
@@ -101,22 +101,22 @@
           </xs:element>
           <xs:element name="description" minOccurs="0" maxOccurs="1" type="markdown">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A free text natural language description of the test script from the consumer's perspective.</xs:documentation>
+              <xs:documentation xml:lang="en">A free text natural language description of the test script from a consumer's perspective.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="useContext" minOccurs="0" maxOccurs="unbounded" type="UsageContext">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The content was developed with a focus and intent of supporting the contexts that are listed. These terms may be used to assist with indexing and searching of code system definitions.</xs:documentation>
+              <xs:documentation xml:lang="en">The content was developed with a focus and intent of supporting the contexts that are listed. These terms may be used to assist with indexing and searching for appropriate test script instances.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="jurisdiction" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A jurisdiction in which the test script is intended to be used.</xs:documentation>
+              <xs:documentation xml:lang="en">A legal or geographic region in which the test script is intended to be used.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="purpose" minOccurs="0" maxOccurs="1" type="markdown">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Explains why this test script is needed and why it has been designed as it has.</xs:documentation>
+              <xs:documentation xml:lang="en">Explaination of why this test script is needed and why it has been designed as it has.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="copyright" minOccurs="0" maxOccurs="1" type="markdown">
@@ -185,7 +185,7 @@
   </xs:complexType>
   <xs:complexType name="TestScript.Origin">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestScript is a resource that specifies a suite of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
+      <xs:documentation xml:lang="en">A structured set of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -206,7 +206,7 @@
   </xs:complexType>
   <xs:complexType name="TestScript.Destination">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestScript is a resource that specifies a suite of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
+      <xs:documentation xml:lang="en">A structured set of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -227,7 +227,7 @@
   </xs:complexType>
   <xs:complexType name="TestScript.Metadata">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestScript is a resource that specifies a suite of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
+      <xs:documentation xml:lang="en">A structured set of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -248,7 +248,7 @@
   </xs:complexType>
   <xs:complexType name="TestScript.Link">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestScript is a resource that specifies a suite of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
+      <xs:documentation xml:lang="en">A structured set of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -269,7 +269,7 @@
   </xs:complexType>
   <xs:complexType name="TestScript.Capability">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestScript is a resource that specifies a suite of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
+      <xs:documentation xml:lang="en">A structured set of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -315,7 +315,7 @@
   </xs:complexType>
   <xs:complexType name="TestScript.Fixture">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestScript is a resource that specifies a suite of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
+      <xs:documentation xml:lang="en">A structured set of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -327,7 +327,7 @@
           </xs:element>
           <xs:element name="autodelete" minOccurs="0" maxOccurs="1" type="boolean">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Whether or not to implicitly delete the fixture during teardown If true, the fixture is automatically deleted on each server being tested during teardown, therefore no delete operation is required for this fixture in the TestScript.teardown section.</xs:documentation>
+              <xs:documentation xml:lang="en">Whether or not to implicitly delete the fixture during teardown. If true, the fixture is automatically deleted on each server being tested during teardown, therefore no delete operation is required for this fixture in the TestScript.teardown section.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="resource" minOccurs="0" maxOccurs="1" type="Reference">
@@ -341,7 +341,7 @@
   </xs:complexType>
   <xs:complexType name="TestScript.Variable">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestScript is a resource that specifies a suite of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
+      <xs:documentation xml:lang="en">A structured set of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -392,7 +392,7 @@
   </xs:complexType>
   <xs:complexType name="TestScript.Rule">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestScript is a resource that specifies a suite of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
+      <xs:documentation xml:lang="en">A structured set of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -413,7 +413,7 @@
   </xs:complexType>
   <xs:complexType name="TestScript.Param">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestScript is a resource that specifies a suite of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
+      <xs:documentation xml:lang="en">A structured set of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -425,7 +425,7 @@
           </xs:element>
           <xs:element name="value" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The explict or dynamic value for the parameter that will be passed on to the external rule template.</xs:documentation>
+              <xs:documentation xml:lang="en">The explicit or dynamic value for the parameter that will be passed on to the external rule template.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -434,7 +434,7 @@
   </xs:complexType>
   <xs:complexType name="TestScript.Ruleset">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestScript is a resource that specifies a suite of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
+      <xs:documentation xml:lang="en">A structured set of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -455,7 +455,7 @@
   </xs:complexType>
   <xs:complexType name="TestScript.Rule1">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestScript is a resource that specifies a suite of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
+      <xs:documentation xml:lang="en">A structured set of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -476,7 +476,7 @@
   </xs:complexType>
   <xs:complexType name="TestScript.Param1">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestScript is a resource that specifies a suite of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
+      <xs:documentation xml:lang="en">A structured set of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -497,7 +497,7 @@
   </xs:complexType>
   <xs:complexType name="TestScript.Setup">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestScript is a resource that specifies a suite of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
+      <xs:documentation xml:lang="en">A structured set of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -513,7 +513,7 @@
   </xs:complexType>
   <xs:complexType name="TestScript.Action">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestScript is a resource that specifies a suite of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
+      <xs:documentation xml:lang="en">A structured set of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -534,7 +534,7 @@
   </xs:complexType>
   <xs:complexType name="TestScript.Operation">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestScript is a resource that specifies a suite of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
+      <xs:documentation xml:lang="en">A structured set of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -625,7 +625,7 @@
   </xs:complexType>
   <xs:complexType name="TestScript.RequestHeader">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestScript is a resource that specifies a suite of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
+      <xs:documentation xml:lang="en">A structured set of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -646,7 +646,7 @@
   </xs:complexType>
   <xs:complexType name="TestScript.Assert">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestScript is a resource that specifies a suite of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
+      <xs:documentation xml:lang="en">A structured set of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -777,7 +777,7 @@
   </xs:complexType>
   <xs:complexType name="TestScript.Rule2">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestScript is a resource that specifies a suite of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
+      <xs:documentation xml:lang="en">A structured set of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -798,7 +798,7 @@
   </xs:complexType>
   <xs:complexType name="TestScript.Param2">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestScript is a resource that specifies a suite of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
+      <xs:documentation xml:lang="en">A structured set of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -819,7 +819,7 @@
   </xs:complexType>
   <xs:complexType name="TestScript.Ruleset1">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestScript is a resource that specifies a suite of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
+      <xs:documentation xml:lang="en">A structured set of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -840,7 +840,7 @@
   </xs:complexType>
   <xs:complexType name="TestScript.Rule3">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestScript is a resource that specifies a suite of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
+      <xs:documentation xml:lang="en">A structured set of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -861,7 +861,7 @@
   </xs:complexType>
   <xs:complexType name="TestScript.Param3">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestScript is a resource that specifies a suite of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
+      <xs:documentation xml:lang="en">A structured set of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -882,7 +882,7 @@
   </xs:complexType>
   <xs:complexType name="TestScript.Test">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestScript is a resource that specifies a suite of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
+      <xs:documentation xml:lang="en">A structured set of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -908,7 +908,7 @@
   </xs:complexType>
   <xs:complexType name="TestScript.Action1">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestScript is a resource that specifies a suite of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
+      <xs:documentation xml:lang="en">A structured set of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -929,7 +929,7 @@
   </xs:complexType>
   <xs:complexType name="TestScript.Teardown">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestScript is a resource that specifies a suite of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
+      <xs:documentation xml:lang="en">A structured set of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -945,7 +945,7 @@
   </xs:complexType>
   <xs:complexType name="TestScript.Action2">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestScript is a resource that specifies a suite of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
+      <xs:documentation xml:lang="en">A structured set of tests against a FHIR server implementation to determine compliance against the FHIR specification.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">

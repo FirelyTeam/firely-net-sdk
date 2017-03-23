@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Feb 28, 2017 07:41+0000 for FHIR v1.9.0 
+  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -51,7 +51,7 @@
         <xs:sequence>
           <xs:element name="url" minOccurs="0" maxOccurs="1" type="uri">
             <xs:annotation>
-              <xs:documentation xml:lang="en">An absolute URL that is used to identify this service definition when it is referenced in a specification, model, design or an instance. This SHALL be a URL, SHOULD be globally unique, and SHOULD be an address at which this service definition is (or will be) published. The URL SHOULD include the major version of the service definition. For more information see [Technical and Business Versions](resource.html#versions).</xs:documentation>
+              <xs:documentation xml:lang="en">An absolute URI that is used to identify this service definition when it is referenced in a specification, model, design or an instance. This SHALL be a URL, SHOULD be globally unique, and SHOULD be an address at which this service definition is (or will be) published. The URL SHOULD include the major version of the service definition. For more information see [Technical and Business Versions](resource.html#versions).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
@@ -61,7 +61,7 @@
           </xs:element>
           <xs:element name="version" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The identifier that is used to identify this version of the service definition when it is referenced in a specification, model, design or instance. This is an arbitrary value managed by the service definition author and is not expected to be globally unique. For example, it might be a timestamp (e.g. yyyymmdd) if a managed version is not available. There is also no expectation that versions are orderable.</xs:documentation>
+              <xs:documentation xml:lang="en">The identifier that is used to identify this version of the service definition when it is referenced in a specification, model, design or instance. This is an arbitrary value managed by the service definition author and is not expected to be globally unique. For example, it might be a timestamp (e.g. yyyymmdd) if a managed version is not available. There is also no expectation that versions can be placed in a lexicographical sequence.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="name" minOccurs="0" maxOccurs="1" type="string">
@@ -81,12 +81,12 @@
           </xs:element>
           <xs:element name="experimental" minOccurs="0" maxOccurs="1" type="boolean">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A flag to indicate that this service definition is authored for testing purposes (or education/evaluation/marketing), and is not intended to be used for genuine usage.</xs:documentation>
+              <xs:documentation xml:lang="en">A boolean value to indicate that this service definition is authored for testing purposes (or education/evaluation/marketing), and is not intended to be used for genuine usage.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="date" minOccurs="0" maxOccurs="1" type="dateTime">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The date  (and optionally time) when the service definition was published. The date must change when the business version changes, if it does, and it must change if the status code changes. In addition, it should change when the substantive content of the service definition changes.</xs:documentation>
+              <xs:documentation xml:lang="en">The date  (and optionally time) when the service definition was published. The date must change if and when the business version changes and it must change if the status code changes. In addition, it should change when the substantive content of the service definition changes.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="publisher" minOccurs="0" maxOccurs="1" type="string">
@@ -96,12 +96,12 @@
           </xs:element>
           <xs:element name="description" minOccurs="0" maxOccurs="1" type="markdown">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A free text natural language description of the service definition from the consumer's perspective.</xs:documentation>
+              <xs:documentation xml:lang="en">A free text natural language description of the service definition from a consumer's perspective.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="purpose" minOccurs="0" maxOccurs="1" type="markdown">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Explains why this service definition is needed and why it has been designed as it has.</xs:documentation>
+              <xs:documentation xml:lang="en">Explaination of why this service definition is needed and why it has been designed as it has.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="usage" minOccurs="0" maxOccurs="1" type="string">
@@ -111,27 +111,27 @@
           </xs:element>
           <xs:element name="approvalDate" minOccurs="0" maxOccurs="1" type="date">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The date on which the asset content was approved by the publisher. Approval happens once when the content is officially approved for usage.</xs:documentation>
+              <xs:documentation xml:lang="en">The date on which the resource content was approved by the publisher. Approval happens once when the content is officially approved for usage.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="lastReviewDate" minOccurs="0" maxOccurs="1" type="date">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The date on which the asset content was last reviewed. Review happens periodically after approval, but doesn't change the original approval date.</xs:documentation>
+              <xs:documentation xml:lang="en">The date on which the resource content was last reviewed. Review happens periodically after approval, but doesn't change the original approval date.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="effectivePeriod" minOccurs="0" maxOccurs="1" type="Period">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The period during which the service definition content was or is planned to be effective.</xs:documentation>
+              <xs:documentation xml:lang="en">The period during which the service definition content was or is planned to be in active use.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="useContext" minOccurs="0" maxOccurs="unbounded" type="UsageContext">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The content was developed with a focus and intent of supporting the contexts that are listed. These terms may be used to assist with indexing and searching of code system definitions.</xs:documentation>
+              <xs:documentation xml:lang="en">The content was developed with a focus and intent of supporting the contexts that are listed. These terms may be used to assist with indexing and searching for appropriate service definition instances.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="jurisdiction" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A jurisdiction in which the service definition is intended to be used.</xs:documentation>
+              <xs:documentation xml:lang="en">A legal or geographic region in which the service definition is intended to be used.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="topic" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">

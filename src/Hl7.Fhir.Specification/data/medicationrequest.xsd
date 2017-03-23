@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Feb 28, 2017 07:41+0000 for FHIR v1.9.0 
+  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -38,12 +38,12 @@
   <xs:include schemaLocation="fhir-base.xsd"/>
   <xs:element name="MedicationRequest" type="MedicationRequest">
     <xs:annotation>
-      <xs:documentation xml:lang="en">An order or request for both supply of the medication and the instructions for administration of the medication to a patient. The resource is called &quot;MedicationRequest&quot; rather than &quot;MedicationPrescription&quot; or &quot;MedicationOrder&quot; to generalize the use across inpatient and outpatient settings as well as for care plans, etc and to harmonize with workflow patterns.</xs:documentation>
+      <xs:documentation xml:lang="en">An order or request for both supply of the medication and the instructions for administration of the medication to a patient. The resource is called &quot;MedicationRequest&quot; rather than &quot;MedicationPrescription&quot; or &quot;MedicationOrder&quot; to generalize the use across inpatient and outpatient settings, including care plans, etc., and to harmonize with workflow patterns.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:complexType name="MedicationRequest">
     <xs:annotation>
-      <xs:documentation xml:lang="en">An order or request for both supply of the medication and the instructions for administration of the medication to a patient. The resource is called &quot;MedicationRequest&quot; rather than &quot;MedicationPrescription&quot; or &quot;MedicationOrder&quot; to generalize the use across inpatient and outpatient settings as well as for care plans, etc and to harmonize with workflow patterns.</xs:documentation>
+      <xs:documentation xml:lang="en">An order or request for both supply of the medication and the instructions for administration of the medication to a patient. The resource is called &quot;MedicationRequest&quot; rather than &quot;MedicationPrescription&quot; or &quot;MedicationOrder&quot; to generalize the use across inpatient and outpatient settings, including care plans, etc., and to harmonize with workflow patterns.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -51,7 +51,7 @@
         <xs:sequence>
           <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">External identifier - one that would be used by another non-FHIR system - for example a re-imbursement system might issue its own id for each prescription that is created.  This is particularly important where FHIR only provides part of an entire workflow process where records have to be tracked through an entire system.</xs:documentation>
+              <xs:documentation xml:lang="en">This records identifiers associated with this medication request that are defined by business processes and/or used to refer to it when a direct URL reference to the resource itself is not appropriate. For example a re-imbursement system might issue its own id for each prescription that is created.  This is particularly important where FHIR only provides part of an entire workflow process where records must be tracked through an entire system.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="definition" minOccurs="0" maxOccurs="unbounded" type="Reference">
@@ -66,7 +66,7 @@
           </xs:element>
           <xs:element name="groupIdentifier" minOccurs="0" maxOccurs="1" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A shared identifier common to all requests that were authorized more or less simultaneously by a single author, representing the identifer of the requisition or prescription.</xs:documentation>
+              <xs:documentation xml:lang="en">A shared identifier common to all requests that were authorized more or less simultaneously by a single author, representing the identifier of the requisition or prescription.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="status" minOccurs="0" maxOccurs="1" type="MedicationRequestStatus">
@@ -91,7 +91,7 @@
           </xs:element>
           <xs:choice minOccurs="1" maxOccurs="1" >
             <xs:annotation>
-              <xs:documentation xml:lang="en">Identifies the medication being administered. This is a link to a resource that represents the medication which may be the details of the medication or simply an attribute carrying a code that identifies the medication from a known list of medications.</xs:documentation>
+              <xs:documentation xml:lang="en">Identifies the medication being requested. This is a link to a resource that represents the medication which may be the details of the medication or simply an attribute carrying a code that identifies the medication from a known list of medications.</xs:documentation>
             </xs:annotation>
             <xs:element name="medicationCodeableConcept" type="CodeableConcept"/>
             <xs:element name="medicationReference" type="Reference"/>
@@ -103,7 +103,7 @@
           </xs:element>
           <xs:element name="context" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A link to a resource that identifies the particular occurrence or set occurrences of contact between patient and health care provider.</xs:documentation>
+              <xs:documentation xml:lang="en">A link to an encounter, or episode of care, that identifies the particular occurrence or set occurrences of contact between patient and health care provider.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="supportingInformation" minOccurs="0" maxOccurs="unbounded" type="Reference">
@@ -148,12 +148,12 @@
           </xs:element>
           <xs:element name="dispenseRequest" type="MedicationRequest.DispenseRequest" minOccurs="0" maxOccurs="1">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates the specific details for the dispense or medication supply part of a medication request (also known as a Medication Prescription or Medication Order).  Note that this information is NOT always sent with the order.  There may be in some settings (e.g. hospitals) institutional or system support for completing the dispense details in the pharmacy department.</xs:documentation>
+              <xs:documentation xml:lang="en">Indicates the specific details for the dispense or medication supply part of a medication request (also known as a Medication Prescription or Medication Order).  Note that this information is not always sent with the order.  There may be in some settings (e.g. hospitals) institutional or system support for completing the dispense details in the pharmacy department.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="substitution" type="MedicationRequest.Substitution" minOccurs="0" maxOccurs="1">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates whether or not substitution can or should be part of the dispense. In some cases substitution must happen, in other cases substitution must not happen, and in others it does not matter. This block explains the prescriber's intent. If nothing is specified substitution may be done.</xs:documentation>
+              <xs:documentation xml:lang="en">Indicates whether or not substitution can or should be part of the dispense. In some cases substitution must happen, in other cases substitution must not happen. This block explains the prescriber's intent. If nothing is specified substitution may be done.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="priorPrescription" minOccurs="0" maxOccurs="1" type="Reference">
@@ -177,7 +177,7 @@
   </xs:complexType>
   <xs:complexType name="MedicationRequest.Requester">
     <xs:annotation>
-      <xs:documentation xml:lang="en">An order or request for both supply of the medication and the instructions for administration of the medication to a patient. The resource is called &quot;MedicationRequest&quot; rather than &quot;MedicationPrescription&quot; or &quot;MedicationOrder&quot; to generalize the use across inpatient and outpatient settings as well as for care plans, etc and to harmonize with workflow patterns.</xs:documentation>
+      <xs:documentation xml:lang="en">An order or request for both supply of the medication and the instructions for administration of the medication to a patient. The resource is called &quot;MedicationRequest&quot; rather than &quot;MedicationPrescription&quot; or &quot;MedicationOrder&quot; to generalize the use across inpatient and outpatient settings, including care plans, etc., and to harmonize with workflow patterns.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -198,7 +198,7 @@
   </xs:complexType>
   <xs:complexType name="MedicationRequest.DispenseRequest">
     <xs:annotation>
-      <xs:documentation xml:lang="en">An order or request for both supply of the medication and the instructions for administration of the medication to a patient. The resource is called &quot;MedicationRequest&quot; rather than &quot;MedicationPrescription&quot; or &quot;MedicationOrder&quot; to generalize the use across inpatient and outpatient settings as well as for care plans, etc and to harmonize with workflow patterns.</xs:documentation>
+      <xs:documentation xml:lang="en">An order or request for both supply of the medication and the instructions for administration of the medication to a patient. The resource is called &quot;MedicationRequest&quot; rather than &quot;MedicationPrescription&quot; or &quot;MedicationOrder&quot; to generalize the use across inpatient and outpatient settings, including care plans, etc., and to harmonize with workflow patterns.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -210,7 +210,7 @@
           </xs:element>
           <xs:element name="numberOfRepeatsAllowed" minOccurs="0" maxOccurs="1" type="positiveInt">
             <xs:annotation>
-              <xs:documentation xml:lang="en">An integer indicating the number of times, in addition to the original dispense, (aka refills or repeats) that the patient can receive the prescribed medication. Usage Notes: This integer does NOT include the original order dispense. This means that if an order indicates dispense 30 tablets plus &quot;3 repeats&quot;, then the order can be dispensed a total of 4 times and the patient can receive a total of 120 tablets.</xs:documentation>
+              <xs:documentation xml:lang="en">An integer indicating the number of times, in addition to the original dispense, (aka refills or repeats) that the patient can receive the prescribed medication. Usage Notes: This integer does not include the original order dispense. This means that if an order indicates dispense 30 tablets plus &quot;3 repeats&quot;, then the order can be dispensed a total of 4 times and the patient can receive a total of 120 tablets.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="quantity" minOccurs="0" maxOccurs="1" type="Quantity">
@@ -234,7 +234,7 @@
   </xs:complexType>
   <xs:complexType name="MedicationRequest.Substitution">
     <xs:annotation>
-      <xs:documentation xml:lang="en">An order or request for both supply of the medication and the instructions for administration of the medication to a patient. The resource is called &quot;MedicationRequest&quot; rather than &quot;MedicationPrescription&quot; or &quot;MedicationOrder&quot; to generalize the use across inpatient and outpatient settings as well as for care plans, etc and to harmonize with workflow patterns.</xs:documentation>
+      <xs:documentation xml:lang="en">An order or request for both supply of the medication and the instructions for administration of the medication to a patient. The resource is called &quot;MedicationRequest&quot; rather than &quot;MedicationPrescription&quot; or &quot;MedicationOrder&quot; to generalize the use across inpatient and outpatient settings, including care plans, etc., and to harmonize with workflow patterns.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">

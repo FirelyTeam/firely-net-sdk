@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Feb 28, 2017 07:41+0000 for FHIR v1.9.0 
+  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -38,12 +38,12 @@
   <xs:include schemaLocation="fhir-base.xsd"/>
   <xs:element name="TestReport" type="TestReport">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestReport is a resource that includes summary information on the results of executing a TestScript.</xs:documentation>
+      <xs:documentation xml:lang="en">A summary of information based on the results of executing a TestScript.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:complexType name="TestReport">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestReport is a resource that includes summary information on the results of executing a TestScript.</xs:documentation>
+      <xs:documentation xml:lang="en">A summary of information based on the results of executing a TestScript.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -115,7 +115,7 @@
   </xs:complexType>
   <xs:complexType name="TestReport.Participant">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestReport is a resource that includes summary information on the results of executing a TestScript.</xs:documentation>
+      <xs:documentation xml:lang="en">A summary of information based on the results of executing a TestScript.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -141,7 +141,7 @@
   </xs:complexType>
   <xs:complexType name="TestReport.Setup">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestReport is a resource that includes summary information on the results of executing a TestScript.</xs:documentation>
+      <xs:documentation xml:lang="en">A summary of information based on the results of executing a TestScript.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -157,7 +157,7 @@
   </xs:complexType>
   <xs:complexType name="TestReport.Action">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestReport is a resource that includes summary information on the results of executing a TestScript.</xs:documentation>
+      <xs:documentation xml:lang="en">A summary of information based on the results of executing a TestScript.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -178,7 +178,7 @@
   </xs:complexType>
   <xs:complexType name="TestReport.Operation">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestReport is a resource that includes summary information on the results of executing a TestScript.</xs:documentation>
+      <xs:documentation xml:lang="en">A summary of information based on the results of executing a TestScript.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -204,7 +204,7 @@
   </xs:complexType>
   <xs:complexType name="TestReport.Assert">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestReport is a resource that includes summary information on the results of executing a TestScript.</xs:documentation>
+      <xs:documentation xml:lang="en">A summary of information based on the results of executing a TestScript.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -230,7 +230,7 @@
   </xs:complexType>
   <xs:complexType name="TestReport.Test">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestReport is a resource that includes summary information on the results of executing a TestScript.</xs:documentation>
+      <xs:documentation xml:lang="en">A summary of information based on the results of executing a TestScript.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -256,7 +256,7 @@
   </xs:complexType>
   <xs:complexType name="TestReport.Action1">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestReport is a resource that includes summary information on the results of executing a TestScript.</xs:documentation>
+      <xs:documentation xml:lang="en">A summary of information based on the results of executing a TestScript.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -277,7 +277,7 @@
   </xs:complexType>
   <xs:complexType name="TestReport.Teardown">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestReport is a resource that includes summary information on the results of executing a TestScript.</xs:documentation>
+      <xs:documentation xml:lang="en">A summary of information based on the results of executing a TestScript.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -293,7 +293,7 @@
   </xs:complexType>
   <xs:complexType name="TestReport.Action2">
     <xs:annotation>
-      <xs:documentation xml:lang="en">TestReport is a resource that includes summary information on the results of executing a TestScript.</xs:documentation>
+      <xs:documentation xml:lang="en">A summary of information based on the results of executing a TestScript.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">

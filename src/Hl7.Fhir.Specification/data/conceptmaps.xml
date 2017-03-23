@@ -1,9 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Bundle xmlns="http://hl7.org/fhir">
   <id value="conceptmaps" />
-  <meta>
-    <lastUpdated value="2017-02-28T07:41:33.123+00:00" />
-  </meta>
+  <!-- Removed Meta/LastModified -->
   <type value="collection" />
   <entry>
     <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-observation-relationshiptypes-v3" />
@@ -13,13 +11,65 @@
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+            <h2>v3 map for ObservationRelationshipType (http://hl7.org/fhir/ConceptMap/cm-observation-relationshiptypes-v3)</h2>
+            <p>Mapping from 
+              <a href="valueset-observation-relationshiptypes.html">http://hl7.org/fhir/ValueSet/observation-relationshiptypes</a> to 
+              <a href="v3/ActRelationshipType/vs.html">http://hl7.org/fhir/ValueSet/v3-ActRelationshipType</a>
+            </p>
+            <p>DRAFT. Published on Mar 21, 2017 9:41:32 PM by HL7 (FHIR Project) (
+              <a href="http://hl7.org/fhir">http://hl7.org/fhir</a>, 
+              <a href="mailto:fhir@lists.hl7.org">fhir@lists.hl7.org</a>). 
+            </p>
+            <br />
+            <table class="grid">
+              <tr>
+                <td>
+                  <b>Source Code</b>
+                </td>
+                <td>
+                  <b>Equivalence</b>
+                </td>
+                <td>
+                  <b>Destination Code</b>
+                </td>
+              </tr>
+              <tr>
+                <td>has-member (Has Member)</td>
+                <td>equal</td>
+                <td>MBR (has member)</td>
+              </tr>
+              <tr>
+                <td>derived-from (Derived From)</td>
+                <td>equal</td>
+                <td>DRIV (is derived from)</td>
+              </tr>
+              <tr>
+                <td>sequel-to (Sequel To)</td>
+                <td>equal</td>
+                <td>SEQL (is sequel)</td>
+              </tr>
+              <tr>
+                <td>replaces (Replaces)</td>
+                <td>equal</td>
+                <td>RPLC (replaces)</td>
+              </tr>
+              <tr>
+                <td>qualified-by (Qualified By)</td>
+                <td>equal</td>
+                <td>QUALF (has qualifier)</td>
+              </tr>
+              <tr>
+                <td>interfered-by (Interfered By)</td>
+                <td>equal</td>
+                <td>INTF (interfered by)</td>
+              </tr>
+            </table>
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-observation-relationshiptypes-v3" />
         <name value="v3 map for ObservationRelationshipType" />
         <status value="draft" />
-        <date value="2017-02-28T07:41:33+00:00" />
+        <date value="2017-03-21T21:41:32+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -39,7 +89,7 @@
         </targetReference>
         <group>
           <source value="http://hl7.org/fhir/observation-relationshiptypes" />
-          <target value="http://hl7.org/fhir/v3/ActRrelationshipType" />
+          <target value="http://hl7.org/fhir/v3/ActRelationshipType" />
           <element>
             <code value="has-member" />
             <target>
@@ -94,13 +144,72 @@
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+            <h2>v3 map for AddressUse (http://hl7.org/fhir/ConceptMap/cm-address-use-v3)</h2>
+            <p>Mapping from 
+              <a href="valueset-address-use.html">http://hl7.org/fhir/ValueSet/address-use</a> to 
+              <a href="v3/AddressUse/vs.html">http://hl7.org/fhir/ValueSet/v3-AddressUse</a>
+            </p>
+            <p>DRAFT. Published on Mar 21, 2017 9:41:32 PM by HL7 (FHIR Project) (
+              <a href="http://hl7.org/fhir">http://hl7.org/fhir</a>, 
+              <a href="mailto:fhir@lists.hl7.org">fhir@lists.hl7.org</a>). 
+            </p>
+            <br />
+            <table class="grid">
+              <tr>
+                <td colspan="1">
+                  <b>Source Concept</b>
+                </td>
+                <td>
+                  <b>Equivalence</b>
+                </td>
+                <td colspan="1">
+                  <b>Destination Concept</b>
+                </td>
+                <td>
+                  <b>Comment</b>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <b>Code [http://hl7.org/fhir/address-use]</b>
+                </td>
+                <td />
+                <td>
+                  <b>Code [http://hl7.org/fhir/v3/AddressUse]</b>
+                </td>
+                <td />
+              </tr>
+              <tr>
+                <td>home (Home)</td>
+                <td>:equal</td>
+                <td>H (home address)</td>
+                <td />
+              </tr>
+              <tr>
+                <td>work (Work)</td>
+                <td>:equal</td>
+                <td>WP (work place)</td>
+                <td />
+              </tr>
+              <tr>
+                <td>temp (Temporary)</td>
+                <td>:equal</td>
+                <td>TMP (temporary address)</td>
+                <td />
+              </tr>
+              <tr>
+                <td>old (Old / Incorrect)</td>
+                <td>:narrower</td>
+                <td>OLD (no longer in use)</td>
+                <td>Bad or Old</td>
+              </tr>
+            </table>
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-address-use-v3" />
         <name value="v3 map for AddressUse" />
         <status value="draft" />
-        <date value="2017-02-28T07:41:33+00:00" />
+        <date value="2017-03-21T21:41:32+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -167,13 +276,78 @@
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+            <h2>v3 map for ContactPointUse (http://hl7.org/fhir/ConceptMap/cm-contact-point-use-v3)</h2>
+            <p>Mapping from 
+              <a href="valueset-contact-point-use.html">http://hl7.org/fhir/ValueSet/contact-point-use</a> to 
+              <a href="v3/AddressUse/vs.html">http://hl7.org/fhir/ValueSet/v3-AddressUse</a>
+            </p>
+            <p>DRAFT. Published on Mar 21, 2017 9:41:32 PM by HL7 (FHIR Project) (
+              <a href="http://hl7.org/fhir">http://hl7.org/fhir</a>, 
+              <a href="mailto:fhir@lists.hl7.org">fhir@lists.hl7.org</a>). 
+            </p>
+            <br />
+            <table class="grid">
+              <tr>
+                <td colspan="1">
+                  <b>Source Concept</b>
+                </td>
+                <td>
+                  <b>Equivalence</b>
+                </td>
+                <td colspan="1">
+                  <b>Destination Concept</b>
+                </td>
+                <td>
+                  <b>Comment</b>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <b>Code [http://hl7.org/fhir/contact-point-use]</b>
+                </td>
+                <td />
+                <td>
+                  <b>Code [http://hl7.org/fhir/v3/AddressUse]</b>
+                </td>
+                <td />
+              </tr>
+              <tr>
+                <td>home (Home)</td>
+                <td>:equal</td>
+                <td>H (home address)</td>
+                <td />
+              </tr>
+              <tr>
+                <td>work (Work)</td>
+                <td>:equal</td>
+                <td>WP (work place)</td>
+                <td />
+              </tr>
+              <tr>
+                <td>temp (Temp)</td>
+                <td>:equal</td>
+                <td>TMP (temporary address)</td>
+                <td />
+              </tr>
+              <tr>
+                <td>old (Old)</td>
+                <td>:narrower</td>
+                <td>OLD (no longer in use)</td>
+                <td>Old and Bad</td>
+              </tr>
+              <tr>
+                <td>mobile (Mobile)</td>
+                <td>:equal</td>
+                <td>MC (mobile contact))</td>
+                <td />
+              </tr>
+            </table>
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-contact-point-use-v3" />
         <name value="v3 map for ContactPointUse" />
         <status value="draft" />
-        <date value="2017-02-28T07:41:33+00:00" />
+        <date value="2017-03-21T21:41:32+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -247,13 +421,59 @@
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+            <h2>v2 map for ContactPointUse (http://hl7.org/fhir/ConceptMap/cm-contact-point-use-v2)</h2>
+            <p>Mapping from 
+              <a href="valueset-contact-point-use.html">http://hl7.org/fhir/ValueSet/contact-point-use</a> to 
+              <a href="v2/0201/index.html">http://hl7.org/fhir/ValueSet/v2-0201</a>
+            </p>
+            <p>DRAFT. Published on Mar 21, 2017 9:41:32 PM by HL7 (FHIR Project) (
+              <a href="http://hl7.org/fhir">http://hl7.org/fhir</a>, 
+              <a href="mailto:fhir@lists.hl7.org">fhir@lists.hl7.org</a>). 
+            </p>
+            <br />
+            <table class="grid">
+              <tr>
+                <td colspan="1">
+                  <b>Source Concept</b>
+                </td>
+                <td>
+                  <b>Equivalence</b>
+                </td>
+                <td colspan="1">
+                  <b>Destination Concept</b>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <b>Code [http://hl7.org/fhir/contact-point-use]</b>
+                </td>
+                <td />
+                <td>
+                  <b>Code [http://hl7.org/fhir/v2/0201]</b>
+                </td>
+              </tr>
+              <tr>
+                <td>home (Home)</td>
+                <td>:wider</td>
+                <td>PRN (Primary Residence Number)</td>
+              </tr>
+              <tr>
+                <td>work (Work)</td>
+                <td>:equivalent</td>
+                <td>WPN (Work Number)</td>
+              </tr>
+              <tr>
+                <td>mobile (Mobile)</td>
+                <td>:equivalent</td>
+                <td>PRS (Personal)</td>
+              </tr>
+            </table>
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-contact-point-use-v2" />
         <name value="v2 map for ContactPointUse" />
         <status value="draft" />
-        <date value="2017-02-28T07:41:33+00:00" />
+        <date value="2017-03-21T21:41:32+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -315,13 +535,61 @@
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+            <h2>v2 map for AdministrativeGender (http://hl7.org/fhir/ConceptMap/cm-administrative-gender-v2)</h2>
+            <p>Mapping from 
+              <a href="valueset-administrative-gender.html">http://hl7.org/fhir/ValueSet/administrative-gender</a> to 
+              <a href="v2/0001/index.html">http://hl7.org/fhir/ValueSet/v2-0001</a>
+            </p>
+            <p>DRAFT. Published on Mar 21, 2017 9:41:32 PM by HL7 (FHIR Project). </p>
+            <br />
+            <table class="grid">
+              <tr>
+                <td colspan="1">
+                  <b>Source Concept</b>
+                </td>
+                <td>
+                  <b>Equivalence</b>
+                </td>
+                <td colspan="1">
+                  <b>Destination Concept</b>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <b>Code [http://hl7.org/fhir/administrative-gender]</b>
+                </td>
+                <td />
+                <td>
+                  <b>Code [http://hl7.org/fhir/v2/0001]</b>
+                </td>
+              </tr>
+              <tr>
+                <td>male (Male)</td>
+                <td>:equal</td>
+                <td>M (Male)</td>
+              </tr>
+              <tr>
+                <td>female (Female)</td>
+                <td>:equal</td>
+                <td>F (Female)</td>
+              </tr>
+              <tr>
+                <td>other (Other)</td>
+                <td>:wider</td>
+                <td>A (Ambiguous)</td>
+              </tr>
+              <tr>
+                <td>unknown (Unknown)</td>
+                <td>:equal</td>
+                <td>U (Unknown)</td>
+              </tr>
+            </table>
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-administrative-gender-v2" />
         <name value="v2 map for AdministrativeGender" />
         <status value="draft" />
-        <date value="2017-02-28T07:41:33+00:00" />
+        <date value="2017-03-21T21:41:32+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/administrative-gender" />
@@ -376,13 +644,45 @@
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+            <h2>v3 map for AddressType (http://hl7.org/fhir/ConceptMap/cm-address-type-v3)</h2>
+            <p>Mapping from 
+              <a href="valueset-address-type.html">http://hl7.org/fhir/ValueSet/address-type</a> to 
+              <a href="v3/AddressUse/vs.html">http://hl7.org/fhir/ValueSet/v3-AddressUse</a>
+            </p>
+            <p>DRAFT. Published on Mar 21, 2017 9:41:32 PM by HL7 (FHIR Project) (
+              <a href="http://hl7.org/fhir">http://hl7.org/fhir</a>, 
+              <a href="mailto:fhir@lists.hl7.org">fhir@lists.hl7.org</a>). 
+            </p>
+            <br />
+            <table class="grid">
+              <tr>
+                <td>
+                  <b>Source Code</b>
+                </td>
+                <td>
+                  <b>Equivalence</b>
+                </td>
+                <td>
+                  <b>Destination Code</b>
+                </td>
+              </tr>
+              <tr>
+                <td>postal (Postal)</td>
+                <td>equal</td>
+                <td>PHYS (physical visit address)</td>
+              </tr>
+              <tr>
+                <td>physical (Physical)</td>
+                <td>equal</td>
+                <td>PST (postal address)</td>
+              </tr>
+            </table>
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-address-type-v3" />
         <name value="v3 map for AddressType" />
         <status value="draft" />
-        <date value="2017-02-28T07:41:33+00:00" />
+        <date value="2017-03-21T21:41:32+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -429,13 +729,70 @@
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+            <h2>v3 map for MedicationRequestStatus (http://hl7.org/fhir/ConceptMap/cm-medication-request-status-v3)</h2>
+            <p>Mapping from 
+              <a href="valueset-medication-request-status.html">http://hl7.org/fhir/ValueSet/medication-request-status</a> to 
+              <a href="v3/ActStatus/vs.html">http://hl7.org/fhir/ValueSet/v3-ActStatus</a>
+            </p>
+            <p>DRAFT. Published on Mar 21, 2017 9:41:32 PM by HL7 (FHIR Project) (
+              <a href="http://hl7.org/fhir">http://hl7.org/fhir</a>, 
+              <a href="mailto:fhir@lists.hl7.org">fhir@lists.hl7.org</a>). 
+            </p>
+            <br />
+            <table class="grid">
+              <tr>
+                <td>
+                  <b>Source Code</b>
+                </td>
+                <td>
+                  <b>Equivalence</b>
+                </td>
+                <td>
+                  <b>Destination Code</b>
+                </td>
+              </tr>
+              <tr>
+                <td>active (Active)</td>
+                <td>equal</td>
+                <td>active (active)</td>
+              </tr>
+              <tr>
+                <td>on-hold (On Hold)</td>
+                <td>equal</td>
+                <td>suspended (suspended)</td>
+              </tr>
+              <tr>
+                <td>cancelled (Cancelled)</td>
+                <td>equal</td>
+                <td>cancelled (cancelled)</td>
+              </tr>
+              <tr>
+                <td>completed (Completed)</td>
+                <td>equal</td>
+                <td>completed (completed)</td>
+              </tr>
+              <tr>
+                <td>entered-in-error (Entered In Error)</td>
+                <td>equal</td>
+                <td>nullified (nullified)</td>
+              </tr>
+              <tr>
+                <td>stopped (Stopped)</td>
+                <td>equal</td>
+                <td>aborted (aborted)</td>
+              </tr>
+              <tr>
+                <td>draft (Draft)</td>
+                <td>equal</td>
+                <td>new (new)</td>
+              </tr>
+            </table>
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-medication-request-status-v3" />
         <name value="v3 map for MedicationRequestStatus" />
         <status value="draft" />
-        <date value="2017-02-28T07:41:33+00:00" />
+        <date value="2017-03-21T21:41:32+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -517,13 +874,52 @@
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+            <h2>v3 map for AdministrativeGender (http://hl7.org/fhir/ConceptMap/cm-administrative-gender-v3)</h2>
+            <p>Mapping from 
+              <a href="valueset-administrative-gender.html">http://hl7.org/fhir/ValueSet/administrative-gender</a> to 
+              <a href="v3/AdministrativeGender/vs.html">http://hl7.org/fhir/ValueSet/v3-AdministrativeGender</a>
+            </p>
+            <p>DRAFT. Published on Mar 21, 2017 9:41:32 PM by HL7 (FHIR Project). </p>
+            <br />
+            <table class="grid">
+              <tr>
+                <td>
+                  <b>Source Code</b>
+                </td>
+                <td>
+                  <b>Equivalence</b>
+                </td>
+                <td>
+                  <b>Destination Code</b>
+                </td>
+              </tr>
+              <tr>
+                <td>male (Male)</td>
+                <td>equal</td>
+                <td>M (Male)</td>
+              </tr>
+              <tr>
+                <td>female (Female)</td>
+                <td>equal</td>
+                <td>F (Female)</td>
+              </tr>
+              <tr>
+                <td>other (Other)</td>
+                <td>wider</td>
+                <td>UN (Undifferentiated)</td>
+              </tr>
+              <tr>
+                <td>unknown (Unknown)</td>
+                <td>equal</td>
+                <td>UNK</td>
+              </tr>
+            </table>
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-administrative-gender-v3" />
         <name value="v3 map for AdministrativeGender" />
         <status value="draft" />
-        <date value="2017-02-28T07:41:33+00:00" />
+        <date value="2017-03-21T21:41:32+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/administrative-gender" />
@@ -574,13 +970,77 @@
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+            <h2>v3 map for DataAbsentReason (http://hl7.org/fhir/ConceptMap/cm-data-absent-reason-v3)</h2>
+            <p>Mapping from 
+              <a href="valueset-data-absent-reason.html">http://hl7.org/fhir/ValueSet/data-absent-reason</a> to 
+              <a href="v3/NullFlavor/vs.html">http://hl7.org/fhir/ValueSet/v3-NullFlavor</a>
+            </p>
+            <p>DRAFT. Published on Mar 21, 2017 9:41:32 PM by HL7 (FHIR Project). </p>
+            <br />
+            <table class="grid">
+              <tr>
+                <td>
+                  <b>Source Code</b>
+                </td>
+                <td>
+                  <b>Equivalence</b>
+                </td>
+                <td>
+                  <b>Destination Code</b>
+                </td>
+              </tr>
+              <tr>
+                <td>unknown (Unknown)</td>
+                <td>equal</td>
+                <td>UNK (unknown)</td>
+              </tr>
+              <tr>
+                <td>asked (Asked)</td>
+                <td>equal</td>
+                <td>ASKU (asked but unknown)</td>
+              </tr>
+              <tr>
+                <td>temp (Temp)</td>
+                <td>equal</td>
+                <td>NAV (temporarily unavailable)</td>
+              </tr>
+              <tr>
+                <td>not-asked (Not Asked)</td>
+                <td>equal</td>
+                <td>NASK (not asked)</td>
+              </tr>
+              <tr>
+                <td>masked (Masked)</td>
+                <td>equal</td>
+                <td>MSK (masked)</td>
+              </tr>
+              <tr>
+                <td>unsupported (Unsupported)</td>
+                <td>wider</td>
+                <td>NA (not applicable)</td>
+              </tr>
+              <tr>
+                <td>error (Error)</td>
+                <td>wider</td>
+                <td>NA (not applicable)</td>
+              </tr>
+              <tr>
+                <td>NaN (Not a Number)</td>
+                <td>wider</td>
+                <td>NA (not applicable)</td>
+              </tr>
+              <tr>
+                <td>not-performed (Not Performed)</td>
+                <td>wider</td>
+                <td>NA (not applicable)</td>
+              </tr>
+            </table>
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-data-absent-reason-v3" />
         <name value="v3 map for DataAbsentReason" />
         <status value="draft" />
-        <date value="2017-02-28T07:41:33+00:00" />
+        <date value="2017-03-21T21:41:32+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/data-absent-reason" />
@@ -666,13 +1126,79 @@
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+            <h2>v2 map for NameUse (http://hl7.org/fhir/ConceptMap/cm-name-use-v2)</h2>
+            <p>Mapping from 
+              <a href="valueset-name-use.html">http://hl7.org/fhir/ValueSet/name-use</a> to 
+              <a href="v2/0200/index.html">http://hl7.org/fhir/ValueSet/v2-0200</a>
+            </p>
+            <p>DRAFT. Published on Mar 21, 2017 9:41:32 PM by HL7 (FHIR Project) (
+              <a href="http://hl7.org/fhir">http://hl7.org/fhir</a>, 
+              <a href="mailto:fhir@lists.hl7.org">fhir@lists.hl7.org</a>). 
+            </p>
+            <br />
+            <table class="grid">
+              <tr>
+                <td colspan="1">
+                  <b>Source Concept</b>
+                </td>
+                <td>
+                  <b>Equivalence</b>
+                </td>
+                <td colspan="1">
+                  <b>Destination Concept</b>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <b>Code [http://hl7.org/fhir/name-use]</b>
+                </td>
+                <td />
+                <td>
+                  <b>Code [http://hl7.org/fhir/v2/0200]</b>
+                </td>
+              </tr>
+              <tr>
+                <td>usual (Usual)</td>
+                <td>:equivalent</td>
+                <td>D (Customary Name)</td>
+              </tr>
+              <tr>
+                <td>official (Official)</td>
+                <td>:equivalent</td>
+                <td>L (Official Registry Name)</td>
+              </tr>
+              <tr>
+                <td>temp (Temp)</td>
+                <td>:equivalent</td>
+                <td>TEMP (Temporary Name)</td>
+              </tr>
+              <tr>
+                <td>nickname (Nickname)</td>
+                <td>:equivalent</td>
+                <td>N (Nickname)</td>
+              </tr>
+              <tr>
+                <td>anonymous (Anonymous)</td>
+                <td>:equivalent</td>
+                <td>S (Pseudonym)</td>
+              </tr>
+              <tr>
+                <td>old (Old)</td>
+                <td>:wider</td>
+                <td>NOUSE (No Longer To Be Used)</td>
+              </tr>
+              <tr>
+                <td>maiden (Name changed for Marriage)</td>
+                <td>:equivalent</td>
+                <td>M (Maiden Name)</td>
+              </tr>
+            </table>
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-name-use-v2" />
         <name value="v2 map for NameUse" />
         <status value="draft" />
-        <date value="2017-02-28T07:41:33+00:00" />
+        <date value="2017-03-21T21:41:32+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -758,13 +1284,47 @@
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+            <h2>v3 map for DocumentReferenceStatus (http://hl7.org/fhir/ConceptMap/cm-document-reference-status-v3)</h2>
+            <p>Mapping from 
+              <a href="valueset-document-reference-status.html">http://hl7.org/fhir/ValueSet/document-reference-status</a> to 
+              <a href="v3/ActStatus/vs.html">http://hl7.org/fhir/ValueSet/v3-ActStatus</a>
+            </p>
+            <p>DRAFT. Published on Mar 21, 2017 9:41:32 PM by HL7 (FHIR Project). </p>
+            <br />
+            <table class="grid">
+              <tr>
+                <td>
+                  <b>Source Code</b>
+                </td>
+                <td>
+                  <b>Equivalence</b>
+                </td>
+                <td>
+                  <b>Destination Code</b>
+                </td>
+              </tr>
+              <tr>
+                <td>current (Current)</td>
+                <td>equivalent</td>
+                <td>active (active)</td>
+              </tr>
+              <tr>
+                <td>superseded (Superseded)</td>
+                <td>equivalent</td>
+                <td>obsolete (obsolete)</td>
+              </tr>
+              <tr>
+                <td>entered-in-error (Entered in Error)</td>
+                <td>equivalent</td>
+                <td>nullified (nullified)</td>
+              </tr>
+            </table>
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-document-reference-status-v3" />
         <name value="v3 map for DocumentReferenceStatus" />
         <status value="draft" />
-        <date value="2017-02-28T07:41:33+00:00" />
+        <date value="2017-03-21T21:41:32+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <sourceReference>
           <reference value="http://hl7.org/fhir/ValueSet/document-reference-status" />
@@ -808,13 +1368,70 @@
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+            <h2>v3 map for NameUse (http://hl7.org/fhir/ConceptMap/cm-name-use-v3)</h2>
+            <p>Mapping from 
+              <a href="valueset-name-use.html">http://hl7.org/fhir/ValueSet/name-use</a> to 
+              <a href="v3/EntityNameUseR2/vs.html">http://hl7.org/fhir/ValueSet/v3-EntityNameUseR2</a>
+            </p>
+            <p>DRAFT. Published on Mar 21, 2017 9:41:32 PM by HL7 (FHIR Project) (
+              <a href="http://hl7.org/fhir">http://hl7.org/fhir</a>, 
+              <a href="mailto:fhir@lists.hl7.org">fhir@lists.hl7.org</a>). 
+            </p>
+            <br />
+            <table class="grid">
+              <tr>
+                <td>
+                  <b>Source Code</b>
+                </td>
+                <td>
+                  <b>Equivalence</b>
+                </td>
+                <td>
+                  <b>Destination Code</b>
+                </td>
+              </tr>
+              <tr>
+                <td>usual (Usual)</td>
+                <td>equal</td>
+                <td>C (customary)</td>
+              </tr>
+              <tr>
+                <td>official (Official)</td>
+                <td>equal</td>
+                <td>OR (official registry name)</td>
+              </tr>
+              <tr>
+                <td>temp (Temp)</td>
+                <td>equal</td>
+                <td>T (temporary)</td>
+              </tr>
+              <tr>
+                <td>nickname (Nickname)</td>
+                <td>equivalent</td>
+                <td>P (Other/Pseudonym/Alias)</td>
+              </tr>
+              <tr>
+                <td>anonymous (Anonymous)</td>
+                <td>equivalent</td>
+                <td>ANON (Anonymous)</td>
+              </tr>
+              <tr>
+                <td>old (Old)</td>
+                <td>equivalent</td>
+                <td>OLD (no longer in use)</td>
+              </tr>
+              <tr>
+                <td>maiden (Name changed for Marriage)</td>
+                <td>equal</td>
+                <td>M (maiden name)</td>
+              </tr>
+            </table>
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-name-use-v3" />
         <name value="v3 map for NameUse" />
         <status value="draft" />
-        <date value="2017-02-28T07:41:33+00:00" />
+        <date value="2017-03-21T21:41:32+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -896,13 +1513,50 @@
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+            <h2>v3 map for DetectedIssueSeverity (http://hl7.org/fhir/ConceptMap/cm-detectedissue-severity-v3)</h2>
+            <p>Mapping from 
+              <a href="valueset-detectedissue-severity.html">http://hl7.org/fhir/ValueSet/detectedissue-severity</a> to 
+              <a href="v3/SeverityObservation/vs.html">http://hl7.org/fhir/ValueSet/v3-SeverityObservation</a>
+            </p>
+            <p>DRAFT. Published on Mar 21, 2017 9:41:32 PM by HL7 (FHIR Project) (
+              <a href="http://hl7.org/fhir">http://hl7.org/fhir</a>, 
+              <a href="mailto:fhir@lists.hl7.org">fhir@lists.hl7.org</a>). 
+            </p>
+            <br />
+            <table class="grid">
+              <tr>
+                <td>
+                  <b>Source Code</b>
+                </td>
+                <td>
+                  <b>Equivalence</b>
+                </td>
+                <td>
+                  <b>Destination Code</b>
+                </td>
+              </tr>
+              <tr>
+                <td>high (High)</td>
+                <td>equal</td>
+                <td>H (High)</td>
+              </tr>
+              <tr>
+                <td>moderate (Moderate)</td>
+                <td>equal</td>
+                <td>M (Moderate)</td>
+              </tr>
+              <tr>
+                <td>low (Low)</td>
+                <td>equal</td>
+                <td>L (Low)</td>
+              </tr>
+            </table>
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-detectedissue-severity-v3" />
         <name value="v3 map for DetectedIssueSeverity" />
         <status value="draft" />
-        <date value="2017-02-28T07:41:33+00:00" />
+        <date value="2017-03-21T21:41:32+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -956,13 +1610,60 @@
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+            <h2>v3 map for MedicationAdministrationStatus (http://hl7.org/fhir/ConceptMap/cm-medication-admin-status-v3)</h2>
+            <p>Mapping from 
+              <a href="valueset-medication-admin-status.html">http://hl7.org/fhir/ValueSet/medication-admin-status</a> to 
+              <a href="v3/ActStatus/vs.html">http://hl7.org/fhir/ValueSet/v3-ActStatus</a>
+            </p>
+            <p>DRAFT. Published on Mar 21, 2017 9:41:32 PM by HL7 (FHIR Project) (
+              <a href="http://hl7.org/fhir">http://hl7.org/fhir</a>, 
+              <a href="mailto:fhir@lists.hl7.org">fhir@lists.hl7.org</a>). 
+            </p>
+            <br />
+            <table class="grid">
+              <tr>
+                <td>
+                  <b>Source Code</b>
+                </td>
+                <td>
+                  <b>Equivalence</b>
+                </td>
+                <td>
+                  <b>Destination Code</b>
+                </td>
+              </tr>
+              <tr>
+                <td>in-progress (In Progress)</td>
+                <td>equal</td>
+                <td>active (active)</td>
+              </tr>
+              <tr>
+                <td>on-hold (On Hold)</td>
+                <td>equal</td>
+                <td>suspended (suspended)</td>
+              </tr>
+              <tr>
+                <td>completed (Completed)</td>
+                <td>equal</td>
+                <td>completed (completed)</td>
+              </tr>
+              <tr>
+                <td>entered-in-error (Entered in Error)</td>
+                <td>equal</td>
+                <td>nullified (nullified)</td>
+              </tr>
+              <tr>
+                <td>stopped (Stopped)</td>
+                <td>equal</td>
+                <td>aborted (aborted)</td>
+              </tr>
+            </table>
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-medication-admin-status-v3" />
         <name value="v3 map for MedicationAdministrationStatus" />
         <status value="draft" />
-        <date value="2017-02-28T07:41:33+00:00" />
+        <date value="2017-03-21T21:41:32+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -1030,13 +1731,68 @@
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+            <h2>v2 map for ContactPointSystem (http://hl7.org/fhir/ConceptMap/cm-contact-point-system-v2)</h2>
+            <p>Mapping from 
+              <a href="valueset-contact-point-system.html">http://hl7.org/fhir/ValueSet/contact-point-system</a> to 
+              <a href="v2/0202/index.html">http://hl7.org/fhir/ValueSet/v2-0202</a>
+            </p>
+            <p>DRAFT. Published on Mar 21, 2017 9:41:32 PM by HL7 (FHIR Project) (
+              <a href="http://hl7.org/fhir">http://hl7.org/fhir</a>, 
+              <a href="mailto:fhir@lists.hl7.org">fhir@lists.hl7.org</a>). 
+            </p>
+            <br />
+            <table class="grid">
+              <tr>
+                <td>
+                  <b>Source Code</b>
+                </td>
+                <td>
+                  <b>Equivalence</b>
+                </td>
+                <td>
+                  <b>Destination Code</b>
+                </td>
+                <td>
+                  <b>Comment</b>
+                </td>
+              </tr>
+              <tr>
+                <td>phone (Phone)</td>
+                <td>equivalent</td>
+                <td>PH (Telephone)</td>
+                <td />
+              </tr>
+              <tr>
+                <td>fax (Fax)</td>
+                <td>equivalent</td>
+                <td>FX (Fax)</td>
+                <td />
+              </tr>
+              <tr>
+                <td>email (Email)</td>
+                <td>narrower</td>
+                <td>Internet (Internet Address)</td>
+                <td>for email addresses</td>
+              </tr>
+              <tr>
+                <td>pager (Pager)</td>
+                <td>equivalent</td>
+                <td>BP (Beeper)</td>
+                <td />
+              </tr>
+              <tr>
+                <td>url (URL)</td>
+                <td>narrower</td>
+                <td>Internet (Internet Address)</td>
+                <td>for non-email kinds of addresses</td>
+              </tr>
+            </table>
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-contact-point-system-v2" />
         <name value="v2 map for ContactPointSystem" />
         <status value="draft" />
-        <date value="2017-02-28T07:41:33+00:00" />
+        <date value="2017-03-21T21:41:32+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -1106,13 +1862,60 @@
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+            <h2>v3 map for MedicationDispenseStatus (http://hl7.org/fhir/ConceptMap/cm-medication-dispense-status-v3)</h2>
+            <p>Mapping from 
+              <a href="valueset-medication-dispense-status.html">http://hl7.org/fhir/ValueSet/medication-dispense-status</a> to 
+              <a href="v3/ActStatus/vs.html">http://hl7.org/fhir/ValueSet/v3-ActStatus</a>
+            </p>
+            <p>DRAFT. Published on Mar 21, 2017 9:41:32 PM by HL7 (FHIR Project) (
+              <a href="http://hl7.org/fhir">http://hl7.org/fhir</a>, 
+              <a href="mailto:fhir@lists.hl7.org">fhir@lists.hl7.org</a>). 
+            </p>
+            <br />
+            <table class="grid">
+              <tr>
+                <td>
+                  <b>Source Code</b>
+                </td>
+                <td>
+                  <b>Equivalence</b>
+                </td>
+                <td>
+                  <b>Destination Code</b>
+                </td>
+              </tr>
+              <tr>
+                <td>in-progress (In Progress)</td>
+                <td>equal</td>
+                <td>active (active)</td>
+              </tr>
+              <tr>
+                <td>on-hold (On Hold)</td>
+                <td>equal</td>
+                <td>suspended (suspended)</td>
+              </tr>
+              <tr>
+                <td>completed (Completed)</td>
+                <td>equal</td>
+                <td>completed (completed)</td>
+              </tr>
+              <tr>
+                <td>entered-in-error (Entered in-Error)</td>
+                <td>equal</td>
+                <td>nullified (nullified)</td>
+              </tr>
+              <tr>
+                <td>stopped (Stopped)</td>
+                <td>equal</td>
+                <td>aborted (aborted)</td>
+              </tr>
+            </table>
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-medication-dispense-status-v3" />
         <name value="v3 map for MedicationDispenseStatus" />
         <status value="draft" />
-        <date value="2017-02-28T07:41:33+00:00" />
+        <date value="2017-03-21T21:41:32+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -1180,13 +1983,55 @@
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+            <h2>v3 map for CompositionStatus (http://hl7.org/fhir/ConceptMap/cm-composition-status-v3)</h2>
+            <p>Mapping from 
+              <a href="valueset-composition-status.html">http://hl7.org/fhir/ValueSet/composition-status</a> to 
+              <a href="v3/ActStatus/vs.html">http://hl7.org/fhir/ValueSet/v3-ActStatus</a>
+            </p>
+            <p>DRAFT. Published on Mar 21, 2017 9:41:32 PM by HL7 (FHIR Project) (
+              <a href="http://hl7.org/fhir">http://hl7.org/fhir</a>, 
+              <a href="mailto:fhir@lists.hl7.org">fhir@lists.hl7.org</a>). 
+            </p>
+            <br />
+            <table class="grid">
+              <tr>
+                <td>
+                  <b>Source Code</b>
+                </td>
+                <td>
+                  <b>Equivalence</b>
+                </td>
+                <td>
+                  <b>Destination Code</b>
+                </td>
+              </tr>
+              <tr>
+                <td>preliminary (Preliminary)</td>
+                <td>equivalent</td>
+                <td>active (active)</td>
+              </tr>
+              <tr>
+                <td>final (Final)</td>
+                <td>wider</td>
+                <td>completed (completed)</td>
+              </tr>
+              <tr>
+                <td>amended (Amended)</td>
+                <td>wider</td>
+                <td>completed (completed)</td>
+              </tr>
+              <tr>
+                <td>entered-in-error (Entered in Error)</td>
+                <td>equivalent</td>
+                <td>nullified (nullified)</td>
+              </tr>
+            </table>
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-composition-status-v3" />
         <name value="v3 map for CompositionStatus" />
         <status value="draft" />
-        <date value="2017-02-28T07:41:33+00:00" />
+        <date value="2017-03-21T21:41:32+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -1247,13 +2092,62 @@
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+            <h2>v2 map for AddressUse (http://hl7.org/fhir/ConceptMap/cm-address-use-v2)</h2>
+            <p>Mapping from 
+              <a href="valueset-address-use.html">http://hl7.org/fhir/ValueSet/address-use</a> to 
+              <a href="v2/0190/index.html">http://hl7.org/fhir/ValueSet/v2-0190</a>
+            </p>
+            <p>DRAFT. Published on Mar 21, 2017 9:41:32 PM by HL7 (FHIR Project) (
+              <a href="http://hl7.org/fhir">http://hl7.org/fhir</a>, 
+              <a href="mailto:fhir@lists.hl7.org">fhir@lists.hl7.org</a>). 
+            </p>
+            <br />
+            <table class="grid">
+              <tr>
+                <td>
+                  <b>Source Code</b>
+                </td>
+                <td>
+                  <b>Equivalence</b>
+                </td>
+                <td>
+                  <b>Destination Code</b>
+                </td>
+                <td>
+                  <b>Comment</b>
+                </td>
+              </tr>
+              <tr>
+                <td>home (Home)</td>
+                <td>equivalent</td>
+                <td>H (Home)</td>
+                <td />
+              </tr>
+              <tr>
+                <td>work (Work)</td>
+                <td>equivalent</td>
+                <td>O (Office/Business)</td>
+                <td />
+              </tr>
+              <tr>
+                <td>temp (Temporary)</td>
+                <td>equivalent</td>
+                <td>C (Current Or Temporary)</td>
+                <td />
+              </tr>
+              <tr>
+                <td>old (Old / Incorrect)</td>
+                <td>wider</td>
+                <td>BA (Bad address)</td>
+                <td>unclear about old addresses</td>
+              </tr>
+            </table>
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-address-use-v2" />
         <name value="v2 map for AddressUse" />
         <status value="draft" />
-        <date value="2017-02-28T07:41:33+00:00" />
+        <date value="2017-03-21T21:41:32+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -1315,13 +2209,60 @@
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+            <h2>v3 map for MedicationStatementStatus (http://hl7.org/fhir/ConceptMap/cm-medication-statement-status-v3)</h2>
+            <p>Mapping from 
+              <a href="valueset-medication-statement-status.html">http://hl7.org/fhir/ValueSet/medication-statement-status</a> to 
+              <a href="v3/ActStatus/vs.html">http://hl7.org/fhir/ValueSet/v3-ActStatus</a>
+            </p>
+            <p>DRAFT. Published on Mar 21, 2017 9:41:32 PM by HL7 (FHIR Project) (
+              <a href="http://hl7.org/fhir">http://hl7.org/fhir</a>, 
+              <a href="mailto:fhir@lists.hl7.org">fhir@lists.hl7.org</a>). 
+            </p>
+            <br />
+            <table class="grid">
+              <tr>
+                <td>
+                  <b>Source Code</b>
+                </td>
+                <td>
+                  <b>Equivalence</b>
+                </td>
+                <td>
+                  <b>Destination Code</b>
+                </td>
+              </tr>
+              <tr>
+                <td>active (Active)</td>
+                <td>equal</td>
+                <td>active (active)</td>
+              </tr>
+              <tr>
+                <td>completed (Completed)</td>
+                <td>equal</td>
+                <td>completed (completed)</td>
+              </tr>
+              <tr>
+                <td>entered-in-error (Entered in Error)</td>
+                <td>equal</td>
+                <td>nullified (nullified)</td>
+              </tr>
+              <tr>
+                <td>stopped (Stopped)</td>
+                <td>equal</td>
+                <td>aborted (aborted)</td>
+              </tr>
+              <tr>
+                <td>on-hold (On Hold)</td>
+                <td>equal</td>
+                <td>suspended (suspended)</td>
+              </tr>
+            </table>
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-medication-statement-status-v3" />
         <name value="v3 map for MedicationStatementStatus" />
         <status value="draft" />
-        <date value="2017-02-28T07:41:33+00:00" />
+        <date value="2017-03-21T21:41:32+00:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -1386,13 +2327,116 @@
     <resource>
       <ConceptMap>
         <id value="101" />
-        <meta>
-          <lastUpdated value="2017-02-28T07:41:33.123+00:00" />
-        </meta>
+        <!-- Removed Meta/LastModified -->
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+      
+            <h2>FHIR-v3-Address-Use (http://hl7.org/fhir/ConceptMap/101)</h2>
+      
+            <p>Mapping from 
+        
+              <a href="valueset-address-use.html">http://hl7.org/fhir/ValueSet/address-use</a> to 
+        
+              <a href="v3/AddressUse/vs.html">http://hl7.org/fhir/ValueSet/v3-AddressUse</a>
+      
+            </p>
+      
+            <p>DRAFT (not intended for production usage). Published on Jun 13, 2012 by HL7, Inc (FHIR project team (example): 
+        
+              <a href="http://hl7.org/fhir">http://hl7.org/fhir</a>). Creative Commons 0
+      
+            </p>
+      
+            <div>
+        
+              <p>A mapping between the FHIR and HL7 v3 AddressUse Code systems</p>
+
+      
+            </div>
+      
+            <br />
+      
+            <table class="grid">
+        
+              <tr>
+          
+                <td>
+            
+                  <b>Source Code</b>
+          
+                </td>
+          
+                <td>
+            
+                  <b>Equivalence</b>
+          
+                </td>
+          
+                <td>
+            
+                  <b>Destination Code</b>
+          
+                </td>
+          
+                <td>
+            
+                  <b>Comment</b>
+          
+                </td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>home (Home)</td>
+          
+                <td />
+          
+                <td>H (home address)</td>
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>work (Work)</td>
+          
+                <td />
+          
+                <td>WP (work place)</td>
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>temp (Temporary)</td>
+          
+                <td />
+          
+                <td>TMP (temporary address)</td>
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>old (Old / Incorrect)</td>
+          
+                <td>disjoint</td>
+          
+                <td>BAD (bad address)</td>
+          
+                <td>In the HL7 v3 AD, old is handled by the usablePeriod element, but you have to provide a time, there's no simple equivalent of flagging an address as old</td>
+        
+              </tr>
+      
+            </table>
+    
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/101" />
@@ -1479,13 +2523,86 @@
     <resource>
       <ConceptMap>
         <id value="103" />
-        <meta>
-          <lastUpdated value="2017-02-28T07:41:33.123+00:00" />
-        </meta>
+        <!-- Removed Meta/LastModified -->
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+      
+            <h2>SNOMED CT to ICD-10-CM mappings for fracture of ulna (http://hl7.org/fhir/ConceptMap/103)</h2>
+      
+            <p>Mapping from http://snomed.info/id?fhir_vs to http://hl7.org/fhir/sid/icd-10-us</p>
+      
+            <p>DRAFT (not intended for production usage). Published on Jun 13, 2012 by HL7, Inc (FHIR project team (example): 
+        
+              <a href="http://hl7.org/fhir">http://hl7.org/fhir</a>). Creative Commons 0
+      
+            </p>
+      
+            <div>
+        
+              <p>Example rule-based mappings between SNOMED CT to ICD-10-CM for fracture of ulna</p>
+
+      
+            </div>
+      
+            <br />
+      
+            <table class="grid">
+        
+              <tr>
+          
+                <td>
+            
+                  <b>Source Code</b>
+          
+                </td>
+          
+                <td>
+            
+                  <b>Equivalence</b>
+          
+                </td>
+          
+                <td>
+            
+                  <b>Destination Code</b>
+          
+                </td>
+          
+                <td>
+            
+                  <b>Comment</b>
+          
+                </td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>263204007 (Fracture of shaft of ulna)</td>
+          
+                <td>narrower</td>
+          
+                <td>S52.209A</td>
+          
+                <td>The target mapping to ICD-10-CM is narrower, since additional patient data on the encounter (initial vs. subsequent) and fracture type is required for a valid ICD-10-CM mapping.</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td />
+          
+                <td>narrower</td>
+          
+                <td>S52.209D</td>
+          
+                <td>The target mapping to ICD-10-CM is narrower, since additional patient data on the encounter (initial vs. subsequent), fracture type and healing (for subsequent encounter) is required for a valid ICD-10-CM mapping.</td>
+        
+              </tr>
+      
+            </table>
+    
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/103" />
@@ -1551,13 +2668,5013 @@
     <resource>
       <ConceptMap>
         <id value="102" />
-        <meta>
-          <lastUpdated value="2017-02-28T07:41:33.123+00:00" />
-        </meta>
+        <!-- Removed Meta/LastModified -->
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+      
+            <h2>Specimen mapping from v2 table 0487 to SNOMED CT (http://hl7.org/fhir/ConceptMap/102)</h2>
+      
+            <p>Mapping from 
+        
+              <a href="v2/0487/index.html">http://hl7.org/fhir/ValueSet/v2-0487</a> to http://snomed.info/id?fhir_vs
+      
+            </p>
+      
+            <p>DRAFT. Published on Jul 25, 2013 by FHIR project team (original source: LabMCoP) (
+        
+              <a href="http://hl7.org/fhir">http://hl7.org/fhir</a>, 
+        
+              <a href="http://www.phconnect.org/group/laboratorymessagingcommunityofpractice/forum/attachment/download?id=3649725%3AUploadedFile%3A145786">http://www.phconnect.org/group...</a>). 
+      
+            </p>
+      
+            <br />
+      
+            <table class="grid">
+        
+              <tr>
+          
+                <td colspan="1">
+            
+                  <b>Source Concept</b>
+          
+                </td>
+          
+                <td>
+            
+                  <b>Equivalence</b>
+          
+                </td>
+          
+                <td colspan="4">
+            
+                  <b>Destination Concept</b>
+          
+                </td>
+          
+                <td>
+            
+                  <b>Comment</b>
+          
+                </td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>
+            
+                  <b>Code [http://hl7.org/fhir/v2/0487]</b>
+          
+                </td>
+          
+                <td />
+          
+                <td>
+            
+                  <b>Code [http://snomed.info/sct]</b>
+          
+                </td>
+          
+                <td>
+            
+                  <b>http://snomed.info/id/246380002 [http://snomed.info/sct]</b>
+          
+                </td>
+          
+                <td>
+            
+                  <b>http://snomed.info/id/3006873018 [http://snomed.info/sct]</b>
+          
+                </td>
+          
+                <td>
+            
+                  <b>TypeModifier [http://snomed.info/sct]</b>
+          
+                </td>
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>ACNE (Tissue, Acne)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>309068002 (Skin lesion sample)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>ACNFLD (Fluid, Acne)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119323008 (Pus specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>47002008 (Pustule)</td>
+          
+                <td>HL7 term is a historical term. mapped to Pus</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>AIRS (Air Sample)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>446302006 (Air sample)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>ALL (Allograft)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119376003 (Tissue specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>7970006 (Allograft)</td>
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>AMP (Amputation)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>408654003 (Specimen obtained by amputation)</td>
+          
+                <td>81723002 (Amputation)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>ANGI (Catheter Tip, Angio)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119312009 (Catheter tip specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD in detail</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>ARTC (Catheter Tip, Arterial)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119312009 (Catheter tip specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD in detail</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>ASERU (Serum, Acute)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>pending</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>ASP (Aspirate)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119295008 (Specimen obtained by aspiration)</td>
+          
+                <td>14766002 (Removal by suction)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>ATTE (Environment, Attest)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>AUTOC (Environmental, Autoclave Capsule)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>AUTP (Autopsy)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>This really is not a specimen per se - it is the state of the subject from whom the specimen is collected, so it should be used as a  specimen type modifier ONLY!. Often this is indicated with a special medical record number or other notation on the patient. needs to have specimen type (e.g. SPM-4) and source site (SPM.8) and spatial orientation (SPM.9)</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>BBL (Blood bag)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119304001 (Blood bag specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>BCYST (Cyst, Baker's)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>32361000 (Popliteal fossa)</td>
+          
+                <td />
+          
+                <td>submitted (PLR155) with parent of  167874004^knee joint synovial fluid (specimen), with specimen source topography 32361000^Popliteal fossa structure (body structure)</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>BITE (Bite)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>Submit for new term with parent 119365002</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>BLEB (Bleb)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>309049000 (Lesion sample)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>339008 (Blister)</td>
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>BLIST (Blister)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>309049000 (Lesion sample)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>339008 (Blister)</td>
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>BOIL (Boil)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119295008 (Specimen obtained by aspiration)</td>
+          
+                <td>14766002 (Removal by suction)</td>
+          
+                <td />
+          
+                <td>59843005 (Furuncle)</td>
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>BON (Bone)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>430268003 (Specimen from bone)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>BOWL (Bowel contents)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>Don't use this term for human samples - use Stool instead. animal would use small intestinal contents, large intestinal contents</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>BPU (Blood product unit)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119300005 (Specimen from blood product)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>BRN (Burn)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119367005 (Specimen from burn injury)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>BRSH (Brush)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258415003 (Biopsy sample)</td>
+          
+                <td>439336003 (Brush biopsy)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>BRTH (Breath (use EXHLD))</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119336008 (Exhaled air specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>BRUS (Brushing)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>309176002 (Bronchial brushings sample)</td>
+          
+                <td>80657008 (Bronchoscopy with brush biopsy)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>BUB (Bubo)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>302795002 (Lymph node aspirate)</td>
+          
+                <td>14766002 (Removal by suction)</td>
+          
+                <td />
+          
+                <td>11585000 (Bubo)</td>
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>BULLA (Bulla/Bullae)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258482009 (Vesicle fluid sample)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>339008 (Blister)</td>
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>BX (Biopsy)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258415003 (Biopsy sample)</td>
+          
+                <td>86273004 (Biopsy)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>CALC (Calculus (=Stone))</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119350003 (Calculus specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>CARBU (Carbuncle)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>309051001 (Body fluid sample)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>41570003 (Carbuncle)</td>
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>CAT (Catheter)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119311002 (Catheter specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>CBITE (Bite, Cat)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>Submit for new term with parent 119365002</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>CLIPP (Clippings)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119327009 (Nail specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>Be more specific use either: 119326000^hair specimen or 119327009^nail specimen</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>CNJT (Conjunctiva)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119401005 (Specimen from conjunctiva)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>CNJT (Conjunctiva)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>128160006 (Tissue specimen from conjunctiva)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>CNJT (Conjunctiva)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258498002 (Conjunctival swab)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>COL (Colostrum)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119329007 (Colostrum specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>CONE (Biospy, Cone)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>399713008 (Specimen from uterine cervix obtained by cone biopsy)</td>
+          
+                <td>54535009 (Cone biopsy of cervix)</td>
+          
+                <td>71252005 (Uterine cervix)</td>
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>CSCR (Scratch, Cat)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>submit for new term with parent 119365002^Specimen from wound (specimen)</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>CSERU (Serum, Convalescent)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>pending</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>CSITE (Catheter Insertion Site)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258507003 (Swab of line insertion site)</td>
+          
+                <td>285570007 (Taking of swab)</td>
+          
+                <td />
+          
+                <td>386144009 (Line insertion site)</td>
+          
+                <td>Prefer to have aspirate of the pus oozing out from cleaned insertion site - if swab is all that can be obtained, then swab after cleaning, otherwise you may get a contaminated specimen and a falsely identified infected central line. Do not just swab the reddened area - that will just collect skin flora       </td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>CSMY (Fluid,  Cystostomy Tube)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>309051001 (Body fluid sample)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>CST (Fluid, Cyst)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258453008 (Cyst fluid sample)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>CSVR (Blood, Cell Saver)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD - may use blood and SPM-6</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>CTP (Catheter tip)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119312009 (Catheter tip specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD in detail</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>CVPS (Site, CVP)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258507003 (Swab of line insertion site)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>CVPT (Catheter Tip, CVP)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119312009 (Catheter tip specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>445085009 (Tunneled central venous catheter)</td>
+          
+                <td>TBD in detail</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>CYN (Nodule, Cystic)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119368000 (Specimen from cyst)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>27925004 (Nodule)</td>
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>CYST (Cyst)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119368000 (Specimen from cyst)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>DBITE (Bite, Dog)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>Submit for new term with parent 119365002</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>DCS (Sputum, Deep Cough)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119335007 (Coughed sputum specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>DEC (Ulcer, Decubitus)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258505006 (Skin ulcer swab)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>DEION (Environmental, Water  (Deionized))</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>DIA (Dialysate)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119360007 (Dialysis fluid specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>DISCHG (Discharge)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258439008 (Discharge)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>DIV (Diverticulum)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119376003 (Tissue specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>31113003 (Diverticulum)</td>
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>DRN (Drain)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119306004 (Drain device specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>DRNG (Drainage, Tube)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258455001 (Drainage fluid sample)</td>
+          
+                <td>122462000 (Drainage)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>Historical term - consider what is being drained and indicate that in SPM-4 instead: not an acceptable specimen for micro - not specific enough term</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>DRNGP (Drainage, Penrose)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>309051001 (Body fluid sample)</td>
+          
+                <td>122462000 (Drainage)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>Historical term - consider what is being drained and indicate that in SPM-4 instead</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>EARW (Ear wax (cerumen))</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>122580007 (Cerumen specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>EBRUSH (Brush, Esophageal)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>309210009 (Oesophageal brushings sample)</td>
+          
+                <td>36213007 (Endoscopy and brush biopsy)</td>
+          
+                <td>32849002 (Esophagus)</td>
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>EEYE (Environmental, Eye Wash)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>EFF (Environmental, Effluent)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>EFFUS (Effusion)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258440005 (Effusion sample)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>EFOD (Environmental, Food)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119320006 (Food specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>EISO (Environmental, Isolette)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258536003 (Incubator swab)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>ELT (Electrode)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119314005 (Electrode specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>ENVIR (Environmental, Unidentified Substance)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119324002 (Specimen of unknown material)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>EOTH (Environmental, Other Substance)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>ESOI (Environmental, Soil)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>ESOS (Environmental, Solution (Sterile))</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>ETA (Aspirate,  Endotrach)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119307008 (Endotracheal tube specimen)</td>
+          
+                <td>14766002 (Removal by suction)</td>
+          
+                <td>321667001 (Respiratory tract structure)</td>
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>ETTP (Catheter Tip, Endotracheal)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119312009 (Catheter tip specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD in detail</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>ETTUB (Tube, Endotracheal)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119307008 (Endotracheal tube specimen)</td>
+          
+                <td>14766002 (Removal by suction)</td>
+          
+                <td>321667001 (Respiratory tract structure)</td>
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>EWHI (Environmental, Whirlpool)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>EXG (Gas, exhaled (=breath))</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119336008 (Exhaled air specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>EXS (Shunt, External)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>EXUDTE (Exudate)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258441009 (Exudate sample)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>FAW (Environmental, Water  (Well))</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>FBLOOD (Blood, Fetal)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119297000 (Blood specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>303112003 (Fetal period)</td>
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>FGA (Fluid,  Abdomen)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>168139001 (Peritoneal fluid sample)</td>
+          
+                <td />
+          
+                <td>83670000 (Peritoneal cavity)</td>
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>FIST (Fistula)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119370009 (Specimen from fistula)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>FLD (Fluid, Other)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>309051001 (Body fluid sample)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>FLT (Filter)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>FLU (Fluid, Body unsp)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>309051001 (Body fluid sample)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>FLUID (Fluid)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258442002 (Fluid sample)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>FOLEY (Catheter Tip, Foley)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119312009 (Catheter tip specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD in detail</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>FRS (Fluid, Respiratory)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258442002 (Fluid sample)</td>
+          
+                <td />
+          
+                <td>272626006 (Respiratory organ)</td>
+          
+                <td />
+          
+                <td>this term is not specific enough, choose from terms that more accurately describe the specimen</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>FSCLP (Scalp, Fetal)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>309502007 (Fetus specimen)</td>
+          
+                <td />
+          
+                <td>41695006 (Scalp)</td>
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>FUR (Furuncle)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119295008 (Specimen obtained by aspiration)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>59843005 (Furuncle)</td>
+          
+                <td>Further describe the sample as tissue or pus. or by the collection method. The term boil is not specifc to a body site - need to indicate source site (spm.8). preferred term is Aspirate_Boil</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>GAS (Gas)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119317003 (Gaseous material specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>GASA (Aspirate, Gastric)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>168137004 (Gastric aspirate sample)</td>
+          
+                <td>14766002 (Removal by suction)</td>
+          
+                <td>69695003 (Stomach)</td>
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>GASAN (Antrum, Gastric)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119379005 (Specimen from stomach)</td>
+          
+                <td />
+          
+                <td>66051006 (Pyloric antrum)</td>
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>GASBR (Brushing, Gastric)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>309213006 (Gastric brushings sample)</td>
+          
+                <td>235157009 (Endoscopic brushings of GIT)</td>
+          
+                <td>69695003 (Stomach)</td>
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>GASD (Drainage, Gastric)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258459007 (Gastric fluid sample)</td>
+          
+                <td>122462000 (Drainage)</td>
+          
+                <td>69695003 (Stomach)</td>
+          
+                <td />
+          
+                <td>Historical term - consider what is being drained and indicate that in SPM-4 instead</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>GAST (Fluid/contents, Gastric)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258459007 (Gastric fluid sample)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>GENV (Genital vaginal)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119394009 (Specimen from vagina)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>GRAFT (Graft)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>440493002 (Graft sample)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>GRANU (Granuloma)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119376003 (Tissue specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>45647009 (Granuloma)</td>
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>GROSH (Catheter, Groshong)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119311002 (Catheter specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD in detail</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>GSOL (Solution, Gastrostomy)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>GSPEC (Biopsy, Gastric)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>309211008 (Gastric biopsy sample)</td>
+          
+                <td>79121003 (Biopsy of stomach)</td>
+          
+                <td>69695003 (Stomach)</td>
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>GT (Tube, Gastric)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>GTUBE (Drainage Tube, Drainage (Gastrostomy))</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258459007 (Gastric fluid sample)</td>
+          
+                <td>122462000 (Drainage)</td>
+          
+                <td>69695003 (Stomach)</td>
+          
+                <td>127490009 (Gastrostomy route)</td>
+          
+                <td>Historical term - consider what is being drained and indicate that in SPM-4 instead</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>HBITE (Bite, Human)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>Submit for new term with parent 119365002</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>HBLUD (Blood, Autopsy)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119297000 (Blood specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>303113008 (Postmortem period)</td>
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>HEMAQ (Catheter Tip, Hemaquit)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119312009 (Catheter tip specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD in detail</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>HEMO (Catheter Tip, Hemovac)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119312009 (Catheter tip specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD in detail</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>HERNI (Tissue, Herniated)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119376003 (Tissue specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>HEV (Drain, Hemovac)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119306004 (Drain device specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>HIC (Catheter, Hickman)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119312009 (Catheter tip specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>445085009 (Tunneled central venous catheter)</td>
+          
+                <td>TBD in detail</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>HYDC (Fluid, Hydrocele)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>309051001 (Body fluid sample)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>55434001 (Hydrocele)</td>
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>IBITE (Bite, Insect)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>Submit for new term with parent 119365002</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>ICYST (Cyst, Inclusion)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>309075001 (Skin cyst sample)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>IDC (Catheter Tip, Indwelling)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119312009 (Catheter tip specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD in detail</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>IHG (Gas, Inhaled)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119337004 (Inhaled gas specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>ILEO (Drainage, Ileostomy)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258455001 (Drainage fluid sample)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>419954003 (Ileostomy route)</td>
+          
+                <td>Historical term - consider what is being drained and indicate that in SPM-4 instead: stool is what is expected, should use stool sample</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>ILLEG (Source of Specimen Is Illigible)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>IMP (Implant)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>439961009 (Implant submitted as specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>INCI (Site, Incision/Surgical)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>438660002 (Specimen from prosthetic device)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>INFIL (Infiltrate)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>This describes a morphologic abnormality, not a sample</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>INS (Insect)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258614005 (Insect sample)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>INTRD (Catheter Tip, Introducer)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119312009 (Catheter tip specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD in detail</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>IT (Intubation tube)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119307008 (Endotracheal tube specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>IUD (Intrauterine Device)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>pending</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>IVCAT (Catheter Tip, IV)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119312009 (Catheter tip specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>255560000 (Intravenous)</td>
+          
+                <td>TBD in detail</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>IVFLD (Fluid, IV)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258649003 (Intravenous infusion fluid sample)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>IVTIP (Tubing Tip, IV)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119312009 (Catheter tip specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>JEJU (Drainage, Jejunal)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258463000 (Jejunal fluid sample)</td>
+          
+                <td>122462000 (Drainage)</td>
+          
+                <td>21306003 (Jejunum)</td>
+          
+                <td />
+          
+                <td>Historical term - consider what is being drained and indicate that in SPM-4 instead: stool is what is expected, should use stool sample</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>JNTFLD (Fluid, Joint)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119332005 (Synovial fluid specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>JP (Drainage, Jackson Pratt)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>309051001 (Body fluid sample)</td>
+          
+                <td>122462000 (Drainage)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>Historical term - consider what is being drained and indicate that in SPM-4 instead</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>KELOI (Lavage)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>440674008 (Wash out specimen)</td>
+          
+                <td>67889009 (Irrigation)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>KIDFLD (Fluid, Kidney)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>309051001 (Body fluid sample)</td>
+          
+                <td />
+          
+                <td>64033007 (Kidney)</td>
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>LAVG (Lavage, Bronhial)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258607008 (Bronchoalveolar lavage fluid sample)</td>
+          
+                <td>397394009 (Bronchoalveolar lavage)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>LAVGG (Lavage, Gastric)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>168138009 (Gastric lavage aspirate sample)</td>
+          
+                <td>173830003 (Irrigation of stomach)</td>
+          
+                <td>69695003 (Stomach)</td>
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>LAVGP (Lavage, Peritoneal)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>440137008 (Specimen obtained by peritoneal lavage)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>LAVPG (Lavage, Pre-Bronch)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>440674008 (Wash out specimen)</td>
+          
+                <td>67889009 (Irrigation)</td>
+          
+                <td>44567001 (Trachea)</td>
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>LENS1 (Contact Lens)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>440473005 (Contact lens submitted as specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>LENS2 (Contact Lens Case)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>LESN (Lesion)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>309049000 (Lesion sample)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>should be more specific what kind of lesion is observed - be more specific is it a wound, abscess, mass - specify! Ask SNOMED CT to mark it as a grouper term only (309049000)</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>LIQ (Liquid, Unspecified)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258442002 (Fluid sample)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>LIQO (Liquid, Other)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>LSAC (Fluid, Lumbar Sac)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258450006 (Cerebrospinal fluid sample)</td>
+          
+                <td />
+          
+                <td>303949008 (Lumbar spinal cerebrospinal fluid pathway)</td>
+          
+                <td />
+          
+                <td>The HL7 term is a historical term Mapped to CSF obtained by lumbar puncture</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>MAHUR (Catheter Tip, Makurkour)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119312009 (Catheter tip specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD in detail</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>MASS (Mass)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>420548004 (Specimen from mass)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>4147007 (Mass)</td>
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>MBLD (Blood, Menstrual)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119345009 (Menstrual blood specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>MUCOS (Mucosa)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119376003 (Tissue specimen)</td>
+          
+                <td />
+          
+                <td>414781009 (Mucous membrane structure)</td>
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>MUCUS (Mucus)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258483004 (Mucus sample)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>NASDR (Drainage, Nasal)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258474009 (Sinus fluid sample)</td>
+          
+                <td>122462000 (Drainage)</td>
+          
+                <td>2095001 (Accessory sinus)</td>
+          
+                <td />
+          
+                <td>Historical term - consider what is being drained and indicate that in SPM-4 instead</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>NEDL (Needle)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>NEPH (Site, Nephrostomy)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>438660002 (Specimen from prosthetic device)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>NGASP (Aspirate, Nasogastric)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>302794003 (Nasogastric aspirate)</td>
+          
+                <td>6853008 (Nasogastric tube aspiration)</td>
+          
+                <td>69695003 (Stomach)</td>
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>NGAST (Drainage, Nasogastric)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258459007 (Gastric fluid sample)</td>
+          
+                <td>122462000 (Drainage)</td>
+          
+                <td>69695003 (Stomach)</td>
+          
+                <td>127492001 (Nasogastric route)</td>
+          
+                <td>Historical term - consider what is being drained and indicate that in SPM-4 instead</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>NGS (Site, Naso/Gastric)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>438660002 (Specimen from prosthetic device)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>NODUL (Nodule(s))</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>pending</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>NSECR (Secretion, Nasal)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>168141000 (Nasal fluid sample)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>ORH (Other)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>123038009 (Specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>ORL (Lesion, Oral)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>74262004 (Oral cavity)</td>
+          
+                <td />
+          
+                <td>be more precise use ulcer, tumor, vesicle</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>OTH (Source, Other)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>123038009 (Specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>PACEM (Pacemaker)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>PCFL (Fluid, Pericardial)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>122571007 (Pericardial fluid specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>PDSIT (Site, Peritoneal Dialysis)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>438660002 (Specimen from prosthetic device)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>PDTS (Site, Peritoneal Dialysis Tunnel)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>submitted for code</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>PELVA (Abscess, Pelvic)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119371008 (Specimen from abscess)</td>
+          
+                <td />
+          
+                <td>12921003 (Pelvis)</td>
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>PENIL (Lesion, Penile)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>18911002 (Penis)</td>
+          
+                <td />
+          
+                <td>need to know what kind of lesion, so map to: UlcerTissue_penile, VesicleFluid_penile, Wound_penile, Mass tissue_penile, Necrotic tissue_penile, AbscessAspirate_penile, Anything else?</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>PERIA (Abscess, Perianal)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119371008 (Specimen from abscess)</td>
+          
+                <td />
+          
+                <td>397158004 (Perianal region structure)</td>
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>PILOC (Cyst, Pilonidal)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119368000 (Specimen from cyst)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>PINS (Site, Pin)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>438660002 (Specimen from prosthetic device)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>PIS (Site, Pacemaker Insetion)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258507003 (Swab of line insertion site)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>PLAN (Plant Material)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119301009 (Plant specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>PLAS (Plasma)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119361006 (Plasma specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>PLB (Plasma bag)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119305000 (Plasma bag specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>PLEVS (Serum, Peak Level)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119364003 (Serum specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>255587001 (Peak)</td>
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>PND (Drainage, Penile)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258439008 (Discharge)</td>
+          
+                <td>122462000 (Drainage)</td>
+          
+                <td>13648007 (Urethra)</td>
+          
+                <td />
+          
+                <td>Historical term -though in this case more often used for discharge</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>POL (Polyps)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119376003 (Tissue specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>41329004 (Polyp)</td>
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>POPGS (Graft Site, Popliteal)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>440493002 (Graft sample)</td>
+          
+                <td />
+          
+                <td>6902008 (Popliteal region)</td>
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>POPLG (Graft, Popliteal)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>440493002 (Graft sample)</td>
+          
+                <td />
+          
+                <td>6902008 (Popliteal region)</td>
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>POPLV (Site, Popliteal Vein)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>PORTA (Catheter, Porta)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119311002 (Catheter specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD in detail</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>PPP (Plasma, Platelet poor)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119362004 (Platelet poor plasma specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>PROST (Prosthetic Device)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>438660002 (Specimen from prosthetic device)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>PRP (Plasma, Platelet rich)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119363009 (Platelet rich plasma specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>PSC (Pseudocyst)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119368000 (Specimen from cyst)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>PUNCT (Wound, Puncture)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119365002 (Specimen from wound)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>129300006 (Puncture - action)</td>
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>PUS (Pus)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119323008 (Pus specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>PUSFR (Pustule)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119323008 (Pus specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>47002008 (Pustule)</td>
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>PUST (Pus)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119323008 (Pus specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>47002008 (Pustule)</td>
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>QC3 (Quality Control)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>RANDU (Urine, Random)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>278020009 (Spot urine sample)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>RBITE (Bite, Reptile)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>Submit for new term with parent: 119365002</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>RECT (Drainage, Rectal)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119339001 (Stool specimen)</td>
+          
+                <td>122462000 (Drainage)</td>
+          
+                <td>34402009 (Rectum)</td>
+          
+                <td />
+          
+                <td>Historical term - consider what is being drained and indicate that in SPM-4 instead: stool is what is expected, should use stool sample</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>RECTA (Abscess, Rectal)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119371008 (Specimen from abscess)</td>
+          
+                <td />
+          
+                <td>34402009 (Rectum)</td>
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>RENALC (Cyst, Renal)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258420003 (Cyst tissue)</td>
+          
+                <td />
+          
+                <td>64033007 (Kidney)</td>
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>RENC (Fluid, Renal Cyst)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258453008 (Cyst fluid sample)</td>
+          
+                <td />
+          
+                <td>64033007 (Kidney)</td>
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>RES (Respiratory)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258603007 (Respiratory sample)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>SAL (Saliva)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119342007 (Saliva specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>SCAR (Tissue, Keloid (Scar))</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119376003 (Tissue specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>SCLV (Catheter Tip, Subclavian)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119312009 (Catheter tip specimen)</td>
+          
+                <td />
+          
+                <td>9454009 (Subclavian vein)</td>
+          
+                <td />
+          
+                <td>TBD in detail</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>SCROA (Abscess, Scrotal)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119371008 (Specimen from abscess)</td>
+          
+                <td />
+          
+                <td>20233005 (Scrotum)</td>
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>SECRE (Secretion(s))</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>432825001 (Body secretion specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>SER (Serum)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119364003 (Serum specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>SHU (Site, Shunt)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119295008 (Specimen obtained by aspiration)</td>
+          
+                <td>14766002 (Removal by suction)</td>
+          
+                <td />
+          
+                <td>257351008 (Shunt)</td>
+          
+                <td>Preferred is aspiration with sterile syringe from inflamed area. Specify body location of shunt site</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>SHUNF (Fluid, Shunt)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>446861007 (Cerebrospinal fluid specimen obtained via ventriculoperitoneal shunt)</td>
+          
+                <td>446860008 (Collection of cerebrospinal fluid via ventriculoperitoneal shunt)</td>
+          
+                <td>279107003 (Central nervous system space)</td>
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>SHUNT (Shunt)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>SITE (Site)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>SKBP (Biopsy, Skin)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>309066003 (Skin biopsy sample)</td>
+          
+                <td>240977001 (Biopsy of skin)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>SKN (Skin)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119325001 (Skin specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>SMM (Mass, Sub-Mandibular)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>420548004 (Specimen from mass)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>4147007 (Mass)</td>
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>SNV (Fluid, synovial (Joint fluid))</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119332005 (Synovial fluid specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>SPRM (Spermatozoa)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119349003 (Spermatozoa specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>SPRP (Catheter Tip, Suprapubic)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119312009 (Catheter tip specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD in detail</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>SPRPB (Cathether Tip, Suprapubic)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119312009 (Catheter tip specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD in detail</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>SPS (Environmental, Spore Strip)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>SPT (Sputum)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119334006 (Sputum specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>SPTC (Sputum - coughed)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119335007 (Coughed sputum specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>SPTT (Sputum - tracheal aspirate)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258609006 (Sputum specimen obtained by aspiration from trachea)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>SPUT1 (Sputum, Simulated)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>SPUTIN (Sputum, Inducted)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258610001 (Sputum specimen obtained by sputum induction)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>SPUTSP (Sputum, Spontaneous)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119335007 (Coughed sputum specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>STER (Environmental, Sterrad)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>STL (Stool = Fecal)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119339001 (Stool specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>STONE (Stone, Kidney)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119350003 (Calculus specimen)</td>
+          
+                <td />
+          
+                <td>64033007 (Kidney)</td>
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>SUBMA (Abscess, Submandibular)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119371008 (Specimen from abscess)</td>
+          
+                <td />
+          
+                <td>5713008 (Submandibular triangle)</td>
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>SUBMX (Abscess, Submaxillary)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119371008 (Specimen from abscess)</td>
+          
+                <td />
+          
+                <td>4335006 (Upper jaw)</td>
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>SUMP (Drainage, Sump)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>446562005 (Body fluid specimen obtained via sump drain)</td>
+          
+                <td>122462000 (Drainage)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>Historical term - consider what is being drained and indicate that in SPM-4 instead</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>SUP (Suprapubic Tap)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>122575003 (Urine specimen)</td>
+          
+                <td>58088002 (Urine specimen collection, suprapubic)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>SUTUR (Suture)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>SWGZ (Catheter Tip, Swan Gantz)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119312009 (Catheter tip specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD in detail</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>TASP (Aspirate, Tracheal)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>122877000 (Upper respiratory fluid specimen obtained by tracheal aspiration)</td>
+          
+                <td>129112001 (Aspiration from trachea)</td>
+          
+                <td>44567001 (Trachea)</td>
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>TISS (Tissue)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119376003 (Tissue specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>TISU (Tissue ulcer)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>122593002 (Tissue specimen obtained from ulcer)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>TLC (Cathether Tip, Triple Lumen)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119312009 (Catheter tip specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD in detail</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>TRAC (Site, Tracheostomy)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>438660002 (Specimen from prosthetic device)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>TRANS (Transudate)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258538002 (Transudate sample)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>TSERU (Serum, Trough)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119364003 (Serum specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td>255588006 (Trough)</td>
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>TSTES (Abscess, Testicular)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119371008 (Specimen from abscess)</td>
+          
+                <td />
+          
+                <td>279572002 (Testicular structure)</td>
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>TTRA (Aspirate, Transtracheal)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258480001 (Transtracheal aspirate sample)</td>
+          
+                <td>129112001 (Aspiration from trachea)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>TUBES (Tubes)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119310001 (Tube specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>TUMOR (Tumor)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258435002 (Tumour tissue)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>TZANC (Smear, Tzanck)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>This is the name of a lab test. A skin sample is examined for viral inclusions.</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>UDENT (Source, Unidentified)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>123038009 (Specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>UR (Urine)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>122575003 (Urine specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>URC (Urine clean catch)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>122880004 (Urine specimen obtained by clean catch procedure)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>URINB (Urine, Bladder Washings)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>122575003 (Urine specimen)</td>
+          
+                <td>78533007 (Irrigation of urinary bladder)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>URINC (Urine, Catheterized)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>446846006 (Urine specimen obtained via indwelling urinary catheter)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>URINM (Urine, Midstream)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258574006 (Mid-stream urine sample)</td>
+          
+                <td>225271002 (Collection of mid-stream specimen of urine)</td>
+          
+                <td>431938005 (Structure of urinary tract proper)</td>
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>URINN (Urine, Nephrostomy)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>446277003 (Urine specimen obtained from nephrostomy tube after percutaneous insertion)</td>
+          
+                <td>225109005 (Collection of nephrostomy urine specimen)</td>
+          
+                <td>25990002 (Renal pelvis)</td>
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>URINP (Urine, Pedibag)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>URT (Urine catheter)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>122565001 (Urinary catheter specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>USCOP (Urine, Cystoscopy)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td>176178006 (Diagnostic cystoscopy)</td>
+          
+                <td>89837001 (Urinary bladder)</td>
+          
+                <td />
+          
+                <td>NEW specimenTERM 7</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>USPEC (Source, Unspecified)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>123038009 (Specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>VASTIP (Catheter Tip, Vas)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119312009 (Catheter tip specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD in detail</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>VENT (Catheter Tip, Ventricular)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119312009 (Catheter tip specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD in detail</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>VITF (Vitreous Fluid)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258438000 (Vitreous humor sample)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>VOM (Vomitus)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>122572000 (Vomitus specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>WASH (Wash)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>440674008 (Wash out specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>WASI (Washing, e.g. bronchial washing)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>122609004 (Specimen from lung obtained by bronchial washing procedure)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>WAT (Water)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119318008 (Water specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>WB (Blood, Whole)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>Bloodbanking term ONLY now map to blood and the respective preservative</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>WEN (Wen)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>309075001 (Skin cyst sample)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>WICK (Wick)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>WND (Wound)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119365002 (Specimen from wound)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>WNDA (Wound abscess)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119366001 (Specimen from wound abscess)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>WNDD (Wound drainage)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>122566000 (Fluid specimen from wound)</td>
+          
+                <td>122462000 (Drainage)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>WNDE (Wound exudate)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>122568004 (Exudate specimen from wound)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>WORM (Worm)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>258618008 (Helminth sample)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>WRT (Wart)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>309068002 (Skin lesion sample)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>WWA (Environmental, Water)</td>
+          
+                <td>:(equivalent)</td>
+          
+                <td>119318008 (Water specimen)</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+        
+              </tr>
+        
+              <tr>
+          
+                <td>WWO (Environmental, Water (Ocean))</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>WWT (Environmental, Water  (Tap))</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>TBD</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>CSITE (Catheter Insertion Site)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td>386144009 (Line insertion site)</td>
+          
+                <td>14766002 (Removal by suction)</td>
+          
+                <td>119295008 (Specimen obtained by aspiration)</td>
+          
+                <td>Prefer to have aspirate of the pus oozing out from cleaned insertion site - if swab is all that can be obtained, then swab after cleaning, otherwise you may get a contaminated specimen and a falsely identified infected central line. Do not just swab the reddened area - that will just collect skin flora</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>CLIPP (Clippings)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td />
+          
+                <td />
+          
+                <td>119326000 (Hair specimen)</td>
+          
+                <td>Be more specific use either: 119326000^hair specimen, or 119327009^nail specimen</td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>SHU (Site, Shunt)</td>
+          
+                <td>:unmatched</td>
+          
+                <td />
+          
+                <td>257351008 (Shunt)</td>
+          
+                <td />
+          
+                <td>438660002 (Specimen from prosthetic device)</td>
+          
+                <td>assume swab from shunt site for mapping here - clean surface of skin prior to expressing the shunt site - preferred is aspiration with sterile syringe should use SPM.8 to specify body approximate match location of shunt site</td>
+        
+              </tr>
+      
+            </table>
+    
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/102" />
@@ -3953,13 +10070,92 @@
     <resource>
       <ConceptMap>
         <id value="example2" />
-        <meta>
-          <lastUpdated value="2017-02-28T07:41:33.123+00:00" />
-        </meta>
+        <!-- Removed Meta/LastModified -->
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+      
+            <h2>FHIR-exanple-2 (http://hl7.org/fhir/ConceptMap/example2)</h2>
+      
+            <p>Mapping from http://example.org/fhir/example1 to http://example.org/fhir/example2</p>
+      
+            <p>DRAFT (not intended for production usage). Published on Jun 13, 2012 by HL7, Inc (FHIR project team (example): 
+        
+              <a href="http://hl7.org/fhir">http://hl7.org/fhir</a>). 
+      
+            </p>
+      
+            <div>
+        
+              <p>An example mapping</p>
+
+      
+            </div>
+      
+            <br />
+      
+            <table class="grid">
+        
+              <tr>
+          
+                <td colspan="2">
+            
+                  <b>Source Concept</b>
+          
+                </td>
+          
+                <td>
+            
+                  <b>Equivalence</b>
+          
+                </td>
+          
+                <td colspan="1">
+            
+                  <b>Destination Concept</b>
+          
+                </td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>
+            
+                  <b>Code [http://example.org/fhir/example1]</b>
+          
+                </td>
+          
+                <td>
+            
+                  <b>http://example.org/fhir/DataElement/example [http://example.org/fhir/example3]</b>
+          
+                </td>
+          
+                <td />
+          
+                <td>
+            
+                  <b>Code [http://example.org/fhir/example2]</b>
+          
+                </td>
+        
+              </tr>
+        
+              <tr>
+          
+                <td>code</td>
+          
+                <td>some-code</td>
+          
+                <td>:equivalent</td>
+          
+                <td>code2</td>
+        
+              </tr>
+      
+            </table>
+    
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/example2" />
@@ -3994,6 +10190,7 @@
                 <property value="http://example.org/fhir/DataElement/example" />
                 <system value="http://example.org/fhir/example3" />
                 <code value="some-code" />
+                <display value="Something Coded" />
               </dependsOn>
             </target>
           </element>
