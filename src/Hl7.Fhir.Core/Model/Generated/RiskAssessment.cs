@@ -225,11 +225,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // PredictionComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Outcome != null) yield return Outcome;
                     if (Probability != null) yield return Probability;
                     if (RelativeRiskElement != null) yield return RelativeRiskElement;
@@ -428,7 +424,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent RiskAssessment_RAS_2 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("prediction.probability.all($this.as(decimal) <= 100)"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("prediction.probability.all($this <= 100)"))},
             Key = "ras-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Must be <= 100",
@@ -516,17 +512,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// DomainResource elements
-				if (Text != null) yield return Text;
-				foreach (var elem in Contained) { if (elem != null) yield return elem; }
-				foreach (var elem in Extension) { if (elem != null) yield return elem; }
-				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-				// RiskAssessment elements
+                foreach (var item in base.Children) yield return item;
 				if (Subject != null) yield return Subject;
 				if (DateElement != null) yield return DateElement;
 				if (Condition != null) yield return Condition;

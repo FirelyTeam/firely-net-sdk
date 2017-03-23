@@ -333,9 +333,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // SlicingComponent elements
+                    foreach (var item in base.Children) yield return item;
                     foreach (var elem in DiscriminatorElement) { if (elem != null) yield return elem; }
                     if (DescriptionElement != null) yield return DescriptionElement;
                     if (OrderedElement != null) yield return OrderedElement;
@@ -504,9 +502,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BaseComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (PathElement != null) yield return PathElement;
                     if (MinElement != null) yield return MinElement;
                     if (MaxElement != null) yield return MaxElement;
@@ -674,9 +670,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // TypeRefComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (CodeElement != null) yield return CodeElement;
                     foreach (var elem in ProfileElement) { if (elem != null) yield return elem; }
                     foreach (var elem in AggregationElement) { if (elem != null) yield return elem; }
@@ -915,9 +909,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // ConstraintComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (KeyElement != null) yield return KeyElement;
                     if (RequirementsElement != null) yield return RequirementsElement;
                     if (SeverityElement != null) yield return SeverityElement;
@@ -1067,9 +1059,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BindingComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (StrengthElement != null) yield return StrengthElement;
                     if (DescriptionElement != null) yield return DescriptionElement;
                     if (ValueSet != null) yield return ValueSet;
@@ -1236,9 +1226,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // MappingComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (IdentityElement != null) yield return IdentityElement;
                     if (LanguageElement != null) yield return LanguageElement;
                     if (MapElement != null) yield return MapElement;
@@ -2144,9 +2132,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                // Element elements
-                foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                // ElementDefinition elements
+                foreach (var item in base.Children) yield return item;
                 if (PathElement != null) yield return PathElement;
                 foreach (var elem in RepresentationElement) { if (elem != null) yield return elem; }
                 if (NameElement != null) yield return NameElement;

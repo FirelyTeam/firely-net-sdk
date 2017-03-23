@@ -46,6 +46,12 @@ namespace Hl7.Fhir.Model
             Reference = reference;
         }
 
+        public ResourceReference(string reference, string display)
+        {
+            Reference = reference;
+            Display = display;
+        }
+
         public ResourceReference()
         {
 
