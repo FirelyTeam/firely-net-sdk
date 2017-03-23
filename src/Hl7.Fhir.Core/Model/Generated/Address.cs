@@ -489,9 +489,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                // Element elements
-                foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                // Address elements
+                foreach (var item in base.Children) yield return item;
                 if (UseElement != null) yield return UseElement;
                 if (TypeElement != null) yield return TypeElement;
                 if (TextElement != null) yield return TextElement;

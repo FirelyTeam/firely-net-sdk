@@ -165,9 +165,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                // Element elements
-                foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                // Period elements
+                foreach (var item in base.Children) yield return item;
                 if (StartElement != null) yield return StartElement;
                 if (EndElement != null) yield return EndElement;
             }

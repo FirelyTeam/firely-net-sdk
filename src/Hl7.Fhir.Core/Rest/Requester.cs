@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Rest
 
         public Bundle.EntryComponent Execute(Bundle.EntryComponent interaction)
         {
-            if (interaction == null) throw Error.ArgumentNull("interaction");
+            if (interaction == null) throw Error.ArgumentNull(nameof(interaction));
             bool compressRequestBody = false;
 #if !PORTABLE45
             compressRequestBody = CompressRequestBody; // PCL doesn't support compression at the moment
@@ -79,6 +79,10 @@ namespace Hl7.Fhir.Rest
 
             LastRequest = request;
             if (BeforeRequest != null) BeforeRequest(request, outBody);
+
+            // Write the body to the output
+            if (outBody != null)
+                request.WriteBody(compressRequestBody, outBody);
 
             // Make sure the HttpResponse gets disposed!
             // using (HttpWebResponse webResponse = (HttpWebResponse)await request.GetResponseAsync(new TimeSpan(0, 0, 0, 0, Timeout)))

@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Introspection
 
         public PropertyMapping FindMappedElementByName(string name)
         {
-            if (name == null) throw Error.ArgumentNull("name");
+            if (name == null) throw Error.ArgumentNull(nameof(name));
 
             var normalizedName = name.ToUpperInvariant();
 
@@ -115,14 +115,14 @@ namespace Hl7.Fhir.Introspection
                                     ReflectionHelper.IsConstructedFromGenericTypeDefinition(type, typeof(Code<>));
 
                 if (!result.IsResource && !String.IsNullOrEmpty(result.Profile))
-                    throw Error.Argument("type", "Type {0} is not a resource, so its FhirType attribute may not specify a profile".FormatWith(type.Name));
+                    throw Error.Argument(nameof(type), "Type {0} is not a resource, so its FhirType attribute may not specify a profile".FormatWith(type.Name));
 
                 inspectProperties(result);
 
                 return result;
             }
             else
-                throw Error.Argument("type", "Type {0} is not marked as a Fhir Resource or datatype using [FhirType]".FormatWith(type.Name));
+                throw Error.Argument(nameof(type), "Type {0} is not marked as a Fhir Resource or datatype using [FhirType]".FormatWith(type.Name));
         }
 
 
@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Introspection
 #else
 			if (type.IsAbstract)
 #endif
-                throw Error.Argument("type", "Type {0} is marked as a mappable tpe, but is abstract so cannot be used directly to represent a FHIR datatype".FormatWith(type.Name));
+                throw Error.Argument(nameof(type), "Type {0} is marked as a mappable tpe, but is abstract so cannot be used directly to represent a FHIR datatype".FormatWith(type.Name));
 
 
             // Open generic type definitions can never appear as roots of objects

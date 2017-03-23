@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2017, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -12,6 +12,7 @@ using System.Linq;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -23,21 +24,32 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// </summary>
         struct ElementDefnMerger
         {
-            /// <summary>Merges two <see cref="ElementDefinition"/> instances. Existing diff properties override associated snap properties.</summary>
+            /// <summary>Merge two <see cref="ElementDefinition"/> instances. Existing diff properties override associated snap properties.</summary>
             public static void Merge(SnapshotGenerator generator, ElementDefinition snap, ElementDefinition diff)
             {
                 var merger = new ElementDefnMerger(generator);
                 merger.merge(snap, diff);
             }
 
-            private SnapshotGenerator _generator;
+            // [WMR 20170209] TODO: Merge global mapping components
+#if false
+            /// <summary>Merge two lists of global <see cref="StructureDefinition.MappingComponent"/> definitions.</summary>
+            public static List<StructureDefinition.MappingComponent> Merge(SnapshotGenerator generator,
+                List<StructureDefinition.MappingComponent> snap, List<StructureDefinition.MappingComponent> diff)
+            {
+                var merger = new ElementDefnMerger(generator);
+                // Merge global mapping definitions having the same (unique) mapping id
+                return merger.mergeCollection(snap, diff, (a, b) => a.Identity == b.Identity);
+            }
+#endif
+            SnapshotGenerator _generator;
 
-            private ElementDefnMerger(SnapshotGenerator generator)
+            ElementDefnMerger(SnapshotGenerator generator)
             {
                 _generator = generator;
             }
 
-            private void merge(ElementDefinition snap, ElementDefinition diff)
+            void merge(ElementDefinition snap, ElementDefinition diff)
             {
                 // [WMR 20160915] Important! Derived profiles should never inherit the ChangedByDiff extension
                 // Caller should make sure that existing extensions have been removed from snap,
@@ -55,7 +67,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                     {
                         throw Error.InvalidOperation($"Invalid operation in snapshot generator. Path cannot be changed from '{snap.Path}' to '{diff.Path}', since the type is sliced to '{diff.Type.First().Code}'");
                     }
-
                     snap.PathElement = mergePrimitiveAttribute(snap.PathElement, diff.PathElement);
                 }
 
@@ -69,7 +80,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // representation cannot be overridden
 
                 snap.NameElement = mergePrimitiveAttribute(snap.NameElement, diff.NameElement);
-            
+
                 // Codes are cumulative based on the code value
                 snap.Code = mergeCollection(snap.Code, diff.Code, (a, b) => a.Code == b.Code);
 
@@ -108,7 +119,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 if (!diff.Type.IsNullOrEmpty() && !diff.Type.IsExactly(snap.Type))
                 {
                     snap.Type = new List<ElementDefinition.TypeRefComponent>(diff.Type.DeepCopy());
-                    foreach (var element in snap.Type) { OnConstraint(snap); }
+                    foreach (var element in snap.Type) { onConstraint(snap); }
                 }
 
                 // ElementDefinition.nameReference cannot be overridden by a derived profile
@@ -162,7 +173,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             /// <summary>Notify clients about a snapshot element with differential constraints.</summary>
-            private void OnConstraint(Element snap)
+            void onConstraint(Element snap)
             {
                 _generator.OnConstraint(snap);
             }
@@ -176,7 +187,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             /// <param name="diff"></param>
             /// <param name="allowAppend"></param>
             /// <returns></returns>
-            private T mergePrimitiveAttribute<T>(T snap, T diff, bool allowAppend = false) where T : Primitive
+            T mergePrimitiveAttribute<T>(T snap, T diff, bool allowAppend = false) where T : Primitive
             {
                 // [WMR 20160718] Handle snap == null
                 // if (!diff.IsNullOrEmpty() && !diff.IsExactly(snap))
@@ -207,30 +218,59 @@ namespace Hl7.Fhir.Specification.Snapshot
                         result.ObjectValue = diffText;
                     }
 
-                    OnConstraint(result);
+                    onConstraint(result);
                     return result;
                 }
                 else
                     return snap;
             }
 
-            private T mergeComplexAttribute<T>(T snap, T diff) where T : Element
+            T mergeComplexAttribute<T>(T snap, T diff) where T : Element
             {
-                //TODO: The next != null should be IsNullOrEmpty(), but we don't have that yet for complex types
-                // [WMR 20160718] Handle snap == null
-                // if (diff != null && !diff.IsExactly(snap))
-                // if (diff != null && (snap == null || !diff.IsExactly(snap)))
+#if true
+                var result = snap;
+                if (!diff.IsNullOrEmpty())
+                {
+                    if (snap.IsNullOrEmpty())
+                    {
+                        result = (T)diff.DeepCopy();
+                        onConstraint(result);
+                    }
+                    else if (!diff.IsExactly(snap))
+                    {
+                        if (snap.GetType().IsAssignableFrom(diff.GetType()))
+                        {
+                            // [WMR 20170227] Diff type is equal to or derived from snap type
+                            // Clone base and recursively copy all non-null diff props over base props
+                            // So effectively the result inherits all missing properties from base
+                            result = (T)snap.DeepCopy();
+                            diff.CopyTo(result);
+                        }
+                        else
+                        {
+                            // [WMR 20170227] Diff type is incompatible with snap type (?)
+                            // diff fully replaces snap
+                            result = (T)diff.DeepCopy();
+                        }
+                        onConstraint(result);
+                    }
+                }
+                return result;
+#else
                 if (!diff.IsNullOrEmpty() && (snap.IsNullOrEmpty() || !diff.IsExactly(snap)))
                 {
+                    // [WMR 20170224] WRONG! Must recursively merge missing child properties from base
                     var result = (T)diff.DeepCopy();
-                    OnConstraint(result);
+
+                    onConstraint(result);
                     return result;
                 }
                 else
                     return snap;
+#endif
             }
 
-            private List<T> mergeCollection<T>(List<T> snap, List<T> diff, Func<T, T, bool> elemComparer) where T : Element
+            List<T> mergeCollection<T>(List<T> snap, List<T> diff, Func<T, T, bool> elemComparer) where T : Element
             {
                 if (!diff.IsNullOrEmpty() && !diff.IsExactly(snap))
                 {
@@ -242,7 +282,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         if (!result.Any(e => elemComparer(e, element)))
                         {
                             var newElement = (T)element.DeepCopy();
-                            OnConstraint(newElement);
+                            onConstraint(newElement);
                             result.Add(newElement);
                         }
                     }

@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Serialization
             using (MemoryStream stream = new MemoryStream())
             {
                 using (var sw = new StreamWriter(stream, new UTF8Encoding(false)))
-                using (JsonWriter jw = new BetterDecimalJsonTextWriter(sw))
+                using (JsonWriter jw = SerializationUtil.CreateJsonTextWriter(sw))
                 {
                     // [WMR 20160421] serializer action now calls Flush before disposing
                     serializer(jw);
@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Serialization
             //return resultBuilder.ToString();
 
             using (StringWriter sw = new StringWriter(resultBuilder))
-            using (JsonWriter jw = new BetterDecimalJsonTextWriter(sw))
+            using (JsonWriter jw = SerializationUtil.CreateJsonTextWriter(sw))
             {
                 // [WMR 20160421] serializer action now calls Flush before disposing
                 serializer(jw);

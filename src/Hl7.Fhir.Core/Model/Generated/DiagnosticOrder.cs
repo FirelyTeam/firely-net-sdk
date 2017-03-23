@@ -329,11 +329,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // EventComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (StatusElement != null) yield return StatusElement;
                     if (Description != null) yield return Description;
                     if (DateTimeElement != null) yield return DateTimeElement;
@@ -498,11 +494,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ItemComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Code != null) yield return Code;
                     foreach (var elem in Specimen) { if (elem != null) yield return elem; }
                     if (BodySite != null) yield return BodySite;
@@ -807,17 +799,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// DomainResource elements
-				if (Text != null) yield return Text;
-				foreach (var elem in Contained) { if (elem != null) yield return elem; }
-				foreach (var elem in Extension) { if (elem != null) yield return elem; }
-				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-				// DiagnosticOrder elements
+                foreach (var item in base.Children) yield return item;
 				if (Subject != null) yield return Subject;
 				if (Orderer != null) yield return Orderer;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }

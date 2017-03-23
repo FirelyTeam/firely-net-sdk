@@ -1,0 +1,297 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="nl-core-address" />
+  <meta>
+    <versionId value="4" />
+    <lastUpdated value="2016-11-17T14:11:17.311+00:00" />
+  </meta>
+  <url value="http://fhir.nl/fhir/StructureDefinition/nl-core-address" />
+  <version value="1.0" />
+  <name value="nl-core-address" />
+  <status value="draft" />
+  <publisher value="HL7 Netherlands" />
+  <description value="Base StructureDefinition for Address Type with additions for Dutch realm addresses. Dutch addresses break down Address.line in several parts and it is important to mark an address as being 'officially registered'." />
+  <copyright value="CC0" />
+  <fhirVersion value="1.0.2" />
+  <mapping>
+    <identity value="zib-address" />
+    <uri value="https://zibs.nl/wiki/Patient(NL)" />
+    <name value="Address as part of Zorginformatiebouwsteen Patient" />
+  </mapping>
+  <mapping>
+    <identity value="BRP" />
+    <uri value="https://nl.wikipedia.org/wiki/Basisregistratie_Personen" />
+    <name value="Basisregistratie Personen" />
+    <comments value="Voorheen GBA - Gemeentelijke basisregistratie" />
+  </mapping>
+  <kind value="datatype" />
+  <constrainedType value="Address" />
+  <abstract value="false" />
+  <base value="http://hl7.org/fhir/StructureDefinition/Address" />
+  <differential>
+    <element id="Address">
+      <path value="Address" />
+      <short value="A physical/postal address " />
+      <definition value="There is a variety of postal address formats defined around the world. This format defines a superset that is the basis for all addresses around the world and adds all relevant components to express Dutch addresses. &#xD;&#xA;&#xD;&#xA;A Dutch Address is a proper FHIR Address. Systems that do not understand any of the extensions, will be able to render and work with a Dutch address. Dutch addresses make certain address parts separately communicable. These parts are required for use in true Dutch systems when dealing with Dutch addresses, but may not have value for international systems when information gets sent abroad.&#xD;&#xA;&#xD;&#xA;To have true compatibility an implementer SHOULD use the core Address parts as intended. To have addresses work for Dutch context, the implementer SHOULD in addition use the extension elements." />
+      <alias value="adres" />
+      <type>
+        <code value="Address" />
+      </type>
+      <exampleAddress>
+        <extension url="http://fhir.nl/fhir/StructureDefinition/nl-address-official">
+          <valueBoolean value="false" />
+        </extension>
+        <line value="Binnenkant 12A Hoog">
+          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetName">
+            <valueString value="Binnenkant" />
+          </extension>
+          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-houseNumber">
+            <valueString value="12" />
+          </extension>
+          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-buildingNumberSuffix">
+            <valueString value="A" />
+          </extension>
+          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-unitID">
+            <valueString value="Hoog" />
+          </extension>
+        </line>
+        <city value="Amsterdam" />
+        <state value="NH" />
+        <postalCode value="1000AA" />
+        <country value="NLD" />
+      </exampleAddress>
+      <condition value="nl-streetname-if-official-and-other-line-parts" />
+      <constraint>
+        <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+          <valueString value="extension.where(url = 'http://fhir.nl/fhir/StructureDefinition/nl-core-address-official').valueBoolean.where(true).empty() or line.where(                             extension.url in ('http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-houseNumber' | 'http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-buildingNumberSuffix' | 'http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-additionalLocator')                             and extension.where(url = 'http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetName').empty).empty" />
+        </extension>
+        <key value="nl-streetname-if-official-and-other-line-parts" />
+        <requirements value="This constraint checks conformance against the Dutch BRP constraints on address parts. However: when you only send postalCode + houseNumber which is enough for certain cases this may still be a valid address" />
+        <severity value="error" />
+        <human value="Address.streetName in an official address SHALL have a value if one of houseNumber|buildingNumberSuffix|additionalLocator has a value" />
+        <xpath value="not(.[f:extension[@url='http://fhir.nl/fhir/StructureDefinition/nl-core-address-official'][f:valueBoolean/@value='true']][f:line[empty(f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetName'])][f:extension[@url=('http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-houseNumber','http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-buildingNumberSuffix','http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-additionalLocator')]]])" />
+      </constraint>
+      <mapping>
+        <identity value="zib-address" />
+        <map value="NL-CM:0.1.4" />
+      </mapping>
+    </element>
+    <element id="Address.extension">
+      <path value="Address.extension" />
+      <slicing>
+        <discriminator value="url" />
+        <rules value="openAtEnd" />
+      </slicing>
+    </element>
+    <element id="Address.extension.official">
+      <path value="Address.extension" />
+      <name value="official" />
+      <short value="Mark an address as an 'officially registered' address." />
+      <definition value="Mark an address as an 'officially registered' address. In Dutch context that means it is registered in the Basisregistratie persoonsgegevens (BRP)" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://fhir.nl/fhir/StructureDefinition/nl-core-address-official" />
+      </type>
+      <mapping>
+        <identity value="zib-address" />
+        <map value="NL-CM:0.1.11" />
+      </mapping>
+    </element>
+    <element id="Address.line.extension">
+      <path value="Address.line.extension" />
+      <slicing>
+        <discriminator value="url" />
+        <rules value="openAtEnd" />
+      </slicing>
+    </element>
+    <element id="Address.line.extension.streetName">
+      <path value="Address.line.extension" />
+      <name value="streetName" />
+      <requirements value="Basisregistratie Persoonsgegevens 11.10 Straatnaam" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetName" />
+      </type>
+      <mapping>
+        <identity value="zib-address" />
+        <map value="NL-CM:0.1.12" />
+      </mapping>
+      <mapping>
+        <identity value="BRP" />
+        <map value="11.10 Straatnaam" />
+      </mapping>
+    </element>
+    <element id="Address.line.extension.houseNumber">
+      <path value="Address.line.extension" />
+      <name value="houseNumber" />
+      <requirements value="Basisregistratie Persoonsgegevens 11.20 Huisnummer" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-houseNumber" />
+      </type>
+      <mapping>
+        <identity value="zib-address" />
+        <map value="NL-CM:0.1.13" />
+      </mapping>
+      <mapping>
+        <identity value="BRP" />
+        <map value="11.20 Huisnummer" />
+      </mapping>
+    </element>
+    <element id="Address.line.extension.buildingNumbersuffix">
+      <path value="Address.line.extension" />
+      <name value="buildingNumberSuffix" />
+      <definition value="HouseNumberLetter - A letter following the house number as assigned by the municipal authorities.&#xD;&#xA;HouseNumberAddition - The letters or signs needed to locate the mailbox, in addition to the house number and letter." />
+      <requirements value="Basisregistratie Persoonsgegevens 11.30 Huisletter&#xD;&#xA;11.40 Huisnummertoevoeging&#xD;&#xA;12.10 Locatieomschrijving" />
+      <min value="0" />
+      <max value="*" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-buildingNumberSuffix" />
+      </type>
+      <mapping>
+        <identity value="zib-address" />
+        <map value="NL-CM:0.1.40" />
+      </mapping>
+      <mapping>
+        <identity value="zib-address" />
+        <map value="NL-CM:0.1.41" />
+      </mapping>
+      <mapping>
+        <identity value="BRP" />
+        <map value="11.30 Huisletter" />
+      </mapping>
+      <mapping>
+        <identity value="BRP" />
+        <map value="11.40 Huisnummertoevoeging" />
+      </mapping>
+    </element>
+    <element id="Address.line.extension.unitID">
+      <path value="Address.line.extension" />
+      <name value="unitID" />
+      <definition value="Extra information such as the building name, building number, entrance, route number." />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-unitID" />
+      </type>
+      <mapping>
+        <identity value="zib-address" />
+        <map value="NL-CM:0.1.28" />
+      </mapping>
+    </element>
+    <element id="Address.line.extension.additionalLocator">
+      <path value="Address.line.extension" />
+      <name value="additionalLocator" />
+      <definition value="HouseNumberIndication - The indication used for addresses which do not consist of the usual street name and house number." />
+      <requirements value="Basisregistratie Persoonsgegevens 11.50 Aanduiding bij huisnummer" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-additionalLocator" />
+      </type>
+      <mapping>
+        <identity value="zib-address" />
+        <map value="NL-CM:0.1.42" />
+      </mapping>
+      <mapping>
+        <identity value="BRP" />
+        <map value="11.50 Aanduiding bij huisnummer" />
+      </mapping>
+    </element>
+    <element id="Address.city">
+      <path value="Address.city" />
+      <short value="Name of city, town etc." />
+      <definition value="The name of the city, town, village or other community or delivery center." />
+      <requirements value="Basisregistratie Persoonsgegevens 11.70 Woonplaatsnaam" />
+      <alias value="Municipality" />
+      <alias value="woonplaats" />
+      <exampleString value="Den Haag" />
+      <mapping>
+        <identity value="zib-address" />
+        <map value="NL-CM:0.1.14" />
+      </mapping>
+      <mapping>
+        <identity value="BRP" />
+        <map value="11.70 Woonplaatsnaam" />
+      </mapping>
+    </element>
+    <element id="Address.district">
+      <path value="Address.district" />
+      <short value="District name (aka county)" />
+      <definition value="The name of the administrative area (county)." />
+      <comments value="District is sometimes known as county, but in some regions 'county' is used in place of city (municipality), so county name should be conveyed in city instead. In a Dutch address this element is used for the population of a &quot;gemeente&quot;" />
+      <requirements value="Basisregistratie Persoonsgegevens 09.10 Gemeente van inschrijving" />
+      <alias value="County" />
+      <alias value="gemeente" />
+      <exampleString value="Wateringen" />
+      <mapping>
+        <identity value="zib-address" />
+        <map value="NL-CM:0.1.16" />
+      </mapping>
+      <mapping>
+        <identity value="BRP" />
+        <map value="09.10 Gemeente van inschrijving" />
+      </mapping>
+    </element>
+    <element id="Address.state">
+      <path value="Address.state" />
+      <short value="Sub-unit of country (abbreviations ok)." />
+      <definition value="Sub-unit of a country with limited sovereignty in a federally organized country. A code may be used if codes are in common use (i.e. US 2 letter state codes). For Dutch addresses this element should contain the &quot;provincie&quot; code" />
+      <requirements value="Some (Dutch) cities have the same name in multiple provinces. Dutch examples include Bergen (Noord-Holland / Limburg) and  Geesteren (Gelderland / Overijssel)." />
+      <alias value="Province" />
+      <alias value="Territory" />
+      <alias value="provincie" />
+      <exampleString value="ZH" />
+    </element>
+    <element id="Address.postalCode">
+      <path value="Address.postalCode" />
+      <short value="Postal code for area" />
+      <definition value="A postal code designating a region defined by the postal service." />
+      <comments value="Dutch postal codes have pattern '\d{4}[A-Z]{2}' so they do not have spaces. Systems can easily render postal codes with a space if necessary." />
+      <alias value="Zip" />
+      <alias value="postcode" />
+      <exampleString value="9132AG" />
+      <condition value="nl-postal-code-pattern" />
+      <constraint>
+        <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+          <valueString value="(country in 'nl' | 'nld' | 'nederland').not() or matches('^\\d{4}[A-Z]{2}$')" />
+        </extension>
+        <key value="nl-postal-code-pattern" />
+        <severity value="error" />
+        <human value="Dutch postal code pattern 'nnnnAA'" />
+        <xpath value="not(../f:country[lower-case(@value)=('nl','nld','nederland')]) or matches(@value,'^\d{4}[A-Z]{2}$')" />
+      </constraint>
+      <mapping>
+        <identity value="zib-address" />
+        <map value="NL-CM:0.1.15" />
+      </mapping>
+      <mapping>
+        <identity value="BRP" />
+        <map value="11.60 Postcode" />
+      </mapping>
+    </element>
+    <element id="Address.country">
+      <path value="Address.country" />
+      <short value="Country (can be ISO 3166 3 letter code)" />
+      <definition value="A country (code) for the address." />
+      <alias value="land" />
+      <exampleString value="NLD" />
+      <mapping>
+        <identity value="zib-address" />
+        <map value="NL-CM:0.1.17" />
+      </mapping>
+      <mapping>
+        <identity value="BRP" />
+        <map value="11.60 Postcode" />
+      </mapping>
+    </element>
+  </differential>
+</StructureDefinition>

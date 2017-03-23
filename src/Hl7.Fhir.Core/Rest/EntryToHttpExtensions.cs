@@ -122,13 +122,15 @@ namespace Hl7.Fhir.Rest
 
         private static void setBodyAndContentType(HttpWebRequest request, Resource data, ResourceFormat format, bool CompressRequestBody, out byte[] body)
         {
-            if (data == null) throw Error.ArgumentNull("data");
+            if (data == null) throw Error.ArgumentNull(nameof(data));
 
             if (data is Binary)
             {
                 var bin = (Binary)data;
                 body = bin.Content;
-                request.WriteBody(CompressRequestBody, bin.Content);
+                // This is done by the caller after the OnBeforeRequest is called so that other properties
+                // can be set before the content is committed
+                // request.WriteBody(CompressRequestBody, bin.Content);
                 request.ContentType = bin.ContentType;
             }
             else
@@ -137,7 +139,9 @@ namespace Hl7.Fhir.Rest
                     FhirSerializer.SerializeToXmlBytes(data, summary: Fhir.Rest.SummaryType.False) :
                     FhirSerializer.SerializeToJsonBytes(data, summary: Fhir.Rest.SummaryType.False);
 
-                request.WriteBody(CompressRequestBody, body);
+                // This is done by the caller after the OnBeforeRequest is called so that other properties
+                // can be set before the content is committed
+                // request.WriteBody(CompressRequestBody, body);
                 request.ContentType = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false);
             }
         }

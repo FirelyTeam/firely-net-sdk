@@ -325,9 +325,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                // Element elements
-                foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                // SampledData elements
+                foreach (var item in base.Children) yield return item;
                 if (Origin != null) yield return Origin;
                 if (PeriodElement != null) yield return PeriodElement;
                 if (FactorElement != null) yield return FactorElement;

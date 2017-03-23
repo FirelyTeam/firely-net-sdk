@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2017, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -10,6 +10,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -39,48 +40,62 @@ namespace Hl7.Fhir.Specification.Snapshot
         #region Annotation: Differential Constraint
 
         /// <summary>
-        /// Indicates elements and properties in the <see cref="StructureDefinition.SnapshotComponent"/>
+        /// Custom annotation for elements and properties in the <see cref="StructureDefinition.SnapshotComponent"/>
         /// that are constrained by the <see cref="StructureDefinition.DifferentialComponent"/>.
         /// </summary>
-        sealed class ConstrainedByDifferentialAnnotation
+        sealed class ConstrainedByDiffAnnotation
         {
             //
         }
 
         /// <summary>Annotate the specified snapshot element to indicate that it is constrained by the differential.</summary>
-        internal static void SetConstrainedByDifferential(this Base element)
+        internal static void SetConstrainedByDiffAnnotation(this Base element)
         {
-            element?.AddAnnotation(new ConstrainedByDifferentialAnnotation());
+            if (element == null) { throw Error.ArgumentNull(nameof(element)); }
+            element.AddAnnotation(new ConstrainedByDiffAnnotation());
         }
 
         /// <summary>Remove any existing differential constraint annotation from the specified snapshot element.</summary>
-        internal static void ClearConstrainedByDifferential(this Base element)
+        internal static void RemoveConstrainedByDiffAnnotation(this Base element)
         {
-            element?.RemoveAnnotations<ConstrainedByDifferentialAnnotation>();
+            if (element == null) { throw Error.ArgumentNull(nameof(element)); }
+            element.RemoveAnnotations<ConstrainedByDiffAnnotation>();
         }
 
         /// <summary>Recursively remove any existing differential constraint annotations from the specified snapshot element and all it's children.</summary>
-        internal static void ClearAllConstrainedByDifferential(this Base element)
+        internal static void RemoveAllConstrainedByDiffAnnotations(this Base element)
         {
             if (element == null) { throw Error.ArgumentNull(nameof(element)); }
-            element.ClearConstrainedByDifferential();
+            element.RemoveConstrainedByDiffAnnotation();
             foreach (var child in element.Children)
             {
-                child.ClearAllConstrainedByDifferential();
+                child.RemoveAllConstrainedByDiffAnnotations();
             }
         }
 
         /// <summary>Recursively remove any existing differential constraint annotations from the specified snapshot elements and all their children.</summary>
-        internal static void ClearAllConstrainedByDifferential<T>(this List<T> elements) where T : Base
+        internal static void RemoveAllConstrainedByDiffAnnotations<T>(this IEnumerable<T> elements) where T : Base
         {
             if (elements == null) { throw Error.ArgumentNull(nameof(elements)); }
             foreach (var elem in elements)
             {
-                elem.ClearAllConstrainedByDifferential();
+                elem.RemoveAllConstrainedByDiffAnnotations();
             }
         }
 
-        public static bool IsConstrainedByDifferential(this Element elem) => elem != null && elem.HasAnnotation<ConstrainedByDifferentialAnnotation>();
+        /// <summary>
+        /// Determines if the specified element is annotated as being constrained by the differential.
+        /// Note that this method is non-recursive; only the specified element itself is inspected, child element annotations are ignored.
+        /// Use <seealso cref="HasDiffConstraintAnnotations"/> to perform a recursive check.
+        /// </summary>
+        public static bool IsConstrainedByDiff(this Base elem) => elem != null && elem.HasAnnotation<ConstrainedByDiffAnnotation>();
+
+        /// <summary>Determines if the specified element or any of it's children is annotated as being constrained by the differential.</summary>
+        public static bool HasDiffConstraintAnnotations(this Base elem)
+            => elem != null && (
+                elem.HasAnnotation<ConstrainedByDiffAnnotation>()
+                || elem.Children.Any(e => e.HasDiffConstraintAnnotations())
+            );
 
         #endregion
 
@@ -90,6 +105,10 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>For annotating a differential element definition with a reference to the associated generated snapshot element definition.</summary>
         sealed class SnapshotElementDefinitionAnnotation
         {
+            /// <summary>
+            /// Custom annotation type for <see cref="ElementDefinition"/> instances in the <see cref="StructureDefinition.Differential"/> component.
+            /// Returns a reference to the associated <see cref="ElementDefinition"/> instance in the <see cref="StructureDefinition.Snapshot"/> component.
+            /// </summary>
             public ElementDefinition SnapshotElement { get; }
             public SnapshotElementDefinitionAnnotation(ElementDefinition snapshotElement)
             {
@@ -100,28 +119,38 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         /// <summary>
         /// Annotate the root <see cref="ElementDefinition"/> instance in the <see cref="StructureDefinition.Differential"/> component
-        /// with a reference to the generated snapshot root <see cref="ElementDefinition"/> instance.
+        /// with a reference to the associated root <see cref="ElementDefinition"/> instance in the <see cref="StructureDefinition.Snapshot"/> component.
         /// </summary>
         internal static void SetSnapshotRootElementAnnotation(this StructureDefinition sd, ElementDefinition rootElemDef)
         {
             sd?.Differential?.Element[0]?.SetSnapshotElementAnnotation(rootElemDef);
         }
 
+        /// <summary>
+        /// Annotate the specified <see cref="ElementDefinition"/> instance in the <see cref="StructureDefinition.Differential"/> component
+        /// with a reference to the associated <see cref="ElementDefinition"/> instance in the <see cref="StructureDefinition.Snapshot"/> component.
+        /// </summary>
+        /// <param name="diffElemDef"></param>
+        /// <param name="snapElemDef"></param>
         internal static void SetSnapshotElementAnnotation(this ElementDefinition diffElemDef, ElementDefinition snapElemDef)
         {
             diffElemDef?.AddAnnotation(new SnapshotElementDefinitionAnnotation(snapElemDef));
         }
 
         /// <summary>
-        /// Retrieve a reference to a previously generated snapshot root <see cref="ElementDefinition"/> instance
-        /// from the root <see cref="ElementDefinition"/> instance in the <see cref="StructureDefinition.Differential"/> component.
+        /// Return the annotated reference to the associated root <see cref="ElementDefinition"/> instance
+        /// in the <see cref="StructureDefinition.Snapshot"/> component, if it exists, or <c>null</c> otherwise.
         /// </summary>
         internal static ElementDefinition GetSnapshotRootElementAnnotation(this StructureDefinition sd) => sd?.Differential?.Element[0]?.GetSnapshotElementAnnotation();
 
+        /// <summary>
+        /// Return the annotated reference to the associated <see cref="ElementDefinition"/> instance
+        /// in the <see cref="StructureDefinition.Snapshot"/> component, if it exists, or <c>null</c> otherwise.
+        /// </summary>
         internal static ElementDefinition GetSnapshotElementAnnotation(this ElementDefinition ed) => ed?.Annotation<SnapshotElementDefinitionAnnotation>()?.SnapshotElement;
 
         /// <summary>Remove all <see cref="SnapshotElementDefinitionAnnotation"/> instances from the specified <see cref="ElementDefinition"/>.</summary>
-        internal static void ClearSnapshotElementAnnotations(this ElementDefinition ed) { ed?.RemoveAnnotations<SnapshotElementDefinitionAnnotation>(); }
+        internal static void RemoveSnapshotElementAnnotations(this ElementDefinition ed) { ed?.RemoveAnnotations<SnapshotElementDefinitionAnnotation>(); }
 
         #endregion
 

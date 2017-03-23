@@ -562,6 +562,7 @@ if (!abstractType){
             {
                 get
                 {
+                    foreach (var item in base.Children) yield return item;
 <#
 					YieldComponent(docTypes, componentName, "Element", component, nsR, enums, "                    ");
 #>
@@ -745,6 +746,7 @@ if (!abstractType){
         {
             get
             {
+                foreach (var item in base.Children) yield return item;
 <#
                 YieldChildren(docResources, e as System.Xml.XmlElement, nsR, enums, "                ");
 #>

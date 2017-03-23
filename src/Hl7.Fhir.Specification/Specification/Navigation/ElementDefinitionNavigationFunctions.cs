@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Specification.Navigation
         private const char RESLICE_NAME_SEPARATOR_CHAR = '/';
         private const string RESLICE_NAME_SEPARATOR = "/";
 
-        //static bool IsInvalidSliceName(string sliceName) => sliceName != null && sliceName.Contains("//") || sliceName.EndsWith("/");
+        //static bool IsInvalidSliceName(string sliceName) => sliceName != null && sliceName.StartsWith("/") || sliceName.Contains("//") || sliceName.EndsWith("/");
 
         /// <summary>Determines if the specified element name represents a reslice: "slice/reslice[/reslice2...]".</summary>
         public static bool IsResliceName(string sliceName) => sliceName != null && sliceName.Contains(RESLICE_NAME_SEPARATOR);

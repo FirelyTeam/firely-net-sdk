@@ -109,8 +109,8 @@ namespace Hl7.Fhir.Rest
         /// <returns>this (Parameters), so you can chain AddParameter calls</returns>
         public SearchParams Add(string name, string value)
         {
-            if (name == null) throw Error.ArgumentNull("name");
-            if (value == null) throw Error.ArgumentNull("value");
+            if (name == null) throw Error.ArgumentNull(nameof(name));
+            if (value == null) throw Error.ArgumentNull(nameof(value));
 
             if (name == SEARCH_PARAM_QUERY) Query = nonEmptySingleValue(name, Query, value);
             else if (name == SEARCH_PARAM_TEXT) Text = nonEmptySingleValue(name, Text, value);
