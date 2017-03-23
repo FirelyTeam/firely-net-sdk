@@ -3309,7 +3309,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
             Assert.IsTrue(nav.MoveToFirstChild());
-            
+
             // Verify slice entry
             Assert.IsTrue(nav.MoveToChild("identifier"));
             Assert.AreEqual(corePatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
@@ -3874,6 +3874,197 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.ReturnToBookmark(bm));
         }
 
+        [TestMethod]
+        public void TestElementMappings()
+        {
+            var profile = _testResolver.FindStructureDefinition("http://example.org/fhir/StructureDefinition/TestMedicationStatement-prescribing");
+            Assert.IsNotNull(profile);
+
+            var diffElem = profile.Differential.Element.FirstOrDefault(e => e.Path == "MedicationStatement.informationSource");
+            Assert.IsNotNull(diffElem);
+            dumpMappings(diffElem);
+
+            StructureDefinition expanded = null;
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            _generator.PrepareElement += elementHandler;
+            try
+            {
+                generateSnapshotAndCompare(profile, out expanded);
+            }
+            finally
+            {
+                _generator.PrepareElement -= elementHandler;
+            }
+            dumpOutcome(_generator.Outcome);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            var elems = expanded.Snapshot.Element;
+            dumpElements(elems);
+
+            var elem = elems.FirstOrDefault(e => e.Path == "MedicationStatement.informationSource");
+            Assert.IsNotNull(elem);
+            dumpMappings(elem);
+
+            // Snapshot element mappings should include all of the differential element mappings
+            Assert.IsTrue(diffElem.Mapping.All(dm => elem.Mapping.Any(m => m.IsExactly(dm))));
+
+        }
+
+        static void dumpMappings(ElementDefinition elem) => dumpMappings(elem.Mapping, $"Mappings for {elem.Path}:");
+
+        static void dumpMappings(IList<ElementDefinition.MappingComponent> mappings, string header = null)
+        {
+            Debug.WriteLineIf(header != null, header);
+            foreach (var mapping in mappings)
+            {
+                Debug.Print($"{mapping.Identity} : {mapping.Map}");
+            }
+        }
+
+        // Ewout: type slices cannot contain renamed elements!
+
+        static StructureDefinition PatientNonTypeSliceProfile => new StructureDefinition()
+        {
+            ConstrainedType = FHIRDefinedType.Patient,
+            Base = ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Patient),
+            Name = "NonTypeSlicePatient",
+            Url = "http://example.org/fhir/StructureDefinition/NonTypeSlicePatient",
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("Patient.deceased[x]")
+                    {
+                        Min = 1,
+                        // Repeat the base element types (no additional constraints)
+                        Type = new List<ElementDefinition.TypeRefComponent>()
+                        {
+                            new ElementDefinition.TypeRefComponent() { Code = FHIRDefinedType.Boolean },
+                            new ElementDefinition.TypeRefComponent() { Code = FHIRDefinedType.DateTime }
+                        }
+                    }
+                }
+            }
+        };
+
+        [TestMethod]
+        public void TestPatientNonTypeSlice()
+        {
+            var profile = PatientNonTypeSliceProfile;
+
+            var resolver = new InMemoryProfileResolver(profile);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            _generator = new SnapshotGenerator(multiResolver);
+
+            //StructureDefinition expanded = null;
+            //generateSnapshotAndCompare(profile, out expanded);
+
+            //_generator.BeforeExpandElement += beforeExpandElementHandler;
+            //StructureDefinition expanded = null;
+            //try
+            //{
+            //    generateSnapshotAndCompare(profile, out expanded);
+            //}
+            //finally
+            //{
+            //    _generator.BeforeExpandElement -= beforeExpandElementHandler;
+            //}
+            //Assert.IsNotNull(expanded);
+            //Assert.IsTrue(expanded.HasSnapshot);
+            //dumpElements(expanded.Snapshot.Element);
+            //dumpOutcome(_generator.Outcome);
+
+            // Force expansion of Patient.deceased[x]
+            var nav = ElementDefinitionNavigator.ForDifferential(profile);
+            Assert.IsTrue(nav.MoveToFirstChild());
+            var result = _generator.ExpandElement(nav);
+            dumpElements(profile.Differential.Element);
+            dumpOutcome(_generator.Outcome);
+            Assert.IsTrue(result);
+
+            Assert.IsNull(_generator.Outcome);
+        }
+
+        // Ewout: type slices cannot contain renamed elements!
+        static StructureDefinition ObservationSimpleQuantityProfile => new StructureDefinition()
+        {
+            ConstrainedType = FHIRDefinedType.Observation,
+            Base = ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Observation),
+            Name = "NonTypeSlicePatient",
+            Url = "http://example.org/fhir/StructureDefinition/ObservationSimpleQuantityProfile",
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("Observation.valueQuantity")
+                    {
+                        // Repeat the base element types (no additional constraints)
+                        Type = new List<ElementDefinition.TypeRefComponent>()
+                        {
+                            new ElementDefinition.TypeRefComponent()
+                            {
+                                // Constrain Quantity to SimpleQuantity
+                                // Code = FHIRDefinedType.Quantity,
+                                // Profile = new string[] { ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.SimpleQuantity) }
+
+                                Code = FHIRDefinedType.SimpleQuantity
+                            },
+                        }
+                    }
+                }
+            }
+        };
+
+        // [WMR 20170321] NEW
+        [TestMethod]
+        public void TestSimpleQuantityProfile()
+        {
+            var profile = ObservationSimpleQuantityProfile;
+
+            var resolver = new InMemoryProfileResolver(profile);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            _generator = new SnapshotGenerator(multiResolver);
+
+            _generator.BeforeExpandElement += beforeExpandElementHandler;
+            StructureDefinition expanded = null;
+            try
+            {
+                generateSnapshotAndCompare(profile, out expanded);
+            }
+            finally
+            {
+                _generator.BeforeExpandElement -= beforeExpandElementHandler;
+            }
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+            dumpElements(expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Observation.value")));
+            dumpOutcome(_generator.Outcome);
+
+            // Force expansion of Observation.valueQuantity
+            //var nav = ElementDefinitionNavigator.ForDifferential(profile);
+            //Assert.IsTrue(nav.MoveToFirstChild());
+            //var result = _generator.ExpandElement(nav);
+            //dumpElements(profile.Differential.Element);
+            //dumpOutcome(_generator.Outcome);
+            //Assert.IsTrue(result);
+            Assert.IsNull(_generator.Outcome);
+
+            // Ensure that renamed diff elements override base elements with original names
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            // Snapshot should not contain elements with original name
+            Assert.IsFalse(nav.JumpToFirst("Observation.value[x]"));
+            // Snapshot should contain renamed elements
+            Assert.IsTrue(nav.JumpToFirst("Observation.valueQuantity"));
+            Assert.IsNotNull(nav.Current.Type);
+            Assert.AreEqual(1, nav.Current.Type.Count);
+            // Assert.AreEqual(FHIRDefinedType.SimpleQuantity, nav.Current.Type[0].Code);
+            // Assert.AreEqual(FHIRDefinedType.Quantity, nav.Current.Type[0].Code);
+
+            var type = nav.Current.Type.First();
+            Debug.Print($"{nav.Path} : {type.Code} - '{type.Profile.FirstOrDefault()}'");
+        }
     }
 
 }
