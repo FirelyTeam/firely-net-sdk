@@ -733,10 +733,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // ensureBaseComponents(typeNav, snap, true);
 
                     // [WMR 20170321] HACK: Never copy elements names from the root element (e.g. SimpleQuantity)
-                    if (typeNav.Current.NameElement != null)
+                    if (typeNav.Current.SliceNameElement != null)
                     {
-                        Debug.WriteLine($"[{nameof(SnapshotGenerator)}.{nameof(mergeTypeProfiles)}] Explicitly prevent copying of root element name: {typeNav.Path} : '{typeNav.Current.Name}'");
-                        typeNav.Current.Name = null;
+                        Debug.WriteLine($"[{nameof(SnapshotGenerator)}.{nameof(mergeTypeProfiles)}] Explicitly prevent copying of root element name: {typeNav.Path} : '{typeNav.Current.SliceName}'");
+                        typeNav.Current.SliceName = null;
                     }
 
                 }

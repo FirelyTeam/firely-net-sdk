@@ -567,14 +567,16 @@ namespace Hl7.Fhir.Specification.Snapshot
             return elemType.Profile;
         }
 
-        /// <summary>Special predefined discriminator for slicing on element type.</summary>
-        static readonly string TypeDiscriminator = "@type";
+        // [EK 20170323 Commented out since these three were no longer used...
 
-        /// <summary>Special predefined discriminator for slicing on element type profile.</summary>
-        static readonly string ProfileDiscriminator = "@profile";
+        ///// <summary>Special predefined discriminator for slicing on element type.</summary>
+        //static readonly string TypeDiscriminator = "@type";
 
-        /// <summary>Special predefined discriminator for slicing on element type and profile.</summary>
-        static readonly string TypeAndProfileDiscriminator = "type@profile";
+        ///// <summary>Special predefined discriminator for slicing on element type profile.</summary>
+        //static readonly string ProfileDiscriminator = "@profile";
+
+        ///// <summary>Special predefined discriminator for slicing on element type and profile.</summary>
+        //static readonly string TypeAndProfileDiscriminator = "type@profile";
 
         /// <summary>Fixed default discriminator for slicing extension elements.</summary>
         static readonly string UrlDiscriminator = "url";
