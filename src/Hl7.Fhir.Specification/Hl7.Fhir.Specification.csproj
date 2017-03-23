@@ -12,7 +12,6 @@
     <PackageTags>HL7 FHIR Profile Metadata Validation Publication Schematron Schema</PackageTags>
     <AssemblyName>Hl7.Fhir.STU3.Specification</AssemblyName>
     <RootNamespace>Hl7.Fhir.Specification</RootNamespace>
-    <Version>0.93.0-alpha1</Version>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
