@@ -12,6 +12,7 @@ using System.Linq;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
+using System.Diagnostics;
 using System.Reflection;
 
 namespace Hl7.Fhir.Specification.Snapshot
@@ -67,7 +68,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                     {
                         throw Error.InvalidOperation($"Invalid operation in snapshot generator. Path cannot be changed from '{snap.Path}' to '{diff.Path}', since the type is sliced to '{diff.Type.First().Code}'");
                     }
-
                     snap.PathElement = mergePrimitiveAttribute(snap.PathElement, diff.PathElement);
                 }
 
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // representation cannot be overridden
 
                 snap.NameElement = mergePrimitiveAttribute(snap.NameElement, diff.NameElement);
-            
+
                 // Codes are cumulative based on the code value
                 snap.Code = mergeCollection(snap.Code, diff.Code, (a, b) => a.Code == b.Code);
 

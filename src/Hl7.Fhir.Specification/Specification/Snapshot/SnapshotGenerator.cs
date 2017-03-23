@@ -356,14 +356,17 @@ namespace Hl7.Fhir.Specification.Snapshot
                     StructureDefinition typeStructure = getStructureForTypeRef(defn, typeRef, true);
                     return expandElementType(nav, typeStructure);
                 }
-                else
-                {
-                    // Alternatively, we could try to expand the most specific common base profile, e.g. (Backbone)Element
-                    // TODO: Determine the intersection, i.e. the most specific common type that all types are derived from
+                // Alternatively, we could try to expand the most specific common base profile, e.g. (Backbone)Element
+                // TODO: Determine the intersection, i.e. the most specific common type that all types are derived from
 
-                    addIssueInvalidChoiceConstraint(defn);
-                    return false;
-                }
+                // [WMR 20170321] WRONG! Differential is allowed to repeat the element types defined by the base profile
+                // Here, we don't have access to the associated base type, so we cannot reliable determine if the types are valid
+                // => Don't expand element and return true to continue processing; caller is responsible for validating the actual types
+                //else
+                //{
+                //    addIssueInvalidChoiceConstraint(defn);
+                //    return false;
+                //}
             }
 
             else // if (defn.Type.Count == 1)
@@ -711,22 +714,28 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // Clone and rebase
                 var rebasePath = diff.Path;
+
                 if (profileRef.IsComplex)
                 {
                     rebasePath = ElementDefinitionNavigator.GetParentPath(rebasePath);
                 }
                 var rebasedTypeSnapshot = (StructureDefinition.SnapshotComponent)typeStructure.Snapshot.DeepCopy();
                 rebasedTypeSnapshot.Rebase(rebasePath);
-                // [WMR 20161011] Also rebase slice names?
 
                 var typeNav = new ElementDefinitionNavigator(rebasedTypeSnapshot.Element);
-
                 if (!profileRef.IsComplex)
                 {
                     typeNav.MoveToFirstChild();
 
                     // [WMR 20170208] Update ElementDefinition.Base components
                     // ensureBaseComponents(typeNav, snap, true);
+
+                    // [WMR 20170321] HACK: Never copy elements names from the root element (e.g. SimpleQuantity)
+                    if (typeNav.Current.NameElement != null)
+                    {
+                        Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(mergeTypeProfiles)}] Explicitly prevent copying of root element name: {typeNav.Path} : '{typeNav.Current.Name}'");
+                        typeNav.Current.Name = null;
+                    }
 
                 }
                 else
@@ -736,6 +745,18 @@ namespace Hl7.Fhir.Specification.Snapshot
                         addIssueInvalidProfileNameReference(snap.Current, profileRef.ElementName, primaryDiffTypeProfile);
                         return false;
                     }
+                }
+
+                // [WMR 20170321] Handle element renaming
+                // diff can rename choice type element, e.g. Observation.valueQuantity
+                // snap may contain the original element paths, e.g. Observation.value[x]
+                // In that case, diff overrides snap; i.e. snap should also be renamed
+                // => First renamed snap before merging diff
+                if (diff.PathName != snap.PathName)
+                {
+                    Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(mergeTypeProfiles)}] Rename snapshot element(s): {snap.Path} => '{diff.Path}'");
+                    Debug.Assert(!snap.HasChildren);
+                    snap.Current.Path = diff.Path;
                 }
 
                 // [WMR 20170208] Merge order is important!
