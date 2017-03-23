@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsNull(client);
 
-            var artifact = wa.ResolveByUri("http://fhir3.healthintersections.com.au/open/StructureDefinition/Flag");
+            var artifact = wa.ResolveByUri("http://fhir3.healthintersections.com.au/open/StructureDefinition/Patient");
 
             Assert.IsNotNull(client);
             Assert.AreEqual(client.Status, 3);
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(vs);
             Assert.IsTrue(vs is ValueSet);
 
-            var artifact = resolver.ResolveByUri("http://fhir3.healthintersections.com.au/open/StructureDefinition/flag");
+            var artifact = resolver.ResolveByUri("http://fhir3.healthintersections.com.au/open/StructureDefinition/Flag");
 
             Assert.IsNotNull(artifact);
             Assert.IsTrue(artifact is StructureDefinition);

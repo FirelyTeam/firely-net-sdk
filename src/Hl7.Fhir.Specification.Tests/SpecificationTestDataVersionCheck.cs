@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Specification.Tests
     [TestClass]
     public class SpecificationTestDataVersionCheck
     {
-        [TestMethod]
+        [TestMethod, Ignore]
         public void VerifyAllTestDataSpecification()
         {
             string location = typeof(TestDataHelper).GetTypeInfo().Assembly.Location;

@@ -89,7 +89,7 @@ CopySpecFile "search-parameters.xml" "$srcdir\Hl7.Fhir.Core\Model\Source"
 # Copy the files necessary for the specification library (specification.zip / data)
 CopySpecFile "conceptmaps.xml" "$srcdir\Hl7.Fhir.Specification\data"
 CopySpecFile "dataelements.xml" "$srcdir\Hl7.Fhir.Specification\data"
-CopySpecFile "expansions.xml" "$srcdir\Hl7.Fhir.Specification\data"
+#CopySpecFile "expansions.xml" "$srcdir\Hl7.Fhir.Specification\data"
 CopySpecFile "extension-definitions.xml" "$srcdir\Hl7.Fhir.Specification\data"
 CopySpecFile "namingsystem-registry.xml" "$srcdir\Hl7.Fhir.Specification\data"
 CopySpecFile "profiles-others.xml" "$srcdir\Hl7.Fhir.Specification\data"
