@@ -4223,7 +4223,7 @@
               <severity value="error" />
               <human value="There SHALL be a code if there is a value and it SHALL be an expression of time.  If system is present, it SHALL be UCUM.  If value is present, it SHALL be positive." />
               <expression value="(code or value.empty()) and (system.empty() or system = %ucum) and (value.empty() or value &gt; 0)" />
-              <xpath value="(f:code or not(f:value)) and (not(exists(f:system)) or f:system/@value='http://unitsofmeasure.org') and not(contains(f:value/@value, '-'))" />
+              <xpath value="(f:code or not(f:value)) and (not(exists(f:system)) or f:system/@value='http://unitsofmeasure.org') and (not(f:value/@value) or f:value/@value &gt;=0)" />
             </constraint>
             <mapping>
               <identity value="v2" />
@@ -4445,7 +4445,7 @@
               <severity value="error" />
               <human value="There SHALL be a code if there is a value and it SHALL be an expression of time.  If system is present, it SHALL be UCUM.  If value is present, it SHALL be positive." />
               <expression value="(code or value.empty()) and (system.empty() or system = %ucum) and (value.empty() or value &gt; 0)" />
-              <xpath value="(f:code or not(f:value)) and (not(exists(f:system)) or f:system/@value='http://unitsofmeasure.org') and not(contains(f:value/@value, '-'))" />
+              <xpath value="(f:code or not(f:value)) and (not(exists(f:system)) or f:system/@value='http://unitsofmeasure.org') and (not(f:value/@value) or f:value/@value &gt;=0)" />
             </constraint>
             <mapping>
               <identity value="rim" />
@@ -24794,7 +24794,7 @@
               <severity value="error" />
               <human value="If there's a timeOfDay, there cannot be be a when, or vice versa" />
               <expression value="timeOfDay.empty() or when.empty()" />
-              <xpath value="not(exists(f:timeofDay)) or not(exists(f:when))" />
+              <xpath value="not(exists(f:timeOfDay)) or not(exists(f:when))" />
             </constraint>
             <constraint>
               <key value="tim-2" />
@@ -25264,7 +25264,7 @@
               <severity value="error" />
               <human value="If there's a timeOfDay, there cannot be be a when, or vice versa" />
               <expression value="timeOfDay.empty() or when.empty()" />
-              <xpath value="not(exists(f:timeofDay)) or not(exists(f:when))" />
+              <xpath value="not(exists(f:timeOfDay)) or not(exists(f:when))" />
             </constraint>
             <constraint>
               <key value="tim-2" />

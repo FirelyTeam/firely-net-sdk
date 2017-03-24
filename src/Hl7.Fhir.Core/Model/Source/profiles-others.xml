@@ -3354,7 +3354,7 @@
               <severity value="error" />
               <human value="Not Done Reason can only be specified if NotDone is &quot;true&quot;" />
               <expression value="notDone or notDoneReason.exists().not()" />
-              <xpath value="f:notDone='true' or not(exists(f:notDoneReason))" />
+              <xpath value="f:notDone/@value=true() or not(exists(f:notDoneReason))" />
               <source value="FamilyMemberHistory" />
             </constraint>
             <constraint>
@@ -9892,7 +9892,7 @@
               <severity value="error" />
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present" />
               <expression value="value.empty() or code!=component.code" />
-              <xpath value="not(exists(f:value)) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
+              <xpath value="not(exists(f:*[starts-with(local-name(.), 'value')])) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
               <source value="Observation" />
             </constraint>
             <constraint>
@@ -11923,7 +11923,7 @@
               <severity value="error" />
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present" />
               <expression value="value.empty() or code!=component.code" />
-              <xpath value="not(exists(f:value)) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
+              <xpath value="not(exists(f:*[starts-with(local-name(.), 'value')])) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
               <source value="Observation" />
             </constraint>
             <constraint>
@@ -14462,7 +14462,7 @@
               <severity value="error" />
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present" />
               <expression value="value.empty() or code!=component.code" />
-              <xpath value="not(exists(f:value)) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
+              <xpath value="not(exists(f:*[starts-with(local-name(.), 'value')])) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
               <source value="Observation" />
             </constraint>
             <constraint>
@@ -17009,7 +17009,7 @@
               <severity value="error" />
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present" />
               <expression value="value.empty() or code!=component.code" />
-              <xpath value="not(exists(f:value)) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
+              <xpath value="not(exists(f:*[starts-with(local-name(.), 'value')])) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
               <source value="Observation" />
             </constraint>
             <constraint>
@@ -19649,7 +19649,7 @@
               <severity value="error" />
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present" />
               <expression value="value.empty() or code!=component.code" />
-              <xpath value="not(exists(f:value)) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
+              <xpath value="not(exists(f:*[starts-with(local-name(.), 'value')])) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
               <source value="Observation" />
             </constraint>
             <constraint>
@@ -22274,7 +22274,7 @@
               <severity value="error" />
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present" />
               <expression value="value.empty() or code!=component.code" />
-              <xpath value="not(exists(f:value)) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
+              <xpath value="not(exists(f:*[starts-with(local-name(.), 'value')])) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
               <source value="Observation" />
             </constraint>
             <constraint>
@@ -24899,7 +24899,7 @@
               <severity value="error" />
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present" />
               <expression value="value.empty() or code!=component.code" />
-              <xpath value="not(exists(f:value)) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
+              <xpath value="not(exists(f:*[starts-with(local-name(.), 'value')])) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
               <source value="Observation" />
             </constraint>
             <constraint>
@@ -27539,7 +27539,7 @@
               <severity value="error" />
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present" />
               <expression value="value.empty() or code!=component.code" />
-              <xpath value="not(exists(f:value)) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
+              <xpath value="not(exists(f:*[starts-with(local-name(.), 'value')])) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
               <source value="Observation" />
             </constraint>
             <constraint>
@@ -30179,7 +30179,7 @@
               <severity value="error" />
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present" />
               <expression value="value.empty() or code!=component.code" />
-              <xpath value="not(exists(f:value)) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
+              <xpath value="not(exists(f:*[starts-with(local-name(.), 'value')])) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
               <source value="Observation" />
             </constraint>
             <constraint>
@@ -32819,7 +32819,7 @@
               <severity value="error" />
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present" />
               <expression value="value.empty() or code!=component.code" />
-              <xpath value="not(exists(f:value)) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
+              <xpath value="not(exists(f:*[starts-with(local-name(.), 'value')])) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
               <source value="Observation" />
             </constraint>
             <constraint>
@@ -35459,7 +35459,7 @@
               <severity value="error" />
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present" />
               <expression value="value.empty() or code!=component.code" />
-              <xpath value="not(exists(f:value)) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
+              <xpath value="not(exists(f:*[starts-with(local-name(.), 'value')])) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
               <source value="Observation" />
             </constraint>
             <constraint>
@@ -38084,7 +38084,7 @@
               <severity value="error" />
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present" />
               <expression value="value.empty() or code!=component.code" />
-              <xpath value="not(exists(f:value)) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
+              <xpath value="not(exists(f:*[starts-with(local-name(.), 'value')])) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
               <source value="Observation" />
             </constraint>
             <constraint>
@@ -40709,7 +40709,7 @@
               <severity value="error" />
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present" />
               <expression value="value.empty() or code!=component.code" />
-              <xpath value="not(exists(f:value)) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
+              <xpath value="not(exists(f:*[starts-with(local-name(.), 'value')])) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
               <source value="Observation" />
             </constraint>
             <constraint>
@@ -45148,7 +45148,7 @@
               <severity value="error" />
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present" />
               <expression value="value.empty() or code!=component.code" />
-              <xpath value="not(exists(f:value)) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
+              <xpath value="not(exists(f:*[starts-with(local-name(.), 'value')])) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
               <source value="Observation" />
             </constraint>
             <constraint>
@@ -49232,7 +49232,7 @@
               <severity value="error" />
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present" />
               <expression value="value.empty() or code!=component.code" />
-              <xpath value="not(exists(f:value)) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
+              <xpath value="not(exists(f:*[starts-with(local-name(.), 'value')])) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
               <source value="Observation" />
             </constraint>
             <constraint>
@@ -51449,7 +51449,7 @@
               <severity value="error" />
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present" />
               <expression value="value.empty() or code!=component.code" />
-              <xpath value="not(exists(f:value)) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
+              <xpath value="not(exists(f:*[starts-with(local-name(.), 'value')])) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
               <source value="Observation" />
             </constraint>
             <constraint>
@@ -53378,7 +53378,7 @@
               <severity value="error" />
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present" />
               <expression value="value.empty() or code!=component.code" />
-              <xpath value="not(exists(f:value)) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
+              <xpath value="not(exists(f:*[starts-with(local-name(.), 'value')])) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
               <source value="Observation" />
             </constraint>
             <constraint>
@@ -55347,7 +55347,7 @@
               <severity value="error" />
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present" />
               <expression value="value.empty() or code!=component.code" />
-              <xpath value="not(exists(f:value)) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
+              <xpath value="not(exists(f:*[starts-with(local-name(.), 'value')])) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)" />
               <source value="Observation" />
             </constraint>
             <constraint>
@@ -69319,7 +69319,7 @@
               <severity value="error" />
               <human value="enableWhen must contain either a 'answer' or a 'hasAnswer' element" />
               <expression value="hasAnswer.exists() xor answer.exists()" />
-              <xpath value="count(*[starts-with(local-name(.), 'answer')]|hasAnswer) = 1" />
+              <xpath value="count(f:*[starts-with(local-name(.), 'answer')]|self::f:hasAnswer) = 1" />
             </constraint>
             <isModifier value="true" />
             <isSummary value="true" />

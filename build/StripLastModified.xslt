@@ -12,6 +12,7 @@
 	<xsl:template match="fhir:StructureDefinition/fhir:date"><xsl:text disable-output-escaping="yes">&lt;!-- Removed date --&gt;</xsl:text></xsl:template>
 	<xsl:template match="fhir:ValueSet/fhir:date"><xsl:text disable-output-escaping="yes">&lt;!-- Removed date --&gt;</xsl:text></xsl:template>
 	<xsl:template match="fhir:SearchParameter/fhir:date"><xsl:text disable-output-escaping="yes">&lt;!-- Removed date --&gt;</xsl:text></xsl:template>
+	<xsl:template match="fhir:NamingSystem/fhir:date"><xsl:text disable-output-escaping="yes">&lt;!-- Removed date --&gt;</xsl:text></xsl:template>
 	<xsl:template match="@*"><xsl:value-of select="." disable-output-escaping="yes"></xsl:value-of></xsl:template>
 	
     <xsl:template match="@*|node()" >

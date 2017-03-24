@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Feb 28, 2017 07:41+0000 for FHIR v1.9.0 
+  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -38,12 +38,12 @@
   <xs:include schemaLocation="fhir-base.xsd"/>
   <xs:element name="DocumentManifest" type="DocumentManifest">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A manifest that defines a set of documents.</xs:documentation>
+      <xs:documentation xml:lang="en">A collection of documents compiled for a purpose together with metadata that applies to the collection.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:complexType name="DocumentManifest">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A manifest that defines a set of documents.</xs:documentation>
+      <xs:documentation xml:lang="en">A collection of documents compiled for a purpose together with metadata that applies to the collection.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -115,7 +115,7 @@
   </xs:complexType>
   <xs:complexType name="DocumentManifest.Content">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A manifest that defines a set of documents.</xs:documentation>
+      <xs:documentation xml:lang="en">A collection of documents compiled for a purpose together with metadata that applies to the collection.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -133,7 +133,7 @@
   </xs:complexType>
   <xs:complexType name="DocumentManifest.Related">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A manifest that defines a set of documents.</xs:documentation>
+      <xs:documentation xml:lang="en">A collection of documents compiled for a purpose together with metadata that applies to the collection.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">

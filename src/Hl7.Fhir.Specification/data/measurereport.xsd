@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Feb 28, 2017 07:41+0000 for FHIR v1.9.0 
+  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -49,29 +49,29 @@
     <xs:complexContent>
       <xs:extension base="DomainResource">
         <xs:sequence>
-          <xs:element name="measure" minOccurs="1" maxOccurs="1" type="Reference">
+          <xs:element name="identifier" minOccurs="0" maxOccurs="1" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A reference to the Measure that was evaluated to produce this report.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="type" minOccurs="1" maxOccurs="1" type="MeasureReportType">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The type of measure report. This may be an individual report, which provides a single patient's score for the measure, a patient listing, which returns the list of patients that meet the various criteria in the measure, or a summary report, which returns a population count for each criteria in the measure.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="patient" minOccurs="0" maxOccurs="1" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Optional Patient if the report was requested for a single patient.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="period" minOccurs="1" maxOccurs="1" type="Period">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The reporting period for which the report was calculated.</xs:documentation>
+              <xs:documentation xml:lang="en">A formal identifier that is used to identify this report when it is represented in other formats, or referenced in a specification, model, design or an instance.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="status" minOccurs="1" maxOccurs="1" type="MeasureReportStatus">
             <xs:annotation>
               <xs:documentation xml:lang="en">The report status. No data will be available until the report status is complete.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="type" minOccurs="1" maxOccurs="1" type="MeasureReportType">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The type of measure report. This may be an individual report, which provides a single patient's score for the measure; a patient listing, which returns the list of patients that meet the various criteria in the measure; or a summary report, which returns a population count for each of the criteria in the measure.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="measure" minOccurs="1" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A reference to the Measure that was evaluated to produce this report.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="patient" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Optional Patient if the report was requested for a single patient.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="date" minOccurs="0" maxOccurs="1" type="dateTime">
@@ -82,6 +82,11 @@
           <xs:element name="reportingOrganization" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Reporting Organization.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="period" minOccurs="1" maxOccurs="1" type="Period">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The reporting period for which the report was calculated.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="group" type="MeasureReport.Group" minOccurs="0" maxOccurs="unbounded">
@@ -117,7 +122,7 @@
           </xs:element>
           <xs:element name="measureScore" minOccurs="0" maxOccurs="1" type="decimal">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The measure score.</xs:documentation>
+              <xs:documentation xml:lang="en">The measure score for this population group, calculated as appropriate for the measure type and scoring method, and based on the contents of the populations defined in the group.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="stratifier" type="MeasureReport.Stratifier" minOccurs="0" maxOccurs="unbounded">
@@ -200,7 +205,7 @@
           </xs:element>
           <xs:element name="measureScore" minOccurs="0" maxOccurs="1" type="decimal">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The measure score for this stratum.</xs:documentation>
+              <xs:documentation xml:lang="en">The measure score for this stratum, calculated as appropriate for the measure type and scoring method, and based on only the members of this stratum.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>

@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Tue, Feb 28, 2017 07:41+0000 for FHIR v1.9.0 
+  Generated on Tue, Mar 21, 2017 06:09+1100 for FHIR v3.0.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -250,7 +250,7 @@
           </xs:element>
           <xs:element name="securityLabel" minOccurs="0" maxOccurs="unbounded" type="Coding">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Denotes security labels for the identified entity.</xs:documentation>
+              <xs:documentation xml:lang="en">Security labels for the identified entity.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="name" minOccurs="0" maxOccurs="1" type="string">
@@ -270,7 +270,7 @@
           </xs:element>
           <xs:element name="detail" type="AuditEvent.Detail" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Additional Information about the entity.</xs:documentation>
+              <xs:documentation xml:lang="en">Tagged value pairs for conveying additional information about the entity.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -286,12 +286,12 @@
         <xs:sequence>
           <xs:element name="type" minOccurs="1" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Name of the property.</xs:documentation>
+              <xs:documentation xml:lang="en">The type of extra detail provided in the value.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="value" minOccurs="1" maxOccurs="1" type="base64Binary">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Property value.</xs:documentation>
+              <xs:documentation xml:lang="en">The details, base64 encoded. Used to carry bulk information.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -364,7 +364,7 @@
   </xs:simpleType>
   <xs:complexType name="AuditEventAction">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Indicator for type of action performed during the event that generated the audit.</xs:documentation>
+      <xs:documentation xml:lang="en">Indicator for type of action performed during the event that generated the event</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
