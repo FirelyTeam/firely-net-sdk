@@ -255,9 +255,8 @@ namespace Hl7.FhirPath.Tests
         {
             var expression = testLine.Element("expression");
             var output = testLine.Elements("output");
-            bool hasInvalid;
-            
-            string invalid = expression.TryGetAttribute("invalid", out hasInvalid);
+
+            string invalid = expression.TryGetAttribute("invalid", out bool hasInvalid);
 
             if (hasInvalid)
             {

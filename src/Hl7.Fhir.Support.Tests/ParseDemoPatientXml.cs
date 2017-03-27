@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Hl7.FhirPath.Tests.XmlNavTests
 {
-    public class ParseDemoPatient
+    public class ParseDemoPatientXml
     {
         [Fact]
         public void CanReadThroughNavigator()
@@ -66,15 +66,5 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             Assert.True(identifier.MoveToNext());  // use (element!)
             Assert.Equal("use", identifier.Name);
         }
-
-        //[Fact]
-        //public void NavigateXmlDoc()
-        //{
-        //    var tpXml = System.IO.File.ReadAllText("TestData\\fp-test-patient.xml");
-
-        //    var nav = XmlDomFhirNavigator.Create(tpXml);
-
-        //    nav.GetChildrenByName("hi");
-        //}
     }
 }

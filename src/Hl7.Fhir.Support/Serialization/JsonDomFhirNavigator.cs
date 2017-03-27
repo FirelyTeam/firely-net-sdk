@@ -62,16 +62,12 @@ namespace Hl7.Fhir.Serialization
 
             private static JsonNavigatorNode build(string name, JToken main, JToken shadow)
             {
-                // Note: Per FHIR serialization rules, the shadow prop should always be a "null" or a JObject.
-                if (!(shadow is JObject shadowObject))
-                    throw Error.Format("Properties beginning with '_' must always be complex objects");
-
-                if (main.Type != JTokenType.Null)
+                if (!isNull(main))
                 {
-                    if (shadow.Type != JTokenType.Null)
+                    if (!isNull(shadow))
                     {
                         // There is a shadow property, main prop should be a simple JValue
-                        return new JsonNavigatorNode(name, (JValue)main, shadowObject);
+                        return new JsonNavigatorNode(name, (JValue)main, getShadowObject(shadow));
                     }
                     else
                     {
@@ -84,13 +80,18 @@ namespace Hl7.Fhir.Serialization
                 else
                 {
                     // No main property, just return the shadow prop                        
-                    return new JsonNavigatorNode(name, shadowObject);
+                    return new JsonNavigatorNode(name, getShadowObject(shadow));
                 }
+
+                bool isNull(JToken t) => t == null || t.Type == JTokenType.Null;
+
+                // Note: Per FHIR serialization rules, the shadow prop should always be a "null" or a JObject.
+                JObject getShadowObject(JToken s) => (s as JObject) ?? throw Error.Format("Properties beginning with '_' must always be complex objects");
             }
 
             public string Name { get; private set; }
 
-            public string Type => throw new NotImplementedException();
+            public string Type => _content.GetCoreTypeFromObject();
 
             public object Value
             {
@@ -115,7 +116,7 @@ namespace Hl7.Fhir.Serialization
                 if (_content == null || _content.HasValues == false) yield break;
 
                 // ToList() added explicitly here, we really need our own copy of the list of children
-                var children = _content.Children<JProperty>().ToList();
+                var children = _content.Children<JProperty>().Where(c=>c.Name != JTokenExtensions.RESOURCETYPE_MEMBER_NAME).ToList();
 
                 while(children.Any())
                 {
@@ -164,12 +165,15 @@ namespace Hl7.Fhir.Serialization
 
             private IEnumerable<JsonNavigatorNode> enumerateElement(string name, JProperty main, JProperty shadow)
             {
-                // TODO: This won't work where arrays are not the same length, this needs to be checked first
-
                 var mains = makeList(main);
                 var shadows = makeList(shadow);
 
-                return mains.Zip(shadows, (m,s) => JsonNavigatorNode.build(name,m,s));
+                int length = Math.Max(mains.Length, shadows.Length);
+
+                for (var index = 0; index < length; index++)
+                    yield return JsonNavigatorNode.build(name, at(mains, index), at(shadows, index));
+
+                JToken at(JToken[] list, int i) => list.Length > i ? list[i] : null;
 
                 JToken[] makeList(JProperty prop)
                 {
@@ -205,9 +209,11 @@ namespace Hl7.Fhir.Serialization
 
         public IElementNavigator Clone()
         {
-            var copy = new JsonDomFhirNavigator();
-            copy._siblings = _siblings;
-            copy._index = _index;
+            var copy = new JsonDomFhirNavigator()
+            {
+                _siblings = _siblings,
+                _index = _index
+            };
 
             return copy;
         }
