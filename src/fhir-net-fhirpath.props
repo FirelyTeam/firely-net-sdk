@@ -14,7 +14,7 @@
 
   <!-- Compiler settings -->
   <PropertyGroup>
-    <LangVersion>6</LangVersion>
+    <LangVersion>7</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

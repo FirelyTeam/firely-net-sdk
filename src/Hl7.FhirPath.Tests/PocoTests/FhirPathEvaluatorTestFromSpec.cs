@@ -21,7 +21,6 @@ using Hl7.FhirPath.Functions;
 using Xunit;
 using Xunit.Sdk;
 using Xunit.Abstractions;
-using Furore.Support;
 using Hl7.Fhir.FhirPath;
 
 namespace Hl7.FhirPath.Tests
@@ -107,7 +106,7 @@ namespace Hl7.FhirPath.Tests
         private void test(Model.Resource resource, String expression, IEnumerable<XElement> expected)
         {
             var tpXml = FhirSerializer.SerializeToXml(resource);
-            var npoco = new PocoElementNavigator(resource);
+            var npoco = new PocoNavigator(resource);
             //       FhirPathEvaluatorTest.Render(npoco);
 
             IEnumerable<IElementNavigator> actual = npoco.Select(expression);
@@ -179,18 +178,18 @@ namespace Hl7.FhirPath.Tests
 
             foreach (var file in files)
             {
-                output.WriteLine("==== Running tests from file '{0}' ====".FormatWith(file));
+                output.WriteLine($"==== Running tests from file '{file}' ====");
                 runTests(file);
                 output.WriteLine(Environment.NewLine);
             }
 
-            output.WriteLine("Ran {0} tests in total, {1} succeeded, {2} failed.".FormatWith(totalTests, totalTests - numFailed, numFailed));
+            output.WriteLine($"Ran {totalTests} tests in total, {totalTests - numFailed} succeeded, {numFailed} failed.");
 
             if (numFailed > 0)
             {
                 // todo: mh
                 // Assert.Fail("There were {0} unsuccessful tests (out of a total of {1})".FormatWith(numFailed, totalTests));
-                throw new Exception("There were {0} unsuccessful tests (out of a total of {1})".FormatWith(numFailed, totalTests));
+                throw new Exception($"There were {numFailed} unsuccessful tests (out of a total of {totalTests})");
             }
 
         }

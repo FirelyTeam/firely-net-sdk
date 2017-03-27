@@ -14,14 +14,14 @@ using System.Linq;
 using Hl7.FhirPath.Expressions;
 using System.Diagnostics;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
 using System.Xml.Linq;
 using Xunit;
 using System.IO;
 using Xunit.Abstractions;
-using Furore.Support;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model.Primitives;
+using Hl7.Fhir.Utility;
+using Hl7.Fhir.FhirPath;
 
 namespace Hl7.FhirPath.Tests
 {

@@ -6,6 +6,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.1.12" />
     <PackageReference Include="MSTest.TestFramework" Version="1.1.11" />
+    <PackageReference Include="System.ValueTuple" Version="4.3.0" />
     <PackageReference Include="xunit" Version="2.2.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
   </ItemGroup>
@@ -20,15 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="FhirPath\**" />
-    <Compile Remove="PocoTests\**" />
-    <EmbeddedResource Remove="FhirPath\**" />
-    <EmbeddedResource Remove="PocoTests\**" />
-    <None Remove="FhirPath\**" />
-    <None Remove="PocoTests\**" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\..\..\fhir-net-api\src\Hl7.Fhir.Core\Hl7.Fhir.DSTU2.csproj" />
     <ProjectReference Include="..\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
     <ProjectReference Include="..\Hl7.FhirPath\Hl7.FhirPath.csproj" />
   </ItemGroup>
