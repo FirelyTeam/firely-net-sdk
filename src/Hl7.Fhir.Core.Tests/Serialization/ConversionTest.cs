@@ -36,13 +36,13 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual("true", PrimitiveTypeConverter.ConvertTo<string>(result));
         }
 
-        [TestMethod]
-        public void TestGetValueAsString()
-        {
-            var x = new FhirBoolean(true);
+        //[TestMethod]
+        //public void TestGetValueAsString()
+        //{
+        //    var x = new FhirBoolean(true);
 
-            Assert.AreEqual("true", x.GetValueAsString());
-        }
+        //    Assert.AreEqual("true", x.GetValueAsString());
+        //}
 
         [TestMethod]
         public void TestStringToInteger()

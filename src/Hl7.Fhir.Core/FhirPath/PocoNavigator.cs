@@ -253,6 +253,12 @@ namespace Hl7.Fhir.FhirPath
                     _parentPath = Location;
                     _parentShortPath = ShortPath;
                     _parentCommonPath = CommonPath;
+
+                    //TODO: We just called Current.Children().Any() which is actually a pretty expensive
+                    //operation - now we are doing it again! 
+                    //Since Children() does create a full list, calling Any() will generate the full list,
+                    //and we may as well cache the result and reuse it here.
+                    //In fact, why not make Children() return a List?
                     _siblings = Current.Children() as List<PocoElementNavigator>;
                     _index = 0;
                 }
