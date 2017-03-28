@@ -9,14 +9,15 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         public void CanReadThroughNavigator()
         {
             var tpXml = TestData.ReadTextFile("fp-test-patient.xml");
-
             var nav = XmlDomFhirNavigator.Create(tpXml);
 
             Assert.Equal("Patient", nav.Name);
             Assert.Equal("Patient", nav.Type);
 
             Assert.True(nav.MoveToFirstChild());
-            Assert.Equal("xmlns", nav.Name);        // Yep, even those come through
+            Assert.Equal("myattr", nav.Name);        // none-xmlns attributes will come through
+            var xmldetails = nav.GetSerializationDetails<XmlSerializationDetails>();
+            Assert.Equal("http://somenamespace", xmldetails.Namespace);
 
             Assert.True(nav.MoveToNext());
             Assert.Equal("id", nav.Name);
@@ -40,7 +41,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             Assert.False(id.MoveToFirstChild()); // cannot move into xhtml
             Assert.Equal("div", id.Name); // still on xhtml <div>
             Assert.False(id.MoveToNext());  // nothing more in <text>
-            
+
             Assert.True(text.MoveToNext()); // contained
             Assert.Equal("contained", text.Name);
             Assert.Equal("Patient", text.Type);
@@ -65,6 +66,29 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             Assert.Equal("id", identifier.Name);
             Assert.True(identifier.MoveToNext());  // use (element!)
             Assert.Equal("use", identifier.Name);
+        }
+
+        [Fact]
+        public void ProducesCorrectLocations()
+        {
+            var tpXml = TestData.ReadTextFile("fp-test-patient.xml");
+            var patient = XmlDomFhirNavigator.Create(tpXml);
+
+            Assert.Equal("Patient", patient.Location);
+
+            patient.MoveToFirstChild();
+            Assert.Equal("Patient.myattr[0]", patient.Location);
+
+            patient.MoveToNext();
+            Assert.Equal("Patient.id[0]", patient.Location);
+
+            patient.MoveToNext();   // text
+            patient.MoveToNext();   // contained[0]
+            patient.MoveToNext();   // contained[1]
+            Assert.Equal("Patient.contained[1]", patient.Location);
+
+            patient.MoveToFirstChild();
+            Assert.Equal("Patient.contained[1].id[0]", patient.Location);
         }
     }
 }

@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Collections.Generic;
+using System;
 
 namespace Hl7.Fhir.ElementModel
 {
@@ -83,6 +84,11 @@ namespace Hl7.Fhir.ElementModel
             }
 
             return false;
+        }
+
+        public T GetSerializationDetails<T>() where T : class
+        {
+            return null;
         }
     }
 

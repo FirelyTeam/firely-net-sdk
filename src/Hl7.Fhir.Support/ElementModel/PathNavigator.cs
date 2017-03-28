@@ -1,4 +1,5 @@
 ﻿
+using System;
 using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.ElementModel
@@ -70,6 +71,11 @@ namespace Hl7.Fhir.ElementModel
             bool exists = _navigator.MoveToNext();
             if (exists) _index++;
             return exists;
+        }
+
+        public T GetSerializationDetails<T>() where T : class
+        {
+            throw new NotImplementedException();
         }
     }
 }

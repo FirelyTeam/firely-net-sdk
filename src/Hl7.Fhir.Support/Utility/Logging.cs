@@ -117,18 +117,25 @@ namespace Hl7.Fhir.Utility
         /// <summary> 
         /// Creates an <see cref="FormatException"/> with the provided properties. 
         /// </summary> 
+        public static FormatException Format(string message, string location)
+        {
+            if (location != null)
+                message += $" (at path '{location}')";
+
+            return Format(message);
+        }
+
+        /// <summary> 
+        /// Creates an <see cref="FormatException"/> with the provided properties. 
+        /// </summary> 
         public static FormatException Format(string message, IPositionInfo pos)
         {
-            string excMessage;
+            string location = null;
 
             if (pos != null)
-            {
-                excMessage = String.Format("At line {0}, pos {1}: {2}", pos.LineNumber, pos.LinePosition, message);
-            }
-            else
-                excMessage = message;
+                location = $"line {pos.LineNumber}, pos {pos.LinePosition}";
 
-            return new FormatException(excMessage);
+            return Format(message, location);
         }
     }
 }

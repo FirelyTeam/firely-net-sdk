@@ -12,16 +12,12 @@ using System.Xml.Linq;
 namespace Hl7.Fhir.Serialization
 {
 
-    public class XmlSerializationDetails : IPositionProvider
+    public class XmlSerializationDetails
     {
         public XmlNodeType NodeType;
         public XNamespace Namespace;
 
         public string[] CommentBefore;
         public string[] CommentAfter;
-
-        public int LineNumber { get; set; }
-        public int LinePosition { get; set; }
-    }
-
+    }   
 }

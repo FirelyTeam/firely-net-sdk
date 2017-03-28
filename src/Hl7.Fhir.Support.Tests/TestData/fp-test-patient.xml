@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <!-- First comment -->
-<Patient xmlns="http://hl7.org/fhir">
+<Patient xmlns="http://hl7.org/fhir" xmlns:q="http://somenamespace" q:myattr="dummy">
   <!-- Comments here -->
   <id value="pat1"/>   <!-- where's this comment? -->
   <text>

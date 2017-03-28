@@ -3,7 +3,7 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Serialization;
 using Xunit;
 
-namespace Hl7.FhirPath.Tests.XmlNavTests
+namespace Hl7.FhirPath.Tests.JsonNavTests
 {
     public class ParseDemoPatientJson
     {
@@ -97,7 +97,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
 
             Assert.True(patient.MoveToNext()); // careProvider
             Assert.True(patient.MoveToNext()); // telecom (2x)
-            Assert.True(patient.MoveToNext()); 
+            Assert.True(patient.MoveToNext());
             Assert.False(patient.MoveToNext());
         }
 
@@ -108,7 +108,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             Assert.True(contact.MoveToFirstChild()); // contact.name
 
             Assert.True(contact.MoveToFirstChild()); // contact.name.family[0]            
-            Assert.Null(contact.Value); 
+            Assert.Null(contact.Value);
 
             Assert.True(contact.MoveToNext()); // family[1]
             Assert.Equal("du", contact.Value);
@@ -123,6 +123,75 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             Assert.Null(contact.Value);
             Assert.True(contact.MoveToFirstChild()); // family[4].extension
             Assert.Equal("extension", contact.Name);
+        }
+
+        [Fact]
+        public void CatchesArrayMisMatch()
+        {
+            var nav = JsonDomFhirNavigator.Create("{ 'a': [2,3,4], '_a' : [{},null] }", "test");
+            Assert.Throws<FormatException>(() => nav.MoveToFirstChild());
+
+            nav = JsonDomFhirNavigator.Create("{ 'a': 2, '_a' : [{},null] }", "test");
+            Assert.Throws<FormatException>(() => nav.MoveToFirstChild());
+
+            nav = JsonDomFhirNavigator.Create("{ 'a': [2,3,4], '_a' : {} }", "test");
+            Assert.Throws<FormatException>(() => nav.MoveToFirstChild());
+
+            nav = JsonDomFhirNavigator.Create("{ 'a': [2,3,4] }", "test");
+            Assert.True(nav.MoveToFirstChild());
+
+            nav = JsonDomFhirNavigator.Create("{ '_a': [{},{},{}] }", "test");
+            Assert.True(nav.MoveToFirstChild());
+
+            nav = JsonDomFhirNavigator.Create("{ 'a': [null,2], '_a' : [{},null] }", "test");
+            Assert.True(nav.MoveToFirstChild());
+        }
+
+        [Fact]
+        public void CatchesUnsupportedFeatures()
+        {
+            var nav = JsonDomFhirNavigator.Create("{ 'a': {}, '_a' : {} }", "test");
+            Assert.Throws<FormatException>(() => nav.MoveToFirstChild());
+
+            nav = JsonDomFhirNavigator.Create("{ 'a': 3, '_a' : 4 }", "test");
+            Assert.Throws<FormatException>(() => nav.MoveToFirstChild());
+
+            nav = JsonDomFhirNavigator.Create("{ 'a': 3, '_a' : new DateTime() }", "test");
+            Assert.Throws<FormatException>(() => nav.MoveToFirstChild());
+
+            nav = JsonDomFhirNavigator.Create("{ 'a': new DateTime() }", "test");
+            Assert.Throws<FormatException>(() => nav.MoveToFirstChild());
+        }
+
+
+        [Fact]
+        public void ProducesCorrectLocations()
+        {
+            var tpJson = TestData.ReadTextFile("json-edge-cases.json");
+
+            var patient = JsonDomFhirNavigator.Create(tpJson);
+
+            Assert.Equal("Patient", patient.Location);
+
+            patient.MoveToFirstChild();
+            var cont = patient.Clone();
+
+            Assert.Equal("Patient.identifier[0]", patient.Location);
+            patient.MoveToFirstChild();
+            Assert.Equal("Patient.identifier[0].period[0]", patient.Location);
+
+            cont.MoveToNext(); // managingOrganization
+            cont.MoveToNext();
+            Assert.Equal("Patient.active[0]", cont.Location);
+
+            cont.MoveToNext();
+            Assert.Equal("Patient.name[0]", cont.Location);
+
+            cont.MoveToNext();
+            Assert.Equal("Patient.name[1]", cont.Location);
+
+            cont.MoveToFirstChild();
+            Assert.Equal("Patient.name[1].given[0]", cont.Location);
         }
     }
 }

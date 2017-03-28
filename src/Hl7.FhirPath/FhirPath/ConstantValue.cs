@@ -135,5 +135,7 @@ namespace Hl7.FhirPath
         {
             return new ConstantValue(Value);
         }
+
+        public T GetSerializationDetails<T>() where T : class => null;
     }
 }

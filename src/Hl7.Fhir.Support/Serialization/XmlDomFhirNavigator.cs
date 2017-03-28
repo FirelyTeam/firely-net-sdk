@@ -20,17 +20,26 @@ namespace Hl7.Fhir.Serialization
         internal XmlDomFhirNavigator(XObject current)
         {
             _current = current;
+            _nameIndex = 0;
+            _parentPath = null;
         }
 
 
         public IElementNavigator Clone()
         {
-            return new XmlDomFhirNavigator(_current);
+            var copy = new XmlDomFhirNavigator(_current)
+            {
+                _nameIndex = _nameIndex,
+                _parentPath = _parentPath
+            };
+
+            return copy;
         }
 
 
-
         private XObject _current;
+        private int _nameIndex;
+        private string _parentPath;
 
         public string Name
         {
@@ -106,7 +115,10 @@ namespace Hl7.Fhir.Serialization
         {
             get
             {
-                throw new NotImplementedException();
+                if (_parentPath == null)
+                    return Name;
+                else
+                    return $"{_parentPath}.{Name}[{_nameIndex}]";
             }
         }
 
@@ -124,17 +136,21 @@ namespace Hl7.Fhir.Serialization
                 if (scan.NodeType == XmlNodeType.Element)
                 {                    
                     var element = (XElement)scan;
+                    _parentPath = Location;
 
                     // If this is a nested resource, move one level deeper
                     if (isResourceNameElement(element.Name))
                         scan = element.FirstNode;
 
                     _current = scan;
+                    _nameIndex = 0;
                     return true;
                 }
-                else if (scan.NodeType == XmlNodeType.Attribute)
+                else if (scan.NodeType == XmlNodeType.Attribute && !isReservedAttribute((XAttribute)scan))
                 {
+                    _parentPath = Location;
                     _current = scan;
+                    _nameIndex = 0;
                     return true;
                 }
 
@@ -151,9 +167,17 @@ namespace Hl7.Fhir.Serialization
             // Make this into a "move to the next child that's an element or attribute"
             while (scan != null)
             {
-                if (scan.NodeType == XmlNodeType.Element || scan.NodeType == XmlNodeType.Attribute)
-                {
+                if (scan.NodeType == XmlNodeType.Element || (scan.NodeType == XmlNodeType.Attribute && !isReservedAttribute((XAttribute)scan)))
+                {                    
+                    var currentName = Name;
+
                     _current = scan;
+
+                    if (currentName == Name)
+                        _nameIndex += 1;
+                    else
+                        _nameIndex = 0;
+
                     return true;
                 }
 
@@ -161,40 +185,30 @@ namespace Hl7.Fhir.Serialization
             }
 
             return false;
+
+            
         }
 
-
-        public int LineNumber
-        {
-            get
-            {
-                var li = (IXmlLineInfo)_current;
-
-                if (!li.HasLineInfo())
-                    return -1;
-
-                return li.LineNumber;
-            }
-        }
-
-        public int LinePosition
-        {
-            get
-            {
-                var li = (IXmlLineInfo)_current;
-
-                if (!li.HasLineInfo())
-                    return -1;
-
-                return li.LinePosition;
-            }
-        }
-
+        private bool isReservedAttribute(XAttribute attr) => attr.Name == (XName)"xmlns" || attr.Name.NamespaceName == XmlNs.XMLNS;
 
         public override string ToString()
         {
             return _current.ToString();
         }
+
+        internal XName XName
+        {
+            get
+            {
+                if (_current is XElement elem)
+                    return elem.Name;
+                else if (_current is XAttribute attr)
+                    return attr.Name;
+                else
+                    return null;
+            }
+        }
+
 
         public T GetSerializationDetails<T>() where T:class
         {
@@ -203,15 +217,8 @@ namespace Hl7.Fhir.Serialization
                 var result = new XmlSerializationDetails();
 
                 result.NodeType = _current.NodeType;
-
-                if (_current.NodeType == XmlNodeType.Element)
-                    result.Namespace = ((XElement)_current).Name.Namespace;
-                if (_current.NodeType == XmlNodeType.Attribute)
-                    result.Namespace = ((XAttribute)_current).Name.Namespace;
-
-                result.LineNumber = LineNumber;
-                result.LinePosition = LinePosition;
-                    
+                result.Namespace = XName.NamespaceName;
+                  
                 return result as T;
             }
             else

@@ -1,5 +1,5 @@
 ﻿/*  
-* Copyright (c) 2016, Furore (info@furore.com) and contributors 
+* Copyright (c) 2017, Furore (info@furore.com) and contributors 
 * See the file CONTRIBUTORS for details. 
 *  
 * This file is licensed under the BSD 3-Clause license 
@@ -17,191 +17,14 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    internal static class JTokenExtensions
-    {
-        public const string RESOURCETYPE_MEMBER_NAME = "resourceType";
-
-        public static string GetCoreTypeFromObject(this JObject o)
-        {
-            var type = o[RESOURCETYPE_MEMBER_NAME];
-
-            if(type is JValue typeValue && typeValue.Type == JTokenType.String)
-                return (string)typeValue.Value;
-            else
-                return null;
-        }
-    }
-
     public partial struct JsonDomFhirNavigator : IElementNavigator
     {
-        internal struct JsonNavigatorNode
-        {
-            private JValue _value;
-            private JObject _content;
-
-            public JsonNavigatorNode(string name, JObject content)
-            {
-                Name = name;
-                _value = null;
-                _content = content;
-            }
-
-            public JsonNavigatorNode(string name, JValue value)
-            {
-                Name = name;
-                _value = value;
-                _content = null;
-            }
-
-            public JsonNavigatorNode(string name, JValue value, JObject content)
-            {
-                Name = name;
-                _value = value;
-                _content = content;
-            }
-
-            private static JsonNavigatorNode build(string name, JToken main, JToken shadow)
-            {
-                if (!isNull(main))
-                {
-                    if (!isNull(shadow))
-                    {
-                        // There is a shadow property, main prop should be a simple JValue
-                        return new JsonNavigatorNode(name, (JValue)main, getShadowObject(shadow));
-                    }
-                    else
-                    {
-                        if (main is JValue)
-                            return new JsonNavigatorNode(name, (JValue)main);
-                        else
-                            return new JsonNavigatorNode(name, (JObject)main);
-                    }
-                }
-                else
-                {
-                    // No main property, just return the shadow prop                        
-                    return new JsonNavigatorNode(name, getShadowObject(shadow));
-                }
-
-                bool isNull(JToken t) => t == null || t.Type == JTokenType.Null;
-
-                // Note: Per FHIR serialization rules, the shadow prop should always be a "null" or a JObject.
-                JObject getShadowObject(JToken s) => (s as JObject) ?? throw Error.Format("Properties beginning with '_' must always be complex objects");
-            }
-
-            public string Name { get; private set; }
-
-            public string Type => _content.GetCoreTypeFromObject();
-
-            public object Value
-            {
-                get
-                {
-                    if(_value != null)
-                    {
-                        if(_value.Value != null)
-                        {
-                            // Make sure the representation of this Json-typed value is turned
-                            // into a string representation compatible with the XML serialization
-                            return PrimitiveTypeConverter.ConvertTo<string>(_value.Value);
-                        }
-                    }
-
-                    return null;
-                }
-            }
-
-            public IEnumerable<JsonNavigatorNode> GetChildren()
-            {
-                if (_content == null || _content.HasValues == false) yield break;
-
-                // ToList() added explicitly here, we really need our own copy of the list of children
-                var children = _content.Children<JProperty>().Where(c=>c.Name != JTokenExtensions.RESOURCETYPE_MEMBER_NAME).ToList();
-
-                while(children.Any())
-                {
-                    (string name, JProperty main, JProperty shadow) = getNextElementPair(children);
-                   
-                    IEnumerable<JsonNavigatorNode> nodes = enumerateElement(name, main, shadow);
-                   
-                    foreach (var node in nodes)
-                        yield return node;
-
-                    if (main != null) children.Remove(main);
-                    if (shadow != null) children.Remove(shadow);
-                }
-
-                         
-            }
-
-            private (string name, JProperty main, JProperty shadow) getNextElementPair(List<JProperty> children)
-            {
-                JProperty main, shadow;
-                string name;
-
-                var child = children.First();
-
-                if (isMainProperty(child))
-                {
-                    main = child;
-                    name = child.Name;
-                    var shadowPropName = makeShadowName(child);
-                    shadow = children.SingleOrDefault(c => c.Name == shadowPropName);
-                }
-                else
-                {
-                    shadow = child;
-                    var mainPropName = deriveMainName(child);
-                    name = mainPropName;
-                    main = children.SingleOrDefault(c => c.Name == mainPropName);
-                }
-
-                return (name, main, shadow);
-
-                bool isMainProperty(JProperty prop) => prop.Name[0] != '_';
-                string makeShadowName(JProperty prop) => "_" + prop.Name;
-                string deriveMainName(JProperty prop) => prop.Name.Substring(1);
-            }
-
-            private IEnumerable<JsonNavigatorNode> enumerateElement(string name, JProperty main, JProperty shadow)
-            {
-                var mains = makeList(main);
-                var shadows = makeList(shadow);
-
-                int length = Math.Max(mains.Length, shadows.Length);
-
-                for (var index = 0; index < length; index++)
-                    yield return JsonNavigatorNode.build(name, at(mains, index), at(shadows, index));
-
-                JToken at(JToken[] list, int i) => list.Length > i ? list[i] : null;
-
-                JToken[] makeList(JProperty prop)
-                {
-                    if (prop == null)
-                        return new JToken[] { };
-                    else if (prop.Value is JArray)
-                        return ((JArray)prop.Value).Children().ToArray();
-                    else
-                        return new[] { prop.Value };
-                }
-            }
-        }
-
-        /*
-            JToken
-	            JContainer
-		            JArray
-		            JConstructor
-		            JObject
-		            JProperty
-	            JValue
-		            JRaw
-         */
-
         internal JsonDomFhirNavigator(string root, JObject current)
         {
             _siblings = new[] { new JsonNavigatorNode(root, current) };
             _index = 0;
+            _nameIndex = 0;
+            _parentPath = null;
         }
 
 
@@ -212,14 +35,17 @@ namespace Hl7.Fhir.Serialization
             var copy = new JsonDomFhirNavigator()
             {
                 _siblings = _siblings,
-                _index = _index
+                _index = _index,
+                _nameIndex = _nameIndex,
+                _parentPath = _parentPath
             };
 
             return copy;
         }
 
         private JsonNavigatorNode[] _siblings;
-        private int _index;
+        private int _index, _nameIndex;
+        private string _parentPath;
 
         public string Name => Current.Name;
 
@@ -227,7 +53,16 @@ namespace Hl7.Fhir.Serialization
 
         public object Value => Current.Value;
 
-        public string Location => throw new NotImplementedException();
+        public string Location
+        {
+            get
+            {
+                if (_parentPath == null)
+                    return Current.Name;
+                else
+                    return $"{_parentPath}.{Current.Name}[{_nameIndex}]";
+            }
+        }
 
         public bool MoveToFirstChild()
         {
@@ -235,8 +70,10 @@ namespace Hl7.Fhir.Serialization
 
             if (children.Length == 0) return false;
 
+            _parentPath = Location;
             _siblings = children;
             _index = 0;
+            _nameIndex = 0;
 
             return true;
         }
@@ -245,14 +82,17 @@ namespace Hl7.Fhir.Serialization
         {
             if (_index + 1 >= _siblings.Length) return false;
 
+            var currentName = Name;
              _index += 1;
+
+            if (currentName == Name)
+                _nameIndex += 1;
+            else
+                _nameIndex = 0;
+
              return true;
         }
-
-        public int LineNumber => throw new NotImplementedException();
-
-        public int LinePosition => throw new NotImplementedException();
-        
+       
         public override string ToString()
         {
             return Current.ToString();
@@ -260,18 +100,27 @@ namespace Hl7.Fhir.Serialization
 
         public T GetSerializationDetails<T>() where T:class
         {
-            throw new NotImplementedException();
-            //if (typeof(T) == typeof(XmlSerializationDetails))
-            //{
-            //    var result = new XmlSerializationDetails();
-                    
-            //    return result as T;
-            //}
-            //else
-            //    return null;
+            return null;
         }
 
     }
+
+
+    internal static class JTokenExtensions
+    {
+        public const string RESOURCETYPE_MEMBER_NAME = "resourceType";
+
+        public static string GetCoreTypeFromObject(this JObject o)
+        {
+            var type = o[RESOURCETYPE_MEMBER_NAME];
+
+            if (type is JValue typeValue && typeValue.Type == JTokenType.String)
+                return (string)typeValue.Value;
+            else
+                return null;
+        }
+    }
+
 }
 
 
