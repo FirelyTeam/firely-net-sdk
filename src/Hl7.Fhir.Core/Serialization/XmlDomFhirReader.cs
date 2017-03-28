@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Serialization
             }
             catch (XmlException xec)
             {
-                throw Error.Format("Cannot parse xml: " + xec.Message, null);
+                throw Error.Format("Cannot parse xml: " + xec.Message);
             }
 
             setRoot(doc);

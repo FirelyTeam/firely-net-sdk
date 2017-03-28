@@ -88,8 +88,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(sd);
             // dumpReferences(sd);
 
-            StructureDefinition expanded;
-            generateSnapshotAndCompare(sd, out expanded);
+            generateSnapshotAndCompare(sd, out StructureDefinition expanded);
 
             dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);

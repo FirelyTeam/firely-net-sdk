@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Serialization
             }
             catch (Exception e)
             {
-                throw Error.Format("Cannot parse json: " + e.Message, null);
+                throw Error.Format("Cannot parse json: " + e.Message);
             }
         }
 

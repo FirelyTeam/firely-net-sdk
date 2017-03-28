@@ -171,20 +171,20 @@ namespace Hl7.Fhir.Rest
 
         private static string nonEmptySingleValue(string paramName, string currentValue, string newValue)
         {
-            if (String.IsNullOrEmpty(newValue)) throw Error.Format("Invalid {0} value: it cannot be empty".FormatWith(paramName), null);
-            if (!String.IsNullOrEmpty(currentValue)) throw Error.Format("{0} cannot be specified more than once".FormatWith(paramName), null);
+            if (String.IsNullOrEmpty(newValue)) throw Error.Format("Invalid {0} value: it cannot be empty".FormatWith(paramName));
+            if (!String.IsNullOrEmpty(currentValue)) throw Error.Format("{0} cannot be specified more than once".FormatWith(paramName));
             return newValue;
         }
 
         private static void addNonEmpty(string paramName, IList<string> values, string value)
         {
-            if (String.IsNullOrEmpty(value)) throw Error.Format("Invalid {0} value: it cannot be empty".FormatWith(paramName), null);
+            if (String.IsNullOrEmpty(value)) throw Error.Format("Invalid {0} value: it cannot be empty".FormatWith(paramName));
             values.Add(value);
         }
 
         private void addNonEmptySort(string value, SortOrder sortOrder)
         {
-            if (String.IsNullOrEmpty(value)) throw Error.Format("Invalid {0} value: it cannot be empty".FormatWith(SEARCH_PARAM_SORT), null);
+            if (String.IsNullOrEmpty(value)) throw Error.Format("Invalid {0} value: it cannot be empty".FormatWith(SEARCH_PARAM_SORT));
             Sort.Add(Tuple.Create(value, sortOrder));
         }
 
