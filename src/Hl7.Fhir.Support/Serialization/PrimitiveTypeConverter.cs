@@ -9,6 +9,7 @@
 using System;
 using System.Xml;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Model.Primitives;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -88,6 +89,10 @@ namespace Hl7.Fhir.Serialization
                 return XmlConvert.ToString((DateTimeOffset)value, FMT_FULL);
             if (value is Uri)
                 return ((Uri)value).ToString();
+            if (value is PartialDateTime pdt)
+                return pdt.ToString();
+            if (value is PartialTime pt)
+                return pt.ToString();
             if (value is Enum)
                 return ((Enum)value).GetLiteral();
 
