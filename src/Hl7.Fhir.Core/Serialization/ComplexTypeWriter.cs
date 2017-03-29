@@ -9,15 +9,9 @@
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-
 
 namespace Hl7.Fhir.Serialization
 {
@@ -86,7 +80,7 @@ namespace Hl7.Fhir.Serialization
             object value = prop.GetValue(instance);
             var isEmptyArray = (value as IList) != null && ((IList)value).Count == 0;
 
-         //   Message.Info("Handling member {0}.{1}", mapping.Name, prop.Name);
+//            Message.Info("Handling member {0}.{1}", mapping.Name, prop.Name);
 
             if ((value != null || prop.RepresentsValueElement && prop.ElementType.IsEnum() && !string.IsNullOrEmpty(((Primitive)instance).ObjectValue as string)) && !isEmptyArray)
             {
@@ -115,15 +109,20 @@ namespace Hl7.Fhir.Serialization
 
                 // Now, if our writer does not use dual properties for primitive values + rest (xml),
                 // or this is a complex property without value element, serialize data normally
-                if(!_writer.HasValueElementSupport || !serializedIntoTwoProperties(prop,value))
+                if (!_writer.HasValueElementSupport || !serializedIntoTwoProperties(prop, value))
+                {
                     writer.Serialize(prop, value, summary, SerializationMode.AllMembers);
+                }
                 else
                 {
                     // else split up between two properties, name and _name
-                    writer.Serialize(prop,value, summary, SerializationMode.ValueElement);
+                    writer.Serialize(prop, value, summary, SerializationMode.ValueElement);
                     _writer.WriteEndProperty();
                     _writer.WriteStartProperty("_" + memberName);
-                    writer.Serialize(prop, value, summary, SerializationMode.NonValueElements);
+                    if (!isFhirPrimitive(value))
+                    {
+                        writer.Serialize(prop, value, summary, SerializationMode.NonValueElements);
+                    }
                 }
 
                 _writer.WriteEndProperty();
@@ -171,6 +170,21 @@ namespace Hl7.Fhir.Serialization
                 return false;
         }
 
+        private bool isFhirPrimitive(object instance)
+        {
+            if (instance is IList)
+                instance = ((IList) instance)[0];
+
+            Type type = instance.GetType();
+            if(type == typeof(FhirString) ||
+               type == typeof(FhirBoolean) ||
+               type == typeof(FhirDateTime) ||
+               type == typeof(FhirDecimal))
+                return true;
+
+            return false;
+        }
+
         private static string upperCamel(string p)
         {
             if (p == null) return p;
@@ -185,7 +199,6 @@ namespace Hl7.Fhir.Serialization
             var mapping = _inspector.ImportType(type);
 
             var suffix = mapping.Name;
-//            if (suffix == "Reference") suffix = "Resource";
 
             return memberName + upperCamel(suffix);
         }
