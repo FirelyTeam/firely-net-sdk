@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
 
             set
             {
-                RemoveAnnotations<ResourceBaseData>();
+                this.RemoveAnnotations<ResourceBaseData>();
                 AddAnnotation(new ResourceBaseData { Base = value } );
             }
         }

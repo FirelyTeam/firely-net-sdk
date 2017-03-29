@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Model
 {
     [InvokeIValidatableObject]
     [System.Runtime.Serialization.DataContract]
-    public abstract class Base : Hl7.Fhir.Validation.IValidatableObject, IDeepCopyable, IDeepComparable, IAnnotated
+    public abstract class Base : Hl7.Fhir.Validation.IValidatableObject, IDeepCopyable, IDeepComparable, IAnnotated, IAnnotatable
     {
         public abstract bool IsExactly(IDeepComparable other);
         public abstract bool Matches(IDeepComparable pattern);
@@ -110,22 +110,11 @@ namespace Hl7.Fhir.Model
             annotations.Add(annotation);
         }
 
-        public void SetAnnotation<A>(A annotation)
-        {
-            RemoveAnnotations<A>();
-            if (annotation != null)
-                AddAnnotation(annotation);
-        }
-
         public void RemoveAnnotations(Type type)
         {
             annotations.RemoveOfType(type);
         }
 
-        public void RemoveAnnotations<A>()
-        {
-            annotations.RemoveOfType(typeof(A));
-        }
         #endregion
 
 
