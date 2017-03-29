@@ -35,6 +35,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Rest;
 using Hl7.FhirPath;
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Model
 {
@@ -50,7 +51,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                var bd = Annotation<ResourceBaseData>();
+                var bd = this.Annotation<ResourceBaseData>();
                 return bd != null ? bd.Base : null;
             }
 

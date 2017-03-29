@@ -17,6 +17,7 @@ using System.Xml.Linq;
 using System.IO;
 using Hl7.Fhir.Serialization;
 using System.Linq;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Tests
 {
