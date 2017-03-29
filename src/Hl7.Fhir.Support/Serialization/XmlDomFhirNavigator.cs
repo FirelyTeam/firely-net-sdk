@@ -97,9 +97,18 @@ namespace Hl7.Fhir.Serialization
         {
             get
             {
-                if(isXhtmlDiv(_current))
+                if (isXhtmlDiv(_current))
                 {
                     return ((XElement)_current).ToString(SaveOptions.DisableFormatting);
+                }
+                else if (_current is XElement xelem)
+                {
+                    // Special case, "value" attribute under the element
+                    // TODO: this will hide the nested text value of the element, thus making it
+                    // impossible to have both
+                    var attrVal = xelem.Attribute("value")?.Value;
+                   
+                    return attrVal;
                 }
                 else
                     return _current.Value();
@@ -189,7 +198,8 @@ namespace Hl7.Fhir.Serialization
             
         }
 
-        private bool isReservedAttribute(XAttribute attr) => attr.Name == (XName)"xmlns" || attr.Name.NamespaceName == XmlNs.XMLNS;
+        private bool isReservedAttribute(XAttribute attr) => 
+            attr.Name == (XName)"xmlns" || attr.Name.NamespaceName == XmlNs.XMLNS || attr.Name == "value";
 
         public override string ToString()
         {

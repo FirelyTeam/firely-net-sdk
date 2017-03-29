@@ -1,15 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <!-- First comment -->
-<Patient xmlns="http://hl7.org/fhir" xmlns:q="http://somenamespace" q:myattr="dummy">
+<Patient xmlns="http://hl7.org/fhir">
   <!-- Comments here -->
   <id value="pat1"/>   <!-- where's this comment? -->
   <text>
     <status value="generated"/>
-    <div xmlns="http://www.w3.org/1999/xhtml">
-      
-      <p>Patient Donald DUCK @ Acme Healthcare, Inc. MR = 654321</p>
-      
-    </div>
+    <div xmlns="http://www.w3.org/1999/xhtml"><p>Patient Donald DUCK @ Acme Healthcare, Inc. MR = 654321</p></div>
   </text>
   <!-- comment on contained -->
   <contained>

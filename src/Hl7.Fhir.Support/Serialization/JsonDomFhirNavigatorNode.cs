@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Serialization
 
         public string Name { get; private set; }
 
-        public string Type => _content.GetCoreTypeFromObject();
+        public string Type => _content?.GetCoreTypeFromObject();
 
         public object Value
         {

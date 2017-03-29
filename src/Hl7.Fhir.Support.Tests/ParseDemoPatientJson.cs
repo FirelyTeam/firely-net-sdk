@@ -2,11 +2,20 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Serialization;
 using Xunit;
+using Hl7.Fhir.Support.Utility;
+using Xunit.Abstractions;
 
 namespace Hl7.FhirPath.Tests.JsonNavTests
 {
     public class ParseDemoPatientJson
     {
+        private readonly ITestOutputHelper output;
+
+        public ParseDemoPatientJson(ITestOutputHelper output)
+        {
+            this.output = output;
+        }
+
         [Fact]
         public void CanReadThroughNavigator()
         {
@@ -193,5 +202,25 @@ namespace Hl7.FhirPath.Tests.JsonNavTests
             cont.MoveToFirstChild();
             Assert.Equal("Patient.name[1].given[0]", cont.Location);
         }
+
+        [Fact]
+        public void CompareJsonXmlParseOutcomes()
+        {
+            var tpJson = TestData.ReadTextFile("json-edge-cases.json");
+            var tpXml = TestData.ReadTextFile("json-edge-cases.xml");
+            
+            var navJson = JsonDomFhirNavigator.Create(tpJson);
+            var navXml = XmlDomFhirNavigator.Create(tpXml);
+
+            var compare = navJson.IsEqualTo(navXml);
+
+            if (compare.Success == false)
+            {
+                output.WriteLine($"Difference in {compare.Details} at {compare.FailureLocation}");
+                Assert.True(compare.Success);
+            }
+            Assert.True(compare.Success);
+        }
+
     }
 }
