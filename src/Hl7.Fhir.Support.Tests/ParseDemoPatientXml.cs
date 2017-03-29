@@ -1,5 +1,5 @@
 ﻿using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Support.Utility;
+using Hl7.Fhir.Utility;
 using System.Diagnostics;
 using Xunit;
 using Xunit.Abstractions;

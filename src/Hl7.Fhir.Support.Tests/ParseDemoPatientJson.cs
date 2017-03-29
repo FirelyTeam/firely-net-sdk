@@ -2,7 +2,7 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Serialization;
 using Xunit;
-using Hl7.Fhir.Support.Utility;
+using Hl7.Fhir.Utility;
 using Xunit.Abstractions;
 
 namespace Hl7.FhirPath.Tests.JsonNavTests
