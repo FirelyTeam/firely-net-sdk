@@ -1,7 +1,12 @@
 ﻿using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Support.Utility;
+using Hl7.Fhir.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Hl7.Fhir
@@ -99,6 +104,23 @@ namespace Hl7.Fhir
             p.ActiveElement.AddExtension("http://something.org", new FhirBoolean(false));
             Assert.AreEqual(false, p.Predicate("Patient.active.hasValue()"));
             Assert.AreEqual(true, p.Predicate("Patient.active.exists()"));
+        }
+
+        [TestMethod]
+        public void CompareToOtherElementNavigator()
+        {
+            var json = TestDataHelper.ReadTestData("TestPatient.json");
+
+            var pocoP = new PocoNavigator((new FhirJsonParser()).Parse<Patient>(json));
+            var jsonP = JsonDomFhirNavigator.Create(json);
+
+            var compare = pocoP.IsEqualTo(jsonP);
+
+            if (compare.Success == false)
+            {
+                Debug.WriteLine($"Difference in {compare.Details} at {compare.FailureLocation}");
+                Assert.Fail();
+            }           
         }
     }
 
