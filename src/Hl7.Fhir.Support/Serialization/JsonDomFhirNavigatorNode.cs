@@ -27,28 +27,28 @@ namespace Hl7.Fhir.Serialization
 
     internal struct JsonNavigatorNode
     {
-        private JValue _value;
-        private JObject _content;
+        public JValue JsonValue;
+        public JObject JsonObject;
 
         public JsonNavigatorNode(string name, JObject content)
         {
             Name = name;
-            _value = null;
-            _content = content;
+            JsonValue = null;
+            JsonObject = content;
         }
 
         public JsonNavigatorNode(string name, JValue value)
         {
             Name = name;
-            _value = value;
-            _content = null;
+            JsonValue = value;
+            JsonObject = null;
         }
 
         public JsonNavigatorNode(string name, JValue value, JObject content)
         {
             Name = name;
-            _value = value;
-            _content = content;
+            JsonValue = value;
+            JsonObject = content;
         }
 
         private static JsonNavigatorNode build(string name, JToken main, JToken shadow)
@@ -87,19 +87,19 @@ namespace Hl7.Fhir.Serialization
 
         public string Name { get; private set; }
 
-        public string Type => _content?.GetCoreTypeFromObject();
+        public string Type => JsonObject?.GetCoreTypeFromObject();
 
         public object Value
         {
             get
             {
-                if (_value != null)
+                if (JsonValue != null)
                 {
-                    if (_value.Value != null)
+                    if (JsonValue.Value != null)
                     {
                         // Make sure the representation of this Json-typed value is turned
                         // into a string representation compatible with the XML serialization
-                        return PrimitiveTypeConverter.ConvertTo<string>(_value.Value);
+                        return PrimitiveTypeConverter.ConvertTo<string>(JsonValue.Value);
                     }
                 }
 
@@ -109,10 +109,10 @@ namespace Hl7.Fhir.Serialization
 
         public IEnumerable<JsonNavigatorNode> GetChildren()
         {
-            if (_content == null || _content.HasValues == false) yield break;
+            if (JsonObject == null || JsonObject.HasValues == false) yield break;
 
             // ToList() added explicitly here, we really need our own copy of the list of children
-            var children = _content.Children<JProperty>().Where(c => c.Name != JTokenExtensions.RESOURCETYPE_MEMBER_NAME).ToList();
+            var children = JsonObject.Children<JProperty>().Where(c => c.Name != JTokenExtensions.RESOURCETYPE_MEMBER_NAME).ToList();
 
             while (children.Any())
             {

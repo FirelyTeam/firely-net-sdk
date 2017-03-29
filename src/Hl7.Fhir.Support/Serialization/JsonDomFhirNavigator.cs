@@ -100,7 +100,16 @@ namespace Hl7.Fhir.Serialization
 
         public T GetSerializationDetails<T>() where T:class
         {
-            return null;
+            if (typeof(T) == typeof(JsonSerializationDetails))
+            {
+                return new JsonSerializationDetails()
+                {
+                    RawValue = Current.JsonValue?.Value
+                } as T;
+
+            }
+            else
+                return null;
         }
 
     }

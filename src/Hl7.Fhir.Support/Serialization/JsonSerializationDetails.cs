@@ -6,17 +6,12 @@
 * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE 
 */
 
-using System.Xml;
-using System.Xml.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public class XmlSerializationDetails
+    public class JsonSerializationDetails
     {
-        public XmlNodeType NodeType;
-        public XNamespace Namespace;
-
-        public string[] CommentBefore;
-        public string[] CommentAfter;
+        public object RawValue;
     }   
 }
