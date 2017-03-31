@@ -68,8 +68,6 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             public IElementNavigator Clone() { throw new NotImplementedException(); }
 
-            public T GetSerializationDetails<T>() where T : class => null;
-
             public bool MoveToFirstChild() { throw new NotImplementedException(); }
 
             public bool MoveToNext() { throw new NotImplementedException(); }

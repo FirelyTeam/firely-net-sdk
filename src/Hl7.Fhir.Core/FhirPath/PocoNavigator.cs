@@ -306,11 +306,5 @@ namespace Hl7.Fhir.FhirPath
             }
             return result;
         }
-
-        public T GetSerializationDetails<T>() where T : class
-        {
-            // TODO: return something useful, like the reflected property of the instance
-            return null;
-        }
     }
 }
