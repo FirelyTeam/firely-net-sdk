@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Validation
             var tracker = new ScopeTracker();
             tracker.Enter(cpNav);
 
-            var entries = cpNav.GetChildrenByName("entry").GetChildrenByName("resource");
+            var entries = cpNav.Children("entry").Children("resource");
 
             int index = 0;
             foreach (var entry in entries)
@@ -110,14 +110,14 @@ namespace Hl7.Fhir.Validation
 
                 if (index == 6)
                 {
-                    var orgX = entry.GetChildrenByName("contained").First();
+                    var orgX = entry.Children("contained").First();
 
                     tracker.Enter(orgX);
                     Assert.AreEqual("http://example.org/fhir/Patient/e", tracker.ContextFullUrl(orgX));
                     Assert.AreEqual("Bundle.entry[6].resource[0].contained[0]", tracker.ResourceContext(orgX).Location);
                     tracker.Leave(orgX);
 
-                    var careProvRef = entry.GetChildrenByName("managingOrganization").GetChildrenByName("reference").Single();
+                    var careProvRef = entry.Children("managingOrganization").Children("reference").Single();
                     Assert.AreEqual("Bundle.entry[6].resource[0]", tracker.ResourceContext(careProvRef).Location);
 
                     tracker.Enter(careProvRef);
@@ -147,25 +147,25 @@ namespace Hl7.Fhir.Validation
             var tracker = new ScopeTracker();
             tracker.Enter(cpNav);
 
-            var entries = cpNav.GetChildrenByName("entry");
+            var entries = cpNav.Children("entry");
 
             var index = 0;
             foreach(var entry in entries)
             {
                 tracker.Enter(entry);
 
-                var resource = entry.GetChildrenByName("resource").First();
+                var resource = entry.Children("resource").First();
                 tracker.Enter(resource);
 
                 if(index == 2 || index == 3 || index == 4 || index == 6)
                 {
-                    var refr = resource.GetChildrenByName("managingOrganization").GetChildrenByName("reference").First();
+                    var refr = resource.Children("managingOrganization").Children("reference").First();
                     var res = tracker.Resolve(refr, refr.Value as string);
                     Assert.IsNotNull(res);
                 }
                 else if (index == 5)
                 {
-                    var refr = resource.GetChildrenByName("managingOrganization").GetChildrenByName("reference").First();
+                    var refr = resource.Children("managingOrganization").Children("reference").First();
                     var res = tracker.Resolve(refr, refr.Value as string);
                     Assert.IsNull(res);
                 }

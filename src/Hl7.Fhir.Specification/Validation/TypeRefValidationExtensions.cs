@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
-            var references = instance.GetChildrenByName("reference");
+            var references = instance.Children("reference");
             var reference = references.FirstOrDefault()?.Value as string;
 
             if (reference == null)       // No reference found -> this is always valid

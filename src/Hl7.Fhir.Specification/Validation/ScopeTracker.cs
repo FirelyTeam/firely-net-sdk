@@ -302,20 +302,20 @@ namespace Hl7.Fhir.Validation
 
         public static IEnumerable<Scope> HarvestResource(IElementNavigator instance)
         {
-            return instance.GetChildrenByName("contained")
+            return instance.Children("contained")
                     .Select(child =>
                         new Scope(child,
-                            "#" + getStringValue(child.GetChildrenByName("id").FirstOrDefault())));                            
+                            "#" + getStringValue(child.Children("id").FirstOrDefault())));                            
         }
 
         public static IEnumerable<Scope> HarvestBundle(IElementNavigator instance)
         {
-            return instance.GetChildrenByName("entry")
+            return instance.Children("entry")
                     .SelectMany(entry =>
-                        entry.GetChildrenByName("resource").Take(1)
+                        entry.Children("resource").Take(1)
                             .Select(res =>
                                 new Scope(res,
-                                    getStringValue(entry.GetChildrenByName("fullUrl").FirstOrDefault()))));
+                                    getStringValue(entry.Children("fullUrl").FirstOrDefault()))));
         }
     }
 }

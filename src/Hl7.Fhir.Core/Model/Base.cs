@@ -34,8 +34,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Introspection;
 using System.Runtime.Serialization;
 using Hl7.Fhir.Utility;
