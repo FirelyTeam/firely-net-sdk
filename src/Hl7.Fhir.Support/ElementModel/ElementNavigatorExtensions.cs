@@ -20,6 +20,21 @@ namespace Hl7.Fhir.ElementModel
             }
         }
 
+        public static IEnumerable<IElementNavigator> Children(this IEnumerable<IElementNavigator> navigators)
+        {
+            return navigators.SelectMany(n => n.Children());
+        }
+
+        public static IEnumerable<IElementNavigator> Children(this IElementNavigator navigator, string name)
+        {
+            return navigator.Children().Where(c => c.Name == name);
+        }
+
+        public static IEnumerable<IElementNavigator> Children(this IEnumerable<IElementNavigator> navigators, string name)
+        {
+            return navigators.SelectMany(n => n.Children(name));
+        }
+
         public static bool HasChildren(this IElementNavigator navigator)
         {
             var nav = navigator.Clone();
@@ -27,68 +42,49 @@ namespace Hl7.Fhir.ElementModel
             return nav.MoveToFirstChild();
         }
 
-        public static IEnumerable<IElementNavigator> Descendants(this IElementNavigator element)
+        public static bool HasChildren(this IEnumerable<IElementNavigator> navigators)
+        {
+            return navigators.Children().Any();
+        }
+
+        public static IEnumerable<IElementNavigator> Descendants(this IElementNavigator navigator)
         {
             //TODO: Don't think this is performant with these nested yields
-            foreach (var child in element.Children())
+            foreach (var child in navigator.Children())
             {
                 yield return child;
                 foreach (var grandchild in child.Descendants()) yield return grandchild;
             }
         }
 
-        public static IEnumerable<object> Values(this IElementNavigator navigator)
+        public static IEnumerable<IElementNavigator> DescendantsAndSelf(this IElementNavigator navigator)
         {
-            var nav = navigator.Clone();
-            if (nav.MoveToFirstChild())
+            return (new[] { navigator }).Concat(navigator.Descendants());
+        }
+
+        public static IEnumerable<IElementNavigator> DescendantsAndSelf(this IEnumerable<IElementNavigator> navigators)
+        {
+            return navigators.SelectMany(e => new[] { e }.Concat(e.DescendantsAndSelf()));
+        }
+
+        public static void Visit(this IElementNavigator navigator, Action<IElementNavigator> visitor)
+        {
+            visitor(navigator);
+            foreach (var child in navigator.Children())
             {
-                do
-                {
-                    yield return nav.Value;
-                }
-                while (nav.MoveToNext());
+                Visit(child, visitor);
             }
         }
 
-        public static IEnumerable<object> Values(this IElementNavigator navigator, Predicate<IElementNavigator> predicate)
+        private static void visit(this IElementNavigator navigator, Action<int, IElementNavigator> visitor, int depth = 0)
         {
-            var nav = navigator.Clone();
-            if (nav.MoveToFirstChild())
+            visitor(depth, navigator);
+            foreach (var child in navigator.Children())
             {
-                do
-                {
-                    if (predicate(nav)) yield return nav.Value;
-                }
-                while (nav.MoveToNext());
+                visit(child, visitor, depth + 1);
             }
         }
 
-        public static IEnumerable<object> Values(this IElementNavigator navigator, string name)
-        {
-            return navigator.Values(n => n.Name == name);
-        }
-
-        public static IEnumerable<object> ChildrenValues(this IEnumerable<IElementNavigator> navigators, string name)
-        {
-            return navigators.SelectMany(n => n.Values(name));
-        }
-
-        public static IEnumerable<string> GetChildNames(this IElementNavigator navigator)
-        {
-            return navigator.Children().Select(c => c.Name).Distinct();
-        }
-
-        public static IEnumerable<IElementNavigator> GetChildrenByName(this IElementNavigator navigator, string name)
-        {
-            return navigator.Children().Where(c => c.Name == name);
-        }
-
-        public static IEnumerable<IElementNavigator> GetChildrenByName(this IEnumerable<IElementNavigator> navigators, string name)
-        {
-            return navigators.SelectMany(n => n.Children().Where(c => c.Name == name));
-        }
-
-
-
+        public static void Visit(this IElementNavigator navigator, Action<int, IElementNavigator> visitor) => navigator.visit(visitor, 0);
     }
 }

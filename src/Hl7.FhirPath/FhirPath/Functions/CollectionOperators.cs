@@ -108,7 +108,7 @@ namespace Hl7.FhirPath.Functions
             }
             else
             {
-                return nav.GetChildrenByName(name);
+                return nav.Children(name);
             }
         }
 

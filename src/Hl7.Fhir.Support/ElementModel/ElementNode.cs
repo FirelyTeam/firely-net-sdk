@@ -10,14 +10,45 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
 
 namespace Hl7.Fhir.ElementModel
 {
+    public class ChildNodes : IEnumerable<IElementNode>
+    {
+        private IList<ElementNode> _wrapped;
+
+        internal ChildNodes(IList<ElementNode> nodes)
+        {
+            _wrapped = nodes;
+        }
+
+        public ElementNode this[int index] => _wrapped[index];
+
+        public ChildNodes this[string name] => new ChildNodes(_wrapped.Children(name).Cast<ElementNode>().ToList());
+
+        public int Count => _wrapped.Count;
+
+        public bool Contains(ElementNode item) => _wrapped.Contains(item);
+
+        public void CopyTo(ElementNode[] array, int arrayIndex) => _wrapped.CopyTo(array, arrayIndex);
+
+        public IEnumerator<IElementNode> GetEnumerator() => _wrapped.GetEnumerator();
+
+        public int IndexOf(ElementNode item) => _wrapped.IndexOf(item);
+
+        IEnumerator IEnumerable.GetEnumerator() => _wrapped.GetEnumerator();
+    }
+
+
 
     public class ElementNode : IElementNode, IAnnotated, IAnnotatable
     {
-        public IElementNode Parent { get; set;  }
-        public IList<IElementNode> Children { get; set; }
+        public IElementNode Parent { get; private set; }
+
+        private List<ElementNode> _children = new List<ElementNode>();
+
+        public IEnumerable<IElementNode> Children => _children;
 
         public string Name { get; set; }
 
@@ -42,15 +73,24 @@ namespace Hl7.Fhir.ElementModel
             }
         }
 
-        private ElementNode(string name, object value, string type, params ElementNode[] children)
+        private ElementNode(string name, object value, string type, IEnumerable<ElementNode> children)
         {
             Name = name;
             Value = value;
             Type = type;
-            Children = children;
 
-            if(children != null)
-                foreach (var c in children) c.Parent = this;
+            if (children != null) AddRange(children);
+        }
+
+        public void Add(ElementNode child)
+        {
+            AddRange(new[] { child });
+        }
+
+        public void AddRange(IEnumerable<ElementNode> children)
+        {
+            _children.AddRange(children);
+            foreach (var c in _children) c.Parent = this;
         }
 
         public static ElementNode Valued(string name, object value, params ElementNode[] children)
@@ -75,7 +115,7 @@ namespace Hl7.Fhir.ElementModel
 
         public IElementNode Clone()
         {
-            var copy = new ElementNode(Name, Value, Type);
+            var copy = new ElementNode(Name, Value, Type, _children);
 
             if (_annotations.IsValueCreated)
                 copy.annotations.AddRange(annotations);
@@ -83,9 +123,12 @@ namespace Hl7.Fhir.ElementModel
             return copy;
         }
 
-
         private Lazy<List<object>> _annotations = new Lazy<List<object>>(() => new List<object>());
         private List<object> annotations { get { return _annotations.Value; } }
+
+        public ChildNodes this[string name] => new ChildNodes(_children.Where(c=>c.Name == name).ToList());
+
+        public ElementNode this[int index] => _children[index];
 
         public IEnumerable<object> Annotations(Type type)
         {

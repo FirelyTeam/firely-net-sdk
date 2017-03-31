@@ -12,21 +12,19 @@ using System.Collections.Generic;
 
 namespace Hl7.Fhir.ElementModel
 {
-
     public interface IElementNode
     {
-        IElementNode Parent { get; set; }
+        IElementNode Parent { get; }
 
-        IList<IElementNode> Children { get; set; }
+        IEnumerable<IElementNode> Children { get; }
 
         // TODO: Should reflect the properties present in IElementNavigator. Once that stabilizes, copy the code comments from
         // there over to here
-        string Name { get; set; }
-        string Type { get; set; }
-        object Value { get; set; }
+        string Name { get; }
+        string Type { get; }
+        object Value { get; }
         string Location { get; }
 
         IElementNode Clone();
     }
-
 }

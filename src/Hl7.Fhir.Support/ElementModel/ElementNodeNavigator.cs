@@ -7,7 +7,7 @@ namespace Hl7.Fhir.ElementModel
 {
     public struct ElementNodeNavigator : IElementNavigator, IAnnotated
     {
-        private IList<IElementNode> _siblings;
+        private IElementNode[] _siblings;
         private int _index;
 
         public IElementNode Current
@@ -17,7 +17,7 @@ namespace Hl7.Fhir.ElementModel
 
         public ElementNodeNavigator(IElementNode wrapped)
         {
-            _siblings = new List<IElementNode> { wrapped };
+            _siblings = new[] { wrapped };
             _index = 0;
         }
 
@@ -68,7 +68,7 @@ namespace Hl7.Fhir.ElementModel
         {
             if (Current.Children != null && Current.Children.Any())
             {
-                _siblings = Current.Children;
+                _siblings = Current.Children.ToArray();
                 _index = 0;
                 return true;
             }
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.ElementModel
 
         public bool MoveToNext()
         {
-            if (_siblings.Count > _index + 1)
+            if (_siblings.Length > _index + 1)
             {
                 _index += 1;
                 return true;

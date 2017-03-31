@@ -190,7 +190,7 @@ namespace Hl7.FhirPath.Functions
 
                 if (element is IElementNavigator)
                 {
-                    var childnames = String.Concat(((IElementNavigator)element).GetChildNames());
+                    var childnames = String.Concat(((IElementNavigator)element).Children().Select(c => c.Name));
                     if (!String.IsNullOrEmpty(childnames))
                         result ^= childnames.GetHashCode();
                 }

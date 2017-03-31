@@ -12,6 +12,7 @@
 using Xunit;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
+using System.Linq;
 
 namespace Hl7.FhirPath.Tests
 {
@@ -37,11 +38,11 @@ namespace Hl7.FhirPath.Tests
         [Fact]
         public void TestConstruction()
         {
-            var data = patient.Children[0];
+            var data = patient[0];
             Assert.Equal("active", data.Name);
             Assert.Equal(true, data.Value);
             Assert.Equal("boolean", data.Type);
-            Assert.Equal(4, data.Children.Count);
+            Assert.Equal(4, data.Children.Count());
         }
 
 
@@ -49,11 +50,39 @@ namespace Hl7.FhirPath.Tests
         public void TestPath()
         {
             Assert.Equal("Patient", patient.Location);
-            Assert.Equal("Patient.active[0]", patient.Children[0].Location);
-            Assert.Equal("Patient.active[0].id[0]", patient.Children[0].Children[0].Location);
-            Assert.Equal("Patient.active[0].id[1]", patient.Children[0].Children[1].Location);
-            Assert.Equal("Patient.active[0].extension[0].value[0]", patient.Children[0].Children[2].Children[0].Location);
-            Assert.Equal("Patient.active[0].extension[1].value[0]", patient.Children[0].Children[3].Children[0].Location);
+            Assert.Equal("Patient.active[0]", patient[0].Location);
+            Assert.Equal("Patient.active[0].id[0]", patient[0][0].Location);
+            Assert.Equal("Patient.active[0].id[1]", patient[0][1].Location);
+            Assert.Equal("Patient.active[0].extension[0].value[0]", patient[0][2][0].Location);
+            Assert.Equal("Patient.active[0].extension[1].value[0]", patient[0][3][0].Location);
+        }
+
+        [Fact]
+        public void TestIndexers()
+        {
+            Assert.Equal("Patient.active[0].extension[1].value[0]", patient["active"][0]["extension"][1]["value"][0].Location);
+            Assert.Equal("Patient.active[0].extension[1].value[0]", patient["active"]["extension"][1]["value"].Single().Location);
+            Assert.Equal("Patient.active[0].extension[0].value[0]", patient.Children("active").First()
+                                .Children("extension").First()
+                                .Children("value").First().Location);
+            Assert.Equal("Patient.active[0].extension[0].value[0]", patient.Children("active")
+                                .Children("extension").First()
+                                .Children("value").Single().Location);
+        }
+
+        [Fact]
+        public void TestHasChildren()
+        {
+            Assert.False(patient["active"][0]["id"].HasChildren());
+            Assert.False(patient["active"]["id"].HasChildren());
+        }
+
+        [Fact]
+        public void TestNodeAxis()
+        {
+            Assert.Equal(6, patient["active"].Descendants().Count());
+            Assert.Equal(7, patient["active"].DescendantsAndSelf().Count());
+            Assert.Equal(2, patient["active"]["extension"].Count());
         }
 
         [Fact]
@@ -82,7 +111,7 @@ namespace Hl7.FhirPath.Tests
         [Fact]
         public void TestAnnotations()
         {
-            var firstIdNode = patient.Children[0].Children[0];
+            var firstIdNode = patient[0][0];
             Assert.Equal("a string annotation", (firstIdNode as IAnnotated).Annotation<string>());
 
             var nav = patient.ToNavigator();
@@ -90,5 +119,7 @@ namespace Hl7.FhirPath.Tests
             nav.MoveToFirstChild(); // id
             Assert.Equal("a string annotation", (nav as IAnnotated).Annotation<string>());
         }
+
+        // Test clone()
     }
 }
