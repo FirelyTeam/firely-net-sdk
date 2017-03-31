@@ -25,6 +25,8 @@ namespace Hl7.Fhir.ElementModel
         string Type { get; set; }
         object Value { get; set; }
         string Location { get; }
+
+        IElementNode Clone();
     }
 
 }

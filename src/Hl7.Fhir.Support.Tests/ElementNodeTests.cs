@@ -11,6 +11,7 @@
 
 using Xunit;
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.FhirPath.Tests
 {
@@ -20,9 +21,12 @@ namespace Hl7.FhirPath.Tests
 
         public ElementNodeTests()
         {
+            var annotatedNode = ElementNode.Valued("id", "myId1");
+            (annotatedNode as IAnnotatable).AddAnnotation("a string annotation");
+
             patient = ElementNode.Node("Patient", "Patient",                
                 ElementNode.Valued("active", true, "boolean",
-                   ElementNode.Valued("id", "myId1"),
+                   annotatedNode,
                    ElementNode.Valued("id", "myId2"),
                    ElementNode.Node("extension",
                        ElementNode.Valued("value", 4, "integer")),
@@ -73,6 +77,18 @@ namespace Hl7.FhirPath.Tests
             Assert.Equal(nav.Name, "extension");
             Assert.True(nav.MoveToFirstChild());
             Assert.Equal(nav.Name, "value");
+        }
+
+        [Fact]
+        public void TestAnnotations()
+        {
+            var firstIdNode = patient.Children[0].Children[0];
+            Assert.Equal("a string annotation", (firstIdNode as IAnnotated).Annotation<string>());
+
+            var nav = patient.ToNavigator();
+            nav.MoveToFirstChild(); // active
+            nav.MoveToFirstChild(); // id
+            Assert.Equal("a string annotation", (nav as IAnnotated).Annotation<string>());
         }
     }
 }

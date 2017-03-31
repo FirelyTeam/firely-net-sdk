@@ -18,11 +18,6 @@ namespace Hl7.Fhir.ElementModel
         }
 
 
-        public static IElementNavigator ToNavigator(this IElementNode node)
-        {
-            return new ElementNodeNavigator(node);
-        }
-
         public static IEnumerable<IElementNode> ChildrenWithName(this IElementNode node, string name)
         {
             return node.Children.Where(c => c.Name == name);

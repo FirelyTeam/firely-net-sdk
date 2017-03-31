@@ -9,6 +9,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.ElementModel
 {
@@ -93,8 +94,6 @@ namespace Hl7.Fhir.ElementModel
         /// a line/position indication, or the dotted name of a property in a POCO. It needs to be sufficiently precise to aid the user in
         /// locating issues in the data.</remarks>
         string Location { get; }
-
-        T GetSerializationDetails<T>() where T : class;
     }
 
 }
