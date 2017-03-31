@@ -17,7 +17,7 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public partial struct JsonDomFhirNavigator : IElementNavigator
+    public partial struct JsonDomFhirNavigator : IElementNavigator, IAnnotated
     {
         internal JsonDomFhirNavigator(string root, JObject current)
         {
@@ -98,20 +98,13 @@ namespace Hl7.Fhir.Serialization
             return Current.ToString();
         }
 
-        public T GetSerializationDetails<T>() where T:class
+        public IEnumerable<object> Annotations(Type type)
         {
-            if (typeof(T) == typeof(JsonSerializationDetails))
-            {
-                return new JsonSerializationDetails()
-                {
-                    RawValue = Current.JsonValue?.Value
-                } as T;
-
-            }
+            if (type == typeof(JsonSerializationDetails))
+                return new[] { new JsonSerializationDetails() { RawValue = Current.JsonValue?.Value } };
             else
                 return null;
         }
-
     }
 
 

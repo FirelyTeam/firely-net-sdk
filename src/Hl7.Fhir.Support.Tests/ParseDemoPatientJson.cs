@@ -83,7 +83,7 @@ namespace Hl7.FhirPath.Tests.JsonNavTests
             Assert.Equal("deceasedBoolean", patient.Name);
             Assert.Equal("true", patient.Value);
 
-            var details = patient.GetSerializationDetails<JsonSerializationDetails>();
+            var details = (patient as IAnnotated).Annotation<JsonSerializationDetails>();
             Assert.Equal(true, details.RawValue);
 
             Assert.True(patient.MoveToNext()); // address

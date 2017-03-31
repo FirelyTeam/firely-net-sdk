@@ -9,13 +9,14 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public partial struct XmlDomFhirNavigator : IElementNavigator
+    public partial struct XmlDomFhirNavigator : IElementNavigator, IAnnotated
     {
         internal XmlDomFhirNavigator(XObject current)
         {
@@ -219,17 +220,18 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-
-        public T GetSerializationDetails<T>() where T:class
+        public IEnumerable<object> Annotations(Type type)
         {
-            if (typeof(T) == typeof(XmlSerializationDetails))
+            if (type == typeof(XmlSerializationDetails))
             {
-                var result = new XmlSerializationDetails();
-
-                result.NodeType = _current.NodeType;
-                result.Namespace = XName.NamespaceName;
-                  
-                return result as T;
+                return new[]
+                {
+                    new XmlSerializationDetails()
+                    {
+                        NodeType = _current.NodeType,
+                        Namespace = XName.NamespaceName
+                    }
+                };
             }
             else
                 return null;

@@ -85,11 +85,6 @@ namespace Hl7.Fhir.ElementModel
 
             return false;
         }
-
-        public T GetSerializationDetails<T>() where T : class
-        {
-            return null;
-        }
     }
 
 }

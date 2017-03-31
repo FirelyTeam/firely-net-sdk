@@ -72,10 +72,5 @@ namespace Hl7.Fhir.ElementModel
             if (exists) _index++;
             return exists;
         }
-
-        public T GetSerializationDetails<T>() where T : class
-        {
-            throw new NotImplementedException();
-        }
     }
 }

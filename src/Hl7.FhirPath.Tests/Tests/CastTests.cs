@@ -177,11 +177,6 @@ namespace Hl7.FhirPath.Tests
             throw new NotImplementedException();
         }
 
-        public T GetSerializationDetails<T>() where T : class
-        {
-            throw new NotImplementedException();
-        }
-
         public bool MoveToFirstChild()
         {
             return false;
