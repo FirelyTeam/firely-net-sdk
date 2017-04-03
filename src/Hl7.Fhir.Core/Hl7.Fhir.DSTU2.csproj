@@ -24,6 +24,8 @@
     <Compile Remove="Rest\SystemNetMimeContentType.cs" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Hl7.Fhir.Support" Version="0.4.2-alpha4" />
+    <PackageReference Include="Hl7.FhirPath" Version="0.4.2-alpha4" />
     <PackageReference Include="System.ComponentModel" Version="4.3.0" />
     <PackageReference Include="System.ComponentModel.Primitives" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
