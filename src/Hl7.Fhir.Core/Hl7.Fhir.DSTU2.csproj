@@ -6,11 +6,11 @@
   <Import Project="..\platforms.props" />
   <Import Project="..\fhir-net-api.props" />
 
-  <PropertyGroup>
+   <PropertyGroup>
     <PackageId>Hl7.Fhir.DSTU2</PackageId>
-    <Product>HL7 FHIR Core support API for DSTU2</Product>
-    <Description>Core .NET support for working with HL7 FHIR. Supports FHIR DSTU2 (1.0)</Description>
-    <Summary>This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the core functionality to working with RESTful FHIR servers: POCO classes for FHIR, parsing/serialization of FHIR data and a FhirClient for easy access to FHIR servers.</Summary>
+    <Title>HL7 FHIR Core support API for DSTU2</Title>	
+    <Summary>Core .NET support for working with HL7 FHIR. Supports FHIR DSTU2 (1.0)</Summary>
+    <Description>This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the core functionality to working with RESTful FHIR servers: POCO classes for FHIR, parsing/serialization of FHIR data and a FhirClient for easy access to FHIR servers.</Description>
     <PackageTags>HL7 FHIR REST parse serialize class model</PackageTags>
     <AssemblyName>Hl7.Fhir.DSTU2.Core</AssemblyName>
     <RootNamespace>Hl7.Fhir</RootNamespace>
@@ -49,9 +49,6 @@
     <None Include="Model\Source\profiles-resources.xml" />
     <None Include="Model\Source\profiles-types.xml" />
     <None Include="Model\Source\search-parameters.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\fhir-net-fhirpath\src\Hl7.FhirPath\Hl7.FhirPath.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

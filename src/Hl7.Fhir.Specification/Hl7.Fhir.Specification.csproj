@@ -8,19 +8,14 @@
 
   <PropertyGroup>
     <PackageId>Hl7.Fhir.Specification.DSTU2</PackageId>
-    <Product>HL7 FHIR Additional functionality support API for DSTU2</Product>
-    <Description>.NET additional support for working with HL7 FHIR. Supports FHIR DSTU2 (1.0).</Description>
-    <Summary>This library offers additional support beyond core for HL7's FHIR standard (http://hl7.org/fhir). It contains functionality to working with FHIR's specification (meta)data such as profiles, profile-based validation and publication</Summary>
+    <Title>HL7 FHIR Additional functionality support API for DSTU2</Title>
+    <Summary>.NET additional support for working with HL7 FHIR. Supports FHIR DSTU2 (1.0).</Summary>
+    <Description>This library offers additional support beyond core for HL7's FHIR standard (http://hl7.org/fhir). It contains functionality to working with FHIR's specification (meta)data such as profiles, profile-based validation and publication</Description>
     <PackageTags>HL7 FHIR Profile Metadata Validation Publication Schematron Schema</PackageTags>
     <AssemblyName>Hl7.Fhir.DSTU2.Specification</AssemblyName>
     <RootNamespace>Hl7.Fhir.Specification</RootNamespace>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-  </PropertyGroup>
-
-  
   <ItemGroup>
     <PackageReference Include="System.ComponentModel" Version="4.3.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.3.0" />
@@ -48,8 +43,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\fhir-net-fhirpath\src\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
-    <ProjectReference Include="..\..\..\fhir-net-fhirpath\src\Hl7.FhirPath\Hl7.FhirPath.csproj" />
     <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.DSTU2.csproj" />
   </ItemGroup>
  
