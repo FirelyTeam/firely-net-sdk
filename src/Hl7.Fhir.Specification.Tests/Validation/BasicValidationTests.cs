@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Validation
             Assert.AreEqual(3, report.ListErrors().Count());
         }
 
-        [TestMethod]
+        [TestMethod,Ignore]
         public void ValidateChoiceElement()
         {
             var extensionSd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Extension).DeepCopy();

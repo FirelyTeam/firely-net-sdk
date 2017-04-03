@@ -585,7 +585,7 @@ namespace Hl7.Fhir.Model
             Key = "rfr-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "onBehalfOf can only be specified if agent is practitioner or device",
-            Xpath = "contains(f:agent, '/Practitioner') or contains(f:agent, '/Device') or not(exists(f:onBehalfOf))"
+            Xpath = "contains(f:agent/f:reference/@value, '/Practitioner/') or contains(f:agent/f:reference/@value, '/Device/') or not(exists(f:onBehalfOf))"
         };
 
         public override void AddDefaultConstraints()

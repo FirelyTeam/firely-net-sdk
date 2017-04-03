@@ -37,8 +37,8 @@ namespace Hl7.Fhir.Validation
         public Scope(IElementNavigator container, string uri)
         {
             Container = container.Clone();
-            Path = container.Path;
-            IsBundle = ModelInfo.FhirTypeNameToFhirType(container.TypeName) == FHIRAllTypes.Bundle;
+            Path = container.Location;
+            IsBundle = ModelInfo.FhirTypeNameToFhirType(container.Type) == FHIRAllTypes.Bundle;
             Uri = uri;
 
            _children = new Lazy<List<Scope>>(createScopeListForContainer);
@@ -202,8 +202,8 @@ namespace Hl7.Fhir.Validation
         {
             if (instance.Type == null) return false;
 
-            return ModelInfo.FhirTypeNameToFhirType(instance.TypeName) == FHIRAllTypes.Bundle ||
-                                    ModelInfo.IsKnownResource(instance.TypeName);
+            return ModelInfo.FhirTypeNameToFhirType(instance.Type) == FHIRAllTypes.Bundle ||
+                                    ModelInfo.IsKnownResource(instance.Type);
         }
 
         public IElementNavigator ResourceContext(IElementNavigator instance)
@@ -288,7 +288,7 @@ namespace Hl7.Fhir.Validation
         {
             var scanner = instance.Clone();
 
-            if (ModelInfo.FhirTypeNameToFhirType(scanner.TypeName) == FHIRAllTypes.Bundle)
+            if (ModelInfo.FhirTypeNameToFhirType(scanner.Type) == FHIRAllTypes.Bundle)
             {
                 return HarvestBundle(scanner);
             }

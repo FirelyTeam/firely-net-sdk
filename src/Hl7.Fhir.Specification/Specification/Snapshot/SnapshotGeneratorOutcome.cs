@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             public string Name => _name;
             public string Location => _path;
 
-            public string TypeName => ModelInfo.FhirTypeToFhirTypeName(FHIRAllTypes.ElementDefinition); // _elemDef.TypeName;
+            public string Type => ModelInfo.FhirTypeToFhirTypeName(FHIRAllTypes.ElementDefinition); // _elemDef.TypeName;
 
             public object Value { get { throw new NotImplementedException(); } }
 

@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsNotNull(artifact);
             Assert.IsTrue(artifact is StructureDefinition);
-            Assert.AreEqual("Flag", ((StructureDefinition)artifact).Name);
+            Assert.AreEqual("Patient", ((StructureDefinition)artifact).Name);
         }
 
         [TestMethod]

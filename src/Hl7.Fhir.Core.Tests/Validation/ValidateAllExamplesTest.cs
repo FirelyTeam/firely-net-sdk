@@ -240,10 +240,6 @@ namespace Hl7.Fhir.Tests.Serialization
 
                                 Trace.WriteLine("\t" + item.Details.Coding[0].Code + ": " + item.Details.Text);
                                 Trace.WriteLine("\t" + item.Diagnostics);
-#else
-                                Debug.WriteLine("\t" + item.Details.Coding[0].Code + ": " + item.Details.Text);
-                                Debug.WriteLine("\t" + item.Diagnostics);
-#endif
                             }
                           //  Trace.WriteLine("-------------------------");
                           //  Trace.WriteLine(FhirSerializer.SerializeResourceToXml(resource));

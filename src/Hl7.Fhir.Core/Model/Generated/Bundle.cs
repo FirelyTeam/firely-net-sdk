@@ -1298,7 +1298,7 @@ namespace Hl7.Fhir.Model
             Key = "bdl-8",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "fullUrl cannot be a version specific reference",
-            Xpath = "not(exists(f:fullUrl[contains(@value, '/_history/')]))"
+            Xpath = "not(exists(f:fullUrl[contains(string(@value), '/_history/')]))"
         };
 
         public static ElementDefinition.ConstraintComponent Bundle_BDL_5 = new ElementDefinition.ConstraintComponent()

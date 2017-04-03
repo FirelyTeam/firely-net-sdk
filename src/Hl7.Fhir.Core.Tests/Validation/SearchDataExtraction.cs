@@ -24,6 +24,7 @@ using Hl7.Fhir.Validation;
 using System.ComponentModel.DataAnnotations;
 using Hl7.Fhir.FhirPath;
 using Hl7.FhirPath;
+using Hl7.Fhir.Utility;
 
 namespace HealthConnex.Fhir.Server.Tests
 {

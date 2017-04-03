@@ -1206,7 +1206,7 @@ namespace Hl7.Fhir.Model
             Key = "sdf-19",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Custom types can only be used in logical models",
-            Xpath = "f:kind/@value = 'logical' or count(f:differential/f:element/f:type/f:code[@value and not(matches(@value, '^[a-zA-Z0-9]+$'))]|f:snapshot/f:element/f:type/f:code[@value and not(matches(@value, '^[a-zA-Z0-9]+$'))]) =0"
+            Xpath = "f:kind/@value = 'logical' or count(f:differential/f:element/f:type/f:code[@value and not(matches(string(@value), '^[a-zA-Z0-9]+$'))]|f:snapshot/f:element/f:type/f:code[@value and not(matches(string(@value), '^[a-zA-Z0-9]+$'))]) =0"
         };
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_16 = new ElementDefinition.ConstraintComponent()

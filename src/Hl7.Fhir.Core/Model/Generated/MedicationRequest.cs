@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -979,7 +979,7 @@ namespace Hl7.Fhir.Model
             Key = "mps-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "onBehalfOf can only be specified if agent is practitioner or device",
-            Xpath = "contains(f:agent, '/Practitioner') or contains(f:agent, '/Device') or not(exists(f:onBehalfOf))"
+            Xpath = "contains(f:agent/f:reference/@value, '/Practitioner/') or contains(f:agent/f:reference/@value, '/Device/') or not(exists(f:onBehalfOf))"
         };
 
         public override void AddDefaultConstraints()

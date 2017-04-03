@@ -736,7 +736,7 @@ namespace Hl7.Fhir.Model
             Key = "mad-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "SHALL have at least one of dosage.dose or dosage.rate[x]",
-            Xpath = "exists(f:dose) or exists(f:rateRatio) or exists(f:rateRange)"
+            Xpath = "exists(f:dose) or exists(f:*[starts-with(local-name(.), 'rate')])"
         };
 
         public override void AddDefaultConstraints()

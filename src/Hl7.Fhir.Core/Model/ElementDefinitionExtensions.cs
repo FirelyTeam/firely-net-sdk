@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Model
 {
@@ -67,7 +68,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition WithBinding(this ElementDefinition ed, string valueSetUri, BindingStrength strength)
         {
-            var binding = new ElementDefinition.BindingComponent
+            var binding = new ElementDefinition.ElementDefinitionBindingComponent
             {
                 ValueSet = new ResourceReference(valueSetUri),
                 Strength = strength

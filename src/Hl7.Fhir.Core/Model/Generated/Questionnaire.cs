@@ -1458,7 +1458,7 @@ namespace Hl7.Fhir.Model
             Key = "que-7",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "enableWhen must contain either a 'answer' or a 'hasAnswer' element",
-            Xpath = "count(*[starts-with(local-name(.), 'answer')]|hasAnswer) = 1"
+            Xpath = "count(f:*[starts-with(local-name(.), 'answer')]|self::f:hasAnswer) = 1"
         };
 
         public override void AddDefaultConstraints()

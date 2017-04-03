@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Tests.Introspection
         [TestMethod]
         public void GetInfoFromEnumMember()
         {
-            var t = FHIRDefinedType.Markdown;
+            var t = Hl7.Fhir.Model. FHIRAllTypes.Markdown;
 
             Assert.AreEqual("markdown", t.GetLiteral());
             Assert.AreEqual("markdown", t.GetDocumentation());
@@ -43,9 +43,9 @@ namespace Hl7.Fhir.Tests.Introspection
         [TestMethod]
         public void ParseFhirTypeName()
         {
-            Assert.AreEqual(FHIRDefinedType.Markdown, ModelInfo.FhirTypeNameToFhirType("markdown"));
+            Assert.AreEqual(FHIRAllTypes.Markdown, ModelInfo.FhirTypeNameToFhirType("markdown"));
             Assert.IsNull(ModelInfo.FhirTypeNameToFhirType("Markdown"));
-            Assert.AreEqual(FHIRDefinedType.Organization, ModelInfo.FhirTypeNameToFhirType("Organization"));
+            Assert.AreEqual(FHIRAllTypes.Organization, ModelInfo.FhirTypeNameToFhirType("Organization"));
         }
 
 
