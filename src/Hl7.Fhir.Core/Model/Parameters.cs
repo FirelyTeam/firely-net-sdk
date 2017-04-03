@@ -41,6 +41,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Hl7.Fhir.Support;
 using System.Diagnostics;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Model
 {

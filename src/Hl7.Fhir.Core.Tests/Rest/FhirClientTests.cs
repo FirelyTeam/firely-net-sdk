@@ -567,7 +567,7 @@ namespace Hl7.Fhir.Tests.Rest
         /// This test will fail if the system records AuditEvents 
         /// and counts them in the WholeSystemHistory
         /// </summary>
-        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest"),Ignore]
         public void History()
         {
             System.Threading.Thread.Sleep(500);
@@ -992,7 +992,7 @@ namespace Hl7.Fhir.Tests.Rest
 
 
 
-        [TestMethod]
+        [TestMethod,Ignore]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void FhirVersionIsChecked()
         {

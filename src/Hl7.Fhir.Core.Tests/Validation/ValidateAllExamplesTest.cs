@@ -22,6 +22,7 @@ using Hl7.Fhir.Serialization;
 using System.IO.Compression;
 using Hl7.Fhir.Validation;
 using System.ComponentModel.DataAnnotations;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -236,7 +237,7 @@ namespace Hl7.Fhir.Tests.Serialization
                                     failedInvariantCodes.Add(item.Details.Coding[0].Code, 1);
                                 else
                                     failedInvariantCodes[item.Details.Coding[0].Code]++;
-#if DOTNETFW
+
                                 Trace.WriteLine("\t" + item.Details.Coding[0].Code + ": " + item.Details.Text);
                                 Trace.WriteLine("\t" + item.Diagnostics);
 #else
@@ -244,11 +245,9 @@ namespace Hl7.Fhir.Tests.Serialization
                                 Debug.WriteLine("\t" + item.Diagnostics);
 #endif
                             }
-#if DOTNETFW
-                            Trace.WriteLine("-------------------------");
-                            Trace.WriteLine(FhirSerializer.SerializeResourceToXml(resource));
-                            Trace.WriteLine("-------------------------");
-#endif
+                          //  Trace.WriteLine("-------------------------");
+                          //  Trace.WriteLine(FhirSerializer.SerializeResourceToXml(resource));
+                          //  Trace.WriteLine("-------------------------");
                             // count the issue
                             errorCount++;
                         }

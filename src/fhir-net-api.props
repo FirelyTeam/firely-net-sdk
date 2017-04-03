@@ -11,20 +11,19 @@
     <PackageReleaseNotes>See http://ewoutkramer.github.io/fhir-net-api/whats-new.html</PackageReleaseNotes>
   </PropertyGroup>
   
-
   <!-- Compiler settings -->
   <PropertyGroup>
-    <LangVersion>6</LangVersion>
+    <LangVersion>7</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>..\FhirNetApi.snk</AssemblyOriginatorKeyFile>
     <IncludeSymbols>true</IncludeSymbols>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <Target Name="CopyPackage" AfterTargets="Pack">

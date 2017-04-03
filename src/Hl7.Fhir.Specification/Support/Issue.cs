@@ -8,7 +8,7 @@
 
 using System.Collections.Generic;
 using Hl7.Fhir.Model;
-using Hl7.ElementModel;
+using Hl7.Fhir.ElementModel;
 
 namespace Hl7.Fhir.Support
 {
@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Support
 
         public OperationOutcome.IssueComponent ToIssueComponent(string message, IElementNavigator location = null)
         {
-            return ToIssueComponent(message, location != null ? location.Path : null);
+            return ToIssueComponent(message, location != null ? location.Location : null);
         }
 
         public OperationOutcome.IssueComponent ToIssueComponent(string message, string path = null)

@@ -8,10 +8,11 @@
 
 using System;
 using Hl7.Fhir.Model;
-using Hl7.ElementModel;
 using Hl7.Fhir.Support;
 using System.Linq;
 using Hl7.Fhir.Specification.Navigation;
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Utility;
 
 // [WMR 20160907] TODO: Create unit tests to evaluate behavior for different kinds of errors, e.g.
 // - unresolved external (type/extension) profile
@@ -59,7 +60,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 _name = elementDef.SliceName;
             }
             public string Name => _name;
-            public string Path => _path;
+            public string Location => _path;
 
             public string TypeName => ModelInfo.FhirTypeToFhirTypeName(FHIRAllTypes.ElementDefinition); // _elemDef.TypeName;
 
@@ -71,7 +72,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             public bool MoveToNext() { throw new NotImplementedException(); }
 
-            public override string ToString() => string.IsNullOrEmpty(Name) ? $"'{Path}'" : $"'{Path}' : '{Name}'";
+            public override string ToString() => string.IsNullOrEmpty(Name) ? $"'{Location}'" : $"'{Location}' : '{Name}'";
         }
 
         // static IElementNavigator ToNamedNode(ElementDefinition elementDef) => new ElementDefinitionNamedNode(elementDef);

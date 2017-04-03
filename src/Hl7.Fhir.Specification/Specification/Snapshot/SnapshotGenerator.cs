@@ -28,10 +28,9 @@ using System.Linq;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
-using Hl7.Fhir.Support;
 using System.Diagnostics;
-using Hl7.ElementModel;
-using Hl7.Fhir.Introspection;
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -1206,7 +1205,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 baseStructure = _resolver.GetStructureDefinitionForTypeCode(typeCodeElem);
                 // [WMR 20160906] Check if element type equals path (e.g. Resource root element), prevent infinite recursion
-                isValidProfile = (IsEqualPath(typeName, location.Path)) ||
+                isValidProfile = (IsEqualPath(typeName, location.Location)) ||
                     (
                         ensureSnapshot
                         ? this.ensureSnapshot(baseStructure, typeName, location)
@@ -1241,7 +1240,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Detect infinite recursion
             // Verify that the type profile is not already being expanded by a parent call higher up the call stack hierarchy
             // Special case: when recursing on Element, simply return true and continue; otherwise throw an exception
-            var path = location != null ? location.Path : null;
+            var path = location != null ? location.Location : null;
             _stack.OnBeforeExpandTypeProfile(profileUri, path);
 
             try

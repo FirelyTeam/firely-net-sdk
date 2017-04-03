@@ -1,12 +1,8 @@
-﻿using Hl7.ElementModel;
-using Hl7.Fhir.Introspection;
+﻿using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Validation
 {
@@ -20,15 +16,15 @@ namespace Hl7.Fhir.Validation
         {
             var newQuantity = new Quantity();
 
-            newQuantity.Value = instance.GetChildrenByName("value").SingleOrDefault()?.Value as decimal?;
+            newQuantity.Value = instance.Children("value").SingleOrDefault()?.Value as decimal?;
 
-            var comp = instance.GetChildrenByName("comparator").GetString();
+            var comp = instance.Children("comparator").GetString();
             if(comp != null)
                 newQuantity.ComparatorElement = new Code<Quantity.QuantityComparator> { ObjectValue = comp };
 
-            newQuantity.Unit = instance.GetChildrenByName("unit").GetString();
-            newQuantity.System = instance.GetChildrenByName("system").GetString();
-            newQuantity.Code = instance.GetChildrenByName("code").GetString();
+            newQuantity.Unit = instance.Children("unit").GetString();
+            newQuantity.System = instance.Children("system").GetString();
+            newQuantity.Code = instance.Children("code").GetString();
 
             return newQuantity;
         }
@@ -78,11 +74,11 @@ namespace Hl7.Fhir.Validation
         public static Coding ParseCoding(this IElementNavigator instance)
         {
             var newCoding = new Coding();
-            newCoding.System = instance.GetChildrenByName("system").GetString();
-            newCoding.Version = instance.GetChildrenByName("version").GetString();
-            newCoding.Code = instance.GetChildrenByName("code").GetString();
-            newCoding.Display = instance.GetChildrenByName("display").GetString();
-            newCoding.UserSelected = instance.GetChildrenByName("userSelected").SingleOrDefault()?.Value as bool?;
+            newCoding.System = instance.Children("system").GetString();
+            newCoding.Version = instance.Children("version").GetString();
+            newCoding.Code = instance.Children("code").GetString();
+            newCoding.Display = instance.Children("display").GetString();
+            newCoding.UserSelected = instance.Children("userSelected").SingleOrDefault()?.Value as bool?;
 
             return newCoding;
         }
@@ -92,8 +88,8 @@ namespace Hl7.Fhir.Validation
             var newCodeableConcept = new CodeableConcept();
 
             newCodeableConcept.Coding = 
-                    instance.GetChildrenByName("coding").Select(codingNav => codingNav.ParseCoding()).ToList();
-            newCodeableConcept.Text = instance.GetChildrenByName("text").GetString();
+                    instance.Children("coding").Select(codingNav => codingNav.ParseCoding()).ToList();
+            newCodeableConcept.Text = instance.Children("text").GetString();
 
             return newCodeableConcept;
         }

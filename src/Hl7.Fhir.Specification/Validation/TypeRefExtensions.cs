@@ -11,6 +11,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System.Collections.Generic;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Validation
 {

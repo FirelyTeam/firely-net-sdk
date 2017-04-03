@@ -6,34 +6,27 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hl7.Fhir.Support;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Model;
 using System.Diagnostics;
+using Hl7.Fhir.Utility;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Tests.Introspection
 {
-    [TestClass]
-	public class EnumMappingTest
+    public class EnumMappingTest
     {
         [TestMethod]
         public void TestCreation()
         {
-            EnumUtility.EnumMapping mapping = EnumUtility.EnumMapping.Create(typeof(TestEnum));
+            Assert.AreEqual("Testee", EnumUtility.GetName<TestEnum>());
+            Assert.AreEqual(TestEnum.Item1, EnumUtility.ParseLiteral<TestEnum>("Item1"));
+            Assert.IsNull(EnumUtility.ParseLiteral<TestEnum>("Item2"));
+            Assert.AreEqual(TestEnum.Item2, EnumUtility.ParseLiteral<TestEnum>("ItemTwo"));
+            Assert.IsNull(EnumUtility.ParseLiteral<TestEnum>("iTeM1"));
 
-            Assert.AreEqual("Testee", mapping.Name);
-            Assert.AreEqual(typeof(TestEnum), mapping.EnumType);
-            Assert.IsTrue(mapping.ContainsLiteral("Item1"));
-            Assert.IsFalse(mapping.ContainsLiteral("Item2"));
-            Assert.IsFalse(mapping.ContainsLiteral("iTeM1"));
-            Assert.IsTrue(mapping.ContainsLiteral("ItemTwo"));
-
-            Assert.AreEqual(TestEnum.Item2, mapping.ParseLiteral("ItemTwo"));
-            Assert.AreEqual(TestEnum.Item1, mapping.ParseLiteral("Item1"));
-            Assert.AreEqual("ItemTwo", mapping.GetLiteral(TestEnum.Item2));
-            Assert.AreEqual("Item1", mapping.GetLiteral(TestEnum.Item1));
+            Assert.AreEqual("ItemTwo", TestEnum.Item2.GetLiteral());
+            Assert.AreEqual("Item1", TestEnum.Item1.GetLiteral());
+            Assert.AreEqual("yadayada", TestEnum.Item2.GetDocumentation());
         }
 
 
@@ -41,7 +34,7 @@ namespace Hl7.Fhir.Tests.Introspection
         [TestMethod]
         public void GetInfoFromEnumMember()
         {
-            var t = FHIRAllTypes.Markdown;
+            var t = FHIRDefinedType.Markdown;
 
             Assert.AreEqual("markdown", t.GetLiteral());
             Assert.AreEqual("markdown", t.GetDocumentation());
@@ -50,9 +43,9 @@ namespace Hl7.Fhir.Tests.Introspection
         [TestMethod]
         public void ParseFhirTypeName()
         {
-            Assert.AreEqual(FHIRAllTypes.Markdown, ModelInfo.FhirTypeNameToFhirType("markdown"));
+            Assert.AreEqual(FHIRDefinedType.Markdown, ModelInfo.FhirTypeNameToFhirType("markdown"));
             Assert.IsNull(ModelInfo.FhirTypeNameToFhirType("Markdown"));
-            Assert.AreEqual(FHIRAllTypes.Organization, ModelInfo.FhirTypeNameToFhirType("Organization"));
+            Assert.AreEqual(FHIRDefinedType.Organization, ModelInfo.FhirTypeNameToFhirType("Organization"));
         }
 
 
@@ -94,7 +87,7 @@ namespace Hl7.Fhir.Tests.Introspection
         {
             Item1 = 4,
 
-            [EnumLiteral("ItemTwo")]
+            [EnumLiteral("ItemTwo"), Utility.Description("yadayaday")]
             Item2
         }
     }

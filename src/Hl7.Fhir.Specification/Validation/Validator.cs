@@ -9,7 +9,7 @@
 // [WMR 20161219] Save and reuse existing instance, so generator can detect & handle recursion
 #define REUSE_SNAPSHOT_GENERATOR
 
-using Hl7.ElementModel;
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
@@ -18,6 +18,7 @@ using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using Hl7.FhirPath;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,6 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
-using Time = Hl7.FhirPath.Time;
 
 namespace Hl7.Fhir.Validation
 {
@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Validation
 
             try
             {
-                Trace(outcome, "Start validation of ElementDefinition at path '{0}'".FormatWith(definition.QualifiedDefinitionPath()), Issue.PROCESSING_PROGRESS, instance);
+                Trace(outcome, $"Start validation of ElementDefinition at path '{definition.QualifiedDefinitionPath()}'", Issue.PROCESSING_PROGRESS, instance);
 
                 ScopeTracker.Enter(instance);
 
@@ -305,7 +305,7 @@ namespace Hl7.Fhir.Validation
                 ts = new LocalTerminologyServer(Settings.ResourceResolver);
             }
 
-            var bindingValidator = new BindingValidator(ts, instance.Path);
+            var bindingValidator = new BindingValidator(ts, instance.Location);
 
             try
             {
@@ -323,8 +323,8 @@ namespace Hl7.Fhir.Validation
         {
             if (definition.IsChoice())
             {
-                if (instance.TypeName != null)
-                    return ModelInfo.FhirTypeNameToFhirType(instance.TypeName);
+                if (instance.Type != null)
+                    return ModelInfo.FhirTypeNameToFhirType(instance.Type);
                 else
                     return null;
             }
@@ -440,10 +440,10 @@ namespace Hl7.Fhir.Validation
                 return XmlConvert.ToString((decimal)val);
             else if (val is bool)
                 return (bool)val ? "true" : "false";
-            else if (val is Hl7.FhirPath.Time)
-                return ((Hl7.FhirPath.Time)val).ToString();
-            else if (val is Hl7.FhirPath.PartialDateTime)
-                return ((Hl7.FhirPath.PartialDateTime)val).ToString();
+            else if (val is Model.Primitives.PartialTime)
+                return ((Model.Primitives.PartialTime)val).ToString();
+            else if (val is Model.Primitives.PartialDateTime)
+                return ((Model.Primitives.PartialDateTime)val).ToString();
             else
                 return val.ToString();
         }

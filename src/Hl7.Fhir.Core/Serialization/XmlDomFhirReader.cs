@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -40,7 +41,7 @@ namespace Hl7.Fhir.Serialization
             }
             catch (XmlException xec)
             {
-                throw Error.Format("Cannot parse xml: " + xec.Message, null);
+                throw Error.Format("Cannot parse xml: " + xec.Message);
             }
 
             setRoot(doc);
