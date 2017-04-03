@@ -39,6 +39,7 @@ using System.Text.RegularExpressions;
 using Hl7.Fhir.Introspection;
 using System.Runtime.Serialization;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Model
 {

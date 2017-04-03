@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using System.Reflection;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Rest
 {

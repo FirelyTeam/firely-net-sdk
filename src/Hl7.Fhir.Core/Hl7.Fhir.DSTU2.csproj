@@ -6,11 +6,11 @@
   <Import Project="..\platforms.props" />
   <Import Project="..\fhir-net-api.props" />
 
-  <PropertyGroup>
+   <PropertyGroup>
     <PackageId>Hl7.Fhir.DSTU2</PackageId>
-    <Product>HL7 FHIR Core support API for DSTU2</Product>
-    <Description>Core .NET support for working with HL7 FHIR. Supports FHIR DSTU2 (1.0)</Description>
-    <Summary>This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the core functionality to working with RESTful FHIR servers: POCO classes for FHIR, parsing/serialization of FHIR data and a FhirClient for easy access to FHIR servers.</Summary>
+    <Title>HL7 FHIR Core support API for DSTU2</Title>	
+    <Summary>Core .NET support for working with HL7 FHIR. Supports FHIR DSTU2 (1.0)</Summary>
+    <Description>This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the core functionality to working with RESTful FHIR servers: POCO classes for FHIR, parsing/serialization of FHIR data and a FhirClient for easy access to FHIR servers.</Description>
     <PackageTags>HL7 FHIR REST parse serialize class model</PackageTags>
     <AssemblyName>Hl7.Fhir.DSTU2.Core</AssemblyName>
     <RootNamespace>Hl7.Fhir</RootNamespace>
@@ -24,13 +24,13 @@
     <Compile Remove="Rest\SystemNetMimeContentType.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Hl7.FhirPath" Version="0.4.1" />
     <PackageReference Include="System.ComponentModel" Version="4.3.0" />
     <PackageReference Include="System.ComponentModel.Primitives" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.3.0" />
     <PackageReference Include="System.Net.Http" Version="4.3.0" />
     <PackageReference Include="System.Net.Requests" Version="4.3.0" />
+    <PackageReference Include="System.ValueTuple" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
     <Reference Include="System" />

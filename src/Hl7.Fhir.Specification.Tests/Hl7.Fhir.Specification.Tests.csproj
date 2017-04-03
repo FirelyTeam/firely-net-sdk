@@ -15,13 +15,14 @@
     <ProjectReference Include="..\Hl7.Fhir.Specification\Hl7.Fhir.Specification.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Hl7.FhirPath" Version="0.4.1" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0-preview-20170106-08" />
-    <PackageReference Include="MSTest.TestAdapter" Version="1.1.10-rc2" />
-    <PackageReference Include="MSTest.TestFramework" Version="1.0.8-rc2" />
-    <PackageReference Include="System.AppContext" Version="4.3.0" />
-    <PackageReference Include="System.IO.Compression" Version="4.3.0" />
-    <PackageReference Include="Xunit" Version="2.2.0-beta5-build3474" />
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
+      <PackageReference Include="MSTest.TestAdapter" Version="1.1.12" />
+      <PackageReference Include="MSTest.TestFramework" Version="1.1.11" />
+      <PackageReference Include="System.ValueTuple" Version="4.3.0" />
+      <PackageReference Include="xunit" Version="2.2.0" />
+      <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
+      <PackageReference Include="System.AppContext" Version="4.3.0" />
+      <PackageReference Include="System.IO.Compression" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
@@ -33,6 +34,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Hl7.Fhir.Core.Tests\TestDataHelper.cs" Link="TestDataHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Hl7.Fhir.Specification\data\profiles-others.xml" Link="TestData\snapshot-test\WMR\profiles-others.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification\data\profiles-resources.xml" Link="TestData\snapshot-test\WMR\profiles-resources.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.Specification\data\profiles-types.xml" Link="TestData\snapshot-test\profiles-types.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <!-- Necessary to make the Test Explorer find the tests in this assembly -->

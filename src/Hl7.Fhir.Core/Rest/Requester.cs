@@ -9,6 +9,7 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using System;
 using System.IO.Compression;
 using System.Net;

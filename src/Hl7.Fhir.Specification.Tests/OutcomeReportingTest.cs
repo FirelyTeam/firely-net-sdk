@@ -6,21 +6,12 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
-using System.IO;
-using System.Reflection;
-using System.Xml;
-using System.Collections.Generic;
-using Hl7.Fhir.Specification.Navigation;
-using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.FhirPath;
-using Hl7.ElementModel;
-using Hl7.FhirPath;
-using Hl7.Fhir.Validation;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.ElementModel;
 
 namespace Hl7.Fhir.Specification.Tests
 {

@@ -1,5 +1,4 @@
-﻿using Hl7.ElementModel;
-using Hl7.Fhir.Introspection;
+﻿using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Navigation;
@@ -9,10 +8,11 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
-using System;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
 using System.Collections.Generic;
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Validation
 {

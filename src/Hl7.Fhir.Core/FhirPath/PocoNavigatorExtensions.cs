@@ -117,9 +117,9 @@ namespace Hl7.Fhir.FhirPath
                 {
                     return new FhirString((string)result);
                 }
-                if (result is PartialDateTime)
+                if (result is Model.Primitives.PartialDateTime)
                 {
-                    var dt = (PartialDateTime)result;
+                    var dt = (Model.Primitives.PartialDateTime)result;
                     return new FhirDateTime(dt.ToUniversalTime());
                 }
                 else

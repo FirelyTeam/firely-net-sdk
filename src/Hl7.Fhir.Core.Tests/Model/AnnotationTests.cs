@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Tests.Model
 {

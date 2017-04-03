@@ -17,6 +17,7 @@ using Hl7.Fhir.Support;
 using Hl7.Fhir.XPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Tests
 {
