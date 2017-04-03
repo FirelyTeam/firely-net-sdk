@@ -2,7 +2,7 @@
   
   <!-- Solution-wide properties for NuGet packaging -->
   <PropertyGroup>
-    <Version>0.4.2-alpha1</Version>
+    <Version>0.4.2-alpha3</Version>
     <Authors>Ewout Kramer (e.kramer@furore.com) and contributors</Authors>
     <Company>Furore (http://fhir.furore.com)</Company>
     <Copyright>Copyright 2016 Furore Health Informatics</Copyright>

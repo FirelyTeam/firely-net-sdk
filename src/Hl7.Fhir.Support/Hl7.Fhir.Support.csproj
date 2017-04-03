@@ -8,7 +8,7 @@
 
   <PropertyGroup>
     <PackageId>Hl7.Fhir.Support</PackageId>
-    <Title>Common interfaces and classes used by all FHIR .NET assemblies</Title>
+    <Title>HL7 FHIR support library</Title>
     <Summary>Common interfaces and classes used by all FHIR .NET assemblies</Summary>
     <Description>Common interfaces and classes used by all FHIR .NET assemblies</Description>
     <PackageTags>HL7;FHIR;Elements;Utility</PackageTags>
