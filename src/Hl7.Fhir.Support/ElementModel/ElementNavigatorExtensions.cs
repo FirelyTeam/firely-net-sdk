@@ -64,7 +64,7 @@ namespace Hl7.Fhir.ElementModel
 
         public static IEnumerable<IElementNavigator> DescendantsAndSelf(this IEnumerable<IElementNavigator> navigators)
         {
-            return navigators.SelectMany(e => new[] { e }.Concat(e.DescendantsAndSelf()));
+            return navigators.SelectMany(n => n.DescendantsAndSelf());
         }
 
         public static void Visit(this IElementNavigator navigator, Action<IElementNavigator> visitor)

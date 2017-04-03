@@ -13,6 +13,7 @@ using Xunit;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 using System.Linq;
+using Hl7.Fhir.Serialization;
 
 namespace Hl7.FhirPath.Tests
 {
@@ -47,7 +48,7 @@ namespace Hl7.FhirPath.Tests
 
 
         [Fact]
-        public void TestPath()
+        public void KnowsPath()
         {
             Assert.Equal("Patient", patient.Location);
             Assert.Equal("Patient.active[0]", patient[0].Location);
@@ -58,7 +59,7 @@ namespace Hl7.FhirPath.Tests
         }
 
         [Fact]
-        public void TestIndexers()
+        public void AccessViaIndexers()
         {
             Assert.Equal("Patient.active[0].extension[1].value[0]", patient["active"][0]["extension"][1]["value"][0].Location);
             Assert.Equal("Patient.active[0].extension[1].value[0]", patient["active"]["extension"][1]["value"].Single().Location);
@@ -71,14 +72,14 @@ namespace Hl7.FhirPath.Tests
         }
 
         [Fact]
-        public void TestHasChildren()
+        public void KnowsChildren()
         {
             Assert.False(patient["active"][0]["id"].HasChildren());
             Assert.False(patient["active"]["id"].HasChildren());
         }
 
         [Fact]
-        public void TestNodeAxis()
+        public void CanQueryNodeAxis()
         {
             Assert.Equal(6, patient["active"].Descendants().Count());
             Assert.Equal(7, patient["active"].DescendantsAndSelf().Count());
@@ -86,7 +87,7 @@ namespace Hl7.FhirPath.Tests
         }
 
         [Fact]
-        public void TestNavigation()
+        public void CanNavigateOverNode()
         {
             var nav = patient.ToNavigator();
 
@@ -109,7 +110,7 @@ namespace Hl7.FhirPath.Tests
         }
 
         [Fact]
-        public void TestAnnotations()
+        public void KeepsAnnotations()
         {
             var firstIdNode = patient[0][0];
             Assert.Equal("a string annotation", (firstIdNode as IAnnotated).Annotation<string>());
@@ -121,5 +122,17 @@ namespace Hl7.FhirPath.Tests
         }
 
         // Test clone()
+
+        [Fact]
+        public void ReadsFromNav()
+        {
+            var tpXml = TestData.ReadTextFile("fp-test-patient.xml");
+            var nav = XmlDomFhirNavigator.Create(tpXml);
+            var nodes = ElementNode.FromNavigator(nav);
+            var nav2 = nodes.ToNavigator();
+
+            Assert.True(nav.IsEqualTo(nav2).Success);
+        }
+
     }
 }

@@ -14,35 +14,7 @@ using System.Collections;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public class ChildNodes : IEnumerable<IElementNode>
-    {
-        private IList<ElementNode> _wrapped;
-
-        internal ChildNodes(IList<ElementNode> nodes)
-        {
-            _wrapped = nodes;
-        }
-
-        public ElementNode this[int index] => _wrapped[index];
-
-        public ChildNodes this[string name] => new ChildNodes(_wrapped.Children(name).Cast<ElementNode>().ToList());
-
-        public int Count => _wrapped.Count;
-
-        public bool Contains(ElementNode item) => _wrapped.Contains(item);
-
-        public void CopyTo(ElementNode[] array, int arrayIndex) => _wrapped.CopyTo(array, arrayIndex);
-
-        public IEnumerator<IElementNode> GetEnumerator() => _wrapped.GetEnumerator();
-
-        public int IndexOf(ElementNode item) => _wrapped.IndexOf(item);
-
-        IEnumerator IEnumerable.GetEnumerator() => _wrapped.GetEnumerator();
-    }
-
-
-
-    public class ElementNode : IElementNode, IAnnotated, IAnnotatable
+    public partial class ElementNode : IElementNode, IAnnotated, IAnnotatable
     {
         public IElementNode Parent { get; private set; }
 
@@ -73,14 +45,18 @@ namespace Hl7.Fhir.ElementModel
             }
         }
 
-        private ElementNode(string name, object value, string type, IEnumerable<ElementNode> children)
+        private ElementNode(string name, object value, string type, IEnumerable<ElementNode> children) : this(name,value,type)
+        {
+            if (children != null) AddRange(children);
+        }
+
+        private ElementNode(string name, object value, string type)
         {
             Name = name;
             Value = value;
             Type = type;
-
-            if (children != null) AddRange(children);
         }
+
 
         public void Add(ElementNode child)
         {
@@ -145,4 +121,32 @@ namespace Hl7.Fhir.ElementModel
             annotations.RemoveOfType(type);
         }
     }
+
+
+    public class ChildNodes : IEnumerable<IElementNode>
+    {
+        private IList<ElementNode> _wrapped;
+
+        internal ChildNodes(IList<ElementNode> nodes)
+        {
+            _wrapped = nodes;
+        }
+
+        public ElementNode this[int index] => _wrapped[index];
+
+        public ChildNodes this[string name] => new ChildNodes(_wrapped.Children(name).Cast<ElementNode>().ToList());
+
+        public int Count => _wrapped.Count;
+
+        public bool Contains(ElementNode item) => _wrapped.Contains(item);
+
+        public void CopyTo(ElementNode[] array, int arrayIndex) => _wrapped.CopyTo(array, arrayIndex);
+
+        public IEnumerator<IElementNode> GetEnumerator() => _wrapped.GetEnumerator();
+
+        public int IndexOf(ElementNode item) => _wrapped.IndexOf(item);
+
+        IEnumerator IEnumerable.GetEnumerator() => _wrapped.GetEnumerator();
+    }
+
 }
