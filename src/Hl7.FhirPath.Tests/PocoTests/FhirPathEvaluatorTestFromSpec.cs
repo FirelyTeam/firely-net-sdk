@@ -174,7 +174,8 @@ namespace Hl7.FhirPath.Tests
         [Fact, Trait("Area", "FhirPathFromSpec")]
         public void TestPublishedTests()
         {
-            var files = Directory.EnumerateFiles(@"..\..\..\fluentpath\tests\dstu2", "*.xml", SearchOption.TopDirectoryOnly);
+            var path = Path.Combine(TestData.GetTestDataBasePath(), "fhirpath");
+            var files = Directory.EnumerateFiles(path, "*.xml", SearchOption.TopDirectoryOnly);
 
             foreach (var file in files)
             {
@@ -191,7 +192,6 @@ namespace Hl7.FhirPath.Tests
                 // Assert.Fail("There were {0} unsuccessful tests (out of a total of {1})".FormatWith(numFailed, totalTests));
                 throw new Exception($"There were {numFailed} unsuccessful tests (out of a total of {totalTests})");
             }
-
         }
 
         private void runTests(string pathToTest)
@@ -211,10 +211,12 @@ namespace Hl7.FhirPath.Tests
 
                 // Now perform this unit test
                 Model.DomainResource resource = null;
+                string basepath = Path.Combine(TestData.GetTestDataBasePath(), @"fhirpath\input");
+
                 if (!_cache.ContainsKey(inputfile))
-                {
-                    string basepath = @"..\..\..\fluentpath\tests\dstu2\input\";
-                    _cache.Add(inputfile, (Model.DomainResource)(new FhirXmlParser().Parse<Model.DomainResource>(File.ReadAllText(basepath + inputfile))));
+                {                    
+                    _cache.Add(inputfile, (Model.DomainResource)(new FhirXmlParser().Parse<Model.DomainResource>(
+                        File.ReadAllText(Path.Combine(basepath, inputfile)))));
                 }
                 resource = _cache[inputfile];
 

@@ -8,15 +8,11 @@
 
   <PropertyGroup>
     <PackageId>Hl7.Fhir.Support</PackageId>
-    <Product>Common interfaces and classes used by all FHIR .NET assemblies</Product>
-    <Description>Common interfaces and classes used by all FHIR .NET assemblies</Description>
+    <Title>Common interfaces and classes used by all FHIR .NET assemblies</Title>
     <Summary>Common interfaces and classes used by all FHIR .NET assemblies</Summary>
+    <Description>Common interfaces and classes used by all FHIR .NET assemblies</Description>
     <PackageTags>HL7;FHIR;Elements;Utility</PackageTags>
     <AssemblyName>Hl7.Fhir.Support</AssemblyName>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

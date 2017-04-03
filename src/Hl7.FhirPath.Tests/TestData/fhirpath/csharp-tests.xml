@@ -1,0 +1,781 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<group name="CSharpTests">
+  <test name="CSharpTest0001" inputfile="fp-test-patient.xml">
+    <expression>4.5 &gt; 0</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0002" inputfile="fp-test-patient.xml">
+    <expression>'ewout' &gt; 'alfred'</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0003" inputfile="fp-test-patient.xml">
+    <expression>2016-04-01 &gt; 2015-04-01</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0004" inputfile="fp-test-patient.xml">
+    <expression>5 &gt; 6 = false</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0005" inputfile="fp-test-patient.xml">
+    <expression>(5 &gt; {}).empty()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0006" inputfile="fp-test-patient.xml">
+    <expression>@2012-04-15 ~ @2012-04-15T10:00:00</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0007" inputfile="fp-test-patient.xml">
+    <expression>@T10:01:02Z !~ @T10:01:55+01:00</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0008" inputfile="fp-test-patient.xml">
+    <expression>Patient.name.family.startsWith('')</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0009" inputfile="fp-test-patient.xml">
+    <expression>Patient.name.family.startsWith('Don')</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0010" inputfile="fp-test-patient.xml">
+    <expression>Patient.name.family.startsWith('Dox')=false</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0011" inputfile="fp-test-patient.xml">
+    <expression>Patient.name.family.endsWith('')</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0012" inputfile="fp-test-patient.xml">
+    <expression>Patient.name.family.endsWith('ald')</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0013" inputfile="fp-test-patient.xml">
+    <expression>Patient.name.family.endsWith('old')=false</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0014" inputfile="fp-test-patient.xml">
+    <expression>Patient.identifier.where(system='urn:oid:0.1.2.3.4.5.6.7').value.matches('^[1-6]+$')</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0015" inputfile="fp-test-patient.xml">
+    <expression>Patient.identifier.where(system='urn:oid:0.1.2.3.4.5.6.7').value.matches('^[1-3]+$') = false</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0016" inputfile="fp-test-patient.xml">
+    <expression>Patient.contained.name[0].family.indexOf('ywo') = 4</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0017" inputfile="fp-test-patient.xml">
+    <expression>Patient.contained.name[0].family.indexOf('') = 0</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0018" inputfile="fp-test-patient.xml">
+    <expression>Patient.contained.name[0].family.indexOf('qq').empty()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0019" inputfile="fp-test-patient.xml">
+    <expression>Patient.contained.name[0].family.contains('ywo')</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0020" inputfile="fp-test-patient.xml">
+    <expression>Patient.contained.name[0].family.contains('ywox')=false</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0021" inputfile="fp-test-patient.xml">
+    <expression>Patient.contained.name[0].family.contains('')</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0022" inputfile="fp-test-patient.xml">
+    <expression>'11/30/1972'.replaceMatches('\\b(?&lt;month&gt;\\d{1,2})/(?&lt;day&gt;\\d{1,2})/(?&lt;year&gt;\\d{2,4})\\b','${day}-${month}-${year}') = '30-11-1972'</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0023" inputfile="fp-test-patient.xml">
+    <expression>'abc'.replace('a', 'q') = 'qbc'</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0024" inputfile="fp-test-patient.xml">
+    <expression>'abc'.replace('a', 'qq') = 'qqbc'</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0025" inputfile="fp-test-patient.xml">
+    <expression>'abc'.replace('q', 'x') = 'abc'</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0026" inputfile="fp-test-patient.xml">
+    <expression>'abc'.replace('ab', '') = 'c'</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0027" inputfile="fp-test-patient.xml">
+    <expression>'abc'.replace('', 'xh') = 'xhaxhbxhc'</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0028" inputfile="fp-test-patient.xml">
+    <expression>Patient.contained.name[0].family.length() = 10</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0029" inputfile="fp-test-patient.xml">
+    <expression>''.length() = 0</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0030" inputfile="fp-test-patient.xml">
+    <expression>{}.length().empty()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0031" inputfile="fp-test-patient.xml">
+    <expression>{}.empty()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0032" inputfile="fp-test-patient.xml">
+    <expression>1.empty().not()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0033" inputfile="fp-test-patient.xml">
+    <expression>1.exists()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0034" inputfile="fp-test-patient.xml">
+    <expression>Patient.identifier.exists()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0035" inputfile="fp-test-patient.xml">
+    <expression>Patient.dientifeir.exists().not()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0036" inputfile="fp-test-patient.xml">
+    <expression>Patient.identifier.where(use = ('offic' + 'ial')).count() = 2</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0037" inputfile="fp-test-patient.xml">
+    <expression>(5 | 'hi' | 4).where($this = 'hi').count()=1</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0038" inputfile="fp-test-patient.xml">
+    <expression>{}.where($this = 'hi').count()=0</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0039" inputfile="fp-test-patient.xml">
+    <expression>Patient.contained.skip(1).repeat(group).count() = 4</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0040" inputfile="fp-test-patient.xml">
+    <expression>Patient.contained.skip(1).repeat(group|question).count() = 11</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0041" inputfile="fp-test-patient.xml">
+    <expression>Patient.contained.skip(1).repeat(group | question).count() = 11</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0042" inputfile="fp-test-patient.xml">
+    <expression>Patient.contained.skip(1).repeat(group|question).count() = 11</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0043" inputfile="fp-test-patient.xml">
+    <expression>Patient.contained.skip(1).repeat(group).select(concept.code) contains 'COMORBIDITY'</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0044" inputfile="fp-test-patient.xml">
+    <expression>Patient.contained.skip(1).repeat(group).any(concept.code = 'COMORBIDITY')</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0045" inputfile="fp-test-patient.xml">
+    <expression>Patient.contained.skip(1).repeat(group).any(concept.code = 'CARDIAL') = false</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0046" inputfile="fp-test-patient.xml">
+    <expression>Patient.contained.skip(1).repeat(group|question).any(concept.code = 'CARDIAL')</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0047" inputfile="fp-test-patient.xml">
+    <expression>Patient.identifier.use.distinct() = ('usual' | 'official')</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0048" inputfile="fp-test-patient.xml">
+    <expression>Patient.identifier.use.distinct().count() = 2</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0049" inputfile="fp-test-patient.xml">
+    <expression>Patient.identifier.use.isDistinct() = false</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0050" inputfile="fp-test-patient.xml">
+    <expression>Patient.identifier.system.isDistinct()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0051" inputfile="fp-test-patient.xml">
+    <expression>(3|4).isDistinct()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0052" inputfile="fp-test-patient.xml">
+    <expression>{}.isDistinct()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0053" inputfile="fp-test-patient.xml">
+    <expression>Patient.identifier.skip(1).subsetOf(%context.Patient.identifier)</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0054" inputfile="fp-test-patient.xml">
+    <expression>Patient.identifier.supersetOf(%context.Patient.identifier)</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0055" inputfile="fp-test-patient.xml">
+    <expression>Patient.identifier.supersetOf({})</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0056" inputfile="fp-test-patient.xml">
+    <expression>{}.subsetOf(%context.Patient.identifier)</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0057" inputfile="fp-test-patient.xml">
+    <expression>Patient.name.iif(exists(), 'named', 'unnamed') = 'named'</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0058" inputfile="fp-test-patient.xml">
+    <expression>Patient.name.iif(empty(), 'unnamed', 'named') = 'named'</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0059" inputfile="fp-test-patient.xml">
+    <expression>Patient.contained[0].name.iif(exists(), 'named', 'unnamed') = 'named'</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0060" inputfile="fp-test-patient.xml">
+    <expression>Patient.contained[0].name.iif(empty(), 'unnamed', 'named') = 'named'</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0061" inputfile="fp-test-patient.xml">
+    <expression>Patient.name.iif({}, 'named', 'unnamed') = 'unnamed'</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0062" inputfile="fp-test-patient.xml">
+    <expression>Patient.identifier[1] != Patient.identifier.first()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0063" inputfile="fp-test-patient.xml">
+    <expression>Patient.identifier[0] = Patient.identifier.first()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0064" inputfile="fp-test-patient.xml">
+    <expression>Patient.identifier[2] = Patient.identifier.last()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0065" inputfile="fp-test-patient.xml">
+    <expression>Patient.identifier[0] | Patient.identifier[1]  = Patient.identifier.take(2)</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0066" inputfile="fp-test-patient.xml">
+    <expression>Patient.identifier.skip(1) = Patient.identifier.tail()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0067" inputfile="fp-test-patient.xml">
+    <expression>Patient.identifier.skip(2) = Patient.identifier.last()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0068" inputfile="fp-test-patient.xml">
+    <expression>Patient.identifier.first().single()</expression>
+    <output type="Identifier" />
+  </test>
+  <test name="CSharpTest0069" inputfile="fp-test-patient.xml">
+    <expression invalid="semantic">Patient.identifier.single()</expression>
+  </test>
+  <test name="CSharpTest0070" inputfile="fp-test-patient.xml">
+    <expression>4 = 4</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0071" inputfile="fp-test-patient.xml">
+    <expression>4 = 4.0</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0072" inputfile="fp-test-patient.xml">
+    <expression>true = true</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0073" inputfile="fp-test-patient.xml">
+    <expression>true != false</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0074" inputfile="fp-test-patient.xml">
+    <expression>Patient.identifier = Patient.identifier</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0075" inputfile="fp-test-patient.xml">
+    <expression>Patient.identifier.first() != Patient.identifier.skip(1)</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0076" inputfile="fp-test-patient.xml">
+    <expression>(1|2|3) = (1|2|3)</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0077" inputfile="fp-test-patient.xml">
+    <expression>(1|2|3) = (1.0|2.0|3)</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0078" inputfile="fp-test-patient.xml">
+    <expression>(1|Patient.identifier|3) = (1|Patient.identifier|3)</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0079" inputfile="fp-test-patient.xml">
+    <expression>(3|Patient.identifier|1) != (1|Patient.identifier|3)</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0080" inputfile="fp-test-patient.xml">
+    <expression>Patient.gender = 'male'</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0081" inputfile="fp-test-patient.xml">
+    <expression>Patient.communication = Patient.communication</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0082" inputfile="fp-test-patient.xml">
+    <expression>Patient.communication.first() = Patient.communication.skip(1)</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0083" inputfile="fp-test-patient.xml">
+    <expression>@2015-01-01 = @2015-01-01</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0084" inputfile="fp-test-patient.xml">
+    <expression>@2015-01-01 != @2015-01</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0085" inputfile="fp-test-patient.xml">
+    <expression>@2015-01-01T13:40:50+00:00 = @2015-01-01T13:40:50Z</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0086" inputfile="fp-test-patient.xml">
+    <expression>@T13:45:02Z = @T13:45:02+00:00</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0087" inputfile="fp-test-patient.xml">
+    <expression>@T13:45:02+00:00 != @T13:45:02+01:00</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0088" inputfile="fp-test-patient.xml">
+    <expression>Patient.name.family.substring(0,6) = 'Donald'</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0089" inputfile="fp-test-patient.xml">
+    <expression>Patient.name.family.substring(2,6) = 'nald'</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0090" inputfile="fp-test-patient.xml">
+    <expression>Patient.name.family.substring(2,4) = 'nald'</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0091" inputfile="fp-test-patient.xml">
+    <expression>Patient.name.family.substring(-1,8).empty()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0092" inputfile="fp-test-patient.xml">
+    <expression>Patient.name.family.substring(999,1).empty()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0093" inputfile="fp-test-patient.xml">
+    <expression>''.substring(0,1).empty()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0094" inputfile="fp-test-patient.xml">
+    <expression>{}.substring(0,10).empty()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0095" inputfile="fp-test-patient.xml">
+    <expression>{}.substring(0,10).empty()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0096" inputfile="fp-test-patient.xml">
+    <expression invalid="semantic">Patient.identifier.use.substring(0,10)</expression>
+  </test>
+  <test name="CSharpTest0097" inputfile="fp-test-patient.xml">
+    <expression>({}.substring(0)).empty()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0098" inputfile="fp-test-patient.xml">
+    <expression>('hello'.substring({})).empty()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0099" inputfile="fp-test-patient.xml">
+    <expression>-4.5 + 4.5 = 0</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0100" inputfile="fp-test-patient.xml">
+    <expression>4/2 = 2</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0101" inputfile="fp-test-patient.xml">
+    <expression>2/4 = 0.5</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0102" inputfile="fp-test-patient.xml">
+    <expression>10/4 = 2.5</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0103" inputfile="fp-test-patient.xml">
+    <expression>10.0/4 = 2.5</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0104" inputfile="fp-test-patient.xml">
+    <expression>4.0/2.0 = 2</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0105" inputfile="fp-test-patient.xml">
+    <expression>2.0/4 = 0.5</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0106" inputfile="fp-test-patient.xml">
+    <expression>2.0 * 4 = 8</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0107" inputfile="fp-test-patient.xml">
+    <expression>2 * 4.1 = 8.2</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0108" inputfile="fp-test-patient.xml">
+    <expression>-0.5 * 0.5 = -0.25</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0109" inputfile="fp-test-patient.xml">
+    <expression>5 - 4.5 = 0.5</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0110" inputfile="fp-test-patient.xml">
+    <expression>9.5 - 4.5 = 5</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0111" inputfile="fp-test-patient.xml">
+    <expression>5 + 4.5 = 9.5</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0112" inputfile="fp-test-patient.xml">
+    <expression>9.5 + 0.5 = 10</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0113" inputfile="fp-test-patient.xml">
+    <expression>103 mod 5 = 3</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0114" inputfile="fp-test-patient.xml">
+    <expression>101.4 mod 5.2 = 2.6</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0115" inputfile="fp-test-patient.xml">
+    <expression>103 div 5 = 20</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0116" inputfile="fp-test-patient.xml">
+    <expression>20.0 div 5.5 = 3</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0117" inputfile="fp-test-patient.xml">
+    <expression>'offic'+'ial' = 'official'</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0118" inputfile="fp-test-patient.xml">
+    <expression>12/(2+2) - (3 div 2) = 2</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0119" inputfile="fp-test-patient.xml">
+    <expression>-4.5 + 4.5 * 2 * 4 / 4 - 1.5 = 3</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0120" inputfile="fp-test-patient.xml">
+    <expression>true or (1/0 = 0)</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0121" inputfile="fp-test-patient.xml">
+    <expression>(false and (1/0 = 0)) = false</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0122" inputfile="fp-test-patient.xml">
+    <expression>Patient.birthDate.extension('http://hl7.org/fhir/StructureDefinition/patient-birthTime').exists()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0123" inputfile="fp-test-patient.xml">
+    <expression>Patient.birthDate.extension(%"ext-patient-birthTime").exists()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0124" inputfile="fp-test-patient.xml">
+    <expression>Patient.birthDate.extension('http://hl7.org/fhir/StructureDefinition/patient-birthTime1').empty()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0125" inputfile="fp-test-patient.xml">
+    <expression>Patient.identifier.skip(1).all(use = 'official')</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0126" inputfile="fp-test-patient.xml">
+    <expression>Patient.identifier.skip(999).all(use = 'official')</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0127" inputfile="fp-test-patient.xml">
+    <expression>Patient.identifier.skip(1).all({}).empty()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0128" inputfile="fp-test-patient.xml">
+    <expression>Patient.identifier.any(use = 'official')</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0129" inputfile="fp-test-patient.xml">
+    <expression>Patient.identifier.skip(999).any(use = 'official') = false</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0130" inputfile="fp-test-patient.xml">
+    <expression>Patient.contained.skip(1).group.group.any(concept.code = 'COMORBIDITY')</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0131" inputfile="fp-test-patient.xml">
+    <expression>(Patient.identifier.where( use = ( 'offic' + 'ial')) = 
+                       Patient.identifier.skip(8 div 2 - 3*2 + 3)) and (Patient.identifier.where(use='usual') = 
+                        Patient.identifier.first())</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0132" inputfile="fp-test-patient.xml">
+    <expression>(1|2|3|4|5).where($this &gt; 2 and $this &lt;= 4) = (3|4)</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0133" inputfile="fp-test-patient.xml">
+    <expression>(1|2|2|3|Patient.identifier.first()|Patient.identifier).distinct().count() = 
+                        3 + Patient.identifier.count()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0134" inputfile="fp-test-patient.xml">
+    <expression>(Patient.identifier.where(use='official').last() in Patient.identifier) and
+                       (Patient.identifier.first() in Patient.identifier.tail()).not()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0135" inputfile="fp-test-patient.xml">
+    <expression>Patient.identifier.any(use='official') and identifier.where(use='usual').exists()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0136" inputfile="fp-test-patient.xml">
+    <expression>Patient.descendants().where($this.as(string).contains('222'))[1] = %context.contained.address.line</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0137" inputfile="fp-test-patient.xml">
+    <expression>Patient.name.select(given|family).count() = 2</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0138" inputfile="fp-test-patient.xml">
+    <expression>Patient.identifier.where(use = 'official').select(value + 'yep') = ('7654321yep' | '11223344yep')</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0139" inputfile="fp-test-patient.xml">
+    <expression>Patient.descendants().where(($this is code) and ($this.contains('wne'))).trace('them') = contact.relationship.coding.code</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0140" inputfile="fp-test-patient.xml">
+    <expression>Patient.descendants().as(code).where(matches('i.*/gif')) in Patient.photo.children()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0141" inputfile="fp-test-patient.xml">
+    <expression>'m' + gender.extension('http://example.org/StructureDefinition/real-gender').value.as(code)
+                    .substring(1,4) + 
+                    gender.extension('http://example.org/StructureDefinition/real-gender').value.as(code)
+                    .substring(5) = 'metrosexual'</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0142" inputfile="fp-test-patient.xml">
+    <expression>gender.extension('http://example.org/StructureDefinition/real-gender').value.as(code)
+                    .select('m' + $this.substring(1,4) + $this.substring(5)) = 'metrosexual'</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0148" inputfile="fp-test-patient.xml">
+    <expression>(4.1).toString() = '4.1'</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0149" inputfile="fp-test-patient.xml">
+    <expression>true.toString() = 'true'</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0150" inputfile="fp-test-patient.xml">
+    <expression>true.toDecimal() = 1</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0151" inputfile="fp-test-patient.xml">
+    <expression>Patient.identifier.value.first().toDecimal() = 654321</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0152" inputfile="fp-test-patient.xml">
+    <expression>@2014-12-14.toString() = '2014-12-14'</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0153" inputfile="fp-test-patient.xml">
+    <expression>Patient.identifier.last() in Patient.identifier</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0154" inputfile="fp-test-patient.xml">
+    <expression>4 in (3|4.0|5)</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0155" inputfile="fp-test-patient.xml">
+    <expression>(3|4.0|5|3).count() = 3</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0156" inputfile="fp-test-patient.xml">
+    <expression>Patient.identifier contains Patient.identifier.last()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0157" inputfile="fp-test-patient.xml">
+    <expression>(3|4.0|5) contains 4</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0158" inputfile="fp-test-patient.xml">
+    <expression>({} contains 4) = false</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0159" inputfile="fp-test-patient.xml">
+    <expression>(4 in {}) = false</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0160" inputfile="fp-test-patient.xml">
+    <expression>Patient.identifier.count() = (Patient.identifier | Patient.identifier).count()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0161" inputfile="fp-test-patient.xml">
+    <expression>(Patient.identifier | Patient.name).count() = Patient.identifier.count() + Patient.name.count()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0162" inputfile="fp-test-patient.xml">
+    <expression>Patient.select(identifier | name).count() = Patient.select(identifier.count() + name.count())</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0163" inputfile="fp-test-patient.xml">
+    <expression>true and true</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0164" inputfile="fp-test-patient.xml">
+    <expression>(true and false) = false</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0165" inputfile="fp-test-patient.xml">
+    <expression>(true and {}).empty()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0166" inputfile="fp-test-patient.xml">
+    <expression>(false and true) = false</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0167" inputfile="fp-test-patient.xml">
+    <expression>(false and false) = false</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0168" inputfile="fp-test-patient.xml">
+    <expression>(false and {}) = false</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0169" inputfile="fp-test-patient.xml">
+    <expression>({} and true).empty()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0170" inputfile="fp-test-patient.xml">
+    <expression>({} and false) = false</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0171" inputfile="fp-test-patient.xml">
+    <expression>({} and {}).empty()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0172" inputfile="fp-test-patient.xml">
+    <expression>true or true</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0173" inputfile="fp-test-patient.xml">
+    <expression>true or false</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0174" inputfile="fp-test-patient.xml">
+    <expression>true or {}</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0175" inputfile="fp-test-patient.xml">
+    <expression>false or true</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0176" inputfile="fp-test-patient.xml">
+    <expression>(false or false) = false</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0177" inputfile="fp-test-patient.xml">
+    <expression>(false or {}).empty()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0178" inputfile="fp-test-patient.xml">
+    <expression>{} or true</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0179" inputfile="fp-test-patient.xml">
+    <expression>({} or false).empty()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0180" inputfile="fp-test-patient.xml">
+    <expression>({} or {}).empty()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0181" inputfile="fp-test-patient.xml">
+    <expression>(true xor true)=false</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0182" inputfile="fp-test-patient.xml">
+    <expression>true xor false</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0183" inputfile="fp-test-patient.xml">
+    <expression>(true xor {}).empty()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0184" inputfile="fp-test-patient.xml">
+    <expression>false xor true</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0185" inputfile="fp-test-patient.xml">
+    <expression>(false xor false) = false</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0186" inputfile="fp-test-patient.xml">
+    <expression>(false xor {}).empty()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0187" inputfile="fp-test-patient.xml">
+    <expression>({} xor true).empty()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0188" inputfile="fp-test-patient.xml">
+    <expression>({} xor false).empty()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0189" inputfile="fp-test-patient.xml">
+    <expression>({} xor {}).empty()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0190" inputfile="fp-test-patient.xml">
+    <expression>true implies true</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0191" inputfile="fp-test-patient.xml">
+    <expression>(true implies false) = false</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0192" inputfile="fp-test-patient.xml">
+    <expression>(true implies {}).empty()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0193" inputfile="fp-test-patient.xml">
+    <expression>false implies true</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0194" inputfile="fp-test-patient.xml">
+    <expression>false implies false</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0195" inputfile="fp-test-patient.xml">
+    <expression>false implies {}</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0196" inputfile="fp-test-patient.xml">
+    <expression>{} implies true</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0197" inputfile="fp-test-patient.xml">
+    <expression>({} implies false).empty()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0198" inputfile="fp-test-patient.xml">
+    <expression>({} implies {}).empty()</expression>
+    <output type="boolean">true</output>
+  </test>
+</group>

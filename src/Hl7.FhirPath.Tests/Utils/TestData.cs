@@ -16,5 +16,11 @@ namespace Hl7.FhirPath.Tests
             return File.ReadAllText(file);
         }
 
+        public static string GetTestDataBasePath()
+        {
+            string location = typeof(TestData).GetTypeInfo().Assembly.Location;
+            var path = Path.GetDirectoryName(location);
+            return Path.Combine(path, "TestData");
+        }
     }
 }
