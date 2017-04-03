@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -762,7 +762,8 @@ namespace Hl7.Fhir.Model
         /// Who the images are of
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=100)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -837,7 +838,8 @@ namespace Hl7.Fhir.Model
         /// Order(s) that caused this study to be performed
         /// </summary>
         [FhirElement("order", InSummary=true, Order=140)]
-        [References("DiagnosticOrder")]
+        [CLSCompliant(false)]
+		[References("DiagnosticOrder")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Order
@@ -866,7 +868,8 @@ namespace Hl7.Fhir.Model
         /// Referring physician (0008,0090)
         /// </summary>
         [FhirElement("referrer", InSummary=true, Order=160)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Referrer
         {
@@ -1010,7 +1013,8 @@ namespace Hl7.Fhir.Model
         /// Type of procedure performed
         /// </summary>
         [FhirElement("procedure", InSummary=true, Order=210)]
-        [References("Procedure")]
+        [CLSCompliant(false)]
+		[References("Procedure")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Procedure
@@ -1025,7 +1029,8 @@ namespace Hl7.Fhir.Model
         /// Who interpreted images
         /// </summary>
         [FhirElement("interpreter", InSummary=true, Order=220)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Interpreter
         {

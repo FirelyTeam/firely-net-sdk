@@ -20,13 +20,8 @@ using Hl7.Fhir.Specification.Source;
 namespace Hl7.Fhir.Specification.Tests
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableResolverAndSourceExtensionTests
-#else
     public class ResolverAndSourceExtensionTests
-#endif
     {
-#if !PORTABLE45
         [ClassInitialize]
         public static void SetupSource(TestContext t)
         {
@@ -117,5 +112,4 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
     }
-#endif
 }

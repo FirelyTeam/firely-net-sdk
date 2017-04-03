@@ -10,8 +10,8 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using Hl7.Fhir.Model;
-using Hl7.ElementModel;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.FhirPath
 {
@@ -26,9 +26,7 @@ namespace Hl7.Fhir.FhirPath
         // For Normal element properties representing a FHIR type
         internal PocoElementNavigator(string name, Base value)
         {
-            if (value == null) throw Error.ArgumentNull(nameof(value));
-
-            _pocoElement = value;
+            _pocoElement = value ?? throw Error.ArgumentNull(nameof(value));
             PropMap = null;
             Name = name;
             _arrayIndex = 0;
@@ -37,9 +35,7 @@ namespace Hl7.Fhir.FhirPath
         // For Normal element properties representing a FHIR type
         internal PocoElementNavigator(Introspection.PropertyMapping map, Base value, int arrayIndex)
         {
-            if (value == null) throw Error.ArgumentNull(nameof(value));
-
-            _pocoElement = value;
+            _pocoElement = value ?? throw Error.ArgumentNull(nameof(value));
             PropMap = map;
             Name = map.Name;
             _arrayIndex = arrayIndex;
@@ -49,9 +45,7 @@ namespace Hl7.Fhir.FhirPath
         // rendered as attributes in the xml
         internal PocoElementNavigator(Introspection.PropertyMapping map, string value)
         {
-            if (value == null) throw Error.ArgumentNull(nameof(value));
-
-            _string = value;
+            _string = value ?? throw Error.ArgumentNull(nameof(value));
             PropMap = map;
             Name = map.Name;
             _arrayIndex = 0;

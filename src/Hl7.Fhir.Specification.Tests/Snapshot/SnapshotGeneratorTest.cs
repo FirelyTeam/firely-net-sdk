@@ -21,7 +21,7 @@ using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Rest;
 using System.Text;
 using System.Xml;
-
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -88,8 +88,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(sd);
             // dumpReferences(sd);
 
-            StructureDefinition expanded;
-            generateSnapshotAndCompare(sd, out expanded);
+            generateSnapshotAndCompare(sd, out StructureDefinition expanded);
 
             dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
@@ -3152,8 +3151,8 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsNotNull(_generator.Outcome);
             Assert.IsNotNull(_generator.Outcome.Issue);
-            Assert.AreEqual(2, _generator.Outcome.Issue.Count);
-            assertIssue(_generator.Outcome.Issue[1], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_PROFILE_TYPE);
+            Assert.AreEqual(1, _generator.Outcome.Issue.Count);
+            assertIssue(_generator.Outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_PROFILE_TYPE);
 
             dumpElements(expanded.Snapshot.Element);
         }

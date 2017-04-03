@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -85,7 +85,8 @@ namespace Hl7.Fhir.Model
         /// Identifies the focus of this resource
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=110)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -99,7 +100,8 @@ namespace Hl7.Fhir.Model
         /// Who created
         /// </summary>
         [FhirElement("author", InSummary=true, Order=120)]
-        [References("Practitioner","Patient","RelatedPerson")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Patient","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
         {

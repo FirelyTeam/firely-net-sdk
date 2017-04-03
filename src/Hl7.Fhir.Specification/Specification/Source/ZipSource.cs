@@ -10,10 +10,12 @@ using System;
 using System.Collections.Generic;
 using Hl7.Fhir.Model;
 using System.IO;
+using System.Reflection;
+
 
 namespace Hl7.Fhir.Specification.Source
 {
-#if !PORTABLE45
+#if NET_COMPRESSION
 
     /// <summary>
     /// Reads FHIR artifacts (Profiles, ValueSets, ...) from validation.zip/validation-min.zip
@@ -31,8 +33,8 @@ namespace Hl7.Fhir.Specification.Source
             throw new FileNotFoundException("Cannot create a ZipArtifactSource for the core specification: specification.zip was not found");
         }
 
-        private readonly string CACHE_KEY = "FhirArtifactCache-" + typeof(ZipSource).Assembly.GetName().Version.ToString();
-       
+        private readonly string CACHE_KEY = "FhirArtifactCache-" + typeof(ZipSource).GetTypeInfo().Assembly.GetName().Version.ToString();
+               
         private bool _prepared = false;
         private string _mask;
 
@@ -135,4 +137,4 @@ namespace Hl7.Fhir.Specification.Source
     }
 
 #endif
-}
+    }

@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -105,7 +105,8 @@ namespace Hl7.Fhir.Model
             /// Record of a specific investigation
             /// </summary>
             [FhirElement("item", Order=50)]
-            [References("Observation","QuestionnaireResponse","FamilyMemberHistory","DiagnosticReport")]
+            [CLSCompliant(false)]
+			[References("Observation","QuestionnaireResponse","FamilyMemberHistory","DiagnosticReport")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> Item
@@ -403,7 +404,8 @@ namespace Hl7.Fhir.Model
         /// The patient being assessed
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=90)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -418,7 +420,8 @@ namespace Hl7.Fhir.Model
         /// The clinician performing the assessment
         /// </summary>
         [FhirElement("assessor", InSummary=true, Order=100)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Assessor
         {
@@ -529,7 +532,8 @@ namespace Hl7.Fhir.Model
         /// Reference to last assessment
         /// </summary>
         [FhirElement("previous", Order=140)]
-        [References("ClinicalImpression")]
+        [CLSCompliant(false)]
+		[References("ClinicalImpression")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Previous
         {
@@ -543,7 +547,8 @@ namespace Hl7.Fhir.Model
         /// General assessment of patient state
         /// </summary>
         [FhirElement("problem", InSummary=true, Order=150)]
-        [References("Condition","AllergyIntolerance")]
+        [CLSCompliant(false)]
+		[References("Condition","AllergyIntolerance")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Problem
@@ -558,7 +563,8 @@ namespace Hl7.Fhir.Model
         /// Request or event that necessitated this assessment
         /// </summary>
         [FhirElement("trigger", Order=160, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element Trigger
         {
@@ -724,7 +730,8 @@ namespace Hl7.Fhir.Model
         /// Plan of action after assessment
         /// </summary>
         [FhirElement("plan", Order=240)]
-        [References("CarePlan","Appointment","CommunicationRequest","DeviceUseRequest","DiagnosticOrder","MedicationOrder","NutritionOrder","Order","ProcedureRequest","ProcessRequest","ReferralRequest","SupplyRequest","VisionPrescription")]
+        [CLSCompliant(false)]
+		[References("CarePlan","Appointment","CommunicationRequest","DeviceUseRequest","DiagnosticOrder","MedicationOrder","NutritionOrder","Order","ProcedureRequest","ProcessRequest","ReferralRequest","SupplyRequest","VisionPrescription")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Plan
@@ -739,7 +746,8 @@ namespace Hl7.Fhir.Model
         /// Actions taken during assessment
         /// </summary>
         [FhirElement("action", Order=250)]
-        [References("ReferralRequest","ProcedureRequest","Procedure","MedicationOrder","DiagnosticOrder","NutritionOrder","SupplyRequest","Appointment")]
+        [CLSCompliant(false)]
+		[References("ReferralRequest","ProcedureRequest","Procedure","MedicationOrder","DiagnosticOrder","NutritionOrder","SupplyRequest","Appointment")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Action

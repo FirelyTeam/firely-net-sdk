@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -354,7 +354,8 @@ namespace Hl7.Fhir.Model
             /// Resource that is related to this one
             /// </summary>
             [FhirElement("target", Order=50)]
-            [References("Observation","QuestionnaireResponse")]
+            [CLSCompliant(false)]
+			[References("Observation","QuestionnaireResponse")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Target
@@ -449,7 +450,8 @@ namespace Hl7.Fhir.Model
             /// Actual component result
             /// </summary>
             [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
             {
@@ -631,7 +633,8 @@ namespace Hl7.Fhir.Model
         /// Who and/or what this is about
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=130)]
-        [References("Patient","Group","Device","Location")]
+        [CLSCompliant(false)]
+		[References("Patient","Group","Device","Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -645,7 +648,8 @@ namespace Hl7.Fhir.Model
         /// Healthcare event during which this observation is made
         /// </summary>
         [FhirElement("encounter", Order=140)]
-        [References("Encounter")]
+        [CLSCompliant(false)]
+		[References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
         {
@@ -659,7 +663,8 @@ namespace Hl7.Fhir.Model
         /// Clinically relevant time/time-period for observation
         /// </summary>
         [FhirElement("effective", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
         public Hl7.Fhir.Model.Element Effective
         {
@@ -705,7 +710,8 @@ namespace Hl7.Fhir.Model
         /// Who is responsible for the observation
         /// </summary>
         [FhirElement("performer", InSummary=true, Order=170)]
-        [References("Practitioner","Organization","Patient","RelatedPerson")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Organization","Patient","RelatedPerson")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Performer
@@ -720,7 +726,8 @@ namespace Hl7.Fhir.Model
         /// Actual result
         /// </summary>
         [FhirElement("value", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
         public Hl7.Fhir.Model.Element Value
         {
@@ -818,7 +825,8 @@ namespace Hl7.Fhir.Model
         /// Specimen used for this observation
         /// </summary>
         [FhirElement("specimen", Order=240)]
-        [References("Specimen")]
+        [CLSCompliant(false)]
+		[References("Specimen")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Specimen
         {
@@ -832,7 +840,8 @@ namespace Hl7.Fhir.Model
         /// (Measurement) Device
         /// </summary>
         [FhirElement("device", Order=250)]
-        [References("Device","DeviceMetric")]
+        [CLSCompliant(false)]
+		[References("Device","DeviceMetric")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Device
         {

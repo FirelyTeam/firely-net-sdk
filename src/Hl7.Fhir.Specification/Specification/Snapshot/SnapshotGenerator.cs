@@ -28,10 +28,9 @@ using System.Linq;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
-using Hl7.Fhir.Support;
 using System.Diagnostics;
-using Hl7.ElementModel;
-using Hl7.Fhir.Introspection;
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -193,7 +192,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// </summary>
         List<ElementDefinition> generate(StructureDefinition structure)
         {
-            Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(generate)}] Generate snapshot for profile '{structure.Name}' : '{structure.Url}' ...");
+            Debug.WriteLine($"[{nameof(SnapshotGenerator)}.{nameof(generate)}] Generate snapshot for profile '{structure.Name}' : '{structure.Url}' ...");
 
             List<ElementDefinition> result;
             var differential = structure.Differential;
@@ -733,7 +732,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // [WMR 20170321] HACK: Never copy elements names from the root element (e.g. SimpleQuantity)
                     if (typeNav.Current.NameElement != null)
                     {
-                        Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(mergeTypeProfiles)}] Explicitly prevent copying of root element name: {typeNav.Path} : '{typeNav.Current.Name}'");
+                        Debug.WriteLine($"[{nameof(SnapshotGenerator)}.{nameof(mergeTypeProfiles)}] Explicitly prevent copying of root element name: {typeNav.Path} : '{typeNav.Current.Name}'");
                         typeNav.Current.Name = null;
                     }
 
@@ -754,7 +753,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // => First renamed snap before merging diff
                 if (diff.PathName != snap.PathName)
                 {
-                    Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(mergeTypeProfiles)}] Rename snapshot element(s): {snap.Path} => '{diff.Path}'");
+                    Debug.WriteLine($"[{nameof(SnapshotGenerator)}.{nameof(mergeTypeProfiles)}] Rename snapshot element(s): {snap.Path} => '{diff.Path}'");
                     Debug.Assert(!snap.HasChildren);
                     snap.Current.Path = diff.Path;
                 }
@@ -1203,7 +1202,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 baseStructure = _resolver.GetStructureDefinitionForTypeCode(typeCodeElem);
                 // [WMR 20160906] Check if element type equals path (e.g. Resource root element), prevent infinite recursion
-                isValidProfile = (IsEqualPath(typeName, location.Path)) ||
+                isValidProfile = (IsEqualPath(typeName, location.Location)) ||
                     (
                         ensureSnapshot
                         ? this.ensureSnapshot(baseStructure, typeName, location)
@@ -1238,7 +1237,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Detect infinite recursion
             // Verify that the type profile is not already being expanded by a parent call higher up the call stack hierarchy
             // Special case: when recursing on Element, simply return true and continue; otherwise throw an exception
-            var path = location != null ? location.Path : null;
+            var path = location != null ? location.Location : null;
             _stack.OnBeforeExpandTypeProfile(profileUri, path);
 
             try

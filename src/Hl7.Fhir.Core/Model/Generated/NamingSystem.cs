@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -729,7 +729,8 @@ namespace Hl7.Fhir.Model
         /// Use this instead
         /// </summary>
         [FhirElement("replacedBy", Order=210)]
-        [References("NamingSystem")]
+        [CLSCompliant(false)]
+		[References("NamingSystem")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference ReplacedBy
         {

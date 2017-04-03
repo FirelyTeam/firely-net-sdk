@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -197,7 +197,8 @@ namespace Hl7.Fhir.Model
         /// What is account tied to?
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=170)]
-        [References("Patient","Device","Practitioner","Location","HealthcareService","Organization")]
+        [CLSCompliant(false)]
+		[References("Patient","Device","Practitioner","Location","HealthcareService","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -211,7 +212,8 @@ namespace Hl7.Fhir.Model
         /// Who is responsible?
         /// </summary>
         [FhirElement("owner", InSummary=true, Order=180)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Owner
         {

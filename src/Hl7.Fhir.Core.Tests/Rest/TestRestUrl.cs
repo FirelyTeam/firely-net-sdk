@@ -14,11 +14,7 @@ using Hl7.Fhir.Rest;
 namespace Hl7.Fhir.Test
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableTestRestUrl
-#else
     public class TestRestUrl
-#endif
     {
         [TestMethod]
         public void Query()

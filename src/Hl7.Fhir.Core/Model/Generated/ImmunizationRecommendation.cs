@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -184,7 +184,8 @@ namespace Hl7.Fhir.Model
             /// Past immunizations supporting recommendation
             /// </summary>
             [FhirElement("supportingImmunization", Order=100)]
-            [References("Immunization")]
+            [CLSCompliant(false)]
+			[References("Immunization")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> SupportingImmunization
@@ -199,7 +200,8 @@ namespace Hl7.Fhir.Model
             /// Patient observations supporting recommendation
             /// </summary>
             [FhirElement("supportingPatientInformation", Order=110)]
-            [References("Observation","AllergyIntolerance")]
+            [CLSCompliant(false)]
+			[References("Observation","AllergyIntolerance")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> SupportingPatientInformation
@@ -481,7 +483,8 @@ namespace Hl7.Fhir.Model
             /// Who is responsible for protocol
             /// </summary>
             [FhirElement("authority", Order=60)]
-            [References("Organization")]
+            [CLSCompliant(false)]
+			[References("Organization")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Authority
             {
@@ -608,7 +611,8 @@ namespace Hl7.Fhir.Model
         /// Who this profile is for
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=100)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient

@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.XPath
 {
+#if NET_XSD_SCHEMA
     public static class JsonReaderExtensions
     {
         public static JsonXPathNavigator GetNavigator(this JsonReader reader)
@@ -21,4 +22,5 @@ namespace Hl7.Fhir.XPath
             return new JsonXPathNavigator(reader);
         }            
     }
+#endif
 }

@@ -14,11 +14,7 @@ using Hl7.Fhir.Serialization;
 namespace Hl7.Fhir.Tests.Serialization
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableConversionTest
-#else
 	public class ConversionTest
-#endif
     {
         [TestMethod]
         public void TestStringToBinary()
@@ -40,13 +36,13 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual("true", PrimitiveTypeConverter.ConvertTo<string>(result));
         }
 
-        [TestMethod]
-        public void TestGetValueAsString()
-        {
-            var x = new FhirBoolean(true);
+        //[TestMethod]
+        //public void TestGetValueAsString()
+        //{
+        //    var x = new FhirBoolean(true);
 
-            Assert.AreEqual("true", x.GetValueAsString());
-        }
+        //    Assert.AreEqual("true", x.GetValueAsString());
+        //}
 
         [TestMethod]
         public void TestStringToInteger()

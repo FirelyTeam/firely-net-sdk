@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -415,7 +415,8 @@ namespace Hl7.Fhir.Model
             /// Profile on the type
             /// </summary>
             [FhirElement("profile", Order=100)]
-            [References("StructureDefinition")]
+            [CLSCompliant(false)]
+			[References("StructureDefinition")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Profile
             {
@@ -583,7 +584,8 @@ namespace Hl7.Fhir.Model
             /// Source of value set
             /// </summary>
             [FhirElement("valueSet", Order=50, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element ValueSet
@@ -1091,7 +1093,8 @@ namespace Hl7.Fhir.Model
         /// Marks this as a profile of the base
         /// </summary>
         [FhirElement("base", Order=230)]
-        [References("OperationDefinition")]
+        [CLSCompliant(false)]
+		[References("OperationDefinition")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Base
         {

@@ -10,6 +10,7 @@
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using Newtonsoft.Json;
 using System;
 using System.Reflection;
@@ -161,11 +162,8 @@ namespace Hl7.Fhir.Serialization
             return new Lazy<ModelInspector>(() =>
             {
                 var result = new ModelInspector();
-#if PORTABLE45
-                    result.Import(typeof(Resource).GetTypeInfo().Assembly);
-#else
-                result.Import(typeof(Resource).Assembly);
-#endif
+
+                result.Import(typeof(Resource).GetTypeInfo().Assembly);
                 return result;
             });
 

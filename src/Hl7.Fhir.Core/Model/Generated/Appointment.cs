@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -189,7 +189,8 @@ namespace Hl7.Fhir.Model
             /// Person, Location/HealthcareService or Device
             /// </summary>
             [FhirElement("actor", InSummary=true, Order=50)]
-            [References("Patient","Practitioner","RelatedPerson","Device","HealthcareService","Location")]
+            [CLSCompliant(false)]
+			[References("Patient","Practitioner","RelatedPerson","Device","HealthcareService","Location")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Actor
             {
@@ -568,7 +569,8 @@ namespace Hl7.Fhir.Model
         /// If provided, then no schedule and start/end values MUST match slot
         /// </summary>
         [FhirElement("slot", Order=180)]
-        [References("Slot")]
+        [CLSCompliant(false)]
+		[References("Slot")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Slot
