@@ -5,6 +5,7 @@
 
   <Import Project="..\platforms.props" />
   <Import Project="..\fhir-net-api.props" />
+  <Import Project="..\fhir-net-api.targets" />
 
   <PropertyGroup>
     <AssemblyName>Hl7.Fhir.Specification.Tests</AssemblyName>

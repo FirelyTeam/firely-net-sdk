@@ -5,6 +5,7 @@
 
   <Import Project="..\platforms.props" />
   <Import Project="..\fhir-net-api.props" />
+  <Import Project="..\fhir-net-api.targets" />
 
   <PropertyGroup>
     <PackageId>Hl7.Fhir.Specification.DSTU2</PackageId>
@@ -22,6 +23,7 @@
     <PackageReference Include="System.Net.Http" Version="4.3.0" />
     <PackageReference Include="System.ValueTuple" Version="4.3.0" />
   </ItemGroup>
+
   <ItemGroup Condition=" '$(TargetFramework)' != 'net45' ">
     <PackageReference Include="System.ComponentModel" Version="4.3.0" />
     <PackageReference Include="System.ComponentModel.Primitives" Version="4.3.0" />
@@ -31,12 +33,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.DSTU2.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <FhirConformance Include="data\*.*" />
   </ItemGroup>
-  <ItemGroup>
-    <None Remove="install.ps1" />
-    <None Remove="specification.zip" />
-  </ItemGroup>
+
   <ItemGroup>
     <Content Include="install.ps1">
       <Pack>true</Pack>
@@ -48,92 +51,15 @@
       <PackagePath>content</PackagePath>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.DSTU2.csproj" />
-  </ItemGroup>
  
-  <!--<Target Name="CreateSpecZip" BeforeTargets="Build">
-    <Message Text="(Re)creating specification.zip" Importance="high" />
-    <CleanSpecFiles DirectoryName="data" />
-    <ZipDir ZipFileName="specification.zip" DirectoryName="data" />
-  </Target>-->
-
-  <Target Name="CreateSpecZip" Inputs="@(FhirConformance)" Outputs="specification.zip" BeforeTargets="Build">
-    <Message Text="(Re)creating specification.zip" Importance="high" />
+  <Target Name="CreateSpecZip" Inputs="@(FhirConformance)" Outputs="specification.zip" BeforeTargets="Compile">
+    <Message Text="(Re)creating specification.zip" />
     <CleanSpecFiles DirectoryName="data" />
     <ZipDir ZipFileName="specification.zip" DirectoryName="data" />
   </Target>
-  
-  <UsingTask TaskName="ZipDir" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v12.0.dll">
-    <ParameterGroup>
-      <ZipFileName ParameterType="System.String" Required="true" />
-      <DirectoryName ParameterType="System.String" Required="true" />
-    </ParameterGroup>
-    <Task>
-      <Reference Include="System.IO.Compression.FileSystem" />
-      <Using Namespace="System.IO.Compression" />
-      <Code Type="Fragment" Language="cs"><![CDATA[
-		  try
-		  {
-			Log.LogMessage(string.Format("Zipping Directory {0} to {1}", DirectoryName, ZipFileName));
-			if(File.Exists(ZipFileName)) File.Delete(ZipFileName);
-			ZipFile.CreateFromDirectory( DirectoryName, ZipFileName );
-			return true;
-		  }
-		  catch(Exception ex)
-		  {
-			Log.LogErrorFromException(ex);
-			return false;
-		  }
-		]]></Code>
-    </Task>
-  </UsingTask>
-  <UsingTask TaskName="CleanSpecFiles" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v12.0.dll">
-    <ParameterGroup>
-      <DirectoryName ParameterType="System.String" Required="true" />
-    </ParameterGroup>
-    <Task>
-      <Reference Include="System.XML" />
-      <Reference Include="System.Xml.Linq" />
-      <Using Namespace="System.Xml.Linq" />
-      <Using Namespace="System.IO" />
-      <Code Type="Fragment" Language="cs"><![CDATA[
-          try
-          {
-            Log.LogMessage(string.Format("Cleaning spec files in directory {0}", DirectoryName));
 
-            var fhirns = XNamespace.Get("http://hl7.org/fhir");
-            var xmlns = XNamespace.Get("http://www.w3.org/1999/xhtml");
-            
-            var files = Directory.EnumerateFiles(DirectoryName, "*.xml");
-
-            Log.LogMessage(string.Format("Cleaning {0} files", files.Count()));
-            foreach(var file in files)
-            {
-                var xdoc = XDocument.Load(file);
-                var sizeBefore = xdoc.ToString().Length;
-                
-                var narrative = xdoc.Elements(fhirns + "Bundle").Elements(fhirns + "entry").Elements(fhirns + "resource")
-                        .Elements().Elements(fhirns + "text").Elements(xmlns + "div");
-                foreach(var narrativeElement in narrative)
-                {
-                    narrativeElement.RemoveNodes();
-                    narrativeElement.Add(new XElement(xmlns + "p",
-                        new XText("The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library")));
-                }
-
-                var sizeAfter = xdoc.ToString().Length;
-                Log.LogMessage(string.Format("File {0} shrunk from {1} to {2} bytes", file, sizeBefore, sizeAfter));
-                xdoc.Save(file);
-            }
-          }
-          catch(Exception ex)
-          {
-            Log.LogMessage("Crap!");
-            Log.LogErrorFromException(ex);
-            return false;
-          }
-        ]]></Code>
-    </Task>
-  </UsingTask>
+ <Target Name="CleanSpecZip" AfterTargets="Clean">
+    <Delete Files="specification.zip" />
+  </Target>
+   
 </Project>

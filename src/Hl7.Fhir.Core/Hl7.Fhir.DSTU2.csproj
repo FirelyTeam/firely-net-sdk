@@ -5,6 +5,7 @@
   
   <Import Project="..\platforms.props" />
   <Import Project="..\fhir-net-api.props" />
+  <Import Project="..\fhir-net-api.targets" />
 
    <PropertyGroup>
     <PackageId>Hl7.Fhir.DSTU2</PackageId>
@@ -15,11 +16,7 @@
     <AssemblyName>Hl7.Fhir.DSTU2.Core</AssemblyName>
     <RootNamespace>Hl7.Fhir</RootNamespace>
   </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-  </PropertyGroup>
-  
+ 
   <ItemGroup>
     <Compile Remove="Rest\SystemNetMimeContentType.cs" />
   </ItemGroup>
