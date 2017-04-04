@@ -15,9 +15,9 @@
   <publisher value="Test" />
   <date value="2017-01-27T13:11:14.8692835+01:00" />
   <kind value="resource" />
-  <constrainedType value="MedicationStatement" />
+  <type value="MedicationStatement" />
   <abstract value="false" />
-  <base value="http://hl7.org/fhir/StructureDefinition/MedicationStatement" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/MedicationStatement" />
   <differential>
     <element>
       <path value="MedicationStatement" />
@@ -32,13 +32,16 @@
     <element>
       <path value="MedicationStatement.extension" />
       <slicing>
-        <discriminator value="url" />
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
         <rules value="open" />
       </slicing>
     </element>
     <element>
       <path value="MedicationStatement.extension" />
-      <name value="authoredOn" />
+      <sliceName value="authoredOn" />
       <definition value="Dato for forskrivning." />
       <alias value="authoredOn" />
       <alias value="Forskrivningsdato" />
@@ -56,7 +59,7 @@
     </element>
     <element>
       <path value="MedicationStatement.extension" />
-      <name value="drugUseType" />
+      <sliceName value="drugUseType" />
       <alias value="Bruk" />
       <max value="1" />
       <type>
@@ -110,14 +113,17 @@
     <element>
       <path value="MedicationStatement.status.modifierExtension" />
       <slicing>
-        <discriminator value="url" />
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
         <rules value="open" />
       </slicing>
     </element>
     <element>
       <path value="MedicationStatement.status.modifierExtension" />
-      <name value="prescriptionStatus" />
-      <comments value="Receiving systems should prioritise prescririptionStatus over status if it's present.&#xD;&#xA;&#xD;&#xA;When the prescrtiptionStatus is set to 'on-hold', MedicationStatement.status should be set to 'intended'." />
+      <sliceName value="prescriptionStatus" />
+      <comment value="Receiving systems should prioritise prescririptionStatus over status if it's present.&#xD;&#xA;&#xD;&#xA;When the prescrtiptionStatus is set to 'on-hold', MedicationStatement.status should be set to 'intended'." />
       <requirements value="The need to set the status on a MedicationStatement to 'paused' when the resource is used as a prescription of medication." />
       <max value="1" />
       <type>
@@ -213,13 +219,16 @@
     <element>
       <path value="MedicationStatement.dosage.extension" />
       <slicing>
-        <discriminator value="url" />
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
         <rules value="open" />
       </slicing>
     </element>
     <element>
       <path value="MedicationStatement.dosage.extension" />
-      <name value="calculationBasis" />
+      <sliceName value="calculationBasis" />
       <definition value="To specify what forms the basis for calculating the dose (weight, age, body surface, other)." />
       <alias value="calculationBasis" />
       <alias value="DoseresEtter" />
@@ -237,7 +246,7 @@
     </element>
     <element>
       <path value="MedicationStatement.dosage.extension" />
-      <name value="calculationBasisNote" />
+      <sliceName value="calculationBasisNote" />
       <definition value="Comment, other relevant information about dosage." />
       <alias value="calculationBasisNote" />
       <alias value="Merknad" />
@@ -254,7 +263,7 @@
     </element>
     <element>
       <path value="MedicationStatement.dosage.extension" />
-      <name value="daysAdministeredAmount" />
+      <sliceName value="daysAdministeredAmount" />
       <definition value="Number of days a drug is to be used." />
       <alias value="daysAdministeredAmount" />
       <alias value="DagerPa" />
@@ -267,7 +276,7 @@
     </element>
     <element>
       <path value="MedicationStatement.dosage.extension" />
-      <name value="daysNotAdministeredAmount" />
+      <sliceName value="daysNotAdministeredAmount" />
       <definition value="Number of days a drug is NOT to be used. This element is always in combination with DagerPa." />
       <alias value="daysNotAdministeredAmount" />
       <alias value="DagerAv" />
@@ -280,7 +289,7 @@
     </element>
     <element>
       <path value="MedicationStatement.dosage.extension" />
-      <name value="shortDosageText" />
+      <sliceName value="shortDosageText" />
       <alias value="shortDosageText" />
       <alias value="Kortdose" />
       <max value="1" />
@@ -310,13 +319,16 @@
     <element>
       <path value="MedicationStatement.dosage.timing.extension" />
       <slicing>
-        <discriminator value="url" />
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
         <rules value="open" />
       </slicing>
     </element>
     <element>
       <path value="MedicationStatement.dosage.timing.extension" />
-      <name value="administerAtSpecificTime" />
+      <sliceName value="administerAtSpecificTime" />
       <definition value="Medication must be given/taken at exact times." />
       <alias value="administerAtSpecificTime" />
       <alias value="GisEksakt" />
@@ -334,7 +346,7 @@
     </element>
     <element>
       <path value="MedicationStatement.dosage.timing.extension" />
-      <name value="extension" />
+      <sliceName value="extension" />
       <definition value="Number of units of time that must pass between each time the drug is given/taken." />
       <alias value="administrationInterval" />
       <alias value="Intervall" />
@@ -357,18 +369,21 @@
     </element>
     <element>
       <path value="MedicationStatement.dosage.timing.repeat" />
-      <comments value=" " />
+      <comment value=" " />
     </element>
     <element>
       <path value="MedicationStatement.dosage.timing.repeat.extension" />
       <slicing>
-        <discriminator value="url" />
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
         <rules value="open" />
       </slicing>
     </element>
     <element>
       <path value="MedicationStatement.dosage.timing.repeat.extension" />
-      <name value="specificTime" />
+      <sliceName value="specificTime" />
       <definition value="Exact time of day medication must be taken at." />
       <alias value="specificTime" />
       <alias value="Klokkeslett" />
@@ -385,9 +400,9 @@
     </element>
     <element>
       <path value="MedicationStatement.dosage.timing.repeat.extension" />
-      <name value="timePeriod" />
+      <sliceName value="timePeriod" />
       <definition value="Time period of the day the drug should be taken at (ex.: morning, noon, afternoon, etc)." />
-      <comments value="Timing.repeat.when is not used as the binding is of strength &quot;required&quot; and is semantically incompatible with OID 8325 from volven.no" />
+      <comment value="Timing.repeat.when is not used as the binding is of strength &quot;required&quot; and is semantically incompatible with OID 8325 from volven.no" />
       <alias value="timePeriod" />
       <alias value="Tidsomrade" />
       <max value="1" />
@@ -403,7 +418,7 @@
     </element>
     <element>
       <path value="MedicationStatement.dosage.timing.repeat.extension" />
-      <name value="dayOfWeek" />
+      <sliceName value="dayOfWeek" />
       <alias value="whichWeekdays" />
       <alias value="FasteUkedager" />
       <type>
@@ -457,7 +472,7 @@
     </element>
     <element>
       <path value="MedicationStatement.dosage.quantityQuantity" />
-      <name value="SimpleQuantity" />
+      <sliceName value="SimpleQuantity" />
       <type>
         <code value="Quantity" />
         <profile value="http://hl7.org/fhir/StructureDefinition/SimpleQuantity" />
@@ -474,14 +489,16 @@
     <element>
       <path value="MedicationStatement.dosage.rate[x]" />
       <slicing>
-        <discriminator value="@type" />
+        <discriminator>
+          <type value="type" />
+        </discriminator>
         <rules value="openAtEnd" />
       </slicing>
       <mustSupport value="true" />
     </element>
     <element>
       <path value="MedicationStatement.dosage.rate[x]" />
-      <name value="ratio" />
+      <sliceName value="ratio" />
       <type>
         <code value="Ratio" />
       </type>
@@ -519,7 +536,7 @@
     </element>
     <element>
       <path value="MedicationStatement.dosage.rate[x]" />
-      <name value="range" />
+      <sliceName value="range" />
       <type>
         <code value="Range" />
       </type>
@@ -527,7 +544,7 @@
     </element>
     <element>
       <path value="MedicationStatement.dosage.rate[x].low" />
-      <name value="SimpleQuantity" />
+      <sliceName value="SimpleQuantity" />
       <alias value="Volum" />
       <binding>
         <strength value="required" />
@@ -543,7 +560,7 @@
     </element>
     <element>
       <path value="MedicationStatement.dosage.rate[x].high" />
-      <name value="SimpleQuantity" />
+      <sliceName value="SimpleQuantity" />
       <alias value="Volum" />
       <binding>
         <strength value="required" />

@@ -80,7 +80,7 @@
       <path value="Bundle.id" />
       <short value="Logical id of this artifact" />
       <definition value="The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes." />
-      <comments value="The only time that a resource does not have an id is when it is being submitted to the server using a create operation. Bundles always have an id, though it is usually a generated UUID." />
+      <comment value="The only time that a resource does not have an id is when it is being submitted to the server using a create operation. Bundles always have an id, though it is usually a generated UUID." />
       <min value="0" />
       <max value="1" />
       <base>
@@ -113,7 +113,7 @@
       <path value="Bundle.implicitRules" />
       <short value="A set of rules under which this content was created" />
       <definition value="A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content." />
-      <comments value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible." />
+      <comment value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible." />
       <min value="0" />
       <max value="1" />
       <base>
@@ -131,7 +131,7 @@
       <path value="Bundle.language" />
       <short value="Language of the resource content" />
       <definition value="The base language in which the resource is written." />
-      <comments value="Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute)." />
+      <comment value="Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute)." />
       <min value="0" />
       <max value="1" />
       <base>
@@ -152,7 +152,7 @@
       <path value="Bundle.type" />
       <short value="document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection" />
       <definition value="Indicates the purpose of this bundle- how it was intended to be used." />
-      <comments value="It's possible to use a bundle for other purposes (e.g. a document can be accepted as a transaction). This is primarily defined so that there can be specific rules for some of the bundle types." />
+      <comment value="It's possible to use a bundle for other purposes (e.g. a document can be accepted as a transaction). This is primarily defined so that there can be specific rules for some of the bundle types." />
       <min value="1" />
       <max value="1" />
       <base>
@@ -180,7 +180,7 @@
       <path value="Bundle.total" />
       <short value="If search, the total number of matches" />
       <definition value="If a set of search matches, this is the total number of matches for the search (as opposed to the number of results in this bundle)." />
-      <comments value="Only used if the bundle is a search result set." />
+      <comment value="Only used if the bundle is a search result set." />
       <min value="0" />
       <max value="1" />
       <base>
@@ -196,7 +196,7 @@
     </element>
     <element>
       <path value="Bundle.link" />
-      <name value="link" />
+      <sliceName value="link" />
       <short value="Links related to this Bundle" />
       <definition value="A series of links that provide context to this bundle." />
       <min value="0" />
@@ -235,7 +235,7 @@
       <path value="Bundle.link.extension" />
       <short value="Additional Content defined by implementations" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <min value="0" />
@@ -257,7 +257,7 @@
       <path value="Bundle.link.modifierExtension" />
       <short value="Extensions that cannot be ignored" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <alias value="modifiers" />
@@ -363,7 +363,7 @@
       <path value="Bundle.entry.extension" />
       <short value="Additional Content defined by implementations" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <min value="0" />
@@ -385,7 +385,7 @@
       <path value="Bundle.entry.modifierExtension" />
       <short value="Extensions that cannot be ignored" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <alias value="modifiers" />
@@ -423,7 +423,7 @@
       <path value="Bundle.entry.fullUrl" />
       <short value="Absolute URL for resource (server address, or UUID/OID)" />
       <definition value="The Absolute URL for the resource. This must be provided for all resources. The fullUrl SHALL not disagree with the id in the resource. The fullUrl is a version independent reference to the resource." />
-      <comments value="fullUrl may not be [unique in the context of a resource](bundle.html#bundle-unique). Note that since [FHIR resources do not need to be served through the FHIR API](references.html), the absolute URL may not end with the logical id of the resource (Resource.id), but if the fullUrl does look like a RESTful server URL (e.g. meets the [regex](references.html#regex), then it SHALL end with the Resource.id." />
+      <comment value="fullUrl may not be [unique in the context of a resource](bundle.html#bundle-unique). Note that since [FHIR resources do not need to be served through the FHIR API](references.html), the absolute URL may not end with the logical id of the resource (Resource.id), but if the fullUrl does look like a RESTful server URL (e.g. meets the [regex](references.html#regex), then it SHALL end with the Resource.id." />
       <min value="0" />
       <max value="1" />
       <base>
@@ -504,7 +504,7 @@
       <path value="Bundle.entry.resource.id" />
       <short value="Logical id of this artifact" />
       <definition value="The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes." />
-      <comments value="The only time that a resource does not have an id is when it is being submitted to the server using a create operation. Bundles always have an id, though it is usually a generated UUID." />
+      <comment value="The only time that a resource does not have an id is when it is being submitted to the server using a create operation. Bundles always have an id, though it is usually a generated UUID." />
       <min value="0" />
       <max value="1" />
       <base>
@@ -538,7 +538,7 @@
       <path value="Bundle.entry.resource.implicitRules" />
       <short value="A set of rules under which this content was created" />
       <definition value="A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content." />
-      <comments value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible." />
+      <comment value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible." />
       <min value="0" />
       <max value="1" />
       <base>
@@ -556,7 +556,7 @@
       <path value="Bundle.entry.resource.language" />
       <short value="Language of the resource content" />
       <definition value="The base language in which the resource is written." />
-      <comments value="Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute)." />
+      <comment value="Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute)." />
       <min value="0" />
       <max value="1" />
       <base>
@@ -577,7 +577,7 @@
       <path value="Bundle.entry.resource.type" />
       <short value="document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection" />
       <definition value="Indicates the purpose of this bundle- how it was intended to be used." />
-      <comments value="It's possible to use a bundle for other purposes (e.g. a document can be accepted as a transaction). This is primarily defined so that there can be specific rules for some of the bundle types." />
+      <comment value="It's possible to use a bundle for other purposes (e.g. a document can be accepted as a transaction). This is primarily defined so that there can be specific rules for some of the bundle types." />
       <min value="1" />
       <max value="1" />
       <base>
@@ -605,7 +605,7 @@
       <path value="Bundle.entry.resource.total" />
       <short value="If search, the total number of matches" />
       <definition value="If a set of search matches, this is the total number of matches for the search (as opposed to the number of results in this bundle)." />
-      <comments value="Only used if the bundle is a search result set." />
+      <comment value="Only used if the bundle is a search result set." />
       <min value="0" />
       <max value="1" />
       <base>
@@ -621,7 +621,7 @@
     </element>
     <element>
       <path value="Bundle.entry.resource.link" />
-      <name value="link" />
+      <sliceName value="link" />
       <short value="Links related to this Bundle" />
       <definition value="A series of links that provide context to this bundle." />
       <min value="0" />
@@ -660,7 +660,7 @@
       <path value="Bundle.entry.resource.link.extension" />
       <short value="Additional Content defined by implementations" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <min value="0" />
@@ -682,7 +682,7 @@
       <path value="Bundle.entry.resource.link.modifierExtension" />
       <short value="Extensions that cannot be ignored" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <alias value="modifiers" />
@@ -788,7 +788,7 @@
       <path value="Bundle.entry.resource.entry.extension" />
       <short value="Additional Content defined by implementations" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <min value="0" />
@@ -810,7 +810,7 @@
       <path value="Bundle.entry.resource.entry.modifierExtension" />
       <short value="Extensions that cannot be ignored" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <alias value="modifiers" />
@@ -848,7 +848,7 @@
       <path value="Bundle.entry.resource.entry.fullUrl" />
       <short value="Absolute URL for resource (server address, or UUID/OID)" />
       <definition value="The Absolute URL for the resource. This must be provided for all resources. The fullUrl SHALL not disagree with the id in the resource. The fullUrl is a version independent reference to the resource." />
-      <comments value="fullUrl may not be [unique in the context of a resource](bundle.html#bundle-unique). Note that since [FHIR resources do not need to be served through the FHIR API](references.html), the absolute URL may not end with the logical id of the resource (Resource.id), but if the fullUrl does look like a RESTful server URL (e.g. meets the [regex](references.html#regex), then it SHALL end with the Resource.id." />
+      <comment value="fullUrl may not be [unique in the context of a resource](bundle.html#bundle-unique). Note that since [FHIR resources do not need to be served through the FHIR API](references.html), the absolute URL may not end with the logical id of the resource (Resource.id), but if the fullUrl does look like a RESTful server URL (e.g. meets the [regex](references.html#regex), then it SHALL end with the Resource.id." />
       <min value="0" />
       <max value="1" />
       <base>
@@ -966,7 +966,7 @@
       <path value="Bundle.entry.resource.entry.search.extension" />
       <short value="Additional Content defined by implementations" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <min value="0" />
@@ -988,7 +988,7 @@
       <path value="Bundle.entry.resource.entry.search.modifierExtension" />
       <short value="Extensions that cannot be ignored" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <alias value="modifiers" />
@@ -1012,7 +1012,7 @@
       <path value="Bundle.entry.resource.entry.search.mode" />
       <short value="match | include | outcome - why this is in the result set" />
       <definition value="Why this entry is in the result set - whether it's included as a match or because of an _include requirement." />
-      <comments value="There is only one mode. In some corner cases, a resource may be included because it is both a match and an include. In these circumstances, 'match' takes precedence." />
+      <comment value="There is only one mode. In some corner cases, a resource may be included because it is both a match and an include. In these circumstances, 'match' takes precedence." />
       <min value="0" />
       <max value="1" />
       <base>
@@ -1036,7 +1036,7 @@
       <path value="Bundle.entry.resource.entry.search.score" />
       <short value="Search ranking (between 0 and 1)" />
       <definition value="When searching, the server's search ranking score for the entry." />
-      <comments value="Servers are not required to return a ranking score. 1 is most relevant, and 0 is least relevant. Often, search results are sorted by score, but the client may specify a different sort order." />
+      <comment value="Servers are not required to return a ranking score. 1 is most relevant, and 0 is least relevant. Often, search results are sorted by score, but the client may specify a different sort order." />
       <min value="0" />
       <max value="1" />
       <base>
@@ -1090,7 +1090,7 @@
       <path value="Bundle.entry.resource.entry.request.extension" />
       <short value="Additional Content defined by implementations" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <min value="0" />
@@ -1112,7 +1112,7 @@
       <path value="Bundle.entry.resource.entry.request.modifierExtension" />
       <short value="Extensions that cannot be ignored" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <alias value="modifiers" />
@@ -1159,7 +1159,7 @@
       <path value="Bundle.entry.resource.entry.request.url" />
       <short value="URL for HTTP equivalent of this entry" />
       <definition value="The URL for this entry, relative to the root (the address to which the request is posted)." />
-      <comments value="E.g. for a Patient Create, the method would be &quot;POST&quot; and the URL would be &quot;Patient&quot;. For a Patient Update, the method would be PUT, and the URL would be &quot;Patient/[id]&quot;." />
+      <comment value="E.g. for a Patient Create, the method would be &quot;POST&quot; and the URL would be &quot;Patient&quot;. For a Patient Update, the method would be PUT, and the URL would be &quot;Patient/[id]&quot;." />
       <min value="1" />
       <max value="1" />
       <base>
@@ -1277,7 +1277,7 @@
       <path value="Bundle.entry.resource.entry.response.extension" />
       <short value="Additional Content defined by implementations" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <min value="0" />
@@ -1299,7 +1299,7 @@
       <path value="Bundle.entry.resource.entry.response.modifierExtension" />
       <short value="Extensions that cannot be ignored" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <alias value="modifiers" />
@@ -1355,7 +1355,7 @@
       <path value="Bundle.entry.resource.entry.response.etag" />
       <short value="The etag for the resource (if relevant)" />
       <definition value="The etag for the resource, it the operation for the entry produced a versioned resource." />
-      <comments value="This has to match the version id in the header if a resource is included." />
+      <comment value="This has to match the version id in the header if a resource is included." />
       <min value="0" />
       <max value="1" />
       <base>
@@ -1372,7 +1372,7 @@
       <path value="Bundle.entry.resource.entry.response.lastModified" />
       <short value="Server's date time modified" />
       <definition value="The date/time that the resource was modified on the server." />
-      <comments value="This has to match the same time in the meta header if a resource is included." />
+      <comment value="This has to match the same time in the meta header if a resource is included." />
       <min value="0" />
       <max value="1" />
       <base>
@@ -1389,7 +1389,7 @@
       <path value="Bundle.entry.resource.signature" />
       <short value="Digital Signature" />
       <definition value="Digital Signature - base64 encoded. XML DigSIg or a JWT." />
-      <comments value="The signature could be created by the &quot;author&quot; of the bundle or by the originating device.   Requirements around inclusion of a signature, verification of signatures and treatment of signed/non-signed bundles is implementation-environment specific." />
+      <comment value="The signature could be created by the &quot;author&quot; of the bundle or by the originating device.   Requirements around inclusion of a signature, verification of signatures and treatment of signed/non-signed bundles is implementation-environment specific." />
       <requirements value="This element allows capturing signatures on documents. It also allows signatures on messages, transactions or even query responses. It may support content-authentication, non-repudiation or other business cases. This is primarily relevant where the bundle may travel through multiple hops or via other mechanisms where HTTPS non-repudiation is insufficient." />
       <min value="0" />
       <max value="1" />
@@ -1444,7 +1444,7 @@
       <path value="Bundle.entry.search.extension" />
       <short value="Additional Content defined by implementations" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <min value="0" />
@@ -1466,7 +1466,7 @@
       <path value="Bundle.entry.search.modifierExtension" />
       <short value="Extensions that cannot be ignored" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <alias value="modifiers" />
@@ -1490,7 +1490,7 @@
       <path value="Bundle.entry.search.mode" />
       <short value="match | include | outcome - why this is in the result set" />
       <definition value="Why this entry is in the result set - whether it's included as a match or because of an _include requirement." />
-      <comments value="There is only one mode. In some corner cases, a resource may be included because it is both a match and an include. In these circumstances, 'match' takes precedence." />
+      <comment value="There is only one mode. In some corner cases, a resource may be included because it is both a match and an include. In these circumstances, 'match' takes precedence." />
       <min value="0" />
       <max value="1" />
       <base>
@@ -1514,7 +1514,7 @@
       <path value="Bundle.entry.search.score" />
       <short value="Search ranking (between 0 and 1)" />
       <definition value="When searching, the server's search ranking score for the entry." />
-      <comments value="Servers are not required to return a ranking score. 1 is most relevant, and 0 is least relevant. Often, search results are sorted by score, but the client may specify a different sort order." />
+      <comment value="Servers are not required to return a ranking score. 1 is most relevant, and 0 is least relevant. Often, search results are sorted by score, but the client may specify a different sort order." />
       <min value="0" />
       <max value="1" />
       <base>
@@ -1568,7 +1568,7 @@
       <path value="Bundle.entry.request.extension" />
       <short value="Additional Content defined by implementations" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <min value="0" />
@@ -1590,7 +1590,7 @@
       <path value="Bundle.entry.request.modifierExtension" />
       <short value="Extensions that cannot be ignored" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <alias value="modifiers" />
@@ -1637,7 +1637,7 @@
       <path value="Bundle.entry.request.url" />
       <short value="URL for HTTP equivalent of this entry" />
       <definition value="The URL for this entry, relative to the root (the address to which the request is posted)." />
-      <comments value="E.g. for a Patient Create, the method would be &quot;POST&quot; and the URL would be &quot;Patient&quot;. For a Patient Update, the method would be PUT, and the URL would be &quot;Patient/[id]&quot;." />
+      <comment value="E.g. for a Patient Create, the method would be &quot;POST&quot; and the URL would be &quot;Patient&quot;. For a Patient Update, the method would be PUT, and the URL would be &quot;Patient/[id]&quot;." />
       <min value="1" />
       <max value="1" />
       <base>
@@ -1755,7 +1755,7 @@
       <path value="Bundle.entry.response.extension" />
       <short value="Additional Content defined by implementations" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <min value="0" />
@@ -1777,7 +1777,7 @@
       <path value="Bundle.entry.response.modifierExtension" />
       <short value="Extensions that cannot be ignored" />
       <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." />
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
       <alias value="extensions" />
       <alias value="user content" />
       <alias value="modifiers" />
@@ -1833,7 +1833,7 @@
       <path value="Bundle.entry.response.etag" />
       <short value="The etag for the resource (if relevant)" />
       <definition value="The etag for the resource, it the operation for the entry produced a versioned resource." />
-      <comments value="This has to match the version id in the header if a resource is included." />
+      <comment value="This has to match the version id in the header if a resource is included." />
       <min value="0" />
       <max value="1" />
       <base>
@@ -1850,7 +1850,7 @@
       <path value="Bundle.entry.response.lastModified" />
       <short value="Server's date time modified" />
       <definition value="The date/time that the resource was modified on the server." />
-      <comments value="This has to match the same time in the meta header if a resource is included." />
+      <comment value="This has to match the same time in the meta header if a resource is included." />
       <min value="0" />
       <max value="1" />
       <base>
@@ -1867,7 +1867,7 @@
       <path value="Bundle.signature" />
       <short value="Digital Signature" />
       <definition value="Digital Signature - base64 encoded. XML DigSIg or a JWT." />
-      <comments value="The signature could be created by the &quot;author&quot; of the bundle or by the originating device.   Requirements around inclusion of a signature, verification of signatures and treatment of signed/non-signed bundles is implementation-environment specific." />
+      <comment value="The signature could be created by the &quot;author&quot; of the bundle or by the originating device.   Requirements around inclusion of a signature, verification of signatures and treatment of signed/non-signed bundles is implementation-environment specific." />
       <requirements value="This element allows capturing signatures on documents. It also allows signatures on messages, transactions or even query responses. It may support content-authentication, non-repudiation or other business cases. This is primarily relevant where the bundle may travel through multiple hops or via other mechanisms where HTTPS non-repudiation is insufficient." />
       <min value="0" />
       <max value="1" />
