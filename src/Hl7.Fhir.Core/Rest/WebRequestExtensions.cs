@@ -60,6 +60,12 @@ namespace Hl7.Fhir.Rest
                 requestReady.WaitOne();
                 //async.AsyncWaitHandle.WaitOne();
             }
+            else
+            {
+                // If the async wasn't finished, then we need to wait anyway
+                if (!async.CompletedSynchronously)
+                    requestReady.WaitOne();
+            }
 
             if (caught != null) throw caught;
 
