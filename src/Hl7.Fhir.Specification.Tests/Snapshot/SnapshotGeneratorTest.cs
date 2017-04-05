@@ -50,9 +50,14 @@ namespace Hl7.Fhir.Specification.Tests
         [TestInitialize]
         public void Setup()
         {
+            Hl7.Fhir.FhirPath.PocoNavigatorExtensions.PrepareFhirSybolTableFunctions();
+
             var dirSource = new DirectorySource("TestData/snapshot-test", includeSubdirectories: true);
             _source = new TimingSource(dirSource);
-            _testResolver = new CachedResolver(_source);
+            _testResolver = new CachedResolver(
+                new MultiResolver(
+                    _source,
+                    new ZipSource("specification.zip")));
         }
 
         // [WMR 20160718] Generate snapshot for extension definition fails with exception:

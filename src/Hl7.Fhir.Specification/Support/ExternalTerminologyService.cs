@@ -35,7 +35,8 @@ namespace Hl7.Fhir.Specification.Support
                 {
                     if (!result.Value.Value)
                     {
-                        outcome.AddIssue(resultValidateCode.GetSingleValue<FhirString>("message")?.Value, Issue.TERMINOLOGY_CODE_NOT_IN_VALUESET);
+                        string message = (resultValidateCode.Parameter.Where(p => p.Name == "message")?.FirstOrDefault()?.Value as FhirString).Value;
+                        outcome.AddIssue(message, Issue.TERMINOLOGY_CODE_NOT_IN_VALUESET);
                     }
                 }
                 return outcome;
