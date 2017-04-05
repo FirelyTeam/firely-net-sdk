@@ -1,5 +1,10 @@
 using System;
 
+using Xunit;
+
+[assembly: CollectionBehavior(DisableTestParallelization = true)]
+
+
 namespace ConsoleApp
 {
     class Program
