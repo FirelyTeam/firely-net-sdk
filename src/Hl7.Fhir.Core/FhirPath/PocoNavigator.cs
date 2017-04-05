@@ -14,9 +14,12 @@ using Hl7.Fhir.Support;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.FhirPath
 {
+    // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+    [DebuggerDisplay(@"\{{ShortPath,nq}}")]
     public class PocoNavigator : IElementNavigator
     {
         public PocoNavigator(Base model)
