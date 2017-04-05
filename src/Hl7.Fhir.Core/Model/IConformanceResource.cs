@@ -36,28 +36,24 @@ using Hl7.Fhir.Introspection;
 namespace Hl7.Fhir.Model
 {
     public interface IConformanceResource
-    {
+    {       
+        string Url { get; set; }
+        Hl7.Fhir.Model.FhirUri UrlElement { get; set; }        
         string Name { get; set; }
         FhirString NameElement { get; set; }
-
-        string Url { get; set; }
-        Hl7.Fhir.Model.FhirUri UrlElement { get; set; }
-
+        PublicationStatus? Status { get; set; }
         string Publisher { get; set; }
-        FhirString PublisherElement { get; set; }
-
+        FhirString PublisherElement { get; set; }        
+        List<ContactDetail> Contact { get; set; }
         Markdown Description { get; set; }
         //FhirString DescriptionElement { get; set; }
-
-        PublicationStatus? Status { get; set; }
+        List<UsageContext> UseContext { get; set; }
+        Markdown Purpose { get; set; }       
         Code<Hl7.Fhir.Model.PublicationStatus> StatusElement { get; set; }
         bool? Experimental { get; set; }
         Hl7.Fhir.Model.FhirBoolean ExperimentalElement { get; set; }
         string Date { get; set; }
-        Hl7.Fhir.Model.FhirDateTime DateElement { get; set; }
-
-        List<UsageContext> UseContext { get; set; }
-        List<ContactDetail> Contact { get; set; }
+        Hl7.Fhir.Model.FhirDateTime DateElement { get; set; }              
     }
 
     public interface IVersionableConformanceResource : IConformanceResource
@@ -67,9 +63,77 @@ namespace Hl7.Fhir.Model
         Hl7.Fhir.Model.FhirString VersionElement { get; set; }
     }
 
-    public partial class StructureDefinition : IConformanceResource
+    public partial class StructureDefinition : IVersionableConformanceResource
     {
 
+    }
+    
+    public partial class ValueSet : IVersionableConformanceResource
+    {
+
+    }
+
+    public partial class SearchParameter :IVersionableConformanceResource
+    {
+
+    }
+
+    public partial class OperationDefinition :IVersionableConformanceResource
+    {
+
+    }
+
+    public partial class CapabilityStatement : IVersionableConformanceResource
+    {
+
+    }
+
+    public partial class MessageDefinition : IVersionableConformanceResource
+    {
+
+    }
+
+    public partial class ImplementationGuide : IVersionableConformanceResource
+    {
+        //I think ImplementationGuide should have a purpose element.
+        [NotMapped]
+        public Markdown Purpose
+        {
+            get { return null; }
+            set { throw new NotImplementedException(); }
+        }
+    }
+
+    public partial class CompartmentDefinition : IConformanceResource
+    {
+
+    }
+    public partial class StructureMap : IVersionableConformanceResource
+    {
+
+    }
+    public partial class GraphDefinition : IVersionableConformanceResource
+    {
+
+    }
+
+    public partial class CodeSystem : IVersionableConformanceResource
+    {
+
+    }
+
+    public partial class ConceptMap : IVersionableConformanceResource
+    {
+
+    }
+
+    public partial class ExpansionProfile : IVersionableConformanceResource
+    {
+        public Markdown Purpose
+        {
+            get { return null; }
+            set { throw new NotImplementedException(); }
+        }
     }
 
     public partial class DataElement : IConformanceResource
@@ -83,19 +147,25 @@ namespace Hl7.Fhir.Model
             set { throw new NotImplementedException(); }
         }
 
-        //[NotMapped]
-        //public FhirString DescriptionElement
-        //{
-        //    get { return null; }
-        //    set {; }
-        //}
-
+        [NotMapped]
+        public Markdown Purpose
+        {
+            get { return null; }
+            set { throw new NotImplementedException(); }
+        }
     }
 
 
     public partial class NamingSystem : IConformanceResource
     {
         // I think NamingSystem should have Experimental too
+        [NotMapped]
+        public Markdown Purpose
+        {
+            get { return null; }
+            set { throw new NotImplementedException(); }
+        }
+
         [NotMapped]
         public bool? Experimental
         {
