@@ -49,11 +49,11 @@ namespace Hl7.Fhir.Specification.Tests
             var snapshotMs = totalMs - resolverMs;
             var snapshotFraction = snapshotMs / totalMs;
             // Debug.Print($"Generated {count} snapshots in {totalMs} ms = {sourceMs} ms (resolver) + {snapshotMs} (snapshot) ({perc:2}%), on average {avg} ms per snapshot.");
-            Console.WriteLine($"Generated {count} snapshots in {totalMs} ms = {resolverMs} ms (resolver) ({resolverFraction:P0}) + {snapshotMs} (snapshot) ({snapshotFraction:P0}).");
+            Debug.WriteLine($"Generated {count} snapshots in {totalMs} ms = {resolverMs} ms (resolver) ({resolverFraction:P0}) + {snapshotMs} (snapshot) ({snapshotFraction:P0}).");
             var totalAvg = totalMs / count;
             var resolverAvg = resolverMs / count;
             var snapshotAvg = snapshotMs / count;
-            Console.WriteLine($"Average per resource: {totalAvg} = {resolverAvg} ms (resolver) + {snapshotAvg} ms (snapshot)");
+            Debug.WriteLine($"Average per resource: {totalAvg} = {resolverAvg} ms (resolver) + {snapshotAvg} ms (snapshot)");
         }
 
     }
