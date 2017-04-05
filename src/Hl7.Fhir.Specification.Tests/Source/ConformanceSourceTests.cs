@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNull(vs);
         }
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void FindNamingSystem()
         {
             var ns = source.FindNamingSystem("2.16.840.1.113883.4.1");

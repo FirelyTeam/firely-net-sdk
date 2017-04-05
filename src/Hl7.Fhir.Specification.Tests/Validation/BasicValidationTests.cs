@@ -13,6 +13,7 @@ using Hl7.Fhir.Support;
 using System.Collections.Generic;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification.Support;
 
 namespace Hl7.Fhir.Validation
 {
@@ -40,6 +41,8 @@ namespace Hl7.Fhir.Validation
                 Trace = false,
                 ResolveExteralReferences = true
             };
+            // until we have a local terminology service ready, here is the remote implementation
+            ctx.TerminologyService = new ExternalTerminologyService(new FhirClient("http://fhir3.healthintersections.com.au/open"));
 
             _validator = new Validator(ctx);
         }
@@ -47,7 +50,7 @@ namespace Hl7.Fhir.Validation
         IResourceResolver _source;
         Validator _validator;
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void TestEmptyElement()
         {
             var boolSd = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Boolean);
@@ -98,7 +101,7 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void ValidatePrimitiveValue()
         {
             var def = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Oid);
@@ -117,7 +120,7 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        [TestMethod,Ignore]
+        [TestMethod]
         public void ValidateCardinality()
         {
             var boolSd = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Boolean);
@@ -133,7 +136,7 @@ namespace Hl7.Fhir.Validation
             Assert.AreEqual(3, report.ListErrors().Count());
         }
 
-        [TestMethod,Ignore]
+        [TestMethod]
         public void ValidateChoiceElement()
         {
             var extensionSd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Extension).DeepCopy();
@@ -187,7 +190,7 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void ValidatesFixedValue()
         {
             var patientSd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Patient);
@@ -221,7 +224,7 @@ namespace Hl7.Fhir.Validation
             Assert.AreEqual(0, report.Errors);
         }
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void ValidatesPatternValue()
         {
             var patientSd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Patient);
@@ -258,7 +261,7 @@ namespace Hl7.Fhir.Validation
             Assert.AreEqual(1, report.Errors);
         }
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void ValidatesMultiplePossibleTypeRefs()
         {
             // Try adding a period
@@ -299,7 +302,7 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void ValidateOverNameRef()
         {
             var questionnaireXml = File.ReadAllText("TestData\\validation\\questionnaire-sdc-profile-example-cap.xml");
@@ -316,7 +319,7 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void ValidateChoiceWithConstraints()
         {
             var obs = new Observation();
@@ -353,7 +356,7 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void ValidateContained()
         {
             var careplanXml = File.ReadAllText("TestData\\validation\\careplan-example-integrated.xml");
@@ -361,8 +364,10 @@ namespace Hl7.Fhir.Validation
             var careplan = (new FhirXmlParser()).Parse<CarePlan>(careplanXml);
             Assert.IsNotNull(careplan);
             var careplanSd = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.CarePlan);
-
+            //var old = _validator.Settings.ResolveExteralReferences;
+            //_validator.Settings.ResolveExteralReferences = false;
             var report = _validator.Validate(careplan, careplanSd);
+            //_validator.Settings.ResolveExteralReferences = old;
             Assert.IsTrue(report.Success);
             Assert.AreEqual(0, report.Warnings);            // 3x invariant
         }
@@ -387,7 +392,7 @@ namespace Hl7.Fhir.Validation
             Debug.WriteLine(sw.ElapsedMilliseconds / 10000.0);
         }
 
-        [TestMethod,Ignore]
+        [TestMethod]
         public void TriggerFpValidationError()
         {
             // pat-1: SHALL at least contain a contact's details or a reference to an organization (xpath: f:name or f:telecom or f:address or f:organization)
@@ -416,7 +421,7 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        [TestMethod,Ignore]
+        [TestMethod]
         public void ValidateBundle()
         {
             var bundleXml = File.ReadAllText("TestData\\validation\\bundle-contained-references.xml");
@@ -474,7 +479,7 @@ namespace Hl7.Fhir.Validation
             Assert.IsTrue(report.ToString().Contains(".NET Xsd validation"));
         }
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void TestBindingValidation()
         {
             var p = new Patient();
@@ -492,7 +497,7 @@ namespace Hl7.Fhir.Validation
             Assert.AreEqual(0, report.Warnings);
         }
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void TestChoiceBindingValidation()
         {
             var profile = "http://validationtest.org/fhir/StructureDefinition/ParametersWithBoundParams";
@@ -518,7 +523,7 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void ValidateExtensionExamples()
         {
             var levinXml = File.ReadAllText(@"TestData\validation\Levin.patient.xml");
@@ -543,7 +548,7 @@ namespace Hl7.Fhir.Validation
             Assert.IsTrue(report.ToString().Contains("The declared type of the element (Period) is incompatible with that of the instance ('string')"));
         }
 
-        [TestMethod,Ignore]
+        [TestMethod]
         public void ValidateBundleExample()
         {
             var bundle = _source.ResolveByUri("http://example.org/examples/Bundle/MainBundle");
@@ -610,7 +615,7 @@ namespace Hl7.Fhir.Validation
         // Causes stack overflow exception in validator when processing the related Organization profile
         // TypeRefValidationExtensions.ValidateTypeReferences needs to detect and handle recursion
         // Example: Organization.partOf => Organization
-        [TestMethod,Ignore]
+        [TestMethod]
         public void TestPatientWithOrganization()
         {
             // DirectorySource (and ResourceStreamScanner) does not support json...

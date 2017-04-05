@@ -130,7 +130,7 @@
         <text value="GERDS"/>
       </code>
       <subject>
-        <reference value="Patient/1"/>
+        <reference value="Patient/Levin"/>
         <display value="Eve Everywoman"/>
       </subject>
     </Condition>
@@ -144,7 +144,7 @@
         <text value="Obesity"/>
       </code>
       <subject>
-        <reference value="Patient/1"/>
+        <reference value="Patient/Levin"/>
         <display value="Eve Everywoman"/>
       </subject>
     </Condition>
@@ -158,7 +158,7 @@
         <text value="Psoriasis"/>
       </code>
       <subject>
-        <reference value="Patient/1"/>
+        <reference value="Patient/Levin"/>
         <display value="Eve Everywoman"/>
       </subject>
     </Condition>
@@ -171,7 +171,7 @@
         <text value="Eve will lose weight and reduce her GERDS symptoms by improving her diet"/>
       </description>
       <subject>
-        <reference value="Patient/1"/>
+        <reference value="Patient/Levin"/>
         <display value="Eve Everywoman"/>
       </subject>
     </Goal>
@@ -184,7 +184,7 @@
         <text value="Eve will improve her GERDS symptoms"/>
       </description>
       <subject>
-        <reference value="Patient/1"/>
+        <reference value="Patient/Levin"/>
         <display value="Eve Everywoman"/>
       </subject>
     </Goal>
@@ -197,7 +197,7 @@
         <text value="Eve will increase her energy by being more active"/>
       </description>
       <subject>
-        <reference value="Patient/1"/>
+        <reference value="Patient/Levin"/>
         <display value="Eve Everywoman"/>
       </subject>
     </Goal>
@@ -210,7 +210,7 @@
         <text value="Eve will set up her medications and take as prescribed"/>
       </description>
       <subject>
-        <reference value="Patient/1"/>
+        <reference value="Patient/Levin"/>
         <display value="Eve Everywoman"/>
       </subject>
     </Goal>
@@ -223,7 +223,7 @@
         <text value="Eve will restart her light treatments"/>
       </description>
       <subject>
-        <reference value="Patient/1"/>
+        <reference value="Patient/Levin"/>
         <display value="Eve Everywoman"/>
       </subject>
     </Goal>
@@ -231,7 +231,7 @@
   <status value="active"/>
   <intent value="plan"/>
   <subject>
-    <reference value="Patient/1"/>
+    <reference value="Patient/Levin"/>
     <display value="Eve Everywoman"/>
   </subject>
   <addresses>
@@ -270,9 +270,6 @@
       <text value="Eve eats one meal a day with her parents"/>
     </progress>
     <detail>
-      <extension url="http://example.org/fhir/StructureDefinition/RevisionDate">
-        <valueDate value="2012-09-10"/>
-      </extension>
       <category>
         <coding>
           <system value="http://hl7.org/fhir/care-plan-activity-category"/>
@@ -296,9 +293,6 @@
       <text value="Eve will sleep in her bed more often than the couch"/>
     </progress>
     <detail>
-      <extension url="http://example.org/fhir/StructureDefinition/RevisionDate">
-        <valueDate value="2012-09-10"/>
-      </extension>
       <category>
         <coding>
           <system value="http://hl7.org/fhir/care-plan-activity-category"/>
@@ -318,9 +312,6 @@
   </activity>
   <activity>
     <detail>
-      <extension url="http://example.org/fhir/StructureDefinition/RevisionDate">
-        <valueDate value="2012-09-10"/>
-      </extension>
       <category>
         <coding>
           <system value="http://hl7.org/fhir/care-plan-activity-category"/>
@@ -348,9 +339,6 @@
       <text value="Eve is still walking the dogs."/>
     </progress>
     <detail>
-      <extension url="http://example.org/fhir/StructureDefinition/RevisionDate">
-        <valueDate value="2012-09-10"/>
-      </extension>
       <category>
         <coding>
           <system value="http://hl7.org/fhir/care-plan-activity-category"/>
@@ -378,9 +366,6 @@
       <text value="Eve did not walk to her parents the last week, but has plans to start again"/>
     </progress>
     <detail>
-      <extension url="http://example.org/fhir/StructureDefinition/RevisionDate">
-        <valueDate value="2012-09-10"/>
-      </extension>
       <category>
         <coding>
           <system value="http://hl7.org/fhir/care-plan-activity-category"/>
@@ -400,9 +385,6 @@
   </activity>
   <activity>
     <detail>
-      <extension url="http://example.org/fhir/StructureDefinition/RevisionDate">
-        <valueDate value="2012-08-13"/>
-      </extension>
       <category>
         <coding>
           <system value="http://hl7.org/fhir/care-plan-activity-category"/>
@@ -430,9 +412,6 @@
       <text value="Since her skin is improved Eve has not been using the light treatment as often, maybe once a week.  She would like to increase to 3 times a week again"/>
     </progress>
     <detail>
-      <extension url="http://example.org/fhir/StructureDefinition/RevisionDate">
-        <valueDate value="2012-08-27"/>
-      </extension>
       <category>
         <coding>
           <system value="http://hl7.org/fhir/care-plan-activity-category"/>
@@ -456,9 +435,6 @@
       <text value="Eve created a chart as a reminer to take the medications that do not fit in her pill box"/>
     </progress>
     <detail>
-      <extension url="http://example.org/fhir/StructureDefinition/RevisionDate">
-        <valueDate value="2012-09-10"/>
-      </extension>
       <category>
         <coding>
           <system value="http://hl7.org/fhir/care-plan-activity-category"/>
@@ -486,9 +462,6 @@
       <text value="Eve prefers to focus on walking at this time"/>
     </progress>
     <detail>
-      <extension url="http://example.org/fhir/StructureDefinition/RevisionDate">
-        <valueDate value="2012-08-23"/>
-      </extension>
       <category>
         <coding>
           <system value="http://hl7.org/fhir/care-plan-activity-category"/>
@@ -508,9 +481,6 @@
   </activity>
   <activity>
     <detail>
-      <extension url="http://example.org/fhir/StructureDefinition/RevisionDate">
-        <valueDate value="2012-07-23"/>
-      </extension>
       <category>
         <coding>
           <system value="http://hl7.org/fhir/care-plan-activity-category"/>
@@ -534,9 +504,6 @@
       <text value="Eve now has some of her medications set up in pill packs by her pharmacist"/>
     </progress>
     <detail>
-      <extension url="http://example.org/fhir/StructureDefinition/RevisionDate">
-        <valueDate value="2012-07-16"/>
-      </extension>
       <category>
         <coding>
           <system value="http://hl7.org/fhir/care-plan-activity-category"/>
@@ -564,9 +531,6 @@
       <text value="hold until &quot;less busy&quot;"/>
     </progress>
     <detail>
-      <extension url="http://example.org/fhir/StructureDefinition/RevisionDate">
-        <valueDate value="2012-08-13"/>
-      </extension>
       <category>
         <coding>
           <system value="http://hl7.org/fhir/care-plan-activity-category"/>
