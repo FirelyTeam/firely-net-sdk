@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Tests
                 {
                     Console.WriteLine($"    {item} (parse error)");
                     Console.WriteLine($"        --> {ex.Message}");
-                    issues.AppendLine($"        --> {ex.Message}");
+                    issues.AppendLine($"    {item} (parse error) --> {ex.Message}");
                 }
             }
             foreach (var item in Directory.EnumerateDirectories(path))
