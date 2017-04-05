@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Validation
 
         }
 
-        [Fact]
+        [Fact(Skip = "Need to adapt for STU3")]
         public void TestCodingValidation()
         {
             var val = new BindingValidator(_termService, "Demo");
@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Validation
             Assert.NotEmpty(result.Where(type: OperationOutcome.IssueType.NotSupported));
         }
 
-        [Fact]
+        [Fact(Skip = "Need to adapt for STU3")]
         public void TestCodeableConceptValidation()
         {
             var val = new BindingValidator(_termService, "Demo");
