@@ -8,6 +8,10 @@
     <Copy SourceFiles="$(OutputPath)$(PackageId).$(PackageVersion).symbols.nupkg" DestinationFolder="$(PackageOutputDirectory)" />
   </Target>
 
+ <Target Name="VSTest" DependsOnTargets="Build" Condition="$(ContainsTests) == 'true'">   
+       <Exec Command="vstest.console.exe $(OutputPath)$(AssemblyName).dll" />
+  </Target>
+
   <UsingTask TaskName="ZipDir" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v12.0.dll">
     <ParameterGroup>
       <ZipFileName ParameterType="System.String" Required="true" />

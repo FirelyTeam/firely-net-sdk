@@ -9,6 +9,7 @@
 
   <PropertyGroup>
     <AssemblyName>Hl7.Fhir.Specification.Tests</AssemblyName>
+    <ContainsTests>true</ContainsTests>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,8 +19,8 @@
   <ItemGroup>
       <PackageReference Include="Hl7.Fhir.Support" Version="0.4.2-alpha4" />
       <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
-      <PackageReference Include="MSTest.TestAdapter" Version="1.1.12" />
-      <PackageReference Include="MSTest.TestFramework" Version="1.1.11" />
+      <PackageReference Include="MSTest.TestAdapter" Version="1.1.14" />
+      <PackageReference Include="MSTest.TestFramework" Version="1.1.14" />
       <PackageReference Include="System.ValueTuple" Version="4.3.0" />
       <PackageReference Include="xunit" Version="2.2.0" />
       <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
@@ -49,12 +50,12 @@
     </Content>
   </ItemGroup>
 
-  <!-- Necessary to make the Test Explorer find the tests in this assembly -->
+  <!-- Necessary to make the Test Explorer find the tests in this assembly 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugType>full</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DebugType>pdbonly</DebugType>
-  </PropertyGroup>
+  </PropertyGroup> -->
 
 </Project>
