@@ -2493,19 +2493,22 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [Conditional("DEBUG")]
-        void dumpElements(IEnumerable<ElementDefinition> elements, string header = null)
+        void dumpElements(IEnumerable<ElementDefinition> elements, string header = null) => dumpElements(elements.ToList(), header);
+
+        [Conditional("DEBUG")]
+        void dumpElements(List<ElementDefinition> elements, string header = null)
         {
             Debug.WriteLineIf(!string.IsNullOrEmpty(header), header);
-            foreach (var elem in elements)
+            for (int i = 0; i < elements.Count; i++)
             {
-                if (elem.Name != null)
+                var elem = elements[i];
+                Debug.Write(elem.Path);
+                Debug.WriteIf(elem.Name != null, " '" + elem.Name + "'");
+                if (elem.Slicing != null)
                 {
-                    Debug.Print(elem.Path + " : '" + elem.Name + "'");
+                    Debug.Write(" => sliced on: " + string.Join(" | ", elem.Slicing.Discriminator));
                 }
-                else
-                {
-                    Debug.Print(elem.Path);
-                }
+                Debug.WriteLine("");
             }
         }
 
