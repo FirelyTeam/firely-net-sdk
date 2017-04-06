@@ -19,11 +19,7 @@ using Hl7.Fhir.Validation;
 namespace Hl7.Fhir.Tests.Model
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableDateTimeOperatorTests
-#else
     public class DateTimeOperatorTests
-#endif
     {
         [TestMethod]
         public void DateEqualityOperators()

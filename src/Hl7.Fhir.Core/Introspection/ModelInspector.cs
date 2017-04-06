@@ -6,15 +6,11 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.Contracts;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace Hl7.Fhir.Introspection
 {
@@ -34,25 +30,15 @@ namespace Hl7.Fhir.Introspection
         {
             if (assembly == null) throw Error.ArgumentNull(nameof(assembly));
 
-#if PORTABLE45
-			if (assembly.GetCustomAttribute<NotMappedAttribute>() != null) return;
-#else
-            if (Attribute.GetCustomAttribute(assembly, typeof(NotMappedAttribute)) != null) return;
-#endif
+            if (assembly.GetCustomAttribute<NotMappedAttribute>() != null) return;
 
-#if PORTABLE45
-			IEnumerable<Type> exportedTypes = assembly.ExportedTypes;
-#else
-			Type[] exportedTypes = assembly.GetExportedTypes();
-#endif
-			foreach (Type type in exportedTypes)
+            IEnumerable<Type> exportedTypes = assembly.ExportedTypes;
+
+            foreach (Type type in exportedTypes)
             {
                 // Don't import types marked with [NotMapped]
-#if PORTABLE45
-				if (type.GetTypeInfo().GetCustomAttribute<NotMappedAttribute>() != null) continue;
-#else
-                if (Attribute.GetCustomAttribute(type, typeof(NotMappedAttribute)) != null) continue;
-#endif
+
+                if (type.GetTypeInfo().GetCustomAttribute<NotMappedAttribute>() != null) continue;
 
                 // Map a Fhir Datatype
                 if (ClassMapping.IsMappableType(type))

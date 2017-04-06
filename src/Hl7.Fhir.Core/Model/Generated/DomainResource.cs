@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -69,7 +69,8 @@ namespace Hl7.Fhir.Model
         /// Contained, inline Resources
         /// </summary>
         [FhirElement("contained", Order=60, Choice=ChoiceType.ResourceChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Resource> Contained

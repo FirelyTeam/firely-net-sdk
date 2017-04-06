@@ -13,6 +13,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -31,7 +32,7 @@ namespace Hl7.Fhir.Serialization
         {
             var chosenFactory = list != null ? list.FindFactory(type) : null;
             if (type == null) throw Error.ArgumentNull(nameof(type));
-            if (chosenFactory == null) throw Error.InvalidOperation("No ModelClassFactory registered to handle type '{0}'", type.Name);
+            if (chosenFactory == null) throw Error.InvalidOperation($"No ModelClassFactory registered to handle type '{type.Name}'");
 
             object result = chosenFactory.Create(type);
             if (result == null) throw Error.InvalidOperation("Factory failed to create object");

@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -656,7 +656,8 @@ namespace Hl7.Fhir.Model
             /// Valueset containing permitted answers
             /// </summary>
             [FhirElement("options", Order=100)]
-            [References("ValueSet")]
+            [CLSCompliant(false)]
+			[References("ValueSet")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Options
             {

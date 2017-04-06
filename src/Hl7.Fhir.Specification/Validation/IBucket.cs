@@ -7,9 +7,8 @@
  */
 
 using System.Collections.Generic;
-using Hl7.ElementModel;
-using System.Linq;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.ElementModel;
 
 namespace Hl7.Fhir.Validation
 {

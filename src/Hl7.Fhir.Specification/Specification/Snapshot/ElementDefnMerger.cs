@@ -13,6 +13,8 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
 using System.Diagnostics;
+using System.Reflection;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -238,7 +240,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     }
                     else if (!diff.IsExactly(snap))
                     {
-                        if (snap.GetType().IsAssignableFrom(diff.GetType()))
+                        if (snap.GetType().GetTypeInfo().IsAssignableFrom(diff.GetType().GetTypeInfo()))
                         {
                             // [WMR 20170227] Diff type is equal to or derived from snap type
                             // Clone base and recursively copy all non-null diff props over base props

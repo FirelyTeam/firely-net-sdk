@@ -15,10 +15,11 @@ using System.IO;
 using Hl7.Fhir.Serialization;
 using System.Xml;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Source
 {
-#if !PORTABLE45
+#if NET_FILESYSTEM
     /// <summary>
     /// Reads FHIR artifacts (Profiles, ValueSets, ...) from directories with individual files
     /// </summary>
@@ -61,8 +62,11 @@ namespace Hl7.Fhir.Specification.Source
         {
             get
             {
+#if DOTNETFW
                 var codebase = AppDomain.CurrentDomain.BaseDirectory;
-
+#else
+                var codebase = AppContext.BaseDirectory;
+#endif
                 if (Directory.Exists(codebase))
                     return codebase;
                 else
@@ -154,7 +158,7 @@ namespace Hl7.Fhir.Specification.Source
             {
                 //throw Error.InvalidOperation("The source has found multiple Conformance Resource artifacts with the same canonical url: {0} appears at {1}"
                 //        .FormatWith(doubles.First().Key, String.Join(", ", doubles.First().Select(hit => hit.Origin))));
-                throw Error.CanonicalUrlConflictException(doubles.Select(d => new CanonicalUrlConflictException.CanonicalUrlConflict(d.Key, d.Select(ci => ci.Origin))));
+                throw new CanonicalUrlConflictException(doubles.Select(d => new CanonicalUrlConflictException.CanonicalUrlConflict(d.Key, d.Select(ci => ci.Origin))));
             }
 
             // var info = doubles.Select(g => new Tuple<string, IEnumerable<string>>(g.Key, g.Select(ci => ci.Origin)));
@@ -303,4 +307,4 @@ namespace Hl7.Fhir.Specification.Source
     }
 
 #endif
-}
+            }

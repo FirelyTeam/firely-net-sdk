@@ -15,6 +15,7 @@ using Hl7.Fhir.Serialization;
 using Newtonsoft.Json;
 using System.IO;
 using System.Xml.Linq;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Tests
 {

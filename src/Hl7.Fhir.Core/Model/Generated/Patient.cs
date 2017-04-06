@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -177,7 +177,8 @@ namespace Hl7.Fhir.Model
             /// Organization that is associated with the contact
             /// </summary>
             [FhirElement("organization", Order=90)]
-            [References("Organization")]
+            [CLSCompliant(false)]
+			[References("Organization")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Organization
             {
@@ -512,7 +513,8 @@ namespace Hl7.Fhir.Model
             /// The other patient resource that the link refers to
             /// </summary>
             [FhirElement("other", Order=40)]
-            [References("Patient")]
+            [CLSCompliant(false)]
+			[References("Patient")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Other
@@ -757,7 +759,8 @@ namespace Hl7.Fhir.Model
         /// Indicates if the individual is deceased or not
         /// </summary>
         [FhirElement("deceased", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDateTime))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDateTime))]
         [DataMember]
         public Hl7.Fhir.Model.Element Deceased
         {
@@ -798,7 +801,8 @@ namespace Hl7.Fhir.Model
         /// Whether patient is part of a multiple birth
         /// </summary>
         [FhirElement("multipleBirth", Order=180, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer))]
         [DataMember]
         public Hl7.Fhir.Model.Element MultipleBirth
         {
@@ -867,7 +871,8 @@ namespace Hl7.Fhir.Model
         /// Patient's nominated primary care provider
         /// </summary>
         [FhirElement("careProvider", Order=230)]
-        [References("Organization","Practitioner")]
+        [CLSCompliant(false)]
+		[References("Organization","Practitioner")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> CareProvider
@@ -882,7 +887,8 @@ namespace Hl7.Fhir.Model
         /// Organization that is the custodian of the patient record
         /// </summary>
         [FhirElement("managingOrganization", InSummary=true, Order=240)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference ManagingOrganization
         {

@@ -16,20 +16,17 @@ using System.Threading.Tasks;
 using System.IO;
 using Hl7.Fhir.Serialization;
 using System.Xml;
+using static Hl7.Fhir.Tests.TestDataHelper;
 
 namespace Hl7.Fhir.Tests.Model
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableDeepCopyTest
-#else
     public class DeepCopyTest
-#endif
     {
         [TestMethod]
         public void CheckCopyAllFields()
         {
-            string xml = File.ReadAllText(@"TestData\TestPatient.xml");
+            string xml = ReadTestData("TestPatient.xml");
 
             var p = new FhirXmlParser().Parse<Patient>(xml);
             var p2 = (Patient)p.DeepCopy();
@@ -40,7 +37,7 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void CheckCopyCarePlan()
         {
-            string xml = File.ReadAllText(@"TestData\careplan-example-f201-renal.xml");
+            string xml = ReadTestData(@"careplan-example-f201-renal.xml");
 
             var p = new FhirXmlParser().Parse<CarePlan>(xml);
             var p2 = (CarePlan)p.DeepCopy();

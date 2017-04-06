@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
@@ -45,7 +46,7 @@ namespace Hl7.Fhir.Serialization
 
                 foreach (var element in elements)
                 {
-                    if (element == null) throw Error.Format("The FHIR serialization does not support arrays with empty (null) elements", null);
+                    if (element == null) throw Error.Format("The FHIR serialization does not support arrays with empty (null) elements");
 
                     write(prop, element, summary, mode);
                 }

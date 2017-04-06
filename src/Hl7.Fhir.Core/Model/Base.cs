@@ -34,16 +34,15 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Introspection;
 using System.Runtime.Serialization;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Model
 {
     [InvokeIValidatableObject]
     [System.Runtime.Serialization.DataContract]
-    public abstract class Base : Hl7.Fhir.Validation.IValidatableObject, IDeepCopyable, IDeepComparable
+    public abstract class Base : Hl7.Fhir.Validation.IValidatableObject, IDeepCopyable, IDeepComparable, IAnnotated, IAnnotatable
     {
         public abstract bool IsExactly(IDeepComparable other);
         public abstract bool Matches(IDeepComparable pattern);
@@ -96,28 +95,12 @@ namespace Hl7.Fhir.Model
             private set { _userData = value; }
         }
 
-
         private Lazy<List<object>> _annotations = new Lazy<List<object>>(() => new List<object>());
         private List<object> annotations { get { return _annotations.Value; } }
-
-        public object Annotation(Type type)
-        {
-            return annotations.OfType(type).FirstOrDefault();
-        }
-
-        public A Annotation<A>()
-        {
-            return (A)Annotation(typeof(A));
-        }
 
         public IEnumerable<object> Annotations(Type type)
         {
             return annotations.OfType(type);
-        }
-
-        public IEnumerable<A> Annotations<A>()
-        {
-            return annotations.OfType(typeof(A)).Cast<A>();
         }
 
         public void AddAnnotation(object annotation)
@@ -125,27 +108,11 @@ namespace Hl7.Fhir.Model
             annotations.Add(annotation);
         }
 
-        public bool HasAnnotation<A>()
-        {
-            return annotations.OfType(typeof(A)).Any();
-        }
-
-        public void SetAnnotation<A>(A annotation)
-        {
-            RemoveAnnotations<A>();
-            if (annotation != null)
-                AddAnnotation(annotation);
-        }
-
         public void RemoveAnnotations(Type type)
         {
             annotations.RemoveOfType(type);
         }
 
-        public void RemoveAnnotations<A>()
-        {
-            annotations.RemoveOfType(typeof(A));
-        }
         #endregion
 
 

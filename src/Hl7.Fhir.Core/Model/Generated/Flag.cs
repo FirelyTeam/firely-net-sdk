@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -157,7 +157,8 @@ namespace Hl7.Fhir.Model
         /// Who/What is flag about?
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=130)]
-        [References("Patient","Location","Group","Organization","Practitioner")]
+        [CLSCompliant(false)]
+		[References("Patient","Location","Group","Organization","Practitioner")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -172,7 +173,8 @@ namespace Hl7.Fhir.Model
         /// Alert relevant during encounter
         /// </summary>
         [FhirElement("encounter", InSummary=true, Order=140)]
-        [References("Encounter")]
+        [CLSCompliant(false)]
+		[References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
         {
@@ -186,7 +188,8 @@ namespace Hl7.Fhir.Model
         /// Flag creator
         /// </summary>
         [FhirElement("author", InSummary=true, Order=150)]
-        [References("Device","Organization","Patient","Practitioner")]
+        [CLSCompliant(false)]
+		[References("Device","Organization","Patient","Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
         {

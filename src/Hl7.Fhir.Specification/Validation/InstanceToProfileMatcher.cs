@@ -6,16 +6,12 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using System;
 using System.Linq;
 using System.Collections.Generic;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
-using System.Diagnostics;
-using System.Text;
-using System.Threading.Tasks;
-using Hl7.ElementModel;
-using Hl7.Fhir.Model;
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Validation
 {
@@ -94,7 +90,7 @@ namespace Hl7.Fhir.Validation
 
             // match where definition path includes a type suffix (typeslice shorthand)
             // example: path Patient.deceasedBoolean matches Patient.deceased (with type 'boolean')
-            if (definedName == instance.Name + instance.TypeName.Capitalize()) return true;
+            if (definedName == instance.Name + instance.Type.Capitalize()) return true;
 
             // match where definition path is a choice (suffix '[x]'), in this case
             // match the path without the suffix against the name

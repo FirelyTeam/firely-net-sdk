@@ -18,18 +18,10 @@ using Hl7.Fhir.Rest;
 namespace Hl7.Fhir.Tests.Rest
 {
     [TestClass]
-#if PORTABLE45
-    public class PortableOperationsTests
-#else
     public class OperationsTests
-#endif
 
     {
-#if PORTABLE45
-        string testEndpoint = PortableFhirClientTests.testEndpoint.OriginalString;
-#else
         string testEndpoint = FhirClientTests.testEndpoint.OriginalString;
-#endif
 
         [TestMethod] 
         [TestCategory("IntegrationTest")]
@@ -72,10 +64,10 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod]
-        [TestCategory("IntegrationTest"), Ignore]
+        [TestCategory("IntegrationTest")]
         public void InvokeExpandUsingInstanceOp()
         {
-            var client = new FhirClient(testEndpoint);
+            var client = new FhirClient("http://sqlonfhir-dstu2.azurewebsites.net/fhir"); // testEndpoint);
 
             //    var vs = client.Read<ValueSet>("ValueSet/administrative-gender");
 
@@ -92,10 +84,10 @@ namespace Hl7.Fhir.Tests.Rest
         /// http://hl7.org/fhir/valueset-operations.html#lookup
         /// </summary>
         [TestMethod]
-        [TestCategory("IntegrationTest"), Ignore]
+        [TestCategory("IntegrationTest")]
         public void InvokeLookupCoding()
         {
-            var client = new FhirClient(testEndpoint);
+            var client = new FhirClient("http://sqlonfhir-dstu2.azurewebsites.net/fhir"); // testEndpoint);
             var coding = new Coding("http://hl7.org/fhir/administrative-gender", "male");
 
             var expansion = client.ConceptLookup(coding);
@@ -105,10 +97,10 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod]
-        [TestCategory("IntegrationTest"), Ignore]
+        [TestCategory("IntegrationTest")]
         public void InvokeLookupCode()
         {
-            var client = new FhirClient(testEndpoint);
+            var client = new FhirClient("http://sqlonfhir-dstu2.azurewebsites.net/fhir"); // testEndpoint);
             var expansion = client.ConceptLookup(new Code("male"), new FhirUri("http://hl7.org/fhir/administrative-gender"));
 
             //Assert.AreEqual("male", expansion.GetSingleValue<FhirString>("name").Value);  // Returns empty currently on Grahame's server

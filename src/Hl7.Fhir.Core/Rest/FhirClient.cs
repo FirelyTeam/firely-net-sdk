@@ -10,6 +10,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -124,7 +125,7 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-#if !PORTABLE45
+#if NET_COMPRESSION
         /// <summary>
         /// This will do 2 things:
         /// 1. Add the header Accept-Encoding: gzip, deflate
@@ -920,8 +921,8 @@ namespace Hl7.Fhir.Rest
         }
 
 
-#if (PORTABLE45 || NET45) && BRIAN
-        #region << Async operations >>
+#if BRIAN
+#region << Async operations >>
 
 
 		/// <summary>
