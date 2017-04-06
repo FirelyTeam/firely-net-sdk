@@ -1,4 +1,8 @@
 version: 1.0.{build}
+branches:
+  only:
+  - develop-dstu2-classic
+clone_depth: 1
 build_script:
 - ps: >-
     nuget install secure-file -ExcludeVersion
