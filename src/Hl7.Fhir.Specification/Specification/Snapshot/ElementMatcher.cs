@@ -161,7 +161,9 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             if (matchingChoice != null)
             {
-                return snapNav.MoveToNext(matchingChoice);
+                // [WMR 20170406] Match on current element? Then don't advance to next!
+                // return snapNav.MoveToNext(matchingChoice);
+                return snapNav.PathName == matchingChoice || snapNav.MoveToNext(matchingChoice);
             }
 
             // No match; consider this to be a new element definition
@@ -302,6 +304,10 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             var result = new List<MatchInfo>();
 
+            // [WMR 20170406] NEW: Fix for Vadim issue - handle profile constraints on complex extension child elements
+            // Determine if the base profile is introducing a slice entry
+            var snapIsSliced = snapNav.Current.Slicing != null;
+
             // if diffNav specifies a slice name, then advance snapNav to matching base slice
             // Otherwise remain at the current slice entry or unsliced element
             if (diffNav.Current.Name != null)
@@ -309,8 +315,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 snapNav.MoveToNextSliceAtAnyLevel(diffNav.Current.Name);
             }
 
-            // Bookmark the initial slice entry element
-            var snapSliceEntry = snapNav.Bookmark();
+            // Bookmark the initial slice base element
+            var snapSliceBase = snapNav.Bookmark();
             var baseIsSliced = snapNav.Current.Slicing != null;
 
             // For the first entries with explicit slicing information (or implicit if this is an extension),
@@ -322,13 +328,15 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Extract the discriminator from diff or base slice entry
             var discriminator = diffIsSliced ? diffNav.Current.Slicing.Discriminator.ToList() : snapNav.Current.Slicing?.Discriminator.ToList();
 
-            if (diffIsSliced || isExtension)
+            // [WMR 20170406] Differential allows extensions w/o slice entry
+            // => Add new slice entry to snapshot if (and only if!) not already defined by the base profile
+            if (diffIsSliced || (isExtension && !snapIsSliced))
             {
                 // Differential has information for the slicing entry
                 result.Add(new MatchInfo()
                 {
                     Action = MatchAction.Slice,
-                    BaseBookmark = snapSliceEntry,
+                    BaseBookmark = snapSliceBase,
                     DiffBookmark = diffIsSliced ? diffNav.Bookmark() : Bookmark.Empty,
                     // [WMR 20170308] If this is a recursive call (e.g. named slice with slicing component = reslice),
                     // then explicitly override default base with specified slice base element
@@ -368,13 +376,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // snapNav and diffNav are now positioned on the first concrete slices, if they exist (?)
             // Match remaining concrete slices to base, in order
-
-            // OLD: if Slicing.Rules = Open, then diff may inject slices inbetween existing base slices
-            // WRONG! slice definitions in StructureDef are always ordered; diff cannot re-order existing slices or insert new slices
-            // => TODO:
-            // - ElementMatcher should initialize match.BaseBookMark to current element (add after this)
-            // - SnapshotGenerator.addSlice should no longer call findSliceAddPosition (OBSOLETE)
-            // - If the diff has invalid slice order, then the snapshot will also be invalid => trash in, trash out; responsibility of the validator
+            // slice definitions in StructureDef are always ordered; diff cannot re-order existing slices or insert new slices
 
             do
             {
@@ -392,7 +394,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     var match = new MatchInfo()
                     {
                         // BaseBookmark = snapNav.Bookmark(),
-                        BaseBookmark = snapSliceEntry,
+                        BaseBookmark = snapSliceBase,
                         DiffBookmark = diffNav.Bookmark(),
                         SliceBase = sliceBase
                     };

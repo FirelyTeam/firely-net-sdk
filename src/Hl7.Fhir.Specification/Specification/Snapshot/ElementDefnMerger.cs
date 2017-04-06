@@ -33,17 +33,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                 merger.merge(snap, diff);
             }
 
-            // [WMR 20170209] TODO: Merge global mapping components
-#if false
-            /// <summary>Merge two lists of global <see cref="StructureDefinition.MappingComponent"/> definitions.</summary>
-            public static List<StructureDefinition.MappingComponent> Merge(SnapshotGenerator generator,
-                List<StructureDefinition.MappingComponent> snap, List<StructureDefinition.MappingComponent> diff)
-            {
-                var merger = new ElementDefnMerger(generator);
-                // Merge global mapping definitions having the same (unique) mapping id
-                return merger.mergeCollection(snap, diff, (a, b) => a.Identity == b.Identity);
-            }
-#endif
             SnapshotGenerator _generator;
 
             ElementDefnMerger(SnapshotGenerator generator)
