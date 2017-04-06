@@ -161,7 +161,9 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             if (matchingChoice != null)
             {
-                return snapNav.MoveToNext(matchingChoice);
+                // [WMR 20170406] Match on current element? Then don't advance to next!
+                // return snapNav.MoveToNext(matchingChoice);
+                return snapNav.PathName == matchingChoice || snapNav.MoveToNext(matchingChoice);
             }
 
             // No match; consider this to be a new element definition
