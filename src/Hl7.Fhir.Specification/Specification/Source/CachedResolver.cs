@@ -140,11 +140,15 @@ namespace Hl7.Fhir.Specification.Source
                     {
                         _cache.Remove(identifier);
                         entry = null;
+                        // [WMR 20170406] Clear flag so we (try to) re-create the entry
+                        success = false;
                     }
 
                     // If we still have a fresh entry, return it
                     if (success)
+                    {
                         return entry.Data;
+                    }
                     else
                     {
                         // Otherwise, fetch it and cache it.
