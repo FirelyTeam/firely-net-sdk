@@ -247,14 +247,12 @@ namespace Hl7.Fhir.Specification.Tests
             matches = ElementMatcher.Match(snapNav, diffNav);
             Assert.IsNotNull(matches);
             matches.DumpMatches(snapNav, diffNav);
-            Assert.AreEqual(2, matches.Count);
+            // [WMR 20170406] extension slice entry is inherited from base w/o diff constraints => no match
+            // Expecting a single match for the additional complex extension element
+            Assert.AreEqual(1, matches.Count);
             Assert.IsTrue(diffNav.MoveToFirstChild());
             Assert.IsTrue(snapNav.MoveToChild(diffNav.PathName));
-            assertMatch(matches[0], ElementMatcher.MatchAction.Slice, snapNav);         // Extension slice entry (no diff match)
-            //Assert.IsTrue(diffNav.MoveToNext());
-            // Don't advance diffNav (no slicing entry)
-            // Don't advance snapNav; new diff slice is merged with default base = snap slice entry
-            assertMatch(matches[1], ElementMatcher.MatchAction.Add, snapNav, diffNav);  // Add new extension slice
+            assertMatch(matches[0], ElementMatcher.MatchAction.Add, snapNav, diffNav);  // Add new extension slice
         }
 
         [TestMethod]
@@ -334,7 +332,7 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         new ElementDefinition("Extension"),
                         new ElementDefinition("Extension.extension") { SliceName = "name" },
-                        new ElementDefinition("Extension.extension.value")
+                        new ElementDefinition("Extension.extension.value[x]")
                         {
                             Type = new List<ElementDefinition.TypeRefComponent>()
                             {
@@ -343,7 +341,7 @@ namespace Hl7.Fhir.Specification.Tests
                         },
                         new ElementDefinition("Extension.extension.url") { Fixed = new FhirUri("name")  },
                         new ElementDefinition("Extension.extension") { SliceName = "age" },
-                        new ElementDefinition("Extension.extension.value")
+                        new ElementDefinition("Extension.extension.value[x]")
                         {
                             Type = new List<ElementDefinition.TypeRefComponent>()
                             {
@@ -393,7 +391,7 @@ namespace Hl7.Fhir.Specification.Tests
                         new ElementDefinition("Extension.extension") { Slicing = new ElementDefinition.SlicingComponent()
                             { Discriminator = ForValueSlice("url").ToList() } },
                         new ElementDefinition("Extension.extension") { SliceName = "name" },
-                        new ElementDefinition("Extension.extension.value")
+                        new ElementDefinition("Extension.extension.value[x]")
                         {
                             Type = new List<ElementDefinition.TypeRefComponent>()
                             {
@@ -402,7 +400,7 @@ namespace Hl7.Fhir.Specification.Tests
                         },
                         new ElementDefinition("Extension.extension.url") { Fixed = new FhirUri("name")  },
                         new ElementDefinition("Extension.extension") { SliceName = "age" },
-                        new ElementDefinition("Extension.extension.value")
+                        new ElementDefinition("Extension.extension.value[x]")
                         {
                             Type = new List<ElementDefinition.TypeRefComponent>()
                             {
@@ -421,7 +419,7 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         new ElementDefinition("Extension"),
                         new ElementDefinition("Extension.extension") { SliceName = "size" },
-                        new ElementDefinition("Extension.extension.value")
+                        new ElementDefinition("Extension.extension.value[x]")
                         {
                             Type = new List<ElementDefinition.TypeRefComponent>()
                             {
@@ -446,11 +444,14 @@ namespace Hl7.Fhir.Specification.Tests
             matches = ElementMatcher.Match(snapNav, diffNav);
             Assert.IsNotNull(matches);
             matches.DumpMatches(snapNav, diffNav);
-            Assert.AreEqual(2, matches.Count);  // extension slice entry + one additional complex extension element
+
+            // [WMR 20170406] extension slice entry is inherited from base w/o diff constraints => no match
+            // Only expecting a single match for the additional complex extension element "size"
+            Assert.AreEqual(1, matches.Count);  // add one additional complex extension element
+
             Assert.IsTrue(diffNav.MoveToFirstChild());
             Assert.IsTrue(snapNav.MoveToChild(diffNav.PathName));
-            assertMatch(matches[0], ElementMatcher.MatchAction.Slice, snapNav);             // Extension slice entry (no diff match)
-            assertMatch(matches[1], ElementMatcher.MatchAction.Add, snapNav, diffNav);      // Add new extension child element "size"
+            assertMatch(matches[0], ElementMatcher.MatchAction.Add, snapNav, diffNav);      // Add new extension child element "size"
             Assert.IsFalse(diffNav.MoveToNext());
         }
 
@@ -470,7 +471,7 @@ namespace Hl7.Fhir.Specification.Tests
                             Slicing = new ElementDefinition.SlicingComponent()
                             { Discriminator = ForValueSlice("url").ToList() } },
                         new ElementDefinition("Extension.extension") { SliceName = "name" },
-                        new ElementDefinition("Extension.extension.value")
+                        new ElementDefinition("Extension.extension.value[x]")
                         {
                             Type = new List<ElementDefinition.TypeRefComponent>()
                             {
@@ -479,7 +480,7 @@ namespace Hl7.Fhir.Specification.Tests
                         },
                         new ElementDefinition("Extension.extension.url") { Fixed = new FhirUri("name")  },
                         new ElementDefinition("Extension.extension") { SliceName = "age" },
-                        new ElementDefinition("Extension.extension.value")
+                        new ElementDefinition("Extension.extension.value[x]")
                         {
                             Type = new List<ElementDefinition.TypeRefComponent>()
                             {
@@ -498,7 +499,7 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         new ElementDefinition("Extension"),
                         new ElementDefinition("Extension.extension") { SliceName = "size" },
-                        new ElementDefinition("Extension.extension.value")
+                        new ElementDefinition("Extension.extension.value[x]")
                         {
                             Type = new List<ElementDefinition.TypeRefComponent>()
                             {
@@ -507,7 +508,7 @@ namespace Hl7.Fhir.Specification.Tests
                         },
                         new ElementDefinition("Extension.extension.url") { Fixed = new FhirUri("size")  },
                         new ElementDefinition("Extension.extension") { SliceName = "name" },
-                        new ElementDefinition("Extension.extension.value")
+                        new ElementDefinition("Extension.extension.value[x]")
                         {
                             Type = new List<ElementDefinition.TypeRefComponent>()
                             {
@@ -515,8 +516,8 @@ namespace Hl7.Fhir.Specification.Tests
                             }
                         },
                         new ElementDefinition("Extension.extension.url") { Fixed = new FhirUri("name")  },
-                        new ElementDefinition("Extension.extension") { SliceName = "age" },
-                        new ElementDefinition("Extension.extension.value")
+                        new ElementDefinition("Extension.extension") { Name = "age" },
+                        new ElementDefinition("Extension.extension.value[x]")
                         {
                             Type = new List<ElementDefinition.TypeRefComponent>()
                             {
@@ -541,18 +542,114 @@ namespace Hl7.Fhir.Specification.Tests
             matches = ElementMatcher.Match(snapNav, diffNav);
             Assert.IsNotNull(matches);
             matches.DumpMatches(snapNav, diffNav);
-            Assert.AreEqual(4, matches.Count);  // extension slice entry + three complex extension elements
+            // [WMR 20170406] extension slice entry is inherited from base w/o diff constraints => no match
+            // Expecting three matches for three additional complex extension elements
+            Assert.AreEqual(3, matches.Count);  // three additional complex extension elements
             Assert.IsTrue(diffNav.MoveToFirstChild());
             Assert.IsTrue(snapNav.MoveToChild(diffNav.PathName));
-            assertMatch(matches[0], ElementMatcher.MatchAction.Slice, snapNav);             // Extension slice entry (no diff match)
-            assertMatch(matches[1], ElementMatcher.MatchAction.Add, snapNav, diffNav);      // Insert new extension child element "size"
+            assertMatch(matches[0], ElementMatcher.MatchAction.Add, snapNav, diffNav);      // Insert new extension child element "size"
             Assert.IsTrue(diffNav.MoveToNext());
             Assert.IsTrue(snapNav.MoveToNext());
-            assertMatch(matches[2], ElementMatcher.MatchAction.Merge, snapNav, diffNav);    // Merge extension child element "name"
+            assertMatch(matches[1], ElementMatcher.MatchAction.Merge, snapNav, diffNav);    // Merge extension child element "name"
             Assert.IsTrue(diffNav.MoveToNext());
             Assert.IsTrue(snapNav.MoveToNext());
-            assertMatch(matches[3], ElementMatcher.MatchAction.Merge, snapNav, diffNav);    // Merge extension child element "age"
+            assertMatch(matches[2], ElementMatcher.MatchAction.Merge, snapNav, diffNav);    // Merge extension child element "age"
             Assert.IsFalse(diffNav.MoveToNext());
+        }
+
+        [TestMethod]
+        public void TestElementMatcher_ComplexExtension_ConstrainChild()
+        {
+            // Profile with constraint on a child element of a referenced complex extension
+
+            var baseProfile = new StructureDefinition()
+            {
+                Snapshot = new StructureDefinition.SnapshotComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Extension"),
+                        new ElementDefinition("Extension.extension") { Slicing = new ElementDefinition.SlicingComponent() { Discriminator = new string[] {"url" } } },
+                        new ElementDefinition("Extension.extension") { Name = "parent" },
+
+                        new ElementDefinition("Extension.extension.extension") { Slicing = new ElementDefinition.SlicingComponent() { Discriminator = new string[] {"url" } } },
+                        new ElementDefinition("Extension.extension.extension") { Name = "child" },
+                        new ElementDefinition("Extension.extension.extension.value[x]")
+                        {
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent() { Code = FHIRDefinedType.Coding }
+                            }
+                        },
+                        new ElementDefinition("Extension.extension.extension.url") { Fixed = new FhirUri("child")  },
+
+                        new ElementDefinition("Extension.extension.value[x]")
+                        {
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent() { Code = FHIRDefinedType.String }
+                            }
+                        },
+                        new ElementDefinition("Extension.extension.url") { Fixed = new FhirUri("parent")  },
+                    }
+                }
+            };
+            var userProfile = new StructureDefinition()
+            {
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Extension"),
+                        new ElementDefinition("Extension.extension") { Name = "parent" },
+                        new ElementDefinition("Extension.extension.extension") { Name = "child" },
+                        new ElementDefinition("Extension.extension.extension.valueCoding")
+                        {
+                            Min = 1,
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent() { Code = FHIRDefinedType.Coding }
+                            }
+                        }
+                    }
+                }
+            };
+
+            var snapNav = ElementDefinitionNavigator.ForSnapshot(baseProfile);
+            var diffNav = ElementDefinitionNavigator.ForDifferential(userProfile);
+
+            // Merge: Extension root
+            var matches = ElementMatcher.Match(snapNav, diffNav);
+            Assert.IsTrue(diffNav.MoveToFirstChild());
+            Assert.IsTrue(snapNav.MoveToFirstChild());
+            assertMatch(matches, ElementMatcher.MatchAction.Merge, snapNav, diffNav);
+
+            // Slice: Extension.extension
+            matches = ElementMatcher.Match(snapNav, diffNav);
+            Assert.IsNotNull(matches);
+            matches.DumpMatches(snapNav, diffNav);
+            // [WMR 20170406] extension slice entry is inherited from base w/o diff constraints => no match
+            // Expecting a single match for "parent"
+            Assert.AreEqual(1, matches.Count);  // three additional complex extension elements
+            Assert.IsTrue(diffNav.MoveToFirstChild());
+            Assert.IsTrue(snapNav.MoveToChild(diffNav.PathName));
+            Assert.IsTrue(snapNav.MoveToNext());
+            Assert.AreEqual("parent", snapNav.Current.Name);
+            Assert.AreEqual("parent", diffNav.Current.Name);
+            assertMatch(matches[0], ElementMatcher.MatchAction.Merge, snapNav, diffNav);    // Merge extension child element "parent"
+            matches = ElementMatcher.Match(snapNav, diffNav);
+            Assert.IsTrue(diffNav.MoveToFirstChild());
+            Assert.IsTrue(snapNav.MoveToFirstChild());
+            Assert.IsTrue(snapNav.MoveToNext());
+            Assert.AreEqual("child", snapNav.Current.Name);
+            Assert.AreEqual("child", diffNav.Current.Name);
+            assertMatch(matches[0], ElementMatcher.MatchAction.Merge, snapNav, diffNav);    // Merge extension child element "child"
+            matches = ElementMatcher.Match(snapNav, diffNav);
+            Assert.IsTrue(snapNav.MoveToFirstChild());
+            Assert.IsTrue(diffNav.MoveToFirstChild());
+            Assert.AreEqual("value[x]", snapNav.PathName);
+            Assert.AreEqual("valueCoding", diffNav.PathName);
+            assertMatch(matches[0], ElementMatcher.MatchAction.Merge, snapNav, diffNav);    // Merge extension child element valueCoding
         }
 
         [TestMethod]

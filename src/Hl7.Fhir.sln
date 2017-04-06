@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.10
+VisualStudioVersion = 15.0.26403.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.STU3", "Hl7.Fhir.Core\Hl7.Fhir.STU3.csproj", "{1E26FE9D-EEF8-4C39-B54F-6CA12F7C7CA5}"
 EndProject
@@ -12,6 +12,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.Specification", "Hl7.Fhir.Specification\Hl7.Fhir.Specification.csproj", "{4F54A3CF-214D-434F-8683-589FF9CDEFFE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.Specification.Tests", "Hl7.Fhir.Specification.Tests\Hl7.Fhir.Specification.Tests.csproj", "{2795B188-A6F8-4D0E-A7A4-FCE670952360}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4D651AFD-CDC8-4836-8EDE-B30B51EB6FC2}"
+	ProjectSection(SolutionItems) = preProject
+		fhir-net-api.props = fhir-net-api.props
+		fhir-net-api.targets = fhir-net-api.targets
+		platforms.props = platforms.props
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

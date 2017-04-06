@@ -1,3 +1,7 @@
+|DSTU2|STU3|
+|---|---|
+|[![DSTU2](https://ci.appveyor.com/api/projects/status/tt94it79sgl172up/branch/develop?svg=true)](https://ci.appveyor.com/project/ewoutkramer/fhir-net-api-7cq0g/branch/develop)|[![STU3](https://ci.appveyor.com/api/projects/status/tt94it79sgl172up/branch/develop-stu3?svg=true)](https://ci.appveyor.com/project/ewoutkramer/fhir-net-api-7cq0g/branch/develop-stu3)|
+
 ## Introduction ##
 This is the official support API for working with [HL7 FHIR][fhir-spec] on the Microsoft .NET (dotnet) platform.
 
@@ -29,12 +33,12 @@ Planned release DSTU2.1 was never published by HL7, but you will still find trac
 Get started by reading the [online documentation][netapi-docu]. Depending on the version of FHIR you require, you'll find the relevant links to the packages
 and develop branches in this repository below:
 
-|Spec version|Core NuGet|Specification NuGet|Git branche|
+|Spec version|Git branche|Core NuGet|Specification NuGet|
 |---|---|---|---|
-|STU3|https://www.nuget.org/packages/Hl7.Fhir.STU3/|https://www.nuget.org/packages/Hl7.Fhir.Specification.STU3/|https://github.com/ewoutkramer/fhir-net-api/tree/develop-stu3|
-|DSTU 2.1|https://www.nuget.org/packages/Hl7.Fhir.DSTU21/|https://www.nuget.org/packages/Hl7.Fhir.Specification.DSTU21/|N/A|
-|DSTU2 | https://www.nuget.org/packages/Hl7.Fhir.DSTU2/ | https://www.nuget.org/packages/Hl7.Fhir.Specification.DSTU2/ |https://github.com/ewoutkramer/fhir-net-api/tree/develop|
-|DSTU1| https://www.nuget.org/packages/Hl7.Fhir.DSTU/ | https://www.nuget.org/packages/Hl7.Fhir.Specification.DSTU/ |https://github.com/ewoutkramer/fhir-net-api/tree/master-dstu1|
+|STU3|https://github.com/ewoutkramer/fhir-net-api/tree/develop-stu3|https://www.nuget.org/packages/Hl7.Fhir.STU3/|https://www.nuget.org/packages/Hl7.Fhir.Specification.STU3/|
+|DSTU 2.1|N/A|https://www.nuget.org/packages/Hl7.Fhir.DSTU21/|https://www.nuget.org/packages/Hl7.Fhir.Specification.DSTU21/|
+|DSTU2| https://github.com/ewoutkramer/fhir-net-api/tree/develop|https://www.nuget.org/packages/Hl7.Fhir.DSTU2/ | https://www.nuget.org/packages/Hl7.Fhir.Specification.DSTU2/ |
+|DSTU1| https://github.com/ewoutkramer/fhir-net-api/tree/master-dstu1|https://www.nuget.org/packages/Hl7.Fhir.DSTU/ | https://www.nuget.org/packages/Hl7.Fhir.Specification.DSTU/ |
   
 ## Support 
 We actively monitor the issues coming in through the GitHub repository at [https://github.com/ewoutkramer/fhir-net-api/issues](https://github.com/ewoutkramer/fhir-net-api/issues). You are welcome to register your bugs and feature suggestions there. For questions and broader discussions, we use the .NET FHIR Implementers chat on [Zulip][netapi-zulip].
