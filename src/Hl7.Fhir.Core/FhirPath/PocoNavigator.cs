@@ -6,18 +6,20 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.ElementModel;
 using Hl7.Fhir.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Introspection;
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Utility;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.FhirPath
 {
+    // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+    [DebuggerDisplay(@"\{{ShortPath,nq}}")]
     public class PocoNavigator : IElementNavigator
     {
         public PocoNavigator(Base model)
@@ -84,7 +86,7 @@ namespace Hl7.Fhir.FhirPath
         /// <summary>
         /// Return the FHIR TypeName
         /// </summary>
-        public string TypeName
+        public string Type
         {
             get
             {
@@ -106,7 +108,7 @@ namespace Hl7.Fhir.FhirPath
             }
         }
 
-        public string Path
+        public string Location
         {
             get
             {
@@ -251,9 +253,15 @@ namespace Hl7.Fhir.FhirPath
             {
                 lock(this)
                 {
-                    _parentPath = Path;
+                    _parentPath = Location;
                     _parentShortPath = ShortPath;
                     _parentCommonPath = CommonPath;
+
+                    //TODO: We just called Current.Children().Any() which is actually a pretty expensive
+                    //operation - now we are doing it again! 
+                    //Since Children() does create a full list, calling Any() will generate the full list,
+                    //and we may as well cache the result and reuse it here.
+                    //In fact, why not make Children() return a List?
                     _siblings = Current.Children() as List<PocoElementNavigator>;
                     _index = 0;
                 }

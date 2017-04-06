@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -1492,7 +1492,8 @@ namespace Hl7.Fhir.Model
             /// Base System profile for all uses of resource
             /// </summary>
             [FhirElement("profile", Order=50)]
-            [References("StructureDefinition")]
+            [CLSCompliant(false)]
+			[References("StructureDefinition")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Profile
             {
@@ -2508,7 +2509,8 @@ namespace Hl7.Fhir.Model
             /// The defined operation/query
             /// </summary>
             [FhirElement("definition", Order=50)]
-            [References("OperationDefinition")]
+            [CLSCompliant(false)]
+			[References("OperationDefinition")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Definition
@@ -2980,7 +2982,8 @@ namespace Hl7.Fhir.Model
             /// Profile that describes the request
             /// </summary>
             [FhirElement("request", Order=80)]
-            [References("StructureDefinition")]
+            [CLSCompliant(false)]
+			[References("StructureDefinition")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Request
@@ -2995,7 +2998,8 @@ namespace Hl7.Fhir.Model
             /// Profile that describes the response
             /// </summary>
             [FhirElement("response", Order=90)]
-            [References("StructureDefinition")]
+            [CLSCompliant(false)]
+			[References("StructureDefinition")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Response
@@ -3193,7 +3197,8 @@ namespace Hl7.Fhir.Model
             /// Constraint on a resource used in the document
             /// </summary>
             [FhirElement("profile", Order=60)]
-            [References("StructureDefinition")]
+            [CLSCompliant(false)]
+			[References("StructureDefinition")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Profile
@@ -3764,7 +3769,8 @@ namespace Hl7.Fhir.Model
         /// Profiles for use cases supported
         /// </summary>
         [FhirElement("profile", Order=260)]
-        [References("StructureDefinition")]
+        [CLSCompliant(false)]
+		[References("StructureDefinition")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Profile

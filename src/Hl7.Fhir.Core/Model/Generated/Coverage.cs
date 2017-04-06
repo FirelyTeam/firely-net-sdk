@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -57,7 +57,8 @@ namespace Hl7.Fhir.Model
         /// An identifier for the plan issuer
         /// </summary>
         [FhirElement("issuer", InSummary=true, Order=90)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Issuer
         {
@@ -297,7 +298,8 @@ namespace Hl7.Fhir.Model
         /// Plan holder information
         /// </summary>
         [FhirElement("subscriber", Order=200)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subscriber
         {
@@ -324,7 +326,8 @@ namespace Hl7.Fhir.Model
         /// Contract details
         /// </summary>
         [FhirElement("contract", Order=220)]
-        [References("Contract")]
+        [CLSCompliant(false)]
+		[References("Contract")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Contract

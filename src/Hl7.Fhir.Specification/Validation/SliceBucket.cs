@@ -6,14 +6,13 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
 using System.Collections.Generic;
-using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Hl7.Fhir.ElementModel;
 
 namespace Hl7.Fhir.Validation
 {
@@ -54,7 +53,7 @@ namespace Hl7.Fhir.Validation
             if(Discriminator?.Any() == true)
             {
                 // Get the full path of the discriminator, which is rooted in the current instance path
-                var baseInstancePath = candidate.Path;
+                var baseInstancePath = candidate.Location;
 
                 // remove all the [num] (from the instance path) and [x] (from the discriminator path) in one go,
                 // so a path looking like this remains as a discriminator:  Patient.deceased

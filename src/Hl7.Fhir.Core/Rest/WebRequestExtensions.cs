@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Rest
     {
         internal static void WriteBody(this HttpWebRequest request, bool CompressRequestBody, byte[] data)
         {
-#if PORTABLE45
+#if !DOTNETFW
             Stream outs = null;
             //outs = request.GetRequestStreamAsync().Result;
             //outs.Write(data, 0, (int)data.Length);
@@ -59,6 +59,12 @@ namespace Hl7.Fhir.Rest
                 // thrown
                 requestReady.WaitOne();
                 //async.AsyncWaitHandle.WaitOne();
+            }
+            else
+            {
+                // If the async wasn't finished, then we need to wait anyway
+                if (!async.CompletedSynchronously)
+                    requestReady.WaitOne();
             }
 
             if (caught != null) throw caught;
@@ -175,7 +181,7 @@ namespace Hl7.Fhir.Rest
 
             if (!async.IsCompleted)
             {
-#if !PORTABLE45
+#if DOTNETFW
                 ThreadPool.RegisterWaitForSingleObject(async.AsyncWaitHandle, new WaitOrTimerCallback(TimeoutCallback), req, req.Timeout, true);
 #endif
 

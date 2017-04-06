@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -592,7 +592,8 @@ namespace Hl7.Fhir.Model
         /// Who recorded the sensitivity
         /// </summary>
         [FhirElement("recorder", InSummary=true, Order=120)]
-        [References("Practitioner","Patient")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Recorder
         {
@@ -606,7 +607,8 @@ namespace Hl7.Fhir.Model
         /// Who the sensitivity is for
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=130)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -621,7 +623,8 @@ namespace Hl7.Fhir.Model
         /// Source of the information about the allergy
         /// </summary>
         [FhirElement("reporter", InSummary=true, Order=140)]
-        [References("Patient","RelatedPerson","Practitioner")]
+        [CLSCompliant(false)]
+		[References("Patient","RelatedPerson","Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Reporter
         {

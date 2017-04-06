@@ -14,7 +14,6 @@ using System.IO.Compression;
 
 namespace Hl7.Fhir.Specification.Source
 {
-#if !PORTABLE45
     /// <summary>
     /// Internal class which gives access to files within a zip whilst avoiding unpacking that zip on every access.
     /// The ZipCacher will unpack the zip once and store the contents in a cache directory, serving files from this cache.
@@ -79,12 +78,7 @@ namespace Hl7.Fhir.Specification.Source
 
             dir.Create();
 
-#if NET40
-            ICSharpCode.SharpZipLib.Zip.FastZip  zf = new ICSharpCode.SharpZipLib.Zip.FastZip();
-            zf.ExtractZip(_zipPath, dir.FullName, "*.*");
-#else
             ZipFile.ExtractToDirectory(_zipPath, dir.FullName);
-#endif
 
             // Set the last write time to be equal to the write time of the zip file,
             // this way, we can compare this time to the write times of newer zips and
@@ -123,5 +117,4 @@ namespace Hl7.Fhir.Specification.Source
             return zipCacheDir;
         }
     }
-#endif
 }

@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -64,7 +64,8 @@ namespace Hl7.Fhir.Model
             /// Organization where the roles are performed
             /// </summary>
             [FhirElement("managingOrganization", Order=40)]
-            [References("Organization")]
+            [CLSCompliant(false)]
+			[References("Organization")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference ManagingOrganization
             {
@@ -118,7 +119,8 @@ namespace Hl7.Fhir.Model
             /// The location(s) at which this practitioner provides care
             /// </summary>
             [FhirElement("location", Order=80)]
-            [References("Location")]
+            [CLSCompliant(false)]
+			[References("Location")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> Location
@@ -133,7 +135,8 @@ namespace Hl7.Fhir.Model
             /// The list of healthcare services that this worker provides for this role's Organization/Location(s)
             /// </summary>
             [FhirElement("healthcareService", Order=90)]
-            [References("HealthcareService")]
+            [CLSCompliant(false)]
+			[References("HealthcareService")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> HealthcareService
@@ -271,7 +274,8 @@ namespace Hl7.Fhir.Model
             /// Organization that regulates and issues the qualification
             /// </summary>
             [FhirElement("issuer", Order=70)]
-            [References("Organization")]
+            [CLSCompliant(false)]
+			[References("Organization")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Issuer
             {

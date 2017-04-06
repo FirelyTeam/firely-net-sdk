@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -382,7 +382,8 @@ namespace Hl7.Fhir.Model
         /// Organization responsible for device
         /// </summary>
         [FhirElement("owner", Order=200)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Owner
         {
@@ -396,7 +397,8 @@ namespace Hl7.Fhir.Model
         /// Where the resource is found
         /// </summary>
         [FhirElement("location", Order=210)]
-        [References("Location")]
+        [CLSCompliant(false)]
+		[References("Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Location
         {
@@ -410,7 +412,8 @@ namespace Hl7.Fhir.Model
         /// If the resource is affixed to a person
         /// </summary>
         [FhirElement("patient", Order=220)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
         {

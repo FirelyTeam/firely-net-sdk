@@ -90,7 +90,7 @@ properties {
   $Script:MSBuild = "MSBuild"
   $Script:VSTest = "VSTest.Console"
 
-  $testCaseFilter = ”TestCategory!=IntegrationTest&TestCategory!=LongRunner"
+  $testCaseFilter = "TestCategory!=IntegrationTest&TestCategory!=LongRunner"
 }
 
 
@@ -480,11 +480,11 @@ function VSTests($build)
     {
        if ($appVeyor)
        {
-         & "$VSTest" $workingSourceDir\$testName\bin\Release\$finalDir\$testName.dll /Logger:Appveyor /TestCaseFilter:”$testCaseFilter" | Out-Default  # TODO: Include LongRunners again.
+         & "$VSTest" $workingSourceDir\$testName\bin\Release\$finalDir\$testName.dll /Logger:Appveyor /TestCaseFilter:$testCaseFilter" | Out-Default  # TODO: Include LongRunners again.
        }
        else
        {
-         & "$VSTest" $workingSourceDir\$testName\bin\Release\$finalDir\$testName.dll /Logger:Trx /TestCaseFilter:”$testCaseFilter" | Out-Default     # TODO: Find out why Trx logger is often not writing anything to file.
+         & "$VSTest" $workingSourceDir\$testName\bin\Release\$finalDir\$testName.dll /Logger:Trx /TestCaseFilter:$testCaseFilter" | Out-Default     # TODO: Find out why Trx logger is often not writing anything to file.
        }
     }
     catch {

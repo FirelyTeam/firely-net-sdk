@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -117,7 +117,8 @@ namespace Hl7.Fhir.Model
         /// The schedule resource that this slot defines an interval of status information
         /// </summary>
         [FhirElement("schedule", InSummary=true, Order=110)]
-        [References("Schedule")]
+        [CLSCompliant(false)]
+		[References("Schedule")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Schedule

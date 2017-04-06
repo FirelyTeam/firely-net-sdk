@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -97,7 +97,8 @@ namespace Hl7.Fhir.Model
             /// The resource to which this actual person is associated
             /// </summary>
             [FhirElement("target", Order=40)]
-            [References("Patient","Practitioner","RelatedPerson","Person")]
+            [CLSCompliant(false)]
+			[References("Patient","Practitioner","RelatedPerson","Person")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Target
@@ -336,7 +337,8 @@ namespace Hl7.Fhir.Model
         /// The organization that is the custodian of the person record
         /// </summary>
         [FhirElement("managingOrganization", InSummary=true, Order=160)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference ManagingOrganization
         {

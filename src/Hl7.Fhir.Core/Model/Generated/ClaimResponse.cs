@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -1832,7 +1832,8 @@ namespace Hl7.Fhir.Model
             /// Insurance information
             /// </summary>
             [FhirElement("coverage", InSummary=true, Order=60)]
-            [References("Coverage")]
+            [CLSCompliant(false)]
+			[References("Coverage")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Coverage
@@ -1926,7 +1927,8 @@ namespace Hl7.Fhir.Model
             /// Adjudication results
             /// </summary>
             [FhirElement("claimResponse", InSummary=true, Order=100)]
-            [References("ClaimResponse")]
+            [CLSCompliant(false)]
+			[References("ClaimResponse")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference ClaimResponse
             {
@@ -2050,7 +2052,8 @@ namespace Hl7.Fhir.Model
         /// Id of resource triggering adjudication
         /// </summary>
         [FhirElement("request", InSummary=true, Order=100)]
-        [References("Claim")]
+        [CLSCompliant(false)]
+		[References("Claim")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Request
         {
@@ -2122,7 +2125,8 @@ namespace Hl7.Fhir.Model
         /// Insurer
         /// </summary>
         [FhirElement("organization", InSummary=true, Order=140)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Organization
         {
@@ -2136,7 +2140,8 @@ namespace Hl7.Fhir.Model
         /// Responsible practitioner
         /// </summary>
         [FhirElement("requestProvider", InSummary=true, Order=150)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference RequestProvider
         {
@@ -2150,7 +2155,8 @@ namespace Hl7.Fhir.Model
         /// Responsible organization
         /// </summary>
         [FhirElement("requestOrganization", InSummary=true, Order=160)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference RequestOrganization
         {

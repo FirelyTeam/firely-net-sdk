@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -157,7 +157,8 @@ namespace Hl7.Fhir.Model
             /// Specific list of hints/warnings/errors
             /// </summary>
             [FhirElement("details", InSummary=true, Order=60)]
-            [References("OperationOutcome")]
+            [CLSCompliant(false)]
+			[References("OperationOutcome")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Details
             {
@@ -493,7 +494,8 @@ namespace Hl7.Fhir.Model
             /// Particular delivery destination within the destination
             /// </summary>
             [FhirElement("target", InSummary=true, Order=50)]
-            [References("Device")]
+            [CLSCompliant(false)]
+			[References("Device")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Target
             {
@@ -691,7 +693,8 @@ namespace Hl7.Fhir.Model
         /// The source of the data entry
         /// </summary>
         [FhirElement("enterer", InSummary=true, Order=140)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Enterer
         {
@@ -705,7 +708,8 @@ namespace Hl7.Fhir.Model
         /// The source of the decision
         /// </summary>
         [FhirElement("author", InSummary=true, Order=150)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
         {
@@ -719,7 +723,8 @@ namespace Hl7.Fhir.Model
         /// Intended "real-world" recipient for the data
         /// </summary>
         [FhirElement("receiver", InSummary=true, Order=160)]
-        [References("Practitioner","Organization")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Receiver
         {
@@ -733,7 +738,8 @@ namespace Hl7.Fhir.Model
         /// Final responsibility for event
         /// </summary>
         [FhirElement("responsible", InSummary=true, Order=170)]
-        [References("Practitioner","Organization")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Responsible
         {
@@ -760,7 +766,8 @@ namespace Hl7.Fhir.Model
         /// The actual content of the message
         /// </summary>
         [FhirElement("data", InSummary=true, Order=190)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Data

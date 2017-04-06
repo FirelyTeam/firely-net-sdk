@@ -19,11 +19,7 @@ using Hl7.Fhir.Rest;
 namespace Hl7.Fhir.Test.Serialization
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableFhirParserTests
-#else
 	public class FhirParserTests
-#endif    
     {
         [TestMethod]
         public void TestParseQueryFromUriParametersSimple()

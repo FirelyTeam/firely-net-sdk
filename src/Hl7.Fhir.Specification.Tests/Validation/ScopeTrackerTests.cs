@@ -1,4 +1,4 @@
-﻿using Hl7.ElementModel;
+﻿using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
@@ -40,23 +40,23 @@ namespace Hl7.Fhir.Validation
 
             var references = ReferenceHarvester.Harvest(cpNav);
             Assert.AreEqual(7, references.Count());
-            Assert.AreEqual("Bundle", cpNav.TypeName);      // should not have navigated somewhere else
+            Assert.AreEqual("Bundle", cpNav.Type);      // should not have navigated somewhere else
 
             // Get one of the entries with no contained resources, an Organization
             var orgNav = references.Single(r => r.Uri == "urn:uuid:04121321-4af5-424c-a0e1-ed3aab1c349d");
-            Assert.AreEqual("Organization", orgNav.Container.TypeName);
+            Assert.AreEqual("Organization", orgNav.Container.Type);
             var orgReferences = ReferenceHarvester.Harvest(orgNav.Container);
             Assert.AreEqual(0, orgReferences.Count());
-            Assert.AreEqual("Organization", orgNav.Container.TypeName);      // should not have navigated somewhere else
+            Assert.AreEqual("Organization", orgNav.Container.Type);      // should not have navigated somewhere else
 
             // Get one of the entries with contained resources, a Patient
             var patNav = references.First(r => r.Uri == "http://example.org/fhir/Patient/e");
-            Assert.AreEqual("Patient", patNav.Container.TypeName);
+            Assert.AreEqual("Patient", patNav.Container.Type);
             var patReferences = ReferenceHarvester.Harvest(patNav.Container);
             Assert.AreEqual(2, patReferences.Count());
             Assert.AreEqual("#orgX", patReferences.First().Uri);
 
-            Assert.AreEqual("Bundle", cpNav.TypeName);      // should not have navigated somewhere else
+            Assert.AreEqual("Bundle", cpNav.Type);      // should not have navigated somewhere else
         }
 
         [TestMethod]
@@ -71,22 +71,22 @@ namespace Hl7.Fhir.Validation
             var bundleScope = new Scope(cpNav, "http://somebase.org/fhir/Bundle/test");
 
             Assert.AreEqual(7, bundleScope.Children.Count());
-            Assert.AreEqual("Bundle", cpNav.TypeName);      // should not have navigated somewhere else
+            Assert.AreEqual("Bundle", cpNav.Type);      // should not have navigated somewhere else
 
             // Get one of the entries with no contained resources, an Organization
             var orgScope = bundleScope.ResolveChild("urn:uuid:04121321-4af5-424c-a0e1-ed3aab1c349d");
-            Assert.AreEqual("Organization", orgScope.Container.TypeName);
+            Assert.AreEqual("Organization", orgScope.Container.Type);
             Assert.AreEqual(0, orgScope.Children.Count());
-            Assert.AreEqual("Organization", orgScope.Container.TypeName);
-            Assert.AreEqual("Bundle", bundleScope.Container.TypeName);
+            Assert.AreEqual("Organization", orgScope.Container.Type);
+            Assert.AreEqual("Bundle", bundleScope.Container.Type);
 
             // Get one of the entries with contained resources, a Patient
             var patScope = bundleScope.ResolveChild("http://example.org/fhir/Patient/e");
-            Assert.AreEqual("Patient", patScope.Container.TypeName);
+            Assert.AreEqual("Patient", patScope.Container.Type);
             Assert.AreEqual(2, patScope.Children.Count());
             Assert.AreEqual("#orgX", patScope.Children.First().Uri);
 
-            Assert.AreEqual("Bundle", cpNav.TypeName);      // should not have navigated somewhere else
+            Assert.AreEqual("Bundle", cpNav.Type);      // should not have navigated somewhere else
         }
 
         [TestMethod]
@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Validation
             var tracker = new ScopeTracker();
             tracker.Enter(cpNav);
 
-            var entries = cpNav.GetChildrenByName("entry").GetChildrenByName("resource");
+            var entries = cpNav.Children("entry").Children("resource");
 
             int index = 0;
             foreach (var entry in entries)
@@ -110,19 +110,19 @@ namespace Hl7.Fhir.Validation
 
                 if (index == 6)
                 {
-                    var orgX = entry.GetChildrenByName("contained").First();
+                    var orgX = entry.Children("contained").First();
 
                     tracker.Enter(orgX);
                     Assert.AreEqual("http://example.org/fhir/Patient/e", tracker.ContextFullUrl(orgX));
-                    Assert.AreEqual("Bundle.entry[6].resource[0].contained[0]", tracker.ResourceContext(orgX).Path);
+                    Assert.AreEqual("Bundle.entry[6].resource[0].contained[0]", tracker.ResourceContext(orgX).Location);
                     tracker.Leave(orgX);
 
-                    var careProvRef = entry.GetChildrenByName("managingOrganization").GetChildrenByName("reference").Single();
-                    Assert.AreEqual("Bundle.entry[6].resource[0]", tracker.ResourceContext(careProvRef).Path);
+                    var careProvRef = entry.Children("managingOrganization").Children("reference").Single();
+                    Assert.AreEqual("Bundle.entry[6].resource[0]", tracker.ResourceContext(careProvRef).Location);
 
                     tracker.Enter(careProvRef);
-                    Assert.AreEqual("Bundle.entry[6].resource[0].contained[1]", tracker.Resolve(careProvRef, "#orgY").Path);
-                    Assert.AreEqual("Bundle.entry[2].resource[0]", tracker.Resolve(careProvRef, "http://example.org/fhir/Patient/a").Path);
+                    Assert.AreEqual("Bundle.entry[6].resource[0].contained[1]", tracker.Resolve(careProvRef, "#orgY").Location);
+                    Assert.AreEqual("Bundle.entry[2].resource[0]", tracker.Resolve(careProvRef, "http://example.org/fhir/Patient/a").Location);
                     tracker.Leave(careProvRef);
                 }
 
@@ -147,25 +147,25 @@ namespace Hl7.Fhir.Validation
             var tracker = new ScopeTracker();
             tracker.Enter(cpNav);
 
-            var entries = cpNav.GetChildrenByName("entry");
+            var entries = cpNav.Children("entry");
 
             var index = 0;
             foreach(var entry in entries)
             {
                 tracker.Enter(entry);
 
-                var resource = entry.GetChildrenByName("resource").First();
+                var resource = entry.Children("resource").First();
                 tracker.Enter(resource);
 
                 if(index == 2 || index == 3 || index == 4 || index == 6)
                 {
-                    var refr = resource.GetChildrenByName("managingOrganization").GetChildrenByName("reference").First();
+                    var refr = resource.Children("managingOrganization").Children("reference").First();
                     var res = tracker.Resolve(refr, refr.Value as string);
                     Assert.IsNotNull(res);
                 }
                 else if (index == 5)
                 {
-                    var refr = resource.GetChildrenByName("managingOrganization").GetChildrenByName("reference").First();
+                    var refr = resource.Children("managingOrganization").Children("reference").First();
                     var res = tracker.Resolve(refr, refr.Value as string);
                     Assert.IsNull(res);
                 }

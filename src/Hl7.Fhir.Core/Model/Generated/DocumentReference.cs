@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -130,7 +130,8 @@ namespace Hl7.Fhir.Model
             /// Target of the relationship
             /// </summary>
             [FhirElement("target", InSummary=true, Order=50)]
-            [References("DocumentReference")]
+            [CLSCompliant(false)]
+			[References("DocumentReference")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Target
@@ -305,7 +306,8 @@ namespace Hl7.Fhir.Model
             /// Context of the document  content
             /// </summary>
             [FhirElement("encounter", InSummary=true, Order=40)]
-            [References("Encounter")]
+            [CLSCompliant(false)]
+			[References("Encounter")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Encounter
             {
@@ -372,7 +374,8 @@ namespace Hl7.Fhir.Model
             /// Patient demographics from source
             /// </summary>
             [FhirElement("sourcePatientInfo", InSummary=true, Order=90)]
-            [References("Patient")]
+            [CLSCompliant(false)]
+			[References("Patient")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference SourcePatientInfo
             {
@@ -499,7 +502,8 @@ namespace Hl7.Fhir.Model
             /// Related Resource
             /// </summary>
             [FhirElement("ref", InSummary=true, Order=50)]
-            [References()]
+            [CLSCompliant(false)]
+			[References()]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Ref
             {
@@ -599,7 +603,8 @@ namespace Hl7.Fhir.Model
         /// Who/what is the subject of the document
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=110)]
-        [References("Patient","Practitioner","Group","Device")]
+        [CLSCompliant(false)]
+		[References("Patient","Practitioner","Group","Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -640,7 +645,8 @@ namespace Hl7.Fhir.Model
         /// Who and/or what authored the document
         /// </summary>
         [FhirElement("author", InSummary=true, Order=140)]
-        [References("Practitioner","Organization","Device","Patient","RelatedPerson")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Organization","Device","Patient","RelatedPerson")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Author
@@ -655,7 +661,8 @@ namespace Hl7.Fhir.Model
         /// Organization which maintains the document
         /// </summary>
         [FhirElement("custodian", InSummary=true, Order=150)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Custodian
         {
@@ -669,7 +676,8 @@ namespace Hl7.Fhir.Model
         /// Who/what authenticated the document
         /// </summary>
         [FhirElement("authenticator", InSummary=true, Order=160)]
-        [References("Practitioner","Organization")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Authenticator
         {

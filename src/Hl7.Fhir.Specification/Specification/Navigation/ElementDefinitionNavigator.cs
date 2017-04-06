@@ -11,8 +11,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
 using System.Diagnostics;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Navigation
 {
@@ -547,10 +547,11 @@ namespace Hl7.Fhir.Specification.Navigation
             get
             {
                 var output = new StringBuilder();
-                foreach (var elem in Elements)
-                {
-                    output.AppendFormat("{0}{1}\r\n", elem == Current ? "*" : "", elem.Path);
-                }
+                output.Append(Current.Path);
+                //foreach (var elem in Elements)
+                //{
+                //    output.AppendFormat("{0}{1}\r\n", elem == Current ? "*" : "", elem.Path);
+                //}
                 return output.ToString();
             }
         }

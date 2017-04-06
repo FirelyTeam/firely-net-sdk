@@ -4,9 +4,6 @@ using Hl7.Fhir.Model;
 using System.Linq;
 using Xunit;
 using Hl7.Fhir.Support;
-using Hl7.Fhir.FhirPath;
-using Hl7.Fhir.Specification.Navigation;
-using Hl7.ElementModel;
 
 namespace Hl7.Fhir.Validation
 {

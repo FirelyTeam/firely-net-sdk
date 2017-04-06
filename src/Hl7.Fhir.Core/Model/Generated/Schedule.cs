@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -85,7 +85,8 @@ namespace Hl7.Fhir.Model
         /// The resource this Schedule resource is providing availability information for. These are expected to usually be one of HealthcareService, Location, Practitioner, Device, Patient or RelatedPerson
         /// </summary>
         [FhirElement("actor", InSummary=true, Order=110)]
-        [References("Patient","Practitioner","RelatedPerson","Device","HealthcareService","Location")]
+        [CLSCompliant(false)]
+		[References("Patient","Practitioner","RelatedPerson","Device","HealthcareService","Location")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Actor

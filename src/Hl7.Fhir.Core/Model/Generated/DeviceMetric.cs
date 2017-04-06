@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -447,7 +447,8 @@ namespace Hl7.Fhir.Model
         /// Describes the link to the source Device
         /// </summary>
         [FhirElement("source", InSummary=true, Order=120)]
-        [References("Device")]
+        [CLSCompliant(false)]
+		[References("Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Source
         {
@@ -461,7 +462,8 @@ namespace Hl7.Fhir.Model
         /// Describes the link to the parent DeviceComponent
         /// </summary>
         [FhirElement("parent", InSummary=true, Order=130)]
-        [References("DeviceComponent")]
+        [CLSCompliant(false)]
+		[References("DeviceComponent")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Parent
         {

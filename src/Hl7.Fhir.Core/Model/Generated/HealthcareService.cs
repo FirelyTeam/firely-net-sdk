@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -531,7 +531,8 @@ namespace Hl7.Fhir.Model
         /// Organization that provides this service
         /// </summary>
         [FhirElement("providedBy", InSummary=true, Order=100)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference ProvidedBy
         {
@@ -572,7 +573,8 @@ namespace Hl7.Fhir.Model
         /// Location where service may be provided
         /// </summary>
         [FhirElement("location", InSummary=true, Order=130)]
-        [References("Location")]
+        [CLSCompliant(false)]
+		[References("Location")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Location
@@ -710,7 +712,8 @@ namespace Hl7.Fhir.Model
         /// Location(s) service is inteded for/available to
         /// </summary>
         [FhirElement("coverageArea", Order=190)]
-        [References("Location")]
+        [CLSCompliant(false)]
+		[References("Location")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> CoverageArea

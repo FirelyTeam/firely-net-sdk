@@ -100,10 +100,10 @@ namespace Hl7.Fhir.Model
         }
 
 
-        public Hl7.FhirPath.PartialDateTime? ToPartialDateTime()
+        public Primitives.PartialDateTime? ToPartialDateTime()
         {
             if (Value != null)
-                return PartialDateTime.Parse(Value);
+                return Primitives.PartialDateTime.Parse(Value);
             else
                 return null;
         }
@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Model
             if (aValue == null) return bValue == null;
             if (bValue == null) return false;
 
-            return PartialDateTime.Parse(a.Value) > PartialDateTime.Parse(b.Value);
+            return Primitives.PartialDateTime.Parse(a.Value) > Primitives.PartialDateTime.Parse(b.Value);
         }
 
         public static bool operator >=(FhirDateTime a, FhirDateTime b)
@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Model
             if (aValue == null) return bValue == null;
             if (bValue == null) return false;
 
-            return PartialDateTime.Parse(a.Value) >= PartialDateTime.Parse(b.Value);
+            return Primitives.PartialDateTime.Parse(a.Value) >= Primitives.PartialDateTime.Parse(b.Value);
         }
 
         public static bool operator <(FhirDateTime a, FhirDateTime b)
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model
             if (aValue == null) return bValue == null;
             if (bValue == null) return false;
 
-            return PartialDateTime.Parse(a.Value) < PartialDateTime.Parse(b.Value);
+            return Primitives.PartialDateTime.Parse(a.Value) < Primitives.PartialDateTime.Parse(b.Value);
         }
 
         public static bool operator <=(FhirDateTime a, FhirDateTime b)
@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Model
             if (aValue == null) return bValue == null;
             if (bValue == null) return false;
 
-            return PartialDateTime.Parse(a.Value) <= PartialDateTime.Parse(b.Value);
+            return Primitives.PartialDateTime.Parse(a.Value) <= Primitives.PartialDateTime.Parse(b.Value);
         }
 
         /// <summary>
@@ -193,8 +193,8 @@ namespace Hl7.Fhir.Model
 
                 if (this.Value == otherValue) return true; // Default reference/string comparison works in most cases
 
-                var left = PartialDateTime.Parse(Value);
-                var right = PartialDateTime.Parse(otherValue);
+                var left = Primitives.PartialDateTime.Parse(Value);
+                var right = Primitives.PartialDateTime.Parse(otherValue);
 
                 return left == right;
             }

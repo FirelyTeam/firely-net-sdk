@@ -10,6 +10,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -75,7 +76,8 @@ namespace Hl7.Fhir.Specification.Source
             if (type != null)
             {
                 var resourceType = EnumUtility.ParseLiteral<ResourceType>(type);
-                var uris = source.ListResourceUris(resourceType);
+                // for some reason there is an issue with this StructureDefinition (needs fixing)
+                var uris = source.ListResourceUris(resourceType).Where(u => u != "http://hl7.org/fhir/us/sdc/StructureDefinition/sdc-questionnaire");
                 return uris.Select(u => source.ResolveByCanonicalUri(u) as T).Where(r => r != null);
             }
             else

@@ -8,10 +8,11 @@
 
 using System;
 using Hl7.Fhir.Model;
-using Hl7.ElementModel;
 using Hl7.Fhir.Support;
 using System.Linq;
 using Hl7.Fhir.Specification.Navigation;
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Utility;
 
 // [WMR 20160907] TODO: Create unit tests to evaluate behavior for different kinds of errors, e.g.
 // - unresolved external (type/extension) profile
@@ -59,9 +60,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                 _name = elementDef.Name;
             }
             public string Name => _name;
-            public string Path => _path;
+            public string Location => _path;
 
-            public string TypeName => ModelInfo.FhirTypeToFhirTypeName(FHIRDefinedType.ElementDefinition); // _elemDef.TypeName;
+            public string Type => ModelInfo.FhirTypeToFhirTypeName(FHIRDefinedType.ElementDefinition); // _elemDef.TypeName;
 
             public object Value { get { throw new NotImplementedException(); } }
 
@@ -71,7 +72,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             public bool MoveToNext() { throw new NotImplementedException(); }
 
-            public override string ToString() => string.IsNullOrEmpty(Name) ? $"'{Path}'" : $"'{Path}' : '{Name}'";
+            public override string ToString() => string.IsNullOrEmpty(Name) ? $"'{Location}'" : $"'{Location}' : '{Name}'";
         }
 
         // static IElementNavigator ToNamedNode(ElementDefinition elementDef) => new ElementDefinitionNamedNode(elementDef);
@@ -99,7 +100,6 @@ namespace Hl7.Fhir.Specification.Snapshot
         // "Differential has a constraint on a choice element '{0}', but does so without using a type slice"
         // Differential specifies a constraint on a child element of a choice type element
         // This is not allowed if an element supports multiple element types; must use slicing!
-
         public static readonly Issue PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT = Issue.Create(10000, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
 
         void addIssueInvalidChoiceConstraint(ElementDefinition elementDef) { addIssue(CreateIssueInvalidChoiceConstraint(elementDef)); }

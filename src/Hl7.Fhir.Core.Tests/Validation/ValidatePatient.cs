@@ -21,16 +21,12 @@ using System.IO;
 namespace Hl7.Fhir.Tests.Validation
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableValidatePatient
-#else
 	public class ValidatePatient
-#endif    
     {
         [TestMethod]
         public void ValidateDemoPatient()
         {
-            var s = new StringReader(File.ReadAllText(@"TestData\TestPatient.xml"));
+            var s = new StringReader(TestDataHelper.ReadTestData(@"TestPatient.xml"));
 
             var patient = new FhirXmlParser().Parse<Patient>(XmlReader.Create(s));
 

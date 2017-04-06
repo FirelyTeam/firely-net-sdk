@@ -6,16 +6,15 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.ElementModel;
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Validation
 {
@@ -36,11 +35,11 @@ namespace Hl7.Fhir.Validation
 
             if (choices.Count() > 1)
             {
-                if (instance.TypeName != null)
+                if (instance.Type != null)
                 {
                     // This is a choice type, find out what type is present in the instance data
                     // (e.g. deceased[Boolean], or _resourceType in json). This is exposed by IElementNavigator.TypeName.
-                    var instanceType = ModelInfo.FhirTypeNameToFhirType(instance.TypeName);
+                    var instanceType = ModelInfo.FhirTypeNameToFhirType(instance.Type);
                     if (instanceType != null)
                     {
                         // In fact, the next statements are just an optimalization, without them, we would do an ANY validation
@@ -56,12 +55,12 @@ namespace Hl7.Fhir.Validation
                         else
                         {
                             var choiceList = String.Join(",", choices.Select(t => "'" + t.GetLiteral() + "'"));
-                            validator.Trace(outcome, $"Type specified in the instance ('{instance.TypeName}') is not one of the allowed choices ({choiceList})",
+                            validator.Trace(outcome, $"Type specified in the instance ('{instance.Type}') is not one of the allowed choices ({choiceList})",
                                      Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, instance);
                         }
                     }
                     else
-                        validator.Trace(outcome, $"Instance indicates the element is of type '{instance.TypeName}', which is not a known FHIR core type.",
+                        validator.Trace(outcome, $"Instance indicates the element is of type '{instance.Type}', which is not a known FHIR core type.",
                                 Issue.CONTENT_ELEMENT_CHOICE_INVALID_INSTANCE_TYPE, instance);
                 }
                 else
@@ -104,7 +103,7 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
-            var references = instance.GetChildrenByName("reference");
+            var references = instance.Children("reference");
             var reference = references.FirstOrDefault()?.Value as string;
 
             if (reference == null)       // No reference found -> this is always valid

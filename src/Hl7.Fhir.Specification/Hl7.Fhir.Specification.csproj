@@ -1,0 +1,65 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+  <PropertyGroup>
+    <TargetFrameworks>net45;netstandard1.3</TargetFrameworks>
+  </PropertyGroup>
+
+  <Import Project="..\platforms.props" />
+  <Import Project="..\fhir-net-api.props" />
+  <Import Project="..\fhir-net-api.targets" />
+
+  <PropertyGroup>
+    <PackageId>Hl7.Fhir.Specification.DSTU2</PackageId>
+    <Title>HL7 FHIR Specification support API for DSTU2</Title>
+    <Summary>Support for working with FHIR metadata and validation. Supports FHIR DSTU2 (1.0).</Summary>
+    <Description>This library offers additional support beyond core for HL7's FHIR standard (http://hl7.org/fhir). It contains functionality to working with FHIR's specification (meta)data such as profiles, profile-based validation and publication</Description>
+    <PackageTags>HL7 FHIR Profile Metadata Validation Publication Schematron Schema</PackageTags>
+    <AssemblyName>Hl7.Fhir.DSTU2.Specification</AssemblyName>
+    <RootNamespace>Hl7.Fhir.Specification</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hl7.Fhir.Support" Version="0.4.2-alpha4" />
+    <PackageReference Include="Hl7.FhirPath" Version="0.4.2-alpha4" />
+    <PackageReference Include="System.Net.Http" Version="4.3.1" />
+    <PackageReference Include="System.ValueTuple" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' != 'net45' ">
+    <PackageReference Include="System.ComponentModel" Version="4.3.0" />
+    <PackageReference Include="System.ComponentModel.Primitives" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.3.0" />
+    <PackageReference Include="System.Net.Requests" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.DSTU2.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <FhirConformance Include="data\*.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="install.ps1">
+      <Pack>true</Pack>
+      <PackagePath>tools</PackagePath>
+    </Content>
+    <Content Include="specification.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>true</Pack>
+      <PackagePath>content</PackagePath>
+    </Content>
+  </ItemGroup>
+ 
+  <Target Name="CreateSpecZip" Inputs="@(FhirConformance)" Outputs="specification.zip" BeforeTargets="Compile">
+    <Message Text="(Re)creating specification.zip" />
+    <CleanSpecFiles DirectoryName="data" />
+    <ZipDir ZipFileName="specification.zip" DirectoryName="data" />
+  </Target>
+
+ <Target Name="CleanSpecZip" AfterTargets="Clean">
+    <Delete Files="specification.zip" />
+  </Target>
+   
+</Project>

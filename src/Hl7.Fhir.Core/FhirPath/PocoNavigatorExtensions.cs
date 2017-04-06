@@ -34,6 +34,7 @@ namespace Hl7.Fhir.FhirPath
         {
             t.Add("hasValue", (ElementModel.IElementNavigator f) => f.HasValue(), doNullProp: false);
             t.Add("resolve", (ElementModel.IElementNavigator f) => f.Resolve(), doNullProp: false);
+            t.Add("htmlchecks", (ElementModel.IElementNavigator f) => f.HtmlChecks(), doNullProp: false);
 
             return t;
         }
@@ -49,6 +50,23 @@ namespace Hl7.Fhir.FhirPath
                 return false;
             if (focus.Value == null)
                 return false;
+            return true;
+        }
+
+        /// <summary>
+        /// Check if the node has a value, and not just extensions.
+        /// </summary>
+        /// <param name="focus"></param>
+        /// <returns></returns>
+        public static bool HtmlChecks(this ElementModel.IElementNavigator focus)
+        {
+            if (focus == null)
+                return false;
+            if (focus.Value == null)
+                return false;
+            // Perform the checking of the content for valid html content
+            var html = focus.Value.ToString();
+            // TODO: Perform the checking
             return true;
         }
 
@@ -117,9 +135,9 @@ namespace Hl7.Fhir.FhirPath
                 {
                     return new FhirString((string)result);
                 }
-                if (result is PartialDateTime)
+                if (result is Model.Primitives.PartialDateTime)
                 {
-                    var dt = (PartialDateTime)result;
+                    var dt = (Model.Primitives.PartialDateTime)result;
                     return new FhirDateTime(dt.ToUniversalTime());
                 }
                 else
