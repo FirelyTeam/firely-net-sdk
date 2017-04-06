@@ -546,12 +546,13 @@ namespace Hl7.Fhir.Specification.Navigation
         {
             get
             {
+                var elem = Current;
+                if (elem == null) { return "(not positioned)"; }
+
                 var output = new StringBuilder();
-                output.Append(Current.Path);
-                //foreach (var elem in Elements)
-                //{
-                //    output.AppendFormat("{0}{1}\r\n", elem == Current ? "*" : "", elem.Path);
-                //}
+                output.Append(elem.Path);
+                if (elem.Name != null) { output.Append(" : '" + elem.Name + "'"); }
+                if (elem.Slicing != null) { output.AppendFormat(" (slicing entry: {0})", string.Join(" | ", elem.Slicing.Discriminator)); }
                 return output.ToString();
             }
         }
