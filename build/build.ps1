@@ -480,11 +480,13 @@ function VSTests($build)
     {
        if ($appVeyor)
        {
-         & "$VSTest" $workingSourceDir\$testName\bin\Release\$finalDir\$testName.dll /Logger:Appveyor /TestCaseFilter:$testCaseFilter" | Out-Default  # TODO: Include LongRunners again.
+     #    & "$VSTest" $workingSourceDir\$testName\bin\Release\$finalDir\$testName.dll /Logger:Appveyor /TestCaseFilter:$testCaseFilter" | Out-Default  # TODO: Include LongRunners again.
+        & "$VSTest" $workingSourceDir\$testName\bin\Release\$finalDir\$testName.dll /Logger:Appveyor | Out-Default
        }
        else
        {
-         & "$VSTest" $workingSourceDir\$testName\bin\Release\$finalDir\$testName.dll /Logger:Trx /TestCaseFilter:$testCaseFilter" | Out-Default     # TODO: Find out why Trx logger is often not writing anything to file.
+    #     & "$VSTest" $workingSourceDir\$testName\bin\Release\$finalDir\$testName.dll /Logger:Trx /TestCaseFilter:$testCaseFilter" | Out-Default     # TODO: Find out why Trx logger is often not writing anything to file.
+         & "$VSTest" $workingSourceDir\$testName\bin\Release\$finalDir\$testName.dll /Logger:Trx  | Out-Default     # TODO: Find out why Trx logger is often not writing anything to file.
        }
     }
     catch {

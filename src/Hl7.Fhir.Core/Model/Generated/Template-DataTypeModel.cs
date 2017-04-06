@@ -1,7 +1,7 @@
 ﻿
 
 //
-// Model Generated on Thu, 02 Mar 2017 11:09:22 GMT for FHIR v1.0.2
+// Model Generated on Thu, 06 Apr 2017 14:42:13 GMT for FHIR v1.0.2
 //
 // Generated Shared Enumeration: ResourceType
 
@@ -59,6 +59,7 @@
 // Hl7.Fhir.Core\Model\Generated\FhirUri.cs
 // Hl7.Fhir.Core\Model\Generated\Oid.cs
 // Hl7.Fhir.Core\Model\Generated\Integer.cs
+// Hl7.Fhir.Core\Model\Generated\Xhtml.cs
 // Hl7.Fhir.Core\Model\Generated\FhirString.cs
 // Hl7.Fhir.Core\Model\Generated\Code.cs
 // Hl7.Fhir.Core\Model\Generated\FhirDateTime.cs

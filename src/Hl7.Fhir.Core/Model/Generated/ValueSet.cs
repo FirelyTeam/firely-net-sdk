@@ -2516,7 +2516,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent ValueSet_VSD_5 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("codeSystem or compose or expansion"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("codeSystem.exists() or compose.exists() or expansion.exists()"))},
             Key = "vsd-5",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Value set SHALL contain at least one of a codeSystem, a compose, or an expansion element",
@@ -2525,7 +2525,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent ValueSet_VSD_2 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("compose.import.count() != 1 or compose.include or compose.exclude or codeSystem"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("compose.import.count() != 1 or compose.include.exists() or compose.exclude.exists() or codeSystem.exists()"))},
             Key = "vsd-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "A value set with only one import SHALL also have an include and/or an exclude unless the value set includes and inline code system",
@@ -2552,7 +2552,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent ValueSet_VSD_1 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("compose.all(include or import)"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("compose.all(include.exists() or import.exists())"))},
             Key = "vsd-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "A value set composition SHALL have an include or an import",
@@ -2570,7 +2570,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent ValueSet_VSD_9 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("expansion.contains.all(code or abstract = 'true')"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("expansion.contains.all(code.exists() or (abstract = 'true'))"))},
             Key = "vsd-9",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Must have a code if not abstract",
@@ -2579,7 +2579,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent ValueSet_VSD_6 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("expansion.contains.all(code or display)"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("expansion.contains.all(code.exists() or display.exists())"))},
             Key = "vsd-6",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "SHALL have a code or a display",
@@ -2588,7 +2588,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent ValueSet_VSD_10 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("expansion.contains.all(code.empty() or system)"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("expansion.contains.all(code.empty() or system.exists())"))},
             Key = "vsd-10",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Must have a system if a code is present",
