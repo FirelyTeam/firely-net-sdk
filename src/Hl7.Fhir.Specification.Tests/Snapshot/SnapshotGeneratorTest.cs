@@ -4024,6 +4024,95 @@ namespace Hl7.Fhir.Specification.Tests
             var type = nav.Current.Type.First();
             Debug.Print($"{nav.Path} : {type.Code} - '{type.Profile.FirstOrDefault()}'");
         }
+
+        // [WMR 20170406] NEW
+        // Issue reported by Vadim
+        // Complex extension:   structure.cdstools-typedstage
+        // Referencing Profile: structure.cdstools-basecancer
+        // Profile defines constraints on child elements of the complex extension
+        // Snapshot generator adds slicing component to Condition.extension.extension.extension:type - WRONG!
+        [TestMethod]
+        public void TestProfileConstraintsOnComplexExtensionChildren()
+        {
+            var profile = _testResolver.FindStructureDefinition("https://MCKESSON-DOMAIN.VAR/fhir/StructureDefinition/cds-basecancer");
+            Assert.IsNotNull(profile);
+
+            dumpElements(profile.Differential.Element, "===== Differential =====");
+
+            StructureDefinition expanded = null;
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            _generator.PrepareElement += elementHandler;
+            try
+            {
+                generateSnapshotAndCompare(profile, out expanded);
+            }
+            finally
+            {
+                _generator.PrepareElement -= elementHandler;
+            }
+            dumpOutcome(_generator.Outcome);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            var elems = expanded.Snapshot.Element;
+            dumpElements(elems.Take(55), "===== Snapshot =====");
+
+            var nav = new ElementDefinitionNavigator(elems);
+            Assert.IsTrue(nav.MoveToFirstChild());
+            Assert.AreEqual("Condition", nav.Path);
+
+            // Condition.extension (slicing entry)
+            Assert.IsTrue(nav.MoveToChild("extension"));
+            Assert.IsNotNull(nav.Current.Slicing);
+            Assert.AreEqual("url", nav.Current.Slicing.Discriminator?.FirstOrDefault());
+            Assert.IsNull(nav.Current.Name);
+
+            // Condition.extension:typedStaging
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.AreEqual("typedStaging", nav.Current.Name);
+            Assert.IsNull(nav.Current.Slicing);
+
+            // Condition.extension:typedStaging.extension (slicing entry)
+            Assert.IsTrue(nav.MoveToChild("extension"));
+            Assert.IsNotNull(nav.Current.Slicing);
+            Assert.AreEqual("url", nav.Current.Slicing.Discriminator?.FirstOrDefault());
+            Assert.IsNull(nav.Current.Name);
+
+            // Condition.extension:typedStaging.extension:stage
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.AreEqual("stage", nav.Current.Name);
+            Assert.IsNull(nav.Current.Slicing);
+
+            // Condition.extension:typedStaging.extension:stage.extension (slicing entry)
+            Assert.IsTrue(nav.MoveToChild("extension"));
+            Assert.IsNotNull(nav.Current.Slicing);
+            Assert.AreEqual("url", nav.Current.Slicing.Discriminator?.FirstOrDefault());
+            Assert.IsNull(nav.Current.Name);
+
+            // Condition.extension:typedStaging.extension:stage.extension:summary
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.AreEqual("summary", nav.Current.Name);
+            Assert.IsNull(nav.Current.Slicing);
+
+            // Condition.extension:typedStaging.extension:stage.extension:assessment
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.AreEqual("assessment", nav.Current.Name);
+            Assert.IsNull(nav.Current.Slicing);
+
+            // Condition.extension:typedStaging.extension:stage.extension:type
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.AreEqual("type", nav.Current.Name);
+            Assert.IsNull(nav.Current.Slicing); // BUG!
+
+            // Condition.extension:typedStaging.extension:stage.extension:type.valueCodeableConcept
+            Assert.IsTrue(nav.MoveToChild("valueCodeableConcept"));
+            Assert.IsNotNull(nav.Current.Binding);
+            var valueSetReference = nav.Current.Binding.ValueSet as ResourceReference;
+            Assert.IsNotNull(valueSetReference);
+            Assert.AreEqual(BindingStrength.Required, nav.Current.Binding.Strength);
+            Assert.AreEqual("https://MCKESSON-DOMAIN.VAR/fhir/ValueSet/cds-cancerstagingtype", valueSetReference.Reference);
+        }
     }
 
 }
