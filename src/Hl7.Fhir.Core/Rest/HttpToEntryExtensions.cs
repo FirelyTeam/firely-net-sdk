@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Rest
         {
             if (!String.IsNullOrEmpty(response.ContentType))
             {
-				return System.Net.Http.Headers.MediaTypeHeaderValue.Parse(response.ContentType).MediaType;
+                return ContentType.GetMediaTypeFromHeaderValue(response.ContentType);
             }
             else
                 return null;
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Rest
 
             if (!String.IsNullOrEmpty(response.ContentType))
             {
-                var charset = System.Net.Http.Headers.MediaTypeHeaderValue.Parse(response.ContentType).CharSet;
+                var charset = ContentType.GetCharSetFromHeaderValue(response.ContentType);
 
                 if (!String.IsNullOrEmpty(charset))
                     result = Encoding.GetEncoding(charset);
