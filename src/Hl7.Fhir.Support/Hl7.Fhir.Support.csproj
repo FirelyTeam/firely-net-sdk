@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+  <PropertyGroup>
+    <TargetFrameworks>net45;netstandard1.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <Import Project="..\platforms.props" />
+  <Import Project="..\fhir-net-api.props" />
+  <Import Project="..\fhir-net-api.targets" />
+
+  <PropertyGroup>
+    <Version>$(SupportApiVersion)</Version>
+    <PackageId>Hl7.Fhir.Support</PackageId>
+    <Title>HL7 FHIR support library</Title>
+    <Summary>Common interfaces and classes used by all FHIR .NET assemblies</Summary>
+    <Description>Common interfaces and classes used by all FHIR .NET assemblies</Description>
+    <PackageTags>HL7;FHIR;Elements;Utility</PackageTags>
+    <AssemblyName>Hl7.Fhir.Support</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="System.ValueTuple" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System" />
+  </ItemGroup>
+</Project>

@@ -8,6 +8,7 @@
   <Import Project="..\fhir-net-api.targets" />
 
    <PropertyGroup>
+    <Version>$(FhirApiVersion)</Version>
     <PackageId>Hl7.Fhir.STU3</PackageId>
     <Title>HL7 FHIR Core support API for STU3</Title>	
     <Summary>Core .NET support for working with HL7 FHIR. Supports FHIR STU3 (3.0)</Summary>
@@ -17,20 +18,16 @@
     <RootNamespace>Hl7.Fhir</RootNamespace>
   </PropertyGroup>
  
-  <ItemGroup>
-    <Compile Remove="Rest\SystemNetMimeContentType.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Hl7.Fhir.Support" Version="0.4.2-alpha4" />
-    <PackageReference Include="Hl7.FhirPath" Version="0.4.2-alpha4" />
-    <PackageReference Include="System.Net.Http" Version="4.3.1" />
+  <ItemGroup>    
     <PackageReference Include="System.ValueTuple" Version="4.3.0" />
   </ItemGroup>
+
   <ItemGroup Condition=" '$(TargetFramework)' != 'net45' ">
     <PackageReference Include="System.ComponentModel" Version="4.3.0" />
     <PackageReference Include="System.ComponentModel.Primitives" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.3.0" />
+    <PackageReference Include="System.Net.Http" Version="4.3.1" />
     <PackageReference Include="System.Net.Requests" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
@@ -48,6 +45,10 @@
     <None Include="Model\Source\profiles-resources.xml" />
     <None Include="Model\Source\profiles-types.xml" />
     <None Include="Model\Source\search-parameters.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
+    <ProjectReference Include="..\Hl7.FhirPath\Hl7.FhirPath.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Parameters xmlns="http://hl7.org/fhir"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://hl7.org/fhir file:/C:/hl7/FHIR/current/build/schema/fhir-single.xsd">
+  <id value="example-gao-request-parameters-CT-head"/>
+  <parameter>
+    <name value="order"/>
+    <resource>
+      <Order>
+        <id value="example-gao-order"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/StructureDefinition/gao-order"/>
+        </meta>
+        <text>
+          <status value="generated"/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>A 50-year-old male is ordered a CT of the Head for his headache by an identified practitioner.</p>
+          </div>
+        </text>
+        <contained>
+          <Patient>
+            <id value="patient"/>
+            <meta>
+              <profile value="http://hl7.org/fhir/StructureDefinition/gao-patient"/>
+            </meta>
+            <gender value="male"/>
+            <birthDate value="1965-11-20"/>
+          </Patient>
+        </contained>
+        <contained>
+          <Practitioner>
+            <id value="practitioner"/>
+            <meta>
+              <profile value="http://hl7.org/fhir/StructureDefinition/gao-practitioner"/>
+            </meta>
+            <identifier>
+              <system value="http://hl7.org/fhir/sid/us-npi"/>
+              <value value="9999999999"/>
+            </identifier>
+          </Practitioner>
+        </contained>
+        <contained>
+          <DiagnosticOrder>
+            <id value="diagnosticorder"/>
+            <meta>
+              <profile value="http://hl7.org/fhir/StructureDefinition/gao-diagnosticorder"/>
+            </meta>
+            <subject>
+              <reference value="example-gao-order#patient"/>
+            </subject>
+            <orderer>
+              <reference value="example-gao-order#practitioner"/>
+            </orderer>
+            <item>
+              <code>
+                <coding>
+                  <system value="http://loinc.org"/>
+                  <code value="30799-1"/>
+                  <display value="Head CT WO contrast"/>
+                </coding>
+                <text value="CT Head without contrast"/>
+              </code>
+            </item>
+          </DiagnosticOrder>
+        </contained>
+        <identifier>
+          <system value="http://example.com/OrderIdentifier"/>
+          <value value="123"/>
+        </identifier>
+        <date value="2015-11-20"/>
+        <subject>
+          <reference value="#patient"/>
+        </subject>  
+        <source>
+          <reference value="#practitioner"/>
+        </source>   
+        <reasonCodeableConcept>
+          <coding>
+            <system value="http://example.com"/>
+            <code value="x"/>
+          </coding>
+          <text value="Headache"/>
+        </reasonCodeableConcept>        
+        <detail>
+          <reference value="#diagnosticorder"/>
+        </detail>
+      </Order>
+    </resource>
+  </parameter>
+</Parameters>
