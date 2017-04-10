@@ -14,6 +14,7 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 using System.Linq;
 using Hl7.Fhir.Serialization;
+using System.IO;
 
 namespace Hl7.FhirPath.Tests
 {
@@ -126,7 +127,7 @@ namespace Hl7.FhirPath.Tests
         [Fact]
         public void ReadsFromNav()
         {
-            var tpXml = TestData.ReadTextFile("fp-test-patient.xml");
+            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var nav = XmlDomFhirNavigator.Create(tpXml);
             var nodes = ElementNode.FromNavigator(nav);
             var nav2 = nodes.ToNavigator();

@@ -4,6 +4,7 @@ using Hl7.Fhir.Serialization;
 using Xunit;
 using Hl7.Fhir.Utility;
 using Xunit.Abstractions;
+using System.IO;
 
 namespace Hl7.FhirPath.Tests.JsonNavTests
 {
@@ -19,7 +20,7 @@ namespace Hl7.FhirPath.Tests.JsonNavTests
         [Fact]
         public void CanReadThroughNavigator()
         {
-            var tpJson = TestData.ReadTextFile("json-edge-cases.json");
+            var tpJson = File.ReadAllText(@"TestData\json-edge-cases.json");
 
             var patient = JsonDomFhirNavigator.Create(tpJson);
 
@@ -179,7 +180,7 @@ namespace Hl7.FhirPath.Tests.JsonNavTests
         [Fact]
         public void ProducesCorrectLocations()
         {
-            var tpJson = TestData.ReadTextFile("json-edge-cases.json");
+            var tpJson = File.ReadAllText(@"TestData\json-edge-cases.json");
 
             var patient = JsonDomFhirNavigator.Create(tpJson);
 
@@ -209,8 +210,8 @@ namespace Hl7.FhirPath.Tests.JsonNavTests
         [Fact]
         public void CompareJsonXmlParseOutcomes()
         {
-            var tpJson = TestData.ReadTextFile("json-edge-cases.json");
-            var tpXml = TestData.ReadTextFile("json-edge-cases.xml");
+            var tpJson = File.ReadAllText(@"TestData\json-edge-cases.json");
+            var tpXml = File.ReadAllText(@"TestData\json-edge-cases.xml");
             
             var navJson = JsonDomFhirNavigator.Create(tpJson);
             var navXml = XmlDomFhirNavigator.Create(tpXml);

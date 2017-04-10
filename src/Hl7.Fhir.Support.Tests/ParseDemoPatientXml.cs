@@ -1,6 +1,7 @@
 ﻿using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System.Diagnostics;
+using System.IO;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -18,7 +19,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         [Fact]
         public void CanReadThroughNavigator()
         {
-            var tpXml = TestData.ReadTextFile("fp-test-patient.xml");
+            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var nav = XmlDomFhirNavigator.Create(tpXml);
 
             Assert.Equal("Patient", nav.Name);
@@ -70,7 +71,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         [Fact]
         public void ProducesCorrectLocations()
         {
-            var tpXml = TestData.ReadTextFile("fp-test-patient.xml");
+            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var patient = XmlDomFhirNavigator.Create(tpXml);
 
             Assert.Equal("Patient", patient.Location);
@@ -103,8 +104,8 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         [Fact]
         public void CompareXmlJsonParseOutcomes()
         {
-            var tpXml = TestData.ReadTextFile("fp-test-patient.xml");
-            var tpJson = TestData.ReadTextFile("fp-test-patient.json");
+            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
+            var tpJson = File.ReadAllText(@"TestData\fp-test-patient.json");
             var navXml = XmlDomFhirNavigator.Create(tpXml);
             var navJson = JsonDomFhirNavigator.Create(tpJson);
 

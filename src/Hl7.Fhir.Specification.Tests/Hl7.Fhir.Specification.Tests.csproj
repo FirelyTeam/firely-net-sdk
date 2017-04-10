@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.DSTU2.csproj" />
     <ProjectReference Include="..\Hl7.Fhir.Specification\Hl7.Fhir.Specification.csproj" />
+    <ProjectReference Include="..\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
   </ItemGroup>
   <ItemGroup>
       <PackageReference Include="Hl7.Fhir.Support" Version="0.4.2-alpha4" />

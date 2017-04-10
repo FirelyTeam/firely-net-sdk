@@ -1,7 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp1.0</TargetFramework>
+    <TargetFramework>net452</TargetFramework>
   </PropertyGroup>
+
+  <Import Project="..\platforms.props" />
+  <Import Project="..\fhir-net-api.props" />
+  <Import Project="..\fhir-net-api.targets" />
+
+  <PropertyGroup>
+    <AssemblyName>Hl7.Fhir.Support.Tests</AssemblyName>
+    <ContainsTests>true</ContainsTests>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.1.12" />

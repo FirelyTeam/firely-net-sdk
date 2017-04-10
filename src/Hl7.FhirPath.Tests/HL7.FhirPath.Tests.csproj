@@ -1,7 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp1.0</TargetFramework>
+    <TargetFramework>net452</TargetFramework>
   </PropertyGroup>
+
+  <Import Project="..\platforms.props" />
+  <Import Project="..\fhir-net-api.props" />
+  <Import Project="..\fhir-net-api.targets" />
+
+  <PropertyGroup>
+    <AssemblyName>Hl7.FhirPath.Tests</AssemblyName>
+    <ContainsTests>true</ContainsTests>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.DSTU2.csproj" />
+    <ProjectReference Include="..\Hl7.FhirPath\Hl7.FhirPath.csproj" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.1.12" />
@@ -21,15 +36,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\fhir-net-api\src\Hl7.Fhir.Core\Hl7.Fhir.DSTU2.csproj" />
-    <ProjectReference Include="..\Hl7.FhirPath\Hl7.FhirPath.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="C:\Users\ewout\.nuget\packages\mstest.testadapter\1.1.12\build\netstandard1.0\..\_common\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll" Link="obj\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll" />
   </ItemGroup>
 </Project>
