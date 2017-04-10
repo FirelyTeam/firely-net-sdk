@@ -4034,7 +4034,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestProfileConstraintsOnComplexExtensionChildren()
         {
-            var profile = _testResolver.FindStructureDefinition("https://MCKESSON-DOMAIN.VAR/fhir/StructureDefinition/cds-basecancer");
+            var profile = _testResolver.FindStructureDefinition("https://example.org/fhir/StructureDefinition/cds-basecancer");
             Assert.IsNotNull(profile);
 
             dumpElements(profile.Differential.Element, "===== Differential =====");
@@ -4111,7 +4111,7 @@ namespace Hl7.Fhir.Specification.Tests
             var valueSetReference = nav.Current.Binding.ValueSet as ResourceReference;
             Assert.IsNotNull(valueSetReference);
             Assert.AreEqual(BindingStrength.Required, nav.Current.Binding.Strength);
-            Assert.AreEqual("https://MCKESSON-DOMAIN.VAR/fhir/ValueSet/cds-cancerstagingtype", valueSetReference.Reference);
+            Assert.AreEqual("https://example.org/fhir/ValueSet/cds-cancerstagingtype", valueSetReference.Reference);
         }
     }
 
