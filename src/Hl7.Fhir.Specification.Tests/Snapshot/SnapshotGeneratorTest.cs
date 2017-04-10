@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             dumpOutcome(_generator.Outcome);
             // dumpBasePaths(expanded);
-            dumpElements(expanded.Snapshot.Element);
+            expanded.Snapshot.Element.Dump();
         }
 
         [TestMethod]
@@ -1831,8 +1831,8 @@ namespace Hl7.Fhir.Specification.Tests
             var baseDef = e.BaseElement;
             var baseStruct = e.BaseStructure;
             elem.AddAnnotation(new BaseDefAnnotation(baseDef));
-            Debug.Write("[SnapshotElementHandler] #{0} '{1}' - Base: #{2} '{3}' - Base Structure '{4}'".FormatWith(elem.GetHashCode(), elem.Path, baseDef != null ? baseDef.GetHashCode() : 0, baseDef != null ? baseDef.Path : null, baseStruct != null ? baseStruct.Url : null));
-            Debug.WriteLine(ann != null && ann.BaseElementDefinition != null ? " (old Base: #{0} '{1}')".FormatWith(ann.BaseElementDefinition.GetHashCode(), ann.BaseElementDefinition.Path) : "");
+            Debug.Write($"[{nameof(SnapshotGeneratorTest)}.{nameof(elementHandler)}] #{elem.GetHashCode()} '{elem.Path}' - Base: #{baseDef?.GetHashCode() ?? 0} '{(baseDef?.Path)}' - Base Structure '{baseStruct?.Url}'");
+            Debug.WriteLine(ann?.BaseElementDefinition != null ? $" (old Base: #{ann.BaseElementDefinition.GetHashCode()} '{ann.BaseElementDefinition.Path}')" : "");
         }
 
         void constraintHandler(object sender, SnapshotConstraintEventArgs e)
@@ -1840,7 +1840,6 @@ namespace Hl7.Fhir.Specification.Tests
             var elem = e.Element as ElementDefinition;
             if (elem != null)
             {
-                // var changed = elem.GetChangedByDiff() == true;
                 var changed = elem.IsConstrainedByDiff();
                 Debug.Assert(!_settings.GenerateAnnotationsOnConstraints || changed);
                 Debug.Print("[SnapshotConstraintHandler] #{0} '{1}'{2}".FormatWith(elem.GetHashCode(), elem.Path, changed ? " CHANGED!" : null));
@@ -2492,26 +2491,6 @@ namespace Hl7.Fhir.Specification.Tests
             }
         };
 
-        [Conditional("DEBUG")]
-        void dumpElements(IEnumerable<ElementDefinition> elements, string header = null) => dumpElements(elements.ToList(), header);
-
-        [Conditional("DEBUG")]
-        void dumpElements(List<ElementDefinition> elements, string header = null)
-        {
-            Debug.WriteLineIf(!string.IsNullOrEmpty(header), header);
-            for (int i = 0; i < elements.Count; i++)
-            {
-                var elem = elements[i];
-                Debug.Write(elem.Path);
-                Debug.WriteIf(elem.Name != null, " '" + elem.Name + "'");
-                if (elem.Slicing != null)
-                {
-                    Debug.Write(" => sliced on: " + string.Join(" | ", elem.Slicing.Discriminator));
-                }
-                Debug.WriteLine("");
-            }
-        }
-
         [TestMethod]
         public void TestTypeSlicing()
         {
@@ -2527,7 +2506,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
 
-            dumpElements(expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Observation.value")), "[1] Observation.value slice:");
+            expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Observation.value")).Dump("[1] Observation.value slice:");
 
             var nav = new ElementDefinitionNavigator(expanded);
             Assert.IsTrue(nav.MoveToFirstChild());
@@ -2553,7 +2532,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
 
-            dumpElements(expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Observation.value")), "[2] Observation.value slice:");
+            expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Observation.value")).Dump("[2] Observation.value slice:");
 
             nav = new ElementDefinitionNavigator(expanded);
             Assert.IsTrue(nav.MoveToFirstChild());
@@ -2583,7 +2562,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
 
-            dumpElements(expanded.Snapshot.Element);
+            expanded.Snapshot.Element.Dump();
         }
 
         [TestMethod]
@@ -2668,7 +2647,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
 
-            dumpElements(expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Observation.value")), "[1] Observation.value reslice:");
+            expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Observation.value")).Dump("[1] Observation.value reslice:");
 
             var nav = new ElementDefinitionNavigator(expanded);
             Assert.IsTrue(nav.MoveToFirstChild());
@@ -2724,7 +2703,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
 
-            dumpElements(expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Observation.value")), "Observation.value choice type constraint:");
+            expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Observation.value")).Dump("Observation.value choice type constraint:");
 
             var nav = new ElementDefinitionNavigator(expanded);
             Assert.IsTrue(nav.MoveToFirstChild());
@@ -2759,7 +2738,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
 
-            dumpElements(expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Observation.value")), "Observation.value choice type constraint:");
+            expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Observation.value")).Dump("Observation.value choice type constraint:");
             var outcome = _generator.Outcome;
             dumpOutcome(outcome);
 
@@ -2837,7 +2816,7 @@ namespace Hl7.Fhir.Specification.Tests
             generateSnapshotAndCompare(sd, out expanded);
 
             dumpOutcome(_generator.Outcome);
-            dumpElements(expanded.Snapshot.Element);
+            expanded.Snapshot.Element.Dump();
 
             // Verify that the snapshot includes the merged children of the slice entry element
             var verifier = new ElementVerifier(expanded, _settings);
@@ -2887,7 +2866,7 @@ namespace Hl7.Fhir.Specification.Tests
             dumpOutcome(_generator.Outcome);
 
             var elems = expanded.Snapshot.Element;
-            dumpElements(elems);
+            elems.Dump();
             dumpBaseElems(elems);
 
             // Verify that the snapshot contains three extension elements 
@@ -2993,7 +2972,7 @@ namespace Hl7.Fhir.Specification.Tests
             dumpOutcome(_generator.Outcome);
 
             var elems = expanded.Snapshot.Element;
-            dumpElements(elems);
+            elems.Dump();
             //dumpBaseElems(elems);
 
             // TODO: Verify slice
@@ -3157,7 +3136,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(1, _generator.Outcome.Issue.Count);
             assertIssue(_generator.Outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_PROFILE_TYPE);
 
-            dumpElements(expanded.Snapshot.Element);
+            expanded.Snapshot.Element.Dump();
         }
 
         // Verify extension constraint on choice type element w/o type slice
@@ -3173,7 +3152,7 @@ namespace Hl7.Fhir.Specification.Tests
             dumpOutcome(_generator.Outcome);
 
             Assert.IsTrue(expanded.HasSnapshot);
-            dumpElements(expanded.Snapshot.Element);
+            expanded.Snapshot.Element.Dump();
 
             // Verify that the snapshot contains the extension on Procedure.request (w/o type slice)
             assertContainsElement(expanded.Snapshot, "Procedure.request.extension", "RequestedBy");
@@ -3271,7 +3250,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var identifierConstraints = expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Patient.identifier"));
 
-            dumpElements(identifierConstraints, "Constraints on Patient.identifier:");
+            identifierConstraints.Dump("Constraints on Patient.identifier:");
 
             var corePatientProfile = _testResolver.FindStructureDefinition(profile.Base);
             Assert.IsNotNull(corePatientProfile);
@@ -3424,7 +3403,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var identifierConstraints = expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Patient.identifier"));
 
-            dumpElements(identifierConstraints, "Constraints on Patient.identifier:");
+            identifierConstraints.Dump("Constraints on Patient.identifier:");
 
             var nationalPatientProfile = resolver.FindStructureDefinition(profile.Base);
             Assert.IsNotNull(nationalPatientProfile);
@@ -3593,7 +3572,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var identifierConstraints = expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Patient.identifier"));
 
-            dumpElements(identifierConstraints, "Constraints on Patient.identifier:");
+            identifierConstraints.Dump("Constraints on Patient.identifier:");
 
             var nationalPatientProfile = resolver.FindStructureDefinition(profile.Base);
             Assert.IsNotNull(nationalPatientProfile);
@@ -3700,7 +3679,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
 
-            dumpElements(expanded.Snapshot.Element);
+            expanded.Snapshot.Element.Dump();
 
             var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
             Assert.IsTrue(nav.MoveToFirstChild());
@@ -3860,7 +3839,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(expanded.HasSnapshot);
 
             var elems = expanded.Snapshot.Element;
-            dumpElements(elems);
+            elems.Dump();
 
             var elem = elems.FirstOrDefault(e => e.Path == "MedicationStatement.informationSource");
             Assert.IsNotNull(elem);
@@ -3939,7 +3918,7 @@ namespace Hl7.Fhir.Specification.Tests
             var nav = ElementDefinitionNavigator.ForDifferential(profile);
             Assert.IsTrue(nav.MoveToFirstChild());
             var result = _generator.ExpandElement(nav);
-            dumpElements(profile.Differential.Element);
+            profile.Differential.Element.Dump();
             dumpOutcome(_generator.Outcome);
             Assert.IsTrue(result);
 
@@ -3998,7 +3977,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
-            dumpElements(expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Observation.value")));
+            expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Observation.value")).Dump();
             dumpOutcome(_generator.Outcome);
 
             // Force expansion of Observation.valueQuantity
@@ -4037,7 +4016,7 @@ namespace Hl7.Fhir.Specification.Tests
             var profile = _testResolver.FindStructureDefinition("https://example.org/fhir/StructureDefinition/cds-basecancer");
             Assert.IsNotNull(profile);
 
-            dumpElements(profile.Differential.Element, "===== Differential =====");
+            profile.Differential.Element.Dump("===== Differential =====");
 
             StructureDefinition expanded = null;
             _generator = new SnapshotGenerator(_testResolver, _settings);
@@ -4056,7 +4035,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(expanded.HasSnapshot);
 
             var elems = expanded.Snapshot.Element;
-            dumpElements(elems.Take(55), "===== Snapshot =====");
+            elems.Take(55).Dump("===== Snapshot =====");
 
             var nav = new ElementDefinitionNavigator(elems);
             Assert.IsTrue(nav.MoveToFirstChild());
@@ -4108,10 +4087,21 @@ namespace Hl7.Fhir.Specification.Tests
             // Condition.extension:typedStaging.extension:stage.extension:type.valueCodeableConcept
             Assert.IsTrue(nav.MoveToChild("valueCodeableConcept"));
             Assert.IsNotNull(nav.Current.Binding);
+            Assert.AreEqual(BindingStrength.Required, nav.Current.Binding.Strength);
             var valueSetReference = nav.Current.Binding.ValueSet as ResourceReference;
             Assert.IsNotNull(valueSetReference);
-            Assert.AreEqual(BindingStrength.Required, nav.Current.Binding.Strength);
             Assert.AreEqual("https://example.org/fhir/ValueSet/cds-cancerstagingtype", valueSetReference.Reference);
+
+            // [WMR 20170410] Also verify the generated base element reference
+            var baseElem = nav.Current.Annotation<BaseDefAnnotation>()?.BaseElementDefinition;
+            Assert.IsNotNull(baseElem);
+            Assert.AreEqual(baseElem.Path, nav.Current.Path);
+            // ElementDefinition.Binding.Strength is constrained
+            // ElementDefinition.Binding.ValueSet is inherited
+            Assert.IsNotNull(baseElem.Binding);
+            Assert.AreEqual(BindingStrength.Preferred, baseElem.Binding.Strength);
+            var baseValueSetReference = baseElem.Binding.ValueSet as ResourceReference;
+            Assert.IsTrue(valueSetReference.IsExactly(baseValueSetReference));
         }
     }
 
