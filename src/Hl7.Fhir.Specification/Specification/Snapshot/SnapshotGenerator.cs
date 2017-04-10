@@ -854,7 +854,9 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                     // [WMR 20160902] Initialize empty ElementDefinition.Base components if necessary
                     // [WMR 20160906] Always regenerate! Cannot reuse cloned base components
-                    elem.EnsureBaseComponent(typeElem, true);
+                    // [WMR 20170410] WRONG! Assign elem.Base, not typeElem.Base!
+                    // elem.EnsureBaseComponent(typeElem, true);
+                    elem.EnsureBaseComponent(elem, true);
 
                     OnPrepareElement(elem, typeStructure, typeElem);
                 }
