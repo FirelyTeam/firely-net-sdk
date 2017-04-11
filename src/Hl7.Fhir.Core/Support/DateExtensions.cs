@@ -80,13 +80,13 @@ namespace Hl7.Fhir.Support
 
         public static string ToFhirDateTime(this System.DateTime me)
         {
-            return me.ToString("yyyy-MM-ddTHH:mm:ss.sss");
+            return me.ToString("yyyy-MM-ddTHH:mm:ss.ssszzz");
         }
 
         public static string ToFhirDateTime(this System.DateTime? me)
         {
             if (me.HasValue)
-                return me.Value.ToString("yyyy-MM-ddTHH:mm:ss.sss");
+                return me.Value.ToString("yyyy-MM-ddTHH:mm:ss.ssszzz");
             return null;
         }
     }
