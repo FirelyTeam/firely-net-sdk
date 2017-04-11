@@ -2316,7 +2316,11 @@
 		<element>
 			<path value="Patient.identifier" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
+				<discriminator>
+          <type value="value" />
+          <!-- [WMR 20170411] Fixed -->
+          <path value="system" />
+        </discriminator>
 				<rules value="open" />
 			</slicing>
 			<short value="An identifier for this patient" />
@@ -4788,7 +4792,11 @@
 		<element>
 			<path value="Patient.name" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
+				<discriminator>
+          <type value="value" />
+          <!-- [WMR 20170411] Fixed -->
+          <path value="use" />
+        </discriminator>
 				<rules value="open" />
 			</slicing>
 			<short value="A name associated with the patient" />
@@ -5707,8 +5715,16 @@
 		<element>
 			<path value="Patient.telecom" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
-				<discriminator><type value="value" /><path value="" /></discriminator>
+				<discriminator>
+          <type value="value" />
+          <!-- [WMR 20170411] Fixed -->
+          <path value="system" />
+        </discriminator>
+				<discriminator>
+          <type value="value" />
+          <!-- [WMR 20170411] Fixed -->
+          <path value="use" />
+        </discriminator>
 				<rules value="open" />
 			</slicing>
 			<short value="A contact detail for the individual" />
@@ -9130,10 +9146,16 @@
 				<map value="n/a" />
 			</mapping>
 		</element>
-		<element>
+
+    <!-- [WMR 20170411] TODO: Element is obsolete... -->
+    <element>
 			<path value="Patient.careProvider" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
+				<discriminator>
+          <!-- [WMR 20170411] Fixed -->
+          <type value="type" />
+          <path value="" />
+        </discriminator>
 				<rules value="open" />
 			</slicing>
 			<short value="Patient's nominated primary care provider" />
@@ -9188,7 +9210,11 @@
 			<path value="Patient.careProvider" />
 			<sliceName value="organizationCare" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
+				<discriminator>
+          <type value="value" />
+          <!-- [WMR 20170411] TODO -->
+          <path value="" />
+        </discriminator>
 				<rules value="open" />
 			</slicing>
 			<short value="Care providers that are organizations." />
@@ -9636,7 +9662,10 @@
 		<element>
 			<path value="Patient.identifier" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
+				<discriminator>
+          <type value="value" />
+          <path value="" />
+        </discriminator>
 				<rules value="open" />
 			</slicing>
 			<max value="2" />

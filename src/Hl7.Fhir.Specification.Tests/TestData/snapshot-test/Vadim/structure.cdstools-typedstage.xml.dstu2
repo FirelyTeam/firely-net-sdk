@@ -13,7 +13,7 @@
 
     </div>
   </text>
-  <url value="https://MCKESSON-DOMAIN.VAR/fhir/StructureDefinition/cds-typedstage"/>
+  <url value="https://example.org/fhir/StructureDefinition/cds-typedstage"/>
   <name value="CDS Typed Stage"/>
   <status value="draft"/>
   <date value="2017-04-03T00:00:00+02:00"/>
@@ -232,7 +232,7 @@
         <strength value="preferred"/>
         <description value="Possible types of cancer stage assessment (e.g. clinical, pathological)"/>
         <valueSetReference>
-          <reference value="https://MCKESSON-DOMAIN.VAR/fhir/ValueSet/cds-cancerstagingtype"/>
+          <reference value="https://example.org/fhir/ValueSet/cds-cancerstagingtype"/>
         </valueSetReference>
       </binding>
     </element>
@@ -276,7 +276,7 @@
       <min value="0"/>
 	  -->
 	  <min value="1"/>
-      <fixedUri value="https://MCKESSON-DOMAIN.VAR/fhir/StructureDefinition/cds-typedstage"/>
+      <fixedUri value="https://example.org/fhir/StructureDefinition/cds-typedstage"/>
       <maxLength value="0"/>
       <mustSupport value="false"/>
       <isModifier value="false"/>

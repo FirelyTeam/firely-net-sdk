@@ -32,7 +32,10 @@
 	<kind value="resource" />
 	<type value="Patient" />
 	<abstract value="false" />
+  <!-- [WMR 20170411] Fixed
 	<baseDefinition value="http://example.com/fhir/SD/patient-with-extensions" />
+  -->
+  <baseDefinition value="http://example.com/fhir/StructureDefinition/patient-with-extensions" />
 	<snapshot>
 		<element>
 			<path value="Patient" />

@@ -1387,7 +1387,10 @@
       </base>
       <type>
         <code value="Extension" />
+        <!-- [WMR 20170411] Fixed
         <profile value="http://hl7.org/fhir/StructureDefinition/us-core-religion" />
+        -->
+        <profile value="http://hl7.org/fhir/StructureDefinition/patient-religion" />
       </type>
       <condition value="ele-1" />
       <constraint>
@@ -3862,7 +3865,10 @@
       <label value="Patient Religion" />
       <type>
         <code value="Extension" />
+        <!-- [WMR 20170411] Fixed
         <profile value="http://hl7.org/fhir/StructureDefinition/us-core-religion" />
+        -->
+        <profile value="http://hl7.org/fhir/StructureDefinition/patient-religion" />
       </type>
     </element>
     <element id="Patient.extension:researchAuth">

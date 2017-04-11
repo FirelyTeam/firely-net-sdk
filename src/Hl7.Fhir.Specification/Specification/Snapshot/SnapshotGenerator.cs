@@ -241,16 +241,26 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // [WMR 20160902] Rebase the cloned base profile (e.g. DomainResource)
                 if (!structure.IsConstraint)
                 {
-                    var rootElem = differential.Element.FirstOrDefault();
-                    if (rootElem != null)
+                    // [WMR 20170411] Updated for STU3 - root element is no longer required/ensured
+                    // => Derive from StructureDefinition.type property
+                    var rootPath = structure.Type;
+                    if (string.IsNullOrEmpty(rootPath))
                     {
-                        if (!rootElem.IsRootElement())
-                        {
-                            // Fatal error...
-                            throw Error.Argument(nameof(structure), $"Invalid argument. The specified StructureDefinition defines a new model (not a constraint on another profile), but the differential component does not start at the root element definition.");
-                        }
-                        snapshot.Rebase(rootElem.Path);
+                        // Fatal error...
+                        throw Error.Argument(nameof(structure), $"Invalid argument. The StructureDefinition.type property value is empty or missing.");
                     }
+                    snapshot.Rebase(rootPath);
+
+                    //var rootElem = differential.Element.FirstOrDefault();
+                    //if (rootElem != null)
+                    //{
+                    //    if (!rootElem.IsRootElement())
+                    //    {
+                    //        // Fatal error...
+                    //        throw Error.Argument(nameof(structure), $"Invalid argument. The specified StructureDefinition defines a new model (not a constraint on another profile), but the differential component does not start at the root element definition.");
+                    //    }
+                    //    snapshot.Rebase(rootElem.Path);
+                    //}
                 }
 
                 // Ensure that ElementDefinition.Base components in base StructureDef are propertly initialized
