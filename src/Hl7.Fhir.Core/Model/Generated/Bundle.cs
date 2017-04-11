@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -299,11 +299,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // LinkComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (RelationElement != null) yield return RelationElement;
                     if (UrlElement != null) yield return UrlElement;
                 }
@@ -369,7 +365,8 @@ namespace Hl7.Fhir.Model
             /// A resource in the bundle
             /// </summary>
             [FhirElement("resource", InSummary=true, Order=60, Choice=ChoiceType.ResourceChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
             [DataMember]
             public Hl7.Fhir.Model.Resource Resource
             {
@@ -480,11 +477,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // EntryComponent elements
+                    foreach (var item in base.Children) yield return item;
                     foreach (var elem in Link) { if (elem != null) yield return elem; }
                     if (FullUrlElement != null) yield return FullUrlElement;
                     if (Resource != null) yield return Resource;
@@ -618,11 +611,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // SearchComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (ModeElement != null) yield return ModeElement;
                     if (ScoreElement != null) yield return ScoreElement;
                 }
@@ -894,11 +883,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // RequestComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (MethodElement != null) yield return MethodElement;
                     if (UrlElement != null) yield return UrlElement;
                     if (IfNoneMatchElement != null) yield return IfNoneMatchElement;
@@ -1103,11 +1088,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ResponseComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (StatusElement != null) yield return StatusElement;
                     if (LocationElement != null) yield return LocationElement;
                     if (EtagElement != null) yield return EtagElement;
@@ -1359,12 +1340,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// Bundle elements
+                foreach (var item in base.Children) yield return item;
 				if (TypeElement != null) yield return TypeElement;
 				if (TotalElement != null) yield return TotalElement;
 				foreach (var elem in Link) { if (elem != null) yield return elem; }

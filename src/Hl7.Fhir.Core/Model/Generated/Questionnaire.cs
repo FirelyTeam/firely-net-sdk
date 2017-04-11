@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -456,11 +456,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // GroupComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (LinkIdElement != null) yield return LinkIdElement;
                     if (TitleElement != null) yield return TitleElement;
                     foreach (var elem in Concept) { if (elem != null) yield return elem; }
@@ -660,7 +656,8 @@ namespace Hl7.Fhir.Model
             /// Valueset containing permitted answers
             /// </summary>
             [FhirElement("options", Order=100)]
-            [References("ValueSet")]
+            [CLSCompliant(false)]
+			[References("ValueSet")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Options
             {
@@ -769,11 +766,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // QuestionComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (LinkIdElement != null) yield return LinkIdElement;
                     foreach (var elem in Concept) { if (elem != null) yield return elem; }
                     if (TextElement != null) yield return TextElement;
@@ -1107,17 +1100,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// DomainResource elements
-				if (Text != null) yield return Text;
-				foreach (var elem in Contained) { if (elem != null) yield return elem; }
-				foreach (var elem in Extension) { if (elem != null) yield return elem; }
-				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-				// Questionnaire elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (VersionElement != null) yield return VersionElement;
 				if (StatusElement != null) yield return StatusElement;

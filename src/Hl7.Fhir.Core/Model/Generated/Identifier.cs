@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -210,7 +210,8 @@ namespace Hl7.Fhir.Model
         /// Organization that issued id (may be just text)
         /// </summary>
         [FhirElement("assigner", InSummary=true, Order=80)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Assigner
         {
@@ -282,9 +283,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                // Element elements
-                foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                // Identifier elements
+                foreach (var item in base.Children) yield return item;
                 if (UseElement != null) yield return UseElement;
                 if (Type != null) yield return Type;
                 if (SystemElement != null) yield return SystemElement;

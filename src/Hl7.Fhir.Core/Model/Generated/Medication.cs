@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -154,11 +154,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ProductComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Form != null) yield return Form;
                     foreach (var elem in Ingredient) { if (elem != null) yield return elem; }
                     foreach (var elem in Batch) { if (elem != null) yield return elem; }
@@ -179,7 +175,8 @@ namespace Hl7.Fhir.Model
             /// The product contained
             /// </summary>
             [FhirElement("item", Order=40)]
-            [References("Substance","Medication")]
+            [CLSCompliant(false)]
+			[References("Substance","Medication")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Item
@@ -253,11 +250,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // IngredientComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Item != null) yield return Item;
                     if (Amount != null) yield return Amount;
                 }
@@ -387,11 +380,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // BatchComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (LotNumberElement != null) yield return LotNumberElement;
                     if (ExpirationDateElement != null) yield return ExpirationDateElement;
                 }
@@ -484,11 +473,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // PackageComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Container != null) yield return Container;
                     foreach (var elem in Content) { if (elem != null) yield return elem; }
                 }
@@ -508,7 +493,8 @@ namespace Hl7.Fhir.Model
             /// A product in the package
             /// </summary>
             [FhirElement("item", Order=40)]
-            [References("Medication")]
+            [CLSCompliant(false)]
+			[References("Medication")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Item
@@ -582,11 +568,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ContentComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Item != null) yield return Item;
                     if (Amount != null) yield return Amount;
                 }
@@ -644,7 +626,8 @@ namespace Hl7.Fhir.Model
         /// Manufacturer of the item
         /// </summary>
         [FhirElement("manufacturer", InSummary=true, Order=110)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Manufacturer
         {
@@ -745,17 +728,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// DomainResource elements
-				if (Text != null) yield return Text;
-				foreach (var elem in Contained) { if (elem != null) yield return elem; }
-				foreach (var elem in Extension) { if (elem != null) yield return elem; }
-				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-				// Medication elements
+                foreach (var item in base.Children) yield return item;
 				if (Code != null) yield return Code;
 				if (IsBrandElement != null) yield return IsBrandElement;
 				if (Manufacturer != null) yield return Manufacturer;

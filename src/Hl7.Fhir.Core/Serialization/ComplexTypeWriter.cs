@@ -9,6 +9,7 @@
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
@@ -42,7 +43,7 @@ namespace Hl7.Fhir.Serialization
 
         internal void Serialize(ClassMapping mapping, object instance, Rest.SummaryType summary, SerializationMode mode = SerializationMode.AllMembers)
         {
-            if (mapping == null) throw Error.ArgumentNull("mapping");
+            if (mapping == null) throw Error.ArgumentNull(nameof(mapping));
 
             _writer.WriteStartComplexContent();
 
@@ -135,21 +136,12 @@ namespace Hl7.Fhir.Serialization
             Type serializationType = value.GetType();
             if (!prop.IsPrimitive && false)
             {
-#if PORTABLE45
                 Type baseType = serializationType.GetTypeInfo().BaseType;
                 while (baseType != typeof(Element) && baseType != typeof(object))
                 {
                     serializationType = baseType;
                     baseType = baseType.GetTypeInfo().BaseType;
                 }
-#else
-                Type baseType = serializationType.BaseType;
-                while (baseType != typeof(Element) && baseType != typeof(object))
-                {
-                    serializationType = baseType;
-                    baseType = baseType.BaseType;
-                }
-#endif
             }
 
             return serializationType;

@@ -15,10 +15,11 @@ using System.IO;
 using Hl7.Fhir.Serialization;
 using System.Xml;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Source
 {
-#if !PORTABLE45
+#if NET_FILESYSTEM
     /// <summary>
     /// Reads FHIR artifacts (Profiles, ValueSets, ...) from directories with individual files
     /// </summary>
@@ -42,7 +43,7 @@ namespace Hl7.Fhir.Specification.Source
 
         public DirectorySource(string contentDirectory, bool includeSubdirectories = false)
         {
-            if (contentDirectory == null) throw Error.ArgumentNull("contentDirectory");
+            if (contentDirectory == null) throw Error.ArgumentNull(nameof(contentDirectory));
 
             _contentDirectory = contentDirectory;
             _includeSubs = includeSubdirectories;
@@ -61,8 +62,11 @@ namespace Hl7.Fhir.Specification.Source
         {
             get
             {
+#if DOTNETFW
                 var codebase = AppDomain.CurrentDomain.BaseDirectory;
-
+#else
+                var codebase = AppContext.BaseDirectory;
+#endif
                 if (Directory.Exists(codebase))
                     return codebase;
                 else
@@ -107,10 +111,21 @@ namespace Hl7.Fhir.Specification.Source
         bool _resourcesPrepared = false;
         private List<ResourceStreamScanner.ResourceScanInformation> _resourceScanInformation;
 
+        // [WMR 20170217] Ignore invalid xml files, aggregate parsing errors
+        // https://github.com/ewoutkramer/fhir-net-api/issues/301
+        public struct ErrorInfo
+        {
+            public ErrorInfo(string fileName, XmlException error) { FileName = fileName; Error = error; }
+            public string FileName { get; }
+            public XmlException Error { get; }
+        }
 
-        /// <summary>
-        /// Scan all xml files found by prepareFiles and find conformance resources + their id
-        /// </summary>
+        ErrorInfo[] _errors = new ErrorInfo[0];
+
+        /// <summary>Returns an array of runtime errors that occured while parsing the resources.</summary>
+        public ErrorInfo[] Errors => _errors;
+
+        /// <summary>Scan all xml files found by prepareFiles and find conformance resources and their id.</summary>
         private void prepareResources()
         {
             if (_resourcesPrepared) return;
@@ -119,6 +134,7 @@ namespace Hl7.Fhir.Specification.Source
 
             _resourceScanInformation = new List<ResourceStreamScanner.ResourceScanInformation>();
 
+            var errors = new List<ErrorInfo>();
             foreach (var file in _artifactFilePaths.Where(af => Path.GetExtension(af) == ".xml"))
             {
                 try
@@ -126,11 +142,14 @@ namespace Hl7.Fhir.Specification.Source
                     var scannedInformation = readInformationFromFile(file);
                     _resourceScanInformation.AddRange(scannedInformation);
                 }
-                catch (XmlException)
+                catch (XmlException e)
                 {
-                    throw;      // Just ignore crappy xml
+                    // throw;      // Just ignore crappy xml
+                    errors.Add(new ErrorInfo(file, e));    // Log the exception
                 }
+                // Don't catch other exceptions (fatal error)
             }
+            _errors = errors.ToArray();
 
             // Check for duplicate canonical urls, this is forbidden within a single source (and actually, universally,
             // but if another source has the same url, the order of polling in the MultiArtifactSource matters)
@@ -139,7 +158,7 @@ namespace Hl7.Fhir.Specification.Source
             {
                 //throw Error.InvalidOperation("The source has found multiple Conformance Resource artifacts with the same canonical url: {0} appears at {1}"
                 //        .FormatWith(doubles.First().Key, String.Join(", ", doubles.First().Select(hit => hit.Origin))));
-                throw Error.CanonicalUrlConflictException(doubles.Select(d => new CanonicalUrlConflictException.CanonicalUrlConflict(d.Key, d.Select(ci => ci.Origin))));
+                throw new CanonicalUrlConflictException(doubles.Select(d => new CanonicalUrlConflictException.CanonicalUrlConflict(d.Key, d.Select(ci => ci.Origin))));
             }
 
             // var info = doubles.Select(g => new Tuple<string, IEnumerable<string>>(g.Key, g.Select(ci => ci.Origin)));
@@ -172,7 +191,7 @@ namespace Hl7.Fhir.Specification.Source
 
         public Stream LoadArtifactByName(string name)
         {
-            if (name == null) throw Error.ArgumentNull("name");
+            if (name == null) throw Error.ArgumentNull(nameof(name));
 
             prepareFiles();
 
@@ -199,7 +218,7 @@ namespace Hl7.Fhir.Specification.Source
 
         public Resource ResolveByUri(string uri)
         {
-            if (uri == null) throw Error.ArgumentNull("uri");
+            if (uri == null) throw Error.ArgumentNull(nameof(uri));
             prepareResources();
 
             var info = _resourceScanInformation.SingleOrDefault(ci => ci.ResourceUri == uri);
@@ -211,7 +230,7 @@ namespace Hl7.Fhir.Specification.Source
 
         public Resource ResolveByCanonicalUri(string uri)
         {
-            if (uri == null) throw Error.ArgumentNull("uri");
+            if (uri == null) throw Error.ArgumentNull(nameof(uri));
             prepareResources();
 
             var info = _resourceScanInformation.SingleOrDefault(ci => ci.Canonical == uri);
@@ -260,7 +279,7 @@ namespace Hl7.Fhir.Specification.Source
         public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri=null, string targetUri=null)
         {
             if (sourceUri == null && targetUri == null)
-                throw Error.ArgumentNull("sourceUri and targetUri cannot both be null");
+                throw Error.ArgumentNull(nameof(targetUri), "sourceUri and targetUri cannot both be null");
 
             prepareResources();
 
@@ -277,7 +296,7 @@ namespace Hl7.Fhir.Specification.Source
 
         public NamingSystem FindNamingSystem(string uniqueId)
         {
-            if (uniqueId == null) throw Error.ArgumentNull("uniqueId");
+            if (uniqueId == null) throw Error.ArgumentNull(nameof(uniqueId));
             prepareResources();
 
             var info = _resourceScanInformation.SingleOrDefault(ci => ci.UniqueIds.Contains(uniqueId));
@@ -288,4 +307,4 @@ namespace Hl7.Fhir.Specification.Source
     }
 
 #endif
-}
+            }

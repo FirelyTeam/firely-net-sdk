@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -187,7 +187,8 @@ namespace Hl7.Fhir.Model
             /// The subject this group's answers are about
             /// </summary>
             [FhirElement("subject", Order=70)]
-            [References()]
+            [CLSCompliant(false)]
+			[References()]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Subject
             {
@@ -287,11 +288,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // GroupComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (LinkIdElement != null) yield return LinkIdElement;
                     if (TitleElement != null) yield return TitleElement;
                     if (TextElement != null) yield return TextElement;
@@ -442,11 +439,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // QuestionComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (LinkIdElement != null) yield return LinkIdElement;
                     if (TextElement != null) yield return TextElement;
                     foreach (var elem in Answer) { if (elem != null) yield return elem; }
@@ -467,7 +460,8 @@ namespace Hl7.Fhir.Model
             /// Single-valued answer to the question
             /// </summary>
             [FhirElement("value", Order=40, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Coding),typeof(Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Coding),typeof(Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
             {
@@ -541,11 +535,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // AnswerComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Value != null) yield return Value;
                     foreach (var elem in Group) { if (elem != null) yield return elem; }
                 }
@@ -571,7 +561,8 @@ namespace Hl7.Fhir.Model
         /// Form being answered
         /// </summary>
         [FhirElement("questionnaire", InSummary=true, Order=100)]
-        [References("Questionnaire")]
+        [CLSCompliant(false)]
+		[References("Questionnaire")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Questionnaire
         {
@@ -618,7 +609,8 @@ namespace Hl7.Fhir.Model
         /// The subject of the questions
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=120)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -632,7 +624,8 @@ namespace Hl7.Fhir.Model
         /// Person who received and recorded the answers
         /// </summary>
         [FhirElement("author", InSummary=true, Order=130)]
-        [References("Device","Practitioner","Patient","RelatedPerson")]
+        [CLSCompliant(false)]
+		[References("Device","Practitioner","Patient","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
         {
@@ -678,7 +671,8 @@ namespace Hl7.Fhir.Model
         /// The person who answered the questions
         /// </summary>
         [FhirElement("source", InSummary=true, Order=150)]
-        [References("Patient","Practitioner","RelatedPerson")]
+        [CLSCompliant(false)]
+		[References("Patient","Practitioner","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Source
         {
@@ -692,7 +686,8 @@ namespace Hl7.Fhir.Model
         /// Primary encounter during which the answers were collected
         /// </summary>
         [FhirElement("encounter", InSummary=true, Order=160)]
-        [References("Encounter")]
+        [CLSCompliant(false)]
+		[References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
         {
@@ -802,17 +797,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// DomainResource elements
-				if (Text != null) yield return Text;
-				foreach (var elem in Contained) { if (elem != null) yield return elem; }
-				foreach (var elem in Extension) { if (elem != null) yield return elem; }
-				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-				// QuestionnaireResponse elements
+                foreach (var item in base.Children) yield return item;
 				if (Identifier != null) yield return Identifier;
 				if (Questionnaire != null) yield return Questionnaire;
 				if (StatusElement != null) yield return StatusElement;

@@ -17,7 +17,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Hl7.Fhir.Model;
-
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Serialization
 
         public IList Deserialize(PropertyMapping prop, string memberName, IList existing=null)
         {
-            if (prop == null) throw Error.ArgumentNull("prop");
+            if (prop == null) throw Error.ArgumentNull(nameof(prop));
 
             IList result = existing;
 

@@ -24,49 +24,47 @@ using System.IO.Compression;
 namespace Hl7.Fhir.Tests.Serialization
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableRoundtripTest
-#else
     public class RoundtripTest
-#endif
     { 
         [TestMethod]   
         public void RoundTripOneExample()
         {
-            string exampleXml = @"TestData\testscript-example(example).xml";
-            var original = File.ReadAllText(exampleXml);
+            string testFileName = "testscript-example(example).xml";
+            var original = TestDataHelper.ReadTestData(testFileName);
 
             var t = new FhirXmlParser().Parse<TestScript>(original);
             var outputXml = FhirSerializer.SerializeResourceToXml(t);
-            XmlAssert.AreSame(exampleXml, original, outputXml);
+            XmlAssert.AreSame(testFileName,original, outputXml);
 
             var outputJson = FhirSerializer.SerializeResourceToJson(t);
             var t2 = new FhirJsonParser().Parse<TestScript>(outputJson);
-//            Assert.IsTrue(t.IsExactly(t2));
+            Assert.IsTrue(t.IsExactly(t2));
 
             var outputXml2 = FhirSerializer.SerializeResourceToXml(t2);
-            XmlAssert.AreSame(exampleXml, original, outputXml2);
+            XmlAssert.AreSame(testFileName, original, outputXml2);
         }
+
+
         [TestMethod]
         [TestCategory("LongRunner")]
         public void FullRoundtripOfAllExamplesXml()
         {
-            string examplesXml = @"TestData\examples.zip";
-
+            ZipArchive examples = TestDataHelper.ReadTestZip("examples.zip");
+            
             // Create an empty temporary directory for us to dump the roundtripped intermediary files in
             string baseTestPath = Path.Combine(Path.GetTempPath(), "FHIRRoundTripTestXml");
             createEmptyDir(baseTestPath);
 
             Debug.WriteLine("Roundtripping xml->json->xml");
             createEmptyDir(baseTestPath);
-            doRoundTrip(examplesXml, baseTestPath);
+            doRoundTrip(examples, baseTestPath);
         }
 
         [TestMethod]
         [TestCategory("LongRunner")]
         public void FullRoundtripOfAllExamplesJson()
         {
-            string examplesJson = @"TestData\examples-json.zip";
+            ZipArchive examples = TestDataHelper.ReadTestZip("examples-json.zip");
 
             // Create an empty temporary directory for us to dump the roundtripped intermediary files in
             string baseTestPath = Path.Combine(Path.GetTempPath(), "FHIRRoundTripTestJson");
@@ -74,7 +72,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             Debug.WriteLine("Roundtripping json->xml->json");
             createEmptyDir(baseTestPath);
-            doRoundTrip(examplesJson, baseTestPath);
+            doRoundTrip(examples, baseTestPath);
         }
 
 
@@ -103,14 +101,14 @@ namespace Hl7.Fhir.Tests.Serialization
             Directory.CreateDirectory(baseTestPath);
         }
 
-        private void doRoundTrip(string examplesZip, string baseTestPath)
+        private void doRoundTrip(ZipArchive examplesZip, string baseTestPath)
         {
             var examplePath = Path.Combine(baseTestPath, "input");
             Directory.CreateDirectory(examplePath);
             // Unzip files into this path
             Debug.WriteLine("Unzipping example files from {0} to {1}", examplesZip, examplePath);
 
-            ZipFile.ExtractToDirectory(examplesZip, examplePath);
+            examplesZip.ExtractToDirectory(examplePath);
 
             var intermediate1Path = Path.Combine(baseTestPath, "intermediate1");
             Debug.WriteLine("Converting files in {0} to {1}", baseTestPath, intermediate1Path);
@@ -199,16 +197,24 @@ namespace Hl7.Fhir.Tests.Serialization
         private void compareFile(string expectedFile, string actualFile, List<string> errors)
         {
             if (expectedFile.EndsWith(".xml"))
-                XmlAssert.AreSame(new FileInfo(expectedFile).Name, File.ReadAllText(expectedFile), File.ReadAllText(actualFile));
+                XmlAssert.AreSame(new FileInfo(expectedFile).Name, File.ReadAllText(expectedFile),
+                    File.ReadAllText(actualFile));
             else
-                JsonAssert.AreSame(new FileInfo(expectedFile).Name, File.ReadAllText(expectedFile), File.ReadAllText(actualFile), errors);
+            {
+                if (new FileInfo(expectedFile).Name != "json-edge-cases.json")
+                {
+                    JsonAssert.AreSame(new FileInfo(expectedFile).Name, File.ReadAllText(expectedFile),
+                                        File.ReadAllText(actualFile), errors);
+                }
+            }
         }
 
         private bool isFeed(string filename)
         {
             var buffer = new char[250];
 
-            using (var reader = new StreamReader(filename))
+
+            using (var reader = new StreamReader(new FileStream(filename, FileMode.Open)))
             {
                 reader.Read(buffer, 0, buffer.Length);
                 var data = new String(buffer);

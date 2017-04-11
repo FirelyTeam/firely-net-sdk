@@ -6,28 +6,17 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
-using System.IO;
-using System.Reflection;
-using System.Xml;
 using System.Collections.Generic;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
-using Hl7.Fhir.FhirPath;
-using Hl7.ElementModel;
-using Hl7.FhirPath;
 
 namespace Hl7.Fhir.Specification.Tests
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableProfileNavigationTest
-#else
     public class ProfileNavigationTest
-#endif
     {
         private IResourceResolver _source;
 
@@ -627,14 +616,15 @@ namespace Hl7.Fhir.Specification.Tests
             var e = struc.Snapshot.Element;
 
             e.Add(new ElementDefinition() { Path = "A" });
-            e.Add(new ElementDefinition() { Path = "A.B" });
+            e.Add(new ElementDefinition() { Path = "A.B", Slicing = new ElementDefinition.SlicingComponent() { } });
             e.Add(new ElementDefinition() { Path = "A.B", Name = "1" });
-            e.Add(new ElementDefinition() { Path = "A.B", Name = "2" });
+            e.Add(new ElementDefinition() { Path = "A.B", Name = "2", Slicing = new ElementDefinition.SlicingComponent() { } });
+            e.Add(new ElementDefinition() { Path = "A.B", Name = "2/1" });
             e.Add(new ElementDefinition() { Path = "A.B", Name = "2/2" });
             e.Add(new ElementDefinition() { Path = "A.B", Name = "3" });
-            e.Add(new ElementDefinition() { Path = "A.C" });
-            e.Add(new ElementDefinition() { Path = "A.C", Name = "1" });
-            e.Add(new ElementDefinition() { Path = "A.C", Name = "1/1" });
+            e.Add(new ElementDefinition() { Path = "A.C", Slicing = new ElementDefinition.SlicingComponent() { } });
+            e.Add(new ElementDefinition() { Path = "A.C", Name = "1", Slicing = new ElementDefinition.SlicingComponent() { } });
+            e.Add(new ElementDefinition() { Path = "A.C", Name = "1/1", Slicing = new ElementDefinition.SlicingComponent() { } });
             e.Add(new ElementDefinition() { Path = "A.C", Name = "1/1/1" });
             e.Add(new ElementDefinition() { Path = "A.C", Name = "1/1/2" });
             e.Add(new ElementDefinition() { Path = "A.C", Name = "1/2" });
@@ -653,20 +643,28 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.MoveToNextSlice());
             Assert.AreEqual(nav.Current.Name, "3");
             Assert.IsFalse(nav.MoveToNextSlice());
+            Assert.IsTrue(nav.MoveToPreviousSlice());
+            Assert.AreEqual(nav.Current.Name, "2");
 
             Assert.IsTrue(nav.MoveToNext("C"));
             Assert.IsTrue(nav.MoveToNextSlice());
             Assert.AreEqual(nav.Current.Name, "1");
-            Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
+            // Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
+            Assert.IsTrue(nav.MoveToFirstReslice());
             Assert.AreEqual(nav.Current.Name, "1/1");
 
             var bm = nav.Bookmark();
-            Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
+            // Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
+            Assert.IsTrue(nav.MoveToFirstReslice());
             Assert.AreEqual(nav.Current.Name, "1/1/1");
             Assert.IsTrue(nav.MoveToNextSlice());
             Assert.AreEqual(nav.Current.Name, "1/1/2");
             Assert.IsFalse(nav.MoveToNextSlice());
-            Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
+            Assert.IsTrue(nav.MoveToPreviousSlice());
+            Assert.AreEqual(nav.Current.Name, "1/1/1");
+            // Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
+            Assert.IsTrue(nav.ReturnToBookmark(bm));
+            Assert.IsTrue(nav.MoveToNextSlice());
             Assert.AreEqual(nav.Current.Name, "1/2");
             Assert.IsTrue(nav.MoveToNextSlice());
             Assert.AreEqual(nav.Current.Name, "1/3");

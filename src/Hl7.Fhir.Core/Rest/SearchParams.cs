@@ -42,6 +42,7 @@ using System.Text.RegularExpressions;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Rest
 {
@@ -109,8 +110,8 @@ namespace Hl7.Fhir.Rest
         /// <returns>this (Parameters), so you can chain AddParameter calls</returns>
         public SearchParams Add(string name, string value)
         {
-            if (name == null) throw Error.ArgumentNull("name");
-            if (value == null) throw Error.ArgumentNull("value");
+            if (name == null) throw Error.ArgumentNull(nameof(name));
+            if (value == null) throw Error.ArgumentNull(nameof(value));
 
             if (name == SEARCH_PARAM_QUERY) Query = nonEmptySingleValue(name, Query, value);
             else if (name == SEARCH_PARAM_TEXT) Text = nonEmptySingleValue(name, Text, value);
@@ -118,7 +119,7 @@ namespace Hl7.Fhir.Rest
             else if (name == SEARCH_PARAM_COUNT)
             {
                 int count;
-                if ( !Int32.TryParse(value, out count) || count <= 0) throw Error.Format("Invalid {0}: '{1}' is not a positive integer".FormatWith(name, value), null);
+                if ( !Int32.TryParse(value, out count) || count <= 0) throw Error.Format("Invalid {0}: '{1}' is not a positive integer".FormatWith(name, value));
                 Count = count;
             }
             else if (name == SEARCH_PARAM_INCLUDE) addNonEmpty(name, Include, value);
@@ -129,7 +130,7 @@ namespace Hl7.Fhir.Rest
 
                 if ( "ascending".StartsWith(order) && order.Length >= 3) addNonEmptySort(value, SortOrder.Ascending);
                 else if ( "descending".StartsWith(order) && order.Length >= 4) addNonEmptySort(value, SortOrder.Descending);
-                else throw Error.Format("Invalid {0}: '{1}' is not a recognized sort order".FormatWith(SEARCH_PARAM_SORT, order), null);
+                else throw Error.Format("Invalid {0}: '{1}' is not a recognized sort order".FormatWith(SEARCH_PARAM_SORT, order));
             }
             else if (name == SEARCH_PARAM_SORT)
             {
@@ -141,7 +142,7 @@ namespace Hl7.Fhir.Rest
                 if (Enum.TryParse(value, ignoreCase: true, result: out st))
                     Summary = st;
                 else
-                    throw Error.Format("Invalid {0}: '{1}' is not a recognized summary value".FormatWith(name, value), null);
+                    throw Error.Format("Invalid {0}: '{1}' is not a recognized summary value".FormatWith(name, value));
             }
             else if (name == SEARCH_PARAM_FILTER) Filter = nonEmptySingleValue(name, Filter, value);
             else if (name == SEARCH_PARAM_CONTAINED)
@@ -149,17 +150,17 @@ namespace Hl7.Fhir.Rest
                 if (SEARCH_CONTAINED_TRUE.Equals(value)) Contained = ContainedSearch.True;
                 else if (SEARCH_CONTAINED_FALSE.Equals(value)) Contained = ContainedSearch.False;
                 else if (SEARCH_CONTAINED_BOTH.Equals(value)) Contained = ContainedSearch.Both;
-                else throw Error.Format("Invalid {0}: '{1}' is not a recognized contained value".FormatWith(name, value), null);
+                else throw Error.Format("Invalid {0}: '{1}' is not a recognized contained value".FormatWith(name, value));
             }
             else if (name == SEARCH_PARAM_CONTAINEDTYPE)
             {
                 if (SEARCH_CONTAINED_TYPE_CONTAINED.Equals(value)) ContainedType = ContainedResult.Contained;
                 else if (SEARCH_CONTAINED_TYPE_CONTAINER.Equals(value)) ContainedType = ContainedResult.Container;
-                else throw Error.Format("Invalid {0}: '{1}' is not a recognized containedType value".FormatWith(name, value), null);
+                else throw Error.Format("Invalid {0}: '{1}' is not a recognized containedType value".FormatWith(name, value));
             }
             else if (name== SEARCH_PARAM_ELEMENTS)
             {
-                if (String.IsNullOrEmpty(value)) throw Error.Format("Invalid {0} value: it cannot be empty".FormatWith(name), null);
+                if (String.IsNullOrEmpty(value)) throw Error.Format("Invalid {0} value: it cannot be empty".FormatWith(name));
                 Elements.AddRange(value.Split(','));
             }
             else
@@ -170,20 +171,20 @@ namespace Hl7.Fhir.Rest
 
         private static string nonEmptySingleValue(string paramName, string currentValue, string newValue)
         {
-            if (String.IsNullOrEmpty(newValue)) throw Error.Format("Invalid {0} value: it cannot be empty".FormatWith(paramName), null);
-            if (!String.IsNullOrEmpty(currentValue)) throw Error.Format("{0} cannot be specified more than once".FormatWith(paramName), null);
+            if (String.IsNullOrEmpty(newValue)) throw Error.Format("Invalid {0} value: it cannot be empty".FormatWith(paramName));
+            if (!String.IsNullOrEmpty(currentValue)) throw Error.Format("{0} cannot be specified more than once".FormatWith(paramName));
             return newValue;
         }
 
         private static void addNonEmpty(string paramName, IList<string> values, string value)
         {
-            if (String.IsNullOrEmpty(value)) throw Error.Format("Invalid {0} value: it cannot be empty".FormatWith(paramName), null);
+            if (String.IsNullOrEmpty(value)) throw Error.Format("Invalid {0} value: it cannot be empty".FormatWith(paramName));
             values.Add(value);
         }
 
         private void addNonEmptySort(string value, SortOrder sortOrder)
         {
-            if (String.IsNullOrEmpty(value)) throw Error.Format("Invalid {0} value: it cannot be empty".FormatWith(SEARCH_PARAM_SORT), null);
+            if (String.IsNullOrEmpty(value)) throw Error.Format("Invalid {0} value: it cannot be empty".FormatWith(SEARCH_PARAM_SORT));
             Sort.Add(Tuple.Create(value, sortOrder));
         }
 

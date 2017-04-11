@@ -10,6 +10,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -108,7 +109,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 if (baseUrl != null)
                 {
                     var baseDef = _resolver.FindStructureDefinition(baseUrl);
-                    if (ensureSnapshot(baseDef, baseUrl, ToNamedNode(elem)))
+                    if (ensureSnapshot(baseDef, baseUrl, elem.ToNamedNode()))
                     {
                         baseNav = new ElementDefinitionNavigator(baseDef);
                         if (baseNav.MoveToFirstChild())

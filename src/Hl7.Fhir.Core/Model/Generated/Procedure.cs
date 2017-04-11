@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -97,7 +97,8 @@ namespace Hl7.Fhir.Model
             /// The reference to the practitioner
             /// </summary>
             [FhirElement("actor", InSummary=true, Order=40)]
-            [References("Practitioner","Organization","Patient","RelatedPerson")]
+            [CLSCompliant(false)]
+			[References("Practitioner","Organization","Patient","RelatedPerson")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Actor
             {
@@ -170,11 +171,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // PerformerComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Actor != null) yield return Actor;
                     if (Role != null) yield return Role;
                 }
@@ -207,7 +204,8 @@ namespace Hl7.Fhir.Model
             /// Device that was changed
             /// </summary>
             [FhirElement("manipulated", Order=50)]
-            [References("Device")]
+            [CLSCompliant(false)]
+			[References("Device")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Manipulated
@@ -268,11 +266,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // FocalDeviceComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Action != null) yield return Action;
                     if (Manipulated != null) yield return Manipulated;
                 }
@@ -299,7 +293,8 @@ namespace Hl7.Fhir.Model
         /// Who the procedure was performed on
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=100)]
-        [References("Patient","Group")]
+        [CLSCompliant(false)]
+		[References("Patient","Group")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -434,7 +429,8 @@ namespace Hl7.Fhir.Model
         /// Reason procedure performed
         /// </summary>
         [FhirElement("reason", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element Reason
         {
@@ -462,7 +458,8 @@ namespace Hl7.Fhir.Model
         /// Date/Period the procedure was performed
         /// </summary>
         [FhirElement("performed", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
         public Hl7.Fhir.Model.Element Performed
         {
@@ -476,7 +473,8 @@ namespace Hl7.Fhir.Model
         /// The encounter associated with the procedure
         /// </summary>
         [FhirElement("encounter", InSummary=true, Order=200)]
-        [References("Encounter")]
+        [CLSCompliant(false)]
+		[References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
         {
@@ -490,7 +488,8 @@ namespace Hl7.Fhir.Model
         /// Where the procedure happened
         /// </summary>
         [FhirElement("location", InSummary=true, Order=210)]
-        [References("Location")]
+        [CLSCompliant(false)]
+		[References("Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Location
         {
@@ -517,7 +516,8 @@ namespace Hl7.Fhir.Model
         /// Any report resulting from the procedure
         /// </summary>
         [FhirElement("report", Order=230)]
-        [References("DiagnosticReport")]
+        [CLSCompliant(false)]
+		[References("DiagnosticReport")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Report
@@ -560,7 +560,8 @@ namespace Hl7.Fhir.Model
         /// A request for this procedure
         /// </summary>
         [FhirElement("request", Order=260)]
-        [References("CarePlan","DiagnosticOrder","ProcedureRequest","ReferralRequest")]
+        [CLSCompliant(false)]
+		[References("CarePlan","DiagnosticOrder","ProcedureRequest","ReferralRequest")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Request
         {
@@ -602,7 +603,8 @@ namespace Hl7.Fhir.Model
         /// Items used during procedure
         /// </summary>
         [FhirElement("used", Order=290)]
-        [References("Device","Medication","Substance")]
+        [CLSCompliant(false)]
+		[References("Device","Medication","Substance")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Used
@@ -736,17 +738,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// DomainResource elements
-				if (Text != null) yield return Text;
-				foreach (var elem in Contained) { if (elem != null) yield return elem; }
-				foreach (var elem in Extension) { if (elem != null) yield return elem; }
-				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-				// Procedure elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (Subject != null) yield return Subject;
 				if (StatusElement != null) yield return StatusElement;

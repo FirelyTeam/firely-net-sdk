@@ -14,15 +14,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Tests.Model
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableAnnotationTests
-#else
     public class AnnotationTests
-#endif
     {
         internal class AnnotationData
         {

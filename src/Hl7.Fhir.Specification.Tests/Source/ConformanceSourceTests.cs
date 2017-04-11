@@ -16,17 +16,13 @@ using System.IO;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Tests
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableArtifactResolverTests
-#else
     public class ArtifactResolverTests
-#endif
     {
-#if !PORTABLE45
         [ClassInitialize]
         public static void SetupSource(TestContext t)
         {
@@ -160,7 +156,4 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(us is StructureDefinition);
         }
     }
-
-
-#endif
 }

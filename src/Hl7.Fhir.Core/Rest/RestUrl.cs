@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 
@@ -23,10 +24,10 @@ namespace Hl7.Fhir.Rest
 
         public RestUrl(Uri url)
         {
-            if (!url.IsAbsoluteUri) throw Error.Argument("url", "Must be an absolute url");
+            if (!url.IsAbsoluteUri) throw Error.Argument(nameof(url), "Must be an absolute url");
 
             if (url.Scheme != "http" && url.Scheme != "https")
-                Error.Argument("uri", "RestUrl must be a http(s) url");
+                Error.Argument(nameof(url), "RestUrl must be a http(s) url");
 
             _builder = new UriBuilder(url);
 
@@ -113,15 +114,15 @@ namespace Hl7.Fhir.Rest
         /// <returns></returns>
         public RestUrl AddParam(string name, string value)
         {
-            if (name == null) throw Error.ArgumentNull("name");
-            if (value == null) throw Error.ArgumentNull("value");
+            if (name == null) throw Error.ArgumentNull(nameof(name));
+            if (value == null) throw Error.ArgumentNull(nameof(value));
 
             return AddParam(Tuple.Create(name, value));
         }
 
         public RestUrl AddParam(Tuple<string, string> keyValue)
         {
-            if (keyValue == null) throw Error.ArgumentNull("keyValue");
+            if (keyValue == null) throw Error.ArgumentNull(nameof(keyValue));
 
             _parameters.Add(keyValue);
 
@@ -130,7 +131,7 @@ namespace Hl7.Fhir.Rest
 
         public RestUrl AddParams(IEnumerable<Tuple<string, string>> keyValues)
         {
-            if (keyValues == null) throw Error.ArgumentNull("keyValues");
+            if (keyValues == null) throw Error.ArgumentNull(nameof(keyValues));
 
             _parameters.AddRange(keyValues);
 
@@ -192,14 +193,14 @@ namespace Hl7.Fhir.Rest
         /// </example>
         public RestUrl NavigateTo(string path)
         {
-            if (path == null) throw Error.ArgumentNull("path");
+            if (path == null) throw Error.ArgumentNull(nameof(path));
 
             return NavigateTo(new Uri(path, UriKind.RelativeOrAbsolute));
         }
 
         public RestUrl NavigateTo(Uri path)
         {
-            if (path == null) throw Error.ArgumentNull("path");
+            if (path == null) throw Error.ArgumentNull(nameof(path));
 
             if (path.IsAbsoluteUri)
                 throw new ArgumentException("Can only navigate to relative paths", "path");

@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Rest
 {
@@ -77,7 +78,7 @@ namespace Hl7.Fhir.Rest
 
         public static OperationOutcome ValidateCreate(this FhirClient client, DomainResource resource, FhirUri profile = null)
         {
-            if (resource == null) throw Error.ArgumentNull("resource");
+            if (resource == null) throw Error.ArgumentNull(nameof(resource));
 
             var par = new Parameters().Add("resource", resource).Add("mode", new Code("create"));
             if (profile != null) par.Add("profile", profile);
@@ -87,8 +88,8 @@ namespace Hl7.Fhir.Rest
 
         public static OperationOutcome ValidateUpdate(this FhirClient client, DomainResource resource, string id, FhirUri profile = null)
         {
-            if (id == null) throw Error.ArgumentNull("id");
-            if (resource == null) throw Error.ArgumentNull("resource");
+            if (id == null) throw Error.ArgumentNull(nameof(id));
+            if (resource == null) throw Error.ArgumentNull(nameof(resource));
 
             var par = new Parameters().Add("resource", resource).Add("mode", new Code("update"));
             if (profile != null) par.Add("profile", profile);
@@ -99,7 +100,7 @@ namespace Hl7.Fhir.Rest
 
         public static OperationOutcome ValidateDelete(this FhirClient client, ResourceIdentity location)
         {
-            if (location == null) throw Error.ArgumentNull("location");
+            if (location == null) throw Error.ArgumentNull(nameof(location));
 
             var par = new Parameters().Add("mode", new Code("delete"));
 
@@ -108,7 +109,7 @@ namespace Hl7.Fhir.Rest
 
         public static OperationOutcome ValidateResource(this FhirClient client, DomainResource resource, string id = null, FhirUri profile = null)
         {
-            if (resource == null) throw Error.ArgumentNull("resource");
+            if (resource == null) throw Error.ArgumentNull(nameof(resource));
 
             var par = new Parameters().Add("resource", resource);
             if (profile != null) par.Add("profile", profile);
@@ -156,7 +157,7 @@ namespace Hl7.Fhir.Rest
 
         public static ValueSet ExpandValueSet(this FhirClient client, Uri valueset, FhirString filter = null, FhirDateTime date = null)
         {
-            if (valueset == null) throw Error.ArgumentNull("valuesetLocation");
+            if (valueset == null) throw Error.ArgumentNull(nameof(valueset));
 
             var par = new Parameters();
 
@@ -171,7 +172,7 @@ namespace Hl7.Fhir.Rest
 
         public static ValueSet ExpandValueSet(this FhirClient client, FhirUri identifier, FhirString filter = null, FhirDateTime date = null)
         {
-            if (identifier == null) throw Error.ArgumentNull("identifier");
+            if (identifier == null) throw Error.ArgumentNull(nameof(identifier));
 
             var par = new Parameters();
 
@@ -185,7 +186,7 @@ namespace Hl7.Fhir.Rest
 
         public static ValueSet ExpandValueSet(this FhirClient client, ValueSet vs, FhirString filter = null, FhirDateTime date = null)
         {
-            if (vs == null) throw Error.ArgumentNull("vs");
+            if (vs == null) throw Error.ArgumentNull(nameof(vs));
 
             var par = new Parameters().Add("valueSet", vs);
             if (filter != null) par.Add("filter", filter);
@@ -196,7 +197,7 @@ namespace Hl7.Fhir.Rest
 
         public static Parameters ConceptLookup(this FhirClient client, Coding coding, FhirDateTime date=null)
         {
-            if (coding == null) throw Error.ArgumentNull("coding");
+            if (coding == null) throw Error.ArgumentNull(nameof(coding));
 
             var par = new Parameters();
             par.Add("coding", coding);
@@ -207,8 +208,8 @@ namespace Hl7.Fhir.Rest
 
         public static Parameters ConceptLookup(this FhirClient client, Code code, FhirUri system, FhirString version = null, FhirDateTime date = null)
         {
-            if (code == null) throw Error.ArgumentNull("code");
-            if (system == null) throw Error.ArgumentNull("system");
+            if (code == null) throw Error.ArgumentNull(nameof(code));
+            if (system == null) throw Error.ArgumentNull(nameof(system));
 
             var par = new Parameters().Add("code",code).Add("system",system);
             if (version != null) par.Add("version", version);

@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+#if NET_XSD_SCHEMA
 using System.Xml.Xsl;
 using System.Xml.XPath;
 using System.Xml;
@@ -194,3 +196,4 @@ namespace Hl7.Fhir.XPath
         }
     }
 }
+#endif

@@ -10,6 +10,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -93,7 +94,7 @@ namespace Hl7.Fhir.Rest
             if (location.IsAbsoluteUri)
             {
                 if (!new RestUrl(baseUrl).IsEndpointFor(location))
-                    throw Error.Argument("location", "Url is not located within the given base endpoint");
+                    throw Error.Argument(nameof(location), "Url is not located within the given base endpoint");
             }
             else
             {

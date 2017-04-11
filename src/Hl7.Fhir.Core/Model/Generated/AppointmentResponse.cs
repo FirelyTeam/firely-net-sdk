@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -116,7 +116,8 @@ namespace Hl7.Fhir.Model
         /// Appointment this response relates to
         /// </summary>
         [FhirElement("appointment", InSummary=true, Order=100)]
-        [References("Appointment")]
+        [CLSCompliant(false)]
+		[References("Appointment")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Appointment
@@ -209,7 +210,8 @@ namespace Hl7.Fhir.Model
         /// Person, Location/HealthcareService or Device
         /// </summary>
         [FhirElement("actor", InSummary=true, Order=140)]
-        [References("Patient","Practitioner","RelatedPerson","Device","HealthcareService","Location")]
+        [CLSCompliant(false)]
+		[References("Patient","Practitioner","RelatedPerson","Device","HealthcareService","Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Actor
         {
@@ -368,17 +370,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// DomainResource elements
-				if (Text != null) yield return Text;
-				foreach (var elem in Contained) { if (elem != null) yield return elem; }
-				foreach (var elem in Extension) { if (elem != null) yield return elem; }
-				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-				// AppointmentResponse elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (Appointment != null) yield return Appointment;
 				if (StartElement != null) yield return StartElement;

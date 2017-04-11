@@ -9,6 +9,7 @@
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ namespace Hl7.Fhir.Serialization
 
         internal object Deserialize(Type nativeType)
         {
-            if (nativeType == null) throw Error.ArgumentNull("nativeType");
+            if (nativeType == null) throw Error.ArgumentNull(nameof(nativeType));
                  
             object primitiveValue = _current.GetPrimitiveValue();
             

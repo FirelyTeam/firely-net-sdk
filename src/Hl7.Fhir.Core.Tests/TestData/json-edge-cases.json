@@ -75,10 +75,6 @@
         {
             "url": "http://example.org/fhir/StructureDefinition/pi",
             "valueDecimal": 3.141592653589793
-        },
-        {
-            "url": "http://example.org/fhir/StructureDefinition/avogadro",
-            "valueDecimal": 6.0221416246424E23
         }
     ],
     "gender": "male",

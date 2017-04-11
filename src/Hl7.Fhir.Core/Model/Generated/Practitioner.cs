@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -64,7 +64,8 @@ namespace Hl7.Fhir.Model
             /// Organization where the roles are performed
             /// </summary>
             [FhirElement("managingOrganization", Order=40)]
-            [References("Organization")]
+            [CLSCompliant(false)]
+			[References("Organization")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference ManagingOrganization
             {
@@ -118,7 +119,8 @@ namespace Hl7.Fhir.Model
             /// The location(s) at which this practitioner provides care
             /// </summary>
             [FhirElement("location", Order=80)]
-            [References("Location")]
+            [CLSCompliant(false)]
+			[References("Location")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> Location
@@ -133,7 +135,8 @@ namespace Hl7.Fhir.Model
             /// The list of healthcare services that this worker provides for this role's Organization/Location(s)
             /// </summary>
             [FhirElement("healthcareService", Order=90)]
-            [References("HealthcareService")]
+            [CLSCompliant(false)]
+			[References("HealthcareService")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> HealthcareService
@@ -206,11 +209,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // PractitionerRoleComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (ManagingOrganization != null) yield return ManagingOrganization;
                     if (Role != null) yield return Role;
                     foreach (var elem in Specialty) { if (elem != null) yield return elem; }
@@ -275,7 +274,8 @@ namespace Hl7.Fhir.Model
             /// Organization that regulates and issues the qualification
             /// </summary>
             [FhirElement("issuer", Order=70)]
-            [References("Organization")]
+            [CLSCompliant(false)]
+			[References("Organization")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Issuer
             {
@@ -341,11 +341,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // QualificationComponent elements
+                    foreach (var item in base.Children) yield return item;
                     foreach (var elem in Identifier) { if (elem != null) yield return elem; }
                     if (Code != null) yield return Code;
                     if (Period != null) yield return Period;
@@ -646,17 +642,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// DomainResource elements
-				if (Text != null) yield return Text;
-				foreach (var elem in Contained) { if (elem != null) yield return elem; }
-				foreach (var elem in Extension) { if (elem != null) yield return elem; }
-				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-				// Practitioner elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (ActiveElement != null) yield return ActiveElement;
 				if (Name != null) yield return Name;

@@ -9,6 +9,7 @@
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -46,7 +47,7 @@ namespace Hl7.Fhir.Serialization
         
         internal Base Deserialize(ClassMapping mapping, Base existing=null)
         {
-            if (mapping == null) throw Error.ArgumentNull("mapping");
+            if (mapping == null) throw Error.ArgumentNull(nameof(mapping));
 
             if (existing == null)
             {
@@ -56,7 +57,7 @@ namespace Hl7.Fhir.Serialization
             else
             {
                 if (mapping.NativeType != existing.GetType())
-                    throw Error.Argument("existing", "Existing instance is of type {0}, but data indicates resource is a {1}".FormatWith(existing.GetType().Name, mapping.NativeType.Name));
+                    throw Error.Argument(nameof(existing), "Existing instance is of type {0}, but data indicates resource is a {1}".FormatWith(existing.GetType().Name, mapping.NativeType.Name));
             }
 
             IEnumerable<Tuple<string, IFhirReader>> members = null;

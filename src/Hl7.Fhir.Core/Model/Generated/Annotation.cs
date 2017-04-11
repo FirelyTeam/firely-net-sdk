@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -55,7 +55,8 @@ namespace Hl7.Fhir.Model
         /// Individual responsible for the annotation
         /// </summary>
         [FhirElement("author", InSummary=true, Order=30, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.FhirString))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
         public Hl7.Fhir.Model.Element Author
         {
@@ -183,9 +184,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                // Element elements
-                foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                // Annotation elements
+                foreach (var item in base.Children) yield return item;
                 if (Author != null) yield return Author;
                 if (TimeElement != null) yield return TimeElement;
                 if (TextElement != null) yield return TextElement;

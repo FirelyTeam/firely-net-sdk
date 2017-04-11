@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
@@ -31,7 +32,7 @@ namespace Hl7.Fhir.Serialization
 
         internal void Serialize(PropertyMapping prop, object instance, Rest.SummaryType summary, ComplexTypeWriter.SerializationMode mode)
         {
-            if (prop == null) throw Error.ArgumentNull("prop");
+            if (prop == null) throw Error.ArgumentNull(nameof(prop));
 
             // ArrayMode avoid the dispatcher making nested calls into the RepeatingElementWriter again
             // when writing array elements. FHIR does not support nested arrays, and this avoids an endlessly
@@ -39,13 +40,13 @@ namespace Hl7.Fhir.Serialization
             if (prop.IsCollection)
             {
                 var elements = instance as IList;
-                if (elements == null) throw Error.Argument("existing", "Can only write repeating elements from a type implementing IList");
+                if (elements == null) throw Error.Argument(nameof(elements), "Can only write repeating elements from a type implementing IList");
 
                 _writer.WriteStartArray();
 
                 foreach (var element in elements)
                 {
-                    if (element == null) throw Error.Format("The FHIR serialization does not support arrays with empty (null) elements", null);
+                    if (element == null) throw Error.Format("The FHIR serialization does not support arrays with empty (null) elements");
 
                     write(prop, element, summary, mode);
                 }

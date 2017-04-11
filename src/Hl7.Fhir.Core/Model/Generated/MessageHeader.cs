@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -157,7 +157,8 @@ namespace Hl7.Fhir.Model
             /// Specific list of hints/warnings/errors
             /// </summary>
             [FhirElement("details", InSummary=true, Order=60)]
-            [References("OperationOutcome")]
+            [CLSCompliant(false)]
+			[References("OperationOutcome")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Details
             {
@@ -220,11 +221,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ResponseComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (IdentifierElement != null) yield return IdentifierElement;
                     if (CodeElement != null) yield return CodeElement;
                     if (Details != null) yield return Details;
@@ -442,11 +439,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // MessageSourceComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (NameElement != null) yield return NameElement;
                     if (SoftwareElement != null) yield return SoftwareElement;
                     if (VersionElement != null) yield return VersionElement;
@@ -501,7 +494,8 @@ namespace Hl7.Fhir.Model
             /// Particular delivery destination within the destination
             /// </summary>
             [FhirElement("target", InSummary=true, Order=50)]
-            [References("Device")]
+            [CLSCompliant(false)]
+			[References("Device")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Target
             {
@@ -597,11 +591,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // MessageDestinationComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (NameElement != null) yield return NameElement;
                     if (Target != null) yield return Target;
                     if (EndpointElement != null) yield return EndpointElement;
@@ -703,7 +693,8 @@ namespace Hl7.Fhir.Model
         /// The source of the data entry
         /// </summary>
         [FhirElement("enterer", InSummary=true, Order=140)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Enterer
         {
@@ -717,7 +708,8 @@ namespace Hl7.Fhir.Model
         /// The source of the decision
         /// </summary>
         [FhirElement("author", InSummary=true, Order=150)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
         {
@@ -731,7 +723,8 @@ namespace Hl7.Fhir.Model
         /// Intended "real-world" recipient for the data
         /// </summary>
         [FhirElement("receiver", InSummary=true, Order=160)]
-        [References("Practitioner","Organization")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Receiver
         {
@@ -745,7 +738,8 @@ namespace Hl7.Fhir.Model
         /// Final responsibility for event
         /// </summary>
         [FhirElement("responsible", InSummary=true, Order=170)]
-        [References("Practitioner","Organization")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Responsible
         {
@@ -772,7 +766,8 @@ namespace Hl7.Fhir.Model
         /// The actual content of the message
         /// </summary>
         [FhirElement("data", InSummary=true, Order=190)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Data
@@ -866,17 +861,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// DomainResource elements
-				if (Text != null) yield return Text;
-				foreach (var elem in Contained) { if (elem != null) yield return elem; }
-				foreach (var elem in Extension) { if (elem != null) yield return elem; }
-				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-				// MessageHeader elements
+                foreach (var item in base.Children) yield return item;
 				if (TimestampElement != null) yield return TimestampElement;
 				if (Event != null) yield return Event;
 				if (Response != null) yield return Response;

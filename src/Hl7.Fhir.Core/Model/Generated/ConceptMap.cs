@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -219,11 +219,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ContactComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (NameElement != null) yield return NameElement;
                     foreach (var elem in Telecom) { if (elem != null) yield return elem; }
                 }
@@ -370,11 +366,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // SourceElementComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (CodeSystemElement != null) yield return CodeSystemElement;
                     if (CodeElement != null) yield return CodeElement;
                     foreach (var elem in Target) { if (elem != null) yield return elem; }
@@ -610,11 +602,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // TargetElementComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (CodeSystemElement != null) yield return CodeSystemElement;
                     if (CodeElement != null) yield return CodeElement;
                     if (EquivalenceElement != null) yield return EquivalenceElement;
@@ -786,11 +774,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // OtherElementComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (ElementElement != null) yield return ElementElement;
                     if (CodeSystemElement != null) yield return CodeSystemElement;
                     if (CodeElement != null) yield return CodeElement;
@@ -1166,7 +1150,8 @@ namespace Hl7.Fhir.Model
         /// Identifies the source of the concepts which are being mapped
         /// </summary>
         [FhirElement("source", InSummary=true, Order=220, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Element Source
@@ -1181,7 +1166,8 @@ namespace Hl7.Fhir.Model
         /// Provides context to the mappings
         /// </summary>
         [FhirElement("target", InSummary=true, Order=230, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Element Target
@@ -1314,17 +1300,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// DomainResource elements
-				if (Text != null) yield return Text;
-				foreach (var elem in Contained) { if (elem != null) yield return elem; }
-				foreach (var elem in Extension) { if (elem != null) yield return elem; }
-				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-				// ConceptMap elements
+                foreach (var item in base.Children) yield return item;
 				if (UrlElement != null) yield return UrlElement;
 				if (Identifier != null) yield return Identifier;
 				if (VersionElement != null) yield return VersionElement;

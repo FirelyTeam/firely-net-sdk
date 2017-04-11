@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -149,7 +149,8 @@ namespace Hl7.Fhir.Model
             /// Provider who is the payee
             /// </summary>
             [FhirElement("provider", InSummary=true, Order=50)]
-            [References("Practitioner")]
+            [CLSCompliant(false)]
+			[References("Practitioner")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Provider
             {
@@ -163,7 +164,8 @@ namespace Hl7.Fhir.Model
             /// Organization who is the payee
             /// </summary>
             [FhirElement("organization", InSummary=true, Order=60)]
-            [References("Organization")]
+            [CLSCompliant(false)]
+			[References("Organization")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Organization
             {
@@ -177,7 +179,8 @@ namespace Hl7.Fhir.Model
             /// Other person who is the payee
             /// </summary>
             [FhirElement("person", InSummary=true, Order=70)]
-            [References("Patient")]
+            [CLSCompliant(false)]
+			[References("Patient")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Person
             {
@@ -243,11 +246,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // PayeeComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Type != null) yield return Type;
                     if (Provider != null) yield return Provider;
                     if (Organization != null) yield return Organization;
@@ -362,11 +361,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // DiagnosisComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (SequenceElement != null) yield return SequenceElement;
                     if (Diagnosis != null) yield return Diagnosis;
                 }
@@ -452,7 +447,8 @@ namespace Hl7.Fhir.Model
             /// Insurance information
             /// </summary>
             [FhirElement("coverage", InSummary=true, Order=60)]
-            [References("Coverage")]
+            [CLSCompliant(false)]
+			[References("Coverage")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Coverage
@@ -546,7 +542,8 @@ namespace Hl7.Fhir.Model
             /// Adjudication results
             /// </summary>
             [FhirElement("claimResponse", InSummary=true, Order=100)]
-            [References("ClaimResponse")]
+            [CLSCompliant(false)]
+			[References("ClaimResponse")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference ClaimResponse
             {
@@ -637,11 +634,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // CoverageComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (SequenceElement != null) yield return SequenceElement;
                     if (FocalElement != null) yield return FocalElement;
                     if (Coverage != null) yield return Coverage;
@@ -714,7 +707,8 @@ namespace Hl7.Fhir.Model
             /// Responsible practitioner
             /// </summary>
             [FhirElement("provider", InSummary=true, Order=60)]
-            [References("Practitioner")]
+            [CLSCompliant(false)]
+			[References("Practitioner")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Provider
             {
@@ -1082,11 +1076,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ItemsComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (SequenceElement != null) yield return SequenceElement;
                     if (Type != null) yield return Type;
                     if (Provider != null) yield return Provider;
@@ -1382,11 +1372,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // DetailComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (SequenceElement != null) yield return SequenceElement;
                     if (Type != null) yield return Type;
                     if (Service != null) yield return Service;
@@ -1658,11 +1644,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // SubDetailComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (SequenceElement != null) yield return SequenceElement;
                     if (Type != null) yield return Type;
                     if (Service != null) yield return Service;
@@ -1815,11 +1797,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ProsthesisComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (InitialElement != null) yield return InitialElement;
                     if (PriorDateElement != null) yield return PriorDateElement;
                     if (PriorMaterial != null) yield return PriorMaterial;
@@ -1948,11 +1926,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // MissingTeethComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Tooth != null) yield return Tooth;
                     if (Reason != null) yield return Reason;
                     if (ExtractionDateElement != null) yield return ExtractionDateElement;
@@ -2071,7 +2045,8 @@ namespace Hl7.Fhir.Model
         /// Insurer
         /// </summary>
         [FhirElement("target", InSummary=true, Order=140)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Target
         {
@@ -2085,7 +2060,8 @@ namespace Hl7.Fhir.Model
         /// Responsible provider
         /// </summary>
         [FhirElement("provider", InSummary=true, Order=150)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Provider
         {
@@ -2099,7 +2075,8 @@ namespace Hl7.Fhir.Model
         /// Responsible organization
         /// </summary>
         [FhirElement("organization", InSummary=true, Order=160)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Organization
         {
@@ -2171,7 +2148,8 @@ namespace Hl7.Fhir.Model
         /// Author
         /// </summary>
         [FhirElement("enterer", InSummary=true, Order=200)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Enterer
         {
@@ -2185,7 +2163,8 @@ namespace Hl7.Fhir.Model
         /// Servicing Facility
         /// </summary>
         [FhirElement("facility", InSummary=true, Order=210)]
-        [References("Location")]
+        [CLSCompliant(false)]
+		[References("Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Facility
         {
@@ -2199,7 +2178,8 @@ namespace Hl7.Fhir.Model
         /// Prescription
         /// </summary>
         [FhirElement("prescription", InSummary=true, Order=220)]
-        [References("MedicationOrder","VisionPrescription")]
+        [CLSCompliant(false)]
+		[References("MedicationOrder","VisionPrescription")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Prescription
         {
@@ -2213,7 +2193,8 @@ namespace Hl7.Fhir.Model
         /// Original Prescription
         /// </summary>
         [FhirElement("originalPrescription", InSummary=true, Order=230)]
-        [References("MedicationOrder")]
+        [CLSCompliant(false)]
+		[References("MedicationOrder")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference OriginalPrescription
         {
@@ -2240,7 +2221,8 @@ namespace Hl7.Fhir.Model
         /// Treatment Referral
         /// </summary>
         [FhirElement("referral", InSummary=true, Order=250)]
-        [References("ReferralRequest")]
+        [CLSCompliant(false)]
+		[References("ReferralRequest")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Referral
         {
@@ -2282,7 +2264,8 @@ namespace Hl7.Fhir.Model
         /// The subject of the Products and Services
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=280)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -2591,17 +2574,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// DomainResource elements
-				if (Text != null) yield return Text;
-				foreach (var elem in Contained) { if (elem != null) yield return elem; }
-				foreach (var elem in Extension) { if (elem != null) yield return elem; }
-				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-				// Claim elements
+                foreach (var item in base.Children) yield return item;
 				if (TypeElement != null) yield return TypeElement;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (Ruleset != null) yield return Ruleset;

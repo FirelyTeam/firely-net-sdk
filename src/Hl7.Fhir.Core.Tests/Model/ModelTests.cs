@@ -19,11 +19,7 @@ using Hl7.Fhir.Validation;
 namespace Hl7.Fhir.Tests.Model
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableModelTests
-#else
     public class ModelTests
-#endif
     {
         [TestMethod]
         public void ValidateElementAssertions()
@@ -79,6 +75,34 @@ namespace Hl7.Fhir.Tests.Model
             Assert.AreEqual("http://nhi.health.nz", identifier.System);
         }
 
+
+        [TestMethod]
+        public void TestBundleLinkEncoding()
+        {
+            Action<string> test = (urlFormat) =>
+            {
+                var param1 = "baz/123";
+                var param2 = "qux:456";
+                var manuallyEncodedUrl = string.Format(urlFormat, "baz%2F123", "qux%3A456");
+                var uriEncodedUrl = string.Format(urlFormat, Uri.EscapeDataString(param1), Uri.EscapeDataString(param2));
+                Assert.AreEqual(manuallyEncodedUrl, uriEncodedUrl);
+                var uri = new Uri(manuallyEncodedUrl, UriKind.RelativeOrAbsolute);
+                var bundle = new Bundle {SelfLink = uri};
+                if (uri.IsAbsoluteUri)
+                {
+                    Assert.AreEqual(uri.AbsoluteUri, bundle.SelfLink.AbsoluteUri);
+                }
+                else
+                {
+                    Assert.AreEqual(uri.OriginalString, bundle.SelfLink.OriginalString);
+                }
+            };
+
+            test("http://foo/bar?param1={0}&param2={1}");
+            test("http://foo/bar/../bar?param1={0}&param2={1}");
+            test("bar?param1={0}&param2={1}");
+            test("bar/../bar?param1={0}&param2={1}");
+        }
 
         [TestMethod]
         public void SimpleValueSupport()

@@ -9,6 +9,7 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using System;
 using System.IO.Compression;
 using System.Net;
@@ -23,7 +24,7 @@ namespace Hl7.Fhir.Rest
         public ResourceFormat PreferredFormat { get; set; }
         public int Timeout { get; set; }           // In milliseconds
         public Prefer Prefer { get; set; }
-#if !PORTABLE45
+
         /// <summary>
         /// This will do 2 things:
         /// 1. Add the header Accept-Encoding: gzip, deflate
@@ -35,7 +36,6 @@ namespace Hl7.Fhir.Rest
         /// (warning, if a server does not handle compressed requests you will get a 415 response)
         /// </summary>
         public bool CompressRequestBody { get; set; }
-#endif
 
         public ParserSettings ParserSettings { get; set; }
 
@@ -60,22 +60,22 @@ namespace Hl7.Fhir.Rest
 
         public Bundle.EntryComponent Execute(Bundle.EntryComponent interaction)
         {
-            if (interaction == null) throw Error.ArgumentNull("interaction");
+            if (interaction == null) throw Error.ArgumentNull(nameof(interaction));
             bool compressRequestBody = false;
-#if !PORTABLE45
+
             compressRequestBody = CompressRequestBody; // PCL doesn't support compression at the moment
-#endif
 
             byte[] outBody;
             var request = interaction.ToHttpRequest(Prefer, PreferredFormat, UseFormatParameter, compressRequestBody, out outBody);
 
-#if !PORTABLE45
+#if DOTNETFW
             request.Timeout = Timeout;
+#endif
+
             if (PreferCompressedResponses)
             {
-                request.Headers.Add("Accept-Encoding", "gzip, deflate");
+                request.Headers["Accept-Encoding"] = "gzip, deflate";
             }
-#endif
 
             LastRequest = request;
             if (BeforeRequest != null) BeforeRequest(request, outBody);
@@ -145,15 +145,19 @@ namespace Hl7.Fhir.Rest
             {
                 byte[] body = null;
                 var respStream = response.GetResponseStream();
-#if !PORTABLE45
-                if (response.ContentEncoding == "gzip")
+#if !DOTNETFW
+                var contentEncoding = response.Headers["Content-Encoding"];
+#else
+                var contentEncoding = response.ContentEncoding;
+#endif
+                if (contentEncoding == "gzip")
                 {
                     using (var decompressed = new GZipStream(respStream, CompressionMode.Decompress, true))
                     {
                         body = HttpUtil.ReadAllFromStream(decompressed);
                     }
                 }
-                else if (response.ContentEncoding == "deflate")
+                else if (contentEncoding == "deflate")
                 {
                     using (var decompressed = new DeflateStream(respStream, CompressionMode.Decompress, true))
                     {
@@ -161,7 +165,6 @@ namespace Hl7.Fhir.Rest
                     }
                 }
                 else
-#endif
                 {
                     body = HttpUtil.ReadAllFromStream(respStream);
                 }

@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -206,6 +206,7 @@ namespace Hl7.Fhir.Model
             /// Length/Range of lengths, or (Start and/or end) limits
             /// </summary>
             [FhirElement("bounds", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+			[CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
             public Hl7.Fhir.Model.Element Bounds
@@ -612,9 +613,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // RepeatComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Bounds != null) yield return Bounds;
                     if (CountElement != null) yield return CountElement;
                     if (DurationElement != null) yield return DurationElement;
@@ -744,9 +743,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                // Element elements
-                foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                // Timing elements
+                foreach (var item in base.Children) yield return item;
                 foreach (var elem in EventElement) { if (elem != null) yield return elem; }
                 if (Repeat != null) yield return Repeat;
                 if (Code != null) yield return Code;

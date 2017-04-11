@@ -16,20 +16,17 @@ using System.Threading.Tasks;
 using System.IO;
 using Hl7.Fhir.Serialization;
 using System.Xml;
+using static Hl7.Fhir.Tests.TestDataHelper;
 
 namespace Hl7.Fhir.Tests.Model
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableDeepCompareTest
-#else
     public class DeepCompareTest
-#endif
     {
         [TestMethod]
         public void CheckCompareDeepCopied()
         {
-            string xml = File.ReadAllText(@"TestData\TestPatient.xml");
+            string xml = ReadTestData("TestPatient.xml");
 
             var p = new FhirXmlParser().Parse<Patient>(xml);
             var p2 = (Patient)p.DeepCopy();
@@ -40,7 +37,7 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void CheckComparePrimitiveChanged()
         {
-            string xml = File.ReadAllText(@"TestData\TestPatient.xml");
+            string xml = ReadTestData("TestPatient.xml");
 
             var p = new FhirXmlParser().Parse<Patient>(xml);
             var p2 = (Patient)p.DeepCopy();
@@ -58,7 +55,7 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void CheckCompareListChanged()
         {
-            string xml = File.ReadAllText(@"TestData\TestPatient.xml");
+            string xml = ReadTestData("TestPatient.xml");
 
             var p = new FhirXmlParser().Parse<Patient>(xml);
             var p2 = (Patient)p.DeepCopy();

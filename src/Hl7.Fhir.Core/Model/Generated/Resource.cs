@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Hl7.Fhir.Introspection;
 using System.Runtime.Serialization;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.

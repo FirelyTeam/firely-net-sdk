@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+  <PropertyGroup>
+    <TargetFrameworks>net45;netstandard1.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <Import Project="..\platforms.props" />
+  <Import Project="..\fhir-net-api.props" />
+  <Import Project="..\fhir-net-api.targets" />
+
+  <PropertyGroup>
+    <Version>$(SupportApiVersion)</Version>
+    <PackageId>Hl7.FhirPath</PackageId>
+    <Title>HL7 FhirPath evaluator</Title>
+    <Summary>Runtime environment for executing HL7 FhirPath queries and invariants.</Summary>
+    <Description>This library contains a runtime environment for executing HL7 FhirPath queries and invariants. It is used by the HL7 .NET FHIR API (https://www.nuget.org/packages/Hl7.Fhir.DSTU2) to run validation for the HL7 FHIR object model.</Description>
+    <PackageTags>HL7;FluentPath;FhirPath;query language;CQL;FHIR</PackageTags>
+    <AssemblyName>Hl7.FhirPath</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="System.ValueTuple" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,7 +1,7 @@
-properties {
+ï»¿properties {
   $productName = "Hl7.Fhir .Net Library" 
-  $productVersion = "0.91.0"             # Update this for a new release
-  # $nugetPrelease = ""              # Set this to something like "alpha", if desired
+  $productVersion = "0.91.3"             # Update this for a new release
+ # $nugetPrelease = ""              # Set this to something like "alpha", if desired
 
   $ignoreTestFailure = $true             # Report build success, even though tests failed. Useful for alpha versions
 
@@ -22,7 +22,7 @@ properties {
 # See the following for some explanations: http://blogs.msdn.com/b/jjameson/archive/2009/04/03/best-practices-for-net-assembly-versioning.aspx 
 #  $assemblyVersion = "1.0"               # Update this according to the assembly version scheme, with Major.Minor. DO NOT INCLUDE BUILD OR REVISION here! 
 
-  $assemblyVersion = "0.91.0.6"    # This is a violation of the assembly version scheme, but the Fhir .Net library wants to go with this for all 0.x releases.
+  $assemblyVersion = "0.91.3"    # This is a violation of the assembly version scheme, but the Fhir .Net library wants to go with this for all 0.x releases.
 
   $nugetPkgs = @(                        # Update this for new DSTU version
     @{CsProj="Hl7.Fhir.Core"; AssemblyPattern="Hl7.Fhir.*.Core"; PkgId="Hl7.Fhir.DSTU2"},
@@ -90,7 +90,7 @@ properties {
   $Script:MSBuild = "MSBuild"
   $Script:VSTest = "VSTest.Console"
 
-  $testCaseFilter = ”TestCategory!=IntegrationTest&TestCategory!=LongRunner"
+  $testCaseFilter = "TestCategory!=IntegrationTest&TestCategory!=LongRunner"
 }
 
 
@@ -480,11 +480,11 @@ function VSTests($build)
     {
        if ($appVeyor)
        {
-         & "$VSTest" $workingSourceDir\$testName\bin\Release\$finalDir\$testName.dll /Logger:Appveyor /TestCaseFilter:”$testCaseFilter" | Out-Default  # TODO: Include LongRunners again.
+         & "$VSTest" $workingSourceDir\$testName\bin\Release\$finalDir\$testName.dll /Logger:Appveyor /TestCaseFilter:$testCaseFilter" | Out-Default  # TODO: Include LongRunners again.
        }
        else
        {
-         & "$VSTest" $workingSourceDir\$testName\bin\Release\$finalDir\$testName.dll /Logger:Trx /TestCaseFilter:”$testCaseFilter" | Out-Default     # TODO: Find out why Trx logger is often not writing anything to file.
+         & "$VSTest" $workingSourceDir\$testName\bin\Release\$finalDir\$testName.dll /Logger:Trx /TestCaseFilter:$testCaseFilter" | Out-Default     # TODO: Find out why Trx logger is often not writing anything to file.
        }
     }
     catch {

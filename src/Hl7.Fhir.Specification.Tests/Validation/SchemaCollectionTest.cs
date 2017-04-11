@@ -18,10 +18,11 @@ using Hl7.Fhir.Serialization;
 using System.Xml.Linq;
 using System.Xml.Schema;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Tests
 {
-#if !PORTABLE45
+#if NET_XSD_SCHEMA
     [TestClass]
     public class SchemaCollectionTest
     {

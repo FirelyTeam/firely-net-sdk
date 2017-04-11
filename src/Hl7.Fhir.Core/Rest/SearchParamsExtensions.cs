@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +35,7 @@ namespace Hl7.Fhir.Rest
 
         public static SearchParams Custom(this SearchParams qry, string customQueryName)
         {
-			if (customQueryName == null) throw Error.ArgumentNull("customQueryName");
+			if (customQueryName == null) throw Error.ArgumentNull(nameof(customQueryName));
 
 			qry.Query = customQueryName;
             return qry;
@@ -42,7 +43,7 @@ namespace Hl7.Fhir.Rest
 
         public static SearchParams OrderBy(this SearchParams qry, string paramName, SortOrder order = SortOrder.Ascending)
         {
-            if (paramName == null) throw Error.ArgumentNull("paramName");
+            if (paramName == null) throw Error.ArgumentNull(nameof(paramName));
 
             qry.Sort.Add(Tuple.Create(paramName, order));
             return qry;

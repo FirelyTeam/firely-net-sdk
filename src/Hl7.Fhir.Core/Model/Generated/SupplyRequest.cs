@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -169,11 +169,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // WhenComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Code != null) yield return Code;
                     if (Schedule != null) yield return Schedule;
                 }
@@ -186,7 +182,8 @@ namespace Hl7.Fhir.Model
         /// Patient for whom the item is supplied
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=90)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
         {
@@ -200,7 +197,8 @@ namespace Hl7.Fhir.Model
         /// Who initiated this order
         /// </summary>
         [FhirElement("source", InSummary=true, Order=100)]
-        [References("Practitioner","Organization","Patient")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Organization","Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Source
         {
@@ -304,7 +302,8 @@ namespace Hl7.Fhir.Model
         /// Medication, Substance, or Device requested to be supplied
         /// </summary>
         [FhirElement("orderedItem", InSummary=true, Order=150)]
-        [References("Medication","Substance","Device")]
+        [CLSCompliant(false)]
+		[References("Medication","Substance","Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference OrderedItem
         {
@@ -318,7 +317,8 @@ namespace Hl7.Fhir.Model
         /// Who is intended to fulfill the request
         /// </summary>
         [FhirElement("supplier", InSummary=true, Order=160)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Supplier
@@ -333,7 +333,8 @@ namespace Hl7.Fhir.Model
         /// Why the supply item was requested
         /// </summary>
         [FhirElement("reason", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element Reason
         {
@@ -436,17 +437,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// DomainResource elements
-				if (Text != null) yield return Text;
-				foreach (var elem in Contained) { if (elem != null) yield return elem; }
-				foreach (var elem in Extension) { if (elem != null) yield return elem; }
-				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-				// SupplyRequest elements
+                foreach (var item in base.Children) yield return item;
 				if (Patient != null) yield return Patient;
 				if (Source != null) yield return Source;
 				if (DateElement != null) yield return DateElement;

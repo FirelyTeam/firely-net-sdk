@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -552,11 +552,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ContactComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (NameElement != null) yield return NameElement;
                     foreach (var elem in Telecom) { if (elem != null) yield return elem; }
                 }
@@ -722,11 +718,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // SoftwareComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (NameElement != null) yield return NameElement;
                     if (VersionElement != null) yield return VersionElement;
                     if (ReleaseDateElement != null) yield return ReleaseDateElement;
@@ -858,11 +850,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ImplementationComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (DescriptionElement != null) yield return DescriptionElement;
                     if (UrlElement != null) yield return UrlElement;
                 }
@@ -1148,11 +1136,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // RestComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (ModeElement != null) yield return ModeElement;
                     if (DocumentationElement != null) yield return DocumentationElement;
                     if (Security != null) yield return Security;
@@ -1323,11 +1307,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // SecurityComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (CorsElement != null) yield return CorsElement;
                     foreach (var elem in Service) { if (elem != null) yield return elem; }
                     if (DescriptionElement != null) yield return DescriptionElement;
@@ -1459,11 +1439,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // CertificateComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (TypeElement != null) yield return TypeElement;
                     if (BlobElement != null) yield return BlobElement;
                 }
@@ -1516,7 +1492,8 @@ namespace Hl7.Fhir.Model
             /// Base System profile for all uses of resource
             /// </summary>
             [FhirElement("profile", Order=50)]
-            [References("StructureDefinition")]
+            [CLSCompliant(false)]
+			[References("StructureDefinition")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Profile
             {
@@ -1892,11 +1869,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ResourceComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (TypeElement != null) yield return TypeElement;
                     if (Profile != null) yield return Profile;
                     foreach (var elem in Interaction) { if (elem != null) yield return elem; }
@@ -2037,11 +2010,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ResourceInteractionComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (CodeElement != null) yield return CodeElement;
                     if (DocumentationElement != null) yield return DocumentationElement;
                 }
@@ -2351,11 +2320,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // SearchParamComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (NameElement != null) yield return NameElement;
                     if (DefinitionElement != null) yield return DefinitionElement;
                     if (TypeElement != null) yield return TypeElement;
@@ -2491,11 +2456,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // SystemInteractionComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (CodeElement != null) yield return CodeElement;
                     if (DocumentationElement != null) yield return DocumentationElement;
                 }
@@ -2548,7 +2509,8 @@ namespace Hl7.Fhir.Model
             /// The defined operation/query
             /// </summary>
             [FhirElement("definition", Order=50)]
-            [References("OperationDefinition")]
+            [CLSCompliant(false)]
+			[References("OperationDefinition")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Definition
@@ -2609,11 +2571,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // OperationComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (NameElement != null) yield return NameElement;
                     if (Definition != null) yield return Definition;
                 }
@@ -2777,11 +2735,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // MessagingComponent elements
+                    foreach (var item in base.Children) yield return item;
                     foreach (var elem in Endpoint) { if (elem != null) yield return elem; }
                     if (ReliableCacheElement != null) yield return ReliableCacheElement;
                     if (DocumentationElement != null) yield return DocumentationElement;
@@ -2896,11 +2850,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // EndpointComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Protocol != null) yield return Protocol;
                     if (AddressElement != null) yield return AddressElement;
                 }
@@ -3032,7 +2982,8 @@ namespace Hl7.Fhir.Model
             /// Profile that describes the request
             /// </summary>
             [FhirElement("request", Order=80)]
-            [References("StructureDefinition")]
+            [CLSCompliant(false)]
+			[References("StructureDefinition")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Request
@@ -3047,7 +2998,8 @@ namespace Hl7.Fhir.Model
             /// Profile that describes the response
             /// </summary>
             [FhirElement("response", Order=90)]
-            [References("StructureDefinition")]
+            [CLSCompliant(false)]
+			[References("StructureDefinition")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Response
@@ -3155,11 +3107,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // EventComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Code != null) yield return Code;
                     if (CategoryElement != null) yield return CategoryElement;
                     if (ModeElement != null) yield return ModeElement;
@@ -3249,7 +3197,8 @@ namespace Hl7.Fhir.Model
             /// Constraint on a resource used in the document
             /// </summary>
             [FhirElement("profile", Order=60)]
-            [References("StructureDefinition")]
+            [CLSCompliant(false)]
+			[References("StructureDefinition")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Profile
@@ -3313,11 +3262,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // DocumentComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (ModeElement != null) yield return ModeElement;
                     if (DocumentationElement != null) yield return DocumentationElement;
                     if (Profile != null) yield return Profile;
@@ -3824,7 +3769,8 @@ namespace Hl7.Fhir.Model
         /// Profiles for use cases supported
         /// </summary>
         [FhirElement("profile", Order=260)]
-        [References("StructureDefinition")]
+        [CLSCompliant(false)]
+		[References("StructureDefinition")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Profile
@@ -4090,17 +4036,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// DomainResource elements
-				if (Text != null) yield return Text;
-				foreach (var elem in Contained) { if (elem != null) yield return elem; }
-				foreach (var elem in Extension) { if (elem != null) yield return elem; }
-				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-				// Conformance elements
+                foreach (var item in base.Children) yield return item;
 				if (UrlElement != null) yield return UrlElement;
 				if (VersionElement != null) yield return VersionElement;
 				if (NameElement != null) yield return NameElement;

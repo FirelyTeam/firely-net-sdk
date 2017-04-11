@@ -9,6 +9,7 @@
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
@@ -32,7 +33,7 @@ namespace Hl7.Fhir.Serialization
 
         public void Serialize(object instance, Rest.SummaryType summary, bool contained = false, string root = null)
         {
-            if (instance == null) throw Error.ArgumentNull("instance");
+            if (instance == null) throw Error.ArgumentNull(nameof(instance));
 
             var mapping = _inspector.ImportType(instance.GetType());
 

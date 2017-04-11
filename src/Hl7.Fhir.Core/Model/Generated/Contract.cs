@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -64,7 +64,8 @@ namespace Hl7.Fhir.Model
             /// Contract Actor Type
             /// </summary>
             [FhirElement("entity", Order=40)]
-            [References("Contract","Device","Group","Location","Organization","Patient","Practitioner","RelatedPerson","Substance")]
+            [CLSCompliant(false)]
+			[References("Contract","Device","Group","Location","Organization","Patient","Practitioner","RelatedPerson","Substance")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Entity
@@ -139,11 +140,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ActorComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Entity != null) yield return Entity;
                     foreach (var elem in Role) { if (elem != null) yield return elem; }
                 }
@@ -163,7 +160,8 @@ namespace Hl7.Fhir.Model
             /// Contract Valued Item Type
             /// </summary>
             [FhirElement("entity", Order=40, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element Entity
             {
@@ -389,11 +387,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ValuedItemComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Entity != null) yield return Entity;
                     if (Identifier != null) yield return Identifier;
                     if (EffectiveTimeElement != null) yield return EffectiveTimeElement;
@@ -433,7 +427,8 @@ namespace Hl7.Fhir.Model
             /// Contract Signatory Party
             /// </summary>
             [FhirElement("party", Order=50)]
-            [References("Organization","Patient","Practitioner","RelatedPerson")]
+            [CLSCompliant(false)]
+			[References("Organization","Patient","Practitioner","RelatedPerson")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Party
@@ -530,11 +525,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // SignatoryComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Type != null) yield return Type;
                     if (Party != null) yield return Party;
                     if (SignatureElement != null) yield return SignatureElement;
@@ -639,7 +630,8 @@ namespace Hl7.Fhir.Model
             /// Subject of this Contract Term
             /// </summary>
             [FhirElement("subject", Order=90)]
-            [References()]
+            [CLSCompliant(false)]
+			[References()]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Subject
             {
@@ -831,11 +823,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // TermComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Identifier != null) yield return Identifier;
                     if (IssuedElement != null) yield return IssuedElement;
                     if (Applies != null) yield return Applies;
@@ -865,7 +853,8 @@ namespace Hl7.Fhir.Model
             /// Contract Term Actor
             /// </summary>
             [FhirElement("entity", Order=40)]
-            [References("Contract","Device","Group","Location","Organization","Patient","Practitioner","RelatedPerson","Substance")]
+            [CLSCompliant(false)]
+			[References("Contract","Device","Group","Location","Organization","Patient","Practitioner","RelatedPerson","Substance")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Entity
@@ -940,11 +929,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // TermActorComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Entity != null) yield return Entity;
                     foreach (var elem in Role) { if (elem != null) yield return elem; }
                 }
@@ -964,7 +949,8 @@ namespace Hl7.Fhir.Model
             /// Contract Term Valued Item Type
             /// </summary>
             [FhirElement("entity", Order=40, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element Entity
             {
@@ -1190,11 +1176,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // TermValuedItemComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Entity != null) yield return Entity;
                     if (Identifier != null) yield return Identifier;
                     if (EffectiveTimeElement != null) yield return EffectiveTimeElement;
@@ -1220,7 +1202,8 @@ namespace Hl7.Fhir.Model
             /// Easily comprehended representation of this Contract
             /// </summary>
             [FhirElement("content", Order=40, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element Content
@@ -1278,11 +1261,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // FriendlyLanguageComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Content != null) yield return Content;
                 }
             }
@@ -1301,7 +1280,8 @@ namespace Hl7.Fhir.Model
             /// Contract Legal Text
             /// </summary>
             [FhirElement("content", Order=40, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element Content
@@ -1359,11 +1339,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // LegalLanguageComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Content != null) yield return Content;
                 }
             }
@@ -1382,7 +1358,8 @@ namespace Hl7.Fhir.Model
             /// Computable Contract Rules
             /// </summary>
             [FhirElement("content", Order=40, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element Content
@@ -1440,11 +1417,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ComputableLanguageComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Content != null) yield return Content;
                 }
             }
@@ -1514,7 +1487,8 @@ namespace Hl7.Fhir.Model
         /// Subject of this Contract
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=120)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Subject
@@ -1529,7 +1503,8 @@ namespace Hl7.Fhir.Model
         /// Authority under which this Contract has standing
         /// </summary>
         [FhirElement("authority", Order=130)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Authority
@@ -1544,7 +1519,8 @@ namespace Hl7.Fhir.Model
         /// Domain in which this Contract applies
         /// </summary>
         [FhirElement("domain", Order=140)]
-        [References("Location")]
+        [CLSCompliant(false)]
+		[References("Location")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Domain
@@ -1670,7 +1646,8 @@ namespace Hl7.Fhir.Model
         /// Binding Contract
         /// </summary>
         [FhirElement("binding", Order=230, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element Binding
         {
@@ -1826,17 +1803,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// DomainResource elements
-				if (Text != null) yield return Text;
-				foreach (var elem in Contained) { if (elem != null) yield return elem; }
-				foreach (var elem in Extension) { if (elem != null) yield return elem; }
-				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-				// Contract elements
+                foreach (var item in base.Children) yield return item;
 				if (Identifier != null) yield return Identifier;
 				if (IssuedElement != null) yield return IssuedElement;
 				if (Applies != null) yield return Applies;

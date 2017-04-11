@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -159,7 +159,8 @@ namespace Hl7.Fhir.Model
         /// Target body site
         /// </summary>
         [FhirElement("bodySite", InSummary=true, Order=90, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element BodySite
         {
@@ -205,7 +206,8 @@ namespace Hl7.Fhir.Model
         /// Device requested
         /// </summary>
         [FhirElement("device", InSummary=true, Order=110)]
-        [References("Device")]
+        [CLSCompliant(false)]
+		[References("Device")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Device
@@ -220,7 +222,8 @@ namespace Hl7.Fhir.Model
         /// Encounter motivating request
         /// </summary>
         [FhirElement("encounter", InSummary=true, Order=120)]
-        [References("Encounter")]
+        [CLSCompliant(false)]
+		[References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
         {
@@ -373,7 +376,8 @@ namespace Hl7.Fhir.Model
         /// Focus of request
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=190)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -388,7 +392,8 @@ namespace Hl7.Fhir.Model
         /// Schedule for use
         /// </summary>
         [FhirElement("timing", InSummary=true, Order=200, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
         [DataMember]
         public Hl7.Fhir.Model.Element Timing
         {
@@ -519,17 +524,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// DomainResource elements
-				if (Text != null) yield return Text;
-				foreach (var elem in Contained) { if (elem != null) yield return elem; }
-				foreach (var elem in Extension) { if (elem != null) yield return elem; }
-				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-				// DeviceUseRequest elements
+                foreach (var item in base.Children) yield return item;
 				if (BodySite != null) yield return BodySite;
 				if (StatusElement != null) yield return StatusElement;
 				if (Device != null) yield return Device;

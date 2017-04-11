@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -137,7 +137,8 @@ namespace Hl7.Fhir.Model
             /// Who is committing?
             /// </summary>
             [FhirElement("author", Order=60)]
-            [References("Practitioner")]
+            [CLSCompliant(false)]
+			[References("Practitioner")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Author
             {
@@ -200,11 +201,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // MitigationComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Action != null) yield return Action;
                     if (DateElement != null) yield return DateElement;
                     if (Author != null) yield return Author;
@@ -218,7 +215,8 @@ namespace Hl7.Fhir.Model
         /// Associated patient
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=90)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
         {
@@ -277,7 +275,8 @@ namespace Hl7.Fhir.Model
         /// Problem resource
         /// </summary>
         [FhirElement("implicated", InSummary=true, Order=120)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Implicated
@@ -356,7 +355,8 @@ namespace Hl7.Fhir.Model
         /// The provider or device that identified the issue
         /// </summary>
         [FhirElement("author", InSummary=true, Order=150)]
-        [References("Practitioner","Device")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
         {
@@ -505,17 +505,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// DomainResource elements
-				if (Text != null) yield return Text;
-				foreach (var elem in Contained) { if (elem != null) yield return elem; }
-				foreach (var elem in Extension) { if (elem != null) yield return elem; }
-				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-				// DetectedIssue elements
+                foreach (var item in base.Children) yield return item;
 				if (Patient != null) yield return Patient;
 				if (Category != null) yield return Category;
 				if (SeverityElement != null) yield return SeverityElement;

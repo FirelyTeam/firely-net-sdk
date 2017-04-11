@@ -16,6 +16,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -38,14 +39,14 @@ namespace Hl7.Fhir.Serialization
 
         public object Deserialize(PropertyMapping prop, string memberName, object existing=null)
         {
-            if (prop == null) throw Error.ArgumentNull("prop");
+            if (prop == null) throw Error.ArgumentNull(nameof(prop));
 
             // ArrayMode avoid the dispatcher making nested calls into the RepeatingElementReader again
             // when reading array elements. FHIR does not support nested arrays, and this avoids an endlessly
             // nesting series of dispatcher calls
             if (!_arrayMode && prop.IsCollection)
             {
-                if (existing != null && !(existing is IList) ) throw Error.Argument("existing", "Can only read repeating elements into a type implementing IList");
+                if (existing != null && !(existing is IList) ) throw Error.Argument(nameof(existing), "Can only read repeating elements into a type implementing IList");
                 var reader = new RepeatingElementReader(_current, Settings);
                 return reader.Deserialize(prop, memberName, (IList)existing);
             }
@@ -83,7 +84,7 @@ namespace Hl7.Fhir.Serialization
                 mapping = _inspector.ImportType(prop.ElementType);
             }
 
-            if (existing != null && !(existing is Resource) && !(existing is Element) ) throw Error.Argument("existing", "Can only read complex elements into types that are Element or Resource");
+            if (existing != null && !(existing is Resource) && !(existing is Element) ) throw Error.Argument(nameof(existing), "Can only read complex elements into types that are Element or Resource");
             var cplxReader = new ComplexTypeReader(_current, Settings);
             return cplxReader.Deserialize(mapping, (Base)existing);
         }

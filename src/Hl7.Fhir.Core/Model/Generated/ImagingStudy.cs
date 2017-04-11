@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -450,11 +450,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // SeriesComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (NumberElement != null) yield return NumberElement;
                     if (Modality != null) yield return Modality;
                     if (UidElement != null) yield return UidElement;
@@ -717,11 +713,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // InstanceComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (NumberElement != null) yield return NumberElement;
                     if (UidElement != null) yield return UidElement;
                     if (SopClassElement != null) yield return SopClassElement;
@@ -770,7 +762,8 @@ namespace Hl7.Fhir.Model
         /// Who the images are of
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=100)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -845,7 +838,8 @@ namespace Hl7.Fhir.Model
         /// Order(s) that caused this study to be performed
         /// </summary>
         [FhirElement("order", InSummary=true, Order=140)]
-        [References("DiagnosticOrder")]
+        [CLSCompliant(false)]
+		[References("DiagnosticOrder")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Order
@@ -874,7 +868,8 @@ namespace Hl7.Fhir.Model
         /// Referring physician (0008,0090)
         /// </summary>
         [FhirElement("referrer", InSummary=true, Order=160)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Referrer
         {
@@ -1018,7 +1013,8 @@ namespace Hl7.Fhir.Model
         /// Type of procedure performed
         /// </summary>
         [FhirElement("procedure", InSummary=true, Order=210)]
-        [References("Procedure")]
+        [CLSCompliant(false)]
+		[References("Procedure")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Procedure
@@ -1033,7 +1029,8 @@ namespace Hl7.Fhir.Model
         /// Who interpreted images
         /// </summary>
         [FhirElement("interpreter", InSummary=true, Order=220)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Interpreter
         {
@@ -1187,17 +1184,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// DomainResource elements
-				if (Text != null) yield return Text;
-				foreach (var elem in Contained) { if (elem != null) yield return elem; }
-				foreach (var elem in Extension) { if (elem != null) yield return elem; }
-				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-				// ImagingStudy elements
+                foreach (var item in base.Children) yield return item;
 				if (StartedElement != null) yield return StartedElement;
 				if (Patient != null) yield return Patient;
 				if (UidElement != null) yield return UidElement;

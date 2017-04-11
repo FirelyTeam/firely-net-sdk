@@ -10,6 +10,7 @@
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using Newtonsoft.Json;
 using System;
 using System.Reflection;
@@ -55,7 +56,7 @@ namespace Hl7.Fhir.Serialization
 
         public Base Parse(string xml, Type dataType)
         {
-            if (dataType == null) throw Error.ArgumentNull("dataType");
+            if (dataType == null) throw Error.ArgumentNull(nameof(dataType));
 
             var reader = CreateFhirReader(xml, Settings.DisallowXsiAttributesOnRoot);
             return Parse(reader, dataType);
@@ -64,7 +65,7 @@ namespace Hl7.Fhir.Serialization
         // [WMR 20160421] Caller is responsible for disposing reader
         public Base Parse(XmlReader reader, Type dataType)
         {
-            if (dataType == null) throw Error.ArgumentNull("dataType");
+            if (dataType == null) throw Error.ArgumentNull(nameof(dataType));
 
             var xmlReader = new XmlDomFhirReader(reader, Settings.DisallowXsiAttributesOnRoot);
             return Parse(xmlReader, dataType);
@@ -126,7 +127,7 @@ namespace Hl7.Fhir.Serialization
 
         public BaseFhirParser(ParserSettings settings)
         {
-            if (settings == null) throw Error.ArgumentNull("settings");
+            if (settings == null) throw Error.ArgumentNull(nameof(settings));
             Settings = settings;
         }
 
@@ -161,11 +162,8 @@ namespace Hl7.Fhir.Serialization
             return new Lazy<ModelInspector>(() =>
             {
                 var result = new ModelInspector();
-#if PORTABLE45
-                    result.Import(typeof(Resource).GetTypeInfo().Assembly);
-#else
-                result.Import(typeof(Resource).Assembly);
-#endif
+
+                result.Import(typeof(Resource).GetTypeInfo().Assembly);
                 return result;
             });
 

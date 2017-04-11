@@ -7,21 +7,9 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Hl7.Fhir;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
 using System.Net;
-using System.IO;
-using Newtonsoft.Json;
-using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Rest;
-using System.Threading;
-using Hl7.Fhir.Introspection;
-using System.Threading.Tasks;
-
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Rest
 {
@@ -88,7 +76,7 @@ namespace Hl7.Fhir.Rest
         /// of all resources of the given Resource type</remarks>
         public Bundle Search(string resource, string[] criteria = null, string[] includes = null, int? pageSize = null, SummaryType? summary = null)
         {
-            if (resource == null) throw Error.ArgumentNull("resource");
+            if (resource == null) throw Error.ArgumentNull(nameof(resource));
 
             return Search(toQuery(criteria, includes, pageSize, summary), resource);
         }
@@ -125,7 +113,7 @@ namespace Hl7.Fhir.Rest
         /// returned resource refers to.</remarks>
         public Bundle SearchById<TResource>(string id, string[] includes = null, int? pageSize = null) where TResource : Resource, new()
         {
-            if (id == null) throw Error.ArgumentNull("id");
+            if (id == null) throw Error.ArgumentNull(nameof(id));
 
             return SearchById(typeof(TResource).GetCollectionName(), id, includes, pageSize);
         }
@@ -144,8 +132,8 @@ namespace Hl7.Fhir.Rest
         /// returned resource refers to.</remarks>
         public Bundle SearchById(string resource, string id, string[] includes = null, int? pageSize = null)
         {
-            if (resource == null) throw Error.ArgumentNull("resource");
-            if (id == null) throw Error.ArgumentNull("id");
+            if (resource == null) throw Error.ArgumentNull(nameof(resource));
+            if (id == null) throw Error.ArgumentNull(nameof(id));
 
             string criterium = "_id=" + id;
             return Search(toQuery(new string[] { criterium }, includes, pageSize, summary: null), resource);
@@ -184,7 +172,7 @@ namespace Hl7.Fhir.Rest
         /// the server did not have more results in that direction.</returns>
         public Bundle Continue(Bundle current, PageDirection direction = PageDirection.Next)
         {
-            if (current == null) throw Error.ArgumentNull("current");
+            if (current == null) throw Error.ArgumentNull(nameof(current));
             if (current.Link == null) return null;
 
             Uri continueAt = null;

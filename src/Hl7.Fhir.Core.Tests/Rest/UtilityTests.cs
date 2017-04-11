@@ -23,19 +23,13 @@ using System.Threading.Tasks;
 namespace Hl7.Fhir.Tests.Rest
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableUtilityTests
-#else
     public class UtilityTests
-#endif
     {
-#if !PORTABLE45
         [TestMethod]
         public void GetResourceFormatSupportsCharset()
         {
             Assert.AreEqual(ContentType.GetResourceFormatFromContentType("text/xml;charset=ISO-8859-1"), ResourceFormat.Xml);
             Assert.AreEqual(ContentType.GetResourceFormatFromContentType("text/xml"), ResourceFormat.Xml);
         }
-#endif
     }
 }

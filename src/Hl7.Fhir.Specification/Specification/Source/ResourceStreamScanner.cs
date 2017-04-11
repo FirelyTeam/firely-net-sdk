@@ -17,6 +17,7 @@ using Hl7.Fhir.Support;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Introspection;
 using System.Diagnostics;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -196,7 +197,7 @@ namespace Hl7.Fhir.Specification.Source
 
         public XElement FindResourceByUri(string uri)
         {
-            if (uri == null) throw Error.ArgumentNull("uri");
+            if (uri == null) throw Error.ArgumentNull(nameof(uri));
 
             var resources = StreamResources();
 

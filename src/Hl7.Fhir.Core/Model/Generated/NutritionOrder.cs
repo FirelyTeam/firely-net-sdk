@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -281,11 +281,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // OralDietComponent elements
+                    foreach (var item in base.Children) yield return item;
                     foreach (var elem in Type) { if (elem != null) yield return elem; }
                     foreach (var elem in Schedule) { if (elem != null) yield return elem; }
                     foreach (var elem in Nutrient) { if (elem != null) yield return elem; }
@@ -381,11 +377,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // NutrientComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Modifier != null) yield return Modifier;
                     if (Amount != null) yield return Amount;
                 }
@@ -477,11 +469,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // TextureComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Modifier != null) yield return Modifier;
                     if (FoodType != null) yield return FoodType;
                 }
@@ -660,11 +648,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // SupplementComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Type != null) yield return Type;
                     if (ProductNameElement != null) yield return ProductNameElement;
                     foreach (var elem in Schedule) { if (elem != null) yield return elem; }
@@ -929,11 +913,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // EnteralFormulaComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (BaseFormulaType != null) yield return BaseFormulaType;
                     if (BaseFormulaProductNameElement != null) yield return BaseFormulaProductNameElement;
                     if (AdditiveType != null) yield return AdditiveType;
@@ -986,7 +966,8 @@ namespace Hl7.Fhir.Model
             /// Speed with which the formula is provided per period of time
             /// </summary>
             [FhirElement("rate", Order=60, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.SimpleQuantity),typeof(Hl7.Fhir.Model.Ratio))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.SimpleQuantity),typeof(Hl7.Fhir.Model.Ratio))]
             [DataMember]
             public Hl7.Fhir.Model.Element Rate
             {
@@ -1049,11 +1030,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // AdministrationComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Schedule != null) yield return Schedule;
                     if (Quantity != null) yield return Quantity;
                     if (Rate != null) yield return Rate;
@@ -1067,7 +1044,8 @@ namespace Hl7.Fhir.Model
         /// The person who requires the diet, formula or nutritional supplement
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=90)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -1082,7 +1060,8 @@ namespace Hl7.Fhir.Model
         /// Who ordered the diet, formula or nutritional supplement
         /// </summary>
         [FhirElement("orderer", InSummary=true, Order=100)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Orderer
         {
@@ -1110,7 +1089,8 @@ namespace Hl7.Fhir.Model
         /// The encounter associated with this nutrition order
         /// </summary>
         [FhirElement("encounter", Order=120)]
-        [References("Encounter")]
+        [CLSCompliant(false)]
+		[References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
         {
@@ -1189,7 +1169,8 @@ namespace Hl7.Fhir.Model
         /// List of the patient's food and nutrition-related allergies and intolerances
         /// </summary>
         [FhirElement("allergyIntolerance", Order=150)]
-        [References("AllergyIntolerance")]
+        [CLSCompliant(false)]
+		[References("AllergyIntolerance")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> AllergyIntolerance
@@ -1364,17 +1345,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// DomainResource elements
-				if (Text != null) yield return Text;
-				foreach (var elem in Contained) { if (elem != null) yield return elem; }
-				foreach (var elem in Extension) { if (elem != null) yield return elem; }
-				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-				// NutritionOrder elements
+                foreach (var item in base.Children) yield return item;
 				if (Patient != null) yield return Patient;
 				if (Orderer != null) yield return Orderer;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }

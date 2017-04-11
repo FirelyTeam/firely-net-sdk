@@ -8,6 +8,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Validation;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Model
 {
@@ -33,9 +34,9 @@ namespace Hl7.Fhir.Model
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
-            if (other == null) throw Error.ArgumentNull("other");
+            if (other == null) throw Error.ArgumentNull(nameof(other));
             if(this.GetType() != other.GetType())
-                throw Error.Argument("other", "Can only copy to an object of the same type");
+                throw Error.Argument(nameof(other), "Can only copy to an object of the same type");
 
             base.CopyTo(other);
             if (ObjectValue != null) ((Primitive)other).ObjectValue = ObjectValue;
@@ -55,7 +56,7 @@ namespace Hl7.Fhir.Model
 
         public override bool IsExactly(IDeepComparable other)
         {
-            if (other == null) throw Error.ArgumentNull("other");
+            if (other == null) throw Error.ArgumentNull(nameof(other));
 
             if (this.GetType() != other.GetType()) return false;
 

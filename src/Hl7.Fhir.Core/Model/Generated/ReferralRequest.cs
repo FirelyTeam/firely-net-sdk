@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -226,7 +226,8 @@ namespace Hl7.Fhir.Model
         /// Patient referred to care or transfer
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=150)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
         {
@@ -240,7 +241,8 @@ namespace Hl7.Fhir.Model
         /// Requester of referral / transfer of care
         /// </summary>
         [FhirElement("requester", InSummary=true, Order=160)]
-        [References("Practitioner","Organization","Patient")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Organization","Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Requester
         {
@@ -254,7 +256,8 @@ namespace Hl7.Fhir.Model
         /// Receiver of referral / transfer of care request
         /// </summary>
         [FhirElement("recipient", InSummary=true, Order=170)]
-        [References("Practitioner","Organization")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Organization")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Recipient
@@ -269,7 +272,8 @@ namespace Hl7.Fhir.Model
         /// Originating encounter
         /// </summary>
         [FhirElement("encounter", Order=180)]
-        [References("Encounter")]
+        [CLSCompliant(false)]
+		[References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
         {
@@ -374,7 +378,8 @@ namespace Hl7.Fhir.Model
         /// Additonal information to support referral or transfer of care request
         /// </summary>
         [FhirElement("supportingInformation", InSummary=true, Order=230)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> SupportingInformation
@@ -496,17 +501,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// DomainResource elements
-				if (Text != null) yield return Text;
-				foreach (var elem in Contained) { if (elem != null) yield return elem; }
-				foreach (var elem in Extension) { if (elem != null) yield return elem; }
-				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-				// ReferralRequest elements
+                foreach (var item in base.Children) yield return item;
 				if (StatusElement != null) yield return StatusElement;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (DateElement != null) yield return DateElement;

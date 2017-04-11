@@ -12,6 +12,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
 using System.Net;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -34,7 +35,7 @@ namespace Hl7.Fhir.Specification.Source
 
         public Hl7.Fhir.Model.Resource ResolveByUri(string uri)
         {
-            if (uri == null) throw Error.ArgumentNull("uri");
+            if (uri == null) throw Error.ArgumentNull(nameof(uri));
 
             if (!ResourceIdentity.IsRestResourceIdentity(uri)) return null;     // Weakness in FhirClient, need to have the base :-(  So return null if we cannot determine it.
 

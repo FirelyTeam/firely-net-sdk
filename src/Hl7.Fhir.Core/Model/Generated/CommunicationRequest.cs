@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -133,7 +133,8 @@ namespace Hl7.Fhir.Model
             /// Message part content
             /// </summary>
             [FhirElement("content", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element Content
@@ -191,11 +192,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // PayloadComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Content != null) yield return Content;
                 }
             }
@@ -234,7 +231,8 @@ namespace Hl7.Fhir.Model
         /// Message sender
         /// </summary>
         [FhirElement("sender", InSummary=true, Order=110)]
-        [References("Device","Organization","Patient","Practitioner","RelatedPerson")]
+        [CLSCompliant(false)]
+		[References("Device","Organization","Patient","Practitioner","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Sender
         {
@@ -248,7 +246,8 @@ namespace Hl7.Fhir.Model
         /// Message recipient
         /// </summary>
         [FhirElement("recipient", InSummary=true, Order=120)]
-        [References("Device","Organization","Patient","Practitioner","RelatedPerson")]
+        [CLSCompliant(false)]
+		[References("Device","Organization","Patient","Practitioner","RelatedPerson")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Recipient
@@ -291,7 +290,8 @@ namespace Hl7.Fhir.Model
         /// An individual who requested a communication
         /// </summary>
         [FhirElement("requester", InSummary=true, Order=150)]
-        [References("Practitioner","Patient","RelatedPerson")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Patient","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Requester
         {
@@ -337,7 +337,8 @@ namespace Hl7.Fhir.Model
         /// Encounter leading to message
         /// </summary>
         [FhirElement("encounter", InSummary=true, Order=170)]
-        [References("Encounter")]
+        [CLSCompliant(false)]
+		[References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
         {
@@ -351,7 +352,8 @@ namespace Hl7.Fhir.Model
         /// When scheduled
         /// </summary>
         [FhirElement("scheduled", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
         public Hl7.Fhir.Model.Element Scheduled
         {
@@ -411,7 +413,8 @@ namespace Hl7.Fhir.Model
         /// Focus of message
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=210)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -526,17 +529,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// DomainResource elements
-				if (Text != null) yield return Text;
-				foreach (var elem in Contained) { if (elem != null) yield return elem; }
-				foreach (var elem in Extension) { if (elem != null) yield return elem; }
-				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-				// CommunicationRequest elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (Category != null) yield return Category;
 				if (Sender != null) yield return Sender;

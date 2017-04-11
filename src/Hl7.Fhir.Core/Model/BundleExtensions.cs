@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Model
 {
@@ -98,8 +99,8 @@ namespace Hl7.Fhir.Model
             // From the spec: If the reference is version specific (either relative or absolute), then remove the version from the URL 
             // before matching fullUrl, and then match the version based on Resource.meta.versionId.
 
-            if (reference == null) throw Error.ArgumentNull("reference");
-            if (!new Uri(reference, UriKind.RelativeOrAbsolute).IsAbsoluteUri) throw Error.Argument("reference", "uri should be absolute");
+            if (reference == null) throw Error.ArgumentNull(nameof(reference));
+            if (!new Uri(reference, UriKind.RelativeOrAbsolute).IsAbsoluteUri) throw Error.Argument(nameof(reference), "uri should be absolute");
 
             string referencedVersion = ResourceIdentity.IsRestResourceIdentity(reference) ? (new ResourceIdentity(reference).VersionId) : null;
             reference = referencedVersion != null ? (new ResourceIdentity(reference).WithoutVersion().ToString()) : reference;
@@ -118,9 +119,9 @@ namespace Hl7.Fhir.Model
         /// <returns>A list of Resources with the given identity, or an empty list if none were found.</returns>
         public static IEnumerable<Bundle.EntryComponent> FindEntry(this Bundle bundle, string reference, bool includeDeleted = false)
         {
-            if (reference == null) throw Error.ArgumentNull("reference");
+            if (reference == null) throw Error.ArgumentNull(nameof(reference));
             if (bundle.Entry == null) return Enumerable.Empty<Bundle.EntryComponent>();
-            if (!new Uri(reference, UriKind.RelativeOrAbsolute).IsAbsoluteUri) throw Error.Argument("reference", "uri should be absolute");
+            if (!new Uri(reference, UriKind.RelativeOrAbsolute).IsAbsoluteUri) throw Error.Argument(nameof(reference), "uri should be absolute");
 
             string referencedVersion = ResourceIdentity.IsRestResourceIdentity(reference) ? (new ResourceIdentity(reference).VersionId) : null;
             reference = referencedVersion != null ? (new ResourceIdentity(reference).WithoutVersion().ToString()) : reference;
@@ -157,8 +158,8 @@ namespace Hl7.Fhir.Model
         [Obsolete("Bundle Entries are now identified by their fullUrl, so cannot be referenced anymore by just the type and id. Use the other overloads instead")]
         public static IEnumerable<Bundle.EntryComponent> FindEntry(this Bundle bundle, string type, string id, string version = null, bool includeDeleted = false)
         {
-            if (type == null) throw Error.ArgumentNull("resource");
-            if (id == null) throw Error.ArgumentNull("id");
+            if (type == null) throw Error.ArgumentNull(nameof(type));
+            if (id == null) throw Error.ArgumentNull(nameof(id));
             var identity = ResourceIdentity.Build(type,id,version);
 
             return FindEntry(bundle, identity, includeDeleted);

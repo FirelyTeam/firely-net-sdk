@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -26,7 +27,7 @@ namespace Hl7.Fhir.Serialization
      
         public bool CanCreate(Type type)
         {
-            if (type == null) throw Error.ArgumentNull("type");
+            if (type == null) throw Error.ArgumentNull(nameof(type));
 
             // Can create any type, as long as a public default constructor is present
             var canCreate = ReflectionHelper.HasDefaultPublicConstructor(type) ||
@@ -38,10 +39,10 @@ namespace Hl7.Fhir.Serialization
 
         public object Create(Type type)
         {
-            if (type == null) throw Error.ArgumentNull("type");
-         //   if (!type.CanBeTreatedAsType(typeof(Base))) throw Error.Argument("type argument must be a subclass of Base");
+            if (type == null) throw Error.ArgumentNull(nameof(type));
+            //   if (!type.CanBeTreatedAsType(typeof(Base))) throw Error.Argument(nameof(type), "type argument must be a subclass of Base");
 
-           // var typeToCreate = findTypeSubstitution(type);
+            // var typeToCreate = findTypeSubstitution(type);
             var typeToCreate = type;
 
             // For nullable types, create an instance of the type that
@@ -52,11 +53,7 @@ namespace Hl7.Fhir.Serialization
             // If type is a typed collection (but not an array), and the type
             // is not a concrete collection type, but an interface, create a new List of
             // the given type.
-#if PORTABLE45
-			if (ReflectionHelper.IsTypedCollection(typeToCreate) && !typeToCreate.IsArray && typeToCreate.GetTypeInfo().IsInterface)
-#else
-            if(ReflectionHelper.IsTypedCollection(typeToCreate) && !typeToCreate.IsArray && typeToCreate.IsInterface)
-#endif
+            if (ReflectionHelper.IsTypedCollection(typeToCreate) && !typeToCreate.IsArray && typeToCreate.GetTypeInfo().IsInterface)
 			{
                 var elementType = ReflectionHelper.GetCollectionItemType(typeToCreate);
                 typeToCreate = typeof(List<>).MakeGenericType(elementType);

@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -111,7 +111,8 @@ namespace Hl7.Fhir.Model
             /// Individual, device or organization playing role
             /// </summary>
             [FhirElement("actor", InSummary=true, Order=50)]
-            [References("Practitioner","RelatedPerson","Patient","Device","Organization")]
+            [CLSCompliant(false)]
+			[References("Practitioner","RelatedPerson","Patient","Device","Organization")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Actor
             {
@@ -204,11 +205,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // AgentComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Role != null) yield return Role;
                     if (Actor != null) yield return Actor;
                     if (UserId != null) yield return UserId;
@@ -323,11 +320,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // RelatedAgentComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Type != null) yield return Type;
                     if (TargetElement != null) yield return TargetElement;
                 }
@@ -527,11 +520,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // EntityComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (RoleElement != null) yield return RoleElement;
                     if (Type != null) yield return Type;
                     if (ReferenceElement != null) yield return ReferenceElement;
@@ -547,7 +536,8 @@ namespace Hl7.Fhir.Model
         /// Target Reference(s) (usually version specific)
         /// </summary>
         [FhirElement("target", InSummary=true, Order=90)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Target
@@ -635,7 +625,8 @@ namespace Hl7.Fhir.Model
         /// Where the activity occurred, if relevant
         /// </summary>
         [FhirElement("location", InSummary=true, Order=140)]
-        [References("Location")]
+        [CLSCompliant(false)]
+		[References("Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Location
         {
@@ -800,17 +791,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// DomainResource elements
-				if (Text != null) yield return Text;
-				foreach (var elem in Contained) { if (elem != null) yield return elem; }
-				foreach (var elem in Extension) { if (elem != null) yield return elem; }
-				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-				// Provenance elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Target) { if (elem != null) yield return elem; }
 				if (Period != null) yield return Period;
 				if (RecordedElement != null) yield return RecordedElement;

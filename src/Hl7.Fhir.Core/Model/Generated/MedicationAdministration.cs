@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -96,7 +96,8 @@ namespace Hl7.Fhir.Model
             /// Body site administered to
             /// </summary>
             [FhirElement("site", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element Site
             {
@@ -149,7 +150,8 @@ namespace Hl7.Fhir.Model
             /// Dose quantity per unit of time
             /// </summary>
             [FhirElement("rate", InSummary=true, Order=90, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Range))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Range))]
             [DataMember]
             public Hl7.Fhir.Model.Element Rate
             {
@@ -221,11 +223,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // DosageComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (TextElement != null) yield return TextElement;
                     if (Site != null) yield return Site;
                     if (Route != null) yield return Route;
@@ -289,7 +287,8 @@ namespace Hl7.Fhir.Model
         /// Who received medication
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=110)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -304,7 +303,8 @@ namespace Hl7.Fhir.Model
         /// Who administered substance
         /// </summary>
         [FhirElement("practitioner", InSummary=true, Order=120)]
-        [References("Practitioner","Patient","RelatedPerson")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Patient","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Practitioner
         {
@@ -318,7 +318,8 @@ namespace Hl7.Fhir.Model
         /// Encounter administered as part of
         /// </summary>
         [FhirElement("encounter", InSummary=true, Order=130)]
-        [References("Encounter")]
+        [CLSCompliant(false)]
+		[References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
         {
@@ -332,7 +333,8 @@ namespace Hl7.Fhir.Model
         /// Order administration performed against
         /// </summary>
         [FhirElement("prescription", InSummary=true, Order=140)]
-        [References("MedicationOrder")]
+        [CLSCompliant(false)]
+		[References("MedicationOrder")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Prescription
         {
@@ -406,7 +408,8 @@ namespace Hl7.Fhir.Model
         /// Start and end time of administration
         /// </summary>
         [FhirElement("effectiveTime", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Element EffectiveTime
@@ -421,7 +424,8 @@ namespace Hl7.Fhir.Model
         /// What was administered
         /// </summary>
         [FhirElement("medication", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Element Medication
@@ -436,7 +440,8 @@ namespace Hl7.Fhir.Model
         /// Device used to administer
         /// </summary>
         [FhirElement("device", InSummary=true, Order=200)]
-        [References("Device")]
+        [CLSCompliant(false)]
+		[References("Device")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Device
@@ -614,17 +619,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// DomainResource elements
-				if (Text != null) yield return Text;
-				foreach (var elem in Contained) { if (elem != null) yield return elem; }
-				foreach (var elem in Extension) { if (elem != null) yield return elem; }
-				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-				// MedicationAdministration elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
 				if (Patient != null) yield return Patient;

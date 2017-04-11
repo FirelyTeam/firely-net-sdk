@@ -12,7 +12,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Hl7.Fhir.Introspection;
-#if !PORTABLE45 || NET45
+using Hl7.Fhir.Utility;
+#if DOTNETFW
 using System.Runtime.Serialization;
 #endif
 using Hl7.Fhir.Model;
@@ -40,7 +41,7 @@ namespace Hl7.Fhir.Rest
     ///   * Anchor: just the "logical id"
     /// 
     /// </summary>
-#if !PORTABLE45
+#if DOTNETFW
     [SerializableAttribute]
 #endif
     [System.Diagnostics.DebuggerDisplay(@"\{ResourceType={ResourceType} Id={Id} VersionId={VersionId} Base={BaseUri} ToString={ToString()}")]
@@ -121,10 +122,10 @@ namespace Hl7.Fhir.Rest
         /// <returns></returns>
         public static ResourceIdentity Build(Uri baseUrl, string resourceType, string id, string vid = null)
         {
-            if (baseUrl == null) throw Error.ArgumentNull("baseUrl");
-            if (!baseUrl.IsAbsoluteUri) throw Error.Argument("baseUrl", "Base must be an absolute path");
-            if (resourceType == null) throw Error.ArgumentNull("resourceType");
-            if (id == null) throw Error.ArgumentNull("id");
+            if (baseUrl == null) throw Error.ArgumentNull(nameof(baseUrl));
+            if (!baseUrl.IsAbsoluteUri) throw Error.Argument(nameof(baseUrl), "Base must be an absolute path");
+            if (resourceType == null) throw Error.ArgumentNull(nameof(resourceType));
+            if (id == null) throw Error.ArgumentNull(nameof(id));
 
             return new ResourceIdentity(baseUrl, resourceType, id, vid, ResourceIdentityForm.AbsoluteRestUrl);
         }
@@ -140,8 +141,8 @@ namespace Hl7.Fhir.Rest
 
         public static ResourceIdentity Build(string resourceType, string id, string vid = null)
         {
-            if (resourceType == null) throw Error.ArgumentNull("resourceType");
-            if (id == null) throw Error.ArgumentNull("id");
+            if (resourceType == null) throw Error.ArgumentNull(nameof(resourceType));
+            if (id == null) throw Error.ArgumentNull(nameof(id));
 
             return new ResourceIdentity(null, resourceType, id, vid, ResourceIdentityForm.RelativeRestUrl);
         }
@@ -155,10 +156,10 @@ namespace Hl7.Fhir.Rest
         /// <returns></returns>
         public static ResourceIdentity Build(UrnType urnType, string id)
         {
-            //if (baseUrn == null) throw Error.ArgumentNull("baseUrn");
-            //if (!baseUrn.IsAbsoluteUri) throw Error.Argument("baseUrn", "Base must be an absolute path");
-            //if (!isUrn(baseUrn.OriginalString)) throw Error.Argument("baseUrn", "Base must be a urn:oid: or urn:uuid:");
-            if (id == null) throw Error.ArgumentNull("id");
+            //if (baseUrn == null) throw Error.ArgumentNull(nameof(baseUrn));
+            //if (!baseUrn.IsAbsoluteUri) throw Error.Argument(nameof(baseUrn), "Base must be an absolute path");
+            //if (!isUrn(baseUrn.OriginalString)) throw Error.Argument(nameof(baseUrn), "Base must be a urn:oid: or urn:uuid:");
+            if (id == null) throw Error.ArgumentNull(nameof(id));
 
             Uri baseUrn;
 
@@ -179,10 +180,10 @@ namespace Hl7.Fhir.Rest
         /// <returns></returns>
         public static ResourceIdentity Build(Uri baseUrn, string id)
         {
-            if (baseUrn == null) throw Error.ArgumentNull("baseUrn");
-            if (!baseUrn.IsAbsoluteUri) throw Error.Argument("baseUrn", "Base must be an absolute path");
-            if (!isUrn(baseUrn.OriginalString)) throw Error.Argument("baseUrn", "Base must be a urn:oid: or urn:uuid:");
-            if (id == null) throw Error.ArgumentNull("id");
+            if (baseUrn == null) throw Error.ArgumentNull(nameof(baseUrn));
+            if (!baseUrn.IsAbsoluteUri) throw Error.Argument(nameof(baseUrn), "Base must be an absolute path");
+            if (!isUrn(baseUrn.OriginalString)) throw Error.Argument(nameof(baseUrn), "Base must be a urn:oid: or urn:uuid:");
+            if (id == null) throw Error.ArgumentNull(nameof(id));
 
             return new ResourceIdentity(baseUrn, null, id, null, ResourceIdentityForm.Urn);
         }
@@ -195,7 +196,7 @@ namespace Hl7.Fhir.Rest
         /// <returns></returns>
         public static ResourceIdentity Build(string id)
         {
-            if (id == null) throw Error.ArgumentNull("id");
+            if (id == null) throw Error.ArgumentNull(nameof(id));
 
             return new ResourceIdentity(null, null, id, null, ResourceIdentityForm.Local);
         }

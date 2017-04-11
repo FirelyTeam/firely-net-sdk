@@ -9,6 +9,7 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace Hl7.Fhir.Rest
     {
         public static Bundle RefreshBundle(this FhirClient client, Bundle bundle)
         {
-            if (bundle == null) throw Error.ArgumentNull("bundle");
+            if (bundle == null) throw Error.ArgumentNull(nameof(bundle));
 
             if (bundle.Type != Bundle.BundleType.Searchset) throw Error.Argument("Refresh is only applicable to bundles of type 'searchset'");
 

@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -129,7 +129,8 @@ namespace Hl7.Fhir.Model
             /// Reference to ImagingStudy
             /// </summary>
             [FhirElement("imagingStudy", InSummary=true, Order=60)]
-            [References("ImagingStudy")]
+            [CLSCompliant(false)]
+			[References("ImagingStudy")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference ImagingStudy
             {
@@ -209,11 +210,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // StudyComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (UidElement != null) yield return UidElement;
                     if (UrlElement != null) yield return UrlElement;
                     if (ImagingStudy != null) yield return ImagingStudy;
@@ -362,11 +359,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // SeriesComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (UidElement != null) yield return UidElement;
                     if (UrlElement != null) yield return UrlElement;
                     foreach (var elem in Instance) { if (elem != null) yield return elem; }
@@ -552,11 +545,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // InstanceComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (SopClassElement != null) yield return SopClassElement;
                     if (UidElement != null) yield return UidElement;
                     if (UrlElement != null) yield return UrlElement;
@@ -690,11 +679,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // FramesComponent elements
+                    foreach (var item in base.Children) yield return item;
                     foreach (var elem in FrameNumbersElement) { if (elem != null) yield return elem; }
                     if (UrlElement != null) yield return UrlElement;
                 }
@@ -740,7 +725,8 @@ namespace Hl7.Fhir.Model
         /// Patient of the selected objects
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=100)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -801,7 +787,8 @@ namespace Hl7.Fhir.Model
         /// Author (human or machine)
         /// </summary>
         [FhirElement("author", InSummary=true, Order=130)]
-        [References("Practitioner","Device","Organization","Patient","RelatedPerson")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Device","Organization","Patient","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
         {
@@ -928,17 +915,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// DomainResource elements
-				if (Text != null) yield return Text;
-				foreach (var elem in Contained) { if (elem != null) yield return elem; }
-				foreach (var elem in Extension) { if (elem != null) yield return elem; }
-				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-				// ImagingObjectSelection elements
+                foreach (var item in base.Children) yield return item;
 				if (UidElement != null) yield return UidElement;
 				if (Patient != null) yield return Patient;
 				if (Title != null) yield return Title;

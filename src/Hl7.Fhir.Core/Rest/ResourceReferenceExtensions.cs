@@ -31,6 +31,7 @@
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,15 +51,15 @@ namespace Hl7.Fhir.Rest
         /// <returns></returns>
         public static Uri GetAbsoluteUriForReference(this ResourceReference reference, Uri parentResourceUri)
         {
-            if (parentResourceUri == null) throw Error.ArgumentNull("parentResourceUri");
-            if (reference == null) throw Error.ArgumentNull("reference");
+            if (parentResourceUri == null) throw Error.ArgumentNull(nameof(parentResourceUri));
+            if (reference == null) throw Error.ArgumentNull(nameof(reference));
             if (reference.Reference == null) return null;
 
             // Don't need to do anything when Uri is absolute
             var referenceUri = new Uri(reference.Reference, UriKind.RelativeOrAbsolute);
             if (referenceUri.IsAbsoluteUri) return referenceUri;
 
-            if (!ResourceIdentity.IsRestResourceIdentity(parentResourceUri)) throw Error.Argument("parentResourceUri", "Must be an absolute FHIR REST identity when reference is relative");
+            if (!ResourceIdentity.IsRestResourceIdentity(parentResourceUri)) throw Error.Argument(nameof(parentResourceUri), "Must be an absolute FHIR REST identity when reference is relative");
             var parent = new ResourceIdentity(parentResourceUri);
             return HttpUtil.MakeAbsoluteToBase(referenceUri, parent.BaseUri);
         }

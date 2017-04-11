@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -127,7 +127,8 @@ namespace Hl7.Fhir.Model
             /// Code or observation that resulted from goal
             /// </summary>
             [FhirElement("result", Order=40, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element Result
             {
@@ -184,11 +185,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // OutcomeComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Result != null) yield return Result;
                 }
             }
@@ -214,7 +211,8 @@ namespace Hl7.Fhir.Model
         /// Who this goal is intended for
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=100)]
-        [References("Patient","Group","Organization")]
+        [CLSCompliant(false)]
+		[References("Patient","Group","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -228,7 +226,8 @@ namespace Hl7.Fhir.Model
         /// When goal pursuit begins
         /// </summary>
         [FhirElement("start", InSummary=true, Order=110, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.CodeableConcept))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.CodeableConcept))]
         [DataMember]
         public Hl7.Fhir.Model.Element Start
         {
@@ -242,7 +241,8 @@ namespace Hl7.Fhir.Model
         /// Reach goal on or before
         /// </summary>
         [FhirElement("target", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Duration))]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Duration))]
         [DataMember]
         public Hl7.Fhir.Model.Element Target
         {
@@ -381,7 +381,8 @@ namespace Hl7.Fhir.Model
         /// Who's responsible for creating Goal?
         /// </summary>
         [FhirElement("author", InSummary=true, Order=180)]
-        [References("Patient","Practitioner","RelatedPerson")]
+        [CLSCompliant(false)]
+		[References("Patient","Practitioner","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
         {
@@ -408,7 +409,8 @@ namespace Hl7.Fhir.Model
         /// Issues addressed by this goal
         /// </summary>
         [FhirElement("addresses", Order=200)]
-        [References("Condition","Observation","MedicationStatement","NutritionOrder","ProcedureRequest","RiskAssessment")]
+        [CLSCompliant(false)]
+		[References("Condition","Observation","MedicationStatement","NutritionOrder","ProcedureRequest","RiskAssessment")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Addresses
@@ -539,17 +541,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// DomainResource elements
-				if (Text != null) yield return Text;
-				foreach (var elem in Contained) { if (elem != null) yield return elem; }
-				foreach (var elem in Extension) { if (elem != null) yield return elem; }
-				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-				// Goal elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (Subject != null) yield return Subject;
 				if (Start != null) yield return Start;

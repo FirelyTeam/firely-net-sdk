@@ -11,8 +11,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
 using System.Diagnostics;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Navigation
 {
@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
         public ElementDefinitionNavigator(IList<ElementDefinition> elements, StructureDefinition definition)
         {
-            if (elements == null) throw Error.ArgumentNull("elements");
+            if (elements == null) throw Error.ArgumentNull(nameof(elements));
 
             StructureDefinition = definition;
             Elements = elements.ToList();      // make a *shallow* copy of the list of elements
@@ -35,8 +35,8 @@ namespace Hl7.Fhir.Specification.Navigation
 
         public ElementDefinitionNavigator(StructureDefinition definition)
         {
-            if (definition == null) throw Error.ArgumentNull("definition");
-            if (definition.Snapshot == null) throw Error.ArgumentNull("snapshot");
+            if (definition == null) throw Error.ArgumentNull(nameof(definition));
+            if (definition.Snapshot == null) throw Error.Argument(nameof(definition), "The specified StructureDefinition has no snapshot component.");
 
             StructureDefinition = definition;
             Elements = definition.Snapshot.Element.ToList();      // make a *shallow* copy of the list of elements
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
         public ElementDefinitionNavigator(ElementDefinitionNavigator other)
         {
-            if (other == null) throw Error.ArgumentNull("other");
+            if (other == null) throw Error.ArgumentNull(nameof(other));
 
             Elements = other.Elements.ToList();
             OrdinalPosition = other.OrdinalPosition;
@@ -69,14 +69,16 @@ namespace Hl7.Fhir.Specification.Navigation
 
         public static ElementDefinitionNavigator ForSnapshot(StructureDefinition sd)
         {
-            if (sd.Snapshot == null) throw Error.ArgumentNull("snapshot");
+            if (sd == null) throw Error.ArgumentNull(nameof(sd));
+            if (sd.Snapshot == null) throw Error.Argument(nameof(sd), "The specified StructureDefinition has no snapshot component.");
 
             return new ElementDefinitionNavigator(sd.Snapshot.Element, sd);
         }
 
         public static ElementDefinitionNavigator ForDifferential(StructureDefinition sd)
         {
-            if (sd.Differential == null) throw Error.ArgumentNull("differential");
+            if (sd == null) throw Error.ArgumentNull(nameof(sd));
+            if (sd.Differential == null) throw Error.ArgumentNull(nameof(sd), "The specified StructureDefinition has no differential component.");
 
             return new ElementDefinitionNavigator(sd.Differential.Element, sd);
         }
@@ -544,11 +546,13 @@ namespace Hl7.Fhir.Specification.Navigation
         {
             get
             {
+                var elem = Current;
+                if (elem == null) { return "(not positioned)"; }
+
                 var output = new StringBuilder();
-                foreach (var elem in Elements)
-                {
-                    output.AppendFormat("{0}{1}\r\n", elem == Current ? "*" : "", elem.Path);
-                }
+                output.Append(elem.Path);
+                if (elem.Name != null) { output.Append(" : '" + elem.Name + "'"); }
+                if (elem.Slicing != null) { output.AppendFormat(" (slicing entry: {0})", string.Join(" | ", elem.Slicing.Discriminator)); }
                 return output.ToString();
             }
         }

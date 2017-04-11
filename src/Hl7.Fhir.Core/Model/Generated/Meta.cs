@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -235,9 +235,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                // Element elements
-                foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                // Meta elements
+                foreach (var item in base.Children) yield return item;
                 if (VersionIdElement != null) yield return VersionIdElement;
                 if (LastUpdatedElement != null) yield return LastUpdatedElement;
                 foreach (var elem in ProfileElement) { if (elem != null) yield return elem; }

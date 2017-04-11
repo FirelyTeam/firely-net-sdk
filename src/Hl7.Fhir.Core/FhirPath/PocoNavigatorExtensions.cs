@@ -33,6 +33,8 @@ namespace Hl7.Fhir.FhirPath
         public static SymbolTable AddFhirExtensions(this SymbolTable t)
         {
             t.Add("hasValue", (ElementModel.IElementNavigator f) => f.HasValue(), doNullProp: false);
+            t.Add("resolve", (ElementModel.IElementNavigator f) => f.Resolve(), doNullProp: false);
+            t.Add("htmlchecks", (ElementModel.IElementNavigator f) => f.HtmlChecks(), doNullProp: false);
 
             return t;
         }
@@ -49,6 +51,51 @@ namespace Hl7.Fhir.FhirPath
             if (focus.Value == null)
                 return false;
             return true;
+        }
+
+        /// <summary>
+        /// Check if the node has a value, and not just extensions.
+        /// </summary>
+        /// <param name="focus"></param>
+        /// <returns></returns>
+        public static bool HtmlChecks(this ElementModel.IElementNavigator focus)
+        {
+            if (focus == null)
+                return false;
+            if (focus.Value == null)
+                return false;
+            // Perform the checking of the content for valid html content
+            var html = focus.Value.ToString();
+            // TODO: Perform the checking
+            return true;
+        }
+
+        /// <summary>
+        /// Where this item is a reference, resolve it to an actual resource, and return that
+        /// </summary>
+        /// <param name="focus"></param>
+        /// <returns></returns>
+        public static ElementModel.IElementNavigator Resolve(this ElementModel.IElementNavigator focus)
+        {
+            if (focus == null)
+                return null;
+            if (focus.Value == null)
+                return null;
+            if (focus.Value is PocoElementNavigator)
+            {
+                var fv = (focus.Value as PocoElementNavigator).FhirValue;
+                if (fv is ResourceReference)
+                {
+                    string reference = (fv as ResourceReference).Reference;
+                    if (string.IsNullOrEmpty(reference))
+                        return null;
+                    Rest.ResourceIdentity ri = new Rest.ResourceIdentity(reference);
+
+                    // Go retrieve the resource? (seriously?)
+                    System.Diagnostics.Debug.WriteLine("Evaluating a reolve call: " + reference);
+                }
+            }
+            return null;
         }
 
         public static IEnumerable<Base> ToFhirValues(this IEnumerable<ElementModel.IElementNavigator> results)
@@ -88,9 +135,9 @@ namespace Hl7.Fhir.FhirPath
                 {
                     return new FhirString((string)result);
                 }
-                if (result is PartialDateTime)
+                if (result is Model.Primitives.PartialDateTime)
                 {
-                    var dt = (PartialDateTime)result;
+                    var dt = (Model.Primitives.PartialDateTime)result;
                     return new FhirDateTime(dt.ToUniversalTime());
                 }
                 else

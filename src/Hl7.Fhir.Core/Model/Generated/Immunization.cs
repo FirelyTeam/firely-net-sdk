@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -138,11 +138,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ExplanationComponent elements
+                    foreach (var item in base.Children) yield return item;
                     foreach (var elem in Reason) { if (elem != null) yield return elem; }
                     foreach (var elem in ReasonNotGiven) { if (elem != null) yield return elem; }
                 }
@@ -194,7 +190,8 @@ namespace Hl7.Fhir.Model
             /// Additional information on reaction
             /// </summary>
             [FhirElement("detail", Order=50)]
-            [References("Observation")]
+            [CLSCompliant(false)]
+			[References("Observation")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Detail
             {
@@ -289,11 +286,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ReactionComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (DateElement != null) yield return DateElement;
                     if (Detail != null) yield return Detail;
                     if (ReportedElement != null) yield return ReportedElement;
@@ -379,7 +372,8 @@ namespace Hl7.Fhir.Model
             /// Who is responsible for protocol
             /// </summary>
             [FhirElement("authority", Order=60)]
-            [References("Organization")]
+            [CLSCompliant(false)]
+			[References("Organization")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Authority
             {
@@ -562,11 +556,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // VaccinationProtocolComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (DoseSequenceElement != null) yield return DoseSequenceElement;
                     if (DescriptionElement != null) yield return DescriptionElement;
                     if (Authority != null) yield return Authority;
@@ -678,7 +668,8 @@ namespace Hl7.Fhir.Model
         /// Who was immunized
         /// </summary>
         [FhirElement("patient", Order=130)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -759,7 +750,8 @@ namespace Hl7.Fhir.Model
         /// Who administered vaccine
         /// </summary>
         [FhirElement("performer", Order=160)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Performer
         {
@@ -773,7 +765,8 @@ namespace Hl7.Fhir.Model
         /// Who ordered vaccination
         /// </summary>
         [FhirElement("requester", Order=170)]
-        [References("Practitioner")]
+        [CLSCompliant(false)]
+		[References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Requester
         {
@@ -787,7 +780,8 @@ namespace Hl7.Fhir.Model
         /// Encounter administered as part of
         /// </summary>
         [FhirElement("encounter", Order=180)]
-        [References("Encounter")]
+        [CLSCompliant(false)]
+		[References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
         {
@@ -801,7 +795,8 @@ namespace Hl7.Fhir.Model
         /// Vaccine manufacturer
         /// </summary>
         [FhirElement("manufacturer", Order=190)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Manufacturer
         {
@@ -815,7 +810,8 @@ namespace Hl7.Fhir.Model
         /// Where vaccination occurred
         /// </summary>
         [FhirElement("location", Order=200)]
-        [References("Location")]
+        [CLSCompliant(false)]
+		[References("Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Location
         {
@@ -1116,17 +1112,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// DomainResource elements
-				if (Text != null) yield return Text;
-				foreach (var elem in Contained) { if (elem != null) yield return elem; }
-				foreach (var elem in Extension) { if (elem != null) yield return elem; }
-				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-				// Immunization elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
 				if (DateElement != null) yield return DateElement;

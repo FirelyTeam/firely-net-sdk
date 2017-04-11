@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -80,7 +81,7 @@ namespace Hl7.Fhir.Introspection
 
         public PropertyMapping FindMappedElementByName(string name)
         {
-            if (name == null) throw Error.ArgumentNull("name");
+            if (name == null) throw Error.ArgumentNull(nameof(name));
 
             var normalizedName = name.ToUpperInvariant();
 
@@ -115,14 +116,14 @@ namespace Hl7.Fhir.Introspection
                                     ReflectionHelper.IsConstructedFromGenericTypeDefinition(type, typeof(Code<>));
 
                 if (!result.IsResource && !String.IsNullOrEmpty(result.Profile))
-                    throw Error.Argument("type", "Type {0} is not a resource, so its FhirType attribute may not specify a profile".FormatWith(type.Name));
+                    throw Error.Argument(nameof(type), "Type {0} is not a resource, so its FhirType attribute may not specify a profile".FormatWith(type.Name));
 
                 inspectProperties(result);
 
                 return result;
             }
             else
-                throw Error.Argument("type", "Type {0} is not marked as a Fhir Resource or datatype using [FhirType]".FormatWith(type.Name));
+                throw Error.Argument(nameof(type), "Type {0} is not marked as a Fhir Resource or datatype using [FhirType]".FormatWith(type.Name));
         }
 
 
@@ -139,9 +140,9 @@ namespace Hl7.Fhir.Introspection
 
                 var propMapping = PropertyMapping.Create(property);      
                 var propKey = propMapping.Name.ToUpperInvariant();
-                
+
                 if (me._propMappings.ContainsKey(propKey))
-                    throw Error.InvalidOperation("Class has multiple properties that are named '{0}'. The property name must be unique", propKey);
+                    throw Error.InvalidOperation($"Class has multiple properties that are named '{propKey}'. The property name must be unique");
 
                 me._propMappings.Add(propKey, propMapping);
 
@@ -178,14 +179,14 @@ namespace Hl7.Fhir.Introspection
 
         private static string getProfile(Type type)
         {
-            var attr = ReflectionHelper.GetAttribute<FhirTypeAttribute>(type);
+            var attr = type.GetTypeInfo().GetCustomAttribute<FhirTypeAttribute>();
          
             return attr != null ? attr.Profile : null;
         }
 
         private static string collectTypeName(Type type)
         {
-            var attr = ReflectionHelper.GetAttribute<FhirTypeAttribute>(type);
+            var attr = type.GetTypeInfo().GetCustomAttribute<FhirTypeAttribute>();
             string name;
 
             if (attr != null && attr.Name != null)
@@ -196,11 +197,8 @@ namespace Hl7.Fhir.Introspection
             if(ReflectionHelper.IsClosedGenericType(type))
             {
                 name += "<";
-#if PORTABLE45
-				name += String.Join(",", type.GenericTypeArguments.Select(arg => arg.FullName));
-#else
-                name += String.Join(",", type.GetGenericArguments().Select(arg => arg.FullName));
-#endif
+                //name += String.Join(",", type.GetGenericArguments().Select(arg => arg.FullName));
+                name += String.Join(",", type.GenericTypeArguments.Select(arg => arg.FullName));
 				name += ">";
 			}
 
@@ -209,25 +207,23 @@ namespace Hl7.Fhir.Introspection
 
         public static bool IsFhirResource(Type type)
         {
-            var attr = ReflectionHelper.GetAttribute<FhirTypeAttribute>(type);
-
-            return typeof(Resource).IsAssignableFrom(type)
-                    || (attr != null && attr.IsResource);
+            var attr = ReflectionHelper.GetAttribute<FhirTypeAttribute>(type.GetTypeInfo());
+            return typeof(Resource).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo())
+                   || (attr != null && attr.IsResource);
+            //var attr = ReflectionHelper.GetAttribute<FhirTypeAttribute>(type);
+            //return typeof(Resource).IsAssignableFrom(type)
+            //       || (attr != null && attr.IsResource);
         }
+
 
         public static bool IsMappableType(Type type)
         {
-            var hasAttribute = type.IsDefined(typeof(FhirTypeAttribute),false);
+            var hasAttribute = type.GetTypeInfo().IsDefined(typeof(FhirTypeAttribute), false);
 
-            if(!hasAttribute) return false;
+            if (!hasAttribute) return false;
 
-#if PORTABLE45
-			if (type.GetTypeInfo().IsAbstract)
-#else
-			if (type.IsAbstract)
-#endif
-                throw Error.Argument("type", "Type {0} is marked as a mappable tpe, but is abstract so cannot be used directly to represent a FHIR datatype".FormatWith(type.Name));
-
+            if (type.GetTypeInfo().IsAbstract)
+                throw Error.Argument(nameof(type), "Type {0} is marked as a mappable tpe, but is abstract so cannot be used directly to represent a FHIR datatype".FormatWith(type.Name));
 
             // Open generic type definitions can never appear as roots of objects
             // to parse. In instances, they will either have been used in closed type definitions

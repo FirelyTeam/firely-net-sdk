@@ -12,6 +12,7 @@ using System.IO;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System.Linq;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -28,7 +29,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <param name="sources">A custom set of IArtifact sources. Resolving occurs in order of input</param>
         public MultiResolver(IEnumerable<IResourceResolver> sources)
         {
-            if (sources == null) throw Error.ArgumentNull("sources");
+            if (sources == null) throw Error.ArgumentNull(nameof(sources));
 
             _sources.AddRange(sources);
         }
@@ -39,7 +40,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <param name="sources">A custom set of IArtifact sources. Resolving occurs in order of input</param>
         public MultiResolver(params IResourceResolver[] sources)
         {
-            if (sources == null) throw Error.ArgumentNull("sources");
+            if (sources == null) throw Error.ArgumentNull(nameof(sources));
 
             _sources.AddRange(sources);
         }
@@ -73,7 +74,7 @@ namespace Hl7.Fhir.Specification.Source
    
         public Resource ResolveByUri(string uri)
         {
-            if (uri == null) throw Error.ArgumentNull("uri");
+            if (uri == null) throw Error.ArgumentNull(nameof(uri));
 
             foreach (var source in Sources)
             {
@@ -96,7 +97,7 @@ namespace Hl7.Fhir.Specification.Source
 
         public Resource ResolveByCanonicalUri(string uri)
         {
-            if (uri == null) throw Error.ArgumentNull("uri");
+            if (uri == null) throw Error.ArgumentNull(nameof(uri));
 
             foreach (var source in Sources)
             {

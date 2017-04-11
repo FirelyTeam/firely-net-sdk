@@ -17,11 +17,7 @@ using Hl7.Fhir.Introspection;
 namespace Hl7.Fhir.Tests.Introspection
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableModelInspectorMembersTest
-#else
 	public class ModelInspectorMembersTest
-#endif
     {
         [TestMethod]
         public void TestPrimitiveDataTypeMapping()

@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -78,7 +78,8 @@ namespace Hl7.Fhir.Model
             /// Likelihood of specified outcome
             /// </summary>
             [FhirElement("probability", Order=50, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept))]
             [DataMember]
             public Hl7.Fhir.Model.Element Probability
             {
@@ -124,7 +125,8 @@ namespace Hl7.Fhir.Model
             /// Timeframe or age range
             /// </summary>
             [FhirElement("when", Order=70, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range))]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range))]
             [DataMember]
             public Hl7.Fhir.Model.Element When
             {
@@ -225,11 +227,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // PredictionComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Outcome != null) yield return Outcome;
                     if (Probability != null) yield return Probability;
                     if (RelativeRiskElement != null) yield return RelativeRiskElement;
@@ -245,7 +243,8 @@ namespace Hl7.Fhir.Model
         /// Who/what does assessment apply to?
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=90)]
-        [References("Patient","Group")]
+        [CLSCompliant(false)]
+		[References("Patient","Group")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
         {
@@ -291,7 +290,8 @@ namespace Hl7.Fhir.Model
         /// Condition assessed
         /// </summary>
         [FhirElement("condition", InSummary=true, Order=110)]
-        [References("Condition")]
+        [CLSCompliant(false)]
+		[References("Condition")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Condition
         {
@@ -305,7 +305,8 @@ namespace Hl7.Fhir.Model
         /// Where was assessment performed?
         /// </summary>
         [FhirElement("encounter", InSummary=true, Order=120)]
-        [References("Encounter")]
+        [CLSCompliant(false)]
+		[References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
         {
@@ -319,7 +320,8 @@ namespace Hl7.Fhir.Model
         /// Who did assessment?
         /// </summary>
         [FhirElement("performer", InSummary=true, Order=130)]
-        [References("Practitioner","Device")]
+        [CLSCompliant(false)]
+		[References("Practitioner","Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Performer
         {
@@ -359,7 +361,8 @@ namespace Hl7.Fhir.Model
         /// Information used in assessment
         /// </summary>
         [FhirElement("basis", Order=160)]
-        [References()]
+        [CLSCompliant(false)]
+		[References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Basis
@@ -516,17 +519,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// DomainResource elements
-				if (Text != null) yield return Text;
-				foreach (var elem in Contained) { if (elem != null) yield return elem; }
-				foreach (var elem in Extension) { if (elem != null) yield return elem; }
-				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-				// RiskAssessment elements
+                foreach (var item in base.Children) yield return item;
 				if (Subject != null) yield return Subject;
 				if (DateElement != null) yield return DateElement;
 				if (Condition != null) yield return Condition;

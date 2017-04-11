@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -300,11 +300,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // StatusHistoryComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (StatusElement != null) yield return StatusElement;
                     if (Period != null) yield return Period;
                 }
@@ -351,7 +347,8 @@ namespace Hl7.Fhir.Model
             /// Persons involved in the encounter other than the patient
             /// </summary>
             [FhirElement("individual", InSummary=true, Order=60)]
-            [References("Practitioner","RelatedPerson")]
+            [CLSCompliant(false)]
+			[References("Practitioner","RelatedPerson")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Individual
             {
@@ -414,11 +411,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // ParticipantComponent elements
+                    foreach (var item in base.Children) yield return item;
                     foreach (var elem in Type) { if (elem != null) yield return elem; }
                     if (Period != null) yield return Period;
                     if (Individual != null) yield return Individual;
@@ -452,7 +445,8 @@ namespace Hl7.Fhir.Model
             /// The location from which the patient came before admission
             /// </summary>
             [FhirElement("origin", Order=50)]
-            [References("Location")]
+            [CLSCompliant(false)]
+			[References("Location")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Origin
             {
@@ -479,7 +473,8 @@ namespace Hl7.Fhir.Model
             /// The admitting diagnosis as reported by admitting practitioner
             /// </summary>
             [FhirElement("admittingDiagnosis", Order=70)]
-            [References("Condition")]
+            [CLSCompliant(false)]
+			[References("Condition")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> AdmittingDiagnosis
@@ -549,7 +544,8 @@ namespace Hl7.Fhir.Model
             /// Location to which the patient is discharged
             /// </summary>
             [FhirElement("destination", Order=120)]
-            [References("Location")]
+            [CLSCompliant(false)]
+			[References("Location")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Destination
             {
@@ -576,7 +572,8 @@ namespace Hl7.Fhir.Model
             /// The final diagnosis given a patient before release from the hospital after all testing, surgery, and workup are complete
             /// </summary>
             [FhirElement("dischargeDiagnosis", Order=140)]
-            [References("Condition")]
+            [CLSCompliant(false)]
+			[References("Condition")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ResourceReference> DischargeDiagnosis
@@ -664,11 +661,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // HospitalizationComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (PreAdmissionIdentifier != null) yield return PreAdmissionIdentifier;
                     if (Origin != null) yield return Origin;
                     if (AdmitSource != null) yield return AdmitSource;
@@ -697,7 +690,8 @@ namespace Hl7.Fhir.Model
             /// Location the encounter takes place
             /// </summary>
             [FhirElement("location", Order=40)]
-            [References("Location")]
+            [CLSCompliant(false)]
+			[References("Location")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Location
@@ -806,11 +800,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    // Element elements
-                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
-                    // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-                    // LocationComponent elements
+                    foreach (var item in base.Children) yield return item;
                     if (Location != null) yield return Location;
                     if (StatusElement != null) yield return StatusElement;
                     if (Period != null) yield return Period;
@@ -944,7 +934,8 @@ namespace Hl7.Fhir.Model
         /// The patient present at the encounter
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=150)]
-        [References("Patient")]
+        [CLSCompliant(false)]
+		[References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
         {
@@ -958,7 +949,8 @@ namespace Hl7.Fhir.Model
         /// Episode(s) of care that this encounter should be recorded against
         /// </summary>
         [FhirElement("episodeOfCare", InSummary=true, Order=160)]
-        [References("EpisodeOfCare")]
+        [CLSCompliant(false)]
+		[References("EpisodeOfCare")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> EpisodeOfCare
@@ -973,7 +965,8 @@ namespace Hl7.Fhir.Model
         /// The ReferralRequest that initiated this encounter
         /// </summary>
         [FhirElement("incomingReferral", Order=170)]
-        [References("ReferralRequest")]
+        [CLSCompliant(false)]
+		[References("ReferralRequest")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> IncomingReferral
@@ -1002,7 +995,8 @@ namespace Hl7.Fhir.Model
         /// The appointment that scheduled this encounter
         /// </summary>
         [FhirElement("appointment", InSummary=true, Order=190)]
-        [References("Appointment")]
+        [CLSCompliant(false)]
+		[References("Appointment")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Appointment
         {
@@ -1056,7 +1050,8 @@ namespace Hl7.Fhir.Model
         /// Reason the encounter takes place (resource)
         /// </summary>
         [FhirElement("indication", Order=230)]
-        [References("Condition","Procedure")]
+        [CLSCompliant(false)]
+		[References("Condition","Procedure")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Indication
@@ -1098,7 +1093,8 @@ namespace Hl7.Fhir.Model
         /// The custodian organization of this Encounter record
         /// </summary>
         [FhirElement("serviceProvider", Order=260)]
-        [References("Organization")]
+        [CLSCompliant(false)]
+		[References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference ServiceProvider
         {
@@ -1112,7 +1108,8 @@ namespace Hl7.Fhir.Model
         /// Another Encounter this encounter is part of
         /// </summary>
         [FhirElement("partOf", Order=270)]
-        [References("Encounter")]
+        [CLSCompliant(false)]
+		[References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference PartOf
         {
@@ -1229,17 +1226,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-				// Resource elements
-				if (IdElement != null) yield return IdElement;
-				if (Meta != null) yield return Meta;
-				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
-				if (LanguageElement != null) yield return LanguageElement;
-				// DomainResource elements
-				if (Text != null) yield return Text;
-				foreach (var elem in Contained) { if (elem != null) yield return elem; }
-				foreach (var elem in Extension) { if (elem != null) yield return elem; }
-				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
-				// Encounter elements
+                foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
 				foreach (var elem in StatusHistory) { if (elem != null) yield return elem; }
