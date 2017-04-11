@@ -320,7 +320,7 @@ namespace Hl7.Fhir.Specification.Tests
             assertMatch(matches[2], ElementMatcher.MatchAction.Merge, snapNav, diffNav);    // Merge existing extension slice
         }
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void TestElementMatcher_ComplexExtension()
         {
             var baseProfile = _testResolver.FindStructureDefinitionForCoreType(FHIRAllTypes.Extension);
