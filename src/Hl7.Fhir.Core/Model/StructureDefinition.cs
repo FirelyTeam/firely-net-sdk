@@ -50,29 +50,18 @@ namespace Hl7.Fhir.Model
 
         public partial class DifferentialComponent : IElementList { }
 
-        // TODO: Is this the Derivation Property?
         [NotMapped]
-        public bool IsConstraint {  get { return Derivation.HasValue && Derivation == TypeDerivationRule.Constraint; } }
+        public bool IsConstraint => Derivation.HasValue && Derivation == TypeDerivationRule.Constraint;
 
         [NotMapped]
-        public bool IsExtension
-        {
-            get
-            {
-                // Is this the Derivation Property? (do we still need to check the base?)
-                // TODO: verify this is STU3
-                return this.Type == "Extension";
-            }
-        }
+        public bool IsExtension => Type == "Extension";
 
         [NotMapped]
-        public bool HasSnapshot
-        {
-            get
-            {
-                return Snapshot != null && Snapshot.Element != null && Snapshot.Element.Any();
-            }
-        }
+        public bool HasSnapshot => Snapshot != null && Snapshot.Element != null && Snapshot.Element.Any();
+
+        [NotMapped]
+        public bool IsCoreDefinition => Type == Id && Url == ModelInfo.CanonicalUriForFhirCoreType(Type);
+
     }
 }
 
