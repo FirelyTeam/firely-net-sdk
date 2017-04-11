@@ -8,6 +8,7 @@
   <Import Project="..\fhir-net-api.targets" />
 
   <PropertyGroup>
+    <Version>$(FhirApiVersion)</Version>
     <PackageId>Hl7.Fhir.Specification.DSTU2</PackageId>
     <Title>HL7 FHIR Specification support API for DSTU2</Title>
     <Summary>Support for working with FHIR metadata and validation. Supports FHIR DSTU2 (1.0).</Summary>
@@ -20,7 +21,6 @@
   <ItemGroup>
     <PackageReference Include="Hl7.Fhir.Support" Version="0.4.2-alpha4" />
     <PackageReference Include="Hl7.FhirPath" Version="0.4.2-alpha4" />
-    <PackageReference Include="System.Net.Http" Version="4.3.1" />
     <PackageReference Include="System.ValueTuple" Version="4.3.0" />
   </ItemGroup>
 
@@ -29,11 +29,14 @@
     <PackageReference Include="System.ComponentModel.Primitives" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.3.0" />
+    <PackageReference Include="System.Net.Http" Version="4.3.1" />
     <PackageReference Include="System.Net.Requests" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.DSTU2.csproj" />
+    <ProjectReference Include="..\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
+    <ProjectReference Include="..\Hl7.FhirPath\Hl7.FhirPath.csproj" />
   </ItemGroup>
 
   <ItemGroup>
