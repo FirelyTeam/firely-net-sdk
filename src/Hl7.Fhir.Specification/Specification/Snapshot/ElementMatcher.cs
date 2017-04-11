@@ -478,7 +478,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             // [WMR 20170110] Accept missing slicing component, e.g. to close the extension slice: Extension.extension { max = 0 }
             // if (discriminators == null || discriminators.Count > 1 || discriminators.FirstOrDefault() != "url")
-            if (discriminators != null && (discriminators.Count != 1 || isUrlDiscriminator(discriminators.FirstOrDefault())))
+            if (discriminators != null && (discriminators.Count != 1 || !isUrlDiscriminator(discriminators.FirstOrDefault())))
             {
                 // Invalid extension discriminator; generate issue and ignore
                 Debug.WriteLine($"[{nameof(ElementMatcher)}.{nameof(matchExtensionSlice)}] Warning! Invalid discriminator for extension slice (path = '{diffNav.Path}') - must be 'url'.");
@@ -534,22 +534,21 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (match.Action == MatchAction.Merge)
             {
                 // We have a match on type code(s); match type profiles
-                var diffProfiles = diffNav.Current.PrimaryTypeProfiles();
-                var snapProfiles = snapNav.Current.PrimaryTypeProfiles();
+                var diffProfile = diffNav.Current.PrimaryTypeProfile();
+                var snapProfile = snapNav.Current.PrimaryTypeProfile();
 
                 // Handle Chris Grenz example http://example.com/fhir/SD/patient-research-auth-reslice
-                if (String.IsNullOrEmpty(diffProfiles) && string.IsNullOrEmpty(snapProfiles))
+                if (String.IsNullOrEmpty(diffProfile) && string.IsNullOrEmpty(snapProfile))
                 {
                     return;
                 }
 
-                var diffProfile = diffProfiles;
                 var profileRef = ProfileReference.Parse(diffProfile);
                 var result = profileRef.IsComplex
                     // Match on element name (for complex extension elements)
                     ? StringComparer.Ordinal.Equals(snapNav.Current.SliceName, profileRef.ElementName)
                     // Match on type profile(s)
-                    : snapProfiles.SequenceEqual(diffProfiles);
+                    : snapProfile.SequenceEqual(diffProfile);
 
                 if (!result)
                 {
@@ -569,25 +568,14 @@ namespace Hl7.Fhir.Specification.Snapshot
             return elemType.Profile;
         }
 
-        // [EK 20170323 Commented out since these three were no longer used...
-
-        ///// <summary>Special predefined discriminator for slicing on element type.</summary>
-        //static readonly string TypeDiscriminator = "@type";
-
-        ///// <summary>Special predefined discriminator for slicing on element type profile.</summary>
-        //static readonly string ProfileDiscriminator = "@profile";
-
-        ///// <summary>Special predefined discriminator for slicing on element type and profile.</summary>
-        //static readonly string TypeAndProfileDiscriminator = "type@profile";
-
         /// <summary>Fixed default discriminator for slicing extension elements.</summary>
         static readonly string UrlDiscriminator = "url";
 
         /// <summary>Determines if the specified value equals the special predefined discriminator for slicing on element type profile.</summary>
-        static bool isProfileDiscriminator(ElementDefinition.DiscriminatorComponent discriminator) => discriminator.Type == ElementDefinition.DiscriminatorType.Profile;
+        static bool isProfileDiscriminator(ElementDefinition.DiscriminatorComponent discriminator) => discriminator?.Type == ElementDefinition.DiscriminatorType.Profile;
 
         /// <summary>Determines if the specified value equals the special predefined discriminator for slicing on element type.</summary>
-        static bool isTypeDiscriminator(ElementDefinition.DiscriminatorComponent discriminator) => discriminator.Type == ElementDefinition.DiscriminatorType.Type;
+        static bool isTypeDiscriminator(ElementDefinition.DiscriminatorComponent discriminator) => discriminator?.Type == ElementDefinition.DiscriminatorType.Type;
 
         //EK: Commented out since this combination is not valid/has never been valid?  In any case we did not consider it
         //when composing the new DiscriminatorType valueset.
@@ -595,12 +583,14 @@ namespace Hl7.Fhir.Specification.Snapshot
         //static bool isTypeAndProfileDiscriminator(string discriminator) => StringComparer.Ordinal.Equals(discriminator, TypeAndProfileDiscriminator);
 
         /// <summary>Determines if the specified value equals the fixed default discriminator for slicing extension elements.</summary>
-        static bool isUrlDiscriminator(ElementDefinition.DiscriminatorComponent discriminator) => StringComparer.Ordinal.Equals(discriminator.Path, UrlDiscriminator);
+        static bool isUrlDiscriminator(ElementDefinition.DiscriminatorComponent discriminator) => StringComparer.Ordinal.Equals(discriminator?.Path, UrlDiscriminator);
 
         // [WMR 20160801]
         // Determine if the specified discriminator(s) match on (type and) profile
         static bool isTypeProfileDiscriminator(IEnumerable<ElementDefinition.DiscriminatorComponent> discriminators)
         {
+            // [WMR 20170411] TODO: update for STU3?
+
             if (discriminators != null)
             {
                 var ar = discriminators.ToArray();

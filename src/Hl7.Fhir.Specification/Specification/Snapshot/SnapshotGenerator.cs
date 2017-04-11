@@ -675,7 +675,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // [WMR 20170208] Ignore explicit diff profile if it matches the (implied) base type profile
             // e.g. if the differential specifies explicit core type profile url
             // Example: Patient.identifier type = { Code : Identifier, Profile : "http://hl7.org/fhir/StructureDefinition/Identifier" } }
-            var primarySnapTypeProfile = primarySnapType.TypeProfile();
+            var primarySnapTypeProfile = primarySnapType.GetTypeProfile();
 
             if (string.IsNullOrEmpty(primaryDiffTypeProfile) || primaryDiffTypeProfile == primarySnapTypeProfile) { return true; }
 
