@@ -202,6 +202,7 @@ namespace Hl7.Fhir.Validation
             result.Status = PublicationStatus.Draft;
             result.Description = new Markdown(description);
             result.FhirVersion = ModelInfo.Version;
+            result.Derivation = StructureDefinition.TypeDerivationRule.Constraint;
 
             if (ModelInfo.IsKnownResource(constrainedType))
                 result.Kind = StructureDefinition.StructureDefinitionKind.Resource;

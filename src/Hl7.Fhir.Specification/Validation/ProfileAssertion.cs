@@ -311,7 +311,7 @@ namespace Hl7.Fhir.Validation
                 //  * If the declared type is a concrete core type, it is as specific as the instance
                 // In both cases return the declared type.
                 else if (DeclaredType != null &&
-                            ( DeclaredType.Derivation == StructureDefinition.TypeDerivationRule.Constraint ||
+                            ( DeclaredType.IsConstraint ||
                               (DeclaredType.IsCoreDefinition && DeclaredType.Abstract==false) ))
                     _lastMinimalSet = new[] { DeclaredType };
 

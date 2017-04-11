@@ -262,7 +262,7 @@ namespace Hl7.Fhir.Validation
             Assert.AreEqual(1, report.Errors);
         }
 
-        [TestMethod,Ignore]
+        [TestMethod]
         public void ValidatesMultiplePossibleTypeRefs()
         {
             // Try adding a period
