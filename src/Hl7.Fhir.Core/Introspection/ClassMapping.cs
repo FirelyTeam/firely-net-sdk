@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -139,9 +140,9 @@ namespace Hl7.Fhir.Introspection
 
                 var propMapping = PropertyMapping.Create(property);      
                 var propKey = propMapping.Name.ToUpperInvariant();
-                
+
                 if (me._propMappings.ContainsKey(propKey))
-                    throw Error.InvalidOperation("Class has multiple properties that are named '{0}'. The property name must be unique", propKey);
+                    throw Error.InvalidOperation($"Class has multiple properties that are named '{propKey}'. The property name must be unique");
 
                 me._propMappings.Add(propKey, propMapping);
 

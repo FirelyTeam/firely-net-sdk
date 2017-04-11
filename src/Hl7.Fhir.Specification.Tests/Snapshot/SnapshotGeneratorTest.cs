@@ -22,7 +22,7 @@ using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Rest;
 using System.Text;
 using System.Xml;
-
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -50,9 +50,14 @@ namespace Hl7.Fhir.Specification.Tests
         [TestInitialize]
         public void Setup()
         {
+            Hl7.Fhir.FhirPath.PocoNavigatorExtensions.PrepareFhirSybolTableFunctions();
+
             var dirSource = new DirectorySource("TestData/snapshot-test", includeSubdirectories: true);
             _source = new TimingSource(dirSource);
-            _testResolver = new CachedResolver(_source);
+            _testResolver = new CachedResolver(
+                new MultiResolver(
+                    _source,
+                    new ZipSource("specification.zip")));
         }
 
         // [WMR 20160718] Generate snapshot for extension definition fails with exception:
@@ -77,7 +82,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 #endif
 
-        [TestMethod]
+        [TestMethod, Ignore]  // string-translation is not available anymore
         public void GenerateExtensionSnapshot()
         {
             // var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/string-translation");
@@ -89,8 +94,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(sd);
             // dumpReferences(sd);
 
-            StructureDefinition expanded;
-            generateSnapshotAndCompare(sd, out expanded);
+            generateSnapshotAndCompare(sd, out StructureDefinition expanded);
 
             dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
@@ -307,7 +311,7 @@ namespace Hl7.Fhir.Specification.Tests
                    );
         }
 
-        [TestMethod, Ignore]
+        [TestMethod,Ignore]
         public void TestExpandAllComplexElementsWithEvent()
         {
             // [WMR 20170105] New - hook new BeforeExpand event in order to force full expansion of all complex elements
@@ -441,7 +445,7 @@ namespace Hl7.Fhir.Specification.Tests
             e.MustExpand |= isExpandable;
         }
 
-        [TestMethod,Ignore]
+        [TestMethod]
         public void TestSnapshotRecursionChecker()
         {
             // Following structuredefinition has a recursive element type profile
@@ -469,7 +473,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(exceptionRaised);
         }
 
-        [TestMethod, Ignore]
+        [TestMethod, Ignore] // qicore-encounter is not available anymore
         public void GenerateDerivedProfileSnapshot()
         {
             // [WMR 20161005] Verify that the snapshot generator supports profiles on profiles
@@ -547,7 +551,6 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod, Ignore]
-        // [Ignore]
         public void GeneratePatientWithExtensionsSnapshot()
         {
             // [WMR 20161005] Very complex set of examples by Chris Grenz
@@ -811,7 +814,6 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        // [Ignore]
         public void GenerateSnapshotIgnoreMissingExternalProfile()
         {
             // [WMR 20161005] Verify that the snapshot generator gracefully handles unresolved external profile references
@@ -865,7 +867,6 @@ namespace Hl7.Fhir.Specification.Tests
         //};
 
         [TestMethod]
-        [Ignore]
         public void GenerateSnapshot()
         {
             var sw = new Stopwatch();
@@ -1065,7 +1066,6 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        [Ignore]
         public void DebugDifferentialTree()
         {
             var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/SD/patient-research-auth-reslice");
@@ -1124,7 +1124,7 @@ namespace Hl7.Fhir.Specification.Tests
             testExpandElement(@"http://hl7.org/fhir/StructureDefinition/Questionnaire", "Questionnaire.item.item");
         }
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void TestExpandElement_Slice()
         {
             var sd = _testResolver.FindStructureDefinition("http://hl7.org/fhir/StructureDefinition/lipidprofile");
@@ -2018,7 +2018,7 @@ namespace Hl7.Fhir.Specification.Tests
         static bool hasChanges<T>(IList<T> elements) where T : Element => elements != null ? elements.Any(e => isChanged(e)) : false;
         static bool isChanged(Element elem) => elem != null && elem.IsConstrainedByDiff();
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void TestExpandCoreArtifacts()
         {
             // testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Element");
@@ -2047,7 +2047,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         }
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void TestExpandAllCoreTypes()
         {
             // Generate snapshots for all core types, in the original order as they are defined
@@ -2238,7 +2238,9 @@ namespace Hl7.Fhir.Specification.Tests
                 }
                 else if (expanded.Kind == StructureDefinition.StructureDefinitionKind.ComplexType)
                 {
-                    Assert.Fail("TODO: implement the complex-type");
+                    // TODO: verify that this is correct (I think so given the others in this context)
+                    verified &= verifyBasePath(expandedElems[1], originalElems[1], "Element.id");
+                    verified &= verifyBasePath(expandedElems[2], originalElems[2], "Element.extension");
                 }
                 else if (expanded.Kind == StructureDefinition.StructureDefinitionKind.Resource)
                 {
@@ -2447,7 +2449,6 @@ namespace Hl7.Fhir.Specification.Tests
         // http://hl7.org/fhir/StructureDefinition/questionnaire-enableWhen : 'TestData/snapshot-test/extensions\extension-questionnaire-enablewhen.xml'
 
         [TestMethod]
-        [Ignore]
         public void FindComplexTestExtensions()
         {
             Debug.WriteLine("Complex extension in TestData folder:");
@@ -2504,19 +2505,22 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [Conditional("DEBUG")]
-        void dumpElements(IEnumerable<ElementDefinition> elements, string header = null)
+        void dumpElements(IEnumerable<ElementDefinition> elements, string header = null) => dumpElements(elements.ToList(), header);
+
+        [Conditional("DEBUG")]
+        void dumpElements(List<ElementDefinition> elements, string header = null)
         {
             Debug.WriteLineIf(!string.IsNullOrEmpty(header), header);
-            foreach (var elem in elements)
+            for (int i = 0; i < elements.Count; i++)
             {
-                if (elem.SliceName != null)
+                var elem = elements[i];
+                Debug.Write(elem.Path);
+                Debug.WriteIf(elem.Path != null, " '" + elem.SliceName + "'");
+                if (elem.Slicing != null)
                 {
-                    Debug.Print(elem.Path + " : '" + elem.SliceName + "'");
+                    Debug.Write(" => sliced on: " + string.Join(" | ", elem.Slicing.Discriminator.Select(p=>p?.Path)));
                 }
-                else
-                {
-                    Debug.Print(elem.Path);
-                }
+                Debug.WriteLine("");
             }
         }
 
@@ -2840,7 +2844,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(ElementDefinition.SlicingRules.Closed, elem.Slicing.Rules);
         }
 
-        [TestMethod(),Ignore]
+        [TestMethod,Ignore]
         public void TestSlicingEntryWithChilren()
         {
             var sd = _testResolver.FindStructureDefinition(@"http://example.org/StructureDefinition/DocumentComposition");
@@ -2987,7 +2991,6 @@ namespace Hl7.Fhir.Specification.Tests
         // Specifically, snapshot generator drops the slicing component from the slice entry element
         // Explanation: Organization.type is not a list (max = 1) and not a choice type => slicing is not allowed!
         [TestMethod]
-        [Ignore]
         public void TestOrganizationTypeSlice()
         {
             var org = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MySlicedOrganization");
@@ -3090,7 +3093,7 @@ namespace Hl7.Fhir.Specification.Tests
         // [WMR 2017024] NEW: Snapshot generator should reject profile extensions mapped to a StructureDefinition that is not an Extension definition.
         // Reported by Thomas Tveit Rosenlund: https://simplifier.net/Velferdsteknologi2/FlagVFT (geoPositions)
         // Don't expand; emit outcome issue
-        [TestMethod, Ignore]
+        [TestMethod,Ignore]
         public void TestInvalidProfileExtensionTarget()
         {
             var sdLocation = new StructureDefinition()
@@ -3174,8 +3177,8 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsNotNull(_generator.Outcome);
             Assert.IsNotNull(_generator.Outcome.Issue);
-            Assert.AreEqual(2, _generator.Outcome.Issue.Count);
-            assertIssue(_generator.Outcome.Issue[1], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_PROFILE_TYPE);
+            Assert.AreEqual(1, _generator.Outcome.Issue.Count);
+            assertIssue(_generator.Outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_PROFILE_TYPE);
 
             dumpElements(expanded.Snapshot.Element);
         }
@@ -3874,7 +3877,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.ReturnToBookmark(bm));
         }
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void TestElementMappings()
         {
             var profile = _testResolver.FindStructureDefinition("http://example.org/fhir/StructureDefinition/TestMedicationStatement-prescribing");
@@ -4064,6 +4067,95 @@ namespace Hl7.Fhir.Specification.Tests
 
             var type = nav.Current.Type.First();
             Debug.Print($"{nav.Path} : {type.Code} - '{type.Profile.FirstOrDefault()}'");
+        }
+
+        // [WMR 20170406] NEW
+        // Issue reported by Vadim
+        // Complex extension:   structure.cdstools-typedstage
+        // Referencing Profile: structure.cdstools-basecancer
+        // Profile defines constraints on child elements of the complex extension
+        // Snapshot generator adds slicing component to Condition.extension.extension.extension:type - WRONG!
+        [TestMethod, Ignore]   // test data needs to be converted from dstu2 -> stu3
+        public void TestProfileConstraintsOnComplexExtensionChildren()
+        {
+            var profile = _testResolver.FindStructureDefinition("https://MCKESSON-DOMAIN.VAR/fhir/StructureDefinition/cds-basecancer");
+            Assert.IsNotNull(profile);
+
+            dumpElements(profile.Differential.Element, "===== Differential =====");
+
+            StructureDefinition expanded = null;
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            _generator.PrepareElement += elementHandler;
+            try
+            {
+                generateSnapshotAndCompare(profile, out expanded);
+            }
+            finally
+            {
+                _generator.PrepareElement -= elementHandler;
+            }
+            dumpOutcome(_generator.Outcome);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            var elems = expanded.Snapshot.Element;
+            dumpElements(elems.Take(55), "===== Snapshot =====");
+
+            var nav = new ElementDefinitionNavigator(elems);
+            Assert.IsTrue(nav.MoveToFirstChild());
+            Assert.AreEqual("Condition", nav.Path);
+
+            // Condition.extension (slicing entry)
+            Assert.IsTrue(nav.MoveToChild("extension"));
+            Assert.IsNotNull(nav.Current.Slicing);
+            Assert.AreEqual("url", nav.Current.Slicing.Discriminator?.FirstOrDefault());
+            Assert.IsNull(nav.Current.SliceName);
+
+            // Condition.extension:typedStaging
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.AreEqual("typedStaging", nav.Current.SliceName);
+            Assert.IsNull(nav.Current.Slicing);
+
+            // Condition.extension:typedStaging.extension (slicing entry)
+            Assert.IsTrue(nav.MoveToChild("extension"));
+            Assert.IsNotNull(nav.Current.Slicing);
+            Assert.AreEqual("url", nav.Current.Slicing.Discriminator?.FirstOrDefault());
+            Assert.IsNull(nav.Current.SliceName);
+
+            // Condition.extension:typedStaging.extension:stage
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.AreEqual("stage", nav.Current.SliceName);
+            Assert.IsNull(nav.Current.Slicing);
+
+            // Condition.extension:typedStaging.extension:stage.extension (slicing entry)
+            Assert.IsTrue(nav.MoveToChild("extension"));
+            Assert.IsNotNull(nav.Current.Slicing);
+            Assert.AreEqual("url", nav.Current.Slicing.Discriminator?.FirstOrDefault());
+            Assert.IsNull(nav.Current.SliceName);
+
+            // Condition.extension:typedStaging.extension:stage.extension:summary
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.AreEqual("summary", nav.Current.SliceName);
+            Assert.IsNull(nav.Current.Slicing);
+
+            // Condition.extension:typedStaging.extension:stage.extension:assessment
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.AreEqual("assessment", nav.Current.SliceName);
+            Assert.IsNull(nav.Current.Slicing);
+
+            // Condition.extension:typedStaging.extension:stage.extension:type
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.AreEqual("type", nav.Current.SliceName);
+            Assert.IsNull(nav.Current.Slicing); // BUG!
+
+            // Condition.extension:typedStaging.extension:stage.extension:type.valueCodeableConcept
+            Assert.IsTrue(nav.MoveToChild("valueCodeableConcept"));
+            Assert.IsNotNull(nav.Current.Binding);
+            var valueSetReference = nav.Current.Binding.ValueSet as ResourceReference;
+            Assert.IsNotNull(valueSetReference);
+            Assert.AreEqual(BindingStrength.Required, nav.Current.Binding.Strength);
+            Assert.AreEqual("https://MCKESSON-DOMAIN.VAR/fhir/ValueSet/cds-cancerstagingtype", valueSetReference.Reference);
         }
     }
 

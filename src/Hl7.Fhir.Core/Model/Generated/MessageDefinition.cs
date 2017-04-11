@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -846,7 +846,7 @@ namespace Hl7.Fhir.Model
             Key = "md-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Max must be postive int or *",
-            Xpath = "f:max/@value='*' or f:max/@value > 0"
+            Xpath = "f:max/@value='*' or number(f:max/@value) > 0"
         };
 
         public override void AddDefaultConstraints()

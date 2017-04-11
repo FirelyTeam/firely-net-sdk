@@ -18,7 +18,9 @@ namespace Hl7.Fhir.Validation
     {
         public static string GetFhirPathConstraint(this ElementDefinition.ConstraintComponent cc)
         {
-            return cc.GetStringExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression");
+            if (cc.Key == "ele-1")
+                return "(children().count() > id.count()) | hasValue()";
+            return cc.Expression;
         }
 
 

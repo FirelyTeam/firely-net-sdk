@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -1048,11 +1048,11 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Task_INV_1 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "lastModified >= authoredOn or lastModified.exists().not() or authoredOn.exists().not()",
+            Expression = "lastModified.exists().not() or authoredOn.exists().not() or lastModified >= authoredOn",
             Key = "inv-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Last modified date must be greater than or equal to authored-on date.",
-            Xpath = "f:lastModified >= f:authoredOn or not(exists(f:lastModified)) or not(exists(f:authoredOn))"
+            Xpath = "not(exists(f:lastModified/@value)) or not(exists(f:authoredOn/@value)) or f:lastModified/@value >= f:authoredOn/@value"
         };
 
         public override void AddDefaultConstraints()

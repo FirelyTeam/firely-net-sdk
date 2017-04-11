@@ -1,3 +1,4 @@
+# file extensions to fail to load in VS. An alternative would be to treat
 * text
 
 *.bmp binary

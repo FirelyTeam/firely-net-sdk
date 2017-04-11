@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Appointment xmlns="http://hl7.org/fhir" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://hl7.org/fhir ../../schema/appointment.xsd">
+	<id value="examplereq"/>
+	<text>
+		<status value="generated"/>
+		<div xmlns="http://www.w3.org/1999/xhtml">Brian MRI results discussion</div>
+	</text>
+	<identifier>
+		<system value="http://example.org/sampleappointment-identifier"/>
+		<value value="123"/>
+	</identifier>
+	<status value="proposed" />
+	<type>
+		<coding>
+			<code value="52"/>
+			<display value="General Discussion" />
+		</coding>
+	</type>
+	<reason>
+		<text value="Clinical Review" />
+	</reason>
+	<priority value="5" />
+	<description value="Discussion on the results of your recent MRI" />
+	<minutesDuration value="15" />
+	<slot>
+		<reference value="Slot/example" />
+	</slot>
+	<comment value="Further expand on the results of the MRI and determine the next actions that may be appropriate." />
+	<participant>
+		<actor>
+			<reference value="Patient/example" />
+			<display value="Peter James Chalmers" />
+		</actor>
+		<required value="required" />
+		<status value="needs-action" />
+	</participant>
+	<participant>
+		<type>
+			<coding>
+				<code value="attending"/>
+			</coding>
+		</type>
+		<required value="required" />
+		<status value="needs-action" />
+	</participant>
+	<participant>
+		<actor>
+			<reference value="Location/1" />
+			<display value="South Wing, second floor" />
+		</actor>
+		<!-- This resource auto accepts, so doesn't need negotiation -->
+		<required value="required" />
+		<status value="accepted" />
+	</participant>
+</Appointment>

@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Support
         /// <summary>Returns a list of canonical url conflicts.</summary>
         public CanonicalUrlConflict[] Conflicts { get; private set; }
 
-        private readonly static string errorMessage = "Found conflicting Conformance Resource artifacts wit the same canonical url identifier.";
+        private readonly static string errorMessage = "Found conflicting Conformance Resource artifacts with the same canonical url identifier.";
 
         private static string formatMessage(IEnumerable<CanonicalUrlConflict> conflicts)
         {

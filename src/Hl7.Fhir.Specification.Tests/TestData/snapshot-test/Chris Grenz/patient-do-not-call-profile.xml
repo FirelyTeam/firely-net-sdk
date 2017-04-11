@@ -1,7 +1,7 @@
 <StructureDefinition xmlns="http://hl7.org/fhir">
 	<url value="http://example.com/fhir/StructureDefinition/patient-do-not-call" />
 	<name value="patient-do-not-call" />
-	<display value="Do Not Call Flag" />
+	<title value="Do Not Call Flag" />
 	<status value="draft" />
 	<description value="Description for patient-do-not-call." />
   
@@ -39,7 +39,7 @@
 			<path value="Extension" />
 			<short value="Do not call flag." />
 			<definition value="A flag indicating that a patient has requested their contact information be added to the do-not-call list." />
-			<comments value="Comments for do not call flag root element." />
+			<comment value="Comments for do not call flag root element." />
 			<requirements value="Requirements for do not call flag root element." />
 			<alias value="no-contact-me-plz" />
 			<min value="0" />
@@ -108,7 +108,7 @@
 			<path value="Extension.extension" />
 			<short value="Additional Content defined by implementations" />
 			<definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
-			<comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+			<comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
 			<alias value="extensions" />
 			<alias value="user content" />
 			<min value="0" />
@@ -162,7 +162,7 @@
 			<representation value="xmlAttr" />
 			<short value="identifies the meaning of the extension" />
 			<definition value="Source of the definition for the extension code - a logical name or a URL." />
-			<comments value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition SHALL be a URI for the Structure Definition defining the extension." />
+			<comment value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition SHALL be a URI for the Structure Definition defining the extension." />
 			<min value="1" />
 			<max value="1" />
 			<base>
@@ -232,7 +232,7 @@
 			<path value="Extension" />
 			<short value="Do not call flag." />
 			<definition value="A flag indicating that a patient has requested their contact information be added to the do-not-call list." />
-			<comments value="Comments for do not call flag root element." />
+			<comment value="Comments for do not call flag root element." />
 			<requirements value="Requirements for do not call flag root element." />
 			<alias value="no-contact-me-plz" />
 		</element>

@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Validation
 {
@@ -298,11 +299,12 @@ namespace Hl7.Fhir.Validation
                     // Remove redundant bases, since the snapshots will contain their constraints anyway.
                     // Note: we're not doing a full closure by resolving all bases for performance sake 
                     var result = StatedProfiles.ToList();
-                    var bases = StatedProfiles.Where(sp => sp.BaseDefinition != null).Select(sp => sp.BaseDefinition).Distinct().ToList();
+                    var bases = StatedProfiles.Where(sp => sp.BaseDefinition != null && sp.Derivation == StructureDefinition.TypeDerivationRule.Specialization).Select(sp => sp.BaseDefinition).Distinct().ToList();
+                    // var bases = StatedProfiles.Where(sp => sp.BaseDefinition != null).Select(sp => sp.BaseDefinition).Distinct().ToList();
                     bases.AddRange(StatedProfiles.Where(sp => sp.Type != null)
                         .Select(sp => ModelInfo.CanonicalUriForFhirCoreType(sp.Type)).Distinct());
 
-                    result.RemoveAll(r => bases.Contains(r.Url));
+                    // result.RemoveAll(r => bases.Contains(r.Url));
                     _lastMinimalSet = result;
                 }
 
@@ -310,7 +312,7 @@ namespace Hl7.Fhir.Validation
                 //  * If the declared type is a profile, it is more specific than the instance
                 //  * If the declared type is a concrete core type, it is as specific as the instance
                 // In both cases return the declared type.
-                else if (DeclaredType != null && (DeclaredType.Type != null || !ModelInfo.IsCoreSuperType(DeclaredType.BaseType())))
+                else if (DeclaredType?.Derivation == StructureDefinition.TypeDerivationRule.Constraint)
                     _lastMinimalSet = new[] { DeclaredType };
 
                 // Else, all we have left is the instance type

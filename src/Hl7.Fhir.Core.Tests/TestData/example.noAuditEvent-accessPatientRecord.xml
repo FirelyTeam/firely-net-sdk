@@ -13,7 +13,6 @@
         </div>
     </text>
     <!-- The event describes what was done -->
-    <event>
         <!-- Extension to define who authorized access to the patient's record.  -->
         <extension url="http://example.no/fhir/StructureDefinition/extAuthorization">
            <extension url="givenByPerson">
@@ -35,12 +34,11 @@
         </type>
         <!-- action R = read -->
         <action value="R"/>
-        <dateTime value="2016-03-20T23:41:23Z"/>
-        <!-- Outcocome of the event. 0 = Success-->
+        <recorded value="2016-03-20T23:41:23Z"/>
+        <!-- Outcome of the event. 0 = Success-->
         <outcome value="0"/>
-    </event>
     <!-- The participant describes the employee/practitioner who performed the audit event. -->
-    <participant> 
+    <agent> 
         <role>
             <coding>
                 <code value="54158HeadRadiologistHelseFordeRadiotherapyDepartment"/>
@@ -60,8 +58,8 @@
             <address value="Mourne.furore.com"/>
             <type value="1"/>
         </network>
-    </participant>
-    <!-- The source describses the application where the auditEvent orgiginated.  -->
+    </agent>
+    <!-- The source describes the application where the auditEvent originated.  -->
     <source>
         <site value="Helse Førde Radiotherapy department"/>
         <identifier>
@@ -72,12 +70,12 @@
     </source>
     <!-- The objects describe the instances of data or objects that have been accessed. 
         The first object is about the specific patient of this AuditEvent. -->
-    <object>
+    <entity>
         <reference>
             <reference value="http://example.no/fhir/Patient/noAuditLog-Patient-example7"/>
         </reference>
         <type>
-            <system value="http://hl7.org/fhir/object-type"/>
+            <system value="http://hl7.org/fhir/audit-entity-type"/>
             <code value="1"/>
             <display value="Person"/>
         </type>
@@ -87,15 +85,15 @@
             <display value="Patient"/>
         </role>
         <name value="Herald Olsen"/>
-    </object>
+    </entity>
     <!-- The specific information that has been accessed. -->
-    <object>
+    <entity>
         <identifier>
             <system value="http://helse-forde.no/informationIdentifier"/>
             <value value="Consult54542154"/>
         </identifier>
         <type>
-            <system value="http://hl7.org/fhir/object-type"/>
+            <system value="http://hl7.org/fhir/audit-entity-type"/>
             <code value="2"/>
             <display value="System Object"/>
         </type>
@@ -106,34 +104,34 @@
         </role>
         <name value="Consultnote"/>
         <description value="Radiology report-20160322"/>
-    </object>
-    <!-- 2 more objects to give information about the last modifcation date of the consult and last approval date. -->
-    <object>
+    </entity>
+    <!-- 2 more objects to give information about the last modification date of the consult and last approval date. -->
+    <entity>
         <identifier>
             <system value="http://helse-forde.no/informationIdentifier"/>
             <value value="Consult54542154"/>
         </identifier>
         <type>
-            <system value="http://hl7.org/fhir/object-type"/>
+            <system value="http://hl7.org/fhir/audit-entity-type"/>
             <code value="4"/>
             <display value="Other"/>
         </type>
         <name value="Last modified"/>
         <description value="2016-03-19T23:41:23Z"/>
-    </object>
-    <object>
+    </entity>
+    <entity>
         <identifier>
             <system value="http://helse-forde.no/informationIdentifier"/>
             <value value="Consult54542154"/>
         </identifier>
         <type>
-            <system value="http://hl7.org/fhir/object-type"/>
+            <system value="http://hl7.org/fhir/audit-entity-type"/>
             <code value="4"/>
             <display value="Other"/>
         </type>
          <name value="Last approved"/>
         <description value="2016-03-19T23:41:23Z"/>
-    </object>
+    </entity>
 </AuditEvent>
 
 

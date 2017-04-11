@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Globalization;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Tests.Serialization
 {

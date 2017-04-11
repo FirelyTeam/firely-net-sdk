@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -601,7 +601,7 @@ namespace Hl7.Fhir.Model
             Key = "fhs-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Not Done Reason can only be specified if NotDone is \"true\"",
-            Xpath = "f:notDone='true' or not(exists(f:notDoneReason))"
+            Xpath = "f:notDone/@value=true() or not(exists(f:notDoneReason))"
         };
 
         public static ElementDefinition.ConstraintComponent FamilyMemberHistory_FHS_1 = new ElementDefinition.ConstraintComponent()

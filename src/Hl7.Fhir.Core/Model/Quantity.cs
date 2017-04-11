@@ -35,20 +35,20 @@ using System.Text;
 using System.Xml;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
-
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Model
 {
     public partial class Quantity
     {
-        public Hl7.FhirPath.Quantity? ToQuantity()
+        public Primitives.Quantity? ToQuantity()
         {
             if (Value != null)
             {
                 if (Comparator != null)
                     throw Error.NotSupported("Cannot convert a Quantity with a comparator to a FhirPath Quantity");
 
-                return new Hl7.FhirPath.Quantity(Value.Value, Code);
+                return new Primitives.Quantity(Value.Value, Code);
             }
             else
                 return null;

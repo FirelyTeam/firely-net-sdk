@@ -16,6 +16,7 @@ using System.IO;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -104,7 +105,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNull(vs);
         }
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void FindNamingSystem()
         {
             var ns = source.FindNamingSystem("2.16.840.1.113883.4.1");

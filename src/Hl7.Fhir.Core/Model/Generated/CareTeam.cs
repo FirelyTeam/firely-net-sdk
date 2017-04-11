@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -438,7 +438,7 @@ namespace Hl7.Fhir.Model
             Key = "ctm-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "CareTeam.participant.onBehalfOf can only be populated when CareTeam.participant.member is a Practitioner",
-            Xpath = "contains(f:member, '/Practitioner') or not(exists(f:onBehalfOf))"
+            Xpath = "contains(f:member/f:reference/@value, '/Practitioner/') or not(exists(f:onBehalfOf))"
         };
 
         public override void AddDefaultConstraints()

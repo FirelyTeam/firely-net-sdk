@@ -9,6 +9,7 @@ using System.IO;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Serialization;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Validation
 {
@@ -142,7 +143,7 @@ namespace Hl7.Fhir.Validation
                 .OrType(FHIRAllTypes.Quantity, "http://validationtest.org/fhir/StructureDefinition/HeightQuantity")
                 .OrType(FHIRAllTypes.String));
 
-            Console.WriteLine(FhirSerializer.SerializeResourceToXml(result));
+            Debug.WriteLine(FhirSerializer.SerializeResourceToXml(result));
             return result;
         }
 

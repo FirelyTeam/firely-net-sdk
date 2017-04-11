@@ -9,6 +9,7 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,7 +71,7 @@ namespace Hl7.Fhir.Specification.Terminology
         private ValueSet expand(string uri)
         {
             var importedVs = Settings.ValueSetSource.FindValueSet(uri);
-            if (importedVs == null) throw Error.ResourceReferenceNotFoundException(uri, $"Cannot resolve canonical reference '{uri}' to ValueSet");
+            if (importedVs == null) throw new ResourceReferenceNotFoundException(uri, $"Cannot resolve canonical reference '{uri}' to ValueSet");
 
             if (!importedVs.HasExpansion) Expand(importedVs);
 

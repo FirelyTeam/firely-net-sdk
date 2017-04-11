@@ -16,22 +16,22 @@
     <NetCoreApp10>$(NetStandard15)</NetCoreApp10>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.0' ">
-    <DefineConstants>$(DefineConstants);$(NetStandard10)</DefineConstants>
+    <DefineConstants>$(DefineConstants);$(NetStandard10);NETSTANDARD</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.1' ">
-    <DefineConstants>$(DefineConstants);$(NetStandard11)</DefineConstants>
+    <DefineConstants>$(DefineConstants);$(NetStandard11);NETSTANDARD</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.2' ">
-    <DefineConstants>$(DefineConstants);$(NetStandard12)</DefineConstants>
+    <DefineConstants>$(DefineConstants);$(NetStandard12);NETSTANDARD</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
-    <DefineConstants>$(DefineConstants);$(NetStandard13)</DefineConstants>
+    <DefineConstants>$(DefineConstants);$(NetStandard13);NETSTANDARD</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
-    <DefineConstants>$(DefineConstants);$(NetStandard14)</DefineConstants>
+    <DefineConstants>$(DefineConstants);$(NetStandard14);NETSTANDARD</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.5' ">
-    <DefineConstants>$(DefineConstants);$(NetStandard15)</DefineConstants>
+    <DefineConstants>$(DefineConstants);$(NetStandard15);NETSTANDARD</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
     <DefineConstants>$(DefineConstants);$(NetFramework45);DOTNETFW</DefineConstants>

@@ -41,7 +41,7 @@
   <snapshot>
     <element id="Questionnaire:sdcquestionnaire">
       <path value="Questionnaire"/>
-      <name value="SDCQuestionnaire"/>
+      <sliceName value="SDCQuestionnaire"/>
       <short value="A structured set of questions"/>
       <definition
                   value="Sets minimum expectations for questionnaire support for SDC-conformant systems, including a number of extensions around display and behavior."/>
@@ -124,7 +124,7 @@
       <short value="Logical id of this artifact"/>
       <definition
                   value="The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes."/>
-      <comments
+      <comment
                 value="The only time that a resource does not have an id is when it is being submitted to the server using a create operation."/>
       <min value="0"/>
       <max value="1"/>
@@ -160,7 +160,7 @@
       <short value="A set of rules under which this content was created"/>
       <definition
                   value="A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content."/>
-      <comments
+      <comment
                 value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible."/>
       <min value="0"/>
       <max value="1"/>
@@ -179,7 +179,7 @@
       <path value="Questionnaire.language"/>
       <short value="Language of the resource content"/>
       <definition value="The base language in which the resource is written."/>
-      <comments
+      <comment
                 value="Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute)."/>
       <min value="0"/>
       <max value="1"/>
@@ -210,7 +210,7 @@
       <short value="Text summary of the resource, for human interpretation"/>
       <definition
                   value="A human-readable narrative that contains a summary of the resource, and may be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it 'clinically safe' for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety."/>
-      <comments
+      <comment
                 value="Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a 'text blob' or where text is additionally entered raw or narrated and encoded in formation is added later."/>
       <alias value="narrative"/>
       <alias value="html"/>
@@ -237,7 +237,7 @@
       <short value="Contained, inline Resources"/>
       <definition
                   value="These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope."/>
-      <comments
+      <comment
                 value="This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again."/>
       <alias value="inline resources"/>
       <alias value="anonymous resources"/>
@@ -260,7 +260,10 @@
     <element id="Questionnaire:sdcquestionnaire.extension">
       <path value="Questionnaire.extension"/>
       <slicing id="5">
-        <discriminator value="url"/>
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
         <ordered value="false"/>
         <rules value="open"/>
       </slicing>
@@ -280,7 +283,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.extension:submissionendpoint$sdc-questionnaire-endpoint">
       <path value="Questionnaire.extension"/>
-      <name value="submissionEndpoint"/>
+      <sliceName value="submissionEndpoint"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -322,7 +325,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.extension:provenancesignaturerequired$sdc-questionnaire-provenanceSignatureRequred">
       <path value="Questionnaire.extension"/>
-      <name value="provenanceSignatureRequired"/>
+      <sliceName value="provenanceSignatureRequired"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -344,7 +347,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.extension:stylesensitive$rendering-styleSensitive">
       <path value="Questionnaire.extension"/>
-      <name value="styleSensitive"/>
+      <sliceName value="styleSensitive"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -386,7 +389,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.extension:demap$questionnaire-deMap">
       <path value="Questionnaire.extension"/>
-      <name value="deMap"/>
+      <sliceName value="deMap"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -424,7 +427,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.extension:structuremap$questionnaire-sourceStructureMap">
       <path value="Questionnaire.extension"/>
-      <name value="structureMap"/>
+      <sliceName value="structureMap"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -462,7 +465,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.extension:studyprotocolidentifier$questionnaire-studyProtocolIdentifier">
       <path value="Questionnaire.extension"/>
-      <name value="studyProtocolIdentifier"/>
+      <sliceName value="studyProtocolIdentifier"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -486,7 +489,7 @@
       <short value="Extensions that cannot be ignored"/>
       <definition
                   value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
-      <comments
+      <comment
                 value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -797,7 +800,10 @@
     <element id="Questionnaire:sdcquestionnaire.title.extension">
       <path value="Questionnaire.title.extension"/>
       <slicing id="6">
-        <discriminator value="url"/>
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
         <ordered value="false"/>
         <rules value="open"/>
       </slicing>
@@ -817,7 +823,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.title.extension:titlerenderingstyle$rendering-style">
       <path value="Questionnaire.title.extension"/>
-      <name value="title.renderingStyle"/>
+      <sliceName value="title.renderingStyle"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -858,7 +864,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.title.extension:titlexhtml$rendering-xhtml">
       <path value="Questionnaire.title.extension"/>
-      <name value="title.xhtml"/>
+      <sliceName value="title.xhtml"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -948,7 +954,7 @@
       <short value="Resource that can be subject of QuestionnaireResponse"/>
       <definition
                   value="Identifies the types of subjects that can be the subject of the questionnaire."/>
-      <comments value="If none are specified, then the subject is unlimited."/>
+      <comment value="If none are specified, then the subject is unlimited."/>
       <min value="1"/>
       <max value="1"/>
       <base>
@@ -1098,7 +1104,10 @@
     <element id="Questionnaire:sdcquestionnaire.item.extension">
       <path value="Questionnaire.item.extension"/>
       <slicing id="7">
-        <discriminator value="url"/>
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
         <ordered value="false"/>
         <rules value="open"/>
       </slicing>
@@ -1118,7 +1127,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:itemminoccurs$questionnaire-minOccurs">
       <path value="Questionnaire.item.extension"/>
-      <name value="itemMinOccurs"/>
+      <sliceName value="itemMinOccurs"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -1175,7 +1184,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:itemmaxoccurs$questionnaire-maxOccurs">
       <path value="Questionnaire.item.extension"/>
-      <name value="itemMaxOccurs"/>
+      <sliceName value="itemMaxOccurs"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -1232,7 +1241,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:itemoptionaldisplay$sdc-questionnaire-optionalDisplay">
       <path value="Questionnaire.item.extension"/>
-      <name value="itemOptionalDisplay"/>
+      <sliceName value="itemOptionalDisplay"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -1274,7 +1283,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:itemhidden$questionnaire-hidden">
       <path value="Questionnaire.item.extension"/>
-      <name value="itemHidden"/>
+      <sliceName value="itemHidden"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -1317,7 +1326,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:usagemode$questionnaire-usageMode">
       <path value="Questionnaire.item.extension"/>
-      <name value="usageMode"/>
+      <sliceName value="usageMode"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -1355,7 +1364,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:itemcontrol$questionnaire-itemControl">
       <path value="Questionnaire.item.extension"/>
-      <name value="itemControl"/>
+      <sliceName value="itemControl"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -1393,7 +1402,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:choiceorientation$questionnaire-choiceOrientation">
       <path value="Questionnaire.item.extension"/>
-      <name value="choiceOrientation"/>
+      <sliceName value="choiceOrientation"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -1441,7 +1450,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:minlength$minLength">
       <path value="Questionnaire.item.extension"/>
-      <name value="minLength"/>
+      <sliceName value="minLength"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -1481,7 +1490,7 @@
     </element>
     <element id="Questionnaire:sdcquestionnaire.item.extension:regex$regex">
       <path value="Questionnaire.item.extension"/>
-      <name value="regex"/>
+      <sliceName value="regex"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -1522,7 +1531,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:entryformat$entryFormat">
       <path value="Questionnaire.item.extension"/>
-      <name value="entryFormat"/>
+      <sliceName value="entryFormat"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -1563,7 +1572,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:minvalue$minValue">
       <path value="Questionnaire.item.extension"/>
-      <name value="minValue"/>
+      <sliceName value="minValue"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -1604,7 +1613,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:maxvalue$maxValue">
       <path value="Questionnaire.item.extension"/>
-      <name value="maxValue"/>
+      <sliceName value="maxValue"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -1645,7 +1654,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:maxdecimalplaces$maxDecimalPlaces">
       <path value="Questionnaire.item.extension"/>
-      <name value="maxDecimalPlaces"/>
+      <sliceName value="maxDecimalPlaces"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -1687,7 +1696,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:mimetype$mimeType">
       <path value="Questionnaire.item.extension"/>
-      <name value="mimeType"/>
+      <sliceName value="mimeType"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -1723,7 +1732,7 @@
     </element>
     <element id="Questionnaire:sdcquestionnaire.item.extension:maxsize$maxSize">
       <path value="Questionnaire.item.extension"/>
-      <name value="maxSize"/>
+      <sliceName value="maxSize"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -1760,7 +1769,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:unit$questionnaire-unit">
       <path value="Questionnaire.item.extension"/>
-      <name value="unit"/>
+      <sliceName value="unit"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -1808,7 +1817,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:dereference$questionnaire-deReference">
       <path value="Questionnaire.item.extension"/>
-      <name value="deReference"/>
+      <sliceName value="deReference"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -1859,7 +1868,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:allowedresource$questionnaire-allowedResource">
       <path value="Questionnaire.item.extension"/>
-      <name value="allowedResource"/>
+      <sliceName value="allowedResource"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -1910,7 +1919,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:allowedprofile$questionnaire-allowedProfile">
       <path value="Questionnaire.item.extension"/>
-      <name value="allowedProfile"/>
+      <sliceName value="allowedProfile"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -1956,7 +1965,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:referencefilter$questionnaire-referenceFilter">
       <path value="Questionnaire.item.extension"/>
-      <name value="referenceFilter"/>
+      <sliceName value="referenceFilter"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -2002,7 +2011,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:displaycategory$questionnaire-displayCategory">
       <path value="Questionnaire.item.extension"/>
-      <name value="displayCategory"/>
+      <sliceName value="displayCategory"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -2053,7 +2062,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:supportlink$questionnaire-supportLink">
       <path value="Questionnaire.item.extension"/>
-      <name value="supportLink"/>
+      <sliceName value="supportLink"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -2093,7 +2102,7 @@
       <short value="Extensions that cannot be ignored"/>
       <definition
                   value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
-      <comments
+      <comment
                 value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -2120,7 +2129,7 @@
       <short value="To link questionnaire with questionnaire response"/>
       <definition
                   value="An identifier that is unique within the Questionnaire allowing linkage to the equivalent item in a QuestionnaireResponse resource."/>
-      <comments
+      <comment
                 value="May be omitted if there is no expectation to link answers back to a Questionnaire.  This ''can'' be a meaningful identifier (e.g. a LOINC code) but is not intended to have any meaning.  GUIDs or sequential numbers are appropriate here."/>
       <requirements
                     value="[[[QuestionnaireResponse]]] does not require omitted items to be included and may have some items that repeat, so linkage based on position alone is not sufficient."/>
@@ -2150,7 +2159,7 @@
       <short value="Concept that represents this item within in a questionnaire"/>
       <definition
                   value="Identifies a how this group of questions is known in a particular terminology such as LOINC."/>
-      <comments
+      <comment
                 value="The code(s) for the 'root' group apply to the questionnaire as a whole."/>
       <requirements
                     value="Allows linking of groups of questions (and complete Questionnaire resources) to formal terminologies."/>
@@ -2186,7 +2195,7 @@
       <short value="E.g. '1(a)', '2.5.3'"/>
       <definition
                   value="A short label for a particular group, question or set of display text within the questionnaire."/>
-      <comments
+      <comment
                 value="These are generally unique within a questionnaire, though this is not guaranteed. Some questionnaires may have multiple questions with the same label with logic to control which gets exposed.  Typically these won't be used for 'text' items, though such use is not prohibited.  Systems SHOULD NOT generate their own prefixes if prefixes are defined for any items within a Questionnaire."/>
       <requirements
                     value="Separating the label from the question text allows improved rendering.  Also, instructions will often refer to specific prefixes, so there's a need for the questionnaire design to have control over what labels are used."/>
@@ -2232,7 +2241,10 @@
     <element id="Questionnaire:sdcquestionnaire.item.prefix.extension">
       <path value="Questionnaire.item.prefix.extension"/>
       <slicing id="8">
-        <discriminator value="url"/>
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
         <ordered value="false"/>
         <rules value="open"/>
       </slicing>
@@ -2252,7 +2264,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.prefix.extension:itemlabelrenderingstyle$rendering-style">
       <path value="Questionnaire.item.prefix.extension"/>
-      <name value="itemLabel.renderingStyle"/>
+      <sliceName value="itemLabel.renderingStyle"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -2293,7 +2305,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.prefix.extension:itemlabelxhtml$rendering-xhtml">
       <path value="Questionnaire.item.prefix.extension"/>
-      <name value="itemLabel.xhtml"/>
+      <sliceName value="itemLabel.xhtml"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -2392,7 +2404,10 @@
     <element id="Questionnaire:sdcquestionnaire.item.text.extension">
       <path value="Questionnaire.item.text.extension"/>
       <slicing id="9">
-        <discriminator value="url"/>
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
         <ordered value="false"/>
         <rules value="open"/>
       </slicing>
@@ -2412,7 +2427,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.text.extension:grouptextrenderingstyle$rendering-style">
       <path value="Questionnaire.item.text.extension"/>
-      <name value="groupText.renderingStyle"/>
+      <sliceName value="groupText.renderingStyle"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -2453,7 +2468,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.text.extension:grouptextxhtml$rendering-xhtml">
       <path value="Questionnaire.item.text.extension"/>
-      <name value="groupText.xhtml"/>
+      <sliceName value="groupText.xhtml"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -2511,7 +2526,7 @@
              value="group | display | question | boolean | decimal | integer | date | dateTime +"/>
       <definition
                   value="Identifies the type of questionnaire item this is - whether text for display, a grouping of other items or a particular type of data to be captured (string, integer, coded choice, etc.)."/>
-      <comments
+      <comment
                 value="Time is handled using 'string'.  File is handled using Attachment.  (Content can be sent as a contained binary)."/>
       <requirements
                     value="Defines the format in which the user is to be prompted for the answer."/>
@@ -2549,7 +2564,7 @@
       <short value="Only allow data when:"/>
       <definition
                   value="If present, indicates that this item should only be enabled (displayed/allow answers to be captured) when the specified condition is true."/>
-      <comments
+      <comment
                 value="If multiple repetitions of this extension are present, the item should be enabled when the condition for *any* of the repetitions is true.  I.e. Treat 'enableWhen's as being joined by an 'or' clause.  If enableWhen is present for an item, 'required' is ignored unless one of the enableWhen conditions is met."/>
       <requirements
                     value="Allows questionnaires to adapt based on answers to other questions; e.g. If physical gender is specified as a male, no need to capture pregnancy history.  Also allows conditional display of instructions or groups of questions."/>
@@ -2611,7 +2626,7 @@
       <short value="Additional Content defined by implementations"/>
       <definition
                   value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-      <comments
+      <comment
                 value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -2636,7 +2651,7 @@
       <short value="Extensions that cannot be ignored"/>
       <definition
                   value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
-      <comments
+      <comment
                 value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -2663,7 +2678,7 @@
       <short value="Question that determines whether item is enabled"/>
       <definition
                   value="The linkId for the question whose answer (or lack of answer) governs whether this item is enabled."/>
-      <comments
+      <comment
                 value="If multiple question occurrences are present for the same question (same linkId), then this refers to the nearest question occurrence reachable by tracing first the 'ancestor' axis and then the 'preceding' axis and then the 'following' axis."/>
       <min value="1"/>
       <max value="1"/>
@@ -2691,7 +2706,7 @@
       <short value="Enable when answered or not"/>
       <definition
                   value="If present, indicates that this item should be enabled only if the specified question is answered or not answered."/>
-      <comments
+      <comment
                 value="If answered=false and answer values are also provided, then they are treated as 'or'.  I.e. 'Enable if the question is unanswered or the answer is one of the specified values'.  If answered=true and answers are present, one of the specified answers must be met. (So there's little reason to specify answered=true if answers are present.)."/>
       <min value="0"/>
       <max value="1"/>
@@ -2716,7 +2731,7 @@
       <short value="Value question must have"/>
       <definition
                   value="If present, then the answer for the referenced question must match this answer for all components present in the enableWhen.answer."/>
-      <comments
+      <comment
                 value="Components not specified in the answer do not need to match.  For example, if enableWhen specifies code + system for a Coding, it's ok if the answer has a 'display' element.  The dataType of this element must be the same as the data type of the question being referenced."/>
       <min value="0"/>
       <max value="1"/>
@@ -2782,7 +2797,7 @@
       <short value="Whether the item must be included in data results"/>
       <definition
                   value="If true, indicates that the item must be present in a 'completed' QuestionnaireResponse.  If false, the item may be skipped when answering the questionnaire."/>
-      <comments
+      <comment
                 value="If an item that contains other items is marked as required, that does not automatically make the contained elements required (though required groups must contain at least one child element)."/>
       <min value="0"/>
       <max value="1"/>
@@ -2842,7 +2857,7 @@
       <short value="Don't allow human editing"/>
       <definition
                   value="If true, the value cannot be changed by a human respondent to the Questionnaire."/>
-      <comments
+      <comment
                 value="The value of readOnly elements can be established by asserting  extensions for defaultValues, linkages that support pre-population and/or extensions that support calculation based on other answers."/>
       <requirements
                     value="Allows certain information to be phrased (and rendered) as a question and an answer, while keeping users from changing it.  May also be useful for preventing changes to pre-populated portions of a questionnaire, for calculated values, etc."/>
@@ -2874,7 +2889,7 @@
       <short value="No more than this many characters"/>
       <definition
                   value="The maximum number of characters that are permitted in the answer to be considered a 'valid' QuestionnaireResponse."/>
-      <comments
+      <comment
                 value="For base64binary, reflects the number of characters representing the encoded data, not the number of bytes of the binary data."/>
       <min value="0"/>
       <max value="1"/>
@@ -2908,7 +2923,7 @@
       <short value="Valueset containing permitted answers"/>
       <definition
                   value="Reference to a value set containing a list of codes representing permitted answers for the question."/>
-      <comments
+      <comment
                 value="LOINC defines many useful value sets for questionnaire response. See [LOINC Answer Lists](loinc.html#alist)."/>
       <min value="0"/>
       <max value="1"/>
@@ -2982,7 +2997,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.option.extension:optionprefix$questionnaire-optionPrefix">
       <path value="Questionnaire.item.option.extension"/>
-      <name value="OptionPrefix"/>
+      <sliceName value="OptionPrefix"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
       <min value="0"/>
@@ -3022,7 +3037,7 @@
       <short value="Extensions that cannot be ignored"/>
       <definition
                   value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
-      <comments
+      <comment
                 value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -3179,7 +3194,7 @@
   <differential>
     <element id="Questionnaire:sdcquestionnaire">
       <path value="Questionnaire"/>
-      <name value="SDCQuestionnaire"/>
+      <sliceName value="SDCQuestionnaire"/>
       <definition
                   value="Sets minimum expectations for questionnaire support for SDC-conformant systems, including a number of extensions around display and behavior."/>
       <mustSupport value="false"/>
@@ -3193,7 +3208,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.extension:submissionendpoint$sdc-questionnaire-endpoint">
       <path value="Questionnaire.extension"/>
-      <name value="submissionEndpoint"/>
+      <sliceName value="submissionEndpoint"/>
       <min value="0"/>
       <max value="*"/>
       <type>
@@ -3212,7 +3227,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.extension:provenancesignaturerequired$sdc-questionnaire-provenanceSignatureRequred">
       <path value="Questionnaire.extension"/>
-      <name value="provenanceSignatureRequired"/>
+      <sliceName value="provenanceSignatureRequired"/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -3227,7 +3242,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.extension:stylesensitive$rendering-styleSensitive">
       <path value="Questionnaire.extension"/>
-      <name value="styleSensitive"/>
+      <sliceName value="styleSensitive"/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -3246,7 +3261,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.extension:demap$questionnaire-deMap">
       <path value="Questionnaire.extension"/>
-      <name value="deMap"/>
+      <sliceName value="deMap"/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -3261,7 +3276,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.extension:structuremap$questionnaire-sourceStructureMap">
       <path value="Questionnaire.extension"/>
-      <name value="structureMap"/>
+      <sliceName value="structureMap"/>
       <min value="0"/>
       <max value="*"/>
       <type>
@@ -3276,7 +3291,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.extension:studyprotocolidentifier$questionnaire-studyProtocolIdentifier">
       <path value="Questionnaire.extension"/>
-      <name value="studyProtocolIdentifier"/>
+      <sliceName value="studyProtocolIdentifier"/>
       <min value="0"/>
       <max value="*"/>
       <type>
@@ -3373,7 +3388,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.title.extension:titlerenderingstyle$rendering-style">
       <path value="Questionnaire.title.extension"/>
-      <name value="title.renderingStyle"/>
+      <sliceName value="title.renderingStyle"/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -3391,7 +3406,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.title.extension:titlexhtml$rendering-xhtml">
       <path value="Questionnaire.title.extension"/>
-      <name value="title.xhtml"/>
+      <sliceName value="title.xhtml"/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -3436,7 +3451,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:itemminoccurs$questionnaire-minOccurs">
       <path value="Questionnaire.item.extension"/>
-      <name value="itemMinOccurs"/>
+      <sliceName value="itemMinOccurs"/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -3455,7 +3470,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:itemmaxoccurs$questionnaire-maxOccurs">
       <path value="Questionnaire.item.extension"/>
-      <name value="itemMaxOccurs"/>
+      <sliceName value="itemMaxOccurs"/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -3474,7 +3489,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:itemoptionaldisplay$sdc-questionnaire-optionalDisplay">
       <path value="Questionnaire.item.extension"/>
-      <name value="itemOptionalDisplay"/>
+      <sliceName value="itemOptionalDisplay"/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -3493,7 +3508,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:itemhidden$questionnaire-hidden">
       <path value="Questionnaire.item.extension"/>
-      <name value="itemHidden"/>
+      <sliceName value="itemHidden"/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -3513,7 +3528,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:usagemode$questionnaire-usageMode">
       <path value="Questionnaire.item.extension"/>
-      <name value="usageMode"/>
+      <sliceName value="usageMode"/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -3528,7 +3543,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:itemcontrol$questionnaire-itemControl">
       <path value="Questionnaire.item.extension"/>
-      <name value="itemControl"/>
+      <sliceName value="itemControl"/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -3543,7 +3558,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:choiceorientation$questionnaire-choiceOrientation">
       <path value="Questionnaire.item.extension"/>
-      <name value="choiceOrientation"/>
+      <sliceName value="choiceOrientation"/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -3558,7 +3573,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:minlength$minLength">
       <path value="Questionnaire.item.extension"/>
-      <name value="minLength"/>
+      <sliceName value="minLength"/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -3575,7 +3590,7 @@
     </element>
     <element id="Questionnaire:sdcquestionnaire.item.extension:regex$regex">
       <path value="Questionnaire.item.extension"/>
-      <name value="regex"/>
+      <sliceName value="regex"/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -3593,7 +3608,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:entryformat$entryFormat">
       <path value="Questionnaire.item.extension"/>
-      <name value="entryFormat"/>
+      <sliceName value="entryFormat"/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -3611,7 +3626,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:minvalue$minValue">
       <path value="Questionnaire.item.extension"/>
-      <name value="minValue"/>
+      <sliceName value="minValue"/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -3629,7 +3644,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:maxvalue$maxValue">
       <path value="Questionnaire.item.extension"/>
-      <name value="maxValue"/>
+      <sliceName value="maxValue"/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -3647,7 +3662,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:maxdecimalplaces$maxDecimalPlaces">
       <path value="Questionnaire.item.extension"/>
-      <name value="maxDecimalPlaces"/>
+      <sliceName value="maxDecimalPlaces"/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -3666,7 +3681,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:mimetype$mimeType">
       <path value="Questionnaire.item.extension"/>
-      <name value="mimeType"/>
+      <sliceName value="mimeType"/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -3679,7 +3694,7 @@
     </element>
     <element id="Questionnaire:sdcquestionnaire.item.extension:maxsize$maxSize">
       <path value="Questionnaire.item.extension"/>
-      <name value="maxSize"/>
+      <sliceName value="maxSize"/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -3693,7 +3708,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:unit$questionnaire-unit">
       <path value="Questionnaire.item.extension"/>
-      <name value="unit"/>
+      <sliceName value="unit"/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -3708,7 +3723,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:dereference$questionnaire-deReference">
       <path value="Questionnaire.item.extension"/>
-      <name value="deReference"/>
+      <sliceName value="deReference"/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -3728,7 +3743,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:allowedresource$questionnaire-allowedResource">
       <path value="Questionnaire.item.extension"/>
-      <name value="allowedResource"/>
+      <sliceName value="allowedResource"/>
       <min value="0"/>
       <max value="*"/>
       <type>
@@ -3748,7 +3763,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:allowedprofile$questionnaire-allowedProfile">
       <path value="Questionnaire.item.extension"/>
-      <name value="allowedProfile"/>
+      <sliceName value="allowedProfile"/>
       <min value="0"/>
       <max value="*"/>
       <type>
@@ -3763,7 +3778,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:referencefilter$questionnaire-referenceFilter">
       <path value="Questionnaire.item.extension"/>
-      <name value="referenceFilter"/>
+      <sliceName value="referenceFilter"/>
       <type>
         <code value="Extension"/>
         <profile
@@ -3776,7 +3791,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:displaycategory$questionnaire-displayCategory">
       <path value="Questionnaire.item.extension"/>
-      <name value="displayCategory"/>
+      <sliceName value="displayCategory"/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -3796,7 +3811,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.extension:supportlink$questionnaire-supportLink">
       <path value="Questionnaire.item.extension"/>
-      <name value="supportLink"/>
+      <sliceName value="supportLink"/>
       <min value="0"/>
       <max value="*"/>
       <type>
@@ -3843,7 +3858,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.prefix.extension:itemlabelrenderingstyle$rendering-style">
       <path value="Questionnaire.item.prefix.extension"/>
-      <name value="itemLabel.renderingStyle"/>
+      <sliceName value="itemLabel.renderingStyle"/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -3861,7 +3876,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.prefix.extension:itemlabelxhtml$rendering-xhtml">
       <path value="Questionnaire.item.prefix.extension"/>
-      <name value="itemLabel.xhtml"/>
+      <sliceName value="itemLabel.xhtml"/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -3890,7 +3905,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.text.extension:grouptextrenderingstyle$rendering-style">
       <path value="Questionnaire.item.text.extension"/>
-      <name value="groupText.renderingStyle"/>
+      <sliceName value="groupText.renderingStyle"/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -3908,7 +3923,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.text.extension:grouptextxhtml$rendering-xhtml">
       <path value="Questionnaire.item.text.extension"/>
-      <name value="groupText.xhtml"/>
+      <sliceName value="groupText.xhtml"/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -3925,7 +3940,7 @@
     </element>
     <element id="Questionnaire:sdcquestionnaire.item.type">
       <path value="Questionnaire.item.type"/>
-      <comments
+      <comment
                 value="Time is handled using 'string'.  File is handled using Attachment.  (Content can be sent as a contained binary)."/>
       <min value="1"/>
       <max value="1"/>
@@ -4035,7 +4050,7 @@
     <element
              id="Questionnaire:sdcquestionnaire.item.option.extension:optionprefix$questionnaire-optionPrefix">
       <path value="Questionnaire.item.option.extension"/>
-      <name value="OptionPrefix"/>
+      <sliceName value="OptionPrefix"/>
       <min value="0"/>
       <max value="1"/>
       <type>

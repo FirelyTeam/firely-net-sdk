@@ -33238,87 +33238,6 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/v2/0475" />
-    <resource>
-      <CodeSystem>
-        <id value="v2-0475" />
-        <!-- Removed Meta/LastModified -->
-        <text>
-          <status value="additional" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
-        </text>
-        <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
-          <valueString value="External" />
-        </extension>
-        <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm">
-          <valueInteger value="0" />
-        </extension>
-        <url value="http://hl7.org/fhir/v2/0475" />
-        <identifier>
-          <system value="urn:ietf:rfc:3986" />
-          <value value="urn:oid:2.16.840.1.113883.18.303" />
-        </identifier>
-        <version value="2.8.2" />
-        <name value="v2 Charge Type Reason" />
-        <status value="active" />
-        <experimental value="false" />
-        <publisher value="HL7, Inc" />
-        <contact>
-          <telecom>
-            <system value="url" />
-            <value value="http://hl7.org" />
-          </telecom>
-        </contact>
-        <description value="FHIR Value set/code system definition for HL7 v2 table 0475 ( Charge Type Reason)" />
-        <caseSensitive value="false" />
-        <valueSet value="http://hl7.org/fhir/ValueSet/v2-0475" />
-        <content value="complete" />
-        <concept>
-          <code value="01" />
-          <display value="Allergy" />
-          <designation>
-            <language value="nl" />
-            <value value="Allergie" />
-          </designation>
-        </concept>
-        <concept>
-          <code value="02" />
-          <display value="Intolerance" />
-          <designation>
-            <language value="nl" />
-            <value value="Intolerantie" />
-          </designation>
-        </concept>
-        <concept>
-          <code value="03" />
-          <display value="Treatment Failure" />
-          <designation>
-            <language value="nl" />
-            <value value="Behandeling mislukt" />
-          </designation>
-        </concept>
-        <concept>
-          <code value="04" />
-          <display value="Patient Request" />
-          <designation>
-            <language value="nl" />
-            <value value="Patiëntverzoek" />
-          </designation>
-        </concept>
-        <concept>
-          <code value="05" />
-          <display value="No Exception" />
-          <designation>
-            <language value="nl" />
-            <value value="Geen uitzondering" />
-          </designation>
-        </concept>
-      </CodeSystem>
-    </resource>
-  </entry>
-  <entry>
     <fullUrl value="http://hl7.org/fhir/v2/0391/2.6" />
     <resource>
       <CodeSystem>
@@ -33775,6 +33694,87 @@
         </concept>
         <concept>
           <code value="VISIT" />
+        </concept>
+      </CodeSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/v2/0475" />
+    <resource>
+      <CodeSystem>
+        <id value="v2-0475" />
+        <!-- Removed Meta/LastModified -->
+        <text>
+          <status value="additional" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
+          <valueString value="External" />
+        </extension>
+        <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm">
+          <valueInteger value="0" />
+        </extension>
+        <url value="http://hl7.org/fhir/v2/0475" />
+        <identifier>
+          <system value="urn:ietf:rfc:3986" />
+          <value value="urn:oid:2.16.840.1.113883.18.303" />
+        </identifier>
+        <version value="2.8.2" />
+        <name value="v2 Charge Type Reason" />
+        <status value="active" />
+        <experimental value="false" />
+        <publisher value="HL7, Inc" />
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="http://hl7.org" />
+          </telecom>
+        </contact>
+        <description value="FHIR Value set/code system definition for HL7 v2 table 0475 ( Charge Type Reason)" />
+        <caseSensitive value="false" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/v2-0475" />
+        <content value="complete" />
+        <concept>
+          <code value="01" />
+          <display value="Allergy" />
+          <designation>
+            <language value="nl" />
+            <value value="Allergie" />
+          </designation>
+        </concept>
+        <concept>
+          <code value="02" />
+          <display value="Intolerance" />
+          <designation>
+            <language value="nl" />
+            <value value="Intolerantie" />
+          </designation>
+        </concept>
+        <concept>
+          <code value="03" />
+          <display value="Treatment Failure" />
+          <designation>
+            <language value="nl" />
+            <value value="Behandeling mislukt" />
+          </designation>
+        </concept>
+        <concept>
+          <code value="04" />
+          <display value="Patient Request" />
+          <designation>
+            <language value="nl" />
+            <value value="Patiëntverzoek" />
+          </designation>
+        </concept>
+        <concept>
+          <code value="05" />
+          <display value="No Exception" />
+          <designation>
+            <language value="nl" />
+            <value value="Geen uitzondering" />
+          </designation>
         </concept>
       </CodeSystem>
     </resource>

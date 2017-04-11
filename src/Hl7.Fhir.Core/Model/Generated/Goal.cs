@@ -4,7 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ComponentModel;
+using Hl7.Fhir.Utility;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -530,7 +530,7 @@ namespace Hl7.Fhir.Model
             Key = "gol-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Goal.target.measure is required if Goal.target.detail is populated",
-            Xpath = "(exists(f:detail) and exists(f:measure)) or not(exists(f:detail))"
+            Xpath = "(exists(f:*[starts-with(local-name(.), 'detail')]) and exists(f:measure)) or not(exists(f:*[starts-with(local-name(.), 'detail')]))"
         };
 
         public override void AddDefaultConstraints()

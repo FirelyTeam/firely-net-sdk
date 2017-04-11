@@ -76,9 +76,7 @@ namespace Hl7.Fhir.Rest
         {
             if (String.IsNullOrEmpty(contentType)) return ResourceFormat.Unknown;
 
-            System.Net.Http.Headers.MediaTypeHeaderValue headerValue;
-            System.Net.Http.Headers.MediaTypeHeaderValue.TryParse(contentType, out headerValue);
-            var f = headerValue.MediaType.ToLowerInvariant();
+            var f = ContentType.GetMediaTypeFromHeaderValue(contentType);
 
             if (JSON_CONTENT_HEADERS.Contains(f))
                 return ResourceFormat.Json;
@@ -121,10 +119,7 @@ namespace Hl7.Fhir.Rest
         /// <returns></returns>
         public static bool IsValidResourceContentType(string contentType)
         {
-
-            System.Net.Http.Headers.MediaTypeHeaderValue headerValue;
-            System.Net.Http.Headers.MediaTypeHeaderValue.TryParse(contentType, out headerValue);
-            var f = headerValue.MediaType.ToLowerInvariant();
+            var f = ContentType.GetMediaTypeFromHeaderValue(contentType);
 
             return JSON_CONTENT_HEADERS.Contains(f) || XML_CONTENT_HEADERS.Contains(f);
         }
@@ -135,6 +130,7 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <param name="contentType">The content type, as it appears on e.g. a Http Content-Type header</param>
         /// <returns></returns>
+        [Obsolete("Since DSTU1, there is no difference in mediatype header for bundles anymore. Use IsValidResourceContentType() instead.")]
         public static bool IsValidBundleContentType(string contentType)
         {
             var f = contentType.ToLowerInvariant();
@@ -153,6 +149,30 @@ namespace Hl7.Fhir.Rest
             return GetResourceFormatFromFormatParam(paramValue) != ResourceFormat.Unknown;
         }
 
+
+        public static string GetMediaTypeFromHeaderValue(string mediaHeaderValue)
+        {
+#if DOTNETFW
+            var ct = new System.Net.Mime.ContentType(mediaHeaderValue);
+            return ct.MediaType.ToLowerInvariant();
+#else
+            System.Net.Http.Headers.MediaTypeHeaderValue headerValue;
+            System.Net.Http.Headers.MediaTypeHeaderValue.TryParse(mediaHeaderValue, out headerValue);
+            return headerValue.MediaType.ToLowerInvariant();
+#endif
+        }
+
+        public static string GetCharSetFromHeaderValue(string mediaHeaderValue)
+        {
+#if DOTNETFW
+            var ct = new System.Net.Mime.ContentType(mediaHeaderValue);
+            return ct.CharSet;
+#else
+            System.Net.Http.Headers.MediaTypeHeaderValue headerValue;
+            System.Net.Http.Headers.MediaTypeHeaderValue.TryParse(mediaHeaderValue, out headerValue);
+            return headerValue.CharSet;
+#endif
+        }
     }
 
 

@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Tests.Rest
         /// <summary>
         /// http://hl7.org/fhir/valueset-operations.html#lookup
         /// </summary>
-        [TestMethod]
+        [TestMethod,Ignore]  // Server returns internal server error
         [TestCategory("IntegrationTest")]
         public void InvokeLookupCoding()
         {
@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.AreEqual("Male", expansion.GetSingleValue<FhirString>("display").Value);               
         }
 
-        [TestMethod]
+        [TestMethod,Ignore] // Server returns internal server error
         [TestCategory("IntegrationTest")]
         public void InvokeLookupCode()
         {

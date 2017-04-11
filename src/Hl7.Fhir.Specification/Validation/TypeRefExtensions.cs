@@ -11,6 +11,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System.Collections.Generic;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Validation
 {
@@ -30,9 +31,18 @@ namespace Hl7.Fhir.Validation
 
         public static string GetDeclaredProfiles(this ElementDefinition.TypeRefComponent typeRef)
         {
+            if (typeRef.Code == FHIRAllTypes.Reference.GetLiteral())
+            {
+                if (!System.String.IsNullOrEmpty(typeRef.TargetProfile))
+                {
+                    return typeRef.TargetProfile;
+                }
+                // It needs to be a reference to a resource.
+                return ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Resource.GetLiteral());
+            }
             if (!System.String.IsNullOrEmpty(typeRef.Profile))
             {
-                return typeRef.Profile;     // Take the first, this will disappear in STU3 anyway
+                return typeRef.Profile;
             }
             else if (!string.IsNullOrEmpty(typeRef.Code))
                 return ModelInfo.CanonicalUriForFhirCoreType(typeRef.Code);

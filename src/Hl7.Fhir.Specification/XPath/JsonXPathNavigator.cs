@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using Hl7.Fhir.Utility;
 
 #if NET_XSD_SCHEMA
 using System.Xml.XPath;

@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, 21 Mar 2017 10:28:29 GMT for FHIR v3.0.0
+// Generated on Mon, 03 Apr 2017 17:16:19 GMT for FHIR v3.0.0
 //
 
 using Hl7.Fhir.Model;

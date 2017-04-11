@@ -10,6 +10,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -99,7 +100,7 @@ namespace Hl7.Fhir.Rest
         {
             if (!String.IsNullOrEmpty(response.ContentType))
             {
-				return System.Net.Http.Headers.MediaTypeHeaderValue.Parse(response.ContentType).MediaType;
+                return ContentType.GetMediaTypeFromHeaderValue(response.ContentType);
             }
             else
                 return null;
@@ -111,7 +112,7 @@ namespace Hl7.Fhir.Rest
 
             if (!String.IsNullOrEmpty(response.ContentType))
             {
-                var charset = System.Net.Http.Headers.MediaTypeHeaderValue.Parse(response.ContentType).CharSet;
+                var charset = ContentType.GetCharSetFromHeaderValue(response.ContentType);
 
                 if (!String.IsNullOrEmpty(charset))
                     result = Encoding.GetEncoding(charset);
