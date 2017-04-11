@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Tests
     [TestClass]
     public class TestDataVersionCheck
     {
-        [TestMethod,Ignore]   // not everything parses correctly
+        [TestMethod]   // not everything parses correctly
         public void VerifyAllTestData()
         {
             string location = typeof(TestDataHelper).GetTypeInfo().Assembly.Location;
