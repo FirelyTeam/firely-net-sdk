@@ -90,19 +90,19 @@ namespace Hl7.Fhir.FhirPath
                     else if ((_pocoElement is Integer))
                     {
                         if ((_pocoElement as Integer).Value.HasValue)
-                            return (long)(_pocoElement as Integer).Value.Value;
+                            return (int)(_pocoElement as Integer).Value.Value;
                         return null;
                     }
                     else if ((_pocoElement is PositiveInt))
                     {
                         if ((_pocoElement as PositiveInt).Value.HasValue)
-                            return (long)(_pocoElement as PositiveInt).Value.Value;
+                            return (uint)(_pocoElement as PositiveInt).Value.Value;
                         return null;
                     }
                     else if ((_pocoElement is UnsignedInt))
                     {
                         if ((_pocoElement as UnsignedInt).Value.HasValue)
-                            return (long)(_pocoElement as UnsignedInt).Value.Value;
+                            return (uint)(_pocoElement as UnsignedInt).Value.Value;
                         return null;
                     }
                     else if (_pocoElement is Primitive)
@@ -120,7 +120,8 @@ namespace Hl7.Fhir.FhirPath
             }
         }
 
-        private static string[] quantitySubtypes = { "SimpleQuantity", "Age", "Count", "Distance", "Duration", "Money" };
+        private static string[] dstu2quantitySubtypes = { "SimpleQuantity", "Age", "Count", "Distance", "Duration", "Money" };
+        private static string[] stu3quantitySubtypes = { "SimpleQuantity" };
 
         public string TypeName
         {
@@ -144,7 +145,7 @@ namespace Hl7.Fhir.FhirPath
                 {
 
                     var tn = _pocoElement.TypeName;
-                    if (quantitySubtypes.Contains(tn)) tn = "Quantity";
+                    if (stu3quantitySubtypes.Contains(tn)) tn = "Quantity";
 
                     return tn;
                 }
