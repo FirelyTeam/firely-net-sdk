@@ -224,7 +224,7 @@ namespace Hl7.Fhir.Validation
         }
 
         /// <summary>
-        /// Validates the instance, declared and stated profiles for consistenty.
+        /// Validates the instance type, declared and stated profiles for consistenty.
         /// </summary>
         /// <returns></returns>
         public OperationOutcome Validate()

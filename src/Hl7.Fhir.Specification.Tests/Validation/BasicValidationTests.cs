@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Validation
         public void SetupSource()
         {
             // Ensure the FHIR extensions are registered
-            Hl7.Fhir.FhirPath.PocoNavigatorExtensions.PrepareFhirSybolTableFunctions();
+            Hl7.Fhir.FhirPath.PocoNavigatorExtensions.PrepareFhirSymbolTableFunctions();
 
             _source = new CachedResolver(
                 new MultiResolver(
