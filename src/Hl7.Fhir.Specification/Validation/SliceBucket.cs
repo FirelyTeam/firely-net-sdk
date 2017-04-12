@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Validation
 
         private static bool errorOnDiscriminator(string[] discriminators, OperationOutcome outcome)
         {
-            foreach(var location in outcome.Issue.SelectMany(i => i.Location))
+            foreach(var location in outcome.ListErrors().SelectMany(i => i.Location))
             {
                 // Remove all the array indices from the instance path (e.g. you end up with Patient.telecom.system, not
                 // Patient.telecom[2].system[0])
