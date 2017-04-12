@@ -303,19 +303,19 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        [TestMethod,Ignore]
+        [TestMethod]
         public void ValidateOverNameRef()
         {
-            var questionnaireXml = File.ReadAllText("TestData\\validation\\questionnaire-sdc-profile-example-cap.xml");
+            var questionnaireXml = File.ReadAllText("TestData\\validation\\questionnaire-with-incorrect-fixed-type.xml");
 
             var questionnaire = (new FhirXmlParser()).Parse<Questionnaire>(questionnaireXml);
             Assert.IsNotNull(questionnaire);
 
             // the questionnaire instance references the profile to be validated:
             //      http://validationtest.org/fhir/StructureDefinition/QuestionnaireWithFixedType
-            var report = _validator.Validate(questionnaire);
+            var report = _validator.Validate(questionnaire, "http://validationtest.org/fhir/StructureDefinition/QuestionnaireWithFixedType");
             Assert.IsFalse(report.Success);
-            Assert.AreEqual(35, report.Errors);
+            Assert.AreEqual(2, report.Errors);
             Assert.AreEqual(0, report.Warnings);           // 3x narrative constraint with no fhirpath
         }
 
@@ -357,7 +357,7 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        [TestMethod]
+        [TestMethod, Ignore]    // Breaks now and then, probably because of external access to Grahame's terminology server
         public void ValidateContained()
         {
             var careplanXml = File.ReadAllText("TestData\\validation\\careplan-example-integrated.xml");
