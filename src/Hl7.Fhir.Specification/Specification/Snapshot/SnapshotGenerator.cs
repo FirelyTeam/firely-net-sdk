@@ -241,16 +241,26 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // [WMR 20160902] Rebase the cloned base profile (e.g. DomainResource)
                 if (!structure.IsConstraint)
                 {
-                    var rootElem = differential.Element.FirstOrDefault();
-                    if (rootElem != null)
+                    // [WMR 20170411] Updated for STU3 - root element is no longer required/ensured
+                    // => Derive from StructureDefinition.type property
+                    var rootPath = structure.Type;
+                    if (string.IsNullOrEmpty(rootPath))
                     {
-                        if (!rootElem.IsRootElement())
-                        {
-                            // Fatal error...
-                            throw Error.Argument(nameof(structure), $"Invalid argument. The specified StructureDefinition defines a new model (not a constraint on another profile), but the differential component does not start at the root element definition.");
-                        }
-                        snapshot.Rebase(rootElem.Path);
+                        // Fatal error...
+                        throw Error.Argument(nameof(structure), $"Invalid argument. The StructureDefinition.type property value is empty or missing.");
                     }
+                    snapshot.Rebase(rootPath);
+
+                    //var rootElem = differential.Element.FirstOrDefault();
+                    //if (rootElem != null)
+                    //{
+                    //    if (!rootElem.IsRootElement())
+                    //    {
+                    //        // Fatal error...
+                    //        throw Error.Argument(nameof(structure), $"Invalid argument. The specified StructureDefinition defines a new model (not a constraint on another profile), but the differential component does not start at the root element definition.");
+                    //    }
+                    //    snapshot.Rebase(rootElem.Path);
+                    //}
                 }
 
                 // Ensure that ElementDefinition.Base components in base StructureDef are propertly initialized
@@ -675,7 +685,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // [WMR 20170208] Ignore explicit diff profile if it matches the (implied) base type profile
             // e.g. if the differential specifies explicit core type profile url
             // Example: Patient.identifier type = { Code : Identifier, Profile : "http://hl7.org/fhir/StructureDefinition/Identifier" } }
-            var primarySnapTypeProfile = primarySnapType.TypeProfile();
+            var primarySnapTypeProfile = primarySnapType.GetTypeProfile();
 
             if (string.IsNullOrEmpty(primaryDiffTypeProfile) || primaryDiffTypeProfile == primarySnapTypeProfile) { return true; }
 
@@ -1143,8 +1153,14 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Initialize slicing component to sensible defaults
             elem.Slicing = new ElementDefinition.SlicingComponent()
             {
-                Discriminator = new List<ElementDefinition.DiscriminatorComponent>() { new ElementDefinition.DiscriminatorComponent
-                        { Type = ElementDefinition.DiscriminatorType.Value, Path = "url" } },
+                Discriminator = new List<ElementDefinition.DiscriminatorComponent>()
+                {
+                    new ElementDefinition.DiscriminatorComponent
+                    {
+                        Type = ElementDefinition.DiscriminatorType.Value,
+                        Path = "url"
+                    }
+                },
                 Ordered = false,
                 Rules = ElementDefinition.SlicingRules.Open
             };

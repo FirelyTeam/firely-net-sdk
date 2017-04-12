@@ -1,20 +1,14 @@
 <StructureDefinition xmlns="http://hl7.org/fhir">
-
   <!-- [WMR 20160810] Fixed
 	<url value="http://example.com/fhir/SD/patient-with-extensions" />
   -->
   <url value="http://example.com/fhir/StructureDefinition/patient-with-extensions" />
-  
 	<name value="patient-extensions" />
 	<status value="draft" />
 	<description value="An example profile where extensions are applied: extension is sliced and each named slice uses type.profile to indicate how the extesion should described/constrained." />
-  
-  <!-- [WMR 20160810] Fixed
-	<fhirVersion value="1.4.0" />
-  -->
-  <fhirVersion value="1.0.2"/>
-  
-	<mapping>
+  <!-- [WMR 20170412 Fixed -->
+  <fhirVersion value="3.0.0" />
+  <mapping>
 		<identity value="rim" />
 		<uri value="http://hl7.org/v3" />
 		<name value="RIM Mapping" />
@@ -1387,7 +1381,10 @@
       </base>
       <type>
         <code value="Extension" />
+        <!-- [WMR 20170411] Fixed
         <profile value="http://hl7.org/fhir/StructureDefinition/us-core-religion" />
+        -->
+        <profile value="http://hl7.org/fhir/StructureDefinition/patient-religion" />
       </type>
       <condition value="ele-1" />
       <constraint>
@@ -3862,7 +3859,10 @@
       <label value="Patient Religion" />
       <type>
         <code value="Extension" />
+        <!-- [WMR 20170411] Fixed
         <profile value="http://hl7.org/fhir/StructureDefinition/us-core-religion" />
+        -->
+        <profile value="http://hl7.org/fhir/StructureDefinition/patient-religion" />
       </type>
     </element>
     <element id="Patient.extension:researchAuth">

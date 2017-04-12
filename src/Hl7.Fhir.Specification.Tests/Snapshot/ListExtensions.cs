@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Hl7.Fhir.Specification.Tests
 {
-    static class IListExtensions
+    public static class IListExtensions
     {
         public static int FindIndex<T>(this IList<T> list, Predicate<T> match)
         {

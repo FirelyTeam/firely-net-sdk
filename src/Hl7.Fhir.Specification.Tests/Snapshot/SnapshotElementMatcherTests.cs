@@ -320,7 +320,7 @@ namespace Hl7.Fhir.Specification.Tests
             assertMatch(matches[2], ElementMatcher.MatchAction.Merge, snapNav, diffNav);    // Merge existing extension slice
         }
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void TestElementMatcher_ComplexExtension()
         {
             var baseProfile = _testResolver.FindStructureDefinitionForCoreType(FHIRAllTypes.Extension);
@@ -366,13 +366,23 @@ namespace Hl7.Fhir.Specification.Tests
             matches = ElementMatcher.Match(snapNav, diffNav);
             Assert.IsNotNull(matches);
             matches.DumpMatches(snapNav, diffNav);
-            Assert.AreEqual(3, matches.Count);  // extension slice entry + 2 complex extension elements
+
+            // DSTU2
+            // [WMR 20170411] In DSTU2, The core Extension profile does NOT define a slicing component on "Extension.extension"
+            // Current profile slices the extension element, so the matcher returns a virtual match (w/o diff element)
+            // Assert.AreEqual(3, matches.Count);  // extension slice entry + 2 complex extension elements
+
+            // STU3
+            // [WMR 20170411] In STU3, The core Extension profile defines url slicing component on "Extension.extension"
+            // Diff does not further constrain the inherited slice entry, so no match
+            Assert.AreEqual(2, matches.Count);  // 2 complex extension elements
+
             Assert.IsTrue(diffNav.MoveToFirstChild());
             Assert.IsTrue(snapNav.MoveToChild(diffNav.PathName));
-            assertMatch(matches[0], ElementMatcher.MatchAction.Slice, snapNav);             // Extension slice entry (no diff match)
-            assertMatch(matches[1], ElementMatcher.MatchAction.Add, snapNav, diffNav);      // First extension child element "name"
+            // assertMatch(matches[0], ElementMatcher.MatchAction.Slice, snapNav);          // Extension slice entry (no diff match)
+            assertMatch(matches[0], ElementMatcher.MatchAction.Add, snapNav, diffNav);      // First extension child element "name"
             Assert.IsTrue(diffNav.MoveToNext());
-            assertMatch(matches[2], ElementMatcher.MatchAction.Add, snapNav, diffNav);      // Second extension child element "age"
+            assertMatch(matches[1], ElementMatcher.MatchAction.Add, snapNav, diffNav);      // Second extension child element "age"
             Assert.IsFalse(diffNav.MoveToNext());
         }
 

@@ -106,8 +106,8 @@ namespace Hl7.Fhir.Specification.Navigation
             return defn.Type != null && defn.Type.Count > 0 ? defn.Type[0] : null;
         }
 
-        /// <summary>Enumerates the type profile references of the primary element type.</summary>
-        public static string PrimaryTypeProfiles(this ElementDefinition elem)
+        /// <summary>Returns the type profile reference of the primary element type, if it exists, or <c>null</c></summary>
+        public static string PrimaryTypeProfile(this ElementDefinition elem)
         {
             if (elem.Type != null)
             {
@@ -120,15 +120,8 @@ namespace Hl7.Fhir.Specification.Navigation
             return null;
         }
 
-
-        /// <summary>Returns the first type profile reference of the primary element type, if it exists, or <c>null</c></summary>
-        public static string PrimaryTypeProfile(this ElementDefinition elem)
-        {
-            return elem.PrimaryTypeProfiles();
-        }
-
         /// <summary>Returns the explicit primary type profile, if specified, or otherwise the core profile url for the specified type code.</summary>
-        public static string TypeProfile(this ElementDefinition.TypeRefComponent elemType)
+        public static string GetTypeProfile(this ElementDefinition.TypeRefComponent elemType)
         {
             string profile = null;
             if (elemType != null)

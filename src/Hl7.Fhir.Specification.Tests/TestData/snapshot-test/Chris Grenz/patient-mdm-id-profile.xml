@@ -3,8 +3,9 @@
 	<name value="patient-mdm-id" />
 	<status value="draft" />
 	<description value="An example type profile constraining the Identifier type. For use in slicing by profile examples." />
-	<fhirVersion value="1.0.2" />
-	<mapping>
+  <!-- [WMR 20170412 Fixed -->
+  <fhirVersion value="3.0.0" />
+  <mapping>
 		<identity value="v2" />
 		<uri value="http://hl7.org/v2" />
 		<name value="HL7 v2" />

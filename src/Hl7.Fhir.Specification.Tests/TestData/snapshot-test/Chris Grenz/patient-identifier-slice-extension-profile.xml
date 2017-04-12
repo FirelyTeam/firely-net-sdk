@@ -4,8 +4,9 @@
 	<title value="Patient with Subslice" />
 	<status value="draft" />
 	<description value="This profile demonstrates a profile with an extension applicable to only one slice of an element.  Here, issuingSite is applicable only to MRNs (as sliced by identifier.system)." />
-	<fhirVersion value="1.0.2" />
-	<mapping>
+  <!-- [WMR 20170412 Fixed -->
+  <fhirVersion value="3.0.0" />
+  <mapping>
 		<identity value="rim" />
 		<uri value="http://hl7.org/v3" />
 		<name value="RIM" />
@@ -2316,7 +2317,11 @@
 		<element>
 			<path value="Patient.identifier" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
+				<discriminator>
+          <!-- [WMR 20170412] Fixed -->
+          <type value="value" />
+          <path value="system" />
+        </discriminator>
 				<rules value="open" />
 			</slicing>
 			<short value="An identifier for this patient" />
@@ -4788,7 +4793,11 @@
 		<element>
 			<path value="Patient.name" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
+				<discriminator>
+          <!-- [WMR 20170412] Fixed -->
+          <type value="value" />
+          <path value="use" />
+        </discriminator>
 				<rules value="open" />
 			</slicing>
 			<short value="A name associated with the patient" />
@@ -5707,8 +5716,16 @@
 		<element>
 			<path value="Patient.telecom" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
-				<discriminator><type value="value" /><path value="" /></discriminator>
+				<discriminator>
+          <!-- [WMR 20170412] Fixed -->
+          <type value="value" />
+          <path value="system" />
+        </discriminator>
+        <discriminator>
+          <!-- [WMR 20170412] Fixed -->
+          <type value="value" />
+          <path value="use" />
+        </discriminator>
 				<rules value="open" />
 			</slicing>
 			<short value="A contact detail for the individual" />
@@ -9130,10 +9147,15 @@
 				<map value="n/a" />
 			</mapping>
 		</element>
-		<element>
+
+    <!-- [WMR 20170411] TODO: Element is obsolete... -->
+    <element>
 			<path value="Patient.careProvider" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
+				<discriminator>
+          <!-- [WMR 20170412] Fixed -->
+          <type value="profile" />
+        </discriminator>
 				<rules value="open" />
 			</slicing>
 			<short value="Patient's nominated primary care provider" />
@@ -9188,7 +9210,10 @@
 			<path value="Patient.careProvider" />
 			<sliceName value="organizationCare" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
+				<discriminator>
+          <!-- [WMR 20170412] Fixed -->
+          <type value="profile" />
+        </discriminator>
 				<rules value="open" />
 			</slicing>
 			<short value="Care providers that are organizations." />
@@ -9636,7 +9661,11 @@
 		<element>
 			<path value="Patient.identifier" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
+				<discriminator>
+          <!-- [WMR 20170412] Fixed -->
+          <type value="value" />
+          <path value="system" />
+        </discriminator>
 				<rules value="open" />
 			</slicing>
 			<max value="2" />
