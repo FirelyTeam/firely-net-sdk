@@ -3,8 +3,9 @@
 	<name value="organization-team" />
 	<status value="draft" />
 	<description value="An organization of type &quot;team&quot;." />
-	<fhirVersion value="1.0.2" />
-	<mapping>
+  <!-- [WMR 20170412 Fixed -->
+  <fhirVersion value="3.0.0" />
+  <mapping>
 		<identity value="v2" />
 		<uri value="http://hl7.org/v2" />
 		<name value="HL7 v2" />

@@ -51,8 +51,12 @@
     <Content Include="..\Hl7.Fhir.Specification\data\profiles-types.xml" Link="TestData\snapshot-test\profiles-types.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\Vadim\structure.cdstools-basecancer.xml.dstu2" />
-    <Content Include="TestData\snapshot-test\Vadim\structure.cdstools-typedstage.xml.dstu2" />
+    <Content Include="TestData\snapshot-test\Vadim\structure.cdstools-basecancer.xml.dstu2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\Vadim\structure.cdstools-typedstage.xml.dstu2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <!-- Necessary to make the Test Explorer find the tests in this assembly 

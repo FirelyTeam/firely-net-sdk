@@ -3,8 +3,9 @@
 	<name value="patient-only-mrn" />
 	<status value="draft" />
 	<description value="Only allow MRNs by limiting the type.profile." />
-	<fhirVersion value="1.0.2" />
-	<mapping>
+  <!-- [WMR 20170412 Fixed -->
+  <fhirVersion value="3.0.0" />
+  <mapping>
 		<identity value="rim" />
 		<uri value="http://hl7.org/v3" />
 		<name value="RIM" />

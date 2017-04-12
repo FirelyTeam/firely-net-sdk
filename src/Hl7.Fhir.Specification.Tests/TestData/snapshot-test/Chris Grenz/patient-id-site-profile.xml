@@ -4,8 +4,9 @@
 	<title value="Patient Identifier Issuing Site" />
 	<status value="draft" />
 	<description value="Coding for the authority who issued with patient identifier." />
-	<fhirVersion value="1.0.2" />
-	<mapping>
+  <!-- [WMR 20170412 Fixed -->
+  <fhirVersion value="3.0.0" />
+  <mapping>
 		<identity value="rim" />
 		<uri value="http://hl7.org/v3" />
 		<name value="RIM" />

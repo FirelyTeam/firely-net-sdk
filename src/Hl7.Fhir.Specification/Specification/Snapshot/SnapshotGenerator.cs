@@ -1153,8 +1153,14 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Initialize slicing component to sensible defaults
             elem.Slicing = new ElementDefinition.SlicingComponent()
             {
-                Discriminator = new List<ElementDefinition.DiscriminatorComponent>() { new ElementDefinition.DiscriminatorComponent
-                        { Type = ElementDefinition.DiscriminatorType.Value, Path = "url" } },
+                Discriminator = new List<ElementDefinition.DiscriminatorComponent>()
+                {
+                    new ElementDefinition.DiscriminatorComponent
+                    {
+                        Type = ElementDefinition.DiscriminatorType.Value,
+                        Path = "url"
+                    }
+                },
                 Ordered = false,
                 Rules = ElementDefinition.SlicingRules.Open
             };

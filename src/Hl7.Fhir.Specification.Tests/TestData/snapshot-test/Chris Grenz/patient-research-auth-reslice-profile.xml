@@ -2,8 +2,9 @@
 	<url value="http://example.com/fhir/SD/patient-research-auth-reslice" />
 	<name value="patient-research-auth-reslice" />
 	<status value="draft" />
-	<fhirVersion value="1.0.2" />
-	<mapping>
+  <!-- [WMR 20170412 Fixed -->
+  <fhirVersion value="3.0.0" />
+  <mapping>
 		<identity value="rim" />
 		<uri value="http://hl7.org/v3" />
 		<name value="RIM" />
@@ -1295,7 +1296,11 @@
 			<path value="Patient.extension" />
 			<sliceName value="researchAuth" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
+        <!-- [WMR 20170412] Fixed -->
+				<discriminator>
+          <type value="value" />
+          <path value="type.value[x]" />
+        </discriminator>
 				<rules value="open" />
 			</slicing>
 			<short value="Base for all elements" />
@@ -3299,7 +3304,11 @@
 		<element>
 			<path value="Patient.identifier" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
+        <!-- [WMR 20170412] Fixed -->
+        <discriminator>
+          <type value="value" />
+          <path value="system" />
+        </discriminator>
 				<rules value="open" />
 			</slicing>
 			<short value="An identifier for this patient" />
@@ -5771,7 +5780,11 @@
 		<element>
 			<path value="Patient.name" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
+        <!-- [WMR 20170412] Fixed -->
+        <discriminator>
+          <type value="value" />
+          <path value="use" />
+        </discriminator>
 				<rules value="open" />
 			</slicing>
 			<short value="A name associated with the patient" />
@@ -6690,9 +6703,16 @@
 		<element>
 			<path value="Patient.telecom" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
-				<discriminator><type value="value" /><path value="" /></discriminator>
-				<rules value="open" />
+        <!-- [WMR 20170412] Fixed -->
+        <discriminator>
+          <type value="value" />
+          <path value="system" />
+        </discriminator>
+        <discriminator>
+          <type value="value" />
+          <path value="use" />
+        </discriminator>
+        <rules value="open" />
 			</slicing>
 			<short value="A contact detail for the individual" />
 			<definition value="A contact detail (e.g. a telephone number or an email address) by which the individual may be contacted." />
@@ -10116,7 +10136,10 @@
 		<element>
 			<path value="Patient.careProvider" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
+        <!-- [WMR 20170412] Fixed -->
+        <discriminator>
+          <type value="profile" />
+        </discriminator>
 				<rules value="open" />
 			</slicing>
 			<short value="Patient's nominated primary care provider" />
@@ -10171,7 +10194,10 @@
 			<path value="Patient.careProvider" />
 			<sliceName value="organizationCare" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
+        <!-- [WMR 20170412] Fixed -->
+        <discriminator>
+          <type value="profile" />
+        </discriminator>
 				<rules value="open" />
 			</slicing>
 			<short value="Care providers that are organizations." />
@@ -10620,7 +10646,11 @@
 			<path value="Patient.extension" />
 			<sliceName value="researchAuth" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
+        <!-- [WMR 20170412] Fixed -->
+        <discriminator>
+          <type value="value" />
+          <path value="type.value[x]" />
+        </discriminator>
 				<rules value="open" />
 			</slicing>
 		</element>

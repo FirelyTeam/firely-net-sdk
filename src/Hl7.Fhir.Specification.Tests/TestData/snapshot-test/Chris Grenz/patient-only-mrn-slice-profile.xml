@@ -3,8 +3,9 @@
 	<name value="patient-only-mrn-slice" />
 	<status value="draft" />
 	<description value="A profile with all elements removed _except_ one slice of identifer (mrn). Closed slicing." />
-	<fhirVersion value="1.0.2" />
-	<mapping>
+  <!-- [WMR 20170412 Fixed -->
+  <fhirVersion value="3.0.0" />
+  <mapping>
 		<identity value="rim" />
 		<uri value="http://hl7.org/v3" />
 		<name value="RIM" />
@@ -355,7 +356,10 @@
 		<element>
 			<path value="Patient.identifier" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
+        <!-- [WMR 20170412 Fixed -->
+        <discriminator>
+          <type value="profile" />
+        </discriminator>
 				<rules value="closed" />
 			</slicing>
 			<short value="An identifier for this patient" />
@@ -2781,8 +2785,11 @@
 		<element>
 			<path value="Patient.identifier" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
-				<rules value="closed" />
+        <!-- [WMR 20170412 Fixed -->
+        <discriminator>
+          <type value="profile" />
+        </discriminator>
+        <rules value="closed" />
 			</slicing>
 		</element>
 		<element>
