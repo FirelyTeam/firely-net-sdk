@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Model
             ensureExpansion();
 
             return Expansion.Contains.FindCode(code, system);
-    }
+        }
 
         public void ImportExpansion(ValueSet other)
         {
@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Model
             {
                 combinedExpansion.Parameter.AddRange(this.Expansion.Parameter);
                 combinedExpansion.Contains.AddRange(this.Expansion.Contains);
-}
+            }
 
             combinedExpansion.Parameter.AddRange(other.Expansion.Parameter);
             combinedExpansion.Contains.AddRange(other.Expansion.Contains);
