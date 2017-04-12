@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Validation
 
         public static IBucket CreateGroup(ElementDefinitionNavigator root, Validator validator, IBucket entryBucket, bool atRoot)
         {
-            var childDiscriminators = root.Current.Slicing.Discriminator.Select(d=>d.Path).ToArray();
+            var childDiscriminators = root.Current.Slicing.Discriminator.ToArray();  // copy, since root will move after this
             var slices = root.FindMemberSlices(atRoot);
             var bm = root.Bookmark();
             var subs = new List<IBucket>();

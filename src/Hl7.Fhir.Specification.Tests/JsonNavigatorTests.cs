@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void AttributeWithAppendix()
         {
             var nav = buildNav();
@@ -124,17 +124,21 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.MoveToNext());  // given #1
             Assert.AreEqual("f:given", nav.Name);
 
-            Assert.IsTrue(nav.MoveToNextAttribute()); // @id="a3"
+            Assert.IsTrue(nav.MoveToNext());  // given #2
+            Assert.AreEqual("f:given", nav.Name);
+
+            Assert.IsTrue(nav.MoveToFirstAttribute()); // @value
+            Assert.AreEqual("Denise", nav.Value);
+            Assert.IsTrue(nav.MoveToNextAttribute());  // @id="a3"
             Assert.AreEqual("a3", nav.Value);
             Assert.AreEqual("id", nav.Name);
             nav.MoveToParent();
 
-            Assert.IsTrue(nav.MoveToNext());        // given #1  - benedicte
-            Assert.IsTrue(nav.MoveToNext());        // family #2  - denise
-            Assert.IsTrue(nav.MoveToNext());        // family #3  - marie
-
-            Assert.IsTrue(nav.MoveToNext());
+            Assert.IsTrue(nav.MoveToNext());        // given #3  - marie           
             Assert.AreEqual("f:given", nav.Name);
+            Assert.AreEqual("Marie", nav.Value);
+
+            Assert.IsFalse(nav.MoveToNext());
         }
 
         [TestMethod]
