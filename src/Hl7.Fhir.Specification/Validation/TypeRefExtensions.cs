@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Validation
     {
         public static FHIRAllTypes BaseType(this StructureDefinition sd)
         {
-            var result = EnumUtility.ParseLiteral<FHIRAllTypes>(sd.Type) ?? EnumUtility.ParseLiteral<FHIRAllTypes>(sd.Id);
+            var result = ModelInfo.FhirTypeNameToFhirType(sd.Type) ?? ModelInfo.FhirTypeNameToFhirType(sd.Id);
 
             if (result == null)
                 throw Error.NotSupported($"Encountered profile '{sd.Url}', for which the declaring core type cannot be determined");
@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Validation
             return result.Value;
         }
 
-        public static string ReadableName(this StructureDefinition sd) => sd.Type != null ? sd.Url : sd.Id;
+        public static string ReadableName(this StructureDefinition sd) => sd.Derivation == StructureDefinition.TypeDerivationRule.Constraint ? sd.Url : sd.Id;
 
         public static string GetDeclaredProfiles(this ElementDefinition.TypeRefComponent typeRef)
         {
