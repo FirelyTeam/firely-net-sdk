@@ -2,8 +2,9 @@
 	<url value="http://example.com/fhir/SD/patient-telecom-reslice" />
 	<name value="patient-telecom-reslice" />
 	<status value="draft" />
-	<fhirVersion value="1.0.2" />
-	<mapping>
+  <!-- [WMR 20170412 Fixed -->
+  <fhirVersion value="3.0.0" />
+  <mapping>
 		<identity value="rim" />
 		<uri value="http://hl7.org/v3" />
 		<name value="RIM" />
@@ -2413,7 +2414,11 @@
 		<element>
 			<path value="Patient.name" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
+        <!-- [WMR 20170412] Fixed -->
+        <discriminator>
+          <type value="value" />
+          <path value="use" />
+        </discriminator>
 				<rules value="open" />
 			</slicing>
 			<short value="A name associated with the patient" />
@@ -3332,7 +3337,11 @@
 		<element>
 			<path value="Patient.telecom" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
+        <!-- [WMR 20170412] Fixed -->
+        <discriminator>
+          <type value="value" />
+          <path value="system" />
+        </discriminator>
 				<rules value="open" />
 			</slicing>
 			<short value="A contact detail for the individual" />
@@ -3396,7 +3405,11 @@
 			<path value="Patient.telecom" />
 			<sliceName value="phone" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
+        <!-- [WMR 20170412] Fixed -->
+        <discriminator>
+          <type value="value" />
+          <path value="use" />
+        </discriminator>
 				<rules value="open" />
 			</slicing>
 			<short value="Phone numbers." />
@@ -4483,7 +4496,11 @@
 			<path value="Patient.telecom" />
 			<sliceName value="email" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
+        <!-- [WMR 20170412] Fixed -->
+        <discriminator>
+          <type value="value" />
+          <path value="use" />
+        </discriminator>
 				<rules value="open" />
 			</slicing>
 			<short value="A contact detail for the individual" />
@@ -7720,7 +7737,11 @@
 		<element>
 			<path value="Patient.telecom" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
+        <!-- [WMR 20170412] Fixed -->
+        <discriminator>
+          <type value="value" />
+          <path value="system" />
+        </discriminator>
 				<rules value="open" />
 			</slicing>
 		</element>
@@ -7728,7 +7749,11 @@
 			<path value="Patient.telecom" />
 			<sliceName value="phone" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
+        <!-- [WMR 20170412] Fixed -->
+        <discriminator>
+          <type value="value" />
+          <path value="use" />
+        </discriminator>
 				<rules value="open" />
 			</slicing>
 			<short value="Phone numbers." />
@@ -7755,7 +7780,11 @@
 			<path value="Patient.telecom" />
 			<sliceName value="email" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
+        <!-- [WMR 20170412] Fixed -->
+        <discriminator>
+          <type value="value" />
+          <path value="use" />
+        </discriminator>
 				<rules value="open" />
 			</slicing>
 		</element>

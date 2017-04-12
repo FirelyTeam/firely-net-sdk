@@ -2,8 +2,9 @@
 	<url value="http://example.com/fhir/SD/encounter-with-type-profile" />
 	<name value="encounter-with-type-profile" />
 	<status value="draft" />
-	<fhirVersion value="1.0.2" />
-	<mapping>
+  <!-- [WMR 20170412 Fixed -->
+  <fhirVersion value="3.0.0" />
+  <mapping>
 		<identity value="rim" />
 		<uri value="http://hl7.org/v3" />
 		<name value="RIM" />
@@ -822,7 +823,11 @@
 		<element>
 			<path value="Encounter.type.coding" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
+        <!-- [WMR 20170412] Fixed -->
+        <discriminator>
+          <type value="value" />
+          <path value="system" />
+        </discriminator>
 				<rules value="open" />
 			</slicing>
 			<short value="Code defined by a terminology system" />
@@ -1717,7 +1722,11 @@
 		<element>
 			<path value="Encounter.priority.coding" />
 			<slicing>
-				<discriminator><type value="value" /><path value="" /></discriminator>
+        <!-- [WMR 20170412] Fixed -->
+        <discriminator>
+          <type value="value" />
+          <path value="system" />
+        </discriminator>
 				<rules value="open" />
 			</slicing>
 			<short value="Code defined by a terminology system" />

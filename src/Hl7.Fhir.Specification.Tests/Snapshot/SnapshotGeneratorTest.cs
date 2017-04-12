@@ -571,7 +571,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         // [WMR 20170411] TODO
-        [TestMethod]
+        [TestMethod, Ignore]
         public void GeneratePatientWithExtensionsSnapshot()
         {
             // [WMR 20161005] Very complex set of examples by Chris Grenz
@@ -630,10 +630,10 @@ namespace Hl7.Fhir.Specification.Tests
             verifier.VerifyElement("Patient.name.family", "officialName.family", "Patient.name:officialName.family");
             verifier.VerifyElement("Patient.name.given", "officialName.given", "Patient.name:officialName.given");
             verifier.VerifyElement("Patient.name.use", "officialName.use", "Patient.name:officialName.use");
-            Assert.AreEqual((verifier.Current.Fixed as Code)?.Value, "official");
+            Assert.AreEqual((verifier.CurrentElement.Fixed as Code)?.Value, "official");
             verifier.VerifyElement("Patient.name", "maidenName", "Patient.name:maidenName");
             verifier.VerifyElement("Patient.name.use", "maidenName.use", "Patient.name:maidenName.use");
-            Assert.AreEqual((verifier.Current.Fixed as Code)?.Value, "maiden");
+            Assert.AreEqual((verifier.CurrentElement.Fixed as Code)?.Value, "maiden");
             verifier.VerifyElement("Patient.name.family", "maidenName.family", "Patient.name:maidenName.family");
 
             // patient-telecom-slice-profile.xml
@@ -748,6 +748,7 @@ namespace Hl7.Fhir.Specification.Tests
                  )
             );
             verifier = new ElementVerifier(sd, _settings);
+
             verifier.VerifyElement("Patient.extension", null, "Patient.extension");
             verifier.VerifyElement("Patient.extension", "doNotCall", "Patient.extension:doNotCall");
             verifier.VerifyElement("Patient.extension", "legalCase", "Patient.extension:legalCase");
@@ -769,7 +770,9 @@ namespace Hl7.Fhir.Specification.Tests
 
             // [WMR 20161216] TODO: Merge slicing entry
             verifier.VerifyElement("Patient.extension.extension", null, "Patient.extension:researchAuth/grandfatheredResAuth.extension");
-            verifier.AssertSlicing("url", ElementDefinition.SlicingRules.Open, false);
+            // [WMR 20170412] Slicing component is inherited from Extension.extension core element definition
+            // STU3: Defined as { type = "value", path = "url", ordered = null }
+            verifier.AssertSlicing("url", ElementDefinition.SlicingRules.Open, null);
 
             // The reslice "researchAuth/grandfatheredResAuth" has a child element constraint on "type.value[x]"
             // Therefore the complex extension is fully expanded (child extensions: type, flag, date)

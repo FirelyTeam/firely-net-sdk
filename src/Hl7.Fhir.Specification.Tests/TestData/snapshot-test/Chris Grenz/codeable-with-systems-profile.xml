@@ -3,8 +3,9 @@
 	<name value="codeable-with-systems" />
 	<status value="draft" />
 	<description value="An example of a type profile with named slices." />
-	<fhirVersion value="1.0.2" />
-	<mapping>
+  <!-- [WMR 20170412 Fixed -->
+  <fhirVersion value="3.0.0" />
+  <mapping>
 		<identity value="v2" />
 		<uri value="http://hl7.org/v2" />
 		<name value="HL7 v2" />
@@ -137,7 +138,10 @@
 		<element>
 			<path value="CodeableConcept.coding" />
 			<slicing>
-				<discriminator><type value="value" /><path value="system" /></discriminator>
+				<discriminator>
+          <type value="value" />
+          <path value="system" />
+        </discriminator>
 				<rules value="open" />
 			</slicing>
 			<short value="Code defined by a terminology system" />
@@ -907,7 +911,10 @@
 		<element>
 			<path value="CodeableConcept.coding" />
 			<slicing>
-				<discriminator><type value="value" /><path value="system" /></discriminator>
+				<discriminator>
+          <type value="value" />
+          <path value="system" />
+        </discriminator>
 				<rules value="open" />
 			</slicing>
 		</element>
