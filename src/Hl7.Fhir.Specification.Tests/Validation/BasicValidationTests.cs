@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        [TestMethod,Ignore]
+        [TestMethod]
         public void ValidateCardinality()
         {
             var boolSd = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Boolean);
@@ -133,7 +133,8 @@ namespace Hl7.Fhir.Validation
                             ElementNode.Valued("value", "world!", "string"))).ToNavigator();
 
             var report = _validator.Validate(data, boolSd);
-            Assert.AreEqual(3, report.ListErrors().Count());
+            Assert.AreEqual(3, report.Errors);
+            Assert.AreEqual(0, report.Warnings);
         }
 
         [TestMethod]
@@ -261,7 +262,7 @@ namespace Hl7.Fhir.Validation
             Assert.AreEqual(1, report.Errors);
         }
 
-        [TestMethod,Ignore]
+        [TestMethod]
         public void ValidatesMultiplePossibleTypeRefs()
         {
             // Try adding a period
