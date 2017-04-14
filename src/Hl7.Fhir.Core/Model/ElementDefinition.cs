@@ -8,6 +8,7 @@
 
 
 using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -60,6 +61,8 @@ namespace Hl7.Fhir.Model
             }
         }
 
+        // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+        [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
         public partial class DiscriminatorComponent
         {
             public static DiscriminatorComponent ForTypeSlice()
@@ -76,7 +79,52 @@ namespace Hl7.Fhir.Model
             {
                 return new List<DiscriminatorComponent> { this };
             }
+
+            // [WMR 20170414] Added
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            [NotMapped]
+            string DebuggerDisplay
+            {
+                get
+                {
+                    StringBuilder sb = new StringBuilder(128);
+                    sb.Append(TypeName);
+                    sb.Append(" | ");
+                    sb.Append(Type.HasValue ? Type.Value.GetLiteral() : "undefined");
+                    if (Path != null)
+                    {
+                        sb.AppendFormat(" : '{0}'", Path);
+                    }
+                    return sb.ToString();
+                }
+            }
         }
+
+        // [WMR 20170414] Added DebuggerDisplay
+
+        // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+        [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
+        public partial class TypeRefComponent
+        {
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            [NotMapped]
+            string DebuggerDisplay
+            {
+                get
+                {
+                    StringBuilder sb = new StringBuilder(128);
+                    sb.Append(TypeName);
+                    sb.Append(" | ");
+                    sb.Append(Code ?? "undefined");
+                    if (Profile != null)
+                    {
+                        sb.AppendFormat(" : '{0}'", Profile);
+                    }
+                    return sb.ToString();
+                }
+            }
+        }
+
 
     }
 }
