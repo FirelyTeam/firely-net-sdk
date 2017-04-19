@@ -53,13 +53,13 @@ namespace Hl7.Fhir.Introspection
         /// PropertyMappings in the order as the appear in the reflected class, which is the order
         /// in which they must be serialized.
         /// </summary>
-        private ICollection<PropertyMapping> _orderedMappings;
+        private List<PropertyMapping> _orderedMappings;
 
         /// <summary>
         /// Collection of PropertyMappings that capture information about this classes
         /// properties
         /// </summary>
-        public ICollection<PropertyMapping> PropertyMappings
+        public List<PropertyMapping> PropertyMappings
         {
             get
             {
