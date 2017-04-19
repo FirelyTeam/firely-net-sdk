@@ -22,12 +22,43 @@ namespace Hl7.Fhir.ElementModel
 
         public static IEnumerable<IElementNavigator> Children(this IEnumerable<IElementNavigator> navigators)
         {
-            return navigators.SelectMany(n => n.Children());
+            // use a standard enumerator approach
+            // this will then only grab 1 value if
+            // that is all the caller requires.
+            foreach (var navigator in navigators)
+            {
+                var nav = navigator.Clone();
+                if (nav.MoveToFirstChild())
+                {
+                    do
+                    {
+                        yield return nav.Clone();
+                    }
+                    while (nav.MoveToNext());
+                }
+            }
         }
 
         public static IEnumerable<IElementNavigator> Children(this IElementNavigator navigator, string name)
         {
-            return navigator.Children().Where(c => c.Name == name);
+            // use a standard enumerator approach
+            // this will then only grab 1 value if
+            // that is all the caller requires.
+            var nav = navigator.Clone();
+            if (nav.MoveToFirstChild(name))
+            {
+                do
+                {
+                    // Some safety checking that the 
+                    // nameFilter parameter has been accurately
+                    // applied to the navigator
+                    if (nav?.Name == name)
+                        yield return nav.Clone();
+                    else
+                        throw new InvalidOperationException("Found an unexpected item in the navigator");
+                }
+                while (nav.MoveToNext());
+            }
         }
 
         public static IEnumerable<IElementNavigator> Children(this IEnumerable<IElementNavigator> navigators, string name)
@@ -38,18 +69,23 @@ namespace Hl7.Fhir.ElementModel
         public static bool HasChildren(this IElementNavigator navigator)
         {
             var nav = navigator.Clone();
-
             return nav.MoveToFirstChild();
         }
 
         public static bool HasChildren(this IEnumerable<IElementNavigator> navigators)
         {
-            return navigators.Children().Any();
+            // if any of the navigators have children
+            // its true! (no need to expand the children)
+            foreach (var nav in navigators)
+            {
+                if (nav.HasChildren())
+                    return true;
+            }
+            return false;
         }
 
         public static IEnumerable<IElementNavigator> Descendants(this IElementNavigator navigator)
         {
-            //TODO: Don't think this is performant with these nested yields
             foreach (var child in navigator.Children())
             {
                 yield return child;

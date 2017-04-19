@@ -126,7 +126,7 @@ namespace Hl7.FhirPath
             return false;
         }
 
-        public bool MoveToFirstChild()
+        public bool MoveToFirstChild(string nameFilter = null)
         {
             return false;
         }

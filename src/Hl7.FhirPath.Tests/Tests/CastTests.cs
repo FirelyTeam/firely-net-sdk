@@ -177,7 +177,7 @@ namespace Hl7.FhirPath.Tests
             throw new NotImplementedException();
         }
 
-        public bool MoveToFirstChild()
+        public bool MoveToFirstChild(string nameFilter = null)
         {
             return false;
         }

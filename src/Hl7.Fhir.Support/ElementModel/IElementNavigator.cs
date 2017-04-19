@@ -38,8 +38,12 @@ namespace Hl7.Fhir.ElementModel
         /// <summary>
         /// Move to the first child of the current element.
         /// </summary>
+        /// <param name="nameFilter">
+        /// If the value is provided, then only elements that have this value for the name should
+        /// be considered by the navigator (during MoveNext())
+        /// </param>
         /// <returns>false if the element has no children, true otherwise</returns>
-        bool MoveToFirstChild();
+        bool MoveToFirstChild(string nameFilter = null);
 
         /// <summary>
         /// Clone the current navigator
