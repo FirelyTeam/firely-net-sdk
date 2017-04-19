@@ -18,6 +18,10 @@
     <RootNamespace>Hl7.Fhir.Specification</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|AnyCPU'">
+    <DocumentationFile>bin\Debug\net45\Hl7.Fhir.DSTU2.Specification.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Hl7.Fhir.Support" Version="0.4.2-alpha4" />
     <PackageReference Include="Hl7.FhirPath" Version="0.4.2-alpha4" />
