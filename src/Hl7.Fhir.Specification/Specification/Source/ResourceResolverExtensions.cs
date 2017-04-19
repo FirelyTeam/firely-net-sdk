@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Specification.Source
 
 
         /// <summary>
-        /// Find a CodeSystem by canonical urlTries to locate a codesystem using a combined algorithm: first, the uri is used to find a valueset by system.
+        /// Find a CodeSystem by canonical url.
         /// </summary>
         /// <param name="source"></param>
         /// <param name="uri"></param>

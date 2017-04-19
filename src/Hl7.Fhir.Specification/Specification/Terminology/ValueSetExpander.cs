@@ -41,7 +41,6 @@ namespace Hl7.Fhir.Specification.Terminology
 
             try
             {
-                // handleDefine(source);
                 handleCompose(source);
             }
             catch(Exception e)
@@ -52,31 +51,6 @@ namespace Hl7.Fhir.Specification.Terminology
             }
         }
 
-        //private void handleDefine(ValueSet source)
-        //{
-        //    if (source.CodeSystem == null) return;
-
-        //    source.Expansion.Total = copyToExpansion(source.CodeSystem.System, source.CodeSystem.Version, source.CodeSystem.Concept, source.Expansion.Contains);
-
-        //    if (source.CodeSystem.Version != null)
-        //    {
-        //        source.Expansion.Parameter.Add(new ValueSet.ParameterComponent
-        //        {
-        //            Name = "version",
-        //            Value = new FhirUri($"{source.Url}?version={source.CodeSystem.Version}")
-        //        });
-        //    }
-        //}
-
-        private ValueSet expand(string uri)
-        {
-            var importedVs = Settings.ValueSetSource.FindValueSet(uri);
-            if (importedVs == null) throw new ResourceReferenceNotFoundException(uri, $"Cannot resolve canonical reference '{uri}' to ValueSet");
-
-            if (!importedVs.HasExpansion) Expand(importedVs);
-
-            return importedVs;
-        }
 
         //private int copyToExpansion(string system, string version, IEnumerable<ValueSet.ConceptDefinitionComponent> source, List<ValueSet.ContainsComponent> dest)
         //{
@@ -108,56 +82,78 @@ namespace Hl7.Fhir.Specification.Terminology
             handleExclude(source);
         }
 
-        //private void handleImport(ValueSet source)
-        //{
-        //    if (!source.Compose.Import.Any()) return;
 
-        //    if (Settings.ValueSetSource == null)
-        //        throw Error.InvalidOperation("No terminology service available to resolve Compose.import, set ValueSetExpander.Settings.ValueSetSource to fix.");
+        private List<ValueSet.ContainsComponent> collectConcepts(ValueSet.ConceptSetComponent conceptSet)
+        {
+            List<ValueSet.ContainsComponent> result = new List<ValueSet.ContainsComponent>();
 
-        //    foreach (var uri in source.Compose.Import)
-        //    {
-        //        var importedVs = expand(uri);
+            if (!conceptSet.ValueSet.Any() && conceptSet.System == null)
+                throw Error.InvalidOperation($"Encountered a ConceptSet with neither a 'system' nor a 'valueset'");
 
-        //        if (importedVs.HasExpansion)
-        //        {
-        //            if (importedVs.Expansion.Total + source.Expansion.Total > Settings.MaxExpansionSize)
-        //                throw new ValueSetExpansionTooBigException($"Import of valueset '{importedVs.Url}' ({importedVs.Expansion.Total} concepts) into " +
-        //                    $"valueset '{source.Url}' ({source.Expansion.Total} concepts) would be larger than the set maximum size ({Settings.MaxExpansionSize})");
+            if (conceptSet.System != null)
+            {
+                if (conceptSet.Filter.Any())
+                    throw Error.NotSupported($"ConceptSets with a filter are not yet supported.");
 
-        //            source.ImportExpansion(importedVs);
-        //        }
-        //        else
-        //            throw Error.InvalidOperation($"Expansion returned neither an error, nor an expansion for ValueSet with canonical reference '{uri}'");
-        //    }
-        //}
+                if (conceptSet.Concept.Any())
+                {
+                    foreach (var concept in conceptSet.Concept)
+                    {
+                        // We'd probably really have to look this code up in the original ValueSet (by system) to know something about 'abstract'
+                        // and what would we do with a hierarchy if we encountered that in the include?
+                        result.Add(conceptSet.System, conceptSet.Version, concept.Code, concept.Display);
+                    }
+                }
+                else
+                {
+                    // Do a full import of the codesystem
+                    var importedConcepts = getConceptsFromCodeSystem(conceptSet.System);
+                    import(result, importedConcepts, conceptSet.System);
+                }
+            }
+
+            if (conceptSet.ValueSet.Any())
+            {
+                if (conceptSet.ValueSet.Count() > 1)
+                    throw Error.NotSupported($"ConceptSets with multiple valuesets are not yet supported.");
+                if (conceptSet.System != null)
+                    throw Error.NotSupported($"ConceptSets with combined 'system' and 'valueset'(s) are not yet supported.");
+
+                var importedVs = conceptSet.ValueSet.Single();
+                var concepts = getExpansionForValueSet(importedVs);
+                import(result, concepts, importedVs);
+            }
+            
+            return result;
+
+            void import(List<ValueSet.ContainsComponent> dest, List<ValueSet.ContainsComponent> source, string importeeUrl)
+            {
+                if (dest.Count + source.Count > Settings.MaxExpansionSize)
+                    throw new ValueSetExpansionTooBigException($"Import of '{importeeUrl}' ({source.Count} concepts) would be larger than the set maximum size ({Settings.MaxExpansionSize})");
+
+                dest.AddRange(source);
+            }
+        }
 
         private void handleInclude(ValueSet source)
         {
             if (!source.Compose.Include.Any()) return;
 
-            foreach(var include in source.Compose.Include)
+            int csIndex = 0;
+            foreach (var include in source.Compose.Include)
             {
-                if (!include.Concept.Any())
-                    throw Error.NotSupported($"Expansion for ValueSet '{source.Url}' uses an include with just a system ('{include.System}') and no enumerated concepts to include.");
-
-                if(include.Filter.Any())
-                    throw Error.NotSupported($"Expansion for ValueSet '{source.Url}' uses a filter to include concepts, which is not supported.");
+                var includedConcepts = collectConcepts(include);
 
                 // Yes, exclusion could make this smaller again, but alas, before we have processed those we might have run out of memory
-                if (source.Expansion.Total + include.Concept.Count > Settings.MaxExpansionSize)
-                    throw new ValueSetExpansionTooBigException($"Inclusion of {include.Concept.Count} concepts from '{include.System}' to  " +
+                if (source.Expansion.Total + includedConcepts.Count > Settings.MaxExpansionSize)
+                    throw new ValueSetExpansionTooBigException($"Inclusion of {includedConcepts.Count} concepts from conceptset #{csIndex}' to  " +
                         $"valueset '{source.Url}' ({source.Expansion.Total} concepts) would be larger than the set maximum size ({Settings.MaxExpansionSize})");
 
-                foreach (var concept in include.Concept)
-                {
-                    // We'd probably really have to look this code up in the original ValueSet (by system) to know something about 'abstract'
-                    // and what would we do with a hierarchy if we encountered that in the include?
-                    addToExpansion(include.System, include.Version, concept.Code, concept.Display, null, source.Expansion.Contains);
-                }
+                source.Expansion.Contains.AddRange(includedConcepts);
 
                 var original = source.Expansion.Total ?? 0;
-                source.Expansion.Total = original + include.Concept.Count;
+                source.Expansion.Total = original + includedConcepts.CountConcepts();
+                csIndex += 1;
             }
         }
 
@@ -167,45 +163,48 @@ namespace Hl7.Fhir.Specification.Terminology
 
             foreach (var exclude in source.Compose.Exclude)
             {
-                if (!exclude.Concept.Any())
-                    throw Error.NotSupported($"Expansion for ValueSet '{source.Url}' uses an exclude with just a system ('{exclude.System}') and no enumerated concepts to exclude.");
+                var excludedConcepts = collectConcepts(exclude);
 
-                if (exclude.Filter.Any())
-                    throw Error.NotSupported($"Expansion for ValueSet '{source.Url}' uses a filter to exclude concepts, which is not supported.");
-
-                foreach (var concept in exclude.Concept)
-                {
-                    removeFromExpansion(exclude.System, concept.Code, source.Expansion.Contains);
-                }
+                source.Expansion.Contains.Remove(excludedConcepts);
 
                 var original = source.Expansion.Total ?? 0;
-                source.Expansion.Total = original + exclude.Concept.Count;
+                source.Expansion.Total = original - excludedConcepts.CountConcepts();
             }
         }
 
-        private ValueSet.ContainsComponent addToExpansion(string system, string version, string code, string display, bool? isAbstract, List<ValueSet.ContainsComponent> dest)
+
+        private List<ValueSet.ContainsComponent> getExpansionForValueSet(string uri)
         {
-            var newContains = new ValueSet.ContainsComponent();
-            newContains.System = system;
-            newContains.Code = code;
-            newContains.Display = display;
-            newContains.Version = version;
+            if (Settings.ValueSetSource == null)
+                throw Error.InvalidOperation($"No valueset resolver available to resolve valueset '{uri}', " +
+                        "set ValueSetExpander.Settings.ValueSetSource to fix.");
 
-            if (isAbstract != null)
-                newContains.Abstract = isAbstract;
+            var importedVs = Settings.ValueSetSource.FindValueSet(uri);
+            if (importedVs == null) throw new ResourceReferenceNotFoundException(uri, $"Cannot resolve canonical reference '{uri}' to ValueSet");
 
-            dest.Add(newContains);
+            if (!importedVs.HasExpansion) Expand(importedVs);
 
-            return newContains;
+            if (importedVs.HasExpansion)
+                return importedVs.Expansion.Contains;
+            else
+                throw Error.InvalidOperation($"Expansion returned neither an error, nor an expansion for ValueSet with canonical reference '{uri}'");
         }
 
-        private int removeFromExpansion(string system, string code, List<ValueSet.ContainsComponent> dest)
+        private List<ValueSet.ContainsComponent> getConceptsFromCodeSystem(string uri)
         {
-            return dest.RemoveAll(c => c.System == system && c.Code == code);
-        }
+            if (Settings.ValueSetSource == null)
+                throw Error.InvalidOperation($"No terminology service available to resolve references to codesystem '{uri}', " +
+                        "set ValueSetExpander.Settings.ValueSetSource to fix.");
 
+            var importedCs = Settings.ValueSetSource.FindCodeSystem(uri);
+            if (importedCs == null) throw new ResourceReferenceNotFoundException(uri, $"Cannot resolve canonical reference '{uri}' to CodeSystem");
+
+            var result = new List<ValueSet.ContainsComponent>();
+            result.AddRange(importedCs.Concept.Select(c => c.ToContainsComponent(importedCs)));
+
+            return result;
+        }
     }
-
 
     public class ValueSetExpanderSettings
     {
@@ -214,5 +213,68 @@ namespace Hl7.Fhir.Specification.Terminology
         public IResourceResolver ValueSetSource { get; set; }
 
         public int MaxExpansionSize { get; set; } = 500;
+    }
+
+    public static class ContainsSetExtensions
+    {
+        public static ValueSet.ContainsComponent Add(this List<ValueSet.ContainsComponent> dest, string system, string version, string code, string display, IEnumerable<ValueSet.ContainsComponent> children = null)
+        {
+            var newContains = new ValueSet.ContainsComponent();
+
+            newContains.System = system;
+            newContains.Code = code;
+            newContains.Display = display;
+            newContains.Version = version;
+
+            if(children != null)
+                newContains.Contains = new List<ValueSet.ContainsComponent>(children);
+
+            dest.Add(newContains);
+
+            return newContains;
+        }
+  
+        public static void Remove(this List<ValueSet.ContainsComponent> dest, string system, string code)
+        {
+            dest.RemoveAll(c => c.System == system && c.Code == code);
+
+            // Look for this code in children too
+            foreach (var component in dest)
+            {
+                if (component.Contains.Any())
+                    component.Contains.Remove(system, code);
+            }
+        }
+
+        public static void Remove(this List<ValueSet.ContainsComponent> dest, List<ValueSet.ContainsComponent> source)
+        {
+            //TODO: Pretty unclear what to do with child concepts in the source - they all need to be removed from dest?
+            foreach (var sourceConcept in source)
+                dest.Remove(sourceConcept.System, sourceConcept.Code);
+        }
+
+        internal static ValueSet.ContainsComponent ToContainsComponent(this CodeSystem.ConceptDefinitionComponent source, CodeSystem system)
+        {
+            var newContains = new ValueSet.ContainsComponent();
+
+            newContains.System = system.Url;
+            newContains.Version = system.Version;
+            newContains.Code = source.Code;
+            newContains.Display = source.Display;
+
+            var abstractProperty = source.ListConceptProperties(system, CodeSystem.CONCEPTPROPERTY_NOT_SELECTABLE).SingleOrDefault();
+            if(abstractProperty?.Value is FhirBoolean isAbstract)
+                newContains.Abstract = isAbstract.Value;
+
+            var inactiveProperty = source.ListConceptProperties(system, CodeSystem.CONCEPTPROPERTY_STATUS).SingleOrDefault();
+            if (inactiveProperty?.Value is FhirBoolean isInactive)
+                newContains.Inactive = isInactive.Value;
+
+            if (source.Concept.Any())
+                newContains.Contains.AddRange(
+                    source.Concept.Select(c => c.ToContainsComponent(system)));
+
+            return newContains;
+        }      
     }
 }
