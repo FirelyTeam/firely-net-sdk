@@ -8,9 +8,9 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
 
-namespace Hl7.Fhir.Specification.Support
+namespace Hl7.Fhir.Specification.Terminology
 {
-    class ExternalTerminologyService : ITerminologyService
+    internal class ExternalTerminologyService : ITerminologyService
     {
         public ExternalTerminologyService(FhirClient client)
         {

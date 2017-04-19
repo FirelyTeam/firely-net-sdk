@@ -1,5 +1,4 @@
-﻿using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Model;
+﻿using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
@@ -9,11 +8,10 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using Hl7.Fhir.Rest;
-using Hl7.Fhir.Support;
 using System.Collections.Generic;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
-using Hl7.Fhir.Specification.Support;
+using Hl7.Fhir.Specification.Terminology;
 
 namespace Hl7.Fhir.Validation
 {
@@ -41,8 +39,10 @@ namespace Hl7.Fhir.Validation
                 Trace = false,
                 ResolveExteralReferences = true
             };
+
             // until we have a local terminology service ready, here is the remote implementation
-            ctx.TerminologyService = new ExternalTerminologyService(new FhirClient("http://fhir3.healthintersections.com.au/open"));
+            //ctx.TerminologyService = new ExternalTerminologyService(new FhirClient("http://fhir3.healthintersections.com.au/open"));
+            ctx.TerminologyService = new LocalTerminologyServer(_source);
 
             _validator = new Validator(ctx);
         }
@@ -320,7 +320,7 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        [TestMethod,Ignore]
+        [TestMethod]
         public void ValidateChoiceWithConstraints()
         {
             var obs = new Observation();
@@ -357,7 +357,7 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        [TestMethod, Ignore]    // Breaks now and then, probably because of external access to Grahame's terminology server
+        [TestMethod]
         public void ValidateContained()
         {
             var careplanXml = File.ReadAllText("TestData\\validation\\careplan-example-integrated.xml");
@@ -422,7 +422,7 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        [TestMethod,Ignore]
+        [TestMethod]
         public void ValidateBundle()
         {
             var bundleXml = File.ReadAllText("TestData\\validation\\bundle-contained-references.xml");
@@ -462,7 +462,7 @@ namespace Hl7.Fhir.Validation
             Assert.AreEqual(4, report.Errors);            // 3 bundled reference, 1 contained reference
         }
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void RunXsdValidation()
         {
             var careplanXml = File.ReadAllText("TestData\\validation\\careplan-example-integrated.xml");
@@ -480,7 +480,7 @@ namespace Hl7.Fhir.Validation
             Assert.IsTrue(report.ToString().Contains(".NET Xsd validation"));
         }
 
-        [TestMethod,Ignore]
+        [TestMethod]
         public void TestBindingValidation()
         {
             var p = new Patient();
@@ -494,11 +494,14 @@ namespace Hl7.Fhir.Validation
             p.MaritalStatus.Coding[0].Code = "XX";
 
             report = _validator.Validate(p);
-            Assert.IsFalse(report.Success);
-            Assert.AreEqual(0, report.Warnings);
+            Assert.IsTrue(report.Success);
+            Assert.AreEqual(1, report.Warnings);
+            Assert.IsTrue(report.ToString().Contains("not valid for non-required binding"));
+
+            p.MaritalStatus = new CodeableConcept("http://hl7.org/fhir/v3/MaritalStatus", "S");
         }
 
-        [TestMethod,Ignore]
+        [TestMethod]
         public void TestChoiceBindingValidation()
         {
             var profile = "http://validationtest.org/fhir/StructureDefinition/ParametersWithBoundParams";
@@ -524,7 +527,7 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        [TestMethod,Ignore]
+        [TestMethod]
         public void ValidateExtensionExamples()
         {
             var levinXml = File.ReadAllText(@"TestData\validation\Levin.patient.xml");
@@ -549,7 +552,7 @@ namespace Hl7.Fhir.Validation
             Assert.IsTrue(report.ToString().Contains("The declared type of the element (Period) is incompatible with that of the instance ('string')"));
         }
 
-        [TestMethod,Ignore]
+        [TestMethod]
         public void ValidateBundleExample()
         {
             var bundle = _source.ResolveByUri("http://example.org/examples/Bundle/MainBundle");

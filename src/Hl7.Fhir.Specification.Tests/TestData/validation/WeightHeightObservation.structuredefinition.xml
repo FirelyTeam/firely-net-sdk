@@ -29,11 +29,11 @@
       </type>
       <type>
         <code value="Quantity" />
-        <profile value="http://example.org/StructureDefinition/WeightQuantity" />
+        <targetProfile value="http://example.org/StructureDefinition/WeightQuantity" />
       </type>
       <type>
         <code value="Quantity" />
-        <profile value="http://example.org/StructureDefinition/HeightQuantity" />
+        <targetProfile value="http://example.org/StructureDefinition/HeightQuantity" />
       </type>
       <maxLength value="5" />
     </element>

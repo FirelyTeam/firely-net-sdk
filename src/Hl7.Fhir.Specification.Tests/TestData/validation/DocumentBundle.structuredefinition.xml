@@ -8,6 +8,7 @@
   <type value="Bundle" />
   <abstract value="false" />
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Bundle" />
+  <derivation value="constraint" />
   <differential>
     <element>
       <path value="Bundle" />

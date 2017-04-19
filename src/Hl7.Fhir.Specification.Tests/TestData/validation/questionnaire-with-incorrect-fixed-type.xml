@@ -17,7 +17,7 @@
 		<item>
 			<linkId value="1.2"/>
 			<text value="Integer question"/>
-			<type value="integer"/>  <!-- correct -->
+			<type value="decimal"/>  <!-- correct -->
 			<required value="true"/>
 		</item>
 		<!-- now, create a deeper group, these are not fixed in the profile and should be fine -->	

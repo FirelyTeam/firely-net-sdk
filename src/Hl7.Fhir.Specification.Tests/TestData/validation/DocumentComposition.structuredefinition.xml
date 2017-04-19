@@ -32,7 +32,7 @@
       <path value="Composition.subject" />
       <type>
         <code value="Reference" />
-        <profile value="http://hl7.org/fhir/StructureDefinition/Patient" />
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Patient" />
         <aggregation value="referenced" />
       </type>
     </element>
@@ -41,7 +41,7 @@
       <max value="1" />
       <type>
         <code value="Reference" />
-        <profile value="http://hl7.org/fhir/StructureDefinition/Practitioner" />
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Practitioner" />
         <aggregation value="bundled" />
       </type>
     </element>
@@ -78,7 +78,7 @@
       <path value="Composition.section.entry" />
       <type>
         <code value="Reference" />
-        <profile value="http://hl7.org/fhir/StructureDefinition/Observation" />
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Observation" />
         <aggregation value="referenced" />
         <aggregation value="bundled" />
       </type>
