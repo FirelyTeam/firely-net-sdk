@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Validation
 
         }
 
-        [Fact(Skip = "Need to adapt for STU3")]
+        [Fact]
         public void TestCodingValidation()
         {
             var val = new BindingValidator(_termService, "Demo");
@@ -46,15 +46,9 @@ namespace Hl7.Fhir.Validation
             c.Display = "Not a NumberX";
             result = val.ValidateBinding(c, vsUri, BindingStrength.Required);
             Assert.False(result.Success);
-
-            // But this won't, it's also a composition, but without expansion - the local term server won't help you here
-            c = new Coding("http://snomed.info/sct", "160244002");
-            result = val.ValidateBinding(c, "http://hl7.org/fhir/ValueSet/allergyintolerance-substance-code");
-            Assert.True(result.Success);
-            Assert.NotEmpty(result.Where(type: OperationOutcome.IssueType.NotSupported));
         }
 
-        [Fact(Skip = "Need to adapt for STU3")]
+        [Fact]
         public void TestCodeableConceptValidation()
         {
             var val = new BindingValidator(_termService, "Demo");

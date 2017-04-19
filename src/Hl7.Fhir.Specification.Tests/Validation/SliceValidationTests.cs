@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Validation
             var outcome = _validator.Validate(p, "http://example.com/StructureDefinition/patient-telecom-slice-ek");
             Assert.False(outcome.Success);
             Assert.Equal(3, outcome.Errors);
-            Assert.Equal(11, outcome.Warnings);  // 11 terminology warnings, reset when terminology is working again
+            Assert.Equal(0, outcome.Warnings);  // 11 terminology warnings, reset when terminology is working again
             var repr = outcome.ToString();
             Assert.Contains("matches slice 'Patient.telecom:phone', but this is out of order for group 'Patient.telecom'", repr);
             Assert.Contains("Value is not exactly equal to fixed value 'work'", repr);
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Validation
 
             var outcome = s.Validate(_validator, pnav);
             Assert.True(outcome.Success);
-            Assert.Equal(10, outcome.Warnings);     // All terminology errors - reset to 0 when using our own term service again
+            Assert.Equal(0, outcome.Warnings);   
             
             Assert.Equal("+31-6-39015765", s.ChildSlices[0].Members.Single().Children("value").Single().Value);
 
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Validation
             var outcome = _validator.Validate(p, "http://example.com/StructureDefinition/patient-telecom-reslice-ek");
             Assert.False(outcome.Success);
             Assert.Equal(7, outcome.Errors);
-            Assert.Equal(14, outcome.Warnings);  // All 14 are terminology errors, return to 0 when fixed
+            Assert.Equal(0, outcome.Warnings); 
             var repr = outcome.ToString();
             Assert.Contains("not within the specified cardinality of 1..5 (at Patient)", repr);
             Assert.Contains("which is not allowed for an open-at-end group (at Patient.telecom[5])", repr);
