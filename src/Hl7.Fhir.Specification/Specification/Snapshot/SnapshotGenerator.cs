@@ -1057,6 +1057,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                 snap.Current.Path = diff.Current.Path;
             }
 
+            // [WMR 20170420] NEW: Notify subscribers
+            // Named slices get a custom base element definition reference
+            // created from clone of slice entry base element with Min = 0 and Slicing = null
+            OnPrepareElement(snap.Current, null, sliceBase.Current);
+
             // Important: explicitly clear the slicing node in the copy!
             Debug.Assert(snap.Current.Slicing == null); // Taken care of by ElementMatcher.constructSliceMatch
             // snap.Current.Slicing = null;
@@ -1071,16 +1076,14 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         static void addSliceBase(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff, ElementDefinitionNavigator sliceBase)
         {
-            var lastSlice = findSliceAddPosition(snap, diff);
-            bool result = false;
-
             if (sliceBase == null || sliceBase.Current == null)
             {
                 Debug.Fail("SHOULDN'T HAPPEN...");
                 throw Error.InvalidOperation($"Internal error in snapshot generator ({nameof(addSlice)}): slice base element is unavailable.");
             }
 
-            result = snap.ReturnToBookmark(lastSlice);
+            var lastSlice = findSliceAddPosition(snap, diff);
+            bool result = snap.ReturnToBookmark(lastSlice);
             // Copy the original (unmerged) slice base element to snapshot
             if (result) { result = snap.InsertAfter((ElementDefinition)sliceBase.Current.DeepCopy()); }
             // Recursively copy the original (unmerged) child elements, if necessary
