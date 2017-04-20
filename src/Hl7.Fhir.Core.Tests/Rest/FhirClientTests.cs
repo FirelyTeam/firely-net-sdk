@@ -887,7 +887,7 @@ namespace Hl7.Fhir.Tests.Rest
             }
 
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void TestRefresh()
         {
             var client = new FhirClient(testEndpoint);
@@ -948,7 +948,7 @@ namespace Hl7.Fhir.Tests.Rest
 
 
         [TestMethod]
-        [TestCategory("FhirClient")]
+        [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void TestReceiveErrorStatusWithOperationOutcomeIsHandled()
         {
             var client = new FhirClient("http://fhir2.healthintersections.com.au/open");  // an address that returns Status 404 with an OperationOutcome
@@ -1042,7 +1042,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("IntegrationTest")]
         public void TestAuthenticationOnBefore()
         {
             FhirClient validationFhirClient = new FhirClient("https://sqlonfhir.azurewebsites.net/fhir");

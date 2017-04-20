@@ -1,6 +1,6 @@
 cd src
 msbuild /t:clean
 msbuild /t:restore
-msbuild /t:build
+msbuild /verbosity:minimal 
 msbuild /t:vstest
 cd ..
