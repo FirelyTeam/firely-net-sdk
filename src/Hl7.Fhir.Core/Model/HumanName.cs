@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 if (this._TextElement != null && !String.IsNullOrEmpty(this._TextElement.Value))
-                    return "Text = \"" + this._TextElement.Value + "\"";
+                    return this._TextElement.Value;
 
                 StringBuilder sb = new StringBuilder();
                 if (this._GivenElement != null)
@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Model
         public override string ToString()
         {
             if (this._TextElement != null && !String.IsNullOrEmpty(this._TextElement.Value))
-                return "Text = \"" + this._TextElement.Value + "\"";
+                return this._TextElement.Value;
 
             StringBuilder sb = new StringBuilder();
             if (this._GivenElement != null)
