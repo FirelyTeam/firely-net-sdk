@@ -16,9 +16,6 @@
     <AssemblyName>Hl7.Fhir.Specification.STU3</AssemblyName>
     <RootNamespace>Hl7.Fhir.Specification</RootNamespace>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Hl7.Fhir.Support" Version="0.4.2-alpha4" />

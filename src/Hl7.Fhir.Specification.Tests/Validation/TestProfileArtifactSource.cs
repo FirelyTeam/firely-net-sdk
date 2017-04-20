@@ -1,13 +1,8 @@
 ﻿using Hl7.Fhir.Specification.Source;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Hl7.Fhir.Model;
-using System.IO;
 using Hl7.Fhir.Rest;
-using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Serialization;
 using System.Diagnostics;
 
@@ -173,7 +168,7 @@ namespace Hl7.Fhir.Validation
 
             cons.Add(new ElementDefinition("Patient").OfType(FHIRAllTypes.Patient));
             cons.Add(new ElementDefinition("Patient.managingOrganization")
-                .OfType(FHIRAllTypes.Reference, ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Organization))); //, aggregation));
+                .OfReference(ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Organization), aggregation));
 
             return result;
         }

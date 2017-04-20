@@ -392,6 +392,21 @@ namespace Hl7.Fhir.Model
                 type == FHIRAllTypes.Money;
         }
 
+        public static bool IsInstanceTypeFor(string superclass, string subclass)
+        {
+            var superType = FhirTypeNameToFhirType(superclass);
+            var subType = FhirTypeNameToFhirType(subclass);
+
+            if (subType == null || superType == null) return false;
+
+            return IsInstanceTypeFor(superType.Value, subType.Value);
+        }
+
+        private static readonly FHIRAllTypes[] QUANTITY_SUBCLASSES = new[] { FHIRAllTypes.Age, FHIRAllTypes.Distance, FHIRAllTypes.Duration,
+                            FHIRAllTypes.Count, FHIRAllTypes.Money };
+        private static readonly FHIRAllTypes[] STRING_SUBCLASSES = new[] { FHIRAllTypes.Code, FHIRAllTypes.Id, FHIRAllTypes.Markdown };
+        private static readonly FHIRAllTypes[] INTEGER_SUBCLASSES = new[] { FHIRAllTypes.UnsignedInt, FHIRAllTypes.PositiveInt };
+
         public static bool IsInstanceTypeFor(FHIRAllTypes superclass, FHIRAllTypes subclass)
         {
             if (superclass == subclass) return true;
@@ -406,7 +421,18 @@ namespace Hl7.Fhir.Model
                     return false;
             }
             else
-                return superclass == FHIRAllTypes.Element;
+            {
+                if (superclass == FHIRAllTypes.Element)
+                    return true;
+                else if (superclass == FHIRAllTypes.Quantity)
+                    return QUANTITY_SUBCLASSES.Contains(subclass);
+                else if (superclass == FHIRAllTypes.String)
+                    return STRING_SUBCLASSES.Contains(subclass);
+                else if (superclass == FHIRAllTypes.Integer)
+                    return INTEGER_SUBCLASSES.Contains(subclass);
+                else
+                    return false;
+            }
         }
 
         public static string CanonicalUriForFhirCoreType(string typename)

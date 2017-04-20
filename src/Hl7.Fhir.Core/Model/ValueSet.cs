@@ -16,26 +16,13 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Model
 {
-        public partial class ValueSet : Hl7.Fhir.Model.DomainResource
-        {
-            [Obsolete("This property was renamed in DSTU2 to CodeSystem, and in DSTU3 out of the class entirely to the CodeSystem resource", true)]
-            public string Define { get; set; }
+    public partial class ValueSet : Hl7.Fhir.Model.DomainResource
+    {
+        [Obsolete("This property was renamed in DSTU2 to CodeSystem, and in DSTU3 out of the class entirely to the CodeSystem resource", true)]
+        public string Define { get; set; }
 
         [NotMapped]
         public bool HasExpansion => Expansion != null;
-
-        public int ExpansionSize()
-        {
-            ensureExpansion();
-
-            return countCodes(Expansion.Contains);
-        }
-
-        private int countCodes(IEnumerable<ValueSet.ContainsComponent> contains)
-        {
-            return contains.Where(ct => ct.Contains.Any())
-                            .Aggregate(contains.Count(), (r, ct) => r + countCodes(ct.Contains));
-        }
 
         public bool CodeInExpansion(String code, string system = null)
         {
@@ -50,26 +37,29 @@ namespace Hl7.Fhir.Model
             ensureExpansion();
 
             return Expansion.Contains.FindCode(code, system);
-    }
+        }
 
         public void ImportExpansion(ValueSet other)
         {
             other.ensureExpansion();
 
             var combinedExpansion = ExpansionComponent.Create();
+            combinedExpansion.Total = 0;
+            combinedExpansion.Offset = 0;
 
             // Todo: worry about duplicates
+
             if (this.HasExpansion)
             {
                 combinedExpansion.Parameter.AddRange(this.Expansion.Parameter);
                 combinedExpansion.Contains.AddRange(this.Expansion.Contains);
-}
+
+                combinedExpansion.Total += this?.Expansion.Total ?? this.Expansion.Contains.CountConcepts();
+            }
 
             combinedExpansion.Parameter.AddRange(other.Expansion.Parameter);
             combinedExpansion.Contains.AddRange(other.Expansion.Contains);
-
-            combinedExpansion.Total = countCodes(combinedExpansion.Contains);
-            combinedExpansion.Offset = 0;
+            combinedExpansion.Total += other.Expansion?.Total ?? other.Expansion.Contains.CountConcepts();
 
             Expansion = combinedExpansion;
         }
@@ -92,6 +82,15 @@ namespace Hl7.Fhir.Model
 
                 return expansion;
             }
+        }
+    }
+
+    public static class ValueSetExtensions
+    {
+        public static int CountConcepts(this List<ValueSet.ContainsComponent> contains)
+        {
+            return contains.Where(ct => ct.Contains.Any())
+                            .Aggregate(contains.Count(), (r, ct) => r + ct.Contains.CountConcepts());
         }
 
     }

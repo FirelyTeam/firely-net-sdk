@@ -224,7 +224,7 @@ namespace Hl7.Fhir.Validation
         }
 
         /// <summary>
-        /// Validates the instance, declared and stated profiles for consistenty.
+        /// Validates the instance type, declared and stated profiles for consistenty.
         /// </summary>
         /// <returns></returns>
         public OperationOutcome Validate()
@@ -245,14 +245,14 @@ namespace Hl7.Fhir.Validation
             {
                 if (DeclaredType != null)
                 {
-                    if (!ModelInfo.IsInstanceTypeFor(DeclaredType.BaseType(), InstanceType.BaseType()))
+                    if (!ModelInfo.IsInstanceTypeFor(DeclaredType.Type, InstanceType.Type))
                         outcome.AddIssue($"The declared type of the element ({DeclaredType.ReadableName()}) is incompatible with that of the instance ('{InstanceType.ReadableName()}')", 
                             Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, _path);
                 }
 
                 foreach (var type in StatedProfiles)
                 {
-                    if (!ModelInfo.IsInstanceTypeFor(type.BaseType(), InstanceType.BaseType()))
+                    if (!ModelInfo.IsInstanceTypeFor(type.Type, InstanceType.Type))
                         outcome.AddIssue($"Instance of type '{InstanceType.ReadableName()}' is incompatible with the stated profile '{type.Url}' which is constraining constrained type '{type.ReadableName()}'", 
                             Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, _path);
                 }
@@ -261,11 +261,11 @@ namespace Hl7.Fhir.Validation
             // All stated profiles should be profiling the same core type
             if (StatedProfiles.Any())
             {
-                var baseTypes = StatedProfiles.Select(p => p.BaseType()).Distinct().ToList();
+                var baseTypes = StatedProfiles.Select(p => p.Type).Distinct().ToList();
 
                 if (baseTypes.Count > 1)
                 {
-                    var combinedNames = String.Join(" and ", baseTypes.Select(bt => bt.GetLiteral()));
+                    var combinedNames = String.Join(" and ", baseTypes);
                     outcome.AddIssue($"The stated profiles are constraints on multiple different core types ({combinedNames}), which can never be satisfied.", 
                         Issue.CONTENT_MISMATCHING_PROFILES, _path);
                 }
@@ -274,7 +274,7 @@ namespace Hl7.Fhir.Validation
                     // The stated profiles should be compatible with the declared type of the element
                     if (DeclaredType != null)
                     {
-                        if (!ModelInfo.IsInstanceTypeFor(DeclaredType.BaseType(), baseTypes.Single()))
+                        if (!ModelInfo.IsInstanceTypeFor(DeclaredType.Type, baseTypes.Single()))
                             outcome.AddIssue($"The stated profiles are all constraints on '{baseTypes.Single()}', which is incompatible with the declared type '{DeclaredType.ReadableName()}' of the element",
                                 Issue.CONTENT_MISMATCHING_PROFILES, _path);
                     }

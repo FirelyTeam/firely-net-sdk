@@ -66,7 +66,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-        [TestMethod]
+        [TestMethod, TestCategory("IntegrationTest")]
         public void RetrieveWebArtifact()
         {
             var wa = new WebResolver();
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("IntegrationTest")]
         public void RetrieveWebArtifactCustomFhirClient()
         {
             TestFhirClient client = null;
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("Patient", ((StructureDefinition)artifact).Name);
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("IntegrationTest")]
         public void RetrieveArtifactMulti()
         {
             var resolver = new MultiResolver(source, new WebResolver());

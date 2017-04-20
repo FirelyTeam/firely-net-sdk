@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Model
         public partial class DifferentialComponent : IElementList { }
 
         [NotMapped]
-        public bool IsConstraint => Derivation == null || Derivation == TypeDerivationRule.Constraint;
+        public bool IsConstraint => Derivation == TypeDerivationRule.Constraint;
 
         [NotMapped]
         public bool IsExtension => Type == "Extension";

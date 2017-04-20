@@ -48,10 +48,33 @@ namespace Hl7.Fhir.Model
             return ed;
         }
 
+        public static ElementDefinition OfReference(this ElementDefinition ed, string targetProfile, IEnumerable<ElementDefinition.AggregationMode> aggregation = null, string profile=null)
+        {
+            ed.Type.Clear();
+            ed.OrReference(targetProfile, aggregation, profile);
+
+            return ed;
+        }
+
         public static ElementDefinition OrType(this ElementDefinition ed, FHIRAllTypes type, string profile = null)
         {
+            if (type == FHIRAllTypes.Reference) throw Error.InvalidOperation("Use OfReference/OrReference instead of OfType/OrType for references");
+
             var newType = new ElementDefinition.TypeRefComponent { Code = type.GetLiteral() };
             if (profile != null) newType.Profile = profile;
+
+            ed.Type.Add(newType);
+
+            return ed;
+        }
+
+        public static ElementDefinition OrReference(this ElementDefinition ed, string targetProfile, IEnumerable<ElementDefinition.AggregationMode> aggregation = null, string profile = null)
+        {
+            var newType = new ElementDefinition.TypeRefComponent { Code = FHIRAllTypes.Reference.GetLiteral() };
+
+            if (targetProfile != null) newType.TargetProfile = targetProfile;
+            if (profile != null) newType.Profile = profile;
+            if (aggregation != null) newType.Aggregation = aggregation.Cast<ElementDefinition.AggregationMode?>();
 
             ed.Type.Add(newType);
 

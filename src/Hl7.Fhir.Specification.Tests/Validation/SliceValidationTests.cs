@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Validation
             Assert.Equal(ElementDefinition.SlicingRules.Open, other.Rules);
         }
 
-        [Fact(Skip = "Need to adapt for STU3")]
+        [Fact]
         public void TestDiscriminatedTelecomSliceUse()
         {
             var p = new Patient();
@@ -108,14 +108,14 @@ namespace Hl7.Fhir.Validation
             var outcome = _validator.Validate(p, "http://example.com/StructureDefinition/patient-telecom-slice-ek");
             Assert.False(outcome.Success);
             Assert.Equal(3, outcome.Errors);
-            Assert.Equal(0, outcome.Warnings);
+            Assert.Equal(0, outcome.Warnings);  // 11 terminology warnings, reset when terminology is working again
             var repr = outcome.ToString();
             Assert.Contains("matches slice 'Patient.telecom:phone', but this is out of order for group 'Patient.telecom'", repr);
             Assert.Contains("Value is not exactly equal to fixed value 'work'", repr);
             Assert.Contains("Instance count for 'Patient.telecom.use' is 1", repr);
         }
 
-        [Fact(Skip = "Need to adapt for STU3")]
+        [Fact]
         public void TestBucketAssignment()
         {
             var s = createSliceDefs() as SliceGroupBucket;
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Validation
 
             var outcome = s.Validate(_validator, pnav);
             Assert.True(outcome.Success);
-            Assert.Equal(0, outcome.Warnings);
+            Assert.Equal(0, outcome.Warnings);   
             
             Assert.Equal("+31-6-39015765", s.ChildSlices[0].Members.Single().Children("value").Single().Value);
 
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Validation
             Assert.Equal("+31-20-6707070", s.Members.Last().Children("value").Single().Value); // in the open-at-end slice
         }
 
-        [Fact(Skip = "Need to adapt for STU3")]
+        [Fact]
         public void TestTelecomReslicing()
         {
             var p = new Patient();
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Validation
             var outcome = _validator.Validate(p, "http://example.com/StructureDefinition/patient-telecom-reslice-ek");
             Assert.False(outcome.Success);
             Assert.Equal(7, outcome.Errors);
-            Assert.Equal(0, outcome.Warnings);
+            Assert.Equal(0, outcome.Warnings); 
             var repr = outcome.ToString();
             Assert.Contains("not within the specified cardinality of 1..5 (at Patient)", repr);
             Assert.Contains("which is not allowed for an open-at-end group (at Patient.telecom[5])", repr);
