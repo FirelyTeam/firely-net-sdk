@@ -23,7 +23,7 @@
         <Otherwise>
           <PropertyGroup>
             <VSTestLogger>/logger:Console</VSTestLogger>
-            <TestCaseFilter>/TestCaseFilter:"TestCategory!=LongRunner&amp;TestCategory!=IntegrationTest&amp;TestCategory!=FhirClient"</TestCaseFilter>
+            <TestCaseFilter />
           </PropertyGroup>
         </Otherwise>
     </Choose>
