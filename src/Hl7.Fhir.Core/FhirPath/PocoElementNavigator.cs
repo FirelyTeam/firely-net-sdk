@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.FhirPath
 {
@@ -79,36 +80,29 @@ namespace Hl7.Fhir.FhirPath
 
                 try
                 {
-                    if (_pocoElement is FhirDateTime)
-                        return ((FhirDateTime)_pocoElement).ToPartialDateTime();
-                    else if (_pocoElement is Hl7.Fhir.Model.Time)
-                        return ((Hl7.Fhir.Model.Time)_pocoElement).ToTime();
-                    else if ((_pocoElement is Hl7.Fhir.Model.Date))
-                        return (((Hl7.Fhir.Model.Date)_pocoElement).ToPartialDateTime());
-                    else if (_pocoElement is Hl7.Fhir.Model.Instant)
-                        return ((Hl7.Fhir.Model.Instant)_pocoElement).ToPartialDateTime();
-                    else if ((_pocoElement is Integer))
+                    switch(_pocoElement)
                     {
-                        if ((_pocoElement as Integer).Value.HasValue)
-                            return (int)(_pocoElement as Integer).Value.Value;
-                        return null;
-                    }
-                    else if ((_pocoElement is PositiveInt))
-                    {
-                        if ((_pocoElement as PositiveInt).Value.HasValue)
-                            return (uint)(_pocoElement as PositiveInt).Value.Value;
-                        return null;
-                    }
-                    else if ((_pocoElement is UnsignedInt))
-                    {
-                        if ((_pocoElement as UnsignedInt).Value.HasValue)
-                            return (uint)(_pocoElement as UnsignedInt).Value.Value;
-                        return null;
-                    }
-                    else if (_pocoElement is Primitive)
-                        return ((Primitive)_pocoElement).ObjectValue;
-                    else
-                        return null;
+                        case Hl7.Fhir.Model.Instant ins:
+                            return ins.ToPartialDateTime();
+                        case Hl7.Fhir.Model.Time time:
+                            return time.ToTime();
+                        case Hl7.Fhir.Model.Date dt:
+                            return dt.ToPartialDateTime();
+                        case FhirDateTime fdt:
+                            return fdt.ToPartialDateTime();
+                        case Hl7.Fhir.Model.Integer fint:
+                            return (long)fint.Value;
+                        case Hl7.Fhir.Model.PositiveInt pint:
+                            return (long)pint.Value;
+                        case Hl7.Fhir.Model.UnsignedInt unsint:
+                            return (long)unsint.Value;
+                        case Hl7.Fhir.Model.Base64Binary b64:
+                            return b64.Value != null ? PrimitiveTypeConverter.ConvertTo<string>(b64.Value) : null;
+                        case Primitive prim:
+                            return prim.ObjectValue;
+                        default:
+                            return null;
+                    }                       
                 }
                 catch (FormatException)
                 {
