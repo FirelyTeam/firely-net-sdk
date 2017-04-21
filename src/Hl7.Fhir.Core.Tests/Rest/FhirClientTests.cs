@@ -1052,7 +1052,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         }
 
-        [TestMethod, TestCategory("IntegrationTest")]
+        [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
         public void TestAuthenticationOnBefore()
         {
             FhirClient validationFhirClient = new FhirClient("https://sqlonfhir.azurewebsites.net/fhir");

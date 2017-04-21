@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Validation
                         ElementNode.Valued("id", "myId1"),
                         ElementNode.Valued("id", "myId2"),
                         ElementNode.Node("extension",
-                            ElementNode.Valued("value", 4, "integer")),
+                            ElementNode.Valued("value", 4L, "integer")),
                         ElementNode.Node("extension",
                             ElementNode.Valued("value", "world!", "string"))).ToNavigator();
 

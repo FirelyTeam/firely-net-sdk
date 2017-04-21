@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("Patient", ((StructureDefinition)artifact).Name);
         }
 
-        [TestMethod, TestCategory("IntegrationTest")]
+        [TestMethod,TestCategory("IntegrationTest")]
         public void RetrieveArtifactMulti()
         {
             var resolver = new MultiResolver(source, new WebResolver());
@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-        [TestMethod]
+        [TestMethod, TestCategory("IntegrationTest")]
         public void TestSourceCaching()
         {
             var src = new CachedResolver(new MultiResolver(ZipSource.CreateValidationSource(), new WebResolver()));

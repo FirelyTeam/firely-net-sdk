@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-        [TestMethod]
+        [TestMethod,Ignore]
         public void TestExpandAllComplexElements()
         {
             // [WMR 20161005] This simulates custom Forge post-processing logic
@@ -330,7 +330,7 @@ namespace Hl7.Fhir.Specification.Tests
                    );
         }
 
-        [TestMethod]
+        [TestMethod,Ignore]
         public void TestExpandAllComplexElementsWithEvent()
         {
             // [WMR 20170105] New - hook new BeforeExpand event in order to force full expansion of all complex elements
@@ -406,7 +406,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-        [TestMethod]
+        [TestMethod,Ignore]
         public void TestCoreOrganizationNL()
         {
             // core-organization-nl references extension core-address-nl

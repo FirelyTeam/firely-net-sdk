@@ -39,17 +39,12 @@ namespace Hl7.Fhir.Validation
             else if (instance is decimal && definition is FhirDecimal d)
                 return instance.CompareTo(d.Value.Value);
 
-            else if (instance is int && definition is Integer i)
-                return instance.CompareTo(i.Value.Value);
-
-            // Houston we have a problem, in the POCO positive ints are translated to int, not uint, which wastes as bit
-            // But...using uint will cause the library to be non-CLS compliant...
-            // For now, assume the interface returns the correct type, and cast the POCO value
-            else if (instance is uint && definition is PositiveInt pi)
-                return instance.CompareTo((uint)pi.Value.Value);
-
-            else if (instance is uint && definition is UnsignedInt ui)
-                return instance.CompareTo((uint)ui.Value.Value);
+            else if (instance is long && definition is Integer i)
+                return instance.CompareTo((long)i.Value.Value);
+            else if (instance is long && definition is PositiveInt pi)
+                return instance.CompareTo((long)pi.Value.Value);
+            else if (instance is long && definition is UnsignedInt ui)
+                return instance.CompareTo((long)ui.Value.Value);
 
             else if (instance is string && definition is FhirString fs)
                 return instance.CompareTo(fs.Value);
