@@ -22,6 +22,9 @@ namespace Hl7.Fhir.Validation
         [TestInitialize]
         public void SetupSource()
         {
+            // Ensure the FHIR extensions are registered
+            Hl7.Fhir.FhirPath.PocoNavigatorExtensions.PrepareFhirSymbolTableFunctions();
+
             _source = new CachedResolver(
                 new MultiResolver(
                     new BundleExampleResolver(@"TestData\validation"),
