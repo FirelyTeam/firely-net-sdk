@@ -1,5 +1,3 @@
-cd src
-msbuild /t:clean /p:configuration=release
-msbuild /t:restore /p:configuration=release
-msbuild /t:build,pack /p:configuration=release
-cd ..
+msbuild src\Hl7.Fhir.sln /t:clean /p:configuration=release /v:minimal
+msbuild src\Hl7.Fhir.sln /t:restore /p:configuration=release /v:minimal
+msbuild src\Hl7.Fhir.sln /t:build,pack /p:configuration=release /v:minimal
