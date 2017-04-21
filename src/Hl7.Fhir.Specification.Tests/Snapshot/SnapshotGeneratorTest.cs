@@ -1134,15 +1134,15 @@ namespace Hl7.Fhir.Specification.Tests
             testExpandElement(@"http://hl7.org/fhir/StructureDefinition/Patient", "Patient.name");
         }
 
-        [TestMethod, Ignore]
-        public void TestExpandElement_QuestionnaireGroupGroup()
+        [TestMethod]
+        public void TestExpandElement_QuestionnaireItem()
         {
             // Validate name reference expansion
             testExpandElement(@"http://hl7.org/fhir/StructureDefinition/Questionnaire", "Questionnaire.item");
         }
 
-        [TestMethod, Ignore]
-        public void TestExpandElement_QuestionnaireGroupQuestionGroup()
+        [TestMethod]
+        public void TestExpandElement_QuestionnaireItemItem()
         {
             // Validate name reference expansion
             testExpandElement(@"http://hl7.org/fhir/StructureDefinition/Questionnaire", "Questionnaire.item.item");
@@ -1282,7 +1282,12 @@ namespace Hl7.Fhir.Specification.Tests
                             Debug.Assert(!typeNav.MoveToNext());
                             break;
                         }
-                        Debug.Assert(typeNav.MoveToNext());
+                        // [WMR 20170412] Backbone elements can introduce additional child elements
+                        if (!typeNav.MoveToNext())
+                        {
+                            Assert.AreEqual(FHIRAllTypes.BackboneElement.GetLiteral(), elemTypeCode);
+                            break;
+                        }
 
                     } while (true);
                 }
@@ -1300,13 +1305,16 @@ namespace Hl7.Fhir.Specification.Tests
 
                 Debug.WriteLine("\r\nName Reference:");
                 Debug.Indent();
+                // [WMR 20170412] Also handle grand children
+                var srcPos = nav.OrdinalPosition.Value;
+                var cnt = nav.Elements.Count;
                 do
                 {
                     Debug.WriteLine(nav.Path);
-                    var srcPath = nav.Path.Substring(prefix.Length);
+                    var srcPath = elems[srcPos++].Path.Substring(prefix.Length);
                     var tgtPath = result[++pos].Path.Substring(expandElemPath.Length);
                     Assert.AreEqual(srcPath, tgtPath);
-                } while (nav.MoveToNext());
+                } while (srcPos < cnt);
                 Debug.Unindent();
             }
         }
