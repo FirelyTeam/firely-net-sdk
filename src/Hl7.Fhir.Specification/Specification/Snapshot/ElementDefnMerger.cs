@@ -27,10 +27,10 @@ namespace Hl7.Fhir.Specification.Snapshot
         struct ElementDefnMerger
         {
             /// <summary>Merge two <see cref="ElementDefinition"/> instances. Existing diff properties override associated snap properties.</summary>
-            public static void Merge(SnapshotGenerator generator, ElementDefinition snap, ElementDefinition diff)
+            public static void Merge(SnapshotGenerator generator, ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
             {
                 var merger = new ElementDefnMerger(generator);
-                merger.merge(snap, diff);
+                merger.merge(snap, diff, mergeElementId);
             }
 
             SnapshotGenerator _generator;
@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 _generator = generator;
             }
 
-            void merge(ElementDefinition snap, ElementDefinition diff)
+            void merge(ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
             {
                 // [WMR 20160915] Important! Derived profiles should never inherit the ChangedByDiff extension
                 // Caller should make sure that existing extensions have been removed from snap,
@@ -61,12 +61,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                     snap.PathElement = mergePrimitiveAttribute(snap.PathElement, diff.PathElement);
                 }
 
-                // [WMR 20160906] Also merge Element.Id
-                // Tricky... like ElementDefinition.Base, this value depends on the position in the tree => can't inherit
-                //if (snap.ElementId == null)
-                //{
-                //    snap.ElementId = diff.ElementId;
-                //}
+                // [WMR 20170421] Element.Id is NOT inherited!
+                // Merge custom Element id value from differential in same profile into snapshot
+                // Never inherit element id from external base profile or element type profiles (explicitly clear!)
+                snap.ElementId = mergeElementId ? diff.ElementId : null;
 
                 // [EK 20170301] This used to be ambiguous, now (STU3) split in contentReference and sliceName
                 snap.SliceNameElement = mergePrimitiveAttribute(snap.SliceNameElement, diff.SliceNameElement);

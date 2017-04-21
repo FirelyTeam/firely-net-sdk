@@ -272,6 +272,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                 snapshot.Element.RemoveAllConstrainedByDiffExtensions();
                 snapshot.Element.RemoveAllConstrainedByDiffAnnotations();
 
+                // [WMR 20170421] Explicitly clear element IDs (NOT inherited from type profiles!)
+                ElementIdGenerator.Clear(snapshot.Element);
+
                 // Notify observers
                 for (int i = 0; i < snapshot.Element.Count; i++)
                 {
@@ -304,7 +307,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // [WMR 20160917] NEW: Re-generate all ElementId values
             if (_settings.GenerateElementIds)
             {
-                generateElementsId(result, true);
+                ElementIdGenerator.Generate(result);
             }
 
             return result;
@@ -504,7 +507,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // [WMR 20160915] NEW: Notify subscribers
                 OnPrepareElement(newElement, typeStructure, baseElement);
 
-                mergeElementDefinition(newElement, diff.Current);
+                // [WMR 20170421] Merge element Id from diff
+                mergeElementDefinition(newElement, diff.Current, true);
 
                 snap.AppendChild(newElement);
             }
@@ -571,7 +575,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // }
 
                 // Then merge constraints from base profile
-                mergeElementDefinition(snap.Current, diffElem);
+                // [WMR 20170421] Don't merge element Id from base profile
+                mergeElementDefinition(snap.Current, diffElem, false);
             }
 #else
             // First merge constraints from element type profile, if it exists
@@ -635,10 +640,15 @@ namespace Hl7.Fhir.Specification.Snapshot
             return mustExpand;
         }
 
-        // Merge a differential ElementDefinition constraint into a snapshot ElementDefinition instance.
-        void mergeElementDefinition(ElementDefinition snap, ElementDefinition diff)
+        /// <summary>Merge a differential ElementDefinition constraint into a snapshot ElementDefinition instance.</summary>
+        /// <param name="snap"></param>
+        /// <param name="diff"></param>
+        /// <param name="mergeElementId">Determines if the snapshot should inherit Element.id values from the differential.</param>
+        void mergeElementDefinition(ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
         {
-            ElementDefnMerger.Merge(this, snap, diff);
+
+            // [WMR 20170421] TODO: Determine when (not) to inherit/clear Element.id
+            ElementDefnMerger.Merge(this, snap, diff, mergeElementId);
         }
 
         // [WMR 20160720] Merge custom element type profiles, e.g. Patient.name with type.profile = "MyHumanName"
@@ -804,7 +814,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 rebasedRootElem.Path = diff.Path;
 
                 // Merge the type profile root element; no need to expand children
-                mergeElementDefinition(snap.Current, rebasedRootElem);
+                // [WMR 20170421] Don't merge element Id from type profile
+                mergeElementDefinition(snap.Current, rebasedRootElem, false);
             }
 
             // [WMR 20170209] Remove invalid annotations after merging an extension definition
@@ -866,9 +877,10 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                     // [WMR 20160902] Initialize empty ElementDefinition.Base components if necessary
                     // [WMR 20160906] Always regenerate! Cannot reuse cloned base components
-                    // [WMR 20170410] WRONG! Assign elem.Base, not typeElem.Base!
-                    // elem.EnsureBaseComponent(typeElem, true);
                     elem.EnsureBaseComponent(elem, true);
+
+                    // [WMR 20170421] Explicitly clear element ID (NOT inherited from type profile!)
+                    elem.ElementId = null;
 
                     OnPrepareElement(elem, typeStructure, typeElem);
                 }
@@ -971,7 +983,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 if (diff.Current == null || diff.Current.IsExtension())
                 {
                     // Merge newly created slicing entry onto snap
-                    mergeElementDefinition(snap.Current, slicingEntry);
+                    // [WMR 20170421] Don't merge element Id from slice entry
+                    mergeElementDefinition(snap.Current, slicingEntry, false);
                 }
                 else
                 {
@@ -1414,7 +1427,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             rebasedRoot.Path = diffRoot.Path;
 
             // Merge differential constraints onto base root element definition
-            mergeElementDefinition(rebasedRoot, diffRoot);
+            // [WMR 20170421] Merge element Id from differential
+            mergeElementDefinition(rebasedRoot, diffRoot, true);
 
 
             // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - succesfully resolved root element definition: #{rebasedRoot.GetHashCode()}");
