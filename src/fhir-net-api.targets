@@ -30,6 +30,7 @@
 
   <Target Name="VSTest" DependsOnTargets="Build" Condition="$(ContainsTests) == 'true'">
     <Message Text="Appveyor = $(APPVEYOR)" Importance="high" />  
+    <Message Text="Logger = $(VSTestLogger), Filter = $(TestCaseFilter)" Importance="high" />
     <Exec Command='vstest.console.exe $(VSTestLogger) $(TestCaseFilter) $(OutputPath)$(AssemblyName).dll' />
   </Target>
 
