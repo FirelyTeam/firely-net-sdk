@@ -663,11 +663,14 @@ namespace Hl7.Fhir.Specification.Tests
             // http://example.com/fhir/StructureDefinition/patient-legal-case
             // http://example.com/fhir/StructureDefinition/patient-legal-case-lead-counsel
 
+            // [WMR 20170424] Corrected element ids
+
             // Verify complex extension used by patient-with-extensions profile
             // patient-research-authorization-profile.xml
             sd = generateSnapshot(@"http://example.com/fhir/StructureDefinition/patient-research-authorization");
             verifier = new ElementVerifier(sd, _settings);
-            verifier.VerifyElement("Extension.extension", null, "Extension.extension");
+            // verifier.VerifyElement("Extension.extension", null, "Extension.extension");  // [WMR 20170424] OLD
+            verifier.VerifyElement("Extension.extension", null, "Element.extension");       // [WMR 20170424] NEW
             verifier.VerifyElement("Extension.extension", "type", "Extension.extension:type");
             verifier.VerifyElement("Extension.extension.url", null, "Extension.extension:type.url", new FhirUri("type"));
             verifier.VerifyElement("Extension.extension", "flag", "Extension.extension:flag");
@@ -680,7 +683,8 @@ namespace Hl7.Fhir.Specification.Tests
             // patient-extensions-profile.xml
             sd = generateSnapshot(@"http://example.com/fhir/StructureDefinition/patient-with-extensions");
             verifier = new ElementVerifier(sd, _settings);
-            verifier.VerifyElement("Patient.extension", null, "Patient.extension");
+            // verifier.VerifyElement("Patient.extension", null, "Patient.extension");      // [WMR 20170424] OLD
+            verifier.VerifyElement("Patient.extension", null, "DomainResource.extension");  // [WMR 20170424] NEW
             verifier.VerifyElement("Patient.extension", "doNotCall", "Patient.extension:doNotCall");
             verifier.VerifyElement("Patient.extension", "legalCase", "Patient.extension:legalCase");
             verifier.VerifyElement("Patient.extension.valueBoolean", null, "Patient.extension:legalCase.valueBoolean");
@@ -826,7 +830,8 @@ namespace Hl7.Fhir.Specification.Tests
             );
             verifier = new ElementVerifier(sd, _settings);
 
-            verifier.VerifyElement("Patient.extension", null, "Patient.extension");
+            // verifier.VerifyElement("Patient.extension", null, "Patient.extension");      // [WMR 20170424] OLD
+            verifier.VerifyElement("Patient.extension", null, "DomainResource.extension");  // [WMR 20170424] NEW
             verifier.VerifyElement("Patient.extension", "doNotCall", "Patient.extension:doNotCall");
             verifier.VerifyElement("Patient.extension", "legalCase", "Patient.extension:legalCase");
             verifier.VerifyElement("Patient.extension.valueBoolean", null, "Patient.extension:legalCase.valueBoolean");
@@ -878,7 +883,6 @@ namespace Hl7.Fhir.Specification.Tests
             verifier.VerifyElement("Patient.identifier.assigner", null, "Patient.identifier:mrn.assigner");
             verifier.VerifyElement("Patient.identifier", "mrn/officialMRN", "Patient.identifier:mrn/officialMRN");
             verifier.VerifyElement("Patient.identifier", "mdmId", "Patient.identifier:mdmId");
-
         }
 
         [TestMethod]
