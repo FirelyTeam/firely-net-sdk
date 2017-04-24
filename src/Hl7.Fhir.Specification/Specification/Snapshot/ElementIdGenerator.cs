@@ -108,8 +108,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                 + ElementDefinitionNavigator.GetLastPathComponent(elemDef.Path)
                 + (elemDef.SliceName != null ? ElementIdSliceNameDelimiter + elemDef.SliceName : null);
             // Don't replace existing IDs, unless force = true
+
             Debug.WriteLineIf(force || elemDef.ElementId == null, $"[{nameof(ElementIdGenerator)}.{nameof(generate)}] {elemDef.Path} '{elemDef.SliceName}' - ID: '{elemDef.ElementId}' => '{id}'");
             Debug.WriteLineIf(!force && elemDef.ElementId != null, $"[{nameof(ElementIdGenerator)}.{nameof(generate)}] {elemDef.Path} '{elemDef.SliceName}' - ID: '{elemDef.ElementId}' ('{id}')");
+
             if (force || elemDef.ElementId == null)
             {
                 elemDef.ElementId = id;

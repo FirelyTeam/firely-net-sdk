@@ -544,7 +544,9 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(exceptionRaised);
         }
 
-        [TestMethod, Ignore] // qicore-encounter is not available anymore
+        // [WMR 20170424] Add qicore-encounter.xml (STU3) as separate content file
+        // Source: http://build.fhir.org/ig/cqframework/qi-core/StructureDefinition-qicore-encounter.xml.html
+        [TestMethod] 
         public void GenerateDerivedProfileSnapshot()
         {
             // [WMR 20161005] Verify that the snapshot generator supports profiles on profiles
@@ -554,7 +556,8 @@ namespace Hl7.Fhir.Specification.Tests
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/sdc-questionnaire");
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-goal");
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-patient");
-            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-encounter");
+            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-encounter");
+            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-encounter");
 
             Assert.IsNotNull(sd);
             // dumpReferences(sd);
@@ -4171,7 +4174,7 @@ namespace Hl7.Fhir.Specification.Tests
         // Referencing Profile: structure.cdstools-basecancer
         // Profile defines constraints on child elements of the complex extension
         // Snapshot generator adds slicing component to Condition.extension.extension.extension:type - WRONG!
-        [TestMethod, Ignore]   // test data needs to be converted from dstu2 -> stu3
+        [TestMethod]   // test data needs to be converted from dstu2 -> stu3
         public void TestProfileConstraintsOnComplexExtensionChildren()
         {
             var profile = _testResolver.FindStructureDefinition("https://example.org/fhir/StructureDefinition/cds-basecancer");
@@ -4196,7 +4199,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(expanded.HasSnapshot);
 
             var elems = expanded.Snapshot.Element;
-            elems.Take(55).Dump("===== Snapshot =====");
+            elems.Dump("===== Snapshot =====");
 
             var nav = new ElementDefinitionNavigator(elems);
             Assert.IsTrue(nav.MoveToFirstChild());
@@ -4205,7 +4208,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Condition.extension (slicing entry)
             Assert.IsTrue(nav.MoveToChild("extension"));
             Assert.IsNotNull(nav.Current.Slicing);
-            Assert.AreEqual("url", nav.Current.Slicing.Discriminator?.FirstOrDefault());
+            Assert.AreEqual("url", nav.Current.Slicing.Discriminator?.FirstOrDefault()?.Path);
             Assert.IsNull(nav.Current.SliceName);
 
             // Condition.extension:typedStaging
@@ -4216,42 +4219,134 @@ namespace Hl7.Fhir.Specification.Tests
             // Condition.extension:typedStaging.extension (slicing entry)
             Assert.IsTrue(nav.MoveToChild("extension"));
             Assert.IsNotNull(nav.Current.Slicing);
-            Assert.AreEqual("url", nav.Current.Slicing.Discriminator?.FirstOrDefault());
+            Assert.AreEqual("url", nav.Current.Slicing.Discriminator?.FirstOrDefault()?.Path);
             Assert.IsNull(nav.Current.SliceName);
 
-            // Condition.extension:typedStaging.extension:stage
-            Assert.IsTrue(nav.MoveToNext());
-            Assert.AreEqual("stage", nav.Current.SliceName);
-            Assert.IsNull(nav.Current.Slicing);
-
-            // Condition.extension:typedStaging.extension:stage.extension (slicing entry)
-            Assert.IsTrue(nav.MoveToChild("extension"));
-            Assert.IsNotNull(nav.Current.Slicing);
-            Assert.AreEqual("url", nav.Current.Slicing.Discriminator?.FirstOrDefault());
-            Assert.IsNull(nav.Current.SliceName);
-
-            // Condition.extension:typedStaging.extension:stage.extension:summary
+            // Condition.extension:typedStaging.extension:summary
             Assert.IsTrue(nav.MoveToNext());
             Assert.AreEqual("summary", nav.Current.SliceName);
             Assert.IsNull(nav.Current.Slicing);
 
-            // Condition.extension:typedStaging.extension:stage.extension:assessment
+            // Condition.extension:typedStaging.extension:assessment
             Assert.IsTrue(nav.MoveToNext());
             Assert.AreEqual("assessment", nav.Current.SliceName);
             Assert.IsNull(nav.Current.Slicing);
 
-            // Condition.extension:typedStaging.extension:stage.extension:type
+            // Condition.extension:typedStaging.extension:type
             Assert.IsTrue(nav.MoveToNext());
             Assert.AreEqual("type", nav.Current.SliceName);
             Assert.IsNull(nav.Current.Slicing); // BUG!
 
-            // Condition.extension:typedStaging.extension:stage.extension:type.valueCodeableConcept
+            // Condition.extension:typedStaging.extension:type.valueCodeableConcept
             Assert.IsTrue(nav.MoveToChild("valueCodeableConcept"));
             Assert.IsNotNull(nav.Current.Binding);
             var valueSetReference = nav.Current.Binding.ValueSet as ResourceReference;
             Assert.IsNotNull(valueSetReference);
             Assert.AreEqual(BindingStrength.Required, nav.Current.Binding.Strength);
             Assert.AreEqual("https://example.org/fhir/ValueSet/cds-cancerstagingtype", valueSetReference.Reference);
+        }
+
+        // [WMR 20170424] For debugging ElementIdGenerator
+
+        static StructureDefinition TestQuestionnaireProfile => new StructureDefinition()
+        {
+            Type = FHIRAllTypes.Questionnaire.GetLiteral(),
+            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Questionnaire),
+            Name = "TestQuestionnaire",
+            Url = "http://example.org/fhir/StructureDefinition/MyTestQuestionnaire",
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("Questionnaire.url")
+                    {
+                        // Override default element id
+                        ElementId = "CustomId"
+                    },
+                    // Verify that slices receive unique element id
+                    new ElementDefinition("Questionnaire.code")
+                    {
+                        Slicing = new ElementDefinition.SlicingComponent()
+                        {
+                            Discriminator = new List<ElementDefinition.DiscriminatorComponent>()
+                            {
+                                new ElementDefinition.DiscriminatorComponent()
+                                {
+                                    Type = ElementDefinition.DiscriminatorType.Value,
+                                    Path = "system"
+                                }
+                            }
+                        }
+                    },
+                    new ElementDefinition("Questionnaire.code")
+                    {
+                        SliceName = "CodeA"
+                    },
+                    new ElementDefinition("Questionnaire.code")
+                    {
+                        SliceName = "CodeB"
+                    }
+                }
+            }
+        };
+
+        [TestMethod]
+        public void TestElementIds_Questionnaire()
+        {
+            //var coreProfile = _testResolver.FindStructureDefinitionForCoreType(FHIRAllTypes.Questionnaire);
+            //Assert.IsNotNull(coreProfile);
+            //Debug.WriteLine("Core Questionnaire:");
+            //foreach (var elem in coreProfile.Differential.Element)
+            //{
+            //    Debug.WriteLine($"{elem.Path} | Id = {elem.ElementId} | Ref = {elem.ContentReference}");
+            //}
+
+            var profile = TestQuestionnaireProfile;
+            var resolver = new InMemoryProfileResolver(profile);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            _generator = new SnapshotGenerator(multiResolver);
+
+            var urlElement = profile.Differential.Element[0];
+
+            _generator.PrepareElement += elementHandler;
+            _generator.BeforeExpandElement += beforeExpandElementHandler;
+            StructureDefinition expanded = null;
+            try
+            {
+                generateSnapshotAndCompare(profile, out expanded);
+            }
+            finally
+            {
+                _generator.PrepareElement -= elementHandler;
+                _generator.BeforeExpandElement -= beforeExpandElementHandler;
+            }
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+            dumpOutcome(_generator.Outcome);
+
+            Debug.WriteLine("Derived Questionnaire:");
+            foreach (var elem in expanded.Snapshot.Element)
+            {
+                var baseElem = elem.Annotation<BaseDefAnnotation>()?.BaseElementDefinition;
+                Debug.WriteLine($"{elem.Path} | Id = {elem.ElementId} =?= {baseElem?.ElementId}");
+                Assert.IsNotNull(elem.ElementId);
+                Assert.IsNotNull(baseElem);
+                Assert.IsNotNull(baseElem.ElementId);
+                if (elem.Path == urlElement.Path)
+                {
+                    // Verify overriden element id
+                    Assert.AreEqual(urlElement.ElementId, elem.ElementId);
+                }
+                else if (elem.SliceName != null)
+                {
+                    Assert.AreNotEqual(baseElem.ElementId, elem.ElementId);
+                }
+                else
+                {
+                    // Verify inherited element id
+                    Assert.AreEqual(baseElem.ElementId, elem.ElementId);
+                }
+            }
         }
     }
 
