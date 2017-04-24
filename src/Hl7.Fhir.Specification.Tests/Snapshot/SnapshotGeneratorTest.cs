@@ -191,8 +191,8 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-        [TestMethod]
-        public void TestExpandAllComplexElements()
+        [TestMethod,Ignore]
+        public void TestExpandAllComplexElements_Patient()
         {
             // [WMR 20161005] This simulates custom Forge post-processing logic
             // i.e. perform a regular snapshot expansion, then explicitly expand all complex elements (esp. those without any differential constraints)
@@ -257,6 +257,51 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
+        // [WMR 20170424] For debugging SnapshotBaseComponentGenerator
+        [TestMethod, Ignore]
+        public void TestExpandAllComplexElements_Organization()
+        {
+            // [WMR 20161005] This simulates custom Forge post-processing logic
+            // i.e. perform a regular snapshot expansion, then explicitly expand all complex elements (esp. those without any differential constraints)
+
+            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Organization");
+            var sd = _testResolver.FindStructureDefinitionForCoreType(FHIRDefinedType.Organization);
+            Assert.IsNotNull(sd);
+            generateSnapshot(sd);
+            Assert.IsTrue(sd.HasSnapshot);
+            var elems = sd.Snapshot.Element;
+
+            var expanded = expandAllComplexElements(sd.Snapshot.Element);
+            Assert.IsNotNull(expanded);
+
+            //StructureDefinition expanded = null;
+            //sd.Differential.Element = sd.Snapshot.Element.DeepCopy().ToList();
+            //_generator = new SnapshotGenerator(_testResolver, _settings);
+            //_generator.PrepareElement += elementHandler;
+            //_generator.BeforeExpandElement += beforeExpandElementHandler;
+            //try
+            //{
+            //    generateSnapshotAndCompare(sd, out expanded);
+            //}
+            //finally
+            //{
+            //    _generator.BeforeExpandElement -= beforeExpandElementHandler;
+            //    _generator.PrepareElement -= elementHandler;
+            //}
+            //dumpOutcome(_generator.Outcome);
+            //Assert.IsNotNull(expanded);
+            //Assert.IsTrue(expanded.HasSnapshot);
+
+            // var tempPath = Path.GetTempPath();
+            // File.WriteAllText(Path.Combine(tempPath, "snapshotgen-dest.xml"), FhirSerializer.SerializeResourceToXml(expanded));
+            // foreach (var elem in expanded.Snapshot.Element)
+
+            foreach (var elem in expanded)
+            {
+                Debug.WriteLine($"{elem.Path} | Base = {elem.Base.Path}");
+            }
+        }
+
         IList<ElementDefinition> expandAllComplexElements(IList<ElementDefinition> elements)
         {
             var nav = new ElementDefinitionNavigator(elements);
@@ -296,7 +341,8 @@ namespace Hl7.Fhir.Specification.Tests
             var typeCode = type?.Code;
             return typeCode.HasValue
                    && element.Type.Count == 1
-                   && typeCode.Value != FHIRDefinedType.BackboneElement
+                   // [WMR 20170424] WRONG! Must expand BackboneElements
+                   // && typeCode != FHIRAllTypes.BackboneElement.GetLiteral()
                    && ModelInfo.IsDataType(typeCode.Value)
                    && (
                         // Only expand extension elements with a custom name or profile
@@ -559,7 +605,6 @@ namespace Hl7.Fhir.Specification.Tests
 
             _settings.GenerateElementIds = true;
 
-#if true
             // http://example.com/fhir/StructureDefinition/patient-legal-case
             // http://example.com/fhir/StructureDefinition/patient-legal-case-lead-counsel
 
@@ -710,7 +755,6 @@ namespace Hl7.Fhir.Specification.Tests
             verifier.VerifyElement("Patient.identifier.assigner", null, "Patient.identifier:mrn.assigner");
             verifier.VerifyElement("Patient.identifier", "mrn/officialMRN", "Patient.identifier:mrn/officialMRN");
             verifier.VerifyElement("Patient.identifier", "mdmId", "Patient.identifier:mdmId");
-#endif
 
             // Verify extension re-slice
             // patient-research-auth-reslice-profile.xml
@@ -1236,6 +1280,13 @@ namespace Hl7.Fhir.Specification.Tests
 
                     nav.Reset();
                     Assert.IsTrue(nav.MoveTo(elem));
+
+                    if (!isExpandableElement(elem))
+                    {
+                        Assert.IsFalse(nav.MoveToFirstChild());
+                        return;
+                    }
+
                     Assert.IsTrue(nav.MoveToFirstChild());
                     var typeNav = new ElementDefinitionNavigator(typeElems);
                     Assert.IsTrue(typeNav.MoveTo(typeNav.Elements[0]));
@@ -1249,7 +1300,13 @@ namespace Hl7.Fhir.Specification.Tests
                             Debug.Assert(!typeNav.MoveToNext());
                             break;
                         }
-                        Debug.Assert(typeNav.MoveToNext());
+                        // Debug.Assert(typeNav.MoveToNext());
+                        // [WMR 20170412] Backbone elements can introduce additional child elements
+                        if (!typeNav.MoveToNext())
+                        {
+                            Assert.AreEqual(FHIRDefinedType.BackboneElement, elemTypeCode);
+                            break;
+                        }
 
                     } while (true);
                 }
@@ -2046,6 +2103,7 @@ namespace Hl7.Fhir.Specification.Tests
             //testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Questionnaire");
             //testExpandResource(@"http://hl7.org/fhir/StructureDefinition/AuditEvent");
 
+            // testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Organization");
         }
 
         [TestMethod]
