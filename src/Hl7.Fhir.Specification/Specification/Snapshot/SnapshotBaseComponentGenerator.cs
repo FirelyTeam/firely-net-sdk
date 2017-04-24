@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     );
                 }
 
-                // Debug.Print("[ensureElementBase] #{0} Path = {1}  Base = {2}".FormatWith(elem.GetHashCode(), elem.Path, elem.Base.Path));
+                // Debug.WriteLine($"[{nameof(EnsureBaseComponent)}] #{elem.GetHashCode()} Path = {elem.Path}  Base = {elem.Base.Path}");
                 Debug.Assert(elem.Base == null || elem.Base.IsCreatedBySnapshotGenerator());
             }
         }

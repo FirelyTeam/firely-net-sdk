@@ -265,7 +265,9 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // Ensure that ElementDefinition.Base components in base StructureDef are propertly initialized
                 // Always regenerate Base component! Cannot reuse cloned values
-                ensureBaseComponents(snapshot.Element, structure.BaseDefinition, true);
+                // ensureBaseComponents(snapshot.Element, structure.BaseDefinition, true);
+                // [WMR 20170424] WRONG! Must inherit existing base components
+                ensureBaseComponents(snapshot.Element, structure.BaseDefinition, false);
 
                 // [WMR 20170208] Moved to *AFTER* ensureBaseComponents - emits annotations...
                 // [WMR 20160915] Derived profiles should never inherit the ChangedByDiff extension from the base structure
@@ -685,7 +687,10 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Note that all these element definitions are marked with: <representation value="xmlAttr"/>
 
             var primaryDiffType = diff.Current.PrimaryType();
-            if (primaryDiffType == null || primaryDiffType.IsReference()) { return true; }
+            if (primaryDiffType == null 
+                // [WMR 20170424] WRONG! Must also expand ResourceReference
+                // || primaryDiffType.IsReference()
+            ) { return true; }
 
             var primarySnapType = snap.Current.PrimaryType();
             // if (primarySnapType == null) { return true; }
@@ -877,7 +882,9 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                     // [WMR 20160902] Initialize empty ElementDefinition.Base components if necessary
                     // [WMR 20160906] Always regenerate! Cannot reuse cloned base components
-                    elem.EnsureBaseComponent(elem, true);
+                    // elem.EnsureBaseComponent(elem, true);
+                    // [WMR 20170424] WRONG! Inherit base components from type profile!
+                    elem.EnsureBaseComponent(typeElem, false);
 
                     // [WMR 20170421] Explicitly clear element ID (NOT inherited from type profile!)
                     elem.ElementId = null;
