@@ -264,18 +264,13 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
 
                 // Ensure that ElementDefinition.Base components in base StructureDef are propertly initialized
-                // Always regenerate Base component! Cannot reuse cloned values
-                // ensureBaseComponents(snapshot.Element, structure.BaseDefinition, true);
-                // [WMR 20170424] WRONG! Must inherit existing base components
+                // [WMR 20170424] Inherit existing base components, generate if missing
                 ensureBaseComponents(snapshot.Element, structure.BaseDefinition, false);
 
                 // [WMR 20170208] Moved to *AFTER* ensureBaseComponents - emits annotations...
                 // [WMR 20160915] Derived profiles should never inherit the ChangedByDiff extension from the base structure
                 snapshot.Element.RemoveAllConstrainedByDiffExtensions();
                 snapshot.Element.RemoveAllConstrainedByDiffAnnotations();
-
-                // [WMR 20170421] Explicitly clear element IDs (NOT inherited from type profiles!)
-                ElementIdGenerator.Clear(snapshot.Element);
 
                 // Notify observers
                 for (int i = 0; i < snapshot.Element.Count; i++)
@@ -509,7 +504,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // [WMR 20160915] NEW: Notify subscribers
                 OnPrepareElement(newElement, typeStructure, baseElement);
 
-                // [WMR 20170421] Merge element Id from diff
+                // [WMR 20170421] Merge custom element Id from diff
                 mergeElementDefinition(newElement, diff.Current, true);
 
                 snap.AppendChild(newElement);
@@ -577,8 +572,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // }
 
                 // Then merge constraints from base profile
-                // [WMR 20170421] Don't merge element Id from base profile
-                mergeElementDefinition(snap.Current, diffElem, false);
+                // [WMR 20170424] Merge custom element Id from diff
+                mergeElementDefinition(snap.Current, diffElem, true);
             }
 #else
             // First merge constraints from element type profile, if it exists
@@ -586,7 +581,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             isValid = mergeTypeProfiles(snap, diff);
 
             // Then merge constraints from base profile
-            mergeElementDefinition(snap.Current, diffElem);
+            mergeElementDefinition(snap.Current, diffElem, true);
 
 #endif
 
@@ -649,7 +644,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         void mergeElementDefinition(ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
         {
 
-            // [WMR 20170421] TODO: Determine when (not) to inherit/clear Element.id
+            // [WMR 20170421] Add parameter to control when (not) to inherit Element.id
             ElementDefnMerger.Merge(this, snap, diff, mergeElementId);
         }
 
@@ -819,7 +814,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 rebasedRootElem.Path = diff.Path;
 
                 // Merge the type profile root element; no need to expand children
-                // [WMR 20170421] Don't merge element Id from type profile
+                // [WMR 20170421] Don't merge element Id from element type profile
                 mergeElementDefinition(snap.Current, rebasedRootElem, false);
             }
 
@@ -881,12 +876,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                     elem.RemoveAllConstrainedByDiffAnnotations();
 
                     // [WMR 20160902] Initialize empty ElementDefinition.Base components if necessary
-                    // [WMR 20160906] Always regenerate! Cannot reuse cloned base components
-                    // elem.EnsureBaseComponent(elem, true);
-                    // [WMR 20170424] WRONG! Inherit base components from type profile!
+                    // [WMR 20170424] Inherit existing base components from type profile
                     elem.EnsureBaseComponent(typeElem, false);
 
-                    // [WMR 20170421] Explicitly clear element ID (NOT inherited from type profile!)
+                    // [WMR 20170421] Explicitly clear element ID
+                    // Do NOT inherit element ID from type profile!
                     elem.ElementId = null;
 
                     OnPrepareElement(elem, typeStructure, typeElem);
