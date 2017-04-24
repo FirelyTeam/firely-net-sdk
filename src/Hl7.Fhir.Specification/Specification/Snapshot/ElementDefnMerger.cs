@@ -63,8 +63,8 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // [WMR 20170421] Element.Id is NOT inherited!
                 // Merge custom Element id value from differential in same profile into snapshot
-                // Never inherit element id from external base profile or element type profiles (explicitly clear!)
-                snap.ElementId = mergeElementId ? diff.ElementId : null;
+                // [WMR 20170424] NEW
+                snap.ElementId = mergeId(snap, diff, mergeElementId);
 
                 // [EK 20170301] This used to be ambiguous, now (STU3) split in contentReference and sliceName
                 snap.SliceNameElement = mergePrimitiveAttribute(snap.SliceNameElement, diff.SliceNameElement);
@@ -225,7 +225,6 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             T mergeComplexAttribute<T>(T snap, T diff) where T : Element
             {
-#if true
                 var result = snap;
                 if (!diff.IsNullOrEmpty())
                 {
@@ -254,18 +253,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                     }
                 }
                 return result;
-#else
-                if (!diff.IsNullOrEmpty() && (snap.IsNullOrEmpty() || !diff.IsExactly(snap)))
-                {
-                    // [WMR 20170224] WRONG! Must recursively merge missing child properties from base
-                    var result = (T)diff.DeepCopy();
-
-                    onConstraint(result);
-                    return result;
-                }
-                else
-                    return snap;
-#endif
             }
 
             List<T> mergeCollection<T>(List<T> snap, List<T> diff, Func<T, T, bool> elemComparer) where T : Element
@@ -289,6 +276,35 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
                 else
                     return snap;
+            }
+
+            string mergeId(ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
+            {
+                // Note: Element.ElementId is a simple string property (not Element)
+                // Cannot call onConstraint to annotate
+
+                if (mergeElementId)
+                {
+                    // Merge custom elementId from differential, if specified
+                    if (diff.ElementId != null)
+                    {
+                        return diff.ElementId;
+                    }
+                    // Newly introduced named slices NEVER inherit element id
+                    // Must always regenerate new unique identifier for named slices
+                    else if (diff.SliceName != snap.SliceName)
+                    {
+                        // Regenerate; don't inherit from snap
+                        return null;
+                    }
+                    // Otherwise inherit existing element id from snap
+                    return snap.ElementId;
+                }
+                else
+                {
+                    // Don't merge elementId, e.g. for type profiles
+                    return null;
+                }
             }
 
         }

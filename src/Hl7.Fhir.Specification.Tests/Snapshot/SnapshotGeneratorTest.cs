@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-        [TestMethod,Ignore]
+        [TestMethod, Ignore]
         public void TestExpandAllComplexElements_Patient()
         {
             // [WMR 20161005] This simulates custom Forge post-processing logic
@@ -381,7 +381,7 @@ namespace Hl7.Fhir.Specification.Tests
                    );
         }
 
-        [TestMethod,Ignore]
+        [TestMethod, Ignore]
         public void TestExpandAllComplexElementsWithEvent()
         {
             // [WMR 20170105] New - hook new BeforeExpand event in order to force full expansion of all complex elements
@@ -546,7 +546,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20170424] Add qicore-encounter.xml (STU3) as separate content file
         // Source: http://build.fhir.org/ig/cqframework/qi-core/StructureDefinition-qicore-encounter.xml.html
-        [TestMethod] 
+        [TestMethod]
         public void GenerateDerivedProfileSnapshot()
         {
             // [WMR 20161005] Verify that the snapshot generator supports profiles on profiles
@@ -1673,7 +1673,7 @@ namespace Hl7.Fhir.Specification.Tests
                 // Note: diff elem is not exactly equal to base elem (due to reduntant type profile constraint)
                 // hasConstraints and hasChanges methods aren't smart enough to detect redundant constraints
                 var hasConstraints = SnapshotGeneratorTest2.hasConstraints(elem, baseElem);
-                Assert.IsTrue(hasConstraints);      
+                Assert.IsTrue(hasConstraints);
                 Assert.IsTrue(hasChanges(elem));
 
                 // Verify base annotations on Patient.identifier subtree
@@ -2640,7 +2640,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Debug.WriteIf(elem.Path != null, " '" + elem.SliceName + "'");
                 if (elem.Slicing != null)
                 {
-                    Debug.Write(" => sliced on: " + string.Join(" | ", elem.Slicing.Discriminator.Select(p=>p?.Path)));
+                    Debug.Write(" => sliced on: " + string.Join(" | ", elem.Slicing.Discriminator.Select(p => p?.Path)));
                 }
                 Debug.WriteLine("");
             }
@@ -3655,7 +3655,7 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         Slicing = new ElementDefinition.SlicingComponent()
                         {
-                            Discriminator = new ElementDefinition.DiscriminatorComponent[] 
+                            Discriminator = new ElementDefinition.DiscriminatorComponent[]
                                 { new ElementDefinition.DiscriminatorComponent
                                     { Type = ElementDefinition.DiscriminatorType.Value, Path = "system" }
                                 }.ToList(),
@@ -4289,6 +4289,11 @@ namespace Hl7.Fhir.Specification.Tests
                     new ElementDefinition("Questionnaire.code")
                     {
                         SliceName = "CodeB"
+                    },
+                    // cf. BasicValidationTests.ValidateOverNameRef
+                    new ElementDefinition("Questionnaire.item.item.type")
+                    {
+                        Fixed = new Code("decimal")
                     }
                 }
             }
@@ -4297,13 +4302,19 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestElementIds_Questionnaire()
         {
-            //var coreProfile = _testResolver.FindStructureDefinitionForCoreType(FHIRAllTypes.Questionnaire);
-            //Assert.IsNotNull(coreProfile);
-            //Debug.WriteLine("Core Questionnaire:");
-            //foreach (var elem in coreProfile.Differential.Element)
-            //{
-            //    Debug.WriteLine($"{elem.Path} | Id = {elem.ElementId} | Ref = {elem.ContentReference}");
-            //}
+#if false // DEBUG
+            var coreProfile = _testResolver.FindStructureDefinitionForCoreType(FHIRAllTypes.Questionnaire);
+            Assert.IsNotNull(coreProfile);
+            Debug.WriteLine("Core Questionnaire:");
+            foreach (var elem in coreProfile.Differential.Element)
+            {
+                Debug.WriteLine($"{elem.Path} | Id = {elem.ElementId} | Ref = {elem.ContentReference}");
+            }
+
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            _generator.Update(coreProfile);
+            dumpOutcome(_generator.Outcome);
+#endif
 
             var profile = TestQuestionnaireProfile;
             var resolver = new InMemoryProfileResolver(profile);
@@ -4352,6 +4363,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             }
         }
+
     }
 
 }
