@@ -1278,6 +1278,13 @@ namespace Hl7.Fhir.Specification.Tests
 
                     nav.Reset();
                     Assert.IsTrue(nav.MoveTo(elem));
+
+                    if (!isExpandableElement(elem))
+                    {
+                        Assert.IsFalse(nav.MoveToFirstChild());
+                        return;
+                    }
+
                     Assert.IsTrue(nav.MoveToFirstChild());
                     var typeNav = new ElementDefinitionNavigator(typeElems);
                     Assert.IsTrue(typeNav.MoveTo(typeNav.Elements[0]));
@@ -1291,7 +1298,13 @@ namespace Hl7.Fhir.Specification.Tests
                             Debug.Assert(!typeNav.MoveToNext());
                             break;
                         }
-                        Debug.Assert(typeNav.MoveToNext());
+                        // Debug.Assert(typeNav.MoveToNext());
+                        // [WMR 20170412] Backbone elements can introduce additional child elements
+                        if (!typeNav.MoveToNext())
+                        {
+                            Assert.AreEqual(FHIRDefinedType.BackboneElement, elemTypeCode);
+                            break;
+                        }
 
                     } while (true);
                 }
