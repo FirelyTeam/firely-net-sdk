@@ -3248,25 +3248,6 @@ namespace Hl7.Fhir.Specification.Tests
             expanded.Snapshot.Element.Dump();
         }
 
-        // Verify extension constraint on choice type element w/o type slice
-        [TestMethod,Ignore]
-        public void TestZibProcedure()
-        {
-            var sd = _testResolver.FindStructureDefinition("http://nictiz.nl/fhir/StructureDefinition/zib-Procedure");
-            Assert.IsNotNull(sd);
-            assertContainsElement(sd.Differential, "Procedure.request.extension", "RequestedBy");
-
-            StructureDefinition expanded = null;
-            generateSnapshotAndCompare(sd, out expanded);
-            dumpOutcome(_generator.Outcome);
-
-            Assert.IsTrue(expanded.HasSnapshot);
-            expanded.Snapshot.Element.Dump();
-
-            // Verify that the snapshot contains the extension on Procedure.request (w/o type slice)
-            assertContainsElement(expanded.Snapshot, "Procedure.request.extension", "RequestedBy");
-        }
-
         // [WMR 20170306] Verify that the snapshot generator determines and merges the correct base element for slices
         // * Slice entry is based on associated element in base profile with same path (and name)
         //   Slice entry inherits constraints from base element; can only further constrain
