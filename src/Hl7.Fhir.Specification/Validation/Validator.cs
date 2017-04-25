@@ -237,6 +237,9 @@ namespace Hl7.Fhir.Validation
 
         internal OperationOutcome ValidateConstraints(ElementDefinition definition, IElementNavigator instance)
         {
+            // Make sure FHIR extensions are installed in FP compiler
+            PocoNavigatorExtensions.PrepareFhirSymbolTableFunctions();
+
             var outcome = new OperationOutcome();
 
             if (Settings.SkipConstraintValidation) return outcome;
@@ -499,15 +502,16 @@ namespace Hl7.Fhir.Validation
         // Note: this modifies an SD that is passed to us and will alter a possibly cached
         // object shared amongst other threads. This is generally useful and saves considerable
         // time when the same snapshot is needed again, but may result in side-effects
-        private void snapshotGenerationNeeded(StructureDefinition definition)
+        private OperationOutcome snapshotGenerationNeeded(StructureDefinition definition)
         {
-            if (!Settings.GenerateSnapshot) return;
+            if (!Settings.GenerateSnapshot) return new OperationOutcome();
 
             // Default implementation: call event
             if (OnSnapshotNeeded != null)
             {
-                OnSnapshotNeeded(this, new OnSnapshotNeededEventArgs(definition, Settings.ResourceResolver));
-                return;
+                var eventData = new OnSnapshotNeededEventArgs(definition, Settings.ResourceResolver);
+                OnSnapshotNeeded(this, eventData);
+                return eventData.Result;
             }
 
             // Else, expand, depending on our configuration
@@ -516,6 +520,16 @@ namespace Hl7.Fhir.Validation
             if (generator != null)
             {
                 generator.Update(definition);
+#if DUMP_SNAPSHOTS
+
+                string xml = FhirSerializer.SerializeResourceToXml(definition);
+                string name = definition.Id ?? definition.Name.Replace(" ", "");
+
+                File.WriteAllText(@"c:\temp\validation\" + name + ".StructureDefinition.xml", xml);
+#endif
+
+
+                return generator.Outcome ?? new OperationOutcome();
 #else
             if (Settings.ResourceResolver != null)
             {
@@ -524,16 +538,9 @@ namespace Hl7.Fhir.Validation
                 (new SnapshotGenerator(Settings.ResourceResolver, settings)).Update(definition);
 
 #endif
-
-#if DUMP_SNAPSHOTS
-
-                string xml = FhirSerializer.SerializeResourceToXml(definition);
-                string name = definition.Id ?? definition.Name.Replace(" ", "");
-
-                File.WriteAllText(@"c:\temp\validation\" + name + ".StructureDefinition.xml", xml);
-#endif
             }
 
+            return new OperationOutcome();
         }
     }
 
@@ -550,6 +557,8 @@ namespace Hl7.Fhir.Validation
                    t == typeof(Model.Time) ||
                    t == typeof(FhirDecimal) ||
                    t == typeof(Integer) ||
+                   t == typeof(PositiveInt) ||
+                   t == typeof(UnsignedInt) ||
                    t == typeof(Model.Quantity) ||
                    t == typeof(FhirString);
         }
@@ -578,6 +587,8 @@ namespace Hl7.Fhir.Validation
         public StructureDefinition Definition { get; }
 
         public IResourceResolver Resolver { get; }
+
+        public OperationOutcome Result { get; set; }
     }
 
     public class OnResolveResourceReferenceEventArgs : EventArgs

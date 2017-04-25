@@ -1,5 +1,10 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
+  <Target Name="CleanBinObj" AfterTargets="Clean">
+    <!-- <RemoveDir Directories="$(OutputPath);$(IntermediateOutputPath)" /> -->
+    <RemoveDir Directories="$(MSBuildProjectDirectory)\bin;$(MSBuildProjectDirectory)\obj" />
+  </Target>
+
   <Target Name="CopyPackage" AfterTargets="Pack">
     <PropertyGroup>
       <PackageOutputDirectory>..\..\dist</PackageOutputDirectory>
@@ -8,8 +13,25 @@
     <Copy SourceFiles="$(OutputPath)$(PackageId).$(PackageVersion).symbols.nupkg" DestinationFolder="$(PackageOutputDirectory)" />
   </Target>
 
- <Target Name="VSTest" DependsOnTargets="Build" Condition="$(ContainsTests) == 'true'">   
-       <Exec Command="vstest.console.exe $(OutputPath)$(AssemblyName).dll" />
+    <Choose>  
+        <When Condition="$(APPVEYOR)=='True' ">
+          <PropertyGroup>
+            <VSTestLogger>/logger:Appveyor</VSTestLogger>
+            <TestCaseFilter>/TestCaseFilter:"TestCategory!=IntegrationTest&amp;TestCategory!=FhirClient"</TestCaseFilter>
+          </PropertyGroup>
+        </When>
+        <Otherwise>
+          <PropertyGroup>
+            <VSTestLogger>/logger:Console</VSTestLogger>
+            <TestCaseFilter />
+          </PropertyGroup>
+        </Otherwise>
+    </Choose>
+
+  <Target Name="VSTest" DependsOnTargets="Build" Condition="$(ContainsTests) == 'true'">
+    <Message Text="Appveyor = $(APPVEYOR)" Importance="high" />  
+    <Message Text="Logger = $(VSTestLogger), Filter = $(TestCaseFilter)" Importance="high" />
+    <Exec Command='vstest.console.exe $(VSTestLogger) $(TestCaseFilter) $(OutputPath)$(AssemblyName).dll' />
   </Target>
 
   <UsingTask TaskName="ZipDir" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v12.0.dll">

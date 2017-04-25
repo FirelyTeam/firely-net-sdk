@@ -255,7 +255,9 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // Ensure that ElementDefinition.Base components in base StructureDef are propertly initialized
                 // Always regenerate Base component! Cannot reuse cloned values
-                ensureBaseComponents(snapshot.Element, structure.Base, true);
+                // ensureBaseComponents(snapshot.Element, structure.Base, true);
+                // [WMR 20170424] WRONG! Must inherit existing base components
+                ensureBaseComponents(snapshot.Element, structure.Base, false);
 
                 // [WMR 20170208] Moved to *AFTER* ensureBaseComponents - emits annotations...
                 // [WMR 20160915] Derived profiles should never inherit the ChangedByDiff extension from the base structure
@@ -663,7 +665,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Note that all these element definitions are marked with: <representation value="xmlAttr"/>
 
             var primaryDiffType = diff.Current.PrimaryType();
-            if (primaryDiffType == null || primaryDiffType.IsReference()) { return true; }
+            if (primaryDiffType == null || primaryDiffType.IsReference() ) { return true; }
 
             var primarySnapType = snap.Current.PrimaryType();
             // if (primarySnapType == null) { return true; }
@@ -854,9 +856,9 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                     // [WMR 20160902] Initialize empty ElementDefinition.Base components if necessary
                     // [WMR 20160906] Always regenerate! Cannot reuse cloned base components
-                    // [WMR 20170410] WRONG! Assign elem.Base, not typeElem.Base!
-                    // elem.EnsureBaseComponent(typeElem, true);
-                    elem.EnsureBaseComponent(elem, true);
+                    // elem.EnsureBaseComponent(elem, true);
+                    // [WMR 20170424] WRONG! Inherit base components from type profile!
+                    elem.EnsureBaseComponent(typeElem, false);
 
                     OnPrepareElement(elem, typeStructure, typeElem);
                 }
@@ -1057,6 +1059,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                 snap.Current.Path = diff.Current.Path;
             }
 
+            // [WMR 20170420] NEW: Notify subscribers
+            // Named slices get a custom base element definition reference
+            // created from clone of slice entry base element with Min = 0 and Slicing = null
+            OnPrepareElement(snap.Current, null, sliceBase.Current);
+
             // Important: explicitly clear the slicing node in the copy!
             Debug.Assert(snap.Current.Slicing == null); // Taken care of by ElementMatcher.constructSliceMatch
             // snap.Current.Slicing = null;
@@ -1071,16 +1078,14 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         static void addSliceBase(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff, ElementDefinitionNavigator sliceBase)
         {
-            var lastSlice = findSliceAddPosition(snap, diff);
-            bool result = false;
-
             if (sliceBase == null || sliceBase.Current == null)
             {
                 Debug.Fail("SHOULDN'T HAPPEN...");
                 throw Error.InvalidOperation($"Internal error in snapshot generator ({nameof(addSlice)}): slice base element is unavailable.");
             }
 
-            result = snap.ReturnToBookmark(lastSlice);
+            var lastSlice = findSliceAddPosition(snap, diff);
+            bool result = snap.ReturnToBookmark(lastSlice);
             // Copy the original (unmerged) slice base element to snapshot
             if (result) { result = snap.InsertAfter((ElementDefinition)sliceBase.Current.DeepCopy()); }
             // Recursively copy the original (unmerged) child elements, if necessary

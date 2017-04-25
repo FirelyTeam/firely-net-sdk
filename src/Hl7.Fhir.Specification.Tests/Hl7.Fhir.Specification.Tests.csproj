@@ -18,7 +18,6 @@
     <ProjectReference Include="..\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
   </ItemGroup>
   <ItemGroup>
-      <PackageReference Include="Hl7.Fhir.Support" Version="0.4.2-alpha4" />
       <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
       <PackageReference Include="MSTest.TestAdapter" Version="1.1.14" />
       <PackageReference Include="MSTest.TestFramework" Version="1.1.14" />
