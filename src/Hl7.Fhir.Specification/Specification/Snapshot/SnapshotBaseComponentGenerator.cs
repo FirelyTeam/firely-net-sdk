@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2017, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -9,7 +9,6 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -174,7 +173,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     );
                 }
 
-                // Debug.Print("[ensureElementBase] #{0} Path = {1}  Base = {2}".FormatWith(elem.GetHashCode(), elem.Path, elem.Base.Path));
+                // Debug.WriteLine($"[{nameof(EnsureBaseComponent)}] #{elem.GetHashCode()} Path = {elem.Path}  Base = {elem.Base.Path}");
                 Debug.Assert(elem.Base == null || elem.Base.IsCreatedBySnapshotGenerator());
             }
         }
@@ -198,5 +197,5 @@ namespace Hl7.Fhir.Specification.Snapshot
             return result;
         }
 
-        }
-        }
+    }
+}

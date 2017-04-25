@@ -264,8 +264,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
 
                 // Ensure that ElementDefinition.Base components in base StructureDef are propertly initialized
-                // Always regenerate Base component! Cannot reuse cloned values
-                ensureBaseComponents(snapshot.Element, structure.BaseDefinition, true);
+                // [WMR 20170424] Inherit existing base components, generate if missing
+                ensureBaseComponents(snapshot.Element, structure.BaseDefinition, false);
 
                 // [WMR 20170208] Moved to *AFTER* ensureBaseComponents - emits annotations...
                 // [WMR 20160915] Derived profiles should never inherit the ChangedByDiff extension from the base structure
@@ -304,7 +304,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // [WMR 20160917] NEW: Re-generate all ElementId values
             if (_settings.GenerateElementIds)
             {
-                generateElementsId(result, true);
+                ElementIdGenerator.Generate(result);
             }
 
             return result;
@@ -504,7 +504,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // [WMR 20160915] NEW: Notify subscribers
                 OnPrepareElement(newElement, typeStructure, baseElement);
 
-                mergeElementDefinition(newElement, diff.Current);
+                // [WMR 20170421] Merge custom element Id from diff
+                mergeElementDefinition(newElement, diff.Current, true);
 
                 snap.AppendChild(newElement);
             }
@@ -571,7 +572,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // }
 
                 // Then merge constraints from base profile
-                mergeElementDefinition(snap.Current, diffElem);
+                // [WMR 20170424] Merge custom element Id from diff
+                mergeElementDefinition(snap.Current, diffElem, true);
             }
 #else
             // First merge constraints from element type profile, if it exists
@@ -579,7 +581,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             isValid = mergeTypeProfiles(snap, diff);
 
             // Then merge constraints from base profile
-            mergeElementDefinition(snap.Current, diffElem);
+            mergeElementDefinition(snap.Current, diffElem, true);
 
 #endif
 
@@ -635,10 +637,15 @@ namespace Hl7.Fhir.Specification.Snapshot
             return mustExpand;
         }
 
-        // Merge a differential ElementDefinition constraint into a snapshot ElementDefinition instance.
-        void mergeElementDefinition(ElementDefinition snap, ElementDefinition diff)
+        /// <summary>Merge a differential ElementDefinition constraint into a snapshot ElementDefinition instance.</summary>
+        /// <param name="snap"></param>
+        /// <param name="diff"></param>
+        /// <param name="mergeElementId">Determines if the snapshot should inherit Element.id values from the differential.</param>
+        void mergeElementDefinition(ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
         {
-            ElementDefnMerger.Merge(this, snap, diff);
+
+            // [WMR 20170421] Add parameter to control when (not) to inherit Element.id
+            ElementDefnMerger.Merge(this, snap, diff, mergeElementId);
         }
 
         // [WMR 20160720] Merge custom element type profiles, e.g. Patient.name with type.profile = "MyHumanName"
@@ -675,7 +682,10 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Note that all these element definitions are marked with: <representation value="xmlAttr"/>
 
             var primaryDiffType = diff.Current.PrimaryType();
-            if (primaryDiffType == null || primaryDiffType.IsReference()) { return true; }
+            if (primaryDiffType == null 
+                // [WMR 20170424] WRONG! Must also expand ResourceReference
+                // || primaryDiffType.IsReference()
+            ) { return true; }
 
             var primarySnapType = snap.Current.PrimaryType();
             // if (primarySnapType == null) { return true; }
@@ -804,7 +814,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 rebasedRootElem.Path = diff.Path;
 
                 // Merge the type profile root element; no need to expand children
-                mergeElementDefinition(snap.Current, rebasedRootElem);
+                // [WMR 20170421] Don't merge element Id from element type profile
+                mergeElementDefinition(snap.Current, rebasedRootElem, false);
             }
 
             // [WMR 20170209] Remove invalid annotations after merging an extension definition
@@ -865,10 +876,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                     elem.RemoveAllConstrainedByDiffAnnotations();
 
                     // [WMR 20160902] Initialize empty ElementDefinition.Base components if necessary
-                    // [WMR 20160906] Always regenerate! Cannot reuse cloned base components
-                    // [WMR 20170410] WRONG! Assign elem.Base, not typeElem.Base!
-                    // elem.EnsureBaseComponent(typeElem, true);
-                    elem.EnsureBaseComponent(elem, true);
+                    // [WMR 20170424] Inherit existing base components from type profile
+                    elem.EnsureBaseComponent(typeElem, false);
+
+                    // [WMR 20170421] Explicitly clear element ID
+                    // Do NOT inherit element ID from type profile!
+                    elem.ElementId = null;
 
                     OnPrepareElement(elem, typeStructure, typeElem);
                 }
@@ -971,7 +984,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 if (diff.Current == null || diff.Current.IsExtension())
                 {
                     // Merge newly created slicing entry onto snap
-                    mergeElementDefinition(snap.Current, slicingEntry);
+                    // [WMR 20170421] Don't merge element Id from slice entry
+                    mergeElementDefinition(snap.Current, slicingEntry, false);
                 }
                 else
                 {
@@ -1414,7 +1428,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             rebasedRoot.Path = diffRoot.Path;
 
             // Merge differential constraints onto base root element definition
-            mergeElementDefinition(rebasedRoot, diffRoot);
+            // [WMR 20170421] Merge element Id from differential
+            mergeElementDefinition(rebasedRoot, diffRoot, true);
 
 
             // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - succesfully resolved root element definition: #{rebasedRoot.GetHashCode()}");

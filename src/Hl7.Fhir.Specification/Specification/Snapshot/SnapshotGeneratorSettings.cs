@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             ForceRegenerateSnapshots = false,           // Only enable this when using a cached source...!
             GenerateExtensionsOnConstraints = false,    // Enabled by Simplifier (not used...)
             GenerateAnnotationsOnConstraints = false,   // For snapshot rendering
-            GenerateElementIds = false                  // for STU3
+            GenerateElementIds = true                   // for STU3
             // MergeTypeProfiles = true
         };
 
@@ -82,10 +82,6 @@ namespace Hl7.Fhir.Specification.Snapshot
         public bool GenerateAnnotationsOnConstraints { get; set; } // AnnotateDifferentialConstraints
 
         /// <summary>Enable this setting to automatically generate missing element id values.</summary>
-        /// <remarks>
-        /// The generated element ids conform to the STU3 FHIR specification.
-        /// Do NOT enable this setting for DSTU2!
-        /// </remarks>
         public bool GenerateElementIds { get; set; }
 
         // [WMR 20161004] Always try to merge element type profiles
