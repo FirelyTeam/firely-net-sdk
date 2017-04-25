@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
-using System.Linq;
 using System.Runtime.Serialization;
 
 /*
@@ -35,9 +34,6 @@ using System.Runtime.Serialization;
 
 */
 
-//
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
-//
 namespace Hl7.Fhir.Model
 {
     /// <summary>
@@ -53,7 +49,6 @@ namespace Hl7.Fhir.Model
         /// xml:id (or equivalent in JSON)
         /// </summary>
         [FhirElement("id", XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=10)]
-        [IdPattern]
         [DataMember]
         public string ElementId
         {
