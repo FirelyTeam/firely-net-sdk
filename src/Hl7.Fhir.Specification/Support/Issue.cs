@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.ElementModel;
 
+#pragma warning disable 1591 // suppress XML summary warnings
+
 namespace Hl7.Fhir.Support
 {
     public class Issue
