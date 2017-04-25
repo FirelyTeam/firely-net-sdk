@@ -552,7 +552,6 @@ namespace Hl7.Fhir.Validation
             var report = _validator.Validate(bundle);
 
             Assert.IsTrue(report.Success);
-            Trace.WriteLine(report.ToString());
             Assert.AreEqual(1, report.Warnings);
         }
     

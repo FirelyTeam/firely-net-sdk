@@ -665,10 +665,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Note that all these element definitions are marked with: <representation value="xmlAttr"/>
 
             var primaryDiffType = diff.Current.PrimaryType();
-            if (primaryDiffType == null 
-                // [WMR 20170424] WRONG! Must also expand ResourceReference
-                // || primaryDiffType.IsReference()
-            ) { return true; }
+            if (primaryDiffType == null || primaryDiffType.IsReference() ) { return true; }
 
             var primarySnapType = snap.Current.PrimaryType();
             // if (primarySnapType == null) { return true; }
