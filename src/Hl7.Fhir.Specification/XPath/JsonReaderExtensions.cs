@@ -12,6 +12,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+#pragma warning disable 1591 // suppress XML summary warnings
+
 namespace Hl7.Fhir.XPath
 {
 #if NET_XSD_SCHEMA
