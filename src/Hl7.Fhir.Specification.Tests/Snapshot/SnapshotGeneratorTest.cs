@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Specification.Tests
             ForceRegenerateSnapshots = true,
             GenerateExtensionsOnConstraints = false,
             GenerateAnnotationsOnConstraints = false,
-            GenerateElementIds = false // STU3
+            GenerateElementIds = true // STU3
         };
 
         [TestInitialize]
@@ -365,16 +365,18 @@ namespace Hl7.Fhir.Specification.Tests
 #endif
 
             var type = element.PrimaryType();
-            var typeCode = type?.Code;
-            return !String.IsNullOrEmpty(typeCode)
-                   && element.Type.Count == 1
+
+            if (type == null || element.Type.Select(t => t.Code).Distinct().Count() != 1) { return false; }
+
+            var typeName = type?.Code;
+            return !String.IsNullOrEmpty(typeName)
                    // [WMR 20170424] WRONG! Must expand BackboneElements
                    // && typeCode != FHIRAllTypes.BackboneElement.GetLiteral()
-                   && ModelInfo.IsDataType(typeCode)
+                   && ModelInfo.IsDataType(typeName)
                    && (
                         // Only expand extension elements with a custom name or profile
                         // Do NOT expand the core Extension.extension element, as this will trigger infinite recursion
-                        typeCode != FHIRAllTypes.Extension.GetLiteral()
+                        typeName != FHIRAllTypes.Extension.GetLiteral()
                         || !string.IsNullOrEmpty(type.Profile)
                         || element.SliceName != null
                    );
@@ -668,8 +670,7 @@ namespace Hl7.Fhir.Specification.Tests
             // patient-research-authorization-profile.xml
             sd = generateSnapshot(@"http://example.com/fhir/StructureDefinition/patient-research-authorization");
             verifier = new ElementVerifier(sd, _settings);
-            // verifier.VerifyElement("Extension.extension", null, "Extension.extension");  // [WMR 20170424] OLD
-            verifier.VerifyElement("Extension.extension", null, "Element.extension");       // [WMR 20170424] NEW
+            verifier.VerifyElement("Extension.extension", null, "Extension.extension");
             verifier.VerifyElement("Extension.extension", "type", "Extension.extension:type");
             verifier.VerifyElement("Extension.extension.url", null, "Extension.extension:type.url", new FhirUri("type"));
             verifier.VerifyElement("Extension.extension", "flag", "Extension.extension:flag");
@@ -682,8 +683,7 @@ namespace Hl7.Fhir.Specification.Tests
             // patient-extensions-profile.xml
             sd = generateSnapshot(@"http://example.com/fhir/StructureDefinition/patient-with-extensions");
             verifier = new ElementVerifier(sd, _settings);
-            // verifier.VerifyElement("Patient.extension", null, "Patient.extension");      // [WMR 20170424] OLD
-            verifier.VerifyElement("Patient.extension", null, "DomainResource.extension");  // [WMR 20170424] NEW
+            verifier.VerifyElement("Patient.extension", null, "Patient.extension");
             verifier.VerifyElement("Patient.extension", "doNotCall", "Patient.extension:doNotCall");
             verifier.VerifyElement("Patient.extension", "legalCase", "Patient.extension:legalCase");
             verifier.VerifyElement("Patient.extension.valueBoolean", null, "Patient.extension:legalCase.valueBoolean");
@@ -829,8 +829,7 @@ namespace Hl7.Fhir.Specification.Tests
             );
             verifier = new ElementVerifier(sd, _settings);
 
-            // verifier.VerifyElement("Patient.extension", null, "Patient.extension");      // [WMR 20170424] OLD
-            verifier.VerifyElement("Patient.extension", null, "DomainResource.extension");  // [WMR 20170424] NEW
+            verifier.VerifyElement("Patient.extension", null, "Patient.extension");
             verifier.VerifyElement("Patient.extension", "doNotCall", "Patient.extension:doNotCall");
             verifier.VerifyElement("Patient.extension", "legalCase", "Patient.extension:legalCase");
             verifier.VerifyElement("Patient.extension.valueBoolean", null, "Patient.extension:legalCase.valueBoolean");
@@ -1959,6 +1958,7 @@ namespace Hl7.Fhir.Specification.Tests
             var baseDef = e.BaseElement;
             var baseStruct = e.BaseStructure;
             elem.AddAnnotation(new BaseDefAnnotation(baseDef, baseStruct));
+
             Debug.Write($"[{nameof(SnapshotGeneratorTest)}.{nameof(elementHandler)}] #{elem.GetHashCode()} '{elem.Path}' - Base: #{baseDef?.GetHashCode() ?? 0} '{(baseDef?.Path)}' - Base Structure '{baseStruct?.Url}'");
             Debug.WriteLine(ann?.BaseElementDefinition != null ? $" (old Base: #{ann.BaseElementDefinition.GetHashCode()} '{ann.BaseElementDefinition.Path}')" : "");
         }
@@ -4372,39 +4372,51 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestPatientWithAddress()
         {
-            var sdPatient = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyPatientWithAddress");
-            Assert.IsNotNull(sdPatient);
-            var sdAddress = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyPatientAddress");
-            Assert.IsNotNull(sdAddress);
+            var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyPatientWithAddress");
+            // var sd = _testResolver.FindStructureDefinitionForCoreType(FHIRAllTypes.Coding);
+            Assert.IsNotNull(sd);
 
-            _generator = new SnapshotGenerator(_testResolver);
+            //sd = (StructureDefinition)sd.DeepCopy();
+            //sd.BaseDefinition = sd.Url;
+            //sd.Url = "http://example.org/fhir/StructureDefinition/MyCoding";
+            //sd.Name = "MyCoding";
+            //sd.Derivation = StructureDefinition.TypeDerivationRule.Constraint;
+            //sd.Differential.Element.Clear();
+
+            _generator = new SnapshotGenerator(_testResolver, _settings);
             _generator.PrepareElement += elementHandler;
             _generator.BeforeExpandElement += beforeExpandElementHandler;
-            StructureDefinition expanded = null;
             try
             {
-                generateSnapshotAndCompare(sdPatient, out expanded);
+                _generator.Update(sd);
             }
             finally
             {
                 _generator.PrepareElement -= elementHandler;
                 _generator.BeforeExpandElement -= beforeExpandElementHandler;
             }
-            Assert.IsNotNull(expanded);
-            Assert.IsTrue(expanded.HasSnapshot);
 
             dumpOutcome(_generator.Outcome);
-            // dumpBaseElems(expanded.Snapshot.Element);
 
+            dumpBaseDefId(sd);
+
+            sd = _testResolver.FindStructureDefinitionForCoreType(sd.Type);
+            dumpBaseDefId(sd);
+
+        }
+
+        static void dumpBaseDefId(StructureDefinition sd)
+        {
+            Debug.Print("===== " + sd.Name);
             Debug.Print($"{"Path".PadRight(50)}| {"Base Path".PadRight(49)}| {"Base StructureDefinition".PadRight(69)}| {"Element Id".PadRight(49)}| {"Base Element Id".PadRight(49)}");
-            foreach (var elem in expanded.Snapshot.Element)
+            foreach (var elem in sd.Snapshot.Element)
             {
                 var ann = elem.Annotation<BaseDefAnnotation>();
                 Assert.IsNotNull(ann);
-                Debug.Print($"{elem.Path.PadRight(50)} | {ann?.BaseElementDefinition?.Path?.PadRight(49)}| {ann?.BaseStructureDefinition?.Url.PadRight(69)}| {elem.ElementId.PadRight(49)}| {ann?.BaseElementDefinition?.ElementId?.PadRight(49)}");
-                Assert.IsTrue(elem.IsRootElement() || elem.ElementId.StartsWith("Patient."));
+                Debug.Print($"{elem.Path.PadRight(50)}| {ann?.BaseElementDefinition?.Path?.PadRight(49)}| {ann?.BaseStructureDefinition?.Url?.PadRight(69)}| {elem?.ElementId?.PadRight(49)}| {ann?.BaseElementDefinition?.ElementId?.PadRight(49)}");
+                var elemId = elem.ElementId;
+                Assert.IsTrue(elem.IsRootElement() ? elemId == sd.Type : elemId.StartsWith(sd.Type + "."));
             }
         }
-
     }
 }
