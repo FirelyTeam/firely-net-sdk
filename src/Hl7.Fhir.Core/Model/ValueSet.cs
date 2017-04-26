@@ -32,6 +32,16 @@ namespace Hl7.Fhir.Model
 
         }
 
+        public int? ExpansionSize()
+        {
+            if (HasExpansion)
+            {
+                return Expansion.Contains.CountConcepts();
+            }
+            else
+                return null;
+        }
+
         public ValueSet.ContainsComponent FindInExpansion(String code, string system = null)
         {
             ensureExpansion();
