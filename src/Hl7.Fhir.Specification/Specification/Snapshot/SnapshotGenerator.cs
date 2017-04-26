@@ -238,9 +238,15 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 var snapshot = (StructureDefinition.SnapshotComponent)baseStructure.Snapshot.DeepCopy();
 
-                // [WMR 20160902] Rebase the cloned base profile (e.g. DomainResource)
                 if (!structure.IsConstraint)
                 {
+                    // [WMR 20160902] Rebase the cloned base profile (e.g. DomainResource)
+
+                    // [WMR 20170426] Specializations (i.e. core resource definitions)
+                    // do NOT inherit element IDs from (abstract) base class
+                    // Clear all to force full re-generation
+                    ElementIdGenerator.Clear(snapshot.Element);
+
                     // [WMR 20170411] Updated for STU3 - root element is no longer required/ensured
                     // => Derive from StructureDefinition.type property
                     var rootPath = structure.Type;
@@ -415,15 +421,15 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                     // [WMR 20170220] WRONG...?
                     // Must merge nav on top of typeNav, not the other way around...
-                    // [WMR 20170426] Do NOT merge element ids from element type profiles!
-                    mergeElement(nav, typeNav, false);
+                    mergeElement(nav, typeNav);
+
+                    // [WMR 20170421] Clear element Ids inherited from type profile ? cf. mergeTypeProfiles
+                    // ElementIdGenerator.Clear(nav);
 
                     // 1. Fully expand the snapshot of the external type profile
                     // 2. Clone, rebase and copy children into referencing profile below the referencing parent element
                     // 2. On top of that, merge base profile constraints (taken from the snapshot)
                     // 3. On top of that, merge profile differential constraints
-
-                    // mergeElementDefinition(snap.Current, diffElem);
                 }
                 return true;
             }
@@ -431,7 +437,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         /// <summary>Merge children of the currently selected element from differential into snapshot.</summary>
-        void merge(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff, bool mergeElementId = true)
+        void merge(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
             var snapPos = snap.Bookmark();
             var diffPos = diff.Bookmark();
@@ -465,18 +471,18 @@ namespace Hl7.Fhir.Specification.Snapshot
                     switch (match.Action)
                     {
                         case ElementMatcher.MatchAction.Merge:
-                            mergeElement(snap, diff, mergeElementId);
+                            mergeElement(snap, diff);
                             break;
                         case ElementMatcher.MatchAction.Add:
-                            addSlice(snap, diff, match.SliceBase, mergeElementId);
+                            addSlice(snap, diff, match.SliceBase);
                             break;
                         case ElementMatcher.MatchAction.Slice:
-                            startSlice(snap, diff, match.SliceBase, mergeElementId);
+                            startSlice(snap, diff, match.SliceBase);
                             break;
                         case ElementMatcher.MatchAction.New:
                             // No matching base element; this is a new element definition
                             // snap is positioned at the associated parent element
-                            createNewElement(snap, diff, mergeElementId);
+                            createNewElement(snap, diff);
                             break;
                         case ElementMatcher.MatchAction.Invalid:
                             // Collect issue and ignore invalid element
@@ -492,7 +498,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         // Create a new resource element without a base element definition (for core type & resource profiles)
-        void createNewElement(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff, bool mergeElementId = true)
+        void createNewElement(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
             StructureDefinition typeStructure = null;
             ElementDefinition baseElement = getBaseElementForElementType(diff.Current, out typeStructure);
@@ -506,7 +512,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 OnPrepareElement(newElement, typeStructure, baseElement);
 
                 // [WMR 20170421] Merge custom element Id from diff
-                mergeElementDefinition(newElement, diff.Current, mergeElementId);
+                mergeElementDefinition(newElement, diff.Current, true);
 
                 snap.AppendChild(newElement);
             }
@@ -524,11 +530,11 @@ namespace Hl7.Fhir.Specification.Snapshot
             OnConstraint(snap.Current);
 
             // Merge children
-            mergeElement(snap, diff, mergeElementId);
+            mergeElement(snap, diff);
         }
 
         // Recursively merge the currently selected element and (grand)children from differential into snapshot
-        void mergeElement(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff, bool mergeElementId = true)
+        void mergeElement(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
             // [WMR 20160816] Multiple inheritance - diamond problem
             // Element inherits constraints from base profile and also from any local type profile
@@ -574,7 +580,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // Then merge constraints from base profile
                 // [WMR 20170424] Merge custom element Id from diff
-                mergeElementDefinition(snap.Current, diffElem, mergeElementId);
+                mergeElementDefinition(snap.Current, diffElem, true);
             }
 #else
             // First merge constraints from element type profile, if it exists
@@ -617,7 +623,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
 
                 // Now, recursively merge the children
-                merge(snap, diff, mergeElementId);
+                merge(snap, diff);
 
                 // [WMR 20160720] NEW
                 // generate [...]extension.url/fixedUri if missing
@@ -795,13 +801,13 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // [WMR 20170208] NEW - cf. expandElement
                 copyChildren(snap, typeNav, typeStructure);
 
-                // [WMR 20170426] Do NOT merge element ids from external type profile
-                // foreach (var elem in typeNav.Elements) { elem.ElementId = null; }
-
                 // But we also need to merge any existing inline constraints from snapshot onto external type profile
                 // e.g. TestObservationProfileWithExtensions(_ExpandAll)
-                // [WMR 20170426] Do NOT merge element ids from element type profiles!
-                mergeElement(snap, typeNav, false);    // Merge result back into profile
+                mergeElement(snap, typeNav);    // Merge result back into profile
+
+                // [WMR 20170421] Clear element Ids inherited from type profile
+                // copyChildren clears the Ids, but mergeElement re-inherits them => must clear again
+                ElementIdGenerator.Clear(snap);
 
             }
             else
@@ -820,7 +826,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                 rebasedRootElem.Path = diff.Path;
 
                 // Merge the type profile root element; no need to expand children
-                // [WMR 20170421] Don't merge element Id from element type profile
                 mergeElementDefinition(snap.Current, rebasedRootElem, false);
             }
 
@@ -924,7 +929,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
-        void startSlice(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff, ElementDefinitionNavigator sliceBase, bool mergeElementId = true)
+        void startSlice(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff, ElementDefinitionNavigator sliceBase)
         {
             // diff is now located at the first repeat of a slice, which is normally the slice entry
             // (Extension slices need not have a slicing entry)
@@ -1001,7 +1006,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 else
                 {
                     // [WMR 20161222] Recursively merge diff constraints on slicing entry and child elements (if any)
-                    mergeElement(snap, diff, mergeElementId);
+                    mergeElement(snap, diff);
                 }
             }
 
@@ -1066,7 +1071,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         //   'C'
         //
 
-        void addSlice(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff, ElementDefinitionNavigator sliceBase, bool mergeElementId = true)
+        void addSlice(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff, ElementDefinitionNavigator sliceBase)
         {
             // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(addSlice)}] Base Path = '{snap.Path}' Base Slice Name = '{snap.Current.Name}' Diff Slice Name = {sliceName}");
 
@@ -1102,7 +1107,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             OnConstraint(snap.Current);
 
             // Merge differential
-            mergeElement(snap, diff, mergeElementId);
+            mergeElement(snap, diff);
 
         }
 

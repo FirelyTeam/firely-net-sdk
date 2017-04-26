@@ -81,6 +81,25 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
+        /// <summary>Clear the element IDs of the current element and it's children, recursively.</summary>
+        /// <param name="nav"></param>
+        public static void Clear(ElementDefinitionNavigator nav)
+        {
+            if (nav == null) { throw new ArgumentNullException(nameof(nav)); }
+            if (nav.Current == null) { throw new ArgumentException("Error! The navigator is not positioned on an element.", nameof(nav)); }
+
+            nav.Current.ElementId = null;
+            var bm = nav.Bookmark();
+            if (nav.MoveToFirstChild())
+            {
+                do
+                {
+                    Clear(nav);
+                } while (nav.MoveToNext());
+                nav.ReturnToBookmark(bm);
+            }
+        }
+
         static void generate(ElementDefinitionNavigator nav, bool force, string parentElemId)
         {
             if (nav == null) { throw new ArgumentNullException(nameof(nav)); }
