@@ -864,6 +864,11 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// </summary>
         bool copyChildren(ElementDefinitionNavigator nav, ElementDefinitionNavigator typeNav, StructureDefinition typeStructure)
         {
+            // [WMR 20170426] IMPORTANT!
+            // Do NOT modify typeNav/typeStructure
+            // Call by mergeTypeProfiles: typeNav/typeStructure refers to modified clone of global type profile
+            // Call by expandElement:     typeNav/typeStructure refers to global cached type profile (!)
+
             // [WMR 20170220] CopyChildren returns false if nav already has children
             if (nav.CopyChildren(typeNav))
             {
