@@ -1913,8 +1913,13 @@ namespace Hl7.Fhir.Specification.Tests
         // [WMR 20160816] Test custom annotations containing associated base definitions
         class BaseDefAnnotation
         {
-            public BaseDefAnnotation(ElementDefinition baseElemDef) { BaseElementDefinition = baseElemDef; }
+            public BaseDefAnnotation(ElementDefinition baseElemDef, StructureDefinition baseStructDef)
+            {
+                BaseElementDefinition = baseElemDef;
+                BaseStructureDefinition = baseStructDef;
+            }
             public ElementDefinition BaseElementDefinition { get; private set; }
+            public StructureDefinition BaseStructureDefinition { get; private set; }
         }
 
         static ElementDefinition GetBaseElementAnnotation(ElementDefinition elemDef)
@@ -1953,7 +1958,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
             var baseDef = e.BaseElement;
             var baseStruct = e.BaseStructure;
-            elem.AddAnnotation(new BaseDefAnnotation(baseDef));
+            elem.AddAnnotation(new BaseDefAnnotation(baseDef, baseStruct));
             Debug.Write($"[{nameof(SnapshotGeneratorTest)}.{nameof(elementHandler)}] #{elem.GetHashCode()} '{elem.Path}' - Base: #{baseDef?.GetHashCode() ?? 0} '{(baseDef?.Path)}' - Base Structure '{baseStruct?.Url}'");
             Debug.WriteLine(ann?.BaseElementDefinition != null ? $" (old Base: #{ann.BaseElementDefinition.GetHashCode()} '{ann.BaseElementDefinition.Path}')" : "");
         }
@@ -4363,7 +4368,43 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
+        // [WMR 20170426] NEW - Bug with generating base element annotations for merged external type profiles?
+        [TestMethod]
+        public void TestPatientWithAddress()
+        {
+            var sdPatient = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyPatientWithAddress");
+            Assert.IsNotNull(sdPatient);
+            var sdAddress = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyPatientAddress");
+            Assert.IsNotNull(sdAddress);
+
+            _generator = new SnapshotGenerator(_testResolver);
+            _generator.PrepareElement += elementHandler;
+            _generator.BeforeExpandElement += beforeExpandElementHandler;
+            StructureDefinition expanded = null;
+            try
+            {
+                generateSnapshotAndCompare(sdPatient, out expanded);
+            }
+            finally
+            {
+                _generator.PrepareElement -= elementHandler;
+                _generator.BeforeExpandElement -= beforeExpandElementHandler;
+            }
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            dumpOutcome(_generator.Outcome);
+            // dumpBaseElems(expanded.Snapshot.Element);
+
+            Debug.Print($"{"Path".PadRight(50)}| {"Base Path".PadRight(49)}| {"Base StructureDefinition".PadRight(69)}| {"Element Id".PadRight(49)}| {"Base Element Id".PadRight(49)}");
+            foreach (var elem in expanded.Snapshot.Element)
+            {
+                var ann = elem.Annotation<BaseDefAnnotation>();
+                Assert.IsNotNull(ann);
+                Debug.Print($"{elem.Path.PadRight(50)} | {ann?.BaseElementDefinition?.Path?.PadRight(49)}| {ann?.BaseStructureDefinition?.Url.PadRight(69)}| {elem.ElementId.PadRight(49)}| {ann?.BaseElementDefinition?.ElementId?.PadRight(49)}");
+                Assert.IsTrue(elem.IsRootElement() || elem.ElementId.StartsWith("Patient."));
+            }
+        }
+
     }
-
 }
-
