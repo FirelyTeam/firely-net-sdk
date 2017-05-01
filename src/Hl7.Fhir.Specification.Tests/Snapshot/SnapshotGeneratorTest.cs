@@ -1669,9 +1669,14 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsNotNull(baseElem);
                 Assert.AreEqual(elem.Path, baseElem.Path); // Base = core Patient.identifier element
                 // Note: diff elem is not exactly equal to base elem (due to reduntant type profile constraint)
-                // hasConstraints and hasChanges methods aren't smart enough to detect redundant constraints
-                var hasConstraints = SnapshotGeneratorTest2.hasConstraints(elem, baseElem);
-                Assert.IsTrue(hasConstraints);
+                // [WMR 20170501 OLD] hasConstraints and hasChanges methods aren't smart enough to detect redundant constraints
+                var hasConstraints = SnapshotGeneratorTest2.isNotExactly(elem, baseElem);
+                // Assert.IsTrue(hasConstraints);
+                // [WMR 20170501 NEW] diff introduces redundant constraint
+                // => elem and baseElem are exactly equal
+                // elem.IsExactly(baseElem) == true => hasConstraints = false
+                // However because (redundant) diff constraint exists, snap element is annotated => hasChanges = true
+                Assert.IsFalse(hasConstraints);
                 Assert.IsTrue(hasChanges(elem));
 
                 // Verify base annotations on Patient.identifier subtree
@@ -1682,14 +1687,16 @@ namespace Hl7.Fhir.Specification.Tests
                     Assert.IsNotNull(elem);
                     baseElem = elem.Annotation<BaseDefAnnotation>()?.BaseElementDefinition;
                     Assert.IsNotNull(baseElem);
-                    hasConstraints = SnapshotGeneratorTest2.hasConstraints(elem, baseElem);
+                    hasConstraints = SnapshotGeneratorTest2.isNotExactly(elem, baseElem);
                     // Only the .use child element has a profile diff constraint
                     bool isConstrained = elem.Path == "Patient.identifier.use";
                     Assert.AreEqual(isConstrained, hasConstraints);
                     Assert.AreEqual(isConstrained, hasChanges(elem));
 
                     // Verify that base element annotations reference the associated child element in Core Identifier profile
-                    Assert.AreEqual("Patient." + baseElem.Path.Uncapitalize(), elem.Path);
+                    // [WMR 20170501] OBSOLETE
+                    // Assert.AreEqual("Patient." + baseElem.Path.Uncapitalize(), elem.Path);
+                    Debug.WriteLine($"*** elem.Path = '{elem.Path}' baseElem.Path = '{baseElem.Path}' ");
                 }
 
             }
@@ -1753,7 +1760,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.AreEqual(elem.Path, baseElem.Path); // Base = core Patient.identifier element
                 // Note: diff elem is not exactly equal to base elem (due to reduntant type profile constraint)
                 // hasConstraints and hasChanges methods aren't smart enough to detect redundant constraints
-                var hasConstraints = SnapshotGeneratorTest2.hasConstraints(elem, baseElem);
+                var hasConstraints = SnapshotGeneratorTest2.isNotExactly(elem, baseElem);
                 Assert.IsTrue(hasConstraints);
 
                 // Verify base annotations on Patient.identifier subtree
@@ -1764,7 +1771,7 @@ namespace Hl7.Fhir.Specification.Tests
                     Assert.IsNotNull(elem);
                     baseElem = elem.Annotation<BaseDefAnnotation>()?.BaseElementDefinition;
                     Assert.IsNotNull(baseElem);
-                    hasConstraints = SnapshotGeneratorTest2.hasConstraints(elem, baseElem);
+                    hasConstraints = SnapshotGeneratorTest2.isNotExactly(elem, baseElem);
                     // Only the .use child element has a profile diff constraint
                     bool isConstrained = elem.Path == "Patient.identifier.use" || elem.Path == "Patient.identifier.value";
                     Assert.AreEqual(isConstrained, hasConstraints);
@@ -1985,7 +1992,7 @@ namespace Hl7.Fhir.Specification.Tests
             var isConstraint = sd.Derivation == StructureDefinition.TypeDerivationRule.Constraint;
 
             Debug.Print("\r\nStructureDefinition '{0}' url = '{1}'", sd.Name, sd.Url);
-            Debug.Print("# | Constraints? | Changed? | Element.Path | Element.Base.Path | BaseElement.Path | #Base | Invalid?");
+            Debug.Print("# | Constraints? | Changed? | Element.Path | Element.Base.Path | BaseElement.Path | #Base | Redundant?");
             Debug.Print(new string('=', 100));
             foreach (var elem in elems)
             {
@@ -1997,32 +2004,35 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.AreNotEqual(elem, baseDef);
 
                 var hasChanges = SnapshotGeneratorTest2.hasChanges(elem);
-                var hasConstraints = false;
+                var isNotExactly = false;
                 if (baseDef != null) // && elem.Base != null)
                 {
                     // If normalizing, then elem.Base.Path refers to the defining profile (e.g. DomainResource),
                     // whereas baseDef refers to the immediate base profile (e.g. Patient)
                     Debug.Assert(elem.Base == null || ElementDefinitionNavigator.IsCandidateBasePath(elem.Base.Path, baseDef.Path));
-                    hasConstraints = SnapshotGeneratorTest2.hasConstraints(elem, baseDef);
+                    isNotExactly = SnapshotGeneratorTest2.isNotExactly(elem, baseDef);
                 }
-                var isValid = hasChanges == hasConstraints;
+                // var isValid = hasChanges == isNotExactly;
+                var isRedundant = hasChanges && !isNotExactly;
                 bool? hasConstraintAnnotations = null;
                 if (settings.GenerateAnnotationsOnConstraints)
                 {
                     hasConstraintAnnotations = elem.HasDiffConstraintAnnotations();
-                    isValid &= hasConstraints == hasConstraintAnnotations;
+                    //isValid &= isNotExactly == hasConstraintAnnotations;
+                    isRedundant |= !isNotExactly && (hasConstraintAnnotations == true);
                 }
 
                 Debug.WriteLine("{0,10}  |  {1}  |  {2,-12}  |  {3,-50}  |  {4,-40}  |  {5,-40}  |  {6,10}  |  {7}",
                     elem.GetHashCode(),
-                    (hasConstraints ? "+" : "-")
+                    (isNotExactly ? "+" : "-")
                     + (hasConstraintAnnotations.HasValue ? (hasConstraintAnnotations.Value ? " (+)" : " (-)") : null),
                     getChangeDescription(elem),
                     elem.Path,
                     elem.Base != null ? elem.Base.Path : null,
                     baseDef != null ? baseDef.Path : null,
                     baseDef != null ? baseDef.GetHashCode().ToString() : null,
-                    !isValid ? "!!!" : ""
+                    // !isValid ? "!!!" : ""
+                    isRedundant ? "(redundant)" : ""
                 );
                 //Assert.IsTrue(baseDef == null || isValid);
                 // Debug.Assert(baseDef == null || isValid);
@@ -2032,7 +2042,7 @@ namespace Hl7.Fhir.Specification.Tests
         // Utility function to compare element and base element
         // Path, Base and CHANGED_BY_DIFF_EXT extension are excluded from comparison
         // Returns true if the element has any other constraints on base
-        static bool hasConstraints(ElementDefinition elem, ElementDefinition baseElem)
+        static bool isNotExactly(ElementDefinition elem, ElementDefinition baseElem)
         {
             var elemClone = (ElementDefinition)elem.DeepCopy();
             var baseClone = (ElementDefinition)baseElem.DeepCopy();
@@ -4397,12 +4407,44 @@ namespace Hl7.Fhir.Specification.Tests
             }
 
             dumpOutcome(_generator.Outcome);
-
             dumpBaseDefId(sd);
 
-            sd = _testResolver.FindStructureDefinitionForCoreType(sd.Type);
-            dumpBaseDefId(sd);
+            var sdCore = _testResolver.FindStructureDefinitionForCoreType(sd.Type);
+            dumpBaseDefId(sdCore);
 
+            // Verify that main profile MyPatientWithAddress inherited
+            // constraints from extension profile MyPatientExtension
+            var elem = sd.Snapshot.Element.FirstOrDefault(e => e.SliceName == "patientExtension");
+            Assert.IsNotNull(elem);
+            Assert.AreEqual(@"http://example.org/fhir/StructureDefinition/MyPatientExtension", elem.Type[0]?.Profile);
+            var sdExt = _testResolver.FindExtensionDefinition(elem.Type[0].Profile);
+            Assert.IsNotNull(sdExt);
+            var extRootshort = sdExt.Differential.Element[0].Short; // Explicit constraint on ext root
+            Assert.IsNotNull(extRootshort);
+            Assert.IsTrue(sdExt.HasSnapshot);
+            Assert.AreEqual(extRootshort, sdExt.Snapshot.Element[0].Short); // Verify propagation to snapshot
+            Assert.AreEqual(extRootshort, elem.Short);  // Verify inherited by referencing profile
+            var baseElem = elem.Annotation<BaseDefAnnotation>()?.BaseElementDefinition;
+            Assert.IsNotNull(baseElem);
+            Assert.AreEqual(extRootshort, baseElem.Short);
+
+            // Verify that main profile MyPatientWithAddress inherited
+            // constraints from element type profile MyPatientAddress
+            elem = sd.Snapshot.Element.FirstOrDefault(e => e.Path == "Patient.address");
+            Assert.IsNotNull(elem);
+            Assert.AreEqual(@"http://example.org/fhir/StructureDefinition/MyPatientAddress", elem.Type[0]?.Profile);
+            var sdType = _testResolver.FindStructureDefinition(elem.Type[0].Profile);
+            Assert.IsNotNull(sdType);
+            var typeChildElem = sdType.Snapshot.Element.FirstOrDefault(e => e.Path == "Address.country");
+            Assert.IsNotNull(typeChildElem);
+            Assert.AreEqual("land", typeChildElem.Alias.FirstOrDefault());
+
+            elem = sd.Snapshot.Element.FirstOrDefault(e => e.Path == "Patient.address.country");
+            Assert.IsNotNull(elem);
+            Assert.AreEqual("land", elem.Alias.FirstOrDefault());
+            baseElem = elem.Annotation<BaseDefAnnotation>()?.BaseElementDefinition;
+            Assert.IsNotNull(baseElem);
+            Assert.AreEqual("land", baseElem.Alias.FirstOrDefault());
         }
 
         static void dumpBaseDefId(StructureDefinition sd)

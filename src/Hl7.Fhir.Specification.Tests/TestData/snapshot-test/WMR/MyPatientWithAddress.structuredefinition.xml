@@ -18,6 +18,24 @@
   <derivation value="constraint" />
   <differential>
     <element>
+      <path value="Patient.extension" />
+      <slicing>
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
+        <rules value="open" />
+      </slicing>
+    </element>
+    <element>
+      <path value="Patient.extension" />
+      <sliceName value="patientExtension" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://example.org/fhir/StructureDefinition/MyPatientExtension" />
+      </type>
+    </element>
+    <element>
       <path value="Patient.name.use" />
       <fixedCode value="official" />
     </element>
