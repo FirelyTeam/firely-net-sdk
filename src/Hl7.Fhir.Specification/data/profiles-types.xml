@@ -27,7 +27,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for Element Type" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -48,7 +48,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
             </constraint>
             <mapping>
@@ -109,7 +109,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
             </constraint>
             <mapping>
@@ -185,7 +185,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for BackboneElement Type" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -208,7 +208,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -348,7 +348,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for base64Binary Type: A stream of bytes" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="base64Binary" />
@@ -366,7 +366,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -487,7 +487,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for boolean Type: Value of &quot;true&quot; or &quot;false&quot;" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="boolean" />
@@ -504,7 +504,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -624,7 +624,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for code type: A string which has at least one character and no leading or trailing whitespace and where there is no whitespace other than single spaces in the contents" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="code" />
@@ -646,7 +646,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -777,7 +777,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for date Type: A date or partial date (e.g. just year or year + month). There is no time zone. The format is a union of the schema types gYear, gYearMonth and date.  Dates SHALL be valid dates." />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="date" />
@@ -794,7 +794,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -920,7 +920,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for dateTime Type: A date, date-time or partial date (e.g. just year or year + month).  If hours and minutes are specified, a time zone SHALL be populated. The format is a union of the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided due to schema type constraints but may be zero-filled and may be ignored.                 Dates SHALL be valid dates." />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="dateTime" />
@@ -937,7 +937,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -1063,7 +1063,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for decimal Type: A rational number with implicit precision" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="decimal" />
@@ -1081,7 +1081,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -1208,7 +1208,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for id type: Any combination of letters, numerals, &quot;-&quot; and &quot;.&quot;, with a length limit of 64 characters.  (This might be an integer, an unprefixed OID, UUID or any other identifier pattern that meets these constraints.)  Ids are case-insensitive." />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="id" />
@@ -1231,7 +1231,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -1363,7 +1363,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for instant Type: An instant in time - known at least to the second" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="instant" />
@@ -1381,7 +1381,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -1502,7 +1502,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for integer Type: A whole number" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="integer" />
@@ -1520,7 +1520,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -1651,7 +1651,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for markdown type: A string that may contain markdown syntax for optional processing by a mark down presentation engine" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="markdown" />
@@ -1674,7 +1674,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -1800,7 +1800,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for oid type: An OID represented as a URI" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="oid" />
@@ -1823,7 +1823,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -1955,7 +1955,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for positiveInt type: An integer with a value that is positive (e.g. &gt;0)" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="positiveInt" />
@@ -1977,7 +1977,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -2108,7 +2108,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for string Type: A sequence of Unicode characters" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="string" />
@@ -2126,7 +2126,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -2249,7 +2249,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for time Type: A time during the day, with no date specified" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="time" />
@@ -2266,7 +2266,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -2392,7 +2392,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for unsignedInt type: An integer with a value that is not negative (e.g. &gt;= 0)" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="unsignedInt" />
@@ -2414,7 +2414,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -2545,7 +2545,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for uri Type: String of characters used to identify a name or a resource" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="uri" />
@@ -2563,7 +2563,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -2684,7 +2684,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for uuid type: A UUID, represented as a URI" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="uuid" />
@@ -2707,7 +2707,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -2839,7 +2839,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for xhtml Type" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <kind value="primitive-type" />
         <abstract value="false" />
         <type value="xhtml" />
@@ -2973,7 +2973,7 @@
         </contact>
         <description value="Base StructureDefinition for Address Type" />
         <purpose value="Need to be able to record postal addresses, along with notes about their use." />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -3012,7 +3012,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -3765,7 +3765,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for Age Type" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -4059,7 +4059,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for Annotation Type" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -4088,7 +4088,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -4338,7 +4338,7 @@
         </contact>
         <description value="Base StructureDefinition for Attachment Type" />
         <purpose value="Many models need to include data defined in other specifications that is complex and opaque to the healthcare model. This includes documents, media recordings, structured data, etc." />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -4367,7 +4367,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -4877,7 +4877,7 @@
         </contact>
         <description value="Base StructureDefinition for CodeableConcept Type" />
         <purpose value="This is a common pattern in healthcare - a concept that may be defined by one or more codes from formal definitions including LOINC and SNOMED CT, and/or defined by the provision of text that captures a human sense of the concept." />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -4911,7 +4911,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -5139,7 +5139,7 @@
         </contact>
         <description value="Base StructureDefinition for Coding Type" />
         <purpose value="References to codes are very common in healthcare models." />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -5173,7 +5173,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -5545,7 +5545,7 @@
         </contact>
         <description value="Base StructureDefinition for ContactDetail Type" />
         <purpose value="Need to track contact information in the same way across multiple resources." />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -5568,7 +5568,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -5711,7 +5711,7 @@
         </contact>
         <description value="Base StructureDefinition for ContactPoint Type" />
         <purpose value="Need to track phone, fax, mobile, sms numbers, email addresses, twitter tags, etc." />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -5744,7 +5744,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -6155,7 +6155,7 @@
         </contact>
         <description value="Base StructureDefinition for Contributor Type" />
         <purpose value="Need to track contributor information in the same way across multiple resources." />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -6178,7 +6178,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -6361,7 +6361,7 @@
         </contact>
         <description value="Base StructureDefinition for Count Type" />
         <purpose value="Need to able to capture all sorts of measured values, even if the measured value are not precisely quantified. Values include exact measures such as 3.51g, customary units such as 3 tablets, and currencies such as $100.32USD." />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -6656,7 +6656,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for DataRequirement Type" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -6679,7 +6679,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -6797,7 +6797,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -6925,7 +6925,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -7201,7 +7201,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for Distance Type" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -7495,7 +7495,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for Dosage Type" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -7518,7 +7518,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -8214,7 +8214,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for Duration Type" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -8508,7 +8508,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for ElementDefinition Type" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="dex" />
           <uri value="http://wiki.ihe.net/index.php?title=Data_Element_Exchange" />
@@ -8551,7 +8551,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -8614,9 +8614,9 @@
             <constraint>
               <key value="eld-16" />
               <severity value="error" />
-              <human value="sliceName must be a proper token" />
-              <expression value="sliceName.empty() or sliceName.matches('^[a-zA-Z0-9\\-\\_]+$')" />
-              <xpath value="not(exists(f:sliceName/@value)) or matches(f:sliceName/@value, '^[a-zA-Z0-9\\-\\_]+$')" />
+              <human value="sliceName must be composed of proper tokens separated by &quot;/&quot;" />
+              <expression value="sliceName.empty() or sliceName.matches('^[a-zA-Z0-9\\/\\-\\_]+$')" />
+              <xpath value="not(exists(f:sliceName/@value)) or matches(f:sliceName/@value, '^[a-zA-Z0-9\\/\\-\\_]+$')" />
             </constraint>
             <constraint>
               <key value="eld-15" />
@@ -8854,7 +8854,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -8939,7 +8939,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -9332,7 +9332,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -9489,7 +9489,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -10147,7 +10147,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -10492,7 +10492,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -10766,7 +10766,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -10963,7 +10963,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -11175,9 +11175,9 @@
             <constraint>
               <key value="eld-16" />
               <severity value="error" />
-              <human value="sliceName must be a proper token" />
-              <expression value="sliceName.empty() or sliceName.matches('^[a-zA-Z0-9\\-\\_]+$')" />
-              <xpath value="not(exists(f:sliceName/@value)) or matches(f:sliceName/@value, '^[a-zA-Z0-9\\-\\_]+$')" />
+              <human value="sliceName must be composed of proper tokens separated by &quot;/&quot;" />
+              <expression value="sliceName.empty() or sliceName.matches('^[a-zA-Z0-9\\/\\-\\_]+$')" />
+              <xpath value="not(exists(f:sliceName/@value)) or matches(f:sliceName/@value, '^[a-zA-Z0-9\\/\\-\\_]+$')" />
             </constraint>
             <constraint>
               <key value="eld-15" />
@@ -13180,7 +13180,7 @@
         </contact>
         <description value="Base StructureDefinition for Extension Type" />
         <purpose value="The ability to add extensions in a structured way is what keeps FHIR resources simple." />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -13203,7 +13203,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -13604,7 +13604,7 @@
         </contact>
         <description value="Base StructureDefinition for HumanName Type" />
         <purpose value="Need to be able to record names, along with notes about their use." />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -13638,7 +13638,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -14114,7 +14114,7 @@
         </contact>
         <description value="Base StructureDefinition for Identifier Type" />
         <purpose value="Need to be able to identify things with confidence and be sure that the identification is not subject to misinterpretation." />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -14147,7 +14147,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -14607,7 +14607,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for Meta Type" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -14630,7 +14630,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -14900,7 +14900,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for Money Type" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -15194,7 +15194,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for Narrative Type" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -15217,7 +15217,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -15427,7 +15427,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for ParameterDefinition Type" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -15450,7 +15450,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -15748,7 +15748,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for Period Type" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -15777,7 +15777,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -15991,7 +15991,7 @@
         </contact>
         <description value="Base StructureDefinition for Quantity Type" />
         <purpose value="Need to able to capture all sorts of measured values, even if the measured value are not precisely quantified. Values include exact measures such as 3.51g, customary units such as 3 tablets, and currencies such as $100.32USD." />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -16020,7 +16020,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -16386,7 +16386,7 @@
         </contact>
         <description value="Base StructureDefinition for Range Type" />
         <purpose value="Need to be able to specify ranges of values." />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -16415,7 +16415,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -16631,7 +16631,7 @@
         </contact>
         <description value="Base StructureDefinition for Ratio Type" />
         <purpose value="Need to able to capture ratios for some measurements (titers) and some rates (costs)." />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -16659,7 +16659,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -16845,7 +16845,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for Reference Type" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -16869,7 +16869,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -17093,7 +17093,7 @@
         </contact>
         <description value="Base StructureDefinition for RelatedArtifact Type" />
         <purpose value="Knowledge resources must be able to provide enough information for consumers of the content (and/or interventions or results produced by the content) to be able to determine and understand the justification for and evidence in support of the content." />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -17117,7 +17117,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -17375,7 +17375,7 @@
         </contact>
         <description value="Base StructureDefinition for SampledData Type" />
         <purpose value="There is a need for a concise way to handle the data produced by devices that sample a physical state at a high frequency." />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -17404,7 +17404,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -17734,7 +17734,7 @@
         </contact>
         <description value="Base StructureDefinition for Signature Type" />
         <purpose value="There are a number of places where content must be signed in healthcare." />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -17758,7 +17758,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -18128,7 +18128,7 @@
         </contact>
         <description value="Base StructureDefinition for Timing Type" />
         <purpose value="Need to able to track proposed timing schedules. There are several different ways to do this: one or more specified times, a simple rules like three times a day, or  before/after meals." />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -18157,7 +18157,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -18254,7 +18254,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -19132,7 +19132,7 @@
           </telecom>
         </contact>
         <description value="Base StructureDefinition for TriggerDefinition Type" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -19155,7 +19155,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -19380,7 +19380,7 @@
         </contact>
         <description value="Base StructureDefinition for UsageContext Type" />
         <purpose value="Consumers of the resource must be able to determine the intended applicability for the resource. Ideally, this information would be used programmatically to determine when and how it should be incorporated or exposed." />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="rim" />
           <uri value="http://hl7.org/v3" />
@@ -19403,7 +19403,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
@@ -19595,7 +19595,7 @@
           </telecom>
         </contact>
         <description value="A fixed quantity (no comparator)" />
-        <fhirVersion value="3.0.0" />
+        <fhirVersion value="3.0.1" />
         <mapping>
           <identity value="v2" />
           <uri value="http://hl7.org/v2" />
@@ -19630,7 +19630,7 @@
               <key value="ele-1" />
               <severity value="error" />
               <human value="All FHIR elements must have a @value or children" />
-              <expression value="children().count() &gt; id.count()" />
+              <expression value="hasValue() | (children().count() &gt; id.count())" />
               <xpath value="@value|f:*|h:div" />
               <source value="Element" />
             </constraint>
