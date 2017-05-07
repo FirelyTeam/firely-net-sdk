@@ -13,8 +13,14 @@
     <Summary>Support for working with FHIR metadata and validation. Supports FHIR STU3 (3.0).</Summary>
     <Description>This library offers additional support beyond core for HL7's FHIR standard (http://hl7.org/fhir). It contains functionality to working with FHIR's specification (meta)data such as profiles, profile-based validation and publication</Description>
     <PackageTags>HL7 FHIR Profile Metadata Validation Publication Schematron Schema</PackageTags>
-    <AssemblyName>Hl7.Fhir.Specification.STU3</AssemblyName>
+    <AssemblyName>Hl7.Fhir.STU3.Specification</AssemblyName>
     <RootNamespace>Hl7.Fhir.Specification</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|AnyCPU'">
+    <DocumentationFile>bin\Debug\net45\Hl7.Fhir.STU3.Specification.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <DebugSymbols>True</DebugSymbols>
   </PropertyGroup>
 
   <ItemGroup>
