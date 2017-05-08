@@ -10,8 +10,6 @@ using Hl7.Fhir.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Hl7.Fhir.Support;
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 using System.Diagnostics;
@@ -53,7 +51,6 @@ namespace Hl7.Fhir.FhirPath
                 return _siblings[_index];
             }
         }
-
 
         /// <summary>
         /// Returns 
@@ -112,14 +109,14 @@ namespace Hl7.Fhir.FhirPath
         {
             get
             {
+                var cur = Current;
                 if (String.IsNullOrEmpty(_parentPath))
                 {
-                    return Current.Name;
+                    return cur.Name;
                 }
                 else
                 {
-                    // int myIndex = _siblings.Where(s => s.Name == Current.Name).ToList().IndexOf(Current);
-                    return _parentPath + ".{0}[{1}]".FormatWith(Current.Name, Current._arrayIndex);
+                    return $"{_parentPath}.{cur.Name}[{cur._arrayIndex}]";
                 }
             }
         }
@@ -133,19 +130,19 @@ namespace Hl7.Fhir.FhirPath
         {
             get
             {
+                var cur = Current;
                 if (String.IsNullOrEmpty(_parentShortPath))
                 {
-                    return Current.Name;
+                    return cur.Name;
                 }
                 else
                 {
                     // Needs to consider that the index might be irrelevant
-                    if (Current.PropMap.IsCollection)
+                    if (cur.PropMap.IsCollection)
                     {
-                        // int myIndex = _siblings.Where(s => s.Name == Current.Name).ToList().IndexOf(Current);
-                        return _parentShortPath + ".{0}[{1}]".FormatWith(Current.Name, Current._arrayIndex);
+                        return $"{_parentShortPath}.{cur.Name}[{cur._arrayIndex}]";
                     }
-                    return _parentShortPath + ".{0}".FormatWith(Current.Name);
+                    return $"{_parentShortPath}.{cur.Name}";
                 }
             }
         }
@@ -165,91 +162,93 @@ namespace Hl7.Fhir.FhirPath
         {
             get
             {
+                var cur = Current;
                 if (String.IsNullOrEmpty(_parentCommonPath))
                 {
-                    return Current.Name;
+                    return cur.Name;
                 }
                 else
                 {
                     // Needs to consider that the index might be irrelevant
-                    if (Current.PropMap.IsCollection)
+                    if (cur.PropMap.IsCollection)
                     {
-                        if (Current.FhirValue is Identifier)
+                        Base fhirValue = cur.FhirValue;
+                        if (fhirValue is Identifier)
                         {
                             // Need to construct a where clause for this property
-                            Identifier ident = Current.FhirValue as Identifier;
+                            Identifier ident = fhirValue as Identifier;
                             if (!string.IsNullOrEmpty(ident.System))
-                                return _parentCommonPath + ".{0}.where(system='{1}')".FormatWith(Current.Name, ident.System);
+                                return $"{_parentCommonPath}.{cur.Name}.where(system='{ident.System}')";
                         }
-                        if (Current.FhirValue is ContactPoint)
+                        else if (fhirValue is ContactPoint)
                         {
                             // Need to construct a where clause for this property
-                            var cp = Current.FhirValue as ContactPoint;
+                            var cp = fhirValue as ContactPoint;
                             if (cp.System.HasValue)
-                                return _parentCommonPath + ".{0}.where(system='{1}')".FormatWith(Current.Name, cp.System.Value.GetLiteral());
+                                return $"{_parentCommonPath}.{cur.Name}.where(system='{cp.System.Value.GetLiteral()}')";
                         }
-                        if (Current.FhirValue is Coding)
+                        else if (fhirValue is Coding)
                         {
                             // Need to construct a where clause for this property
-                            var item = Current.FhirValue as Coding;
+                            var item = fhirValue as Coding;
                             if (!string.IsNullOrEmpty(item.System))
-                                return _parentCommonPath + ".{0}.where(system='{1}')".FormatWith(Current.Name, item.System);
+                                return $"{_parentCommonPath}.{cur.Name}.where(system='{item.System}')";
                         }
-                        if (Current.FhirValue is Address)
+                        else if (fhirValue is Address)
                         {
                             // Need to construct a where clause for this property
-                            var addr = Current.FhirValue as Address;
+                            var addr = fhirValue as Address;
                             if (addr.Use.HasValue)
-                                return _parentCommonPath + ".{0}.where(use='{1}')".FormatWith(Current.Name, addr.Use.Value.GetLiteral());
+                                return $"{_parentCommonPath}.{cur.Name}.where(use='{addr.Use.Value.GetLiteral()}')";
                         }
-                        if (Current.FhirValue is Questionnaire.GroupComponent)
+                        else if (fhirValue is Questionnaire.GroupComponent)
                         {
                             // Need to construct a where clause for this property
-                            var item = Current.FhirValue as Questionnaire.GroupComponent;
+                            var item = fhirValue as Questionnaire.GroupComponent;
                             if (!string.IsNullOrEmpty(item.LinkId))
-                                return _parentCommonPath + ".{0}.where(linkId='{1}')".FormatWith(Current.Name, item.LinkId);
+                                return $"{_parentCommonPath}.{cur.Name}.where(linkId='{item.LinkId}')";
                         }
-                        if (Current.FhirValue is Questionnaire.QuestionComponent)
+                        else if (fhirValue is Questionnaire.QuestionComponent)
                         {
                             // Need to construct a where clause for this property
-                            var item = Current.FhirValue as Questionnaire.QuestionComponent;
+                            var item = fhirValue as Questionnaire.QuestionComponent;
                             if (!string.IsNullOrEmpty(item.LinkId))
-                                return _parentCommonPath + ".{0}.where(linkId='{1}')".FormatWith(Current.Name, item.LinkId);
+                                return $"{_parentCommonPath}.{cur.Name}.where(linkId='{item.LinkId}')";
                         }
-                        if (Current.FhirValue is QuestionnaireResponse.GroupComponent)
+                        else if (fhirValue is QuestionnaireResponse.GroupComponent)
                         {
                             // Need to construct a where clause for this property
-                            var item = Current.FhirValue as QuestionnaireResponse.GroupComponent;
+                            var item = fhirValue as QuestionnaireResponse.GroupComponent;
                             if (!string.IsNullOrEmpty(item.LinkId))
-                                return _parentCommonPath + ".{0}.where(linkId='{1}')".FormatWith(Current.Name, item.LinkId);
+                                return $"{_parentCommonPath}.{cur.Name}.where(linkId='{item.LinkId}')";
                         }
-                        if (Current.FhirValue is QuestionnaireResponse.QuestionComponent)
+                        else if (fhirValue is QuestionnaireResponse.QuestionComponent)
                         {
                             // Need to construct a where clause for this property
-                            var item = Current.FhirValue as QuestionnaireResponse.QuestionComponent;
+                            var item = fhirValue as QuestionnaireResponse.QuestionComponent;
                             if (!string.IsNullOrEmpty(item.LinkId))
-                                return _parentCommonPath + ".{0}.where(linkId='{1}')".FormatWith(Current.Name, item.LinkId);
+                                return $"{_parentCommonPath}.{cur.Name}.where(linkId='{item.LinkId}')";
                         }
-                        if (Current.FhirValue is Extension)
+                        else if (fhirValue is Extension)
                         {
                             // Need to construct a where clause for this property
                             // The extension is different as with fhirpath there
                             // is a shortcut format of .extension('url'), and since
                             // all extensions have a property name of extension, can just at the brackets and string name
-                            var item = Current.FhirValue as Extension;
-                            return _parentCommonPath + ".{0}('{1}')".FormatWith(Current.Name, item.Url);
+                            var item = fhirValue as Extension;
+                            return $"{_parentCommonPath}.{cur.Name}('{item.Url}')";
                         }
-                        // int myIndex = _siblings.Where(s => s.Name == Current.Name).ToList().IndexOf(Current);
-                        return _parentCommonPath + ".{0}[{1}]".FormatWith(Current.Name, Current._arrayIndex);
+                        return $"{_parentCommonPath}.{cur.Name}[{cur._arrayIndex}]";
                     }
-                    return _parentCommonPath + ".{0}".FormatWith(Current.Name);
+                    return $"{_parentCommonPath}.{cur.Name}";
                 }
             }
         }
 
-        public bool MoveToFirstChild()
+        public bool MoveToFirstChild(string nameFilter = null)
         {
-            if (Current.Children().Any())
+            var children = Current.Children(nameFilter);
+            if (children.Any())
             {
                 lock(this)
                 {
@@ -257,12 +256,7 @@ namespace Hl7.Fhir.FhirPath
                     _parentShortPath = ShortPath;
                     _parentCommonPath = CommonPath;
 
-                    //TODO: We just called Current.Children().Any() which is actually a pretty expensive
-                    //operation - now we are doing it again! 
-                    //Since Children() does create a full list, calling Any() will generate the full list,
-                    //and we may as well cache the result and reuse it here.
-                    //In fact, why not make Children() return a List?
-                    _siblings = Current.Children() as List<PocoElementNavigator>;
+                    _siblings = (List<PocoElementNavigator>)children;
                     _index = 0;
                 }
                 return true;
@@ -305,7 +299,6 @@ namespace Hl7.Fhir.FhirPath
                 result._parentPath = this._parentPath;
                 result._parentShortPath = this._parentShortPath;
                 result._parentCommonPath = this._parentCommonPath;
-                // Console.WriteLine("Cloning: {0}", this.GetName());
             }
             return result;
         }

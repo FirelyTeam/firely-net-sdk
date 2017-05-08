@@ -88,10 +88,13 @@ namespace Hl7.FhirPath.Functions
         }
 
         public static IEnumerable<IElementNavigator> Navigate(this IElementNavigator nav, string name)
-        {       
+        {
+            // If there is no item to navigate, return the empty navigator 
+            // (prevents null reference exception)
+            if (nav == null)
+                return Enumerable.Empty<IElementNavigator>();
             if (char.IsUpper(name[0]))
             {
-
                 if (!char.IsUpper(nav.Name[0]))
                     throw Error.InvalidOperation("Resource type name may only appear at the root of a document");
 

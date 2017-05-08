@@ -152,31 +152,58 @@ namespace Hl7.Fhir.FhirPath
             {
                 if (_classmapping == null)
                     _classmapping = GetMappingForType(_pocoElement.GetType());
+                if (_classmapping == null)
+                    throw Error.NotSupported(String.Format("Unknown type '{0}' encountered", _pocoElement.GetType().Name));
                 return _classmapping;
             }
         }
         private Introspection.ClassMapping _classmapping;
 
         private List<PocoElementNavigator> _children;
+        private string _nameFilter;
+        private List<PocoElementNavigator> _childrenFiltered;
 
-        public IEnumerable<PocoElementNavigator> Children()
+        public IEnumerable<PocoElementNavigator> Children(string nameFilter = null)
         {
             lock (this)
             {
                 // Cache children
-                if (_children != null) return _children;
+                if (nameFilter == null)
+                {
+                    if (_children != null)
+                        return _children;
+                }
+                else
+                {
+                    if (_childrenFiltered != null && nameFilter == _nameFilter)
+                        return _childrenFiltered;
+                    _nameFilter = nameFilter;
+                    if (_children != null)
+                    {
+                        _childrenFiltered = _children.Where(c => c.Name == _nameFilter).ToList();
+                        return _childrenFiltered;
+                    }
+                }
 
                 // If this is a primitive, there are no children
                 if (_pocoElement == null) return Enumerable.Empty<PocoElementNavigator>();
 
-                _children = new List<PocoElementNavigator>();
+                List<PocoElementNavigator> list;
+                List<Introspection.PropertyMapping> props = null;
+                if (nameFilter != null)
+                {
+                    _childrenFiltered = new List<PocoElementNavigator>();
+                    list = _childrenFiltered;
+                    props = ClassMapping.PropertyMappings.Where(p => p.Name == _nameFilter).ToList();
+                }
+                else
+                {
+                    _children = new List<PocoElementNavigator>();
+                    list = _children;
+                    props = ClassMapping.PropertyMappings;
+                }
 
-                var mapping = GetMappingForType(_pocoElement.GetType());
-
-                if (mapping == null)
-                    throw Error.NotSupported(String.Format("Unknown type '{0}' encountered", _pocoElement.GetType().Name));
-
-                foreach (var item in mapping.PropertyMappings)
+                foreach (var item in props)
                 {
                     // Don't expose "value" as a child, that's our ValueProvider.Value (if we're a primitive)
                     if (item.IsPrimitive && item.Name == "value")
@@ -193,7 +220,7 @@ namespace Hl7.Fhir.FhirPath
                             {
                                 if (colItem != null)
                                 {
-                                    _children.Add(new PocoElementNavigator(item, (Base)colItem, nIndex));
+                                    list.Add(new PocoElementNavigator(item, (Base)colItem, nIndex));
                                     nIndex++;
                                 }
                             }
@@ -202,14 +229,14 @@ namespace Hl7.Fhir.FhirPath
                         {
                             if (itemValue is string)
                                 // The special case for the 'url' and 'id' properties, which are primitive strings
-                                _children.Add(new PocoElementNavigator(item, (string)itemValue));
+                                list.Add(new PocoElementNavigator(item, (string)itemValue));
                             else
-                                _children.Add(new PocoElementNavigator(item, (Base)itemValue, 0));
+                                list.Add(new PocoElementNavigator(item, (Base)itemValue, 0));
                         }
                     }
                 }
+                return list;
             }
-            return _children;
         }     
     }
 }

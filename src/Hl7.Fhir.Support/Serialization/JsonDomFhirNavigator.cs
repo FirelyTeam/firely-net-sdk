@@ -64,9 +64,16 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        public bool MoveToFirstChild()
+        public bool MoveToFirstChild(string nameFilter = null)
         {
-            var children = Current.GetChildren().ToArray();
+            JsonNavigatorNode[] children;
+            if (nameFilter == null)
+                children = Current.GetChildren().ToArray();
+            else
+            {
+                // also handles JSON extensions here (as they are at the same level).
+                children = Current.GetChildren().Where(f => f.Name == nameFilter || f.Name == "_"+nameFilter).ToArray();
+            }
 
             if (children.Length == 0) return false;
 
