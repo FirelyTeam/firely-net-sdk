@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>
         /// Find a CodeSystem by a ValueSet canonical url that contains all codes from that codesystem.
         /// </summary>
-        /// <param name="system"></param>
+        /// <param name="valueSetUri"></param>
         /// <returns></returns>
         /// <remarks>It is very common for valuesets to represent all codes from a specific/smaller code system. These
         /// are indicated by he CodeSystem.valueSet element, which is searched here.</remarks>

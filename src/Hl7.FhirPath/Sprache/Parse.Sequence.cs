@@ -67,7 +67,8 @@
         /// 
         /// </summary>
         /// <param name="parser"></param>
-        /// <param name="count"></param>
+        /// <param name="maximumCount"></param>
+        /// <param name="minimumCount"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
