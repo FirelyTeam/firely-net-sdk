@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-        [TestMethod]
+        [TestMethod, TestCategory("IntegrationTest")]
         public void RetrieveWebArtifact()
         {
             var wa = new WebResolver();
