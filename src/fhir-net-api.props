@@ -22,8 +22,13 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+<!--     <DocumentationFile>$(AssemblyName).xml</DocumentationFile> -->
+     <DebugType>full</DebugType>
+     <DebugSymbols>True</DebugSymbols>
+     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+     <NoWarn>1591</NoWarn>
   </PropertyGroup>
-
+ 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>..\FhirNetApi.snk</AssemblyOriginatorKeyFile>
