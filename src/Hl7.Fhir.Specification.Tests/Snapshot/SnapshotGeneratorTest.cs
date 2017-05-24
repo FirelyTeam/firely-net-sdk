@@ -344,7 +344,7 @@ namespace Hl7.Fhir.Specification.Tests
             } while (nav.MoveToNext());
         }
 
-        bool isExpandableElement(ElementDefinition element)
+        static bool isExpandableElement(ElementDefinition element)
         {
 #if HACK_STU3_RECURSION
             // [WMR 20170328] DEBUG HACK
@@ -506,15 +506,19 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-        void beforeExpandElementHandler(object sender, SnapshotExpandElementEventArgs e)
+        static void beforeExpandElementHandler(object sender, SnapshotExpandElementEventArgs e)
         {
             var isExpandable = isExpandableElement(e.Element);
 
-            Debug.Print("[beforeExpandElementHandler] #{0} '{1}' - HasChildren = {2} - MustExpand = {3} => {4}"
-                .FormatWith(e.Element.GetHashCode(), e.Element.Path, e.HasChildren, e.MustExpand, isExpandable));
+            Debug.Print($"[beforeExpandElementHandler] #{e.Element.GetHashCode()} '{e.Element.Path}' - HasChildren = {e.HasChildren} - MustExpand = {e.MustExpand} => {isExpandable}");
 
             // Never clear flag if already set by snapshot generator...!
             e.MustExpand |= isExpandable;
+        }
+
+        static void beforeExpandElementHandler_DEBUG(object sender, SnapshotExpandElementEventArgs e)
+        {
+            Debug.Print($"[beforeExpandElementHandler_DEBUG] #{e.Element.GetHashCode()} '{e.Element.Path}' - HasChildren = {e.HasChildren} - MustExpand = {e.MustExpand}");
         }
 
         [TestMethod]
@@ -1946,7 +1950,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(profile.BaseDefinition, baseProfile.Url);
         }
 
-        void elementHandler(object sender, SnapshotElementEventArgs e)
+        static void elementHandler(object sender, SnapshotElementEventArgs e)
         {
             var elem = e.Element;
             Assert.IsNotNull(elem);
@@ -4459,6 +4463,105 @@ namespace Hl7.Fhir.Specification.Tests
                 var elemId = elem.ElementId;
                 Assert.IsTrue(elem.IsRootElement() ? elemId == sd.Type : elemId.StartsWith(sd.Type + "."));
             }
+        }
+
+        // [WMR 20170524] Added to fix bug reported by Stefan Lang
+
+        // [WMR 20170424] For debugging ElementIdGenerator
+
+        const string PatientIdentifierProfileUri = @"http://example.org/fhir/StructureDefinition/PatientIdentifierProfile";
+        const string PatientProfileWithIdentifierProfileUri = @"http://example.org/fhir/StructureDefinition/PatientProfileWithIdentifierProfile";
+        const string PatientIdentifierTypeValueSetUri = @"http://example.org/fhir/ValueSet/PatientIdentifierTypeValueSet";
+
+        // Identifier profile with valueset binding on child element Identifier.type
+        static StructureDefinition PatientIdentifierProfile => new StructureDefinition()
+        {
+            Type = FHIRAllTypes.Identifier.GetLiteral(),
+            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Identifier),
+            Name = "PatientIdentifierProfile",
+            Url = PatientIdentifierProfileUri,
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+            Kind = StructureDefinition.StructureDefinitionKind.ComplexType,
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("Identifier.type")
+                    {
+                        Min = 1,
+                        Binding = new ElementDefinition.ElementDefinitionBindingComponent()
+                        {
+                            Strength = BindingStrength.Extensible,
+                            ValueSet = new ResourceReference(PatientIdentifierTypeValueSetUri)
+                        }
+                    },
+                }
+            }
+        };
+
+        // Patient profile with type profile constraint on Patient.identifier
+        // Snapshot should pick up the valueset binding on Identifier.type
+        static StructureDefinition PatientProfileWithIdentifierProfile => new StructureDefinition()
+        {
+            Type = FHIRAllTypes.Patient.GetLiteral(),
+            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
+            Name = "PatientProfileWithIdentifierProfile",
+            Url = PatientProfileWithIdentifierProfileUri,
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+            Kind = StructureDefinition.StructureDefinitionKind.Resource,
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("Patient.identifier")
+                    {
+                        Type = new List<ElementDefinition.TypeRefComponent>()
+                        {
+                            new ElementDefinition.TypeRefComponent()
+                            {
+                                Code = FHIRAllTypes.Identifier.GetLiteral(),
+                                Profile = PatientIdentifierProfileUri
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        [TestMethod]
+        public void TestTypeProfileWithChildElementBinding()
+        {
+            var patientProfile = PatientProfileWithIdentifierProfile;
+            var resolver = new InMemoryProfileResolver(patientProfile, PatientIdentifierProfile);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            StructureDefinition expanded = null;
+            _generator.BeforeExpandElement += beforeExpandElementHandler_DEBUG;
+            try
+            {
+                    generateSnapshotAndCompare(patientProfile, out expanded);
+            }
+            finally
+            {
+                _generator.BeforeExpandElement -= beforeExpandElementHandler_DEBUG;
+            }
+
+            dumpOutcome(_generator.Outcome);
+            Assert.IsTrue(expanded.HasSnapshot);
+            dumpElements(expanded.Snapshot.Element);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.JumpToFirst("Patient.identifier"));
+            Assert.IsNotNull(nav.Current);
+
+            // BUG: binding constraint on Identifier.type is merged onto Patient.identifier...? (parent element!)
+            // FIXED [SnapshotGenerator.getSnapshotRootElement] var diffRoot = sd.Differential.GetRootElement();
+            Assert.IsNull(nav.Current.Binding);
+
+            // By default, Patient.identifier.type should NOT be included in the generated snapshot
+            Assert.IsFalse(nav.MoveToChild("type"));
         }
     }
 }
