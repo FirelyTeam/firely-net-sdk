@@ -34,6 +34,7 @@ namespace Hl7.Fhir.Introspection
 
         public Type ReturnType { get; private set; }
         public Type ElementType { get; private set; }
+        public Type DefiningType { get; private set; }
 
         public int Order { get; private set; }
 
@@ -63,6 +64,7 @@ namespace Hl7.Fhir.Introspection
             result.Name = determinePropertyName(prop);
             result.ReturnType = prop.PropertyType;
             result.ElementType = result.ReturnType;
+            result.DefiningType = prop.DeclaringType;
 
             result.InSummary = elementAttr != null ? elementAttr.InSummary : false;
             result.IsMandatoryElement = cardinalityAttr != null ? cardinalityAttr.Min > 0 : false;

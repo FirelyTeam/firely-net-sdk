@@ -34,6 +34,10 @@ namespace Hl7.Fhir.Utility
             return data.TrimStart().StartsWith("{");
         }
 
+        public static bool ProbeIsTurtle(string data)
+        {
+            return data.TrimStart().StartsWith("@");
+        }
 
         public static XDocument XDocumentFromXmlText(string xml)
         {

@@ -96,8 +96,11 @@ namespace Hl7.Fhir.Serialization
             var typeName = mappedProperty.GetChoiceSuffixFromName(memberName);
 
             if (String.IsNullOrEmpty(typeName))
-                throw Error.Format("Encountered polymorph member {0}, but is does not specify the type used".FormatWith(memberName), _current);
-
+            {
+                // MZ: Workaround for special Reference in Turtle
+                typeName = "Reference";
+                //throw Error.Format("Encountered polymorph member {0}, but is does not specify the type used".FormatWith(memberName), _current);
+            }
             // Exception: valueResource actually means the element is of type ResourceReference
             if (typeName == "Resource") typeName = "Reference";
 

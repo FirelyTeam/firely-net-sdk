@@ -18,10 +18,10 @@ namespace Hl7.Fhir.Serialization
 {
     public interface IFhirWriter : IDisposable
     {
-        void WriteStartRootObject(string name, bool contained);
+        void WriteStartRootObject(string name, string id, bool contained);
         void WriteEndRootObject(bool contained);
 
-        void WriteStartProperty(string name);
+        void WriteStartProperty(string name, PropertyMapping propMap);
         void WriteEndProperty();
 
         void WriteStartComplexContent();

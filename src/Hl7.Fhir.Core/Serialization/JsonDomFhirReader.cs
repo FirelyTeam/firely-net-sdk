@@ -257,5 +257,7 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
+        public string Path { get { return ""; }}
+
     }
 }
