@@ -23,6 +23,7 @@ namespace Hl7.Fhir.Serialization
             _current = current;
             _nameIndex = 0;
             _parentPath = null;
+            _nameFilter = null;
         }
 
 
@@ -31,7 +32,8 @@ namespace Hl7.Fhir.Serialization
             var copy = new XmlDomFhirNavigator(_current)
             {
                 _nameIndex = _nameIndex,
-                _parentPath = _parentPath
+                _parentPath = _parentPath,
+                _nameFilter = _nameFilter
             };
 
             return copy;
@@ -41,6 +43,7 @@ namespace Hl7.Fhir.Serialization
         private XObject _current;
         private int _nameIndex;
         private string _parentPath;
+        private string _nameFilter;
 
         public string Name
         {
@@ -132,8 +135,10 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        public bool MoveToFirstChild()
+        public bool MoveToFirstChild(string nameFilter = null)
         {
+            _nameFilter = nameFilter;
+
             // don't move into xhtml
             if (isXhtmlDiv(_current))
                 return false;
@@ -154,7 +159,8 @@ namespace Hl7.Fhir.Serialization
 
                     _current = scan;
                     _nameIndex = 0;
-                    return true;
+                    if (_nameFilter == null || element.Name == _nameFilter)
+                        return true;
                 }
                 else if (scan.NodeType == XmlNodeType.Attribute && !isReservedAttribute((XAttribute)scan))
                 {
@@ -188,7 +194,8 @@ namespace Hl7.Fhir.Serialization
                     else
                         _nameIndex = 0;
 
-                    return true;
+                    if (_nameFilter == null || currentName == _nameFilter)
+                        return true;
                 }
 
                 scan = scan.NextChild();

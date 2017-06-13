@@ -37,16 +37,23 @@ namespace Hl7.Fhir.Utility
             if (expected.Location != actual.Location) ComparisonResult.Fail(actual.Location, $"location: was '{actual.Location}', expected '{expected.Location}'");
 
             // Ignore ordering (only relevant to xml)
-            var childrenExp = expected.Children().OrderBy(e=>e.Name).ToArray();
-            var childrenActual = actual.Children().OrderBy(e=>e.Name).ToArray();
+            var childrenExp = expected.Children().OrderBy(e => e.Name);
+            var childrenActual = actual.Children().OrderBy(e => e.Name).GetEnumerator();
 
-            if (childrenExp.Length != childrenActual.Length) ComparisonResult.Fail(actual.Location, $"number of children was {childrenActual.Length}, expected {childrenExp.Length}");
-
-            for(var index=0; index<childrenExp.Length; index++)
+            // Don't compare lengths, as this would require complete enumeration of both collections
+            // just enumerate through the lists, comparing each item as they go.
+            // first fail (or list end) will drop out.
+            foreach (var exp in childrenExp)
             {
-                var result = childrenExp[index].IsEqualTo(childrenActual[index]);
-                if (!result.Success) return result;
+                if (!childrenActual.MoveNext())
+                    ComparisonResult.Fail(actual.Location, $"number of children was different");
+
+                var result = exp.IsEqualTo(childrenActual.Current);
+                if (!result.Success)
+                    return result;
             }
+            if (childrenActual.MoveNext())
+                ComparisonResult.Fail(actual.Location, $"number of children was different");
 
             return ComparisonResult.OK;
 

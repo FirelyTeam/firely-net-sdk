@@ -63,6 +63,9 @@ namespace Hl7.Fhir
                 bool result = qr.Predicate(mediumValidationExpression);
                 Assert.IsTrue(result, "This weird validation should have passed");
             }
+
+            bool resultBig = qr.Predicate(bigValidationExpression);
+            Assert.IsTrue(resultBig, "This weird big validation should have passed");
         }
     }
 
