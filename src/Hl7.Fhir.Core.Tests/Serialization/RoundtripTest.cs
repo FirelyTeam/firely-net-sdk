@@ -148,6 +148,8 @@ namespace Hl7.Fhir.Tests.Serialization
                     continue;
                 if (file.Contains(".schema"))
                     continue;
+                if (file.Contains(".diff"))
+                    continue;
                 string exampleName = Path.GetFileNameWithoutExtension(file);
                 string ext = Path.GetExtension(file);
                 var toExt = ext == ".xml" ? ".json" : ".xml";
@@ -176,6 +178,8 @@ namespace Hl7.Fhir.Tests.Serialization
                 if (file.Contains(".profile"))
                     continue;
                 if (file.Contains(".schema"))
+                    continue;
+                if (file.Contains(".diff"))
                     continue;
                 string exampleName = Path.GetFileNameWithoutExtension(file);
                 string extension = Path.GetExtension(file);

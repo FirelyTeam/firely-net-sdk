@@ -45,7 +45,8 @@ namespace Hl7.Fhir.Validation
 
             c.Display = "Not a NumberX";
             result = val.ValidateBinding(c, vsUri, BindingStrength.Required);
-            Assert.False(result.Success);
+            Assert.True(result.Success);
+            Assert.Equal(1, result.Warnings);   // Incorrect display
         }
 
         [Fact]

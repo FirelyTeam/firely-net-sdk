@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Model
         /// <param name="model"></param>
         /// <param name="result">The OperationOutcome that will have the validation results appended</param>
         /// <returns></returns>
-        protected static bool ValidateInvariantRule(ElementDefinition.ConstraintComponent invariantRule, IElementNavigator model, OperationOutcome result)
+        public static bool ValidateInvariantRule(ElementDefinition.ConstraintComponent invariantRule, IElementNavigator model, OperationOutcome result)
         {
             string expression = invariantRule.Expression;
             try

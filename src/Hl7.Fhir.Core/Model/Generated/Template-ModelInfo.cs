@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Mon, 03 Apr 2017 17:16:19 GMT for FHIR v3.0.0
+// Generated on Sat, 06 May 2017 12:41:44 GMT for FHIR v3.0.1
 //
 
 using Hl7.Fhir.Model;
@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Model
         
         public static string Version
         {
-            get { return "3.0.0"; }
+            get { return "3.0.1"; }
         }
         
         public static Dictionary<string,Type> FhirTypeToCsType =
