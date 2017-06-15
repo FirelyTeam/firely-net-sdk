@@ -344,7 +344,7 @@ namespace Hl7.Fhir.Specification.Tests
             } while (nav.MoveToNext());
         }
 
-        bool isExpandableElement(ElementDefinition element)
+        static bool isExpandableElement(ElementDefinition element)
         {
 #if HACK_STU3_RECURSION
             // [WMR 20170328] DEBUG HACK
@@ -506,15 +506,19 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-        void beforeExpandElementHandler(object sender, SnapshotExpandElementEventArgs e)
+        static void beforeExpandElementHandler(object sender, SnapshotExpandElementEventArgs e)
         {
             var isExpandable = isExpandableElement(e.Element);
 
-            Debug.Print("[beforeExpandElementHandler] #{0} '{1}' - HasChildren = {2} - MustExpand = {3} => {4}"
-                .FormatWith(e.Element.GetHashCode(), e.Element.Path, e.HasChildren, e.MustExpand, isExpandable));
+            Debug.Print($"[beforeExpandElementHandler] #{e.Element.GetHashCode()} '{e.Element.Path}' - HasChildren = {e.HasChildren} - MustExpand = {e.MustExpand} => {isExpandable}");
 
             // Never clear flag if already set by snapshot generator...!
             e.MustExpand |= isExpandable;
+        }
+
+        static void beforeExpandElementHandler_DEBUG(object sender, SnapshotExpandElementEventArgs e)
+        {
+            Debug.Print($"[beforeExpandElementHandler_DEBUG] #{e.Element.GetHashCode()} '{e.Element.Path}' - HasChildren = {e.HasChildren} - MustExpand = {e.MustExpand}");
         }
 
         [TestMethod]
@@ -686,9 +690,15 @@ namespace Hl7.Fhir.Specification.Tests
             verifier.VerifyElement("Patient.extension", null, "Patient.extension");
             verifier.VerifyElement("Patient.extension", "doNotCall", "Patient.extension:doNotCall");
             verifier.VerifyElement("Patient.extension", "legalCase", "Patient.extension:legalCase");
-            verifier.VerifyElement("Patient.extension.valueBoolean", null, "Patient.extension:legalCase.valueBoolean");
-            verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.valueBoolean.extension");
-            verifier.VerifyElement("Patient.extension.valueBoolean.extension", "leadCounsel", "Patient.extension:legalCase.valueBoolean.extension:leadCounsel");
+
+            // [WMR 20170614] Fixed; element id for type slices is based on original element name ending with "[x]"
+            // verifier.VerifyElement("Patient.extension.valueBoolean", null, "Patient.extension:legalCase.valueBoolean");
+            // verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.valueBoolean.extension");
+            // verifier.VerifyElement("Patient.extension.valueBoolean.extension", "leadCounsel", "Patient.extension:legalCase.valueBoolean.extension:leadCounsel");
+            verifier.VerifyElement("Patient.extension.valueBoolean", null, "Patient.extension:legalCase.value[x]");
+            verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.value[x].extension");
+            verifier.VerifyElement("Patient.extension.valueBoolean.extension", "leadCounsel", "Patient.extension:legalCase.value[x].extension:leadCounsel");
+
             verifier.VerifyElement("Patient.extension", "religion", "Patient.extension:religion");
             verifier.VerifyElement("Patient.extension", "researchAuth", "Patient.extension:researchAuth");
 
@@ -832,9 +842,16 @@ namespace Hl7.Fhir.Specification.Tests
             verifier.VerifyElement("Patient.extension", null, "Patient.extension");
             verifier.VerifyElement("Patient.extension", "doNotCall", "Patient.extension:doNotCall");
             verifier.VerifyElement("Patient.extension", "legalCase", "Patient.extension:legalCase");
-            verifier.VerifyElement("Patient.extension.valueBoolean", null, "Patient.extension:legalCase.valueBoolean");
-            verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.valueBoolean.extension");
-            verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.valueBoolean.extension:leadCounsel");
+
+
+            // [WMR 20170614] Fixed; element id for type slices is based on original element name ending with "[x]"
+            // verifier.VerifyElement("Patient.extension.valueBoolean", null, "Patient.extension:legalCase.valueBoolean");
+            // verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.valueBoolean.extension");
+            // verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.valueBoolean.extension:leadCounsel");
+            verifier.VerifyElement("Patient.extension.valueBoolean", null, "Patient.extension:legalCase.value[x]");
+            verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.value[x].extension");
+            verifier.VerifyElement("Patient.extension.valueBoolean.extension", null, "Patient.extension:legalCase.value[x].extension:leadCounsel");
+
             verifier.VerifyElement("Patient.extension", "religion", "Patient.extension:religion");
             verifier.VerifyElement("Patient.extension", "researchAuth", "Patient.extension:researchAuth");
             // Note: in the original snapshot, the "researchAuth" complex extension slice is fully expanded (child extensions: type, flag, date)
@@ -1276,7 +1293,13 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Test...
             _generator = new SnapshotGenerator(_testResolver, _settings);
+
+            // [WMR 20170614] NEW: ExpandElement should maintain the existing element ID...!
+            var orgId = elem.ElementId;
+            
             var result = _generator.ExpandElement(elems, elem);
+
+            Assert.AreEqual(orgId, elem.ElementId);
 
             // Verify results
             verifyExpandElement(elem, elems, result);
@@ -1946,7 +1969,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(profile.BaseDefinition, baseProfile.Url);
         }
 
-        void elementHandler(object sender, SnapshotElementEventArgs e)
+        static void elementHandler(object sender, SnapshotElementEventArgs e)
         {
             var elem = e.Element;
             Assert.IsNotNull(elem);
@@ -2668,7 +2691,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var resolver = new InMemoryProfileResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
-            _generator = new SnapshotGenerator(multiResolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
             StructureDefinition expanded = null;
 
             generateSnapshotAndCompare(profile, out expanded);
@@ -2724,7 +2747,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var resolver = new InMemoryProfileResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
-            _generator = new SnapshotGenerator(multiResolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
             StructureDefinition expanded = null;
 
             generateSnapshotAndCompare(profile, out expanded);
@@ -2743,7 +2766,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var resolver = new InMemoryProfileResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
-            _generator = new SnapshotGenerator(multiResolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
             StructureDefinition expanded = null;
 
             generateSnapshotAndCompare(profile, out expanded);
@@ -2814,7 +2837,7 @@ namespace Hl7.Fhir.Specification.Tests
             var resources = new IConformanceResource[] { profile, baseProfile };
             var resolver = new InMemoryProfileResolver(resources);
             var multiResolver = new MultiResolver(_testResolver, resolver);
-            _generator = new SnapshotGenerator(multiResolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
             StructureDefinition expanded = null;
 
             generateSnapshotAndCompare(profile, out expanded);
@@ -2871,7 +2894,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var resolver = new InMemoryProfileResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
-            _generator = new SnapshotGenerator(multiResolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
             StructureDefinition expanded = null;
 
             generateSnapshotAndCompare(profile, out expanded);
@@ -2906,7 +2929,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var resolver = new InMemoryProfileResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
-            _generator = new SnapshotGenerator(multiResolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
             StructureDefinition expanded = null;
 
             generateSnapshotAndCompare(profile, out expanded);
@@ -2963,7 +2986,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var resolver = new InMemoryProfileResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
-            _generator = new SnapshotGenerator(multiResolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
             StructureDefinition expanded = null;
 
             generateSnapshotAndCompare(profile, out expanded);
@@ -3197,7 +3220,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var resolver = new InMemoryProfileResolver(sd);
             var multiResolver = new MultiResolver(_testResolver, resolver);
-            _generator = new SnapshotGenerator(multiResolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
             StructureDefinition expanded = null;
 
             generateSnapshotAndCompare(sd, out expanded);
@@ -3397,7 +3420,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var resolver = new InMemoryProfileResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
-            _generator = new SnapshotGenerator(multiResolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
             StructureDefinition expanded = null;
 
             _generator.PrepareElement += elementHandler;
@@ -3556,7 +3579,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var resolver = new InMemoryProfileResolver(baseProfile, profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
-            _generator = new SnapshotGenerator(multiResolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
             StructureDefinition expanded = null;
 
             _generator.PrepareElement += elementHandler;
@@ -3733,7 +3756,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var resolver = new InMemoryProfileResolver(baseProfile, profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
-            _generator = new SnapshotGenerator(multiResolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
             StructureDefinition expanded = null;
 
             _generator.PrepareElement += elementHandler;
@@ -4076,7 +4099,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var resolver = new InMemoryProfileResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
-            _generator = new SnapshotGenerator(multiResolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
 
             //StructureDefinition expanded = null;
             //generateSnapshotAndCompare(profile, out expanded);
@@ -4145,7 +4168,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var resolver = new InMemoryProfileResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
-            _generator = new SnapshotGenerator(multiResolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
 
             _generator.BeforeExpandElement += beforeExpandElementHandler;
             StructureDefinition expanded = null;
@@ -4333,7 +4356,7 @@ namespace Hl7.Fhir.Specification.Tests
             var profile = TestQuestionnaireProfile;
             var resolver = new InMemoryProfileResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
-            _generator = new SnapshotGenerator(multiResolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
 
             var urlElement = profile.Differential.Element[0];
 
@@ -4357,26 +4380,123 @@ namespace Hl7.Fhir.Specification.Tests
             foreach (var elem in expanded.Snapshot.Element)
             {
                 var baseElem = elem.Annotation<BaseDefAnnotation>()?.BaseElementDefinition;
-                Debug.WriteLine($"{elem.Path} | Id = {elem.ElementId} =?= {baseElem?.ElementId}");
+                Debug.WriteLine($"{elem.Path} | Id = {elem.ElementId} | Base Id = {baseElem?.ElementId}");
                 Assert.IsNotNull(elem.ElementId);
                 Assert.IsNotNull(baseElem);
                 Assert.IsNotNull(baseElem.ElementId);
+
                 if (elem.Path == urlElement.Path)
                 {
                     // Verify overriden element id
                     Assert.AreEqual(urlElement.ElementId, elem.ElementId);
                 }
-                else if (elem.SliceName != null)
-                {
-                    Assert.AreNotEqual(baseElem.ElementId, elem.ElementId);
-                }
                 else
                 {
-                    // Verify inherited element id
-                    Assert.AreEqual(baseElem.ElementId, elem.ElementId);
+                    assertElementIds(elem, baseElem);
                 }
             }
         }
+
+        static void assertElementIds(ElementDefinition elem, ElementDefinition baseElem)
+        {
+            // [WMR 20170614] derived profile may (further) slice the base profile
+            // Element id's are not exactly equal, as the diff id's will introduce slice name(s)
+            // => Strip slice names from id; path segments should be equal
+            var idSegments = ElementIdGenerator.ParseId(elem.ElementId);
+            var baseIdSegments = ElementIdGenerator.ParseId(baseElem.ElementId);
+
+            // Determine if the base element has the same root (i.e. represents base profile of the same type)
+            // If so, then the element ids should have the same number of segments
+            if (idSegments.FirstOrDefault() == baseIdSegments.FirstOrDefault())
+            {
+                Assert.AreEqual(baseIdSegments.Length, idSegments.Length);
+            }
+
+            // string elemName = null, sliceName = null;
+            var idSegment = ElementIdSegment.Empty;
+            for (int i = 0; i < idSegments.Length; i++)
+            {
+                idSegment = ElementIdSegment.Parse(idSegments[i]);
+
+                // Verify that the element name matches the base element name
+                // Note: element ids of type slices should use original element name ending with "[x]"
+                var baseIdSegment = ElementIdSegment.Parse(baseIdSegments[i]);
+                Assert.AreEqual(baseIdSegment.ElementName, idSegment.ElementName);
+
+                // If the base element id introduces a slice name, then derived element id should also include it
+                // However derived profiles can introduce additional slices
+                Assert.IsTrue(baseIdSegment.ElementName == null || idSegment.ElementName == baseIdSegment.ElementName);
+            }
+
+            // Verify the last element id segment = "elementName[:sliceName]"
+            var basePath = elem.Base?.Path;
+            var elemPath = basePath != null && ElementDefinitionNavigator.IsChoiceTypeElement(basePath) ? basePath : elem.Path;
+            Assert.AreEqual(ProfileNavigationExtensions.GetNameFromPath(elemPath), idSegment.ElementName);
+            Assert.AreEqual(elem.SliceName, idSegment.SliceName);
+        }
+
+        static StructureDefinition TestPatientTypeSliceProfile => new StructureDefinition()
+        {
+            Type = FHIRAllTypes.Patient.GetLiteral(),
+            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
+            Name = "TestPatientWithTypeSlice",
+            Url = "http://example.org/fhir/StructureDefinition/TestPatientWithTypeSlice",
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("Patient.deceasedDateTime")
+                    {
+                        SliceName = "deceasedDateTime",
+                        Type = new List<ElementDefinition.TypeRefComponent>()
+                        {
+                            new ElementDefinition.TypeRefComponent()
+                            {
+                                Code = FHIRAllTypes.DateTime.GetLiteral()
+                            }
+                        }
+                    },
+                }
+            }
+        };
+
+        [TestMethod]
+        public void TestElementIds_PatientWithTypeSlice()
+        {
+            var profile = TestPatientTypeSliceProfile;
+            var resolver = new InMemoryProfileResolver(profile);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            _generator.PrepareElement += elementHandler;
+            _generator.BeforeExpandElement += beforeExpandElementHandler;
+            StructureDefinition expanded = null;
+            try
+            {
+                generateSnapshotAndCompare(profile, out expanded);
+            }
+            finally
+            {
+                _generator.PrepareElement -= elementHandler;
+                _generator.BeforeExpandElement -= beforeExpandElementHandler;
+            }
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+            dumpOutcome(_generator.Outcome);
+
+            Debug.WriteLine("Patient with type slice:");
+            foreach (var elem in expanded.Snapshot.Element)
+            {
+                var baseElem = elem.Annotation<BaseDefAnnotation>()?.BaseElementDefinition;
+                Debug.WriteLine($"{elem.Path} | Id = {elem.ElementId} | Base Id = {baseElem?.ElementId}");
+                Assert.IsNotNull(elem.ElementId);
+                Assert.IsNotNull(baseElem);
+                Assert.IsNotNull(baseElem.ElementId);
+
+                assertElementIds(elem, baseElem);
+            }
+        }
+
 
         // [WMR 20170426] NEW - Bug with generating base element annotations for merged external type profiles?
         [TestMethod]
@@ -4459,6 +4579,105 @@ namespace Hl7.Fhir.Specification.Tests
                 var elemId = elem.ElementId;
                 Assert.IsTrue(elem.IsRootElement() ? elemId == sd.Type : elemId.StartsWith(sd.Type + "."));
             }
+        }
+
+        // [WMR 20170524] Added to fix bug reported by Stefan Lang
+
+        // [WMR 20170424] For debugging ElementIdGenerator
+
+        const string PatientIdentifierProfileUri = @"http://example.org/fhir/StructureDefinition/PatientIdentifierProfile";
+        const string PatientProfileWithIdentifierProfileUri = @"http://example.org/fhir/StructureDefinition/PatientProfileWithIdentifierProfile";
+        const string PatientIdentifierTypeValueSetUri = @"http://example.org/fhir/ValueSet/PatientIdentifierTypeValueSet";
+
+        // Identifier profile with valueset binding on child element Identifier.type
+        static StructureDefinition PatientIdentifierProfile => new StructureDefinition()
+        {
+            Type = FHIRAllTypes.Identifier.GetLiteral(),
+            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Identifier),
+            Name = "PatientIdentifierProfile",
+            Url = PatientIdentifierProfileUri,
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+            Kind = StructureDefinition.StructureDefinitionKind.ComplexType,
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("Identifier.type")
+                    {
+                        Min = 1,
+                        Binding = new ElementDefinition.ElementDefinitionBindingComponent()
+                        {
+                            Strength = BindingStrength.Extensible,
+                            ValueSet = new ResourceReference(PatientIdentifierTypeValueSetUri)
+                        }
+                    },
+                }
+            }
+        };
+
+        // Patient profile with type profile constraint on Patient.identifier
+        // Snapshot should pick up the valueset binding on Identifier.type
+        static StructureDefinition PatientProfileWithIdentifierProfile => new StructureDefinition()
+        {
+            Type = FHIRAllTypes.Patient.GetLiteral(),
+            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
+            Name = "PatientProfileWithIdentifierProfile",
+            Url = PatientProfileWithIdentifierProfileUri,
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+            Kind = StructureDefinition.StructureDefinitionKind.Resource,
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("Patient.identifier")
+                    {
+                        Type = new List<ElementDefinition.TypeRefComponent>()
+                        {
+                            new ElementDefinition.TypeRefComponent()
+                            {
+                                Code = FHIRAllTypes.Identifier.GetLiteral(),
+                                Profile = PatientIdentifierProfileUri
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        [TestMethod]
+        public void TestTypeProfileWithChildElementBinding()
+        {
+            var patientProfile = PatientProfileWithIdentifierProfile;
+            var resolver = new InMemoryProfileResolver(patientProfile, PatientIdentifierProfile);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            StructureDefinition expanded = null;
+            _generator.BeforeExpandElement += beforeExpandElementHandler_DEBUG;
+            try
+            {
+                    generateSnapshotAndCompare(patientProfile, out expanded);
+            }
+            finally
+            {
+                _generator.BeforeExpandElement -= beforeExpandElementHandler_DEBUG;
+            }
+
+            dumpOutcome(_generator.Outcome);
+            Assert.IsTrue(expanded.HasSnapshot);
+            dumpElements(expanded.Snapshot.Element);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.JumpToFirst("Patient.identifier"));
+            Assert.IsNotNull(nav.Current);
+
+            // BUG: binding constraint on Identifier.type is merged onto Patient.identifier...? (parent element!)
+            // FIXED [SnapshotGenerator.getSnapshotRootElement] var diffRoot = sd.Differential.GetRootElement();
+            Assert.IsNull(nav.Current.Binding);
+
+            // By default, Patient.identifier.type should NOT be included in the generated snapshot
+            Assert.IsFalse(nav.MoveToChild("type"));
         }
     }
 }

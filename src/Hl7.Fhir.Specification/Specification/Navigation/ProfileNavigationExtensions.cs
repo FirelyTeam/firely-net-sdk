@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Specification.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -196,6 +197,12 @@ namespace Hl7.Fhir.Specification.Navigation
         public static string GetParentNameFromPath(this ElementDefinition defn)
         {
             return ElementDefinitionNavigator.GetParentPath(defn.Path);
+        }
+
+        /// <summary>Returns the root element from the specified element list, if available, or <c>null</c>.</summary>
+        public static ElementDefinition GetRootElement(this IElementList elements)
+        {
+            return elements?.Element?.FirstOrDefault(e => e.IsRootElement());
         }
     }
 }
