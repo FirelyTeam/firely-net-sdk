@@ -4345,7 +4345,7 @@ namespace Hl7.Fhir.Specification.Tests
             Debug.WriteLine("Core Questionnaire:");
             foreach (var elem in coreProfile.Differential.Element)
             {
-                Debug.WriteLine($"{elem.Path} | Id = {elem.ElementId} | Ref = {elem.ContentReference}");
+                Debug.WriteLine($"{elem.Path} | {elem.SliceName} | Id = {elem.ElementId} | Ref = {elem.ContentReference}");
             }
 
             _generator = new SnapshotGenerator(_testResolver, _settings);
@@ -4380,7 +4380,7 @@ namespace Hl7.Fhir.Specification.Tests
             foreach (var elem in expanded.Snapshot.Element)
             {
                 var baseElem = elem.Annotation<BaseDefAnnotation>()?.BaseElementDefinition;
-                Debug.WriteLine($"{elem.Path} | Id = {elem.ElementId} | Base Id = {baseElem?.ElementId}");
+                Debug.WriteLine($"{elem.Path} | {elem.SliceName} | Id = {elem.ElementId} | Base Id = {baseElem?.ElementId}");
                 Assert.IsNotNull(elem.ElementId);
                 Assert.IsNotNull(baseElem);
                 Assert.IsNotNull(baseElem.ElementId);
@@ -4488,7 +4488,7 @@ namespace Hl7.Fhir.Specification.Tests
             foreach (var elem in expanded.Snapshot.Element)
             {
                 var baseElem = elem.Annotation<BaseDefAnnotation>()?.BaseElementDefinition;
-                Debug.WriteLine($"{elem.Path} | Id = {elem.ElementId} | Base Id = {baseElem?.ElementId}");
+                Debug.WriteLine($"{elem.Path} | {elem.SliceName} | Id = {elem.ElementId} | Base Id = {baseElem?.ElementId}");
                 Assert.IsNotNull(elem.ElementId);
                 Assert.IsNotNull(baseElem);
                 Assert.IsNotNull(baseElem.ElementId);
@@ -4505,12 +4505,17 @@ namespace Hl7.Fhir.Specification.Tests
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
             Name = "TestSlicedPatientWithCustomIdProfile",
             Url = "http://example.org/fhir/StructureDefinition/TestSlicedPatientWithCustomIdProfile",
+
+            // [WMR 20170616] StructureDefinition.Derivation property changes generated element IDs...?
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+
             Differential = new StructureDefinition.DifferentialComponent()
             {
                 Element = new List<ElementDefinition>()
                 {
                     new ElementDefinition("Patient.identifier")
                     {
+                        ElementId = "Patient.identifier",
                         Slicing = new ElementDefinition.SlicingComponent()
                         {
                             Discriminator = new List<ElementDefinition.DiscriminatorComponent>()
@@ -4571,7 +4576,7 @@ namespace Hl7.Fhir.Specification.Tests
             foreach (var elem in expanded.Snapshot.Element)
             {
                 var baseElem = elem.Annotation<BaseDefAnnotation>()?.BaseElementDefinition;
-                Debug.WriteLine($"{elem.Path} | Id = {elem.ElementId} | Base Id = {baseElem?.ElementId}");
+                Debug.WriteLine($"{elem.Path} | {elem.SliceName} | Id = {elem.ElementId} | Base Id = {baseElem?.ElementId}");
                 Assert.IsNotNull(elem.ElementId);
                 Assert.IsNotNull(baseElem);
                 Assert.IsNotNull(baseElem.ElementId);
@@ -4582,6 +4587,45 @@ namespace Hl7.Fhir.Specification.Tests
                     Assert.AreEqual(sliceId, elem.ElementId);
                 }
                 else
+                {
+                    assertElementIds(elem, baseElem);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void TestElementIds_SlicedPatientWithCustomIdProfile2()
+        {
+            var profile = _testResolver.FindStructureDefinition("http://example.org/fhir/StructureDefinition/PatientWithCustomElementIds");
+            Assert.IsNotNull(profile);
+
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            _generator.PrepareElement += elementHandler;
+            _generator.BeforeExpandElement += beforeExpandElementHandler;
+            StructureDefinition expanded = null;
+            try
+            {
+                generateSnapshotAndCompare(profile, out expanded);
+            }
+            finally
+            {
+                _generator.PrepareElement -= elementHandler;
+                _generator.BeforeExpandElement -= beforeExpandElementHandler;
+            }
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+            dumpOutcome(_generator.Outcome);
+
+            Debug.WriteLine("Sliced Patient with custom element id on slice:");
+            foreach (var elem in expanded.Snapshot.Element)
+            {
+                var baseElem = elem.Annotation<BaseDefAnnotation>()?.BaseElementDefinition;
+                Debug.WriteLine($"{elem.Path} | {elem.SliceName} | Id = {elem.ElementId} | Base Id = {baseElem?.ElementId}");
+                Assert.IsNotNull(elem.ElementId);
+                Assert.IsNotNull(baseElem);
+                Assert.IsNotNull(baseElem.ElementId);
+
+                if (elem.ElementId?.StartsWith("CUSTOM-") != true)
                 {
                     assertElementIds(elem, baseElem);
                 }
