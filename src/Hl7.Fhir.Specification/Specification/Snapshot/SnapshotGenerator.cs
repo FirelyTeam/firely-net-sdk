@@ -238,6 +238,10 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 var snapshot = (StructureDefinition.SnapshotComponent)baseStructure.Snapshot.DeepCopy();
 
+                // [WMR 20170616] NEVER inherit element IDs from base profile
+                // Otherwise e.g. slices introduced in derived profile would inherit the original ID from unsliced parent element - WRONG!
+                ElementIdGenerator.Clear(snapshot.Element);
+
                 if (!structure.IsConstraint)
                 {
                     // [WMR 20160902] Rebase the cloned base profile (e.g. DomainResource)
@@ -245,7 +249,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // [WMR 20170426] Specializations (i.e. core resource definitions)
                     // do NOT inherit element IDs from (abstract) base class
                     // Clear all to force full re-generation
-                    ElementIdGenerator.Clear(snapshot.Element);
+                    // ElementIdGenerator.Clear(snapshot.Element);
 
                     // [WMR 20170411] Updated for STU3 - root element is no longer required/ensured
                     // => Derive from StructureDefinition.type property
