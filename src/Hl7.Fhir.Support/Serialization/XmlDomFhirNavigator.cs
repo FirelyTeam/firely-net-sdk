@@ -23,7 +23,6 @@ namespace Hl7.Fhir.Serialization
             _current = current;
             _nameIndex = 0;
             _parentPath = null;
-            _nameFilter = null;
         }
 
 
@@ -33,7 +32,6 @@ namespace Hl7.Fhir.Serialization
             {
                 _nameIndex = _nameIndex,
                 _parentPath = _parentPath,
-                _nameFilter = _nameFilter
             };
 
             return copy;
@@ -43,7 +41,6 @@ namespace Hl7.Fhir.Serialization
         private XObject _current;
         private int _nameIndex;
         private string _parentPath;
-        private string _nameFilter;
 
         public string Name
         {
@@ -71,14 +68,13 @@ namespace Hl7.Fhir.Serialization
                 // We only know the type in two occasions:
                 // 1. We are on a root element have the same name as a resource (e.g. <Patient>....</Patient>)
                 // 2. We are on an element that contains a nested resource (e.g. <contained><Patient>...</Patient></contained>)
-                var element = _current as XElement;
 
-                if (element != null)
+                if (_current is XElement element)
                 {
                     if (isResourceNameElement(element.Name))
                         return element.Name.LocalName;
-                
-                    if(element.HasElements)
+
+                    if (element.HasElements)
                     {
                         var candidate = element.Elements().First();
                         if (isResourceNameElement(candidate.Name))
@@ -137,8 +133,6 @@ namespace Hl7.Fhir.Serialization
 
         public bool MoveToFirstChild(string nameFilter = null)
         {
-            _nameFilter = nameFilter;
-
             // don't move into xhtml
             if (isXhtmlDiv(_current))
                 return false;
@@ -159,15 +153,18 @@ namespace Hl7.Fhir.Serialization
 
                     _current = scan;
                     _nameIndex = 0;
-                    if (_nameFilter == null || element.Name == _nameFilter)
+
+                    if (nameFilter == null || element.Name == nameFilter)
                         return true;
                 }
-                else if (scan.NodeType == XmlNodeType.Attribute && !isReservedAttribute((XAttribute)scan))
+                else if (scan.NodeType == XmlNodeType.Attribute && scan is XAttribute attr && !isReservedAttribute(attr))
                 {
                     _parentPath = Location;
                     _current = scan;
                     _nameIndex = 0;
-                    return true;
+
+                    if (nameFilter == null || attr.Name == nameFilter)
+                        return true;
                 }
 
                 scan = scan.NextChild();
@@ -176,7 +173,7 @@ namespace Hl7.Fhir.Serialization
             return false;
         }
 
-        public bool MoveToNext()
+        public bool MoveToNext(string nameFilter)
         {
             var scan = _current.NextChild();
 
@@ -187,14 +184,14 @@ namespace Hl7.Fhir.Serialization
                 {                    
                     var currentName = Name;
 
-                    _current = scan;
+                    _current = scan;  // this will change property Name
 
                     if (currentName == Name)
                         _nameIndex += 1;
                     else
                         _nameIndex = 0;
 
-                    if (_nameFilter == null || currentName == _nameFilter)
+                    if (nameFilter == null || currentName == nameFilter)
                         return true;
                 }
 

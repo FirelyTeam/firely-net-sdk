@@ -85,8 +85,10 @@ namespace Hl7.Fhir.Serialization
             return true;
         }
 
-        public bool MoveToNext()
+        public bool MoveToNext(string nameFilter = null)
         {
+            if (nameFilter != null) throw new NotImplementedException();
+
             if (_index + 1 >= _siblings.Length) return false;
 
             var currentName = Name;

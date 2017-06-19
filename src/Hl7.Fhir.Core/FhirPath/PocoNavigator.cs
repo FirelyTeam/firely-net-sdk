@@ -25,26 +25,23 @@ namespace Hl7.Fhir.FhirPath
             if (model == null) throw Error.ArgumentNull(nameof(model));
 
             //_current = new PocoElementNavigator(model.TypeName, model);
-            _parentPath = "";
+            _parentLocation = "";
             _parentShortPath = "";
             _parentCommonPath = "";
 
-            var me = new PocoElementNavigator(model.TypeName, model);
-            _siblings = new List<PocoElementNavigator> { me };
-            _index = 0;
+            _nav = new PocoElementNavigator(model);
         }
 
-        private PocoNavigator()
+        private PocoNavigator()     // for clone
         {
         }
 
-        private IList<PocoElementNavigator> _siblings;
-        private int _index;
-        private string _parentPath;
+        private PocoElementNavigator _nav;
+        private string _parentLocation;
         private string _parentShortPath;
         private string _parentCommonPath;
 
-        private PocoElementNavigator Current => _siblings[_index];
+        private PocoElementNavigator Current => _nav;
 
         /// <summary>
         /// Returns 
@@ -71,13 +68,13 @@ namespace Hl7.Fhir.FhirPath
             get
             {
                 var cur = Current;
-                if (String.IsNullOrEmpty(_parentPath))
+                if (String.IsNullOrEmpty(_parentLocation))
                 {
                     return cur.Name;
                 }
                 else
                 {
-                    return $"{_parentPath}.{cur.Name}[{cur._arrayIndex}]";
+                    return $"{_parentLocation}.{cur.Name}[{cur.ArrayIndex}]";
                 }
             }
         }
@@ -99,9 +96,9 @@ namespace Hl7.Fhir.FhirPath
                 else
                 {
                     // Needs to consider that the index might be irrelevant
-                    if (cur.PropMap.IsCollection)
+                    if (cur.AtArray)
                     {
-                        return $"{_parentShortPath}.{cur.Name}[{cur._arrayIndex}]";
+                        return $"{_parentShortPath}.{cur.Name}[{cur.ArrayIndex}]";
                     }
                     return $"{_parentShortPath}.{cur.Name}";
                 }
@@ -131,7 +128,7 @@ namespace Hl7.Fhir.FhirPath
                 else
                 {
                     // Needs to consider that the index might be irrelevant
-                    if (cur.PropMap.IsCollection)
+                    if (cur.AtArray)
                     {
                         Base fhirValue = cur.FhirValue;
                         if (fhirValue is Identifier ident)
@@ -190,27 +187,30 @@ namespace Hl7.Fhir.FhirPath
                             // all extensions have a property name of extension, can just at the brackets and string name
                             return $"{_parentCommonPath}.{cur.Name}('{ext.Url}')";
                         }
-                        return $"{_parentCommonPath}.{cur.Name}[{cur._arrayIndex}]";
+                        return $"{_parentCommonPath}.{cur.Name}[{cur.ArrayIndex}]";
                     }
                     return $"{_parentCommonPath}.{cur.Name}";
                 }
             }
         }
 
+        private object lockObject = new object();
+
         public bool MoveToFirstChild(string nameFilter = null)
         {
-            var children = Current.Children(nameFilter);
-            if (children.Any())
+            var oldLoc = Location;
+            var oldSP = ShortPath;
+            var oldCP = CommonPath;
+                
+            if (Current.MoveToFirstChild(nameFilter))
             {
-                lock(this)
+                lock(lockObject)
                 {
-                    _parentPath = Location;
-                    _parentShortPath = ShortPath;
-                    _parentCommonPath = CommonPath;
-
-                    _siblings = (List<PocoElementNavigator>)children;
-                    _index = 0;
+                    _parentLocation = oldLoc;
+                    _parentShortPath = oldSP;
+                    _parentCommonPath = oldCP;
                 }
+
                 return true;
             }
 
@@ -223,18 +223,9 @@ namespace Hl7.Fhir.FhirPath
         /// <returns>
         /// true if there was a next element, false if it was the last element
         /// </returns>
-        public bool MoveToNext()
+        public bool MoveToNext(string nameFilter = null)
         {
-            if (_siblings.Count > _index+1)
-            { 
-                // string oldName = Current.Name;
-                _index++;
-                // string newName = Current.Name;
-                // Console.WriteLine("Move Next: {0} -> {1}", oldName, newName);
-                return true;
-            }
-            // Console.WriteLine("Move Next: {0} (no more sibblings, didn't move)", this.GetName());
-            return false;
+            return Current.MoveToNext(nameFilter);
         }
 
         /// <summary>
@@ -244,14 +235,15 @@ namespace Hl7.Fhir.FhirPath
         public IElementNavigator Clone()
         {
             var result = new PocoNavigator();
-            lock (this)
+
+            lock (lockObject)
             {
-                result._siblings = this._siblings;
-                result._index = this._index;
-                result._parentPath = this._parentPath;
+                result._nav = this._nav.Clone();
+                result._parentLocation = this._parentLocation;
                 result._parentShortPath = this._parentShortPath;
                 result._parentCommonPath = this._parentCommonPath;
             }
+
             return result;
         }
     }

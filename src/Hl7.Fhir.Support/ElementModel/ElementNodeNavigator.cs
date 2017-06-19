@@ -81,8 +81,10 @@ namespace Hl7.Fhir.ElementModel
             return false;
         }
 
-        public bool MoveToNext()
+        public bool MoveToNext(string nameFilter = null)
         {
+            if (nameFilter != null) throw new NotImplementedException();
+
             if (_siblings.Length > _index + 1)
             {
                 _index += 1;

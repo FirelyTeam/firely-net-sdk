@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             public bool MoveToFirstChild(string nameFilter = null) { throw new NotImplementedException(); }
 
-            public bool MoveToNext() { throw new NotImplementedException(); }
+            public bool MoveToNext(string nameFilter = null) { throw new NotImplementedException(); }
 
             public override string ToString() => string.IsNullOrEmpty(Name) ? $"'{Location}'" : $"'{Location}' : '{Name}'";
         }
