@@ -11,6 +11,7 @@ using System.Linq;
 using Hl7.FhirPath;
 using Hl7.Fhir.Model.Primitives;
 using Hl7.FhirPath.Expressions;
+using Hl7.Fhir.ElementModel;
 
 namespace Hl7.Fhir
 {

@@ -49,7 +49,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestInitialize]
         public void Setup()
         {
-            Hl7.Fhir.FhirPath.PocoNavigatorExtensions.PrepareFhirSymbolTableFunctions();
+            FhirPath.ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
 
             var dirSource = new DirectorySource("TestData/snapshot-test", includeSubdirectories: true);
             _source = new TimingSource(dirSource);

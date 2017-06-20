@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Validation
         internal OperationOutcome ValidateConstraints(ElementDefinition definition, IElementNavigator instance)
         {
             // Make sure FHIR extensions are installed in FP compiler
-            PocoNavigatorExtensions.PrepareFhirSymbolTableFunctions();
+            ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
 
             var outcome = new OperationOutcome();
 
