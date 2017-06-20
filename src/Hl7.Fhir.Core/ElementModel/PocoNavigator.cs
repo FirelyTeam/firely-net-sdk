@@ -14,7 +14,7 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 using System.Diagnostics;
 
-namespace Hl7.Fhir.FhirPath
+namespace Hl7.Fhir.ElementModel
 {
     // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
     [DebuggerDisplay(@"\{{ShortPath,nq}}")]

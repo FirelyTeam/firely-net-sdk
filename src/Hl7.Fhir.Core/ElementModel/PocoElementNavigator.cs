@@ -15,7 +15,7 @@ using Hl7.Fhir.Utility;
 using Hl7.Fhir.Serialization;
 using System.Collections;
 
-namespace Hl7.Fhir.FhirPath
+namespace Hl7.Fhir.ElementModel
 {
     public class PocoElementNavigator
     {
