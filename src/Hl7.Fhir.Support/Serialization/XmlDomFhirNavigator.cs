@@ -131,76 +131,70 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
+        private XObject nextMatch (XObject root, string name, XObject startAfter = null)
+        {
+            var scan = startAfter == null ? root.FirstChild() : startAfter.NextChild();
+        
+            while(scan != null)
+            {
+                XName scanName;
+
+                if (scan.NodeType == XmlNodeType.Element && scan is XElement element)
+                    scanName = element.Name;
+                else if (scan.NodeType == XmlNodeType.Attribute && scan is XAttribute attr && !isReservedAttribute(attr))
+                    scanName = attr.Name;
+                else
+                    scanName = null;
+
+                if (scanName != null)
+                {
+                    if (name == null || scanName?.LocalName == name)
+                        return scan;
+                }
+
+                scan = scan.NextChild();
+            }
+
+            return null;
+        }
+
         public bool MoveToFirstChild(string nameFilter = null)
         {
             // don't move into xhtml
             if (isXhtmlDiv(_current))
                 return false;
 
-            var scan = _current.FirstChild();
+            var found = nextMatch(_current, nameFilter);
+            if (found == null) return false;
 
-            // Make this into a "move to the first child that's an element or attribute"
-            while (scan != null)
-            {
-                if (scan.NodeType == XmlNodeType.Element)
-                {                    
-                    var element = (XElement)scan;
-                    _parentPath = Location;
+            _parentPath = Location;
 
-                    // If this is a nested resource, move one level deeper
-                    if (isResourceNameElement(element.Name))
-                        scan = element.FirstNode;
+            // Move the _current position to the newly found element,
+            // unless that is the (xml) type name in a contained resource, in which case we move one level deeper
+            if (found is XElement xe && isResourceNameElement(xe.Name))
+                _current = xe.FirstNode;
+            else
+                _current = found;
 
-                    _current = scan;
-                    _nameIndex = 0;
+            _nameIndex = 0;
 
-                    if (nameFilter == null || element.Name.LocalName == nameFilter)
-                        return true;
-                }
-                else if (scan.NodeType == XmlNodeType.Attribute && scan is XAttribute attr && !isReservedAttribute(attr))
-                {
-                    _parentPath = Location;
-                    _current = scan;
-                    _nameIndex = 0;
-
-                    if (nameFilter == null || attr.Name.LocalName == nameFilter)
-                        return true;
-                }
-
-                scan = scan.NextChild();
-            }
-
-            return false;
+            return true;
         }
 
         public bool MoveToNext(string nameFilter)
         {
-            var scan = _current.NextChild();
+            var found = nextMatch(_current, nameFilter, _current);
+            if (found == null) return false;
 
-            // Make this into a "move to the next child that's an element or attribute"
-            while (scan != null)
-            {
-                if (scan.NodeType == XmlNodeType.Element || (scan.NodeType == XmlNodeType.Attribute && !isReservedAttribute((XAttribute)scan)))
-                {                    
-                    var currentName = Name;
+            var currentName = Name;
+             _current = found;  // this will change property Name
 
-                    _current = scan;  // this will change property Name
+            if (currentName == Name)
+                _nameIndex += 1;
+            else
+                _nameIndex = 0;
 
-                    if (currentName == Name)
-                        _nameIndex += 1;
-                    else
-                        _nameIndex = 0;
-
-                    if (nameFilter == null || Name == nameFilter)
-                        return true;
-                }
-
-                scan = scan.NextChild();
-            }
-
-            return false;
-
-            
+            return true;            
         }
 
         private bool isReservedAttribute(XAttribute attr) => 
