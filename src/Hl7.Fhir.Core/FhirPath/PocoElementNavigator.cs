@@ -13,6 +13,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Serialization;
+using System.Collections;
 
 namespace Hl7.Fhir.FhirPath
 {
@@ -29,12 +30,25 @@ namespace Hl7.Fhir.FhirPath
         // For Normal element properties representing a FHIR type
         internal PocoElementNavigator(Base parent)
         {
-            moveTo(parent);
+            // The root is the special case, we start with a "collection" of children where the parent is the only element
+            _parent = null;
+            _index = 0;
+            _arrayIndex = -1;
+            _properties = new List<Introspection.PropertyMapping>()
+            {
+                new Introspection.PropertyMapping()
+                {
+                    Name = parent.TypeName,
+                    IsCollection = false
+                }
+            };
+            _propValue = parent;
+            _currentValue = parent;
         }
 
-        private PocoElementNavigator()      // for clone
+        private PocoElementNavigator()
         {
-
+            // only use for clone
         }
 
         internal PocoElementNavigator Clone()
@@ -43,6 +57,7 @@ namespace Hl7.Fhir.FhirPath
 
             result._parent = this._parent;
             result._arrayIndex = this._arrayIndex;
+            result._index = this._index;
             result._properties = this._properties;
             result._propValue = this._propValue;
             result._currentValue = this._currentValue;
@@ -51,8 +66,12 @@ namespace Hl7.Fhir.FhirPath
         }
 
 
-        private void moveTo(Base target)
+        private void enter(Base target)
         {
+            //[20160620 EK] There's a bug here, when the target has no children, the internal
+            //state of the navigator will have changed. This bug does not surface since all the
+            //navigator extension methods will clone() before they more, but still, it should be
+            //fixed by the time we have used the (generated) Children() method on the model.
             _parent = target;
 
             var type = target.GetType();
@@ -87,52 +106,63 @@ namespace Hl7.Fhir.FhirPath
 
             // If not a collection, or out of collection members, scan
             // for next property
-            var scan = _index + 1;
+            var scan = _index;
 
-            while (scan < _properties.Count)
+            while (scan+1 < _properties.Count)
             {
-                if (name == null || _properties[scan].Name == name)
+                scan += 1;
+                var scanProp = _properties[scan];
+
+                // Don't expose "value" as a child, that's our ValueProvider.Value (if we're a primitive) 
+                if (isPrimitiveValueProp(scanProp)) continue;
+
+                if (name == null || scanProp.Name == name)
                 {
-                    var tempValue = _properties[_index + 1].GetValue(_parent);
+                    var tempValue = getNonEmptyValue(scanProp);
 
                     if (tempValue != null)
                     {
                         _index = scan;
                         _propValue = tempValue;
-
-                        if (!(tempValue is System.Collections.IList list))
+                        
+                        if (!scanProp.IsCollection)
                         {
                             _arrayIndex = -1;
+                            _currentValue = _propValue;
                             return true;
                         }
-
-                        // The new property is a collection
-
-                        if(list.Count > 0)
+                        else
                         { 
                             _arrayIndex = 0;
-                            _currentValue = list[0];
+                            _currentValue = ((IList)_propValue)[0];
                             return true;
-                        }
-                          
-                        // new item is an empty collection, fall through and scan for
-                        // next property
+                        }                          
                     }
                 }
-
-                scan += 1;
             }
 
             return false;
+
+            object getNonEmptyValue(Introspection.PropertyMapping p)
+            {
+                var value = p.GetValue(_parent);
+
+                if (value == null) return null;
+                if (value is IList list && list.Count == 0) return null;
+
+                return value;
+            }
+
+            bool isPrimitiveValueProp(Introspection.PropertyMapping p) => p.IsPrimitive && p.Name == "value";
         }
 
         public string Name => Prop.Name;
 
         internal Introspection.PropertyMapping Prop => _properties[_index];
 
-        public bool AtArray => _arrayIndex != -1;
+        public bool AtCollection => Prop.IsCollection;
 
-        public int ArrayIndex => AtArray ? _arrayIndex : 0;
+        public int ArrayIndex => AtCollection ? _arrayIndex : 0;
 
         /// <summary>
         /// This is only needed for search data extraction (and debugging)
@@ -226,7 +256,7 @@ namespace Hl7.Fhir.FhirPath
                 // If this is a primitive, there are no children
                 if (!(_currentValue is Base b)) return false;
 
-                moveTo(b);
+                enter(b);
                 return next(name);
             }
         }

@@ -96,7 +96,7 @@ namespace Hl7.Fhir.FhirPath
                 else
                 {
                     // Needs to consider that the index might be irrelevant
-                    if (cur.AtArray)
+                    if (cur.AtCollection)
                     {
                         return $"{_parentShortPath}.{cur.Name}[{cur.ArrayIndex}]";
                     }
@@ -128,7 +128,7 @@ namespace Hl7.Fhir.FhirPath
                 else
                 {
                     // Needs to consider that the index might be irrelevant
-                    if (cur.AtArray)
+                    if (cur.AtCollection)
                     {
                         Base fhirValue = cur.FhirValue;
                         if (fhirValue is Identifier ident)

@@ -99,12 +99,12 @@ namespace Hl7.FhirPath.Tests
             Assert.False(nav.MoveToNext());
 
             Assert.Equal(true, nav.Value);
-            Assert.True(nav.MoveToFirstChild());
+            Assert.True(nav.MoveToFirstChild("id"));
             Assert.Equal(nav.Name, "id");
             Assert.False(nav.MoveToFirstChild());
             Assert.True(nav.MoveToNext());
             Assert.Equal(nav.Name, "id");
-            Assert.True(nav.MoveToNext());
+            Assert.True(nav.MoveToNext("extension"));
             Assert.Equal(nav.Name, "extension");
             Assert.True(nav.MoveToFirstChild());
             Assert.Equal(nav.Name, "value");
