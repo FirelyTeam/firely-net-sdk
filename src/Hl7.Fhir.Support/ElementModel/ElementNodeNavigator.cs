@@ -7,7 +7,7 @@ namespace Hl7.Fhir.ElementModel
 {
     public struct ElementNodeNavigator : IElementNavigator, IAnnotated
     {
-        private IElementNode[] _siblings;
+        private IList<IElementNode> _siblings;
         private int _index;
 
         public IElementNode Current
@@ -17,7 +17,7 @@ namespace Hl7.Fhir.ElementModel
 
         public ElementNodeNavigator(IElementNode wrapped)
         {
-            _siblings = new[] { wrapped };
+            _siblings = new List<IElementNode> { wrapped };
             _index = 0;
         }
 
@@ -64,34 +64,41 @@ namespace Hl7.Fhir.ElementModel
             return r;
         }
 
-        public bool MoveToFirstChild(string nameFilter = null)
+        
+        private int nextMatch(IList<IElementNode> nodes, string namefilter=null, int startAfter=-1)
         {
-            IEnumerable<IElementNode> children;
-            if (nameFilter == null)
-                children = Current.Children;
-            else
-                children = Current.Children.Where(n => n.Name == nameFilter);
-            if (children != null && children.Any())
+            for(int scan=startAfter+1; scan < nodes.Count; scan++)
             {
-                _siblings = children.ToArray();
-                _index = 0;
-                return true;
+                if (namefilter == null || nodes[scan].Name == namefilter)
+                    return scan;
             }
 
-            return false;
+            return -1;
+        }
+
+        public bool MoveToFirstChild(string nameFilter = null)
+        {
+            var children = Current.Children;
+
+            if (!children.Any()) return false;
+
+            var found = nextMatch(children, nameFilter);
+
+            if (found == -1) return false;
+
+            _siblings = children;
+            _index = 0;
+            return true;
         }
 
         public bool MoveToNext(string nameFilter = null)
         {
-            if (nameFilter != null) throw new NotImplementedException();
+            var found = nextMatch(_siblings, nameFilter, _index);
 
-            if (_siblings.Length > _index + 1)
-            {
-                _index += 1;
-                return true;
-            }
+            if (found == -1) return false;
 
-            return false;
+            _index = found;
+            return true;
         }
 
         public IEnumerable<object> Annotations(Type type)

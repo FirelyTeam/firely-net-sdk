@@ -23,7 +23,7 @@ namespace Hl7.Fhir
         {
             // Ensure the FHIR extensions are registered
             Hl7.Fhir.FhirPath.PocoNavigatorExtensions.PrepareFhirSymbolTableFunctions();
-            SymbolTableExtensions.Add(Hl7.FhirPath.FhirPathCompiler.DefaultSymbolTable, "shortpathname",
+            Hl7.FhirPath.FhirPathCompiler.DefaultSymbolTable.Add("shortpathname",
             (object f) =>
             {
                 if (f is IEnumerable<IElementNavigator>)
@@ -94,7 +94,7 @@ namespace Hl7.Fhir
             v3.MoveToNext(); System.Diagnostics.Trace.WriteLine($"{v3.ShortPath} = {v3.FhirValue.ToString()}");
             // v3.MoveToNext(); System.Diagnostics.Trace.WriteLine($"{v3.ShortPath} = {v3.FhirValue.ToString()}");
             // v3.MoveToNext(); System.Diagnostics.Trace.WriteLine($"{v3.ShortPath} = {v3.FhirValue.ToString()}");
-            v3.MoveToFirstChild(); System.Diagnostics.Trace.WriteLine($"{v3.ShortPath} = {v3.FhirValue.ToString()}");
+            v3.MoveToFirstChild("system"); System.Diagnostics.Trace.WriteLine($"{v3.ShortPath} = {v3.FhirValue.ToString()}");
             Assert.AreEqual("Patient.telecom[0].system[0]", v3.Location);
             Assert.AreEqual("Patient.telecom[0].system", v3.ShortPath);
             Assert.AreEqual("Patient.telecom.where(system='phone').system", v3.CommonPath);

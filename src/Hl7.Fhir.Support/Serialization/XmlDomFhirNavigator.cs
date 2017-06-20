@@ -30,8 +30,8 @@ namespace Hl7.Fhir.Serialization
         {
             var copy = new XmlDomFhirNavigator(_current)
             {
-                _nameIndex = _nameIndex,
-                _parentPath = _parentPath,
+                _nameIndex = this._nameIndex,
+                _parentPath = this._parentPath,
             };
 
             return copy;
@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Serialization
                     _current = scan;
                     _nameIndex = 0;
 
-                    if (nameFilter == null || element.Name == nameFilter)
+                    if (nameFilter == null || element.Name.LocalName == nameFilter)
                         return true;
                 }
                 else if (scan.NodeType == XmlNodeType.Attribute && scan is XAttribute attr && !isReservedAttribute(attr))
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Serialization
                     _current = scan;
                     _nameIndex = 0;
 
-                    if (nameFilter == null || attr.Name == nameFilter)
+                    if (nameFilter == null || attr.Name.LocalName == nameFilter)
                         return true;
                 }
 
@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Serialization
                     else
                         _nameIndex = 0;
 
-                    if (nameFilter == null || currentName == nameFilter)
+                    if (nameFilter == null || Name == nameFilter)
                         return true;
                 }
 

@@ -20,7 +20,7 @@ namespace Hl7.Fhir.ElementModel
 
         private List<ElementNode> _children = new List<ElementNode>();
 
-        public IEnumerable<IElementNode> Children => _children;
+        public IList<IElementNode> Children => _children.ToList<IElementNode>();
 
         public string Name { get; set; }
 
