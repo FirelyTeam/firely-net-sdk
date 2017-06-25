@@ -42,6 +42,35 @@ namespace Hl7.Fhir.Core.AsyncTests
             Console.WriteLine("Test Completed");
         }
         [Test]
+        public async Task SearchSync_UsingSearchParams_SearchReturned()
+        {
+            var client = new FhirClient(_endpoint);
+            client.PreferredFormat = ResourceFormat.Json;
+            client.ReturnFullResource = true;
+
+            var srch = new SearchParams()
+                .Where("name=Daniel")
+                .LimitTo(10)
+                .SummaryOnly()
+                .OrderBy("birthdate",
+                    SortOrder.Descending);
+
+            var result1 = client.Search<Patient>(srch);
+            result1.Entry.Count.Should().BeGreaterOrEqualTo(1);
+            while (result1 != null)
+            {
+                foreach (var e in result1.Entry)
+                {
+                    Patient p = (Patient)e.Resource;
+                    Console.WriteLine(
+                        $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
+                }
+                result1 = client.Continue(result1, PageDirection.Next);
+            }
+
+            Console.WriteLine("Test Completed");
+        }
+        [Test]
         public async Task SearchMultiple_UsingSearchParams_SearchReturned()
         {
             var client = new FhirClient(_endpoint);
