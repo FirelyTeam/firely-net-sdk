@@ -427,7 +427,7 @@ namespace Hl7.Fhir.Rest
             var id = verifyResourceIdentity(location, needId: true, needVid: false);
             var tx = new TransactionBuilder(Endpoint).Delete(id.ResourceType, id.Id).ToBundle();
 
-            await executeAsync<Resource>(tx, HttpStatusCode.NoContent);
+            await executeAsync<Resource>(tx, HttpStatusCode.NoContent).ConfigureAwait(false);
         }
         /// <summary>
         /// Delete a resource at the given endpoint.
@@ -473,7 +473,7 @@ namespace Hl7.Fhir.Rest
             if (resource == null) throw Error.ArgumentNull(nameof(resource));
             if (resource.Id == null) throw Error.Argument(nameof(resource), "Entry must have an id");
 
-            await DeleteAsync(resource.ResourceIdentity(Endpoint).WithoutVersion());
+            await DeleteAsync(resource.ResourceIdentity(Endpoint).WithoutVersion()).ConfigureAwait(false);
         }
         /// <summary>
         /// Delete a resource
@@ -495,7 +495,7 @@ namespace Hl7.Fhir.Rest
             if (condition == null) throw Error.ArgumentNull(nameof(condition));
 
             var tx = new TransactionBuilder(Endpoint).Delete(resourceType, condition).ToBundle();
-            await executeAsync<Resource>(tx, HttpStatusCode.NoContent);
+            await executeAsync<Resource>(tx, HttpStatusCode.NoContent).ConfigureAwait(false);
         }
         /// <summary>
         /// Conditionally delete a resource
@@ -907,7 +907,7 @@ namespace Hl7.Fhir.Rest
             if (url == null) throw Error.ArgumentNull(nameof(url));
 
             var tx = new TransactionBuilder(Endpoint).Get(url).ToBundle();
-            return await executeAsync<Resource>(tx, HttpStatusCode.OK);
+            return await executeAsync<Resource>(tx, HttpStatusCode.OK).ConfigureAwait(false);
         }
         /// <summary>
         /// Invoke a general GET on the server. If the operation fails, then this method will throw an exception
@@ -1168,7 +1168,7 @@ namespace Hl7.Fhir.Rest
             verifyServerVersion();
 
             var request = tx.Entry[0];
-            var response = await _requester.ExecuteAsync(request);
+            var response = await _requester.ExecuteAsync(request).ConfigureAwait(false);
 
             if (!expect.Select(sc => ((int)sc).ToString()).Contains(response.Response.Status))
             {
@@ -1187,7 +1187,7 @@ namespace Hl7.Fhir.Rest
                 && ReturnFullResource && response.Response.Location != null
                 && new ResourceIdentity(response.Response.Location).IsRestResourceIdentity()) // Check that it isn't an operation too
             {
-                result = await GetAsync(response.Response.Location);
+                result = await GetAsync(response.Response.Location).ConfigureAwait(false);
             }
             else
                 result = response.Resource;

@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Rest
             var par = new Parameters().Add("resource", resource).Add("mode", new Code("create"));
             if (profile != null) par.Add("profile", profile);
 
-            return expect<OperationOutcome>(await client.TypeOperationAsync(Operation.VALIDATE_RESOURCE, resource.TypeName, par));
+            return expect<OperationOutcome>(await client.TypeOperationAsync(Operation.VALIDATE_RESOURCE, resource.TypeName, par).ConfigureAwait(false));
         }
         public static OperationOutcome ValidateCreate(this FhirClient client, DomainResource resource,
             FhirUri profile = null)
@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Rest
             if (profile != null) par.Add("profile", profile);
 
             var loc = ResourceIdentity.Build(resource.TypeName, id);
-            return expect<OperationOutcome>(await client.InstanceOperationAsync(loc, Operation.VALIDATE_RESOURCE, par));
+            return expect<OperationOutcome>(await client.InstanceOperationAsync(loc, Operation.VALIDATE_RESOURCE, par).ConfigureAwait(false));
         }
         public static OperationOutcome ValidateUpdate(this FhirClient client, DomainResource resource, string id,
             FhirUri profile = null)
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Rest
 
             var par = new Parameters().Add("mode", new Code("delete"));
 
-            return expect<OperationOutcome>(await client.InstanceOperationAsync(location.WithoutVersion().MakeRelative(), Operation.VALIDATE_RESOURCE, par));
+            return expect<OperationOutcome>(await client.InstanceOperationAsync(location.WithoutVersion().MakeRelative(), Operation.VALIDATE_RESOURCE, par).ConfigureAwait(false));
         }
         public static OperationOutcome ValidateDelete(this FhirClient client, ResourceIdentity location)
         {
@@ -134,12 +134,12 @@ namespace Hl7.Fhir.Rest
 
             if (id == null)
             {
-                return expect<OperationOutcome>(await client.TypeOperationAsync(Operation.VALIDATE_RESOURCE, resource.TypeName, par));
+                return expect<OperationOutcome>(await client.TypeOperationAsync(Operation.VALIDATE_RESOURCE, resource.TypeName, par).ConfigureAwait(false));
             }
             else
             {
                 var loc = ResourceIdentity.Build(resource.TypeName, id);
-                return expect<OperationOutcome>(await client.InstanceOperationAsync(loc, Operation.VALIDATE_RESOURCE, par));
+                return expect<OperationOutcome>(await client.InstanceOperationAsync(loc, Operation.VALIDATE_RESOURCE, par).ConfigureAwait(false));
             }
         }
 
@@ -162,11 +162,11 @@ namespace Hl7.Fhir.Rest
             
             Resource result;
             if (patient == null)
-                result = await client.TypeOperationAsync<Patient>(Operation.FETCH_PATIENT_RECORD, par);
+                result = await client.TypeOperationAsync<Patient>(Operation.FETCH_PATIENT_RECORD, par).ConfigureAwait(false);
             else
             {
                 var location = new ResourceIdentity(patient);
-                result = await client.InstanceOperationAsync(location.WithoutVersion().MakeRelative(), Operation.FETCH_PATIENT_RECORD, par);
+                result = await client.InstanceOperationAsync(location.WithoutVersion().MakeRelative(), Operation.FETCH_PATIENT_RECORD, par).ConfigureAwait(false);
             }
 
             return expect<Bundle>(result);
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Rest
 
             ResourceIdentity id = new ResourceIdentity(valueset);
 
-            return expect<ValueSet>(await client.InstanceOperationAsync(id.WithoutVersion().MakeRelative(), Operation.EXPAND_VALUESET, par));
+            return expect<ValueSet>(await client.InstanceOperationAsync(id.WithoutVersion().MakeRelative(), Operation.EXPAND_VALUESET, par).ConfigureAwait(false));
         }
 
         public static ValueSet ExpandValueSet(this FhirClient client, Uri valueset, FhirString filter = null,
@@ -211,7 +211,7 @@ namespace Hl7.Fhir.Rest
             if (filter != null) par.Add("filter", filter);
             if (date != null) par.Add("date", date);
             
-            return expect<ValueSet>(await client.TypeOperationAsync<ValueSet>(Operation.EXPAND_VALUESET, par));
+            return expect<ValueSet>(await client.TypeOperationAsync<ValueSet>(Operation.EXPAND_VALUESET, par).ConfigureAwait(false));
         }
 
         public static ValueSet ExpandValueSet(this FhirClient client, FhirUri identifier, FhirString filter = null,
@@ -228,7 +228,7 @@ namespace Hl7.Fhir.Rest
             if (filter != null) par.Add("filter", filter);
             if (date != null) par.Add("date", date);
 
-            return expect<ValueSet>(await client.TypeOperationAsync<ValueSet>(Operation.EXPAND_VALUESET, par));
+            return expect<ValueSet>(await client.TypeOperationAsync<ValueSet>(Operation.EXPAND_VALUESET, par).ConfigureAwait(false));
         }
 
         public static ValueSet ExpandValueSet(this FhirClient client, ValueSet vs, FhirString filter = null,
@@ -249,7 +249,7 @@ namespace Hl7.Fhir.Rest
             par.Add("coding", coding);
             if (date != null) par.Add("date", date);
 
-            return expect<Parameters>(await client.TypeOperationAsync<ValueSet>(Operation.CONCEPT_LOOKUP, par));
+            return expect<Parameters>(await client.TypeOperationAsync<ValueSet>(Operation.CONCEPT_LOOKUP, par).ConfigureAwait(false));
         }
 
         public static Parameters ConceptLookup(this FhirClient client, Coding coding, FhirDateTime date = null)
@@ -267,7 +267,7 @@ namespace Hl7.Fhir.Rest
             if (version != null) par.Add("version", version);
             if (date != null) par.Add("date", date);
 
-            return expect<Parameters>(await client.TypeOperationAsync<ValueSet>(Operation.CONCEPT_LOOKUP, par));
+            return expect<Parameters>(await client.TypeOperationAsync<ValueSet>(Operation.CONCEPT_LOOKUP, par).ConfigureAwait(false));
         }
 
         public static Parameters ConceptLookup(this FhirClient client, Code code, FhirUri system,
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Rest
         //[base]/$meta
         public static async Task<Meta> MetaAsync(this FhirClient client)
         {
-            return extractMeta(expect<Parameters>(await client.WholeSystemOperationAsync(Operation.META, useGet:true)));
+            return extractMeta(expect<Parameters>(await client.WholeSystemOperationAsync(Operation.META, useGet:true).ConfigureAwait(false)));
         }
         public static Meta Meta(this FhirClient client)
         {
@@ -293,7 +293,7 @@ namespace Hl7.Fhir.Rest
         //[base]/Resource/$meta
         public static async Task<Meta> MetaAsync(this FhirClient client, ResourceType type)
         {             
-            return extractMeta(expect<Parameters>(await client.TypeOperationAsync(Operation.META, type.ToString(), useGet: true)));
+            return extractMeta(expect<Parameters>(await client.TypeOperationAsync(Operation.META, type.ToString(), useGet: true).ConfigureAwait(false)));
         }
         public static Meta Meta(this FhirClient client, ResourceType type)
         {
@@ -304,7 +304,7 @@ namespace Hl7.Fhir.Rest
         public static async Task<Meta> MetaAsync(this FhirClient client, Uri location)
         {
             Resource result;
-            result = await client.InstanceOperationAsync(location, Operation.META, useGet: true);
+            result = await client.InstanceOperationAsync(location, Operation.META, useGet: true).ConfigureAwait(false);
 
             return extractMeta(expect<Parameters>(result));
         }
@@ -325,7 +325,7 @@ namespace Hl7.Fhir.Rest
         public static async Task<Meta> AddMetaAsync(this FhirClient client, Uri location, Meta meta)
         {
             var par = new Parameters().Add("meta", meta);
-            return extractMeta(expect<Parameters>(await client.InstanceOperationAsync(location, Operation.META_ADD, par)));
+            return extractMeta(expect<Parameters>(await client.InstanceOperationAsync(location, Operation.META_ADD, par).ConfigureAwait(false)));
         }
         public static Meta AddMeta(this FhirClient client, Uri location, Meta meta)
         {
@@ -345,7 +345,7 @@ namespace Hl7.Fhir.Rest
         public static async Task<Meta> DeleteMetaAsync(this FhirClient client, Uri location, Meta meta)
         {
             var par = new Parameters().Add("meta", meta);
-            return extractMeta(expect<Parameters>(await client.InstanceOperationAsync(location, Operation.META_DELETE, par)));
+            return extractMeta(expect<Parameters>(await client.InstanceOperationAsync(location, Operation.META_DELETE, par).ConfigureAwait(false)));
         }
 
         public static Meta DeleteMeta(this FhirClient client, Uri location, Meta meta)
@@ -431,7 +431,7 @@ namespace Hl7.Fhir.Rest
         {
             Parameters par = createTranslateConceptParams(code, system, version, valueSet, coding, codeableConcept, target, dependencies);
             var loc = ResourceIdentity.Build("ConceptMap", id);
-            return expect<Parameters>(await client.InstanceOperationAsync(loc, Operation.TRANSLATE, par));
+            return expect<Parameters>(await client.InstanceOperationAsync(loc, Operation.TRANSLATE, par).ConfigureAwait(false));
         }
         public static Parameters TranslateConcept(this FhirClient client, string id, Code code, FhirUri system,
             FhirString version,
@@ -448,7 +448,7 @@ namespace Hl7.Fhir.Rest
         {
             Parameters par = createTranslateConceptParams(code, system, version, valueSet, coding, codeableConcept, target, dependencies);
 
-            return expect<Parameters>(await client.TypeOperationAsync<ConceptMap>(Operation.TRANSLATE, par));
+            return expect<Parameters>(await client.TypeOperationAsync<ConceptMap>(Operation.TRANSLATE, par).ConfigureAwait(false));
         }
 
         public static Parameters TranslateConcept(this FhirClient client, Code code, FhirUri system, FhirString version,
@@ -517,7 +517,7 @@ namespace Hl7.Fhir.Rest
         {
             ResourceIdentity location = new ResourceIdentity("ValueSet/" + valueSetId);
 
-            return expect<Parameters>(await client.InstanceOperationAsync(location.WithoutVersion().MakeRelative(), Operation.VALIDATE_CODE, par));
+            return expect<Parameters>(await client.InstanceOperationAsync(location.WithoutVersion().MakeRelative(), Operation.VALIDATE_CODE, par).ConfigureAwait(false));
         }
         private static Parameters validateCodeForValueSetId(FhirClient client, string valueSetId, Parameters par)
         {

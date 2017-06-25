@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Rest
                 request.WriteBody(compressRequestBody, outBody);
 
             // Make sure the HttpResponse gets disposed!
-            using (HttpWebResponse webResponse = (HttpWebResponse)await request.GetResponseAsync(new TimeSpan(0, 0, 0, 0, Timeout)))
+            using (HttpWebResponse webResponse = (HttpWebResponse)await request.GetResponseAsync(new TimeSpan(0, 0, 0, 0, Timeout)).ConfigureAwait(false))
             //using (HttpWebResponse webResponse = (HttpWebResponse)request.GetResponseNoEx())
             {
                 try

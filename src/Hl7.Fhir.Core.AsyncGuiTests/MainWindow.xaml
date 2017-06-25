@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Hl7.Fhir.Core.AsyncGuiTests"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        <Button Click="ButtonBase_OnClick">Test</Button>
-    </Grid>
+        Title="MainWindow" Height="200" Width="325">
+    <StackPanel>
+        <Button  x:Name="SyncButton" Click="Sync_OnClick">Test Sync Call</Button>
+        <Button x:Name="AsyncButton" Click="AsyncButton_OnClick">Test Async Call</Button>
+        <ListBox x:Name="OutputList"></ListBox>
+    </StackPanel>
 </Window>

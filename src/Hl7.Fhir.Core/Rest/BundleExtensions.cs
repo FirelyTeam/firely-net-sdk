@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Rest
             {
                 if (entry.Resource != null)
                 {
-                    entry.Resource = await client.ReadAsync<Resource>(entry.FullUrl);
+                    entry.Resource = await client.ReadAsync<Resource>(entry.FullUrl).ConfigureAwait(false);
                 }
             }
 
