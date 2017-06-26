@@ -132,6 +132,18 @@ namespace Hl7.Fhir.Model
                 if (Denominator != null) yield return Denominator;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren 
+        { 
+            get 
+            { 
+                foreach (var item in base.NamedChildren) yield return item; 
+                if (Numerator != null) yield return ("numerator",Numerator);
+                if (Denominator != null) yield return ("denominator",Denominator);
+ 
+            } 
+        } 
     
     
     }

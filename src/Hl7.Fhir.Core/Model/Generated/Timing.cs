@@ -627,10 +627,29 @@ namespace Hl7.Fhir.Model
                     if (WhenElement != null) yield return WhenElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren 
+            { 
+                get 
+                { 
+                    foreach (var item in base.NamedChildren) yield return item; 
+                    if (Bounds != null) yield return ("bounds",Bounds);
+                    if (CountElement != null) yield return ("count",CountElement);
+                    if (DurationElement != null) yield return ("duration",DurationElement);
+                    if (DurationMaxElement != null) yield return ("durationMax",DurationMaxElement);
+                    if (DurationUnitsElement != null) yield return ("durationUnits",DurationUnitsElement);
+                    if (FrequencyElement != null) yield return ("frequency",FrequencyElement);
+                    if (FrequencyMaxElement != null) yield return ("frequencyMax",FrequencyMaxElement);
+                    if (PeriodElement != null) yield return ("period",PeriodElement);
+                    if (PeriodMaxElement != null) yield return ("periodMax",PeriodMaxElement);
+                    if (PeriodUnitsElement != null) yield return ("periodUnits",PeriodUnitsElement);
+                    if (WhenElement != null) yield return ("when",WhenElement);
+ 
+                } 
+            } 
             
-        }
-        
-        
+        }                
         /// <summary>
         /// When the event occurs
         /// </summary>
@@ -749,6 +768,19 @@ namespace Hl7.Fhir.Model
                 if (Code != null) yield return Code;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren 
+        { 
+            get 
+            { 
+                foreach (var item in base.NamedChildren) yield return item; 
+                foreach (var elem in EventElement) { if (elem != null) yield return ("event",elem); }
+                if (Repeat != null) yield return ("repeat",Repeat);
+                if (Code != null) yield return ("code",Code);
+ 
+            } 
+        } 
     
     
     }

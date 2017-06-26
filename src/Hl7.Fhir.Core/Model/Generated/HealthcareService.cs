@@ -195,6 +195,18 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Specialty) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Type != null) yield return ("type",Type);
+                    foreach (var elem in Specialty) { if (elem != null) yield return ("specialty",elem); }
+                }
+            }
+
             
         }
         
@@ -398,6 +410,20 @@ namespace Hl7.Fhir.Model
                     if (AvailableEndTimeElement != null) yield return AvailableEndTimeElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    foreach (var elem in DaysOfWeek_Element) { if (elem != null) yield return ("daysOfWeek",elem); }
+                    if (AllDayElement != null) yield return ("allDay",AllDayElement);
+                    if (AvailableStartTimeElement != null) yield return ("availableStartTime",AvailableStartTimeElement);
+                    if (AvailableEndTimeElement != null) yield return ("availableEndTime",AvailableEndTimeElement);
+                }
+            }
+
             
         }
         
@@ -510,6 +536,18 @@ namespace Hl7.Fhir.Model
                     if (During != null) yield return During;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                    if (During != null) yield return ("during",During);
+                }
+            }
+
             
         }
         
@@ -1110,6 +1148,38 @@ namespace Hl7.Fhir.Model
 				if (AvailabilityExceptionsElement != null) yield return AvailabilityExceptionsElement;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (ProvidedBy != null) yield return ("providedBy",ProvidedBy);
+                if (ServiceCategory != null) yield return ("serviceCategory",ServiceCategory);
+                foreach (var elem in ServiceType) { if (elem != null) yield return ("serviceType",elem); }
+                if (Location != null) yield return ("location",Location);
+                if (ServiceNameElement != null) yield return ("serviceName",ServiceNameElement);
+                if (CommentElement != null) yield return ("comment",CommentElement);
+                if (ExtraDetailsElement != null) yield return ("extraDetails",ExtraDetailsElement);
+                if (Photo != null) yield return ("photo",Photo);
+                foreach (var elem in Telecom) { if (elem != null) yield return ("telecom",elem); }
+                foreach (var elem in CoverageArea) { if (elem != null) yield return ("coverageArea",elem); }
+                foreach (var elem in ServiceProvisionCode) { if (elem != null) yield return ("serviceProvisionCode",elem); }
+                if (Eligibility != null) yield return ("eligibility",Eligibility);
+                if (EligibilityNoteElement != null) yield return ("eligibilityNote",EligibilityNoteElement);
+                foreach (var elem in ProgramNameElement) { if (elem != null) yield return ("programName",elem); }
+                foreach (var elem in Characteristic) { if (elem != null) yield return ("characteristic",elem); }
+                foreach (var elem in ReferralMethod) { if (elem != null) yield return ("referralMethod",elem); }
+                if (PublicKeyElement != null) yield return ("publicKey",PublicKeyElement);
+                if (AppointmentRequiredElement != null) yield return ("appointmentRequired",AppointmentRequiredElement);
+                foreach (var elem in AvailableTime) { if (elem != null) yield return ("availableTime",elem); }
+                foreach (var elem in NotAvailable) { if (elem != null) yield return ("notAvailable",elem); }
+                if (AvailabilityExceptionsElement != null) yield return ("availabilityExceptions",AvailabilityExceptionsElement);
+            }
+        }
+
     }
     
 }

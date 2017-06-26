@@ -326,6 +326,20 @@ namespace Hl7.Fhir.Model
                     if (HeaderElement != null) yield return HeaderElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (TypeElement != null) yield return ("type",TypeElement);
+                    if (EndpointElement != null) yield return ("endpoint",EndpointElement);
+                    if (PayloadElement != null) yield return ("payload",PayloadElement);
+                    if (HeaderElement != null) yield return ("header",HeaderElement);
+                }
+            }
+
             
         }
         
@@ -620,6 +634,24 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Tag) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (CriteriaElement != null) yield return ("criteria",CriteriaElement);
+                foreach (var elem in Contact) { if (elem != null) yield return ("contact",elem); }
+                if (ReasonElement != null) yield return ("reason",ReasonElement);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (ErrorElement != null) yield return ("error",ErrorElement);
+                if (Channel != null) yield return ("channel",Channel);
+                if (EndElement != null) yield return ("end",EndElement);
+                foreach (var elem in Tag) { if (elem != null) yield return ("tag",elem); }
+            }
+        }
+
     }
     
 }

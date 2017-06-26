@@ -277,6 +277,23 @@ namespace Hl7.Fhir.Model
                     if (Period != null) yield return Period;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    foreach (var elem in Relationship) { if (elem != null) yield return ("relationship",elem); }
+                    if (Name != null) yield return ("name",Name);
+                    foreach (var elem in Telecom) { if (elem != null) yield return ("telecom",elem); }
+                    if (Address != null) yield return ("address",Address);
+                    if (GenderElement != null) yield return ("gender",GenderElement);
+                    if (Organization != null) yield return ("organization",Organization);
+                    if (Period != null) yield return ("period",Period);
+                }
+            }
+
             
         }
         
@@ -387,6 +404,19 @@ namespace Hl7.Fhir.Model
                     if (GenderStatus != null) yield return GenderStatus;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Species != null) yield return ("species",Species);
+                    if (Breed != null) yield return ("breed",Breed);
+                    if (GenderStatus != null) yield return ("genderStatus",GenderStatus);
+                }
+            }
+
             
         }
         
@@ -499,6 +529,18 @@ namespace Hl7.Fhir.Model
                     if (PreferredElement != null) yield return PreferredElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Language != null) yield return ("language",Language);
+                    if (PreferredElement != null) yield return ("preferred",PreferredElement);
+                }
+            }
+
             
         }
         
@@ -614,6 +656,18 @@ namespace Hl7.Fhir.Model
                     if (TypeElement != null) yield return TypeElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Other != null) yield return ("other",Other);
+                    if (TypeElement != null) yield return ("type",TypeElement);
+                }
+            }
+
             
         }
         
@@ -1044,6 +1098,33 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Link) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (ActiveElement != null) yield return ("active",ActiveElement);
+                foreach (var elem in Name) { if (elem != null) yield return ("name",elem); }
+                foreach (var elem in Telecom) { if (elem != null) yield return ("telecom",elem); }
+                if (GenderElement != null) yield return ("gender",GenderElement);
+                if (BirthDateElement != null) yield return ("birthDate",BirthDateElement);
+                if (Deceased != null) yield return ("deceased",Deceased);
+                foreach (var elem in Address) { if (elem != null) yield return ("address",elem); }
+                if (MaritalStatus != null) yield return ("maritalStatus",MaritalStatus);
+                if (MultipleBirth != null) yield return ("multipleBirth",MultipleBirth);
+                foreach (var elem in Photo) { if (elem != null) yield return ("photo",elem); }
+                foreach (var elem in Contact) { if (elem != null) yield return ("contact",elem); }
+                if (Animal != null) yield return ("animal",Animal);
+                foreach (var elem in Communication) { if (elem != null) yield return ("communication",elem); }
+                foreach (var elem in CareProvider) { if (elem != null) yield return ("careProvider",elem); }
+                if (ManagingOrganization != null) yield return ("managingOrganization",ManagingOrganization);
+                foreach (var elem in Link) { if (elem != null) yield return ("link",elem); }
+            }
+        }
+
     }
     
 }

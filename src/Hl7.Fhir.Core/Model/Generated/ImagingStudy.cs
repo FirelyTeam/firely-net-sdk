@@ -465,6 +465,27 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Instance) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (NumberElement != null) yield return ("number",NumberElement);
+                    if (Modality != null) yield return ("modality",Modality);
+                    if (UidElement != null) yield return ("uid",UidElement);
+                    if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                    if (NumberOfInstancesElement != null) yield return ("numberOfInstances",NumberOfInstancesElement);
+                    if (AvailabilityElement != null) yield return ("availability",AvailabilityElement);
+                    if (UrlElement != null) yield return ("url",UrlElement);
+                    if (BodySite != null) yield return ("bodySite",BodySite);
+                    if (Laterality != null) yield return ("laterality",Laterality);
+                    if (StartedElement != null) yield return ("started",StartedElement);
+                    foreach (var elem in Instance) { if (elem != null) yield return ("instance",elem); }
+                }
+            }
+
             
         }
         
@@ -723,6 +744,22 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Content) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (NumberElement != null) yield return ("number",NumberElement);
+                    if (UidElement != null) yield return ("uid",UidElement);
+                    if (SopClassElement != null) yield return ("sopClass",SopClassElement);
+                    if (TypeElement != null) yield return ("type",TypeElement);
+                    if (TitleElement != null) yield return ("title",TitleElement);
+                    foreach (var elem in Content) { if (elem != null) yield return ("content",elem); }
+                }
+            }
+
             
         }
         
@@ -1204,6 +1241,32 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Series) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (StartedElement != null) yield return ("started",StartedElement);
+                if (Patient != null) yield return ("patient",Patient);
+                if (UidElement != null) yield return ("uid",UidElement);
+                if (Accession != null) yield return ("accession",Accession);
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                foreach (var elem in Order) { if (elem != null) yield return ("order",elem); }
+                foreach (var elem in ModalityList) { if (elem != null) yield return ("modalityList",elem); }
+                if (Referrer != null) yield return ("referrer",Referrer);
+                if (AvailabilityElement != null) yield return ("availability",AvailabilityElement);
+                if (UrlElement != null) yield return ("url",UrlElement);
+                if (NumberOfSeriesElement != null) yield return ("numberOfSeries",NumberOfSeriesElement);
+                if (NumberOfInstancesElement != null) yield return ("numberOfInstances",NumberOfInstancesElement);
+                foreach (var elem in Procedure) { if (elem != null) yield return ("procedure",elem); }
+                if (Interpreter != null) yield return ("interpreter",Interpreter);
+                if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                foreach (var elem in Series) { if (elem != null) yield return ("series",elem); }
+            }
+        }
+
     }
     
 }

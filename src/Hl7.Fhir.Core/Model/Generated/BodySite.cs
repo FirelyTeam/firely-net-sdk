@@ -234,6 +234,22 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Image) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (Patient != null) yield return ("patient",Patient);
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (Code != null) yield return ("code",Code);
+                foreach (var elem in Modifier) { if (elem != null) yield return ("modifier",elem); }
+                if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                foreach (var elem in Image) { if (elem != null) yield return ("image",elem); }
+            }
+        }
+
     }
     
 }

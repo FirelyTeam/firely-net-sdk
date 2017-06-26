@@ -122,6 +122,16 @@ namespace Hl7.Fhir.Model
                 foreach (var p in Extension) { if (p != null) yield return p; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var p in Extension) { if (p != null) yield return ("extension",p); }
+            }
+        }
+
     }
 
 }

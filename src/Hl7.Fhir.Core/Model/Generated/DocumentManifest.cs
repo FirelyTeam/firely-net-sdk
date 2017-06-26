@@ -128,6 +128,17 @@ namespace Hl7.Fhir.Model
                     if (P != null) yield return P;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (P != null) yield return ("p",P);
+                }
+            }
+
             
         }
         
@@ -222,6 +233,18 @@ namespace Hl7.Fhir.Model
                     if (Ref != null) yield return Ref;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Identifier != null) yield return ("identifier",Identifier);
+                    if (Ref != null) yield return ("ref",Ref);
+                }
+            }
+
             
         }
         
@@ -571,6 +594,28 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Related) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (MasterIdentifier != null) yield return ("masterIdentifier",MasterIdentifier);
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (Subject != null) yield return ("subject",Subject);
+                foreach (var elem in Recipient) { if (elem != null) yield return ("recipient",elem); }
+                if (Type != null) yield return ("type",Type);
+                foreach (var elem in Author) { if (elem != null) yield return ("author",elem); }
+                if (CreatedElement != null) yield return ("created",CreatedElement);
+                if (SourceElement != null) yield return ("source",SourceElement);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                foreach (var elem in Content) { if (elem != null) yield return ("content",elem); }
+                foreach (var elem in Related) { if (elem != null) yield return ("related",elem); }
+            }
+        }
+
     }
     
 }

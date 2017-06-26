@@ -448,6 +448,30 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Contract) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (Issuer != null) yield return ("issuer",Issuer);
+                if (Bin != null) yield return ("bin",Bin);
+                if (Period != null) yield return ("period",Period);
+                if (Type != null) yield return ("type",Type);
+                if (SubscriberId != null) yield return ("subscriberId",SubscriberId);
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (GroupElement != null) yield return ("group",GroupElement);
+                if (PlanElement != null) yield return ("plan",PlanElement);
+                if (SubPlanElement != null) yield return ("subPlan",SubPlanElement);
+                if (DependentElement != null) yield return ("dependent",DependentElement);
+                if (SequenceElement != null) yield return ("sequence",SequenceElement);
+                if (Subscriber != null) yield return ("subscriber",Subscriber);
+                if (Network != null) yield return ("network",Network);
+                foreach (var elem in Contract) { if (elem != null) yield return ("contract",elem); }
+            }
+        }
+
     }
     
 }

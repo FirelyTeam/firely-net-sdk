@@ -343,6 +343,26 @@ namespace Hl7.Fhir.Model
 				if (RequestOrganization != null) yield return RequestOrganization;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (Request != null) yield return ("request",Request);
+                if (OutcomeElement != null) yield return ("outcome",OutcomeElement);
+                if (DispositionElement != null) yield return ("disposition",DispositionElement);
+                if (Ruleset != null) yield return ("ruleset",Ruleset);
+                if (OriginalRuleset != null) yield return ("originalRuleset",OriginalRuleset);
+                if (CreatedElement != null) yield return ("created",CreatedElement);
+                if (Organization != null) yield return ("organization",Organization);
+                if (RequestProvider != null) yield return ("requestProvider",RequestProvider);
+                if (RequestOrganization != null) yield return ("requestOrganization",RequestOrganization);
+            }
+        }
+
     }
     
 }

@@ -305,6 +305,18 @@ namespace Hl7.Fhir.Model
                     if (UrlElement != null) yield return UrlElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (RelationElement != null) yield return ("relation",RelationElement);
+                    if (UrlElement != null) yield return ("url",UrlElement);
+                }
+            }
+
             
         }
         
@@ -487,6 +499,22 @@ namespace Hl7.Fhir.Model
                     if (Response != null) yield return Response;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    foreach (var elem in Link) { if (elem != null) yield return ("link",elem); }
+                    if (FullUrlElement != null) yield return ("fullUrl",FullUrlElement);
+                    if (Resource != null) yield return ("resource",Resource);
+                    if (Search != null) yield return ("search",Search);
+                    if (Request != null) yield return ("request",Request);
+                    if (Response != null) yield return ("response",Response);
+                }
+            }
+
             
         }
         
@@ -617,6 +645,18 @@ namespace Hl7.Fhir.Model
                     if (ScoreElement != null) yield return ScoreElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (ModeElement != null) yield return ("mode",ModeElement);
+                    if (ScoreElement != null) yield return ("score",ScoreElement);
+                }
+            }
+
             
         }
         
@@ -893,6 +933,22 @@ namespace Hl7.Fhir.Model
                     if (IfNoneExistElement != null) yield return IfNoneExistElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (MethodElement != null) yield return ("method",MethodElement);
+                    if (UrlElement != null) yield return ("url",UrlElement);
+                    if (IfNoneMatchElement != null) yield return ("ifNoneMatch",IfNoneMatchElement);
+                    if (IfModifiedSinceElement != null) yield return ("ifModifiedSince",IfModifiedSinceElement);
+                    if (IfMatchElement != null) yield return ("ifMatch",IfMatchElement);
+                    if (IfNoneExistElement != null) yield return ("ifNoneExist",IfNoneExistElement);
+                }
+            }
+
             
         }
         
@@ -1096,6 +1152,20 @@ namespace Hl7.Fhir.Model
                     if (LastModifiedElement != null) yield return LastModifiedElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (StatusElement != null) yield return ("status",StatusElement);
+                    if (LocationElement != null) yield return ("location",LocationElement);
+                    if (EtagElement != null) yield return ("etag",EtagElement);
+                    if (LastModifiedElement != null) yield return ("lastModified",LastModifiedElement);
+                }
+            }
+
             
         }
         
@@ -1349,6 +1419,21 @@ namespace Hl7.Fhir.Model
 				if (Signature != null) yield return Signature;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (TypeElement != null) yield return ("type",TypeElement);
+                if (TotalElement != null) yield return ("total",TotalElement);
+                foreach (var elem in Link) { if (elem != null) yield return ("link",elem); }
+                foreach (var elem in Entry) { if (elem != null) yield return ("entry",elem); }
+                if (Signature != null) yield return ("signature",Signature);
+            }
+        }
+
     }
     
 }

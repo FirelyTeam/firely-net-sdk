@@ -177,6 +177,18 @@ namespace Hl7.Fhir.Model
                     if (Role != null) yield return Role;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Actor != null) yield return ("actor",Actor);
+                    if (Role != null) yield return ("role",Role);
+                }
+            }
+
             
         }
         
@@ -272,6 +284,18 @@ namespace Hl7.Fhir.Model
                     if (Manipulated != null) yield return Manipulated;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Action != null) yield return ("action",Action);
+                    if (Manipulated != null) yield return ("manipulated",Manipulated);
+                }
+            }
+
             
         }
         
@@ -763,6 +787,37 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Used) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (Subject != null) yield return ("subject",Subject);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (Category != null) yield return ("category",Category);
+                if (Code != null) yield return ("code",Code);
+                if (NotPerformedElement != null) yield return ("notPerformed",NotPerformedElement);
+                foreach (var elem in ReasonNotPerformed) { if (elem != null) yield return ("reasonNotPerformed",elem); }
+                foreach (var elem in BodySite) { if (elem != null) yield return ("bodySite",elem); }
+                if (Reason != null) yield return ("reason",Reason);
+                foreach (var elem in Performer) { if (elem != null) yield return ("performer",elem); }
+                if (Performed != null) yield return ("performed",Performed);
+                if (Encounter != null) yield return ("encounter",Encounter);
+                if (Location != null) yield return ("location",Location);
+                if (Outcome != null) yield return ("outcome",Outcome);
+                foreach (var elem in Report) { if (elem != null) yield return ("report",elem); }
+                foreach (var elem in Complication) { if (elem != null) yield return ("complication",elem); }
+                foreach (var elem in FollowUp) { if (elem != null) yield return ("followUp",elem); }
+                if (Request != null) yield return ("request",Request);
+                foreach (var elem in Notes) { if (elem != null) yield return ("notes",elem); }
+                foreach (var elem in FocalDevice) { if (elem != null) yield return ("focalDevice",elem); }
+                foreach (var elem in Used) { if (elem != null) yield return ("used",elem); }
+            }
+        }
+
     }
     
 }

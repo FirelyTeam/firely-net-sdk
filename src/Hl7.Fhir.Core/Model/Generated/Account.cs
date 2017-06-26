@@ -353,6 +353,27 @@ namespace Hl7.Fhir.Model
 				if (DescriptionElement != null) yield return DescriptionElement;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (NameElement != null) yield return ("name",NameElement);
+                if (Type != null) yield return ("type",Type);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (ActivePeriod != null) yield return ("activePeriod",ActivePeriod);
+                if (Currency != null) yield return ("currency",Currency);
+                if (Balance != null) yield return ("balance",Balance);
+                if (CoveragePeriod != null) yield return ("coveragePeriod",CoveragePeriod);
+                if (Subject != null) yield return ("subject",Subject);
+                if (Owner != null) yield return ("owner",Owner);
+                if (DescriptionElement != null) yield return ("description",DescriptionElement);
+            }
+        }
+
     }
     
 }

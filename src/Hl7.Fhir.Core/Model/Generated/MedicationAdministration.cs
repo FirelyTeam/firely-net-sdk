@@ -233,6 +233,22 @@ namespace Hl7.Fhir.Model
                     if (Rate != null) yield return Rate;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (TextElement != null) yield return ("text",TextElement);
+                    if (Site != null) yield return ("site",Site);
+                    if (Route != null) yield return ("route",Route);
+                    if (Method != null) yield return ("method",Method);
+                    if (Quantity != null) yield return ("quantity",Quantity);
+                    if (Rate != null) yield return ("rate",Rate);
+                }
+            }
+
             
         }
         
@@ -637,6 +653,30 @@ namespace Hl7.Fhir.Model
 				if (Dosage != null) yield return Dosage;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (Patient != null) yield return ("patient",Patient);
+                if (Practitioner != null) yield return ("practitioner",Practitioner);
+                if (Encounter != null) yield return ("encounter",Encounter);
+                if (Prescription != null) yield return ("prescription",Prescription);
+                if (WasNotGivenElement != null) yield return ("wasNotGiven",WasNotGivenElement);
+                foreach (var elem in ReasonNotGiven) { if (elem != null) yield return ("reasonNotGiven",elem); }
+                foreach (var elem in ReasonGiven) { if (elem != null) yield return ("reasonGiven",elem); }
+                if (EffectiveTime != null) yield return ("effectiveTime",EffectiveTime);
+                if (Medication != null) yield return ("medication",Medication);
+                foreach (var elem in Device) { if (elem != null) yield return ("device",elem); }
+                if (NoteElement != null) yield return ("note",NoteElement);
+                if (Dosage != null) yield return ("dosage",Dosage);
+            }
+        }
+
     }
     
 }

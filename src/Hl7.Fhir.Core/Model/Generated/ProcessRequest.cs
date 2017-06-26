@@ -178,6 +178,17 @@ namespace Hl7.Fhir.Model
                     if (SequenceLinkIdElement != null) yield return SequenceLinkIdElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (SequenceLinkIdElement != null) yield return ("sequenceLinkId",SequenceLinkIdElement);
+                }
+            }
+
             
         }
         
@@ -636,6 +647,32 @@ namespace Hl7.Fhir.Model
 				if (Period != null) yield return Period;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (ActionElement != null) yield return ("action",ActionElement);
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (Ruleset != null) yield return ("ruleset",Ruleset);
+                if (OriginalRuleset != null) yield return ("originalRuleset",OriginalRuleset);
+                if (CreatedElement != null) yield return ("created",CreatedElement);
+                if (Target != null) yield return ("target",Target);
+                if (Provider != null) yield return ("provider",Provider);
+                if (Organization != null) yield return ("organization",Organization);
+                if (Request != null) yield return ("request",Request);
+                if (Response != null) yield return ("response",Response);
+                if (NullifyElement != null) yield return ("nullify",NullifyElement);
+                if (ReferenceElement != null) yield return ("reference",ReferenceElement);
+                foreach (var elem in Item) { if (elem != null) yield return ("item",elem); }
+                foreach (var elem in IncludeElement) { if (elem != null) yield return ("include",elem); }
+                foreach (var elem in ExcludeElement) { if (elem != null) yield return ("exclude",elem); }
+                if (Period != null) yield return ("period",Period);
+            }
+        }
+
     }
     
 }

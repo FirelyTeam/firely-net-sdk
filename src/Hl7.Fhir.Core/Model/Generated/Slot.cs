@@ -378,6 +378,24 @@ namespace Hl7.Fhir.Model
 				if (CommentElement != null) yield return CommentElement;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (Type != null) yield return ("type",Type);
+                if (Schedule != null) yield return ("schedule",Schedule);
+                if (FreeBusyTypeElement != null) yield return ("freeBusyType",FreeBusyTypeElement);
+                if (StartElement != null) yield return ("start",StartElement);
+                if (EndElement != null) yield return ("end",EndElement);
+                if (OverbookedElement != null) yield return ("overbooked",OverbookedElement);
+                if (CommentElement != null) yield return ("comment",CommentElement);
+            }
+        }
+
     }
     
 }

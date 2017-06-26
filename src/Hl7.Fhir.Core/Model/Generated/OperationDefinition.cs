@@ -205,6 +205,18 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Telecom) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (NameElement != null) yield return ("name",NameElement);
+                    foreach (var elem in Telecom) { if (elem != null) yield return ("telecom",elem); }
+                }
+            }
+
             
         }
         
@@ -537,6 +549,25 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Part) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (NameElement != null) yield return ("name",NameElement);
+                    if (UseElement != null) yield return ("use",UseElement);
+                    if (MinElement != null) yield return ("min",MinElement);
+                    if (MaxElement != null) yield return ("max",MaxElement);
+                    if (DocumentationElement != null) yield return ("documentation",DocumentationElement);
+                    if (TypeElement != null) yield return ("type",TypeElement);
+                    if (Profile != null) yield return ("profile",Profile);
+                    if (Binding != null) yield return ("binding",Binding);
+                    foreach (var elem in Part) { if (elem != null) yield return ("part",elem); }
+                }
+            }
+
             
         }
         
@@ -652,6 +683,18 @@ namespace Hl7.Fhir.Model
                     if (ValueSet != null) yield return ValueSet;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (StrengthElement != null) yield return ("strength",StrengthElement);
+                    if (ValueSet != null) yield return ("valueSet",ValueSet);
+                }
+            }
+
             
         }
         
@@ -1357,6 +1400,35 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Parameter) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (UrlElement != null) yield return ("url",UrlElement);
+                if (VersionElement != null) yield return ("version",VersionElement);
+                if (NameElement != null) yield return ("name",NameElement);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (KindElement != null) yield return ("kind",KindElement);
+                if (ExperimentalElement != null) yield return ("experimental",ExperimentalElement);
+                if (PublisherElement != null) yield return ("publisher",PublisherElement);
+                foreach (var elem in Contact) { if (elem != null) yield return ("contact",elem); }
+                if (DateElement != null) yield return ("date",DateElement);
+                if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                if (RequirementsElement != null) yield return ("requirements",RequirementsElement);
+                if (IdempotentElement != null) yield return ("idempotent",IdempotentElement);
+                if (CodeElement != null) yield return ("code",CodeElement);
+                if (NotesElement != null) yield return ("notes",NotesElement);
+                if (Base != null) yield return ("base",Base);
+                if (SystemElement != null) yield return ("system",SystemElement);
+                foreach (var elem in TypeElement) { if (elem != null) yield return ("type",elem); }
+                if (InstanceElement != null) yield return ("instance",InstanceElement);
+                foreach (var elem in Parameter) { if (elem != null) yield return ("parameter",elem); }
+            }
+        }
+
     }
     
 }

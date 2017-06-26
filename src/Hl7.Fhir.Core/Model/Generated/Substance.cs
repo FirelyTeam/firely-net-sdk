@@ -178,6 +178,19 @@ namespace Hl7.Fhir.Model
                     if (Quantity != null) yield return Quantity;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Identifier != null) yield return ("identifier",Identifier);
+                    if (ExpiryElement != null) yield return ("expiry",ExpiryElement);
+                    if (Quantity != null) yield return ("quantity",Quantity);
+                }
+            }
+
             
         }
         
@@ -273,6 +286,18 @@ namespace Hl7.Fhir.Model
                     if (Substance != null) yield return Substance;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Quantity != null) yield return ("quantity",Quantity);
+                    if (Substance != null) yield return ("substance",Substance);
+                }
+            }
+
             
         }
         
@@ -456,6 +481,22 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Ingredient) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                foreach (var elem in Category) { if (elem != null) yield return ("category",elem); }
+                if (Code != null) yield return ("code",Code);
+                if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                foreach (var elem in Instance) { if (elem != null) yield return ("instance",elem); }
+                foreach (var elem in Ingredient) { if (elem != null) yield return ("ingredient",elem); }
+            }
+        }
+
     }
     
 }

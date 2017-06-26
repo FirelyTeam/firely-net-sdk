@@ -236,6 +236,21 @@ namespace Hl7.Fhir.Model
                     if (RationaleElement != null) yield return RationaleElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Outcome != null) yield return ("outcome",Outcome);
+                    if (Probability != null) yield return ("probability",Probability);
+                    if (RelativeRiskElement != null) yield return ("relativeRisk",RelativeRiskElement);
+                    if (When != null) yield return ("when",When);
+                    if (RationaleElement != null) yield return ("rationale",RationaleElement);
+                }
+            }
+
             
         }
         
@@ -432,7 +447,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent RiskAssessment_RAS_2 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("prediction.probability.all($this.as(decimal) <= 100)"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("prediction.probability.all($this <= 100)"))},
             Key = "ras-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Must be <= 100",
@@ -533,6 +548,26 @@ namespace Hl7.Fhir.Model
 				if (MitigationElement != null) yield return MitigationElement;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (Subject != null) yield return ("subject",Subject);
+                if (DateElement != null) yield return ("date",DateElement);
+                if (Condition != null) yield return ("condition",Condition);
+                if (Encounter != null) yield return ("encounter",Encounter);
+                if (Performer != null) yield return ("performer",Performer);
+                if (Identifier != null) yield return ("identifier",Identifier);
+                if (Method != null) yield return ("method",Method);
+                foreach (var elem in Basis) { if (elem != null) yield return ("basis",elem); }
+                foreach (var elem in Prediction) { if (elem != null) yield return ("prediction",elem); }
+                if (MitigationElement != null) yield return ("mitigation",MitigationElement);
+            }
+        }
+
     }
     
 }

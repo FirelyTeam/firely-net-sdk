@@ -521,6 +521,32 @@ namespace Hl7.Fhir.Model
 				if (FulfillmentTime != null) yield return FulfillmentTime;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (StatusElement != null) yield return ("status",StatusElement);
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (DateElement != null) yield return ("date",DateElement);
+                if (Type != null) yield return ("type",Type);
+                if (Specialty != null) yield return ("specialty",Specialty);
+                if (Priority != null) yield return ("priority",Priority);
+                if (Patient != null) yield return ("patient",Patient);
+                if (Requester != null) yield return ("requester",Requester);
+                foreach (var elem in Recipient) { if (elem != null) yield return ("recipient",elem); }
+                if (Encounter != null) yield return ("encounter",Encounter);
+                if (DateSentElement != null) yield return ("dateSent",DateSentElement);
+                if (Reason != null) yield return ("reason",Reason);
+                if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                foreach (var elem in ServiceRequested) { if (elem != null) yield return ("serviceRequested",elem); }
+                foreach (var elem in SupportingInformation) { if (elem != null) yield return ("supportingInformation",elem); }
+                if (FulfillmentTime != null) yield return ("fulfillmentTime",FulfillmentTime);
+            }
+        }
+
     }
     
 }

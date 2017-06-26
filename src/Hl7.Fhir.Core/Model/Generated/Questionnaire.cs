@@ -468,6 +468,24 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Question) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (LinkIdElement != null) yield return ("linkId",LinkIdElement);
+                    if (TitleElement != null) yield return ("title",TitleElement);
+                    foreach (var elem in Concept) { if (elem != null) yield return ("concept",elem); }
+                    if (TextElement != null) yield return ("text",TextElement);
+                    if (RequiredElement != null) yield return ("required",RequiredElement);
+                    if (RepeatsElement != null) yield return ("repeats",RepeatsElement);
+                    foreach (var elem in Group) { if (elem != null) yield return ("group",elem); }
+                    foreach (var elem in Question) { if (elem != null) yield return ("question",elem); }
+                }
+            }
+
             
         }
         
@@ -779,6 +797,25 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Group) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (LinkIdElement != null) yield return ("linkId",LinkIdElement);
+                    foreach (var elem in Concept) { if (elem != null) yield return ("concept",elem); }
+                    if (TextElement != null) yield return ("text",TextElement);
+                    if (TypeElement != null) yield return ("type",TypeElement);
+                    if (RequiredElement != null) yield return ("required",RequiredElement);
+                    if (RepeatsElement != null) yield return ("repeats",RepeatsElement);
+                    if (Options != null) yield return ("options",Options);
+                    foreach (var elem in Option) { if (elem != null) yield return ("option",elem); }
+                    foreach (var elem in Group) { if (elem != null) yield return ("group",elem); }
+                }
+            }
+
             
         }
         
@@ -1112,6 +1149,24 @@ namespace Hl7.Fhir.Model
 				if (Group != null) yield return Group;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (VersionElement != null) yield return ("version",VersionElement);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (DateElement != null) yield return ("date",DateElement);
+                if (PublisherElement != null) yield return ("publisher",PublisherElement);
+                foreach (var elem in Telecom) { if (elem != null) yield return ("telecom",elem); }
+                foreach (var elem in SubjectTypeElement) { if (elem != null) yield return ("subjectType",elem); }
+                if (Group != null) yield return ("group",Group);
+            }
+        }
+
     }
     
 }

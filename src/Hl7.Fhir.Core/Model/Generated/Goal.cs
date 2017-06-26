@@ -190,6 +190,17 @@ namespace Hl7.Fhir.Model
                     if (Result != null) yield return Result;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Result != null) yield return ("result",Result);
+                }
+            }
+
             
         }
         
@@ -559,6 +570,30 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Outcome) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (Subject != null) yield return ("subject",Subject);
+                if (Start != null) yield return ("start",Start);
+                if (Target != null) yield return ("target",Target);
+                foreach (var elem in Category) { if (elem != null) yield return ("category",elem); }
+                if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (StatusDateElement != null) yield return ("statusDate",StatusDateElement);
+                if (StatusReason != null) yield return ("statusReason",StatusReason);
+                if (Author != null) yield return ("author",Author);
+                if (Priority != null) yield return ("priority",Priority);
+                foreach (var elem in Addresses) { if (elem != null) yield return ("addresses",elem); }
+                foreach (var elem in Note) { if (elem != null) yield return ("note",elem); }
+                foreach (var elem in Outcome) { if (elem != null) yield return ("outcome",elem); }
+            }
+        }
+
     }
     
 }

@@ -541,6 +541,29 @@ namespace Hl7.Fhir.Model
 				if (PriorityElement != null) yield return PriorityElement;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (BodySite != null) yield return ("bodySite",BodySite);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (Device != null) yield return ("device",Device);
+                if (Encounter != null) yield return ("encounter",Encounter);
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                foreach (var elem in Indication) { if (elem != null) yield return ("indication",elem); }
+                foreach (var elem in NotesElement) { if (elem != null) yield return ("notes",elem); }
+                foreach (var elem in PrnReason) { if (elem != null) yield return ("prnReason",elem); }
+                if (OrderedOnElement != null) yield return ("orderedOn",OrderedOnElement);
+                if (RecordedOnElement != null) yield return ("recordedOn",RecordedOnElement);
+                if (Subject != null) yield return ("subject",Subject);
+                if (Timing != null) yield return ("timing",Timing);
+                if (PriorityElement != null) yield return ("priority",PriorityElement);
+            }
+        }
+
     }
     
 }

@@ -216,6 +216,21 @@ namespace Hl7.Fhir.Model
 				if (CommentElement != null) yield return CommentElement;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                foreach (var elem in Type) { if (elem != null) yield return ("type",elem); }
+                if (Actor != null) yield return ("actor",Actor);
+                if (PlanningHorizon != null) yield return ("planningHorizon",PlanningHorizon);
+                if (CommentElement != null) yield return ("comment",CommentElement);
+            }
+        }
+
     }
     
 }

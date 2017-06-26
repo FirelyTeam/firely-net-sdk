@@ -310,6 +310,26 @@ namespace Hl7.Fhir.Model
 				if (Relationship != null) yield return Relationship;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (Ruleset != null) yield return ("ruleset",Ruleset);
+                if (OriginalRuleset != null) yield return ("originalRuleset",OriginalRuleset);
+                if (CreatedElement != null) yield return ("created",CreatedElement);
+                if (Target != null) yield return ("target",Target);
+                if (Provider != null) yield return ("provider",Provider);
+                if (Organization != null) yield return ("organization",Organization);
+                if (Subject != null) yield return ("subject",Subject);
+                if (Coverage != null) yield return ("coverage",Coverage);
+                if (Relationship != null) yield return ("relationship",Relationship);
+            }
+        }
+
     }
     
 }

@@ -329,6 +329,20 @@ namespace Hl7.Fhir.Model
                     if (StatusElement != null) yield return StatusElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    foreach (var elem in Type) { if (elem != null) yield return ("type",elem); }
+                    if (Actor != null) yield return ("actor",Actor);
+                    if (RequiredElement != null) yield return ("required",RequiredElement);
+                    if (StatusElement != null) yield return ("status",StatusElement);
+                }
+            }
+
             
         }
         
@@ -759,6 +773,28 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Participant) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (Type != null) yield return ("type",Type);
+                if (Reason != null) yield return ("reason",Reason);
+                if (PriorityElement != null) yield return ("priority",PriorityElement);
+                if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                if (StartElement != null) yield return ("start",StartElement);
+                if (EndElement != null) yield return ("end",EndElement);
+                if (MinutesDurationElement != null) yield return ("minutesDuration",MinutesDurationElement);
+                foreach (var elem in Slot) { if (elem != null) yield return ("slot",elem); }
+                if (CommentElement != null) yield return ("comment",CommentElement);
+                foreach (var elem in Participant) { if (elem != null) yield return ("participant",elem); }
+            }
+        }
+
     }
     
 }

@@ -275,6 +275,18 @@ namespace Hl7.Fhir.Model
                     if (Plan != null) yield return Plan;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (CodeElement != null) yield return ("code",CodeElement);
+                    if (Plan != null) yield return ("plan",Plan);
+                }
+            }
+
             
         }
         
@@ -369,6 +381,18 @@ namespace Hl7.Fhir.Model
                     if (Member != null) yield return Member;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Role != null) yield return ("role",Role);
+                    if (Member != null) yield return ("member",Member);
+                }
+            }
+
             
         }
         
@@ -501,6 +525,20 @@ namespace Hl7.Fhir.Model
                     if (Detail != null) yield return Detail;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    foreach (var elem in ActionResulting) { if (elem != null) yield return ("actionResulting",elem); }
+                    foreach (var elem in Progress) { if (elem != null) yield return ("progress",elem); }
+                    if (Reference != null) yield return ("reference",Reference);
+                    if (Detail != null) yield return ("detail",Detail);
+                }
+            }
+
             
         }
         
@@ -888,6 +926,31 @@ namespace Hl7.Fhir.Model
                     if (DescriptionElement != null) yield return DescriptionElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Category != null) yield return ("category",Category);
+                    if (Code != null) yield return ("code",Code);
+                    foreach (var elem in ReasonCode) { if (elem != null) yield return ("reasonCode",elem); }
+                    foreach (var elem in ReasonReference) { if (elem != null) yield return ("reasonReference",elem); }
+                    foreach (var elem in Goal) { if (elem != null) yield return ("goal",elem); }
+                    if (StatusElement != null) yield return ("status",StatusElement);
+                    if (StatusReason != null) yield return ("statusReason",StatusReason);
+                    if (ProhibitedElement != null) yield return ("prohibited",ProhibitedElement);
+                    if (Scheduled != null) yield return ("scheduled",Scheduled);
+                    if (Location != null) yield return ("location",Location);
+                    foreach (var elem in Performer) { if (elem != null) yield return ("performer",elem); }
+                    if (Product != null) yield return ("product",Product);
+                    if (DailyAmount != null) yield return ("dailyAmount",DailyAmount);
+                    if (Quantity != null) yield return ("quantity",Quantity);
+                    if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                }
+            }
+
             
         }
         
@@ -1306,6 +1369,32 @@ namespace Hl7.Fhir.Model
 				if (Note != null) yield return Note;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (Subject != null) yield return ("subject",Subject);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (Context != null) yield return ("context",Context);
+                if (Period != null) yield return ("period",Period);
+                foreach (var elem in Author) { if (elem != null) yield return ("author",elem); }
+                if (ModifiedElement != null) yield return ("modified",ModifiedElement);
+                foreach (var elem in Category) { if (elem != null) yield return ("category",elem); }
+                if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                foreach (var elem in Addresses) { if (elem != null) yield return ("addresses",elem); }
+                foreach (var elem in Support) { if (elem != null) yield return ("support",elem); }
+                foreach (var elem in RelatedPlan) { if (elem != null) yield return ("relatedPlan",elem); }
+                foreach (var elem in Participant) { if (elem != null) yield return ("participant",elem); }
+                foreach (var elem in Goal) { if (elem != null) yield return ("goal",elem); }
+                foreach (var elem in Activity) { if (elem != null) yield return ("activity",elem); }
+                if (Note != null) yield return ("note",Note);
+            }
+        }
+
     }
     
 }

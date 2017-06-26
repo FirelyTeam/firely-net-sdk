@@ -507,6 +507,24 @@ namespace Hl7.Fhir.Model
                     if (Note != null) yield return Note;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Substance != null) yield return ("substance",Substance);
+                    if (CertaintyElement != null) yield return ("certainty",CertaintyElement);
+                    foreach (var elem in Manifestation) { if (elem != null) yield return ("manifestation",elem); }
+                    if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                    if (OnsetElement != null) yield return ("onset",OnsetElement);
+                    if (SeverityElement != null) yield return ("severity",SeverityElement);
+                    if (ExposureRoute != null) yield return ("exposureRoute",ExposureRoute);
+                    if (Note != null) yield return ("note",Note);
+                }
+            }
+
             
         }
         
@@ -945,6 +963,30 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Reaction) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (OnsetElement != null) yield return ("onset",OnsetElement);
+                if (RecordedDateElement != null) yield return ("recordedDate",RecordedDateElement);
+                if (Recorder != null) yield return ("recorder",Recorder);
+                if (Patient != null) yield return ("patient",Patient);
+                if (Reporter != null) yield return ("reporter",Reporter);
+                if (Substance != null) yield return ("substance",Substance);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (CriticalityElement != null) yield return ("criticality",CriticalityElement);
+                if (TypeElement != null) yield return ("type",TypeElement);
+                if (CategoryElement != null) yield return ("category",CategoryElement);
+                if (LastOccurenceElement != null) yield return ("lastOccurence",LastOccurenceElement);
+                if (Note != null) yield return ("note",Note);
+                foreach (var elem in Reaction) { if (elem != null) yield return ("reaction",elem); }
+            }
+        }
+
     }
     
 }

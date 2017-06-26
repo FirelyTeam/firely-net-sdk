@@ -161,6 +161,19 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Batch) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Form != null) yield return ("form",Form);
+                    foreach (var elem in Ingredient) { if (elem != null) yield return ("ingredient",elem); }
+                    foreach (var elem in Batch) { if (elem != null) yield return ("batch",elem); }
+                }
+            }
+
             
         }
         
@@ -256,6 +269,18 @@ namespace Hl7.Fhir.Model
                     if (Amount != null) yield return Amount;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Item != null) yield return ("item",Item);
+                    if (Amount != null) yield return ("amount",Amount);
+                }
+            }
+
             
         }
         
@@ -386,6 +411,18 @@ namespace Hl7.Fhir.Model
                     if (ExpirationDateElement != null) yield return ExpirationDateElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (LotNumberElement != null) yield return ("lotNumber",LotNumberElement);
+                    if (ExpirationDateElement != null) yield return ("expirationDate",ExpirationDateElement);
+                }
+            }
+
             
         }
         
@@ -479,6 +516,18 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Content) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Container != null) yield return ("container",Container);
+                    foreach (var elem in Content) { if (elem != null) yield return ("content",elem); }
+                }
+            }
+
             
         }
         
@@ -574,6 +623,18 @@ namespace Hl7.Fhir.Model
                     if (Amount != null) yield return Amount;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Item != null) yield return ("item",Item);
+                    if (Amount != null) yield return ("amount",Amount);
+                }
+            }
+
             
         }
         
@@ -737,6 +798,21 @@ namespace Hl7.Fhir.Model
 				if (Package != null) yield return Package;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (Code != null) yield return ("code",Code);
+                if (IsBrandElement != null) yield return ("isBrand",IsBrandElement);
+                if (Manufacturer != null) yield return ("manufacturer",Manufacturer);
+                if (Product != null) yield return ("product",Product);
+                if (Package != null) yield return ("package",Package);
+            }
+        }
+
     }
     
 }

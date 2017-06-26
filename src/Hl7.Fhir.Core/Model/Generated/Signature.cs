@@ -247,6 +247,21 @@ namespace Hl7.Fhir.Model
                 if (BlobElement != null) yield return BlobElement;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren 
+        { 
+            get 
+            { 
+                foreach (var item in base.NamedChildren) yield return item; 
+                foreach (var elem in Type) { if (elem != null) yield return ("type",elem); }
+                if (WhenElement != null) yield return ("when",WhenElement);
+                if (Who != null) yield return ("who",Who);
+                if (ContentTypeElement != null) yield return ("contentType",ContentTypeElement);
+                if (BlobElement != null) yield return ("blob",BlobElement);
+ 
+            } 
+        } 
     
     
     }

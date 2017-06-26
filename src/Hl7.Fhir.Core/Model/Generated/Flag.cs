@@ -299,6 +299,24 @@ namespace Hl7.Fhir.Model
 				if (Code != null) yield return Code;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (Category != null) yield return ("category",Category);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (Period != null) yield return ("period",Period);
+                if (Subject != null) yield return ("subject",Subject);
+                if (Encounter != null) yield return ("encounter",Encounter);
+                if (Author != null) yield return ("author",Author);
+                if (Code != null) yield return ("code",Code);
+            }
+        }
+
     }
     
 }

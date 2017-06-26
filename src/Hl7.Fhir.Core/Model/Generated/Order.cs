@@ -142,6 +142,18 @@ namespace Hl7.Fhir.Model
                     if (Schedule != null) yield return Schedule;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Code != null) yield return ("code",Code);
+                    if (Schedule != null) yield return ("schedule",Schedule);
+                }
+            }
+
             
         }
         
@@ -376,6 +388,24 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Detail) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (DateElement != null) yield return ("date",DateElement);
+                if (Subject != null) yield return ("subject",Subject);
+                if (Source != null) yield return ("source",Source);
+                if (Target != null) yield return ("target",Target);
+                if (Reason != null) yield return ("reason",Reason);
+                if (When != null) yield return ("when",When);
+                foreach (var elem in Detail) { if (elem != null) yield return ("detail",elem); }
+            }
+        }
+
     }
     
 }

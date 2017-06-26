@@ -212,6 +212,20 @@ namespace Hl7.Fhir.Model
                     if (Note != null) yield return Note;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Code != null) yield return ("code",Code);
+                    if (Outcome != null) yield return ("outcome",Outcome);
+                    if (Onset != null) yield return ("onset",Onset);
+                    if (Note != null) yield return ("note",Note);
+                }
+            }
+
             
         }
         
@@ -572,6 +586,28 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Condition) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (Patient != null) yield return ("patient",Patient);
+                if (DateElement != null) yield return ("date",DateElement);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (NameElement != null) yield return ("name",NameElement);
+                if (Relationship != null) yield return ("relationship",Relationship);
+                if (GenderElement != null) yield return ("gender",GenderElement);
+                if (Born != null) yield return ("born",Born);
+                if (Age != null) yield return ("age",Age);
+                if (Deceased != null) yield return ("deceased",Deceased);
+                if (Note != null) yield return ("note",Note);
+                foreach (var elem in Condition) { if (elem != null) yield return ("condition",elem); }
+            }
+        }
+
     }
     
 }

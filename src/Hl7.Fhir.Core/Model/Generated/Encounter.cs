@@ -306,6 +306,18 @@ namespace Hl7.Fhir.Model
                     if (Period != null) yield return Period;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (StatusElement != null) yield return ("status",StatusElement);
+                    if (Period != null) yield return ("period",Period);
+                }
+            }
+
             
         }
         
@@ -418,6 +430,19 @@ namespace Hl7.Fhir.Model
                     if (Individual != null) yield return Individual;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    foreach (var elem in Type) { if (elem != null) yield return ("type",elem); }
+                    if (Period != null) yield return ("period",Period);
+                    if (Individual != null) yield return ("individual",Individual);
+                }
+            }
+
             
         }
         
@@ -676,6 +701,27 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in DischargeDiagnosis) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (PreAdmissionIdentifier != null) yield return ("preAdmissionIdentifier",PreAdmissionIdentifier);
+                    if (Origin != null) yield return ("origin",Origin);
+                    if (AdmitSource != null) yield return ("admitSource",AdmitSource);
+                    foreach (var elem in AdmittingDiagnosis) { if (elem != null) yield return ("admittingDiagnosis",elem); }
+                    if (ReAdmission != null) yield return ("reAdmission",ReAdmission);
+                    foreach (var elem in DietPreference) { if (elem != null) yield return ("dietPreference",elem); }
+                    foreach (var elem in SpecialCourtesy) { if (elem != null) yield return ("specialCourtesy",elem); }
+                    foreach (var elem in SpecialArrangement) { if (elem != null) yield return ("specialArrangement",elem); }
+                    if (Destination != null) yield return ("destination",Destination);
+                    if (DischargeDisposition != null) yield return ("dischargeDisposition",DischargeDisposition);
+                    foreach (var elem in DischargeDiagnosis) { if (elem != null) yield return ("dischargeDiagnosis",elem); }
+                }
+            }
+
             
         }
         
@@ -807,6 +853,19 @@ namespace Hl7.Fhir.Model
                     if (Period != null) yield return Period;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Location != null) yield return ("location",Location);
+                    if (StatusElement != null) yield return ("status",StatusElement);
+                    if (Period != null) yield return ("period",Period);
+                }
+            }
+
             
         }
         
@@ -1249,6 +1308,35 @@ namespace Hl7.Fhir.Model
 				if (PartOf != null) yield return PartOf;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (StatusElement != null) yield return ("status",StatusElement);
+                foreach (var elem in StatusHistory) { if (elem != null) yield return ("statusHistory",elem); }
+                if (ClassElement != null) yield return ("class",ClassElement);
+                foreach (var elem in Type) { if (elem != null) yield return ("type",elem); }
+                if (Priority != null) yield return ("priority",Priority);
+                if (Patient != null) yield return ("patient",Patient);
+                foreach (var elem in EpisodeOfCare) { if (elem != null) yield return ("episodeOfCare",elem); }
+                foreach (var elem in IncomingReferral) { if (elem != null) yield return ("incomingReferral",elem); }
+                foreach (var elem in Participant) { if (elem != null) yield return ("participant",elem); }
+                if (Appointment != null) yield return ("appointment",Appointment);
+                if (Period != null) yield return ("period",Period);
+                if (Length != null) yield return ("length",Length);
+                foreach (var elem in Reason) { if (elem != null) yield return ("reason",elem); }
+                foreach (var elem in Indication) { if (elem != null) yield return ("indication",elem); }
+                if (Hospitalization != null) yield return ("hospitalization",Hospitalization);
+                foreach (var elem in Location) { if (elem != null) yield return ("location",elem); }
+                if (ServiceProvider != null) yield return ("serviceProvider",ServiceProvider);
+                if (PartOf != null) yield return ("partOf",PartOf);
+            }
+        }
+
     }
     
 }

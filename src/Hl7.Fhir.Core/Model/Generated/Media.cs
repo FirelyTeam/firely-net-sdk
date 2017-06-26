@@ -499,6 +499,28 @@ namespace Hl7.Fhir.Model
 				if (Content != null) yield return Content;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (TypeElement != null) yield return ("type",TypeElement);
+                if (Subtype != null) yield return ("subtype",Subtype);
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (Subject != null) yield return ("subject",Subject);
+                if (Operator != null) yield return ("operator",Operator);
+                if (View != null) yield return ("view",View);
+                if (DeviceNameElement != null) yield return ("deviceName",DeviceNameElement);
+                if (HeightElement != null) yield return ("height",HeightElement);
+                if (WidthElement != null) yield return ("width",WidthElement);
+                if (FramesElement != null) yield return ("frames",FramesElement);
+                if (DurationElement != null) yield return ("duration",DurationElement);
+                if (Content != null) yield return ("content",Content);
+            }
+        }
+
     }
     
 }

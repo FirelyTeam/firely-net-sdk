@@ -345,6 +345,26 @@ namespace Hl7.Fhir.Model
                     if (MaxDosePerPeriod != null) yield return MaxDosePerPeriod;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (TextElement != null) yield return ("text",TextElement);
+                    if (AdditionalInstructions != null) yield return ("additionalInstructions",AdditionalInstructions);
+                    if (Timing != null) yield return ("timing",Timing);
+                    if (AsNeeded != null) yield return ("asNeeded",AsNeeded);
+                    if (Site != null) yield return ("site",Site);
+                    if (Route != null) yield return ("route",Route);
+                    if (Method != null) yield return ("method",Method);
+                    if (Dose != null) yield return ("dose",Dose);
+                    if (Rate != null) yield return ("rate",Rate);
+                    if (MaxDosePerPeriod != null) yield return ("maxDosePerPeriod",MaxDosePerPeriod);
+                }
+            }
+
             
         }
         
@@ -459,6 +479,19 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in ResponsibleParty) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Type != null) yield return ("type",Type);
+                    foreach (var elem in Reason) { if (elem != null) yield return ("reason",elem); }
+                    foreach (var elem in ResponsibleParty) { if (elem != null) yield return ("responsibleParty",elem); }
+                }
+            }
+
             
         }
         
@@ -890,6 +923,32 @@ namespace Hl7.Fhir.Model
 				if (Substitution != null) yield return Substitution;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (Identifier != null) yield return ("identifier",Identifier);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (Patient != null) yield return ("patient",Patient);
+                if (Dispenser != null) yield return ("dispenser",Dispenser);
+                foreach (var elem in AuthorizingPrescription) { if (elem != null) yield return ("authorizingPrescription",elem); }
+                if (Type != null) yield return ("type",Type);
+                if (Quantity != null) yield return ("quantity",Quantity);
+                if (DaysSupply != null) yield return ("daysSupply",DaysSupply);
+                if (Medication != null) yield return ("medication",Medication);
+                if (WhenPreparedElement != null) yield return ("whenPrepared",WhenPreparedElement);
+                if (WhenHandedOverElement != null) yield return ("whenHandedOver",WhenHandedOverElement);
+                if (Destination != null) yield return ("destination",Destination);
+                foreach (var elem in Receiver) { if (elem != null) yield return ("receiver",elem); }
+                if (NoteElement != null) yield return ("note",NoteElement);
+                foreach (var elem in DosageInstruction) { if (elem != null) yield return ("dosageInstruction",elem); }
+                if (Substitution != null) yield return ("substitution",Substitution);
+            }
+        }
+
     }
     
 }

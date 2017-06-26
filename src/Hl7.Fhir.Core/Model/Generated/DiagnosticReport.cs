@@ -215,6 +215,18 @@ namespace Hl7.Fhir.Model
                     if (Link != null) yield return Link;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (CommentElement != null) yield return ("comment",CommentElement);
+                    if (Link != null) yield return ("link",Link);
+                }
+            }
+
             
         }
         
@@ -648,6 +660,33 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in PresentedForm) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (Category != null) yield return ("category",Category);
+                if (Code != null) yield return ("code",Code);
+                if (Subject != null) yield return ("subject",Subject);
+                if (Encounter != null) yield return ("encounter",Encounter);
+                if (Effective != null) yield return ("effective",Effective);
+                if (IssuedElement != null) yield return ("issued",IssuedElement);
+                if (Performer != null) yield return ("performer",Performer);
+                foreach (var elem in Request) { if (elem != null) yield return ("request",elem); }
+                foreach (var elem in Specimen) { if (elem != null) yield return ("specimen",elem); }
+                foreach (var elem in Result) { if (elem != null) yield return ("result",elem); }
+                foreach (var elem in ImagingStudy) { if (elem != null) yield return ("imagingStudy",elem); }
+                foreach (var elem in Image) { if (elem != null) yield return ("image",elem); }
+                if (ConclusionElement != null) yield return ("conclusion",ConclusionElement);
+                foreach (var elem in CodedDiagnosis) { if (elem != null) yield return ("codedDiagnosis",elem); }
+                foreach (var elem in PresentedForm) { if (elem != null) yield return ("presentedForm",elem); }
+            }
+        }
+
     }
     
 }

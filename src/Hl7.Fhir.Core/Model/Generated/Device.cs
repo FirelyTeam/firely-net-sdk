@@ -587,6 +587,32 @@ namespace Hl7.Fhir.Model
 				if (UrlElement != null) yield return UrlElement;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (Type != null) yield return ("type",Type);
+                foreach (var elem in Note) { if (elem != null) yield return ("note",elem); }
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (ManufacturerElement != null) yield return ("manufacturer",ManufacturerElement);
+                if (ModelElement != null) yield return ("model",ModelElement);
+                if (VersionElement != null) yield return ("version",VersionElement);
+                if (ManufactureDateElement != null) yield return ("manufactureDate",ManufactureDateElement);
+                if (ExpiryElement != null) yield return ("expiry",ExpiryElement);
+                if (UdiElement != null) yield return ("udi",UdiElement);
+                if (LotNumberElement != null) yield return ("lotNumber",LotNumberElement);
+                if (Owner != null) yield return ("owner",Owner);
+                if (Location != null) yield return ("location",Location);
+                if (Patient != null) yield return ("patient",Patient);
+                foreach (var elem in Contact) { if (elem != null) yield return ("contact",elem); }
+                if (UrlElement != null) yield return ("url",UrlElement);
+            }
+        }
+
     }
     
 }

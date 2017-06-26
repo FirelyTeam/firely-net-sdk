@@ -152,6 +152,18 @@ namespace Hl7.Fhir.Model
                 if (TextElement != null) yield return TextElement;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren 
+        { 
+            get 
+            { 
+                foreach (var item in base.NamedChildren) yield return item; 
+                foreach (var elem in Coding) { if (elem != null) yield return ("coding",elem); }
+                if (TextElement != null) yield return ("text",TextElement);
+ 
+            } 
+        } 
     
     
     }

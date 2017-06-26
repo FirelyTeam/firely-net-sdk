@@ -201,6 +201,18 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Telecom) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (NameElement != null) yield return ("name",NameElement);
+                    foreach (var elem in Telecom) { if (elem != null) yield return ("telecom",elem); }
+                }
+            }
+
             
         }
         
@@ -797,6 +809,31 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in TargetElement) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (UrlElement != null) yield return ("url",UrlElement);
+                if (NameElement != null) yield return ("name",NameElement);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (ExperimentalElement != null) yield return ("experimental",ExperimentalElement);
+                if (PublisherElement != null) yield return ("publisher",PublisherElement);
+                foreach (var elem in Contact) { if (elem != null) yield return ("contact",elem); }
+                if (DateElement != null) yield return ("date",DateElement);
+                if (RequirementsElement != null) yield return ("requirements",RequirementsElement);
+                if (CodeElement != null) yield return ("code",CodeElement);
+                if (BaseElement != null) yield return ("base",BaseElement);
+                if (TypeElement != null) yield return ("type",TypeElement);
+                if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                if (XpathElement != null) yield return ("xpath",XpathElement);
+                if (XpathUsageElement != null) yield return ("xpathUsage",XpathUsageElement);
+                foreach (var elem in TargetElement) { if (elem != null) yield return ("target",elem); }
+            }
+        }
+
     }
     
 }

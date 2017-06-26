@@ -201,6 +201,20 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Part) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (NameElement != null) yield return ("name",NameElement);
+                    if (Value != null) yield return ("value",Value);
+                    if (Resource != null) yield return ("resource",Resource);
+                    foreach (var elem in Part) { if (elem != null) yield return ("part",elem); }
+                }
+            }
+
             
         }
         
@@ -296,6 +310,17 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Parameter) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Parameter) { if (elem != null) yield return ("parameter",elem); }
+            }
+        }
+
     }
     
 }

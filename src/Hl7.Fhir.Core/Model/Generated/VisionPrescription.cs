@@ -665,6 +665,31 @@ namespace Hl7.Fhir.Model
                     if (NotesElement != null) yield return NotesElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Product != null) yield return ("product",Product);
+                    if (EyeElement != null) yield return ("eye",EyeElement);
+                    if (SphereElement != null) yield return ("sphere",SphereElement);
+                    if (CylinderElement != null) yield return ("cylinder",CylinderElement);
+                    if (AxisElement != null) yield return ("axis",AxisElement);
+                    if (PrismElement != null) yield return ("prism",PrismElement);
+                    if (BaseElement != null) yield return ("base",BaseElement);
+                    if (AddElement != null) yield return ("add",AddElement);
+                    if (PowerElement != null) yield return ("power",PowerElement);
+                    if (BackCurveElement != null) yield return ("backCurve",BackCurveElement);
+                    if (DiameterElement != null) yield return ("diameter",DiameterElement);
+                    if (Duration != null) yield return ("duration",Duration);
+                    if (ColorElement != null) yield return ("color",ColorElement);
+                    if (BrandElement != null) yield return ("brand",BrandElement);
+                    if (NotesElement != null) yield return ("notes",NotesElement);
+                }
+            }
+
             
         }
         
@@ -870,6 +895,23 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Dispense) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (DateWrittenElement != null) yield return ("dateWritten",DateWrittenElement);
+                if (Patient != null) yield return ("patient",Patient);
+                if (Prescriber != null) yield return ("prescriber",Prescriber);
+                if (Encounter != null) yield return ("encounter",Encounter);
+                if (Reason != null) yield return ("reason",Reason);
+                foreach (var elem in Dispense) { if (elem != null) yield return ("dispense",elem); }
+            }
+        }
+
     }
     
 }

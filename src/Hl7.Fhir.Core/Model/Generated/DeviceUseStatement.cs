@@ -308,6 +308,25 @@ namespace Hl7.Fhir.Model
 				if (Timing != null) yield return Timing;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (BodySite != null) yield return ("bodySite",BodySite);
+                if (WhenUsed != null) yield return ("whenUsed",WhenUsed);
+                if (Device != null) yield return ("device",Device);
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                foreach (var elem in Indication) { if (elem != null) yield return ("indication",elem); }
+                foreach (var elem in NotesElement) { if (elem != null) yield return ("notes",elem); }
+                if (RecordedOnElement != null) yield return ("recordedOn",RecordedOnElement);
+                if (Subject != null) yield return ("subject",Subject);
+                if (Timing != null) yield return ("timing",Timing);
+            }
+        }
+
     }
     
 }

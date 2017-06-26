@@ -161,6 +161,18 @@ namespace Hl7.Fhir.Model
                     if (TextElement != null) yield return TextElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Type != null) yield return ("type",Type);
+                    if (TextElement != null) yield return ("text",TextElement);
+                }
+            }
+
             
         }
         
@@ -488,6 +500,29 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Error) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (Request != null) yield return ("request",Request);
+                if (Outcome != null) yield return ("outcome",Outcome);
+                if (DispositionElement != null) yield return ("disposition",DispositionElement);
+                if (Ruleset != null) yield return ("ruleset",Ruleset);
+                if (OriginalRuleset != null) yield return ("originalRuleset",OriginalRuleset);
+                if (CreatedElement != null) yield return ("created",CreatedElement);
+                if (Organization != null) yield return ("organization",Organization);
+                if (RequestProvider != null) yield return ("requestProvider",RequestProvider);
+                if (RequestOrganization != null) yield return ("requestOrganization",RequestOrganization);
+                if (Form != null) yield return ("form",Form);
+                foreach (var elem in Notes) { if (elem != null) yield return ("notes",elem); }
+                foreach (var elem in Error) { if (elem != null) yield return ("error",elem); }
+            }
+        }
+
     }
     
 }

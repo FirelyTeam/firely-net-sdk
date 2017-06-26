@@ -335,6 +335,23 @@ namespace Hl7.Fhir.Model
                 if (DataElement != null) yield return DataElement;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren 
+        { 
+            get 
+            { 
+                foreach (var item in base.NamedChildren) yield return item; 
+                if (Origin != null) yield return ("origin",Origin);
+                if (PeriodElement != null) yield return ("period",PeriodElement);
+                if (FactorElement != null) yield return ("factor",FactorElement);
+                if (LowerLimitElement != null) yield return ("lowerLimit",LowerLimitElement);
+                if (UpperLimitElement != null) yield return ("upperLimit",UpperLimitElement);
+                if (DimensionsElement != null) yield return ("dimensions",DimensionsElement);
+                if (DataElement != null) yield return ("data",DataElement);
+ 
+            } 
+        } 
     
     
     }

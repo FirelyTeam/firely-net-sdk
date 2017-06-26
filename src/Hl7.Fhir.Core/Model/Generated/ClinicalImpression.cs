@@ -173,6 +173,18 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Item) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Code != null) yield return ("code",Code);
+                    foreach (var elem in Item) { if (elem != null) yield return ("item",elem); }
+                }
+            }
+
             
         }
         
@@ -285,6 +297,18 @@ namespace Hl7.Fhir.Model
                     if (CauseElement != null) yield return CauseElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Item != null) yield return ("item",Item);
+                    if (CauseElement != null) yield return ("cause",CauseElement);
+                }
+            }
+
             
         }
         
@@ -397,6 +421,18 @@ namespace Hl7.Fhir.Model
                     if (ReasonElement != null) yield return ReasonElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Item != null) yield return ("item",Item);
+                    if (ReasonElement != null) yield return ("reason",ReasonElement);
+                }
+            }
+
             
         }
         
@@ -880,6 +916,33 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Action) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (Patient != null) yield return ("patient",Patient);
+                if (Assessor != null) yield return ("assessor",Assessor);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (DateElement != null) yield return ("date",DateElement);
+                if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                if (Previous != null) yield return ("previous",Previous);
+                foreach (var elem in Problem) { if (elem != null) yield return ("problem",elem); }
+                if (Trigger != null) yield return ("trigger",Trigger);
+                foreach (var elem in Investigations) { if (elem != null) yield return ("investigations",elem); }
+                if (ProtocolElement != null) yield return ("protocol",ProtocolElement);
+                if (SummaryElement != null) yield return ("summary",SummaryElement);
+                foreach (var elem in Finding) { if (elem != null) yield return ("finding",elem); }
+                foreach (var elem in Resolved) { if (elem != null) yield return ("resolved",elem); }
+                foreach (var elem in RuledOut) { if (elem != null) yield return ("ruledOut",elem); }
+                if (PrognosisElement != null) yield return ("prognosis",PrognosisElement);
+                foreach (var elem in Plan) { if (elem != null) yield return ("plan",elem); }
+                foreach (var elem in Action) { if (elem != null) yield return ("action",elem); }
+            }
+        }
+
     }
     
 }

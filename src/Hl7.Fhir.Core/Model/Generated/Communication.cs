@@ -167,6 +167,17 @@ namespace Hl7.Fhir.Model
                     if (Content != null) yield return Content;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Content != null) yield return ("content",Content);
+                }
+            }
+
             
         }
         
@@ -517,6 +528,29 @@ namespace Hl7.Fhir.Model
 				if (RequestDetail != null) yield return RequestDetail;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (Category != null) yield return ("category",Category);
+                if (Sender != null) yield return ("sender",Sender);
+                foreach (var elem in Recipient) { if (elem != null) yield return ("recipient",elem); }
+                foreach (var elem in Payload) { if (elem != null) yield return ("payload",elem); }
+                foreach (var elem in Medium) { if (elem != null) yield return ("medium",elem); }
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (Encounter != null) yield return ("encounter",Encounter);
+                if (SentElement != null) yield return ("sent",SentElement);
+                if (ReceivedElement != null) yield return ("received",ReceivedElement);
+                foreach (var elem in Reason) { if (elem != null) yield return ("reason",elem); }
+                if (Subject != null) yield return ("subject",Subject);
+                if (RequestDetail != null) yield return ("requestDetail",RequestDetail);
+            }
+        }
+
     }
     
 }
