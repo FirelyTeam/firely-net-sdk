@@ -16,7 +16,7 @@ namespace Hl7.Fhir.ElementModel
     {
         IElementNode Parent { get; }
 
-        IEnumerable<IElementNode> Children { get; }
+        IList<IElementNode> Children { get; }
 
         // TODO: Should reflect the properties present in IElementNavigator. Once that stabilizes, copy the code comments from
         // there over to here

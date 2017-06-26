@@ -98,6 +98,8 @@ namespace Hl7.FhirPath.Tests
 
         public FhirPathEvaluatorTest(PatientFixture fixture, ITestOutputHelper output)
         {
+            ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
+
             this.fixture = fixture;
             this.output = output;
         }

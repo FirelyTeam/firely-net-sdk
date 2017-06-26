@@ -14,6 +14,8 @@ using System.Threading.Tasks;
 using System.Xml;
 using Hl7.Fhir.Utility;
 
+#pragma warning disable 1591 // suppress XML summary warnings
+
 #if NET_XSD_SCHEMA
 using System.Xml.XPath;
 using Hl7.Fhir.Support;

@@ -137,9 +137,8 @@ namespace Hl7.Fhir.Model
 
         public override bool Equals(object obj)
         {
-            if (obj is Date)
+            if (obj is Date other)
             {
-                var other = (Date)obj;
                 var otherValue = !Object.ReferenceEquals(other, null) ? other.Value : null;
 
                 if (Value == null) return otherValue == null;

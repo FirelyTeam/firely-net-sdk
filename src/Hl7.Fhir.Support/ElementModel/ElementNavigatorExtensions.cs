@@ -7,49 +7,68 @@ namespace Hl7.Fhir.ElementModel
 
     public static class ElementNavigatorExtensions
     {
-        public static IEnumerable<IElementNavigator> Children(this IElementNavigator navigator)
+        public static IEnumerable<IElementNavigator> Children(this IElementNavigator navigator, string name = null)
         {
             var nav = navigator.Clone();
-            if (nav.MoveToFirstChild())
+            if (nav.MoveToFirstChild(name))
             {
                 do
                 {
                     yield return nav.Clone();
                 }
-                while (nav.MoveToNext());
+                while (nav.MoveToNext(name));
             }
         }
 
-        public static IEnumerable<IElementNavigator> Children(this IEnumerable<IElementNavigator> navigators)
-        {
-            return navigators.SelectMany(n => n.Children());
-        }
 
-        public static IEnumerable<IElementNavigator> Children(this IElementNavigator navigator, string name)
-        {
-            return navigator.Children().Where(c => c.Name == name);
-        }
-
-        public static IEnumerable<IElementNavigator> Children(this IEnumerable<IElementNavigator> navigators, string name)
+        public static IEnumerable<IElementNavigator> Children(this IEnumerable<IElementNavigator> navigators, string name = null)
         {
             return navigators.SelectMany(n => n.Children(name));
+
+            // [20170524 EK] This is unneccessary, since this is exactly what SelectMany() does, so this just results
+            // in duplication of code inside the foreach() here.
+
+            // use a standard enumerator approach
+            // this will then only grab 1 value if
+            // that is all the caller requires.
+            //foreach (var navigator in navigators)
+            //{
+            //    var nav = navigator.Clone();
+            //    if (nav.MoveToFirstChild())
+            //    {
+            //        do
+            //        {
+            //            yield return nav.Clone();
+            //        }
+            //        while (nav.MoveToNext());
+            //    }
+            //}
         }
 
-        public static bool HasChildren(this IElementNavigator navigator)
+        public static bool HasChildren(this IEnumerable<IElementNavigator> navigators, string name = null)
         {
-            var nav = navigator.Clone();
+            return navigators.Children(name).Any();
 
-            return nav.MoveToFirstChild();
+            // [20170524 EK] This is unneccessary, since this is exactly what Any() does, so this just results
+            // in duplication of code inside the foreach() here.
+
+            // if any of the navigators have children
+            // its true! (no need to expand the children)
+            //foreach (var nav in navigators)
+            //{
+            //    if (nav.HasChildren())
+            //        return true;
+            //}
+            //return false;
         }
 
-        public static bool HasChildren(this IEnumerable<IElementNavigator> navigators)
+        public static bool HasChildren(this IElementNavigator navigator, string name = null)
         {
-            return navigators.Children().Any();
+            return navigator.Children(name).Any();
         }
 
         public static IEnumerable<IElementNavigator> Descendants(this IElementNavigator navigator)
         {
-            //TODO: Don't think this is performant with these nested yields
             foreach (var child in navigator.Children())
             {
                 yield return child;
