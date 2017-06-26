@@ -313,6 +313,23 @@ namespace Hl7.Fhir.Model
                     if (CausalityResult != null) yield return CausalityResult;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Instance != null) yield return ("instance",Instance);
+                    if (CausalityElement != null) yield return ("causality",CausalityElement);
+                    if (CausalityAssessment != null) yield return ("causalityAssessment",CausalityAssessment);
+                    if (CausalityProductRelatednessElement != null) yield return ("causalityProductRelatedness",CausalityProductRelatednessElement);
+                    if (CausalityMethod != null) yield return ("causalityMethod",CausalityMethod);
+                    if (CausalityAuthor != null) yield return ("causalityAuthor",CausalityAuthor);
+                    if (CausalityResult != null) yield return ("causalityResult",CausalityResult);
+                }
+            }
+
             
         }
         
@@ -722,6 +739,32 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Study) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (Identifier != null) yield return ("identifier",Identifier);
+                if (CategoryElement != null) yield return ("category",CategoryElement);
+                if (Type != null) yield return ("type",Type);
+                if (Subject != null) yield return ("subject",Subject);
+                if (DateElement != null) yield return ("date",DateElement);
+                foreach (var elem in Reaction) { if (elem != null) yield return ("reaction",elem); }
+                if (Location != null) yield return ("location",Location);
+                if (Seriousness != null) yield return ("seriousness",Seriousness);
+                if (Outcome != null) yield return ("outcome",Outcome);
+                if (Recorder != null) yield return ("recorder",Recorder);
+                if (EventParticipant != null) yield return ("eventParticipant",EventParticipant);
+                if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                foreach (var elem in SuspectEntity) { if (elem != null) yield return ("suspectEntity",elem); }
+                foreach (var elem in SubjectMedicalHistory) { if (elem != null) yield return ("subjectMedicalHistory",elem); }
+                foreach (var elem in ReferenceDocument) { if (elem != null) yield return ("referenceDocument",elem); }
+                foreach (var elem in Study) { if (elem != null) yield return ("study",elem); }
+            }
+        }
+
     }
     
 }

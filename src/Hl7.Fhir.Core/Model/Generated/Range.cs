@@ -132,6 +132,18 @@ namespace Hl7.Fhir.Model
                 if (High != null) yield return High;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren 
+        { 
+            get 
+            { 
+                foreach (var item in base.NamedChildren) yield return item; 
+                if (Low != null) yield return ("low",Low);
+                if (High != null) yield return ("high",High);
+ 
+            } 
+        } 
     
     
     }

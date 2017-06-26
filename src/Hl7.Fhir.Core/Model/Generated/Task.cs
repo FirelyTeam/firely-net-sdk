@@ -229,6 +229,18 @@ namespace Hl7.Fhir.Model
                     if (OnBehalfOf != null) yield return OnBehalfOf;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Agent != null) yield return ("agent",Agent);
+                    if (OnBehalfOf != null) yield return ("onBehalfOf",OnBehalfOf);
+                }
+            }
+
             
         }
         
@@ -360,6 +372,19 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Recipient) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (RepetitionsElement != null) yield return ("repetitions",RepetitionsElement);
+                    if (Period != null) yield return ("period",Period);
+                    foreach (var elem in Recipient) { if (elem != null) yield return ("recipient",elem); }
+                }
+            }
+
             
         }
         
@@ -456,6 +481,18 @@ namespace Hl7.Fhir.Model
                     if (Value != null) yield return Value;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Type != null) yield return ("type",Type);
+                    if (Value != null) yield return ("value",Value);
+                }
+            }
+
             
         }
         
@@ -552,6 +589,18 @@ namespace Hl7.Fhir.Model
                     if (Value != null) yield return Value;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Type != null) yield return ("type",Type);
+                    if (Value != null) yield return ("value",Value);
+                }
+            }
+
             
         }
         
@@ -1218,6 +1267,43 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Output) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (Definition != null) yield return ("definition",Definition);
+                foreach (var elem in BasedOn) { if (elem != null) yield return ("basedOn",elem); }
+                if (GroupIdentifier != null) yield return ("groupIdentifier",GroupIdentifier);
+                foreach (var elem in PartOf) { if (elem != null) yield return ("partOf",elem); }
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (StatusReason != null) yield return ("statusReason",StatusReason);
+                if (BusinessStatus != null) yield return ("businessStatus",BusinessStatus);
+                if (IntentElement != null) yield return ("intent",IntentElement);
+                if (PriorityElement != null) yield return ("priority",PriorityElement);
+                if (Code != null) yield return ("code",Code);
+                if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                if (Focus != null) yield return ("focus",Focus);
+                if (For != null) yield return ("for",For);
+                if (Context != null) yield return ("context",Context);
+                if (ExecutionPeriod != null) yield return ("executionPeriod",ExecutionPeriod);
+                if (AuthoredOnElement != null) yield return ("authoredOn",AuthoredOnElement);
+                if (LastModifiedElement != null) yield return ("lastModified",LastModifiedElement);
+                if (Requester != null) yield return ("requester",Requester);
+                foreach (var elem in PerformerType) { if (elem != null) yield return ("performerType",elem); }
+                if (Owner != null) yield return ("owner",Owner);
+                if (Reason != null) yield return ("reason",Reason);
+                foreach (var elem in Note) { if (elem != null) yield return ("note",elem); }
+                foreach (var elem in RelevantHistory) { if (elem != null) yield return ("relevantHistory",elem); }
+                if (Restriction != null) yield return ("restriction",Restriction);
+                foreach (var elem in Input) { if (elem != null) yield return ("input",elem); }
+                foreach (var elem in Output) { if (elem != null) yield return ("output",elem); }
+            }
+        }
+
     }
     
 }

@@ -335,6 +335,23 @@ namespace Hl7.Fhir.Model
                 if (Profile != null) yield return Profile;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren 
+        { 
+            get 
+            { 
+                foreach (var item in base.NamedChildren) yield return item; 
+                if (NameElement != null) yield return ("name",NameElement);
+                if (UseElement != null) yield return ("use",UseElement);
+                if (MinElement != null) yield return ("min",MinElement);
+                if (MaxElement != null) yield return ("max",MaxElement);
+                if (DocumentationElement != null) yield return ("documentation",DocumentationElement);
+                if (TypeElement != null) yield return ("type",TypeElement);
+                if (Profile != null) yield return ("profile",Profile);
+ 
+            } 
+        } 
     
     
     }

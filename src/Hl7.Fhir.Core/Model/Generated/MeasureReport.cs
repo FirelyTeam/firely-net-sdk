@@ -253,6 +253,20 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Stratifier) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Identifier != null) yield return ("identifier",Identifier);
+                    foreach (var elem in Population) { if (elem != null) yield return ("population",elem); }
+                    if (MeasureScoreElement != null) yield return ("measureScore",MeasureScoreElement);
+                    foreach (var elem in Stratifier) { if (elem != null) yield return ("stratifier",elem); }
+                }
+            }
+
             
         }
         
@@ -400,6 +414,20 @@ namespace Hl7.Fhir.Model
                     if (Patients != null) yield return Patients;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Identifier != null) yield return ("identifier",Identifier);
+                    if (Code != null) yield return ("code",Code);
+                    if (CountElement != null) yield return ("count",CountElement);
+                    if (Patients != null) yield return ("patients",Patients);
+                }
+            }
+
             
         }
         
@@ -493,6 +521,18 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Stratum) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Identifier != null) yield return ("identifier",Identifier);
+                    foreach (var elem in Stratum) { if (elem != null) yield return ("stratum",elem); }
+                }
+            }
+
             
         }
         
@@ -642,6 +682,19 @@ namespace Hl7.Fhir.Model
                     if (MeasureScoreElement != null) yield return MeasureScoreElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (ValueElement != null) yield return ("value",ValueElement);
+                    foreach (var elem in Population) { if (elem != null) yield return ("population",elem); }
+                    if (MeasureScoreElement != null) yield return ("measureScore",MeasureScoreElement);
+                }
+            }
+
             
         }
         
@@ -789,6 +842,20 @@ namespace Hl7.Fhir.Model
                     if (Patients != null) yield return Patients;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Identifier != null) yield return ("identifier",Identifier);
+                    if (Code != null) yield return ("code",Code);
+                    if (CountElement != null) yield return ("count",CountElement);
+                    if (Patients != null) yield return ("patients",Patients);
+                }
+            }
+
             
         }
         
@@ -1086,6 +1153,26 @@ namespace Hl7.Fhir.Model
 				if (EvaluatedResources != null) yield return EvaluatedResources;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (Identifier != null) yield return ("identifier",Identifier);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (TypeElement != null) yield return ("type",TypeElement);
+                if (Measure != null) yield return ("measure",Measure);
+                if (Patient != null) yield return ("patient",Patient);
+                if (DateElement != null) yield return ("date",DateElement);
+                if (ReportingOrganization != null) yield return ("reportingOrganization",ReportingOrganization);
+                if (Period != null) yield return ("period",Period);
+                foreach (var elem in Group) { if (elem != null) yield return ("group",elem); }
+                if (EvaluatedResources != null) yield return ("evaluatedResources",EvaluatedResources);
+            }
+        }
+
     }
     
 }

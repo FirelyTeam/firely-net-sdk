@@ -258,6 +258,20 @@ namespace Hl7.Fhir.Model
                 if (EventData != null) yield return EventData;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren 
+        { 
+            get 
+            { 
+                foreach (var item in base.NamedChildren) yield return item; 
+                if (TypeElement != null) yield return ("type",TypeElement);
+                if (EventNameElement != null) yield return ("eventName",EventNameElement);
+                if (EventTiming != null) yield return ("eventTiming",EventTiming);
+                if (EventData != null) yield return ("eventData",EventData);
+ 
+            } 
+        } 
     
     
     }

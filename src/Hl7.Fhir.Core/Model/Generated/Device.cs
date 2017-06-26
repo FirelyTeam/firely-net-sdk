@@ -439,6 +439,23 @@ namespace Hl7.Fhir.Model
                     if (EntryTypeElement != null) yield return EntryTypeElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (DeviceIdentifierElement != null) yield return ("deviceIdentifier",DeviceIdentifierElement);
+                    if (NameElement != null) yield return ("name",NameElement);
+                    if (JurisdictionElement != null) yield return ("jurisdiction",JurisdictionElement);
+                    if (CarrierHRFElement != null) yield return ("carrierHRF",CarrierHRFElement);
+                    if (CarrierAIDCElement != null) yield return ("carrierAIDC",CarrierAIDCElement);
+                    if (IssuerElement != null) yield return ("issuer",IssuerElement);
+                    if (EntryTypeElement != null) yield return ("entryType",EntryTypeElement);
+                }
+            }
+
             
         }
         
@@ -947,6 +964,33 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Safety) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (Udi != null) yield return ("udi",Udi);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (Type != null) yield return ("type",Type);
+                if (LotNumberElement != null) yield return ("lotNumber",LotNumberElement);
+                if (ManufacturerElement != null) yield return ("manufacturer",ManufacturerElement);
+                if (ManufactureDateElement != null) yield return ("manufactureDate",ManufactureDateElement);
+                if (ExpirationDateElement != null) yield return ("expirationDate",ExpirationDateElement);
+                if (ModelElement != null) yield return ("model",ModelElement);
+                if (VersionElement != null) yield return ("version",VersionElement);
+                if (Patient != null) yield return ("patient",Patient);
+                if (Owner != null) yield return ("owner",Owner);
+                foreach (var elem in Contact) { if (elem != null) yield return ("contact",elem); }
+                if (Location != null) yield return ("location",Location);
+                if (UrlElement != null) yield return ("url",UrlElement);
+                foreach (var elem in Note) { if (elem != null) yield return ("note",elem); }
+                foreach (var elem in Safety) { if (elem != null) yield return ("safety",elem); }
+            }
+        }
+
     }
     
 }

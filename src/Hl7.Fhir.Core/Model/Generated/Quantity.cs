@@ -311,6 +311,21 @@ namespace Hl7.Fhir.Model
                 if (CodeElement != null) yield return CodeElement;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren 
+        { 
+            get 
+            { 
+                foreach (var item in base.NamedChildren) yield return item; 
+                if (ValueElement != null) yield return ("value",ValueElement);
+                if (ComparatorElement != null) yield return ("comparator",ComparatorElement);
+                if (UnitElement != null) yield return ("unit",UnitElement);
+                if (SystemElement != null) yield return ("system",SystemElement);
+                if (CodeElement != null) yield return ("code",CodeElement);
+ 
+            } 
+        } 
     
     
     }

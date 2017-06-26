@@ -148,6 +148,18 @@ namespace Hl7.Fhir.Model
                     if (OnBehalfOf != null) yield return OnBehalfOf;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Agent != null) yield return ("agent",Agent);
+                    if (OnBehalfOf != null) yield return ("onBehalfOf",OnBehalfOf);
+                }
+            }
+
             
         }
         
@@ -735,6 +747,39 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in RelevantHistory) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                foreach (var elem in Definition) { if (elem != null) yield return ("definition",elem); }
+                foreach (var elem in BasedOn) { if (elem != null) yield return ("basedOn",elem); }
+                foreach (var elem in Replaces) { if (elem != null) yield return ("replaces",elem); }
+                if (GroupIdentifier != null) yield return ("groupIdentifier",GroupIdentifier);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (IntentElement != null) yield return ("intent",IntentElement);
+                if (Type != null) yield return ("type",Type);
+                if (PriorityElement != null) yield return ("priority",PriorityElement);
+                foreach (var elem in ServiceRequested) { if (elem != null) yield return ("serviceRequested",elem); }
+                if (Subject != null) yield return ("subject",Subject);
+                if (Context != null) yield return ("context",Context);
+                if (Occurrence != null) yield return ("occurrence",Occurrence);
+                if (AuthoredOnElement != null) yield return ("authoredOn",AuthoredOnElement);
+                if (Requester != null) yield return ("requester",Requester);
+                if (Specialty != null) yield return ("specialty",Specialty);
+                foreach (var elem in Recipient) { if (elem != null) yield return ("recipient",elem); }
+                foreach (var elem in ReasonCode) { if (elem != null) yield return ("reasonCode",elem); }
+                foreach (var elem in ReasonReference) { if (elem != null) yield return ("reasonReference",elem); }
+                if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                foreach (var elem in SupportingInfo) { if (elem != null) yield return ("supportingInfo",elem); }
+                foreach (var elem in Note) { if (elem != null) yield return ("note",elem); }
+                foreach (var elem in RelevantHistory) { if (elem != null) yield return ("relevantHistory",elem); }
+            }
+        }
+
     }
     
 }

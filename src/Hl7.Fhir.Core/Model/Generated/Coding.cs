@@ -278,6 +278,21 @@ namespace Hl7.Fhir.Model
                 if (UserSelectedElement != null) yield return UserSelectedElement;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren 
+        { 
+            get 
+            { 
+                foreach (var item in base.NamedChildren) yield return item; 
+                if (SystemElement != null) yield return ("system",SystemElement);
+                if (VersionElement != null) yield return ("version",VersionElement);
+                if (CodeElement != null) yield return ("code",CodeElement);
+                if (DisplayElement != null) yield return ("display",DisplayElement);
+                if (UserSelectedElement != null) yield return ("userSelected",UserSelectedElement);
+ 
+            } 
+        } 
     
     
     }

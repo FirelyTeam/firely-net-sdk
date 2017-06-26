@@ -152,6 +152,18 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Telecom) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren 
+        { 
+            get 
+            { 
+                foreach (var item in base.NamedChildren) yield return item; 
+                if (NameElement != null) yield return ("name",NameElement);
+                foreach (var elem in Telecom) { if (elem != null) yield return ("telecom",elem); }
+ 
+            } 
+        } 
     
     
     }

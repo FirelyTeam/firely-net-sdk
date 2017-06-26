@@ -235,6 +235,21 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Stratifier) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Identifier != null) yield return ("identifier",Identifier);
+                    if (NameElement != null) yield return ("name",NameElement);
+                    if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                    foreach (var elem in Population) { if (elem != null) yield return ("population",elem); }
+                    foreach (var elem in Stratifier) { if (elem != null) yield return ("stratifier",elem); }
+                }
+            }
+
             
         }
         
@@ -436,6 +451,21 @@ namespace Hl7.Fhir.Model
                     if (CriteriaElement != null) yield return CriteriaElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Identifier != null) yield return ("identifier",Identifier);
+                    if (Code != null) yield return ("code",Code);
+                    if (NameElement != null) yield return ("name",NameElement);
+                    if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                    if (CriteriaElement != null) yield return ("criteria",CriteriaElement);
+                }
+            }
+
             
         }
         
@@ -583,6 +613,19 @@ namespace Hl7.Fhir.Model
                     if (PathElement != null) yield return PathElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Identifier != null) yield return ("identifier",Identifier);
+                    if (CriteriaElement != null) yield return ("criteria",CriteriaElement);
+                    if (PathElement != null) yield return ("path",PathElement);
+                }
+            }
+
             
         }
         
@@ -748,6 +791,20 @@ namespace Hl7.Fhir.Model
                     if (PathElement != null) yield return PathElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Identifier != null) yield return ("identifier",Identifier);
+                    foreach (var elem in Usage) { if (elem != null) yield return ("usage",elem); }
+                    if (CriteriaElement != null) yield return ("criteria",CriteriaElement);
+                    if (PathElement != null) yield return ("path",PathElement);
+                }
+            }
+
             
         }
         
@@ -1734,6 +1791,53 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in SupplementalData) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (UrlElement != null) yield return ("url",UrlElement);
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (VersionElement != null) yield return ("version",VersionElement);
+                if (NameElement != null) yield return ("name",NameElement);
+                if (TitleElement != null) yield return ("title",TitleElement);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (ExperimentalElement != null) yield return ("experimental",ExperimentalElement);
+                if (DateElement != null) yield return ("date",DateElement);
+                if (PublisherElement != null) yield return ("publisher",PublisherElement);
+                if (Description != null) yield return ("description",Description);
+                if (Purpose != null) yield return ("purpose",Purpose);
+                if (UsageElement != null) yield return ("usage",UsageElement);
+                if (ApprovalDateElement != null) yield return ("approvalDate",ApprovalDateElement);
+                if (LastReviewDateElement != null) yield return ("lastReviewDate",LastReviewDateElement);
+                if (EffectivePeriod != null) yield return ("effectivePeriod",EffectivePeriod);
+                foreach (var elem in UseContext) { if (elem != null) yield return ("useContext",elem); }
+                foreach (var elem in Jurisdiction) { if (elem != null) yield return ("jurisdiction",elem); }
+                foreach (var elem in Topic) { if (elem != null) yield return ("topic",elem); }
+                foreach (var elem in Contributor) { if (elem != null) yield return ("contributor",elem); }
+                foreach (var elem in Contact) { if (elem != null) yield return ("contact",elem); }
+                if (Copyright != null) yield return ("copyright",Copyright);
+                foreach (var elem in RelatedArtifact) { if (elem != null) yield return ("relatedArtifact",elem); }
+                foreach (var elem in Library) { if (elem != null) yield return ("library",elem); }
+                if (Disclaimer != null) yield return ("disclaimer",Disclaimer);
+                if (Scoring != null) yield return ("scoring",Scoring);
+                if (CompositeScoring != null) yield return ("compositeScoring",CompositeScoring);
+                foreach (var elem in Type) { if (elem != null) yield return ("type",elem); }
+                if (RiskAdjustmentElement != null) yield return ("riskAdjustment",RiskAdjustmentElement);
+                if (RateAggregationElement != null) yield return ("rateAggregation",RateAggregationElement);
+                if (Rationale != null) yield return ("rationale",Rationale);
+                if (ClinicalRecommendationStatement != null) yield return ("clinicalRecommendationStatement",ClinicalRecommendationStatement);
+                if (ImprovementNotationElement != null) yield return ("improvementNotation",ImprovementNotationElement);
+                foreach (var elem in Definition) { if (elem != null) yield return ("definition",elem); }
+                if (Guidance != null) yield return ("guidance",Guidance);
+                if (SetElement != null) yield return ("set",SetElement);
+                foreach (var elem in Group) { if (elem != null) yield return ("group",elem); }
+                foreach (var elem in SupplementalData) { if (elem != null) yield return ("supplementalData",elem); }
+            }
+        }
+
     }
     
 }

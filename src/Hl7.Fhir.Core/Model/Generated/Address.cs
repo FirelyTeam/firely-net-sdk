@@ -500,6 +500,26 @@ namespace Hl7.Fhir.Model
                 if (Period != null) yield return Period;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren 
+        { 
+            get 
+            { 
+                foreach (var item in base.NamedChildren) yield return item; 
+                if (UseElement != null) yield return ("use",UseElement);
+                if (TypeElement != null) yield return ("type",TypeElement);
+                if (TextElement != null) yield return ("text",TextElement);
+                foreach (var elem in LineElement) { if (elem != null) yield return ("line",elem); }
+                if (CityElement != null) yield return ("city",CityElement);
+                if (DistrictElement != null) yield return ("district",DistrictElement);
+                if (StateElement != null) yield return ("state",StateElement);
+                if (PostalCodeElement != null) yield return ("postalCode",PostalCodeElement);
+                if (CountryElement != null) yield return ("country",CountryElement);
+                if (Period != null) yield return ("period",Period);
+ 
+            } 
+        } 
     
     
     }

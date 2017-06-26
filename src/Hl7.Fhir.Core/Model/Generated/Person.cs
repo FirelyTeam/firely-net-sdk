@@ -198,6 +198,18 @@ namespace Hl7.Fhir.Model
                     if (AssuranceElement != null) yield return AssuranceElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Target != null) yield return ("target",Target);
+                    if (AssuranceElement != null) yield return ("assurance",AssuranceElement);
+                }
+            }
+
             
         }
         
@@ -489,6 +501,26 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Link) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                foreach (var elem in Name) { if (elem != null) yield return ("name",elem); }
+                foreach (var elem in Telecom) { if (elem != null) yield return ("telecom",elem); }
+                if (GenderElement != null) yield return ("gender",GenderElement);
+                if (BirthDateElement != null) yield return ("birthDate",BirthDateElement);
+                foreach (var elem in Address) { if (elem != null) yield return ("address",elem); }
+                if (Photo != null) yield return ("photo",Photo);
+                if (ManagingOrganization != null) yield return ("managingOrganization",ManagingOrganization);
+                if (ActiveElement != null) yield return ("active",ActiveElement);
+                foreach (var elem in Link) { if (elem != null) yield return ("link",elem); }
+            }
+        }
+
     }
     
 }

@@ -406,6 +406,19 @@ namespace Hl7.Fhir.Model
                     if (TimeElement != null) yield return TimeElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (TypeElement != null) yield return ("type",TypeElement);
+                    if (StateElement != null) yield return ("state",StateElement);
+                    if (TimeElement != null) yield return ("time",TimeElement);
+                }
+            }
+
             
         }
         
@@ -698,6 +711,26 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Calibration) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (Identifier != null) yield return ("identifier",Identifier);
+                if (Type != null) yield return ("type",Type);
+                if (Unit != null) yield return ("unit",Unit);
+                if (Source != null) yield return ("source",Source);
+                if (Parent != null) yield return ("parent",Parent);
+                if (OperationalStatusElement != null) yield return ("operationalStatus",OperationalStatusElement);
+                if (ColorElement != null) yield return ("color",ColorElement);
+                if (CategoryElement != null) yield return ("category",CategoryElement);
+                if (MeasurementPeriod != null) yield return ("measurementPeriod",MeasurementPeriod);
+                foreach (var elem in Calibration) { if (elem != null) yield return ("calibration",elem); }
+            }
+        }
+
     }
     
 }

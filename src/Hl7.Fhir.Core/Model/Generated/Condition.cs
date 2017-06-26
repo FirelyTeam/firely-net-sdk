@@ -230,6 +230,18 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Assessment) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Summary != null) yield return ("summary",Summary);
+                    foreach (var elem in Assessment) { if (elem != null) yield return ("assessment",elem); }
+                }
+            }
+
             
         }
         
@@ -326,6 +338,18 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Detail) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    foreach (var elem in Code) { if (elem != null) yield return ("code",elem); }
+                    foreach (var elem in Detail) { if (elem != null) yield return ("detail",elem); }
+                }
+            }
+
             
         }
         
@@ -768,6 +792,32 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Note) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (ClinicalStatusElement != null) yield return ("clinicalStatus",ClinicalStatusElement);
+                if (VerificationStatusElement != null) yield return ("verificationStatus",VerificationStatusElement);
+                foreach (var elem in Category) { if (elem != null) yield return ("category",elem); }
+                if (Severity != null) yield return ("severity",Severity);
+                if (Code != null) yield return ("code",Code);
+                foreach (var elem in BodySite) { if (elem != null) yield return ("bodySite",elem); }
+                if (Subject != null) yield return ("subject",Subject);
+                if (Context != null) yield return ("context",Context);
+                if (Onset != null) yield return ("onset",Onset);
+                if (Abatement != null) yield return ("abatement",Abatement);
+                if (AssertedDateElement != null) yield return ("assertedDate",AssertedDateElement);
+                if (Asserter != null) yield return ("asserter",Asserter);
+                if (Stage != null) yield return ("stage",Stage);
+                foreach (var elem in Evidence) { if (elem != null) yield return ("evidence",elem); }
+                foreach (var elem in Note) { if (elem != null) yield return ("note",elem); }
+            }
+        }
+
     }
     
 }

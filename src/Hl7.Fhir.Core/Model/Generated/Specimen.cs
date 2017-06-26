@@ -231,6 +231,21 @@ namespace Hl7.Fhir.Model
                     if (BodySite != null) yield return BodySite;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Collector != null) yield return ("collector",Collector);
+                    if (Collected != null) yield return ("collected",Collected);
+                    if (Quantity != null) yield return ("quantity",Quantity);
+                    if (Method != null) yield return ("method",Method);
+                    if (BodySite != null) yield return ("bodySite",BodySite);
+                }
+            }
+
             
         }
         
@@ -381,6 +396,20 @@ namespace Hl7.Fhir.Model
                     if (Time != null) yield return Time;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                    if (Procedure != null) yield return ("procedure",Procedure);
+                    foreach (var elem in Additive) { if (elem != null) yield return ("additive",elem); }
+                    if (Time != null) yield return ("time",Time);
+                }
+            }
+
             
         }
         
@@ -563,6 +592,22 @@ namespace Hl7.Fhir.Model
                     if (Additive != null) yield return Additive;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                    if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                    if (Type != null) yield return ("type",Type);
+                    if (Capacity != null) yield return ("capacity",Capacity);
+                    if (SpecimenQuantity != null) yield return ("specimenQuantity",SpecimenQuantity);
+                    if (Additive != null) yield return ("additive",Additive);
+                }
+            }
+
             
         }
         
@@ -875,6 +920,28 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Note) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (AccessionIdentifier != null) yield return ("accessionIdentifier",AccessionIdentifier);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (Type != null) yield return ("type",Type);
+                if (Subject != null) yield return ("subject",Subject);
+                if (ReceivedTimeElement != null) yield return ("receivedTime",ReceivedTimeElement);
+                foreach (var elem in Parent) { if (elem != null) yield return ("parent",elem); }
+                foreach (var elem in Request) { if (elem != null) yield return ("request",elem); }
+                if (Collection != null) yield return ("collection",Collection);
+                foreach (var elem in Processing) { if (elem != null) yield return ("processing",elem); }
+                foreach (var elem in Container) { if (elem != null) yield return ("container",elem); }
+                foreach (var elem in Note) { if (elem != null) yield return ("note",elem); }
+            }
+        }
+
     }
     
 }

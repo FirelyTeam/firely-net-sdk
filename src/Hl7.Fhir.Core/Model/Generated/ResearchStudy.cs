@@ -244,6 +244,19 @@ namespace Hl7.Fhir.Model
                     if (DescriptionElement != null) yield return DescriptionElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (NameElement != null) yield return ("name",NameElement);
+                    if (Code != null) yield return ("code",Code);
+                    if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                }
+            }
+
             
         }
         
@@ -705,6 +718,36 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Arm) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (TitleElement != null) yield return ("title",TitleElement);
+                foreach (var elem in Protocol) { if (elem != null) yield return ("protocol",elem); }
+                foreach (var elem in PartOf) { if (elem != null) yield return ("partOf",elem); }
+                if (StatusElement != null) yield return ("status",StatusElement);
+                foreach (var elem in Category) { if (elem != null) yield return ("category",elem); }
+                foreach (var elem in Focus) { if (elem != null) yield return ("focus",elem); }
+                foreach (var elem in Contact) { if (elem != null) yield return ("contact",elem); }
+                foreach (var elem in RelatedArtifact) { if (elem != null) yield return ("relatedArtifact",elem); }
+                foreach (var elem in Keyword) { if (elem != null) yield return ("keyword",elem); }
+                foreach (var elem in Jurisdiction) { if (elem != null) yield return ("jurisdiction",elem); }
+                if (Description != null) yield return ("description",Description);
+                foreach (var elem in Enrollment) { if (elem != null) yield return ("enrollment",elem); }
+                if (Period != null) yield return ("period",Period);
+                if (Sponsor != null) yield return ("sponsor",Sponsor);
+                if (PrincipalInvestigator != null) yield return ("principalInvestigator",PrincipalInvestigator);
+                foreach (var elem in Site) { if (elem != null) yield return ("site",elem); }
+                if (ReasonStopped != null) yield return ("reasonStopped",ReasonStopped);
+                foreach (var elem in Note) { if (elem != null) yield return ("note",elem); }
+                foreach (var elem in Arm) { if (elem != null) yield return ("arm",elem); }
+            }
+        }
+
     }
     
 }

@@ -245,6 +245,20 @@ namespace Hl7.Fhir.Model
                     if (Item != null) yield return Item;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Flag != null) yield return ("flag",Flag);
+                    if (DeletedElement != null) yield return ("deleted",DeletedElement);
+                    if (DateElement != null) yield return ("date",DateElement);
+                    if (Item != null) yield return ("item",Item);
+                }
+            }
+
             
         }
         
@@ -630,6 +644,29 @@ namespace Hl7.Fhir.Model
 				if (EmptyReason != null) yield return EmptyReason;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (ModeElement != null) yield return ("mode",ModeElement);
+                if (TitleElement != null) yield return ("title",TitleElement);
+                if (Code != null) yield return ("code",Code);
+                if (Subject != null) yield return ("subject",Subject);
+                if (Encounter != null) yield return ("encounter",Encounter);
+                if (DateElement != null) yield return ("date",DateElement);
+                if (Source != null) yield return ("source",Source);
+                if (OrderedBy != null) yield return ("orderedBy",OrderedBy);
+                foreach (var elem in Note) { if (elem != null) yield return ("note",elem); }
+                foreach (var elem in Entry) { if (elem != null) yield return ("entry",elem); }
+                if (EmptyReason != null) yield return ("emptyReason",EmptyReason);
+            }
+        }
+
     }
     
 }

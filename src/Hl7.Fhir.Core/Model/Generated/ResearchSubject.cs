@@ -355,6 +355,24 @@ namespace Hl7.Fhir.Model
 				if (Consent != null) yield return Consent;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (Identifier != null) yield return ("identifier",Identifier);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (Period != null) yield return ("period",Period);
+                if (Study != null) yield return ("study",Study);
+                if (Individual != null) yield return ("individual",Individual);
+                if (AssignedArmElement != null) yield return ("assignedArm",AssignedArmElement);
+                if (ActualArmElement != null) yield return ("actualArm",ActualArmElement);
+                if (Consent != null) yield return ("consent",Consent);
+            }
+        }
+
     }
     
 }

@@ -110,6 +110,17 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren 
+        { 
+            get 
+            { 
+                foreach (var item in base.NamedChildren) yield return item; 
+                foreach (var elem in ModifierExtension) { if (elem != null) yield return ("modifierExtension",elem); }
+ 
+            } 
+        } 
     
     
     }

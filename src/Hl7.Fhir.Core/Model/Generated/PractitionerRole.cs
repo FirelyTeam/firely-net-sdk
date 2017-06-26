@@ -254,6 +254,20 @@ namespace Hl7.Fhir.Model
                     if (AvailableEndTimeElement != null) yield return AvailableEndTimeElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    foreach (var elem in DaysOfWeekElement) { if (elem != null) yield return ("daysOfWeek",elem); }
+                    if (AllDayElement != null) yield return ("allDay",AllDayElement);
+                    if (AvailableStartTimeElement != null) yield return ("availableStartTime",AvailableStartTimeElement);
+                    if (AvailableEndTimeElement != null) yield return ("availableEndTime",AvailableEndTimeElement);
+                }
+            }
+
             
         }
         
@@ -366,6 +380,18 @@ namespace Hl7.Fhir.Model
                     if (During != null) yield return During;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                    if (During != null) yield return ("during",During);
+                }
+            }
+
             
         }
         
@@ -718,6 +744,30 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Endpoint) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (ActiveElement != null) yield return ("active",ActiveElement);
+                if (Period != null) yield return ("period",Period);
+                if (Practitioner != null) yield return ("practitioner",Practitioner);
+                if (Organization != null) yield return ("organization",Organization);
+                foreach (var elem in Code) { if (elem != null) yield return ("code",elem); }
+                foreach (var elem in Specialty) { if (elem != null) yield return ("specialty",elem); }
+                foreach (var elem in Location) { if (elem != null) yield return ("location",elem); }
+                foreach (var elem in HealthcareService) { if (elem != null) yield return ("healthcareService",elem); }
+                foreach (var elem in Telecom) { if (elem != null) yield return ("telecom",elem); }
+                foreach (var elem in AvailableTime) { if (elem != null) yield return ("availableTime",elem); }
+                foreach (var elem in NotAvailable) { if (elem != null) yield return ("notAvailable",elem); }
+                if (AvailabilityExceptionsElement != null) yield return ("availabilityExceptions",AvailabilityExceptionsElement);
+                foreach (var elem in Endpoint) { if (elem != null) yield return ("endpoint",elem); }
+            }
+        }
+
     }
     
 }

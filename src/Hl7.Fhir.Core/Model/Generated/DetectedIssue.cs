@@ -209,6 +209,19 @@ namespace Hl7.Fhir.Model
                     if (Author != null) yield return Author;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Action != null) yield return ("action",Action);
+                    if (DateElement != null) yield return ("date",DateElement);
+                    if (Author != null) yield return ("author",Author);
+                }
+            }
+
             
         }
         
@@ -557,6 +570,27 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Mitigation) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (Identifier != null) yield return ("identifier",Identifier);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (Category != null) yield return ("category",Category);
+                if (SeverityElement != null) yield return ("severity",SeverityElement);
+                if (Patient != null) yield return ("patient",Patient);
+                if (DateElement != null) yield return ("date",DateElement);
+                if (Author != null) yield return ("author",Author);
+                foreach (var elem in Implicated) { if (elem != null) yield return ("implicated",elem); }
+                if (DetailElement != null) yield return ("detail",DetailElement);
+                if (ReferenceElement != null) yield return ("reference",ReferenceElement);
+                foreach (var elem in Mitigation) { if (elem != null) yield return ("mitigation",elem); }
+            }
+        }
+
     }
     
 }

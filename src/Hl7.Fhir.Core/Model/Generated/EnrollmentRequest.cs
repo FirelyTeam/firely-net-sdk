@@ -293,6 +293,24 @@ namespace Hl7.Fhir.Model
 				if (Coverage != null) yield return Coverage;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (CreatedElement != null) yield return ("created",CreatedElement);
+                if (Insurer != null) yield return ("insurer",Insurer);
+                if (Provider != null) yield return ("provider",Provider);
+                if (Organization != null) yield return ("organization",Organization);
+                if (Subject != null) yield return ("subject",Subject);
+                if (Coverage != null) yield return ("coverage",Coverage);
+            }
+        }
+
     }
     
 }

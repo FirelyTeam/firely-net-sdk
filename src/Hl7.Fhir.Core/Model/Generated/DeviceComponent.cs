@@ -254,6 +254,19 @@ namespace Hl7.Fhir.Model
                     if (ProductionSpecElement != null) yield return ProductionSpecElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (SpecType != null) yield return ("specType",SpecType);
+                    if (ComponentId != null) yield return ("componentId",ComponentId);
+                    if (ProductionSpecElement != null) yield return ("productionSpec",ProductionSpecElement);
+                }
+            }
+
             
         }
         
@@ -527,6 +540,26 @@ namespace Hl7.Fhir.Model
 				if (LanguageCode != null) yield return LanguageCode;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (Identifier != null) yield return ("identifier",Identifier);
+                if (Type != null) yield return ("type",Type);
+                if (LastSystemChangeElement != null) yield return ("lastSystemChange",LastSystemChangeElement);
+                if (Source != null) yield return ("source",Source);
+                if (Parent != null) yield return ("parent",Parent);
+                foreach (var elem in OperationalStatus) { if (elem != null) yield return ("operationalStatus",elem); }
+                if (ParameterGroup != null) yield return ("parameterGroup",ParameterGroup);
+                if (MeasurementPrincipleElement != null) yield return ("measurementPrinciple",MeasurementPrincipleElement);
+                foreach (var elem in ProductionSpecification) { if (elem != null) yield return ("productionSpecification",elem); }
+                if (LanguageCode != null) yield return ("languageCode",LanguageCode);
+            }
+        }
+
     }
     
 }

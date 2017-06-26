@@ -197,6 +197,18 @@ namespace Hl7.Fhir.Model
                     if (Item != null) yield return Item;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Quantity != null) yield return ("quantity",Quantity);
+                    if (Item != null) yield return ("item",Item);
+                }
+            }
+
             
         }
         
@@ -294,6 +306,18 @@ namespace Hl7.Fhir.Model
                     if (OnBehalfOf != null) yield return OnBehalfOf;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Agent != null) yield return ("agent",Agent);
+                    if (OnBehalfOf != null) yield return ("onBehalfOf",OnBehalfOf);
+                }
+            }
+
             
         }
         
@@ -623,6 +647,28 @@ namespace Hl7.Fhir.Model
 				if (DeliverTo != null) yield return DeliverTo;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (Identifier != null) yield return ("identifier",Identifier);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (Category != null) yield return ("category",Category);
+                if (PriorityElement != null) yield return ("priority",PriorityElement);
+                if (OrderedItem != null) yield return ("orderedItem",OrderedItem);
+                if (Occurrence != null) yield return ("occurrence",Occurrence);
+                if (AuthoredOnElement != null) yield return ("authoredOn",AuthoredOnElement);
+                if (Requester != null) yield return ("requester",Requester);
+                foreach (var elem in Supplier) { if (elem != null) yield return ("supplier",elem); }
+                if (Reason != null) yield return ("reason",Reason);
+                if (DeliverFrom != null) yield return ("deliverFrom",DeliverFrom);
+                if (DeliverTo != null) yield return ("deliverTo",DeliverTo);
+            }
+        }
+
     }
     
 }

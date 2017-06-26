@@ -190,6 +190,19 @@ namespace Hl7.Fhir.Model
                 if (TextElement != null) yield return TextElement;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren 
+        { 
+            get 
+            { 
+                foreach (var item in base.NamedChildren) yield return item; 
+                if (Author != null) yield return ("author",Author);
+                if (TimeElement != null) yield return ("time",TimeElement);
+                if (TextElement != null) yield return ("text",TextElement);
+ 
+            } 
+        } 
     
     
     }

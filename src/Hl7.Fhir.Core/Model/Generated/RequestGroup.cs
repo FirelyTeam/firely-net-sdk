@@ -598,6 +598,34 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Action) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (LabelElement != null) yield return ("label",LabelElement);
+                    if (TitleElement != null) yield return ("title",TitleElement);
+                    if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                    if (TextEquivalentElement != null) yield return ("textEquivalent",TextEquivalentElement);
+                    foreach (var elem in Code) { if (elem != null) yield return ("code",elem); }
+                    foreach (var elem in Documentation) { if (elem != null) yield return ("documentation",elem); }
+                    foreach (var elem in Condition) { if (elem != null) yield return ("condition",elem); }
+                    foreach (var elem in RelatedAction) { if (elem != null) yield return ("relatedAction",elem); }
+                    if (Timing != null) yield return ("timing",Timing);
+                    foreach (var elem in Participant) { if (elem != null) yield return ("participant",elem); }
+                    if (Type != null) yield return ("type",Type);
+                    if (GroupingBehaviorElement != null) yield return ("groupingBehavior",GroupingBehaviorElement);
+                    if (SelectionBehaviorElement != null) yield return ("selectionBehavior",SelectionBehaviorElement);
+                    if (RequiredBehaviorElement != null) yield return ("requiredBehavior",RequiredBehaviorElement);
+                    if (PrecheckBehaviorElement != null) yield return ("precheckBehavior",PrecheckBehaviorElement);
+                    if (CardinalityBehaviorElement != null) yield return ("cardinalityBehavior",CardinalityBehaviorElement);
+                    if (Resource != null) yield return ("resource",Resource);
+                    foreach (var elem in Action) { if (elem != null) yield return ("action",elem); }
+                }
+            }
+
             
         }
         
@@ -801,6 +829,20 @@ namespace Hl7.Fhir.Model
                     if (ExpressionElement != null) yield return ExpressionElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (KindElement != null) yield return ("kind",KindElement);
+                    if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                    if (LanguageElement != null) yield return ("language",LanguageElement);
+                    if (ExpressionElement != null) yield return ("expression",ExpressionElement);
+                }
+            }
+
             
         }
         
@@ -952,6 +994,19 @@ namespace Hl7.Fhir.Model
                     if (Offset != null) yield return Offset;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (ActionIdElement != null) yield return ("actionId",ActionIdElement);
+                    if (RelationshipElement != null) yield return ("relationship",RelationshipElement);
+                    if (Offset != null) yield return ("offset",Offset);
+                }
+            }
+
             
         }
         
@@ -1372,6 +1427,31 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Action) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                foreach (var elem in Definition) { if (elem != null) yield return ("definition",elem); }
+                foreach (var elem in BasedOn) { if (elem != null) yield return ("basedOn",elem); }
+                foreach (var elem in Replaces) { if (elem != null) yield return ("replaces",elem); }
+                if (GroupIdentifier != null) yield return ("groupIdentifier",GroupIdentifier);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (IntentElement != null) yield return ("intent",IntentElement);
+                if (PriorityElement != null) yield return ("priority",PriorityElement);
+                if (Subject != null) yield return ("subject",Subject);
+                if (Context != null) yield return ("context",Context);
+                if (AuthoredOnElement != null) yield return ("authoredOn",AuthoredOnElement);
+                if (Author != null) yield return ("author",Author);
+                if (Reason != null) yield return ("reason",Reason);
+                foreach (var elem in Note) { if (elem != null) yield return ("note",elem); }
+                foreach (var elem in Action) { if (elem != null) yield return ("action",elem); }
+            }
+        }
+
     }
     
 }

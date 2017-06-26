@@ -804,10 +804,33 @@ namespace Hl7.Fhir.Model
                     if (OffsetElement != null) yield return OffsetElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren 
+            { 
+                get 
+                { 
+                    foreach (var item in base.NamedChildren) yield return item; 
+                    if (Bounds != null) yield return ("bounds",Bounds);
+                    if (CountElement != null) yield return ("count",CountElement);
+                    if (CountMaxElement != null) yield return ("countMax",CountMaxElement);
+                    if (DurationElement != null) yield return ("duration",DurationElement);
+                    if (DurationMaxElement != null) yield return ("durationMax",DurationMaxElement);
+                    if (DurationUnitElement != null) yield return ("durationUnit",DurationUnitElement);
+                    if (FrequencyElement != null) yield return ("frequency",FrequencyElement);
+                    if (FrequencyMaxElement != null) yield return ("frequencyMax",FrequencyMaxElement);
+                    if (PeriodElement != null) yield return ("period",PeriodElement);
+                    if (PeriodMaxElement != null) yield return ("periodMax",PeriodMaxElement);
+                    if (PeriodUnitElement != null) yield return ("periodUnit",PeriodUnitElement);
+                    foreach (var elem in DayOfWeekElement) { if (elem != null) yield return ("dayOfWeek",elem); }
+                    foreach (var elem in TimeOfDayElement) { if (elem != null) yield return ("timeOfDay",elem); }
+                    foreach (var elem in WhenElement) { if (elem != null) yield return ("when",elem); }
+                    if (OffsetElement != null) yield return ("offset",OffsetElement);
+ 
+                } 
+            } 
             
-        }
-        
-        
+        }                
         /// <summary>
         /// When the event occurs
         /// </summary>
@@ -926,6 +949,19 @@ namespace Hl7.Fhir.Model
                 if (Code != null) yield return Code;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren 
+        { 
+            get 
+            { 
+                foreach (var item in base.NamedChildren) yield return item; 
+                foreach (var elem in EventElement) { if (elem != null) yield return ("event",elem); }
+                if (Repeat != null) yield return ("repeat",Repeat);
+                if (Code != null) yield return ("code",Code);
+ 
+            } 
+        } 
     
     
     }

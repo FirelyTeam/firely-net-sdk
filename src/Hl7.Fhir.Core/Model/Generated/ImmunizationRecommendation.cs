@@ -309,6 +309,25 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in SupportingPatientInformation) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (DateElement != null) yield return ("date",DateElement);
+                    if (VaccineCode != null) yield return ("vaccineCode",VaccineCode);
+                    if (TargetDisease != null) yield return ("targetDisease",TargetDisease);
+                    if (DoseNumberElement != null) yield return ("doseNumber",DoseNumberElement);
+                    if (ForecastStatus != null) yield return ("forecastStatus",ForecastStatus);
+                    foreach (var elem in DateCriterion) { if (elem != null) yield return ("dateCriterion",elem); }
+                    if (Protocol != null) yield return ("protocol",Protocol);
+                    foreach (var elem in SupportingImmunization) { if (elem != null) yield return ("supportingImmunization",elem); }
+                    foreach (var elem in SupportingPatientInformation) { if (elem != null) yield return ("supportingPatientInformation",elem); }
+                }
+            }
+
             
         }
         
@@ -422,6 +441,18 @@ namespace Hl7.Fhir.Model
                     if (ValueElement != null) yield return ValueElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Code != null) yield return ("code",Code);
+                    if (ValueElement != null) yield return ("value",ValueElement);
+                }
+            }
+
             
         }
         
@@ -607,6 +638,20 @@ namespace Hl7.Fhir.Model
                     if (SeriesElement != null) yield return SeriesElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (DoseSequenceElement != null) yield return ("doseSequence",DoseSequenceElement);
+                    if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                    if (Authority != null) yield return ("authority",Authority);
+                    if (SeriesElement != null) yield return ("series",SeriesElement);
+                }
+            }
+
             
         }
         
@@ -730,6 +775,19 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Recommendation) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (Patient != null) yield return ("patient",Patient);
+                foreach (var elem in Recommendation) { if (elem != null) yield return ("recommendation",elem); }
+            }
+        }
+
     }
     
 }

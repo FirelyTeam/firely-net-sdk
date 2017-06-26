@@ -279,6 +279,19 @@ namespace Hl7.Fhir.Model
                     if (Party != null) yield return Party;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    foreach (var elem in ModeElement) { if (elem != null) yield return ("mode",elem); }
+                    if (TimeElement != null) yield return ("time",TimeElement);
+                    if (Party != null) yield return ("party",Party);
+                }
+            }
+
             
         }
         
@@ -394,6 +407,18 @@ namespace Hl7.Fhir.Model
                     if (Target != null) yield return Target;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (CodeElement != null) yield return ("code",CodeElement);
+                    if (Target != null) yield return ("target",Target);
+                }
+            }
+
             
         }
         
@@ -507,6 +532,19 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Detail) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    foreach (var elem in Code) { if (elem != null) yield return ("code",elem); }
+                    if (Period != null) yield return ("period",Period);
+                    foreach (var elem in Detail) { if (elem != null) yield return ("detail",elem); }
+                }
+            }
+
             
         }
         
@@ -743,6 +781,24 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Section) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (TitleElement != null) yield return ("title",TitleElement);
+                    if (Code != null) yield return ("code",Code);
+                    if (Text != null) yield return ("text",Text);
+                    if (ModeElement != null) yield return ("mode",ModeElement);
+                    if (OrderedBy != null) yield return ("orderedBy",OrderedBy);
+                    foreach (var elem in Entry) { if (elem != null) yield return ("entry",elem); }
+                    if (EmptyReason != null) yield return ("emptyReason",EmptyReason);
+                    foreach (var elem in Section) { if (elem != null) yield return ("section",elem); }
+                }
+            }
+
             
         }
         
@@ -1169,6 +1225,31 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Section) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (Identifier != null) yield return ("identifier",Identifier);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (Type != null) yield return ("type",Type);
+                if (Class != null) yield return ("class",Class);
+                if (Subject != null) yield return ("subject",Subject);
+                if (Encounter != null) yield return ("encounter",Encounter);
+                if (DateElement != null) yield return ("date",DateElement);
+                foreach (var elem in Author) { if (elem != null) yield return ("author",elem); }
+                if (TitleElement != null) yield return ("title",TitleElement);
+                if (ConfidentialityElement != null) yield return ("confidentiality",ConfidentialityElement);
+                foreach (var elem in Attester) { if (elem != null) yield return ("attester",elem); }
+                if (Custodian != null) yield return ("custodian",Custodian);
+                foreach (var elem in RelatesTo) { if (elem != null) yield return ("relatesTo",elem); }
+                foreach (var elem in Event) { if (elem != null) yield return ("event",elem); }
+                foreach (var elem in Section) { if (elem != null) yield return ("section",elem); }
+            }
+        }
+
     }
     
 }

@@ -346,6 +346,26 @@ namespace Hl7.Fhir.Model
 				if (PaymentStatus != null) yield return PaymentStatus;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (Request != null) yield return ("request",Request);
+                if (Response != null) yield return ("response",Response);
+                if (StatusDateElement != null) yield return ("statusDate",StatusDateElement);
+                if (CreatedElement != null) yield return ("created",CreatedElement);
+                if (Target != null) yield return ("target",Target);
+                if (Provider != null) yield return ("provider",Provider);
+                if (Organization != null) yield return ("organization",Organization);
+                if (PaymentStatus != null) yield return ("paymentStatus",PaymentStatus);
+            }
+        }
+
     }
     
 }

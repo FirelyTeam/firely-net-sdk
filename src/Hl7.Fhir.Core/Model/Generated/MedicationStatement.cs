@@ -590,6 +590,34 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Dosage) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                foreach (var elem in BasedOn) { if (elem != null) yield return ("basedOn",elem); }
+                foreach (var elem in PartOf) { if (elem != null) yield return ("partOf",elem); }
+                if (Context != null) yield return ("context",Context);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (Category != null) yield return ("category",Category);
+                if (Medication != null) yield return ("medication",Medication);
+                if (Effective != null) yield return ("effective",Effective);
+                if (DateAssertedElement != null) yield return ("dateAsserted",DateAssertedElement);
+                if (InformationSource != null) yield return ("informationSource",InformationSource);
+                if (Subject != null) yield return ("subject",Subject);
+                foreach (var elem in DerivedFrom) { if (elem != null) yield return ("derivedFrom",elem); }
+                if (TakenElement != null) yield return ("taken",TakenElement);
+                foreach (var elem in ReasonNotTaken) { if (elem != null) yield return ("reasonNotTaken",elem); }
+                foreach (var elem in ReasonCode) { if (elem != null) yield return ("reasonCode",elem); }
+                foreach (var elem in ReasonReference) { if (elem != null) yield return ("reasonReference",elem); }
+                foreach (var elem in Note) { if (elem != null) yield return ("note",elem); }
+                foreach (var elem in Dosage) { if (elem != null) yield return ("dosage",elem); }
+            }
+        }
+
     }
     
 }

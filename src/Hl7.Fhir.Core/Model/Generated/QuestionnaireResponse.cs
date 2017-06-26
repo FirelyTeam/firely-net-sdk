@@ -312,6 +312,22 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Item) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (LinkIdElement != null) yield return ("linkId",LinkIdElement);
+                    if (DefinitionElement != null) yield return ("definition",DefinitionElement);
+                    if (TextElement != null) yield return ("text",TextElement);
+                    if (Subject != null) yield return ("subject",Subject);
+                    foreach (var elem in Answer) { if (elem != null) yield return ("answer",elem); }
+                    foreach (var elem in Item) { if (elem != null) yield return ("item",elem); }
+                }
+            }
+
             
         }
         
@@ -407,6 +423,18 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Item) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Value != null) yield return ("value",Value);
+                    foreach (var elem in Item) { if (elem != null) yield return ("item",elem); }
+                }
+            }
+
             
         }
         
@@ -717,6 +745,27 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Item) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (Identifier != null) yield return ("identifier",Identifier);
+                foreach (var elem in BasedOn) { if (elem != null) yield return ("basedOn",elem); }
+                foreach (var elem in Parent) { if (elem != null) yield return ("parent",elem); }
+                if (Questionnaire != null) yield return ("questionnaire",Questionnaire);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (Subject != null) yield return ("subject",Subject);
+                if (Context != null) yield return ("context",Context);
+                if (AuthoredElement != null) yield return ("authored",AuthoredElement);
+                if (Author != null) yield return ("author",Author);
+                if (Source != null) yield return ("source",Source);
+                foreach (var elem in Item) { if (elem != null) yield return ("item",elem); }
+            }
+        }
+
     }
     
 }

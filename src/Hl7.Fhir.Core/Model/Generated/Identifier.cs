@@ -292,6 +292,22 @@ namespace Hl7.Fhir.Model
                 if (Assigner != null) yield return Assigner;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren 
+        { 
+            get 
+            { 
+                foreach (var item in base.NamedChildren) yield return item; 
+                if (UseElement != null) yield return ("use",UseElement);
+                if (Type != null) yield return ("type",Type);
+                if (SystemElement != null) yield return ("system",SystemElement);
+                if (ValueElement != null) yield return ("value",ValueElement);
+                if (Period != null) yield return ("period",Period);
+                if (Assigner != null) yield return ("assigner",Assigner);
+ 
+            } 
+        } 
     
     
     }

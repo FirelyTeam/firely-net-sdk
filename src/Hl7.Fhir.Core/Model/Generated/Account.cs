@@ -192,6 +192,18 @@ namespace Hl7.Fhir.Model
                     if (PriorityElement != null) yield return PriorityElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Coverage != null) yield return ("coverage",Coverage);
+                    if (PriorityElement != null) yield return ("priority",PriorityElement);
+                }
+            }
+
             
         }
         
@@ -323,6 +335,19 @@ namespace Hl7.Fhir.Model
                     if (Period != null) yield return Period;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Party != null) yield return ("party",Party);
+                    if (OnHoldElement != null) yield return ("onHold",OnHoldElement);
+                    if (Period != null) yield return ("period",Period);
+                }
+            }
+
             
         }
         
@@ -648,6 +673,28 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Guarantor) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (Type != null) yield return ("type",Type);
+                if (NameElement != null) yield return ("name",NameElement);
+                if (Subject != null) yield return ("subject",Subject);
+                if (Period != null) yield return ("period",Period);
+                if (Active != null) yield return ("active",Active);
+                if (Balance != null) yield return ("balance",Balance);
+                foreach (var elem in Coverage) { if (elem != null) yield return ("coverage",elem); }
+                if (Owner != null) yield return ("owner",Owner);
+                if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                foreach (var elem in Guarantor) { if (elem != null) yield return ("guarantor",elem); }
+            }
+        }
+
     }
     
 }

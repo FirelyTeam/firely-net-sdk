@@ -360,6 +360,27 @@ namespace Hl7.Fhir.Model
 				if (Period != null) yield return Period;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (ActiveElement != null) yield return ("active",ActiveElement);
+                if (Patient != null) yield return ("patient",Patient);
+                if (Relationship != null) yield return ("relationship",Relationship);
+                foreach (var elem in Name) { if (elem != null) yield return ("name",elem); }
+                foreach (var elem in Telecom) { if (elem != null) yield return ("telecom",elem); }
+                if (GenderElement != null) yield return ("gender",GenderElement);
+                if (BirthDateElement != null) yield return ("birthDate",BirthDateElement);
+                foreach (var elem in Address) { if (elem != null) yield return ("address",elem); }
+                foreach (var elem in Photo) { if (elem != null) yield return ("photo",elem); }
+                if (Period != null) yield return ("period",Period);
+            }
+        }
+
     }
     
 }

@@ -165,6 +165,19 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in BenefitBalance) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Coverage != null) yield return ("coverage",Coverage);
+                    if (Contract != null) yield return ("contract",Contract);
+                    foreach (var elem in BenefitBalance) { if (elem != null) yield return ("benefitBalance",elem); }
+                }
+            }
+
             
         }
         
@@ -435,6 +448,25 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Financial) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Category != null) yield return ("category",Category);
+                    if (SubCategory != null) yield return ("subCategory",SubCategory);
+                    if (ExcludedElement != null) yield return ("excluded",ExcludedElement);
+                    if (NameElement != null) yield return ("name",NameElement);
+                    if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                    if (Network != null) yield return ("network",Network);
+                    if (Unit != null) yield return ("unit",Unit);
+                    if (Term != null) yield return ("term",Term);
+                    foreach (var elem in Financial) { if (elem != null) yield return ("financial",elem); }
+                }
+            }
+
             
         }
         
@@ -549,6 +581,19 @@ namespace Hl7.Fhir.Model
                     if (Used != null) yield return Used;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Type != null) yield return ("type",Type);
+                    if (Allowed != null) yield return ("allowed",Allowed);
+                    if (Used != null) yield return ("used",Used);
+                }
+            }
+
             
         }
         
@@ -625,6 +670,17 @@ namespace Hl7.Fhir.Model
                     if (Code != null) yield return Code;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Code != null) yield return ("code",Code);
+                }
+            }
+
             
         }
         
@@ -990,6 +1046,29 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Error) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (CreatedElement != null) yield return ("created",CreatedElement);
+                if (RequestProvider != null) yield return ("requestProvider",RequestProvider);
+                if (RequestOrganization != null) yield return ("requestOrganization",RequestOrganization);
+                if (Request != null) yield return ("request",Request);
+                if (Outcome != null) yield return ("outcome",Outcome);
+                if (DispositionElement != null) yield return ("disposition",DispositionElement);
+                if (Insurer != null) yield return ("insurer",Insurer);
+                if (InforceElement != null) yield return ("inforce",InforceElement);
+                foreach (var elem in Insurance) { if (elem != null) yield return ("insurance",elem); }
+                if (Form != null) yield return ("form",Form);
+                foreach (var elem in Error) { if (elem != null) yield return ("error",elem); }
+            }
+        }
+
     }
     
 }

@@ -243,6 +243,21 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Tag) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren 
+        { 
+            get 
+            { 
+                foreach (var item in base.NamedChildren) yield return item; 
+                if (VersionIdElement != null) yield return ("versionId",VersionIdElement);
+                if (LastUpdatedElement != null) yield return ("lastUpdated",LastUpdatedElement);
+                foreach (var elem in ProfileElement) { if (elem != null) yield return ("profile",elem); }
+                foreach (var elem in Security) { if (elem != null) yield return ("security",elem); }
+                foreach (var elem in Tag) { if (elem != null) yield return ("tag",elem); }
+ 
+            } 
+        } 
     
     
     }

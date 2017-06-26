@@ -215,6 +215,18 @@ namespace Hl7.Fhir.Model
                     if (Period != null) yield return Period;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (StatusElement != null) yield return ("status",StatusElement);
+                    if (Period != null) yield return ("period",Period);
+                }
+            }
+
             
         }
         
@@ -346,6 +358,19 @@ namespace Hl7.Fhir.Model
                     if (RankElement != null) yield return RankElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Condition != null) yield return ("condition",Condition);
+                    if (Role != null) yield return ("role",Role);
+                    if (RankElement != null) yield return ("rank",RankElement);
+                }
+            }
+
             
         }
         
@@ -647,6 +672,28 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Account) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (StatusElement != null) yield return ("status",StatusElement);
+                foreach (var elem in StatusHistory) { if (elem != null) yield return ("statusHistory",elem); }
+                foreach (var elem in Type) { if (elem != null) yield return ("type",elem); }
+                foreach (var elem in Diagnosis) { if (elem != null) yield return ("diagnosis",elem); }
+                if (Patient != null) yield return ("patient",Patient);
+                if (ManagingOrganization != null) yield return ("managingOrganization",ManagingOrganization);
+                if (Period != null) yield return ("period",Period);
+                foreach (var elem in ReferralRequest) { if (elem != null) yield return ("referralRequest",elem); }
+                if (CareManager != null) yield return ("careManager",CareManager);
+                foreach (var elem in Team) { if (elem != null) yield return ("team",elem); }
+                foreach (var elem in Account) { if (elem != null) yield return ("account",elem); }
+            }
+        }
+
     }
     
 }

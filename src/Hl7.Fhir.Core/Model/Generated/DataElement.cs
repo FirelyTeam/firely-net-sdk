@@ -299,6 +299,20 @@ namespace Hl7.Fhir.Model
                     if (CommentElement != null) yield return CommentElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (IdentityElement != null) yield return ("identity",IdentityElement);
+                    if (UriElement != null) yield return ("uri",UriElement);
+                    if (NameElement != null) yield return ("name",NameElement);
+                    if (CommentElement != null) yield return ("comment",CommentElement);
+                }
+            }
+
             
         }
         
@@ -836,6 +850,32 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Element) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (UrlElement != null) yield return ("url",UrlElement);
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (VersionElement != null) yield return ("version",VersionElement);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (ExperimentalElement != null) yield return ("experimental",ExperimentalElement);
+                if (DateElement != null) yield return ("date",DateElement);
+                if (PublisherElement != null) yield return ("publisher",PublisherElement);
+                if (NameElement != null) yield return ("name",NameElement);
+                if (TitleElement != null) yield return ("title",TitleElement);
+                foreach (var elem in Contact) { if (elem != null) yield return ("contact",elem); }
+                foreach (var elem in UseContext) { if (elem != null) yield return ("useContext",elem); }
+                foreach (var elem in Jurisdiction) { if (elem != null) yield return ("jurisdiction",elem); }
+                if (Copyright != null) yield return ("copyright",Copyright);
+                if (StringencyElement != null) yield return ("stringency",StringencyElement);
+                foreach (var elem in Mapping) { if (elem != null) yield return ("mapping",elem); }
+                foreach (var elem in Element) { if (elem != null) yield return ("element",elem); }
+            }
+        }
+
     }
     
 }

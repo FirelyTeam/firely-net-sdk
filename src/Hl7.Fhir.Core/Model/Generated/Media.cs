@@ -594,6 +594,34 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Note) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                foreach (var elem in BasedOn) { if (elem != null) yield return ("basedOn",elem); }
+                if (TypeElement != null) yield return ("type",TypeElement);
+                if (Subtype != null) yield return ("subtype",Subtype);
+                if (View != null) yield return ("view",View);
+                if (Subject != null) yield return ("subject",Subject);
+                if (Context != null) yield return ("context",Context);
+                if (Occurrence != null) yield return ("occurrence",Occurrence);
+                if (Operator != null) yield return ("operator",Operator);
+                foreach (var elem in ReasonCode) { if (elem != null) yield return ("reasonCode",elem); }
+                if (BodySite != null) yield return ("bodySite",BodySite);
+                if (Device != null) yield return ("device",Device);
+                if (HeightElement != null) yield return ("height",HeightElement);
+                if (WidthElement != null) yield return ("width",WidthElement);
+                if (FramesElement != null) yield return ("frames",FramesElement);
+                if (DurationElement != null) yield return ("duration",DurationElement);
+                if (Content != null) yield return ("content",Content);
+                foreach (var elem in Note) { if (elem != null) yield return ("note",elem); }
+            }
+        }
+
     }
     
 }

@@ -246,6 +246,20 @@ namespace Hl7.Fhir.Model
                     if (Period != null) yield return Period;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Code != null) yield return ("code",Code);
+                    if (Value != null) yield return ("value",Value);
+                    if (ExcludeElement != null) yield return ("exclude",ExcludeElement);
+                    if (Period != null) yield return ("period",Period);
+                }
+            }
+
             
         }
         
@@ -377,6 +391,19 @@ namespace Hl7.Fhir.Model
                     if (InactiveElement != null) yield return InactiveElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Entity != null) yield return ("entity",Entity);
+                    if (Period != null) yield return ("period",Period);
+                    if (InactiveElement != null) yield return ("inactive",InactiveElement);
+                }
+            }
+
             
         }
         
@@ -697,6 +724,25 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Member) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (ActiveElement != null) yield return ("active",ActiveElement);
+                if (TypeElement != null) yield return ("type",TypeElement);
+                if (ActualElement != null) yield return ("actual",ActualElement);
+                if (Code != null) yield return ("code",Code);
+                if (NameElement != null) yield return ("name",NameElement);
+                if (QuantityElement != null) yield return ("quantity",QuantityElement);
+                foreach (var elem in Characteristic) { if (elem != null) yield return ("characteristic",elem); }
+                foreach (var elem in Member) { if (elem != null) yield return ("member",elem); }
+            }
+        }
+
     }
     
 }

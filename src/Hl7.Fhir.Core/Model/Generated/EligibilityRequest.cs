@@ -437,6 +437,31 @@ namespace Hl7.Fhir.Model
 				if (BenefitSubCategory != null) yield return BenefitSubCategory;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (Priority != null) yield return ("priority",Priority);
+                if (Patient != null) yield return ("patient",Patient);
+                if (Serviced != null) yield return ("serviced",Serviced);
+                if (CreatedElement != null) yield return ("created",CreatedElement);
+                if (Enterer != null) yield return ("enterer",Enterer);
+                if (Provider != null) yield return ("provider",Provider);
+                if (Organization != null) yield return ("organization",Organization);
+                if (Insurer != null) yield return ("insurer",Insurer);
+                if (Facility != null) yield return ("facility",Facility);
+                if (Coverage != null) yield return ("coverage",Coverage);
+                if (BusinessArrangementElement != null) yield return ("businessArrangement",BusinessArrangementElement);
+                if (BenefitCategory != null) yield return ("benefitCategory",BenefitCategory);
+                if (BenefitSubCategory != null) yield return ("benefitSubCategory",BenefitSubCategory);
+            }
+        }
+
     }
     
 }

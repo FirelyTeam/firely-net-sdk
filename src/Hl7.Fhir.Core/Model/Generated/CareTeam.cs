@@ -220,6 +220,20 @@ namespace Hl7.Fhir.Model
                     if (Period != null) yield return Period;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Role != null) yield return ("role",Role);
+                    if (Member != null) yield return ("member",Member);
+                    if (OnBehalfOf != null) yield return ("onBehalfOf",OnBehalfOf);
+                    if (Period != null) yield return ("period",Period);
+                }
+            }
+
             
         }
         
@@ -544,6 +558,28 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Note) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (StatusElement != null) yield return ("status",StatusElement);
+                foreach (var elem in Category) { if (elem != null) yield return ("category",elem); }
+                if (NameElement != null) yield return ("name",NameElement);
+                if (Subject != null) yield return ("subject",Subject);
+                if (Context != null) yield return ("context",Context);
+                if (Period != null) yield return ("period",Period);
+                foreach (var elem in Participant) { if (elem != null) yield return ("participant",elem); }
+                foreach (var elem in ReasonCode) { if (elem != null) yield return ("reasonCode",elem); }
+                foreach (var elem in ReasonReference) { if (elem != null) yield return ("reasonReference",elem); }
+                foreach (var elem in ManagingOrganization) { if (elem != null) yield return ("managingOrganization",elem); }
+                foreach (var elem in Note) { if (elem != null) yield return ("note",elem); }
+            }
+        }
+
     }
     
 }

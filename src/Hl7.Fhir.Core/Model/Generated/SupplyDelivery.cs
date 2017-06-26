@@ -178,6 +178,18 @@ namespace Hl7.Fhir.Model
                     if (Item != null) yield return Item;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Quantity != null) yield return ("quantity",Quantity);
+                    if (Item != null) yield return ("item",Item);
+                }
+            }
+
             
         }
         
@@ -458,6 +470,27 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Receiver) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (Identifier != null) yield return ("identifier",Identifier);
+                foreach (var elem in BasedOn) { if (elem != null) yield return ("basedOn",elem); }
+                foreach (var elem in PartOf) { if (elem != null) yield return ("partOf",elem); }
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (Patient != null) yield return ("patient",Patient);
+                if (Type != null) yield return ("type",Type);
+                if (SuppliedItem != null) yield return ("suppliedItem",SuppliedItem);
+                if (Occurrence != null) yield return ("occurrence",Occurrence);
+                if (Supplier != null) yield return ("supplier",Supplier);
+                if (Destination != null) yield return ("destination",Destination);
+                foreach (var elem in Receiver) { if (elem != null) yield return ("receiver",elem); }
+            }
+        }
+
     }
     
 }

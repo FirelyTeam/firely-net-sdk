@@ -541,6 +541,28 @@ namespace Hl7.Fhir.Model
                     if (SubClassDisplayElement != null) yield return SubClassDisplayElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (GroupElement != null) yield return ("group",GroupElement);
+                    if (GroupDisplayElement != null) yield return ("groupDisplay",GroupDisplayElement);
+                    if (SubGroupElement != null) yield return ("subGroup",SubGroupElement);
+                    if (SubGroupDisplayElement != null) yield return ("subGroupDisplay",SubGroupDisplayElement);
+                    if (PlanElement != null) yield return ("plan",PlanElement);
+                    if (PlanDisplayElement != null) yield return ("planDisplay",PlanDisplayElement);
+                    if (SubPlanElement != null) yield return ("subPlan",SubPlanElement);
+                    if (SubPlanDisplayElement != null) yield return ("subPlanDisplay",SubPlanDisplayElement);
+                    if (ClassElement != null) yield return ("class",ClassElement);
+                    if (ClassDisplayElement != null) yield return ("classDisplay",ClassDisplayElement);
+                    if (SubClassElement != null) yield return ("subClass",SubClassElement);
+                    if (SubClassDisplayElement != null) yield return ("subClassDisplay",SubClassDisplayElement);
+                }
+            }
+
             
         }
         
@@ -997,6 +1019,32 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Contract) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (Type != null) yield return ("type",Type);
+                if (PolicyHolder != null) yield return ("policyHolder",PolicyHolder);
+                if (Subscriber != null) yield return ("subscriber",Subscriber);
+                if (SubscriberIdElement != null) yield return ("subscriberId",SubscriberIdElement);
+                if (Beneficiary != null) yield return ("beneficiary",Beneficiary);
+                if (Relationship != null) yield return ("relationship",Relationship);
+                if (Period != null) yield return ("period",Period);
+                foreach (var elem in Payor) { if (elem != null) yield return ("payor",elem); }
+                if (Grouping != null) yield return ("grouping",Grouping);
+                if (DependentElement != null) yield return ("dependent",DependentElement);
+                if (SequenceElement != null) yield return ("sequence",SequenceElement);
+                if (OrderElement != null) yield return ("order",OrderElement);
+                if (NetworkElement != null) yield return ("network",NetworkElement);
+                foreach (var elem in Contract) { if (elem != null) yield return ("contract",elem); }
+            }
+        }
+
     }
     
 }

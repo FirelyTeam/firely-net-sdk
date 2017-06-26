@@ -337,6 +337,18 @@ namespace Hl7.Fhir.Model
                     if (ExpressionElement != null) yield return ExpressionElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Definition != null) yield return ("definition",Definition);
+                    if (ExpressionElement != null) yield return ("expression",ExpressionElement);
+                }
+            }
+
             
         }
         
@@ -1179,6 +1191,40 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Component) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (UrlElement != null) yield return ("url",UrlElement);
+                if (VersionElement != null) yield return ("version",VersionElement);
+                if (NameElement != null) yield return ("name",NameElement);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (ExperimentalElement != null) yield return ("experimental",ExperimentalElement);
+                if (DateElement != null) yield return ("date",DateElement);
+                if (PublisherElement != null) yield return ("publisher",PublisherElement);
+                foreach (var elem in Contact) { if (elem != null) yield return ("contact",elem); }
+                foreach (var elem in UseContext) { if (elem != null) yield return ("useContext",elem); }
+                foreach (var elem in Jurisdiction) { if (elem != null) yield return ("jurisdiction",elem); }
+                if (Purpose != null) yield return ("purpose",Purpose);
+                if (CodeElement != null) yield return ("code",CodeElement);
+                foreach (var elem in BaseElement) { if (elem != null) yield return ("base",elem); }
+                if (TypeElement != null) yield return ("type",TypeElement);
+                if (DerivedFromElement != null) yield return ("derivedFrom",DerivedFromElement);
+                if (Description != null) yield return ("description",Description);
+                if (ExpressionElement != null) yield return ("expression",ExpressionElement);
+                if (XpathElement != null) yield return ("xpath",XpathElement);
+                if (XpathUsageElement != null) yield return ("xpathUsage",XpathUsageElement);
+                foreach (var elem in TargetElement) { if (elem != null) yield return ("target",elem); }
+                foreach (var elem in ComparatorElement) { if (elem != null) yield return ("comparator",elem); }
+                foreach (var elem in ModifierElement) { if (elem != null) yield return ("modifier",elem); }
+                foreach (var elem in ChainElement) { if (elem != null) yield return ("chain",elem); }
+                foreach (var elem in Component) { if (elem != null) yield return ("component",elem); }
+            }
+        }
+
     }
     
 }

@@ -276,6 +276,22 @@ namespace Hl7.Fhir.Model
                     if (TextElement != null) yield return TextElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Low != null) yield return ("low",Low);
+                    if (High != null) yield return ("high",High);
+                    if (Type != null) yield return ("type",Type);
+                    foreach (var elem in AppliesTo) { if (elem != null) yield return ("appliesTo",elem); }
+                    if (Age != null) yield return ("age",Age);
+                    if (TextElement != null) yield return ("text",TextElement);
+                }
+            }
+
             
         }
         
@@ -390,6 +406,18 @@ namespace Hl7.Fhir.Model
                     if (Target != null) yield return Target;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (TypeElement != null) yield return ("type",TypeElement);
+                    if (Target != null) yield return ("target",Target);
+                }
+            }
+
             
         }
         
@@ -537,6 +565,21 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in ReferenceRange) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Code != null) yield return ("code",Code);
+                    if (Value != null) yield return ("value",Value);
+                    if (DataAbsentReason != null) yield return ("dataAbsentReason",DataAbsentReason);
+                    if (Interpretation != null) yield return ("interpretation",Interpretation);
+                    foreach (var elem in ReferenceRange) { if (elem != null) yield return ("referenceRange",elem); }
+                }
+            }
+
             
         }
         
@@ -1063,6 +1106,37 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Component) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                foreach (var elem in BasedOn) { if (elem != null) yield return ("basedOn",elem); }
+                if (StatusElement != null) yield return ("status",StatusElement);
+                foreach (var elem in Category) { if (elem != null) yield return ("category",elem); }
+                if (Code != null) yield return ("code",Code);
+                if (Subject != null) yield return ("subject",Subject);
+                if (Context != null) yield return ("context",Context);
+                if (Effective != null) yield return ("effective",Effective);
+                if (IssuedElement != null) yield return ("issued",IssuedElement);
+                foreach (var elem in Performer) { if (elem != null) yield return ("performer",elem); }
+                if (Value != null) yield return ("value",Value);
+                if (DataAbsentReason != null) yield return ("dataAbsentReason",DataAbsentReason);
+                if (Interpretation != null) yield return ("interpretation",Interpretation);
+                if (CommentElement != null) yield return ("comment",CommentElement);
+                if (BodySite != null) yield return ("bodySite",BodySite);
+                if (Method != null) yield return ("method",Method);
+                if (Specimen != null) yield return ("specimen",Specimen);
+                if (Device != null) yield return ("device",Device);
+                foreach (var elem in ReferenceRange) { if (elem != null) yield return ("referenceRange",elem); }
+                foreach (var elem in Related) { if (elem != null) yield return ("related",elem); }
+                foreach (var elem in Component) { if (elem != null) yield return ("component",elem); }
+            }
+        }
+
     }
     
 }

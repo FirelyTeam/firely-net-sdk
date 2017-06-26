@@ -267,6 +267,19 @@ namespace Hl7.Fhir.Model
                     if (AltitudeElement != null) yield return AltitudeElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (LongitudeElement != null) yield return ("longitude",LongitudeElement);
+                    if (LatitudeElement != null) yield return ("latitude",LatitudeElement);
+                    if (AltitudeElement != null) yield return ("altitude",AltitudeElement);
+                }
+            }
+
             
         }
         
@@ -684,6 +697,31 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Endpoint) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (OperationalStatus != null) yield return ("operationalStatus",OperationalStatus);
+                if (NameElement != null) yield return ("name",NameElement);
+                foreach (var elem in AliasElement) { if (elem != null) yield return ("alias",elem); }
+                if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                if (ModeElement != null) yield return ("mode",ModeElement);
+                if (Type != null) yield return ("type",Type);
+                foreach (var elem in Telecom) { if (elem != null) yield return ("telecom",elem); }
+                if (Address != null) yield return ("address",Address);
+                if (PhysicalType != null) yield return ("physicalType",PhysicalType);
+                if (Position != null) yield return ("position",Position);
+                if (ManagingOrganization != null) yield return ("managingOrganization",ManagingOrganization);
+                if (PartOf != null) yield return ("partOf",PartOf);
+                foreach (var elem in Endpoint) { if (elem != null) yield return ("endpoint",elem); }
+            }
+        }
+
     }
     
 }

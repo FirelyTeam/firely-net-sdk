@@ -165,6 +165,19 @@ namespace Hl7.Fhir.Model
                     if (OnBehalfOf != null) yield return OnBehalfOf;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Role != null) yield return ("role",Role);
+                    if (Actor != null) yield return ("actor",Actor);
+                    if (OnBehalfOf != null) yield return ("onBehalfOf",OnBehalfOf);
+                }
+            }
+
             
         }
         
@@ -260,6 +273,18 @@ namespace Hl7.Fhir.Model
                     if (Manipulated != null) yield return Manipulated;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Action != null) yield return ("action",Action);
+                    if (Manipulated != null) yield return ("manipulated",Manipulated);
+                }
+            }
+
             
         }
         
@@ -847,6 +872,42 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in UsedCode) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                foreach (var elem in Definition) { if (elem != null) yield return ("definition",elem); }
+                foreach (var elem in BasedOn) { if (elem != null) yield return ("basedOn",elem); }
+                foreach (var elem in PartOf) { if (elem != null) yield return ("partOf",elem); }
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (NotDoneElement != null) yield return ("notDone",NotDoneElement);
+                if (NotDoneReason != null) yield return ("notDoneReason",NotDoneReason);
+                if (Category != null) yield return ("category",Category);
+                if (Code != null) yield return ("code",Code);
+                if (Subject != null) yield return ("subject",Subject);
+                if (Context != null) yield return ("context",Context);
+                if (Performed != null) yield return ("performed",Performed);
+                foreach (var elem in Performer) { if (elem != null) yield return ("performer",elem); }
+                if (Location != null) yield return ("location",Location);
+                foreach (var elem in ReasonCode) { if (elem != null) yield return ("reasonCode",elem); }
+                foreach (var elem in ReasonReference) { if (elem != null) yield return ("reasonReference",elem); }
+                foreach (var elem in BodySite) { if (elem != null) yield return ("bodySite",elem); }
+                if (Outcome != null) yield return ("outcome",Outcome);
+                foreach (var elem in Report) { if (elem != null) yield return ("report",elem); }
+                foreach (var elem in Complication) { if (elem != null) yield return ("complication",elem); }
+                foreach (var elem in ComplicationDetail) { if (elem != null) yield return ("complicationDetail",elem); }
+                foreach (var elem in FollowUp) { if (elem != null) yield return ("followUp",elem); }
+                foreach (var elem in Note) { if (elem != null) yield return ("note",elem); }
+                foreach (var elem in FocalDevice) { if (elem != null) yield return ("focalDevice",elem); }
+                foreach (var elem in UsedReference) { if (elem != null) yield return ("usedReference",elem); }
+                foreach (var elem in UsedCode) { if (elem != null) yield return ("usedCode",elem); }
+            }
+        }
+
     }
     
 }

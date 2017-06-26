@@ -400,6 +400,30 @@ namespace Hl7.Fhir.Model
                 if (Rate != null) yield return Rate;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren 
+        { 
+            get 
+            { 
+                foreach (var item in base.NamedChildren) yield return item; 
+                if (SequenceElement != null) yield return ("sequence",SequenceElement);
+                if (TextElement != null) yield return ("text",TextElement);
+                foreach (var elem in AdditionalInstruction) { if (elem != null) yield return ("additionalInstruction",elem); }
+                if (PatientInstructionElement != null) yield return ("patientInstruction",PatientInstructionElement);
+                if (Timing != null) yield return ("timing",Timing);
+                if (AsNeeded != null) yield return ("asNeeded",AsNeeded);
+                if (Site != null) yield return ("site",Site);
+                if (Route != null) yield return ("route",Route);
+                if (Method != null) yield return ("method",Method);
+                if (Dose != null) yield return ("dose",Dose);
+                if (MaxDosePerPeriod != null) yield return ("maxDosePerPeriod",MaxDosePerPeriod);
+                if (MaxDosePerAdministration != null) yield return ("maxDosePerAdministration",MaxDosePerAdministration);
+                if (MaxDosePerLifetime != null) yield return ("maxDosePerLifetime",MaxDosePerLifetime);
+                if (Rate != null) yield return ("rate",Rate);
+ 
+            } 
+        } 
     
     
     }

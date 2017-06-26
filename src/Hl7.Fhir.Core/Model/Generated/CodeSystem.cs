@@ -367,6 +367,20 @@ namespace Hl7.Fhir.Model
                     if (ValueElement != null) yield return ValueElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (CodeElement != null) yield return ("code",CodeElement);
+                    if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                    foreach (var elem in OperatorElement) { if (elem != null) yield return ("operator",elem); }
+                    if (ValueElement != null) yield return ("value",ValueElement);
+                }
+            }
+
             
         }
         
@@ -571,6 +585,20 @@ namespace Hl7.Fhir.Model
                     if (TypeElement != null) yield return TypeElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (CodeElement != null) yield return ("code",CodeElement);
+                    if (UriElement != null) yield return ("uri",UriElement);
+                    if (DescriptionElement != null) yield return ("description",DescriptionElement);
+                    if (TypeElement != null) yield return ("type",TypeElement);
+                }
+            }
+
             
         }
         
@@ -792,6 +820,22 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Concept) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (CodeElement != null) yield return ("code",CodeElement);
+                    if (DisplayElement != null) yield return ("display",DisplayElement);
+                    if (DefinitionElement != null) yield return ("definition",DefinitionElement);
+                    foreach (var elem in Designation) { if (elem != null) yield return ("designation",elem); }
+                    foreach (var elem in Property) { if (elem != null) yield return ("property",elem); }
+                    foreach (var elem in Concept) { if (elem != null) yield return ("concept",elem); }
+                }
+            }
+
             
         }
         
@@ -940,6 +984,19 @@ namespace Hl7.Fhir.Model
                     if (ValueElement != null) yield return ValueElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (LanguageElement != null) yield return ("language",LanguageElement);
+                    if (Use != null) yield return ("use",Use);
+                    if (ValueElement != null) yield return ("value",ValueElement);
+                }
+            }
+
             
         }
         
@@ -1055,6 +1112,18 @@ namespace Hl7.Fhir.Model
                     if (Value != null) yield return Value;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (CodeElement != null) yield return ("code",CodeElement);
+                    if (Value != null) yield return ("value",Value);
+                }
+            }
+
             
         }
         
@@ -1840,6 +1909,41 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Concept) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (UrlElement != null) yield return ("url",UrlElement);
+                if (Identifier != null) yield return ("identifier",Identifier);
+                if (VersionElement != null) yield return ("version",VersionElement);
+                if (NameElement != null) yield return ("name",NameElement);
+                if (TitleElement != null) yield return ("title",TitleElement);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (ExperimentalElement != null) yield return ("experimental",ExperimentalElement);
+                if (DateElement != null) yield return ("date",DateElement);
+                if (PublisherElement != null) yield return ("publisher",PublisherElement);
+                foreach (var elem in Contact) { if (elem != null) yield return ("contact",elem); }
+                if (Description != null) yield return ("description",Description);
+                foreach (var elem in UseContext) { if (elem != null) yield return ("useContext",elem); }
+                foreach (var elem in Jurisdiction) { if (elem != null) yield return ("jurisdiction",elem); }
+                if (Purpose != null) yield return ("purpose",Purpose);
+                if (Copyright != null) yield return ("copyright",Copyright);
+                if (CaseSensitiveElement != null) yield return ("caseSensitive",CaseSensitiveElement);
+                if (ValueSetElement != null) yield return ("valueSet",ValueSetElement);
+                if (HierarchyMeaningElement != null) yield return ("hierarchyMeaning",HierarchyMeaningElement);
+                if (CompositionalElement != null) yield return ("compositional",CompositionalElement);
+                if (VersionNeededElement != null) yield return ("versionNeeded",VersionNeededElement);
+                if (ContentElement != null) yield return ("content",ContentElement);
+                if (CountElement != null) yield return ("count",CountElement);
+                foreach (var elem in Filter) { if (elem != null) yield return ("filter",elem); }
+                foreach (var elem in Property) { if (elem != null) yield return ("property",elem); }
+                foreach (var elem in Concept) { if (elem != null) yield return ("concept",elem); }
+            }
+        }
+
     }
     
 }

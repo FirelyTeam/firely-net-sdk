@@ -214,6 +214,20 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Note) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Code != null) yield return ("code",Code);
+                    if (Outcome != null) yield return ("outcome",Outcome);
+                    if (Onset != null) yield return ("onset",Onset);
+                    foreach (var elem in Note) { if (elem != null) yield return ("note",elem); }
+                }
+            }
+
             
         }
         
@@ -742,6 +756,34 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Condition) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                foreach (var elem in Definition) { if (elem != null) yield return ("definition",elem); }
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (NotDoneElement != null) yield return ("notDone",NotDoneElement);
+                if (NotDoneReason != null) yield return ("notDoneReason",NotDoneReason);
+                if (Patient != null) yield return ("patient",Patient);
+                if (DateElement != null) yield return ("date",DateElement);
+                if (NameElement != null) yield return ("name",NameElement);
+                if (Relationship != null) yield return ("relationship",Relationship);
+                if (GenderElement != null) yield return ("gender",GenderElement);
+                if (Born != null) yield return ("born",Born);
+                if (Age != null) yield return ("age",Age);
+                if (EstimatedAgeElement != null) yield return ("estimatedAge",EstimatedAgeElement);
+                if (Deceased != null) yield return ("deceased",Deceased);
+                foreach (var elem in ReasonCode) { if (elem != null) yield return ("reasonCode",elem); }
+                foreach (var elem in ReasonReference) { if (elem != null) yield return ("reasonReference",elem); }
+                foreach (var elem in Note) { if (elem != null) yield return ("note",elem); }
+                foreach (var elem in Condition) { if (elem != null) yield return ("condition",elem); }
+            }
+        }
+
     }
     
 }

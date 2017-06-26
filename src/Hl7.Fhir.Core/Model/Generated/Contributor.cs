@@ -223,6 +223,19 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Contact) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren 
+        { 
+            get 
+            { 
+                foreach (var item in base.NamedChildren) yield return item; 
+                if (TypeElement != null) yield return ("type",TypeElement);
+                if (NameElement != null) yield return ("name",NameElement);
+                foreach (var elem in Contact) { if (elem != null) yield return ("contact",elem); }
+ 
+            } 
+        } 
     
     
     }

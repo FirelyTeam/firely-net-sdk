@@ -256,6 +256,23 @@ namespace Hl7.Fhir.Model
                     if (Amount != null) yield return Amount;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Type != null) yield return ("type",Type);
+                    if (Request != null) yield return ("request",Request);
+                    if (Response != null) yield return ("response",Response);
+                    if (Submitter != null) yield return ("submitter",Submitter);
+                    if (Payee != null) yield return ("payee",Payee);
+                    if (DateElement != null) yield return ("date",DateElement);
+                    if (Amount != null) yield return ("amount",Amount);
+                }
+            }
+
             
         }
         
@@ -367,6 +384,18 @@ namespace Hl7.Fhir.Model
                     if (TextElement != null) yield return TextElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Type != null) yield return ("type",Type);
+                    if (TextElement != null) yield return ("text",TextElement);
+                }
+            }
+
             
         }
         
@@ -730,6 +759,30 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in ProcessNote) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (Period != null) yield return ("period",Period);
+                if (CreatedElement != null) yield return ("created",CreatedElement);
+                if (Organization != null) yield return ("organization",Organization);
+                if (Request != null) yield return ("request",Request);
+                if (Outcome != null) yield return ("outcome",Outcome);
+                if (DispositionElement != null) yield return ("disposition",DispositionElement);
+                if (RequestProvider != null) yield return ("requestProvider",RequestProvider);
+                if (RequestOrganization != null) yield return ("requestOrganization",RequestOrganization);
+                foreach (var elem in Detail) { if (elem != null) yield return ("detail",elem); }
+                if (Form != null) yield return ("form",Form);
+                if (Total != null) yield return ("total",Total);
+                foreach (var elem in ProcessNote) { if (elem != null) yield return ("processNote",elem); }
+            }
+        }
+
     }
     
 }

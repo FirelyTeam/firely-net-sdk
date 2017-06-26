@@ -335,6 +335,20 @@ namespace Hl7.Fhir.Model
                     if (CommentElement != null) yield return CommentElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (IdentityElement != null) yield return ("identity",IdentityElement);
+                    if (UriElement != null) yield return ("uri",UriElement);
+                    if (NameElement != null) yield return ("name",NameElement);
+                    if (CommentElement != null) yield return ("comment",CommentElement);
+                }
+            }
+
             
         }
         
@@ -411,6 +425,17 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Element) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    foreach (var elem in Element) { if (elem != null) yield return ("element",elem); }
+                }
+            }
+
             
         }
         
@@ -487,6 +512,17 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Element) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    foreach (var elem in Element) { if (elem != null) yield return ("element",elem); }
+                }
+            }
+
             
         }
         
@@ -1557,6 +1593,44 @@ namespace Hl7.Fhir.Model
 				if (Differential != null) yield return Differential;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (UrlElement != null) yield return ("url",UrlElement);
+                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
+                if (VersionElement != null) yield return ("version",VersionElement);
+                if (NameElement != null) yield return ("name",NameElement);
+                if (TitleElement != null) yield return ("title",TitleElement);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (ExperimentalElement != null) yield return ("experimental",ExperimentalElement);
+                if (DateElement != null) yield return ("date",DateElement);
+                if (PublisherElement != null) yield return ("publisher",PublisherElement);
+                foreach (var elem in Contact) { if (elem != null) yield return ("contact",elem); }
+                if (Description != null) yield return ("description",Description);
+                foreach (var elem in UseContext) { if (elem != null) yield return ("useContext",elem); }
+                foreach (var elem in Jurisdiction) { if (elem != null) yield return ("jurisdiction",elem); }
+                if (Purpose != null) yield return ("purpose",Purpose);
+                if (Copyright != null) yield return ("copyright",Copyright);
+                foreach (var elem in Keyword) { if (elem != null) yield return ("keyword",elem); }
+                if (FhirVersionElement != null) yield return ("fhirVersion",FhirVersionElement);
+                foreach (var elem in Mapping) { if (elem != null) yield return ("mapping",elem); }
+                if (KindElement != null) yield return ("kind",KindElement);
+                if (AbstractElement != null) yield return ("abstract",AbstractElement);
+                if (ContextTypeElement != null) yield return ("contextType",ContextTypeElement);
+                foreach (var elem in ContextElement) { if (elem != null) yield return ("context",elem); }
+                foreach (var elem in ContextInvariantElement) { if (elem != null) yield return ("contextInvariant",elem); }
+                if (TypeElement != null) yield return ("type",TypeElement);
+                if (BaseDefinitionElement != null) yield return ("baseDefinition",BaseDefinitionElement);
+                if (DerivationElement != null) yield return ("derivation",DerivationElement);
+                if (Snapshot != null) yield return ("snapshot",Snapshot);
+                if (Differential != null) yield return ("differential",Differential);
+            }
+        }
+
     }
     
 }

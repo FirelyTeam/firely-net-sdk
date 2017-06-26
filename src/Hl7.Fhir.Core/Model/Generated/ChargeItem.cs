@@ -197,6 +197,18 @@ namespace Hl7.Fhir.Model
                     if (Actor != null) yield return Actor;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Role != null) yield return ("role",Role);
+                    if (Actor != null) yield return ("actor",Actor);
+                }
+            }
+
             
         }
         
@@ -772,6 +784,39 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in SupportingInformation) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (Identifier != null) yield return ("identifier",Identifier);
+                foreach (var elem in DefinitionElement) { if (elem != null) yield return ("definition",elem); }
+                if (StatusElement != null) yield return ("status",StatusElement);
+                foreach (var elem in PartOf) { if (elem != null) yield return ("partOf",elem); }
+                if (Code != null) yield return ("code",Code);
+                if (Subject != null) yield return ("subject",Subject);
+                if (Context != null) yield return ("context",Context);
+                if (Occurrence != null) yield return ("occurrence",Occurrence);
+                foreach (var elem in Participant) { if (elem != null) yield return ("participant",elem); }
+                if (PerformingOrganization != null) yield return ("performingOrganization",PerformingOrganization);
+                if (RequestingOrganization != null) yield return ("requestingOrganization",RequestingOrganization);
+                if (Quantity != null) yield return ("quantity",Quantity);
+                foreach (var elem in Bodysite) { if (elem != null) yield return ("bodysite",elem); }
+                if (FactorOverrideElement != null) yield return ("factorOverride",FactorOverrideElement);
+                if (PriceOverride != null) yield return ("priceOverride",PriceOverride);
+                if (OverrideReasonElement != null) yield return ("overrideReason",OverrideReasonElement);
+                if (Enterer != null) yield return ("enterer",Enterer);
+                if (EnteredDateElement != null) yield return ("enteredDate",EnteredDateElement);
+                foreach (var elem in Reason) { if (elem != null) yield return ("reason",elem); }
+                foreach (var elem in Service) { if (elem != null) yield return ("service",elem); }
+                foreach (var elem in Account) { if (elem != null) yield return ("account",elem); }
+                foreach (var elem in Note) { if (elem != null) yield return ("note",elem); }
+                foreach (var elem in SupportingInformation) { if (elem != null) yield return ("supportingInformation",elem); }
+            }
+        }
+
     }
     
 }

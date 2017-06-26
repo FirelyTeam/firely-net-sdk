@@ -254,6 +254,22 @@ namespace Hl7.Fhir.Model
                     if (RationaleElement != null) yield return RationaleElement;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Outcome != null) yield return ("outcome",Outcome);
+                    if (Probability != null) yield return ("probability",Probability);
+                    if (QualitativeRisk != null) yield return ("qualitativeRisk",QualitativeRisk);
+                    if (RelativeRiskElement != null) yield return ("relativeRisk",RelativeRiskElement);
+                    if (When != null) yield return ("when",When);
+                    if (RationaleElement != null) yield return ("rationale",RationaleElement);
+                }
+            }
+
             
         }
         
@@ -681,6 +697,32 @@ namespace Hl7.Fhir.Model
 				if (CommentElement != null) yield return CommentElement;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (Identifier != null) yield return ("identifier",Identifier);
+                if (BasedOn != null) yield return ("basedOn",BasedOn);
+                if (Parent != null) yield return ("parent",Parent);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (Method != null) yield return ("method",Method);
+                if (Code != null) yield return ("code",Code);
+                if (Subject != null) yield return ("subject",Subject);
+                if (Context != null) yield return ("context",Context);
+                if (Occurrence != null) yield return ("occurrence",Occurrence);
+                if (Condition != null) yield return ("condition",Condition);
+                if (Performer != null) yield return ("performer",Performer);
+                if (Reason != null) yield return ("reason",Reason);
+                foreach (var elem in Basis) { if (elem != null) yield return ("basis",elem); }
+                foreach (var elem in Prediction) { if (elem != null) yield return ("prediction",elem); }
+                if (MitigationElement != null) yield return ("mitigation",MitigationElement);
+                if (CommentElement != null) yield return ("comment",CommentElement);
+            }
+        }
+
     }
     
 }

@@ -236,6 +236,17 @@ namespace Hl7.Fhir.Model
             }
         }
 
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                if (IdElement != null) yield return ("id",IdElement);
+                if (Meta != null) yield return ("meta",Meta);
+                if (ImplicitRulesElement != null) yield return ("implicitRules",ImplicitRulesElement);
+                if (LanguageElement != null) yield return ("language",LanguageElement);
+            }
+        }
     }
 
 }

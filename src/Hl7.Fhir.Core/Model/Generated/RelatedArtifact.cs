@@ -336,6 +336,22 @@ namespace Hl7.Fhir.Model
                 if (Resource != null) yield return Resource;
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren 
+        { 
+            get 
+            { 
+                foreach (var item in base.NamedChildren) yield return item; 
+                if (TypeElement != null) yield return ("type",TypeElement);
+                if (DisplayElement != null) yield return ("display",DisplayElement);
+                if (CitationElement != null) yield return ("citation",CitationElement);
+                if (UrlElement != null) yield return ("url",UrlElement);
+                if (Document != null) yield return ("document",Document);
+                if (Resource != null) yield return ("resource",Resource);
+ 
+            } 
+        } 
     
     
     }

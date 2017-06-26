@@ -222,6 +222,20 @@ namespace Hl7.Fhir.Model
                     if (RelatedAgentType != null) yield return RelatedAgentType;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    foreach (var elem in Role) { if (elem != null) yield return ("role",elem); }
+                    if (Who != null) yield return ("who",Who);
+                    if (OnBehalfOf != null) yield return ("onBehalfOf",OnBehalfOf);
+                    if (RelatedAgentType != null) yield return ("relatedAgentType",RelatedAgentType);
+                }
+            }
+
             
         }
         
@@ -355,6 +369,19 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Agent) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (RoleElement != null) yield return ("role",RoleElement);
+                    if (What != null) yield return ("what",What);
+                    foreach (var elem in Agent) { if (elem != null) yield return ("agent",elem); }
+                }
+            }
+
             
         }
         
@@ -631,6 +658,26 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Signature) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Target) { if (elem != null) yield return ("target",elem); }
+                if (Period != null) yield return ("period",Period);
+                if (RecordedElement != null) yield return ("recorded",RecordedElement);
+                foreach (var elem in PolicyElement) { if (elem != null) yield return ("policy",elem); }
+                if (Location != null) yield return ("location",Location);
+                foreach (var elem in Reason) { if (elem != null) yield return ("reason",elem); }
+                if (Activity != null) yield return ("activity",Activity);
+                foreach (var elem in Agent) { if (elem != null) yield return ("agent",elem); }
+                foreach (var elem in Entity) { if (elem != null) yield return ("entity",elem); }
+                foreach (var elem in Signature) { if (elem != null) yield return ("signature",elem); }
+            }
+        }
+
     }
     
 }

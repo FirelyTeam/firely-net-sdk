@@ -469,6 +469,30 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in DataRequirement) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (RequestIdElement != null) yield return ("requestId",RequestIdElement);
+                if (Identifier != null) yield return ("identifier",Identifier);
+                if (Module != null) yield return ("module",Module);
+                if (StatusElement != null) yield return ("status",StatusElement);
+                if (Subject != null) yield return ("subject",Subject);
+                if (Context != null) yield return ("context",Context);
+                if (OccurrenceDateTimeElement != null) yield return ("occurrenceDateTime",OccurrenceDateTimeElement);
+                if (Performer != null) yield return ("performer",Performer);
+                if (Reason != null) yield return ("reason",Reason);
+                foreach (var elem in Note) { if (elem != null) yield return ("note",elem); }
+                foreach (var elem in EvaluationMessage) { if (elem != null) yield return ("evaluationMessage",elem); }
+                if (OutputParameters != null) yield return ("outputParameters",OutputParameters);
+                if (Result != null) yield return ("result",Result);
+                foreach (var elem in DataRequirement) { if (elem != null) yield return ("dataRequirement",elem); }
+            }
+        }
+
     }
     
 }

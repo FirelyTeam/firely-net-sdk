@@ -233,10 +233,23 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in ValueCodeableConcept) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren 
+            { 
+                get 
+                { 
+                    foreach (var item in base.NamedChildren) yield return item; 
+                    if (PathElement != null) yield return ("path",PathElement);
+                    if (ValueSet != null) yield return ("valueSet",ValueSet);
+                    foreach (var elem in ValueCodeElement) { if (elem != null) yield return ("valueCode",elem); }
+                    foreach (var elem in ValueCoding) { if (elem != null) yield return ("valueCoding",elem); }
+                    foreach (var elem in ValueCodeableConcept) { if (elem != null) yield return ("valueCodeableConcept",elem); }
+ 
+                } 
+            } 
             
-        }
-        
-        
+        }                
         [FhirType("DateFilterComponent")]
         [DataContract]
         public partial class DateFilterComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -346,10 +359,20 @@ namespace Hl7.Fhir.Model
                     if (Value != null) yield return Value;
                 }
             }
+
+            [NotMapped]
+            public override IEnumerable<(string name, Base child)> NamedChildren 
+            { 
+                get 
+                { 
+                    foreach (var item in base.NamedChildren) yield return item; 
+                    if (PathElement != null) yield return ("path",PathElement);
+                    if (Value != null) yield return ("value",Value);
+ 
+                } 
+            } 
             
-        }
-        
-        
+        }                
         /// <summary>
         /// The type of the required data
         /// </summary>
@@ -544,6 +567,21 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in DateFilter) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        public override IEnumerable<(string name, Base child)> NamedChildren 
+        { 
+            get 
+            { 
+                foreach (var item in base.NamedChildren) yield return item; 
+                if (TypeElement != null) yield return ("type",TypeElement);
+                foreach (var elem in ProfileElement) { if (elem != null) yield return ("profile",elem); }
+                foreach (var elem in MustSupportElement) { if (elem != null) yield return ("mustSupport",elem); }
+                foreach (var elem in CodeFilter) { if (elem != null) yield return ("codeFilter",elem); }
+                foreach (var elem in DateFilter) { if (elem != null) yield return ("dateFilter",elem); }
+ 
+            } 
+        } 
     
     
     }
