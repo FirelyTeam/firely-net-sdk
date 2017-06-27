@@ -645,7 +645,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Appointment_APP_3 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("(start and end) or status = 'proposed' or status = 'cancelled'"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("(start.exists() and end.exists()) or (status = 'proposed') or (status = 'cancelled')"))},
             Key = "app-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Only proposed or cancelled appointments can be missing start/end dates",
@@ -654,7 +654,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Appointment_APP_2 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("start.empty() xor end"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("start.empty() xor end.exists()"))},
             Key = "app-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Either start and end are specified, or neither",
@@ -663,7 +663,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Appointment_APP_1 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("participant.all(type or actor)"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("participant.all(type.exists() or actor.exists())"))},
             Key = "app-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Either the type or actor on the participant MUST be specified",
