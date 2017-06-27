@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Introspection
             {
                 name += "<";
                 //name += String.Join(",", type.GetGenericArguments().Select(arg => arg.FullName));
-                name += String.Join(",", type.GenericTypeArguments.Select(arg => arg.FullName));
+                name += String.Join(",", type.GetTypeInfo().GenericTypeArguments.Select(arg => arg.FullName));
 				name += ">";
 			}
 

@@ -12,8 +12,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <FhirApiVersion>0.93.2</FhirApiVersion>
-    <SupportApiVersion>0.4.2</SupportApiVersion>
+    <FhirApiVersion Condition=" '$(FhirApiVersion)' == '' ">0.93.2</FhirApiVersion>
+    <SupportApiVersion Condition=" '$(SupportApiVersion)' == '' ">0.4.2</SupportApiVersion>
   </PropertyGroup>
 
   <!-- Compiler settings -->

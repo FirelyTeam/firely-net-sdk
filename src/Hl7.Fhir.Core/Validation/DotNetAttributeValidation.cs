@@ -22,7 +22,11 @@ namespace Hl7.Fhir.Validation
             if (value == null) throw new ArgumentNullException("value");
             //    assertSupportedInstanceType(value);
 
+#if NET40
+            var validationContext = new ValidationContext(value, null, null);
+#else
             var validationContext = new ValidationContext(value);
+#endif
             validationContext.SetValidateRecursively(recurse);
             Validator.ValidateObject(value, validationContext, true);
         }
@@ -33,7 +37,11 @@ namespace Hl7.Fhir.Validation
           // assertSupportedInstanceType(value);
 
             var results = validationResults ?? new List<ValidationResult>();
+#if NET40
+            var validationContext = new ValidationContext(value, null, null);
+#else
             var validationContext = new ValidationContext(value);
+#endif
             validationContext.SetValidateRecursively(recurse);
             return Validator.TryValidateObject(value, validationContext, results, true);
 
