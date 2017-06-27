@@ -18,30 +18,26 @@ namespace Hl7.FhirPath.Functions
 {
     internal static class EqualityOperators
     {
-        public static bool IsEqualTo(this IEnumerable<IElementNavigator> left, IEnumerable<IElementNavigator> right)
+        public static bool IsEqualTo(this IEnumerable<IElementNavigator> left, IEnumerable<IElementNavigator> right, bool compareNames = false)
         {
-            if (left.Count() != right.Count()) return false;
+            var r = right.GetEnumerator();
 
-            // This will enumerate the whole set using the iterator,
-            // so isn't faster than just comparing the lists 
-            // (which will stop when an Item is different)
-            // Worst case where last Item is different with old code would 
-            // enumerate both collections 3 times.
-            // With the new code it would enumerate once
-            // The best case with old code was 2 enumerations of the collection,
-            // then first one is different.
-            // With the new code, a single comparison would be performed.
-            // ...but this does not work....since is right has more items, Zip() won't complain
+            foreach (var l in left)
+            {
+                if (!r.MoveNext()) return false;        // number of children not the same            
+                if (!l.IsEqualTo(r.Current, compareNames)) return false;
+            }
 
-            //TODO: align with more performant code in ElementNavigatorComparator
-
-            return left.Zip(right, (l, r) => l.IsEqualTo(r)).All(x => x);
-
-            
+            if (r.MoveNext())
+                return false;   // number of children not the same
+            else
+                return true;
         }
 
-        public static bool IsEqualTo(this IElementNavigator left, IElementNavigator right)
+        public static bool IsEqualTo(this IElementNavigator left, IElementNavigator right, bool compareNames = false)
         {
+            if (compareNames && (left.Name != right.Name)) return false;
+
             var l = left.Value;
             var r = right.Value;
 
@@ -70,13 +66,10 @@ namespace Hl7.FhirPath.Functions
             else if (l == null && r == null)
             {
                 // Compare complex types (extensions on primitives are not compared, but handled (=ignored) above
-                var childrenL = left.childrenOrEmpty();
-                var childrenR = right.childrenOrEmpty();
+                var childrenL = left.Children();
+                var childrenR = right.Children();
 
-                bool allNamesAreEqual = childrenL.Zip(childrenR, (childL, childR) => namesAreEqual(childL, childR)).All(t => t);
-
-                return allNamesAreEqual &&
-                        childrenL.IsEqualTo(childrenR);    // NOTE: Assumes null will never be returned when any() children exist
+                return childrenL.IsEqualTo(childrenR, compareNames:true);    // NOTE: Assumes null will never be returned when any() children exist
             }
             else
             {
@@ -86,25 +79,30 @@ namespace Hl7.FhirPath.Functions
         }
 
 
-        private static bool namesAreEqual(IElementNavigator left, IElementNavigator right, bool useEquivalence = false)
-        {
-            if (useEquivalence && left.Name == "id") return true;      // don't compare 'id' elements for equivalence
-            if (left.Name != right.Name) return false;
+    
 
-            return true;
+        public static bool IsEquivalentTo(this IEnumerable<IElementNavigator> left, IEnumerable<IElementNavigator> right, bool compareNames = false)
+        {
+            var r = right.ToList();
+            int count = 0;
+
+            foreach (var l in left)
+            {
+                count += 1;
+                if (!r.Any(ri => l.IsEquivalentTo(ri, compareNames))) return false;
+            }
+
+            if (count != r.Count)
+                return false;
+            else
+                return true;
         }
 
 
-        public static bool IsEquivalentTo(this IEnumerable<IElementNavigator> left, IEnumerable<IElementNavigator> right)
+        public static bool IsEquivalentTo(this IElementNavigator left, IElementNavigator right, bool compareNames = false)
         {
-            if (left.Count() != right.Count()) return false;
+            if (compareNames && !namesAreEquivalent(left, right)) return false;
 
-            return left.All(l => right.Any(r => l.IsEquivalentTo(r)));
-        }
-
-
-        public static bool IsEquivalentTo(this IElementNavigator left, IElementNavigator right)
-        {
             var l = left.Value;
             var r = right.Value;
 
@@ -133,20 +131,23 @@ namespace Hl7.FhirPath.Functions
             else if (l == null && r == null)
             {
                 // Compare complex types (extensions on primitives are not compared, but handled (=ignored) above
+                var childrenL = left.Children();
+                var childrenR = right.Children();
 
-                var childrenL = left.childrenOrEmpty();
-                var childrenR = right.childrenOrEmpty();
-
-                bool allNamesAreEquivalent = childrenL.Zip(childrenR, 
-                        (childL, childR) => namesAreEqual(childL, childR, useEquivalence:true)).All(t => t);
-
-                return allNamesAreEquivalent &&
-                            childrenL.IsEquivalentTo(childrenR);    // NOTE: Assumes null will never be returned when any() children exist
+                return childrenL.IsEquivalentTo(childrenR, compareNames: true);    // NOTE: Assumes null will never be returned when any() children exist
             }
             else
             {
                 // Else, we're comparing a complex (without a value) to a primitive which (probably) should return false
                 return false;
+            }
+
+            bool namesAreEquivalent(IElementNavigator le, IElementNavigator ri)
+            {
+                if (le.Name == "id" && ri.Name == "id") return true;      // don't compare 'id' elements for equivalence
+                if (le.Name != ri.Name) return false;
+
+                return true;
             }
         }
 
@@ -154,12 +155,7 @@ namespace Hl7.FhirPath.Functions
 
         private static IEnumerable<IElementNavigator> childrenOrEmpty(this IElementNavigator focus)
         {
-            if (focus is IElementNavigator)
-            {
-                return ((IElementNavigator)focus).Children();
-            }
-
-            return FhirValueList.Empty;
+            return (focus is IElementNavigator ien) ? ien.Children() : FhirValueList.Empty;
         }
 
         public static bool IsEquivalentTo(this string a, string b)
