@@ -112,12 +112,12 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren 
+        internal override IEnumerable<ElementValue> NamedChildren 
         { 
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                foreach (var elem in ModifierExtension) { if (elem != null) yield return ("modifierExtension",elem); }
+                foreach (var elem in ModifierExtension) { if (elem != null) yield return new ElementValue("modifierExtension", true, elem); }
  
             } 
         } 

@@ -203,13 +203,13 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (NameElement != null) yield return ("name",NameElement);
-                    foreach (var elem in Telecom) { if (elem != null) yield return ("telecom",elem); }
+                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                    foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
                 }
             }
 
@@ -811,26 +811,26 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (UrlElement != null) yield return ("url",UrlElement);
-                if (NameElement != null) yield return ("name",NameElement);
-                if (StatusElement != null) yield return ("status",StatusElement);
-                if (ExperimentalElement != null) yield return ("experimental",ExperimentalElement);
-                if (PublisherElement != null) yield return ("publisher",PublisherElement);
-                foreach (var elem in Contact) { if (elem != null) yield return ("contact",elem); }
-                if (DateElement != null) yield return ("date",DateElement);
-                if (RequirementsElement != null) yield return ("requirements",RequirementsElement);
-                if (CodeElement != null) yield return ("code",CodeElement);
-                if (BaseElement != null) yield return ("base",BaseElement);
-                if (TypeElement != null) yield return ("type",TypeElement);
-                if (DescriptionElement != null) yield return ("description",DescriptionElement);
-                if (XpathElement != null) yield return ("xpath",XpathElement);
-                if (XpathUsageElement != null) yield return ("xpathUsage",XpathUsageElement);
-                foreach (var elem in TargetElement) { if (elem != null) yield return ("target",elem); }
+                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
+                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (ExperimentalElement != null) yield return new ElementValue("experimental", false, ExperimentalElement);
+                if (PublisherElement != null) yield return new ElementValue("publisher", false, PublisherElement);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
+                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
+                if (RequirementsElement != null) yield return new ElementValue("requirements", false, RequirementsElement);
+                if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
+                if (BaseElement != null) yield return new ElementValue("base", false, BaseElement);
+                if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
+                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                if (XpathElement != null) yield return new ElementValue("xpath", false, XpathElement);
+                if (XpathUsageElement != null) yield return new ElementValue("xpathUsage", false, XpathUsageElement);
+                foreach (var elem in TargetElement) { if (elem != null) yield return new ElementValue("target", true, elem); }
             }
         }
 

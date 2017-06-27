@@ -300,17 +300,17 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (LinkIdElement != null) yield return ("linkId",LinkIdElement);
-                    if (TitleElement != null) yield return ("title",TitleElement);
-                    if (TextElement != null) yield return ("text",TextElement);
-                    if (Subject != null) yield return ("subject",Subject);
-                    foreach (var elem in Group) { if (elem != null) yield return ("group",elem); }
-                    foreach (var elem in Question) { if (elem != null) yield return ("question",elem); }
+                    if (LinkIdElement != null) yield return new ElementValue("linkId", false, LinkIdElement);
+                    if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
+                    if (TextElement != null) yield return new ElementValue("text", false, TextElement);
+                    if (Subject != null) yield return new ElementValue("subject", false, Subject);
+                    foreach (var elem in Group) { if (elem != null) yield return new ElementValue("group", true, elem); }
+                    foreach (var elem in Question) { if (elem != null) yield return new ElementValue("question", true, elem); }
                 }
             }
 
@@ -464,14 +464,14 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (LinkIdElement != null) yield return ("linkId",LinkIdElement);
-                    if (TextElement != null) yield return ("text",TextElement);
-                    foreach (var elem in Answer) { if (elem != null) yield return ("answer",elem); }
+                    if (LinkIdElement != null) yield return new ElementValue("linkId", false, LinkIdElement);
+                    if (TextElement != null) yield return new ElementValue("text", false, TextElement);
+                    foreach (var elem in Answer) { if (elem != null) yield return new ElementValue("answer", true, elem); }
                 }
             }
 
@@ -572,13 +572,13 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Value != null) yield return ("value",Value);
-                    foreach (var elem in Group) { if (elem != null) yield return ("group",elem); }
+                    if (Value != null) yield return new ElementValue("value", false, Value);
+                    foreach (var elem in Group) { if (elem != null) yield return new ElementValue("group", true, elem); }
                 }
             }
 
@@ -853,20 +853,20 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Identifier != null) yield return ("identifier",Identifier);
-                if (Questionnaire != null) yield return ("questionnaire",Questionnaire);
-                if (StatusElement != null) yield return ("status",StatusElement);
-                if (Subject != null) yield return ("subject",Subject);
-                if (Author != null) yield return ("author",Author);
-                if (AuthoredElement != null) yield return ("authored",AuthoredElement);
-                if (Source != null) yield return ("source",Source);
-                if (Encounter != null) yield return ("encounter",Encounter);
-                if (Group != null) yield return ("group",Group);
+                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                if (Questionnaire != null) yield return new ElementValue("questionnaire", false, Questionnaire);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (Subject != null) yield return new ElementValue("subject", false, Subject);
+                if (Author != null) yield return new ElementValue("author", false, Author);
+                if (AuthoredElement != null) yield return new ElementValue("authored", false, AuthoredElement);
+                if (Source != null) yield return new ElementValue("source", false, Source);
+                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
+                if (Group != null) yield return new ElementValue("group", false, Group);
             }
         }
 

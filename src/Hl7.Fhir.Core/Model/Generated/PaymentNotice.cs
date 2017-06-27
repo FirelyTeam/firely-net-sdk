@@ -310,21 +310,21 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
-                if (Ruleset != null) yield return ("ruleset",Ruleset);
-                if (OriginalRuleset != null) yield return ("originalRuleset",OriginalRuleset);
-                if (CreatedElement != null) yield return ("created",CreatedElement);
-                if (Target != null) yield return ("target",Target);
-                if (Provider != null) yield return ("provider",Provider);
-                if (Organization != null) yield return ("organization",Organization);
-                if (Request != null) yield return ("request",Request);
-                if (Response != null) yield return ("response",Response);
-                if (PaymentStatus != null) yield return ("paymentStatus",PaymentStatus);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (Ruleset != null) yield return new ElementValue("ruleset", false, Ruleset);
+                if (OriginalRuleset != null) yield return new ElementValue("originalRuleset", false, OriginalRuleset);
+                if (CreatedElement != null) yield return new ElementValue("created", false, CreatedElement);
+                if (Target != null) yield return new ElementValue("target", false, Target);
+                if (Provider != null) yield return new ElementValue("provider", false, Provider);
+                if (Organization != null) yield return new ElementValue("organization", false, Organization);
+                if (Request != null) yield return new ElementValue("request", false, Request);
+                if (Response != null) yield return new ElementValue("response", false, Response);
+                if (PaymentStatus != null) yield return new ElementValue("paymentStatus", false, PaymentStatus);
             }
         }
 

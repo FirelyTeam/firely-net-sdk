@@ -490,16 +490,16 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (SeverityElement != null) yield return ("severity",SeverityElement);
-                    if (CodeElement != null) yield return ("code",CodeElement);
-                    if (Details != null) yield return ("details",Details);
-                    if (DiagnosticsElement != null) yield return ("diagnostics",DiagnosticsElement);
-                    foreach (var elem in LocationElement) { if (elem != null) yield return ("location",elem); }
+                    if (SeverityElement != null) yield return new ElementValue("severity", false, SeverityElement);
+                    if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
+                    if (Details != null) yield return new ElementValue("details", false, Details);
+                    if (DiagnosticsElement != null) yield return new ElementValue("diagnostics", false, DiagnosticsElement);
+                    foreach (var elem in LocationElement) { if (elem != null) yield return new ElementValue("location", true, elem); }
                 }
             }
 
@@ -580,12 +580,12 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Issue) { if (elem != null) yield return ("issue",elem); }
+                foreach (var elem in Issue) { if (elem != null) yield return new ElementValue("issue", true, elem); }
             }
         }
 

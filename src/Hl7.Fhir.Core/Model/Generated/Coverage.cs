@@ -450,25 +450,25 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Issuer != null) yield return ("issuer",Issuer);
-                if (Bin != null) yield return ("bin",Bin);
-                if (Period != null) yield return ("period",Period);
-                if (Type != null) yield return ("type",Type);
-                if (SubscriberId != null) yield return ("subscriberId",SubscriberId);
-                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
-                if (GroupElement != null) yield return ("group",GroupElement);
-                if (PlanElement != null) yield return ("plan",PlanElement);
-                if (SubPlanElement != null) yield return ("subPlan",SubPlanElement);
-                if (DependentElement != null) yield return ("dependent",DependentElement);
-                if (SequenceElement != null) yield return ("sequence",SequenceElement);
-                if (Subscriber != null) yield return ("subscriber",Subscriber);
-                if (Network != null) yield return ("network",Network);
-                foreach (var elem in Contract) { if (elem != null) yield return ("contract",elem); }
+                if (Issuer != null) yield return new ElementValue("issuer", false, Issuer);
+                if (Bin != null) yield return new ElementValue("bin", false, Bin);
+                if (Period != null) yield return new ElementValue("period", false, Period);
+                if (Type != null) yield return new ElementValue("type", false, Type);
+                if (SubscriberId != null) yield return new ElementValue("subscriberId", false, SubscriberId);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (GroupElement != null) yield return new ElementValue("group", false, GroupElement);
+                if (PlanElement != null) yield return new ElementValue("plan", false, PlanElement);
+                if (SubPlanElement != null) yield return new ElementValue("subPlan", false, SubPlanElement);
+                if (DependentElement != null) yield return new ElementValue("dependent", false, DependentElement);
+                if (SequenceElement != null) yield return new ElementValue("sequence", false, SequenceElement);
+                if (Subscriber != null) yield return new ElementValue("subscriber", false, Subscriber);
+                if (Network != null) yield return new ElementValue("network", false, Network);
+                foreach (var elem in Contract) { if (elem != null) yield return new ElementValue("contract", true, elem); }
             }
         }
 

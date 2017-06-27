@@ -268,14 +268,14 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (LongitudeElement != null) yield return ("longitude",LongitudeElement);
-                    if (LatitudeElement != null) yield return ("latitude",LatitudeElement);
-                    if (AltitudeElement != null) yield return ("altitude",AltitudeElement);
+                    if (LongitudeElement != null) yield return new ElementValue("longitude", false, LongitudeElement);
+                    if (LatitudeElement != null) yield return new ElementValue("latitude", false, LatitudeElement);
+                    if (AltitudeElement != null) yield return new ElementValue("altitude", false, AltitudeElement);
                 }
             }
 
@@ -624,23 +624,23 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
-                if (StatusElement != null) yield return ("status",StatusElement);
-                if (NameElement != null) yield return ("name",NameElement);
-                if (DescriptionElement != null) yield return ("description",DescriptionElement);
-                if (ModeElement != null) yield return ("mode",ModeElement);
-                if (Type != null) yield return ("type",Type);
-                foreach (var elem in Telecom) { if (elem != null) yield return ("telecom",elem); }
-                if (Address != null) yield return ("address",Address);
-                if (PhysicalType != null) yield return ("physicalType",PhysicalType);
-                if (Position != null) yield return ("position",Position);
-                if (ManagingOrganization != null) yield return ("managingOrganization",ManagingOrganization);
-                if (PartOf != null) yield return ("partOf",PartOf);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                if (ModeElement != null) yield return new ElementValue("mode", false, ModeElement);
+                if (Type != null) yield return new ElementValue("type", false, Type);
+                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
+                if (Address != null) yield return new ElementValue("address", false, Address);
+                if (PhysicalType != null) yield return new ElementValue("physicalType", false, PhysicalType);
+                if (Position != null) yield return new ElementValue("position", false, Position);
+                if (ManagingOrganization != null) yield return new ElementValue("managingOrganization", false, ManagingOrganization);
+                if (PartOf != null) yield return new ElementValue("partOf", false, PartOf);
             }
         }
 

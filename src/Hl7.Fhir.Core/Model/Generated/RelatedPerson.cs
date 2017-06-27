@@ -324,21 +324,21 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
-                if (Patient != null) yield return ("patient",Patient);
-                if (Relationship != null) yield return ("relationship",Relationship);
-                if (Name != null) yield return ("name",Name);
-                foreach (var elem in Telecom) { if (elem != null) yield return ("telecom",elem); }
-                if (GenderElement != null) yield return ("gender",GenderElement);
-                if (BirthDateElement != null) yield return ("birthDate",BirthDateElement);
-                foreach (var elem in Address) { if (elem != null) yield return ("address",elem); }
-                foreach (var elem in Photo) { if (elem != null) yield return ("photo",elem); }
-                if (Period != null) yield return ("period",Period);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (Patient != null) yield return new ElementValue("patient", false, Patient);
+                if (Relationship != null) yield return new ElementValue("relationship", false, Relationship);
+                if (Name != null) yield return new ElementValue("name", false, Name);
+                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
+                if (GenderElement != null) yield return new ElementValue("gender", false, GenderElement);
+                if (BirthDateElement != null) yield return new ElementValue("birthDate", false, BirthDateElement);
+                foreach (var elem in Address) { if (elem != null) yield return new ElementValue("address", true, elem); }
+                foreach (var elem in Photo) { if (elem != null) yield return new ElementValue("photo", true, elem); }
+                if (Period != null) yield return new ElementValue("period", false, Period);
             }
         }
 

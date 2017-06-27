@@ -509,19 +509,19 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Substance != null) yield return ("substance",Substance);
-                    if (CertaintyElement != null) yield return ("certainty",CertaintyElement);
-                    foreach (var elem in Manifestation) { if (elem != null) yield return ("manifestation",elem); }
-                    if (DescriptionElement != null) yield return ("description",DescriptionElement);
-                    if (OnsetElement != null) yield return ("onset",OnsetElement);
-                    if (SeverityElement != null) yield return ("severity",SeverityElement);
-                    if (ExposureRoute != null) yield return ("exposureRoute",ExposureRoute);
-                    if (Note != null) yield return ("note",Note);
+                    if (Substance != null) yield return new ElementValue("substance", false, Substance);
+                    if (CertaintyElement != null) yield return new ElementValue("certainty", false, CertaintyElement);
+                    foreach (var elem in Manifestation) { if (elem != null) yield return new ElementValue("manifestation", true, elem); }
+                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                    if (OnsetElement != null) yield return new ElementValue("onset", false, OnsetElement);
+                    if (SeverityElement != null) yield return new ElementValue("severity", false, SeverityElement);
+                    if (ExposureRoute != null) yield return new ElementValue("exposureRoute", false, ExposureRoute);
+                    if (Note != null) yield return new ElementValue("note", false, Note);
                 }
             }
 
@@ -965,25 +965,25 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
-                if (OnsetElement != null) yield return ("onset",OnsetElement);
-                if (RecordedDateElement != null) yield return ("recordedDate",RecordedDateElement);
-                if (Recorder != null) yield return ("recorder",Recorder);
-                if (Patient != null) yield return ("patient",Patient);
-                if (Reporter != null) yield return ("reporter",Reporter);
-                if (Substance != null) yield return ("substance",Substance);
-                if (StatusElement != null) yield return ("status",StatusElement);
-                if (CriticalityElement != null) yield return ("criticality",CriticalityElement);
-                if (TypeElement != null) yield return ("type",TypeElement);
-                if (CategoryElement != null) yield return ("category",CategoryElement);
-                if (LastOccurenceElement != null) yield return ("lastOccurence",LastOccurenceElement);
-                if (Note != null) yield return ("note",Note);
-                foreach (var elem in Reaction) { if (elem != null) yield return ("reaction",elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (OnsetElement != null) yield return new ElementValue("onset", false, OnsetElement);
+                if (RecordedDateElement != null) yield return new ElementValue("recordedDate", false, RecordedDateElement);
+                if (Recorder != null) yield return new ElementValue("recorder", false, Recorder);
+                if (Patient != null) yield return new ElementValue("patient", false, Patient);
+                if (Reporter != null) yield return new ElementValue("reporter", false, Reporter);
+                if (Substance != null) yield return new ElementValue("substance", false, Substance);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (CriticalityElement != null) yield return new ElementValue("criticality", false, CriticalityElement);
+                if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
+                if (CategoryElement != null) yield return new ElementValue("category", false, CategoryElement);
+                if (LastOccurenceElement != null) yield return new ElementValue("lastOccurence", false, LastOccurenceElement);
+                if (Note != null) yield return new ElementValue("note", false, Note);
+                foreach (var elem in Reaction) { if (elem != null) yield return new ElementValue("reaction", true, elem); }
             }
         }
 

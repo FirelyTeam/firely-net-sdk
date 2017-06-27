@@ -28,9 +28,9 @@ namespace Hl7.Fhir.Utility
 
 
         public static ComparisonResult IsEqualTo(this IElementNavigator expected, IElementNavigator actual)
-        {          
+        {
+            if (!namesEqual(expected.Name, actual.Name)) return ComparisonResult.Fail(actual.Location, $"name: was '{actual.Name}', expected '{expected.Name}'");
             if (!valuesEqual(expected.Value,actual.Value)) return ComparisonResult.Fail(actual.Location, $"value: was '{actual.Value}', expected '{expected.Value}'");
-            if (!namesEqual(expected.Name,actual.Name)) return ComparisonResult.Fail(actual.Location, $"name: was '{actual.Name}', expected '{expected.Name}'");
 
             // Allow the expected navigator to have more type info than the actual navigator
             if (expected.Type != actual.Type && actual.Type != null) return ComparisonResult.Fail(actual.Location, $"type: was '{actual.Type}', expected '{expected.Type}'");

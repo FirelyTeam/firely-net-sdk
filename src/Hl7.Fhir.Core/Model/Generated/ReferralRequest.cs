@@ -523,27 +523,27 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (StatusElement != null) yield return ("status",StatusElement);
-                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
-                if (DateElement != null) yield return ("date",DateElement);
-                if (Type != null) yield return ("type",Type);
-                if (Specialty != null) yield return ("specialty",Specialty);
-                if (Priority != null) yield return ("priority",Priority);
-                if (Patient != null) yield return ("patient",Patient);
-                if (Requester != null) yield return ("requester",Requester);
-                foreach (var elem in Recipient) { if (elem != null) yield return ("recipient",elem); }
-                if (Encounter != null) yield return ("encounter",Encounter);
-                if (DateSentElement != null) yield return ("dateSent",DateSentElement);
-                if (Reason != null) yield return ("reason",Reason);
-                if (DescriptionElement != null) yield return ("description",DescriptionElement);
-                foreach (var elem in ServiceRequested) { if (elem != null) yield return ("serviceRequested",elem); }
-                foreach (var elem in SupportingInformation) { if (elem != null) yield return ("supportingInformation",elem); }
-                if (FulfillmentTime != null) yield return ("fulfillmentTime",FulfillmentTime);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
+                if (Type != null) yield return new ElementValue("type", false, Type);
+                if (Specialty != null) yield return new ElementValue("specialty", false, Specialty);
+                if (Priority != null) yield return new ElementValue("priority", false, Priority);
+                if (Patient != null) yield return new ElementValue("patient", false, Patient);
+                if (Requester != null) yield return new ElementValue("requester", false, Requester);
+                foreach (var elem in Recipient) { if (elem != null) yield return new ElementValue("recipient", true, elem); }
+                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
+                if (DateSentElement != null) yield return new ElementValue("dateSent", false, DateSentElement);
+                if (Reason != null) yield return new ElementValue("reason", false, Reason);
+                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                foreach (var elem in ServiceRequested) { if (elem != null) yield return new ElementValue("serviceRequested", true, elem); }
+                foreach (var elem in SupportingInformation) { if (elem != null) yield return new ElementValue("supportingInformation", true, elem); }
+                if (FulfillmentTime != null) yield return new ElementValue("fulfillmentTime", false, FulfillmentTime);
             }
         }
 

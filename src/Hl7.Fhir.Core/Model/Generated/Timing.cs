@@ -629,22 +629,22 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren 
+            internal override IEnumerable<ElementValue> NamedChildren 
             { 
                 get 
                 { 
                     foreach (var item in base.NamedChildren) yield return item; 
-                    if (Bounds != null) yield return ("bounds",Bounds);
-                    if (CountElement != null) yield return ("count",CountElement);
-                    if (DurationElement != null) yield return ("duration",DurationElement);
-                    if (DurationMaxElement != null) yield return ("durationMax",DurationMaxElement);
-                    if (DurationUnitsElement != null) yield return ("durationUnits",DurationUnitsElement);
-                    if (FrequencyElement != null) yield return ("frequency",FrequencyElement);
-                    if (FrequencyMaxElement != null) yield return ("frequencyMax",FrequencyMaxElement);
-                    if (PeriodElement != null) yield return ("period",PeriodElement);
-                    if (PeriodMaxElement != null) yield return ("periodMax",PeriodMaxElement);
-                    if (PeriodUnitsElement != null) yield return ("periodUnits",PeriodUnitsElement);
-                    if (WhenElement != null) yield return ("when",WhenElement);
+                    if (Bounds != null) yield return new ElementValue("bounds", false, Bounds);
+                    if (CountElement != null) yield return new ElementValue("count", false, CountElement);
+                    if (DurationElement != null) yield return new ElementValue("duration", false, DurationElement);
+                    if (DurationMaxElement != null) yield return new ElementValue("durationMax", false, DurationMaxElement);
+                    if (DurationUnitsElement != null) yield return new ElementValue("durationUnits", false, DurationUnitsElement);
+                    if (FrequencyElement != null) yield return new ElementValue("frequency", false, FrequencyElement);
+                    if (FrequencyMaxElement != null) yield return new ElementValue("frequencyMax", false, FrequencyMaxElement);
+                    if (PeriodElement != null) yield return new ElementValue("period", false, PeriodElement);
+                    if (PeriodMaxElement != null) yield return new ElementValue("periodMax", false, PeriodMaxElement);
+                    if (PeriodUnitsElement != null) yield return new ElementValue("periodUnits", false, PeriodUnitsElement);
+                    if (WhenElement != null) yield return new ElementValue("when", false, WhenElement);
  
                 } 
             } 
@@ -770,14 +770,14 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren 
+        internal override IEnumerable<ElementValue> NamedChildren 
         { 
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                foreach (var elem in EventElement) { if (elem != null) yield return ("event",elem); }
-                if (Repeat != null) yield return ("repeat",Repeat);
-                if (Code != null) yield return ("code",Code);
+                foreach (var elem in EventElement) { if (elem != null) yield return new ElementValue("event", true, elem); }
+                if (Repeat != null) yield return new ElementValue("repeat", false, Repeat);
+                if (Code != null) yield return new ElementValue("code", false, Code);
  
             } 
         } 

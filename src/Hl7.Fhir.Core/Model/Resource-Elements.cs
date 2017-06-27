@@ -228,7 +228,9 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override IEnumerable<Base> Children
         {
-            get {
+            get
+            {
+                foreach (var item in base.Children) yield return item;
                 if (IdElement != null) yield return IdElement;
                 if (Meta != null) yield return Meta;
                 if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
@@ -237,14 +239,15 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
-                if (IdElement != null) yield return ("id",IdElement);
-                if (Meta != null) yield return ("meta",Meta);
-                if (ImplicitRulesElement != null) yield return ("implicitRules",ImplicitRulesElement);
-                if (LanguageElement != null) yield return ("language",LanguageElement);
+                foreach (var item in base.NamedChildren) yield return item;
+                if (IdElement != null) yield return new ElementValue("id",false, IdElement);
+                if (Meta != null) yield return new ElementValue("meta",false,Meta);
+                if (ImplicitRulesElement != null) yield return new ElementValue("implicitRules",false,ImplicitRulesElement);
+                if (LanguageElement != null) yield return new ElementValue("language",false,LanguageElement);
             }
         }
     }

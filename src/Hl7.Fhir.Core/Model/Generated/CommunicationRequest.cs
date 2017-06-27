@@ -199,12 +199,12 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Content != null) yield return ("content",Content);
+                    if (Content != null) yield return new ElementValue("content", false, Content);
                 }
             }
 
@@ -560,25 +560,25 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
-                if (Category != null) yield return ("category",Category);
-                if (Sender != null) yield return ("sender",Sender);
-                foreach (var elem in Recipient) { if (elem != null) yield return ("recipient",elem); }
-                foreach (var elem in Payload) { if (elem != null) yield return ("payload",elem); }
-                foreach (var elem in Medium) { if (elem != null) yield return ("medium",elem); }
-                if (Requester != null) yield return ("requester",Requester);
-                if (StatusElement != null) yield return ("status",StatusElement);
-                if (Encounter != null) yield return ("encounter",Encounter);
-                if (Scheduled != null) yield return ("scheduled",Scheduled);
-                foreach (var elem in Reason) { if (elem != null) yield return ("reason",elem); }
-                if (RequestedOnElement != null) yield return ("requestedOn",RequestedOnElement);
-                if (Subject != null) yield return ("subject",Subject);
-                if (Priority != null) yield return ("priority",Priority);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (Category != null) yield return new ElementValue("category", false, Category);
+                if (Sender != null) yield return new ElementValue("sender", false, Sender);
+                foreach (var elem in Recipient) { if (elem != null) yield return new ElementValue("recipient", true, elem); }
+                foreach (var elem in Payload) { if (elem != null) yield return new ElementValue("payload", true, elem); }
+                foreach (var elem in Medium) { if (elem != null) yield return new ElementValue("medium", true, elem); }
+                if (Requester != null) yield return new ElementValue("requester", false, Requester);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
+                if (Scheduled != null) yield return new ElementValue("scheduled", false, Scheduled);
+                foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", true, elem); }
+                if (RequestedOnElement != null) yield return new ElementValue("requestedOn", false, RequestedOnElement);
+                if (Subject != null) yield return new ElementValue("subject", false, Subject);
+                if (Priority != null) yield return new ElementValue("priority", false, Priority);
             }
         }
 

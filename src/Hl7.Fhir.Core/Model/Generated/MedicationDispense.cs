@@ -347,21 +347,21 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (TextElement != null) yield return ("text",TextElement);
-                    if (AdditionalInstructions != null) yield return ("additionalInstructions",AdditionalInstructions);
-                    if (Timing != null) yield return ("timing",Timing);
-                    if (AsNeeded != null) yield return ("asNeeded",AsNeeded);
-                    if (Site != null) yield return ("site",Site);
-                    if (Route != null) yield return ("route",Route);
-                    if (Method != null) yield return ("method",Method);
-                    if (Dose != null) yield return ("dose",Dose);
-                    if (Rate != null) yield return ("rate",Rate);
-                    if (MaxDosePerPeriod != null) yield return ("maxDosePerPeriod",MaxDosePerPeriod);
+                    if (TextElement != null) yield return new ElementValue("text", false, TextElement);
+                    if (AdditionalInstructions != null) yield return new ElementValue("additionalInstructions", false, AdditionalInstructions);
+                    if (Timing != null) yield return new ElementValue("timing", false, Timing);
+                    if (AsNeeded != null) yield return new ElementValue("asNeeded", false, AsNeeded);
+                    if (Site != null) yield return new ElementValue("site", false, Site);
+                    if (Route != null) yield return new ElementValue("route", false, Route);
+                    if (Method != null) yield return new ElementValue("method", false, Method);
+                    if (Dose != null) yield return new ElementValue("dose", false, Dose);
+                    if (Rate != null) yield return new ElementValue("rate", false, Rate);
+                    if (MaxDosePerPeriod != null) yield return new ElementValue("maxDosePerPeriod", false, MaxDosePerPeriod);
                 }
             }
 
@@ -481,14 +481,14 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return ("type",Type);
-                    foreach (var elem in Reason) { if (elem != null) yield return ("reason",elem); }
-                    foreach (var elem in ResponsibleParty) { if (elem != null) yield return ("responsibleParty",elem); }
+                    if (Type != null) yield return new ElementValue("type", false, Type);
+                    foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", true, elem); }
+                    foreach (var elem in ResponsibleParty) { if (elem != null) yield return new ElementValue("responsibleParty", true, elem); }
                 }
             }
 
@@ -925,27 +925,27 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Identifier != null) yield return ("identifier",Identifier);
-                if (StatusElement != null) yield return ("status",StatusElement);
-                if (Patient != null) yield return ("patient",Patient);
-                if (Dispenser != null) yield return ("dispenser",Dispenser);
-                foreach (var elem in AuthorizingPrescription) { if (elem != null) yield return ("authorizingPrescription",elem); }
-                if (Type != null) yield return ("type",Type);
-                if (Quantity != null) yield return ("quantity",Quantity);
-                if (DaysSupply != null) yield return ("daysSupply",DaysSupply);
-                if (Medication != null) yield return ("medication",Medication);
-                if (WhenPreparedElement != null) yield return ("whenPrepared",WhenPreparedElement);
-                if (WhenHandedOverElement != null) yield return ("whenHandedOver",WhenHandedOverElement);
-                if (Destination != null) yield return ("destination",Destination);
-                foreach (var elem in Receiver) { if (elem != null) yield return ("receiver",elem); }
-                if (NoteElement != null) yield return ("note",NoteElement);
-                foreach (var elem in DosageInstruction) { if (elem != null) yield return ("dosageInstruction",elem); }
-                if (Substitution != null) yield return ("substitution",Substitution);
+                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (Patient != null) yield return new ElementValue("patient", false, Patient);
+                if (Dispenser != null) yield return new ElementValue("dispenser", false, Dispenser);
+                foreach (var elem in AuthorizingPrescription) { if (elem != null) yield return new ElementValue("authorizingPrescription", true, elem); }
+                if (Type != null) yield return new ElementValue("type", false, Type);
+                if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
+                if (DaysSupply != null) yield return new ElementValue("daysSupply", false, DaysSupply);
+                if (Medication != null) yield return new ElementValue("medication", false, Medication);
+                if (WhenPreparedElement != null) yield return new ElementValue("whenPrepared", false, WhenPreparedElement);
+                if (WhenHandedOverElement != null) yield return new ElementValue("whenHandedOver", false, WhenHandedOverElement);
+                if (Destination != null) yield return new ElementValue("destination", false, Destination);
+                foreach (var elem in Receiver) { if (elem != null) yield return new ElementValue("receiver", true, elem); }
+                if (NoteElement != null) yield return new ElementValue("note", false, NoteElement);
+                foreach (var elem in DosageInstruction) { if (elem != null) yield return new ElementValue("dosageInstruction", true, elem); }
+                if (Substitution != null) yield return new ElementValue("substitution", false, Substitution);
             }
         }
 

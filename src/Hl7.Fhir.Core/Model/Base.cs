@@ -180,6 +180,12 @@ namespace Hl7.Fhir.Model
         /// Finally returns child nodes defined by the current class.
         /// </summary>
         [NotMapped]
-        public virtual IEnumerable<(string name, Base child)> NamedChildren { get { return Enumerable.Empty<(string name, Base child)>(); } }
+        internal virtual IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var elem in FhirComments) { if (elem != null) yield return new ElementValue("fhir_comments", true, elem); }
+            }
+        }
     }
 }

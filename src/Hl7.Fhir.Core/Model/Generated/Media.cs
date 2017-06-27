@@ -501,23 +501,23 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (TypeElement != null) yield return ("type",TypeElement);
-                if (Subtype != null) yield return ("subtype",Subtype);
-                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
-                if (Subject != null) yield return ("subject",Subject);
-                if (Operator != null) yield return ("operator",Operator);
-                if (View != null) yield return ("view",View);
-                if (DeviceNameElement != null) yield return ("deviceName",DeviceNameElement);
-                if (HeightElement != null) yield return ("height",HeightElement);
-                if (WidthElement != null) yield return ("width",WidthElement);
-                if (FramesElement != null) yield return ("frames",FramesElement);
-                if (DurationElement != null) yield return ("duration",DurationElement);
-                if (Content != null) yield return ("content",Content);
+                if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
+                if (Subtype != null) yield return new ElementValue("subtype", false, Subtype);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (Subject != null) yield return new ElementValue("subject", false, Subject);
+                if (Operator != null) yield return new ElementValue("operator", false, Operator);
+                if (View != null) yield return new ElementValue("view", false, View);
+                if (DeviceNameElement != null) yield return new ElementValue("deviceName", false, DeviceNameElement);
+                if (HeightElement != null) yield return new ElementValue("height", false, HeightElement);
+                if (WidthElement != null) yield return new ElementValue("width", false, WidthElement);
+                if (FramesElement != null) yield return new ElementValue("frames", false, FramesElement);
+                if (DurationElement != null) yield return new ElementValue("duration", false, DurationElement);
+                if (Content != null) yield return new ElementValue("content", false, Content);
             }
         }
 

@@ -380,19 +380,19 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
-                if (Type != null) yield return ("type",Type);
-                if (Schedule != null) yield return ("schedule",Schedule);
-                if (FreeBusyTypeElement != null) yield return ("freeBusyType",FreeBusyTypeElement);
-                if (StartElement != null) yield return ("start",StartElement);
-                if (EndElement != null) yield return ("end",EndElement);
-                if (OverbookedElement != null) yield return ("overbooked",OverbookedElement);
-                if (CommentElement != null) yield return ("comment",CommentElement);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (Type != null) yield return new ElementValue("type", false, Type);
+                if (Schedule != null) yield return new ElementValue("schedule", false, Schedule);
+                if (FreeBusyTypeElement != null) yield return new ElementValue("freeBusyType", false, FreeBusyTypeElement);
+                if (StartElement != null) yield return new ElementValue("start", false, StartElement);
+                if (EndElement != null) yield return new ElementValue("end", false, EndElement);
+                if (OverbookedElement != null) yield return new ElementValue("overbooked", false, OverbookedElement);
+                if (CommentElement != null) yield return new ElementValue("comment", false, CommentElement);
             }
         }
 

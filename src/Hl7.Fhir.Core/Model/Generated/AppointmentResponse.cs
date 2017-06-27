@@ -384,19 +384,19 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
-                if (Appointment != null) yield return ("appointment",Appointment);
-                if (StartElement != null) yield return ("start",StartElement);
-                if (EndElement != null) yield return ("end",EndElement);
-                foreach (var elem in ParticipantType) { if (elem != null) yield return ("participantType",elem); }
-                if (Actor != null) yield return ("actor",Actor);
-                if (ParticipantStatus_Element != null) yield return ("participantStatus",ParticipantStatus_Element);
-                if (CommentElement != null) yield return ("comment",CommentElement);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (Appointment != null) yield return new ElementValue("appointment", false, Appointment);
+                if (StartElement != null) yield return new ElementValue("start", false, StartElement);
+                if (EndElement != null) yield return new ElementValue("end", false, EndElement);
+                foreach (var elem in ParticipantType) { if (elem != null) yield return new ElementValue("participantType", true, elem); }
+                if (Actor != null) yield return new ElementValue("actor", false, Actor);
+                if (ParticipantStatus_Element != null) yield return new ElementValue("participantStatus", false, ParticipantStatus_Element);
+                if (CommentElement != null) yield return new ElementValue("comment", false, CommentElement);
             }
         }
 
