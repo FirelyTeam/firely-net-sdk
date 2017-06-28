@@ -18,8 +18,9 @@ namespace Hl7.Fhir.Validation
     {
         public static string GetFhirPathConstraint(this ElementDefinition.ConstraintComponent cc)
         {
-            if (cc.Key == "ele-1")
-                return "(children().count() > id.count()) | hasValue()";
+            // This was required for 3.0.0, but was rectified in the 3.0.1 technical update
+            //if (cc.Key == "ele-1")
+            //    return "(children().count() > id.count()) | hasValue()";
             return cc.Expression;
         }
 

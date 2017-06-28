@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Tests.Rest
         //public static Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
         //public static Uri testEndpoint = new Uri("https://localhost:44346/fhir");
         //public static Uri testEndpoint = new Uri("http://localhost:1396/fhir");
-        public static Uri testEndpoint = new Uri("http://fhir3.healthintersections.com.au/open");
+        public static Uri testEndpoint = new Uri("http://test.fhir.org/r3");
         //public static Uri testEndpoint = new Uri("https://api.fhir.me");
         //public static Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu3");
         //public static Uri testEndpoint = new Uri("http://localhost:49911/fhir");
@@ -957,7 +957,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void TestReceiveErrorStatusWithOperationOutcomeIsHandled()
         {
-            var client = new FhirClient("http://fhir3.healthintersections.com.au/open");  // an address that returns Status 404 with an OperationOutcome
+            var client = new FhirClient("http://test.fhir.org/r3");  // an address that returns Status 404 with an OperationOutcome
 
             try
             {
@@ -1002,7 +1002,7 @@ namespace Hl7.Fhir.Tests.Rest
             var testEndpointDSTU1 = new Uri("http://spark.furore.com/fhir");
             var testEndpointDSTU12 = new Uri("http://fhirtest.uhn.ca/baseDstu1");
             var testEndpointDSTU22 = new Uri("http://fhirtest.uhn.ca/baseDstu2");
-            var testEndpointDSTU23 = new Uri("http://fhir3.healthintersections.com.au/open");
+            var testEndpointDSTU23 = new Uri("http://test.fhir.org/r3");
 
             var client = new FhirClient(testEndpointDSTU1);
             client.ParserSettings.AllowUnrecognizedEnums = true;

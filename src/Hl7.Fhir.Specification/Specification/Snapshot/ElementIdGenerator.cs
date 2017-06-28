@@ -52,6 +52,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         /// <summary>Generate unique element IDs for all the <see cref="ElementDefinition"/>s in the specified list.</summary>
         /// <param name="elements">A list of <see cref="ElementDefinition"/>s.</param>
+        /// <param name="force">Determines wether to regenerate (<c>true</c>) or maintain (<c>false</c>) any existing element IDs.</param>
         public static void Generate(IList<ElementDefinition> elements, bool force = false)
         {
             if (elements == null) { throw new ArgumentNullException(nameof(elements)); }
@@ -81,7 +82,26 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
-        static void generate(ElementDefinitionNavigator nav, bool force, string parentElemId)
+        /// <summary>Clear the element IDs of the current element and it's children, recursively.</summary>
+        /// <param name="nav"></param>
+        public static void Clear(ElementDefinitionNavigator nav)
+        {
+            if (nav == null) { throw new ArgumentNullException(nameof(nav)); }
+            if (nav.Current == null) { throw new ArgumentException("Error! The navigator is not positioned on an element.", nameof(nav)); }
+
+            nav.Current.ElementId = null;
+            var bm = nav.Bookmark();
+            if (nav.MoveToFirstChild())
+            {
+                do
+                {
+                    Clear(nav);
+                } while (nav.MoveToNext());
+                nav.ReturnToBookmark(bm);
+            }
+        }
+
+        private static void generate(ElementDefinitionNavigator nav, bool force, string parentElemId)
         {
             if (nav == null) { throw new ArgumentNullException(nameof(nav)); }
             if (nav.Current == null) { throw new ArgumentException("Error! The specified navigator is not positioned on an element.", nameof(nav)); }
@@ -99,7 +119,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             } while (nav.MoveToNext());
         }
 
-        static string generate(ElementDefinition elemDef, bool force, string parentElemId)
+        private static string generate(ElementDefinition elemDef, bool force, string parentElemId)
         {
             if (elemDef == null) { throw new ArgumentNullException(nameof(elemDef)); }
             if (elemDef.Path == null) { throw new ArgumentException("Error! The specified element has no path.", nameof(elemDef)); }
