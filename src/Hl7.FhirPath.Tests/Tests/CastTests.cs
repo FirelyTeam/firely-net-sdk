@@ -182,7 +182,7 @@ namespace Hl7.FhirPath.Tests
             return false;
         }
 
-        public bool MoveToNext()
+        public bool MoveToNext(string nameFilter = null)
         {
             return false;
         }

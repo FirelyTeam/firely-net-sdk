@@ -18,69 +18,138 @@ namespace Hl7.Fhir.FhirPath
 {
     public class PocoElementNavigator
     {
-        static Hl7.Fhir.Introspection.ClassMapping GetMappingForType(Type elementType)
-        {
-            var inspector = Serialization.BaseFhirParser.Inspector;
-            return inspector.ImportType(elementType);
-        }
+        private Base _parent;
 
-        // For the root element only
-        internal PocoElementNavigator(string name, Base value)
-        {
-            _pocoElement = value ?? throw Error.ArgumentNull(nameof(value));
-            PropMap = null;
-            Name = name;
-            _arrayIndex = 0;
-        }
+        private int _arrayIndex; // this is only for the ShortPath implementation eg Patient.Name[1].Family (its the 1 here)
+        private int _index;
+        private IList<Introspection.PropertyMapping> _properties;
+        private object _propValue;      // value of the property indexed by _index, may be an array
+        private object _currentValue;    // current value, often equal to _propValue, except when _propValue is a list
 
         // For Normal element properties representing a FHIR type
-        internal PocoElementNavigator(Introspection.PropertyMapping map, Base value, int arrayIndex)
+        internal PocoElementNavigator(Base parent)
         {
-            _pocoElement = value ?? throw Error.ArgumentNull(nameof(value));
-            PropMap = map;
-            Name = map.Name;
-            _arrayIndex = arrayIndex;
+            moveTo(parent);
         }
 
-        // For properties representing primitive strings (id, url, div), as
-        // rendered as attributes in the xml
-        internal PocoElementNavigator(Introspection.PropertyMapping map, string value)
+        private PocoElementNavigator()      // for clone
         {
-            _string = value ?? throw Error.ArgumentNull(nameof(value));
-            PropMap = map;
-            Name = map.Name;
-            _arrayIndex = 0;
+
         }
 
-        private Base _pocoElement;
-        private string _string;
-        internal int _arrayIndex; // this is only for the ShortPath implementation eg Patient.Name[1].Family (its the 1 here)
+        internal PocoElementNavigator Clone()
+        {
+            var result = new PocoElementNavigator();
 
-        public string Name { get; private set; }
-        public Introspection.PropertyMapping PropMap { get; private set; }
+            result._parent = this._parent;
+            result._arrayIndex = this._arrayIndex;
+            result._properties = this._properties;
+            result._propValue = this._propValue;
+            result._currentValue = this._currentValue;
+
+            return result;
+        }
+
+
+        private void moveTo(Base target)
+        {
+            _parent = target;
+
+            var type = target.GetType();
+            var mapping = GetMappingForType(type) ??
+                        throw Error.NotSupported($"Could not get POCO to FHIR mapping for type '{type.Name}'");
+
+            _properties = mapping.PropertyMappings;
+
+            // Reset everything, next() will initialize the values for the first "child"
+            _index = -1;
+            _arrayIndex = -1;
+            _propValue = null;
+            _currentValue = null;
+        }
+
+        private bool next(string name = null)
+        {
+            // If we are at a collection, fully enumerate its members first
+            if (_arrayIndex != -1)
+            {
+                var list = (System.Collections.IList)_propValue;
+
+                if(_arrayIndex + 1 < list.Count)
+                {
+                    _arrayIndex += 1;
+                    _currentValue = list[_arrayIndex];
+                    return true;
+
+                    // _propValue and _index remain unchanged
+                }
+            }
+
+            // If not a collection, or out of collection members, scan
+            // for next property
+            var scan = _index + 1;
+
+            while (scan < _properties.Count)
+            {
+                if (name == null || _properties[scan].Name == name)
+                {
+                    var tempValue = _properties[_index + 1].GetValue(_parent);
+
+                    if (tempValue != null)
+                    {
+                        _index = scan;
+                        _propValue = tempValue;
+
+                        if (!(tempValue is System.Collections.IList list))
+                        {
+                            _arrayIndex = -1;
+                            return true;
+                        }
+
+                        // The new property is a collection
+
+                        if(list.Count > 0)
+                        { 
+                            _arrayIndex = 0;
+                            _currentValue = list[0];
+                            return true;
+                        }
+                          
+                        // new item is an empty collection, fall through and scan for
+                        // next property
+                    }
+                }
+
+                scan += 1;
+            }
+
+            return false;
+        }
+
+        public string Name => Prop.Name;
+
+        internal Introspection.PropertyMapping Prop => _properties[_index];
+
+        public bool AtArray => _arrayIndex != -1;
+
+        public int ArrayIndex => AtArray ? _arrayIndex : 0;
 
         /// <summary>
         /// This is only needed for search data extraction (and debugging)
         /// to be able to read the values from the selected node (if a coding, so can get the value and system)
         /// </summary>
-        public Base FhirValue
-        {
-            get
-            {
-                return _pocoElement;
-            }
-        }
+        public Base FhirValue => _currentValue as Base;    // conversion will return null if on id, value, url (primitive attribute props in xml)
 
         public object Value
         {
             get
             {
-                if (_string != null)
-                    return _string;
+                if (_currentValue is string)
+                    return _currentValue;
 
                 try
                 {
-                    switch(_pocoElement)
+                    switch (_currentValue)
                     {
                         case Hl7.Fhir.Model.Instant ins:
                             return ins.ToPartialDateTime();
@@ -102,15 +171,14 @@ namespace Hl7.Fhir.FhirPath
                             return prim.ObjectValue;
                         default:
                             return null;
-                    }                       
+                    }
                 }
                 catch (FormatException)
                 {
                     // If it fails, just return the unparsed shit
                     // Todo: add sentinel class!
-                    return (_pocoElement as Primitive)?.ObjectValue;
+                    return (_currentValue as Primitive)?.ObjectValue;
                 }
-
             }
         }
 
@@ -121,10 +189,7 @@ namespace Hl7.Fhir.FhirPath
         {
             get
             {
-#if DEBUGX
-                Console.WriteLine("Read TypeName '{0}' for Element '{1}' (value '{2}')".FormatWith(_mapping.Name, Name, Value ?? "(nothing)"));
-#endif
-                if (_string != null)
+                if (_currentValue is string)
                 {
                     if (Name == "url")
                         return "uri";
@@ -137,8 +202,8 @@ namespace Hl7.Fhir.FhirPath
                 }
                 else
                 {
-
-                    var tn = _pocoElement.TypeName;
+                    // _currentValue must now be of type Base....
+                    var tn = FhirValue.TypeName;
                     if (stu3quantitySubtypes.Contains(tn)) tn = "Quantity";
 
                     return tn;
@@ -146,97 +211,29 @@ namespace Hl7.Fhir.FhirPath
             }
         }
 
-        internal Introspection.ClassMapping ClassMapping
+        private object lockObject = new object();
+
+        static Hl7.Fhir.Introspection.ClassMapping GetMappingForType(Type elementType)
         {
-            get
+            var inspector = Serialization.BaseFhirParser.Inspector;
+            return inspector.ImportType(elementType);
+        }
+
+        public bool MoveToFirstChild(string name = null)
+        {
+            lock (lockObject)
             {
-                if (_classmapping == null)
-                    _classmapping = GetMappingForType(_pocoElement.GetType());
-                if (_classmapping == null)
-                    throw Error.NotSupported(String.Format("Unknown type '{0}' encountered", _pocoElement.GetType().Name));
-                return _classmapping;
+                // If this is a primitive, there are no children
+                if (!(_currentValue is Base b)) return false;
+
+                moveTo(b);
+                return next(name);
             }
         }
-        private Introspection.ClassMapping _classmapping;
 
-        private List<PocoElementNavigator> _children;
-        private string _nameFilter;
-        private List<PocoElementNavigator> _childrenFiltered;
-
-        public IEnumerable<PocoElementNavigator> Children(string nameFilter = null)
+        public bool MoveToNext(string name = null)
         {
-            lock (this)
-            {
-                // Cache children
-                if (nameFilter == null)
-                {
-                    if (_children != null)
-                        return _children;
-                }
-                else
-                {
-                    if (_childrenFiltered != null && nameFilter == _nameFilter)
-                        return _childrenFiltered;
-                    _nameFilter = nameFilter;
-                    if (_children != null)
-                    {
-                        _childrenFiltered = _children.Where(c => c.Name == _nameFilter).ToList();
-                        return _childrenFiltered;
-                    }
-                }
-
-                // If this is a primitive, there are no children
-                if (_pocoElement == null) return Enumerable.Empty<PocoElementNavigator>();
-
-                List<PocoElementNavigator> list;
-                List<Introspection.PropertyMapping> props = null;
-                if (nameFilter != null)
-                {
-                    _childrenFiltered = new List<PocoElementNavigator>();
-                    list = _childrenFiltered;
-                    props = ClassMapping.PropertyMappings.Where(p => p.Name == _nameFilter).ToList();
-                }
-                else
-                {
-                    _children = new List<PocoElementNavigator>();
-                    list = _children;
-                    props = ClassMapping.PropertyMappings;
-                }
-
-                foreach (var item in props)
-                {
-                    // Don't expose "value" as a child, that's our ValueProvider.Value (if we're a primitive)
-                    if (item.IsPrimitive && item.Name == "value")
-                        continue;
-
-                    var itemValue = item.GetValue(_pocoElement);
-
-                    if (itemValue != null)
-                    {
-                        if (item.IsCollection)
-                        {
-                            int nIndex = 0;
-                            foreach (var colItem in (itemValue as System.Collections.IList))
-                            {
-                                if (colItem != null)
-                                {
-                                    list.Add(new PocoElementNavigator(item, (Base)colItem, nIndex));
-                                    nIndex++;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            if (itemValue is string)
-                                // The special case for the 'url' and 'id' properties, which are primitive strings
-                                list.Add(new PocoElementNavigator(item, (string)itemValue));
-                            else
-                                list.Add(new PocoElementNavigator(item, (Base)itemValue, 0));
-                        }
-                    }
-                }
-                return list;
-            }
-        }     
+            return next(name);
+        }
     }
 }

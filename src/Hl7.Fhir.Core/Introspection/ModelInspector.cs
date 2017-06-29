@@ -55,13 +55,13 @@ namespace Hl7.Fhir.Introspection
         {
             ClassMapping mapping = null;
 
-            if(!ClassMapping.IsMappableType(type))
-                throw Error.Argument(nameof(type), "Type {0} is not a mappable Fhir datatype or resource".FormatWith(type.Name));
-
             lock (lockObject)
             {
                 mapping = FindClassMappingByType(type);
                 if (mapping != null) return mapping;
+
+                if (!ClassMapping.IsMappableType(type))
+                    throw Error.Argument(nameof(type), "Type {0} is not a mappable Fhir datatype or resource".FormatWith(type.Name));
 
                 mapping = ClassMapping.Create(type);
                 _classMappingsByType[type] = mapping;

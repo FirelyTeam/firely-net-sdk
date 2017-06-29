@@ -62,6 +62,11 @@ namespace Hl7.Fhir.ElementModel
             //return false;
         }
 
+        public static bool HasChildren(this IElementNavigator navigator, string name = null)
+        {
+            return navigator.Children(name).Any();
+        }
+
         public static IEnumerable<IElementNavigator> Descendants(this IElementNavigator navigator)
         {
             foreach (var child in navigator.Children())

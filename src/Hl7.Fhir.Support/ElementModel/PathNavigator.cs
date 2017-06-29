@@ -66,9 +66,9 @@ namespace Hl7.Fhir.ElementModel
             return exists;
         }
 
-        public bool MoveToNext()
+        public bool MoveToNext(string nameFilter = null)
         {
-            bool exists = _navigator.MoveToNext();
+            bool exists = _navigator.MoveToNext(nameFilter);
             if (exists) _index++;
             return exists;
         }
