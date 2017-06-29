@@ -25,6 +25,7 @@ using System.ComponentModel.DataAnnotations;
 using Hl7.Fhir.FhirPath;
 using Hl7.FhirPath;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.ElementModel;
 
 namespace HealthConnex.Fhir.Server.Tests
 {
@@ -145,7 +146,7 @@ namespace HealthConnex.Fhir.Server.Tests
                 {
                     if (t2 != null)
                     {
-                        if (t2 is Hl7.Fhir.FhirPath.PocoNavigator && (t2 as Hl7.Fhir.FhirPath.PocoNavigator).FhirValue != null)
+                        if (t2 is PocoNavigator && (t2 as PocoNavigator).FhirValue != null)
                         {
                             // Validate the type of data returned against the type of search parameter
                             //     Debug.Write(index.Resource + "." + index.Name + ": ");

@@ -22,8 +22,8 @@ namespace Hl7.Fhir
         public void TestPocoPath()
         {
             // Ensure the FHIR extensions are registered
-            Hl7.Fhir.FhirPath.PocoNavigatorExtensions.PrepareFhirSymbolTableFunctions();
-            Hl7.FhirPath.FhirPathCompiler.DefaultSymbolTable.Add("shortpathname",
+            ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
+            FhirPathCompiler.DefaultSymbolTable.Add("shortpathname",
             (object f) =>
             {
                 if (f is IEnumerable<IElementNavigator>)
@@ -139,7 +139,7 @@ namespace Hl7.Fhir
         public void PocoHasValueTest()
         {
             // Ensure the FHIR extensions are registered
-            Hl7.Fhir.FhirPath.PocoNavigatorExtensions.PrepareFhirSymbolTableFunctions();
+            FhirPath.ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
 
             Patient p = new Patient();
 
