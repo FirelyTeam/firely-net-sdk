@@ -195,13 +195,13 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Actor != null) yield return ("actor",Actor);
-                    if (OnBehalfOf != null) yield return ("onBehalfOf",OnBehalfOf);
+                    if (Actor != null) yield return new ElementValue("actor", false, Actor);
+                    if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", false, OnBehalfOf);
                 }
             }
 
@@ -357,15 +357,15 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (WasSubstitutedElement != null) yield return ("wasSubstituted",WasSubstitutedElement);
-                    if (Type != null) yield return ("type",Type);
-                    foreach (var elem in Reason) { if (elem != null) yield return ("reason",elem); }
-                    foreach (var elem in ResponsibleParty) { if (elem != null) yield return ("responsibleParty",elem); }
+                    if (WasSubstitutedElement != null) yield return new ElementValue("wasSubstituted", false, WasSubstitutedElement);
+                    if (Type != null) yield return new ElementValue("type", false, Type);
+                    foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", true, elem); }
+                    foreach (var elem in ResponsibleParty) { if (elem != null) yield return new ElementValue("responsibleParty", true, elem); }
                 }
             }
 
@@ -955,35 +955,35 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
-                foreach (var elem in PartOf) { if (elem != null) yield return ("partOf",elem); }
-                if (StatusElement != null) yield return ("status",StatusElement);
-                if (Category != null) yield return ("category",Category);
-                if (Medication != null) yield return ("medication",Medication);
-                if (Subject != null) yield return ("subject",Subject);
-                if (Context != null) yield return ("context",Context);
-                foreach (var elem in SupportingInformation) { if (elem != null) yield return ("supportingInformation",elem); }
-                foreach (var elem in Performer) { if (elem != null) yield return ("performer",elem); }
-                foreach (var elem in AuthorizingPrescription) { if (elem != null) yield return ("authorizingPrescription",elem); }
-                if (Type != null) yield return ("type",Type);
-                if (Quantity != null) yield return ("quantity",Quantity);
-                if (DaysSupply != null) yield return ("daysSupply",DaysSupply);
-                if (WhenPreparedElement != null) yield return ("whenPrepared",WhenPreparedElement);
-                if (WhenHandedOverElement != null) yield return ("whenHandedOver",WhenHandedOverElement);
-                if (Destination != null) yield return ("destination",Destination);
-                foreach (var elem in Receiver) { if (elem != null) yield return ("receiver",elem); }
-                foreach (var elem in Note) { if (elem != null) yield return ("note",elem); }
-                foreach (var elem in DosageInstruction) { if (elem != null) yield return ("dosageInstruction",elem); }
-                if (Substitution != null) yield return ("substitution",Substitution);
-                foreach (var elem in DetectedIssue) { if (elem != null) yield return ("detectedIssue",elem); }
-                if (NotDoneElement != null) yield return ("notDone",NotDoneElement);
-                if (NotDoneReason != null) yield return ("notDoneReason",NotDoneReason);
-                foreach (var elem in EventHistory) { if (elem != null) yield return ("eventHistory",elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", true, elem); }
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (Category != null) yield return new ElementValue("category", false, Category);
+                if (Medication != null) yield return new ElementValue("medication", false, Medication);
+                if (Subject != null) yield return new ElementValue("subject", false, Subject);
+                if (Context != null) yield return new ElementValue("context", false, Context);
+                foreach (var elem in SupportingInformation) { if (elem != null) yield return new ElementValue("supportingInformation", true, elem); }
+                foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", true, elem); }
+                foreach (var elem in AuthorizingPrescription) { if (elem != null) yield return new ElementValue("authorizingPrescription", true, elem); }
+                if (Type != null) yield return new ElementValue("type", false, Type);
+                if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
+                if (DaysSupply != null) yield return new ElementValue("daysSupply", false, DaysSupply);
+                if (WhenPreparedElement != null) yield return new ElementValue("whenPrepared", false, WhenPreparedElement);
+                if (WhenHandedOverElement != null) yield return new ElementValue("whenHandedOver", false, WhenHandedOverElement);
+                if (Destination != null) yield return new ElementValue("destination", false, Destination);
+                foreach (var elem in Receiver) { if (elem != null) yield return new ElementValue("receiver", true, elem); }
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
+                foreach (var elem in DosageInstruction) { if (elem != null) yield return new ElementValue("dosageInstruction", true, elem); }
+                if (Substitution != null) yield return new ElementValue("substitution", false, Substitution);
+                foreach (var elem in DetectedIssue) { if (elem != null) yield return new ElementValue("detectedIssue", true, elem); }
+                if (NotDoneElement != null) yield return new ElementValue("notDone", false, NotDoneElement);
+                if (NotDoneReason != null) yield return new ElementValue("notDoneReason", false, NotDoneReason);
+                foreach (var elem in EventHistory) { if (elem != null) yield return new ElementValue("eventHistory", true, elem); }
             }
         }
 

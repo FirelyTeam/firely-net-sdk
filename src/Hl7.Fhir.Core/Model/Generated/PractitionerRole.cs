@@ -256,15 +256,15 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in DaysOfWeekElement) { if (elem != null) yield return ("daysOfWeek",elem); }
-                    if (AllDayElement != null) yield return ("allDay",AllDayElement);
-                    if (AvailableStartTimeElement != null) yield return ("availableStartTime",AvailableStartTimeElement);
-                    if (AvailableEndTimeElement != null) yield return ("availableEndTime",AvailableEndTimeElement);
+                    foreach (var elem in DaysOfWeekElement) { if (elem != null) yield return new ElementValue("daysOfWeek", true, elem); }
+                    if (AllDayElement != null) yield return new ElementValue("allDay", false, AllDayElement);
+                    if (AvailableStartTimeElement != null) yield return new ElementValue("availableStartTime", false, AvailableStartTimeElement);
+                    if (AvailableEndTimeElement != null) yield return new ElementValue("availableEndTime", false, AvailableEndTimeElement);
                 }
             }
 
@@ -382,13 +382,13 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (DescriptionElement != null) yield return ("description",DescriptionElement);
-                    if (During != null) yield return ("during",During);
+                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                    if (During != null) yield return new ElementValue("during", false, During);
                 }
             }
 
@@ -746,25 +746,25 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
-                if (ActiveElement != null) yield return ("active",ActiveElement);
-                if (Period != null) yield return ("period",Period);
-                if (Practitioner != null) yield return ("practitioner",Practitioner);
-                if (Organization != null) yield return ("organization",Organization);
-                foreach (var elem in Code) { if (elem != null) yield return ("code",elem); }
-                foreach (var elem in Specialty) { if (elem != null) yield return ("specialty",elem); }
-                foreach (var elem in Location) { if (elem != null) yield return ("location",elem); }
-                foreach (var elem in HealthcareService) { if (elem != null) yield return ("healthcareService",elem); }
-                foreach (var elem in Telecom) { if (elem != null) yield return ("telecom",elem); }
-                foreach (var elem in AvailableTime) { if (elem != null) yield return ("availableTime",elem); }
-                foreach (var elem in NotAvailable) { if (elem != null) yield return ("notAvailable",elem); }
-                if (AvailabilityExceptionsElement != null) yield return ("availabilityExceptions",AvailabilityExceptionsElement);
-                foreach (var elem in Endpoint) { if (elem != null) yield return ("endpoint",elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (ActiveElement != null) yield return new ElementValue("active", false, ActiveElement);
+                if (Period != null) yield return new ElementValue("period", false, Period);
+                if (Practitioner != null) yield return new ElementValue("practitioner", false, Practitioner);
+                if (Organization != null) yield return new ElementValue("organization", false, Organization);
+                foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", true, elem); }
+                foreach (var elem in Specialty) { if (elem != null) yield return new ElementValue("specialty", true, elem); }
+                foreach (var elem in Location) { if (elem != null) yield return new ElementValue("location", true, elem); }
+                foreach (var elem in HealthcareService) { if (elem != null) yield return new ElementValue("healthcareService", true, elem); }
+                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
+                foreach (var elem in AvailableTime) { if (elem != null) yield return new ElementValue("availableTime", true, elem); }
+                foreach (var elem in NotAvailable) { if (elem != null) yield return new ElementValue("notAvailable", true, elem); }
+                if (AvailabilityExceptionsElement != null) yield return new ElementValue("availabilityExceptions", false, AvailabilityExceptionsElement);
+                foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", true, elem); }
             }
         }
 

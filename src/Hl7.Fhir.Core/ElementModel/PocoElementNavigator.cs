@@ -10,7 +10,6 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Serialization;
 using System.Collections;
@@ -23,9 +22,7 @@ namespace Hl7.Fhir.ElementModel
 
         private int _arrayIndex; // this is only for the ShortPath implementation eg Patient.Name[1].Family (its the 1 here)
         private int _index;
-        private IList<Introspection.PropertyMapping> _properties;
-        private object _propValue;      // value of the property indexed by _index, may be an array
-        private object _currentValue;    // current value, often equal to _propValue, except when _propValue is a list
+        private IList<ElementValue> _children;
 
         // For Normal element properties representing a FHIR type
         internal PocoElementNavigator(Base parent)
@@ -34,16 +31,7 @@ namespace Hl7.Fhir.ElementModel
             _parent = null;
             _index = 0;
             _arrayIndex = -1;
-            _properties = new List<Introspection.PropertyMapping>()
-            {
-                new Introspection.PropertyMapping()
-                {
-                    Name = parent.TypeName,
-                    IsCollection = false
-                }
-            };
-            _propValue = parent;
-            _currentValue = parent;
+            _children = new List<ElementValue>() { new ElementValue(parent.TypeName, false, parent) };
         }
 
         private PocoElementNavigator()
@@ -58,109 +46,60 @@ namespace Hl7.Fhir.ElementModel
             result._parent = this._parent;
             result._arrayIndex = this._arrayIndex;
             result._index = this._index;
-            result._properties = this._properties;
-            result._propValue = this._propValue;
-            result._currentValue = this._currentValue;
+            result._children = this._children;
 
             return result;
         }
 
 
-        private void enter(Base target)
+        private bool enter(Base target)
         {
-            //[20160620 EK] There's a bug here, when the target has no children, the internal
-            //state of the navigator will have changed. This bug does not surface since all the
-            //navigator extension methods will clone() before they more, but still, it should be
-            //fixed by the time we have used the (generated) Children() method on the model.
+            var children = target.NamedChildren.ToList();
+            if (!children.Any()) return false;
+
             _parent = target;
-
-            var type = target.GetType();
-            var mapping = GetMappingForType(type) ??
-                        throw Error.NotSupported($"Could not get POCO to FHIR mapping for type '{type.Name}'");
-
-            _properties = mapping.PropertyMappings;
+            _children = children;
 
             // Reset everything, next() will initialize the values for the first "child"
             _index = -1;
             _arrayIndex = -1;
-            _propValue = null;
-            _currentValue = null;
+
+            return true;
         }
+
 
         private bool next(string name = null)
         {
-            // If we are at a collection, fully enumerate its members first
-            if (_arrayIndex != -1)
-            {
-                var list = (System.Collections.IList)_propValue;
-
-                if(_arrayIndex + 1 < list.Count)
-                {
-                    _arrayIndex += 1;
-                    _currentValue = list[_arrayIndex];
-                    return true;
-
-                    // _propValue and _index remain unchanged
-                }
-            }
-
             // If not a collection, or out of collection members, scan
             // for next property
             var scan = _index;
 
-            while (scan+1 < _properties.Count)
+            while (scan + 1 < _children.Count)
             {
                 scan += 1;
-                var scanProp = _properties[scan];
+                var scanProp = _children[scan];
 
-                // Don't expose "value" as a child, that's our ValueProvider.Value (if we're a primitive) 
-                if (isPrimitiveValueProp(scanProp)) continue;
-
-                if (name == null || scanProp.Name == name)
+                if (name == null || scanProp.ElementName == name)
                 {
-                    var tempValue = getNonEmptyValue(scanProp);
+                    _index = scan;
 
-                    if (tempValue != null)
-                    {
-                        _index = scan;
-                        _propValue = tempValue;
-                        
-                        if (!scanProp.IsCollection)
-                        {
-                            _arrayIndex = -1;
-                            _currentValue = _propValue;
-                            return true;
-                        }
-                        else
-                        { 
-                            _arrayIndex = 0;
-                            _currentValue = ((IList)_propValue)[0];
-                            return true;
-                        }                          
-                    }
+                    if (!scanProp.IsCollectionMember)
+                        _arrayIndex = -1;
+                    else
+                        _arrayIndex += 1;
+
+                    return true;
                 }
             }
 
             return false;
-
-            object getNonEmptyValue(Introspection.PropertyMapping p)
-            {
-                var value = p.GetValue(_parent);
-
-                if (value == null) return null;
-                if (value is IList list && list.Count == 0) return null;
-
-                return value;
-            }
-
-            bool isPrimitiveValueProp(Introspection.PropertyMapping p) => p.IsPrimitive && p.Name == "value";
         }
 
-        public string Name => Prop.Name;
+        internal ElementValue Current => _children[_index];
 
-        internal Introspection.PropertyMapping Prop => _properties[_index];
+        public string Name => Current.ElementName;
 
-        public bool AtCollection => Prop.IsCollection;
+        public bool AtCollection => Current.IsCollectionMember;
 
         public int ArrayIndex => AtCollection ? _arrayIndex : 0;
 
@@ -168,18 +107,18 @@ namespace Hl7.Fhir.ElementModel
         /// This is only needed for search data extraction (and debugging)
         /// to be able to read the values from the selected node (if a coding, so can get the value and system)
         /// </summary>
-        public Base FhirValue => _currentValue as Base;    // conversion will return null if on id, value, url (primitive attribute props in xml)
+        public Base FhirValue => Current.Value as Base;    // conversion will return null if on id, value, url (primitive attribute props in xml)
 
         public object Value
         {
             get
             {
-                if (_currentValue is string)
-                    return _currentValue;
+                if (Current.Value is string)
+                    return Current.Value;
 
                 try
                 {
-                    switch (_currentValue)
+                    switch (Current.Value)
                     {
                         case Hl7.Fhir.Model.Instant ins:
                             return ins.ToPartialDateTime();
@@ -207,7 +146,7 @@ namespace Hl7.Fhir.ElementModel
                 {
                     // If it fails, just return the unparsed shit
                     // Todo: add sentinel class!
-                    return (_currentValue as Primitive)?.ObjectValue;
+                    return (Current.Value as Primitive)?.ObjectValue;
                 }
             }
         }
@@ -219,7 +158,7 @@ namespace Hl7.Fhir.ElementModel
         {
             get
             {
-                if (_currentValue is string)
+                if (Current.Value is string)
                 {
                     if (Name == "url")
                         return "uri";
@@ -227,6 +166,8 @@ namespace Hl7.Fhir.ElementModel
                         return "id";
                     else if (Name == "div")
                         return "xhtml";
+                    else if (Name == "fhir_comments")
+                        return "string";
                     else
                         throw new NotSupportedException($"Don't know about primitive with name '{Name}'");
                 }
@@ -254,10 +195,12 @@ namespace Hl7.Fhir.ElementModel
             lock (lockObject)
             {
                 // If this is a primitive, there are no children
-                if (!(_currentValue is Base b)) return false;
+                if (!(Current.Value is Base b)) return false;
 
-                enter(b);
-                return next(name);
+                if (enter(b))
+                    return next(name);
+                else
+                    return false;
             }
         }
 

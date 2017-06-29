@@ -134,13 +134,13 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren 
+        internal override IEnumerable<ElementValue> NamedChildren 
         { 
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                if (Low != null) yield return ("low",Low);
-                if (High != null) yield return ("high",High);
+                if (Low != null) yield return new ElementValue("low", false, Low);
+                if (High != null) yield return new ElementValue("high", false, High);
  
             } 
         } 

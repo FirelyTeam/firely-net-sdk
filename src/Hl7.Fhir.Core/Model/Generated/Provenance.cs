@@ -224,15 +224,15 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Role) { if (elem != null) yield return ("role",elem); }
-                    if (Who != null) yield return ("who",Who);
-                    if (OnBehalfOf != null) yield return ("onBehalfOf",OnBehalfOf);
-                    if (RelatedAgentType != null) yield return ("relatedAgentType",RelatedAgentType);
+                    foreach (var elem in Role) { if (elem != null) yield return new ElementValue("role", true, elem); }
+                    if (Who != null) yield return new ElementValue("who", false, Who);
+                    if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", false, OnBehalfOf);
+                    if (RelatedAgentType != null) yield return new ElementValue("relatedAgentType", false, RelatedAgentType);
                 }
             }
 
@@ -371,14 +371,14 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (RoleElement != null) yield return ("role",RoleElement);
-                    if (What != null) yield return ("what",What);
-                    foreach (var elem in Agent) { if (elem != null) yield return ("agent",elem); }
+                    if (RoleElement != null) yield return new ElementValue("role", false, RoleElement);
+                    if (What != null) yield return new ElementValue("what", false, What);
+                    foreach (var elem in Agent) { if (elem != null) yield return new ElementValue("agent", true, elem); }
                 }
             }
 
@@ -660,21 +660,21 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Target) { if (elem != null) yield return ("target",elem); }
-                if (Period != null) yield return ("period",Period);
-                if (RecordedElement != null) yield return ("recorded",RecordedElement);
-                foreach (var elem in PolicyElement) { if (elem != null) yield return ("policy",elem); }
-                if (Location != null) yield return ("location",Location);
-                foreach (var elem in Reason) { if (elem != null) yield return ("reason",elem); }
-                if (Activity != null) yield return ("activity",Activity);
-                foreach (var elem in Agent) { if (elem != null) yield return ("agent",elem); }
-                foreach (var elem in Entity) { if (elem != null) yield return ("entity",elem); }
-                foreach (var elem in Signature) { if (elem != null) yield return ("signature",elem); }
+                foreach (var elem in Target) { if (elem != null) yield return new ElementValue("target", true, elem); }
+                if (Period != null) yield return new ElementValue("period", false, Period);
+                if (RecordedElement != null) yield return new ElementValue("recorded", false, RecordedElement);
+                foreach (var elem in PolicyElement) { if (elem != null) yield return new ElementValue("policy", true, elem); }
+                if (Location != null) yield return new ElementValue("location", false, Location);
+                foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", true, elem); }
+                if (Activity != null) yield return new ElementValue("activity", false, Activity);
+                foreach (var elem in Agent) { if (elem != null) yield return new ElementValue("agent", true, elem); }
+                foreach (var elem in Entity) { if (elem != null) yield return new ElementValue("entity", true, elem); }
+                foreach (var elem in Signature) { if (elem != null) yield return new ElementValue("signature", true, elem); }
             }
         }
 

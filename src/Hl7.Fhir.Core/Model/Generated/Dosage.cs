@@ -402,25 +402,25 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren 
+        internal override IEnumerable<ElementValue> NamedChildren 
         { 
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                if (SequenceElement != null) yield return ("sequence",SequenceElement);
-                if (TextElement != null) yield return ("text",TextElement);
-                foreach (var elem in AdditionalInstruction) { if (elem != null) yield return ("additionalInstruction",elem); }
-                if (PatientInstructionElement != null) yield return ("patientInstruction",PatientInstructionElement);
-                if (Timing != null) yield return ("timing",Timing);
-                if (AsNeeded != null) yield return ("asNeeded",AsNeeded);
-                if (Site != null) yield return ("site",Site);
-                if (Route != null) yield return ("route",Route);
-                if (Method != null) yield return ("method",Method);
-                if (Dose != null) yield return ("dose",Dose);
-                if (MaxDosePerPeriod != null) yield return ("maxDosePerPeriod",MaxDosePerPeriod);
-                if (MaxDosePerAdministration != null) yield return ("maxDosePerAdministration",MaxDosePerAdministration);
-                if (MaxDosePerLifetime != null) yield return ("maxDosePerLifetime",MaxDosePerLifetime);
-                if (Rate != null) yield return ("rate",Rate);
+                if (SequenceElement != null) yield return new ElementValue("sequence", false, SequenceElement);
+                if (TextElement != null) yield return new ElementValue("text", false, TextElement);
+                foreach (var elem in AdditionalInstruction) { if (elem != null) yield return new ElementValue("additionalInstruction", true, elem); }
+                if (PatientInstructionElement != null) yield return new ElementValue("patientInstruction", false, PatientInstructionElement);
+                if (Timing != null) yield return new ElementValue("timing", false, Timing);
+                if (AsNeeded != null) yield return new ElementValue("asNeeded", false, AsNeeded);
+                if (Site != null) yield return new ElementValue("site", false, Site);
+                if (Route != null) yield return new ElementValue("route", false, Route);
+                if (Method != null) yield return new ElementValue("method", false, Method);
+                if (Dose != null) yield return new ElementValue("dose", false, Dose);
+                if (MaxDosePerPeriod != null) yield return new ElementValue("maxDosePerPeriod", false, MaxDosePerPeriod);
+                if (MaxDosePerAdministration != null) yield return new ElementValue("maxDosePerAdministration", false, MaxDosePerAdministration);
+                if (MaxDosePerLifetime != null) yield return new ElementValue("maxDosePerLifetime", false, MaxDosePerLifetime);
+                if (Rate != null) yield return new ElementValue("rate", false, Rate);
  
             } 
         } 

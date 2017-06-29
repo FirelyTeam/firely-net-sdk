@@ -180,13 +180,13 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Quantity != null) yield return ("quantity",Quantity);
-                    if (Item != null) yield return ("item",Item);
+                    if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
+                    if (Item != null) yield return new ElementValue("item", false, Item);
                 }
             }
 
@@ -472,22 +472,22 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Identifier != null) yield return ("identifier",Identifier);
-                foreach (var elem in BasedOn) { if (elem != null) yield return ("basedOn",elem); }
-                foreach (var elem in PartOf) { if (elem != null) yield return ("partOf",elem); }
-                if (StatusElement != null) yield return ("status",StatusElement);
-                if (Patient != null) yield return ("patient",Patient);
-                if (Type != null) yield return ("type",Type);
-                if (SuppliedItem != null) yield return ("suppliedItem",SuppliedItem);
-                if (Occurrence != null) yield return ("occurrence",Occurrence);
-                if (Supplier != null) yield return ("supplier",Supplier);
-                if (Destination != null) yield return ("destination",Destination);
-                foreach (var elem in Receiver) { if (elem != null) yield return ("receiver",elem); }
+                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", true, elem); }
+                foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", true, elem); }
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (Patient != null) yield return new ElementValue("patient", false, Patient);
+                if (Type != null) yield return new ElementValue("type", false, Type);
+                if (SuppliedItem != null) yield return new ElementValue("suppliedItem", false, SuppliedItem);
+                if (Occurrence != null) yield return new ElementValue("occurrence", false, Occurrence);
+                if (Supplier != null) yield return new ElementValue("supplier", false, Supplier);
+                if (Destination != null) yield return new ElementValue("destination", false, Destination);
+                foreach (var elem in Receiver) { if (elem != null) yield return new ElementValue("receiver", true, elem); }
             }
         }
 

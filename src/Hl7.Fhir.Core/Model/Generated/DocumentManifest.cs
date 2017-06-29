@@ -131,12 +131,12 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (P != null) yield return ("p",P);
+                    if (P != null) yield return new ElementValue("p", false, P);
                 }
             }
 
@@ -236,13 +236,13 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Identifier != null) yield return ("identifier",Identifier);
-                    if (Ref != null) yield return ("ref",Ref);
+                    if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                    if (Ref != null) yield return new ElementValue("ref", false, Ref);
                 }
             }
 
@@ -597,23 +597,23 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (MasterIdentifier != null) yield return ("masterIdentifier",MasterIdentifier);
-                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
-                if (StatusElement != null) yield return ("status",StatusElement);
-                if (Type != null) yield return ("type",Type);
-                if (Subject != null) yield return ("subject",Subject);
-                if (CreatedElement != null) yield return ("created",CreatedElement);
-                foreach (var elem in Author) { if (elem != null) yield return ("author",elem); }
-                foreach (var elem in Recipient) { if (elem != null) yield return ("recipient",elem); }
-                if (SourceElement != null) yield return ("source",SourceElement);
-                if (DescriptionElement != null) yield return ("description",DescriptionElement);
-                foreach (var elem in Content) { if (elem != null) yield return ("content",elem); }
-                foreach (var elem in Related) { if (elem != null) yield return ("related",elem); }
+                if (MasterIdentifier != null) yield return new ElementValue("masterIdentifier", false, MasterIdentifier);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (Type != null) yield return new ElementValue("type", false, Type);
+                if (Subject != null) yield return new ElementValue("subject", false, Subject);
+                if (CreatedElement != null) yield return new ElementValue("created", false, CreatedElement);
+                foreach (var elem in Author) { if (elem != null) yield return new ElementValue("author", true, elem); }
+                foreach (var elem in Recipient) { if (elem != null) yield return new ElementValue("recipient", true, elem); }
+                if (SourceElement != null) yield return new ElementValue("source", false, SourceElement);
+                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                foreach (var elem in Content) { if (elem != null) yield return new ElementValue("content", true, elem); }
+                foreach (var elem in Related) { if (elem != null) yield return new ElementValue("related", true, elem); }
             }
         }
 

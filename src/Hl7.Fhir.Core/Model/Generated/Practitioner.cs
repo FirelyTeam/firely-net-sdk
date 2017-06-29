@@ -183,15 +183,15 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
-                    if (Code != null) yield return ("code",Code);
-                    if (Period != null) yield return ("period",Period);
-                    if (Issuer != null) yield return ("issuer",Issuer);
+                    foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                    if (Code != null) yield return new ElementValue("code", false, Code);
+                    if (Period != null) yield return new ElementValue("period", false, Period);
+                    if (Issuer != null) yield return new ElementValue("issuer", false, Issuer);
                 }
             }
 
@@ -488,21 +488,21 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
-                if (ActiveElement != null) yield return ("active",ActiveElement);
-                foreach (var elem in Name) { if (elem != null) yield return ("name",elem); }
-                foreach (var elem in Telecom) { if (elem != null) yield return ("telecom",elem); }
-                foreach (var elem in Address) { if (elem != null) yield return ("address",elem); }
-                if (GenderElement != null) yield return ("gender",GenderElement);
-                if (BirthDateElement != null) yield return ("birthDate",BirthDateElement);
-                foreach (var elem in Photo) { if (elem != null) yield return ("photo",elem); }
-                foreach (var elem in Qualification) { if (elem != null) yield return ("qualification",elem); }
-                foreach (var elem in Communication) { if (elem != null) yield return ("communication",elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (ActiveElement != null) yield return new ElementValue("active", false, ActiveElement);
+                foreach (var elem in Name) { if (elem != null) yield return new ElementValue("name", true, elem); }
+                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
+                foreach (var elem in Address) { if (elem != null) yield return new ElementValue("address", true, elem); }
+                if (GenderElement != null) yield return new ElementValue("gender", false, GenderElement);
+                if (BirthDateElement != null) yield return new ElementValue("birthDate", false, BirthDateElement);
+                foreach (var elem in Photo) { if (elem != null) yield return new ElementValue("photo", true, elem); }
+                foreach (var elem in Qualification) { if (elem != null) yield return new ElementValue("qualification", true, elem); }
+                foreach (var elem in Communication) { if (elem != null) yield return new ElementValue("communication", true, elem); }
             }
         }
 

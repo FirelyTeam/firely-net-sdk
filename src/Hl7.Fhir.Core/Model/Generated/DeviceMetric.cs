@@ -408,14 +408,14 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (TypeElement != null) yield return ("type",TypeElement);
-                    if (StateElement != null) yield return ("state",StateElement);
-                    if (TimeElement != null) yield return ("time",TimeElement);
+                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
+                    if (StateElement != null) yield return new ElementValue("state", false, StateElement);
+                    if (TimeElement != null) yield return new ElementValue("time", false, TimeElement);
                 }
             }
 
@@ -713,21 +713,21 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Identifier != null) yield return ("identifier",Identifier);
-                if (Type != null) yield return ("type",Type);
-                if (Unit != null) yield return ("unit",Unit);
-                if (Source != null) yield return ("source",Source);
-                if (Parent != null) yield return ("parent",Parent);
-                if (OperationalStatusElement != null) yield return ("operationalStatus",OperationalStatusElement);
-                if (ColorElement != null) yield return ("color",ColorElement);
-                if (CategoryElement != null) yield return ("category",CategoryElement);
-                if (MeasurementPeriod != null) yield return ("measurementPeriod",MeasurementPeriod);
-                foreach (var elem in Calibration) { if (elem != null) yield return ("calibration",elem); }
+                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                if (Type != null) yield return new ElementValue("type", false, Type);
+                if (Unit != null) yield return new ElementValue("unit", false, Unit);
+                if (Source != null) yield return new ElementValue("source", false, Source);
+                if (Parent != null) yield return new ElementValue("parent", false, Parent);
+                if (OperationalStatusElement != null) yield return new ElementValue("operationalStatus", false, OperationalStatusElement);
+                if (ColorElement != null) yield return new ElementValue("color", false, ColorElement);
+                if (CategoryElement != null) yield return new ElementValue("category", false, CategoryElement);
+                if (MeasurementPeriod != null) yield return new ElementValue("measurementPeriod", false, MeasurementPeriod);
+                foreach (var elem in Calibration) { if (elem != null) yield return new ElementValue("calibration", true, elem); }
             }
         }
 

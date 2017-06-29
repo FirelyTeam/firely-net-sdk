@@ -245,16 +245,16 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren 
+        internal override IEnumerable<ElementValue> NamedChildren 
         { 
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                if (VersionIdElement != null) yield return ("versionId",VersionIdElement);
-                if (LastUpdatedElement != null) yield return ("lastUpdated",LastUpdatedElement);
-                foreach (var elem in ProfileElement) { if (elem != null) yield return ("profile",elem); }
-                foreach (var elem in Security) { if (elem != null) yield return ("security",elem); }
-                foreach (var elem in Tag) { if (elem != null) yield return ("tag",elem); }
+                if (VersionIdElement != null) yield return new ElementValue("versionId", false, VersionIdElement);
+                if (LastUpdatedElement != null) yield return new ElementValue("lastUpdated", false, LastUpdatedElement);
+                foreach (var elem in ProfileElement) { if (elem != null) yield return new ElementValue("profile", true, elem); }
+                foreach (var elem in Security) { if (elem != null) yield return new ElementValue("security", true, elem); }
+                foreach (var elem in Tag) { if (elem != null) yield return new ElementValue("tag", true, elem); }
  
             } 
         } 

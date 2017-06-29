@@ -255,15 +255,15 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Identifier != null) yield return ("identifier",Identifier);
-                    foreach (var elem in Population) { if (elem != null) yield return ("population",elem); }
-                    if (MeasureScoreElement != null) yield return ("measureScore",MeasureScoreElement);
-                    foreach (var elem in Stratifier) { if (elem != null) yield return ("stratifier",elem); }
+                    if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                    foreach (var elem in Population) { if (elem != null) yield return new ElementValue("population", true, elem); }
+                    if (MeasureScoreElement != null) yield return new ElementValue("measureScore", false, MeasureScoreElement);
+                    foreach (var elem in Stratifier) { if (elem != null) yield return new ElementValue("stratifier", true, elem); }
                 }
             }
 
@@ -416,15 +416,15 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Identifier != null) yield return ("identifier",Identifier);
-                    if (Code != null) yield return ("code",Code);
-                    if (CountElement != null) yield return ("count",CountElement);
-                    if (Patients != null) yield return ("patients",Patients);
+                    if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                    if (Code != null) yield return new ElementValue("code", false, Code);
+                    if (CountElement != null) yield return new ElementValue("count", false, CountElement);
+                    if (Patients != null) yield return new ElementValue("patients", false, Patients);
                 }
             }
 
@@ -523,13 +523,13 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Identifier != null) yield return ("identifier",Identifier);
-                    foreach (var elem in Stratum) { if (elem != null) yield return ("stratum",elem); }
+                    if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                    foreach (var elem in Stratum) { if (elem != null) yield return new ElementValue("stratum", true, elem); }
                 }
             }
 
@@ -684,14 +684,14 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (ValueElement != null) yield return ("value",ValueElement);
-                    foreach (var elem in Population) { if (elem != null) yield return ("population",elem); }
-                    if (MeasureScoreElement != null) yield return ("measureScore",MeasureScoreElement);
+                    if (ValueElement != null) yield return new ElementValue("value", false, ValueElement);
+                    foreach (var elem in Population) { if (elem != null) yield return new ElementValue("population", true, elem); }
+                    if (MeasureScoreElement != null) yield return new ElementValue("measureScore", false, MeasureScoreElement);
                 }
             }
 
@@ -844,15 +844,15 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Identifier != null) yield return ("identifier",Identifier);
-                    if (Code != null) yield return ("code",Code);
-                    if (CountElement != null) yield return ("count",CountElement);
-                    if (Patients != null) yield return ("patients",Patients);
+                    if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                    if (Code != null) yield return new ElementValue("code", false, Code);
+                    if (CountElement != null) yield return new ElementValue("count", false, CountElement);
+                    if (Patients != null) yield return new ElementValue("patients", false, Patients);
                 }
             }
 
@@ -1155,21 +1155,21 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Identifier != null) yield return ("identifier",Identifier);
-                if (StatusElement != null) yield return ("status",StatusElement);
-                if (TypeElement != null) yield return ("type",TypeElement);
-                if (Measure != null) yield return ("measure",Measure);
-                if (Patient != null) yield return ("patient",Patient);
-                if (DateElement != null) yield return ("date",DateElement);
-                if (ReportingOrganization != null) yield return ("reportingOrganization",ReportingOrganization);
-                if (Period != null) yield return ("period",Period);
-                foreach (var elem in Group) { if (elem != null) yield return ("group",elem); }
-                if (EvaluatedResources != null) yield return ("evaluatedResources",EvaluatedResources);
+                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
+                if (Measure != null) yield return new ElementValue("measure", false, Measure);
+                if (Patient != null) yield return new ElementValue("patient", false, Patient);
+                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
+                if (ReportingOrganization != null) yield return new ElementValue("reportingOrganization", false, ReportingOrganization);
+                if (Period != null) yield return new ElementValue("period", false, Period);
+                foreach (var elem in Group) { if (elem != null) yield return new ElementValue("group", true, elem); }
+                if (EvaluatedResources != null) yield return new ElementValue("evaluatedResources", false, EvaluatedResources);
             }
         }
 

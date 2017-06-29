@@ -290,19 +290,19 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
-                if (ActiveElement != null) yield return ("active",ActiveElement);
-                if (ServiceCategory != null) yield return ("serviceCategory",ServiceCategory);
-                foreach (var elem in ServiceType) { if (elem != null) yield return ("serviceType",elem); }
-                foreach (var elem in Specialty) { if (elem != null) yield return ("specialty",elem); }
-                foreach (var elem in Actor) { if (elem != null) yield return ("actor",elem); }
-                if (PlanningHorizon != null) yield return ("planningHorizon",PlanningHorizon);
-                if (CommentElement != null) yield return ("comment",CommentElement);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (ActiveElement != null) yield return new ElementValue("active", false, ActiveElement);
+                if (ServiceCategory != null) yield return new ElementValue("serviceCategory", false, ServiceCategory);
+                foreach (var elem in ServiceType) { if (elem != null) yield return new ElementValue("serviceType", true, elem); }
+                foreach (var elem in Specialty) { if (elem != null) yield return new ElementValue("specialty", true, elem); }
+                foreach (var elem in Actor) { if (elem != null) yield return new ElementValue("actor", true, elem); }
+                if (PlanningHorizon != null) yield return new ElementValue("planningHorizon", false, PlanningHorizon);
+                if (CommentElement != null) yield return new ElementValue("comment", false, CommentElement);
             }
         }
 

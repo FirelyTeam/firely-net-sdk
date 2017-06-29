@@ -235,16 +235,16 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren 
+            internal override IEnumerable<ElementValue> NamedChildren 
             { 
                 get 
                 { 
                     foreach (var item in base.NamedChildren) yield return item; 
-                    if (PathElement != null) yield return ("path",PathElement);
-                    if (ValueSet != null) yield return ("valueSet",ValueSet);
-                    foreach (var elem in ValueCodeElement) { if (elem != null) yield return ("valueCode",elem); }
-                    foreach (var elem in ValueCoding) { if (elem != null) yield return ("valueCoding",elem); }
-                    foreach (var elem in ValueCodeableConcept) { if (elem != null) yield return ("valueCodeableConcept",elem); }
+                    if (PathElement != null) yield return new ElementValue("path", false, PathElement);
+                    if (ValueSet != null) yield return new ElementValue("valueSet", false, ValueSet);
+                    foreach (var elem in ValueCodeElement) { if (elem != null) yield return new ElementValue("valueCode", true, elem); }
+                    foreach (var elem in ValueCoding) { if (elem != null) yield return new ElementValue("valueCoding", true, elem); }
+                    foreach (var elem in ValueCodeableConcept) { if (elem != null) yield return new ElementValue("valueCodeableConcept", true, elem); }
  
                 } 
             } 
@@ -361,13 +361,13 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren 
+            internal override IEnumerable<ElementValue> NamedChildren 
             { 
                 get 
                 { 
                     foreach (var item in base.NamedChildren) yield return item; 
-                    if (PathElement != null) yield return ("path",PathElement);
-                    if (Value != null) yield return ("value",Value);
+                    if (PathElement != null) yield return new ElementValue("path", false, PathElement);
+                    if (Value != null) yield return new ElementValue("value", false, Value);
  
                 } 
             } 
@@ -569,16 +569,16 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren 
+        internal override IEnumerable<ElementValue> NamedChildren 
         { 
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                if (TypeElement != null) yield return ("type",TypeElement);
-                foreach (var elem in ProfileElement) { if (elem != null) yield return ("profile",elem); }
-                foreach (var elem in MustSupportElement) { if (elem != null) yield return ("mustSupport",elem); }
-                foreach (var elem in CodeFilter) { if (elem != null) yield return ("codeFilter",elem); }
-                foreach (var elem in DateFilter) { if (elem != null) yield return ("dateFilter",elem); }
+                if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
+                foreach (var elem in ProfileElement) { if (elem != null) yield return new ElementValue("profile", true, elem); }
+                foreach (var elem in MustSupportElement) { if (elem != null) yield return new ElementValue("mustSupport", true, elem); }
+                foreach (var elem in CodeFilter) { if (elem != null) yield return new ElementValue("codeFilter", true, elem); }
+                foreach (var elem in DateFilter) { if (elem != null) yield return new ElementValue("dateFilter", true, elem); }
  
             } 
         } 

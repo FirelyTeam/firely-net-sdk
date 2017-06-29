@@ -338,17 +338,17 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren 
+        internal override IEnumerable<ElementValue> NamedChildren 
         { 
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                if (TypeElement != null) yield return ("type",TypeElement);
-                if (DisplayElement != null) yield return ("display",DisplayElement);
-                if (CitationElement != null) yield return ("citation",CitationElement);
-                if (UrlElement != null) yield return ("url",UrlElement);
-                if (Document != null) yield return ("document",Document);
-                if (Resource != null) yield return ("resource",Resource);
+                if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
+                if (DisplayElement != null) yield return new ElementValue("display", false, DisplayElement);
+                if (CitationElement != null) yield return new ElementValue("citation", false, CitationElement);
+                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
+                if (Document != null) yield return new ElementValue("document", false, Document);
+                if (Resource != null) yield return new ElementValue("resource", false, Resource);
  
             } 
         } 

@@ -263,13 +263,13 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (TypeElement != null) yield return ("type",TypeElement);
-                    if (UriElement != null) yield return ("uri",UriElement);
+                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
+                    if (UriElement != null) yield return new ElementValue("uri", false, UriElement);
                 }
             }
 
@@ -424,14 +424,14 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (NameElement != null) yield return ("name",NameElement);
-                    if (DescriptionElement != null) yield return ("description",DescriptionElement);
-                    foreach (var elem in Resource) { if (elem != null) yield return ("resource",elem); }
+                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                    foreach (var elem in Resource) { if (elem != null) yield return new ElementValue("resource", true, elem); }
                 }
             }
 
@@ -679,17 +679,17 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (ExampleElement != null) yield return ("example",ExampleElement);
-                    if (NameElement != null) yield return ("name",NameElement);
-                    if (DescriptionElement != null) yield return ("description",DescriptionElement);
-                    if (AcronymElement != null) yield return ("acronym",AcronymElement);
-                    if (Source != null) yield return ("source",Source);
-                    if (ExampleFor != null) yield return ("exampleFor",ExampleFor);
+                    if (ExampleElement != null) yield return new ElementValue("example", false, ExampleElement);
+                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                    if (AcronymElement != null) yield return new ElementValue("acronym", false, AcronymElement);
+                    if (Source != null) yield return new ElementValue("source", false, Source);
+                    if (ExampleFor != null) yield return new ElementValue("exampleFor", false, ExampleFor);
                 }
             }
 
@@ -810,13 +810,13 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (TypeElement != null) yield return ("type",TypeElement);
-                    if (Profile != null) yield return ("profile",Profile);
+                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
+                    if (Profile != null) yield return new ElementValue("profile", false, Profile);
                 }
             }
 
@@ -1119,18 +1119,18 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (SourceElement != null) yield return ("source",SourceElement);
-                    if (TitleElement != null) yield return ("title",TitleElement);
-                    if (KindElement != null) yield return ("kind",KindElement);
-                    foreach (var elem in TypeElement) { if (elem != null) yield return ("type",elem); }
-                    foreach (var elem in PackageElement) { if (elem != null) yield return ("package",elem); }
-                    if (FormatElement != null) yield return ("format",FormatElement);
-                    foreach (var elem in Page) { if (elem != null) yield return ("page",elem); }
+                    if (SourceElement != null) yield return new ElementValue("source", false, SourceElement);
+                    if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
+                    if (KindElement != null) yield return new ElementValue("kind", false, KindElement);
+                    foreach (var elem in TypeElement) { if (elem != null) yield return new ElementValue("type", true, elem); }
+                    foreach (var elem in PackageElement) { if (elem != null) yield return new ElementValue("package", true, elem); }
+                    if (FormatElement != null) yield return new ElementValue("format", false, FormatElement);
+                    foreach (var elem in Page) { if (elem != null) yield return new ElementValue("page", true, elem); }
                 }
             }
 
@@ -1680,29 +1680,29 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (UrlElement != null) yield return ("url",UrlElement);
-                if (VersionElement != null) yield return ("version",VersionElement);
-                if (NameElement != null) yield return ("name",NameElement);
-                if (StatusElement != null) yield return ("status",StatusElement);
-                if (ExperimentalElement != null) yield return ("experimental",ExperimentalElement);
-                if (DateElement != null) yield return ("date",DateElement);
-                if (PublisherElement != null) yield return ("publisher",PublisherElement);
-                foreach (var elem in Contact) { if (elem != null) yield return ("contact",elem); }
-                if (Description != null) yield return ("description",Description);
-                foreach (var elem in UseContext) { if (elem != null) yield return ("useContext",elem); }
-                foreach (var elem in Jurisdiction) { if (elem != null) yield return ("jurisdiction",elem); }
-                if (Copyright != null) yield return ("copyright",Copyright);
-                if (FhirVersionElement != null) yield return ("fhirVersion",FhirVersionElement);
-                foreach (var elem in Dependency) { if (elem != null) yield return ("dependency",elem); }
-                foreach (var elem in Package) { if (elem != null) yield return ("package",elem); }
-                foreach (var elem in Global) { if (elem != null) yield return ("global",elem); }
-                foreach (var elem in BinaryElement) { if (elem != null) yield return ("binary",elem); }
-                if (Page != null) yield return ("page",Page);
+                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
+                if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
+                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (ExperimentalElement != null) yield return new ElementValue("experimental", false, ExperimentalElement);
+                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
+                if (PublisherElement != null) yield return new ElementValue("publisher", false, PublisherElement);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
+                if (Description != null) yield return new ElementValue("description", false, Description);
+                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", true, elem); }
+                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", true, elem); }
+                if (Copyright != null) yield return new ElementValue("copyright", false, Copyright);
+                if (FhirVersionElement != null) yield return new ElementValue("fhirVersion", false, FhirVersionElement);
+                foreach (var elem in Dependency) { if (elem != null) yield return new ElementValue("dependency", true, elem); }
+                foreach (var elem in Package) { if (elem != null) yield return new ElementValue("package", true, elem); }
+                foreach (var elem in Global) { if (elem != null) yield return new ElementValue("global", true, elem); }
+                foreach (var elem in BinaryElement) { if (elem != null) yield return new ElementValue("binary", true, elem); }
+                if (Page != null) yield return new ElementValue("page", false, Page);
             }
         }
 

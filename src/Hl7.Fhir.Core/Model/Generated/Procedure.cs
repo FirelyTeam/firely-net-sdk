@@ -167,14 +167,14 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Role != null) yield return ("role",Role);
-                    if (Actor != null) yield return ("actor",Actor);
-                    if (OnBehalfOf != null) yield return ("onBehalfOf",OnBehalfOf);
+                    if (Role != null) yield return new ElementValue("role", false, Role);
+                    if (Actor != null) yield return new ElementValue("actor", false, Actor);
+                    if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", false, OnBehalfOf);
                 }
             }
 
@@ -275,13 +275,13 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Action != null) yield return ("action",Action);
-                    if (Manipulated != null) yield return ("manipulated",Manipulated);
+                    if (Action != null) yield return new ElementValue("action", false, Action);
+                    if (Manipulated != null) yield return new ElementValue("manipulated", false, Manipulated);
                 }
             }
 
@@ -874,37 +874,37 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
-                foreach (var elem in Definition) { if (elem != null) yield return ("definition",elem); }
-                foreach (var elem in BasedOn) { if (elem != null) yield return ("basedOn",elem); }
-                foreach (var elem in PartOf) { if (elem != null) yield return ("partOf",elem); }
-                if (StatusElement != null) yield return ("status",StatusElement);
-                if (NotDoneElement != null) yield return ("notDone",NotDoneElement);
-                if (NotDoneReason != null) yield return ("notDoneReason",NotDoneReason);
-                if (Category != null) yield return ("category",Category);
-                if (Code != null) yield return ("code",Code);
-                if (Subject != null) yield return ("subject",Subject);
-                if (Context != null) yield return ("context",Context);
-                if (Performed != null) yield return ("performed",Performed);
-                foreach (var elem in Performer) { if (elem != null) yield return ("performer",elem); }
-                if (Location != null) yield return ("location",Location);
-                foreach (var elem in ReasonCode) { if (elem != null) yield return ("reasonCode",elem); }
-                foreach (var elem in ReasonReference) { if (elem != null) yield return ("reasonReference",elem); }
-                foreach (var elem in BodySite) { if (elem != null) yield return ("bodySite",elem); }
-                if (Outcome != null) yield return ("outcome",Outcome);
-                foreach (var elem in Report) { if (elem != null) yield return ("report",elem); }
-                foreach (var elem in Complication) { if (elem != null) yield return ("complication",elem); }
-                foreach (var elem in ComplicationDetail) { if (elem != null) yield return ("complicationDetail",elem); }
-                foreach (var elem in FollowUp) { if (elem != null) yield return ("followUp",elem); }
-                foreach (var elem in Note) { if (elem != null) yield return ("note",elem); }
-                foreach (var elem in FocalDevice) { if (elem != null) yield return ("focalDevice",elem); }
-                foreach (var elem in UsedReference) { if (elem != null) yield return ("usedReference",elem); }
-                foreach (var elem in UsedCode) { if (elem != null) yield return ("usedCode",elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                foreach (var elem in Definition) { if (elem != null) yield return new ElementValue("definition", true, elem); }
+                foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", true, elem); }
+                foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", true, elem); }
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (NotDoneElement != null) yield return new ElementValue("notDone", false, NotDoneElement);
+                if (NotDoneReason != null) yield return new ElementValue("notDoneReason", false, NotDoneReason);
+                if (Category != null) yield return new ElementValue("category", false, Category);
+                if (Code != null) yield return new ElementValue("code", false, Code);
+                if (Subject != null) yield return new ElementValue("subject", false, Subject);
+                if (Context != null) yield return new ElementValue("context", false, Context);
+                if (Performed != null) yield return new ElementValue("performed", false, Performed);
+                foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", true, elem); }
+                if (Location != null) yield return new ElementValue("location", false, Location);
+                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", true, elem); }
+                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", true, elem); }
+                foreach (var elem in BodySite) { if (elem != null) yield return new ElementValue("bodySite", true, elem); }
+                if (Outcome != null) yield return new ElementValue("outcome", false, Outcome);
+                foreach (var elem in Report) { if (elem != null) yield return new ElementValue("report", true, elem); }
+                foreach (var elem in Complication) { if (elem != null) yield return new ElementValue("complication", true, elem); }
+                foreach (var elem in ComplicationDetail) { if (elem != null) yield return new ElementValue("complicationDetail", true, elem); }
+                foreach (var elem in FollowUp) { if (elem != null) yield return new ElementValue("followUp", true, elem); }
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
+                foreach (var elem in FocalDevice) { if (elem != null) yield return new ElementValue("focalDevice", true, elem); }
+                foreach (var elem in UsedReference) { if (elem != null) yield return new ElementValue("usedReference", true, elem); }
+                foreach (var elem in UsedCode) { if (elem != null) yield return new ElementValue("usedCode", true, elem); }
             }
         }
 

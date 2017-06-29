@@ -305,15 +305,15 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    foreach (var elem in Type) { if (elem != null) yield return ("type",elem); }
-                    if (Actor != null) yield return ("actor",Actor);
-                    if (RequiredElement != null) yield return ("required",RequiredElement);
-                    if (StatusElement != null) yield return ("status",StatusElement);
+                    foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, elem); }
+                    if (Actor != null) yield return new ElementValue("actor", false, Actor);
+                    if (RequiredElement != null) yield return new ElementValue("required", false, RequiredElement);
+                    if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
                 }
             }
 
@@ -917,31 +917,31 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
-                if (StatusElement != null) yield return ("status",StatusElement);
-                if (ServiceCategory != null) yield return ("serviceCategory",ServiceCategory);
-                foreach (var elem in ServiceType) { if (elem != null) yield return ("serviceType",elem); }
-                foreach (var elem in Specialty) { if (elem != null) yield return ("specialty",elem); }
-                if (AppointmentType != null) yield return ("appointmentType",AppointmentType);
-                foreach (var elem in Reason) { if (elem != null) yield return ("reason",elem); }
-                foreach (var elem in Indication) { if (elem != null) yield return ("indication",elem); }
-                if (PriorityElement != null) yield return ("priority",PriorityElement);
-                if (DescriptionElement != null) yield return ("description",DescriptionElement);
-                foreach (var elem in SupportingInformation) { if (elem != null) yield return ("supportingInformation",elem); }
-                if (StartElement != null) yield return ("start",StartElement);
-                if (EndElement != null) yield return ("end",EndElement);
-                if (MinutesDurationElement != null) yield return ("minutesDuration",MinutesDurationElement);
-                foreach (var elem in Slot) { if (elem != null) yield return ("slot",elem); }
-                if (CreatedElement != null) yield return ("created",CreatedElement);
-                if (CommentElement != null) yield return ("comment",CommentElement);
-                foreach (var elem in IncomingReferral) { if (elem != null) yield return ("incomingReferral",elem); }
-                foreach (var elem in Participant) { if (elem != null) yield return ("participant",elem); }
-                foreach (var elem in RequestedPeriod) { if (elem != null) yield return ("requestedPeriod",elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (ServiceCategory != null) yield return new ElementValue("serviceCategory", false, ServiceCategory);
+                foreach (var elem in ServiceType) { if (elem != null) yield return new ElementValue("serviceType", true, elem); }
+                foreach (var elem in Specialty) { if (elem != null) yield return new ElementValue("specialty", true, elem); }
+                if (AppointmentType != null) yield return new ElementValue("appointmentType", false, AppointmentType);
+                foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", true, elem); }
+                foreach (var elem in Indication) { if (elem != null) yield return new ElementValue("indication", true, elem); }
+                if (PriorityElement != null) yield return new ElementValue("priority", false, PriorityElement);
+                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                foreach (var elem in SupportingInformation) { if (elem != null) yield return new ElementValue("supportingInformation", true, elem); }
+                if (StartElement != null) yield return new ElementValue("start", false, StartElement);
+                if (EndElement != null) yield return new ElementValue("end", false, EndElement);
+                if (MinutesDurationElement != null) yield return new ElementValue("minutesDuration", false, MinutesDurationElement);
+                foreach (var elem in Slot) { if (elem != null) yield return new ElementValue("slot", true, elem); }
+                if (CreatedElement != null) yield return new ElementValue("created", false, CreatedElement);
+                if (CommentElement != null) yield return new ElementValue("comment", false, CommentElement);
+                foreach (var elem in IncomingReferral) { if (elem != null) yield return new ElementValue("incomingReferral", true, elem); }
+                foreach (var elem in Participant) { if (elem != null) yield return new ElementValue("participant", true, elem); }
+                foreach (var elem in RequestedPeriod) { if (elem != null) yield return new ElementValue("requestedPeriod", true, elem); }
             }
         }
 

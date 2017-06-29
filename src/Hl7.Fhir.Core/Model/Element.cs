@@ -119,16 +119,19 @@ namespace Hl7.Fhir.Model
         {
             get
             {
+                foreach (var item in base.Children) yield return item;
                 foreach (var p in Extension) { if (p != null) yield return p; }
             }
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
-                foreach (var p in Extension) { if (p != null) yield return ("extension",p); }
+                foreach (var item in base.NamedChildren) yield return item;
+                if (ElementId != null)  yield return new ElementValue("id", false, ElementId);
+                foreach (var p in Extension) { if (p != null) yield return new ElementValue("extension",true, p); }
             }
         }
 

@@ -441,18 +441,18 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (DeviceIdentifierElement != null) yield return ("deviceIdentifier",DeviceIdentifierElement);
-                    if (NameElement != null) yield return ("name",NameElement);
-                    if (JurisdictionElement != null) yield return ("jurisdiction",JurisdictionElement);
-                    if (CarrierHRFElement != null) yield return ("carrierHRF",CarrierHRFElement);
-                    if (CarrierAIDCElement != null) yield return ("carrierAIDC",CarrierAIDCElement);
-                    if (IssuerElement != null) yield return ("issuer",IssuerElement);
-                    if (EntryTypeElement != null) yield return ("entryType",EntryTypeElement);
+                    if (DeviceIdentifierElement != null) yield return new ElementValue("deviceIdentifier", false, DeviceIdentifierElement);
+                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                    if (JurisdictionElement != null) yield return new ElementValue("jurisdiction", false, JurisdictionElement);
+                    if (CarrierHRFElement != null) yield return new ElementValue("carrierHRF", false, CarrierHRFElement);
+                    if (CarrierAIDCElement != null) yield return new ElementValue("carrierAIDC", false, CarrierAIDCElement);
+                    if (IssuerElement != null) yield return new ElementValue("issuer", false, IssuerElement);
+                    if (EntryTypeElement != null) yield return new ElementValue("entryType", false, EntryTypeElement);
                 }
             }
 
@@ -966,28 +966,28 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
-                if (Udi != null) yield return ("udi",Udi);
-                if (StatusElement != null) yield return ("status",StatusElement);
-                if (Type != null) yield return ("type",Type);
-                if (LotNumberElement != null) yield return ("lotNumber",LotNumberElement);
-                if (ManufacturerElement != null) yield return ("manufacturer",ManufacturerElement);
-                if (ManufactureDateElement != null) yield return ("manufactureDate",ManufactureDateElement);
-                if (ExpirationDateElement != null) yield return ("expirationDate",ExpirationDateElement);
-                if (ModelElement != null) yield return ("model",ModelElement);
-                if (VersionElement != null) yield return ("version",VersionElement);
-                if (Patient != null) yield return ("patient",Patient);
-                if (Owner != null) yield return ("owner",Owner);
-                foreach (var elem in Contact) { if (elem != null) yield return ("contact",elem); }
-                if (Location != null) yield return ("location",Location);
-                if (UrlElement != null) yield return ("url",UrlElement);
-                foreach (var elem in Note) { if (elem != null) yield return ("note",elem); }
-                foreach (var elem in Safety) { if (elem != null) yield return ("safety",elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (Udi != null) yield return new ElementValue("udi", false, Udi);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (Type != null) yield return new ElementValue("type", false, Type);
+                if (LotNumberElement != null) yield return new ElementValue("lotNumber", false, LotNumberElement);
+                if (ManufacturerElement != null) yield return new ElementValue("manufacturer", false, ManufacturerElement);
+                if (ManufactureDateElement != null) yield return new ElementValue("manufactureDate", false, ManufactureDateElement);
+                if (ExpirationDateElement != null) yield return new ElementValue("expirationDate", false, ExpirationDateElement);
+                if (ModelElement != null) yield return new ElementValue("model", false, ModelElement);
+                if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
+                if (Patient != null) yield return new ElementValue("patient", false, Patient);
+                if (Owner != null) yield return new ElementValue("owner", false, Owner);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
+                if (Location != null) yield return new ElementValue("location", false, Location);
+                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
+                foreach (var elem in Safety) { if (elem != null) yield return new ElementValue("safety", true, elem); }
             }
         }
 

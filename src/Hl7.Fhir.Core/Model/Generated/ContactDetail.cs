@@ -154,13 +154,13 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren 
+        internal override IEnumerable<ElementValue> NamedChildren 
         { 
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                if (NameElement != null) yield return ("name",NameElement);
-                foreach (var elem in Telecom) { if (elem != null) yield return ("telecom",elem); }
+                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
  
             } 
         } 

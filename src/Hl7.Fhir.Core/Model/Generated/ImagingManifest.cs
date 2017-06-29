@@ -205,15 +205,15 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (UidElement != null) yield return ("uid",UidElement);
-                    if (ImagingStudy != null) yield return ("imagingStudy",ImagingStudy);
-                    foreach (var elem in Endpoint) { if (elem != null) yield return ("endpoint",elem); }
-                    foreach (var elem in Series) { if (elem != null) yield return ("series",elem); }
+                    if (UidElement != null) yield return new ElementValue("uid", false, UidElement);
+                    if (ImagingStudy != null) yield return new ElementValue("imagingStudy", false, ImagingStudy);
+                    foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", true, elem); }
+                    foreach (var elem in Series) { if (elem != null) yield return new ElementValue("series", true, elem); }
                 }
             }
 
@@ -352,14 +352,14 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (UidElement != null) yield return ("uid",UidElement);
-                    foreach (var elem in Endpoint) { if (elem != null) yield return ("endpoint",elem); }
-                    foreach (var elem in Instance) { if (elem != null) yield return ("instance",elem); }
+                    if (UidElement != null) yield return new ElementValue("uid", false, UidElement);
+                    foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", true, elem); }
+                    foreach (var elem in Instance) { if (elem != null) yield return new ElementValue("instance", true, elem); }
                 }
             }
 
@@ -497,13 +497,13 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (SopClassElement != null) yield return ("sopClass",SopClassElement);
-                    if (UidElement != null) yield return ("uid",UidElement);
+                    if (SopClassElement != null) yield return new ElementValue("sopClass", false, SopClassElement);
+                    if (UidElement != null) yield return new ElementValue("uid", false, UidElement);
                 }
             }
 
@@ -712,17 +712,17 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Identifier != null) yield return ("identifier",Identifier);
-                if (Patient != null) yield return ("patient",Patient);
-                if (AuthoringTimeElement != null) yield return ("authoringTime",AuthoringTimeElement);
-                if (Author != null) yield return ("author",Author);
-                if (DescriptionElement != null) yield return ("description",DescriptionElement);
-                foreach (var elem in Study) { if (elem != null) yield return ("study",elem); }
+                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                if (Patient != null) yield return new ElementValue("patient", false, Patient);
+                if (AuthoringTimeElement != null) yield return new ElementValue("authoringTime", false, AuthoringTimeElement);
+                if (Author != null) yield return new ElementValue("author", false, Author);
+                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                foreach (var elem in Study) { if (elem != null) yield return new ElementValue("study", true, elem); }
             }
         }
 

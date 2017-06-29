@@ -301,15 +301,15 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (IdentityElement != null) yield return ("identity",IdentityElement);
-                    if (UriElement != null) yield return ("uri",UriElement);
-                    if (NameElement != null) yield return ("name",NameElement);
-                    if (CommentElement != null) yield return ("comment",CommentElement);
+                    if (IdentityElement != null) yield return new ElementValue("identity", false, IdentityElement);
+                    if (UriElement != null) yield return new ElementValue("uri", false, UriElement);
+                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                    if (CommentElement != null) yield return new ElementValue("comment", false, CommentElement);
                 }
             }
 
@@ -852,27 +852,27 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (UrlElement != null) yield return ("url",UrlElement);
-                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
-                if (VersionElement != null) yield return ("version",VersionElement);
-                if (StatusElement != null) yield return ("status",StatusElement);
-                if (ExperimentalElement != null) yield return ("experimental",ExperimentalElement);
-                if (DateElement != null) yield return ("date",DateElement);
-                if (PublisherElement != null) yield return ("publisher",PublisherElement);
-                if (NameElement != null) yield return ("name",NameElement);
-                if (TitleElement != null) yield return ("title",TitleElement);
-                foreach (var elem in Contact) { if (elem != null) yield return ("contact",elem); }
-                foreach (var elem in UseContext) { if (elem != null) yield return ("useContext",elem); }
-                foreach (var elem in Jurisdiction) { if (elem != null) yield return ("jurisdiction",elem); }
-                if (Copyright != null) yield return ("copyright",Copyright);
-                if (StringencyElement != null) yield return ("stringency",StringencyElement);
-                foreach (var elem in Mapping) { if (elem != null) yield return ("mapping",elem); }
-                foreach (var elem in Element) { if (elem != null) yield return ("element",elem); }
+                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (ExperimentalElement != null) yield return new ElementValue("experimental", false, ExperimentalElement);
+                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
+                if (PublisherElement != null) yield return new ElementValue("publisher", false, PublisherElement);
+                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
+                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", true, elem); }
+                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", true, elem); }
+                if (Copyright != null) yield return new ElementValue("copyright", false, Copyright);
+                if (StringencyElement != null) yield return new ElementValue("stringency", false, StringencyElement);
+                foreach (var elem in Mapping) { if (elem != null) yield return new ElementValue("mapping", true, elem); }
+                foreach (var elem in Element) { if (elem != null) yield return new ElementValue("element", true, elem); }
             }
         }
 

@@ -131,12 +131,12 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Content != null) yield return ("content",Content);
+                    if (Content != null) yield return new ElementValue("content", false, Content);
                 }
             }
 
@@ -239,13 +239,13 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Agent != null) yield return ("agent",Agent);
-                    if (OnBehalfOf != null) yield return ("onBehalfOf",OnBehalfOf);
+                    if (Agent != null) yield return new ElementValue("agent", false, Agent);
+                    if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", false, OnBehalfOf);
                 }
             }
 
@@ -745,31 +745,31 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
-                foreach (var elem in BasedOn) { if (elem != null) yield return ("basedOn",elem); }
-                foreach (var elem in Replaces) { if (elem != null) yield return ("replaces",elem); }
-                if (GroupIdentifier != null) yield return ("groupIdentifier",GroupIdentifier);
-                if (StatusElement != null) yield return ("status",StatusElement);
-                foreach (var elem in Category) { if (elem != null) yield return ("category",elem); }
-                if (PriorityElement != null) yield return ("priority",PriorityElement);
-                foreach (var elem in Medium) { if (elem != null) yield return ("medium",elem); }
-                if (Subject != null) yield return ("subject",Subject);
-                foreach (var elem in Recipient) { if (elem != null) yield return ("recipient",elem); }
-                foreach (var elem in Topic) { if (elem != null) yield return ("topic",elem); }
-                if (Context != null) yield return ("context",Context);
-                foreach (var elem in Payload) { if (elem != null) yield return ("payload",elem); }
-                if (Occurrence != null) yield return ("occurrence",Occurrence);
-                if (AuthoredOnElement != null) yield return ("authoredOn",AuthoredOnElement);
-                if (Sender != null) yield return ("sender",Sender);
-                if (Requester != null) yield return ("requester",Requester);
-                foreach (var elem in ReasonCode) { if (elem != null) yield return ("reasonCode",elem); }
-                foreach (var elem in ReasonReference) { if (elem != null) yield return ("reasonReference",elem); }
-                foreach (var elem in Note) { if (elem != null) yield return ("note",elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", true, elem); }
+                foreach (var elem in Replaces) { if (elem != null) yield return new ElementValue("replaces", true, elem); }
+                if (GroupIdentifier != null) yield return new ElementValue("groupIdentifier", false, GroupIdentifier);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", true, elem); }
+                if (PriorityElement != null) yield return new ElementValue("priority", false, PriorityElement);
+                foreach (var elem in Medium) { if (elem != null) yield return new ElementValue("medium", true, elem); }
+                if (Subject != null) yield return new ElementValue("subject", false, Subject);
+                foreach (var elem in Recipient) { if (elem != null) yield return new ElementValue("recipient", true, elem); }
+                foreach (var elem in Topic) { if (elem != null) yield return new ElementValue("topic", true, elem); }
+                if (Context != null) yield return new ElementValue("context", false, Context);
+                foreach (var elem in Payload) { if (elem != null) yield return new ElementValue("payload", true, elem); }
+                if (Occurrence != null) yield return new ElementValue("occurrence", false, Occurrence);
+                if (AuthoredOnElement != null) yield return new ElementValue("authoredOn", false, AuthoredOnElement);
+                if (Sender != null) yield return new ElementValue("sender", false, Sender);
+                if (Requester != null) yield return new ElementValue("requester", false, Requester);
+                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", true, elem); }
+                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", true, elem); }
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
             }
         }
 

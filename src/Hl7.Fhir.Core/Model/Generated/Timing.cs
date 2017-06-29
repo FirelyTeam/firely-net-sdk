@@ -806,26 +806,26 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren 
+            internal override IEnumerable<ElementValue> NamedChildren 
             { 
                 get 
                 { 
                     foreach (var item in base.NamedChildren) yield return item; 
-                    if (Bounds != null) yield return ("bounds",Bounds);
-                    if (CountElement != null) yield return ("count",CountElement);
-                    if (CountMaxElement != null) yield return ("countMax",CountMaxElement);
-                    if (DurationElement != null) yield return ("duration",DurationElement);
-                    if (DurationMaxElement != null) yield return ("durationMax",DurationMaxElement);
-                    if (DurationUnitElement != null) yield return ("durationUnit",DurationUnitElement);
-                    if (FrequencyElement != null) yield return ("frequency",FrequencyElement);
-                    if (FrequencyMaxElement != null) yield return ("frequencyMax",FrequencyMaxElement);
-                    if (PeriodElement != null) yield return ("period",PeriodElement);
-                    if (PeriodMaxElement != null) yield return ("periodMax",PeriodMaxElement);
-                    if (PeriodUnitElement != null) yield return ("periodUnit",PeriodUnitElement);
-                    foreach (var elem in DayOfWeekElement) { if (elem != null) yield return ("dayOfWeek",elem); }
-                    foreach (var elem in TimeOfDayElement) { if (elem != null) yield return ("timeOfDay",elem); }
-                    foreach (var elem in WhenElement) { if (elem != null) yield return ("when",elem); }
-                    if (OffsetElement != null) yield return ("offset",OffsetElement);
+                    if (Bounds != null) yield return new ElementValue("bounds", false, Bounds);
+                    if (CountElement != null) yield return new ElementValue("count", false, CountElement);
+                    if (CountMaxElement != null) yield return new ElementValue("countMax", false, CountMaxElement);
+                    if (DurationElement != null) yield return new ElementValue("duration", false, DurationElement);
+                    if (DurationMaxElement != null) yield return new ElementValue("durationMax", false, DurationMaxElement);
+                    if (DurationUnitElement != null) yield return new ElementValue("durationUnit", false, DurationUnitElement);
+                    if (FrequencyElement != null) yield return new ElementValue("frequency", false, FrequencyElement);
+                    if (FrequencyMaxElement != null) yield return new ElementValue("frequencyMax", false, FrequencyMaxElement);
+                    if (PeriodElement != null) yield return new ElementValue("period", false, PeriodElement);
+                    if (PeriodMaxElement != null) yield return new ElementValue("periodMax", false, PeriodMaxElement);
+                    if (PeriodUnitElement != null) yield return new ElementValue("periodUnit", false, PeriodUnitElement);
+                    foreach (var elem in DayOfWeekElement) { if (elem != null) yield return new ElementValue("dayOfWeek", true, elem); }
+                    foreach (var elem in TimeOfDayElement) { if (elem != null) yield return new ElementValue("timeOfDay", true, elem); }
+                    foreach (var elem in WhenElement) { if (elem != null) yield return new ElementValue("when", true, elem); }
+                    if (OffsetElement != null) yield return new ElementValue("offset", false, OffsetElement);
  
                 } 
             } 
@@ -951,14 +951,14 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren 
+        internal override IEnumerable<ElementValue> NamedChildren 
         { 
             get 
             { 
                 foreach (var item in base.NamedChildren) yield return item; 
-                foreach (var elem in EventElement) { if (elem != null) yield return ("event",elem); }
-                if (Repeat != null) yield return ("repeat",Repeat);
-                if (Code != null) yield return ("code",Code);
+                foreach (var elem in EventElement) { if (elem != null) yield return new ElementValue("event", true, elem); }
+                if (Repeat != null) yield return new ElementValue("repeat", false, Repeat);
+                if (Code != null) yield return new ElementValue("code", false, Code);
  
             } 
         } 

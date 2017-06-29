@@ -230,14 +230,14 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (NameElement != null) yield return ("name",NameElement);
-                    if (Target != null) yield return ("target",Target);
-                    if (EndpointElement != null) yield return ("endpoint",EndpointElement);
+                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                    if (Target != null) yield return new ElementValue("target", false, Target);
+                    if (EndpointElement != null) yield return new ElementValue("endpoint", false, EndpointElement);
                 }
             }
 
@@ -463,16 +463,16 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (NameElement != null) yield return ("name",NameElement);
-                    if (SoftwareElement != null) yield return ("software",SoftwareElement);
-                    if (VersionElement != null) yield return ("version",VersionElement);
-                    if (Contact != null) yield return ("contact",Contact);
-                    if (EndpointElement != null) yield return ("endpoint",EndpointElement);
+                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                    if (SoftwareElement != null) yield return new ElementValue("software", false, SoftwareElement);
+                    if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
+                    if (Contact != null) yield return new ElementValue("contact", false, Contact);
+                    if (EndpointElement != null) yield return new ElementValue("endpoint", false, EndpointElement);
                 }
             }
 
@@ -629,14 +629,14 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (IdentifierElement != null) yield return ("identifier",IdentifierElement);
-                    if (CodeElement != null) yield return ("code",CodeElement);
-                    if (Details != null) yield return ("details",Details);
+                    if (IdentifierElement != null) yield return new ElementValue("identifier", false, IdentifierElement);
+                    if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
+                    if (Details != null) yield return new ElementValue("details", false, Details);
                 }
             }
 
@@ -939,23 +939,23 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Event != null) yield return ("event",Event);
-                foreach (var elem in Destination) { if (elem != null) yield return ("destination",elem); }
-                if (Receiver != null) yield return ("receiver",Receiver);
-                if (Sender != null) yield return ("sender",Sender);
-                if (TimestampElement != null) yield return ("timestamp",TimestampElement);
-                if (Enterer != null) yield return ("enterer",Enterer);
-                if (Author != null) yield return ("author",Author);
-                if (Source != null) yield return ("source",Source);
-                if (Responsible != null) yield return ("responsible",Responsible);
-                if (Reason != null) yield return ("reason",Reason);
-                if (Response != null) yield return ("response",Response);
-                foreach (var elem in Focus) { if (elem != null) yield return ("focus",elem); }
+                if (Event != null) yield return new ElementValue("event", false, Event);
+                foreach (var elem in Destination) { if (elem != null) yield return new ElementValue("destination", true, elem); }
+                if (Receiver != null) yield return new ElementValue("receiver", false, Receiver);
+                if (Sender != null) yield return new ElementValue("sender", false, Sender);
+                if (TimestampElement != null) yield return new ElementValue("timestamp", false, TimestampElement);
+                if (Enterer != null) yield return new ElementValue("enterer", false, Enterer);
+                if (Author != null) yield return new ElementValue("author", false, Author);
+                if (Source != null) yield return new ElementValue("source", false, Source);
+                if (Responsible != null) yield return new ElementValue("responsible", false, Responsible);
+                if (Reason != null) yield return new ElementValue("reason", false, Reason);
+                if (Response != null) yield return new ElementValue("response", false, Response);
+                foreach (var elem in Focus) { if (elem != null) yield return new ElementValue("focus", true, elem); }
             }
         }
 

@@ -199,13 +199,13 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Quantity != null) yield return ("quantity",Quantity);
-                    if (Item != null) yield return ("item",Item);
+                    if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
+                    if (Item != null) yield return new ElementValue("item", false, Item);
                 }
             }
 
@@ -308,13 +308,13 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Agent != null) yield return ("agent",Agent);
-                    if (OnBehalfOf != null) yield return ("onBehalfOf",OnBehalfOf);
+                    if (Agent != null) yield return new ElementValue("agent", false, Agent);
+                    if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", false, OnBehalfOf);
                 }
             }
 
@@ -649,23 +649,23 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                if (Identifier != null) yield return ("identifier",Identifier);
-                if (StatusElement != null) yield return ("status",StatusElement);
-                if (Category != null) yield return ("category",Category);
-                if (PriorityElement != null) yield return ("priority",PriorityElement);
-                if (OrderedItem != null) yield return ("orderedItem",OrderedItem);
-                if (Occurrence != null) yield return ("occurrence",Occurrence);
-                if (AuthoredOnElement != null) yield return ("authoredOn",AuthoredOnElement);
-                if (Requester != null) yield return ("requester",Requester);
-                foreach (var elem in Supplier) { if (elem != null) yield return ("supplier",elem); }
-                if (Reason != null) yield return ("reason",Reason);
-                if (DeliverFrom != null) yield return ("deliverFrom",DeliverFrom);
-                if (DeliverTo != null) yield return ("deliverTo",DeliverTo);
+                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (Category != null) yield return new ElementValue("category", false, Category);
+                if (PriorityElement != null) yield return new ElementValue("priority", false, PriorityElement);
+                if (OrderedItem != null) yield return new ElementValue("orderedItem", false, OrderedItem);
+                if (Occurrence != null) yield return new ElementValue("occurrence", false, Occurrence);
+                if (AuthoredOnElement != null) yield return new ElementValue("authoredOn", false, AuthoredOnElement);
+                if (Requester != null) yield return new ElementValue("requester", false, Requester);
+                foreach (var elem in Supplier) { if (elem != null) yield return new ElementValue("supplier", true, elem); }
+                if (Reason != null) yield return new ElementValue("reason", false, Reason);
+                if (DeliverFrom != null) yield return new ElementValue("deliverFrom", false, DeliverFrom);
+                if (DeliverTo != null) yield return new ElementValue("deliverTo", false, DeliverTo);
             }
         }
 

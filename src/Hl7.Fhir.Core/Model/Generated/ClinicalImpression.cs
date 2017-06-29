@@ -176,13 +176,13 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return ("code",Code);
-                    foreach (var elem in Item) { if (elem != null) yield return ("item",elem); }
+                    if (Code != null) yield return new ElementValue("code", false, Code);
+                    foreach (var elem in Item) { if (elem != null) yield return new ElementValue("item", true, elem); }
                 }
             }
 
@@ -302,13 +302,13 @@ namespace Hl7.Fhir.Model
             }
 
             [NotMapped]
-            public override IEnumerable<(string name, Base child)> NamedChildren
+            internal override IEnumerable<ElementValue> NamedChildren
             {
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Item != null) yield return ("item",Item);
-                    if (BasisElement != null) yield return ("basis",BasisElement);
+                    if (Item != null) yield return new ElementValue("item", false, Item);
+                    if (BasisElement != null) yield return new ElementValue("basis", false, BasisElement);
                 }
             }
 
@@ -816,30 +816,30 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public override IEnumerable<(string name, Base child)> NamedChildren
+        internal override IEnumerable<ElementValue> NamedChildren
         {
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
-                foreach (var elem in Identifier) { if (elem != null) yield return ("identifier",elem); }
-                if (StatusElement != null) yield return ("status",StatusElement);
-                if (Code != null) yield return ("code",Code);
-                if (DescriptionElement != null) yield return ("description",DescriptionElement);
-                if (Subject != null) yield return ("subject",Subject);
-                if (Context != null) yield return ("context",Context);
-                if (Effective != null) yield return ("effective",Effective);
-                if (DateElement != null) yield return ("date",DateElement);
-                if (Assessor != null) yield return ("assessor",Assessor);
-                if (Previous != null) yield return ("previous",Previous);
-                foreach (var elem in Problem) { if (elem != null) yield return ("problem",elem); }
-                foreach (var elem in Investigation) { if (elem != null) yield return ("investigation",elem); }
-                foreach (var elem in ProtocolElement) { if (elem != null) yield return ("protocol",elem); }
-                if (SummaryElement != null) yield return ("summary",SummaryElement);
-                foreach (var elem in Finding) { if (elem != null) yield return ("finding",elem); }
-                foreach (var elem in PrognosisCodeableConcept) { if (elem != null) yield return ("prognosisCodeableConcept",elem); }
-                foreach (var elem in PrognosisReference) { if (elem != null) yield return ("prognosisReference",elem); }
-                foreach (var elem in Action) { if (elem != null) yield return ("action",elem); }
-                foreach (var elem in Note) { if (elem != null) yield return ("note",elem); }
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (Code != null) yield return new ElementValue("code", false, Code);
+                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                if (Subject != null) yield return new ElementValue("subject", false, Subject);
+                if (Context != null) yield return new ElementValue("context", false, Context);
+                if (Effective != null) yield return new ElementValue("effective", false, Effective);
+                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
+                if (Assessor != null) yield return new ElementValue("assessor", false, Assessor);
+                if (Previous != null) yield return new ElementValue("previous", false, Previous);
+                foreach (var elem in Problem) { if (elem != null) yield return new ElementValue("problem", true, elem); }
+                foreach (var elem in Investigation) { if (elem != null) yield return new ElementValue("investigation", true, elem); }
+                foreach (var elem in ProtocolElement) { if (elem != null) yield return new ElementValue("protocol", true, elem); }
+                if (SummaryElement != null) yield return new ElementValue("summary", false, SummaryElement);
+                foreach (var elem in Finding) { if (elem != null) yield return new ElementValue("finding", true, elem); }
+                foreach (var elem in PrognosisCodeableConcept) { if (elem != null) yield return new ElementValue("prognosisCodeableConcept", true, elem); }
+                foreach (var elem in PrognosisReference) { if (elem != null) yield return new ElementValue("prognosisReference", true, elem); }
+                foreach (var elem in Action) { if (elem != null) yield return new ElementValue("action", true, elem); }
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
             }
         }
 
