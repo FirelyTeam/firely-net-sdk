@@ -36,6 +36,8 @@ using Hl7.Fhir.Utility;
 
 */
 
+#pragma warning disable 1591 // suppress XML summary warnings 
+
 //
 // Generated for FHIR v3.0.1
 //
