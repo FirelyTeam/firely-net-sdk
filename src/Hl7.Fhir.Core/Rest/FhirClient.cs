@@ -19,7 +19,7 @@ using System.Net;
 
 namespace Hl7.Fhir.Rest
 {
-    public partial class FhirClient
+    public partial class FhirClient : IFhirClient
     {
         private Requester _requester;
 
