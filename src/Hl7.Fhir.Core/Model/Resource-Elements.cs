@@ -35,7 +35,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated, and then post-processed by hand for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
