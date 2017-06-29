@@ -22,7 +22,22 @@ namespace Hl7.FhirPath.Functions
         {
             if (left.Count() != right.Count()) return false;
 
+            // This will enumerate the whole set using the iterator,
+            // so isn't faster than just comparing the lists 
+            // (which will stop when an Item is different)
+            // Worst case where last Item is different with old code would 
+            // enumerate both collections 3 times.
+            // With the new code it would enumerate once
+            // The best case with old code was 2 enumerations of the collection,
+            // then first one is different.
+            // With the new code, a single comparison would be performed.
+            // ...but this does not work....since is right has more items, Zip() won't complain
+
+            //TODO: align with more performant code in ElementNavigatorComparator
+
             return left.Zip(right, (l, r) => l.IsEqualTo(r)).All(x => x);
+
+            
         }
 
         public static bool IsEqualTo(this IElementNavigator left, IElementNavigator right)

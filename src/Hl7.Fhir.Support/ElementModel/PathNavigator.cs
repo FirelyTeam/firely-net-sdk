@@ -59,9 +59,9 @@ namespace Hl7.Fhir.ElementModel
         }
 
 
-        public bool MoveToFirstChild()
+        public bool MoveToFirstChild(string nameFilter = null)
         {
-            bool exists = _navigator.MoveToFirstChild();
+            bool exists = _navigator.MoveToFirstChild(nameFilter);
             if (exists) _index = 0;
             return exists;
         }

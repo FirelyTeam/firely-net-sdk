@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             public IElementNavigator Clone() { throw new NotImplementedException(); }
 
-            public bool MoveToFirstChild() { throw new NotImplementedException(); }
+            public bool MoveToFirstChild(string nameFilter = null) { throw new NotImplementedException(); }
 
             public bool MoveToNext() { throw new NotImplementedException(); }
 

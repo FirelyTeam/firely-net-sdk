@@ -64,11 +64,16 @@ namespace Hl7.Fhir.ElementModel
             return r;
         }
 
-        public bool MoveToFirstChild()
+        public bool MoveToFirstChild(string nameFilter = null)
         {
-            if (Current.Children != null && Current.Children.Any())
+            IEnumerable<IElementNode> children;
+            if (nameFilter == null)
+                children = Current.Children;
+            else
+                children = Current.Children.Where(n => n.Name == nameFilter);
+            if (children != null && children.Any())
             {
-                _siblings = Current.Children.ToArray();
+                _siblings = children.ToArray();
                 _index = 0;
                 return true;
             }
