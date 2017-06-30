@@ -28,7 +28,7 @@
      <GenerateDocumentationFile>true</GenerateDocumentationFile>
      <NoWarn>1591</NoWarn>
   </PropertyGroup>
- 
+
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>..\FhirNetApi.snk</AssemblyOriginatorKeyFile>
