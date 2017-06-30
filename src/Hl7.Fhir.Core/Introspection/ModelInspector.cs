@@ -32,7 +32,11 @@ namespace Hl7.Fhir.Introspection
 
             if (assembly.GetCustomAttribute<NotMappedAttribute>() != null) return;
 
+#if NET40
+            IEnumerable<Type> exportedTypes = assembly.GetExportedTypes();
+#else
             IEnumerable<Type> exportedTypes = assembly.ExportedTypes;
+#endif
 
             foreach (Type type in exportedTypes)
             {

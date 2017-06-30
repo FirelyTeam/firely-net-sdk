@@ -7,7 +7,11 @@ namespace Hl7.Fhir.Rest
 {
     public interface IFhirClient
     {
+#if NET_COMPRESSION
+        bool PreferCompressedResponses { get; set; }
         bool CompressRequestBody { get; set; }
+#endif
+
         Uri Endpoint { get; }
         byte[] LastBody { get; }
         Resource LastBodyAsResource { get; }
@@ -16,7 +20,7 @@ namespace Hl7.Fhir.Rest
         HttpWebResponse LastResponse { get; }
         Bundle.ResponseComponent LastResult { get; }
         ParserSettings ParserSettings { get; set; }
-        bool PreferCompressedResponses { get; set; }
+
         ResourceFormat PreferredFormat { get; set; }
         bool ReturnFullResource { get; set; }
         int Timeout { get; set; }
