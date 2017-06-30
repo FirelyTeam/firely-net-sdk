@@ -96,6 +96,13 @@ namespace Hl7.Fhir.Serialization
             });
         }
 
+        public static string SerializeResourceToTurtle(Base instance, SummaryType summary = SummaryType.False, string root = null)
+        {
+            TurtleFhirWriter tw = new TurtleFhirWriter();
+            Serialize(instance, tw, summary, root);
+            return tw.turtleAsString();
+        }        
+
         // [WMR 20160421] Caller is responsible for disposing writer
         public static void SerializeResource(Resource resource, XmlWriter writer, SummaryType summary = SummaryType.False)
         {

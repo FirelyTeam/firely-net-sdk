@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Utility
             string location = null;
 
             if (pos != null)
-                location = $"line {pos.LineNumber}, pos {pos.LinePosition}";
+                location = $"line {pos.LineNumber}, pos {pos.LinePosition} {pos.Path}";
 
             return Format(message, location);
         }

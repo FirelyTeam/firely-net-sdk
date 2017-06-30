@@ -13,7 +13,6 @@ using System.Text;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
-using Newtonsoft.Json;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
 using Hl7.Fhir.Support;

@@ -18,5 +18,6 @@ namespace Hl7.Fhir.Utility
     {
         int LineNumber { get; }
         int LinePosition { get; }
+        string Path { get; }
     }
 }

@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26403.0
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FhirConsole", "FhirConsole\FhirConsole.csproj", "{4a7f75b7-b3e7-4f03-b43f-cbddaf021c61}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Core", "Hl7.Fhir.Core\Hl7.Fhir.Core.csproj", "{1E26FE9D-EEF8-4C39-B54F-6CA12F7C7CA5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.Core.Tests", "Hl7.Fhir.Core.Tests\Hl7.Fhir.Core.Tests.csproj", "{F4609F02-DD99-4DD2-9855-9BB8FF4AC68F}"

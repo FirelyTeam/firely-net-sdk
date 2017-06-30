@@ -13,6 +13,7 @@ using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using Newtonsoft.Json;
 using System;
+using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -226,6 +227,11 @@ namespace Hl7.Fhir.Serialization
             return FhirJsonParser.CreateFhirReader(json);
         }
 
+        public static IFhirReader FhirReaderFromTurtle(string turtle)
+        {
+            return new TurtleFhirReader(new StringReader(turtle));
+        }
+
         #endregion
 
         private static FhirXmlParser _xmlParser = new FhirXmlParser();
@@ -259,6 +265,20 @@ namespace Hl7.Fhir.Serialization
                 return _jsonParser.Parse<Resource>(json);
             else
                 return _jsonParser.Parse(json, dataType);
+        }
+
+        public static Resource ParseResourceFromTurtle(string turtle)
+        {
+            return (Resource)ParseFromTurtle(turtle);
+        }
+
+        public static Base ParseFromTurtle(string turtle, Type dataType = null)
+        {
+            var reader = FhirReaderFromTurtle(turtle);
+            if (dataType == null)
+                return new ResourceReader(reader, ParserSettings.Default).Deserialize();
+            else
+                return new ComplexTypeReader(reader, ParserSettings.Default).Deserialize(dataType);
         }
 
         [Obsolete("Create an instance of FhirXmlParser and call Parse<Resource>()")]

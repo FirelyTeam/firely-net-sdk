@@ -1,0 +1,182 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<http://hl7.org/fhir/Patient/example> a fhir:Patient;
+  fhir:nodeRole fhir:treeRoot;
+  fhir:Resource.id [ fhir:value "example"];
+  fhir:DomainResource.text [
+     fhir:Narrative.status [ fhir:value "generated" ];
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n			<table>\n				<tbody>\n					<tr>\n						<td>Name</td>\n						<td>Peter James \n              <b>Chalmers</b> (&quot;Jim&quot;)\n            </td>\n					</tr>\n					<tr>\n						<td>Address</td>\n						<td>534 Erewhon, Pleasantville, Vic, 3999</td>\n					</tr>\n					<tr>\n						<td>Contacts</td>\n						<td>Home: unknown. Work: (03) 5555 6473</td>\n					</tr>\n					<tr>\n						<td>Id</td>\n						<td>MRN: 12345 (Acme Healthcare)</td>\n					</tr>\n				</tbody>\n			</table>\n		</div>"
+  ];
+  fhir:Patient.identifier [
+     fhir:index 0;
+     fhir:Identifier.use [ fhir:value "usual" ];
+     fhir:Identifier.type [
+       fhir:CodeableConcept.coding [
+         fhir:index 0;
+         fhir:Coding.system [ fhir:value "http://hl7.org/fhir/v2/0203" ];
+         fhir:Coding.code [ fhir:value "MR" ]
+       ]
+     ];
+     fhir:Identifier.system [ fhir:value "urn:oid:1.2.36.146.595.217.0.1" ];
+     fhir:Identifier.value [ fhir:value "12345" ];
+     fhir:Identifier.period [
+       fhir:Period.start [ fhir:value "2001-05-06"^^xsd:date ]
+     ];
+     fhir:Identifier.assigner [
+       fhir:Reference.display [ fhir:value "Acme Healthcare" ]
+     ]
+  ];
+  fhir:Patient.active [ fhir:value "true"^^xsd:boolean];
+  fhir:Patient.name [
+     fhir:index 0;
+     fhir:HumanName.use [ fhir:value "official" ];
+     fhir:HumanName.family [ fhir:value "Chalmers" ];
+     fhir:HumanName.given [
+       fhir:value "Peter";
+       fhir:index 0
+     ], [
+       fhir:value "James";
+       fhir:index 1
+     ]
+  ], [
+     fhir:index 1;
+     fhir:HumanName.use [ fhir:value "usual" ];
+     fhir:HumanName.given [
+       fhir:value "Jim";
+       fhir:index 0
+     ]
+  ], [
+     fhir:index 2;
+     fhir:HumanName.use [ fhir:value "maiden" ];
+     fhir:HumanName.family [ fhir:value "Windsor" ];
+     fhir:HumanName.given [
+       fhir:value "Peter";
+       fhir:index 0
+     ], [
+       fhir:value "James";
+       fhir:index 1
+     ];
+     fhir:HumanName.period [
+       fhir:Period.end [ fhir:value "2002"^^xsd:gYear ]
+     ]
+  ];
+  fhir:Patient.telecom [
+     fhir:index 0;
+     fhir:ContactPoint.use [ fhir:value "home" ]
+  ], [
+     fhir:index 1;
+     fhir:ContactPoint.system [ fhir:value "phone" ];
+     fhir:ContactPoint.value [ fhir:value "(03) 5555 6473" ];
+     fhir:ContactPoint.use [ fhir:value "work" ];
+     fhir:ContactPoint.rank [ fhir:value "1"^^xsd:positiveInteger ]
+  ], [
+     fhir:index 2;
+     fhir:ContactPoint.system [ fhir:value "phone" ];
+     fhir:ContactPoint.value [ fhir:value "(03) 3410 5613" ];
+     fhir:ContactPoint.use [ fhir:value "mobile" ];
+     fhir:ContactPoint.rank [ fhir:value "2"^^xsd:positiveInteger ]
+  ], [
+     fhir:index 3;
+     fhir:ContactPoint.system [ fhir:value "phone" ];
+     fhir:ContactPoint.value [ fhir:value "(03) 5555 8834" ];
+     fhir:ContactPoint.use [ fhir:value "old" ];
+     fhir:ContactPoint.period [
+       fhir:Period.end [ fhir:value "2014"^^xsd:gYear ]
+     ]
+  ];
+  fhir:Patient.gender [ fhir:value "male"];
+  fhir:Patient.birthDate [
+     fhir:value "1974-12-25"^^xsd:date;
+     fhir:Element.extension [
+       fhir:index 0;
+       fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/patient-birthTime" ];
+       fhir:Extension.valueDateTime [ fhir:value "1974-12-25T14:35:45-05:00"^^xsd:dateTime ]
+     ]
+  ];
+  fhir:Patient.deceasedBoolean [ fhir:value "false"^^xsd:boolean];
+  fhir:Patient.address [
+     fhir:index 0;
+     fhir:Address.use [ fhir:value "home" ];
+     fhir:Address.type [ fhir:value "both" ];
+     fhir:Address.text [ fhir:value "534 Erewhon St PeasantVille, Rainbow, Vic  3999" ];
+     fhir:Address.line [
+       fhir:value "534 Erewhon St";
+       fhir:index 0
+     ];
+     fhir:Address.city [ fhir:value "PleasantVille" ];
+     fhir:Address.district [ fhir:value "Rainbow" ];
+     fhir:Address.state [ fhir:value "Vic" ];
+     fhir:Address.postalCode [ fhir:value "3999" ];
+     fhir:Address.period [
+       fhir:Period.start [ fhir:value "1974-12-25"^^xsd:date ]
+     ]
+  ];
+  fhir:Patient.contact [
+     fhir:index 0;
+     fhir:Patient.contact.relationship [
+       fhir:index 0;
+       fhir:CodeableConcept.coding [
+         fhir:index 0;
+         fhir:Coding.system [ fhir:value "http://hl7.org/fhir/v2/0131" ];
+         fhir:Coding.code [ fhir:value "N" ]
+       ]
+     ];
+     fhir:Patient.contact.name [
+       fhir:HumanName.family [
+         fhir:value "du Marché";
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/humanname-own-prefix" ];
+           fhir:Extension.valueString [ fhir:value "VV" ]
+         ]
+       ];
+       fhir:HumanName.given [
+         fhir:value "Bénédicte";
+         fhir:index 0
+       ]
+     ];
+     fhir:Patient.contact.telecom [
+       fhir:index 0;
+       fhir:ContactPoint.system [ fhir:value "phone" ];
+       fhir:ContactPoint.value [ fhir:value "+33 (237) 998327" ]
+     ];
+     fhir:Patient.contact.address [
+       fhir:Address.use [ fhir:value "home" ];
+       fhir:Address.type [ fhir:value "both" ];
+       fhir:Address.line [
+         fhir:value "534 Erewhon St";
+         fhir:index 0
+       ];
+       fhir:Address.city [ fhir:value "PleasantVille" ];
+       fhir:Address.district [ fhir:value "Rainbow" ];
+       fhir:Address.state [ fhir:value "Vic" ];
+       fhir:Address.postalCode [ fhir:value "3999" ];
+       fhir:Address.period [
+         fhir:Period.start [ fhir:value "1974-12-25"^^xsd:date ]
+       ]
+     ];
+     fhir:Patient.contact.gender [ fhir:value "female" ];
+     fhir:Patient.contact.period [
+       fhir:Period.start [ fhir:value "2012"^^xsd:gYear ]
+     ]
+  ];
+  fhir:Patient.managingOrganization [
+     fhir:link <http://hl7.org/fhir/Organization/1>;
+     fhir:Reference.reference [ fhir:value "Organization/1" ]
+  ] .
+
+<http://hl7.org/fhir/Organization/1> a fhir:Organization .
+
+# - ontology header ------------------------------------------------------------
+
+<http://hl7.org/fhir/Patient/example.ttl> a owl:Ontology;
+  owl:imports fhir:fhir.ttl;
+  owl:versionIRI <http://build.fhir.org/Patient/example.ttl> .
+
+# -------------------------------------------------------------------------------------
+

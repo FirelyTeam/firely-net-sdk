@@ -128,19 +128,21 @@ namespace Hl7.Fhir.Rest
 
             if (fhirType == ResourceFormat.Unknown)
                 throw new UnsupportedBodyTypeException(
-                    "Endpoint returned a body with contentType '{0}', while a valid FHIR xml/json body type was expected. Is this a FHIR endpoint?"
+                    "Endpoint returned a body with contentType '{0}', while a valid FHIR xml/json/turtle body type was expected. Is this a FHIR endpoint?"
                         .FormatWith(contentType), contentType, bodyText);
 
-            if (!SerializationUtil.ProbeIsJson(bodyText) && !SerializationUtil.ProbeIsXml(bodyText))
+            if (!SerializationUtil.ProbeIsJson(bodyText) && !SerializationUtil.ProbeIsXml(bodyText) && !SerializationUtil.ProbeIsTurtle(bodyText))
                 throw new UnsupportedBodyTypeException(
-                        "Endpoint said it returned '{0}', but the body is not recognized as either xml or json.".FormatWith(contentType), contentType, bodyText);
+                        "Endpoint said it returned '{0}', but the body is not recognized as either xml, json or turtle.".FormatWith(contentType), contentType, bodyText);
 
             try
             {
                 if (fhirType == ResourceFormat.Json)
                     result = new FhirJsonParser(settings).Parse<Resource>(bodyText);
-                else
+                else if (fhirType == ResourceFormat.Xml)
                     result = new FhirXmlParser(settings).Parse<Resource>(bodyText);
+                else if (fhirType == ResourceFormat.Turtle)
+                    result = (Resource)FhirParser.ParseFromTurtle(bodyText);
             }
             catch(FormatException fe)
             {

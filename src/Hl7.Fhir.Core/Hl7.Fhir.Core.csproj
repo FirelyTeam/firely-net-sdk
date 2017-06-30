@@ -1,63 +1,61 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
     <TargetFrameworks>net45;netstandard1.1;netstandard1.3</TargetFrameworks>
   </PropertyGroup>
-  
-  <Import Project="..\platforms.props" />
-  <Import Project="..\fhir-net-api.props" />
-  <Import Project="..\fhir-net-api.targets" />
-
-   <PropertyGroup>
+  <PropertyGroup>
     <Version>$(FhirApiVersion)</Version>
     <PackageId>Hl7.Fhir.STU3</PackageId>
-    <Title>HL7 FHIR Core support API for STU3</Title>	
+    <Title>HL7 FHIR Core support API for STU3</Title>
     <Summary>Core .NET support for working with HL7 FHIR. Supports FHIR STU3 (3.0)</Summary>
     <Description>This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the core functionality to working with RESTful FHIR servers: POCO classes for FHIR, parsing/serialization of FHIR data and a FhirClient for easy access to FHIR servers.</Description>
     <PackageTags>HL7 FHIR REST parse serialize class model</PackageTags>
     <AssemblyName>Hl7.Fhir.STU3.Core</AssemblyName>
     <RootNamespace>Hl7.Fhir</RootNamespace>
   </PropertyGroup>
- 
-  <ItemGroup>    
-    <PackageReference Include="System.ValueTuple" Version="4.3.0" />
+  <Import Project="..\platforms.props"/>
+  <Import Project="..\fhir-net-api.props"/>
+  <Import Project="..\fhir-net-api.targets"/>
+  <ItemGroup>
+    <PackageReference Include="System.ValueTuple" Version="4.3.0"/>
+    <PackageReference Include="dotNetRDF" Version="1.0.12"/>
   </ItemGroup>
-
   <ItemGroup Condition=" '$(TargetFramework)' != 'net45' ">
-    <PackageReference Include="System.ComponentModel" Version="4.3.0" />
-    <PackageReference Include="System.ComponentModel.Primitives" Version="4.3.0" />
-    <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
-    <PackageReference Include="System.ComponentModel.Annotations" Version="4.3.0" />
-    <PackageReference Include="System.Net.Http" Version="4.3.1" />
-    <PackageReference Include="System.Net.Requests" Version="4.3.0" />
+    <PackageReference Include="System.ComponentModel" Version="4.3.0"/>
+    <PackageReference Include="System.ComponentModel.Primitives" Version="4.3.0"/>
+    <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0"/>
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.3.0"/>
+    <PackageReference Include="System.Net.Http" Version="4.3.1"/>
+    <PackageReference Include="System.Net.Requests" Version="4.3.0"/>
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System"/>
+    <Reference Include="System.ComponentModel.DataAnnotations"/>
+    <Reference Include="System.Core"/>
+    <Reference Include="System.Xml.Linq"/>
+    <Reference Include="System.Data"/>
+    <Reference Include="System.Xml"/>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Validation\xhtml\fhir-xhtml.xsd" />
-    <None Include="Validation\xhtml\xml.xsd" />
-    <None Include="Model\Source\expansions.xml" />
-    <None Include="Model\Source\profiles-resources.xml" />
-    <None Include="Model\Source\profiles-types.xml" />
-    <None Include="Model\Source\search-parameters.xml" />
+    <None Include="Validation\xhtml\fhir-xhtml.xsd"/>
+    <None Include="Validation\xhtml\xml.xsd"/>
+    <None Include="Model\Source\expansions.xml"/>
+    <None Include="Model\Source\profiles-resources.xml"/>
+    <None Include="Model\Source\profiles-types.xml"/>
+    <None Include="Model\Source\search-parameters.xml"/>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
-    <ProjectReference Include="..\Hl7.FhirPath\Hl7.FhirPath.csproj" />
+    <ProjectReference Include="..\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj"/>
+    <ProjectReference Include="..\Hl7.FhirPath\Hl7.FhirPath.csproj"/>
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}"/>
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.1' ">
-    <Compile Remove="Properties\Resources.Designer.cs" />
+    <Compile Remove="Properties\Resources.Designer.cs"/>
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
-    <Compile Remove="Properties\Resources.Designer.cs" />
+    <Compile Remove="Properties\Resources.Designer.cs"/>
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Model\Generated\Template-Bindings.cs">
@@ -92,7 +90,7 @@
       <LastGenOutput>Template-Bindings.cs</LastGenOutput>
     </None>
     <None Update="Model\Generated\Template-Children.ttinclude">
-      <Generator>
+      <Generator>&#xD;
       </Generator>
     </None>
     <None Update="Model\Generated\Template-DataTypeModel.tt">
