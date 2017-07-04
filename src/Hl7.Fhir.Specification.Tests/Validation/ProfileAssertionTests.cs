@@ -16,14 +16,12 @@ namespace Hl7.Fhir.Validation
         public Validator Validator { get; }
         public ValidationFixture()
         {
-            var zip = ZipSource.CreateValidationSource();
-
             Resolver = new CachedResolver(
-                new MultiResolver(
-                    new TestProfileArtifactSource(),
-                    new DirectorySource(@"TestData\validation"),
-                    zip
-                    ));
+                    new MultiResolver(
+                        new BasicValidationTests.BundleExampleResolver(@"TestData\validation"),
+                        new DirectorySource(@"TestData\validation"),
+                        new TestProfileArtifactSource(),
+                        new ZipSource("specification.zip")));
 
             var ctx = new ValidationSettings()
             {
@@ -33,6 +31,7 @@ namespace Hl7.Fhir.Validation
                 Trace = false,
                 ResolveExteralReferences = true
             };
+
 
             Validator = new Validator(ctx);
         }
