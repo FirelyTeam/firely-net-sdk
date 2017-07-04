@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 using Xunit;
+using System;
 
 namespace Hl7.Fhir.Validation
 {
@@ -318,7 +319,7 @@ namespace Hl7.Fhir.Validation
             //      http://validationtest.org/fhir/StructureDefinition/QuestionnaireWithFixedType
             var report = _validator.Validate(questionnaire);
             Assert.False(report.Success);
-            Assert.Equal(35, report.Errors);
+            Assert.Equal(51, report.Errors);
             Assert.Equal(0, report.Warnings);           // 3x narrative constraint with no fhirpath
         }
 
@@ -611,6 +612,29 @@ namespace Hl7.Fhir.Validation
 
             // cf. ResourceStreamScanner.StreamResources
             static string getResourceUri(Resource res) => res.TypeName + "/" + res.Id;
+        }
+
+        [Fact]
+        public void HandlesParentElementOfCoreAbstractType()
+        {
+            var sd = "http://validationtest.org/fhir/StructureDefinition/BundleWithConstrainedContained";
+            Bundle b = new Bundle();
+
+            b.Type = Bundle.BundleType.Message;
+            b.Entry.Add(new Bundle.EntryComponent
+            {
+                FullUrl = "http://somewhere.org/",
+                Resource = new MessageHeader
+                {
+                    Timestamp = DateTimeOffset.Now,
+                    Meta = new Meta { LastUpdated = DateTimeOffset.Now }
+                }
+            });
+
+            var report = _validator.Validate(b, sd);
+            Assert.Equal(2, report.Errors);
+            Assert.Equal(0, report.Warnings);
+            Assert.DoesNotContain("Encountered unknown child elements 'timestamp'", report.ToString());
         }
 
         // [WMR 20161220] Example by Christiaan Knaap

@@ -69,6 +69,8 @@ namespace Hl7.Fhir.Validation
             var outcome = new OperationOutcome();
 
             OperationOutcome validateResult = _service.ValidateCode(uri, code, system, display, abstractAllowed: false);
+            foreach (var issue in validateResult.Issue) issue.Location = new string[] { path };
+
             var codeLabel = $"Code '{code}' from system '{system}'";
             if (display != null) codeLabel += $" with display '{display}'";
 

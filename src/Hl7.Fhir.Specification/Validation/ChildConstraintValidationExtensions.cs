@@ -18,7 +18,8 @@ namespace Hl7.Fhir.Validation
 {
     internal static class ChildConstraintValidationExtensions
     {
-        internal static OperationOutcome ValidateChildConstraints(this Validator validator, ElementDefinitionNavigator definition, IElementNavigator instance)
+        internal static OperationOutcome ValidateChildConstraints(this Validator validator, ElementDefinitionNavigator definition, 
+            IElementNavigator instance, bool allowAdditionalChildren)
         {
             var outcome = new OperationOutcome();
             if (!definition.HasChildren) return outcome;
@@ -27,7 +28,7 @@ namespace Hl7.Fhir.Validation
 
             var matchResult = ChildNameMatcher.Match(definition, instance);
 
-            if (matchResult.UnmatchedInstanceElements.Any())
+            if (matchResult.UnmatchedInstanceElements.Any() && !allowAdditionalChildren )
             {
                 var elementList = String.Join(",", matchResult.UnmatchedInstanceElements.Select(e => "'" + e.Name + "'"));
                 validator.Trace(outcome, $"Encountered unknown child elements {elementList} for definition '{definition.Path}'",
