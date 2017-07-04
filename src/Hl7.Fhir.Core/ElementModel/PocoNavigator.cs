@@ -56,7 +56,7 @@ namespace Hl7.Fhir.ElementModel
         /// <summary>
         /// Return the FHIR TypeName
         /// </summary>
-        public string Type => Current.TypeName;
+        public string Type => FhirValue is BackboneElement ? "BackboneElement" : Current.TypeName;
 
         /// <summary>
         /// The FHIR TypeName is also returned for the name of the root element

@@ -196,24 +196,32 @@ namespace Hl7.Fhir.Validation
                     // primitive against the regex given in the core definition
                     outcome.Add(VerifyPrimitiveContents(elementConstraints, instance));
                 }
-                else if (definition.HasChildren)
-                {
-                    // Handle in-lined constraints on children. In a snapshot, these children should be exhaustive,
-                    // so there's no point in also validating the <type> or <nameReference>
-                    // TODO: Check whether this is even true when the <type> has a profile?
-                    outcome.Add(this.ValidateChildConstraints(definition, instance));
-                }
                 else
                 {
-                    // No inline-children, so validation depends on the presence of a <type> or <nameReference>
-                    if (elementConstraints.Type != null || elementConstraints.ContentReference != null)
-
+                    bool hasDeclaredSuperType = elementConstraints.HasDeclaredCoreSuperType();
+                    // Now, validate the children
+                    if (definition.HasChildren)
                     {
-                        outcome.Add(this.ValidateType(elementConstraints, instance));
-                        outcome.Add(ValidateNameReference(elementConstraints, definition, instance));
+                        // Handle in-lined constraints on children. In a snapshot, these children should be exhaustive,
+                        // so there's no point in also validating the <type> or <nameReference>
+                        // TODO: Check whether this is even true when the <type> has a profile?
+                        // Note: the snapshot is *not* exhaustive if the declared type is a base FHIR type (like Resource),
+                        // in which case there may be additional children (verified in the next step)
+                        outcome.Add(this.ValidateChildConstraints(definition, instance, allowAdditionalChildren: hasDeclaredSuperType));
                     }
-                    else
-                        Trace(outcome, "ElementDefinition has no child, nor does it specify a type or nameReference to validate the instance data against", Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE_OR_NAMEREF, instance);
+
+                    if (!definition.HasChildren || (hasDeclaredSuperType && !definition.Current.IsRootElement()))
+                    {
+                        // No inline-children, so validation depends on the presence of a <type> or <nameReference>
+                        if (elementConstraints.Type != null || elementConstraints.ContentReference != null)
+
+                        {
+                            outcome.Add(this.ValidateType(elementConstraints, instance));
+                            outcome.Add(ValidateNameReference(elementConstraints, definition, instance));
+                        }
+                        else
+                            Trace(outcome, "ElementDefinition has no child, nor does it specify a type or nameReference to validate the instance data against", Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE_OR_NAMEREF, instance);
+                    }
                 }
 
                 outcome.Add(this.ValidateFixed(elementConstraints, instance));
@@ -233,7 +241,6 @@ namespace Hl7.Fhir.Validation
                 ScopeTracker.Leave(instance);
             }
         }
-
 
         internal OperationOutcome ValidateConstraints(ElementDefinition definition, IElementNavigator instance)
         {
