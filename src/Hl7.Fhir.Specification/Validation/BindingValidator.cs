@@ -85,13 +85,14 @@ namespace Hl7.Fhir.Validation
                 return outcome;
             }
 
-            if(!validateResult.Success && strength == BindingStrength.Required)
+            if(strength == BindingStrength.Required)
                 outcome.Include(validateResult);
 
-            //EK 20170605 - commented out since this will 1) create superfluous messages (both saying the code is not valid) coming
-            //from the validateResult + the outcome.AddIssue() as below and 2) add the validateResult as warnings for preferred bindings,
-            //which are confusing in the case where the slicing entry is validating the binding against the core and slices will refine it:
-            //if it does not generate warnings against the slice, it should not generate warnings against the slicing entry.
+            //EK 20170605 - disabled inclusion of warnings/erros for all but required bindings since this will 
+            // 1) create superfluous messages (both saying the code is not valid) coming from the validateResult + the outcome.AddIssue() 
+            // 2) add the validateResult as warnings for preferred bindings, which are confusing in the case where the slicing entry is 
+            //    validating the binding against the core and slices will refine it: if it does not generate warnings against the slice, 
+            //    it should not generate warnings against the slicing entry.
 
             //if (!validateResult.Success)
             //{
@@ -108,7 +109,6 @@ namespace Hl7.Fhir.Validation
             //}
             //
             // outcome.Include(validateResult);
-
 
             return outcome;
         }
