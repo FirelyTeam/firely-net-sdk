@@ -174,8 +174,8 @@ namespace Hl7.Fhir.Specification.Source
             {
                 if (bundleStream != null)
                 {
-                    var scanner = new ResourceStreamScanner(bundleStream, path);
-                    return scanner.List().ToList();
+                    var scanner = new ResourceStreamScanner(path);
+                    return scanner.List(bundleStream).ToList();
                 }
                 else
                     return Enumerable.Empty<ResourceStreamScanner.ResourceScanInformation>();
@@ -250,8 +250,8 @@ namespace Hl7.Fhir.Specification.Source
             {
                 if (content == null) throw new FileNotFoundException("Cannot find file " + path);
 
-                var scanner = new ResourceStreamScanner(content, path);
-                var entry = scanner.FindResourceByUri(info.ResourceUri);
+                var scanner = new ResourceStreamScanner(path);
+                var entry = scanner.FindResourceByUri(content, info.ResourceUri);
 
                 artifactXml = entry != null ? entry.ToString() : null;
             }
