@@ -85,21 +85,31 @@ namespace Hl7.Fhir.Validation
                 return outcome;
             }
 
-            if (!validateResult.Success)
-            {
-                if (strength == BindingStrength.Required)
-                {
-                    outcome.AddIssue($"{codeLabel} is not valid for required binding to valueset '{uri}'", Issue.CONTENT_INVALID_FOR_REQUIRED_BINDING, path);
-                }
-                else if(strength != BindingStrength.Example)
-                {
-                    outcome.AddIssue($"{codeLabel} is not valid for non-required binding to valueset '{uri}'", Issue.CONTENT_INVALID_FOR_NON_REQUIRED_BINDING, path);
-                }
+            if(!validateResult.Success && strength == BindingStrength.Required)
+                outcome.Include(validateResult);
 
-                validateResult.MakeInformational();             
-            }
+            //EK 20170605 - commented out since this will 1) create superfluous messages (both saying the code is not valid) coming
+            //from the validateResult + the outcome.AddIssue() as below and 2) add the validateResult as warnings for preferred bindings,
+            //which are confusing in the case where the slicing entry is validating the binding against the core and slices will refine it:
+            //if it does not generate warnings against the slice, it should not generate warnings against the slicing entry.
 
-            outcome.Include(validateResult);
+            //if (!validateResult.Success)
+            //{
+            //    if (strength == BindingStrength.Required)
+            //    {
+            //        outcome.AddIssue($"{codeLabel} is not valid for required binding to valueset '{uri}'", Issue.CONTENT_INVALID_FOR_REQUIRED_BINDING, path);
+            //    }
+            //    else if(strength != BindingStrength.Example)
+            //    {
+            //        outcome.AddIssue($"{codeLabel} is not valid for non-required binding to valueset '{uri}'", Issue.CONTENT_INVALID_FOR_NON_REQUIRED_BINDING, path);
+            //    }
+
+            //    validateResult.MakeInformational();             
+            //}
+            //
+            // outcome.Include(validateResult);
+
+
             return outcome;
         }
 

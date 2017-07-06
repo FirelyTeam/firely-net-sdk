@@ -108,7 +108,14 @@ namespace Hl7.Fhir.Validation
                 {
                     try
                     {
-                        outcome.Add(snapshotGenerator(sd));
+                        var snapshotOutcome = snapshotGenerator(sd);
+
+                        if(!snapshotOutcome.Success)
+                        {
+                            outcome.AddIssue($"Snapshot generation failed for '{sd.Url}'. Details follow below.",
+                               Issue.UNAVAILABLE_SNAPSHOT_GENERATION_FAILED, path);
+                            outcome.Add(snapshotOutcome);
+                        }                                                
                     }
                     catch (Exception e)
                     {
