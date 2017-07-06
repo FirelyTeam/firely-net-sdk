@@ -6,13 +6,10 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -77,13 +74,15 @@ namespace Hl7.Fhir.Utility
 
         public static XmlReader XmlReaderFromStream(Stream input)
         {
-            if (input.Position != 0)
-            {
-                if (input.CanSeek)
-                    input.Seek(0, SeekOrigin.Begin);
-                else
-                    throw Error.InvalidOperation("Stream is not at beginning, and seeking is not supported by this stream");
-            }
+            // [EK 20170706] The caller should ensure the input stream is at the beginning (or not, maybe you are reading streams
+            // partially, and the API should stay off
+            //if (input.Position != 0)
+            //{
+            //    if (input.CanSeek)
+            //        input.Seek(0, SeekOrigin.Begin);
+            //    else
+            //        throw Error.InvalidOperation("Stream is not at beginning, and seeking is not supported by this stream");
+            //}
 
             return WrapXmlReader(XmlReader.Create(input));
         }
