@@ -76,9 +76,10 @@ namespace Hl7.Fhir.Validation
             result = val.ValidateBinding(cc, vsUri, BindingStrength.Required);
             Assert.False(result.Success);
 
+            //EK 2017-07-6 No longer reports warnings when failing a preferred binding
             result = val.ValidateBinding(cc, vsUri);
             Assert.True(result.Success);
-            Assert.Equal(1, result.Warnings);
+            Assert.Equal(0, result.Warnings);
         }      
     }
 }
