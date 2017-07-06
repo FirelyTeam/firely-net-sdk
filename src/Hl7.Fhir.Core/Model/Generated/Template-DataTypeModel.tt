@@ -282,8 +282,8 @@ if (!abstractType){
         /// </summary>
         [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=30)]
 <#
-	if (!string.IsNullOrEmpty(pattern) && resourceName != "FhirDecimal" && resourceName != "Time" && resourceName != "Integer" && resourceName != "UnsignedInt" && resourceName != "PositiveInt"
-		|| resourceName == "Instant"
+	if (!string.IsNullOrEmpty(pattern) && resourceName != "FhirDecimal" && resourceName != "Time" && resourceName != "Integer" && 
+		resourceName != "UnsignedInt" && resourceName != "PositiveInt" && resourceName != "Instant"
 		|| resourceName == "FhirUri")
     {
 		WriteLine("        [{0}Pattern]", resourceName.Replace("Fhir", ""));
