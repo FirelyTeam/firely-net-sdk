@@ -8,10 +8,6 @@
 
 using Hl7.Fhir.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.Rest
@@ -25,14 +21,18 @@ namespace Hl7.Fhir.Rest
         private Bundle _result;
         private string _baseUrl;
 
-        public TransactionBuilder(string baseUrl)
+        public TransactionBuilder(string baseUrl, Bundle.BundleType type = Bundle.BundleType.Batch)
         {
-            _result = new Bundle();
-            _baseUrl = baseUrl;           
+            _result = new Bundle()
+            {
+                Type = type
+            };
+
+            _baseUrl = baseUrl;
         }
 
-        public TransactionBuilder(Uri baseUri)
-            : this(baseUri.OriginalString)
+        public TransactionBuilder(Uri baseUri, Bundle.BundleType type = Bundle.BundleType.Batch)
+            : this(baseUri.OriginalString, type)
         {
         }
 
