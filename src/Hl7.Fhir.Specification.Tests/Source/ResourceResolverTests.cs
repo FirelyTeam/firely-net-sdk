@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(artifact is StructureDefinition);
             Assert.AreEqual("Observation", ((StructureDefinition)artifact).Name);
 
-            var ci = artifact.Annotation<OriginInformation>();
+            var ci = artifact.Annotation<OriginAnnotation>();
             Assert.AreEqual("http://fhir2.healthintersections.com.au/open/StructureDefinition/Observation", ci.Origin);
         }
 
