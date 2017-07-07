@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Serialization
             setRoot(doc);
         }
 
-        internal XmlDomFhirReader(XObject root)
+        public XmlDomFhirReader(XObject root)
         {
             setRoot(root);
         }

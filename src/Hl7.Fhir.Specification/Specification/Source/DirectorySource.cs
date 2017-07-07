@@ -109,15 +109,15 @@ namespace Hl7.Fhir.Specification.Source
 
 
         bool _resourcesPrepared = false;
-        private List<ResourceStreamScanner.ResourceScanInformation> _resourceScanInformation;
+        private List<ConformanceScanInformation> _resourceScanInformation;
 
         // [WMR 20170217] Ignore invalid xml files, aggregate parsing errors
         // https://github.com/ewoutkramer/fhir-net-api/issues/301
         public struct ErrorInfo
         {
-            public ErrorInfo(string fileName, XmlException error) { FileName = fileName; Error = error; }
+            public ErrorInfo(string fileName, Exception error) { FileName = fileName; Error = error; }
             public string FileName { get; }
-            public XmlException Error { get; }
+            public Exception Error { get; }
         }
 
         ErrorInfo[] _errors = new ErrorInfo[0];
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Specification.Source
 
             prepareFiles();
 
-            _resourceScanInformation = new List<ResourceStreamScanner.ResourceScanInformation>();
+            _resourceScanInformation = new List<ConformanceScanInformation>();
 
             var errors = new List<ErrorInfo>();
             foreach (var file in _artifactFilePaths.Where(af => Path.GetExtension(af) == ".xml"))
@@ -161,25 +161,13 @@ namespace Hl7.Fhir.Specification.Source
                 throw new CanonicalUrlConflictException(doubles.Select(d => new CanonicalUrlConflictException.CanonicalUrlConflict(d.Key, d.Select(ci => ci.Origin))));
             }
 
-            // var info = doubles.Select(g => new Tuple<string, IEnumerable<string>>(g.Key, g.Select(ci => ci.Origin)));
-            // var d = _resourceInformation.Select(ci => new Tuple<string, string>(ci.Url, ci.Origin)).GroupBy(t => t.Item1).Where(g => g.Count() > 1);
-
             _resourcesPrepared = true;
         }
 
 
-        private IEnumerable<ResourceStreamScanner.ResourceScanInformation> readInformationFromFile(string path)
+        private IEnumerable<ConformanceScanInformation> readInformationFromFile(string path)
         {
-            using (var bundleStream = File.OpenRead(path))
-            {
-                if (bundleStream != null)
-                {
-                    var scanner = new ResourceStreamScanner(path);
-                    return scanner.List(bundleStream).ToList();
-                }
-                else
-                    return Enumerable.Empty<ResourceStreamScanner.ResourceScanInformation>();
-            }
+            return new XmlFileConformanceScanner(path).List();
         }
 
         public IEnumerable<string> ListArtifactNames()
@@ -207,7 +195,7 @@ namespace Hl7.Fhir.Specification.Source
         public IEnumerable<string> ListResourceUris(ResourceType? filter = null)
         {
             prepareResources();
-            IEnumerable<ResourceStreamScanner.ResourceScanInformation> scan = _resourceScanInformation;
+            IEnumerable<ConformanceScanInformation> scan = _resourceScanInformation;
 
             if (filter != null)
                 scan = scan.Where(dsi => dsi.ResourceType == filter);
@@ -239,31 +227,12 @@ namespace Hl7.Fhir.Specification.Source
             return getResourceFromScannedSource(info);
         }
 
-        private static Resource getResourceFromScannedSource(ResourceStreamScanner.ResourceScanInformation info)
+        private static Resource getResourceFromScannedSource(ConformanceScanInformation info)
         {
             var path = info.Origin;
-            string artifactXml;
 
-            // Note: no exception handling. If the expected bundled file cannot be
-            // read, throw the original exception.
-            using (var content = File.OpenRead(path))
-            {
-                if (content == null) throw new FileNotFoundException("Cannot find file " + path);
-
-                var scanner = new ResourceStreamScanner(path);
-                var entry = scanner.FindResourceByUri(content, info.ResourceUri);
-
-                artifactXml = entry != null ? entry.ToString() : null;
-            }
-
-            if (artifactXml != null)
-            {
-                var resultResource = new FhirXmlParser().Parse<Resource>(artifactXml);
-                resultResource.AddAnnotation(new OriginInformation { Origin = info.Origin });
-                return resultResource;
-            }
-            else
-                return null;
+            var scanner = new XmlFileConformanceScanner(path);
+            return scanner.Retrieve(info);
         }
 
         public CodeSystem FindCodeSystemByValueSet(string system)
@@ -283,7 +252,7 @@ namespace Hl7.Fhir.Specification.Source
 
             prepareResources();
 
-            IEnumerable<ResourceStreamScanner.ResourceScanInformation> infoList = _resourceScanInformation;
+            IEnumerable<ConformanceScanInformation> infoList = _resourceScanInformation;
 
             if (sourceUri != null)
                 infoList = infoList.Where(ci => ci.ConceptMapSource.Contains(sourceUri));

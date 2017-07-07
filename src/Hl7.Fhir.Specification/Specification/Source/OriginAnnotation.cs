@@ -7,9 +7,17 @@
  */
 
 
+using System;
+
 namespace Hl7.Fhir.Specification.Source
 {
+    [Obsolete("OriginInformation has been renamed to OriginAnnotation")]
     public class OriginInformation
+    {
+        // Replaced by OriginAnnotation
+    }
+
+    public class OriginAnnotation
     {
         public string Origin { get; internal set; }
     }
