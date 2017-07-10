@@ -28,18 +28,44 @@ namespace Hl7.Fhir.Specification.Source
         private readonly string _contentDirectory;
         private readonly bool _includeSubs;
 
-        private string _mask;
+        private string[] _masks;
+        private string[] _includes;
+        private string[] _excludes;
 
         /// <summary>
         /// Gets or sets the search string to match against the names of files in the content directory.
         /// The source will only provide resources from files that match the specified mask.
         /// The source will ignore all files that don't match the specified mask.
+        /// Multiple masks can be split by '|'
         /// </summary>
         public string Mask
         {
-            get { return _mask; }
-            set { _mask = value; _filesPrepared = false; _resourcesPrepared = false; }
+            get => String.Join("|", _masks);
+            set
+            {
+                _masks = value?.Split('|').Select(s => s.Trim()).Where(s => !String.IsNullOrEmpty(s)).ToArray();
+                _filesPrepared = false; _resourcesPrepared = false;
+            }
         }
+
+        public string[] Masks
+        {
+            get { return _masks; }
+            set { _masks = value; _filesPrepared = false; _resourcesPrepared = false; }
+        }
+
+        public string[] Includes
+        {
+            get { return _includes; }
+            set { _includes = value; _filesPrepared = false; _resourcesPrepared = false; }
+        }
+
+        public string[] Excludes
+        {
+            get { return _excludes; }
+            set { _excludes = value; _filesPrepared = false; _resourcesPrepared = false; }
+        }
+
 
         public DirectorySource(string contentDirectory, bool includeSubdirectories = false)
         {
@@ -87,26 +113,32 @@ namespace Hl7.Fhir.Specification.Source
         {
             if (_filesPrepared) return;
 
-            IEnumerable<string> masks;
-            if (Mask == null)
-                masks = new string[] { "*.*" };
-            else
-                masks = Mask.Split('|').Select(s => s.Trim()).Where(s => !String.IsNullOrEmpty(s));
+            var masks = _masks ?? (new[] { "*.*" });
 
             // Add files present in the content directory
             var allFiles = new List<string>();
 
             foreach (var mask in masks)
-            {
                 allFiles.AddRange(Directory.GetFiles(_contentDirectory, mask, _includeSubs ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly));
-            }
 
+            // Always remove *.exe" and "*.dll"
             allFiles.RemoveAll(name => Path.GetExtension(name) == ".exe" || Path.GetExtension(name) == ".dll");
 
-            _artifactFilePaths = new List<string>(allFiles);
+            if (_includes?.Length > 0)
+            {
+                var includeFilter = new FilePatternFilter(_includes);
+                allFiles = includeFilter.Filter(_contentDirectory, allFiles).ToList();
+            }
+
+            if (_excludes?.Length > 0)
+            {
+                var excludeFilter = new FilePatternFilter(_excludes, negate: true);
+                allFiles = excludeFilter.Filter(_contentDirectory, allFiles).ToList();
+            }
+
+            _artifactFilePaths = allFiles;
             _filesPrepared = true;
         }
-
 
         bool _resourcesPrepared = false;
         private List<ConformanceScanInformation> _resourceScanInformation;
@@ -139,7 +171,7 @@ namespace Hl7.Fhir.Specification.Source
             {
                 try
                 {
-                    var scannedInformation = readInformationFromFile(file);
+                    var scannedInformation = new XmlFileConformanceScanner(file).List();
                     _resourceScanInformation.AddRange(scannedInformation);
                 }
                 catch (XmlException e)
@@ -164,11 +196,6 @@ namespace Hl7.Fhir.Specification.Source
             _resourcesPrepared = true;
         }
 
-
-        private IEnumerable<ConformanceScanInformation> readInformationFromFile(string path)
-        {
-            return new XmlFileConformanceScanner(path).List();
-        }
 
         public IEnumerable<string> ListArtifactNames()
         {
