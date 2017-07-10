@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Specification.Source
 
         private string getValueSetSystem(JObject vs) => vs["codeSystem"]?["system"]?.Value<string>();
 
-        private string[] getUniqueIds(JObject ns) => ns["uniqueId"]?.Select(id => (string)id["value"])?.ToArray();
+        private string[] getUniqueIds(JObject ns) => ns["uniqueId"]?.Select(id => (string)id["value"]).ToArray() ?? new string[0];
 
         private string getCmSource(JObject cm) => cm["sourceUri"]?.Value<string>() + cm["sourceReference"]?["reference"]?.Value<string>();
 
