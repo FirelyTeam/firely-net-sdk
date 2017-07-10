@@ -1247,12 +1247,26 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestExpandElement_Slice()
         {
+            // Resolve lipid profile from profile-others.xml
             var sd = _testResolver.FindStructureDefinition("http://hl7.org/fhir/StructureDefinition/lipidprofile");
             Assert.IsNotNull(sd);
             Assert.IsNotNull(sd.Snapshot);
 
             // DiagnosticReport.result is sliced
             var nav = new ElementDefinitionNavigator(sd.Snapshot.Element);
+
+            // [WMR 20170711] Fix non-standard element id's in source (capitalization)
+            // Standardized element ids are preferred, but not mandatory; so the profile is not invalid
+            // Nonetheless fix this first, so we can call common assertion methods
+            var elem = sd.Snapshot.Element.FirstOrDefault(e => e.ElementId == "DiagnosticReport.result:cholesterol");
+            Assert.IsNotNull(elem);
+            elem.ElementId = elem.Path + ElementIdGenerator.ElementIdSliceNameDelimiter + elem.SliceName;
+            Assert.AreEqual("DiagnosticReport.result:Cholesterol", elem.ElementId);
+            elem = sd.Snapshot.Element.FirstOrDefault(e => e.ElementId == "DiagnosticReport.result:triglyceride");
+            elem.ElementId = elem.Path + ElementIdGenerator.ElementIdSliceNameDelimiter + elem.SliceName;
+            Assert.IsNotNull(elem);
+            elem.ElementId = elem.Path + ElementIdGenerator.ElementIdSliceNameDelimiter + elem.SliceName;
+            Assert.AreEqual("DiagnosticReport.result:Triglyceride", elem.ElementId);
 
             // Move to slicing entry
             nav.JumpToFirst("DiagnosticReport.result");
@@ -1693,7 +1707,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.AreEqual(elem.Path, baseElem.Path); // Base = core Patient.identifier element
                 // Note: diff elem is not exactly equal to base elem (due to reduntant type profile constraint)
                 // [WMR 20170501 OLD] hasConstraints and hasChanges methods aren't smart enough to detect redundant constraints
-                var hasConstraints = SnapshotGeneratorTest2.isNotExactly(elem, baseElem);
+                var hasConstraints = !SnapshotGeneratorTest2.isAlmostExactly(elem, baseElem);
                 // Assert.IsTrue(hasConstraints);
                 // [WMR 20170501 NEW] diff introduces redundant constraint
                 // => elem and baseElem are exactly equal
@@ -1710,7 +1724,7 @@ namespace Hl7.Fhir.Specification.Tests
                     Assert.IsNotNull(elem);
                     baseElem = elem.Annotation<BaseDefAnnotation>()?.BaseElementDefinition;
                     Assert.IsNotNull(baseElem);
-                    hasConstraints = SnapshotGeneratorTest2.isNotExactly(elem, baseElem);
+                    hasConstraints = !SnapshotGeneratorTest2.isAlmostExactly(elem, baseElem);
                     // Only the .use child element has a profile diff constraint
                     bool isConstrained = elem.Path == "Patient.identifier.use";
                     Assert.AreEqual(isConstrained, hasConstraints);
@@ -1783,7 +1797,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.AreEqual(elem.Path, baseElem.Path); // Base = core Patient.identifier element
                 // Note: diff elem is not exactly equal to base elem (due to reduntant type profile constraint)
                 // hasConstraints and hasChanges methods aren't smart enough to detect redundant constraints
-                var hasConstraints = SnapshotGeneratorTest2.isNotExactly(elem, baseElem);
+                var hasConstraints = !SnapshotGeneratorTest2.isAlmostExactly(elem, baseElem);
                 Assert.IsTrue(hasConstraints);
 
                 // Verify base annotations on Patient.identifier subtree
@@ -1794,7 +1808,7 @@ namespace Hl7.Fhir.Specification.Tests
                     Assert.IsNotNull(elem);
                     baseElem = elem.Annotation<BaseDefAnnotation>()?.BaseElementDefinition;
                     Assert.IsNotNull(baseElem);
-                    hasConstraints = SnapshotGeneratorTest2.isNotExactly(elem, baseElem);
+                    hasConstraints = !SnapshotGeneratorTest2.isAlmostExactly(elem, baseElem);
                     // Only the .use child element has a profile diff constraint
                     bool isConstrained = elem.Path == "Patient.identifier.use" || elem.Path == "Patient.identifier.value";
                     Assert.AreEqual(isConstrained, hasConstraints);
@@ -2033,7 +2047,7 @@ namespace Hl7.Fhir.Specification.Tests
                     // If normalizing, then elem.Base.Path refers to the defining profile (e.g. DomainResource),
                     // whereas baseDef refers to the immediate base profile (e.g. Patient)
                     Debug.Assert(elem.Base == null || ElementDefinitionNavigator.IsCandidateBasePath(elem.Base.Path, baseDef.Path));
-                    isNotExactly = SnapshotGeneratorTest2.isNotExactly(elem, baseDef);
+                    isNotExactly = !SnapshotGeneratorTest2.isAlmostExactly(elem, baseDef);
                 }
                 // var isValid = hasChanges == isNotExactly;
                 var isRedundant = hasChanges && !isNotExactly;
@@ -2064,8 +2078,8 @@ namespace Hl7.Fhir.Specification.Tests
 
         // Utility function to compare element and base element
         // Path, Base and CHANGED_BY_DIFF_EXT extension are excluded from comparison
-        // Returns true if the element has any other constraints on base
-        static bool isNotExactly(ElementDefinition elem, ElementDefinition baseElem)
+        // Returns true if the element has no other constraints on base
+        static bool isAlmostExactly(ElementDefinition elem, ElementDefinition baseElem)
         {
             var elemClone = (ElementDefinition)elem.DeepCopy();
             var baseClone = (ElementDefinition)baseElem.DeepCopy();
@@ -2081,7 +2095,7 @@ namespace Hl7.Fhir.Specification.Tests
             elemClone.RemoveAllConstrainedByDiffAnnotations();
             baseClone.RemoveAllConstrainedByDiffAnnotations();
 
-            var result = !baseClone.IsExactly(elemClone);
+            var result = baseClone.IsExactly(elemClone);
             return result;
         }
 
@@ -3455,7 +3469,12 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify slice entry
             Assert.IsTrue(nav.MoveToChild("identifier"));
-            Assert.AreEqual(corePatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+
+            // [WMR 20170711] Disregard ElementDefinition.Base
+            // Empty for elements introduced by core Patient profile, esp. corePatientIdentifierElem
+            // Assert.AreEqual(corePatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+            Assert.IsTrue(isAlmostExactly(corePatientIdentifierElem, GetBaseElementAnnotation(nav.Current)));
+
             Assert.IsNotNull(nav.Current.Slicing);
             Assert.IsNull(nav.Current.SliceName);
             Assert.AreEqual(1, nav.Current.Min);
@@ -3463,7 +3482,11 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify slice "bsn"
             Assert.IsTrue(nav.MoveToNextSlice());
-            Assert.AreEqual(corePatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+
+            // [WMR 20170711] Disregard ElementDefinition.Base
+            // Assert.AreEqual(corePatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+            Assert.IsTrue(isAlmostExactly(corePatientIdentifierElem, GetBaseElementAnnotation(nav.Current)));
+
             Assert.IsNull(nav.Current.Slicing);
             Assert.AreEqual("bsn", nav.Current.SliceName);
             Assert.AreEqual(1, nav.Current.Min);
@@ -3471,7 +3494,11 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify slice "ehr_id"
             Assert.IsTrue(nav.MoveToNextSlice());
-            Assert.AreEqual(corePatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+            
+            // [WMR 20170711] Disregard ElementDefinition.Base
+            // Assert.AreEqual(corePatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+            Assert.IsTrue(isAlmostExactly(corePatientIdentifierElem, GetBaseElementAnnotation(nav.Current)));
+
             Assert.IsNull(nav.Current.Slicing);
             Assert.AreEqual("ehr_id", nav.Current.SliceName);
             Assert.AreEqual(0, nav.Current.Min);
@@ -3614,7 +3641,11 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify slice entry
             Assert.IsTrue(nav.MoveToChild("identifier"));
-            Assert.AreEqual(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+
+            // [WMR 20170711] Disregard ElementDefinition.Base
+            // Assert.AreEqual(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+            Assert.IsTrue(isAlmostExactly(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current)));
+
             Assert.IsNotNull(nav.Current.Slicing);
             Assert.IsNull(nav.Current.SliceName);
             Assert.AreEqual(1, nav.Current.Min);
@@ -3629,7 +3660,11 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify slice "bsn"
             Assert.IsTrue(nav.MoveToNextSlice());
-            Assert.AreEqual(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+
+            // [WMR 20170711] Disregard ElementDefinition.Base
+            // Assert.AreEqual(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+            Assert.IsTrue(isAlmostExactly(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current)));
+
             Assert.IsNull(nav.Current.Slicing);
             Assert.AreEqual("bsn", nav.Current.SliceName);
             Assert.AreEqual(1, nav.Current.Min);
@@ -3646,7 +3681,11 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify slice "ehr_id"
             Assert.IsTrue(nav.MoveToNextSlice());
-            Assert.AreEqual(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+
+            // [WMR 20170711] Disregard ElementDefinition.Base
+            // Assert.AreEqual(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+            Assert.IsTrue(isAlmostExactly(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current)));
+
             Assert.IsNull(nav.Current.Slicing);
             Assert.AreEqual("ehr_id", nav.Current.SliceName);
             Assert.AreEqual(0, nav.Current.Min);
@@ -3662,7 +3701,11 @@ namespace Hl7.Fhir.Specification.Tests
 #if false
             // Verify re-slice "ehr_id/temp"
             Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel());
-            Assert.AreEqual(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+
+            // [WMR 20170711] Disregard ElementDefinition.Base
+            // Assert.AreEqual(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+            Assert.IsTrue(isAlmostExactly(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current)));
+
             Assert.IsNull(nav.Current.Slicing);
             Assert.AreEqual("ehr_id/temp", nav.Current.SliceName);
             Assert.AreEqual(0, nav.Current.Min);
@@ -3791,7 +3834,11 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify slice entry
             Assert.IsTrue(nav.MoveToChild("identifier"));
-            Assert.AreEqual(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+
+            // [WMR 20170711] Disregard ElementDefinition.Base
+            // Assert.AreEqual(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+            Assert.IsTrue(isAlmostExactly(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current)));
+
             Assert.IsNotNull(nav.Current.Slicing);
             Assert.IsNull(nav.Current.SliceName);
             Assert.AreEqual(1, nav.Current.Min);
@@ -3806,7 +3853,11 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify slice "bsn"
             Assert.IsTrue(nav.MoveToNextSlice());
-            Assert.AreEqual(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+
+            // [WMR 20170711] Disregard ElementDefinition.Base
+            // Assert.AreEqual(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+            Assert.IsTrue(isAlmostExactly(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current)));
+
             Assert.IsNull(nav.Current.Slicing);
             Assert.AreEqual("bsn", nav.Current.SliceName);
             Assert.AreEqual(1, nav.Current.Min);
@@ -3823,7 +3874,11 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify slice "ehr_id"
             Assert.IsTrue(nav.MoveToNextSlice());
-            Assert.AreEqual(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+
+            // [WMR 20170711] Disregard ElementDefinition.Base
+            // Assert.AreEqual(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+            Assert.IsTrue(isAlmostExactly(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current)));
+
             Assert.IsNotNull(nav.Current.Slicing);
             Assert.AreEqual("ehr_id", nav.Current.SliceName);
             Assert.AreEqual(0, nav.Current.Min);
@@ -3838,7 +3893,11 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify re-slice "ehr_id/temp"
             Assert.IsTrue(nav.MoveToFirstReslice());
-            Assert.AreEqual(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+
+            // [WMR 20170711] Disregard ElementDefinition.Base
+            // Assert.AreEqual(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+            Assert.IsTrue(isAlmostExactly(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current)));
+
             Assert.IsNull(nav.Current.Slicing);
             Assert.AreEqual("ehr_id/temp", nav.Current.SliceName);
             Assert.AreEqual(0, nav.Current.Min);
@@ -4392,12 +4451,13 @@ namespace Hl7.Fhir.Specification.Tests
                 }
                 else
                 {
-                    assertElementIds(elem, baseElem);
+                    var equalLength = !elem.Path.StartsWith("Questionnaire.item.item.");
+                    assertElementIds(elem, baseElem, equalLength);
                 }
             }
         }
 
-        static void assertElementIds(ElementDefinition elem, ElementDefinition baseElem)
+        static void assertElementIds(ElementDefinition elem, ElementDefinition baseElem, bool equalLength = true)
         {
             // [WMR 20170614] derived profile may (further) slice the base profile
             // Element id's are not exactly equal, as the diff id's will introduce slice name(s)
@@ -4407,16 +4467,17 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Determine if the base element has the same root (i.e. represents base profile of the same type)
             // If so, then the element ids should have the same number of segments
-            if (idSegments.FirstOrDefault() == baseIdSegments.FirstOrDefault())
+            if (equalLength && idSegments.FirstOrDefault() == baseIdSegments.FirstOrDefault())
             {
                 Assert.AreEqual(baseIdSegments.Length, idSegments.Length);
             }
 
-            // string elemName = null, sliceName = null;
+            // [WMR 20170710] Leading path segment(s) can differ, e.g. Patient.identifier.id <=> Identifier.id
             var idSegment = ElementIdSegment.Empty;
-            for (int i = 0; i < idSegments.Length; i++)
+            var offset = idSegments.Length - baseIdSegments.Length;
+            for (int i = 1; i < baseIdSegments.Length; i++)
             {
-                idSegment = ElementIdSegment.Parse(idSegments[i]);
+                idSegment = ElementIdSegment.Parse(idSegments[offset + i]);
 
                 // Verify that the element name matches the base element name
                 // Note: element ids of type slices should use original element name ending with "[x]"
@@ -4431,8 +4492,16 @@ namespace Hl7.Fhir.Specification.Tests
             // Verify the last element id segment = "elementName[:sliceName]"
             var basePath = elem.Base?.Path;
             var elemPath = basePath != null && ElementDefinitionNavigator.IsChoiceTypeElement(basePath) ? basePath : elem.Path;
+
+            if (baseIdSegments.Length == 1)
+            {
+                // [WMR 20170710] initialize idSegment to the last segment
+                idSegment = ElementIdSegment.Parse(idSegments[idSegments.Length - 1]);
+            }
+
             Assert.AreEqual(ProfileNavigationExtensions.GetNameFromPath(elemPath), idSegment.ElementName);
             Assert.AreEqual(elem.SliceName, idSegment.SliceName);
+
         }
 
         static StructureDefinition TestPatientTypeSliceProfile => new StructureDefinition()
@@ -4505,10 +4574,7 @@ namespace Hl7.Fhir.Specification.Tests
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
             Name = "TestSlicedPatientWithCustomIdProfile",
             Url = "http://example.org/fhir/StructureDefinition/TestSlicedPatientWithCustomIdProfile",
-
-            // [WMR 20170616] StructureDefinition.Derivation property changes generated element IDs...?
             Derivation = StructureDefinition.TypeDerivationRule.Constraint,
-
             Differential = new StructureDefinition.DifferentialComponent()
             {
                 Element = new List<ElementDefinition>()
@@ -4554,7 +4620,6 @@ namespace Hl7.Fhir.Specification.Tests
             const string sliceName = "bsn";
             var slice = profile.Differential.Element.FirstOrDefault(e => e.SliceName == sliceName);
             Assert.IsNotNull(slice);
-            var sliceId = slice.ElementId;
 
             _generator.PrepareElement += elementHandler;
             _generator.BeforeExpandElement += beforeExpandElementHandler;
@@ -4572,8 +4637,10 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(expanded.HasSnapshot);
             dumpOutcome(_generator.Outcome);
 
+            var elems = expanded.Snapshot.Element;
+
             Debug.WriteLine("Sliced Patient with custom element id on slice:");
-            foreach (var elem in expanded.Snapshot.Element)
+            foreach (var elem in elems)
             {
                 var baseElem = elem.Annotation<BaseDefAnnotation>()?.BaseElementDefinition;
                 Debug.WriteLine($"{elem.Path} | {elem.SliceName} | Id = {elem.ElementId} | Base Id = {baseElem?.ElementId}");
@@ -4581,16 +4648,46 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsNotNull(baseElem);
                 Assert.IsNotNull(baseElem.ElementId);
 
-                if (elem.SliceName == sliceName)
+                if (elem.ElementId?.StartsWith("CUSTOM") == true)
                 {
-                    // Verify overriden element id
-                    Assert.AreEqual(sliceId, elem.ElementId);
+                    Assert.AreEqual(elem.SliceName, sliceName);
                 }
                 else
                 {
                     assertElementIds(elem, baseElem);
                 }
             }
+
+            // [WMR 20170711] Additional assertions on children of named slice
+            var slicePos = elems.FindIndex(e => e.SliceName == "bsn");
+            Assert.AreNotEqual(-1, slicePos);
+            var elemDef = elems[slicePos];
+            Assert.AreEqual("Patient.identifier", elemDef.Path);
+            // Verify that the id of all child elements includes parent slice name, i.e. starts with "Patient.identifier:bsn"
+            for (var idx = slicePos + 1; idx < elems.Count; idx++)
+            {
+                elemDef = elems[idx];
+                if (!ElementDefinitionNavigator.IsChildPath("Patient.identifier", elemDef.Path)) { break; }
+                Assert.IsTrue(elemDef.ElementId.StartsWith("Patient.identifier:bsn"), $"Invalid element id at element #{idx}: {elemDef.ElementId}");
+            }
+
+            // [WMR 20170711] Dynamically update the slice name and re-generate ids for the subtree
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.JumpToFirst(slice.Path));
+            Assert.IsTrue(nav.MoveToNextSliceAtAnyLevel(sliceName));
+            slice = nav.Current;
+            Assert.AreEqual(slice.SliceName, sliceName);
+            slice.SliceName = "CHANGED";
+            ElementIdGenerator.Update(nav, true);
+
+            // Verify that the id of all child elements includes updated slice name, i.e. starts with "Patient.identifier:CHANGED"
+            for (var idx = slicePos + 1; idx < elems.Count; idx++)
+            {
+                elemDef = elems[idx];
+                if (!ElementDefinitionNavigator.IsChildPath("Patient.identifier", elemDef.Path)) { break; }
+                Assert.IsTrue(elemDef.ElementId.StartsWith("Patient.identifier:CHANGED"), $"Invalid element id at element #{idx}: {elemDef.ElementId}");
+            }
+
         }
 
         [TestMethod]
@@ -4631,6 +4728,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             }
         }
+
 
         // [WMR 20170426] NEW - Bug with generating base element annotations for merged external type profiles?
         [TestMethod]
@@ -4709,8 +4807,11 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 var ann = elem.Annotation<BaseDefAnnotation>();
                 Assert.IsNotNull(ann);
-                Debug.Print($"{elem.Path.PadRight(50)}| {ann?.BaseElementDefinition?.Path?.PadRight(49)}| {ann?.BaseStructureDefinition?.Url?.PadRight(69)}| {elem?.ElementId?.PadRight(49)}| {ann?.BaseElementDefinition?.ElementId?.PadRight(49)}");
+                var s49 = new string(' ', 49);
+                var s69 = new string(' ', 69);
+                Debug.Print($"{elem.Path.PadRight(50)}| {ann?.BaseElementDefinition?.Path?.PadRight(49) ?? s49}| {ann?.BaseStructureDefinition?.Url?.PadRight(69) ?? s69}| {elem?.ElementId?.PadRight(49) ?? s49}| {ann?.BaseElementDefinition?.ElementId?.PadRight(49) ?? s49}");
                 var elemId = elem.ElementId;
+                Assert.IsNotNull(elemId);
                 Assert.IsTrue(elem.IsRootElement() ? elemId == sd.Type : elemId.StartsWith(sd.Type + "."));
             }
         }
@@ -4813,5 +4914,7 @@ namespace Hl7.Fhir.Specification.Tests
             // By default, Patient.identifier.type should NOT be included in the generated snapshot
             Assert.IsFalse(nav.MoveToChild("type"));
         }
+
+
     }
 }
