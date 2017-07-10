@@ -35,7 +35,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             Assert.Equal("text", nav.Name);
             var text = nav.Clone();
 
-            Assert.True(text.MoveToFirstChild()); // status
+            Assert.True(text.MoveToFirstChild("status")); // status
             Assert.True(text.MoveToNext());
             Assert.Equal("div", text.Name);
             Assert.StartsWith("<div xmlns=", (string)text.Value);       // special handling of xhtml
@@ -58,8 +58,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             Assert.False(identifier.MoveToFirstChild());
             Assert.Equal("444222222", identifier.Value);
 
-            Assert.True(nav.MoveToNext()); // active
-            Assert.True(nav.MoveToNext()); // name
+            Assert.True(nav.MoveToNext("name"));
             Assert.Equal("name", nav.Name);
             Assert.True(nav.MoveToFirstChild());  // id (attribute)
             Assert.Equal("id", nav.Name);

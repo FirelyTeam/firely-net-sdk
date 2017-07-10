@@ -36,6 +36,8 @@ using Hl7.Fhir.Utility;
 
 */
 
+#pragma warning disable 1591 // suppress XML summary warnings 
+
 //
 // Generated for FHIR v3.0.1
 //
@@ -408,6 +410,24 @@ namespace Hl7.Fhir.Model
                     if (WindowEndElement != null) yield return WindowEndElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Chromosome != null) yield return new ElementValue("chromosome", false, Chromosome);
+                    if (GenomeBuildElement != null) yield return new ElementValue("genomeBuild", false, GenomeBuildElement);
+                    if (ReferenceSeqId != null) yield return new ElementValue("referenceSeqId", false, ReferenceSeqId);
+                    if (ReferenceSeqPointer != null) yield return new ElementValue("referenceSeqPointer", false, ReferenceSeqPointer);
+                    if (ReferenceSeqStringElement != null) yield return new ElementValue("referenceSeqString", false, ReferenceSeqStringElement);
+                    if (StrandElement != null) yield return new ElementValue("strand", false, StrandElement);
+                    if (WindowStartElement != null) yield return new ElementValue("windowStart", false, WindowStartElement);
+                    if (WindowEndElement != null) yield return new ElementValue("windowEnd", false, WindowEndElement);
+                }
+            }
+
             
         }
         
@@ -665,6 +685,22 @@ namespace Hl7.Fhir.Model
                     if (VariantPointer != null) yield return VariantPointer;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (StartElement != null) yield return new ElementValue("start", false, StartElement);
+                    if (EndElement != null) yield return new ElementValue("end", false, EndElement);
+                    if (ObservedAlleleElement != null) yield return new ElementValue("observedAllele", false, ObservedAlleleElement);
+                    if (ReferenceAlleleElement != null) yield return new ElementValue("referenceAllele", false, ReferenceAlleleElement);
+                    if (CigarElement != null) yield return new ElementValue("cigar", false, CigarElement);
+                    if (VariantPointer != null) yield return new ElementValue("variantPointer", false, VariantPointer);
+                }
+            }
+
             
         }
         
@@ -1171,6 +1207,30 @@ namespace Hl7.Fhir.Model
                     if (FScoreElement != null) yield return FScoreElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
+                    if (StandardSequence != null) yield return new ElementValue("standardSequence", false, StandardSequence);
+                    if (StartElement != null) yield return new ElementValue("start", false, StartElement);
+                    if (EndElement != null) yield return new ElementValue("end", false, EndElement);
+                    if (Score != null) yield return new ElementValue("score", false, Score);
+                    if (Method != null) yield return new ElementValue("method", false, Method);
+                    if (TruthTPElement != null) yield return new ElementValue("truthTP", false, TruthTPElement);
+                    if (QueryTPElement != null) yield return new ElementValue("queryTP", false, QueryTPElement);
+                    if (TruthFNElement != null) yield return new ElementValue("truthFN", false, TruthFNElement);
+                    if (QueryFPElement != null) yield return new ElementValue("queryFP", false, QueryFPElement);
+                    if (GtFPElement != null) yield return new ElementValue("gtFP", false, GtFPElement);
+                    if (PrecisionElement != null) yield return new ElementValue("precision", false, PrecisionElement);
+                    if (RecallElement != null) yield return new ElementValue("recall", false, RecallElement);
+                    if (FScoreElement != null) yield return new ElementValue("fScore", false, FScoreElement);
+                }
+            }
+
             
         }
         
@@ -1446,6 +1506,22 @@ namespace Hl7.Fhir.Model
                     if (ReadsetIdElement != null) yield return ReadsetIdElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
+                    if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
+                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                    if (DatasetIdElement != null) yield return new ElementValue("datasetId", false, DatasetIdElement);
+                    if (VariantsetIdElement != null) yield return new ElementValue("variantsetId", false, VariantsetIdElement);
+                    if (ReadsetIdElement != null) yield return new ElementValue("readsetId", false, ReadsetIdElement);
+                }
+            }
+
             
         }
         
@@ -1890,6 +1966,31 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Pointer) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
+                if (CoordinateSystemElement != null) yield return new ElementValue("coordinateSystem", false, CoordinateSystemElement);
+                if (Patient != null) yield return new ElementValue("patient", false, Patient);
+                if (Specimen != null) yield return new ElementValue("specimen", false, Specimen);
+                if (Device != null) yield return new ElementValue("device", false, Device);
+                if (Performer != null) yield return new ElementValue("performer", false, Performer);
+                if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
+                if (ReferenceSeq != null) yield return new ElementValue("referenceSeq", false, ReferenceSeq);
+                foreach (var elem in Variant) { if (elem != null) yield return new ElementValue("variant", true, elem); }
+                if (ObservedSeqElement != null) yield return new ElementValue("observedSeq", false, ObservedSeqElement);
+                foreach (var elem in Quality) { if (elem != null) yield return new ElementValue("quality", true, elem); }
+                if (ReadCoverageElement != null) yield return new ElementValue("readCoverage", false, ReadCoverageElement);
+                foreach (var elem in Repository) { if (elem != null) yield return new ElementValue("repository", true, elem); }
+                foreach (var elem in Pointer) { if (elem != null) yield return new ElementValue("pointer", true, elem); }
+            }
+        }
+
     }
     
 }

@@ -36,6 +36,8 @@ using Hl7.Fhir.Utility;
 
 */
 
+#pragma warning disable 1591 // suppress XML summary warnings 
+
 //
 // Generated for FHIR v3.0.1
 //
@@ -307,6 +309,25 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in SupportingPatientInformation) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (DateElement != null) yield return new ElementValue("date", false, DateElement);
+                    if (VaccineCode != null) yield return new ElementValue("vaccineCode", false, VaccineCode);
+                    if (TargetDisease != null) yield return new ElementValue("targetDisease", false, TargetDisease);
+                    if (DoseNumberElement != null) yield return new ElementValue("doseNumber", false, DoseNumberElement);
+                    if (ForecastStatus != null) yield return new ElementValue("forecastStatus", false, ForecastStatus);
+                    foreach (var elem in DateCriterion) { if (elem != null) yield return new ElementValue("dateCriterion", true, elem); }
+                    if (Protocol != null) yield return new ElementValue("protocol", false, Protocol);
+                    foreach (var elem in SupportingImmunization) { if (elem != null) yield return new ElementValue("supportingImmunization", true, elem); }
+                    foreach (var elem in SupportingPatientInformation) { if (elem != null) yield return new ElementValue("supportingPatientInformation", true, elem); }
+                }
+            }
+
             
         }
         
@@ -420,6 +441,18 @@ namespace Hl7.Fhir.Model
                     if (ValueElement != null) yield return ValueElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Code != null) yield return new ElementValue("code", false, Code);
+                    if (ValueElement != null) yield return new ElementValue("value", false, ValueElement);
+                }
+            }
+
             
         }
         
@@ -605,6 +638,20 @@ namespace Hl7.Fhir.Model
                     if (SeriesElement != null) yield return SeriesElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (DoseSequenceElement != null) yield return new ElementValue("doseSequence", false, DoseSequenceElement);
+                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                    if (Authority != null) yield return new ElementValue("authority", false, Authority);
+                    if (SeriesElement != null) yield return new ElementValue("series", false, SeriesElement);
+                }
+            }
+
             
         }
         
@@ -728,6 +775,19 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Recommendation) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (Patient != null) yield return new ElementValue("patient", false, Patient);
+                foreach (var elem in Recommendation) { if (elem != null) yield return new ElementValue("recommendation", true, elem); }
+            }
+        }
+
     }
     
 }

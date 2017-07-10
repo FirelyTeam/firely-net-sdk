@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.FhirPath;
 using Hl7.FhirPath.Expressions;
@@ -16,7 +17,7 @@ using System.Text;
 
 namespace Hl7.Fhir.FhirPath
 {
-    public static class PocoNavigatorExtensions
+    public static class ElementNavFhirExtensions
     {
         internal static bool _fhirSymbolTableExtensionsAdded = false;
         public static void PrepareFhirSymbolTableFunctions()
@@ -105,11 +106,13 @@ namespace Hl7.Fhir.FhirPath
                 if (r == null)
                     return null;
 
-                if (r is Hl7.Fhir.FhirPath.PocoNavigator && (r as Hl7.Fhir.FhirPath.PocoNavigator).FhirValue != null)
+                if (r is PocoNavigator pnav && pnav.FhirValue != null)
                 {
-                    return ((PocoNavigator)r).FhirValue;
+                    return pnav.FhirValue;
                 }
+
                 object result;
+
                 if (r.Value is Hl7.FhirPath.ConstantValue)
                 {
                     result = (r.Value as Hl7.FhirPath.ConstantValue).Value;
@@ -153,8 +156,8 @@ namespace Hl7.Fhir.FhirPath
             var inputNav = new PocoNavigator(input);
             var resourceNav = resource != null ? new PocoNavigator(resource) : null;
 
-            var results = inputNav.Select(expression, resourceNav);
-            return results.ToFhirValues();
+            var result = inputNav.Select(expression, resourceNav);
+            return result.ToFhirValues();            
         }
 
         public static object Scalar(this Base input, string expression, Resource resource = null)

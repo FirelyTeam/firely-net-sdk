@@ -36,6 +36,8 @@ using Hl7.Fhir.Utility;
 
 */
 
+#pragma warning disable 1591 // suppress XML summary warnings 
+
 //
 // Generated for FHIR v3.0.1
 //
@@ -310,6 +312,22 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Item) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (LinkIdElement != null) yield return new ElementValue("linkId", false, LinkIdElement);
+                    if (DefinitionElement != null) yield return new ElementValue("definition", false, DefinitionElement);
+                    if (TextElement != null) yield return new ElementValue("text", false, TextElement);
+                    if (Subject != null) yield return new ElementValue("subject", false, Subject);
+                    foreach (var elem in Answer) { if (elem != null) yield return new ElementValue("answer", true, elem); }
+                    foreach (var elem in Item) { if (elem != null) yield return new ElementValue("item", true, elem); }
+                }
+            }
+
             
         }
         
@@ -405,6 +423,18 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Item) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Value != null) yield return new ElementValue("value", false, Value);
+                    foreach (var elem in Item) { if (elem != null) yield return new ElementValue("item", true, elem); }
+                }
+            }
+
             
         }
         
@@ -715,6 +745,27 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Item) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", true, elem); }
+                foreach (var elem in Parent) { if (elem != null) yield return new ElementValue("parent", true, elem); }
+                if (Questionnaire != null) yield return new ElementValue("questionnaire", false, Questionnaire);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (Subject != null) yield return new ElementValue("subject", false, Subject);
+                if (Context != null) yield return new ElementValue("context", false, Context);
+                if (AuthoredElement != null) yield return new ElementValue("authored", false, AuthoredElement);
+                if (Author != null) yield return new ElementValue("author", false, Author);
+                if (Source != null) yield return new ElementValue("source", false, Source);
+                foreach (var elem in Item) { if (elem != null) yield return new ElementValue("item", true, elem); }
+            }
+        }
+
     }
     
 }

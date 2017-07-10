@@ -36,6 +36,8 @@ using Hl7.Fhir.Utility;
 
 */
 
+#pragma warning disable 1591 // suppress XML summary warnings 
+
 //
 // Generated for FHIR v3.0.1
 //
@@ -176,6 +178,18 @@ namespace Hl7.Fhir.Model
                     if (Item != null) yield return Item;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
+                    if (Item != null) yield return new ElementValue("item", false, Item);
+                }
+            }
+
             
         }
         
@@ -456,6 +470,27 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Receiver) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", true, elem); }
+                foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", true, elem); }
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (Patient != null) yield return new ElementValue("patient", false, Patient);
+                if (Type != null) yield return new ElementValue("type", false, Type);
+                if (SuppliedItem != null) yield return new ElementValue("suppliedItem", false, SuppliedItem);
+                if (Occurrence != null) yield return new ElementValue("occurrence", false, Occurrence);
+                if (Supplier != null) yield return new ElementValue("supplier", false, Supplier);
+                if (Destination != null) yield return new ElementValue("destination", false, Destination);
+                foreach (var elem in Receiver) { if (elem != null) yield return new ElementValue("receiver", true, elem); }
+            }
+        }
+
     }
     
 }

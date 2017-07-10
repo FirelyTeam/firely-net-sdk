@@ -132,6 +132,18 @@ namespace Hl7.Fhir.Model
                 if (Denominator != null) yield return Denominator;
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren 
+        { 
+            get 
+            { 
+                foreach (var item in base.NamedChildren) yield return item; 
+                if (Numerator != null) yield return new ElementValue("numerator", false, Numerator);
+                if (Denominator != null) yield return new ElementValue("denominator", false, Denominator);
+ 
+            } 
+        } 
     
     
     }

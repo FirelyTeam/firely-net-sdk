@@ -36,6 +36,8 @@ using Hl7.Fhir.Utility;
 
 */
 
+#pragma warning disable 1591 // suppress XML summary warnings 
+
 //
 // Generated for FHIR v3.0.1
 //
@@ -201,6 +203,20 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Series) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (UidElement != null) yield return new ElementValue("uid", false, UidElement);
+                    if (ImagingStudy != null) yield return new ElementValue("imagingStudy", false, ImagingStudy);
+                    foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", true, elem); }
+                    foreach (var elem in Series) { if (elem != null) yield return new ElementValue("series", true, elem); }
+                }
+            }
+
             
         }
         
@@ -334,6 +350,19 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Instance) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (UidElement != null) yield return new ElementValue("uid", false, UidElement);
+                    foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", true, elem); }
+                    foreach (var elem in Instance) { if (elem != null) yield return new ElementValue("instance", true, elem); }
+                }
+            }
+
             
         }
         
@@ -466,6 +495,18 @@ namespace Hl7.Fhir.Model
                     if (UidElement != null) yield return UidElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (SopClassElement != null) yield return new ElementValue("sopClass", false, SopClassElement);
+                    if (UidElement != null) yield return new ElementValue("uid", false, UidElement);
+                }
+            }
+
             
         }
         
@@ -669,6 +710,22 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Study) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                if (Patient != null) yield return new ElementValue("patient", false, Patient);
+                if (AuthoringTimeElement != null) yield return new ElementValue("authoringTime", false, AuthoringTimeElement);
+                if (Author != null) yield return new ElementValue("author", false, Author);
+                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                foreach (var elem in Study) { if (elem != null) yield return new ElementValue("study", true, elem); }
+            }
+        }
+
     }
     
 }

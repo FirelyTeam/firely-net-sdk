@@ -18,11 +18,11 @@ namespace Hl7.Fhir.Support
     {
         public static DateTime? ToDateTime(this Model.FhirDateTime me)
         {
-            if (me == null)
-                return null;
-            DateTime result;
-            if (DateTime.TryParse(me.Value, out result))
+            if (me == null) return null;
+
+            if (DateTime.TryParse(me.Value, out DateTime result))
                 return result;
+
             if (!string.IsNullOrEmpty(me.Value))
             {
                 // the date didn't parse, one of the common mistakes
@@ -43,11 +43,11 @@ namespace Hl7.Fhir.Support
 
         public static DateTime? ToDateTime(this Model.Date me)
         {
-            if (me == null)
-                return null;
-            DateTime result;
-            if (DateTime.TryParse(me.Value, out result))
+            if (me == null) return null;
+
+            if (DateTime.TryParse(me.Value, out DateTime result))
                 return result;
+
             if (!string.IsNullOrEmpty(me.Value))
             {
                 // the date didn't parse, one of the common mistakes
@@ -80,13 +80,13 @@ namespace Hl7.Fhir.Support
 
         public static string ToFhirDateTime(this System.DateTime me)
         {
-            return me.ToString("yyyy-MM-ddTHH:mm:ss.ssszzz");
+            return me.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz");
         }
 
         public static string ToFhirDateTime(this System.DateTime? me)
         {
             if (me.HasValue)
-                return me.Value.ToString("yyyy-MM-ddTHH:mm:ss.ssszzz");
+                return me.Value.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz");
             return null;
         }
     }

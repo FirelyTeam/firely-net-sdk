@@ -411,10 +411,22 @@ namespace Hl7.Fhir.Model
                     if (RulesElement != null) yield return RulesElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren 
+            { 
+                get 
+                { 
+                    foreach (var item in base.NamedChildren) yield return item; 
+                    foreach (var elem in Discriminator) { if (elem != null) yield return new ElementValue("discriminator", true, elem); }
+                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                    if (OrderedElement != null) yield return new ElementValue("ordered", false, OrderedElement);
+                    if (RulesElement != null) yield return new ElementValue("rules", false, RulesElement);
+ 
+                } 
+            } 
             
-        }
-        
-        
+        }                
         [FhirType("DiscriminatorComponent")]
         [DataContract]
         public partial class DiscriminatorComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -542,10 +554,20 @@ namespace Hl7.Fhir.Model
                     if (PathElement != null) yield return PathElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren 
+            { 
+                get 
+                { 
+                    foreach (var item in base.NamedChildren) yield return item; 
+                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
+                    if (PathElement != null) yield return new ElementValue("path", false, PathElement);
+ 
+                } 
+            } 
             
-        }
-        
-        
+        }                
         [FhirType("BaseComponent")]
         [DataContract]
         public partial class BaseComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -710,10 +732,21 @@ namespace Hl7.Fhir.Model
                     if (MaxElement != null) yield return MaxElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren 
+            { 
+                get 
+                { 
+                    foreach (var item in base.NamedChildren) yield return item; 
+                    if (PathElement != null) yield return new ElementValue("path", false, PathElement);
+                    if (MinElement != null) yield return new ElementValue("min", false, MinElement);
+                    if (MaxElement != null) yield return new ElementValue("max", false, MaxElement);
+ 
+                } 
+            } 
             
-        }
-        
-        
+        }                
         [FhirType("TypeRefComponent")]
         [DataContract]
         public partial class TypeRefComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -949,10 +982,23 @@ namespace Hl7.Fhir.Model
                     if (VersioningElement != null) yield return VersioningElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren 
+            { 
+                get 
+                { 
+                    foreach (var item in base.NamedChildren) yield return item; 
+                    if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
+                    if (ProfileElement != null) yield return new ElementValue("profile", false, ProfileElement);
+                    if (TargetProfileElement != null) yield return new ElementValue("targetProfile", false, TargetProfileElement);
+                    foreach (var elem in AggregationElement) { if (elem != null) yield return new ElementValue("aggregation", true, elem); }
+                    if (VersioningElement != null) yield return new ElementValue("versioning", false, VersioningElement);
+ 
+                } 
+            } 
             
-        }
-        
-        
+        }                
         [FhirType("ExampleComponent")]
         [DataContract]
         public partial class ExampleComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -1063,10 +1109,20 @@ namespace Hl7.Fhir.Model
                     if (Value != null) yield return Value;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren 
+            { 
+                get 
+                { 
+                    foreach (var item in base.NamedChildren) yield return item; 
+                    if (LabelElement != null) yield return new ElementValue("label", false, LabelElement);
+                    if (Value != null) yield return new ElementValue("value", false, Value);
+ 
+                } 
+            } 
             
-        }
-        
-        
+        }                
         [FhirType("ConstraintComponent")]
         [DataContract]
         public partial class ConstraintComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -1376,10 +1432,25 @@ namespace Hl7.Fhir.Model
                     if (SourceElement != null) yield return SourceElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren 
+            { 
+                get 
+                { 
+                    foreach (var item in base.NamedChildren) yield return item; 
+                    if (KeyElement != null) yield return new ElementValue("key", false, KeyElement);
+                    if (RequirementsElement != null) yield return new ElementValue("requirements", false, RequirementsElement);
+                    if (SeverityElement != null) yield return new ElementValue("severity", false, SeverityElement);
+                    if (HumanElement != null) yield return new ElementValue("human", false, HumanElement);
+                    if (ExpressionElement != null) yield return new ElementValue("expression", false, ExpressionElement);
+                    if (XpathElement != null) yield return new ElementValue("xpath", false, XpathElement);
+                    if (SourceElement != null) yield return new ElementValue("source", false, SourceElement);
+ 
+                } 
+            } 
             
-        }
-        
-        
+        }                
         [FhirType("ElementDefinitionBindingComponent")]
         [DataContract]
         public partial class ElementDefinitionBindingComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -1525,10 +1596,21 @@ namespace Hl7.Fhir.Model
                     if (ValueSet != null) yield return ValueSet;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren 
+            { 
+                get 
+                { 
+                    foreach (var item in base.NamedChildren) yield return item; 
+                    if (StrengthElement != null) yield return new ElementValue("strength", false, StrengthElement);
+                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                    if (ValueSet != null) yield return new ElementValue("valueSet", false, ValueSet);
+ 
+                } 
+            } 
             
-        }
-        
-        
+        }                
         [FhirType("MappingComponent")]
         [DataContract]
         public partial class MappingComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -1728,10 +1810,22 @@ namespace Hl7.Fhir.Model
                     if (CommentElement != null) yield return CommentElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren 
+            { 
+                get 
+                { 
+                    foreach (var item in base.NamedChildren) yield return item; 
+                    if (IdentityElement != null) yield return new ElementValue("identity", false, IdentityElement);
+                    if (LanguageElement != null) yield return new ElementValue("language", false, LanguageElement);
+                    if (MapElement != null) yield return new ElementValue("map", false, MapElement);
+                    if (CommentElement != null) yield return new ElementValue("comment", false, CommentElement);
+ 
+                } 
+            } 
             
-        }
-        
-        
+        }                
         /// <summary>
         /// Path of the element in the hierarchy of elements
         /// </summary>
@@ -2703,6 +2797,48 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Mapping) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren 
+        { 
+            get 
+            { 
+                foreach (var item in base.NamedChildren) yield return item; 
+                if (PathElement != null) yield return new ElementValue("path", false, PathElement);
+                foreach (var elem in RepresentationElement) { if (elem != null) yield return new ElementValue("representation", true, elem); }
+                if (SliceNameElement != null) yield return new ElementValue("sliceName", false, SliceNameElement);
+                if (LabelElement != null) yield return new ElementValue("label", false, LabelElement);
+                foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", true, elem); }
+                if (Slicing != null) yield return new ElementValue("slicing", false, Slicing);
+                if (ShortElement != null) yield return new ElementValue("short", false, ShortElement);
+                if (DefinitionElement != null) yield return new ElementValue("definition", false, DefinitionElement);
+                if (CommentElement != null) yield return new ElementValue("comment", false, CommentElement);
+                if (RequirementsElement != null) yield return new ElementValue("requirements", false, RequirementsElement);
+                foreach (var elem in AliasElement) { if (elem != null) yield return new ElementValue("alias", true, elem); }
+                if (MinElement != null) yield return new ElementValue("min", false, MinElement);
+                if (MaxElement != null) yield return new ElementValue("max", false, MaxElement);
+                if (Base != null) yield return new ElementValue("base", false, Base);
+                if (ContentReferenceElement != null) yield return new ElementValue("contentReference", false, ContentReferenceElement);
+                foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, elem); }
+                if (DefaultValue != null) yield return new ElementValue("defaultValue", false, DefaultValue);
+                if (MeaningWhenMissingElement != null) yield return new ElementValue("meaningWhenMissing", false, MeaningWhenMissingElement);
+                if (OrderMeaningElement != null) yield return new ElementValue("orderMeaning", false, OrderMeaningElement);
+                if (Fixed != null) yield return new ElementValue("fixed", false, Fixed);
+                if (Pattern != null) yield return new ElementValue("pattern", false, Pattern);
+                foreach (var elem in Example) { if (elem != null) yield return new ElementValue("example", true, elem); }
+                if (MinValue != null) yield return new ElementValue("minValue", false, MinValue);
+                if (MaxValue != null) yield return new ElementValue("maxValue", false, MaxValue);
+                if (MaxLengthElement != null) yield return new ElementValue("maxLength", false, MaxLengthElement);
+                foreach (var elem in ConditionElement) { if (elem != null) yield return new ElementValue("condition", true, elem); }
+                foreach (var elem in Constraint) { if (elem != null) yield return new ElementValue("constraint", true, elem); }
+                if (MustSupportElement != null) yield return new ElementValue("mustSupport", false, MustSupportElement);
+                if (IsModifierElement != null) yield return new ElementValue("isModifier", false, IsModifierElement);
+                if (IsSummaryElement != null) yield return new ElementValue("isSummary", false, IsSummaryElement);
+                if (Binding != null) yield return new ElementValue("binding", false, Binding);
+                foreach (var elem in Mapping) { if (elem != null) yield return new ElementValue("mapping", true, elem); }
+ 
+            } 
+        } 
     
     
     }

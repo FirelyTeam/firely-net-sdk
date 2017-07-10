@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Specification.Terminology
             {
                 if (string.IsNullOrEmpty(system))
                 {
-                    outcome.AddIssue($"No system supplied to resolve {code} in valueset {uri}", Issue.TERMINOLOGY_SYSTEM_VALUE_MISSING);
+                    outcome.AddIssue($"No system supplied to resolve '{code}' in valueset {uri}", Issue.TERMINOLOGY_SYSTEM_VALUE_MISSING);
                     return outcome;
                 }
                 var resultValidateCode = _server.ValidateCode(uri, new Coding(system, code, display));

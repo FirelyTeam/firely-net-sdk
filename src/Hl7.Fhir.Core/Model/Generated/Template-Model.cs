@@ -1,7 +1,8 @@
 ﻿
 
+
 //
-// Model Generated on Sat, 06 May 2017 12:41:53 GMT for FHIR v3.0.1
+// Model Generated on Thu, 29 Jun 2017 20:25:29 GMT for FHIR v3.0.1
 //
 // Generated Shared Enumeration: ResourceType
 	// Used in model class (resource): ActivityDefinition.kind

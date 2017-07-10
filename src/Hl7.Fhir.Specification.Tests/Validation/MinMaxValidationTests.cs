@@ -1,4 +1,5 @@
-﻿using Hl7.Fhir.FhirPath;
+﻿using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.FhirPath;
 using System;

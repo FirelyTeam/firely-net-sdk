@@ -36,6 +36,8 @@ using Hl7.Fhir.Utility;
 
 */
 
+#pragma warning disable 1591 // suppress XML summary warnings 
+
 //
 // Generated for FHIR v3.0.1
 //
@@ -243,6 +245,20 @@ namespace Hl7.Fhir.Model
                     if (Item != null) yield return Item;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Flag != null) yield return new ElementValue("flag", false, Flag);
+                    if (DeletedElement != null) yield return new ElementValue("deleted", false, DeletedElement);
+                    if (DateElement != null) yield return new ElementValue("date", false, DateElement);
+                    if (Item != null) yield return new ElementValue("item", false, Item);
+                }
+            }
+
             
         }
         
@@ -628,6 +644,29 @@ namespace Hl7.Fhir.Model
 				if (EmptyReason != null) yield return EmptyReason;
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (ModeElement != null) yield return new ElementValue("mode", false, ModeElement);
+                if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
+                if (Code != null) yield return new ElementValue("code", false, Code);
+                if (Subject != null) yield return new ElementValue("subject", false, Subject);
+                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
+                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
+                if (Source != null) yield return new ElementValue("source", false, Source);
+                if (OrderedBy != null) yield return new ElementValue("orderedBy", false, OrderedBy);
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
+                foreach (var elem in Entry) { if (elem != null) yield return new ElementValue("entry", true, elem); }
+                if (EmptyReason != null) yield return new ElementValue("emptyReason", false, EmptyReason);
+            }
+        }
+
     }
     
 }

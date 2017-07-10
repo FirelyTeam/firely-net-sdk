@@ -36,6 +36,8 @@ using Hl7.Fhir.Utility;
 
 */
 
+#pragma warning disable 1591 // suppress XML summary warnings 
+
 //
 // Generated for FHIR v3.0.1
 //
@@ -196,6 +198,18 @@ namespace Hl7.Fhir.Model
                     if (AssuranceElement != null) yield return AssuranceElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Target != null) yield return new ElementValue("target", false, Target);
+                    if (AssuranceElement != null) yield return new ElementValue("assurance", false, AssuranceElement);
+                }
+            }
+
             
         }
         
@@ -487,6 +501,26 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Link) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                foreach (var elem in Name) { if (elem != null) yield return new ElementValue("name", true, elem); }
+                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
+                if (GenderElement != null) yield return new ElementValue("gender", false, GenderElement);
+                if (BirthDateElement != null) yield return new ElementValue("birthDate", false, BirthDateElement);
+                foreach (var elem in Address) { if (elem != null) yield return new ElementValue("address", true, elem); }
+                if (Photo != null) yield return new ElementValue("photo", false, Photo);
+                if (ManagingOrganization != null) yield return new ElementValue("managingOrganization", false, ManagingOrganization);
+                if (ActiveElement != null) yield return new ElementValue("active", false, ActiveElement);
+                foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", true, elem); }
+            }
+        }
+
     }
     
 }

@@ -36,6 +36,8 @@ using Hl7.Fhir.Utility;
 
 */
 
+#pragma warning disable 1591 // suppress XML summary warnings 
+
 //
 // Generated for FHIR v3.0.1
 //
@@ -230,6 +232,23 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Target) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Category != null) yield return new ElementValue("category", false, Category);
+                    if (Description != null) yield return new ElementValue("description", false, Description);
+                    if (Priority != null) yield return new ElementValue("priority", false, Priority);
+                    if (Start != null) yield return new ElementValue("start", false, Start);
+                    foreach (var elem in Addresses) { if (elem != null) yield return new ElementValue("addresses", true, elem); }
+                    foreach (var elem in Documentation) { if (elem != null) yield return new ElementValue("documentation", true, elem); }
+                    foreach (var elem in Target) { if (elem != null) yield return new ElementValue("target", true, elem); }
+                }
+            }
+
             
         }
         
@@ -341,6 +360,19 @@ namespace Hl7.Fhir.Model
                     if (Due != null) yield return Due;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Measure != null) yield return new ElementValue("measure", false, Measure);
+                    if (Detail != null) yield return new ElementValue("detail", false, Detail);
+                    if (Due != null) yield return new ElementValue("due", false, Due);
+                }
+            }
+
             
         }
         
@@ -1032,6 +1064,41 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Action) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (LabelElement != null) yield return new ElementValue("label", false, LabelElement);
+                    if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
+                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                    if (TextEquivalentElement != null) yield return new ElementValue("textEquivalent", false, TextEquivalentElement);
+                    foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", true, elem); }
+                    foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", true, elem); }
+                    foreach (var elem in Documentation) { if (elem != null) yield return new ElementValue("documentation", true, elem); }
+                    foreach (var elem in GoalIdElement) { if (elem != null) yield return new ElementValue("goalId", true, elem); }
+                    foreach (var elem in TriggerDefinition) { if (elem != null) yield return new ElementValue("triggerDefinition", true, elem); }
+                    foreach (var elem in Condition) { if (elem != null) yield return new ElementValue("condition", true, elem); }
+                    foreach (var elem in Input) { if (elem != null) yield return new ElementValue("input", true, elem); }
+                    foreach (var elem in Output) { if (elem != null) yield return new ElementValue("output", true, elem); }
+                    foreach (var elem in RelatedAction) { if (elem != null) yield return new ElementValue("relatedAction", true, elem); }
+                    if (Timing != null) yield return new ElementValue("timing", false, Timing);
+                    foreach (var elem in Participant) { if (elem != null) yield return new ElementValue("participant", true, elem); }
+                    if (Type != null) yield return new ElementValue("type", false, Type);
+                    if (GroupingBehaviorElement != null) yield return new ElementValue("groupingBehavior", false, GroupingBehaviorElement);
+                    if (SelectionBehaviorElement != null) yield return new ElementValue("selectionBehavior", false, SelectionBehaviorElement);
+                    if (RequiredBehaviorElement != null) yield return new ElementValue("requiredBehavior", false, RequiredBehaviorElement);
+                    if (PrecheckBehaviorElement != null) yield return new ElementValue("precheckBehavior", false, PrecheckBehaviorElement);
+                    if (CardinalityBehaviorElement != null) yield return new ElementValue("cardinalityBehavior", false, CardinalityBehaviorElement);
+                    if (Definition != null) yield return new ElementValue("definition", false, Definition);
+                    if (Transform != null) yield return new ElementValue("transform", false, Transform);
+                    foreach (var elem in DynamicValue) { if (elem != null) yield return new ElementValue("dynamicValue", true, elem); }
+                    foreach (var elem in Action) { if (elem != null) yield return new ElementValue("action", true, elem); }
+                }
+            }
+
             
         }
         
@@ -1235,6 +1302,20 @@ namespace Hl7.Fhir.Model
                     if (ExpressionElement != null) yield return ExpressionElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (KindElement != null) yield return new ElementValue("kind", false, KindElement);
+                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                    if (LanguageElement != null) yield return new ElementValue("language", false, LanguageElement);
+                    if (ExpressionElement != null) yield return new ElementValue("expression", false, ExpressionElement);
+                }
+            }
+
             
         }
         
@@ -1386,6 +1467,19 @@ namespace Hl7.Fhir.Model
                     if (Offset != null) yield return Offset;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (ActionIdElement != null) yield return new ElementValue("actionId", false, ActionIdElement);
+                    if (RelationshipElement != null) yield return new ElementValue("relationship", false, RelationshipElement);
+                    if (Offset != null) yield return new ElementValue("offset", false, Offset);
+                }
+            }
+
             
         }
         
@@ -1498,6 +1592,18 @@ namespace Hl7.Fhir.Model
                     if (Role != null) yield return Role;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
+                    if (Role != null) yield return new ElementValue("role", false, Role);
+                }
+            }
+
             
         }
         
@@ -1700,6 +1806,20 @@ namespace Hl7.Fhir.Model
                     if (ExpressionElement != null) yield return ExpressionElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                    if (PathElement != null) yield return new ElementValue("path", false, PathElement);
+                    if (LanguageElement != null) yield return new ElementValue("language", false, LanguageElement);
+                    if (ExpressionElement != null) yield return new ElementValue("expression", false, ExpressionElement);
+                }
+            }
+
             
         }
         
@@ -2421,6 +2541,42 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Action) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
+                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
+                if (Type != null) yield return new ElementValue("type", false, Type);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (ExperimentalElement != null) yield return new ElementValue("experimental", false, ExperimentalElement);
+                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
+                if (PublisherElement != null) yield return new ElementValue("publisher", false, PublisherElement);
+                if (Description != null) yield return new ElementValue("description", false, Description);
+                if (Purpose != null) yield return new ElementValue("purpose", false, Purpose);
+                if (UsageElement != null) yield return new ElementValue("usage", false, UsageElement);
+                if (ApprovalDateElement != null) yield return new ElementValue("approvalDate", false, ApprovalDateElement);
+                if (LastReviewDateElement != null) yield return new ElementValue("lastReviewDate", false, LastReviewDateElement);
+                if (EffectivePeriod != null) yield return new ElementValue("effectivePeriod", false, EffectivePeriod);
+                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", true, elem); }
+                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", true, elem); }
+                foreach (var elem in Topic) { if (elem != null) yield return new ElementValue("topic", true, elem); }
+                foreach (var elem in Contributor) { if (elem != null) yield return new ElementValue("contributor", true, elem); }
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
+                if (Copyright != null) yield return new ElementValue("copyright", false, Copyright);
+                foreach (var elem in RelatedArtifact) { if (elem != null) yield return new ElementValue("relatedArtifact", true, elem); }
+                foreach (var elem in Library) { if (elem != null) yield return new ElementValue("library", true, elem); }
+                foreach (var elem in Goal) { if (elem != null) yield return new ElementValue("goal", true, elem); }
+                foreach (var elem in Action) { if (elem != null) yield return new ElementValue("action", true, elem); }
+            }
+        }
+
     }
     
 }

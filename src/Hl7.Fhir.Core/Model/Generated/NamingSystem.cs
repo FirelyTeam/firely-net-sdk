@@ -36,6 +36,8 @@ using Hl7.Fhir.Utility;
 
 */
 
+#pragma warning disable 1591 // suppress XML summary warnings 
+
 //
 // Generated for FHIR v3.0.1
 //
@@ -330,6 +332,21 @@ namespace Hl7.Fhir.Model
                     if (Period != null) yield return Period;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
+                    if (ValueElement != null) yield return new ElementValue("value", false, ValueElement);
+                    if (PreferredElement != null) yield return new ElementValue("preferred", false, PreferredElement);
+                    if (CommentElement != null) yield return new ElementValue("comment", false, CommentElement);
+                    if (Period != null) yield return new ElementValue("period", false, Period);
+                }
+            }
+
             
         }
         
@@ -798,6 +815,30 @@ namespace Hl7.Fhir.Model
 				if (ReplacedBy != null) yield return ReplacedBy;
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (KindElement != null) yield return new ElementValue("kind", false, KindElement);
+                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
+                if (PublisherElement != null) yield return new ElementValue("publisher", false, PublisherElement);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
+                if (ResponsibleElement != null) yield return new ElementValue("responsible", false, ResponsibleElement);
+                if (Type != null) yield return new ElementValue("type", false, Type);
+                if (Description != null) yield return new ElementValue("description", false, Description);
+                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", true, elem); }
+                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", true, elem); }
+                if (UsageElement != null) yield return new ElementValue("usage", false, UsageElement);
+                foreach (var elem in UniqueId) { if (elem != null) yield return new ElementValue("uniqueId", true, elem); }
+                if (ReplacedBy != null) yield return new ElementValue("replacedBy", false, ReplacedBy);
+            }
+        }
+
     }
     
 }

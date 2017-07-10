@@ -36,6 +36,8 @@ using Hl7.Fhir.Utility;
 
 */
 
+#pragma warning disable 1591 // suppress XML summary warnings 
+
 //
 // Generated for FHIR v3.0.1
 //
@@ -176,6 +178,20 @@ namespace Hl7.Fhir.Model
                     if (Address != null) yield return Address;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Purpose != null) yield return new ElementValue("purpose", false, Purpose);
+                    if (Name != null) yield return new ElementValue("name", false, Name);
+                    foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
+                    if (Address != null) yield return new ElementValue("address", false, Address);
+                }
+            }
+
             
         }
         
@@ -501,6 +517,26 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Endpoint) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (ActiveElement != null) yield return new ElementValue("active", false, ActiveElement);
+                foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, elem); }
+                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                foreach (var elem in AliasElement) { if (elem != null) yield return new ElementValue("alias", true, elem); }
+                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
+                foreach (var elem in Address) { if (elem != null) yield return new ElementValue("address", true, elem); }
+                if (PartOf != null) yield return new ElementValue("partOf", false, PartOf);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
+                foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", true, elem); }
+            }
+        }
+
     }
     
 }

@@ -36,6 +36,8 @@ using Hl7.Fhir.Utility;
 
 */
 
+#pragma warning disable 1591 // suppress XML summary warnings 
+
 //
 // Generated for FHIR v3.0.1
 //
@@ -207,6 +209,19 @@ namespace Hl7.Fhir.Model
                     if (Author != null) yield return Author;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Action != null) yield return new ElementValue("action", false, Action);
+                    if (DateElement != null) yield return new ElementValue("date", false, DateElement);
+                    if (Author != null) yield return new ElementValue("author", false, Author);
+                }
+            }
+
             
         }
         
@@ -555,6 +570,27 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Mitigation) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (Category != null) yield return new ElementValue("category", false, Category);
+                if (SeverityElement != null) yield return new ElementValue("severity", false, SeverityElement);
+                if (Patient != null) yield return new ElementValue("patient", false, Patient);
+                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
+                if (Author != null) yield return new ElementValue("author", false, Author);
+                foreach (var elem in Implicated) { if (elem != null) yield return new ElementValue("implicated", true, elem); }
+                if (DetailElement != null) yield return new ElementValue("detail", false, DetailElement);
+                if (ReferenceElement != null) yield return new ElementValue("reference", false, ReferenceElement);
+                foreach (var elem in Mitigation) { if (elem != null) yield return new ElementValue("mitigation", true, elem); }
+            }
+        }
+
     }
     
 }

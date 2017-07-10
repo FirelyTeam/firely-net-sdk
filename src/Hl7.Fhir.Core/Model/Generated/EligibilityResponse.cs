@@ -36,6 +36,8 @@ using Hl7.Fhir.Utility;
 
 */
 
+#pragma warning disable 1591 // suppress XML summary warnings 
+
 //
 // Generated for FHIR v3.0.1
 //
@@ -163,6 +165,19 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in BenefitBalance) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Coverage != null) yield return new ElementValue("coverage", false, Coverage);
+                    if (Contract != null) yield return new ElementValue("contract", false, Contract);
+                    foreach (var elem in BenefitBalance) { if (elem != null) yield return new ElementValue("benefitBalance", true, elem); }
+                }
+            }
+
             
         }
         
@@ -433,6 +448,25 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Financial) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Category != null) yield return new ElementValue("category", false, Category);
+                    if (SubCategory != null) yield return new ElementValue("subCategory", false, SubCategory);
+                    if (ExcludedElement != null) yield return new ElementValue("excluded", false, ExcludedElement);
+                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                    if (Network != null) yield return new ElementValue("network", false, Network);
+                    if (Unit != null) yield return new ElementValue("unit", false, Unit);
+                    if (Term != null) yield return new ElementValue("term", false, Term);
+                    foreach (var elem in Financial) { if (elem != null) yield return new ElementValue("financial", true, elem); }
+                }
+            }
+
             
         }
         
@@ -547,6 +581,19 @@ namespace Hl7.Fhir.Model
                     if (Used != null) yield return Used;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Type != null) yield return new ElementValue("type", false, Type);
+                    if (Allowed != null) yield return new ElementValue("allowed", false, Allowed);
+                    if (Used != null) yield return new ElementValue("used", false, Used);
+                }
+            }
+
             
         }
         
@@ -623,6 +670,17 @@ namespace Hl7.Fhir.Model
                     if (Code != null) yield return Code;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Code != null) yield return new ElementValue("code", false, Code);
+                }
+            }
+
             
         }
         
@@ -988,6 +1046,29 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Error) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (CreatedElement != null) yield return new ElementValue("created", false, CreatedElement);
+                if (RequestProvider != null) yield return new ElementValue("requestProvider", false, RequestProvider);
+                if (RequestOrganization != null) yield return new ElementValue("requestOrganization", false, RequestOrganization);
+                if (Request != null) yield return new ElementValue("request", false, Request);
+                if (Outcome != null) yield return new ElementValue("outcome", false, Outcome);
+                if (DispositionElement != null) yield return new ElementValue("disposition", false, DispositionElement);
+                if (Insurer != null) yield return new ElementValue("insurer", false, Insurer);
+                if (InforceElement != null) yield return new ElementValue("inforce", false, InforceElement);
+                foreach (var elem in Insurance) { if (elem != null) yield return new ElementValue("insurance", true, elem); }
+                if (Form != null) yield return new ElementValue("form", false, Form);
+                foreach (var elem in Error) { if (elem != null) yield return new ElementValue("error", true, elem); }
+            }
+        }
+
     }
     
 }

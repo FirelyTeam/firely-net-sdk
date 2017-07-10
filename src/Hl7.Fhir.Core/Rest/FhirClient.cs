@@ -19,7 +19,7 @@ using System.Net;
 
 namespace Hl7.Fhir.Rest
 {
-    public partial class FhirClient
+    public partial class FhirClient : IFhirClient
     {
         private Requester _requester;
 
@@ -336,7 +336,7 @@ namespace Hl7.Fhir.Rest
             var id = verifyResourceIdentity(location, needId: true, needVid: false);
             var tx = new TransactionBuilder(Endpoint).Delete(id.ResourceType, id.Id).ToBundle();
 
-            execute<Resource>(tx, HttpStatusCode.NoContent);
+            execute<Resource>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent });
 
             return;
         }
@@ -370,7 +370,7 @@ namespace Hl7.Fhir.Rest
             if (condition == null) throw Error.ArgumentNull(nameof(condition));
 
             var tx = new TransactionBuilder(Endpoint).Delete(resourceType, condition).ToBundle();
-            execute<Resource>(tx, HttpStatusCode.NoContent);
+            execute<Resource>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent });
 
             return;
         }

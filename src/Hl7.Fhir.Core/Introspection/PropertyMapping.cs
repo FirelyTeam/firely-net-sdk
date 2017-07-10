@@ -23,9 +23,9 @@ namespace Hl7.Fhir.Introspection
     [System.Diagnostics.DebuggerDisplay(@"\{Name={Name} ElementType={ElementType.Name}}")]
     public class PropertyMapping
     {
-        public string Name { get; private set; }
+        public string Name { get; internal set; }
 
-        public bool IsCollection { get; private set; }
+        public bool IsCollection { get; internal set; }
 
         public bool IsPrimitive { get; private set; }
         public bool RepresentsValueElement { get; private set; }

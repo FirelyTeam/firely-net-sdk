@@ -36,6 +36,8 @@ using Hl7.Fhir.Utility;
 
 */
 
+#pragma warning disable 1591 // suppress XML summary warnings 
+
 //
 // Generated for FHIR v3.0.1
 //
@@ -190,6 +192,18 @@ namespace Hl7.Fhir.Model
                     if (PriorityElement != null) yield return PriorityElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Coverage != null) yield return new ElementValue("coverage", false, Coverage);
+                    if (PriorityElement != null) yield return new ElementValue("priority", false, PriorityElement);
+                }
+            }
+
             
         }
         
@@ -321,6 +335,19 @@ namespace Hl7.Fhir.Model
                     if (Period != null) yield return Period;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Party != null) yield return new ElementValue("party", false, Party);
+                    if (OnHoldElement != null) yield return new ElementValue("onHold", false, OnHoldElement);
+                    if (Period != null) yield return new ElementValue("period", false, Period);
+                }
+            }
+
             
         }
         
@@ -646,6 +673,28 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Guarantor) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (Type != null) yield return new ElementValue("type", false, Type);
+                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                if (Subject != null) yield return new ElementValue("subject", false, Subject);
+                if (Period != null) yield return new ElementValue("period", false, Period);
+                if (Active != null) yield return new ElementValue("active", false, Active);
+                if (Balance != null) yield return new ElementValue("balance", false, Balance);
+                foreach (var elem in Coverage) { if (elem != null) yield return new ElementValue("coverage", true, elem); }
+                if (Owner != null) yield return new ElementValue("owner", false, Owner);
+                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                foreach (var elem in Guarantor) { if (elem != null) yield return new ElementValue("guarantor", true, elem); }
+            }
+        }
+
     }
     
 }
