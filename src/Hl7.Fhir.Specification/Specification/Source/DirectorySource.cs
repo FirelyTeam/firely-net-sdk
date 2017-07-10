@@ -282,10 +282,10 @@ namespace Hl7.Fhir.Specification.Source
             IEnumerable<ConformanceScanInformation> infoList = _resourceScanInformation;
 
             if (sourceUri != null)
-                infoList = infoList.Where(ci => ci.ConceptMapSource.Contains(sourceUri));
+                infoList = infoList.Where(ci => ci.ConceptMapSource == sourceUri);
             
             if(targetUri != null)
-                infoList = infoList.Where(ci =>ci.ConceptMapTarget.Contains(targetUri));
+                infoList = infoList.Where(ci =>ci.ConceptMapTarget == targetUri);
 
             return infoList.Select(info => getResourceFromScannedSource(info)).Where(r => r != null).Cast<ConceptMap>();
         }
