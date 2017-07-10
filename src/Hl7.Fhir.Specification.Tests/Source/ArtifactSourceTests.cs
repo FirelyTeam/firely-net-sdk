@@ -138,6 +138,23 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
+        public void UseIncludeExcludeFilter()
+        {
+            var fa = new DirectorySource(_testPath);
+            fa.Includes = new[] { "*.xml", "pa*.sch" };
+            fa.Excludes = new[] { "nonfhir*.*" };
+
+            var names = fa.ListArtifactNames();
+
+            Assert.AreEqual(4, names.Count());
+            Assert.IsTrue(names.Contains("extension-definitions.xml"));
+            Assert.IsTrue(names.Contains("TestPatient.xml"));
+            Assert.IsFalse(names.Contains("nonfhir.xml"));
+            Assert.IsTrue(names.Contains("invalid.xml"));
+            Assert.IsTrue(names.Contains("patient.sch"));
+        }
+
+        [TestMethod]
         public void FileSourceSkipsInvalidXml()
         {
             var fa = new DirectorySource(_testPath);
