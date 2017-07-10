@@ -6,15 +6,9 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
-using System.Diagnostics;
-using System.IO;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Utility;
 
@@ -155,5 +149,104 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(us);
             Assert.IsTrue(us is StructureDefinition);
         }
+
+
+        [TestMethod]
+        public void TestIgnoreFilter()
+        {
+            var files = new[] {
+                @"c:\bla\",
+                @"c:\bla\file1.json",
+                @"c:\bla\file1.xml",
+                @"c:\bla\bla2\file1.json",
+                @"c:\bla\bla2\file2.xml",
+                @"c:\bla\bla2\text1.txt",
+                @"c:\bla\bla2\bla3\test2.jpg",
+                @"c:\blie\bla.xml" };
+            var basef = @"c:\bla";
+
+            // Basic glob filter
+            var fi = new FilePatternFilter("*.xml");
+            var r = fi.Filter(basef, files);
+            Assert.AreEqual(2, r.Count());
+            Assert.IsTrue(r.All(f => f.EndsWith(".xml")));
+            Assert.IsTrue(r.All(f => f.StartsWith(basef)));
+
+            // Absolute select 1 file
+            fi = new FilePatternFilter("/file1.json");
+            r = fi.Filter(basef, files);
+            Assert.AreEqual(@"c:\bla\file1.json", r.Single());
+
+            // Absolute select 1 file - no match
+            fi = new FilePatternFilter("/file1.crap");
+            r = fi.Filter(basef, files);
+            Assert.AreEqual(0, r.Count());
+
+            // Absolute select with glob
+            fi = new FilePatternFilter("/*.json");
+            r = fi.Filter(basef, files);
+            Assert.AreEqual(1, r.Count());
+            Assert.AreEqual(@"c:\bla\file1.json", r.Single());
+
+            // Relative select file
+            fi = new FilePatternFilter("file1.json");
+            r = fi.Filter(basef, files);
+            Assert.AreEqual(2, r.Count());
+            Assert.IsTrue(r.All(f => f.EndsWith("file1.json")));
+
+            // Relative select file
+            fi = new FilePatternFilter("**/file1.json");
+            r = fi.Filter(basef, files);
+            Assert.AreEqual(2, r.Count());
+            Assert.IsTrue(r.All(f => f.EndsWith("file1.json")));
+
+            // Relative select file with glob
+            fi = new FilePatternFilter("**/file1.*");
+            r = fi.Filter(basef, files);
+            Assert.AreEqual(3, r.Count());
+            Assert.IsTrue(r.All(f => f.Contains("\\file1.")));
+
+            // Relative select file with glob
+            fi = new FilePatternFilter("**/*.txt");
+            r = fi.Filter(basef, files);
+            Assert.AreEqual(1, r.Count());
+            Assert.AreEqual(@"c:\bla\bla2\text1.txt", r.Single());
+
+            // Relative select file with glob
+            fi = new FilePatternFilter("**/file*.xml");
+            r = fi.Filter(basef, files);
+            Assert.AreEqual(2, r.Count());
+            Assert.IsTrue(r.All(f => f.Contains("\\file") && f.EndsWith(".xml")));
+
+            // Relative select file with glob
+            fi = new FilePatternFilter("file1.*");
+            r = fi.Filter(basef, files);
+            Assert.AreEqual(3, r.Count());
+            Assert.IsTrue(r.All(f => f.Contains("\\file1.")));
+
+            // Select whole directory
+            fi = new FilePatternFilter("bla2/");
+            r = fi.Filter(basef, files);
+            Assert.AreEqual(4, r.Count());
+            Assert.IsTrue(r.All(f => f.Contains("\\bla2\\")));
+
+            // Select whole directory
+            fi = new FilePatternFilter("/bla3/");
+            r = fi.Filter(basef, files);
+            Assert.AreEqual(0, r.Count());
+
+            // Internal glob dir
+            fi = new FilePatternFilter("/bla2/*/*.jpg");
+            r = fi.Filter(basef, files);
+            Assert.AreEqual(1, r.Count());
+            Assert.AreEqual(@"c:\bla\bla2\bla3\test2.jpg", r.Single());
+
+            // Case-insensitive
+            fi = new FilePatternFilter("TEST2.jpg");
+            r = fi.Filter(basef, files);
+            Assert.AreEqual(1, r.Count());
+            Assert.AreEqual(@"c:\bla\bla2\bla3\test2.jpg", r.Single());
+        }
+
     }
 }
