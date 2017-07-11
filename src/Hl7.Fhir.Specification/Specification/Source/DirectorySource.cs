@@ -12,10 +12,10 @@ using System.Linq;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System.IO;
-using Hl7.Fhir.Serialization;
 using System.Xml;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Utility;
+using Newtonsoft.Json;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -40,30 +40,29 @@ namespace Hl7.Fhir.Specification.Source
         /// </summary>
         public string Mask
         {
-            get => String.Join("|", _masks);
+            get => String.Join("|", Masks);
             set
             {
-                _masks = value?.Split('|').Select(s => s.Trim()).Where(s => !String.IsNullOrEmpty(s)).ToArray();
-                _filesPrepared = false; _resourcesPrepared = false;
+                Masks = value?.Split('|').Select(s => s.Trim()).Where(s => !String.IsNullOrEmpty(s)).ToArray();
             }
         }
 
         public string[] Masks
         {
             get { return _masks; }
-            set { _masks = value; _filesPrepared = false; _resourcesPrepared = false; }
+            set { _masks = value; Refresh(); }
         }
 
         public string[] Includes
         {
             get { return _includes; }
-            set { _includes = value; _filesPrepared = false; _resourcesPrepared = false; }
+            set { _includes = value; Refresh(); }
         }
 
         public string[] Excludes
         {
             get { return _excludes; }
-            set { _excludes = value; _filesPrepared = false; _resourcesPrepared = false; }
+            set { _excludes = value; Refresh(); }
         }
 
 
@@ -140,8 +139,62 @@ namespace Hl7.Fhir.Specification.Source
             _filesPrepared = true;
         }
 
+        internal static List<string> ResolveDuplicateFilenames(List<string> allFilenames, DuplicateFilenameResolution preference)
+        {
+            var result = new List<string>();
+            var xmlOrJson = new List<string>();
+
+            foreach (var filename in allFilenames.Distinct())
+            {
+                if (isXml(filename) || isJson(filename))
+                    xmlOrJson.Add(filename);
+                else
+                    result.Add(filename);
+            }
+
+            var groups = xmlOrJson.GroupBy(path => fullPathWithoutExtension(path));
+            
+            foreach (var group in groups)
+            {
+                if (group.Count() == 1 || preference == DuplicateFilenameResolution.KeepBoth)
+                    result.AddRange(group);
+                else
+                {
+                    // count must be 2
+                    var first = group.First();
+                    if (preference == DuplicateFilenameResolution.PreferXml && isXml(first))
+                        result.Add(first);
+                    else if (preference == DuplicateFilenameResolution.PreferJson && isJson(first))
+                        result.Add(first);
+                    else
+                        result.Add(group.Skip(1).First());                
+                }
+            }
+
+            return result;
+
+            string fullPathWithoutExtension(string fullPath) => fullPath.Replace(Path.GetFileName(fullPath), Path.GetFileNameWithoutExtension(fullPath));
+            bool isXml(string fullPath) => Path.GetExtension(fullPath).ToLower() == ".xml";
+            bool isJson(string fullPath) => Path.GetExtension(fullPath).ToLower() == ".json";
+        }
+
         bool _resourcesPrepared = false;
         private List<ConformanceScanInformation> _resourceScanInformation;
+
+        public enum DuplicateFilenameResolution
+        {
+            PreferXml,
+            PreferJson,
+            KeepBoth
+        }
+
+
+        public DuplicateFilenameResolution FormatPreference
+        {
+            get;
+            set;
+        } = DuplicateFilenameResolution.PreferXml;
+
 
         // [WMR 20170217] Ignore invalid xml files, aggregate parsing errors
         // https://github.com/ewoutkramer/fhir-net-api/issues/301
@@ -152,50 +205,73 @@ namespace Hl7.Fhir.Specification.Source
             public Exception Error { get; }
         }
 
-        ErrorInfo[] _errors = new ErrorInfo[0];
-
         /// <summary>Returns an array of runtime errors that occured while parsing the resources.</summary>
-        public ErrorInfo[] Errors => _errors;
+        public ErrorInfo[] Errors = new ErrorInfo[0];
 
         /// <summary>Scan all xml files found by prepareFiles and find conformance resources and their id.</summary>
         private void prepareResources()
         {
             if (_resourcesPrepared) return;
-
             prepareFiles();
 
-            _resourceScanInformation = new List<ConformanceScanInformation>();
-
-            var errors = new List<ErrorInfo>();
-            foreach (var file in _artifactFilePaths.Where(af => Path.GetExtension(af) == ".xml"))
-            {
-                try
-                {
-                    var scannedInformation = new XmlFileConformanceScanner(file).List();
-                    _resourceScanInformation.AddRange(scannedInformation);
-                }
-                catch (XmlException e)
-                {
-                    // throw;      // Just ignore crappy xml
-                    errors.Add(new ErrorInfo(file, e));    // Log the exception
-                }
-                // Don't catch other exceptions (fatal error)
-            }
-            _errors = errors.ToArray();
+            var uniqueArtifacts = ResolveDuplicateFilenames(_artifactFilePaths, FormatPreference);
+            (_resourceScanInformation, Errors) = scanPaths(uniqueArtifacts);
 
             // Check for duplicate canonical urls, this is forbidden within a single source (and actually, universally,
             // but if another source has the same url, the order of polling in the MultiArtifactSource matters)
-            var doubles = _resourceScanInformation.Where(ci => ci.Canonical != null).GroupBy(ci => ci.Canonical).Where(group => group.Count() > 1);
+            var doubles = from ci in _resourceScanInformation
+                          where ci.Canonical != null
+                          group ci by ci.Canonical into g
+                          where g.Count() > 1
+                          select g;
+
             if (doubles.Any())
-            {
-                //throw Error.InvalidOperation("The source has found multiple Conformance Resource artifacts with the same canonical url: {0} appears at {1}"
-                //        .FormatWith(doubles.First().Key, String.Join(", ", doubles.First().Select(hit => hit.Origin))));
                 throw new CanonicalUrlConflictException(doubles.Select(d => new CanonicalUrlConflictException.CanonicalUrlConflict(d.Key, d.Select(ci => ci.Origin))));
-            }
 
             _resourcesPrepared = true;
+            return;
+
+            (List<ConformanceScanInformation>, ErrorInfo[]) scanPaths(List<string> paths)
+            {
+                var scanResult = new List<ConformanceScanInformation>();
+                var errors = new List<ErrorInfo>();
+
+                foreach (var file in paths)
+                {
+                    try
+                    {
+                        var scanner = createScanner(file);
+                        if (scanner != null)
+                            scanResult.AddRange(scanner.List());
+                    }
+                    catch (XmlException ex)
+                    {
+                        errors.Add(new ErrorInfo(file, ex));    // Log the exception
+                    }
+                    catch(JsonException ej)
+                    {
+                        errors.Add(new ErrorInfo(file, ej));    // Log the exception
+                    }
+                    // Don't catch other exceptions (fatal error)
+                }
+
+                return (scanResult, errors.ToArray());
+
+                IConformanceScanner createScanner(string path)
+                {
+                    var ext = Path.GetExtension(path).ToLower();
+                    return ext == ".xml" ? new XmlFileConformanceScanner(path) :
+                                  ext == ".json" ? new JsonFileConformanceScanner(path) : (IConformanceScanner)null;
+                }
+            }
         }
 
+
+        public void Refresh()
+        {
+            _filesPrepared = false;
+            _resourcesPrepared = false;
+        }
 
         public IEnumerable<string> ListArtifactNames()
         {
@@ -272,7 +348,7 @@ namespace Hl7.Fhir.Specification.Source
             return getResourceFromScannedSource(info) as ValueSet;
         }
 
-        public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri=null, string targetUri=null)
+        public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
         {
             if (sourceUri == null && targetUri == null)
                 throw Error.ArgumentNull(nameof(targetUri), "sourceUri and targetUri cannot both be null");
@@ -283,9 +359,9 @@ namespace Hl7.Fhir.Specification.Source
 
             if (sourceUri != null)
                 infoList = infoList.Where(ci => ci.ConceptMapSource == sourceUri);
-            
-            if(targetUri != null)
-                infoList = infoList.Where(ci =>ci.ConceptMapTarget == targetUri);
+
+            if (targetUri != null)
+                infoList = infoList.Where(ci => ci.ConceptMapTarget == targetUri);
 
             return infoList.Select(info => getResourceFromScannedSource(info)).Where(r => r != null).Cast<ConceptMap>();
         }
@@ -301,6 +377,5 @@ namespace Hl7.Fhir.Specification.Source
             return getResourceFromScannedSource(info) as NamingSystem;
         }
     }
-
 #endif
-            }
+}

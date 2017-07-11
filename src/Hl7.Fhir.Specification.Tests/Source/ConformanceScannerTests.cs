@@ -13,7 +13,7 @@ using System.Diagnostics;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
 
-namespace Hl7.Fhir.Specification.Tests.Source
+namespace Hl7.Fhir.Specification.Tests
 {
     [TestClass]
     public class ConformanceScannerTests

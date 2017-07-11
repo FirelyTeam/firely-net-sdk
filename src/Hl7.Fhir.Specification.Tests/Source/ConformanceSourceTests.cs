@@ -11,6 +11,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Utility;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -152,6 +155,32 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [TestMethod]
+        public void TestFilenameDeDuplication()
+        {
+            var paths = new List<string> { @"c:\blie\bla.txt", @"c:\bla\bla.txt", @"c:\blie\bla.txt", @"c:\yadi.json",
+                                @"c:\blie\bit.xml", @"c:\blie\bit.json", @"c:\blie\bit.txt" };
+
+            var res = DirectorySource.ResolveDuplicateFilenames(paths, DirectorySource.DuplicateFilenameResolution.PreferXml);
+            Assert.AreEqual(5, res.Count);
+            Assert.IsTrue(res.Any(p => p.EndsWith("bit.xml")));
+            Assert.IsTrue(res.Any(p => p.EndsWith("bit.txt")));
+            Assert.IsFalse(res.Any(p=> p.EndsWith("bit.json")));
+            Assert.IsTrue(res.Any(p=>p.EndsWith("yadi.json")));
+
+            res = DirectorySource.ResolveDuplicateFilenames(paths, DirectorySource.DuplicateFilenameResolution.PreferJson);
+            Assert.AreEqual(5, res.Count);
+            Assert.IsFalse(res.Any(p => p.EndsWith("bit.xml")));
+            Assert.IsTrue(res.Any(p => p.EndsWith("bit.txt")));
+            Assert.IsTrue(res.Any(p => p.EndsWith("bit.json")));
+            Assert.IsTrue(res.Any(p => p.EndsWith("yadi.json")));
+
+            res = DirectorySource.ResolveDuplicateFilenames(paths, DirectorySource.DuplicateFilenameResolution.KeepBoth);
+            Assert.AreEqual(6, res.Count);
+            Assert.IsTrue(res.Any(p => p.EndsWith("bit.xml")));
+            Assert.IsTrue(res.Any(p => p.EndsWith("bit.json")));
+        }
+
+        [TestMethod]
         public void TestIgnoreFilter()
         {
             var files = new[] {
@@ -231,6 +260,12 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(r.All(f => f.Contains("\\bla2\\")));
 
             // Select whole directory
+            fi = new FilePatternFilter("bla2/**");
+            r = fi.Filter(basef, files);
+            Assert.AreEqual(4, r.Count());
+            Assert.IsTrue(r.All(f => f.Contains("\\bla2\\")));
+
+            // Select whole directory
             fi = new FilePatternFilter("/bla3/");
             r = fi.Filter(basef, files);
             Assert.AreEqual(0, r.Count());
@@ -248,5 +283,40 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(@"c:\bla\bla2\bla3\test2.jpg", r.Single());
         }
 
+
+        [TestMethod]
+        public void TestSourceSpeedTest()
+        {
+            var jsonSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory,"TestData"), includeSubdirectories: false);
+            jsonSource.Mask = "*.json";
+            jsonSource.Includes = new[] { "profiles-types.json" };
+            Assert.IsNotNull(jsonSource.LoadArtifactByName("profiles-types.json"));
+
+            var xmlSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), includeSubdirectories: false);
+            xmlSource.Mask = "*.xml";
+            xmlSource.Includes = new[] { "profiles-types.xml" };
+            Assert.IsNotNull(xmlSource.LoadArtifactByName("profiles-types.xml"));
+
+            var duration = runTest(jsonSource);
+            Assert.IsTrue(duration < 1000);
+
+            duration = runTest(xmlSource);
+            Assert.IsTrue(duration < 500);
+
+            long runTest(DirectorySource s)
+            {
+                var sw = new Stopwatch();
+                sw.Start();
+
+                for (var repeat = 0; repeat < 10; repeat++)
+                {
+                    s.Refresh();  // force reload of whole file
+                    s.ListResourceUris().Count();
+                }
+
+                sw.Stop();
+                return sw.ElapsedMilliseconds;
+            }
+        }
     }
 }
