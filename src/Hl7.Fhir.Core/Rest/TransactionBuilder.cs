@@ -229,10 +229,6 @@ namespace Hl7.Fhir.Rest
         {
             var entry = newEntry(useGet ? Bundle.HTTPVerb.GET : Bundle.HTTPVerb.POST);
 
-            // Brian: Not sure why we would create this parameters object as empty.
-            //        I would imagine that a null parameters object is different to an empty one?
-            // if (parameters == null)
-            //    parameters = new Parameters();
             entry.Resource = parameters;
 
             var path = new RestUrl(endpoint);
