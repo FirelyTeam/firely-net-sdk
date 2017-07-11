@@ -32,6 +32,8 @@ namespace Hl7.Fhir.Support
             Conflicts = conflicts.ToArray();
         }
 
+        public bool IsResolved => Conflicts?.All(c => c.FilePaths.Count() == 1) == true;
+
         /// <summary>Returns a list of canonical url conflicts.</summary>
         public CanonicalUrlConflict[] Conflicts { get; private set; }
 
