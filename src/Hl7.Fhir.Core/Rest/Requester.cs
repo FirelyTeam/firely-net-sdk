@@ -13,6 +13,7 @@ using Hl7.Fhir.Utility;
 using System;
 using System.IO.Compression;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
@@ -57,8 +58,11 @@ namespace Hl7.Fhir.Rest
         public Action<HttpWebResponse, byte[]> AfterResponse { get; set; }
 
 
-
         public Bundle.EntryComponent Execute(Bundle.EntryComponent interaction)
+        {
+            return ExecuteAsync(interaction).WaitResult();
+        }
+        public async Task<Bundle.EntryComponent> ExecuteAsync(Bundle.EntryComponent interaction)
         {
             if (interaction == null) throw Error.ArgumentNull(nameof(interaction));
             bool compressRequestBody = false;
@@ -85,8 +89,8 @@ namespace Hl7.Fhir.Rest
                 request.WriteBody(compressRequestBody, outBody);
 
             // Make sure the HttpResponse gets disposed!
-            // using (HttpWebResponse webResponse = (HttpWebResponse)await request.GetResponseAsync(new TimeSpan(0, 0, 0, 0, Timeout)))
-            using (HttpWebResponse webResponse = (HttpWebResponse)request.GetResponseNoEx())
+            using (HttpWebResponse webResponse = (HttpWebResponse)await request.GetResponseAsync(new TimeSpan(0, 0, 0, 0, Timeout)).ConfigureAwait(false))
+            //using (HttpWebResponse webResponse = (HttpWebResponse)request.GetResponseNoEx())
             {
                 try
                 {
