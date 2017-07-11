@@ -13,5 +13,12 @@ namespace Hl7.Fhir.Rest
             task.Wait();
             return task.Result;
         }
+
+        public static Task<TResult> FromResult<TResult>(TResult resultValue)
+        {
+            var completionSource = new TaskCompletionSource<TResult>();
+            completionSource.SetResult(resultValue);
+            return completionSource.Task;
+        }
     }
 }

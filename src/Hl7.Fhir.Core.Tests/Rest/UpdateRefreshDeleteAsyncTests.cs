@@ -1,20 +1,19 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using FluentAssertions;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Hl7.Fhir.Core.AsyncTests
 {
-    [TestFixture]
+    [TestClass]
     public class UpdateRefreshDeleteAsyncTests
     {
         private string _endpoint = "https://api.hspconsortium.org/rpineda/open";
 
-        [Test]
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
         public async Task UpdateDelete_UsingResourceIdentity_ResultReturned()
         {
             var client = new FhirClient(_endpoint);
@@ -36,7 +35,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             // Create the patient
             Console.WriteLine("Creating patient...");
             Patient p = await client.UpdateAsync<Patient>(pat);
-            p.Should().NotBeNull();
+            Assert.IsNotNull(p);
 
             // Refresh the patient
             Console.WriteLine("Refreshing patient...");
@@ -53,7 +52,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             };
 
             // VERIFY //
-            act.ShouldThrow<FhirOperationException>("the patient is no longer on the server");
+            Assert.ThrowsException<FhirOperationException>(act, "the patient is no longer on the server");
             
             
             Console.WriteLine("Test Completed");

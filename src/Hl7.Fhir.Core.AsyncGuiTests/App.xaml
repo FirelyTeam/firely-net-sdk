@@ -1,9 +1,0 @@
-﻿<Application x:Class="Hl7.Fhir.Core.AsyncGuiTests.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Hl7.Fhir.Core.AsyncGuiTests"
-             StartupUri="MainWindow.xaml">
-    <Application.Resources>
-         
-    </Application.Resources>
-</Application>
