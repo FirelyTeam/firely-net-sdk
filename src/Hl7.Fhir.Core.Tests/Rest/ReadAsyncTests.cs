@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using FluentAssertions;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Hl7.Fhir.Core.AsyncTests
 {
-    [TestFixture]
+    [TestClass]
     public class ReadAsyncTests
     {
         private string _endpoint = "https://api.hspconsortium.org/rpineda/open";
-        [Test]
+
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
         public async Task Read_UsingResourceIdentity_ResultReturned()
         {
             var client = new FhirClient(_endpoint);
@@ -20,13 +21,15 @@ namespace Hl7.Fhir.Core.AsyncTests
             client.ReturnFullResource = true;
 
             Patient p = await client.ReadAsync<Patient>(new ResourceIdentity("/Patient/SMART-1288992"));
-            p.Should().NotBeNull();
-            p.Name[0].Given.Should().NotBeNull();
-            p.Name[0].Family.Should().NotBeNull();
+            Assert.IsNotNull(p);
+            Assert.IsNotNull(p.Name[0].Given);
+            Assert.IsNotNull(p.Name[0].Family);
             Console.WriteLine($"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
             Console.WriteLine("Test Completed");
         }
-        [Test]
+
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
         public async Task Read_UsingLocationString_ResultReturned()
         {
             var client = new FhirClient(_endpoint);
@@ -34,9 +37,9 @@ namespace Hl7.Fhir.Core.AsyncTests
             client.ReturnFullResource = true;
 
             Patient p = await client.ReadAsync<Patient>("/Patient/SMART-1288992");
-            p.Should().NotBeNull();
-            p.Name[0].Given.Should().NotBeNull();
-            p.Name[0].Family.Should().NotBeNull();
+            Assert.IsNotNull(p);
+            Assert.IsNotNull(p.Name[0].Given);
+            Assert.IsNotNull(p.Name[0].Family);
             Console.WriteLine($"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
             Console.WriteLine("Test Completed");
         }
