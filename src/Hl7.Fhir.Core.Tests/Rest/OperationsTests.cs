@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public async Task InvokeTestPatientGetEverythingAsync()
+        public async System.Threading.Tasks.Task InvokeTestPatientGetEverythingAsync()
         {
             string _endpoint = "https://api.hspconsortium.org/rpineda/open";
 
@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Tests.Rest
             var bundleTask = client.InstanceOperationAsync(ResourceIdentity.Build("Patient", "SMART-1288992"), "everything", par);
             var bundle2Task = client.FetchPatientRecordAsync(ResourceIdentity.Build("Patient", "SMART-1288992"), start, end);
 
-            await Task.WhenAll(bundleTask, bundle2Task);
+            await System.Threading.Tasks.Task.WhenAll(bundleTask, bundle2Task);
 
             var bundle = (Bundle)bundleTask.Result;
             Assert.IsTrue(bundle.Entry.Any());

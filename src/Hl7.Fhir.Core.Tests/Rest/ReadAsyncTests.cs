@@ -14,7 +14,7 @@ namespace Hl7.Fhir.Core.AsyncTests
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public async Task Read_UsingResourceIdentity_ResultReturned()
+        public async System.Threading.Tasks.Task Read_UsingResourceIdentity_ResultReturned()
         {
             var client = new FhirClient(_endpoint);
             client.PreferredFormat = ResourceFormat.Json;
@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Core.AsyncTests
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public async Task Read_UsingLocationString_ResultReturned()
+        public async System.Threading.Tasks.Task Read_UsingLocationString_ResultReturned()
         {
             var client = new FhirClient(_endpoint);
             client.PreferredFormat = ResourceFormat.Json;
