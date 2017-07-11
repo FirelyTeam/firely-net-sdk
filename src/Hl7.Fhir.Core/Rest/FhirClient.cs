@@ -895,7 +895,9 @@ namespace Hl7.Fhir.Rest
         {
             // Brian: Not sure why we would create this parameters object as empty.
             //        I would imagine that a null parameters object is different to an empty one?
-            // if (parameters == null) parameters = new Parameters();
+            // EK: What else could we do?  POST an empty body?  We cannot use GET unless the caller indicates this is an
+            // idempotent call....
+            if (parameters == null) parameters = new Parameters();
 
             Bundle tx;
 
