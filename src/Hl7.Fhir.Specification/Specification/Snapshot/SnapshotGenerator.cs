@@ -414,8 +414,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // [WMR 20170208] TODO: Expand profile snapshot if necessary
             if (typeStructure != null && typeStructure.HasSnapshot)
             {
-                var typeSnap = typeStructure.Snapshot;
-                var typeNav = new ElementDefinitionNavigator(typeSnap.Element);
+                var typeNav = ElementDefinitionNavigator.ForSnapshot(typeStructure);
                 if (!typeNav.MoveToFirstChild())
                 {
                     addIssueProfileHasNoSnapshot(nav.Current.ToNamedNode(), typeStructure.Url);
@@ -444,7 +443,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // [WMR 20170711]
                 // - Regenerate element IDs (NOT inherited from external rebased element type profiles!)
                 // - Notify subscribers by calling OnPrepareBaseElement, before merging diff constraints
-                prepareTypeProfileElements(nav, typeStructure);
+                // prepareTypeProfileElements(nav, typeStructure);
+                prepareTypeProfileElements2(nav, typeNav);
 
                 return true;
             }
@@ -979,6 +979,9 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 // Important! Must clone the current snapshot element to create a separate base instance
                 // Clone BEFORE erasing the original ElementID
+                
+                // [WMR 20170713] WRONG! Must pull correct base element from typeProfile
+
                 var baseElem = (ElementDefinition)elem.DeepCopy();
 
                 if (_settings.GenerateElementIds)
@@ -999,6 +1002,93 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 // Re-generate IDs for elements inherited from external rebased type profile
                 ElementIdGenerator.Update(nav, true);
+            }
+        }
+
+        // [WMR 20170713] NEW
+        // Problem: prepareTypeProfileElements raises OnPrepareElement with invalid baseElement
+        // To determine correct matching base element from typeNav, we need to recursively match type profile children...
+        // This finds correct matching base elements, but is MUCH slower...
+        void prepareTypeProfileElements2(ElementDefinitionNavigator snap, ElementDefinitionNavigator typeNav)
+        {
+            // ElementIdGenerator.Update is recursive, only need to call this once for the expanded subtree
+            if (_settings.GenerateElementIds)
+            {
+                // Re-generate IDs for elements inherited from external rebased type profile
+                ElementIdGenerator.Update(snap, true);
+            }
+
+            prepareTypeProfileElements2b(snap, typeNav);
+        }
+
+        void prepareTypeProfileElements2b(ElementDefinitionNavigator snap, ElementDefinitionNavigator typeNav)
+        {
+            var snapPos = snap.Bookmark();
+            var typePos = typeNav.Bookmark();
+            var typeProfile = typeNav.StructureDefinition;
+            Debug.Assert(typeProfile != null);
+
+            try
+            {
+                var matches = ElementMatcher.Match(snap, typeNav);
+
+                // Debug.WriteLine($"Type profile matches for children of {(snap.Path ?? "/")} '{(snap.Current?.SliceName ?? snap.Current?.Type.FirstOrDefault()?.Profile ?? snap.Current?.Type.FirstOrDefault()?.Code)}'");
+                // matches.DumpMatches(snap, typeNav);
+
+                foreach (var match in matches)
+                {
+                    // Navigate to the matched elements
+                    if (!snap.ReturnToBookmark(match.BaseBookmark))
+                    {
+                        throw Error.InvalidOperation($"Internal error in snapshot generator ({nameof(merge)}): bookmark '{match.BaseBookmark}' in snap is no longer available");
+                    }
+                    if (!typeNav.ReturnToBookmark(match.DiffBookmark))
+                    {
+                        throw Error.InvalidOperation($"Internal error in snapshot generator ({nameof(merge)}): bookmark '{match.DiffBookmark}' in typeNav is no longer available");
+                    }
+
+                    // Collect any reported issue
+                    if (match.Issue != null)
+                    {
+                        addIssue(match.Issue);
+                    }
+
+                    // Process the match, depending on the result
+                    switch (match.Action)
+                    {
+                        case ElementMatcher.MatchAction.Merge:
+                            OnPrepareElement(snap.Current, typeProfile, typeNav.Current);
+                            break;
+                        case ElementMatcher.MatchAction.Add:
+                            OnPrepareElement(snap.Current, typeProfile, match.SliceBase.Current);
+                            break;
+                        case ElementMatcher.MatchAction.Slice:
+                            // For extensions, match.SliceBase may be null (slice entry is implicit and may be omitted)
+                            var sliceBase = match.SliceBase?.Current ?? createExtensionSlicingEntry(snap.Current);
+                            OnPrepareElement(snap.Current, typeProfile, sliceBase);
+                            break;
+                        case ElementMatcher.MatchAction.New:
+                            // No matching base element; this is a new element definition
+                            // snap is positioned at the associated parent element
+                            OnPrepareElement(snap.Current, null, null);
+                            break;
+                        case ElementMatcher.MatchAction.Invalid:
+                            // Collect issue and ignore invalid element
+                            break;
+                    }
+
+                    // Recurse children
+                    if (snap.HasChildren)
+                    {
+                        prepareTypeProfileElements2b(snap, typeNav);
+                    }
+
+                }
+            }
+            finally
+            {
+                snap.ReturnToBookmark(snapPos);
+                typeNav.ReturnToBookmark(typePos);
             }
         }
 

@@ -1706,14 +1706,11 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsNotNull(baseElem);
                 Assert.AreEqual(elem.Path, baseElem.Path); // Base = core Patient.identifier element
                 // Note: diff elem is not exactly equal to base elem (due to reduntant type profile constraint)
-                // [WMR 20170501 OLD] hasConstraints and hasChanges methods aren't smart enough to detect redundant constraints
-                var hasConstraints = !SnapshotGeneratorTest2.isAlmostExactly(elem, baseElem);
-                // Assert.IsTrue(hasConstraints);
-                // [WMR 20170501 NEW] diff introduces redundant constraint
-                // => elem and baseElem are exactly equal
-                // elem.IsExactly(baseElem) == true => hasConstraints = false
-                // However because (redundant) diff constraint exists, snap element is annotated => hasChanges = true
-                Assert.IsFalse(hasConstraints);
+                var hasConstraints = !SnapshotGeneratorTest2.isAlmostExactly(elem, baseElem, false);
+                Assert.IsTrue(hasConstraints);
+                // Check: re-assert while ignoring the redundant type profile constraint
+                Assert.IsTrue(SnapshotGeneratorTest2.isAlmostExactly(elem, baseElem, true));
+
                 Assert.IsTrue(hasChanges(elem));
 
                 // Verify base annotations on Patient.identifier subtree
@@ -1727,8 +1724,13 @@ namespace Hl7.Fhir.Specification.Tests
                     hasConstraints = !SnapshotGeneratorTest2.isAlmostExactly(elem, baseElem);
                     // Only the .use child element has a profile diff constraint
                     bool isConstrained = elem.Path == "Patient.identifier.use";
-                    Assert.AreEqual(isConstrained, hasConstraints);
-                    Assert.AreEqual(isConstrained, hasChanges(elem));
+
+                    // [WMR 20170713] Changed
+                    // Assert.AreEqual(isConstrained, hasConstraints);
+                    Assert.AreEqual(isConstrained || elem.IsExtension(), hasConstraints);
+
+                    var elemHasChanges = hasChanges(elem);
+                    Assert.AreEqual(isConstrained, elemHasChanges);
 
                     // Verify that base element annotations reference the associated child element in Core Identifier profile
                     // [WMR 20170501] OBSOLETE
@@ -2046,7 +2048,10 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     // If normalizing, then elem.Base.Path refers to the defining profile (e.g. DomainResource),
                     // whereas baseDef refers to the immediate base profile (e.g. Patient)
-                    Debug.Assert(elem.Base == null || ElementDefinitionNavigator.IsCandidateBasePath(elem.Base.Path, baseDef.Path));
+                    Debug.Assert(elem.Base == null || ElementDefinitionNavigator.IsCandidateBasePath(elem.Base.Path, baseDef.Path)
+                        // [WMR 20170713] Added, e.g. Patient.identifier.use <=> code
+                        || !baseDef.Path.Contains(".")
+                        );
                     isNotExactly = !SnapshotGeneratorTest2.isAlmostExactly(elem, baseDef);
                 }
                 // var isValid = hasChanges == isNotExactly;
@@ -2079,7 +2084,7 @@ namespace Hl7.Fhir.Specification.Tests
         // Utility function to compare element and base element
         // Path, Base and CHANGED_BY_DIFF_EXT extension are excluded from comparison
         // Returns true if the element has no other constraints on base
-        static bool isAlmostExactly(ElementDefinition elem, ElementDefinition baseElem)
+        static bool isAlmostExactly(ElementDefinition elem, ElementDefinition baseElem, bool ignoreTypeProfile = false)
         {
             var elemClone = (ElementDefinition)elem.DeepCopy();
             var baseClone = (ElementDefinition)baseElem.DeepCopy();
@@ -2088,6 +2093,14 @@ namespace Hl7.Fhir.Specification.Tests
             baseClone.ElementId = elem.ElementId;
             baseClone.Path = elem.Path;
             baseClone.Base = elem.Base;
+
+            // [WMR 20170713] Added
+            if (ignoreTypeProfile)
+            {
+                Debug.Assert(elem.Type.Count > 0);
+                Debug.Assert(baseClone.Type.Count > 0);
+                baseClone.Type[0].Profile = elem.Type[0].Profile;
+            }
 
             // Also ignore any Changed extensions on base and diff
             elemClone.RemoveAllConstrainedByDiffExtensions();
@@ -4951,11 +4964,26 @@ namespace Hl7.Fhir.Specification.Tests
                     },
                 }
             }
-            };
+        };
 
         // Isue #387
         // https://github.com/ewoutkramer/fhir-net-api/issues/387
         // Cannot reproduce in STU3?
+        // [WMR 20170713] Note: in DSTU2, the QuestionnaireResponse core resource definition
+        // specifies an example binding on element "QuestionnaireResponse.group.question.answer.value[x]"
+        // WITHOUT an actual valueset reference:
+        //
+        //   <element>
+        //     <path value="QuestionnaireResponse.group.question.answer.value[x]"/>
+        //     <!-- ... -->
+        //     <binding>
+        //       <strength value="example"/>
+        //       <description value="Code indicating the response provided for a question."/>
+        //     </binding>
+        //     <!-- ... -->
+        //   </element>
+        //
+        // However in STU3, the core def example binding DOES include a valueset reference.
         [TestMethod]
         public void TestQRSliceChildrenBindings()
         {
@@ -4998,6 +5026,160 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsNotNull(bindingNameValue);
                 Assert.AreEqual("QuestionnaireAnswer", bindingNameValue.Value);
             }
+        }
+
+        // For derived profiles, base element annotations are incorrect
+        // https://trello.com/c/8h7u2qRa
+        // Three layers of derived profiles: MyVitalSigns => VitalSigns => Observation
+        // When expanding MyVitalSigns, the annotated base elements also include local diff constraints... WRONG!
+        // As a result, Forge will not detect the existing local constraints (no yellow pen, excluded from output).
+
+        const string MyDerivedObservationUrl = @"http://example.org/fhir/StructureDefinition/MyDerivedObservation";
+        const string MyMoreDerivedObservationUrl = @"http://example.org/fhir/StructureDefinition/MyMoreDerivedObservation";
+
+        static StructureDefinition MyDerivedObservation => new StructureDefinition()
+        {
+            Type = FHIRAllTypes.Observation.GetLiteral(),
+            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation),
+            Name = "MyDerivedObservation",
+            Url = MyDerivedObservationUrl,
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+            Kind = StructureDefinition.StructureDefinitionKind.Resource,
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("Observation.method")
+                    {
+                        Short = "DerivedMethodShort"
+                    }
+                }
+            }
+        };
+
+        [TestMethod]
+        public void TestDerivedObservation()
+        {
+            var derivedObs = MyDerivedObservation;
+            var resolver = new InMemoryProfileResolver(derivedObs);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            StructureDefinition expanded = null;
+            // _generator.BeforeExpandElement += beforeExpandElementHandler_DEBUG;
+            _generator.PrepareElement += elementHandler;
+            try
+            {
+                generateSnapshotAndCompare(derivedObs, out expanded);
+            }
+            finally
+            {
+                // _generator.BeforeExpandElement -= beforeExpandElementHandler_DEBUG;
+                _generator.PrepareElement -= elementHandler;
+            }
+
+            dumpOutcome(_generator.Outcome);
+            Assert.IsTrue(expanded.HasSnapshot);
+            // dumpElements(expanded.Snapshot.Element);
+            dumpBaseElems(expanded.Snapshot.Element);
+
+            var derivedMethodElem = expanded.Snapshot.Element.FirstOrDefault(e => e.Path == "Observation.method");
+            Assert.IsNotNull(derivedMethodElem);
+            Assert.AreEqual("DerivedMethodShort", derivedMethodElem.Short);
+
+            var coreObs = _testResolver.FindStructureDefinitionForCoreType(FHIRAllTypes.Observation);
+            Assert.IsTrue(coreObs.HasSnapshot);
+            var coreMethodElem = coreObs.Snapshot.Element.FirstOrDefault(e => e.Path == "Observation.method");
+            Assert.IsNotNull(coreMethodElem);
+            Assert.IsNotNull(coreMethodElem.Short);
+
+            var annotation = derivedMethodElem.Annotation<BaseDefAnnotation>();
+            Assert.IsNotNull(annotation);
+            var baseElem = annotation.BaseElementDefinition;
+            Assert.IsNotNull(baseElem);
+            Assert.AreEqual(coreMethodElem.Short, baseElem.Short);
+        }
+
+        static StructureDefinition MyMoreDerivedObservation => new StructureDefinition()
+        {
+            Type = FHIRAllTypes.Observation.GetLiteral(),
+            BaseDefinition = MyDerivedObservationUrl,
+            Name = "MyMoreDerivedObservation",
+            Url = MyMoreDerivedObservationUrl,
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+            Kind = StructureDefinition.StructureDefinitionKind.Resource,
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("Observation.method")
+                    {
+                        Short = "MoreDerivedMethodShort",
+                        Comment = "MoreDerivedMethodComment"
+                    },
+                    // Include child constraint to force full expansion of .bodySite node
+                    // BUG: if we include this element, then the generated base element for .bodySite is incorrect
+                    // (includes local constraints, i.e. Min = 1 ... WRONG!)
+                    new ElementDefinition("Observation.method.coding.code")
+                    {
+                        Min = 1
+                    },
+                }
+            }
+        };
+
+        [TestMethod]
+        public void TestMoreDerivedObservation()
+        {
+            var derivedObs = MyDerivedObservation;
+            var moreDerivedObs = MyMoreDerivedObservation;
+            var resolver = new InMemoryProfileResolver(derivedObs, moreDerivedObs);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            StructureDefinition expanded = null;
+            // _generator.BeforeExpandElement += beforeExpandElementHandler_DEBUG;
+            _generator.PrepareElement += elementHandler;
+            try
+            {
+                generateSnapshotAndCompare(moreDerivedObs, out expanded);
+            }
+            finally
+            {
+                // _generator.BeforeExpandElement -= beforeExpandElementHandler_DEBUG;
+                _generator.PrepareElement -= elementHandler;
+            }
+
+            dumpOutcome(_generator.Outcome);
+            Assert.IsTrue(expanded.HasSnapshot);
+            // dumpElements(expanded.Snapshot.Element);
+            dumpBaseElems(expanded.Snapshot.Element);
+
+            var moreDerivedMethodElem = expanded.Snapshot.Element.FirstOrDefault(e => e.Path == "Observation.method");
+            Assert.IsNotNull(moreDerivedMethodElem);
+            Assert.AreEqual("MoreDerivedMethodShort", moreDerivedMethodElem.Short);
+
+            Assert.IsTrue(derivedObs.HasSnapshot);
+            var derivedMethodElem = derivedObs.Snapshot.Element.FirstOrDefault(e => e.Path == "Observation.method");
+            Assert.IsNotNull(derivedMethodElem);
+            Assert.AreEqual("DerivedMethodShort", derivedMethodElem.Short);
+
+            // MoreDerivedObservation:Observation.method.short is inherited from DerivedObservation:Observation.method.short
+            var annotation = moreDerivedMethodElem.Annotation<BaseDefAnnotation>();
+            Assert.IsNotNull(annotation);
+            var baseElem = annotation.BaseElementDefinition;
+            Assert.IsNotNull(baseElem);
+            Assert.AreEqual(derivedMethodElem.Short, baseElem.Short);
+
+            // MoreDerivedObservation:Observation.method.comments is inherited from Core:Observation.method.comments
+            var coreObs = _testResolver.FindStructureDefinitionForCoreType(FHIRAllTypes.Observation);
+            Assert.IsTrue(coreObs.HasSnapshot);
+            var coreMethodElem = coreObs.Snapshot.Element.FirstOrDefault(e => e.Path == "Observation.method");
+            Assert.IsNotNull(coreMethodElem);
+            Assert.IsNotNull(coreMethodElem.Comment);
+            Assert.AreEqual(coreMethodElem.Comment, baseElem.Comment);
         }
 
     }
