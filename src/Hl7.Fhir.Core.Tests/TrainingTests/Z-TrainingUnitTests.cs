@@ -59,9 +59,7 @@ namespace FHIR.Server.Tests
             pat.Telecom[0].Period = new Period() { Start = "2015", End = "2017" };
         }
 
-        /// <summary>
-        /// https://groups.google.com/forum/?utm_medium=email&utm_source=footer#!msg/fhir-dotnet/2L0_3ONfIbk/Er8Ho0yeCAAJ
-        /// </summary>
+        // See https://groups.google.com/forum/?utm_medium=email&utm_source=footer#!msg/fhir-dotnet/2L0_3ONfIbk/Er8Ho0yeCAAJ
         [TestMethod, TestCategory("Training")]
         public void AddingAnExtensionToPatientResource()
         {

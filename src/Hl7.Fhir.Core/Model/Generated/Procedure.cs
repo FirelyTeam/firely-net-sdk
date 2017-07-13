@@ -35,6 +35,7 @@ using Hl7.Fhir.Utility;
   
 
 */
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
 // Generated for FHIR v1.0.2
@@ -176,6 +177,18 @@ namespace Hl7.Fhir.Model
                     if (Role != null) yield return Role;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Actor != null) yield return new ElementValue("actor", false, Actor);
+                    if (Role != null) yield return new ElementValue("role", false, Role);
+                }
+            }
+
             
         }
         
@@ -271,6 +284,18 @@ namespace Hl7.Fhir.Model
                     if (Manipulated != null) yield return Manipulated;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Action != null) yield return new ElementValue("action", false, Action);
+                    if (Manipulated != null) yield return new ElementValue("manipulated", false, Manipulated);
+                }
+            }
+
             
         }
         
@@ -762,6 +787,37 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Used) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (Subject != null) yield return new ElementValue("subject", false, Subject);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (Category != null) yield return new ElementValue("category", false, Category);
+                if (Code != null) yield return new ElementValue("code", false, Code);
+                if (NotPerformedElement != null) yield return new ElementValue("notPerformed", false, NotPerformedElement);
+                foreach (var elem in ReasonNotPerformed) { if (elem != null) yield return new ElementValue("reasonNotPerformed", true, elem); }
+                foreach (var elem in BodySite) { if (elem != null) yield return new ElementValue("bodySite", true, elem); }
+                if (Reason != null) yield return new ElementValue("reason", false, Reason);
+                foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", true, elem); }
+                if (Performed != null) yield return new ElementValue("performed", false, Performed);
+                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
+                if (Location != null) yield return new ElementValue("location", false, Location);
+                if (Outcome != null) yield return new ElementValue("outcome", false, Outcome);
+                foreach (var elem in Report) { if (elem != null) yield return new ElementValue("report", true, elem); }
+                foreach (var elem in Complication) { if (elem != null) yield return new ElementValue("complication", true, elem); }
+                foreach (var elem in FollowUp) { if (elem != null) yield return new ElementValue("followUp", true, elem); }
+                if (Request != null) yield return new ElementValue("request", false, Request);
+                foreach (var elem in Notes) { if (elem != null) yield return new ElementValue("notes", true, elem); }
+                foreach (var elem in FocalDevice) { if (elem != null) yield return new ElementValue("focalDevice", true, elem); }
+                foreach (var elem in Used) { if (elem != null) yield return new ElementValue("used", true, elem); }
+            }
+        }
+
     }
     
 }

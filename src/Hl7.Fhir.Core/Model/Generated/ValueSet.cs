@@ -35,6 +35,7 @@ using Hl7.Fhir.Utility;
   
 
 */
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
 // Generated for FHIR v1.0.2
@@ -206,6 +207,18 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Telecom) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                    foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
+                }
+            }
+
             
         }
         
@@ -391,6 +404,20 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Concept) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (SystemElement != null) yield return new ElementValue("system", false, SystemElement);
+                    if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
+                    if (CaseSensitiveElement != null) yield return new ElementValue("caseSensitive", false, CaseSensitiveElement);
+                    foreach (var elem in Concept) { if (elem != null) yield return new ElementValue("concept", true, elem); }
+                }
+            }
+
             
         }
         
@@ -630,6 +657,22 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Concept) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
+                    if (AbstractElement != null) yield return new ElementValue("abstract", false, AbstractElement);
+                    if (DisplayElement != null) yield return new ElementValue("display", false, DisplayElement);
+                    if (DefinitionElement != null) yield return new ElementValue("definition", false, DefinitionElement);
+                    foreach (var elem in Designation) { if (elem != null) yield return new ElementValue("designation", true, elem); }
+                    foreach (var elem in Concept) { if (elem != null) yield return new ElementValue("concept", true, elem); }
+                }
+            }
+
             
         }
         
@@ -778,6 +821,19 @@ namespace Hl7.Fhir.Model
                     if (ValueElement != null) yield return ValueElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (LanguageElement != null) yield return new ElementValue("language", false, LanguageElement);
+                    if (Use != null) yield return new ElementValue("use", false, Use);
+                    if (ValueElement != null) yield return new ElementValue("value", false, ValueElement);
+                }
+            }
+
             
         }
         
@@ -909,6 +965,19 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Exclude) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    foreach (var elem in ImportElement) { if (elem != null) yield return new ElementValue("import", true, elem); }
+                    foreach (var elem in Include) { if (elem != null) yield return new ElementValue("include", true, elem); }
+                    foreach (var elem in Exclude) { if (elem != null) yield return new ElementValue("exclude", true, elem); }
+                }
+            }
+
             
         }
         
@@ -1076,6 +1145,20 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Filter) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (SystemElement != null) yield return new ElementValue("system", false, SystemElement);
+                    if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
+                    foreach (var elem in Concept) { if (elem != null) yield return new ElementValue("concept", true, elem); }
+                    foreach (var elem in Filter) { if (elem != null) yield return new ElementValue("filter", true, elem); }
+                }
+            }
+
             
         }
         
@@ -1225,6 +1308,19 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Designation) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
+                    if (DisplayElement != null) yield return new ElementValue("display", false, DisplayElement);
+                    foreach (var elem in Designation) { if (elem != null) yield return new ElementValue("designation", true, elem); }
+                }
+            }
+
             
         }
         
@@ -1394,6 +1490,19 @@ namespace Hl7.Fhir.Model
                     if (ValueElement != null) yield return ValueElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (PropertyElement != null) yield return new ElementValue("property", false, PropertyElement);
+                    if (OpElement != null) yield return new ElementValue("op", false, OpElement);
+                    if (ValueElement != null) yield return new ElementValue("value", false, ValueElement);
+                }
+            }
+
             
         }
         
@@ -1634,6 +1743,22 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Contains) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (IdentifierElement != null) yield return new ElementValue("identifier", false, IdentifierElement);
+                    if (TimestampElement != null) yield return new ElementValue("timestamp", false, TimestampElement);
+                    if (TotalElement != null) yield return new ElementValue("total", false, TotalElement);
+                    if (OffsetElement != null) yield return new ElementValue("offset", false, OffsetElement);
+                    foreach (var elem in Parameter) { if (elem != null) yield return new ElementValue("parameter", true, elem); }
+                    foreach (var elem in Contains) { if (elem != null) yield return new ElementValue("contains", true, elem); }
+                }
+            }
+
             
         }
         
@@ -1748,6 +1873,18 @@ namespace Hl7.Fhir.Model
                     if (Value != null) yield return Value;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                    if (Value != null) yield return new ElementValue("value", false, Value);
+                }
+            }
+
             
         }
         
@@ -2004,6 +2141,22 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Contains) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (SystemElement != null) yield return new ElementValue("system", false, SystemElement);
+                    if (AbstractElement != null) yield return new ElementValue("abstract", false, AbstractElement);
+                    if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
+                    if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
+                    if (DisplayElement != null) yield return new ElementValue("display", false, DisplayElement);
+                    foreach (var elem in Contains) { if (elem != null) yield return new ElementValue("contains", true, elem); }
+                }
+            }
+
             
         }
         
@@ -2517,7 +2670,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent ValueSet_VSD_5 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("codeSystem or compose or expansion"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("codeSystem.exists() or compose.exists() or expansion.exists()"))},
             Key = "vsd-5",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Value set SHALL contain at least one of a codeSystem, a compose, or an expansion element",
@@ -2526,7 +2679,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent ValueSet_VSD_2 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("compose.import.count() != 1 or compose.include or compose.exclude or codeSystem"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("compose.import.count() != 1 or compose.include.exists() or compose.exclude.exists() or codeSystem.exists()"))},
             Key = "vsd-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "A value set with only one import SHALL also have an include and/or an exclude unless the value set includes and inline code system",
@@ -2553,7 +2706,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent ValueSet_VSD_1 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("compose.all(include or import)"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("compose.all(include.exists() or import.exists())"))},
             Key = "vsd-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "A value set composition SHALL have an include or an import",
@@ -2571,7 +2724,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent ValueSet_VSD_9 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("expansion.contains.all(code or abstract = 'true')"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("expansion.contains.all(code.exists() or (abstract = 'true'))"))},
             Key = "vsd-9",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Must have a code if not abstract",
@@ -2580,7 +2733,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent ValueSet_VSD_6 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("expansion.contains.all(code or display)"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("expansion.contains.all(code.exists() or display.exists())"))},
             Key = "vsd-6",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "SHALL have a code or a display",
@@ -2589,7 +2742,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent ValueSet_VSD_10 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("expansion.contains.all(code.empty() or system)"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("expansion.contains.all(code.empty() or system.exists())"))},
             Key = "vsd-10",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Must have a system if a code is present",
@@ -2734,6 +2887,35 @@ namespace Hl7.Fhir.Model
 				if (Expansion != null) yield return Expansion;
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
+                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
+                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (ExperimentalElement != null) yield return new ElementValue("experimental", false, ExperimentalElement);
+                if (PublisherElement != null) yield return new ElementValue("publisher", false, PublisherElement);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
+                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
+                if (LockedDateElement != null) yield return new ElementValue("lockedDate", false, LockedDateElement);
+                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", true, elem); }
+                if (ImmutableElement != null) yield return new ElementValue("immutable", false, ImmutableElement);
+                if (RequirementsElement != null) yield return new ElementValue("requirements", false, RequirementsElement);
+                if (CopyrightElement != null) yield return new ElementValue("copyright", false, CopyrightElement);
+                if (ExtensibleElement != null) yield return new ElementValue("extensible", false, ExtensibleElement);
+                if (CodeSystem != null) yield return new ElementValue("codeSystem", false, CodeSystem);
+                if (Compose != null) yield return new ElementValue("compose", false, Compose);
+                if (Expansion != null) yield return new ElementValue("expansion", false, Expansion);
+            }
+        }
+
     }
     
 }

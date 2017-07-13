@@ -53,13 +53,13 @@ namespace Hl7.Fhir.Introspection
         /// PropertyMappings in the order as the appear in the reflected class, which is the order
         /// in which they must be serialized.
         /// </summary>
-        private ICollection<PropertyMapping> _orderedMappings;
+        private IList<PropertyMapping> _orderedMappings;
 
         /// <summary>
         /// Collection of PropertyMappings that capture information about this classes
         /// properties
         /// </summary>
-        public ICollection<PropertyMapping> PropertyMappings
+        public IList<PropertyMapping> PropertyMappings
         {
             get
             {
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Introspection
             {
                 name += "<";
                 //name += String.Join(",", type.GetGenericArguments().Select(arg => arg.FullName));
-                name += String.Join(",", type.GenericTypeArguments.Select(arg => arg.FullName));
+                name += String.Join(",", type.GetTypeInfo().GenericTypeArguments.Select(arg => arg.FullName));
 				name += ">";
 			}
 

@@ -35,6 +35,7 @@ using Hl7.Fhir.Utility;
   
 
 */
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
 // Generated for FHIR v1.0.2
@@ -586,6 +587,32 @@ namespace Hl7.Fhir.Model
 				if (UrlElement != null) yield return UrlElement;
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (Type != null) yield return new ElementValue("type", false, Type);
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (ManufacturerElement != null) yield return new ElementValue("manufacturer", false, ManufacturerElement);
+                if (ModelElement != null) yield return new ElementValue("model", false, ModelElement);
+                if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
+                if (ManufactureDateElement != null) yield return new ElementValue("manufactureDate", false, ManufactureDateElement);
+                if (ExpiryElement != null) yield return new ElementValue("expiry", false, ExpiryElement);
+                if (UdiElement != null) yield return new ElementValue("udi", false, UdiElement);
+                if (LotNumberElement != null) yield return new ElementValue("lotNumber", false, LotNumberElement);
+                if (Owner != null) yield return new ElementValue("owner", false, Owner);
+                if (Location != null) yield return new ElementValue("location", false, Location);
+                if (Patient != null) yield return new ElementValue("patient", false, Patient);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
+                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
+            }
+        }
+
     }
     
 }

@@ -45,7 +45,8 @@ namespace Hl7.Fhir.Validation
 
             c.Display = "Not a NumberX";
             result = val.ValidateBinding(c, vsUri, BindingStrength.Required);
-            Assert.False(result.Success);
+            Assert.True(result.Success);
+            Assert.Equal(1, result.Warnings);   // Incorrect display
 
             // But this won't, it's also a composition, but without expansion - the local term server won't help you here
             c = new Coding("http://snomed.info/sct", "160244002");
@@ -75,9 +76,10 @@ namespace Hl7.Fhir.Validation
             result = val.ValidateBinding(cc, vsUri, BindingStrength.Required);
             Assert.False(result.Success);
 
+            //EK 2017-07-6 No longer reports warnings when failing a preferred binding
             result = val.ValidateBinding(cc, vsUri);
             Assert.True(result.Success);
-            Assert.Equal(1, result.Warnings);
+            Assert.Equal(0, result.Warnings);
         }      
     }
 }

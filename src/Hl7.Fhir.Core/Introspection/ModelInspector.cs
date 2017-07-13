@@ -32,7 +32,11 @@ namespace Hl7.Fhir.Introspection
 
             if (assembly.GetCustomAttribute<NotMappedAttribute>() != null) return;
 
+#if NET40
+            IEnumerable<Type> exportedTypes = assembly.GetExportedTypes();
+#else
             IEnumerable<Type> exportedTypes = assembly.ExportedTypes;
+#endif
 
             foreach (Type type in exportedTypes)
             {
@@ -55,13 +59,13 @@ namespace Hl7.Fhir.Introspection
         {
             ClassMapping mapping = null;
 
-            if(!ClassMapping.IsMappableType(type))
-                throw Error.Argument(nameof(type), "Type {0} is not a mappable Fhir datatype or resource".FormatWith(type.Name));
-
             lock (lockObject)
             {
                 mapping = FindClassMappingByType(type);
                 if (mapping != null) return mapping;
+
+                if (!ClassMapping.IsMappableType(type))
+                    throw Error.Argument(nameof(type), "Type {0} is not a mappable Fhir datatype or resource".FormatWith(type.Name));
 
                 mapping = ClassMapping.Create(type);
                 _classMappingsByType[type] = mapping;

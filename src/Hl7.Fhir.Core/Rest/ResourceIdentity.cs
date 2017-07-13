@@ -207,9 +207,12 @@ namespace Hl7.Fhir.Rest
             return ResourceIdentity.Core(type.GetLiteral());
         }
 
+
+        public const string CORE_BASE_URL = "http://hl7.org/fhir/StructureDefinition/";
+
         public static ResourceIdentity Core(string type)
         {
-            return new ResourceIdentity("http://hl7.org/fhir/StructureDefinition/" + type);
+            return new ResourceIdentity(CORE_BASE_URL + type);
         }
 
 

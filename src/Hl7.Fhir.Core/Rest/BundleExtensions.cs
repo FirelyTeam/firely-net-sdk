@@ -14,19 +14,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
     public static class BundleExtensions
     {
-        public static Bundle RefreshBundle(this FhirClient client, Bundle bundle)
+        public static async Task<Bundle> RefreshBundleAsync(this FhirClient client, Bundle bundle)
         {
             if (bundle == null) throw Error.ArgumentNull(nameof(bundle));
 
-            if (bundle.Type != Bundle.BundleType.Searchset) throw Error.Argument("Refresh is only applicable to bundles of type 'searchset'");
+            if (bundle.Type != Bundle.BundleType.Searchset)
+                throw Error.Argument("Refresh is only applicable to bundles of type 'searchset'");
 
             // Clone old bundle, without the entries (so, just the header)
-            Bundle result = (Bundle)bundle.DeepCopy();
+            Bundle result = (Bundle) bundle.DeepCopy();
 
             result.Id = "urn:uuid:" + Guid.NewGuid().ToString("n");
             result.Meta = new Meta();
@@ -36,11 +38,16 @@ namespace Hl7.Fhir.Rest
             {
                 if (entry.Resource != null)
                 {
-                    entry.Resource = client.Read<Resource>(entry.FullUrl);
+                    entry.Resource = await client.ReadAsync<Resource>(entry.FullUrl).ConfigureAwait(false);
                 }
             }
 
             return result;
+        }
+
+        public static Bundle RefreshBundle(this FhirClient client, Bundle bundle)
+        {
+            return RefreshBundleAsync(client, bundle).WaitResult();
         }
     }
 }

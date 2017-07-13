@@ -121,12 +121,12 @@ namespace Hl7.FhirPath
                 return 0;
         }
 
-        public bool MoveToNext()
+        public bool MoveToNext(string nameFilter = null)
         {
             return false;
         }
 
-        public bool MoveToFirstChild()
+        public bool MoveToFirstChild(string nameFilter = null)
         {
             return false;
         }

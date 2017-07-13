@@ -15,9 +15,177 @@ using System.Text;
 
 namespace Hl7.Fhir.Utility
 {
+#if NET40
+    public class TypeInfoPolyfill
+    {
+        public Type Type;
+
+        public TypeInfoPolyfill(Type type)
+        {
+            Type = type;
+        }
+
+        public bool IsValueType
+        {
+            get
+            {
+                return Type.IsValueType;
+            }
+        }
+
+        public bool IsGenericType
+        {
+            get
+            {
+                return Type.IsGenericType;
+            }
+        }
+
+        public bool IsGenericTypeDefinition
+        {
+            get
+            {
+                return Type.IsGenericTypeDefinition;
+            }
+        }
+
+        public bool ContainsGenericParameters
+        {
+            get
+            {
+                return Type.ContainsGenericParameters;
+            }
+        }
+
+        public bool IsInterface
+        {
+            get
+            {
+                return Type.IsInterface;
+            }
+        }
+
+        public Type[] ImplementedInterfaces
+        {
+            get
+            {
+                return Type.GetInterfaces();
+            }
+        }
+
+        public FieldInfo[] DeclaredFields
+        {
+            get
+            {
+                return Type.GetFields(BindingFlags.Public | BindingFlags.Static);
+            }
+        }
+
+        public Type[] GenericTypeParameters
+        {
+            get
+            {
+                return Type.GetGenericArguments();
+            }
+        }
+
+        public Type[] GenericTypeArguments
+        {
+            get
+            {
+                return Type.GetGenericArguments();
+            }
+        }
+
+        public FieldInfo GetDeclaredField(string fieldName)
+        {
+            return DeclaredFields.SingleOrDefault(f => f.Name == fieldName);
+        }
+
+        public bool IsEnum
+        {
+            get
+            {
+                return Type.IsEnum;
+            }
+        }
+
+        public bool IsAbstract
+        {
+            get
+            {
+                return Type.IsAbstract;
+            }
+        }
+
+        public Type BaseType
+        {
+            get
+            {
+                return Type.BaseType;
+            }
+        }
+
+        public Assembly Assembly
+        {
+            get
+            {
+                return Type.Assembly;
+            }
+        }
+
+        public bool IsAssignableFrom(TypeInfoPolyfill otherType)
+        {
+            return Type.IsAssignableFrom(otherType.Type);
+        }
+
+        public T GetCustomAttribute<T>() where T : Attribute
+        {
+            return (T) Type.GetCustomAttributes(typeof(T), true).FirstOrDefault();
+        }
+
+        public bool IsDefined(Type type, bool inherit)
+        {
+            return Type.IsDefined(type, inherit);
+        }
+    }
+
+    public static class Net40TypeExtensions
+    {
+        public static TypeInfoPolyfill GetTypeInfo(this Type type)
+        {
+            return new TypeInfoPolyfill(type);
+        }
+
+        public static PropertyInfo GetRuntimeProperty(this Type type, string propertyName)
+        {
+            return type.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public);
+        }
+
+        public static T GetCustomAttribute<T>(this MemberInfo memberInfo) where T: Attribute
+        {
+            return (T) memberInfo.GetCustomAttributes(typeof(T), true).FirstOrDefault();
+        }
+
+        public static T GetCustomAttribute<T>(this Assembly assembly) where T : Attribute
+        {
+            return (T) assembly.GetCustomAttributes(typeof(T), true).FirstOrDefault();
+        }
+
+        public static Type[] GetExportedTypes(this Assembly assembly)
+        {
+            return assembly.GetTypes().Where(t => t.IsVisible).ToArray();
+        }
+
+        public static IEnumerable<T> GetCustomAttributes<T>(this MemberInfo memberInfo) where T: Attribute
+        {
+            return memberInfo.GetCustomAttributes(typeof(T), true).Cast<T>();
+        }
+    }
+#endif
+
     public static class ReflectionHelper
     {
-
         public static bool IsAValueType(this Type t)
         {
             return t.GetTypeInfo().IsValueType;
@@ -119,7 +287,7 @@ namespace Hl7.Fhir.Utility
 
             if (IsNullableType(type))
             {
-                return type.GenericTypeArguments[0];
+                return type.GetTypeInfo().GenericTypeArguments[0];
             }
             else
                 throw Error.Argument("type", "Type {0} is not a Nullable<T>".FormatWith(type.Name));
@@ -260,6 +428,13 @@ namespace Hl7.Fhir.Utility
 //			return (T)attr;
 //		}
 //#endif
+
+#if NET40
+        public static T GetAttribute<T>(TypeInfoPolyfill typeInfo) where T : Attribute
+        {
+            return typeInfo.GetCustomAttribute<T>();
+        }
+#endif
 
         public static T GetAttribute<T>(MemberInfo member) where T : Attribute
         {

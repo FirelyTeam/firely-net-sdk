@@ -192,7 +192,8 @@ namespace Hl7.Fhir.Tests.Validation
             validateErrorOrFail(enc, true, membername: "Value");
         }
 
-        [TestMethod,Ignore]    // XHtml validation not available in portable library
+#if NET_XSD_SCHEMA
+        [TestMethod]    // XHtml validation not available in portable library
         public void TestXhtmlValidation()
         {
             var p = new Patient();
@@ -206,5 +207,6 @@ namespace Hl7.Fhir.Tests.Validation
             p.Text.Div = "<div xmlns='http://www.w3.org/1999/xhtml'><img onmouseover='bigImg(this)' src='smiley.gif' alt='Smiley' /></div>";
             validateErrorOrFail(p,true);
         }
+#endif       
     }
 }

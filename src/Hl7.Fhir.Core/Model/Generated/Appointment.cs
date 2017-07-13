@@ -35,6 +35,7 @@ using Hl7.Fhir.Utility;
   
 
 */
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
 // Generated for FHIR v1.0.2
@@ -328,6 +329,20 @@ namespace Hl7.Fhir.Model
                     if (StatusElement != null) yield return StatusElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, elem); }
+                    if (Actor != null) yield return new ElementValue("actor", false, Actor);
+                    if (RequiredElement != null) yield return new ElementValue("required", false, RequiredElement);
+                    if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                }
+            }
+
             
         }
         
@@ -630,7 +645,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Appointment_APP_3 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("(start and end) or status = 'proposed' or status = 'cancelled'"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("(start.exists() and end.exists()) or (status = 'proposed') or (status = 'cancelled')"))},
             Key = "app-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Only proposed or cancelled appointments can be missing start/end dates",
@@ -639,7 +654,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Appointment_APP_2 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("start.empty() xor end"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("start.empty() xor end.exists()"))},
             Key = "app-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Either start and end are specified, or neither",
@@ -648,7 +663,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Appointment_APP_1 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("participant.all(type or actor)"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("participant.all(type.exists() or actor.exists())"))},
             Key = "app-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Either the type or actor on the participant MUST be specified",
@@ -758,6 +773,28 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Participant) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (Type != null) yield return new ElementValue("type", false, Type);
+                if (Reason != null) yield return new ElementValue("reason", false, Reason);
+                if (PriorityElement != null) yield return new ElementValue("priority", false, PriorityElement);
+                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                if (StartElement != null) yield return new ElementValue("start", false, StartElement);
+                if (EndElement != null) yield return new ElementValue("end", false, EndElement);
+                if (MinutesDurationElement != null) yield return new ElementValue("minutesDuration", false, MinutesDurationElement);
+                foreach (var elem in Slot) { if (elem != null) yield return new ElementValue("slot", true, elem); }
+                if (CommentElement != null) yield return new ElementValue("comment", false, CommentElement);
+                foreach (var elem in Participant) { if (elem != null) yield return new ElementValue("participant", true, elem); }
+            }
+        }
+
     }
     
 }

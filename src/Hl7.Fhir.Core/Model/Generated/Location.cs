@@ -35,6 +35,7 @@ using Hl7.Fhir.Utility;
   
 
 */
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
 // Generated for FHIR v1.0.2
@@ -265,6 +266,19 @@ namespace Hl7.Fhir.Model
                     if (AltitudeElement != null) yield return AltitudeElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (LongitudeElement != null) yield return new ElementValue("longitude", false, LongitudeElement);
+                    if (LatitudeElement != null) yield return new ElementValue("latitude", false, LatitudeElement);
+                    if (AltitudeElement != null) yield return new ElementValue("altitude", false, AltitudeElement);
+                }
+            }
+
             
         }
         
@@ -608,6 +622,28 @@ namespace Hl7.Fhir.Model
 				if (PartOf != null) yield return PartOf;
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                if (ModeElement != null) yield return new ElementValue("mode", false, ModeElement);
+                if (Type != null) yield return new ElementValue("type", false, Type);
+                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
+                if (Address != null) yield return new ElementValue("address", false, Address);
+                if (PhysicalType != null) yield return new ElementValue("physicalType", false, PhysicalType);
+                if (Position != null) yield return new ElementValue("position", false, Position);
+                if (ManagingOrganization != null) yield return new ElementValue("managingOrganization", false, ManagingOrganization);
+                if (PartOf != null) yield return new ElementValue("partOf", false, PartOf);
+            }
+        }
+
     }
     
 }

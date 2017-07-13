@@ -24,42 +24,66 @@ namespace Hl7.Fhir.Specification.Source
     /// <summary>
     /// Internal class which is able to scan a (possibly) large Xml FHIR (conformance) resource from a given stream
     /// </summary>
-    internal class ResourceStreamScanner
+    internal class XmlFileConformanceScanner : IConformanceScanner
     {
-        private Stream _input;
-        private string _origin;
+        string _path;
 
-        public ResourceStreamScanner(Stream input, string origin)
+        public XmlFileConformanceScanner(string path)
         {
-            _input = input;
-            _origin = origin;
+            _path = path;
         }
 
-        public IEnumerable<ResourceScanInformation> List()
+        public List<ConformanceScanInformation> List()
         {
-            var resources = StreamResources();
+            using (var input = File.OpenRead(_path))
+            {
+                return streamResources(input)
 
-            return resources
+                    // [WMR 20170420] Issue: if the resource type is unknown (i.e. DSTU Conformance), 
+                    // then we cannot parse res.Name to a ResourceType enum value 
+                    // (ParseLiteral returns null and .Value throws an exception) 
+                    // => First skip unknown resources 
+                    .Where(res => ModelInfo.IsKnownResource(res.element.Name.LocalName))
 
-                // [WMR 20170420] Issue: if the resource type is unknown (i.e. DSTU Conformance), 
-                // then we cannot parse res.Name to a ResourceType enum value 
-                // (ParseLiteral returns null and .Value throws an exception) 
-                // => First skip unknown resources 
-                .Where(res => ModelInfo.IsKnownResource(res.Name.LocalName))
+                    .Select(res =>
+                            new ConformanceScanInformation()
+                            {
+                                ResourceType = EnumUtility.ParseLiteral<ResourceType>(res.element.Name.LocalName).Value,
+                                ResourceUri = res.fullUrl,
+                                Canonical = getPrimitiveValueElement(res.element, "url"),
+                                ValueSetSystem = getValueSetSystem(res.element),
+                                UniqueIds = getUniqueIds(res.element),
+                                ConceptMapSource = getCmSource(res.element),
+                                ConceptMapTarget = getCmTarget(res.element),
+                                Origin = _path,
+                            })
 
-                .Select(res =>
-                        new ResourceScanInformation()
-                        {
-                            ResourceType = EnumUtility.ParseLiteral<ResourceType>(res.Name.LocalName).Value,
-                            ResourceUri =  fullUrl(res),
-                            Canonical = getPrimitiveValueElement(res, "url"),
-                            ValueSetSystem = getValueSetSystem(res),
-                            UniqueIds = getUniqueIds(res),
-                            ConceptMapSource = getCmSources(res),
-                            ConceptMapTarget = getCmTargets(res),
-                            Origin = _origin,
-                        });
+                     .ToList();
+            }
         }
+
+
+        public Resource Retrieve(ConformanceScanInformation entry)
+        {
+            if (entry == null) throw Error.ArgumentNull(nameof(entry));
+
+            XElement found = null;
+
+            using (var input = File.OpenRead(entry.Origin))
+            {
+                var resources = streamResources(input);
+
+                found = resources.Where(res => res.fullUrl == entry.ResourceUri).SingleOrDefault().element;
+            }
+
+            if (found == null) return null;
+
+            var resultResource = new FhirXmlParser().Parse<Resource>(new XmlDomFhirReader(found));
+            resultResource.AddAnnotation(new OriginAnnotation { Origin = entry.Origin });
+
+            return resultResource;
+        }
+
 
         private string getValueSetSystem(XElement vs)
         {
@@ -77,26 +101,24 @@ namespace Hl7.Fhir.Specification.Source
                      .Select(a => a.Value).ToArray<string>();
         }
 
-        private string[] getCmSources(XElement cm)
+        private string getCmSource(XElement cm)
         {
             return cm
                  .Elements(XmlNs.XFHIR + "sourceUri")
                  .Concat(cm
                     .Elements(XmlNs.XFHIR + "sourceReference")
                     .Elements(XmlNs.XFHIR + "reference"))
-                 .Attributes("value").Select(a => a.Value)
-                 .ToArray<string>();
+                 .Attributes("value").Select(a => a.Value).SingleOrDefault();
         }
 
-        private string[] getCmTargets(XElement cm)
+        private string getCmTarget(XElement cm)
         {
             return cm
                  .Elements(XmlNs.XFHIR + "targetUri")
                  .Concat(cm
                     .Elements(XmlNs.XFHIR + "targetReference")
                     .Elements(XmlNs.XFHIR + "reference"))
-                 .Attributes("value").Select(a => a.Value)
-                 .ToArray<string>();
+                 .Attributes("value").Select(a => a.Value).SingleOrDefault();
         }
 
         private string getPrimitiveValueElement(XElement element, string name)
@@ -113,10 +135,9 @@ namespace Hl7.Fhir.Specification.Source
 
         // Use a forward-only XmlReader to scan through a possibly huge bundled file,
         // and yield the feed entries, so only one entry is in memory at a time
-        internal IEnumerable<XElement> StreamResources()
+        private IEnumerable<(XElement element, string fullUrl)> streamResources(Stream input)
         {
-            var reader = SerializationUtil.XmlReaderFromStream(_input);
-
+            var reader = SerializationUtil.XmlReaderFromStream(input);
             var root = getRootName(reader);
 
             if (root == "Bundle")
@@ -136,8 +157,7 @@ namespace Hl7.Fhir.Specification.Source
                             if (resourceNode != null)
                             {
                                 var resource = resourceNode.Elements().First();
-                                resource.AddAnnotation(new FullUrlAnnotation { FullUrl = fullUrl.Value });
-                                yield return resource;
+                                yield return (resource, fullUrl.Value);
                             }
                         }
                     }
@@ -146,20 +166,6 @@ namespace Hl7.Fhir.Specification.Source
                 }
             }
 
-#if true
-            // [WMR 20160908] Originally commented out logic
-            //else if (root != null)
-            //{
-            //    var resourceNode = (XElement)XElement.ReadFrom(reader);
-            //    var resourceId = resourceNode.Elements(XmlNs.XFHIR + "id").Attributes("value").SingleOrDefault();
-            //    if (resourceId != null)
-            //    {
-            //        var fullUrl = resourceNode.Name.LocalName + "/" + resourceId.Value;
-            //        resourceNode.Add(new XAttribute("scannerUrl", fullUrl));
-            //        yield return resourceNode;
-            //    }
-            //}
-
             // [WMR 20160908] Fixed, parse stand-alone (conformance) resources
             else if (root != null)
             {
@@ -167,23 +173,18 @@ namespace Hl7.Fhir.Specification.Source
                 // First try to initialize from canonical url (conformance resources)
                 var canonicalUrl = resourceNode.Elements(XmlNs.XFHIR + "url").Attributes("value").SingleOrDefault();
                 if (canonicalUrl != null)
-                {
-                    resourceNode.AddAnnotation(new FullUrlAnnotation { FullUrl = canonicalUrl.Value });
-                    yield return resourceNode;
-                }
+                    yield return (resourceNode, canonicalUrl.Value);
                 else
                 {
                     // Otherwise try to initialize from resource id
                     var resourceId = resourceNode.Elements(XmlNs.XFHIR + "id").Attributes("value").SingleOrDefault();
                     if (resourceId != null)
                     {
-                        var fullUrl = resourceNode.Name.LocalName + "/" + resourceId.Value;
-                        resourceNode.AddAnnotation(new FullUrlAnnotation { FullUrl = fullUrl });
-                        yield return resourceNode;
+                        var fullUrl = "http://example.org/" + resourceNode.Name.LocalName + "/" + resourceId.Value;
+                        yield return (resourceNode, fullUrl);
                     }
                 }
             }
-#endif
 
             else
                 yield break;
@@ -199,54 +200,6 @@ namespace Hl7.Fhir.Specification.Source
             }
 
             return null;
-        }
-
-
-        public XElement FindResourceByUri(string uri)
-        {
-            if (uri == null) throw Error.ArgumentNull(nameof(uri));
-
-            var resources = StreamResources();
-
-            return resources.Where(res => fullUrl(res) == uri).SingleOrDefault();
-        }
-
-        private static string fullUrl(XElement resourceElement)
-        {
-            var ann = resourceElement.Annotation<FullUrlAnnotation>();
-
-            if (ann != null)
-            {
-                return ann.FullUrl;
-            }
-            else
-                return null;
-        }
-
-
-        internal class ResourceScanInformation
-        {
-            public ResourceType ResourceType { get; set; }
-
-            public string ResourceUri { get; set; }
-
-            public string Canonical { get; set; }
-
-            public string ValueSetSystem { get; set; }
-
-            public string[] UniqueIds { get; set; }
-
-            public string[] ConceptMapSource { get; set; }
-
-            public string[] ConceptMapTarget { get; set; }
-
-            public string Origin { get; set; }
-
-            public override string ToString()
-            {
-                return "{0} resource with uri {1} (canonical {2}), read from {2}"
-                    .FormatWith(ResourceType, ResourceUri ?? "(unknown)", Canonical ?? "(unknown)", Origin);
-            }
         }
     }
 }

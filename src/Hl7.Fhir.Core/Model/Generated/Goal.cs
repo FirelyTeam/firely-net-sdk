@@ -35,6 +35,7 @@ using Hl7.Fhir.Utility;
   
 
 */
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
 // Generated for FHIR v1.0.2
@@ -189,6 +190,17 @@ namespace Hl7.Fhir.Model
                     if (Result != null) yield return Result;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Result != null) yield return new ElementValue("result", false, Result);
+                }
+            }
+
             
         }
         
@@ -558,6 +570,30 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Outcome) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (Subject != null) yield return new ElementValue("subject", false, Subject);
+                if (Start != null) yield return new ElementValue("start", false, Start);
+                if (Target != null) yield return new ElementValue("target", false, Target);
+                foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", true, elem); }
+                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (StatusDateElement != null) yield return new ElementValue("statusDate", false, StatusDateElement);
+                if (StatusReason != null) yield return new ElementValue("statusReason", false, StatusReason);
+                if (Author != null) yield return new ElementValue("author", false, Author);
+                if (Priority != null) yield return new ElementValue("priority", false, Priority);
+                foreach (var elem in Addresses) { if (elem != null) yield return new ElementValue("addresses", true, elem); }
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
+                foreach (var elem in Outcome) { if (elem != null) yield return new ElementValue("outcome", true, elem); }
+            }
+        }
+
     }
     
 }

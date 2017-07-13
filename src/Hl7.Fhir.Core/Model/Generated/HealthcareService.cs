@@ -35,6 +35,7 @@ using Hl7.Fhir.Utility;
   
 
 */
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
 // Generated for FHIR v1.0.2
@@ -194,6 +195,18 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Specialty) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Type != null) yield return new ElementValue("type", false, Type);
+                    foreach (var elem in Specialty) { if (elem != null) yield return new ElementValue("specialty", true, elem); }
+                }
+            }
+
             
         }
         
@@ -397,6 +410,20 @@ namespace Hl7.Fhir.Model
                     if (AvailableEndTimeElement != null) yield return AvailableEndTimeElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    foreach (var elem in DaysOfWeek_Element) { if (elem != null) yield return new ElementValue("daysOfWeek", true, elem); }
+                    if (AllDayElement != null) yield return new ElementValue("allDay", false, AllDayElement);
+                    if (AvailableStartTimeElement != null) yield return new ElementValue("availableStartTime", false, AvailableStartTimeElement);
+                    if (AvailableEndTimeElement != null) yield return new ElementValue("availableEndTime", false, AvailableEndTimeElement);
+                }
+            }
+
             
         }
         
@@ -509,6 +536,18 @@ namespace Hl7.Fhir.Model
                     if (During != null) yield return During;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                    if (During != null) yield return new ElementValue("during", false, During);
+                }
+            }
+
             
         }
         
@@ -1109,6 +1148,38 @@ namespace Hl7.Fhir.Model
 				if (AvailabilityExceptionsElement != null) yield return AvailabilityExceptionsElement;
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (ProvidedBy != null) yield return new ElementValue("providedBy", false, ProvidedBy);
+                if (ServiceCategory != null) yield return new ElementValue("serviceCategory", false, ServiceCategory);
+                foreach (var elem in ServiceType) { if (elem != null) yield return new ElementValue("serviceType", true, elem); }
+                if (Location != null) yield return new ElementValue("location", false, Location);
+                if (ServiceNameElement != null) yield return new ElementValue("serviceName", false, ServiceNameElement);
+                if (CommentElement != null) yield return new ElementValue("comment", false, CommentElement);
+                if (ExtraDetailsElement != null) yield return new ElementValue("extraDetails", false, ExtraDetailsElement);
+                if (Photo != null) yield return new ElementValue("photo", false, Photo);
+                foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
+                foreach (var elem in CoverageArea) { if (elem != null) yield return new ElementValue("coverageArea", true, elem); }
+                foreach (var elem in ServiceProvisionCode) { if (elem != null) yield return new ElementValue("serviceProvisionCode", true, elem); }
+                if (Eligibility != null) yield return new ElementValue("eligibility", false, Eligibility);
+                if (EligibilityNoteElement != null) yield return new ElementValue("eligibilityNote", false, EligibilityNoteElement);
+                foreach (var elem in ProgramNameElement) { if (elem != null) yield return new ElementValue("programName", true, elem); }
+                foreach (var elem in Characteristic) { if (elem != null) yield return new ElementValue("characteristic", true, elem); }
+                foreach (var elem in ReferralMethod) { if (elem != null) yield return new ElementValue("referralMethod", true, elem); }
+                if (PublicKeyElement != null) yield return new ElementValue("publicKey", false, PublicKeyElement);
+                if (AppointmentRequiredElement != null) yield return new ElementValue("appointmentRequired", false, AppointmentRequiredElement);
+                foreach (var elem in AvailableTime) { if (elem != null) yield return new ElementValue("availableTime", true, elem); }
+                foreach (var elem in NotAvailable) { if (elem != null) yield return new ElementValue("notAvailable", true, elem); }
+                if (AvailabilityExceptionsElement != null) yield return new ElementValue("availabilityExceptions", false, AvailabilityExceptionsElement);
+            }
+        }
+
     }
     
 }

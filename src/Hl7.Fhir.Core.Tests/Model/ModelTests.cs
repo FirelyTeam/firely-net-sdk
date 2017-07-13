@@ -467,6 +467,17 @@ namespace Hl7.Fhir.Tests.Model
             Assert.IsTrue(expected.SequenceEqual(children));
         }
 
+
+        [TestMethod]
+        public void ToStringHandlesNullObjectValue()
+        {
+            var s = new FhirString(null);
+            Assert.IsNull(s.ToString());
+
+            var i = new FhirBoolean(null);
+            Assert.IsNull(i.ToString());
+        }
+
         [TestMethod]
         public void TestChildren_Patient()
         {

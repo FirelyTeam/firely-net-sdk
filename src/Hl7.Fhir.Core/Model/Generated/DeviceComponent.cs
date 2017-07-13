@@ -35,6 +35,7 @@ using Hl7.Fhir.Utility;
   
 
 */
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
 // Generated for FHIR v1.0.2
@@ -252,6 +253,19 @@ namespace Hl7.Fhir.Model
                     if (ProductionSpecElement != null) yield return ProductionSpecElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (SpecType != null) yield return new ElementValue("specType", false, SpecType);
+                    if (ComponentId != null) yield return new ElementValue("componentId", false, ComponentId);
+                    if (ProductionSpecElement != null) yield return new ElementValue("productionSpec", false, ProductionSpecElement);
+                }
+            }
+
             
         }
         
@@ -526,6 +540,26 @@ namespace Hl7.Fhir.Model
 				if (LanguageCode != null) yield return LanguageCode;
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (Type != null) yield return new ElementValue("type", false, Type);
+                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                if (LastSystemChangeElement != null) yield return new ElementValue("lastSystemChange", false, LastSystemChangeElement);
+                if (Source != null) yield return new ElementValue("source", false, Source);
+                if (Parent != null) yield return new ElementValue("parent", false, Parent);
+                foreach (var elem in OperationalStatus) { if (elem != null) yield return new ElementValue("operationalStatus", true, elem); }
+                if (ParameterGroup != null) yield return new ElementValue("parameterGroup", false, ParameterGroup);
+                if (MeasurementPrincipleElement != null) yield return new ElementValue("measurementPrinciple", false, MeasurementPrincipleElement);
+                foreach (var elem in ProductionSpecification) { if (elem != null) yield return new ElementValue("productionSpecification", true, elem); }
+                if (LanguageCode != null) yield return new ElementValue("languageCode", false, LanguageCode);
+            }
+        }
+
     }
     
 }

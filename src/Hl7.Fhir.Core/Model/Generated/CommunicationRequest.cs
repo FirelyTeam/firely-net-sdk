@@ -35,6 +35,7 @@ using Hl7.Fhir.Utility;
   
 
 */
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
 // Generated for FHIR v1.0.2
@@ -196,6 +197,17 @@ namespace Hl7.Fhir.Model
                     if (Content != null) yield return Content;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Content != null) yield return new ElementValue("content", false, Content);
+                }
+            }
+
             
         }
         
@@ -546,6 +558,30 @@ namespace Hl7.Fhir.Model
 				if (Priority != null) yield return Priority;
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (Category != null) yield return new ElementValue("category", false, Category);
+                if (Sender != null) yield return new ElementValue("sender", false, Sender);
+                foreach (var elem in Recipient) { if (elem != null) yield return new ElementValue("recipient", true, elem); }
+                foreach (var elem in Payload) { if (elem != null) yield return new ElementValue("payload", true, elem); }
+                foreach (var elem in Medium) { if (elem != null) yield return new ElementValue("medium", true, elem); }
+                if (Requester != null) yield return new ElementValue("requester", false, Requester);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
+                if (Scheduled != null) yield return new ElementValue("scheduled", false, Scheduled);
+                foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", true, elem); }
+                if (RequestedOnElement != null) yield return new ElementValue("requestedOn", false, RequestedOnElement);
+                if (Subject != null) yield return new ElementValue("subject", false, Subject);
+                if (Priority != null) yield return new ElementValue("priority", false, Priority);
+            }
+        }
+
     }
     
 }

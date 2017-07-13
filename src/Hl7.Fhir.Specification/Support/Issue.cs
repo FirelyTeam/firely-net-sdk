@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.ElementModel;
 
+#pragma warning disable 1591 // suppress XML summary warnings
+
 namespace Hl7.Fhir.Support
 {
     public class Issue
@@ -131,7 +133,7 @@ namespace Hl7.Fhir.Support
         // Terminology specific errors
         public static readonly Issue TERMINOLOGY_CODE_NOT_IN_VALUESET = Create(6001, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.CodeInvalid);
         public static readonly Issue TERMINOLOGY_ABSTRACT_CODE_NOT_ALLOWED = Create(6002, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.CodeInvalid);
-        public static readonly Issue TERMINOLOGY_INCORRECT_DISPLAY = Create(6003, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.CodeInvalid);
+        public static readonly Issue TERMINOLOGY_INCORRECT_DISPLAY = Create(6003, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.CodeInvalid);
         public static readonly Issue TERMINOLOGY_VALUESET_TOO_COMPLEX = Create(3005, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.NotSupported);
         public static readonly Issue TERMINOLOGY_EXPANSION_FAILED = Create(3006, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
     }

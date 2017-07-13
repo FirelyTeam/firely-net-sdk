@@ -665,10 +665,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Note that all these element definitions are marked with: <representation value="xmlAttr"/>
 
             var primaryDiffType = diff.Current.PrimaryType();
-            if (primaryDiffType == null 
-                // [WMR 20170424] WRONG! Must also expand ResourceReference
-                // || primaryDiffType.IsReference()
-            ) { return true; }
+            if (primaryDiffType == null || primaryDiffType.IsReference() ) { return true; }
 
             var primarySnapType = snap.Current.PrimaryType();
             // if (primarySnapType == null) { return true; }
@@ -1427,5 +1424,6 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Determine if the specified element names are equal. Performs an ordinal comparison.</summary>
         static bool IsEqualName(string name, string other) => StringComparer.Ordinal.Equals(name, other);
 
+        public static List<ElementDefinition> ConstructFullTree(List<ElementDefinition> source) => DifferentialTreeConstructor.MakeTree(source);
     }
 }

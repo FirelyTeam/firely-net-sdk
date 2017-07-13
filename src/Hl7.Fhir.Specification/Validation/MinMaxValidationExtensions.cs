@@ -21,32 +21,36 @@ namespace Hl7.Fhir.Validation
             if (instance == null) throw Error.ArgumentNull(nameof(instance));
             if (definition == null) throw Error.ArgumentNull(nameof(definition));
             if (!(definition is Primitive || definition is Quantity)) throw Error.Argument(nameof(definition), "Must be Primitive or Quantity");
-            if (definition is Primitive && ((Primitive)definition).ObjectValue == null) throw Error.ArgumentNull(nameof(definition));
+            if (definition is Primitive pr && pr.ObjectValue == null) throw Error.ArgumentNull(nameof(definition));
 
             if (instance is Model.Primitives.PartialDateTime)
             {
-                if (definition is FhirDateTime)
-                    return instance.CompareTo(((FhirDateTime)definition).ToPartialDateTime());
-                else if (definition is Date)
-                    return instance.CompareTo(((Date)definition).ToPartialDateTime());
-                else if (definition is Instant)
-                    return instance.CompareTo(((Instant)definition).ToPartialDateTime());
+                if (definition is FhirDateTime fdt)
+                    return instance.CompareTo(fdt.ToPartialDateTime());
+                else if (definition is Date d)
+                    return instance.CompareTo(d.ToPartialDateTime());
+                else if (definition is Instant ins)
+                    return instance.CompareTo(ins.ToPartialDateTime());
             }
 
-            else if (instance is Model.Primitives.PartialTime && definition is Time)
-                return instance.CompareTo(((Time)definition).ToTime());
+            else if (instance is Model.Primitives.PartialTime && definition is Time t)
+                return instance.CompareTo(t.ToTime());
 
-            else if (instance is decimal && definition is FhirDecimal)
-                return instance.CompareTo(((FhirDecimal)definition).Value.Value);
+            else if (instance is decimal && definition is FhirDecimal d)
+                return instance.CompareTo(d.Value.Value);
 
-            else if (instance is long && definition is Integer)
-                return instance.CompareTo((long)((Integer)definition).Value.Value);
+            else if (instance is long && definition is Integer i)
+                return instance.CompareTo((long)i.Value.Value);
+            else if (instance is long && definition is PositiveInt pi)
+                return instance.CompareTo((long)pi.Value.Value);
+            else if (instance is long && definition is UnsignedInt ui)
+                return instance.CompareTo((long)ui.Value.Value);
 
-            else if (instance is string && definition is FhirString)
-                return instance.CompareTo(((FhirString)definition).Value);
+            else if (instance is string && definition is FhirString fs)
+                return instance.CompareTo(fs.Value);
 
-            else if (instance is Model.Primitives.Quantity && definition is Quantity)
-                return instance.CompareTo(((Quantity)definition).ToQuantity());
+            else if (instance is Model.Primitives.Quantity && definition is Quantity q)
+                return instance.CompareTo(q.ToQuantity());
 
             throw Error.NotSupported($"Value '{definition}' and instance value '{instance}' are of incompatible types and can not be compared");
         }

@@ -196,24 +196,32 @@ namespace Hl7.Fhir.Validation
                     // primitive against the regex given in the core definition
                     outcome.Add(VerifyPrimitiveContents(elementConstraints, instance));
                 }
-                else if (definition.HasChildren)
-                {
-                    // Handle in-lined constraints on children. In a snapshot, these children should be exhaustive,
-                    // so there's no point in also validating the <type> or <nameReference>
-                    // TODO: Check whether this is even true when the <type> has a profile?
-                    outcome.Add(this.ValidateChildConstraints(definition, instance));
-                }
                 else
                 {
-                    // No inline-children, so validation depends on the presence of a <type> or <nameReference>
-                    if (elementConstraints.Type != null || elementConstraints.NameReference != null)
-
+                    bool hasDeclaredSuperType = elementConstraints.HasDeclaredCoreSuperType();
+                    // Now, validate the children
+                    if (definition.HasChildren)
                     {
-                        outcome.Add(this.ValidateType(elementConstraints, instance));
-                        outcome.Add(ValidateNameReference(elementConstraints, definition, instance));
+                        // Handle in-lined constraints on children. In a snapshot, these children should be exhaustive,
+                        // so there's no point in also validating the <type> or <nameReference>
+                        // TODO: Check whether this is even true when the <type> has a profile?
+                        // Note: the snapshot is *not* exhaustive if the declared type is a base FHIR type (like Resource),
+                        // in which case there may be additional children (verified in the next step)
+                        outcome.Add(this.ValidateChildConstraints(definition, instance, allowAdditionalChildren: hasDeclaredSuperType));
                     }
-                    else
-                        Trace(outcome, "ElementDefinition has no child, nor does it specify a type or nameReference to validate the instance data against", Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE_OR_NAMEREF, instance);
+
+                    if (!definition.HasChildren || (hasDeclaredSuperType && !definition.Current.IsRootElement()))
+                    {
+                        // No inline-children, so validation depends on the presence of a <type> or <nameReference>
+                        if (elementConstraints.Type != null || elementConstraints.NameReference != null)
+
+                        {
+                            outcome.Add(this.ValidateType(elementConstraints, instance));
+                            outcome.Add(ValidateNameReference(elementConstraints, definition, instance));
+                        }
+                        else
+                            Trace(outcome, "ElementDefinition has no child, nor does it specify a type or nameReference to validate the instance data against", Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE_OR_NAMEREF, instance);
+                    }
                 }
 
                 outcome.Add(this.ValidateFixed(elementConstraints, instance));
@@ -234,9 +242,11 @@ namespace Hl7.Fhir.Validation
             }
         }
 
-
         internal OperationOutcome ValidateConstraints(ElementDefinition definition, IElementNavigator instance)
         {
+            // Make sure FHIR extensions are installed in FP compiler
+            ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
+
             var outcome = new OperationOutcome();
 
             if (Settings.SkipConstraintValidation) return outcome;
@@ -499,15 +509,16 @@ namespace Hl7.Fhir.Validation
         // Note: this modifies an SD that is passed to us and will alter a possibly cached
         // object shared amongst other threads. This is generally useful and saves considerable
         // time when the same snapshot is needed again, but may result in side-effects
-        private void snapshotGenerationNeeded(StructureDefinition definition)
+        private OperationOutcome snapshotGenerationNeeded(StructureDefinition definition)
         {
-            if (!Settings.GenerateSnapshot) return;
+            if (!Settings.GenerateSnapshot) return new OperationOutcome();
 
             // Default implementation: call event
             if (OnSnapshotNeeded != null)
             {
-                OnSnapshotNeeded(this, new OnSnapshotNeededEventArgs(definition, Settings.ResourceResolver));
-                return;
+                var eventData = new OnSnapshotNeededEventArgs(definition, Settings.ResourceResolver);
+                OnSnapshotNeeded(this, eventData);
+                return eventData.Result;
             }
 
             // Else, expand, depending on our configuration
@@ -516,6 +527,16 @@ namespace Hl7.Fhir.Validation
             if (generator != null)
             {
                 generator.Update(definition);
+#if DUMP_SNAPSHOTS
+
+                string xml = FhirSerializer.SerializeResourceToXml(definition);
+                string name = definition.Id ?? definition.Name.Replace(" ", "");
+
+                File.WriteAllText(@"c:\temp\validation\" + name + ".StructureDefinition.xml", xml);
+#endif
+
+
+                return generator.Outcome ?? new OperationOutcome();
 #else
             if (Settings.ResourceResolver != null)
             {
@@ -524,16 +545,9 @@ namespace Hl7.Fhir.Validation
                 (new SnapshotGenerator(Settings.ResourceResolver, settings)).Update(definition);
 
 #endif
-
-#if DUMP_SNAPSHOTS
-
-                string xml = FhirSerializer.SerializeResourceToXml(definition);
-                string name = definition.Id ?? definition.Name.Replace(" ", "");
-
-                File.WriteAllText(@"c:\temp\validation\" + name + ".StructureDefinition.xml", xml);
-#endif
             }
 
+            return new OperationOutcome();
         }
     }
 
@@ -550,6 +564,8 @@ namespace Hl7.Fhir.Validation
                    t == typeof(Model.Time) ||
                    t == typeof(FhirDecimal) ||
                    t == typeof(Integer) ||
+                   t == typeof(PositiveInt) ||
+                   t == typeof(UnsignedInt) ||
                    t == typeof(Model.Quantity) ||
                    t == typeof(FhirString);
         }
@@ -578,6 +594,8 @@ namespace Hl7.Fhir.Validation
         public StructureDefinition Definition { get; }
 
         public IResourceResolver Resolver { get; }
+
+        public OperationOutcome Result { get; set; }
     }
 
     public class OnResolveResourceReferenceEventArgs : EventArgs

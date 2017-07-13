@@ -6424,6 +6424,7 @@
               <code value="Extension" />
             </type>
             <isModifier value="true" />
+            <isSummary value="true" />
             <mapping>
               <identity value="rim" />
               <map value="N/A" />
@@ -6459,6 +6460,7 @@
               <code value="Extension" />
             </type>
             <isModifier value="true" />
+            <isSummary value="true" />
             <mapping>
               <identity value="rim" />
               <map value="N/A" />

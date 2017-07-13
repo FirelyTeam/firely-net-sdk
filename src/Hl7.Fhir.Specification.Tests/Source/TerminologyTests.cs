@@ -100,7 +100,8 @@ namespace Hl7.Fhir.Source
             Assert.True(result.Success);
 
             result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/data-absent-reason", "NaN", "http://hl7.org/fhir/data-absent-reason", display: "Not any Number");
-            Assert.False(result.Success);
+            Assert.True(result.Success);
+            Assert.Equal(1, result.Warnings);       // Warning for incorrect display
 
             result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/v3-AcknowledgementDetailCode", "_AcknowledgementDetailNotSupportedCode",
                 "http://hl7.org/fhir/v3/AcknowledgementDetailCode");

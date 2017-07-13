@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
         }
 
         private static Lazy<IDictionary<FHIRDefinedType, string>> _fhirTypeToFhirTypeName
-            = new Lazy<IDictionary<FHIRDefinedType, string>>(InitFhirTypeToFhirTypeName, System.Threading.LazyThreadSafetyMode.PublicationOnly);
+            = new Lazy<IDictionary<FHIRDefinedType, string>>(InitFhirTypeToFhirTypeName);
 
         private static IDictionary<FHIRDefinedType, string> InitFhirTypeToFhirTypeName()
         {
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model
         }
 
         private static Lazy<IDictionary<string, FHIRDefinedType>> _fhirTypeNameToFhirType
-            = new Lazy<IDictionary<string, FHIRDefinedType>>(InitFhirTypeNameToFhirType, System.Threading.LazyThreadSafetyMode.PublicationOnly);
+            = new Lazy<IDictionary<string, FHIRDefinedType>>(InitFhirTypeNameToFhirType);
 
         private static IDictionary<string, FHIRDefinedType> InitFhirTypeNameToFhirType()
         {
