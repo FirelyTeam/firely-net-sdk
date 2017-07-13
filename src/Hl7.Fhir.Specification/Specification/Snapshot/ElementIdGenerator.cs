@@ -12,6 +12,7 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -45,6 +46,37 @@ namespace Hl7.Fhir.Specification.Snapshot
     {
         public static readonly ElementIdSegment Empty = new ElementIdSegment(null, null);
 
+        /// <summary>Create a new <see cref="ElementIdSegment"/> from the specified (original) element name and (optional) slice name.</summary>
+        public static ElementIdSegment Create(string elementName, string sliceName = null)
+        {
+            if (string.IsNullOrEmpty(elementName)) { throw Error.ArgumentNull(nameof(elementName)); }
+            return new ElementIdSegment(elementName, sliceName);
+        }
+
+        /// <summary>Create a new <see cref="ElementIdSegment"/> from the specified element definition.</summary>
+        public static ElementIdSegment Create(ElementDefinition elemDef) => new ElementIdSegment(elemDef);
+
+        /// <summary>
+        /// Create a new <see cref="ElementIdSegment"/> by parsing the specified id segment string of the form "elementName[:sliceName]".
+        /// </summary>
+        public static ElementIdSegment Parse(string idSegment)
+        {
+            if (string.IsNullOrEmpty(idSegment)) { throw Error.ArgumentNull(nameof(idSegment)); }
+            if (idSegment.IndexOf(ElementIdGenerator.ElementIdSegmentDelimiter) > -1) { throw Error.Argument(nameof(idSegment), $"The specified element id segment is invalid. A segment cannot contain the segment delimiter character '{ElementIdGenerator.ElementIdSegmentDelimiter}'."); }
+
+            var pos = idSegment.IndexOf(ElementIdGenerator.ElementIdSliceNameDelimiter);
+            if (pos == -1) { return new ElementIdSegment(idSegment); }
+            return new ElementIdSegment(idSegment.Substring(0, pos), idSegment.Substring(pos + 1));
+        }
+
+        /// <summary>Parse the specified element id into a sequence of <see cref="ElementIdSegment"/>s.</summary>
+        public static IEnumerable<ElementIdSegment> ParseId(string elementId)
+        {
+            if (string.IsNullOrEmpty(elementId)) { throw Error.ArgumentNull(nameof(elementId)); }
+            var segments = ElementIdGenerator.ParseId(elementId);
+            return segments.Select(s => ElementIdSegment.Parse(s));
+        }
+
         ElementIdSegment(string elementName, string sliceName = null)
         {
             ElementName = elementName;
@@ -59,26 +91,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             var elemPath = basePath != null && ElementDefinitionNavigator.IsChoiceTypeElement(basePath) ? basePath : elemDef.Path;
             ElementName = ProfileNavigationExtensions.GetNameFromPath(elemPath);
             SliceName = elemDef.SliceName;
-        }
-
-        /// <summary>Create a new <see cref="ElementIdSegment"/> from the specified (original) element name and (optional) slice name.</summary>
-        public static ElementIdSegment Create(string elementName, string sliceName = null)
-        {
-            if (string.IsNullOrEmpty(elementName)) { throw Error.ArgumentNull(nameof(elementName)); }
-            return new ElementIdSegment(elementName, sliceName);
-        }
-
-        /// <summary>Create a new <see cref="ElementIdSegment"/> from the specified element definition.</summary>
-        public static ElementIdSegment Create(ElementDefinition elemDef) => new ElementIdSegment(elemDef);
-
-        public static ElementIdSegment Parse(string idSegment)
-        {
-            if (idSegment == null) { throw Error.ArgumentNull(nameof(idSegment)); }
-            if (idSegment.IndexOf(ElementIdGenerator.ElementIdSegmentDelimiter) > -1) { throw Error.Argument(nameof(idSegment), $"The specified element id segment is invalid. A segment cannot contain the segment delimiter character '{ElementIdGenerator.ElementIdSegmentDelimiter}'."); }
-
-            var pos = idSegment.IndexOf(ElementIdGenerator.ElementIdSliceNameDelimiter);
-            if (pos == -1) { return new ElementIdSegment(idSegment); }
-            return new ElementIdSegment(idSegment.Substring(0, pos), idSegment.Substring(pos + 1));
         }
 
         /// <summary>Returns the (original) element name.</summary>
@@ -121,38 +133,14 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <remarks>To generate the full element id, traverse the element hierarchy and concatenate the associated element id segments.</remarks>
         /// <example>value[x]:valueString</example>
         public static string GenerateIdSegment(ElementDefinition elemDef) => ElementIdSegment.Create(elemDef).ToString();
-        //{
-        //    elemDef.ThrowIfNullOrEmptyPath(nameof(elemDef));
-
-        //    // Special handling for type slicing
-        //    // Always generate ID from the original element name, ending with [x]
-        //    var basePath = elemDef.Base?.Path;
-        //    var elemPath = basePath != null && ElementDefinitionNavigator.IsChoiceTypeElement(basePath) ? basePath : elemDef.Path;
-
-        //    return GenerateIdSegment(elemPath, elemDef.SliceName);
-        //}
 
         /// <summary>Generate a segment of a standardized element ID from the specified element path and slice name.</summary>
         /// <returns>A string that represents an standardized element id segment of the form "elementName[:sliceName]".</returns>
         public static string GenerateIdSegment(string elementPath, string sliceName)
         {
             var elementName = ProfileNavigationExtensions.GetNameFromPath(elementPath);
-            // return string.IsNullOrEmpty(sliceName) ? elementName : elementName + ElementIdSliceNameDelimiter + sliceName;
             return ElementIdSegment.Create(elementName, sliceName).ToString();
         }
-
-        // <summary>Parse a segment of a standardized element id into element name and optional slice name (or <c>null</c>).</summary>
-        // <param name="idSegment">An element id segment. Cannot contain the segment delimiter character '.'</param>
-        // <returns>A tuple representing the element name and the optional slice name (or <c>null</c>).</returns>
-        //public static (string elementName, string sliceName) ParseIdSegment(string idSegment)
-        //{
-        //    if (idSegment == null) { throw Error.ArgumentNull(nameof(idSegment)); }
-        //    if (idSegment.IndexOf(ElementIdSegmentDelimiter) > -1) { throw Error.Argument(nameof(idSegment), $"The specified element id segment is invalid. A segment cannot contain the segment delimiter character '{ElementIdSegmentDelimiter}'."); }
-
-        //    var pos = idSegment.IndexOf(ElementIdSliceNameDelimiter);
-        //    if (pos == -1) { return (idSegment, null); }
-        //    return (idSegment.Substring(0, pos), idSegment.Substring(pos + 1));
-        //}
 
         /// <summary>Parse a standardized element id into an array of segments of the form "elementName[:sliceName]".</summary>
         /// <param name="elementId">An element id.</param>
@@ -163,7 +151,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             return elementId.Split(ElementIdSegmentDelimiter);
         }
 
-        /// <summary>Generate the standard element ID for the specified <see cref="ElementDefinition"/> instance.</summary>
+        /// <summary>Generate a standard element ID for the specified <see cref="ElementDefinition"/> instance.</summary>
         /// <param name="elemDef">An <see cref="ElementDefinition"/> instance.</param>
         /// <param name="parentElementId">The (generated) element id of the associated parent element, or <c>null</c>.</param>
         /// <returns>A string that represents the full element ID.</returns>
@@ -175,6 +163,69 @@ namespace Hl7.Fhir.Specification.Snapshot
             return !string.IsNullOrEmpty(parentElementId)
                 ? parentElementId + ElementIdSegmentDelimiter + idSegment
                 : idSegment;
+        }
+
+        /// <summary>
+        /// Generate a standard element ID for the current element of the specified
+        /// <see cref="ElementDefinitionNavigator"/> instance, by recursively traversing all the (grand)parent elements.
+        /// </summary>
+        /// <returns>A string that represents the full element ID.</returns>
+        public static string GenerateId(ElementDefinitionNavigator nav)
+        {
+            nav.ThrowIfNullOrNotPositioned(nameof(nav));
+
+            var bm = nav.Bookmark();
+            string parentId = "";
+            if (nav.MoveToParent())
+            {
+                if (!nav.AtRoot) { parentId = GenerateId(nav); }
+                nav.ReturnToBookmark(bm);
+            }
+            return GenerateId(nav.Current, parentId);
+        }
+
+        /// <summary>
+        /// Generate and assign standard element IDs to the current element of the specified
+        /// <see cref="ElementDefinitionNavigator"/> instance and it's children, recursively.
+        /// </summary>
+        /// <param name="nav">An <see cref="ElementDefinitionNavigator"/> instance.</param>
+        /// <param name="force">Determines wether to regenerate (<c>true</c>) or maintain (<c>false</c>) any existing element IDs.</param>
+        /// <param name="onlyChildren">Determines wether to only update child element ids (<c>true</c>) or also update the id of the current element (<c>false</c>).</param>
+        public static void Update(ElementDefinitionNavigator nav, bool force = false, bool onlyChildren = false)
+        {
+            var bm = nav.Bookmark();
+
+            var parentId = "";
+            if (onlyChildren)
+            {
+                // Note: cannot rely on nav.Current.ElementId as it may represent a custom id value
+                // Instead, always recalculate full parent id
+                if (!nav.AtRoot)
+                {
+                    parentId = GenerateId(nav);
+                }
+                if (nav.MoveToFirstChild())
+                {
+                    generate(nav, parentId, force);
+                    nav.ReturnToBookmark(bm);
+                }
+            }
+            else
+            {
+                if (nav.MoveToParent())
+                {
+                    // Parent may have a custom element Id value
+                    // => must always (re-)generate full id by traversing parent hierarchy
+                    // Possible optimization: caller could specify parent id
+                    if (!nav.AtRoot)
+                    {
+                        parentId = GenerateId(nav);
+                    }
+                    nav.ReturnToBookmark(bm);
+                }
+                generate(nav, parentId, force);
+                nav.ReturnToBookmark(bm);
+            }
         }
 
         /// <summary>
@@ -230,17 +281,34 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         /// <summary>Clear the element IDs of the current element and it's children, recursively.</summary>
         /// <param name="nav">An <see cref="ElementDefinitionNavigator"/> instance that is positioned on a specific element.</param>
-        public static void Clear(ElementDefinitionNavigator nav)
+        /// <param name="onlyChildren">Determines wether to only clear child element ids (<c>true</c>) or also clear the id of the current element (<c>false</c>).</param>
+        public static void Clear(ElementDefinitionNavigator nav, bool onlyChildren)
         {
             nav.ThrowIfNullOrNotPositioned(nameof(nav));
+            if (onlyChildren)
+            {
+                clearChildren(nav);
+            }
+            else
+            {
+                clear(nav);
+            }
+        }
 
+        static void clear(ElementDefinitionNavigator nav)
+        {
             nav.Current.ElementId = null;
+            clearChildren(nav);
+        }
+
+        static void clearChildren(ElementDefinitionNavigator nav)
+        {
             var bm = nav.Bookmark();
             if (nav.MoveToFirstChild())
             {
                 do
                 {
-                    Clear(nav);
+                    clear(nav);
                 } while (nav.MoveToNext());
                 nav.ReturnToBookmark(bm);
             }
@@ -276,6 +344,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Don't replace existing IDs, unless force = true
             if (force || elemDef.ElementId == null)
             {
+                // Debug.WriteLine($"[{nameof(ElementIdGenerator)}.{nameof(generate)}] Path: {elemDef.Path}:{elemDef.SliceName} Id: {elemDef.ElementId} => {id}");
                 elemDef.ElementId = id;
             }
 

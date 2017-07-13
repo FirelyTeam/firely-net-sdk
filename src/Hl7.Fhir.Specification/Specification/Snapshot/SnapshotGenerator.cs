@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             _stack.OnStartRecursion();
             try
             {
-                expandElement(nav, true);
+                expandElement(nav);
             }
             finally
             {
@@ -175,7 +175,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             _stack.OnStartRecursion();
             try
             {
-                return expandElement(nav, true);
+                return expandElement(nav);
             }
             finally
             {
@@ -238,6 +238,16 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 var snapshot = (StructureDefinition.SnapshotComponent)baseStructure.Snapshot.DeepCopy();
 
+                // [WMR 20170616] NEVER inherit element IDs from base profile
+                // Otherwise e.g. slices introduced in derived profile would inherit the original ID from unsliced parent element - WRONG!
+                // WRONG! Must handle backward content references in derived profiles, e.g. Questionnaire
+                // Following statement causes BasicValidationTests.ValidateOverNameRef to fail,
+                // because snapshot generator can no longer expand Questionnaire.item.item
+                // because element id of Questionnaire.item has been cleared...
+                // => must immediately (re-)generate element ID after expansion of each element
+                // ElementIdGenerator.Clear(snapshot.Element);
+                // Debug.Fail("TODO");
+
                 if (!structure.IsConstraint)
                 {
                     // [WMR 20160902] Rebase the cloned base profile (e.g. DomainResource)
@@ -245,7 +255,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // [WMR 20170426] Specializations (i.e. core resource definitions)
                     // do NOT inherit element IDs from (abstract) base class
                     // Clear all to force full re-generation
-                    ElementIdGenerator.Clear(snapshot.Element);
+                    // ElementIdGenerator.Clear(snapshot.Element);
 
                     // [WMR 20170411] Updated for STU3 - root element is no longer required/ensured
                     // => Derive from StructureDefinition.type property
@@ -256,17 +266,17 @@ namespace Hl7.Fhir.Specification.Snapshot
                         throw Error.Argument(nameof(structure), $"Invalid argument. The StructureDefinition.type property value is empty or missing.");
                     }
                     snapshot.Rebase(rootPath);
+                }
 
-                    //var rootElem = differential.Element.FirstOrDefault();
-                    //if (rootElem != null)
-                    //{
-                    //    if (!rootElem.IsRootElement())
-                    //    {
-                    //        // Fatal error...
-                    //        throw Error.Argument(nameof(structure), $"Invalid argument. The specified StructureDefinition defines a new model (not a constraint on another profile), but the differential component does not start at the root element definition.");
-                    //    }
-                    //    snapshot.Rebase(rootElem.Path);
-                    //}
+                // [WMR 20170710] NEW: Generate element IDs while processing
+                // First ensure IDs exist on all elements inherited from base profile
+                // Then, while expanding the snapshot, generate ids for all new element constraints introduced by diff
+                // This ensures that we can process back references to ids of preceding elements
+                // e.g. Questionnaire.item.item => Questionnaire.item
+                if (_settings.GenerateElementIds)
+                {
+                    // Always re-generate; never inherit element ids from base profile
+                    ElementIdGenerator.Update(snapshot.Element, true);
                 }
 
                 // Ensure that ElementDefinition.Base components in base StructureDef are propertly initialized
@@ -307,12 +317,6 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             result = nav.ToListOfElements();
 
-            // [WMR 20160917] NEW: Re-generate all ElementId values
-            if (_settings.GenerateElementIds)
-            {
-                ElementIdGenerator.Update(result);
-            }
-
             return result;
         }
 
@@ -321,12 +325,12 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// If the element has a name reference, then merge from the targeted element.
         /// Otherwise, if the element has a custom type profile, then merge it.
         /// </summary>
-        bool expandElement(ElementDefinitionNavigator nav, bool keepElementId)
+        bool expandElement(ElementDefinitionNavigator nav)
         {
             // [WMR 20170614] NEW: keepElementId
             // Maintain existing root element ID if called from the public ExpandElement method
 
-            if (nav.Current == null)
+            if (nav.AtRoot)
             {
                 throw Error.Argument(nameof(nav), $"Internal error in snapshot generator ({nameof(expandElement)}): Navigator is not positioned on an element");
             }
@@ -341,14 +345,19 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (!String.IsNullOrEmpty(defn.ContentReference))
             {
                 var sourceNav = new ElementDefinitionNavigator(nav);
-                var success = sourceNav.JumpToNameReference(defn.ContentReference);
-
-                if (!success)
+                if (!sourceNav.JumpToNameReference(defn.ContentReference))
                 {
                     addIssueInvalidNameReference(defn);
                     return false;
                 }
                 nav.CopyChildren(sourceNav);
+
+                // [WMR 20170710] Explicitly re-generate element ids for the copied subtree
+                // Cannot re-use original ids from reference target, as this would lead to duplicates
+                if (_settings.GenerateElementIds)
+                {
+                    ElementIdGenerator.Update(nav, true, true);
+                }
             }
             else if (defn.Type == null || defn.Type.Count == 0)
             {
@@ -374,7 +383,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // Different profiles for common base type => expand the common base type (w/o custom profile)
                     var typeRef = new ElementDefinition.TypeRefComponent() { Code = distinctTypeCodes[0] };
                     StructureDefinition typeStructure = getStructureForTypeRef(defn, typeRef, true);
-                    return expandElementType(nav, typeStructure, keepElementId);
+                    return expandElementType(nav, typeStructure);
                 }
                 // Alternatively, we could try to expand the most specific common base profile, e.g. (Backbone)Element
                 // TODO: Determine the intersection, i.e. the most specific common type that all types are derived from
@@ -394,19 +403,18 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // [WMR 20160720] Handle custom type profiles (GForge #9791)
                 StructureDefinition typeStructure = getStructureForElementType(defn, true);
 
-                return expandElementType(nav, typeStructure, keepElementId);
+                return expandElementType(nav, typeStructure);
             }
 
             return true;
         }
 
-        bool expandElementType(ElementDefinitionNavigator nav, StructureDefinition typeStructure, bool keepElementId)
+        bool expandElementType(ElementDefinitionNavigator nav, StructureDefinition typeStructure)
         {
             // [WMR 20170208] TODO: Expand profile snapshot if necessary
             if (typeStructure != null && typeStructure.HasSnapshot)
             {
-                var typeSnap = typeStructure.Snapshot;
-                var typeNav = new ElementDefinitionNavigator(typeSnap.Element);
+                var typeNav = ElementDefinitionNavigator.ForSnapshot(typeStructure);
                 if (!typeNav.MoveToFirstChild())
                 {
                     addIssueProfileHasNoSnapshot(nav.Current.ToNamedNode(), typeStructure.Url);
@@ -432,11 +440,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // 3. On top of that, merge profile differential constraints
                 }
 
-                // [WMR 20170501] NEW (cf. mergeTypeProfiles)
-                // - Clear element IDs (NOT inherited from external rebased element type profiles)
-                // - Notify subscribers by calling OnPrepareBaseElement
-                // [WMR 20170614] Maintain existing root element ID if called from the public ExpandElement method
-                prepareTypeProfileElements(nav, typeStructure, !keepElementId);
+                // [WMR 20170711]
+                // - Regenerate element IDs (NOT inherited from external rebased element type profiles!)
+                // - Notify subscribers by calling OnPrepareBaseElement, before merging diff constraints
+                prepareExpandedTypeProfileElements(nav, typeNav);
 
                 return true;
             }
@@ -533,6 +540,13 @@ namespace Hl7.Fhir.Specification.Snapshot
                 snap.AppendChild(clonedElem);
             }
 
+            // [WMR 20170710] NEW: Generate element IDs while processing
+            if (_settings.GenerateElementIds)
+            {
+                // Always re-generate; never inherit element ids from base element
+                ElementIdGenerator.Update(snap, true);
+            }
+
             // Notify clients about a snapshot element with differential constraints
             OnConstraint(snap.Current);
 
@@ -579,6 +593,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
             else
             {
+
                 // First merge constraints from element type profile, if it exists
                 // [WMR 20161004] Remove configuration setting; always merge type profiles
                 // if (_settings.MergeTypeProfiles) 
@@ -587,13 +602,22 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // }
 
                 // Then merge constraints from base profile
-                // [WMR 20170424] Merge custom element Id from diff
+                // [WMR 20170424] Merge custom element Id from diff, if specified
                 mergeElementDefinition(snap.Current, diffElem, true);
+
+                // [WMR 20170710] NEW: Generate element IDs while processing
+                // Generate id if not explicitly specified in diff (don't inherit from base)
+                if (_settings.GenerateElementIds)
+                {
+                    // Always generate new id's for child elements
+                    // Also generate id for current element if not specified by diff
+                    ElementIdGenerator.Update(snap, true, !string.IsNullOrEmpty(diff.Current.ElementId));
+                }
             }
 #else
             // First merge constraints from element type profile, if it exists
-            var isValid = true;
-            isValid = mergeTypeProfiles(snap, diff);
+            var isMerged = true;
+            isMerged = mergeTypeProfiles(snap, diff);
 
             // Then merge constraints from base profile
             mergeElementDefinition(snap.Current, diffElem, true);
@@ -624,7 +648,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                     //    return;
                     //}
 
-                    if (!expandElement(snap, false))
+                    // [WMR 20170711] Explicitly re-generate element ids
+                    if (!expandElement(snap))
                     {
                         return;
                     }
@@ -697,160 +722,164 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Note that all these element definitions are marked with: <representation value="xmlAttr"/>
 
             var primaryDiffType = diff.Current.PrimaryType();
-            if (primaryDiffType == null 
-                // [WMR 20170424] WRONG! Must also expand ResourceReference
-                // || primaryDiffType.IsReference()
-            ) { return true; }
+            
+            // [WMR 20170710] WRONG! Must always call prepareTypeProfileElements
+            // if (primaryDiffType == null) { return true; }
 
-            var primarySnapType = snap.Current.PrimaryType();
-            // if (primarySnapType == null) { return true; }
-
-            var primaryDiffTypeProfile = primaryDiffType.Profile;
-
-            // [WMR 20170208] Ignore explicit diff profile if it matches the (implied) base type profile
-            // e.g. if the differential specifies explicit core type profile url
-            // Example: Patient.identifier type = { Code : Identifier, Profile : "http://hl7.org/fhir/StructureDefinition/Identifier" } }
-            var primarySnapTypeProfile = primarySnapType.GetTypeProfile();
-
-            if (string.IsNullOrEmpty(primaryDiffTypeProfile) || primaryDiffTypeProfile == primarySnapTypeProfile) { return true; }
-
-            // [WMR 20160721] NEW: Handle type profiles with name references
-            // e.g. profile "http://hl7.org/fhir/StructureDefinition/qicore-adverseevent"
-            // Extension element "cause" => "http://hl7.org/fhir/StructureDefinition/qicore-adverseevent-cause"
-            // Constraint on extension child element "certainty" => "http://hl7.org/fhir/StructureDefinition/qicore-adverseevent-cause#certainty"
-            // This means: 
-            // - First inherit child element constraints from extension definition, element with name "certainty"
-            // - Then override inherited constraints by explicit element constraints in profile differential
-
-            var profileRef = ProfileReference.Parse(primaryDiffTypeProfile);
-            if (profileRef.IsComplex)
+            StructureDefinition typeStructure = null;
+            if (primaryDiffType != null)
             {
-                primaryDiffTypeProfile = profileRef.CanonicalUrl;
-            }
 
-            var typeStructure = _resolver.FindStructureDefinition(primaryDiffTypeProfile);
+                var primarySnapType = snap.Current.PrimaryType();
+                // if (primarySnapType == null) { return true; }
 
-            // [WMR 20170224] Verify that the resolved StructureDefinition is compatible with the element type
-            if (!_resolver.IsValidTypeProfile(primarySnapType.Code, typeStructure))
-            {
-                addIssueInvalidProfileType(diff.Current, typeStructure);
-                return false;
-            }
+                var primaryDiffTypeProfile = primaryDiffType.Profile;
 
-            var diffNode = diff.Current.ToNamedNode();
+                // [WMR 20170208] Ignore explicit diff profile if it matches the (implied) base type profile
+                // e.g. if the differential specifies explicit core type profile url
+                // Example: Patient.identifier type = { Code : Identifier, Profile : "http://hl7.org/fhir/StructureDefinition/Identifier" } }
+                var primarySnapTypeProfile = primarySnapType.GetTypeProfile();
 
-            // [WMR 20170207] Notify observers, allow event subscribers to force expansion (even if no diff constraints)
-            // Note: if the element is to be expanded, then always merge full snapshot of the external type profile (!)
-            if (mustExpandElement(diff))  // if (diff.HasChildren)
-            {
-                if (!ensureSnapshot(typeStructure, primaryDiffTypeProfile, diffNode))
+                if (string.IsNullOrEmpty(primaryDiffTypeProfile) || primaryDiffTypeProfile == primarySnapTypeProfile) { return true; }
+
+                // [WMR 20160721] NEW: Handle type profiles with name references
+                // e.g. profile "http://hl7.org/fhir/StructureDefinition/qicore-adverseevent"
+                // Extension element "cause" => "http://hl7.org/fhir/StructureDefinition/qicore-adverseevent-cause"
+                // Constraint on extension child element "certainty" => "http://hl7.org/fhir/StructureDefinition/qicore-adverseevent-cause#certainty"
+                // This means: 
+                // - First inherit child element constraints from extension definition, element with name "certainty"
+                // - Then override inherited constraints by explicit element constraints in profile differential
+
+                var profileRef = ProfileReference.Parse(primaryDiffTypeProfile);
+                if (profileRef.IsComplex)
                 {
+                    primaryDiffTypeProfile = profileRef.CanonicalUrl;
+                }
+
+                typeStructure = _resolver.FindStructureDefinition(primaryDiffTypeProfile);
+
+                // [WMR 20170224] Verify that the resolved StructureDefinition is compatible with the element type
+                if (!_resolver.IsValidTypeProfile(primarySnapType.Code, typeStructure))
+                {
+                    addIssueInvalidProfileType(diff.Current, typeStructure);
                     return false;
                 }
 
-                // Clone and rebase
-                var rebasePath = diff.Path;
+                var diffNode = diff.Current.ToNamedNode();
 
-                if (profileRef.IsComplex)
+                // [WMR 20170207] Notify observers, allow event subscribers to force expansion (even if no diff constraints)
+                // Note: if the element is to be expanded, then always merge full snapshot of the external type profile (!)
+                if (mustExpandElement(diff))
                 {
-                    rebasePath = ElementDefinitionNavigator.GetParentPath(rebasePath);
-                }
-                var rebasedTypeSnapshot = (StructureDefinition.SnapshotComponent)typeStructure.Snapshot.DeepCopy();
-                rebasedTypeSnapshot.Rebase(rebasePath);
-
-                var typeNav = new ElementDefinitionNavigator(rebasedTypeSnapshot.Element, typeStructure);
-                if (!profileRef.IsComplex)
-                {
-                    typeNav.MoveToFirstChild();
-
-                    // [WMR 20170208] Update ElementDefinition.Base components
-                    // ensureBaseComponents(typeNav, snap, true);
-
-                    // [WMR 20170321] HACK: Never copy elements names from the root element (e.g. SimpleQuantity)
-                    if (typeNav.Current.SliceNameElement != null)
+                    if (!ensureSnapshot(typeStructure, primaryDiffTypeProfile, diffNode))
                     {
-                        Debug.WriteLine($"[{nameof(SnapshotGenerator)}.{nameof(mergeTypeProfiles)}] Explicitly prevent copying of root element name: {typeNav.Path} : '{typeNav.Current.SliceName}'");
-                        typeNav.Current.SliceName = null;
+                        return false;
                     }
 
+                    // Clone and rebase
+                    var rebasePath = diff.Path;
+
+                    if (profileRef.IsComplex)
+                    {
+                        rebasePath = ElementDefinitionNavigator.GetParentPath(rebasePath);
+                    }
+                    var rebasedTypeSnapshot = (StructureDefinition.SnapshotComponent)typeStructure.Snapshot.DeepCopy();
+                    rebasedTypeSnapshot.Rebase(rebasePath);
+
+                    var typeNav = new ElementDefinitionNavigator(rebasedTypeSnapshot.Element, typeStructure);
+                    if (!profileRef.IsComplex)
+                    {
+                        typeNav.MoveToFirstChild();
+
+                        // [WMR 20170208] Update ElementDefinition.Base components
+                        // ensureBaseComponents(typeNav, snap, true);
+
+                        // [WMR 20170321] HACK: Never copy elements names from the root element (e.g. SimpleQuantity)
+                        if (typeNav.Current.SliceNameElement != null)
+                        {
+                            Debug.WriteLine($"[{nameof(SnapshotGenerator)}.{nameof(mergeTypeProfiles)}] Explicitly prevent copying of root element name: {typeNav.Path} : '{typeNav.Current.SliceName}'");
+                            typeNav.Current.SliceName = null;
+                        }
+
+                    }
+                    else
+                    {
+                        if (!typeNav.JumpToNameReference(profileRef.ElementName))
+                        {
+                            addIssueInvalidProfileNameReference(snap.Current, profileRef.ElementName, primaryDiffTypeProfile);
+                            return false;
+                        }
+                    }
+
+                    // [WMR 20170321] Handle element renaming
+                    // diff can rename choice type element, e.g. Observation.valueQuantity
+                    // snap may contain the original element paths, e.g. Observation.value[x]
+                    // In that case, diff overrides snap; i.e. snap should also be renamed
+                    // => First renamed snap before merging diff
+                    if (diff.PathName != snap.PathName)
+                    {
+                        Debug.WriteLine($"[{nameof(SnapshotGenerator)}.{nameof(mergeTypeProfiles)}] Rename snapshot element(s): {snap.Path} => '{diff.Path}'");
+                        Debug.Assert(!snap.HasChildren);
+                        snap.Current.Path = diff.Path;
+                    }
+
+                    // [WMR 20170208] Merge order is important!
+                    // Profile may specify inline constraints to override aspects of the external type profile
+                    // 1. Fully expand the snapshot of the external type profile
+                    // 2. Clone, rebase and copy children into referencing profile below the referencing parent element
+                    // 2. On top of that, merge base profile constraints (taken from the snapshot)
+                    // 3. On top of that, merge profile differential constraints
+                    // Example:
+                    //   diff (element type profile constraint) : Patient.identifier::type = { Identifier, "http://example.org/fhir/StructureDefinition/MyCustomIdentifier" }
+                    //   snap (default type from base profile)  : Patient.identifier::type = { Identifier }
+                    //   typeNav (Identifier root element type) : Patient.identifier::type = { Element }
+
+                    // [WMR 20170501] Must handle two different situations:
+                    // 1. Element type is NOT expanded in the base profile
+                    //    => Expand now by calling copyChildren
+                    // 2. Element (base) type IS expanded in the base profile, i.e. base profile has child elements
+                    //    => call mergeElement to merge diff (derived) type profile onto snapshot (base) type profile
+
+                    var copied = copyChildren(snap, typeNav, typeStructure);
+
+                    // But we also need to merge external type profile onto any existing inline snapshot constraints
+                    // e.g. TestObservationProfileWithExtensions(_ExpandAll)
+
+                    // [WMR 20170428] ISSUE
+                    // typeNav refers to type Snapshot, e.g. { Address Snap + MyAddress Diff }
+                    // snap may already include Address Snap + Diff
+                    // We need to determine { Address Snap + Diff + MyAddress Diff }
+                    // But this performs { Address Snap + Diff + Address Snap (WRONG!) + MyAddress Diff }
+                    // i.e. any overriding diff constraints from base snapshot are reverted back to original Address constraints
+                    // Gets even more complicated with higher order derived base/type profiles...
+
+                    mergeElement(snap, typeNav);
+
+                    // Now call prepareTypeProfileElements (below) to clear element IDs and notify event subscribers
                 }
                 else
                 {
-                    if (!typeNav.JumpToNameReference(profileRef.ElementName))
-                    {
-                        addIssueInvalidProfileNameReference(snap.Current, profileRef.ElementName, primaryDiffTypeProfile);
-                        return false;
-                    }
+                    // Expand and merge (only!) the root element of the external type profile
+                    // Note: full expansion may trigger recursion, e.g. Element.id => identifier => string => Element
+                    var typeRootElem = getSnapshotRootElement(typeStructure, primaryDiffTypeProfile, diffNode);
+                    if (typeRootElem == null) { return false; }
+
+                    // Rebase before merging
+                    var rebasedRootElem = (ElementDefinition)typeRootElem.DeepCopy();
+                    rebasedRootElem.Path = diff.Path;
+
+                    // Merge the type profile root element; no need to expand children
+                    mergeElementDefinition(snap.Current, rebasedRootElem, false);
                 }
-
-                // [WMR 20170321] Handle element renaming
-                // diff can rename choice type element, e.g. Observation.valueQuantity
-                // snap may contain the original element paths, e.g. Observation.value[x]
-                // In that case, diff overrides snap; i.e. snap should also be renamed
-                // => First renamed snap before merging diff
-                if (diff.PathName != snap.PathName)
-                {
-                    Debug.WriteLine($"[{nameof(SnapshotGenerator)}.{nameof(mergeTypeProfiles)}] Rename snapshot element(s): {snap.Path} => '{diff.Path}'");
-                    Debug.Assert(!snap.HasChildren);
-                    snap.Current.Path = diff.Path;
-                }
-
-                // [WMR 20170208] Merge order is important!
-                // Profile may specify inline constraints to override aspects of the external type profile
-                // 1. Fully expand the snapshot of the external type profile
-                // 2. Clone, rebase and copy children into referencing profile below the referencing parent element
-                // 2. On top of that, merge base profile constraints (taken from the snapshot)
-                // 3. On top of that, merge profile differential constraints
-                // Example:
-                //   diff (element type profile constraint) : Patient.identifier::type = { Identifier, "http://example.org/fhir/StructureDefinition/MyCustomIdentifier" }
-                //   snap (default type from base profile)  : Patient.identifier::type = { Identifier }
-                //   typeNav (Identifier root element type) : Patient.identifier::type = { Element }
-
-                // [WMR 20170501] Must handle two different situations:
-                // 1. Element type is NOT expanded in the base profile
-                //    => Expand now by calling copyChildren
-                // 2. Element (base) type IS expanded in the base profile, i.e. base profile has child elements
-                //    => call mergeElement to merge diff (derived) type profile onto snapshot (base) type profile
-
-                var copied = copyChildren(snap, typeNav, typeStructure);
-
-                // But we also need to merge external type profile onto any existing inline snapshot constraints
-                // e.g. TestObservationProfileWithExtensions(_ExpandAll)
-
-                // [WMR 20170428] ISSUE
-                // typeNav refers to type Snapshot, e.g. { Address Snap + MyAddress Diff }
-                // snap may already include Address Snap + Diff
-                // We need to determine { Address Snap + Diff + MyAddress Diff }
-                // But this performs { Address Snap + Diff + Address Snap (WRONG!) + MyAddress Diff }
-                // i.e. any overriding diff constraints from base snapshot are reverted back to original Address constraints
-                // Gets even more complicated with higher order derived base/type profiles...
-
-                mergeElement(snap, typeNav);
-
-                // Now call prepareTypeProfileElements (below) to clear element IDs and notify event subscribers
-            }
-            else
-            {
-                // Expand and merge (only!) the root element of the external type profile
-                // Note: full expansion may trigger recursion, e.g. Element.id => identifier => string => Element
-                var typeRootElem = getSnapshotRootElement(typeStructure, primaryDiffTypeProfile, diffNode);
-                if (typeRootElem == null) { return false; }
-
-                // Rebase before merging
-                var rebasedRootElem = (ElementDefinition)typeRootElem.DeepCopy();
-                rebasedRootElem.Path = diff.Path;
-
-                // Merge the type profile root element; no need to expand children
-                mergeElementDefinition(snap.Current, rebasedRootElem, false);
             }
 
             // [WMR 20170209] Remove invalid annotations after merging an extension definition
             fixExtensionAnnotationsAfterMerge(snap.Current);
 
-            // [WMR 20170501] NEW (cf. expandElementType)
-            // - Clear element IDs (NOT inherited from external rebased element type profiles!)
+            // [WMR 20170711]
+            // - Regenerate element IDs (NOT inherited from external rebased element type profiles!)
             // - Notify subscribers by calling OnPrepareBaseElement, before merging diff constraints
-            prepareTypeProfileElements(snap, typeStructure, true);
+            prepareMergedTypeProfileElements(snap, typeStructure);
 
             return true;
         }
@@ -917,59 +946,131 @@ namespace Hl7.Fhir.Specification.Snapshot
             return false;
         }
 
-        // [WMR 20170501] NEW, called from expandElementType and mergeTypeProfiles
-        // After merging child elements of a type profile, we need to:
-        // 1. Clear merged element IDs to force re-generation
-        //    Do NOT inherit element IDs from rebased element type profiles!
-        // 2. Inform event subscribers by calling OnPrepareElement
-        // [WMR 20170614] Maintain existing root element ID on demand, i.e. if called from the public ExpandElement method
-        void prepareTypeProfileElements(ElementDefinitionNavigator snap, StructureDefinition typeProfile, bool clearRootElementId)
+        /// <summary>
+        /// Process child element definitions inherited from a merged external element type profile.
+        /// For each element, raise the <see cref="OnPrepareElement(ElementDefinition, StructureDefinition, ElementDefinition)"/> event
+        /// and ensure that the element id is assigned.
+        /// </summary>
+        void prepareMergedTypeProfileElements(ElementDefinitionNavigator snap, StructureDefinition typeProfile)
         {
-            // [WMR 20170614] Maintain the existing element ID of the (relative) root element
-            prepareTypeProfileElement(snap.Current, typeProfile, clearRootElementId);
-
-            // Recurse on grand children
-            var bm = snap.Bookmark();
-            if (snap.MoveToFirstChild())
+            // Recursively re-generate IDs for elements inherited from external rebased type profile
+            if (_settings.GenerateElementIds)
             {
-                do
+                ElementIdGenerator.Update(snap, true);
+            }
+
+            if (MustRaisePrepareElement)
+            {
+                var elems = snap.Elements;
+                var parentPath = snap.Path;
+                var start = snap.OrdinalPosition.Value;
+                for (int i = start; i < elems.Count && (i == start || ElementDefinitionNavigator.IsChildPath(parentPath, elems[i].Path)); i++)
                 {
-                    // [WMR 20170614] Always clear the element IDs of the child elements
-                    // Child element ids are not inherited from external type profile!
-                    prepareTypeProfileElements(snap, typeProfile, true);
-                } while (snap.MoveToNext());
-                snap.ReturnToBookmark(bm);
+                    var elem = elems[i];
+
+                    // Important! Must clone the current snapshot element to create a separate base instance
+                    var baseElem = (ElementDefinition)elem.DeepCopy();
+
+                    // Inform subscribers about the prepared merged base element
+                    // nav.Current now represents the merged base element, including
+                    // constraints from base profile and external element type profile.
+                    // Next we are going to merge profile diff constraints.
+                    OnPrepareElement(elem, typeProfile, baseElem);
+                }
             }
         }
 
-        void prepareTypeProfileElement(ElementDefinition elem, StructureDefinition typeProfile, bool clearElementId)
+        // [WMR 20170713] NEW - for expandElementType
+        // Raise OnPrepareElement event and provide matching base elements from typeNav
+        // Cannot use prepareMergedTypeProfileElements, as the provided base element is incorrect in this case
+        // To determine correct matching base element from typeNav, we need to recursively match type profile children...
+        // This finds correct matching base elements, but is MUCH slower...
+        void prepareExpandedTypeProfileElements(ElementDefinitionNavigator snap, ElementDefinitionNavigator typeNav)
         {
+            // Recursively re-generate IDs for elements inherited from external rebased type profile
+            if (_settings.GenerateElementIds)
+            {
+                ElementIdGenerator.Update(snap, true);
+            }
+
             if (MustRaisePrepareElement)
             {
-                // Important! Must clone the current snapshot element to create a separate base instance
-                // Clone BEFORE erasing the original ElementID
-                var baseElem = (ElementDefinition)elem.DeepCopy();
-
-                if (clearElementId)
-                {
-                    // Clear element IDs inherited from external rebased type profile,
-                    // in order to force re-generation
-                    elem.ElementId = null;
-                }
-
-                // Inform subscribers about the prepared merged base element
-                // nav.Current now represents the merged base element, including
-                // constraints from base profile and external element type profile.
-                // Next we are going to merge profile diff constraints.
-                // TODO: Event listeners should be responsible for cloning snap.Current,
-                // to prevent unnecessary work in case of no event subscribers
-                OnPrepareElement(elem, typeProfile, baseElem);
+                prepareExpandedTypeProfileElementsInternal(snap, typeNav);
             }
-            else if (clearElementId)
+        }
+
+        void prepareExpandedTypeProfileElementsInternal(ElementDefinitionNavigator snap, ElementDefinitionNavigator typeNav)
+        {
+            Debug.Assert(MustRaisePrepareElement);
+
+            var snapPos = snap.Bookmark();
+            var typePos = typeNav.Bookmark();
+            var typeProfile = typeNav.StructureDefinition;
+            Debug.Assert(typeProfile != null);
+
+            try
             {
-                // Clear element IDs inherited from external rebased type profile,
-                // in order to force re-generation
-                elem.ElementId = null;
+                var matches = ElementMatcher.Match(snap, typeNav);
+
+                // Debug.WriteLine($"Type profile matches for children of {(snap.Path ?? "/")} '{(snap.Current?.SliceName ?? snap.Current?.Type.FirstOrDefault()?.Profile ?? snap.Current?.Type.FirstOrDefault()?.Code)}'");
+                // matches.DumpMatches(snap, typeNav);
+
+                foreach (var match in matches)
+                {
+                    // Navigate to the matched elements
+                    if (!snap.ReturnToBookmark(match.BaseBookmark))
+                    {
+                        throw Error.InvalidOperation($"Internal error in snapshot generator ({nameof(merge)}): bookmark '{match.BaseBookmark}' in snap is no longer available");
+                    }
+                    if (!typeNav.ReturnToBookmark(match.DiffBookmark))
+                    {
+                        throw Error.InvalidOperation($"Internal error in snapshot generator ({nameof(merge)}): bookmark '{match.DiffBookmark}' in typeNav is no longer available");
+                    }
+
+                    // Collect any reported issue
+                    if (match.Issue != null)
+                    {
+                        addIssue(match.Issue);
+                    }
+
+                    // Process the match, depending on the result
+                    switch (match.Action)
+                    {
+                        case ElementMatcher.MatchAction.Merge:
+                            OnPrepareElement(snap.Current, typeProfile, typeNav.Current);
+                            break;
+                        case ElementMatcher.MatchAction.Add:
+                            // var sliceBase = match.SliceBase?.Current ?? createExtensionSlicingEntry(snap.Current);
+                            Debug.Assert(match.SliceBase?.Current != null);
+                            OnPrepareElement(snap.Current, typeProfile, match.SliceBase.Current);
+                            break;
+                        case ElementMatcher.MatchAction.Slice:
+                            // For extensions, match.SliceBase may be null (slice entry is implicit and may be omitted)
+                            var sliceBase = match.SliceBase?.Current ?? createExtensionSlicingEntry(snap.Current);
+                            OnPrepareElement(snap.Current, typeProfile, sliceBase);
+                            break;
+                        case ElementMatcher.MatchAction.New:
+                            // No matching base element; this is a new element definition
+                            // snap is positioned at the associated parent element
+                            OnPrepareElement(snap.Current, null, null);
+                            break;
+                        case ElementMatcher.MatchAction.Invalid:
+                            // Collect issue and ignore invalid element
+                            break;
+                    }
+
+                    // Recurse children
+                    if (snap.HasChildren)
+                    {
+                        prepareExpandedTypeProfileElementsInternal(snap, typeNav);
+                    }
+
+                }
+            }
+            finally
+            {
+                snap.ReturnToBookmark(snapPos);
+                typeNav.ReturnToBookmark(typePos);
             }
         }
 
@@ -1069,6 +1170,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // Merge newly created slicing entry onto snap
                     // [WMR 20170421] Don't merge element Id from slice entry
                     mergeElementDefinition(snap.Current, slicingEntry, false);
+
+                    // [WMR 20170711] Explicitly re-generate the extension element id
+                    if (_settings.GenerateElementIds)
+                    {
+                        ElementIdGenerator.Update(snap, true);
+                    }
                 }
                 else
                 {
@@ -1165,7 +1272,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             // Important: explicitly clear the slicing node in the copy!
-            Debug.Assert(snap.Current.Slicing == null); // Taken care of by ElementMatcher.constructSliceMatch
+            Debug.Assert(snap.Current.Slicing == null); // Taken care of by ElementMatcher.initSliceBase
             // snap.Current.Slicing = null;
 
             // Notify clients about a snapshot element with differential constraints
@@ -1176,7 +1283,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         }
 
-        static void addSliceBase(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff, ElementDefinitionNavigator sliceBase)
+        void addSliceBase(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff, ElementDefinitionNavigator sliceBase)
         {
             var lastSlice = findSliceAddPosition(snap, diff);
             bool result = false;
@@ -1388,8 +1495,6 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // Generating the element base components may also resolve StructureDefinitions and cause recursion!
                 ensureSnapshotBaseComponents(sd);
-
-                // [WMR 20160906] TODO: Generate ElementDefinition.id
             }
             finally
             {

@@ -7,7 +7,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 {
     internal static class SnapshotGeneratorErrors
     {
-        public const string Error_Navigator_Position = "Error! The specified element definition navigator has no current position.";
+        public const string Error_Navigator_Position = "Error! The specified element definition navigator is not positioned on an element.";
         public const string Error_ElementDefinition_Path = "Error! The specified element definition has no path.";
         public const string Error_StructureDefinition_Snapshot = "Error! The specified structure definition has no snapshot.";
 
@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         public static void ThrowIfNullOrNotPositioned(this ElementDefinitionNavigator nav, string paramName)
         {
             if (nav == null) { throw Error.ArgumentNull(nameof(nav)); }
-            if (nav.Current == null) { throw Error.Argument(nameof(nav), Error_Navigator_Position); }
+            if (nav.AtRoot) { throw Error.Argument(nameof(nav), Error_Navigator_Position); }
         }
 
         /// <summary>
