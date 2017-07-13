@@ -17,6 +17,12 @@
     <AssemblyName>Hl7.Fhir.DSTU2.Core</AssemblyName>
     <RootNamespace>Hl7.Fhir</RootNamespace>
   </PropertyGroup>
+
+   <ItemGroup>
+     <Compile Remove="Rest\Search\**" />
+     <EmbeddedResource Remove="Rest\Search\**" />
+     <None Remove="Rest\Search\**" />
+   </ItemGroup>
  
   <ItemGroup>    
     <PackageReference Include="System.ValueTuple" Version="4.3.0" />

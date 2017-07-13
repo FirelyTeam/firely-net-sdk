@@ -18,23 +18,14 @@ namespace Hl7.Fhir.Utility
         public static string GetLiteral(this Enum e)
         {
             var attr = e.GetAttributeOnEnum<EnumLiteralAttribute>();
-
-            if (attr != null)
-                return attr.Literal;
-            else
-                return null;
+            return attr?.Literal ?? e.ToString();
         }
 
         public static string GetDocumentation(this Enum e)
         {
             var attr = e.GetAttributeOnEnum<DescriptionAttribute>();
-
-            if (attr != null)
-                return attr.Description;
-            else
-                return null;
+            return attr?.Description ?? e.ToString();
         }
-
 
         private static Dictionary<Type, EnumMapping> _cache = new Dictionary<Type, EnumMapping>();
         private static Object _cacheLock = new Object();
