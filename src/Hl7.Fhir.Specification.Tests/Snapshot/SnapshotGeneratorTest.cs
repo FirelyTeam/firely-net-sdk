@@ -4915,6 +4915,90 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsFalse(nav.MoveToChild("type"));
         }
 
+        static StructureDefinition QuestionnaireResponseWithSlice => new StructureDefinition()
+        {
+            Type = FHIRAllTypes.QuestionnaireResponse.GetLiteral(),
+            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.QuestionnaireResponse),
+            Name = "QuestionnaireResponseWithSlice",
+            Url = @"http://example.org/fhir/StructureDefinition/QuestionnaireResponseWithSlice",
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+            Kind = StructureDefinition.StructureDefinitionKind.Resource,
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("QuestionnaireResponse.item")
+                    {
+                        Slicing = new ElementDefinition.SlicingComponent()
+                        {
+                            Discriminator = new List<ElementDefinition.DiscriminatorComponent>()
+                            {
+                                new ElementDefinition.DiscriminatorComponent() { Type = ElementDefinition.DiscriminatorType.Value, Path = "text" }
+                            }
+                        }
+                    },
+                    new ElementDefinition("QuestionnaireResponse.item")
+                    {
+                        SliceName = "Q1"
+                    },
+                    new ElementDefinition("QuestionnaireResponse.item")
+                    {
+                        SliceName = "Q2"
+                    },
+                    new ElementDefinition("QuestionnaireResponse.item.linkid")
+                    {
+                        Max = "0"
+                    },
+                }
+            }
+            };
+
+        // Isue #387
+        // https://github.com/ewoutkramer/fhir-net-api/issues/387
+        // Cannot reproduce in STU3?
+        [TestMethod]
+        public void TestQRSliceChildrenBindings()
+        {
+            var sd = QuestionnaireResponseWithSlice;
+            var resolver = new InMemoryProfileResolver(sd);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            StructureDefinition expanded = null;
+            _generator.BeforeExpandElement += beforeExpandElementHandler_DEBUG;
+            try
+            {
+                generateSnapshotAndCompare(sd, out expanded);
+            }
+            finally
+            {
+                _generator.BeforeExpandElement -= beforeExpandElementHandler_DEBUG;
+            }
+
+            dumpOutcome(_generator.Outcome);
+            Assert.IsTrue(expanded.HasSnapshot);
+            dumpElements(expanded.Snapshot.Element);
+
+            // Verify the inherited example binding on QuestionnaireResponse.item.answer.value[x]
+            var answerValues = expanded.Snapshot.Element.Where(e => e.Path == "QuestionnaireResponse.item.answer.value[x]").ToList();
+            Assert.AreEqual(3, answerValues.Count);
+            foreach (var elem in answerValues)
+            {
+                var binding = elem.Binding;
+                Assert.IsNotNull(binding);
+                Assert.AreEqual(BindingStrength.Example, binding.Strength);
+                var ValueSetReference = binding.ValueSet as ResourceReference;
+                Assert.IsNotNull(ValueSetReference);
+                // Assert.AreEqual("http://hl7.org/fhir/ValueSet/questionnaire-answers", ValueSetReference.Url.OriginalString);
+                Assert.IsTrue(ValueSetReference.Url.Equals("http://hl7.org/fhir/ValueSet/questionnaire-answers"));
+                var bindingNameExtension = binding.Extension.FirstOrDefault(e => e.Url == "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName");
+                Assert.IsNotNull(bindingNameExtension);
+                var bindingNameValue = bindingNameExtension.Value as FhirString;
+                Assert.IsNotNull(bindingNameValue);
+                Assert.AreEqual("QuestionnaireAnswer", bindingNameValue.Value);
+            }
+        }
 
     }
 }
