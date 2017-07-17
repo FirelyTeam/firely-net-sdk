@@ -116,8 +116,8 @@ namespace Hl7.Fhir.Rest
         [Obsolete("In STU3 this is no longer a true/false option, use the PreferredReturn property instead")]
         public bool ReturnFullResource
         {
-            get => _requester.Prefer == Prefer.ReturnRepresentation;
-            set => _requester.Prefer = value == true ? Prefer.ReturnRepresentation : Prefer.ReturnMinimal;
+            get => _requester.PreferredReturn == Prefer.ReturnRepresentation;
+            set => _requester.PreferredReturn = value == true ? Prefer.ReturnRepresentation : Prefer.ReturnMinimal;
         }
 
         /// <summary>
@@ -126,11 +126,23 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <remarks>Refer to specification section 2.1.0.5 (Managing Return Content)</remarks>
 
-        public Prefer PreferredReturn
+        public Prefer? PreferredReturn
         {
-            get => _requester.Prefer;
-            set => _requester.Prefer = value;
+            get => _requester.PreferredReturn;
+            set => _requester.PreferredReturn = value;
         }
+
+        /// <summary>
+        /// Should server return which search parameters were supported after executing a search?
+        /// If true, the server should return an error for any unknown or unsupported parameter, otherwise
+        /// the server may ignore any unknown or unsupported parameter.
+        /// </summary>
+        public SearchParameterHandling? PreferredParameterHandling
+        {
+            get => _requester.PreferredParameterHandling;
+            set => _requester.PreferredParameterHandling = value;
+        }
+
 
 #if NET_COMPRESSION
         /// <summary>

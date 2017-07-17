@@ -192,6 +192,22 @@ namespace Hl7.Fhir.Rest
     }
 
 
+    public enum SearchParameterHandling
+    {
+        /// <summary>
+        /// Server should return an error for any unknown or unsupported parameter        
+        /// </summary>
+        [EnumLiteral("strict")]
+        Strict,
+
+        /// <summary>
+        /// Server should ignore any unknown or unsupported parameter
+        /// </summary>
+        [EnumLiteral("lenient")]
+        Lenient
+    }
+
+
     public enum Prefer
     {
         /// <summary>
