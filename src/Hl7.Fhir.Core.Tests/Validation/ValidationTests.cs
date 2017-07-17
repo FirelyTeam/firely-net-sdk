@@ -39,6 +39,15 @@ namespace Hl7.Fhir.Tests.Validation
             validateErrorOrFail(id);
         }
 
+        [TestMethod]
+        public void IdIsNowAString()
+        {
+            HumanName hn = HumanName.ForFamily("Kramer");
+            hn.ElementId = "This/may:contain.all$kinds%of@characters_now";
+
+            DotNetAttributeValidation.Validate(hn);
+        }
+
 
         private void validateErrorOrFail(object instance, bool recurse=false, string membername=null)
         {
