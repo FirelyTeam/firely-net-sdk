@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Tests.Introspection
         {
             Item1 = 4,
 
-            [EnumLiteral("ItemTwo"), Utility.Description("yadayaday")]
+            [EnumLiteral("ItemTwo", "http://example.org/test-system"), Utility.Description("yadayaday")]
             Item2
         }
     }
