@@ -65,43 +65,43 @@ namespace Hl7.Fhir.Model
             /// A draft referral that has yet to be send.
             /// (system: http://hl7.org/fhir/referralstatus)
             /// </summary>
-            [EnumLiteral("draft"), Description("Draft")]
+            [EnumLiteral("draft", "http://hl7.org/fhir/referralstatus"), Description("Draft")]
             Draft,
             /// <summary>
             /// The referral has been transmitted, but not yet acknowledged by the recipient.
             /// (system: http://hl7.org/fhir/referralstatus)
             /// </summary>
-            [EnumLiteral("requested"), Description("Requested")]
+            [EnumLiteral("requested", "http://hl7.org/fhir/referralstatus"), Description("Requested")]
             Requested,
             /// <summary>
             /// The referral has been acknowledged by the recipient, and is in the process of being actioned.
             /// (system: http://hl7.org/fhir/referralstatus)
             /// </summary>
-            [EnumLiteral("active"), Description("Active")]
+            [EnumLiteral("active", "http://hl7.org/fhir/referralstatus"), Description("Active")]
             Active,
             /// <summary>
             /// The referral has been cancelled without being completed. For example it is no longer needed.
             /// (system: http://hl7.org/fhir/referralstatus)
             /// </summary>
-            [EnumLiteral("cancelled"), Description("Cancelled")]
+            [EnumLiteral("cancelled", "http://hl7.org/fhir/referralstatus"), Description("Cancelled")]
             Cancelled,
             /// <summary>
             /// The recipient has agreed to deliver the care requested by the referral.
             /// (system: http://hl7.org/fhir/referralstatus)
             /// </summary>
-            [EnumLiteral("accepted"), Description("Accepted")]
+            [EnumLiteral("accepted", "http://hl7.org/fhir/referralstatus"), Description("Accepted")]
             Accepted,
             /// <summary>
             /// The recipient has declined to accept the referral.
             /// (system: http://hl7.org/fhir/referralstatus)
             /// </summary>
-            [EnumLiteral("rejected"), Description("Rejected")]
+            [EnumLiteral("rejected", "http://hl7.org/fhir/referralstatus"), Description("Rejected")]
             Rejected,
             /// <summary>
             /// The referral has been completely actioned.
             /// (system: http://hl7.org/fhir/referralstatus)
             /// </summary>
-            [EnumLiteral("completed"), Description("Completed")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/referralstatus"), Description("Completed")]
             Completed,
         }
 

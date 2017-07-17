@@ -65,25 +65,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://nema.org/dicom/dicm)
             /// </summary>
-            [EnumLiteral("ONLINE"), Description("Online")]
+            [EnumLiteral("ONLINE", "http://nema.org/dicom/dicm"), Description("Online")]
             ONLINE,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://nema.org/dicom/dicm)
             /// </summary>
-            [EnumLiteral("OFFLINE"), Description("Offline")]
+            [EnumLiteral("OFFLINE", "http://nema.org/dicom/dicm"), Description("Offline")]
             OFFLINE,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://nema.org/dicom/dicm)
             /// </summary>
-            [EnumLiteral("NEARLINE"), Description("Nearline")]
+            [EnumLiteral("NEARLINE", "http://nema.org/dicom/dicm"), Description("Nearline")]
             NEARLINE,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://nema.org/dicom/dicm)
             /// </summary>
-            [EnumLiteral("UNAVAILABLE"), Description("Unavailable")]
+            [EnumLiteral("UNAVAILABLE", "http://nema.org/dicom/dicm"), Description("Unavailable")]
             UNAVAILABLE,
         }
 

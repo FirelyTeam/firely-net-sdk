@@ -65,55 +65,55 @@ namespace Hl7.Fhir.Model
             /// The bundle is a document. The first resource is a Composition.
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
-            [EnumLiteral("document"), Description("Document")]
+            [EnumLiteral("document", "http://hl7.org/fhir/bundle-type"), Description("Document")]
             Document,
             /// <summary>
             /// The bundle is a message. The first resource is a MessageHeader.
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
-            [EnumLiteral("message"), Description("Message")]
+            [EnumLiteral("message", "http://hl7.org/fhir/bundle-type"), Description("Message")]
             Message,
             /// <summary>
             /// The bundle is a transaction - intended to be processed by a server as an atomic commit.
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
-            [EnumLiteral("transaction"), Description("Transaction")]
+            [EnumLiteral("transaction", "http://hl7.org/fhir/bundle-type"), Description("Transaction")]
             Transaction,
             /// <summary>
             /// The bundle is a transaction response. Because the response is a transaction response, the transactionhas succeeded, and all responses are error free.
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
-            [EnumLiteral("transaction-response"), Description("Transaction Response")]
+            [EnumLiteral("transaction-response", "http://hl7.org/fhir/bundle-type"), Description("Transaction Response")]
             TransactionResponse,
             /// <summary>
             /// The bundle is a transaction - intended to be processed by a server as a group of actions.
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
-            [EnumLiteral("batch"), Description("Batch")]
+            [EnumLiteral("batch", "http://hl7.org/fhir/bundle-type"), Description("Batch")]
             Batch,
             /// <summary>
             /// The bundle is a batch response. Note that as a batch, some responses may indicate failure and others success.
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
-            [EnumLiteral("batch-response"), Description("Batch Response")]
+            [EnumLiteral("batch-response", "http://hl7.org/fhir/bundle-type"), Description("Batch Response")]
             BatchResponse,
             /// <summary>
             /// The bundle is a list of resources from a history interaction on a server.
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
-            [EnumLiteral("history"), Description("History List")]
+            [EnumLiteral("history", "http://hl7.org/fhir/bundle-type"), Description("History List")]
             History,
             /// <summary>
             /// The bundle is a list of resources returned as a result of a search/query interaction, operation, or message.
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
-            [EnumLiteral("searchset"), Description("Search Results")]
+            [EnumLiteral("searchset", "http://hl7.org/fhir/bundle-type"), Description("Search Results")]
             Searchset,
             /// <summary>
             /// The bundle is a set of resources collected into a single document for ease of distribution.
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
-            [EnumLiteral("collection"), Description("Collection")]
+            [EnumLiteral("collection", "http://hl7.org/fhir/bundle-type"), Description("Collection")]
             Collection,
         }
 
@@ -128,19 +128,19 @@ namespace Hl7.Fhir.Model
             /// This resource matched the search specification.
             /// (system: http://hl7.org/fhir/search-entry-mode)
             /// </summary>
-            [EnumLiteral("match"), Description("Match")]
+            [EnumLiteral("match", "http://hl7.org/fhir/search-entry-mode"), Description("Match")]
             Match,
             /// <summary>
             /// This resource is returned because it is referred to from another resource in the search set.
             /// (system: http://hl7.org/fhir/search-entry-mode)
             /// </summary>
-            [EnumLiteral("include"), Description("Include")]
+            [EnumLiteral("include", "http://hl7.org/fhir/search-entry-mode"), Description("Include")]
             Include,
             /// <summary>
             /// An OperationOutcome that provides additional information about the processing of a search.
             /// (system: http://hl7.org/fhir/search-entry-mode)
             /// </summary>
-            [EnumLiteral("outcome"), Description("Outcome")]
+            [EnumLiteral("outcome", "http://hl7.org/fhir/search-entry-mode"), Description("Outcome")]
             Outcome,
         }
 
@@ -155,25 +155,25 @@ namespace Hl7.Fhir.Model
             /// HTTP GET
             /// (system: http://hl7.org/fhir/http-verb)
             /// </summary>
-            [EnumLiteral("GET"), Description("GET")]
+            [EnumLiteral("GET", "http://hl7.org/fhir/http-verb"), Description("GET")]
             GET,
             /// <summary>
             /// HTTP POST
             /// (system: http://hl7.org/fhir/http-verb)
             /// </summary>
-            [EnumLiteral("POST"), Description("POST")]
+            [EnumLiteral("POST", "http://hl7.org/fhir/http-verb"), Description("POST")]
             POST,
             /// <summary>
             /// HTTP PUT
             /// (system: http://hl7.org/fhir/http-verb)
             /// </summary>
-            [EnumLiteral("PUT"), Description("PUT")]
+            [EnumLiteral("PUT", "http://hl7.org/fhir/http-verb"), Description("PUT")]
             PUT,
             /// <summary>
             /// HTTP DELETE
             /// (system: http://hl7.org/fhir/http-verb)
             /// </summary>
-            [EnumLiteral("DELETE"), Description("DELETE")]
+            [EnumLiteral("DELETE", "http://hl7.org/fhir/http-verb"), Description("DELETE")]
             DELETE,
         }
 

@@ -65,43 +65,43 @@ namespace Hl7.Fhir.Model
             /// An active record of a reaction to the identified Substance.
             /// (system: http://hl7.org/fhir/allergy-intolerance-status)
             /// </summary>
-            [EnumLiteral("active"), Description("Active")]
+            [EnumLiteral("active", "http://hl7.org/fhir/allergy-intolerance-status"), Description("Active")]
             Active,
             /// <summary>
             /// A low level of certainty about the propensity for a reaction to the identified Substance.
             /// (system: http://hl7.org/fhir/allergy-intolerance-status)
             /// </summary>
-            [EnumLiteral("unconfirmed"), Description("Unconfirmed")]
+            [EnumLiteral("unconfirmed", "http://hl7.org/fhir/allergy-intolerance-status"), Description("Unconfirmed")]
             Unconfirmed,
             /// <summary>
             /// A high level of certainty about the propensity for a reaction to the identified Substance, which may include clinical evidence by testing or rechallenge.
             /// (system: http://hl7.org/fhir/allergy-intolerance-status)
             /// </summary>
-            [EnumLiteral("confirmed"), Description("Confirmed")]
+            [EnumLiteral("confirmed", "http://hl7.org/fhir/allergy-intolerance-status"), Description("Confirmed")]
             Confirmed,
             /// <summary>
             /// An inactive record of a reaction to the identified Substance.
             /// (system: http://hl7.org/fhir/allergy-intolerance-status)
             /// </summary>
-            [EnumLiteral("inactive"), Description("Inactive")]
+            [EnumLiteral("inactive", "http://hl7.org/fhir/allergy-intolerance-status"), Description("Inactive")]
             Inactive,
             /// <summary>
             /// A reaction to the identified Substance has been clinically reassessed by testing or rechallenge and considered to be resolved.
             /// (system: http://hl7.org/fhir/allergy-intolerance-status)
             /// </summary>
-            [EnumLiteral("resolved"), Description("Resolved")]
+            [EnumLiteral("resolved", "http://hl7.org/fhir/allergy-intolerance-status"), Description("Resolved")]
             Resolved,
             /// <summary>
             /// A propensity for a reaction to the identified Substance has been disproven with a high level of clinical certainty, which may include testing or rechallenge, and is refuted.
             /// (system: http://hl7.org/fhir/allergy-intolerance-status)
             /// </summary>
-            [EnumLiteral("refuted"), Description("Refuted")]
+            [EnumLiteral("refuted", "http://hl7.org/fhir/allergy-intolerance-status"), Description("Refuted")]
             Refuted,
             /// <summary>
             /// The statement was entered in error and is not valid.
             /// (system: http://hl7.org/fhir/allergy-intolerance-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered In Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/allergy-intolerance-status"), Description("Entered In Error")]
             EnteredInError,
         }
 
@@ -116,19 +116,19 @@ namespace Hl7.Fhir.Model
             /// The potential clinical impact of a future reaction is estimated as low risk: exposure to substance is unlikely to result in a life threatening or organ system threatening outcome. Future exposure to the Substance is considered a relative contra-indication.
             /// (system: http://hl7.org/fhir/allergy-intolerance-criticality)
             /// </summary>
-            [EnumLiteral("CRITL"), Description("Low Risk")]
+            [EnumLiteral("CRITL", "http://hl7.org/fhir/allergy-intolerance-criticality"), Description("Low Risk")]
             CRITL,
             /// <summary>
             /// The potential clinical impact of a future reaction is estimated as high risk: exposure to substance may result in a life threatening or organ system threatening outcome. Future exposure to the Substance may be considered an absolute contra-indication.
             /// (system: http://hl7.org/fhir/allergy-intolerance-criticality)
             /// </summary>
-            [EnumLiteral("CRITH"), Description("High Risk")]
+            [EnumLiteral("CRITH", "http://hl7.org/fhir/allergy-intolerance-criticality"), Description("High Risk")]
             CRITH,
             /// <summary>
             /// Unable to assess the potential clinical impact with the information available.
             /// (system: http://hl7.org/fhir/allergy-intolerance-criticality)
             /// </summary>
-            [EnumLiteral("CRITU"), Description("Unable to determine")]
+            [EnumLiteral("CRITU", "http://hl7.org/fhir/allergy-intolerance-criticality"), Description("Unable to determine")]
             CRITU,
         }
 
@@ -143,13 +143,13 @@ namespace Hl7.Fhir.Model
             /// A propensity for hypersensitivity reaction(s) to a substance.  These reactions are most typically type I hypersensitivity, plus other "allergy-like" reactions, including pseudoallergy.
             /// (system: http://hl7.org/fhir/allergy-intolerance-type)
             /// </summary>
-            [EnumLiteral("allergy"), Description("Allergy")]
+            [EnumLiteral("allergy", "http://hl7.org/fhir/allergy-intolerance-type"), Description("Allergy")]
             Allergy,
             /// <summary>
             /// A propensity for adverse reactions to a substance that is not judged to be allergic or "allergy-like".  These reactions are typically (but not necessarily) non-immune.  They are to some degree idiosyncratic and/or individually specific (i.e. are not a reaction that is expected to occur with most or all patients given similar circumstances).
             /// (system: http://hl7.org/fhir/allergy-intolerance-type)
             /// </summary>
-            [EnumLiteral("intolerance"), Description("Intolerance")]
+            [EnumLiteral("intolerance", "http://hl7.org/fhir/allergy-intolerance-type"), Description("Intolerance")]
             Intolerance,
         }
 
@@ -164,25 +164,25 @@ namespace Hl7.Fhir.Model
             /// Any substance consumed to provide nutritional support for the body.
             /// (system: http://hl7.org/fhir/allergy-intolerance-category)
             /// </summary>
-            [EnumLiteral("food"), Description("Food")]
+            [EnumLiteral("food", "http://hl7.org/fhir/allergy-intolerance-category"), Description("Food")]
             Food,
             /// <summary>
             /// Substances administered to achieve a physiological effect.
             /// (system: http://hl7.org/fhir/allergy-intolerance-category)
             /// </summary>
-            [EnumLiteral("medication"), Description("Medication")]
+            [EnumLiteral("medication", "http://hl7.org/fhir/allergy-intolerance-category"), Description("Medication")]
             Medication,
             /// <summary>
             /// Substances that are encountered in the environment.
             /// (system: http://hl7.org/fhir/allergy-intolerance-category)
             /// </summary>
-            [EnumLiteral("environment"), Description("Environment")]
+            [EnumLiteral("environment", "http://hl7.org/fhir/allergy-intolerance-category"), Description("Environment")]
             Environment,
             /// <summary>
             /// Other substances that are not covered by any other category.
             /// (system: http://hl7.org/fhir/allergy-intolerance-category)
             /// </summary>
-            [EnumLiteral("other"), Description("Other")]
+            [EnumLiteral("other", "http://hl7.org/fhir/allergy-intolerance-category"), Description("Other")]
             Other,
         }
 
@@ -197,19 +197,19 @@ namespace Hl7.Fhir.Model
             /// There is a low level of clinical certainty that the reaction was caused by the identified Substance.
             /// (system: http://hl7.org/fhir/reaction-event-certainty)
             /// </summary>
-            [EnumLiteral("unlikely"), Description("Unlikely")]
+            [EnumLiteral("unlikely", "http://hl7.org/fhir/reaction-event-certainty"), Description("Unlikely")]
             Unlikely,
             /// <summary>
             /// There is a high level of clinical certainty that the reaction was caused by the identified Substance.
             /// (system: http://hl7.org/fhir/reaction-event-certainty)
             /// </summary>
-            [EnumLiteral("likely"), Description("Likely")]
+            [EnumLiteral("likely", "http://hl7.org/fhir/reaction-event-certainty"), Description("Likely")]
             Likely,
             /// <summary>
             /// There is a very high level of clinical certainty that the reaction was due to the identified Substance, which may include clinical evidence by testing or rechallenge.
             /// (system: http://hl7.org/fhir/reaction-event-certainty)
             /// </summary>
-            [EnumLiteral("confirmed"), Description("Confirmed")]
+            [EnumLiteral("confirmed", "http://hl7.org/fhir/reaction-event-certainty"), Description("Confirmed")]
             Confirmed,
         }
 
@@ -224,19 +224,19 @@ namespace Hl7.Fhir.Model
             /// Causes mild physiological effects.
             /// (system: http://hl7.org/fhir/reaction-event-severity)
             /// </summary>
-            [EnumLiteral("mild"), Description("Mild")]
+            [EnumLiteral("mild", "http://hl7.org/fhir/reaction-event-severity"), Description("Mild")]
             Mild,
             /// <summary>
             /// Causes moderate physiological effects.
             /// (system: http://hl7.org/fhir/reaction-event-severity)
             /// </summary>
-            [EnumLiteral("moderate"), Description("Moderate")]
+            [EnumLiteral("moderate", "http://hl7.org/fhir/reaction-event-severity"), Description("Moderate")]
             Moderate,
             /// <summary>
             /// Causes severe physiological effects.
             /// (system: http://hl7.org/fhir/reaction-event-severity)
             /// </summary>
-            [EnumLiteral("severe"), Description("Severe")]
+            [EnumLiteral("severe", "http://hl7.org/fhir/reaction-event-severity"), Description("Severe")]
             Severe,
         }
 

@@ -65,19 +65,19 @@ namespace Hl7.Fhir.Model
             /// The Conformance instance represents the present capabilities of a specific system instance.  This is the kind returned by OPTIONS for a FHIR server end-point.
             /// (system: http://hl7.org/fhir/conformance-statement-kind)
             /// </summary>
-            [EnumLiteral("instance"), Description("Instance")]
+            [EnumLiteral("instance", "http://hl7.org/fhir/conformance-statement-kind"), Description("Instance")]
             Instance,
             /// <summary>
             /// The Conformance instance represents the capabilities of a system or piece of software, independent of a particular installation.
             /// (system: http://hl7.org/fhir/conformance-statement-kind)
             /// </summary>
-            [EnumLiteral("capability"), Description("Capability")]
+            [EnumLiteral("capability", "http://hl7.org/fhir/conformance-statement-kind"), Description("Capability")]
             Capability,
             /// <summary>
             /// The Conformance instance represents a set of requirements for other systems to meet; e.g. as part of an implementation guide or 'request for proposal'.
             /// (system: http://hl7.org/fhir/conformance-statement-kind)
             /// </summary>
-            [EnumLiteral("requirements"), Description("Requirements")]
+            [EnumLiteral("requirements", "http://hl7.org/fhir/conformance-statement-kind"), Description("Requirements")]
             Requirements,
         }
 
@@ -92,25 +92,25 @@ namespace Hl7.Fhir.Model
             /// The application does not accept either unknown elements or extensions.
             /// (system: http://hl7.org/fhir/unknown-content-code)
             /// </summary>
-            [EnumLiteral("no"), Description("Neither Elements or Extensions")]
+            [EnumLiteral("no", "http://hl7.org/fhir/unknown-content-code"), Description("Neither Elements or Extensions")]
             No,
             /// <summary>
             /// The application accepts unknown extensions, but not unknown elements.
             /// (system: http://hl7.org/fhir/unknown-content-code)
             /// </summary>
-            [EnumLiteral("extensions"), Description("Unknown Extensions")]
+            [EnumLiteral("extensions", "http://hl7.org/fhir/unknown-content-code"), Description("Unknown Extensions")]
             Extensions,
             /// <summary>
             /// The application accepts unknown elements, but not unknown extensions.
             /// (system: http://hl7.org/fhir/unknown-content-code)
             /// </summary>
-            [EnumLiteral("elements"), Description("Unknown Elements")]
+            [EnumLiteral("elements", "http://hl7.org/fhir/unknown-content-code"), Description("Unknown Elements")]
             Elements,
             /// <summary>
             /// The application accepts unknown elements and extensions.
             /// (system: http://hl7.org/fhir/unknown-content-code)
             /// </summary>
-            [EnumLiteral("both"), Description("Unknown Elements and Extensions")]
+            [EnumLiteral("both", "http://hl7.org/fhir/unknown-content-code"), Description("Unknown Elements and Extensions")]
             Both,
         }
 
@@ -125,13 +125,13 @@ namespace Hl7.Fhir.Model
             /// The application acts as a client for this resource.
             /// (system: http://hl7.org/fhir/restful-conformance-mode)
             /// </summary>
-            [EnumLiteral("client"), Description("Client")]
+            [EnumLiteral("client", "http://hl7.org/fhir/restful-conformance-mode"), Description("Client")]
             Client,
             /// <summary>
             /// The application acts as a server for this resource.
             /// (system: http://hl7.org/fhir/restful-conformance-mode)
             /// </summary>
-            [EnumLiteral("server"), Description("Server")]
+            [EnumLiteral("server", "http://hl7.org/fhir/restful-conformance-mode"), Description("Server")]
             Server,
         }
 
@@ -146,55 +146,55 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/restful-interaction)
             /// </summary>
-            [EnumLiteral("read"), Description("read")]
+            [EnumLiteral("read", "http://hl7.org/fhir/restful-interaction"), Description("read")]
             Read,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/restful-interaction)
             /// </summary>
-            [EnumLiteral("vread"), Description("vread")]
+            [EnumLiteral("vread", "http://hl7.org/fhir/restful-interaction"), Description("vread")]
             Vread,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/restful-interaction)
             /// </summary>
-            [EnumLiteral("update"), Description("update")]
+            [EnumLiteral("update", "http://hl7.org/fhir/restful-interaction"), Description("update")]
             Update,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/restful-interaction)
             /// </summary>
-            [EnumLiteral("delete"), Description("delete")]
+            [EnumLiteral("delete", "http://hl7.org/fhir/restful-interaction"), Description("delete")]
             Delete,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/restful-interaction)
             /// </summary>
-            [EnumLiteral("history-instance"), Description("history-instance")]
+            [EnumLiteral("history-instance", "http://hl7.org/fhir/restful-interaction"), Description("history-instance")]
             HistoryInstance,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/restful-interaction)
             /// </summary>
-            [EnumLiteral("validate"), Description("validate")]
+            [EnumLiteral("validate", "http://hl7.org/fhir/restful-interaction"), Description("validate")]
             Validate,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/restful-interaction)
             /// </summary>
-            [EnumLiteral("history-type"), Description("history-type")]
+            [EnumLiteral("history-type", "http://hl7.org/fhir/restful-interaction"), Description("history-type")]
             HistoryType,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/restful-interaction)
             /// </summary>
-            [EnumLiteral("create"), Description("create")]
+            [EnumLiteral("create", "http://hl7.org/fhir/restful-interaction"), Description("create")]
             Create,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/restful-interaction)
             /// </summary>
-            [EnumLiteral("search-type"), Description("search-type")]
+            [EnumLiteral("search-type", "http://hl7.org/fhir/restful-interaction"), Description("search-type")]
             SearchType,
         }
 
@@ -209,19 +209,19 @@ namespace Hl7.Fhir.Model
             /// VersionId meta-property is not supported (server) or used (client).
             /// (system: http://hl7.org/fhir/versioning-policy)
             /// </summary>
-            [EnumLiteral("no-version"), Description("No VersionId Support")]
+            [EnumLiteral("no-version", "http://hl7.org/fhir/versioning-policy"), Description("No VersionId Support")]
             NoVersion,
             /// <summary>
             /// VersionId meta-property is supported (server) or used (client).
             /// (system: http://hl7.org/fhir/versioning-policy)
             /// </summary>
-            [EnumLiteral("versioned"), Description("Versioned")]
+            [EnumLiteral("versioned", "http://hl7.org/fhir/versioning-policy"), Description("Versioned")]
             Versioned,
             /// <summary>
             /// VersionId is must be correct for updates (server) or will be specified (If-match header) for updates (client).
             /// (system: http://hl7.org/fhir/versioning-policy)
             /// </summary>
-            [EnumLiteral("versioned-update"), Description("VersionId tracked fully")]
+            [EnumLiteral("versioned-update", "http://hl7.org/fhir/versioning-policy"), Description("VersionId tracked fully")]
             VersionedUpdate,
         }
 
@@ -236,19 +236,19 @@ namespace Hl7.Fhir.Model
             /// No support for conditional deletes.
             /// (system: http://hl7.org/fhir/conditional-delete-status)
             /// </summary>
-            [EnumLiteral("not-supported"), Description("Not Supported")]
+            [EnumLiteral("not-supported", "http://hl7.org/fhir/conditional-delete-status"), Description("Not Supported")]
             NotSupported,
             /// <summary>
             /// Conditional deletes are supported, but only single resources at a time.
             /// (system: http://hl7.org/fhir/conditional-delete-status)
             /// </summary>
-            [EnumLiteral("single"), Description("Single Deletes Supported")]
+            [EnumLiteral("single", "http://hl7.org/fhir/conditional-delete-status"), Description("Single Deletes Supported")]
             Single,
             /// <summary>
             /// Conditional deletes are supported, and multiple resources can be deleted in a single interaction.
             /// (system: http://hl7.org/fhir/conditional-delete-status)
             /// </summary>
-            [EnumLiteral("multiple"), Description("Multiple Deletes Supported")]
+            [EnumLiteral("multiple", "http://hl7.org/fhir/conditional-delete-status"), Description("Multiple Deletes Supported")]
             Multiple,
         }
 
@@ -263,61 +263,61 @@ namespace Hl7.Fhir.Model
             /// The search parameter returns resources that have a value or not.
             /// (system: http://hl7.org/fhir/search-modifier-code)
             /// </summary>
-            [EnumLiteral("missing"), Description("Missing")]
+            [EnumLiteral("missing", "http://hl7.org/fhir/search-modifier-code"), Description("Missing")]
             Missing,
             /// <summary>
             /// The search parameter returns resources that have a value that exactly matches the supplied parameter (the whole string, including casing and accents).
             /// (system: http://hl7.org/fhir/search-modifier-code)
             /// </summary>
-            [EnumLiteral("exact"), Description("Exact")]
+            [EnumLiteral("exact", "http://hl7.org/fhir/search-modifier-code"), Description("Exact")]
             Exact,
             /// <summary>
             /// The search parameter returns resources that include the supplied parameter value anywhere within the field being searched.
             /// (system: http://hl7.org/fhir/search-modifier-code)
             /// </summary>
-            [EnumLiteral("contains"), Description("Contains")]
+            [EnumLiteral("contains", "http://hl7.org/fhir/search-modifier-code"), Description("Contains")]
             Contains,
             /// <summary>
             /// The search parameter returns resources that do not contain a match .
             /// (system: http://hl7.org/fhir/search-modifier-code)
             /// </summary>
-            [EnumLiteral("not"), Description("Not")]
+            [EnumLiteral("not", "http://hl7.org/fhir/search-modifier-code"), Description("Not")]
             Not,
             /// <summary>
             /// The search parameter is processed as a string that searches text associated with the code/value - either CodeableConcept.text, Coding.display, or Identifier.type.text.
             /// (system: http://hl7.org/fhir/search-modifier-code)
             /// </summary>
-            [EnumLiteral("text"), Description("Text")]
+            [EnumLiteral("text", "http://hl7.org/fhir/search-modifier-code"), Description("Text")]
             Text,
             /// <summary>
             /// The search parameter is a URI (relative or absolute) that identifies a value set, and the search parameter tests whether the coding is in the specified value set.
             /// (system: http://hl7.org/fhir/search-modifier-code)
             /// </summary>
-            [EnumLiteral("in"), Description("In")]
+            [EnumLiteral("in", "http://hl7.org/fhir/search-modifier-code"), Description("In")]
             In,
             /// <summary>
             /// The search parameter is a URI (relative or absolute) that identifies a value set, and the search parameter tests whether the coding is not in the specified value set.
             /// (system: http://hl7.org/fhir/search-modifier-code)
             /// </summary>
-            [EnumLiteral("not-in"), Description("Not In")]
+            [EnumLiteral("not-in", "http://hl7.org/fhir/search-modifier-code"), Description("Not In")]
             NotIn,
             /// <summary>
             /// The search parameter tests whether the value in a resource is subsumed by the specified value (is-a, or hierarchical relationships).
             /// (system: http://hl7.org/fhir/search-modifier-code)
             /// </summary>
-            [EnumLiteral("below"), Description("Below")]
+            [EnumLiteral("below", "http://hl7.org/fhir/search-modifier-code"), Description("Below")]
             Below,
             /// <summary>
             /// The search parameter tests whether the value in a resource subsumes the specified value (is-a, or hierarchical relationships).
             /// (system: http://hl7.org/fhir/search-modifier-code)
             /// </summary>
-            [EnumLiteral("above"), Description("Above")]
+            [EnumLiteral("above", "http://hl7.org/fhir/search-modifier-code"), Description("Above")]
             Above,
             /// <summary>
             /// The search parameter only applies to the Resource Type specified as a modifier (e.g. the modifier is not actually :type, but :Patient etc.).
             /// (system: http://hl7.org/fhir/search-modifier-code)
             /// </summary>
-            [EnumLiteral("type"), Description("Type")]
+            [EnumLiteral("type", "http://hl7.org/fhir/search-modifier-code"), Description("Type")]
             Type,
         }
 
@@ -332,19 +332,19 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/restful-interaction)
             /// </summary>
-            [EnumLiteral("transaction"), Description("transaction")]
+            [EnumLiteral("transaction", "http://hl7.org/fhir/restful-interaction"), Description("transaction")]
             Transaction,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/restful-interaction)
             /// </summary>
-            [EnumLiteral("search-system"), Description("search-system")]
+            [EnumLiteral("search-system", "http://hl7.org/fhir/restful-interaction"), Description("search-system")]
             SearchSystem,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/restful-interaction)
             /// </summary>
-            [EnumLiteral("history-system"), Description("history-system")]
+            [EnumLiteral("history-system", "http://hl7.org/fhir/restful-interaction"), Description("history-system")]
             HistorySystem,
         }
 
@@ -359,25 +359,25 @@ namespace Hl7.Fhir.Model
             /// Neither batch or transaction is supported.
             /// (system: http://hl7.org/fhir/transaction-mode)
             /// </summary>
-            [EnumLiteral("not-supported"), Description("None")]
+            [EnumLiteral("not-supported", "http://hl7.org/fhir/transaction-mode"), Description("None")]
             NotSupported,
             /// <summary>
             /// Batches are  supported.
             /// (system: http://hl7.org/fhir/transaction-mode)
             /// </summary>
-            [EnumLiteral("batch"), Description("Batches supported")]
+            [EnumLiteral("batch", "http://hl7.org/fhir/transaction-mode"), Description("Batches supported")]
             Batch,
             /// <summary>
             /// Transactions are supported.
             /// (system: http://hl7.org/fhir/transaction-mode)
             /// </summary>
-            [EnumLiteral("transaction"), Description("Transactions Supported")]
+            [EnumLiteral("transaction", "http://hl7.org/fhir/transaction-mode"), Description("Transactions Supported")]
             Transaction,
             /// <summary>
             /// Both batches and transactions are supported.
             /// (system: http://hl7.org/fhir/transaction-mode)
             /// </summary>
-            [EnumLiteral("both"), Description("Batches & Transactions")]
+            [EnumLiteral("both", "http://hl7.org/fhir/transaction-mode"), Description("Batches & Transactions")]
             Both,
         }
 
@@ -392,19 +392,19 @@ namespace Hl7.Fhir.Model
             /// The message represents/requests a change that should not be processed more than once; e.g. Making a booking for an appointment.
             /// (system: http://hl7.org/fhir/message-significance-category)
             /// </summary>
-            [EnumLiteral("Consequence"), Description("Consequence")]
+            [EnumLiteral("Consequence", "http://hl7.org/fhir/message-significance-category"), Description("Consequence")]
             Consequence,
             /// <summary>
             /// The message represents a response to query for current information. Retrospective processing is wrong and/or wasteful.
             /// (system: http://hl7.org/fhir/message-significance-category)
             /// </summary>
-            [EnumLiteral("Currency"), Description("Currency")]
+            [EnumLiteral("Currency", "http://hl7.org/fhir/message-significance-category"), Description("Currency")]
             Currency,
             /// <summary>
             /// The content is not necessarily intended to be current, and it can be reprocessed, though there may be version issues created by processing old notifications.
             /// (system: http://hl7.org/fhir/message-significance-category)
             /// </summary>
-            [EnumLiteral("Notification"), Description("Notification")]
+            [EnumLiteral("Notification", "http://hl7.org/fhir/message-significance-category"), Description("Notification")]
             Notification,
         }
 
@@ -419,13 +419,13 @@ namespace Hl7.Fhir.Model
             /// The application sends requests and receives responses.
             /// (system: http://hl7.org/fhir/message-conformance-event-mode)
             /// </summary>
-            [EnumLiteral("sender"), Description("Sender")]
+            [EnumLiteral("sender", "http://hl7.org/fhir/message-conformance-event-mode"), Description("Sender")]
             Sender,
             /// <summary>
             /// The application receives requests and sends responses.
             /// (system: http://hl7.org/fhir/message-conformance-event-mode)
             /// </summary>
-            [EnumLiteral("receiver"), Description("Receiver")]
+            [EnumLiteral("receiver", "http://hl7.org/fhir/message-conformance-event-mode"), Description("Receiver")]
             Receiver,
         }
 
@@ -440,13 +440,13 @@ namespace Hl7.Fhir.Model
             /// The application produces documents of the specified type.
             /// (system: http://hl7.org/fhir/document-mode)
             /// </summary>
-            [EnumLiteral("producer"), Description("Producer")]
+            [EnumLiteral("producer", "http://hl7.org/fhir/document-mode"), Description("Producer")]
             Producer,
             /// <summary>
             /// The application consumes documents of the specified type.
             /// (system: http://hl7.org/fhir/document-mode)
             /// </summary>
-            [EnumLiteral("consumer"), Description("Consumer")]
+            [EnumLiteral("consumer", "http://hl7.org/fhir/document-mode"), Description("Consumer")]
             Consumer,
         }
 

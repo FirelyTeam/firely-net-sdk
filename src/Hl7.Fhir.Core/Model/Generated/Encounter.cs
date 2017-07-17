@@ -65,37 +65,37 @@ namespace Hl7.Fhir.Model
             /// The Encounter has not yet started.
             /// (system: http://hl7.org/fhir/encounter-state)
             /// </summary>
-            [EnumLiteral("planned"), Description("Planned")]
+            [EnumLiteral("planned", "http://hl7.org/fhir/encounter-state"), Description("Planned")]
             Planned,
             /// <summary>
             /// The Patient is present for the encounter, however is not currently meeting with a practitioner.
             /// (system: http://hl7.org/fhir/encounter-state)
             /// </summary>
-            [EnumLiteral("arrived"), Description("Arrived")]
+            [EnumLiteral("arrived", "http://hl7.org/fhir/encounter-state"), Description("Arrived")]
             Arrived,
             /// <summary>
             /// The Encounter has begun and the patient is present / the practitioner and the patient are meeting.
             /// (system: http://hl7.org/fhir/encounter-state)
             /// </summary>
-            [EnumLiteral("in-progress"), Description("in Progress")]
+            [EnumLiteral("in-progress", "http://hl7.org/fhir/encounter-state"), Description("in Progress")]
             InProgress,
             /// <summary>
             /// The Encounter has begun, but the patient is temporarily on leave.
             /// (system: http://hl7.org/fhir/encounter-state)
             /// </summary>
-            [EnumLiteral("onleave"), Description("On Leave")]
+            [EnumLiteral("onleave", "http://hl7.org/fhir/encounter-state"), Description("On Leave")]
             Onleave,
             /// <summary>
             /// The Encounter has ended.
             /// (system: http://hl7.org/fhir/encounter-state)
             /// </summary>
-            [EnumLiteral("finished"), Description("Finished")]
+            [EnumLiteral("finished", "http://hl7.org/fhir/encounter-state"), Description("Finished")]
             Finished,
             /// <summary>
             /// The Encounter has ended before it has begun.
             /// (system: http://hl7.org/fhir/encounter-state)
             /// </summary>
-            [EnumLiteral("cancelled"), Description("Cancelled")]
+            [EnumLiteral("cancelled", "http://hl7.org/fhir/encounter-state"), Description("Cancelled")]
             Cancelled,
         }
 
@@ -110,55 +110,55 @@ namespace Hl7.Fhir.Model
             /// An encounter during which the patient is hospitalized and stays overnight.
             /// (system: http://hl7.org/fhir/encounter-class)
             /// </summary>
-            [EnumLiteral("inpatient"), Description("Inpatient")]
+            [EnumLiteral("inpatient", "http://hl7.org/fhir/encounter-class"), Description("Inpatient")]
             Inpatient,
             /// <summary>
             /// An encounter during which the patient is not hospitalized overnight.
             /// (system: http://hl7.org/fhir/encounter-class)
             /// </summary>
-            [EnumLiteral("outpatient"), Description("Outpatient")]
+            [EnumLiteral("outpatient", "http://hl7.org/fhir/encounter-class"), Description("Outpatient")]
             Outpatient,
             /// <summary>
             /// An encounter where the patient visits the practitioner in his/her office, e.g. a G.P. visit.
             /// (system: http://hl7.org/fhir/encounter-class)
             /// </summary>
-            [EnumLiteral("ambulatory"), Description("Ambulatory")]
+            [EnumLiteral("ambulatory", "http://hl7.org/fhir/encounter-class"), Description("Ambulatory")]
             Ambulatory,
             /// <summary>
             /// An encounter in the Emergency Care Department.
             /// (system: http://hl7.org/fhir/encounter-class)
             /// </summary>
-            [EnumLiteral("emergency"), Description("Emergency")]
+            [EnumLiteral("emergency", "http://hl7.org/fhir/encounter-class"), Description("Emergency")]
             Emergency,
             /// <summary>
             /// An encounter where the practitioner visits the patient at his/her home.
             /// (system: http://hl7.org/fhir/encounter-class)
             /// </summary>
-            [EnumLiteral("home"), Description("Home")]
+            [EnumLiteral("home", "http://hl7.org/fhir/encounter-class"), Description("Home")]
             Home,
             /// <summary>
             /// An encounter taking place outside the regular environment for giving care.
             /// (system: http://hl7.org/fhir/encounter-class)
             /// </summary>
-            [EnumLiteral("field"), Description("Field")]
+            [EnumLiteral("field", "http://hl7.org/fhir/encounter-class"), Description("Field")]
             Field,
             /// <summary>
             /// An encounter where the patient needs more prolonged treatment or investigations than outpatients, but who do not need to stay in the hospital overnight.
             /// (system: http://hl7.org/fhir/encounter-class)
             /// </summary>
-            [EnumLiteral("daytime"), Description("Daytime")]
+            [EnumLiteral("daytime", "http://hl7.org/fhir/encounter-class"), Description("Daytime")]
             Daytime,
             /// <summary>
             /// An encounter that takes place where the patient and practitioner do not physically meet but use electronic means for contact.
             /// (system: http://hl7.org/fhir/encounter-class)
             /// </summary>
-            [EnumLiteral("virtual"), Description("Virtual")]
+            [EnumLiteral("virtual", "http://hl7.org/fhir/encounter-class"), Description("Virtual")]
             Virtual,
             /// <summary>
             /// Any other encounter type that is not described by one of the other values. Where this is used it is expected that an implementer will include an extension value to define what the actual other type is.
             /// (system: http://hl7.org/fhir/encounter-class)
             /// </summary>
-            [EnumLiteral("other"), Description("Other")]
+            [EnumLiteral("other", "http://hl7.org/fhir/encounter-class"), Description("Other")]
             Other,
         }
 
@@ -173,27 +173,27 @@ namespace Hl7.Fhir.Model
             /// The patient is planned to be moved to this location at some point in the future.
             /// (system: http://hl7.org/fhir/encounter-location-status)
             /// </summary>
-            [EnumLiteral("planned"), Description("Planned")]
+            [EnumLiteral("planned", "http://hl7.org/fhir/encounter-location-status"), Description("Planned")]
             Planned,
             /// <summary>
             /// The patient is currently at this location, or was between the period specified.
         /// A system may update these records when the patient leaves the location to either reserved, or completed
             /// (system: http://hl7.org/fhir/encounter-location-status)
             /// </summary>
-            [EnumLiteral("active"), Description("Active")]
+            [EnumLiteral("active", "http://hl7.org/fhir/encounter-location-status"), Description("Active")]
             Active,
             /// <summary>
             /// This location is held empty for this patient.
             /// (system: http://hl7.org/fhir/encounter-location-status)
             /// </summary>
-            [EnumLiteral("reserved"), Description("Reserved")]
+            [EnumLiteral("reserved", "http://hl7.org/fhir/encounter-location-status"), Description("Reserved")]
             Reserved,
             /// <summary>
             /// The patient was at this location during the period specified.
         /// Not to be used when the patient is currently at the location
             /// (system: http://hl7.org/fhir/encounter-location-status)
             /// </summary>
-            [EnumLiteral("completed"), Description("Completed")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/encounter-location-status"), Description("Completed")]
             Completed,
         }
 

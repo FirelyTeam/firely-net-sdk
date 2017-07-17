@@ -65,37 +65,37 @@ namespace Hl7.Fhir.Model
             /// The data element is sufficiently well-constrained that multiple pieces of data captured according to the constraints of the data element will be comparable (though in some cases, a degree of automated conversion/normalization may be required).
             /// (system: http://hl7.org/fhir/dataelement-stringency)
             /// </summary>
-            [EnumLiteral("comparable"), Description("Comparable")]
+            [EnumLiteral("comparable", "http://hl7.org/fhir/dataelement-stringency"), Description("Comparable")]
             Comparable,
             /// <summary>
             /// The data element is fully specified down to a single value set, single unit of measure, single data type, etc.  Multiple pieces of data associated with this data element are fully comparable.
             /// (system: http://hl7.org/fhir/dataelement-stringency)
             /// </summary>
-            [EnumLiteral("fully-specified"), Description("Fully Specified")]
+            [EnumLiteral("fully-specified", "http://hl7.org/fhir/dataelement-stringency"), Description("Fully Specified")]
             FullySpecified,
             /// <summary>
             /// The data element allows multiple units of measure having equivalent meaning; e.g. "cc" (cubic centimeter) and "mL" (milliliter).
             /// (system: http://hl7.org/fhir/dataelement-stringency)
             /// </summary>
-            [EnumLiteral("equivalent"), Description("Equivalent")]
+            [EnumLiteral("equivalent", "http://hl7.org/fhir/dataelement-stringency"), Description("Equivalent")]
             Equivalent,
             /// <summary>
             /// The data element allows multiple units of measure that are convertable between each other (e.g. inches and centimeters) and/or allows data to be captured in multiple value sets for which a known mapping exists allowing conversion of meaning.
             /// (system: http://hl7.org/fhir/dataelement-stringency)
             /// </summary>
-            [EnumLiteral("convertable"), Description("Convertable")]
+            [EnumLiteral("convertable", "http://hl7.org/fhir/dataelement-stringency"), Description("Convertable")]
             Convertable,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/dataelement-stringency)
             /// </summary>
-            [EnumLiteral("scaleable"), Description("Scaleable")]
+            [EnumLiteral("scaleable", "http://hl7.org/fhir/dataelement-stringency"), Description("Scaleable")]
             Scaleable,
             /// <summary>
             /// The data element is unconstrained in units, choice of data types and/or choice of vocabulary such that automated comparison of data captured using the data element is not possible.
             /// (system: http://hl7.org/fhir/dataelement-stringency)
             /// </summary>
-            [EnumLiteral("flexible"), Description("Flexible")]
+            [EnumLiteral("flexible", "http://hl7.org/fhir/dataelement-stringency"), Description("Flexible")]
             Flexible,
         }
 

@@ -65,25 +65,25 @@ namespace Hl7.Fhir.Model
             /// The physical specimen is present and in good condition.
             /// (system: http://hl7.org/fhir/specimen-status)
             /// </summary>
-            [EnumLiteral("available"), Description("Available")]
+            [EnumLiteral("available", "http://hl7.org/fhir/specimen-status"), Description("Available")]
             Available,
             /// <summary>
             /// There is no physical specimen because it is either lost, destroyed or consumed.
             /// (system: http://hl7.org/fhir/specimen-status)
             /// </summary>
-            [EnumLiteral("unavailable"), Description("Unavailable")]
+            [EnumLiteral("unavailable", "http://hl7.org/fhir/specimen-status"), Description("Unavailable")]
             Unavailable,
             /// <summary>
             /// The specimen cannot be used because of a quality issue such as a broken container, contamination, or too old.
             /// (system: http://hl7.org/fhir/specimen-status)
             /// </summary>
-            [EnumLiteral("unsatisfactory"), Description("Unsatisfactory")]
+            [EnumLiteral("unsatisfactory", "http://hl7.org/fhir/specimen-status"), Description("Unsatisfactory")]
             Unsatisfactory,
             /// <summary>
             /// The specimen was entered in error and therefore nullified.
             /// (system: http://hl7.org/fhir/specimen-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered-in-error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/specimen-status"), Description("Entered-in-error")]
             EnteredInError,
         }
 

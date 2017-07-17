@@ -65,25 +65,25 @@ namespace Hl7.Fhir.Model
             /// A transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a preexisting entity.
             /// (system: http://hl7.org/fhir/provenance-entity-role)
             /// </summary>
-            [EnumLiteral("derivation"), Description("Derivation")]
+            [EnumLiteral("derivation", "http://hl7.org/fhir/provenance-entity-role"), Description("Derivation")]
             Derivation,
             /// <summary>
             /// A derivation for which the resulting entity is a revised version of some original.
             /// (system: http://hl7.org/fhir/provenance-entity-role)
             /// </summary>
-            [EnumLiteral("revision"), Description("Revision")]
+            [EnumLiteral("revision", "http://hl7.org/fhir/provenance-entity-role"), Description("Revision")]
             Revision,
             /// <summary>
             /// The repeat of (some or all of) an entity, such as text or image, by someone who may or may not be its original author.
             /// (system: http://hl7.org/fhir/provenance-entity-role)
             /// </summary>
-            [EnumLiteral("quotation"), Description("Quotation")]
+            [EnumLiteral("quotation", "http://hl7.org/fhir/provenance-entity-role"), Description("Quotation")]
             Quotation,
             /// <summary>
             /// A primary source for a topic refers to something produced by some agent with direct experience and knowledge about the topic, at the time of the topic's study, without benefit from hindsight.
             /// (system: http://hl7.org/fhir/provenance-entity-role)
             /// </summary>
-            [EnumLiteral("source"), Description("Source")]
+            [EnumLiteral("source", "http://hl7.org/fhir/provenance-entity-role"), Description("Source")]
             Source,
         }
 

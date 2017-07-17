@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
             /// In XML, this property is represented as an attribute not an element.
             /// (system: http://hl7.org/fhir/property-representation)
             /// </summary>
-            [EnumLiteral("xmlAttr"), Description("XML Attribute")]
+            [EnumLiteral("xmlAttr", "http://hl7.org/fhir/property-representation"), Description("XML Attribute")]
             XmlAttr,
         }
 
@@ -77,19 +77,19 @@ namespace Hl7.Fhir.Model
             /// No additional content is allowed other than that described by the slices in this profile.
             /// (system: http://hl7.org/fhir/resource-slicing-rules)
             /// </summary>
-            [EnumLiteral("closed"), Description("Closed")]
+            [EnumLiteral("closed", "http://hl7.org/fhir/resource-slicing-rules"), Description("Closed")]
             Closed,
             /// <summary>
             /// Additional content is allowed anywhere in the list.
             /// (system: http://hl7.org/fhir/resource-slicing-rules)
             /// </summary>
-            [EnumLiteral("open"), Description("Open")]
+            [EnumLiteral("open", "http://hl7.org/fhir/resource-slicing-rules"), Description("Open")]
             Open,
             /// <summary>
             /// Additional content is allowed, but only at the end of the list. Note that using this requires that the slices be ordered, which makes it hard to share uses. This should only be done where absolutely required.
             /// (system: http://hl7.org/fhir/resource-slicing-rules)
             /// </summary>
-            [EnumLiteral("openAtEnd"), Description("Open at End")]
+            [EnumLiteral("openAtEnd", "http://hl7.org/fhir/resource-slicing-rules"), Description("Open at End")]
             OpenAtEnd,
         }
 
@@ -104,19 +104,19 @@ namespace Hl7.Fhir.Model
             /// The reference is a local reference to a contained resource.
             /// (system: http://hl7.org/fhir/resource-aggregation-mode)
             /// </summary>
-            [EnumLiteral("contained"), Description("Contained")]
+            [EnumLiteral("contained", "http://hl7.org/fhir/resource-aggregation-mode"), Description("Contained")]
             Contained,
             /// <summary>
             /// The reference to a resource that has to be resolved externally to the resource that includes the reference.
             /// (system: http://hl7.org/fhir/resource-aggregation-mode)
             /// </summary>
-            [EnumLiteral("referenced"), Description("Referenced")]
+            [EnumLiteral("referenced", "http://hl7.org/fhir/resource-aggregation-mode"), Description("Referenced")]
             Referenced,
             /// <summary>
             /// The resource the reference points to will be found in the same bundle as the resource that includes the reference.
             /// (system: http://hl7.org/fhir/resource-aggregation-mode)
             /// </summary>
-            [EnumLiteral("bundled"), Description("Bundled")]
+            [EnumLiteral("bundled", "http://hl7.org/fhir/resource-aggregation-mode"), Description("Bundled")]
             Bundled,
         }
 
@@ -131,13 +131,13 @@ namespace Hl7.Fhir.Model
             /// If the constraint is violated, the resource is not conformant.
             /// (system: http://hl7.org/fhir/constraint-severity)
             /// </summary>
-            [EnumLiteral("error"), Description("Error")]
+            [EnumLiteral("error", "http://hl7.org/fhir/constraint-severity"), Description("Error")]
             Error,
             /// <summary>
             /// If the constraint is violated, the resource is conformant, but it is not necessarily following best practice.
             /// (system: http://hl7.org/fhir/constraint-severity)
             /// </summary>
-            [EnumLiteral("warning"), Description("Warning")]
+            [EnumLiteral("warning", "http://hl7.org/fhir/constraint-severity"), Description("Warning")]
             Warning,
         }
 

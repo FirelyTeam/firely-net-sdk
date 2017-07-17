@@ -65,31 +65,31 @@ namespace Hl7.Fhir.Model
             /// The search parameter is derived directly from the selected nodes based on the type definitions.
             /// (system: http://hl7.org/fhir/search-xpath-usage)
             /// </summary>
-            [EnumLiteral("normal"), Description("Normal")]
+            [EnumLiteral("normal", "http://hl7.org/fhir/search-xpath-usage"), Description("Normal")]
             Normal,
             /// <summary>
             /// The search parameter is derived by a phonetic transform from the selected nodes.
             /// (system: http://hl7.org/fhir/search-xpath-usage)
             /// </summary>
-            [EnumLiteral("phonetic"), Description("Phonetic")]
+            [EnumLiteral("phonetic", "http://hl7.org/fhir/search-xpath-usage"), Description("Phonetic")]
             Phonetic,
             /// <summary>
             /// The search parameter is based on a spatial transform of the selected nodes.
             /// (system: http://hl7.org/fhir/search-xpath-usage)
             /// </summary>
-            [EnumLiteral("nearby"), Description("Nearby")]
+            [EnumLiteral("nearby", "http://hl7.org/fhir/search-xpath-usage"), Description("Nearby")]
             Nearby,
             /// <summary>
             /// The search parameter is based on a spatial transform of the selected nodes, using physical distance from the middle.
             /// (system: http://hl7.org/fhir/search-xpath-usage)
             /// </summary>
-            [EnumLiteral("distance"), Description("Distance")]
+            [EnumLiteral("distance", "http://hl7.org/fhir/search-xpath-usage"), Description("Distance")]
             Distance,
             /// <summary>
             /// The interpretation of the xpath statement is unknown (and can't be automated).
             /// (system: http://hl7.org/fhir/search-xpath-usage)
             /// </summary>
-            [EnumLiteral("other"), Description("Other")]
+            [EnumLiteral("other", "http://hl7.org/fhir/search-xpath-usage"), Description("Other")]
             Other,
         }
 

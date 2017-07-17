@@ -65,37 +65,37 @@ namespace Hl7.Fhir.Model
             /// This episode of care is planned to start at the date specified in the period.start. During this status an organization may perform assessments to determine if they are eligible to receive services, or be organizing to make resources available to provide care services.
             /// (system: http://hl7.org/fhir/episode-of-care-status)
             /// </summary>
-            [EnumLiteral("planned"), Description("Planned")]
+            [EnumLiteral("planned", "http://hl7.org/fhir/episode-of-care-status"), Description("Planned")]
             Planned,
             /// <summary>
             /// This episode has been placed on a waitlist, pending the episode being made active (or cancelled).
             /// (system: http://hl7.org/fhir/episode-of-care-status)
             /// </summary>
-            [EnumLiteral("waitlist"), Description("Waitlist")]
+            [EnumLiteral("waitlist", "http://hl7.org/fhir/episode-of-care-status"), Description("Waitlist")]
             Waitlist,
             /// <summary>
             /// This episode of care is current.
             /// (system: http://hl7.org/fhir/episode-of-care-status)
             /// </summary>
-            [EnumLiteral("active"), Description("Active")]
+            [EnumLiteral("active", "http://hl7.org/fhir/episode-of-care-status"), Description("Active")]
             Active,
             /// <summary>
             /// This episode of care is on hold, the organization has limited responsibility for the patient (such as while on respite).
             /// (system: http://hl7.org/fhir/episode-of-care-status)
             /// </summary>
-            [EnumLiteral("onhold"), Description("On Hold")]
+            [EnumLiteral("onhold", "http://hl7.org/fhir/episode-of-care-status"), Description("On Hold")]
             Onhold,
             /// <summary>
             /// This episode of care is finished at the organization is not expecting to be providing care to the patient. Can also be known as "closed", "completed" or other similar terms.
             /// (system: http://hl7.org/fhir/episode-of-care-status)
             /// </summary>
-            [EnumLiteral("finished"), Description("Finished")]
+            [EnumLiteral("finished", "http://hl7.org/fhir/episode-of-care-status"), Description("Finished")]
             Finished,
             /// <summary>
             /// The episode of care was cancelled, or withdrawn from service, often selected during the planned stage as the patient may have gone elsewhere, or the circumstances have changed and the organization is unable to provide the care. It indicates that services terminated outside the planned/expected workflow.
             /// (system: http://hl7.org/fhir/episode-of-care-status)
             /// </summary>
-            [EnumLiteral("cancelled"), Description("Cancelled")]
+            [EnumLiteral("cancelled", "http://hl7.org/fhir/episode-of-care-status"), Description("Cancelled")]
             Cancelled,
         }
 

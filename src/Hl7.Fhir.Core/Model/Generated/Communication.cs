@@ -65,31 +65,31 @@ namespace Hl7.Fhir.Model
             /// The communication transmission is ongoing.
             /// (system: http://hl7.org/fhir/communication-status)
             /// </summary>
-            [EnumLiteral("in-progress"), Description("In Progress")]
+            [EnumLiteral("in-progress", "http://hl7.org/fhir/communication-status"), Description("In Progress")]
             InProgress,
             /// <summary>
             /// The message transmission is complete, i.e., delivered to the recipient's destination.
             /// (system: http://hl7.org/fhir/communication-status)
             /// </summary>
-            [EnumLiteral("completed"), Description("Completed")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/communication-status"), Description("Completed")]
             Completed,
             /// <summary>
             /// The communication transmission has been held by originating system/user request.
             /// (system: http://hl7.org/fhir/communication-status)
             /// </summary>
-            [EnumLiteral("suspended"), Description("Suspended")]
+            [EnumLiteral("suspended", "http://hl7.org/fhir/communication-status"), Description("Suspended")]
             Suspended,
             /// <summary>
             /// The receiving system has declined to accept the message.
             /// (system: http://hl7.org/fhir/communication-status)
             /// </summary>
-            [EnumLiteral("rejected"), Description("Rejected")]
+            [EnumLiteral("rejected", "http://hl7.org/fhir/communication-status"), Description("Rejected")]
             Rejected,
             /// <summary>
             /// There was a failure in transmitting the message out.
             /// (system: http://hl7.org/fhir/communication-status)
             /// </summary>
-            [EnumLiteral("failed"), Description("Failed")]
+            [EnumLiteral("failed", "http://hl7.org/fhir/communication-status"), Description("Failed")]
             Failed,
         }
 

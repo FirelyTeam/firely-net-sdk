@@ -65,19 +65,19 @@ namespace Hl7.Fhir.Model
             /// The assessment is still on-going and results are not yet final.
             /// (system: http://hl7.org/fhir/clinical-impression-status)
             /// </summary>
-            [EnumLiteral("in-progress"), Description("In progress")]
+            [EnumLiteral("in-progress", "http://hl7.org/fhir/clinical-impression-status"), Description("In progress")]
             InProgress,
             /// <summary>
             /// The assessment is done and the results are final.
             /// (system: http://hl7.org/fhir/clinical-impression-status)
             /// </summary>
-            [EnumLiteral("completed"), Description("Completed")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/clinical-impression-status"), Description("Completed")]
             Completed,
             /// <summary>
             /// This assessment was never actually done and the record is erroneous (e.g. Wrong patient).
             /// (system: http://hl7.org/fhir/clinical-impression-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/clinical-impression-status"), Description("Entered in Error")]
             EnteredInError,
         }
 

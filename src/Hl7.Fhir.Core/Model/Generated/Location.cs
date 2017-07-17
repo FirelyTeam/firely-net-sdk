@@ -65,19 +65,19 @@ namespace Hl7.Fhir.Model
             /// The location is operational.
             /// (system: http://hl7.org/fhir/location-status)
             /// </summary>
-            [EnumLiteral("active"), Description("Active")]
+            [EnumLiteral("active", "http://hl7.org/fhir/location-status"), Description("Active")]
             Active,
             /// <summary>
             /// The location is temporarily closed.
             /// (system: http://hl7.org/fhir/location-status)
             /// </summary>
-            [EnumLiteral("suspended"), Description("Suspended")]
+            [EnumLiteral("suspended", "http://hl7.org/fhir/location-status"), Description("Suspended")]
             Suspended,
             /// <summary>
             /// The location is no longer used.
             /// (system: http://hl7.org/fhir/location-status)
             /// </summary>
-            [EnumLiteral("inactive"), Description("Inactive")]
+            [EnumLiteral("inactive", "http://hl7.org/fhir/location-status"), Description("Inactive")]
             Inactive,
         }
 
@@ -92,13 +92,13 @@ namespace Hl7.Fhir.Model
             /// The Location resource represents a specific instance of a location (e.g. Operating Theatre 1A).
             /// (system: http://hl7.org/fhir/location-mode)
             /// </summary>
-            [EnumLiteral("instance"), Description("Instance")]
+            [EnumLiteral("instance", "http://hl7.org/fhir/location-mode"), Description("Instance")]
             Instance,
             /// <summary>
             /// The Location represents a class of locations (e.g. Any Operating Theatre) although this class of locations could be constrained within a specific boundary (such as organization, or parent location, address etc.).
             /// (system: http://hl7.org/fhir/location-mode)
             /// </summary>
-            [EnumLiteral("kind"), Description("Kind")]
+            [EnumLiteral("kind", "http://hl7.org/fhir/location-mode"), Description("Kind")]
             Kind,
         }
 

@@ -65,31 +65,31 @@ namespace Hl7.Fhir.Model
             /// Create a new database object, such as placing an order.
             /// (system: http://hl7.org/fhir/audit-event-action)
             /// </summary>
-            [EnumLiteral("C"), Description("Create")]
+            [EnumLiteral("C", "http://hl7.org/fhir/audit-event-action"), Description("Create")]
             C,
             /// <summary>
             /// Display or print data, such as a doctor census.
             /// (system: http://hl7.org/fhir/audit-event-action)
             /// </summary>
-            [EnumLiteral("R"), Description("Read/View/Print")]
+            [EnumLiteral("R", "http://hl7.org/fhir/audit-event-action"), Description("Read/View/Print")]
             R,
             /// <summary>
             /// Update data, such as revise patient information.
             /// (system: http://hl7.org/fhir/audit-event-action)
             /// </summary>
-            [EnumLiteral("U"), Description("Update")]
+            [EnumLiteral("U", "http://hl7.org/fhir/audit-event-action"), Description("Update")]
             U,
             /// <summary>
             /// Delete items, such as a doctor master file record.
             /// (system: http://hl7.org/fhir/audit-event-action)
             /// </summary>
-            [EnumLiteral("D"), Description("Delete")]
+            [EnumLiteral("D", "http://hl7.org/fhir/audit-event-action"), Description("Delete")]
             D,
             /// <summary>
             /// Perform a system or application function such as log-on, program execution or use of an object's method, or perform a query/search operation.
             /// (system: http://hl7.org/fhir/audit-event-action)
             /// </summary>
-            [EnumLiteral("E"), Description("Execute")]
+            [EnumLiteral("E", "http://hl7.org/fhir/audit-event-action"), Description("Execute")]
             E,
         }
 
@@ -104,25 +104,25 @@ namespace Hl7.Fhir.Model
             /// The operation completed successfully (whether with warnings or not).
             /// (system: http://hl7.org/fhir/audit-event-outcome)
             /// </summary>
-            [EnumLiteral("0"), Description("Success")]
+            [EnumLiteral("0", "http://hl7.org/fhir/audit-event-outcome"), Description("Success")]
             N0,
             /// <summary>
             /// The action was not successful due to some kind of catered for error (often equivalent to an HTTP 400 response).
             /// (system: http://hl7.org/fhir/audit-event-outcome)
             /// </summary>
-            [EnumLiteral("4"), Description("Minor failure")]
+            [EnumLiteral("4", "http://hl7.org/fhir/audit-event-outcome"), Description("Minor failure")]
             N4,
             /// <summary>
             /// The action was not successful due to some kind of unexpected error (often equivalent to an HTTP 500 response).
             /// (system: http://hl7.org/fhir/audit-event-outcome)
             /// </summary>
-            [EnumLiteral("8"), Description("Serious failure")]
+            [EnumLiteral("8", "http://hl7.org/fhir/audit-event-outcome"), Description("Serious failure")]
             N8,
             /// <summary>
             /// An error of such magnitude occurred that the system is no longer available for use (i.e. the system died).
             /// (system: http://hl7.org/fhir/audit-event-outcome)
             /// </summary>
-            [EnumLiteral("12"), Description("Major failure")]
+            [EnumLiteral("12", "http://hl7.org/fhir/audit-event-outcome"), Description("Major failure")]
             N12,
         }
 
@@ -137,31 +137,31 @@ namespace Hl7.Fhir.Model
             /// The machine name, including DNS name.
             /// (system: http://hl7.org/fhir/network-type)
             /// </summary>
-            [EnumLiteral("1"), Description("Machine Name")]
+            [EnumLiteral("1", "http://hl7.org/fhir/network-type"), Description("Machine Name")]
             N1,
             /// <summary>
             /// The assigned Internet Protocol (IP) address.
             /// (system: http://hl7.org/fhir/network-type)
             /// </summary>
-            [EnumLiteral("2"), Description("IP Address")]
+            [EnumLiteral("2", "http://hl7.org/fhir/network-type"), Description("IP Address")]
             N2,
             /// <summary>
             /// The assigned telephone number.
             /// (system: http://hl7.org/fhir/network-type)
             /// </summary>
-            [EnumLiteral("3"), Description("Telephone Number")]
+            [EnumLiteral("3", "http://hl7.org/fhir/network-type"), Description("Telephone Number")]
             N3,
             /// <summary>
             /// The assigned email address.
             /// (system: http://hl7.org/fhir/network-type)
             /// </summary>
-            [EnumLiteral("4"), Description("Email address")]
+            [EnumLiteral("4", "http://hl7.org/fhir/network-type"), Description("Email address")]
             N4,
             /// <summary>
             /// URI (User directory, HTTP-PUT, ftp, etc.).
             /// (system: http://hl7.org/fhir/network-type)
             /// </summary>
-            [EnumLiteral("5"), Description("URI")]
+            [EnumLiteral("5", "http://hl7.org/fhir/network-type"), Description("URI")]
             N5,
         }
 

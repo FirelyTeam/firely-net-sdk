@@ -65,37 +65,37 @@ namespace Hl7.Fhir.Model
             /// The prescription is 'actionable', but not all actions that are implied by it have occurred yet.
             /// (system: http://hl7.org/fhir/medication-order-status)
             /// </summary>
-            [EnumLiteral("active"), Description("Active")]
+            [EnumLiteral("active", "http://hl7.org/fhir/medication-order-status"), Description("Active")]
             Active,
             /// <summary>
             /// Actions implied by the prescription are to be temporarily halted, but are expected to continue later.  May also be called "suspended".
             /// (system: http://hl7.org/fhir/medication-order-status)
             /// </summary>
-            [EnumLiteral("on-hold"), Description("On Hold")]
+            [EnumLiteral("on-hold", "http://hl7.org/fhir/medication-order-status"), Description("On Hold")]
             OnHold,
             /// <summary>
             /// All actions that are implied by the prescription have occurred.
             /// (system: http://hl7.org/fhir/medication-order-status)
             /// </summary>
-            [EnumLiteral("completed"), Description("Completed")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/medication-order-status"), Description("Completed")]
             Completed,
             /// <summary>
             /// The prescription was entered in error.
             /// (system: http://hl7.org/fhir/medication-order-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered In Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/medication-order-status"), Description("Entered In Error")]
             EnteredInError,
             /// <summary>
             /// Actions implied by the prescription are to be permanently halted, before all of them occurred.
             /// (system: http://hl7.org/fhir/medication-order-status)
             /// </summary>
-            [EnumLiteral("stopped"), Description("Stopped")]
+            [EnumLiteral("stopped", "http://hl7.org/fhir/medication-order-status"), Description("Stopped")]
             Stopped,
             /// <summary>
             /// The prescription is not yet 'actionable', i.e. it is a work in progress, requires sign-off or verification, and needs to be run through decision support process.
             /// (system: http://hl7.org/fhir/medication-order-status)
             /// </summary>
-            [EnumLiteral("draft"), Description("Draft")]
+            [EnumLiteral("draft", "http://hl7.org/fhir/medication-order-status"), Description("Draft")]
             Draft,
         }
 

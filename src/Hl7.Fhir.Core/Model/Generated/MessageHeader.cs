@@ -65,19 +65,19 @@ namespace Hl7.Fhir.Model
             /// The message was accepted and processed without error.
             /// (system: http://hl7.org/fhir/response-code)
             /// </summary>
-            [EnumLiteral("ok"), Description("OK")]
+            [EnumLiteral("ok", "http://hl7.org/fhir/response-code"), Description("OK")]
             Ok,
             /// <summary>
             /// Some internal unexpected error occurred - wait and try again. Note - this is usually used for things like database unavailable, which may be expected to resolve, though human intervention may be required.
             /// (system: http://hl7.org/fhir/response-code)
             /// </summary>
-            [EnumLiteral("transient-error"), Description("Transient Error")]
+            [EnumLiteral("transient-error", "http://hl7.org/fhir/response-code"), Description("Transient Error")]
             TransientError,
             /// <summary>
             /// The message was rejected because of some content in it. There is no point in re-sending without change. The response narrative SHALL describe the issue.
             /// (system: http://hl7.org/fhir/response-code)
             /// </summary>
-            [EnumLiteral("fatal-error"), Description("Fatal Error")]
+            [EnumLiteral("fatal-error", "http://hl7.org/fhir/response-code"), Description("Fatal Error")]
             FatalError,
         }
 

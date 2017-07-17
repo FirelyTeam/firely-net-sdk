@@ -65,37 +65,37 @@ namespace Hl7.Fhir.Model
             /// The appointment participant has accepted that they can attend the appointment at the time specified in the AppointmentResponse.
             /// (system: http://hl7.org/fhir/participantstatus)
             /// </summary>
-            [EnumLiteral("accepted"), Description("Accepted")]
+            [EnumLiteral("accepted", "http://hl7.org/fhir/participantstatus"), Description("Accepted")]
             Accepted,
             /// <summary>
             /// The appointment participant has declined the appointment.
             /// (system: http://hl7.org/fhir/participantstatus)
             /// </summary>
-            [EnumLiteral("declined"), Description("Declined")]
+            [EnumLiteral("declined", "http://hl7.org/fhir/participantstatus"), Description("Declined")]
             Declined,
             /// <summary>
             /// The appointment participant has tentatively accepted the appointment.
             /// (system: http://hl7.org/fhir/participantstatus)
             /// </summary>
-            [EnumLiteral("tentative"), Description("Tentative")]
+            [EnumLiteral("tentative", "http://hl7.org/fhir/participantstatus"), Description("Tentative")]
             Tentative,
             /// <summary>
             /// The participant has in-process the appointment.
             /// (system: http://hl7.org/fhir/participantstatus)
             /// </summary>
-            [EnumLiteral("in-process"), Description("In Process")]
+            [EnumLiteral("in-process", "http://hl7.org/fhir/participantstatus"), Description("In Process")]
             InProcess,
             /// <summary>
             /// The participant has completed the appointment.
             /// (system: http://hl7.org/fhir/participantstatus)
             /// </summary>
-            [EnumLiteral("completed"), Description("Completed")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/participantstatus"), Description("Completed")]
             Completed,
             /// <summary>
             /// This is the intitial status of an appointment participant until a participant has replied. It implies that there is no commitment for the appointment.
             /// (system: http://hl7.org/fhir/participantstatus)
             /// </summary>
-            [EnumLiteral("needs-action"), Description("Needs Action")]
+            [EnumLiteral("needs-action", "http://hl7.org/fhir/participantstatus"), Description("Needs Action")]
             NeedsAction,
         }
 

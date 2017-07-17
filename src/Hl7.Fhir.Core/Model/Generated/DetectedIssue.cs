@@ -65,19 +65,19 @@ namespace Hl7.Fhir.Model
             /// Indicates the issue may be life-threatening or has the potential to cause permanent injury.
             /// (system: http://hl7.org/fhir/detectedissue-severity)
             /// </summary>
-            [EnumLiteral("high"), Description("High")]
+            [EnumLiteral("high", "http://hl7.org/fhir/detectedissue-severity"), Description("High")]
             High,
             /// <summary>
             /// Indicates the issue may result in noticeable adverse consequences but is unlikely to be life-threatening or cause permanent injury.
             /// (system: http://hl7.org/fhir/detectedissue-severity)
             /// </summary>
-            [EnumLiteral("moderate"), Description("Moderate")]
+            [EnumLiteral("moderate", "http://hl7.org/fhir/detectedissue-severity"), Description("Moderate")]
             Moderate,
             /// <summary>
             /// Indicates the issue may result in some adverse consequences but is unlikely to substantially affect the situation of the subject.
             /// (system: http://hl7.org/fhir/detectedissue-severity)
             /// </summary>
-            [EnumLiteral("low"), Description("Low")]
+            [EnumLiteral("low", "http://hl7.org/fhir/detectedissue-severity"), Description("Low")]
             Low,
         }
 

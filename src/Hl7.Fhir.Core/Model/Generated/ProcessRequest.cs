@@ -65,25 +65,25 @@ namespace Hl7.Fhir.Model
             /// Cancel, reverse or nullify the target resource.
             /// (system: http://hl7.org/fhir/actionlist)
             /// </summary>
-            [EnumLiteral("cancel"), Description("Cancel, Reverse or Nullify")]
+            [EnumLiteral("cancel", "http://hl7.org/fhir/actionlist"), Description("Cancel, Reverse or Nullify")]
             Cancel,
             /// <summary>
             /// Check for previously un-read/ not-retrieved resources.
             /// (system: http://hl7.org/fhir/actionlist)
             /// </summary>
-            [EnumLiteral("poll"), Description("Poll")]
+            [EnumLiteral("poll", "http://hl7.org/fhir/actionlist"), Description("Poll")]
             Poll,
             /// <summary>
             /// Re-process the target resource.
             /// (system: http://hl7.org/fhir/actionlist)
             /// </summary>
-            [EnumLiteral("reprocess"), Description("Re-Process")]
+            [EnumLiteral("reprocess", "http://hl7.org/fhir/actionlist"), Description("Re-Process")]
             Reprocess,
             /// <summary>
             /// Retrieve the processing status of the target resource.
             /// (system: http://hl7.org/fhir/actionlist)
             /// </summary>
-            [EnumLiteral("status"), Description("Status Check")]
+            [EnumLiteral("status", "http://hl7.org/fhir/actionlist"), Description("Status Check")]
             Status,
         }
 

@@ -65,19 +65,19 @@ namespace Hl7.Fhir.Model
             /// The list is considered to be an active part of the patient's record.
             /// (system: http://hl7.org/fhir/list-status)
             /// </summary>
-            [EnumLiteral("current"), Description("Current")]
+            [EnumLiteral("current", "http://hl7.org/fhir/list-status"), Description("Current")]
             Current,
             /// <summary>
             /// The list is "old" and should no longer be considered accurate or relevant.
             /// (system: http://hl7.org/fhir/list-status)
             /// </summary>
-            [EnumLiteral("retired"), Description("Retired")]
+            [EnumLiteral("retired", "http://hl7.org/fhir/list-status"), Description("Retired")]
             Retired,
             /// <summary>
             /// The list was never accurate.  It is retained for medico-legal purposes only.
             /// (system: http://hl7.org/fhir/list-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered In Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/list-status"), Description("Entered In Error")]
             EnteredInError,
         }
 
