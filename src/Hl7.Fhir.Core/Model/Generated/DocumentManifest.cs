@@ -35,6 +35,7 @@ using Hl7.Fhir.Utility;
   
 
 */
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
 // Generated for FHIR v1.0.2
@@ -127,6 +128,17 @@ namespace Hl7.Fhir.Model
                     if (P != null) yield return P;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (P != null) yield return new ElementValue("p", false, P);
+                }
+            }
+
             
         }
         
@@ -221,6 +233,18 @@ namespace Hl7.Fhir.Model
                     if (Ref != null) yield return Ref;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                    if (Ref != null) yield return new ElementValue("ref", false, Ref);
+                }
+            }
+
             
         }
         
@@ -570,6 +594,28 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Related) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (MasterIdentifier != null) yield return new ElementValue("masterIdentifier", false, MasterIdentifier);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (Subject != null) yield return new ElementValue("subject", false, Subject);
+                foreach (var elem in Recipient) { if (elem != null) yield return new ElementValue("recipient", true, elem); }
+                if (Type != null) yield return new ElementValue("type", false, Type);
+                foreach (var elem in Author) { if (elem != null) yield return new ElementValue("author", true, elem); }
+                if (CreatedElement != null) yield return new ElementValue("created", false, CreatedElement);
+                if (SourceElement != null) yield return new ElementValue("source", false, SourceElement);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                foreach (var elem in Content) { if (elem != null) yield return new ElementValue("content", true, elem); }
+                foreach (var elem in Related) { if (elem != null) yield return new ElementValue("related", true, elem); }
+            }
+        }
+
     }
     
 }

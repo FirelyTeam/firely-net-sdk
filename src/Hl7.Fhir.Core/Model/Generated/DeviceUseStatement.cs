@@ -35,6 +35,7 @@ using Hl7.Fhir.Utility;
   
 
 */
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
 // Generated for FHIR v1.0.2
@@ -307,6 +308,25 @@ namespace Hl7.Fhir.Model
 				if (Timing != null) yield return Timing;
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (BodySite != null) yield return new ElementValue("bodySite", false, BodySite);
+                if (WhenUsed != null) yield return new ElementValue("whenUsed", false, WhenUsed);
+                if (Device != null) yield return new ElementValue("device", false, Device);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                foreach (var elem in Indication) { if (elem != null) yield return new ElementValue("indication", true, elem); }
+                foreach (var elem in NotesElement) { if (elem != null) yield return new ElementValue("notes", true, elem); }
+                if (RecordedOnElement != null) yield return new ElementValue("recordedOn", false, RecordedOnElement);
+                if (Subject != null) yield return new ElementValue("subject", false, Subject);
+                if (Timing != null) yield return new ElementValue("timing", false, Timing);
+            }
+        }
+
     }
     
 }

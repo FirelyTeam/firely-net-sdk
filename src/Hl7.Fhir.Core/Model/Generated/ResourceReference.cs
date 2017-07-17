@@ -170,6 +170,18 @@ namespace Hl7.Fhir.Model
                 if (DisplayElement != null) yield return DisplayElement;
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren 
+        { 
+            get 
+            { 
+                foreach (var item in base.NamedChildren) yield return item; 
+                if (ReferenceElement != null) yield return new ElementValue("reference", false, ReferenceElement);
+                if (DisplayElement != null) yield return new ElementValue("display", false, DisplayElement);
+ 
+            } 
+        } 
     
     
     }

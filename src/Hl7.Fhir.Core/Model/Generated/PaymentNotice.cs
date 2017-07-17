@@ -35,6 +35,7 @@ using Hl7.Fhir.Utility;
   
 
 */
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
 // Generated for FHIR v1.0.2
@@ -307,6 +308,26 @@ namespace Hl7.Fhir.Model
 				if (PaymentStatus != null) yield return PaymentStatus;
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (Ruleset != null) yield return new ElementValue("ruleset", false, Ruleset);
+                if (OriginalRuleset != null) yield return new ElementValue("originalRuleset", false, OriginalRuleset);
+                if (CreatedElement != null) yield return new ElementValue("created", false, CreatedElement);
+                if (Target != null) yield return new ElementValue("target", false, Target);
+                if (Provider != null) yield return new ElementValue("provider", false, Provider);
+                if (Organization != null) yield return new ElementValue("organization", false, Organization);
+                if (Request != null) yield return new ElementValue("request", false, Request);
+                if (Response != null) yield return new ElementValue("response", false, Response);
+                if (PaymentStatus != null) yield return new ElementValue("paymentStatus", false, PaymentStatus);
+            }
+        }
+
     }
     
 }

@@ -35,6 +35,7 @@ using Hl7.Fhir.Utility;
   
 
 */
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
 // Generated for FHIR v1.0.2
@@ -221,6 +222,18 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Telecom) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                    foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
+                }
+            }
+
             
         }
         
@@ -406,6 +419,20 @@ namespace Hl7.Fhir.Model
                     if (Period != null) yield return Period;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
+                    if (ValueElement != null) yield return new ElementValue("value", false, ValueElement);
+                    if (PreferredElement != null) yield return new ElementValue("preferred", false, PreferredElement);
+                    if (Period != null) yield return new ElementValue("period", false, Period);
+                }
+            }
+
             
         }
         
@@ -875,6 +902,29 @@ namespace Hl7.Fhir.Model
 				if (ReplacedBy != null) yield return ReplacedBy;
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (KindElement != null) yield return new ElementValue("kind", false, KindElement);
+                if (PublisherElement != null) yield return new ElementValue("publisher", false, PublisherElement);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
+                if (ResponsibleElement != null) yield return new ElementValue("responsible", false, ResponsibleElement);
+                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
+                if (Type != null) yield return new ElementValue("type", false, Type);
+                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", true, elem); }
+                if (UsageElement != null) yield return new ElementValue("usage", false, UsageElement);
+                foreach (var elem in UniqueId) { if (elem != null) yield return new ElementValue("uniqueId", true, elem); }
+                if (ReplacedBy != null) yield return new ElementValue("replacedBy", false, ReplacedBy);
+            }
+        }
+
     }
     
 }

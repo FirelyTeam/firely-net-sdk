@@ -49,6 +49,8 @@ namespace Hl7.Fhir.Specification.Tests
         [TestInitialize]
         public void Setup()
         {
+            FhirPath.ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
+
             var dirSource = new DirectorySource("TestData/snapshot-test", includeSubdirectories: true);
             _source = new TimingSource(dirSource);
             _testResolver = new CachedResolver(_source);
@@ -189,8 +191,8 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-        [TestMethod]
-        public void TestExpandAllComplexElements()
+        [TestMethod,Ignore]
+        public void TestExpandAllComplexElements_Patient()
         {
             // [WMR 20161005] This simulates custom Forge post-processing logic
             // i.e. perform a regular snapshot expansion, then explicitly expand all complex elements (esp. those without any differential constraints)
@@ -255,6 +257,51 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
+        // [WMR 20170424] For debugging SnapshotBaseComponentGenerator
+        [TestMethod, Ignore]
+        public void TestExpandAllComplexElements_Organization()
+        {
+            // [WMR 20161005] This simulates custom Forge post-processing logic
+            // i.e. perform a regular snapshot expansion, then explicitly expand all complex elements (esp. those without any differential constraints)
+
+            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Organization");
+            var sd = _testResolver.FindStructureDefinitionForCoreType(FHIRDefinedType.Organization);
+            Assert.IsNotNull(sd);
+            generateSnapshot(sd);
+            Assert.IsTrue(sd.HasSnapshot);
+            var elems = sd.Snapshot.Element;
+
+            var expanded = expandAllComplexElements(sd.Snapshot.Element);
+            Assert.IsNotNull(expanded);
+
+            //StructureDefinition expanded = null;
+            //sd.Differential.Element = sd.Snapshot.Element.DeepCopy().ToList();
+            //_generator = new SnapshotGenerator(_testResolver, _settings);
+            //_generator.PrepareElement += elementHandler;
+            //_generator.BeforeExpandElement += beforeExpandElementHandler;
+            //try
+            //{
+            //    generateSnapshotAndCompare(sd, out expanded);
+            //}
+            //finally
+            //{
+            //    _generator.BeforeExpandElement -= beforeExpandElementHandler;
+            //    _generator.PrepareElement -= elementHandler;
+            //}
+            //dumpOutcome(_generator.Outcome);
+            //Assert.IsNotNull(expanded);
+            //Assert.IsTrue(expanded.HasSnapshot);
+
+            // var tempPath = Path.GetTempPath();
+            // File.WriteAllText(Path.Combine(tempPath, "snapshotgen-dest.xml"), FhirSerializer.SerializeResourceToXml(expanded));
+            // foreach (var elem in expanded.Snapshot.Element)
+
+            foreach (var elem in expanded)
+            {
+                Debug.WriteLine($"{elem.Path} | Base = {elem.Base.Path}");
+            }
+        }
+
         IList<ElementDefinition> expandAllComplexElements(IList<ElementDefinition> elements)
         {
             var nav = new ElementDefinitionNavigator(elements);
@@ -294,7 +341,8 @@ namespace Hl7.Fhir.Specification.Tests
             var typeCode = type?.Code;
             return typeCode.HasValue
                    && element.Type.Count == 1
-                   && typeCode.Value != FHIRDefinedType.BackboneElement
+                   // [WMR 20170424] WRONG! Must expand BackboneElements
+                   // && typeCode != FHIRAllTypes.BackboneElement.GetLiteral()
                    && ModelInfo.IsDataType(typeCode.Value)
                    && (
                         // Only expand extension elements with a custom name or profile
@@ -557,7 +605,6 @@ namespace Hl7.Fhir.Specification.Tests
 
             _settings.GenerateElementIds = true;
 
-#if true
             // http://example.com/fhir/StructureDefinition/patient-legal-case
             // http://example.com/fhir/StructureDefinition/patient-legal-case-lead-counsel
 
@@ -708,7 +755,6 @@ namespace Hl7.Fhir.Specification.Tests
             verifier.VerifyElement("Patient.identifier.assigner", null, "Patient.identifier:mrn.assigner");
             verifier.VerifyElement("Patient.identifier", "mrn/officialMRN", "Patient.identifier:mrn/officialMRN");
             verifier.VerifyElement("Patient.identifier", "mdmId", "Patient.identifier:mdmId");
-#endif
 
             // Verify extension re-slice
             // patient-research-auth-reslice-profile.xml
@@ -954,7 +1000,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             foreach (var testSD in testSDs)
             {
-                var sdInfo = testSD.Annotation<OriginInformation>();
+                var sdInfo = testSD.Annotation<OriginAnnotation>();
                 // [WMR 20160721] Select all profiles in profiles-others.xml
                 var fileName = Path.GetFileNameWithoutExtension(sdInfo.Origin);
                 if (fileName == "profiles-others")
@@ -1234,6 +1280,13 @@ namespace Hl7.Fhir.Specification.Tests
 
                     nav.Reset();
                     Assert.IsTrue(nav.MoveTo(elem));
+
+                    if (!isExpandableElement(elem))
+                    {
+                        Assert.IsFalse(nav.MoveToFirstChild());
+                        return;
+                    }
+
                     Assert.IsTrue(nav.MoveToFirstChild());
                     var typeNav = new ElementDefinitionNavigator(typeElems);
                     Assert.IsTrue(typeNav.MoveTo(typeNav.Elements[0]));
@@ -1247,7 +1300,13 @@ namespace Hl7.Fhir.Specification.Tests
                             Debug.Assert(!typeNav.MoveToNext());
                             break;
                         }
-                        Debug.Assert(typeNav.MoveToNext());
+                        // Debug.Assert(typeNav.MoveToNext());
+                        // [WMR 20170412] Backbone elements can introduce additional child elements
+                        if (!typeNav.MoveToNext())
+                        {
+                            Assert.AreEqual(FHIRDefinedType.BackboneElement, elemTypeCode);
+                            break;
+                        }
 
                     } while (true);
                 }
@@ -1326,14 +1385,16 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     var bea = e.Annotation<BaseDefAnnotation>();
                     var be = bea != null ? bea.BaseElementDefinition : null;
-                    return "  #{0} '{1}' - '{2}' => #{3} '{4}' - '{5}'"
+                    return "  #{0} {1} '{2}' - {3} => #{4} {5} '{6}' - {7}"
                         .FormatWith(
                             e.GetHashCode(),
                             e.Path,
-                            e.Base != null ? e.Base.Path : null,
-                            be != null ? (int?)be.GetHashCode() : null,
-                            be != null ? be.Path : null,
-                            be != null && be.Base != null ? be.Base.Path : null
+                            e.Name,
+                            e?.Base?.Path,
+                            (int?)be?.GetHashCode(),
+                            be?.Path,
+                            be?.Name,
+                            be?.Base?.Path
                         );
                 })
             ));
@@ -1831,8 +1892,8 @@ namespace Hl7.Fhir.Specification.Tests
             var baseDef = e.BaseElement;
             var baseStruct = e.BaseStructure;
             elem.AddAnnotation(new BaseDefAnnotation(baseDef));
-            Debug.Write($"[{nameof(SnapshotGeneratorTest)}.{nameof(elementHandler)}] #{elem.GetHashCode()} '{elem.Path}' - Base: #{baseDef?.GetHashCode() ?? 0} '{(baseDef?.Path)}' - Base Structure '{baseStruct?.Url}'");
-            Debug.WriteLine(ann?.BaseElementDefinition != null ? $" (old Base: #{ann.BaseElementDefinition.GetHashCode()} '{ann.BaseElementDefinition.Path}')" : "");
+            Debug.Write($"[{nameof(SnapshotGeneratorTest)}.{nameof(elementHandler)}] #{elem.GetHashCode()} {elem.Path} '{elem.Name}' - Base: #{baseDef?.GetHashCode() ?? 0} {(baseDef?.Path)} '{baseDef?.Name}' - Base Structure '{baseStruct?.Url}'");
+            Debug.WriteLine(ann?.BaseElementDefinition != null ? $" (old Base: #{ann.BaseElementDefinition.GetHashCode()} {ann.BaseElementDefinition.Path} '{ann.BaseElementDefinition.Name}')" : "");
         }
 
         void constraintHandler(object sender, SnapshotConstraintEventArgs e)
@@ -2042,6 +2103,7 @@ namespace Hl7.Fhir.Specification.Tests
             //testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Questionnaire");
             //testExpandResource(@"http://hl7.org/fhir/StructureDefinition/AuditEvent");
 
+            // testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Organization");
         }
 
         [TestMethod]
@@ -2453,7 +2515,7 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     if (sd.Differential.Element.Any(e => e.Path.StartsWith("Extension.extension.", StringComparison.Ordinal)))
                     {
-                        var orgInfo = sd.Annotation<OriginInformation>();
+                        var orgInfo = sd.Annotation<OriginAnnotation>();
                         Debug.WriteLine($"{uri} : '{orgInfo?.Origin}'");
                     }
                 }
@@ -3274,7 +3336,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify slice "bsn"
             Assert.IsTrue(nav.MoveToNextSlice());
-            Assert.AreEqual(corePatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+            assertNamedSliceBaseElement(corePatientIdentifierElem, nav.Current);
             Assert.IsNull(nav.Current.Slicing);
             Assert.AreEqual("bsn", nav.Current.Name);
             Assert.AreEqual(1, nav.Current.Min);
@@ -3282,11 +3344,24 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify slice "ehr_id"
             Assert.IsTrue(nav.MoveToNextSlice());
-            Assert.AreEqual(corePatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+            assertNamedSliceBaseElement(corePatientIdentifierElem, nav.Current);
             Assert.IsNull(nav.Current.Slicing);
             Assert.AreEqual("ehr_id", nav.Current.Name);
             Assert.AreEqual(0, nav.Current.Min);
             Assert.AreEqual("2", nav.Current.Max);
+        }
+
+        // [WMR 20170420] NEW
+        // Verify the base element annotation of a named slice
+        // Note: named slices receive a customized base element: Min = 0, Slicing = null
+        static void assertNamedSliceBaseElement(ElementDefinition original, ElementDefinition namedSlice)
+        {
+            var sliceBase = GetBaseElementAnnotation(namedSlice);
+            var clone = (ElementDefinition)sliceBase.DeepCopy();
+            clone.Min = 0;
+            clone.Slicing = null;
+            clone.Base = original.Base;
+            Assert.IsTrue(clone.IsExactly(original));
         }
 
         static StructureDefinition NationalPatientProfile => new StructureDefinition()
@@ -3434,7 +3509,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify slice "bsn"
             Assert.IsTrue(nav.MoveToNextSlice());
-            Assert.AreEqual(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+            assertNamedSliceBaseElement(nationalPatientIdentifierElem, nav.Current);
             Assert.IsNull(nav.Current.Slicing);
             Assert.AreEqual("bsn", nav.Current.Name);
             Assert.AreEqual(1, nav.Current.Min);
@@ -3451,7 +3526,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify slice "ehr_id"
             Assert.IsTrue(nav.MoveToNextSlice());
-            Assert.AreEqual(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+            assertNamedSliceBaseElement(nationalPatientIdentifierElem, nav.Current);
             Assert.IsNull(nav.Current.Slicing);
             Assert.AreEqual("ehr_id", nav.Current.Name);
             Assert.AreEqual(0, nav.Current.Min);
@@ -3588,7 +3663,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify slice entry
             Assert.IsTrue(nav.MoveToChild("identifier"));
-            Assert.AreEqual(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+            assertNamedSliceBaseElement(nationalPatientIdentifierElem, nav.Current);
             Assert.IsNotNull(nav.Current.Slicing);
             Assert.IsNull(nav.Current.Name);
             Assert.AreEqual(1, nav.Current.Min);
@@ -3603,7 +3678,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify slice "bsn"
             Assert.IsTrue(nav.MoveToNextSlice());
-            Assert.AreEqual(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+            assertNamedSliceBaseElement(nationalPatientIdentifierElem, nav.Current);
             Assert.IsNull(nav.Current.Slicing);
             Assert.AreEqual("bsn", nav.Current.Name);
             Assert.AreEqual(1, nav.Current.Min);
@@ -3620,7 +3695,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify slice "ehr_id"
             Assert.IsTrue(nav.MoveToNextSlice());
-            Assert.AreEqual(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+            assertNamedSliceBaseElement(nationalPatientIdentifierElem, nav.Current);
             Assert.IsNotNull(nav.Current.Slicing);
             Assert.AreEqual("ehr_id", nav.Current.Name);
             Assert.AreEqual(0, nav.Current.Min);
@@ -3635,7 +3710,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify re-slice "ehr_id/temp"
             Assert.IsTrue(nav.MoveToFirstReslice());
-            Assert.AreEqual(nationalPatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+            assertNamedSliceBaseElement(nationalPatientIdentifierElem, nav.Current);
             Assert.IsNull(nav.Current.Slicing);
             Assert.AreEqual("ehr_id/temp", nav.Current.Name);
             Assert.AreEqual(0, nav.Current.Min);
@@ -3647,6 +3722,180 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.MoveToChild("system"));
             Assert.AreEqual(nav.Current.Min, 1);
             Assert.IsTrue(nav.ReturnToBookmark(bm));
+        }
+
+        // [WMR 20170420] Added
+        // Slices should never inherit Minimum Cardinality from base (always zero)
+
+        static StructureDefinition SliceBaseObservationProfile => new StructureDefinition()
+        {
+            ConstrainedType = FHIRDefinedType.Observation,
+            Base = ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Observation),
+            Name = "SliceBaseObservation",
+            Url = "http://example.org/fhir/StructureDefinition/SliceBaseObservation",
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("Observation.code.coding")
+                    {
+                        Min = 1
+                    }
+                }
+            }
+        };
+
+        static StructureDefinition SlicedDerivedObservationProfile => new StructureDefinition()
+        {
+            ConstrainedType = FHIRDefinedType.Observation,
+            Base = SliceBaseObservationProfile.Url,
+            Name = "SlicedDerivedObservationProfile",
+            Url = "http://example.org/fhir/StructureDefinition/SlicedDerivedObservationProfile",
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("Observation.code.coding")
+                    {
+                        Slicing = new ElementDefinition.SlicingComponent()
+                        {
+                            Discriminator = new string[] { "code" }
+                        }
+                        // Should inherit Min = 1 from base slice entry
+                    },
+                    new ElementDefinition("Observation.code.coding")
+                    {
+                        Name = "MainCoding",
+                        Max = "1"
+                        // Named slices should NOT inherit Min = 1 from base slice entry !
+                    },
+                    new ElementDefinition("Observation.code.coding")
+                    {
+                        Name = "DetaildeCoding"
+                        // Named slices should NOT inherit Min = 1 from base slice entry !
+                    }
+                }
+            }
+        };
+
+        [TestMethod]
+        public void TestNamedSliceMinimumCardinality()
+        {
+            // Named slices should never inherit minimum cardinality from the base element (always zero)
+            // See ElementMatcher.initSliceBase
+
+            var baseProfile = SliceBaseObservationProfile;
+            var profile = SlicedDerivedObservationProfile;
+
+            var resolver = new InMemoryProfileResolver(baseProfile, profile);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            _generator = new SnapshotGenerator(multiResolver);
+            StructureDefinition expanded = null;
+
+            _generator.PrepareElement += elementHandler;
+            try
+            {
+                generateSnapshotAndCompare(profile, out expanded);
+            }
+            finally
+            {
+                _generator.PrepareElement -= elementHandler;
+            }
+            dumpOutcome(_generator.Outcome);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            dumpBaseElems(expanded.Snapshot.Element);
+
+            var nav = new ElementDefinitionNavigator(expanded);
+            Assert.IsTrue(nav.MoveToFirstChild());
+            Assert.IsTrue(nav.JumpToFirst("Observation.code.coding"));
+            Assert.IsNotNull(nav.Current);
+            Assert.IsNotNull(nav.Current.Slicing);
+            // Slice entry should inherit Min = 1 from base
+            Assert.AreEqual(1, nav.Current.Min);
+
+            Assert.IsTrue(nav.MoveToNextSlice());
+            Assert.AreEqual("MainCoding", nav.Current.Name);
+            Assert.AreEqual("1", nav.Current.Max);
+            // Named slices should NOT inherit Min = 1 from base slice entry !
+            Assert.AreEqual(0, nav.Current.Min);
+
+            // Also verify base element annotation
+            var baseElemAnnotation = nav.Current.Annotation<BaseDefAnnotation>();
+            Assert.IsNotNull(baseElemAnnotation);
+            Assert.IsNotNull(baseElemAnnotation.BaseElementDefinition);
+            Assert.AreEqual(0, baseElemAnnotation.BaseElementDefinition.Min);
+
+            Assert.IsTrue(nav.MoveToNextSlice());
+            Assert.AreEqual("DetaildeCoding", nav.Current.Name);
+            Assert.AreEqual("*", nav.Current.Max);
+            // Named slices should NOT inherit Min = 1 from base slice entry !
+            Assert.AreEqual(0, nav.Current.Min);
+
+            // Also verify base element annotation
+            baseElemAnnotation = nav.Current.Annotation<BaseDefAnnotation>();
+            Assert.IsNotNull(baseElemAnnotation);
+            Assert.IsNotNull(baseElemAnnotation.BaseElementDefinition);
+            Assert.AreEqual(0, baseElemAnnotation.BaseElementDefinition.Min);
+        }
+
+        [TestMethod]
+        public void TestNamedSliceMinimumCardinality_FIPHR()
+        {
+            // Same as above, but with actual profiles from Finnish PHR project
+
+            var profile = _testResolver.FindStructureDefinition(@"http://phr.kanta.fi/StructureDefinition/fiphr-bodytemperature");
+
+            StructureDefinition expanded = null;
+
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            _generator.PrepareElement += elementHandler;
+            try
+            {
+                generateSnapshotAndCompare(profile, out expanded);
+            }
+            finally
+            {
+                _generator.PrepareElement -= elementHandler;
+            }
+            dumpOutcome(_generator.Outcome);
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            var nav = new ElementDefinitionNavigator(expanded);
+            Assert.IsTrue(nav.MoveToFirstChild());
+            Assert.IsTrue(nav.JumpToFirst("Observation.code.coding"));
+            Assert.IsNotNull(nav.Current);
+            Assert.IsNotNull(nav.Current.Slicing);
+            // Slice entry should inherit Min = 1 from base
+            Assert.AreEqual(1, nav.Current.Min);
+
+            Assert.IsTrue(nav.MoveToNextSlice());
+            Assert.AreEqual("MainCoding", nav.Current.Name);
+            Assert.AreEqual("1", nav.Current.Max);
+            // Named slices should NOT inherit Min = 1 from base slice entry !
+            Assert.AreEqual(0, nav.Current.Min);
+
+            // Also verify base element annotation
+            var baseElemAnnotation = nav.Current.Annotation<BaseDefAnnotation>();
+            Assert.IsNotNull(baseElemAnnotation);
+            Assert.IsNotNull(baseElemAnnotation.BaseElementDefinition);
+            Assert.AreEqual(0, baseElemAnnotation.BaseElementDefinition.Min);
+
+            Assert.IsTrue(nav.MoveToNextSlice());
+            Assert.AreEqual("DetaildeCoding", nav.Current.Name);
+            Assert.AreEqual("*", nav.Current.Max);
+            // Named slices should NOT inherit Min = 1 from base slice entry !
+            Assert.AreEqual(0, nav.Current.Min);
+
+            // Also verify base element annotation
+            baseElemAnnotation = nav.Current.Annotation<BaseDefAnnotation>();
+            Assert.IsNotNull(baseElemAnnotation);
+            Assert.IsNotNull(baseElemAnnotation.BaseElementDefinition);
+            Assert.AreEqual(0, baseElemAnnotation.BaseElementDefinition.Min);
         }
 
         [TestMethod]

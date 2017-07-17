@@ -35,6 +35,7 @@ using Hl7.Fhir.Utility;
   
 
 */
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
 // Generated for FHIR v1.0.2
@@ -305,6 +306,18 @@ namespace Hl7.Fhir.Model
                     if (Period != null) yield return Period;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                    if (Period != null) yield return new ElementValue("period", false, Period);
+                }
+            }
+
             
         }
         
@@ -417,6 +430,19 @@ namespace Hl7.Fhir.Model
                     if (Individual != null) yield return Individual;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, elem); }
+                    if (Period != null) yield return new ElementValue("period", false, Period);
+                    if (Individual != null) yield return new ElementValue("individual", false, Individual);
+                }
+            }
+
             
         }
         
@@ -675,6 +701,27 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in DischargeDiagnosis) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (PreAdmissionIdentifier != null) yield return new ElementValue("preAdmissionIdentifier", false, PreAdmissionIdentifier);
+                    if (Origin != null) yield return new ElementValue("origin", false, Origin);
+                    if (AdmitSource != null) yield return new ElementValue("admitSource", false, AdmitSource);
+                    foreach (var elem in AdmittingDiagnosis) { if (elem != null) yield return new ElementValue("admittingDiagnosis", true, elem); }
+                    if (ReAdmission != null) yield return new ElementValue("reAdmission", false, ReAdmission);
+                    foreach (var elem in DietPreference) { if (elem != null) yield return new ElementValue("dietPreference", true, elem); }
+                    foreach (var elem in SpecialCourtesy) { if (elem != null) yield return new ElementValue("specialCourtesy", true, elem); }
+                    foreach (var elem in SpecialArrangement) { if (elem != null) yield return new ElementValue("specialArrangement", true, elem); }
+                    if (Destination != null) yield return new ElementValue("destination", false, Destination);
+                    if (DischargeDisposition != null) yield return new ElementValue("dischargeDisposition", false, DischargeDisposition);
+                    foreach (var elem in DischargeDiagnosis) { if (elem != null) yield return new ElementValue("dischargeDiagnosis", true, elem); }
+                }
+            }
+
             
         }
         
@@ -806,6 +853,19 @@ namespace Hl7.Fhir.Model
                     if (Period != null) yield return Period;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Location != null) yield return new ElementValue("location", false, Location);
+                    if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                    if (Period != null) yield return new ElementValue("period", false, Period);
+                }
+            }
+
             
         }
         
@@ -1248,6 +1308,35 @@ namespace Hl7.Fhir.Model
 				if (PartOf != null) yield return PartOf;
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                foreach (var elem in StatusHistory) { if (elem != null) yield return new ElementValue("statusHistory", true, elem); }
+                if (ClassElement != null) yield return new ElementValue("class", false, ClassElement);
+                foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", true, elem); }
+                if (Priority != null) yield return new ElementValue("priority", false, Priority);
+                if (Patient != null) yield return new ElementValue("patient", false, Patient);
+                foreach (var elem in EpisodeOfCare) { if (elem != null) yield return new ElementValue("episodeOfCare", true, elem); }
+                foreach (var elem in IncomingReferral) { if (elem != null) yield return new ElementValue("incomingReferral", true, elem); }
+                foreach (var elem in Participant) { if (elem != null) yield return new ElementValue("participant", true, elem); }
+                if (Appointment != null) yield return new ElementValue("appointment", false, Appointment);
+                if (Period != null) yield return new ElementValue("period", false, Period);
+                if (Length != null) yield return new ElementValue("length", false, Length);
+                foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", true, elem); }
+                foreach (var elem in Indication) { if (elem != null) yield return new ElementValue("indication", true, elem); }
+                if (Hospitalization != null) yield return new ElementValue("hospitalization", false, Hospitalization);
+                foreach (var elem in Location) { if (elem != null) yield return new ElementValue("location", true, elem); }
+                if (ServiceProvider != null) yield return new ElementValue("serviceProvider", false, ServiceProvider);
+                if (PartOf != null) yield return new ElementValue("partOf", false, PartOf);
+            }
+        }
+
     }
     
 }

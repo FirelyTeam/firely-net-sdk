@@ -35,6 +35,7 @@ using Hl7.Fhir.Utility;
   
 
 */
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
 // Generated for FHIR v1.0.2
@@ -221,6 +222,18 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Telecom) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                    foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", true, elem); }
+                }
+            }
+
             
         }
         
@@ -424,6 +437,20 @@ namespace Hl7.Fhir.Model
                     if (CommentsElement != null) yield return CommentsElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (IdentityElement != null) yield return new ElementValue("identity", false, IdentityElement);
+                    if (UriElement != null) yield return new ElementValue("uri", false, UriElement);
+                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                    if (CommentsElement != null) yield return new ElementValue("comments", false, CommentsElement);
+                }
+            }
+
             
         }
         
@@ -500,6 +527,17 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Element) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    foreach (var elem in Element) { if (elem != null) yield return new ElementValue("element", true, elem); }
+                }
+            }
+
             
         }
         
@@ -576,6 +614,17 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Element) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    foreach (var elem in Element) { if (elem != null) yield return new ElementValue("element", true, elem); }
+                }
+            }
+
             
         }
         
@@ -1531,6 +1580,41 @@ namespace Hl7.Fhir.Model
 				if (Differential != null) yield return Differential;
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
+                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                if (DisplayElement != null) yield return new ElementValue("display", false, DisplayElement);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (ExperimentalElement != null) yield return new ElementValue("experimental", false, ExperimentalElement);
+                if (PublisherElement != null) yield return new ElementValue("publisher", false, PublisherElement);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
+                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
+                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", true, elem); }
+                if (RequirementsElement != null) yield return new ElementValue("requirements", false, RequirementsElement);
+                if (CopyrightElement != null) yield return new ElementValue("copyright", false, CopyrightElement);
+                foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", true, elem); }
+                if (FhirVersionElement != null) yield return new ElementValue("fhirVersion", false, FhirVersionElement);
+                foreach (var elem in Mapping) { if (elem != null) yield return new ElementValue("mapping", true, elem); }
+                if (KindElement != null) yield return new ElementValue("kind", false, KindElement);
+                if (ConstrainedTypeElement != null) yield return new ElementValue("constrainedType", false, ConstrainedTypeElement);
+                if (AbstractElement != null) yield return new ElementValue("abstract", false, AbstractElement);
+                if (ContextTypeElement != null) yield return new ElementValue("contextType", false, ContextTypeElement);
+                foreach (var elem in ContextElement) { if (elem != null) yield return new ElementValue("context", true, elem); }
+                if (BaseElement != null) yield return new ElementValue("base", false, BaseElement);
+                if (Snapshot != null) yield return new ElementValue("snapshot", false, Snapshot);
+                if (Differential != null) yield return new ElementValue("differential", false, Differential);
+            }
+        }
+
     }
     
 }

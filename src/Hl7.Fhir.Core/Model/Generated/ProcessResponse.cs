@@ -35,6 +35,7 @@ using Hl7.Fhir.Utility;
   
 
 */
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
 // Generated for FHIR v1.0.2
@@ -160,6 +161,18 @@ namespace Hl7.Fhir.Model
                     if (TextElement != null) yield return TextElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Type != null) yield return new ElementValue("type", false, Type);
+                    if (TextElement != null) yield return new ElementValue("text", false, TextElement);
+                }
+            }
+
             
         }
         
@@ -487,6 +500,29 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Error) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (Request != null) yield return new ElementValue("request", false, Request);
+                if (Outcome != null) yield return new ElementValue("outcome", false, Outcome);
+                if (DispositionElement != null) yield return new ElementValue("disposition", false, DispositionElement);
+                if (Ruleset != null) yield return new ElementValue("ruleset", false, Ruleset);
+                if (OriginalRuleset != null) yield return new ElementValue("originalRuleset", false, OriginalRuleset);
+                if (CreatedElement != null) yield return new ElementValue("created", false, CreatedElement);
+                if (Organization != null) yield return new ElementValue("organization", false, Organization);
+                if (RequestProvider != null) yield return new ElementValue("requestProvider", false, RequestProvider);
+                if (RequestOrganization != null) yield return new ElementValue("requestOrganization", false, RequestOrganization);
+                if (Form != null) yield return new ElementValue("form", false, Form);
+                foreach (var elem in Notes) { if (elem != null) yield return new ElementValue("notes", true, elem); }
+                foreach (var elem in Error) { if (elem != null) yield return new ElementValue("error", true, elem); }
+            }
+        }
+
     }
     
 }

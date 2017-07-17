@@ -43,13 +43,13 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        public T Parse<T>(string xml) where T : Resource
+        public T Parse<T>(string xml) where T : Base
         {
             return (T)Parse(xml, typeof(T));
         }
 
         // [WMR 20160421] Caller is responsible for disposing reader
-        public T Parse<T>(XmlReader reader) where T : Resource
+        public T Parse<T>(XmlReader reader) where T : Base
         {
             return (T)Parse(reader, typeof(T));
         }
@@ -95,13 +95,13 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        public T Parse<T>(string json) where T:Resource
+        public T Parse<T>(string json) where T:Base
         {
             return (T)Parse(json, typeof(T));
         }
 
         // [WMR 20160421] Caller is responsible for disposing reader
-        public T Parse<T>(JsonReader reader) where T : Resource
+        public T Parse<T>(JsonReader reader) where T : Base
         {
             return (T)Parse(reader, typeof(T));
         }
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        public T Parse<T>(IFhirReader reader) where T : Resource
+        public T Parse<T>(IFhirReader reader) where T : Base
         {
             return (T)Parse(reader, typeof(T));
         }

@@ -35,6 +35,7 @@ using Hl7.Fhir.Utility;
   
 
 */
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
 // Generated for FHIR v1.0.2
@@ -522,6 +523,30 @@ namespace Hl7.Fhir.Model
 				if (PriorityElement != null) yield return PriorityElement;
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (Subject != null) yield return new ElementValue("subject", false, Subject);
+                if (Code != null) yield return new ElementValue("code", false, Code);
+                foreach (var elem in BodySite) { if (elem != null) yield return new ElementValue("bodySite", true, elem); }
+                if (Reason != null) yield return new ElementValue("reason", false, Reason);
+                if (Scheduled != null) yield return new ElementValue("scheduled", false, Scheduled);
+                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
+                if (Performer != null) yield return new ElementValue("performer", false, Performer);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                foreach (var elem in Notes) { if (elem != null) yield return new ElementValue("notes", true, elem); }
+                if (AsNeeded != null) yield return new ElementValue("asNeeded", false, AsNeeded);
+                if (OrderedOnElement != null) yield return new ElementValue("orderedOn", false, OrderedOnElement);
+                if (Orderer != null) yield return new ElementValue("orderer", false, Orderer);
+                if (PriorityElement != null) yield return new ElementValue("priority", false, PriorityElement);
+            }
+        }
+
     }
     
 }

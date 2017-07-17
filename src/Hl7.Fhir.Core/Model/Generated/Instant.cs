@@ -62,7 +62,6 @@ namespace Hl7.Fhir.Model
         /// Primitive value of the element
         /// </summary>
         [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=30)]
-        [InstantPattern]
         [DataMember]
         public DateTimeOffset? Value
         {

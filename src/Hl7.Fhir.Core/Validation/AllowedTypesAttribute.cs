@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;

@@ -155,8 +155,17 @@ namespace Hl7.Fhir.Validation
             }
 
             // Finally, add any validation items on the elements that made it into the child slices
-            foreach(var slice in ChildSlices)
-                outcome.Add(slice.Validate(validator, errorLocation));
+            foreach (var slice in ChildSlices)
+            {
+                var sliceOutcome = slice.Validate(validator, errorLocation);
+                foreach (var issue in sliceOutcome.Issue)
+                {
+                    // Only add the issue from the slice outcome if the entry validation did not already catch
+                    // the same issue, otherwise the users will see it twice.
+                    if(!outcome.Issue.Exists(i => i.Location.First() == issue.Location.First() && i.Details.Text == issue.Details.Text))
+                        outcome.AddIssue(issue);
+                }
+            }
 
             return outcome;
         }    

@@ -382,6 +382,42 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(outp.Contains("\"superman\""));
         }
 
+
+        [TestMethod]
+        public void TestNullExtensionRemoval()
+        {
+            var p = new Patient
+            {
+                Extension = new List<Extension>
+                {
+                    new Extension("http://hl7.org/fhir/Profile/iso-21090#qualifier", new Code("VV")),
+                    null
+                },
+
+                Contact = new List<Patient.ContactComponent>
+                {
+                    null,
+                    new Patient.ContactComponent { Name = HumanName.ForFamily("Kramer") }, 
+                }
+            };
+
+            var xml = FhirSerializer.SerializeResourceToXml(p);
+
+            var p2 = (new FhirXmlParser()).Parse<Patient>(xml);
+            Assert.AreEqual(1, p2.Extension.Count);
+            Assert.AreEqual(1, p2.Contact.Count);
+        }
+
+        [TestMethod]
+        public void SerializeEmptyParams()
+        {
+            var par = new Parameters();
+            var xml = FhirSerializer.SerializeResourceToXml(par);
+
+            var par2 = (new FhirXmlParser()).Parse<Parameters>(xml);
+            Assert.AreEqual(0, par2.Parameter.Count);
+        }
+
         // [WMR 20161222] Richard Kavanagh: serializing ValueSet (to XML) throws an exception...?
         // Cause: { ... "text" { ... "div" = "removed" } ... }
         // => "removed" is not valid Xhtml contents (no root)! Should be e.g. "<p>removed</p>"

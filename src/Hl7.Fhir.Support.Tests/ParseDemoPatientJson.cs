@@ -39,7 +39,7 @@ namespace Hl7.FhirPath.Tests.JsonNavTests
             var period = identifier.Clone();
 
             // Move to child Patient.identifier.period.start
-            Assert.True(period.MoveToFirstChild());
+            Assert.True(period.MoveToFirstChild("start"));
             Assert.Equal("start", period.Name);
             Assert.Equal("2001-05-06", period.Value);
 
@@ -74,13 +74,7 @@ namespace Hl7.FhirPath.Tests.JsonNavTests
             Assert.True(patient.MoveToNext());
             Assert.Equal("name", patient.Name);
 
-            Assert.True(patient.MoveToNext()); // extension (2x)
-            Assert.True(patient.MoveToNext());
-            Assert.True(patient.MoveToNext()); // modifierExtension (2x)
-            Assert.True(patient.MoveToNext());
-            Assert.True(patient.MoveToNext()); // gender
-            Assert.True(patient.MoveToNext()); // birthdate
-            Assert.True(patient.MoveToNext()); // deceasedBoolean
+            Assert.True(patient.MoveToNext("deceasedBoolean"));
             Assert.Equal("deceasedBoolean", patient.Name);
             Assert.Equal("true", patient.Value);
 

@@ -627,10 +627,29 @@ namespace Hl7.Fhir.Model
                     if (WhenElement != null) yield return WhenElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren 
+            { 
+                get 
+                { 
+                    foreach (var item in base.NamedChildren) yield return item; 
+                    if (Bounds != null) yield return new ElementValue("bounds", false, Bounds);
+                    if (CountElement != null) yield return new ElementValue("count", false, CountElement);
+                    if (DurationElement != null) yield return new ElementValue("duration", false, DurationElement);
+                    if (DurationMaxElement != null) yield return new ElementValue("durationMax", false, DurationMaxElement);
+                    if (DurationUnitsElement != null) yield return new ElementValue("durationUnits", false, DurationUnitsElement);
+                    if (FrequencyElement != null) yield return new ElementValue("frequency", false, FrequencyElement);
+                    if (FrequencyMaxElement != null) yield return new ElementValue("frequencyMax", false, FrequencyMaxElement);
+                    if (PeriodElement != null) yield return new ElementValue("period", false, PeriodElement);
+                    if (PeriodMaxElement != null) yield return new ElementValue("periodMax", false, PeriodMaxElement);
+                    if (PeriodUnitsElement != null) yield return new ElementValue("periodUnits", false, PeriodUnitsElement);
+                    if (WhenElement != null) yield return new ElementValue("when", false, WhenElement);
+ 
+                } 
+            } 
             
-        }
-        
-        
+        }                
         /// <summary>
         /// When the event occurs
         /// </summary>
@@ -749,6 +768,19 @@ namespace Hl7.Fhir.Model
                 if (Code != null) yield return Code;
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren 
+        { 
+            get 
+            { 
+                foreach (var item in base.NamedChildren) yield return item; 
+                foreach (var elem in EventElement) { if (elem != null) yield return new ElementValue("event", true, elem); }
+                if (Repeat != null) yield return new ElementValue("repeat", false, Repeat);
+                if (Code != null) yield return new ElementValue("code", false, Code);
+ 
+            } 
+        } 
     
     
     }

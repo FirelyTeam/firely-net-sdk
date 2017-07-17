@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-        [TestMethod]
+        [TestMethod, TestCategory("IntegrationTest")]
         public void RetrieveWebArtifact()
         {
             var wa = new WebResolver();
@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(artifact is StructureDefinition);
             Assert.AreEqual("Observation", ((StructureDefinition)artifact).Name);
 
-            var ci = artifact.Annotation<OriginInformation>();
+            var ci = artifact.Annotation<OriginAnnotation>();
             Assert.AreEqual("http://fhir2.healthintersections.com.au/open/StructureDefinition/Observation", ci.Origin);
         }
 
@@ -105,7 +105,8 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("IntegrationTest")]
+
         public void RetrieveWebArtifactCustomFhirClient()
         {
             TestFhirClient client = null;
@@ -124,7 +125,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("Flag", ((StructureDefinition)artifact).Name);
         }
 
-        [TestMethod]
+        [TestMethod,TestCategory("IntegrationTest")]
         public void RetrieveArtifactMulti()
         {
             var resolver = new MultiResolver(source, new WebResolver());
@@ -141,7 +142,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-        [TestMethod]
+        [TestMethod, TestCategory("IntegrationTest")]
         public void TestSourceCaching()
         {
             var src = new CachedResolver(new MultiResolver(ZipSource.CreateValidationSource(), new WebResolver()));

@@ -8,10 +8,6 @@
 
 using Hl7.Fhir.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.Rest
@@ -25,24 +21,31 @@ namespace Hl7.Fhir.Rest
         private Bundle _result;
         private string _baseUrl;
 
-        public TransactionBuilder(string baseUrl)
+        public TransactionBuilder(string baseUrl, Bundle.BundleType type = Bundle.BundleType.Batch)
         {
-            _result = new Bundle();
-            _baseUrl = baseUrl;           
+            _result = new Bundle()
+            {
+                Type = type
+            };
+
+            _baseUrl = baseUrl;
         }
 
-        public TransactionBuilder(Uri baseUri)
-            : this(baseUri.OriginalString)
+        public TransactionBuilder(Uri baseUri, Bundle.BundleType type = Bundle.BundleType.Batch)
+            : this(baseUri.OriginalString, type)
         {
         }
 
 
         private Bundle.EntryComponent newEntry(Bundle.HTTPVerb method)
         {
-            var newEntry = new Bundle.EntryComponent();
-            newEntry.Request = new Bundle.RequestComponent();
-            newEntry.Request.Method = method;
-
+            var newEntry = new Bundle.EntryComponent()
+            {
+                Request = new Bundle.RequestComponent()
+                {
+                    Method = method
+                }
+            };
             return newEntry;
         }
 
@@ -226,10 +229,6 @@ namespace Hl7.Fhir.Rest
         {
             var entry = newEntry(useGet ? Bundle.HTTPVerb.GET : Bundle.HTTPVerb.POST);
 
-            // Brian: Not sure why we would create this parameters object as empty.
-            //        I would imagine that a null parameters object is different to an empty one?
-            // if (parameters == null)
-            //    parameters = new Parameters();
             entry.Resource = parameters;
 
             var path = new RestUrl(endpoint);

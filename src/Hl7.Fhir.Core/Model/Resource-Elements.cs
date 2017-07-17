@@ -35,7 +35,7 @@ using Hl7.Fhir.Utility;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated, and then post-processed by hand for FHIR v1.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -228,7 +228,9 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override IEnumerable<Base> Children
         {
-            get {
+            get
+            {
+                foreach (var item in base.Children) yield return item;
                 if (IdElement != null) yield return IdElement;
                 if (Meta != null) yield return Meta;
                 if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
@@ -236,6 +238,18 @@ namespace Hl7.Fhir.Model
             }
         }
 
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (IdElement != null) yield return new ElementValue("id",false, IdElement);
+                if (Meta != null) yield return new ElementValue("meta",false,Meta);
+                if (ImplicitRulesElement != null) yield return new ElementValue("implicitRules",false,ImplicitRulesElement);
+                if (LanguageElement != null) yield return new ElementValue("language",false,LanguageElement);
+            }
+        }
     }
 
 }

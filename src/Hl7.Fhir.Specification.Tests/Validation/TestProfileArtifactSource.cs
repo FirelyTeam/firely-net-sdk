@@ -32,7 +32,8 @@ namespace Hl7.Fhir.Validation
             patientWithSpecificOrganization(new[] { ElementDefinition.AggregationMode.Bundled }, "Bundled"),
             bundleWithSpecificEntries("Referenced"),
             patientWithSpecificOrganization(new[] { ElementDefinition.AggregationMode.Referenced }, "Referenced"),
-            buildParametersWithBoundParams()
+            buildParametersWithBoundParams(),
+            bundleWithConstrainedContained()
         };
 
 
@@ -159,6 +160,20 @@ namespace Hl7.Fhir.Validation
             cons.Add(new ElementDefinition("Bundle.entry.resource")
                 .OfType(FHIRDefinedType.Organization)
                 .OrType(FHIRDefinedType.Patient, $"http://validationtest.org/fhir/StructureDefinition/PatientWith{prefix}Organization"));
+
+            return result;
+        }
+
+        private static StructureDefinition bundleWithConstrainedContained()
+        {
+            var result = createTestSD($"http://validationtest.org/fhir/StructureDefinition/BundleWithConstrainedContained", 
+                            $"Bundle with a constraint on the Bundle.entry.resource",
+                    $"Bundle with a constraint on the Bundle.entry.resource", FHIRDefinedType.Bundle);
+
+            var cons = result.Differential.Element;
+
+            cons.Add(new ElementDefinition("Bundle").OfType(FHIRDefinedType.Bundle));
+            cons.Add(new ElementDefinition("Bundle.entry.resource.meta").Required());
 
             return result;
         }

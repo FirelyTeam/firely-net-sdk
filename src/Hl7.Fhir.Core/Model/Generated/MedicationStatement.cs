@@ -35,6 +35,7 @@ using Hl7.Fhir.Utility;
   
 
 */
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
 // Generated for FHIR v1.0.2
@@ -320,6 +321,25 @@ namespace Hl7.Fhir.Model
                     if (MaxDosePerPeriod != null) yield return MaxDosePerPeriod;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (TextElement != null) yield return new ElementValue("text", false, TextElement);
+                    if (Timing != null) yield return new ElementValue("timing", false, Timing);
+                    if (AsNeeded != null) yield return new ElementValue("asNeeded", false, AsNeeded);
+                    if (Site != null) yield return new ElementValue("site", false, Site);
+                    if (Route != null) yield return new ElementValue("route", false, Route);
+                    if (Method != null) yield return new ElementValue("method", false, Method);
+                    if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
+                    if (Rate != null) yield return new ElementValue("rate", false, Rate);
+                    if (MaxDosePerPeriod != null) yield return new ElementValue("maxDosePerPeriod", false, MaxDosePerPeriod);
+                }
+            }
+
             
         }
         
@@ -713,6 +733,29 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Dosage) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (Patient != null) yield return new ElementValue("patient", false, Patient);
+                if (InformationSource != null) yield return new ElementValue("informationSource", false, InformationSource);
+                if (DateAssertedElement != null) yield return new ElementValue("dateAsserted", false, DateAssertedElement);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (WasNotTakenElement != null) yield return new ElementValue("wasNotTaken", false, WasNotTakenElement);
+                foreach (var elem in ReasonNotTaken) { if (elem != null) yield return new ElementValue("reasonNotTaken", true, elem); }
+                if (ReasonForUse != null) yield return new ElementValue("reasonForUse", false, ReasonForUse);
+                if (Effective != null) yield return new ElementValue("effective", false, Effective);
+                if (NoteElement != null) yield return new ElementValue("note", false, NoteElement);
+                foreach (var elem in SupportingInformation) { if (elem != null) yield return new ElementValue("supportingInformation", true, elem); }
+                if (Medication != null) yield return new ElementValue("medication", false, Medication);
+                foreach (var elem in Dosage) { if (elem != null) yield return new ElementValue("dosage", true, elem); }
+            }
+        }
+
     }
     
 }

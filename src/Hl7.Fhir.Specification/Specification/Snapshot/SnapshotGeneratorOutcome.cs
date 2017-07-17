@@ -14,6 +14,8 @@ using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 
+#pragma warning disable 1591 // suppress XML summary warnings
+
 // [WMR 20160907] TODO: Create unit tests to evaluate behavior for different kinds of errors, e.g.
 // - unresolved external (type/extension) profile
 // - invalid element order
@@ -68,9 +70,9 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             public IElementNavigator Clone() { throw new NotImplementedException(); }
 
-            public bool MoveToFirstChild() { throw new NotImplementedException(); }
+            public bool MoveToFirstChild(string nameFilter = null) { throw new NotImplementedException(); }
 
-            public bool MoveToNext() { throw new NotImplementedException(); }
+            public bool MoveToNext(string nameFilter = null) { throw new NotImplementedException(); }
 
             public override string ToString() => string.IsNullOrEmpty(Name) ? $"'{Location}'" : $"'{Location}' : '{Name}'";
         }

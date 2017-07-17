@@ -35,6 +35,7 @@ using Hl7.Fhir.Utility;
   
 
 */
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
 // Generated for FHIR v1.0.2
@@ -235,6 +236,21 @@ namespace Hl7.Fhir.Model
                     if (RationaleElement != null) yield return RationaleElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Outcome != null) yield return new ElementValue("outcome", false, Outcome);
+                    if (Probability != null) yield return new ElementValue("probability", false, Probability);
+                    if (RelativeRiskElement != null) yield return new ElementValue("relativeRisk", false, RelativeRiskElement);
+                    if (When != null) yield return new ElementValue("when", false, When);
+                    if (RationaleElement != null) yield return new ElementValue("rationale", false, RationaleElement);
+                }
+            }
+
             
         }
         
@@ -532,6 +548,26 @@ namespace Hl7.Fhir.Model
 				if (MitigationElement != null) yield return MitigationElement;
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (Subject != null) yield return new ElementValue("subject", false, Subject);
+                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
+                if (Condition != null) yield return new ElementValue("condition", false, Condition);
+                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
+                if (Performer != null) yield return new ElementValue("performer", false, Performer);
+                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                if (Method != null) yield return new ElementValue("method", false, Method);
+                foreach (var elem in Basis) { if (elem != null) yield return new ElementValue("basis", true, elem); }
+                foreach (var elem in Prediction) { if (elem != null) yield return new ElementValue("prediction", true, elem); }
+                if (MitigationElement != null) yield return new ElementValue("mitigation", false, MitigationElement);
+            }
+        }
+
     }
     
 }

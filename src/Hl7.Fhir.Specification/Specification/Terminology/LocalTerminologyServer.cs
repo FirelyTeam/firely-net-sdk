@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Specification.Terminology
             var component = vs.FindInExpansion(code, system);
             var codeLabel = $"Code '{code}' from system '{system}'";
             if (component == null)
-                result.AddIssue($"{codeLabel} does not exists in valueset '{uri}'", Issue.TERMINOLOGY_CODE_NOT_IN_VALUESET);
+                result.AddIssue($"{codeLabel} does not exist in valueset '{uri}'", Issue.TERMINOLOGY_CODE_NOT_IN_VALUESET);
             else
             {
                 if (component.Abstract == true && !abstractAllowed)

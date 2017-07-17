@@ -35,6 +35,7 @@ using Hl7.Fhir.Utility;
   
 
 */
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
 // Generated for FHIR v1.0.2
@@ -297,6 +298,22 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Question) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (LinkIdElement != null) yield return new ElementValue("linkId", false, LinkIdElement);
+                    if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
+                    if (TextElement != null) yield return new ElementValue("text", false, TextElement);
+                    if (Subject != null) yield return new ElementValue("subject", false, Subject);
+                    foreach (var elem in Group) { if (elem != null) yield return new ElementValue("group", true, elem); }
+                    foreach (var elem in Question) { if (elem != null) yield return new ElementValue("question", true, elem); }
+                }
+            }
+
             
         }
         
@@ -445,6 +462,19 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Answer) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (LinkIdElement != null) yield return new ElementValue("linkId", false, LinkIdElement);
+                    if (TextElement != null) yield return new ElementValue("text", false, TextElement);
+                    foreach (var elem in Answer) { if (elem != null) yield return new ElementValue("answer", true, elem); }
+                }
+            }
+
             
         }
         
@@ -540,6 +570,18 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Group) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Value != null) yield return new ElementValue("value", false, Value);
+                    foreach (var elem in Group) { if (elem != null) yield return new ElementValue("group", true, elem); }
+                }
+            }
+
             
         }
         
@@ -809,6 +851,25 @@ namespace Hl7.Fhir.Model
 				if (Group != null) yield return Group;
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                if (Questionnaire != null) yield return new ElementValue("questionnaire", false, Questionnaire);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (Subject != null) yield return new ElementValue("subject", false, Subject);
+                if (Author != null) yield return new ElementValue("author", false, Author);
+                if (AuthoredElement != null) yield return new ElementValue("authored", false, AuthoredElement);
+                if (Source != null) yield return new ElementValue("source", false, Source);
+                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
+                if (Group != null) yield return new ElementValue("group", false, Group);
+            }
+        }
+
     }
     
 }

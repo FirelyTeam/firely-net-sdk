@@ -48,7 +48,11 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        
+        public JsonDomFhirReader(JObject source)
+        {
+            _current = source;
+        }
+
         // This code implements the San Antonio timeframe DSTU2 Json serialization of extensions
         // (using full urls as property names). This has been retracted, but keep the code here
         // in case we change our mind again.

@@ -12,8 +12,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <FhirApiVersion>0.92.0-alpha4</FhirApiVersion>
-    <SupportApiVersion>0.4.2-alpha4</SupportApiVersion>
+    <FhirApiVersion>0.92.1</FhirApiVersion>
+    <SupportApiVersion>0.4.2</SupportApiVersion>
   </PropertyGroup>
 
   <!-- Compiler settings -->
@@ -22,6 +22,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+<!--     <DocumentationFile>$(AssemblyName).xml</DocumentationFile> -->
+     <DebugType>full</DebugType>
+     <DebugSymbols>True</DebugSymbols>
+     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+     <NoWarn>1591</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">

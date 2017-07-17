@@ -19,11 +19,11 @@ namespace Hl7.Fhir.Validation
     internal class ProfilePreprocessor
     {
         private Func<string, StructureDefinition> _profileResolver;
-        private Action<StructureDefinition> _snapshotGenerator;
+        private Func<StructureDefinition,OperationOutcome> _snapshotGenerator;
         private string _path;
         private ProfileAssertion _profiles;
 
-        public ProfilePreprocessor(Func<string,StructureDefinition> profileResolver, Action<StructureDefinition> snapshotGenerator, 
+        public ProfilePreprocessor(Func<string,StructureDefinition> profileResolver, Func<StructureDefinition,OperationOutcome> snapshotGenerator, 
                 IElementNavigator instance, string declaredTypeProfile, 
                 IEnumerable<StructureDefinition> additionalProfiles, IEnumerable<string> additionalCanonicals)
         {
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Validation
         /// Generate snapshots for all StructureDefinitions available to the preprocessor
         /// </summary>
         /// <returns></returns>
-        public static OperationOutcome GenerateSnapshots(IEnumerable<StructureDefinition> sds, Action<StructureDefinition> snapshotGenerator, string path)
+        public static OperationOutcome GenerateSnapshots(IEnumerable<StructureDefinition> sds, Func<StructureDefinition,OperationOutcome> snapshotGenerator, string path)
         {
             var outcome = new OperationOutcome();
 
@@ -108,7 +108,14 @@ namespace Hl7.Fhir.Validation
                 {
                     try
                     {
-                        snapshotGenerator(sd);
+                        var snapshotOutcome = snapshotGenerator(sd);
+
+                        if(!snapshotOutcome.Success)
+                        {
+                            outcome.AddIssue($"Snapshot generation failed for '{sd.Url}'. Details follow below.",
+                               Issue.UNAVAILABLE_SNAPSHOT_GENERATION_FAILED, path);
+                            outcome.Add(snapshotOutcome);
+                        }                                                
                     }
                     catch (Exception e)
                     {
@@ -116,6 +123,7 @@ namespace Hl7.Fhir.Validation
                                Issue.UNAVAILABLE_SNAPSHOT_GENERATION_FAILED, path);
                     }
                 }
+
 
                 if (!sd.HasSnapshot)
                     outcome.AddIssue($"Profile '{sd.Url}' does not include a snapshot.", Issue.UNAVAILABLE_NEED_SNAPSHOT, path);
