@@ -52,10 +52,20 @@ namespace Hl7.Fhir.Model
         }
     }
 
+    /// <summary>
+    /// Provides a way to access the system and code from a Code&lt;T&gt; derived class, without having to mess
+    /// about with the generic types/additional nasty reflection
+    /// </summary>
+    public interface ISystemAndCode
+    {
+        string System { get; }
+        string Code { get; }
+    }
+
     [FhirType("codeOfT")]
     [DataContract]
     [System.Diagnostics.DebuggerDisplay(@"\{{Value}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
-    public class Code<T> : Primitive<T>, INullableValue<T> where T : struct
+    public class Code<T> : Primitive<T>, INullableValue<T>, ISystemAndCode where T : struct
     {
         static Code()
         {
@@ -98,6 +108,10 @@ namespace Hl7.Fhir.Model
         {
             get { return "code"; }
         }
+
+        string ISystemAndCode.System => ((Enum)(object)Value).GetSystem();
+
+        string ISystemAndCode.Code => ObjectValue as string; // this is the literal
 
         //public override IDeepCopyable CopyTo(IDeepCopyable other)
         //{
