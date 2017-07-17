@@ -39,16 +39,25 @@ namespace Hl7.Fhir.Utility
     public sealed class EnumLiteralAttribute : Attribute
     {
         readonly string literal;
+        readonly string system;
 
         // This is a positional argument
-        public EnumLiteralAttribute(string literal)
+        public EnumLiteralAttribute(string literal, string system)
         {
             this.literal = literal;
+            this.system = system;
         }
 
         public string Literal
         {
             get { return literal; }
+        }
+        /// <summary>
+        /// The system name-space of the code system that this literal value comes from 
+        /// </summary>
+        public string System
+        {
+            get { return system; }
         }
     }
 
