@@ -25,6 +25,16 @@ namespace Hl7.Fhir.Utility
                 return null;
         }
 
+        public static string GetSystem(this Enum e)
+        {
+            var attr = e.GetAttributeOnEnum<EnumLiteralAttribute>();
+
+            if (attr != null)
+                return attr.System;
+            else
+                return null;
+        }
+
         public static string GetDocumentation(this Enum e)
         {
             var attr = e.GetAttributeOnEnum<DescriptionAttribute>();
