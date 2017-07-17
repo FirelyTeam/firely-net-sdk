@@ -65,19 +65,19 @@ namespace Hl7.Fhir.Model
             /// The Device is available for use.
             /// (system: http://hl7.org/fhir/devicestatus)
             /// </summary>
-            [EnumLiteral("available"), Description("Available")]
+            [EnumLiteral("available", "http://hl7.org/fhir/devicestatus"), Description("Available")]
             Available,
             /// <summary>
             /// The Device is no longer available for use (e.g. lost, expired, damaged).
             /// (system: http://hl7.org/fhir/devicestatus)
             /// </summary>
-            [EnumLiteral("not-available"), Description("Not Available")]
+            [EnumLiteral("not-available", "http://hl7.org/fhir/devicestatus"), Description("Not Available")]
             NotAvailable,
             /// <summary>
             /// The Device was entered in error and voided.
             /// (system: http://hl7.org/fhir/devicestatus)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/devicestatus"), Description("Entered in Error")]
             EnteredInError,
         }
 

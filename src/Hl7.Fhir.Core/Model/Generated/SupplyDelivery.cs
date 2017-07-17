@@ -65,19 +65,19 @@ namespace Hl7.Fhir.Model
             /// Supply has been requested, but not delivered.
             /// (system: http://hl7.org/fhir/supplydelivery-status)
             /// </summary>
-            [EnumLiteral("in-progress"), Description("In Progress")]
+            [EnumLiteral("in-progress", "http://hl7.org/fhir/supplydelivery-status"), Description("In Progress")]
             InProgress,
             /// <summary>
             /// Supply has been delivered ("completed").
             /// (system: http://hl7.org/fhir/supplydelivery-status)
             /// </summary>
-            [EnumLiteral("completed"), Description("Delivered")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/supplydelivery-status"), Description("Delivered")]
             Completed,
             /// <summary>
             /// Dispensing was not completed.
             /// (system: http://hl7.org/fhir/supplydelivery-status)
             /// </summary>
-            [EnumLiteral("abandoned"), Description("Abandoned")]
+            [EnumLiteral("abandoned", "http://hl7.org/fhir/supplydelivery-status"), Description("Abandoned")]
             Abandoned,
         }
 

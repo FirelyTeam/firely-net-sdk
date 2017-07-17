@@ -66,31 +66,31 @@ namespace Hl7.Fhir.Model
             /// The dispense has started but has not yet completed.
             /// (system: http://hl7.org/fhir/medication-dispense-status)
             /// </summary>
-            [EnumLiteral("in-progress"), Description("In Progress")]
+            [EnumLiteral("in-progress", "http://hl7.org/fhir/medication-dispense-status"), Description("In Progress")]
             InProgress,
             /// <summary>
             /// Actions implied by the administration have been temporarily halted, but are expected to continue later. May also be called "suspended"
             /// (system: http://hl7.org/fhir/medication-dispense-status)
             /// </summary>
-            [EnumLiteral("on-hold"), Description("On Hold")]
+            [EnumLiteral("on-hold", "http://hl7.org/fhir/medication-dispense-status"), Description("On Hold")]
             OnHold,
             /// <summary>
             /// All actions that are implied by the dispense have occurred.
             /// (system: http://hl7.org/fhir/medication-dispense-status)
             /// </summary>
-            [EnumLiteral("completed"), Description("Completed")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/medication-dispense-status"), Description("Completed")]
             Completed,
             /// <summary>
             /// The dispense was entered in error and therefore nullified.
             /// (system: http://hl7.org/fhir/medication-dispense-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered in-Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/medication-dispense-status"), Description("Entered in-Error")]
             EnteredInError,
             /// <summary>
             /// Actions implied by the dispense have been permanently halted, before all of them occurred.
             /// (system: http://hl7.org/fhir/medication-dispense-status)
             /// </summary>
-            [EnumLiteral("stopped"), Description("Stopped")]
+            [EnumLiteral("stopped", "http://hl7.org/fhir/medication-dispense-status"), Description("Stopped")]
             Stopped,
         }
 

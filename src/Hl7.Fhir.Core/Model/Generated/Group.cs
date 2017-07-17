@@ -65,37 +65,37 @@ namespace Hl7.Fhir.Model
             /// Group contains "person" Patient resources
             /// (system: http://hl7.org/fhir/group-type)
             /// </summary>
-            [EnumLiteral("person"), Description("Person")]
+            [EnumLiteral("person", "http://hl7.org/fhir/group-type"), Description("Person")]
             Person,
             /// <summary>
             /// Group contains "animal" Patient resources
             /// (system: http://hl7.org/fhir/group-type)
             /// </summary>
-            [EnumLiteral("animal"), Description("Animal")]
+            [EnumLiteral("animal", "http://hl7.org/fhir/group-type"), Description("Animal")]
             Animal,
             /// <summary>
             /// Group contains healthcare practitioner resources
             /// (system: http://hl7.org/fhir/group-type)
             /// </summary>
-            [EnumLiteral("practitioner"), Description("Practitioner")]
+            [EnumLiteral("practitioner", "http://hl7.org/fhir/group-type"), Description("Practitioner")]
             Practitioner,
             /// <summary>
             /// Group contains Device resources
             /// (system: http://hl7.org/fhir/group-type)
             /// </summary>
-            [EnumLiteral("device"), Description("Device")]
+            [EnumLiteral("device", "http://hl7.org/fhir/group-type"), Description("Device")]
             Device,
             /// <summary>
             /// Group contains Medication resources
             /// (system: http://hl7.org/fhir/group-type)
             /// </summary>
-            [EnumLiteral("medication"), Description("Medication")]
+            [EnumLiteral("medication", "http://hl7.org/fhir/group-type"), Description("Medication")]
             Medication,
             /// <summary>
             /// Group contains Substance resources
             /// (system: http://hl7.org/fhir/group-type)
             /// </summary>
-            [EnumLiteral("substance"), Description("Substance")]
+            [EnumLiteral("substance", "http://hl7.org/fhir/group-type"), Description("Substance")]
             Substance,
         }
 

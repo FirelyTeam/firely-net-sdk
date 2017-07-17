@@ -65,19 +65,19 @@ namespace Hl7.Fhir.Model
             /// This Questionnaire is not ready for official use.
             /// (system: http://hl7.org/fhir/questionnaire-status)
             /// </summary>
-            [EnumLiteral("draft"), Description("Draft")]
+            [EnumLiteral("draft", "http://hl7.org/fhir/questionnaire-status"), Description("Draft")]
             Draft,
             /// <summary>
             /// This Questionnaire is ready for use.
             /// (system: http://hl7.org/fhir/questionnaire-status)
             /// </summary>
-            [EnumLiteral("published"), Description("Published")]
+            [EnumLiteral("published", "http://hl7.org/fhir/questionnaire-status"), Description("Published")]
             Published,
             /// <summary>
             /// This Questionnaire should no longer be used to gather data.
             /// (system: http://hl7.org/fhir/questionnaire-status)
             /// </summary>
-            [EnumLiteral("retired"), Description("Retired")]
+            [EnumLiteral("retired", "http://hl7.org/fhir/questionnaire-status"), Description("Retired")]
             Retired,
         }
 
@@ -92,91 +92,91 @@ namespace Hl7.Fhir.Model
             /// Answer is a yes/no answer.
             /// (system: http://hl7.org/fhir/answer-format)
             /// </summary>
-            [EnumLiteral("boolean"), Description("Boolean")]
+            [EnumLiteral("boolean", "http://hl7.org/fhir/answer-format"), Description("Boolean")]
             Boolean,
             /// <summary>
             /// Answer is a floating point number.
             /// (system: http://hl7.org/fhir/answer-format)
             /// </summary>
-            [EnumLiteral("decimal"), Description("Decimal")]
+            [EnumLiteral("decimal", "http://hl7.org/fhir/answer-format"), Description("Decimal")]
             Decimal,
             /// <summary>
             /// Answer is an integer.
             /// (system: http://hl7.org/fhir/answer-format)
             /// </summary>
-            [EnumLiteral("integer"), Description("Integer")]
+            [EnumLiteral("integer", "http://hl7.org/fhir/answer-format"), Description("Integer")]
             Integer,
             /// <summary>
             /// Answer is a date.
             /// (system: http://hl7.org/fhir/answer-format)
             /// </summary>
-            [EnumLiteral("date"), Description("Date")]
+            [EnumLiteral("date", "http://hl7.org/fhir/answer-format"), Description("Date")]
             Date,
             /// <summary>
             /// Answer is a date and time.
             /// (system: http://hl7.org/fhir/answer-format)
             /// </summary>
-            [EnumLiteral("dateTime"), Description("Date Time")]
+            [EnumLiteral("dateTime", "http://hl7.org/fhir/answer-format"), Description("Date Time")]
             DateTime,
             /// <summary>
             /// Answer is a system timestamp.
             /// (system: http://hl7.org/fhir/answer-format)
             /// </summary>
-            [EnumLiteral("instant"), Description("Instant")]
+            [EnumLiteral("instant", "http://hl7.org/fhir/answer-format"), Description("Instant")]
             Instant,
             /// <summary>
             /// Answer is a time (hour/minute/second) independent of date.
             /// (system: http://hl7.org/fhir/answer-format)
             /// </summary>
-            [EnumLiteral("time"), Description("Time")]
+            [EnumLiteral("time", "http://hl7.org/fhir/answer-format"), Description("Time")]
             Time,
             /// <summary>
             /// Answer is a short (few words to short sentence) free-text entry.
             /// (system: http://hl7.org/fhir/answer-format)
             /// </summary>
-            [EnumLiteral("string"), Description("String")]
+            [EnumLiteral("string", "http://hl7.org/fhir/answer-format"), Description("String")]
             String,
             /// <summary>
             /// Answer is a long (potentially multi-paragraph) free-text entry (still captured as a string).
             /// (system: http://hl7.org/fhir/answer-format)
             /// </summary>
-            [EnumLiteral("text"), Description("Text")]
+            [EnumLiteral("text", "http://hl7.org/fhir/answer-format"), Description("Text")]
             Text,
             /// <summary>
             /// Answer is a url (website, FTP site, etc.).
             /// (system: http://hl7.org/fhir/answer-format)
             /// </summary>
-            [EnumLiteral("url"), Description("Url")]
+            [EnumLiteral("url", "http://hl7.org/fhir/answer-format"), Description("Url")]
             Url,
             /// <summary>
             /// Answer is a Coding drawn from a list of options.
             /// (system: http://hl7.org/fhir/answer-format)
             /// </summary>
-            [EnumLiteral("choice"), Description("Choice")]
+            [EnumLiteral("choice", "http://hl7.org/fhir/answer-format"), Description("Choice")]
             Choice,
             /// <summary>
             /// Answer is a Coding drawn from a list of options or a free-text entry.
             /// (system: http://hl7.org/fhir/answer-format)
             /// </summary>
-            [EnumLiteral("open-choice"), Description("Open Choice")]
+            [EnumLiteral("open-choice", "http://hl7.org/fhir/answer-format"), Description("Open Choice")]
             OpenChoice,
             /// <summary>
             /// Answer is binary content such as a image, PDF, etc.
             /// (system: http://hl7.org/fhir/answer-format)
             /// </summary>
-            [EnumLiteral("attachment"), Description("Attachment")]
+            [EnumLiteral("attachment", "http://hl7.org/fhir/answer-format"), Description("Attachment")]
             Attachment,
             /// <summary>
             /// Answer is a reference to another resource (practitioner, organization, etc.).
             /// (system: http://hl7.org/fhir/answer-format)
             /// </summary>
-            [EnumLiteral("reference"), Description("Reference")]
+            [EnumLiteral("reference", "http://hl7.org/fhir/answer-format"), Description("Reference")]
             Reference,
             /// <summary>
             /// Answer is a combination of a numeric value and unit, potentially with a comparator (&lt;, &gt;, etc.).
             /// (system: http://hl7.org/fhir/answer-format)
             /// </summary>
-            [EnumLiteral("quantity"), Description("Quantity")]
+            [EnumLiteral("quantity", "http://hl7.org/fhir/answer-format"), Description("Quantity")]
             Quantity,
         }
 

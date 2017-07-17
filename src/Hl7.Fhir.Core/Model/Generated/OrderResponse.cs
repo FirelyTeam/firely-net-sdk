@@ -65,55 +65,55 @@ namespace Hl7.Fhir.Model
             /// The order is known, but no processing has occurred at this time
             /// (system: http://hl7.org/fhir/order-status)
             /// </summary>
-            [EnumLiteral("pending"), Description("Pending")]
+            [EnumLiteral("pending", "http://hl7.org/fhir/order-status"), Description("Pending")]
             Pending,
             /// <summary>
             /// The order is undergoing initial processing to determine whether it will be accepted (usually this involves human review)
             /// (system: http://hl7.org/fhir/order-status)
             /// </summary>
-            [EnumLiteral("review"), Description("Review")]
+            [EnumLiteral("review", "http://hl7.org/fhir/order-status"), Description("Review")]
             Review,
             /// <summary>
             /// The order was rejected because of a workflow/business logic reason
             /// (system: http://hl7.org/fhir/order-status)
             /// </summary>
-            [EnumLiteral("rejected"), Description("Rejected")]
+            [EnumLiteral("rejected", "http://hl7.org/fhir/order-status"), Description("Rejected")]
             Rejected,
             /// <summary>
             /// The order was unable to be processed because of a technical error (i.e. unexpected error)
             /// (system: http://hl7.org/fhir/order-status)
             /// </summary>
-            [EnumLiteral("error"), Description("Error")]
+            [EnumLiteral("error", "http://hl7.org/fhir/order-status"), Description("Error")]
             Error,
             /// <summary>
             /// The order has been accepted, and work is in progress.
             /// (system: http://hl7.org/fhir/order-status)
             /// </summary>
-            [EnumLiteral("accepted"), Description("Accepted")]
+            [EnumLiteral("accepted", "http://hl7.org/fhir/order-status"), Description("Accepted")]
             Accepted,
             /// <summary>
             /// Processing the order was halted at the initiators request.
             /// (system: http://hl7.org/fhir/order-status)
             /// </summary>
-            [EnumLiteral("cancelled"), Description("Cancelled")]
+            [EnumLiteral("cancelled", "http://hl7.org/fhir/order-status"), Description("Cancelled")]
             Cancelled,
             /// <summary>
             /// The order has been cancelled and replaced by another.
             /// (system: http://hl7.org/fhir/order-status)
             /// </summary>
-            [EnumLiteral("replaced"), Description("Replaced")]
+            [EnumLiteral("replaced", "http://hl7.org/fhir/order-status"), Description("Replaced")]
             Replaced,
             /// <summary>
             /// Processing the order was stopped because of some workflow/business logic reason.
             /// (system: http://hl7.org/fhir/order-status)
             /// </summary>
-            [EnumLiteral("aborted"), Description("Aborted")]
+            [EnumLiteral("aborted", "http://hl7.org/fhir/order-status"), Description("Aborted")]
             Aborted,
             /// <summary>
             /// The order has been completed.
             /// (system: http://hl7.org/fhir/order-status)
             /// </summary>
-            [EnumLiteral("completed"), Description("Completed")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/order-status"), Description("Completed")]
             Completed,
         }
 

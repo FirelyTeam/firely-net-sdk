@@ -65,25 +65,25 @@ namespace Hl7.Fhir.Model
             /// The procedure is still occurring.
             /// (system: http://hl7.org/fhir/procedure-status)
             /// </summary>
-            [EnumLiteral("in-progress"), Description("In Progress")]
+            [EnumLiteral("in-progress", "http://hl7.org/fhir/procedure-status"), Description("In Progress")]
             InProgress,
             /// <summary>
             /// The procedure was terminated without completing successfully.
             /// (system: http://hl7.org/fhir/procedure-status)
             /// </summary>
-            [EnumLiteral("aborted"), Description("Aboted")]
+            [EnumLiteral("aborted", "http://hl7.org/fhir/procedure-status"), Description("Aboted")]
             Aborted,
             /// <summary>
             /// All actions involved in the procedure have taken place.
             /// (system: http://hl7.org/fhir/procedure-status)
             /// </summary>
-            [EnumLiteral("completed"), Description("Completed")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/procedure-status"), Description("Completed")]
             Completed,
             /// <summary>
             /// The statement was entered in error and Is not valid.
             /// (system: http://hl7.org/fhir/procedure-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/procedure-status"), Description("Entered in Error")]
             EnteredInError,
         }
 

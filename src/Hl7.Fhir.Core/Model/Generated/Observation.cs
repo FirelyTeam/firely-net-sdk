@@ -65,43 +65,43 @@ namespace Hl7.Fhir.Model
             /// The existence of the observation is registered, but there is no result yet available.
             /// (system: http://hl7.org/fhir/observation-status)
             /// </summary>
-            [EnumLiteral("registered"), Description("Registered")]
+            [EnumLiteral("registered", "http://hl7.org/fhir/observation-status"), Description("Registered")]
             Registered,
             /// <summary>
             /// This is an initial or interim observation: data may be incomplete or unverified.
             /// (system: http://hl7.org/fhir/observation-status)
             /// </summary>
-            [EnumLiteral("preliminary"), Description("Preliminary")]
+            [EnumLiteral("preliminary", "http://hl7.org/fhir/observation-status"), Description("Preliminary")]
             Preliminary,
             /// <summary>
             /// The observation is complete and verified by an authorized person.
             /// (system: http://hl7.org/fhir/observation-status)
             /// </summary>
-            [EnumLiteral("final"), Description("Final")]
+            [EnumLiteral("final", "http://hl7.org/fhir/observation-status"), Description("Final")]
             Final,
             /// <summary>
             /// The observation has been modified subsequent to being Final, and is complete and verified by an authorized person.
             /// (system: http://hl7.org/fhir/observation-status)
             /// </summary>
-            [EnumLiteral("amended"), Description("Amended")]
+            [EnumLiteral("amended", "http://hl7.org/fhir/observation-status"), Description("Amended")]
             Amended,
             /// <summary>
             /// The observation is unavailable because the measurement was not started or not completed (also sometimes called "aborted").
             /// (system: http://hl7.org/fhir/observation-status)
             /// </summary>
-            [EnumLiteral("cancelled"), Description("cancelled")]
+            [EnumLiteral("cancelled", "http://hl7.org/fhir/observation-status"), Description("cancelled")]
             Cancelled,
             /// <summary>
             /// The observation has been withdrawn following previous final release.
             /// (system: http://hl7.org/fhir/observation-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/observation-status"), Description("Entered in Error")]
             EnteredInError,
             /// <summary>
             /// The observation status is unknown.  Note that "unknown" is a value of last resort and every attempt should be made to provide a meaningful value other than "unknown".
             /// (system: http://hl7.org/fhir/observation-status)
             /// </summary>
-            [EnumLiteral("unknown"), Description("Unknown Status")]
+            [EnumLiteral("unknown", "http://hl7.org/fhir/observation-status"), Description("Unknown Status")]
             Unknown,
         }
 
@@ -116,37 +116,37 @@ namespace Hl7.Fhir.Model
             /// This observation is a group observation (e.g. a battery, a panel of tests, a set of vital sign measurements) that includes the target as a member of the group.
             /// (system: http://hl7.org/fhir/observation-relationshiptypes)
             /// </summary>
-            [EnumLiteral("has-member"), Description("Has Member")]
+            [EnumLiteral("has-member", "http://hl7.org/fhir/observation-relationshiptypes"), Description("Has Member")]
             HasMember,
             /// <summary>
             /// The target resource (Observation or QuestionnaireResponse) is part of the information from which this observation value is derived. (e.g. calculated anion gap, Apgar score)  NOTE:  "derived-from" is only logical choice when referencing QuestionnaireResponse.
             /// (system: http://hl7.org/fhir/observation-relationshiptypes)
             /// </summary>
-            [EnumLiteral("derived-from"), Description("Derived From")]
+            [EnumLiteral("derived-from", "http://hl7.org/fhir/observation-relationshiptypes"), Description("Derived From")]
             DerivedFrom,
             /// <summary>
             /// This observation follows the target observation (e.g. timed tests such as Glucose Tolerance Test).
             /// (system: http://hl7.org/fhir/observation-relationshiptypes)
             /// </summary>
-            [EnumLiteral("sequel-to"), Description("Sequel To")]
+            [EnumLiteral("sequel-to", "http://hl7.org/fhir/observation-relationshiptypes"), Description("Sequel To")]
             SequelTo,
             /// <summary>
             /// This observation replaces a previous observation (i.e. a revised value). The target observation is now obsolete.
             /// (system: http://hl7.org/fhir/observation-relationshiptypes)
             /// </summary>
-            [EnumLiteral("replaces"), Description("Replaces")]
+            [EnumLiteral("replaces", "http://hl7.org/fhir/observation-relationshiptypes"), Description("Replaces")]
             Replaces,
             /// <summary>
             /// The value of the target observation qualifies (refines) the semantics of the source observation (e.g. a lipemia measure target from a plasma measure).
             /// (system: http://hl7.org/fhir/observation-relationshiptypes)
             /// </summary>
-            [EnumLiteral("qualified-by"), Description("Qualified By")]
+            [EnumLiteral("qualified-by", "http://hl7.org/fhir/observation-relationshiptypes"), Description("Qualified By")]
             QualifiedBy,
             /// <summary>
             /// The value of the target observation interferes (degrades quality, or prevents valid observation) with the semantics of the source observation (e.g. a hemolysis measure target from a plasma potassium measure which has no value).
             /// (system: http://hl7.org/fhir/observation-relationshiptypes)
             /// </summary>
-            [EnumLiteral("interfered-by"), Description("Interfered By")]
+            [EnumLiteral("interfered-by", "http://hl7.org/fhir/observation-relationshiptypes"), Description("Interfered By")]
             InterferedBy,
         }
 

@@ -65,25 +65,25 @@ namespace Hl7.Fhir.Model
             /// Supply has been requested, but not dispensed.
             /// (system: http://hl7.org/fhir/supplyrequest-status)
             /// </summary>
-            [EnumLiteral("requested"), Description("Requested")]
+            [EnumLiteral("requested", "http://hl7.org/fhir/supplyrequest-status"), Description("Requested")]
             Requested,
             /// <summary>
             /// Supply has been received by the requestor.
             /// (system: http://hl7.org/fhir/supplyrequest-status)
             /// </summary>
-            [EnumLiteral("completed"), Description("Received")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/supplyrequest-status"), Description("Received")]
             Completed,
             /// <summary>
             /// The supply will not be completed because the supplier was unable or unwilling to supply the item.
             /// (system: http://hl7.org/fhir/supplyrequest-status)
             /// </summary>
-            [EnumLiteral("failed"), Description("Failed")]
+            [EnumLiteral("failed", "http://hl7.org/fhir/supplyrequest-status"), Description("Failed")]
             Failed,
             /// <summary>
             /// The orderer of the supply cancelled the request.
             /// (system: http://hl7.org/fhir/supplyrequest-status)
             /// </summary>
-            [EnumLiteral("cancelled"), Description("Cancelled")]
+            [EnumLiteral("cancelled", "http://hl7.org/fhir/supplyrequest-status"), Description("Cancelled")]
             Cancelled,
         }
 

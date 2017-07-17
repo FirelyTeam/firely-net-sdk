@@ -65,25 +65,25 @@ namespace Hl7.Fhir.Model
             /// Some health information is known and captured, but not complete - see notes for details.
             /// (system: http://hl7.org/fhir/history-status)
             /// </summary>
-            [EnumLiteral("partial"), Description("Partial")]
+            [EnumLiteral("partial", "http://hl7.org/fhir/history-status"), Description("Partial")]
             Partial,
             /// <summary>
             /// All relevant health information is known and captured.
             /// (system: http://hl7.org/fhir/history-status)
             /// </summary>
-            [EnumLiteral("completed"), Description("Completed")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/history-status"), Description("Completed")]
             Completed,
             /// <summary>
             /// This instance should not have been part of this patient's medical record.
             /// (system: http://hl7.org/fhir/history-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered in error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/history-status"), Description("Entered in error")]
             EnteredInError,
             /// <summary>
             /// Health information for this individual is unavailable/unknown.
             /// (system: http://hl7.org/fhir/history-status)
             /// </summary>
-            [EnumLiteral("health-unknown"), Description("Health unknown")]
+            [EnumLiteral("health-unknown", "http://hl7.org/fhir/history-status"), Description("Health unknown")]
             HealthUnknown,
         }
 

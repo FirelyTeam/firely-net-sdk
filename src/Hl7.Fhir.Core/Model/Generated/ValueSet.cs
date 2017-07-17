@@ -65,37 +65,37 @@ namespace Hl7.Fhir.Model
             /// The specified property of the code equals the provided value.
             /// (system: http://hl7.org/fhir/filter-operator)
             /// </summary>
-            [EnumLiteral("="), Description("Equals")]
+            [EnumLiteral("=", "http://hl7.org/fhir/filter-operator"), Description("Equals")]
             Equal,
             /// <summary>
             /// Includes all concept ids that have a transitive is-a relationship with the concept Id provided as the value, including the provided concept itself.
             /// (system: http://hl7.org/fhir/filter-operator)
             /// </summary>
-            [EnumLiteral("is-a"), Description("Is A (by subsumption)")]
+            [EnumLiteral("is-a", "http://hl7.org/fhir/filter-operator"), Description("Is A (by subsumption)")]
             IsA,
             /// <summary>
             /// The specified property of the code does not have an is-a relationship with the provided value.
             /// (system: http://hl7.org/fhir/filter-operator)
             /// </summary>
-            [EnumLiteral("is-not-a"), Description("Not (Is A) (by subsumption)")]
+            [EnumLiteral("is-not-a", "http://hl7.org/fhir/filter-operator"), Description("Not (Is A) (by subsumption)")]
             IsNotA,
             /// <summary>
             /// The specified property of the code  matches the regex specified in the provided value.
             /// (system: http://hl7.org/fhir/filter-operator)
             /// </summary>
-            [EnumLiteral("regex"), Description("Regular Expression")]
+            [EnumLiteral("regex", "http://hl7.org/fhir/filter-operator"), Description("Regular Expression")]
             Regex,
             /// <summary>
             /// The specified property of the code is in the set of codes or concepts specified in the provided value (comma separated list).
             /// (system: http://hl7.org/fhir/filter-operator)
             /// </summary>
-            [EnumLiteral("in"), Description("In Set")]
+            [EnumLiteral("in", "http://hl7.org/fhir/filter-operator"), Description("In Set")]
             In,
             /// <summary>
             /// The specified property of the code is not in the set of codes or concepts specified in the provided value (comma separated list).
             /// (system: http://hl7.org/fhir/filter-operator)
             /// </summary>
-            [EnumLiteral("not-in"), Description("Not in Set")]
+            [EnumLiteral("not-in", "http://hl7.org/fhir/filter-operator"), Description("Not in Set")]
             NotIn,
         }
 

@@ -65,19 +65,19 @@ namespace Hl7.Fhir.Model
             /// The DeviceMetric is operating and will generate DeviceObservations.
             /// (system: http://hl7.org/fhir/metric-operational-status)
             /// </summary>
-            [EnumLiteral("on"), Description("On")]
+            [EnumLiteral("on", "http://hl7.org/fhir/metric-operational-status"), Description("On")]
             On,
             /// <summary>
             /// The DeviceMetric is not operating.
             /// (system: http://hl7.org/fhir/metric-operational-status)
             /// </summary>
-            [EnumLiteral("off"), Description("Off")]
+            [EnumLiteral("off", "http://hl7.org/fhir/metric-operational-status"), Description("Off")]
             Off,
             /// <summary>
             /// The DeviceMetric is operating, but will not generate any DeviceObservations.
             /// (system: http://hl7.org/fhir/metric-operational-status)
             /// </summary>
-            [EnumLiteral("standby"), Description("Standby")]
+            [EnumLiteral("standby", "http://hl7.org/fhir/metric-operational-status"), Description("Standby")]
             Standby,
         }
 
@@ -92,49 +92,49 @@ namespace Hl7.Fhir.Model
             /// Color for representation - black.
             /// (system: http://hl7.org/fhir/metric-color)
             /// </summary>
-            [EnumLiteral("black"), Description("Color Black")]
+            [EnumLiteral("black", "http://hl7.org/fhir/metric-color"), Description("Color Black")]
             Black,
             /// <summary>
             /// Color for representation - red.
             /// (system: http://hl7.org/fhir/metric-color)
             /// </summary>
-            [EnumLiteral("red"), Description("Color Red")]
+            [EnumLiteral("red", "http://hl7.org/fhir/metric-color"), Description("Color Red")]
             Red,
             /// <summary>
             /// Color for representation - green.
             /// (system: http://hl7.org/fhir/metric-color)
             /// </summary>
-            [EnumLiteral("green"), Description("Color Green")]
+            [EnumLiteral("green", "http://hl7.org/fhir/metric-color"), Description("Color Green")]
             Green,
             /// <summary>
             /// Color for representation - yellow.
             /// (system: http://hl7.org/fhir/metric-color)
             /// </summary>
-            [EnumLiteral("yellow"), Description("Color Yellow")]
+            [EnumLiteral("yellow", "http://hl7.org/fhir/metric-color"), Description("Color Yellow")]
             Yellow,
             /// <summary>
             /// Color for representation - blue.
             /// (system: http://hl7.org/fhir/metric-color)
             /// </summary>
-            [EnumLiteral("blue"), Description("Color Blue")]
+            [EnumLiteral("blue", "http://hl7.org/fhir/metric-color"), Description("Color Blue")]
             Blue,
             /// <summary>
             /// Color for representation - magenta.
             /// (system: http://hl7.org/fhir/metric-color)
             /// </summary>
-            [EnumLiteral("magenta"), Description("Color Magenta")]
+            [EnumLiteral("magenta", "http://hl7.org/fhir/metric-color"), Description("Color Magenta")]
             Magenta,
             /// <summary>
             /// Color for representation - cyan.
             /// (system: http://hl7.org/fhir/metric-color)
             /// </summary>
-            [EnumLiteral("cyan"), Description("Color Cyan")]
+            [EnumLiteral("cyan", "http://hl7.org/fhir/metric-color"), Description("Color Cyan")]
             Cyan,
             /// <summary>
             /// Color for representation - white.
             /// (system: http://hl7.org/fhir/metric-color)
             /// </summary>
-            [EnumLiteral("white"), Description("Color White")]
+            [EnumLiteral("white", "http://hl7.org/fhir/metric-color"), Description("Color White")]
             White,
         }
 
@@ -149,25 +149,25 @@ namespace Hl7.Fhir.Model
             /// DeviceObservations generated for this DeviceMetric are measured.
             /// (system: http://hl7.org/fhir/metric-category)
             /// </summary>
-            [EnumLiteral("measurement"), Description("Measurement")]
+            [EnumLiteral("measurement", "http://hl7.org/fhir/metric-category"), Description("Measurement")]
             Measurement,
             /// <summary>
             /// DeviceObservations generated for this DeviceMetric is a setting that will influence the behavior of the Device.
             /// (system: http://hl7.org/fhir/metric-category)
             /// </summary>
-            [EnumLiteral("setting"), Description("Setting")]
+            [EnumLiteral("setting", "http://hl7.org/fhir/metric-category"), Description("Setting")]
             Setting,
             /// <summary>
             /// DeviceObservations generated for this DeviceMetric are calculated.
             /// (system: http://hl7.org/fhir/metric-category)
             /// </summary>
-            [EnumLiteral("calculation"), Description("Calculation")]
+            [EnumLiteral("calculation", "http://hl7.org/fhir/metric-category"), Description("Calculation")]
             Calculation,
             /// <summary>
             /// The category of this DeviceMetric is unspecified.
             /// (system: http://hl7.org/fhir/metric-category)
             /// </summary>
-            [EnumLiteral("unspecified"), Description("Unspecified")]
+            [EnumLiteral("unspecified", "http://hl7.org/fhir/metric-category"), Description("Unspecified")]
             Unspecified,
         }
 
@@ -182,25 +182,25 @@ namespace Hl7.Fhir.Model
             /// TODO
             /// (system: http://hl7.org/fhir/metric-calibration-type)
             /// </summary>
-            [EnumLiteral("unspecified"), Description("Unspecified")]
+            [EnumLiteral("unspecified", "http://hl7.org/fhir/metric-calibration-type"), Description("Unspecified")]
             Unspecified,
             /// <summary>
             /// TODO
             /// (system: http://hl7.org/fhir/metric-calibration-type)
             /// </summary>
-            [EnumLiteral("offset"), Description("Offset")]
+            [EnumLiteral("offset", "http://hl7.org/fhir/metric-calibration-type"), Description("Offset")]
             Offset,
             /// <summary>
             /// TODO
             /// (system: http://hl7.org/fhir/metric-calibration-type)
             /// </summary>
-            [EnumLiteral("gain"), Description("Gain")]
+            [EnumLiteral("gain", "http://hl7.org/fhir/metric-calibration-type"), Description("Gain")]
             Gain,
             /// <summary>
             /// TODO
             /// (system: http://hl7.org/fhir/metric-calibration-type)
             /// </summary>
-            [EnumLiteral("two-point"), Description("Two Point")]
+            [EnumLiteral("two-point", "http://hl7.org/fhir/metric-calibration-type"), Description("Two Point")]
             TwoPoint,
         }
 
@@ -215,25 +215,25 @@ namespace Hl7.Fhir.Model
             /// The metric has not been calibrated.
             /// (system: http://hl7.org/fhir/metric-calibration-state)
             /// </summary>
-            [EnumLiteral("not-calibrated"), Description("Not Calibrated")]
+            [EnumLiteral("not-calibrated", "http://hl7.org/fhir/metric-calibration-state"), Description("Not Calibrated")]
             NotCalibrated,
             /// <summary>
             /// The metric needs to be calibrated.
             /// (system: http://hl7.org/fhir/metric-calibration-state)
             /// </summary>
-            [EnumLiteral("calibration-required"), Description("Calibration Required")]
+            [EnumLiteral("calibration-required", "http://hl7.org/fhir/metric-calibration-state"), Description("Calibration Required")]
             CalibrationRequired,
             /// <summary>
             /// The metric has been calibrated.
             /// (system: http://hl7.org/fhir/metric-calibration-state)
             /// </summary>
-            [EnumLiteral("calibrated"), Description("Calibrated")]
+            [EnumLiteral("calibrated", "http://hl7.org/fhir/metric-calibration-state"), Description("Calibrated")]
             Calibrated,
             /// <summary>
             /// The state of calibration of this metric is unspecified.
             /// (system: http://hl7.org/fhir/metric-calibration-state)
             /// </summary>
-            [EnumLiteral("unspecified"), Description("Unspecified")]
+            [EnumLiteral("unspecified", "http://hl7.org/fhir/metric-calibration-state"), Description("Unspecified")]
             Unspecified,
         }
 

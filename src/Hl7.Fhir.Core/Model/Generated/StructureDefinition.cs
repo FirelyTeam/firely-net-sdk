@@ -65,19 +65,19 @@ namespace Hl7.Fhir.Model
             /// A data type - either a primitive or complex structure that defines a set of data elements. These can be used throughout Resource and extension definitions.
             /// (system: http://hl7.org/fhir/structure-definition-kind)
             /// </summary>
-            [EnumLiteral("datatype"), Description("Data Type")]
+            [EnumLiteral("datatype", "http://hl7.org/fhir/structure-definition-kind"), Description("Data Type")]
             Datatype,
             /// <summary>
             /// A resource defined by the FHIR specification.
             /// (system: http://hl7.org/fhir/structure-definition-kind)
             /// </summary>
-            [EnumLiteral("resource"), Description("Resource")]
+            [EnumLiteral("resource", "http://hl7.org/fhir/structure-definition-kind"), Description("Resource")]
             Resource,
             /// <summary>
             /// A logical model - a conceptual package of data that will be mapped to resources for implementation.
             /// (system: http://hl7.org/fhir/structure-definition-kind)
             /// </summary>
-            [EnumLiteral("logical"), Description("Logical Model")]
+            [EnumLiteral("logical", "http://hl7.org/fhir/structure-definition-kind"), Description("Logical Model")]
             Logical,
         }
 
@@ -92,25 +92,25 @@ namespace Hl7.Fhir.Model
             /// The context is all elements matching a particular resource element path.
             /// (system: http://hl7.org/fhir/extension-context)
             /// </summary>
-            [EnumLiteral("resource"), Description("Resource")]
+            [EnumLiteral("resource", "http://hl7.org/fhir/extension-context"), Description("Resource")]
             Resource,
             /// <summary>
             /// The context is all nodes matching a particular data type element path (root or repeating element) or all elements referencing a particular primitive data type (expressed as the datatype name).
             /// (system: http://hl7.org/fhir/extension-context)
             /// </summary>
-            [EnumLiteral("datatype"), Description("Datatype")]
+            [EnumLiteral("datatype", "http://hl7.org/fhir/extension-context"), Description("Datatype")]
             Datatype,
             /// <summary>
             /// The context is all nodes whose mapping to a specified reference model corresponds to a particular mapping structure.  The context identifies the mapping target. The mapping should clearly identify where such an extension could be used.
             /// (system: http://hl7.org/fhir/extension-context)
             /// </summary>
-            [EnumLiteral("mapping"), Description("Mapping")]
+            [EnumLiteral("mapping", "http://hl7.org/fhir/extension-context"), Description("Mapping")]
             Mapping,
             /// <summary>
             /// The context is a particular extension from a particular profile, a uri that identifies the extension definition.
             /// (system: http://hl7.org/fhir/extension-context)
             /// </summary>
-            [EnumLiteral("extension"), Description("Extension")]
+            [EnumLiteral("extension", "http://hl7.org/fhir/extension-context"), Description("Extension")]
             Extension,
         }
 

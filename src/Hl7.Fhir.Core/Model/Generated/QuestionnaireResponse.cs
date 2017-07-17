@@ -65,19 +65,19 @@ namespace Hl7.Fhir.Model
             /// This QuestionnaireResponse has been partially filled out with answers, but changes or additions are still expected to be made to it.
             /// (system: http://hl7.org/fhir/questionnaire-answers-status)
             /// </summary>
-            [EnumLiteral("in-progress"), Description("In Progress")]
+            [EnumLiteral("in-progress", "http://hl7.org/fhir/questionnaire-answers-status"), Description("In Progress")]
             InProgress,
             /// <summary>
             /// This QuestionnaireResponse has been filled out with answers, and the current content is regarded as definitive.
             /// (system: http://hl7.org/fhir/questionnaire-answers-status)
             /// </summary>
-            [EnumLiteral("completed"), Description("Completed")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/questionnaire-answers-status"), Description("Completed")]
             Completed,
             /// <summary>
             /// This QuestionnaireResponse has been filled out with answers, then marked as complete, yet changes or additions have been made to it afterwards.
             /// (system: http://hl7.org/fhir/questionnaire-answers-status)
             /// </summary>
-            [EnumLiteral("amended"), Description("Amended")]
+            [EnumLiteral("amended", "http://hl7.org/fhir/questionnaire-answers-status"), Description("Amended")]
             Amended,
         }
 

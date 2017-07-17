@@ -65,25 +65,25 @@ namespace Hl7.Fhir.Model
             /// Indicates that the time interval is busy because one  or more events have been scheduled for that interval.
             /// (system: http://hl7.org/fhir/slotstatus)
             /// </summary>
-            [EnumLiteral("busy"), Description("Busy")]
+            [EnumLiteral("busy", "http://hl7.org/fhir/slotstatus"), Description("Busy")]
             Busy,
             /// <summary>
             /// Indicates that the time interval is free for scheduling.
             /// (system: http://hl7.org/fhir/slotstatus)
             /// </summary>
-            [EnumLiteral("free"), Description("Free")]
+            [EnumLiteral("free", "http://hl7.org/fhir/slotstatus"), Description("Free")]
             Free,
             /// <summary>
             /// Indicates that the time interval is busy and that the interval can not be scheduled.
             /// (system: http://hl7.org/fhir/slotstatus)
             /// </summary>
-            [EnumLiteral("busy-unavailable"), Description("Busy (Unavailable)")]
+            [EnumLiteral("busy-unavailable", "http://hl7.org/fhir/slotstatus"), Description("Busy (Unavailable)")]
             BusyUnavailable,
             /// <summary>
             /// Indicates that the time interval is busy because one or more events have been tentatively scheduled for that interval.
             /// (system: http://hl7.org/fhir/slotstatus)
             /// </summary>
-            [EnumLiteral("busy-tentative"), Description("Busy (Tentative)")]
+            [EnumLiteral("busy-tentative", "http://hl7.org/fhir/slotstatus"), Description("Busy (Tentative)")]
             BusyTentative,
         }
 
