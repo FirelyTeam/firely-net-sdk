@@ -113,16 +113,23 @@ namespace Hl7.Fhir.Rest
         /// Should calls to Create, Update and transaction operations return the whole updated content?
         /// </summary>
         /// <remarks>Refer to specification section 2.1.0.5 (Managing Return Content)</remarks>
+        [Obsolete("In STU3 this is no longer a true/false option, use the PreferredReturn property instead")]
         public bool ReturnFullResource
         {
-            get
-            {
-                return _requester.Prefer == Prefer.ReturnRepresentation;
-            }
-            set
-            {
-                _requester.Prefer = value == true ? Prefer.ReturnRepresentation : Prefer.ReturnMinimal;
-            }
+            get => _requester.Prefer == Prefer.ReturnRepresentation;
+            set => _requester.Prefer = value == true ? Prefer.ReturnRepresentation : Prefer.ReturnMinimal;
+        }
+
+        /// <summary>
+        /// Should calls to Create, Update and transaction operations return the whole updated content, 
+        /// or an OperationOutcome?
+        /// </summary>
+        /// <remarks>Refer to specification section 2.1.0.5 (Managing Return Content)</remarks>
+
+        public Prefer PreferredReturn
+        {
+            get => _requester.Prefer;
+            set => _requester.Prefer = value;
         }
 
 #if NET_COMPRESSION

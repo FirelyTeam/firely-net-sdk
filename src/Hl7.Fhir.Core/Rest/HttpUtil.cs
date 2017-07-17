@@ -197,11 +197,20 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Prefer to receive the full resource in the body after completion of the interaction
         /// </summary>
+        [EnumLiteral("representation")]
         ReturnRepresentation,
 
         /// <summary>
         /// Prefer to not a receive a body after completion of the interaction
         /// </summary>
-        ReturnMinimal
+        [EnumLiteral("minimal")]
+        ReturnMinimal,
+
+        /// <summary>
+        /// Prefer to receive an OperationOutcome resource containing hints and warnings about the 
+        /// operation rather than the full resource
+        /// </summary>
+        [EnumLiteral("OperationOutcome")]
+        OperationOutcome
     }
 }
