@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Tests.Model
 
             var stamp = new DateTimeOffset(1972, 11, 30, 15, 10, 0, TimeSpan.Zero);
             dt = new FhirDateTime(stamp);
-            Assert.IsTrue(dt.Value.EndsWith("Z"));
+            Assert.IsTrue(dt.Value.EndsWith("+00:00"));
         }
 
 

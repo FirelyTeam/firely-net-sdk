@@ -7,6 +7,7 @@
  */
 
 
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
 using System.Xml;
@@ -21,7 +22,7 @@ namespace Hl7.Fhir.Model.Primitives
         {
             try
             {
-                var dummy = XmlConvert.ToDateTimeOffset(toDTOParseable(value));
+                var dummy = PrimitiveTypeConverter.ConvertTo<DateTimeOffset>(toDTOParseable(value));
             }
             catch
             {
@@ -58,7 +59,7 @@ namespace Hl7.Fhir.Model.Primitives
         
         private DateTimeOffset toDTO()
         {
-            return XmlConvert.ToDateTimeOffset(toDTOParseable(_value)).ToUniversalTime();
+            return PrimitiveTypeConverter.ConvertTo<DateTimeOffset>(toDTOParseable(_value)).ToUniversalTime();
         }
 
      
@@ -129,7 +130,7 @@ namespace Hl7.Fhir.Model.Primitives
 
         public static PartialTime Now()
         {
-            return new PartialTime { _value = XmlConvert.ToString(DateTimeOffset.Now).Substring(10) };
+            return new PartialTime { _value = PrimitiveTypeConverter.ConvertTo<string>(DateTimeOffset.Now).Substring(10) };
         }
 
         public int CompareTo(object obj)

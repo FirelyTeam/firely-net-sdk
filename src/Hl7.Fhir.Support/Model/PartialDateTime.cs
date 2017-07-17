@@ -7,6 +7,7 @@
  */
 
 
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
 using System.Xml;
@@ -22,7 +23,7 @@ namespace Hl7.Fhir.Model.Primitives
         {
             try
             {
-                var dummy = XmlConvert.ToDateTimeOffset(value);
+                var dummy = PrimitiveTypeConverter.ConvertTo<DateTimeOffset>(value);
             }
             catch
             {
@@ -52,7 +53,7 @@ namespace Hl7.Fhir.Model.Primitives
 
         public DateTimeOffset ToUniversalTime()
         {
-            return XmlConvert.ToDateTimeOffset(_value).ToUniversalTime();
+            return PrimitiveTypeConverter.ConvertTo<DateTimeOffset>(_value).ToUniversalTime();
         }
 
 
@@ -139,7 +140,7 @@ namespace Hl7.Fhir.Model.Primitives
 
         public static PartialDateTime FromDateTime(DateTimeOffset dto)
         {
-            return new PartialDateTime { _value = XmlConvert.ToString(dto) };
+            return new PartialDateTime { _value = PrimitiveTypeConverter.ConvertTo<string>(dto) };
         }
 
         public static PartialDateTime FromDateTime(DateTime dt)
@@ -149,7 +150,7 @@ namespace Hl7.Fhir.Model.Primitives
             // todo: check equivalence
             return new PartialDateTime { _value = XmlConvert.ToString(dt) };
 #else
-            return new PartialDateTime { _value = XmlConvert.ToString(dt, XmlDateTimeSerializationMode.RoundtripKind) };
+            return new PartialDateTime { _value = PrimitiveTypeConverter.ConvertTo<string>(dt) };
 #endif
 
         }
