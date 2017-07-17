@@ -167,9 +167,7 @@ namespace Hl7.Fhir.Rest
             entry.Resource = body;
             var path = newRestUrl().AddPath(body.TypeName);
 
-            var nonExist = new RestUrl(path);
-            nonExist.AddParams(condition.ToUriParamList());
-            entry.Request.IfNoneExist = nonExist.ToString();
+            entry.Request.IfNoneExist = condition.ToUriParamList().ToQueryString();
             addEntry(entry, path);
 
             return this;
