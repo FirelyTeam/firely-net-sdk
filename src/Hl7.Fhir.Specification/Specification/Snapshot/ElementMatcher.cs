@@ -304,8 +304,8 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             var result = new List<MatchInfo>();
 
-            // [WMR 20170406] NEW: Fix for Vadim issue - handle profile constraints on complex extension child elements
-            // Determine if the base profile is introducing a slice entry
+            // [WMR 20170406] NEW: Fix for Vadim issue - handle profile constraints on complex extension child elements 
+            // Determine if the base profile is introducing a slice entry 
             var snapIsSliced = snapNav.Current.Slicing != null;
 
             // if diffNav specifies a slice name, then advance snapNav to matching base slice
@@ -358,20 +358,35 @@ namespace Hl7.Fhir.Specification.Snapshot
                 sliceBase = initSliceBase(snapNav);
             }
 
-            // ALTERNATIVE APPROACH
-            // ElementMatcher should duplicate (unmerged!) snap base element, then return bookmark to new duplicate as slice base
-            // => SnapshotGenerator.addSlice no longer needs to call duplicate; only merge / recurse children
-            // * Assume slice order in profile is always ordered (even if slicing.ordered = false; this only applies to validation)
-            // * Note: same as matching on path; invalid diff element order corrupts the snapshot
-            // * Expansion of slice children is handled by regular recursive process; no special logic required (?)
-
             // Note: if slice entry is missing from diff, then we fall back to the inherited base slicing entry
             // Strictly not valid according to FHIR rules, but we can cope
-            // Caller (SnapshotGenerator.makeSlice) should emit an issue PROFILE_ELEMENTDEF_MISSING_SLICE_ENTRY
-
             if (baseIsSliced)
             {
+                // Always consume the base slice entry
                 snapNav.MoveToNextSliceAtAnyLevel();
+
+                // [WMR 20170718] NEW - Accept & handle diff constraints on base slice entry
+                // Note: snapSliceBase still points to slice entry in snapNav base profile
+                if (diffNav.Current.SliceName == null)
+                {
+                    // Generate match for constraint on existing slice entry
+                    var match = new MatchInfo()
+                    {
+                        Action = MatchAction.Merge,
+                        BaseBookmark = snapSliceBase,
+                        DiffBookmark = diffNav.Bookmark(),
+                        SliceBase = sliceBase
+                    };
+                    result.Add(match);
+
+                    // Consume the diff constraint
+                    if (!diffNav.MoveToNextSliceAtAnyLevel())
+                    {
+                        // No more named slices in diff; done!
+                        return result;
+                    }
+                    // Merge named slices in diff
+                }
             }
 
             // snapNav and diffNav are now positioned on the first concrete slices, if they exist (?)
