@@ -21,7 +21,6 @@ namespace Hl7.Fhir.Rest
         HttpWebResponse LastResponse { get; }
         Bundle.ResponseComponent LastResult { get; }
         ParserSettings ParserSettings { get; set; }
-
         ResourceFormat PreferredFormat { get; set; }
         bool ReturnFullResource { get; set; }
         int Timeout { get; set; }
@@ -69,17 +68,17 @@ namespace Hl7.Fhir.Rest
         TResource Refresh<TResource>(TResource current) where TResource : Resource;
         Task<TResource> RefreshAsync<TResource>(TResource current) where TResource : Resource;
         Bundle Search(SearchParams q, string resourceType = null);
-        Bundle Search(string resource, string[] criteria = null, string[] includes = null, int? pageSize = default(int?), SummaryType? summary = default(SummaryType?));
-        Bundle Search<TResource>(string[] criteria = null, string[] includes = null, int? pageSize = default(int?), SummaryType? summary = default(SummaryType?)) where TResource : Resource, new();
+        Bundle Search(string resource, string[] criteria = null, string[] includes = null, int? pageSize = default(int?), SummaryType? summary = default(SummaryType?), string[] revIncludes = null);
+        Bundle Search<TResource>(string[] criteria = null, string[] includes = null, int? pageSize = default(int?), SummaryType? summary = default(SummaryType?), string[] revIncludes = null) where TResource : Resource, new();
         Bundle Search<TResource>(SearchParams q) where TResource : Resource;
         Task<Bundle> SearchAsync(SearchParams q, string resourceType = null);
-        Task<Bundle> SearchAsync(string resource, string[] criteria = null, string[] includes = null, int? pageSize = default(int?), SummaryType? summary = default(SummaryType?));
-        Task<Bundle> SearchAsync<TResource>(string[] criteria = null, string[] includes = null, int? pageSize = default(int?), SummaryType? summary = default(SummaryType?)) where TResource : Resource, new();
+        Task<Bundle> SearchAsync(string resource, string[] criteria = null, string[] includes = null, int? pageSize = default(int?), SummaryType? summary = default(SummaryType?), string[] revIncludes = null);
+        Task<Bundle> SearchAsync<TResource>(string[] criteria = null, string[] includes = null, int? pageSize = default(int?), SummaryType? summary = default(SummaryType?), string[] revIncludes = null) where TResource : Resource, new();
         Task<Bundle> SearchAsync<TResource>(SearchParams q) where TResource : Resource;
-        Bundle SearchById(string resource, string id, string[] includes = null, int? pageSize = default(int?));
-        Bundle SearchById<TResource>(string id, string[] includes = null, int? pageSize = default(int?)) where TResource : Resource, new();
-        Task<Bundle> SearchByIdAsync(string resource, string id, string[] includes = null, int? pageSize = default(int?));
-        Task<Bundle> SearchByIdAsync<TResource>(string id, string[] includes = null, int? pageSize = default(int?)) where TResource : Resource, new();
+        Bundle SearchById(string resource, string id, string[] includes = null, int? pageSize = default(int?), string[] revIncludes = null);
+        Bundle SearchById<TResource>(string id, string[] includes = null, int? pageSize = default(int?), string[] revIncludes = null) where TResource : Resource, new();
+        Task<Bundle> SearchByIdAsync(string resource, string id, string[] includes = null, int? pageSize = default(int?), string[] revIncludes = null);
+        Task<Bundle> SearchByIdAsync<TResource>(string id, string[] includes = null, int? pageSize = default(int?), string[] revIncludes = null) where TResource : Resource, new();
         Bundle Transaction(Bundle bundle);
         Task<Bundle> TransactionAsync(Bundle bundle);
         Bundle TypeHistory(string resourceType, DateTimeOffset? since = default(DateTimeOffset?), int? pageSize = default(int?), SummaryType summary = SummaryType.False);
@@ -98,7 +97,7 @@ namespace Hl7.Fhir.Rest
         Task<Bundle> WholeSystemHistoryAsync(DateTimeOffset? since = default(DateTimeOffset?), int? pageSize = default(int?), SummaryType summary = SummaryType.False);
         Resource WholeSystemOperation(string operationName, Parameters parameters = null, bool useGet = false);
         Task<Resource> WholeSystemOperationAsync(string operationName, Parameters parameters = null, bool useGet = false);
-        Bundle WholeSystemSearch(string[] criteria = null, string[] includes = null, int? pageSize = default(int?), SummaryType? summary = default(SummaryType?));
-        Task<Bundle> WholeSystemSearchAsync(string[] criteria = null, string[] includes = null, int? pageSize = default(int?), SummaryType? summary = default(SummaryType?));
+        Bundle WholeSystemSearch(string[] criteria = null, string[] includes = null, int? pageSize = default(int?), SummaryType? summary = default(SummaryType?), string[] revIncludes = null);
+        Task<Bundle> WholeSystemSearchAsync(string[] criteria = null, string[] includes = null, int? pageSize = default(int?), SummaryType? summary = default(SummaryType?), string[] revIncludes = null);
     }
 }
