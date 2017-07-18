@@ -88,10 +88,10 @@ namespace Hl7.Fhir.Rest
             return Get(uri.OriginalString);
         }
 
-        public TransactionBuilder Read(string resourceType, string id, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null)
+        public TransactionBuilder Read(string resourceType, string id, string versionId = null, DateTimeOffset? ifModifiedSince = null)
         {
             var entry = newEntry(Bundle.HTTPVerb.GET);
-            entry.Request.IfNoneMatch = ifNoneMatch;
+            entry.Request.IfNoneMatch = createIfMatchETag(versionId);
             entry.Request.IfModifiedSince = ifModifiedSince;
             var path = newRestUrl().AddPath(resourceType, id);
             addEntry(entry, path);
@@ -109,21 +109,22 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public TransactionBuilder Update(string id, Resource body, string ifMatch=null)
+        public TransactionBuilder Update(string id, Resource body, string versionId=null)
         {
             var entry = newEntry(Bundle.HTTPVerb.PUT);
             entry.Resource = body;
-            entry.Request.IfMatch = ifMatch;
+            entry.Request.IfMatch = createIfMatchETag(versionId);
             var path = newRestUrl().AddPath(body.TypeName, id);
             addEntry(entry, path);
 
             return this;
         }
 
-        public TransactionBuilder Update(SearchParams condition, Resource body, string ifMatch=null)
+        public TransactionBuilder Update(SearchParams condition, Resource body, string versionId=null)
         {
             var entry = newEntry(Bundle.HTTPVerb.PUT);
             entry.Resource = body;
+            entry.Request.IfMatch = createIfMatchETag(versionId);
             var path = newRestUrl().AddPath(body.TypeName);
             path.AddParams(condition.ToUriParamList());
             addEntry(entry, path);
@@ -131,6 +132,14 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
+        private string createIfMatchETag(string versionId)
+        {
+            //To not break our previous public interface, we need to make sure we don't double
+            //convert to an eTag
+            if (versionId.StartsWith("W/")) return versionId;
+
+            return $"W/\"{versionId}\"";
+        }
 
         public TransactionBuilder Delete(string resourceType, string id)
         {

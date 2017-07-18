@@ -338,7 +338,7 @@ namespace Hl7.Fhir.Rest
             var upd = new TransactionBuilder(Endpoint);
 
             if (versionAware && resource.HasVersionId)
-                upd.Update(resource.Id, resource, ifMatch: resource.VersionId);
+                upd.Update(resource.Id, resource, versionId: resource.VersionId);
             else
                 upd.Update(resource.Id, resource);
 
@@ -377,7 +377,7 @@ namespace Hl7.Fhir.Rest
             var upd = new TransactionBuilder(Endpoint);
                 
             if (versionAware && resource.HasVersionId)
-                upd.Update(condition, resource, ifMatch: resource.VersionId);
+                upd.Update(condition, resource, versionId: resource.VersionId);
             else
                 upd.Update(condition, resource);
 

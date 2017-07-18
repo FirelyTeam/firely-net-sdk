@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Test
                         .Create(p)
                         .ResourceHistory("Patient","7")
                         .Delete("Patient","8")
-                        .Read("Patient","9", ifNoneMatch: "W/bla")
+                        .Read("Patient","9", versionId: "bla")
                         .ToBundle();
 
             Assert.AreEqual(4, b.Entry.Count);
@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Test
 
             Assert.AreEqual(Bundle.HTTPVerb.GET, b.Entry[3].Request.Method);
             Assert.AreEqual("http://myserver.org/fhir/Patient/9", b.Entry[3].Request.Url);
-            Assert.AreEqual("W/bla", b.Entry[3].Request.IfNoneMatch);
+            Assert.AreEqual("W/\"bla\"", b.Entry[3].Request.IfNoneMatch);
         }
 
         [TestMethod]
@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Test
 
 
         [TestMethod]
-        public void TestConditionCreate()
+        public void TestConditionalCreate()
         {
             var p = new Patient();
             var tx = new TransactionBuilder("http://myserver.org/fhir")
@@ -68,6 +68,18 @@ namespace Hl7.Fhir.Test
             var b = tx.ToBundle();
 
             Assert.AreEqual("name=foobar",b.Entry[0].Request.IfNoneExist);
+        }
+
+
+        [TestMethod]
+        public void TestConditionalUpdate()
+        {
+            var p = new Patient();
+            var tx = new TransactionBuilder("http://myserver.org/fhir")
+                        .Update(new SearchParams().Where("name=foobar"), p, versionId: "314");
+            var b = tx.ToBundle();
+
+            Assert.AreEqual("W/\"314\"", b.Entry[0].Request.IfMatch);
         }
     }
 }
