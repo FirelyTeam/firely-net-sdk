@@ -116,14 +116,8 @@ namespace Hl7.Fhir.Rest
         /// <remarks>Refer to specification section 2.1.0.5 (Managing Return Content)</remarks>
         public bool ReturnFullResource
         {
-            get 
-            {
-                return _requester.Prefer == Prefer.ReturnRepresentation;
-            }
-            set 
-            {
-                _requester.Prefer = value==true ? Prefer.ReturnRepresentation : Prefer.ReturnMinimal; 
-            }
+            get => _requester.Prefer == Prefer.ReturnRepresentation;
+            set => _requester.Prefer = value ? Prefer.ReturnRepresentation : Prefer.ReturnMinimal;
         }
 
 #if NET_COMPRESSION
@@ -152,10 +146,7 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// The last transaction result that was executed on this connection to the FHIR server
         /// </summary>
-        public Bundle.ResponseComponent LastResult
-        {
-            get { return _requester.LastResult != null ? _requester.LastResult.Response : null; }
-        }
+        public Bundle.ResponseComponent LastResult => _requester.LastResult?.Response;
 
         public ParserSettings ParserSettings
         {
@@ -1034,8 +1025,7 @@ namespace Hl7.Fhir.Rest
 
             if (!expect.Select(sc => ((int)sc).ToString()).Contains(response.Response.Status))
             {
-                HttpStatusCode code;
-                Enum.TryParse<HttpStatusCode>(response.Response.Status, out code);
+                Enum.TryParse<HttpStatusCode>(response.Response.Status, out HttpStatusCode code);
                 throw new FhirOperationException("Operation concluded successfully, but the return status {0} was unexpected".FormatWith(response.Response.Status), code);
             }
 
