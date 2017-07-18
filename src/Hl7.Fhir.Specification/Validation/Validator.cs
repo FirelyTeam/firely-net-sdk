@@ -198,23 +198,36 @@ namespace Hl7.Fhir.Validation
                 }
                 else
                 {
-                    bool hasDeclaredSuperType = elementConstraints.HasDeclaredCoreSuperType();
+                    bool isInlineChildren = !definition.Current.IsRootElement();
+
                     // Now, validate the children
                     if (definition.HasChildren)
                     {
+                        // If we are at the root of an abstract type (e.g. is this instance a Resource)?
+                        // or we are at a nested resource, we may expect more children in the instance than
+                        // we know about
+                        bool allowAdditionalChildren = (isInlineChildren && elementConstraints.IsResourcePlaceholder()) ||
+                                          (!isInlineChildren && definition.StructureDefinition.Abstract == true);
+
                         // Handle in-lined constraints on children. In a snapshot, these children should be exhaustive,
                         // so there's no point in also validating the <type> or <nameReference>
                         // TODO: Check whether this is even true when the <type> has a profile?
                         // Note: the snapshot is *not* exhaustive if the declared type is a base FHIR type (like Resource),
                         // in which case there may be additional children (verified in the next step)
-                        outcome.Add(this.ValidateChildConstraints(definition, instance, allowAdditionalChildren: hasDeclaredSuperType));
+                        outcome.Add(this.ValidateChildConstraints(definition, instance, allowAdditionalChildren: allowAdditionalChildren));
+
+                        // Special case: if we are located at a nested resource (i.e. contained or Bundle.entry.resource),
+                        // we need to validate based on the actual type of the instance
+                        if(isInlineChildren && elementConstraints.IsResourcePlaceholder())
+                        {
+                            outcome.Add(this.ValidateType(elementConstraints, instance));
+                        }
                     }
 
-                    if (!definition.HasChildren || (hasDeclaredSuperType && !definition.Current.IsRootElement()))
+                    if (!definition.HasChildren)
                     {
                         // No inline-children, so validation depends on the presence of a <type> or <nameReference>
                         if (elementConstraints.Type != null || elementConstraints.ContentReference != null)
-
                         {
                             outcome.Add(this.ValidateType(elementConstraints, instance));
                             outcome.Add(ValidateNameReference(elementConstraints, definition, instance));

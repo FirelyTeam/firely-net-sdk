@@ -163,11 +163,11 @@ namespace Hl7.Fhir.Validation
         {
             var result = createTestSD($"http://validationtest.org/fhir/StructureDefinition/BundleWithConstrainedContained", 
                             $"Bundle with a constraint on the Bundle.entry.resource",
-                    $"Bundle with a constraint on the Bundle.entry.resource", FHIRDefinedType.Bundle);
+                    $"Bundle with a constraint on the Bundle.entry.resource", FHIRAllTypes.Bundle);
 
             var cons = result.Differential.Element;
 
-            cons.Add(new ElementDefinition("Bundle").OfType(FHIRDefinedType.Bundle));
+            cons.Add(new ElementDefinition("Bundle").OfType(FHIRAllTypes.Bundle));
             cons.Add(new ElementDefinition("Bundle.entry.resource.meta").Required());
 
             return result;
