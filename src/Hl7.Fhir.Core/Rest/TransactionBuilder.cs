@@ -134,6 +134,8 @@ namespace Hl7.Fhir.Rest
 
         private string createIfMatchETag(string versionId)
         {
+            if (versionId == null) return versionId;
+
             //To not break our previous public interface, we need to make sure we don't double
             //convert to an eTag
             if (versionId.StartsWith("W/")) return versionId;
