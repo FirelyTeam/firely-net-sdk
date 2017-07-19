@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         {
             var client = new FhirClient(_endpoint);
             client.PreferredFormat = ResourceFormat.Json;
-            client.ReturnFullResource = true;
+            client.PreferredReturn = Prefer.ReturnRepresentation;
 
             Patient p = await client.ReadAsync<Patient>(new ResourceIdentity("/Patient/SMART-1288992"));
             Assert.IsNotNull(p);
@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         {
             var client = new FhirClient(_endpoint);
             client.PreferredFormat = ResourceFormat.Json;
-            client.ReturnFullResource = true;
+            client.PreferredReturn = Prefer.ReturnRepresentation;
 
             Patient p = await client.ReadAsync<Patient>("/Patient/SMART-1288992");
             Assert.IsNotNull(p);

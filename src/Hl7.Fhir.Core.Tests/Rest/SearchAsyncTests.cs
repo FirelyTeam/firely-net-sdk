@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         {
             var client = new FhirClient(_endpoint);
             client.PreferredFormat = ResourceFormat.Json;
-            client.ReturnFullResource = true;
+            client.PreferredReturn = Prefer.ReturnRepresentation;
 
             var srch = new SearchParams()
                 .Where("name=Daniel")
@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         {
             var client = new FhirClient(_endpoint);
             client.PreferredFormat = ResourceFormat.Json;
-            client.ReturnFullResource = true;
+            client.PreferredReturn = Prefer.ReturnRepresentation;
 
             var srch = new SearchParams()
                 .Where("name=Daniel")
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         {
             var client = new FhirClient(_endpoint);
             client.PreferredFormat = ResourceFormat.Json;
-            client.ReturnFullResource = true;
+            client.PreferredReturn = Prefer.ReturnRepresentation;
 
             var srchParams = new SearchParams()
                 .Where("name=Daniel")
@@ -122,8 +122,8 @@ namespace Hl7.Fhir.Core.AsyncTests
         {
             var client = new FhirClient(_endpoint);
             client.PreferredFormat = ResourceFormat.Json;
-            client.ReturnFullResource = true;
-            
+            client.PreferredReturn = Prefer.ReturnRepresentation;
+
             var result1 = await client.SearchAsync<Patient>(new []{"family=clark"});
 
             Assert.IsTrue(result1.Entry.Count >= 1);
@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         {
             var client = new FhirClient(_endpoint);
             client.PreferredFormat = ResourceFormat.Json;
-            client.ReturnFullResource = true;
+            client.PreferredReturn = Prefer.ReturnRepresentation;
 
             var result1 = await client.SearchAsync<Patient>(new[] { "family=clark" },null,1);
 

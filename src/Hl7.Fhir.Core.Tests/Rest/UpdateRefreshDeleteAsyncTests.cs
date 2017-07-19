@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         {
             var client = new FhirClient(_endpoint);
             client.PreferredFormat = ResourceFormat.Json;
-            client.ReturnFullResource = true;
+            client.PreferredReturn = Prefer.ReturnRepresentation;
 
             var pat = new Patient()
             {
