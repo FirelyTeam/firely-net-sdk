@@ -47,9 +47,12 @@ namespace Hl7.Fhir.Rest
             if (!endpoint.IsAbsoluteUri) throw new ArgumentException("endpoint", "Endpoint must be absolute");
 
             Endpoint = endpoint;
-            _requester = new Requester(Endpoint);
-            _requester.BeforeRequest = this.BeforeRequest;
-            _requester.AfterResponse = this.AfterResponse;
+
+            _requester = new Requester(Endpoint)
+            {
+                BeforeRequest = this.BeforeRequest,
+                AfterResponse = this.AfterResponse
+            };
 
             VerifyFhirVersion = verifyFhirVersion;
         }
@@ -155,9 +158,9 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public byte[] LastBody { get { return LastResult != null ? LastResult.GetBody() : null; } }
-        public string LastBodyAsText { get { return LastResult != null ? LastResult.GetBodyAsText() : null; } }
-        public Resource LastBodyAsResource { get { return _requester.LastResult != null ? _requester.LastResult.Resource : null; } }
+        public byte[] LastBody => LastResult?.GetBody();
+        public string LastBodyAsText => LastResult?.GetBodyAsText();
+        public Resource LastBodyAsResource => _requester.LastResult?.Resource;
 
         /// <summary>
         /// Returns the HttpWebRequest as it was last constructed to execute a call on the FhirClient
@@ -987,7 +990,7 @@ namespace Hl7.Fhir.Rest
         protected virtual void BeforeRequest(HttpWebRequest rawRequest, byte[] body) 
         {
             // Default implementation: call event
-            if (OnBeforeRequest != null) OnBeforeRequest(this,new BeforeRequestEventArgs(rawRequest, body));
+            OnBeforeRequest?.Invoke(this, new BeforeRequestEventArgs(rawRequest, body));
         }
 
         /// <summary>
@@ -998,7 +1001,7 @@ namespace Hl7.Fhir.Rest
         protected virtual void AfterResponse(HttpWebResponse webResponse, byte[] body)
         {
             // Default implementation: call event
-            if (OnAfterResponse != null) OnAfterResponse(this,new AfterResponseEventArgs(webResponse, body));
+            OnAfterResponse?.Invoke(this, new AfterResponseEventArgs(webResponse, body));
         }
 
         // Original

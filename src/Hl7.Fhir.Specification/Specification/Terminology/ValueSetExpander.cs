@@ -139,10 +139,10 @@ namespace Hl7.Fhir.Specification.Terminology
             foreach(var include in source.Compose.Include)
             {
                 if (!include.Concept.Any())
-                    throw Error.NotSupported($"Expansion for ValueSet '{source.Url}' uses an include with just a system ('{include.System}') and no enumerated concepts to include.");
+                    throw new ValueSetExpansionTooComplexException($"Expansion for ValueSet '{source.Url}' uses an include with just a system ('{include.System}') and no enumerated concepts to include.");
 
                 if(include.Filter.Any())
-                    throw Error.NotSupported($"Expansion for ValueSet '{source.Url}' uses a filter to include concepts, which is not supported.");
+                    throw new ValueSetExpansionTooComplexException($"Expansion for ValueSet '{source.Url}' uses a filter to include concepts, which is not supported.");
 
                 // Yes, exclusion could make this smaller again, but alas, before we have processed those we might have run out of memory
                 if (source.Expansion.Total + include.Concept.Count > Settings.MaxExpansionSize)
@@ -168,10 +168,10 @@ namespace Hl7.Fhir.Specification.Terminology
             foreach (var exclude in source.Compose.Exclude)
             {
                 if (!exclude.Concept.Any())
-                    throw Error.NotSupported($"Expansion for ValueSet '{source.Url}' uses an exclude with just a system ('{exclude.System}') and no enumerated concepts to exclude.");
+                    throw new ValueSetExpansionTooComplexException($"Expansion for ValueSet '{source.Url}' uses an exclude with just a system ('{exclude.System}') and no enumerated concepts to exclude.");
 
                 if (exclude.Filter.Any())
-                    throw Error.NotSupported($"Expansion for ValueSet '{source.Url}' uses a filter to exclude concepts, which is not supported.");
+                    throw new ValueSetExpansionTooComplexException($"Expansion for ValueSet '{source.Url}' uses a filter to exclude concepts, which is not supported.");
 
                 foreach (var concept in exclude.Concept)
                 {

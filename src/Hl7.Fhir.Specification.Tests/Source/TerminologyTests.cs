@@ -1,4 +1,5 @@
 ﻿using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Support;
@@ -120,5 +121,14 @@ namespace Hl7.Fhir.Source
             Assert.False(result.Success);
             Assert.Single(result.Where(type: OperationOutcome.IssueType.NotSupported));
         }
+
+        //[Fact]
+        //public void TermServiceLoopupTest()
+        //{
+        //    //FhirClient f = new FhirClient("http://tx.fhir.org/r3");
+        //    FhirClient f = new FhirClient("http://fhir2.healthintersections.com.au/open");
+            
+
+        //}
     }
 }
