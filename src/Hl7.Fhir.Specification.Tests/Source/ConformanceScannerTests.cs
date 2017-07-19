@@ -39,8 +39,8 @@ namespace Hl7.Fhir.Specification.Tests
                     new Bundle.EntryComponent
                     {
                         FullUrl = "http://test.org/CodeSystem/cs",
-                        Resource = new CodeSystem { Url = "http://test.org/CodeSystem/vs",
-                                ValueSet = "http://test.org/ValueSet/s" }
+                        Resource = new CodeSystem { Url = "http://test.org/CodeSystem/cs",
+                                ValueSet = "http://test.org/ValueSet/vs" }
                     },
 
                     new Bundle.EntryComponent
@@ -102,18 +102,17 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("http://test.org/ValueSet/vs", list[2].CodeSystemValueSet);
             Assert.AreEqual(origin, list[2].Origin);
 
-
-            Assert.AreEqual(ResourceType.NamingSystem, list[2].ResourceType);
-            Assert.AreEqual("http://test.org/NamingSystem/ns", list[2].ResourceUri);
-            Assert.AreEqual("http://test.org/ns/testname1", list[2].UniqueIds.First());
-            Assert.AreEqual("http://test.org/ns/testname2", list[2].UniqueIds.Skip(1).First());
+            Assert.AreEqual(ResourceType.NamingSystem, list[3].ResourceType);
+            Assert.AreEqual("http://test.org/NamingSystem/ns", list[3].ResourceUri);
+            Assert.AreEqual("http://test.org/ns/testname1", list[3].UniqueIds.First());
+            Assert.AreEqual("http://test.org/ns/testname2", list[3].UniqueIds.Skip(1).First());
             Assert.AreEqual(origin, list[3].Origin);
 
-            Assert.AreEqual(ResourceType.ConceptMap, list[3].ResourceType);
-            Assert.AreEqual("http://test.org/ConceptMap/cm", list[3].ResourceUri);
-            Assert.AreEqual("http://test.org/ConceptMap/cm", list[3].Canonical);
-            Assert.AreEqual("http://test.org/source", list[3].ConceptMapSource);
-            Assert.AreEqual("http://test.org/target", list[3].ConceptMapTarget);
+            Assert.AreEqual(ResourceType.ConceptMap, list[4].ResourceType);
+            Assert.AreEqual("http://test.org/ConceptMap/cm", list[4].ResourceUri);
+            Assert.AreEqual("http://test.org/ConceptMap/cm", list[4].Canonical);
+            Assert.AreEqual("http://test.org/source", list[4].ConceptMapSource);
+            Assert.AreEqual("http://test.org/target", list[4].ConceptMapTarget);
             Assert.AreEqual(origin, list[4].Origin);
         }
 
