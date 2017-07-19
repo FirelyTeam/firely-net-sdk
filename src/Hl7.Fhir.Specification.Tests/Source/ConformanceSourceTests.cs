@@ -287,14 +287,20 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestSourceSpeedTest()
         {
-            var jsonSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory,"TestData"), includeSubdirectories: false);
-            jsonSource.Mask = "*.json";
-            jsonSource.Includes = new[] { "profiles-types.json" };
+            var jsonSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData"), includeSubdirectories: false)
+            {
+                Mask = "*.json",
+                Includes = new[] { "profiles-types.json" }
+            };
+
             Assert.IsNotNull(jsonSource.LoadArtifactByName("profiles-types.json"));
 
-            var xmlSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), includeSubdirectories: false);
-            xmlSource.Mask = "*.xml";
-            xmlSource.Includes = new[] { "profiles-types.xml" };
+            var xmlSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), includeSubdirectories: false)
+            {
+                Mask = "*.xml",
+                Includes = new[] { "profiles-types.xml" }
+            };
+
             Assert.IsNotNull(xmlSource.LoadArtifactByName("profiles-types.xml"));
 
             var duration = runTest(jsonSource);

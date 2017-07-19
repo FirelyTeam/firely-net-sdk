@@ -185,12 +185,13 @@ namespace Hl7.Fhir.Specification.Terminology
 
         private ValueSet.ContainsComponent addToExpansion(string system, string version, string code, string display, bool? isAbstract, List<ValueSet.ContainsComponent> dest)
         {
-            var newContains = new ValueSet.ContainsComponent();
-            newContains.System = system;
-            newContains.Code = code;
-            newContains.Display = display;
-            newContains.Version = version;
-
+            var newContains = new ValueSet.ContainsComponent()
+            {
+                System = system,
+                Code = code,
+                Display = display,
+                Version = version
+            };
             if (isAbstract != null)
                 newContains.Abstract = isAbstract;
 

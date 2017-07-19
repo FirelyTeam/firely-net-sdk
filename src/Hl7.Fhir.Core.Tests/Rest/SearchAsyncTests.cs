@@ -16,9 +16,11 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async Task Search_UsingSearchParams_SearchReturned()
         {
-            var client = new FhirClient(_endpoint);
-            client.PreferredFormat = ResourceFormat.Json;
-            client.ReturnFullResource = true;
+            var client = new FhirClient(_endpoint)
+            {
+                PreferredFormat = ResourceFormat.Json,
+                ReturnFullResource = true
+            };
 
             var srch = new SearchParams()
                 .Where("name=Daniel")
@@ -48,9 +50,11 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public void SearchSync_UsingSearchParams_SearchReturned()
         {
-            var client = new FhirClient(_endpoint);
-            client.PreferredFormat = ResourceFormat.Json;
-            client.ReturnFullResource = true;
+            var client = new FhirClient(_endpoint)
+            {
+                PreferredFormat = ResourceFormat.Json,
+                ReturnFullResource = true
+            };
 
             var srch = new SearchParams()
                 .Where("name=Daniel")
@@ -82,9 +86,11 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async Task SearchMultiple_UsingSearchParams_SearchReturned()
         {
-            var client = new FhirClient(_endpoint);
-            client.PreferredFormat = ResourceFormat.Json;
-            client.ReturnFullResource = true;
+            var client = new FhirClient(_endpoint)
+            {
+                PreferredFormat = ResourceFormat.Json,
+                ReturnFullResource = true
+            };
 
             var srchParams = new SearchParams()
                 .Where("name=Daniel")
@@ -120,10 +126,12 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async Task SearchWithCriteria_SyncContinue_SearchReturned()
         {
-            var client = new FhirClient(_endpoint);
-            client.PreferredFormat = ResourceFormat.Json;
-            client.ReturnFullResource = true;
-            
+            var client = new FhirClient(_endpoint)
+            {
+                PreferredFormat = ResourceFormat.Json,
+                ReturnFullResource = true
+            };
+
             var result1 = await client.SearchAsync<Patient>(new []{"family=clark"});
 
             Assert.IsTrue(result1.Entry.Count >= 1);
@@ -146,9 +154,11 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async Task SearchWithCriteria_AsyncContinue_SearchReturned()
         {
-            var client = new FhirClient(_endpoint);
-            client.PreferredFormat = ResourceFormat.Json;
-            client.ReturnFullResource = true;
+            var client = new FhirClient(_endpoint)
+            {
+                PreferredFormat = ResourceFormat.Json,
+                ReturnFullResource = true
+            };
 
             var result1 = await client.SearchAsync<Patient>(new[] { "family=clark" },null,1);
 
