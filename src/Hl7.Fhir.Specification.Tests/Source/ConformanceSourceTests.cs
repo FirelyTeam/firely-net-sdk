@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Specification.Tests
             // A Fhir valueset
             var vs = source.FindValueSet("http://hl7.org/fhir/ValueSet/contact-point-system");
             Assert.IsNotNull(vs);
-            Assert.IsNotNull(vs.Annotation<OriginInformation>());
+            Assert.IsNotNull(vs.Annotation<OriginAnnotation>());
 
             //EK: These seem to be no longer part of the spec
             //// A non-HL7 valueset

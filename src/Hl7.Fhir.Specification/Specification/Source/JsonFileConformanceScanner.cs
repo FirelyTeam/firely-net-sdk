@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Specification.Source
                         ResourceType = EnumUtility.ParseLiteral<ResourceType>(resourceType).Value,
                         ResourceUri = res.fullUrl,
                         Canonical = res.element.Value<string>("url"),
-                        ValueSetSystem = getValueSetSystem(res.element),
+                        CodeSystemValueSet = getCodeSystemValueSet(res.element),
                         UniqueIds = getUniqueIds(res.element),
                         ConceptMapSource = getCmSource(res.element),
                         ConceptMapTarget = getCmTarget(res.element),
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Specification.Source
         }
 
 
-        private string getValueSetSystem(JObject vs) => vs["codeSystem"]?["system"]?.Value<string>();
+        private string getCodeSystemValueSet(JObject cs) => cs["valueSet"]?.Value<string>();
 
         private string[] getUniqueIds(JObject ns) => ns["uniqueId"]?.Select(id => (string)id["value"]).ToArray() ?? new string[0];
 

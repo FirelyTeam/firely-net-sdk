@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2017, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Specification.Source
 
             public string Canonical { get; set; }
 
-            public string ValueSetSystem { get; set; }
+            public string CodeSystemValueSet { get; set; }
 
             public string[] UniqueIds { get; set; }
 

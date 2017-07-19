@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Specification.Source
                                 ResourceType = EnumUtility.ParseLiteral<ResourceType>(res.element.Name.LocalName).Value,
                                 ResourceUri = res.fullUrl,
                                 Canonical = getPrimitiveValueElement(res.element, "url"),
-                                ValueSetSystem = getValueSetSystem(res.element),
+                                CodeSystemValueSet = getCodeSystemValueSet(res.element),
                                 UniqueIds = getUniqueIds(res.element),
                                 ConceptMapSource = getCmSource(res.element),
                                 ConceptMapTarget = getCmTarget(res.element),
@@ -85,16 +85,17 @@ namespace Hl7.Fhir.Specification.Source
         }
 
 
-        private string getValueSetSystem(XElement vs)
+        private string getCodeSystemValueSet(XElement cs)
         {
-            return vs.Elements(XmlNs.XFHIR + "codeSystem")
-                     .Elements(XmlNs.XFHIR + "system")
+            // On CodeSystem
+            return cs.Elements(XmlNs.XFHIR + "valueSet")
                      .Attributes("value")
                      .Select(a => a.Value).SingleOrDefault();
         }
 
         private string[] getUniqueIds(XElement ns)
         {
+            // On NamingSystem
             return ns.Elements(XmlNs.XFHIR + "uniqueId")
                      .Elements(XmlNs.XFHIR + "value")
                      .Attributes("value")
@@ -103,6 +104,7 @@ namespace Hl7.Fhir.Specification.Source
 
         private string getCmSource(XElement cm)
         {
+            // On ConceptMap
             return cm
                  .Elements(XmlNs.XFHIR + "sourceUri")
                  .Concat(cm
@@ -113,6 +115,7 @@ namespace Hl7.Fhir.Specification.Source
 
         private string getCmTarget(XElement cm)
         {
+            // On ConceptMap
             return cm
                  .Elements(XmlNs.XFHIR + "targetUri")
                  .Concat(cm
