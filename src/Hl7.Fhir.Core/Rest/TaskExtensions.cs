@@ -1,4 +1,5 @@
 using Hl7.Fhir.Model;
+using System;
 using System.Threading.Tasks;
 using Task = System.Threading.Tasks.Task;
 
@@ -10,7 +11,15 @@ namespace Hl7.Fhir.Rest
         {
             if (task == null) return null;
 
-            task.Wait();
+            try
+            {
+                task.Wait();
+            }
+            catch(AggregateException ae)
+            {
+                throw ae.Flatten().InnerException;
+            }
+
             return task.Result;
         }
 
