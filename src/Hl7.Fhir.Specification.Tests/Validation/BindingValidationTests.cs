@@ -17,7 +17,7 @@ namespace Hl7.Fhir.Validation
         {
             _resolver = fixture.Resolver;
 
-            _termService = new LocalTerminologyServer(_resolver);
+            _termService = new LocalTerminologyService(_resolver);
 
         }
 

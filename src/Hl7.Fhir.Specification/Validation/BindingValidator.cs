@@ -25,7 +25,6 @@ namespace Hl7.Fhir.Validation
             _path = path;
         }
 
-
         public OperationOutcome ValidateBinding(Coding coding, string valueSetUri, BindingStrength? strength=null)
         {
             return callService(coding.Code, coding.System, coding.Display, valueSetUri, strength, _path);
@@ -68,48 +67,32 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
-            OperationOutcome validateResult = _service.ValidateCode(uri, code, system, display, abstractAllowed: false);
-            foreach (var issue in validateResult.Issue) issue.Location = new string[] { path };
-
-            var codeLabel = $"Code '{code}' from system '{system}'";
-            if (display != null) codeLabel += $" with display '{display}'";
-
-            if (validateResult.Where(type: OperationOutcome.IssueType.NotSupported).Any())
+            if(string.IsNullOrEmpty(code))
             {
-                if (strength != BindingStrength.Example)
-                {
-                    outcome.AddIssue($"The terminology service is incapable of validating {codeLabel} (valueset '{uri}').", Issue.UNSUPPORTED_BINDING_NOT_SUPPORTED_BY_SERVICE, path);
-                    validateResult.MakeInformational();
-                    outcome.Include(validateResult);
-                }
+                //HACK: we only can see the empty code element this low in the call tree that we can just report success
+                //from here. In fact, we should not even go into validating a binding at all if the instance data does
+                //not provide anything bindeable.
                 return outcome;
             }
 
-            if(strength == BindingStrength.Required)
-                outcome.Include(validateResult);
+            try
+            {
+                var validateResult = _service.ValidateCode(uri, code, system, display, abstractAllowed: false);
+                foreach (var issue in validateResult.Issue) issue.Location = new string[] { path };
 
-            //EK 20170605 - disabled inclusion of warnings/erros for all but required bindings since this will 
-            // 1) create superfluous messages (both saying the code is not valid) coming from the validateResult + the outcome.AddIssue() 
-            // 2) add the validateResult as warnings for preferred bindings, which are confusing in the case where the slicing entry is 
-            //    validating the binding against the core and slices will refine it: if it does not generate warnings against the slice, 
-            //    it should not generate warnings against the slicing entry.
-
-            //if (!validateResult.Success)
-            //{
-            //    if (strength == BindingStrength.Required)
-            //    {
-            //        outcome.AddIssue($"{codeLabel} is not valid for required binding to valueset '{uri}'", Issue.CONTENT_INVALID_FOR_REQUIRED_BINDING, path);
-            //    }
-            //    else if(strength != BindingStrength.Example)
-            //    {
-            //        outcome.AddIssue($"{codeLabel} is not valid for non-required binding to valueset '{uri}'", Issue.CONTENT_INVALID_FOR_NON_REQUIRED_BINDING, path);
-            //    }
-
-            //    validateResult.MakeInformational();             
-            //}
-            //
-            // outcome.Include(validateResult);
-
+                //EK 20170605 - disabled inclusion of warnings/erros for all but required bindings since this will 
+                // 1) create superfluous messages (both saying the code is not valid) coming from the validateResult + the outcome.AddIssue() 
+                // 2) add the validateResult as warnings for preferred bindings, which are confusing in the case where the slicing entry is 
+                //    validating the binding against the core and slices will refine it: if it does not generate warnings against the slice, 
+                //    it should not generate warnings against the slicing entry.
+                if (strength == BindingStrength.Required)
+                    outcome.Include(validateResult);
+            }
+            catch (TerminologyServiceException tse)
+            {
+                outcome.AddIssue($"Terminology service failed while validating code '{code}' (system '{system}'): {tse.Message}", Issue.TERMINOLOGY_SERVICE_FAILED, path);
+            }
+            
             return outcome;
         }
 
@@ -138,10 +121,10 @@ namespace Hl7.Fhir.Validation
                             {
                                 var bindable = instance.ParseBindable(codedType.Value);
 
-                                if (bindable is Coding)
-                                    return ValidateBinding(bindable as Coding, uri, binding.Strength);
-                                else
-                                    return ValidateBinding(bindable as CodeableConcept, uri, binding.Strength);
+                                if (bindable is Coding cd)
+                                    return ValidateBinding(cd, uri, binding.Strength);
+                                else if (bindable is CodeableConcept cc)
+                                    return ValidateBinding(cc, uri, binding.Strength);
                             }
                             else
                                 outcome.AddIssue($"A binding is given ('{uri}'), but the instance data is of type '{codedType.Value}', which is not bindeable.", Issue.CONTENT_TYPE_NOT_BINDEABLE, instance);

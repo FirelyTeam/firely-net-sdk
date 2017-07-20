@@ -6,75 +6,62 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.Specification.Terminology;
 using System.Linq;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 
-namespace Furore.Fhir.ValidationDemo
+namespace Hl7.Fhir.Specification.Terminology
 {
-    // [WMR 20170414] Copied from Hl7.Fhir.Specification (private...?)
-    sealed class ExternalTerminologyService : ITerminologyService
+    public class ExternalTerminologyService : ITerminologyService
     {
-        public ExternalTerminologyService(FhirClient client)
+        public ExternalTerminologyService(IFhirClient client)
         {
-            _endpoint = client;
+            Endpoint = client;
         }
 
-        FhirClient _endpoint;
+        public IFhirClient Endpoint { get; set; }
 
-        public OperationOutcome ValidateCode(string uri, string code, string system, string display = null, bool abstractAllowed = false)
-        {
-            if (string.IsNullOrEmpty(uri)) throw Error.ArgumentNullOrEmpty(nameof(uri));
-            if (string.IsNullOrEmpty(code)) throw Error.ArgumentNullOrEmpty(nameof(code));
-            if (string.IsNullOrEmpty(system)) throw Error.ArgumentNullOrEmpty(nameof(system));
-
-            Parameters resultValidateCode;
-
-            try
-            {
-                resultValidateCode = _endpoint.ValidateCode(uri, new Coding(system, code, display), new FhirBoolean(abstractAllowed));
-            }
-            catch (FhirOperationException ex)
-            {
-                return ex.Outcome;
-            }
-
-            OperationOutcome outcome = processResult(code, system, display, resultValidateCode);
-
-            return outcome;
-        }
+        public OperationOutcome ValidateCode(string canonical, string code, string system, string display = null, bool abstractAllowed = false)
+                => invokeValidate(null, canonical, code, system, display, abstractAllowed);
 
         public OperationOutcome ValidateCode(ValueSet vs, string code, string system, string display = null, bool abstractAllowed = false)
+                => invokeValidate(vs, null, code, system, display, abstractAllowed);
+
+
+        public OperationOutcome invokeValidate(ValueSet vs, string canonical, string code, string system, string display = null, bool abstractAllowed = false)
         {
-            if (vs == null) throw Error.ArgumentNull(nameof(vs));
+            if (vs == null && canonical == null) throw Error.ArgumentNull($"Either {nameof(vs)} or {nameof(canonical)} should be supploed");
             if (string.IsNullOrEmpty(code)) throw Error.ArgumentNullOrEmpty(nameof(code));
             if (string.IsNullOrEmpty(system)) throw Error.ArgumentNullOrEmpty(nameof(system));
 
             Parameters resultValidateCode;
+            var coding = new Coding(system, code, display);
 
             try
             {
-                resultValidateCode = _endpoint.ValidateCode(vs, new Coding(system, code, display), new FhirBoolean(abstractAllowed));
+                resultValidateCode = vs != null ? Endpoint.ValidateCode(vs, coding, new FhirBoolean(abstractAllowed))
+                                            : Endpoint.ValidateCode(new FhirUri(canonical), coding, new FhirBoolean(abstractAllowed));
             }
             catch (FhirOperationException ex)
             {
-                return ex.Outcome;
+                if (ex.Status == System.Net.HttpStatusCode.NotFound)
+                    throw new ValueSetUnknownException(ex.Message);
+                else
+                    return ex.Outcome;
             }
 
             OperationOutcome outcome = processResult(code, system, display, resultValidateCode);
 
             return outcome;
         }
-
 
         private OperationOutcome processResult(string code, string system, string display, Parameters resultValidateCode)
         {
             var result = resultValidateCode.GetSingleValue<FhirBoolean>("result").Value;
             if (result == null)
-                throw Error.InvalidOperation($"Terminology service at {_endpoint.Endpoint.ToString()} did not return a result.");
+                throw Error.InvalidOperation($"Terminology service at {Endpoint.Endpoint.ToString()} did not return a result.");
 
             var outcome = new OperationOutcome();
 
@@ -88,7 +75,7 @@ namespace Furore.Fhir.ValidationDemo
                     outcome.AddIssue(message, Issue.TERMINOLOGY_CODE_NOT_IN_VALUESET);
                 else
                     outcome.AddIssue($"Validation of code '{code}', system '{system}' and display '{display}' failed, but" +
-                                $"the terminology service at {_endpoint.Endpoint.ToString()} did not provide further details.",
+                                $"the terminology service at {Endpoint.Endpoint.ToString()} did not provide further details.",
                                 Issue.TERMINOLOGY_CODE_NOT_IN_VALUESET);
             }
 
