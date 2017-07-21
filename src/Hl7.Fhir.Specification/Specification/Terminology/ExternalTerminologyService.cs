@@ -32,44 +32,38 @@ namespace Hl7.Fhir.Specification.Terminology
 
         public OperationOutcome invokeValidate(ValueSet vs, string canonical, string code, string system, string display = null, bool abstractAllowed = false)
         {
-            if (vs == null && canonical == null) throw Error.ArgumentNull($"Either {nameof(vs)} or {nameof(canonical)} should be supploed");
-            if (string.IsNullOrEmpty(code)) throw Error.ArgumentNullOrEmpty(nameof(code));
-            if (string.IsNullOrEmpty(system)) throw Error.ArgumentNullOrEmpty(nameof(system));
-
-            Parameters resultValidateCode;
             var coding = new Coding(system, code, display);
 
             try
             {
-                resultValidateCode = vs != null ? Endpoint.ValidateCode(vs, coding, new FhirBoolean(abstractAllowed))
-                                            : Endpoint.ValidateCode(new FhirUri(canonical), coding, new FhirBoolean(abstractAllowed));
+                var resultValidateCode = vs != null ? Endpoint.ValidateCode(valueSet: vs, coding: coding, @abstract: new FhirBoolean(abstractAllowed))
+                                            : Endpoint.ValidateCode(identifier: new FhirUri(canonical), coding: coding, @abstract: new FhirBoolean(abstractAllowed));
+
+                OperationOutcome outcome = processResult(code, system, display, resultValidateCode );
+
+                return outcome;
+
             }
             catch (FhirOperationException ex)
             {
+                // Special case, if term service returns 404, turn that into a more explicit exception
                 if (ex.Status == System.Net.HttpStatusCode.NotFound)
                     throw new ValueSetUnknownException(ex.Message);
                 else
                     return ex.Outcome;
             }
-
-            OperationOutcome outcome = processResult(code, system, display, resultValidateCode);
-
-            return outcome;
         }
 
-        private OperationOutcome processResult(string code, string system, string display, Parameters resultValidateCode)
+        private OperationOutcome processResult(string code, string system, string display, ValidateCodeResult result)
         {
-            var result = resultValidateCode.GetSingleValue<FhirBoolean>("result").Value;
-            if (result == null)
+            if (result?.Result?.Value == null)
                 throw Error.InvalidOperation($"Terminology service at {Endpoint.Endpoint.ToString()} did not return a result.");
 
             var outcome = new OperationOutcome();
 
-            if (!result.Value)
+            if (result?.Result?.Value == false)
             {
-                string message = (resultValidateCode.Parameter
-                        .Where(p => p.Name == "message")?
-                        .FirstOrDefault()?.Value as FhirString)?.Value;
+                string message = result?.Message?.Value;
 
                 if (message != null)
                     outcome.AddIssue(message, Issue.TERMINOLOGY_CODE_NOT_IN_VALUESET);

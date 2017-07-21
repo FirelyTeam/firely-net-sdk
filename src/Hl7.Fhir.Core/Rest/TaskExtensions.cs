@@ -17,6 +17,7 @@ namespace Hl7.Fhir.Rest
             }
             catch(AggregateException ae)
             {
+                //throw ae;
                 throw ae.Flatten().InnerException;
             }
 

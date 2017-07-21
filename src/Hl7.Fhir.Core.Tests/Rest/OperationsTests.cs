@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Tests.Rest
 
             // Assert.IsTrue(vsX.Expansion.Contains.Any());
             var result = client.InstanceOperation(ResourceIdentity.Build("ValueSet", "extensional-case-1"),
-                FhirClientOperations.Operation.EXPAND_VALUESET);
+                RestOperation.EXPAND_VALUESET);
 
         }
     
@@ -109,15 +109,13 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public void InvokeValidateCodeById()
+        public async void InvokeValidateCodeById()
         {
             var client = new FhirClient("http://ontoserver.csiro.au/dstu2_1");
             var coding = new Coding("http://snomed.info/sct", "4322002");
 
-            //var result = client.ValidateCode("http://hl7.org/fhir/ValueSet/c80-facilitycodes", coding);
-            var result = client.ValidateCode("c80-facilitycodes", coding, abstractAllowed: new FhirBoolean(false));
-            Assert.IsTrue((result.Parameter.Single(p => p.Name == "result")?.Value as FhirBoolean)?.Value == true);
-
+            var result = await client.ValidateCodeAsync("c80-facilitycodes", coding: coding, @abstract: new FhirBoolean(false));
+            Assert.IsTrue(result.Result?.Value == true);
         }
 
         [TestMethod]
@@ -127,8 +125,9 @@ namespace Hl7.Fhir.Tests.Rest
             var client = new FhirClient("http://ontoserver.csiro.au/dstu2_1");
             var coding = new Coding("http://snomed.info/sct", "4322002");
 
-            var result = client.ValidateCode(new FhirUri("http://hl7.org/fhir/ValueSet/c80-facilitycodes"), coding, abstractAllowed: new FhirBoolean(false));
-            Assert.IsTrue((result.Parameter.Single(p => p.Name == "result")?.Value as FhirBoolean)?.Value == true);
+            var result = client.ValidateCode(identifier: new FhirUri("http://hl7.org/fhir/ValueSet/c80-facilitycodes"), 
+                  coding: coding, @abstract: new FhirBoolean(false));
+            Assert.IsTrue(result.Result?.Value == true);
         }
 
         [TestMethod]
@@ -141,8 +140,8 @@ namespace Hl7.Fhir.Tests.Rest
             var vs = client.Read<ValueSet>("ValueSet/c80-facilitycodes");
             Assert.IsNotNull(vs);
 
-            var result = client.ValidateCode(vs, coding);
-            Assert.IsTrue((result.Parameter.Single(p => p.Name == "result")?.Value as FhirBoolean)?.Value == true);
+            var result = client.ValidateCode(valueSet: vs, coding: coding);
+            Assert.IsTrue(result.Result?.Value == true);
         }
 
 
