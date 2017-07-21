@@ -10,6 +10,7 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using System.Linq;
 
 namespace Hl7.Fhir.Validation
@@ -25,12 +26,44 @@ namespace Hl7.Fhir.Validation
             _path = path;
         }
 
-        public OperationOutcome ValidateBinding(Coding coding, string valueSetUri, BindingStrength? strength=null)
+        public OperationOutcome ValidateBinding(Element bindable, ElementDefinition.BindingComponent binding)
         {
-            return callService(coding.Code, coding.System, coding.Display, valueSetUri, strength, _path);
+            // bindable should be code, Coding or CodeableConcept
+
+            if (binding.Strength == null)
+                return new OperationOutcome().AddIssue($"Encountered a binding element without a binding strength", Issue.PROFILE_INCOMPLETE_BINDING, _path);
+
+            var uri = (binding.ValueSet as FhirUri)?.Value ??
+                        (binding.ValueSet as ResourceReference)?.Reference;
+
+            if (uri == null)
+                return new OperationOutcome().AddIssue($"Encountered a binding element without either a ValueSet reference or uri", Issue.PROFILE_INCOMPLETE_BINDING, _path);
+            
+            switch(bindable)
+            {
+                case Code co:
+                    return validateBinding(co, uri, binding.Strength);
+                case Coding cd:
+                    return validateBinding(cd, uri, binding.Strength);
+                case CodeableConcept cc:
+                    return validateBinding(cc, uri, binding.Strength);
+                default:
+                    throw Error.NotSupported($"Validating a binding against a '{bindable.TypeName}' is not supported in FHIR.");
+            }
         }
 
-        public OperationOutcome ValidateBinding(CodeableConcept concept, string valueSetUri, BindingStrength? strength=null)
+
+        private OperationOutcome validateBinding(Code code, string valueSetUri, BindingStrength? strength = null)
+        {
+            return callService(code.Value, system: null, display: null, uri: valueSetUri, strength: strength);
+        }
+
+        private OperationOutcome validateBinding(Coding coding, string valueSetUri, BindingStrength? strength = null)
+        {
+            return callService(coding.Code, coding.System, coding.Display, valueSetUri, strength);
+        }
+
+        private OperationOutcome validateBinding(CodeableConcept concept, string valueSetUri, BindingStrength? strength = null)
         {
             var outcome = new OperationOutcome();
 
@@ -39,10 +72,10 @@ namespace Hl7.Fhir.Validation
 
             // If we have just 1 coding, we better handle this using the simpler version of ValidateBinding
             if (concept.Coding.Count == 1)
-                return ValidateBinding(concept.Coding.Single(), valueSetUri, strength);
+                return validateBinding(concept.Coding.Single(), valueSetUri, strength);
 
             // Else, look for one succesful match in any of the codes in the CodeableConcept
-            var callResults = concept.Coding.Select(coding => ValidateBinding(coding, valueSetUri, strength));
+            var callResults = concept.Coding.Select(coding => validateBinding(coding, valueSetUri, strength));
             var successOutcome = callResults.Where(r => r.Success).OrderBy(oo => oo.Warnings).FirstOrDefault();
 
             if (successOutcome == null)
@@ -63,11 +96,11 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        private OperationOutcome callService(string code, string system, string display, string uri, BindingStrength? strength, string path)
+        private OperationOutcome callService(string code, string system, string display, string uri, BindingStrength? strength)
         {
             var outcome = new OperationOutcome();
 
-            if(string.IsNullOrEmpty(code))
+            if (string.IsNullOrEmpty(code))
             {
                 //HACK: we only can see the empty code element this low in the call tree that we can just report success
                 //from here. In fact, we should not even go into validating a binding at all if the instance data does
@@ -78,7 +111,7 @@ namespace Hl7.Fhir.Validation
             try
             {
                 var validateResult = _service.ValidateCode(uri, code, system, display, abstractAllowed: false);
-                foreach (var issue in validateResult.Issue) issue.Location = new string[] { path };
+                foreach (var issue in validateResult.Issue) issue.Location = new string[] { _path };
 
                 //EK 20170605 - disabled inclusion of warnings/erros for all but required bindings since this will 
                 // 1) create superfluous messages (both saying the code is not valid) coming from the validateResult + the outcome.AddIssue() 
@@ -90,57 +123,11 @@ namespace Hl7.Fhir.Validation
             }
             catch (TerminologyServiceException tse)
             {
-                outcome.AddIssue($"Terminology service failed while validating code '{code}' (system '{system}'): {tse.Message}", Issue.TERMINOLOGY_SERVICE_FAILED, path);
-            }
-            
-            return outcome;
-        }
-
-
-        public OperationOutcome ValidateBinding(IElementNavigator instance, ElementDefinition definition)
-        {
-            var outcome = new OperationOutcome();
-
-            if (definition.Binding != null)
-            {
-                var binding = definition.Binding;
-
-                if (binding.ValueSet != null)
-                {
-                    var uri = (binding.ValueSet as FhirUri)?.Value;
-
-                    // == null, so we check whether this could NOT be casted to a FhirUri, thus is a ValueSet reference
-                    if (uri == null)
-                    {
-                        uri = (binding.ValueSet as ResourceReference).Reference;
-
-                        var codedType = Validator.DetermineType(definition, instance);
-                        if (codedType != null)
-                        {
-                            if (codedType.Value.IsBindeableFhirType())
-                            {
-                                var bindable = instance.ParseBindable(codedType.Value);
-
-                                if (bindable is Coding cd)
-                                    return ValidateBinding(cd, uri, binding.Strength);
-                                else if (bindable is CodeableConcept cc)
-                                    return ValidateBinding(cc, uri, binding.Strength);
-                            }
-                            else
-                                outcome.AddIssue($"A binding is given ('{uri}'), but the instance data is of type '{codedType.Value}', which is not bindeable.", Issue.CONTENT_TYPE_NOT_BINDEABLE, instance);
-                        }
-                        else
-                            outcome.AddIssue($"Cannot determine type of data in instance to extract code/system information", Issue.CONTENT_ELEMENT_CANNOT_DETERMINE_TYPE, instance);
-                    }
-                    else
-                        outcome.AddIssue($"Binding element references a valueset by uri ({uri}), which cannot be used to validate a binding",
-                                Issue.UNSUPPORTED_URI_BINDING_NOT_SUPPORTED, instance);
-                }
-                else
-                    outcome.AddIssue($"Encountered a binding element without a ValueSet reference", Issue.PROFILE_BINDING_WITHOUT_VALUESET, instance);
+                outcome.AddIssue($"Terminology service failed while validating code '{code}' (system '{system}'): {tse.Message}", Issue.TERMINOLOGY_SERVICE_FAILED, _path);
             }
 
             return outcome;
         }
+
     }
 }
