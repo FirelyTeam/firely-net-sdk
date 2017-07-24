@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Validation
             // But this won't, it's also a composition, but without expansion - the local term server won't help you here
             var binding2 = new ElementDefinition.ElementDefinitionBindingComponent
             {
-                ValueSet = new FhirUri("http://hl7.org/fhir/ValueSet/allergyintolerance-substance-code"),
+                ValueSet = new FhirUri("http://hl7.org/fhir/ValueSet/substance-code"),
                 Strength = BindingStrength.Required
             };
 

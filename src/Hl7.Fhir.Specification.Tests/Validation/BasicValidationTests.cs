@@ -320,7 +320,7 @@ namespace Hl7.Fhir.Validation
             //      http://validationtest.org/fhir/StructureDefinition/QuestionnaireWithFixedType
             var report = _validator.Validate(questionnaire, "http://validationtest.org/fhir/StructureDefinition/QuestionnaireWithFixedType");
             Assert.False(report.Success);
-            Assert.Equal(51, report.Errors);
+            Assert.Equal(2, report.Errors);
             Assert.Equal(0, report.Warnings);           // 20 warnings about valueset too complex
         }
 
