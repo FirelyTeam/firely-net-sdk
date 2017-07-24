@@ -30,68 +30,94 @@ namespace Hl7.Fhir.Validation
         }
 
         /// <summary>
-        /// Parses a bindeable type into either a Coding (code, Coding, Quantity, string, uri) or CodeableConcept
+        /// Parses a bindeable type (code, Coding, CodeableConcept, Quantity, string, uri) into a FHIR coded datatype.
+        /// Extensions will be parsed from the 'value' of the (simple) extension.
         /// </summary>
         /// <param name="instance"></param>
-        /// <param name="codedType"></param>
-        /// <returns>An object, which is either a Coding or CodeableConcept</returns>
-        public static object ParseBindable(this IElementNavigator instance, FHIRAllTypes codedType)
+        /// <returns>An Element of a coded type (code, Coding or CodeableConcept) dependin on the instance type,
+        /// or null if no bindable instance data was found</returns>
+        /// <remarks>The instance type is mapped to a codable type as follows:
+        ///   'code' => code
+        ///   'Coding' => Coding
+        ///   'CodeableConcept' => CodeableConcept
+        ///   'Quantity' => Coding
+        ///   'Extension' => depends on value[x]
+        ///   'string' => code
+        ///   'uri' => code
+        /// </remarks>
+        public static Element ParseBindable(this IElementNavigator instance)
         {
-            // 'code','Coding','CodeableConcept','Quantity','Extension', 'string', 'uri'
+            var instanceType = ModelInfo.FhirTypeNameToFhirType(instance.Type);
 
-            if (codedType == FHIRAllTypes.Code)
-                return instance.ParsePrimitiveCode();
-            else if (codedType == FHIRAllTypes.Coding)
-                return instance.ParseCoding();
-            else if (codedType == FHIRAllTypes.CodeableConcept)
-                return instance.ParseCodeableConcept();
-            else if (codedType == FHIRAllTypes.Quantity)
+            switch (instanceType)
+            {
+                case FHIRAllTypes.Code:
+                    return instance.ParsePrimitive<Code>();
+                case FHIRAllTypes.Coding:
+                    return instance.ParseCoding();
+                case FHIRAllTypes.CodeableConcept:
+                    return instance.ParseCodeableConcept();
+                case FHIRAllTypes.Quantity:
+                    return parseQuantity(instance);
+                case FHIRAllTypes.String:
+                    return new Code(instance.ParsePrimitive<FhirString>()?.Value);
+                case FHIRAllTypes.Uri:
+                    return new Code(instance.ParsePrimitive<FhirUri>()?.Value);
+                case FHIRAllTypes.Extension:
+                    return parseExtension(instance);
+                case null:
+                    //HACK: fall through - IElementNav did not provide a type
+                    //should not happen, and I have no intention to handle it.
+                default:
+                    // Not bindable
+                    return null;
+            }
+
+            Coding parseQuantity(IElementNavigator nav)
             {
                 var newCoding = new Coding();
                 var q = instance.ParseQuantity();
                 newCoding.Code = q.Unit;
-                newCoding.System = q.System;
+                newCoding.System = q.System ?? "http://unitsofmeasure.org";
                 return newCoding;
             }
-            else if(codedType == FHIRAllTypes.String)
-                return instance.ParsePrimitiveCode();
-            else if (codedType == FHIRAllTypes.Uri)
-                return instance.ParsePrimitiveCode();
-            else if (codedType == FHIRAllTypes.Extension)
-                throw new NotSupportedException($"The validator does not support binding to Extension values");
-            else
-                throw new NotSupportedException($"FHIR type '{codedType}' is not bindeable");
+
+            Element parseExtension(IElementNavigator nav)
+            {
+                // HACK: For now, assume this is a typed navigator, so we have "value",
+                // not the unparsed "valueCode" etc AND we have Type (in ParseBindable())
+                var valueChild = instance.Children("value").FirstOrDefault();
+
+                if (valueChild != null)
+                    return valueChild.ParseBindable();
+                else
+                    return null;
+            }
         }
 
-        public static Coding ParsePrimitiveCode(this IElementNavigator instance)
-        {
-            var newCoding = new Coding();
-            newCoding.Code = instance.Value?.ToString();
-
-            return newCoding;
-        }
+        public static T ParsePrimitive<T>(this IElementNavigator instance) where T:Primitive, new()
+                    => new T() { ObjectValue = instance.Value };
 
         public static Coding ParseCoding(this IElementNavigator instance)
         {
-            var newCoding = new Coding();
-            newCoding.System = instance.Children("system").GetString();
-            newCoding.Version = instance.Children("version").GetString();
-            newCoding.Code = instance.Children("code").GetString();
-            newCoding.Display = instance.Children("display").GetString();
-            newCoding.UserSelected = instance.Children("userSelected").SingleOrDefault()?.Value as bool?;
-
-            return newCoding;
+            return new Coding()
+            {
+                System = instance.Children("system").GetString(),
+                Version = instance.Children("version").GetString(),
+                Code = instance.Children("code").GetString(),
+                Display = instance.Children("display").GetString(),
+                UserSelected = instance.Children("userSelected").SingleOrDefault()?.Value as bool?
+            };
         }
 
         public static CodeableConcept ParseCodeableConcept(this IElementNavigator instance)
         {
-            var newCodeableConcept = new CodeableConcept();
-
-            newCodeableConcept.Coding = 
-                    instance.Children("coding").Select(codingNav => codingNav.ParseCoding()).ToList();
-            newCodeableConcept.Text = instance.Children("text").GetString();
-
-            return newCodeableConcept;
+            return new CodeableConcept()
+            {
+                Coding =
+                    instance.Children("coding").Select(codingNav => codingNav.ParseCoding()).ToList(),
+                Text = instance.Children("text").GetString()
+            };
         }
 
         public static string GetString(this IEnumerable<IElementNavigator> instance)

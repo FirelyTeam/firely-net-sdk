@@ -18,10 +18,6 @@ namespace Hl7.Fhir.Specification.Terminology
 
         public OperationOutcome ValidateCode(string canonical, string code, string system, string display = null, bool abstractAllowed = false)
         {
-            if (string.IsNullOrEmpty(canonical)) throw Error.ArgumentNullOrEmpty(nameof(canonical));
-            if (string.IsNullOrEmpty(code)) throw Error.ArgumentNullOrEmpty(nameof(code));
-            if (string.IsNullOrEmpty(system)) throw Error.ArgumentNullOrEmpty(nameof(system));
-
             try
             {
                 return _localService.ValidateCode(canonical, code, system, display, abstractAllowed);
@@ -46,10 +42,6 @@ namespace Hl7.Fhir.Specification.Terminology
 
         public OperationOutcome ValidateCode(ValueSet vs, string code, string system, string display = null, bool abstractAllowed = false)
         {
-            if (vs == null) throw Error.ArgumentNull(nameof(vs));
-            if (string.IsNullOrEmpty(code)) throw Error.ArgumentNullOrEmpty(nameof(code));
-            if (string.IsNullOrEmpty(system)) throw Error.ArgumentNullOrEmpty(nameof(system));
-
             try
             {
                 return _localService.ValidateCode(vs, code, system, display, abstractAllowed);

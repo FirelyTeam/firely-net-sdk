@@ -71,15 +71,15 @@ namespace Hl7.Fhir.Validation
 
         internal Validator NewInstance()
         {
-            var newValidator = new Validator(Settings);
-            newValidator.OnSnapshotNeeded = this.OnSnapshotNeeded;
-            newValidator.OnExternalResolutionNeeded = this.OnExternalResolutionNeeded;
+            return new Validator(Settings)
+            {
+                OnSnapshotNeeded = this.OnSnapshotNeeded,
+                OnExternalResolutionNeeded = this.OnExternalResolutionNeeded,
 
 #if REUSE_SNAPSHOT_GENERATOR
-            newValidator._snapshotGenerator = this._snapshotGenerator;
+                _snapshotGenerator = this._snapshotGenerator
 #endif
-
-            return newValidator;
+            };
         }
 
 
@@ -257,10 +257,14 @@ namespace Hl7.Fhir.Validation
 
         internal OperationOutcome ValidateConstraints(ElementDefinition definition, IElementNavigator instance)
         {
+            var outcome = new OperationOutcome();
+
+            if (!definition.Constraint.Any()) return outcome;
+
             // Make sure FHIR extensions are installed in FP compiler
             ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
 
-            var outcome = new OperationOutcome();
+
 
             if (Settings.SkipConstraintValidation) return outcome;
 
@@ -314,8 +318,9 @@ namespace Hl7.Fhir.Validation
         internal OperationOutcome ValidateBinding(ElementDefinition definition, IElementNavigator instance)
         {
             var outcome = new OperationOutcome();
-            var ts = Settings.TerminologyService;
+            if (definition.Binding == null) return outcome;
 
+            var ts = Settings.TerminologyService;
             if (ts == null)
             {
                 if (Settings.ResourceResolver == null)
@@ -332,29 +337,20 @@ namespace Hl7.Fhir.Validation
 
             try
             {
-                return bindingValidator.ValidateBinding(instance, definition);
+                Element bindable = instance.ParseBindable();
+
+                // If the instance is not bindeable, ignore the Binding specified on the element, 
+                // it's simply not applicable
+                if (bindable != null)
+                    return bindingValidator.ValidateBinding(bindable, definition.Binding);
             }
             catch (Exception e)
             {
-                Trace(outcome, $"Terminology service failed for binding at {definition.Path}: {e.Message}", Issue.TERMINOLOGY_SERVICE_FAILED, instance);
-                return outcome;
+                Trace(outcome, $"Terminology service call failed for binding at {definition.Path}: {e.Message}", Issue.TERMINOLOGY_SERVICE_FAILED, instance);                
             }
+
+            return outcome;
         }
-
-
-        internal static FHIRAllTypes? DetermineType(ElementDefinition definition, IElementNavigator instance)
-        {
-            if (definition.IsChoice())
-            {
-                if (instance.Type != null)
-                    return ModelInfo.FhirTypeNameToFhirType(instance.Type);
-                else
-                    return null;
-            }
-            else
-                return ModelInfo.FhirTypeNameToFhirType(definition.Type.First().Code);
-        }
-
 
         internal OperationOutcome ValidateNameReference(ElementDefinition definition, ElementDefinitionNavigator allDefinitions, IElementNavigator instance)
         {
