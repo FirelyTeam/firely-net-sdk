@@ -367,51 +367,80 @@ namespace Hl7.Fhir.Rest
 
         #region Validate Code
 
-        public static Task<Parameters> ValidateAsync(this FhirClient client, String valueSetId, FhirUri system, Code code, FhirString display = null)
+        public static Task<Parameters> ValidateCodeAsync(this FhirClient client, String valueSetId, FhirUri system, 
+            Code code, FhirString display = null, FhirBoolean abstractAllowed = null)
         {
-            if (code == null) throw new ArgumentNullException("code");
-            if (system == null) throw new ArgumentNullException("system");
+            if (valueSetId == null) throw new ArgumentNullException(nameof(valueSetId));
+            if (code == null) throw new ArgumentNullException(nameof(code));
+            if (system == null) throw new ArgumentNullException(nameof(system));
 
             var par = new Parameters().Add("code", code).Add("system", system);
+
             if (display != null)
-            {
                 par.Add("display", display);
-            }
+
+            if (abstractAllowed != null)
+                par.Add("abstract", abstractAllowed);
 
             return validateCodeForValueSetIdAsync(client, valueSetId, par);
         }
-        public static Parameters Validate(this FhirClient client, String valueSetId, FhirUri system, Code code,
-            FhirString display = null)
+        public static Parameters ValidateCode(this FhirClient client, String valueSetId, FhirUri system, Code code,
+            FhirString display = null, FhirBoolean abstractAllowed = null)
         {
-            return ValidateAsync(client, valueSetId, system, code, display).WaitResult();
+            return ValidateCodeAsync(client, valueSetId, system, code, display, abstractAllowed).WaitResult();
         }
 
-        public static Task<Parameters> ValidateCodeAsync(this FhirClient client, String valueSetId, Coding coding)
+        public static Task<Parameters> ValidateCodeAsync(this FhirClient client, ValueSet vs, Coding coding, FhirBoolean abstractAllowed = null)
+        {
+            if (vs == null) throw Error.ArgumentNull(nameof(vs));
+            if (coding == null) throw new ArgumentNullException("coding");
+
+            var par = new Parameters()
+                .Add("coding", coding)
+                .Add("valueSet", vs);
+
+            if (abstractAllowed != null)
+                par.Add("abstract", abstractAllowed);
+
+            return validateCodeForValueSetAsync(client, par);
+        }
+
+        public static Parameters ValidateCode(this FhirClient client, ValueSet vs, Coding coding, FhirBoolean abstractAllowed = null)
+        {
+            return ValidateCodeAsync(client, vs, coding, abstractAllowed).WaitResult();
+        }
+
+        public static Task<Parameters> ValidateCodeAsync(this FhirClient client, String valueSetId, Coding coding, FhirBoolean abstractAllowed = null)
         {
             if (coding == null) throw new ArgumentNullException("coding");
 
             var par = new Parameters().Add("coding", coding);
+            if (abstractAllowed != null)
+                par.Add("abstract", abstractAllowed);
 
             return validateCodeForValueSetIdAsync(client, valueSetId, par);
         }
-        public static Parameters ValidateCode(this FhirClient client, String valueSetId, Coding coding)
+
+        public static Parameters ValidateCode(this FhirClient client, String valueSetId, Coding coding, FhirBoolean abstractAllowed = null)
         {
-            return ValidateCodeAsync(client, valueSetId, coding).WaitResult();
+            return ValidateCodeAsync(client, valueSetId, coding, abstractAllowed).WaitResult();
         }
 
-        public static Task<Parameters> ValidateCodeAsync(this FhirClient client, String valueSetId, CodeableConcept codeableConcept)
+        public static Task<Parameters> ValidateCodeAsync(this FhirClient client, String valueSetId, CodeableConcept codeableConcept, FhirBoolean abstractAllowed = null)
         {
             if (codeableConcept == null) throw new ArgumentNullException("codeableConcept");
 
             var par = new Parameters().Add("codeableConcept", codeableConcept);
+            if (abstractAllowed != null)
+                par.Add("abstract", abstractAllowed);
 
             return validateCodeForValueSetIdAsync(client, valueSetId, par);
         }
 
         public static Parameters ValidateCode(this FhirClient client, String valueSetId,
-            CodeableConcept codeableConcept)
+            CodeableConcept codeableConcept, FhirBoolean abstractAllowed = null)
         {
-            return ValidateCodeAsync(client, valueSetId, codeableConcept).WaitResult();
+            return ValidateCodeAsync(client, valueSetId, codeableConcept, abstractAllowed).WaitResult();
         }
 
         #endregion
@@ -513,15 +542,17 @@ namespace Hl7.Fhir.Rest
 
             return null;
         }
+
+        private static async Task<Parameters> validateCodeForValueSetAsync(FhirClient client, Parameters par)
+        {
+            return expect<Parameters>(await client.TypeOperationAsync<ValueSet>(Operation.VALIDATE_CODE, par).ConfigureAwait(false));
+        }
+
         private static async Task<Parameters> validateCodeForValueSetIdAsync(FhirClient client, string valueSetId, Parameters par)
         {
             ResourceIdentity location = new ResourceIdentity("ValueSet/" + valueSetId);
 
             return expect<Parameters>(await client.InstanceOperationAsync(location.WithoutVersion().MakeRelative(), Operation.VALIDATE_CODE, par).ConfigureAwait(false));
-        }
-        private static Parameters validateCodeForValueSetId(FhirClient client, string valueSetId, Parameters par)
-        {
-            return validateCodeForValueSetIdAsync(client, valueSetId, par).WaitResult();
         }
         #endregion
     }

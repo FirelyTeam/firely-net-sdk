@@ -107,6 +107,34 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.AreEqual("Male", expansion.GetSingleValue<FhirString>("display").Value);
         }
 
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public void InvokeValidateCode()
+        {
+            var client = new FhirClient("http://ontoserver.csiro.au/dstu2_1");
+            var coding = new Coding("http://snomed.info/sct", "4322002");
+
+            //var result = client.ValidateCode("http://hl7.org/fhir/ValueSet/c80-facilitycodes", coding);
+            var result = client.ValidateCode("c80-facilitycodes", coding, abstractAllowed: new FhirBoolean(false));
+            Assert.IsTrue((result.Parameter.Single(p => p.Name == "result")?.Value as FhirBoolean)?.Value == true);
+
+        }
+
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public void InvokeValidateCodeWithVS()
+        {
+            var client = new FhirClient("http://ontoserver.csiro.au/dstu2_1");
+            var coding = new Coding("http://snomed.info/sct", "4322002");
+
+            var vs = client.Read<ValueSet>("ValueSet/c80-facilitycodes");
+            Assert.IsNotNull(vs);
+
+            var result = client.ValidateCode(vs, coding);
+            Assert.IsTrue((result.Parameter.Single(p => p.Name == "result")?.Value as FhirBoolean)?.Value == true);
+        }
+
+
         [TestMethod]//returns 500: validation of slices is not done yet.
         [TestCategory("IntegrationTest"), Ignore]
         public void InvokeResourceValidation()

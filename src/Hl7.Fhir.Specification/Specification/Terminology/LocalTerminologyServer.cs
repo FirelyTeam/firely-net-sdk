@@ -1,4 +1,12 @@
-﻿using System;
+﻿/* 
+ * Copyright (c) 2017, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+
+using System;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
@@ -12,62 +20,62 @@ namespace Hl7.Fhir.Specification.Terminology
         private IResourceResolver _resolver;
         private ValueSetExpander _expander;
 
-        //public LocalTerminologyServer(IConformanceSource localSource)
-        //{
-        //    if (localSource == null) throw Error.ArgumentNull(nameof(localSource));
-
-        //    _source = localSource;
-        //    _resolver = localSource;
-        //}
-
-        public LocalTerminologyServer(IResourceResolver resolver)
+        public LocalTerminologyServer(IResourceResolver resolver, ValueSetExpanderSettings expanderSettings = null)
         {
-            if (resolver == null) throw Error.ArgumentNull(nameof(resolver));
+            _resolver = resolver ?? throw Error.ArgumentNull(nameof(resolver));
 
-            _resolver = resolver;
+            var settings = expanderSettings ?? ValueSetExpanderSettings.Default;
+            if (settings.ValueSetSource == null) settings.ValueSetSource = resolver;
 
-            var settings = ValueSetExpanderSettings.Default;
-            settings.ValueSetSource = _resolver;
             _expander = new ValueSetExpander(settings);
         }
 
 
         public OperationOutcome ValidateCode(string uri, string code, string system, string display = null, bool abstractAllowed = false)
         {
+            if (string.IsNullOrEmpty(uri)) throw Error.ArgumentNullOrEmpty(nameof(uri));
+            if (string.IsNullOrEmpty(code)) throw Error.ArgumentNullOrEmpty(nameof(code));
+            if (string.IsNullOrEmpty(system)) throw Error.ArgumentNullOrEmpty(nameof(system));
+
             var result = new OperationOutcome();
-            var vs = _resolver.FindValueSet(uri);
+
+            ValueSet vs = null;
+            try
+            {
+                vs = _resolver.FindValueSet(uri);
+            }
+            catch
+            {
+                vs = null;
+            }
 
             if (vs == null)
-            {
-                result.AddIssue($"Cannot retrieve valueset '{uri}'", Issue.UNAVAILABLE_VALUESET);
-                return result;
-            }
+                throw new ValueSetUnknownException($"Cannot retrieve valueset '{uri}'");
+
+            return ValidateCode(vs, code, system, display, abstractAllowed);
+        }
+
+
+        public OperationOutcome ValidateCode(ValueSet vs, string code, string system, string display = null, bool abstractAllowed = false)
+        {
+            if (vs == null) throw Error.ArgumentNull(nameof(vs));
+            if (string.IsNullOrEmpty(code)) throw Error.ArgumentNullOrEmpty(nameof(code));
+            if (string.IsNullOrEmpty(system)) throw Error.ArgumentNullOrEmpty(nameof(system));
 
             // We might have a cached or pre-expanded version brought to us by the _source
             if (!vs.HasExpansion)
             {
                 // This will expand te vs - since we do not deepcopy() it, it will change the instance
                 // as it was passed to us from the source
-                try
-                {
-                    _expander.Expand(vs);
-                }
-                catch(Exception e)
-                {
-                    var tooComplex = e is NotSupportedException || e is ValueSetExpansionTooBigException;
-
-                    result.AddIssue($"ValueSet cannot be expanded: {e.Message}",
-                        tooComplex ? Issue.TERMINOLOGY_VALUESET_TOO_COMPLEX : Issue.TERMINOLOGY_EXPANSION_FAILED);
-                    return result;
-                }
+                _expander.Expand(vs);
             }
-
-            // No fallback necessary, just do a direct check for now
 
             var component = vs.FindInExpansion(code, system);
             var codeLabel = $"Code '{code}' from system '{system}'";
+            var result = new OperationOutcome();
+
             if (component == null)
-                result.AddIssue($"{codeLabel} does not exist in valueset '{uri}'", Issue.TERMINOLOGY_CODE_NOT_IN_VALUESET);
+                result.AddIssue($"{codeLabel} does not exist in valueset '{vs.Url}'", Issue.TERMINOLOGY_CODE_NOT_IN_VALUESET);
             else
             {
                 if (component.Abstract == true && !abstractAllowed)
@@ -81,3 +89,4 @@ namespace Hl7.Fhir.Specification.Terminology
         }
     }
 }
+
