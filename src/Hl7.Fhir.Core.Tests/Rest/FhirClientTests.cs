@@ -31,6 +31,8 @@ namespace Hl7.Fhir.Tests.Rest
         //public static Uri testEndpoint = new Uri("http://localhost:49911/fhir");
         //public static Uri testEndpoint = new Uri("http://sqlonfhir-dstu2.azurewebsites.net/fhir");
 
+        public static Uri TerminologyEndpoint = new Uri("http://ontoserver.csiro.au/dstu2_1");
+
         [TestInitialize]
         public void TestInitialize()
         {

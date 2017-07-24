@@ -122,41 +122,27 @@ namespace Hl7.Fhir.Rest
 
         #region Concept Lookup
 
-        public static async Task<Parameters> ConceptLookupAsync(this FhirClient client, Coding coding, FhirDateTime date = null)
+        public static async Task<Parameters> ConceptLookupAsync(this IFhirClient client, 
+            Code code=null, FhirUri system = null, FhirString version = null, 
+            Coding coding=null, FhirDateTime date = null)
         {
-            if (coding == null) throw Error.ArgumentNull(nameof(coding));
-
-            var par = new Parameters();
-            par.Add("coding", coding);
-            if (date != null) par.Add("date", date);
+            var par = new Parameters()
+                .Add(nameof(code), code)
+                .Add(nameof(system), system)
+                .Add(nameof(version), version)
+                .Add(nameof(coding), coding)
+                .Add(nameof(date), date);
 
             return (await client.TypeOperationAsync<ValueSet>(RestOperation.CONCEPT_LOOKUP, par).ConfigureAwait(false))
                 .OperationResult<Parameters>();
         }
 
-        public static Parameters ConceptLookup(this FhirClient client, Coding coding, FhirDateTime date = null)
+        public static Parameters ConceptLookup(this IFhirClient client,
+            Code code = null, FhirUri system = null, FhirString version = null,
+            Coding coding = null, FhirDateTime date = null)
+
         {
-            return ConceptLookupAsync(client, coding, date).WaitResult();
-        }
-
-
-        public static async Task<Parameters> ConceptLookupAsync(this FhirClient client, Code code, FhirUri system, FhirString version = null, FhirDateTime date = null)
-        {
-            if (code == null) throw Error.ArgumentNull(nameof(code));
-            if (system == null) throw Error.ArgumentNull(nameof(system));
-
-            var par = new Parameters().Add("code", code).Add("system", system);
-            if (version != null) par.Add("version", version);
-            if (date != null) par.Add("date", date);
-
-            return (await client.TypeOperationAsync<ValueSet>(RestOperation.CONCEPT_LOOKUP, par).ConfigureAwait(false))
-                .OperationResult<Parameters>();
-        }
-
-        public static Parameters ConceptLookup(this FhirClient client, Code code, FhirUri system,
-            FhirString version = null, FhirDateTime date = null)
-        {
-            return ConceptLookupAsync(client, code, system, version, date).WaitResult();
+            return ConceptLookupAsync(client, code, system, version, coding, date).WaitResult();
         }
 
         #endregion
