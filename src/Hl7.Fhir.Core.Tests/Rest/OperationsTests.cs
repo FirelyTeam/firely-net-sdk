@@ -42,9 +42,8 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("IntegrationTest")]
         public void InvokeExpandExistingValueSet()
         {
-            var client = new FhirClient(testEndpoint);
-            var vs = client.ExpandValueSet(ResourceIdentity.Build("ValueSet","administrative-gender"));
-            
+            var client = new FhirClient(FhirClientTests.TerminologyEndpoint);
+            var vs = client.ExpandValueSet(ResourceIdentity.Build("ValueSet","administrative-gender"));            
             Assert.IsTrue(vs.Expansion.Contains.Any());
         }
 
@@ -54,54 +53,37 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("IntegrationTest")]
         public void InvokeExpandParameterValueSet()
         {
-            var client = new FhirClient(testEndpoint);
+            var client = new FhirClient(FhirClientTests.TerminologyEndpoint);
 
             var vs = client.Read<ValueSet>("ValueSet/administrative-gender");
-
             var vsX = client.ExpandValueSet(vs);
 
             Assert.IsTrue(vsX.Expansion.Contains.Any());
         }
 
-        [TestMethod]
-        [TestCategory("IntegrationTest")]
-        public void InvokeExpandUsingInstanceOp()
-        {
-            var client = new FhirClient("http://sqlonfhir-dstu2.azurewebsites.net/fhir"); // testEndpoint);
-
-            //    var vs = client.Read<ValueSet>("ValueSet/administrative-gender");
-
-            //   var vsX = client.ExpandValueSet(ExpandValueSet(vs);
-
-            // Assert.IsTrue(vsX.Expansion.Contains.Any());
-            var result = client.InstanceOperation(ResourceIdentity.Build("ValueSet", "extensional-case-1"),
-                RestOperation.EXPAND_VALUESET);
-
-        }
-    
-
+  
         /// <summary>
         /// http://hl7.org/fhir/valueset-operations.html#lookup
         /// </summary>
-        [TestMethod,Ignore]  // Server returns internal server error
+        [TestMethod]  // Server returns internal server error
         [TestCategory("IntegrationTest")]
         public void InvokeLookupCoding()
         {
-            var client = new FhirClient(testEndpoint);
+            var client = new FhirClient(FhirClientTests.TerminologyEndpoint);
             var coding = new Coding("http://hl7.org/fhir/administrative-gender", "male");
 
-            var expansion = client.ConceptLookup(coding);
+            var expansion = client.ConceptLookup(coding: coding);
 
             // Assert.AreEqual("AdministrativeGender", expansion.GetSingleValue<FhirString>("name").Value); // Returns empty currently on Grahame's server
             Assert.AreEqual("Male", expansion.GetSingleValue<FhirString>("display").Value);               
         }
 
-        [TestMethod,Ignore] // Server returns internal server error
+        [TestMethod] // Server returns internal server error
         [TestCategory("IntegrationTest")]
         public void InvokeLookupCode()
         {
-            var client = new FhirClient(testEndpoint);
-            var expansion = client.ConceptLookup(new Code("male"), new FhirUri("http://hl7.org/fhir/administrative-gender"));
+            var client = new FhirClient(FhirClientTests.TerminologyEndpoint);
+            var expansion = client.ConceptLookup(code: new Code("male"), system: new FhirUri("http://hl7.org/fhir/administrative-gender"));
 
             //Assert.AreEqual("male", expansion.GetSingleValue<FhirString>("name").Value);  // Returns empty currently on Grahame's server
             Assert.AreEqual("Male", expansion.GetSingleValue<FhirString>("display").Value);
@@ -111,7 +93,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("IntegrationTest")]
         public async void InvokeValidateCodeById()
         {
-            var client = new FhirClient("http://ontoserver.csiro.au/dstu2_1");
+            var client = new FhirClient(FhirClientTests.TerminologyEndpoint);
             var coding = new Coding("http://snomed.info/sct", "4322002");
 
             var result = await client.ValidateCodeAsync("c80-facilitycodes", coding: coding, @abstract: new FhirBoolean(false));
@@ -122,10 +104,10 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("IntegrationTest")]
         public void InvokeValidateCodeByCanonical()
         {
-            var client = new FhirClient("http://ontoserver.csiro.au/dstu2_1");
+            var client = new FhirClient(FhirClientTests.TerminologyEndpoint);
             var coding = new Coding("http://snomed.info/sct", "4322002");
 
-            var result = client.ValidateCode(identifier: new FhirUri("http://hl7.org/fhir/ValueSet/c80-facilitycodes"), 
+            var result = client.ValidateCode(url: new FhirUri("http://hl7.org/fhir/ValueSet/c80-facilitycodes"), 
                   coding: coding, @abstract: new FhirBoolean(false));
             Assert.IsTrue(result.Result?.Value == true);
         }
@@ -134,7 +116,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("IntegrationTest")]
         public void InvokeValidateCodeWithVS()
         {
-            var client = new FhirClient("http://ontoserver.csiro.au/dstu2_1");
+            var client = new FhirClient(FhirClientTests.TerminologyEndpoint);
             var coding = new Coding("http://snomed.info/sct", "4322002");
 
             var vs = client.Read<ValueSet>("ValueSet/c80-facilitycodes");
