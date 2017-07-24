@@ -102,9 +102,8 @@ namespace Hl7.Fhir.Model.Primitives
         {
             if (obj == null) return false;
 
-            if (obj is PartialDateTime)
+            if (obj is PartialDateTime other)
             {
-                var other = (PartialDateTime)obj;
 
                 // If we just have a date, do a straight compare
                 // otherwise, we have date + time, and DateTimeOffset will work as expected,
@@ -159,10 +158,8 @@ namespace Hl7.Fhir.Model.Primitives
         {
             if (obj == null) return 1;
 
-            if(obj is PartialDateTime)
+            if (obj is PartialDateTime p)
             {
-                var p = (PartialDateTime)obj;
-
                 if (this < p) return -1;
                 if (this > p) return 1;
                 return 0;

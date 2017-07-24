@@ -16,9 +16,11 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async System.Threading.Tasks.Task UpdateDelete_UsingResourceIdentity_ResultReturned()
         {
-            var client = new FhirClient(_endpoint);
-            client.PreferredFormat = ResourceFormat.Json;
-            client.PreferredReturn = Prefer.ReturnRepresentation;
+            var client = new FhirClient(_endpoint)
+            {
+                PreferredFormat = ResourceFormat.Json,
+                PreferredReturn = Prefer.ReturnRepresentation
+            };
 
             var pat = new Patient()
             {

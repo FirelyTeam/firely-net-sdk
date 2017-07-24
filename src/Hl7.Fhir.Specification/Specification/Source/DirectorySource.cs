@@ -68,9 +68,7 @@ namespace Hl7.Fhir.Specification.Source
 
         public DirectorySource(string contentDirectory, bool includeSubdirectories = false)
         {
-            if (contentDirectory == null) throw Error.ArgumentNull(nameof(contentDirectory));
-
-            _contentDirectory = contentDirectory;
+            _contentDirectory = contentDirectory ?? throw Error.ArgumentNull(nameof(contentDirectory));
             _includeSubs = includeSubdirectories;
         }
 

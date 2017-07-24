@@ -16,10 +16,12 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async System.Threading.Tasks.Task Read_UsingResourceIdentity_ResultReturned()
         {
-            var client = new FhirClient(_endpoint);
-            client.PreferredFormat = ResourceFormat.Json;
-            client.PreferredReturn = Prefer.ReturnRepresentation;
-
+            var client = new FhirClient(_endpoint)
+            {
+                PreferredFormat = ResourceFormat.Json,
+                PreferredReturn = Prefer.ReturnRepresentation
+            };
+            
             Patient p = await client.ReadAsync<Patient>(new ResourceIdentity("/Patient/SMART-1288992"));
             Assert.IsNotNull(p);
             Assert.IsNotNull(p.Name[0].Given);
@@ -32,9 +34,11 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async System.Threading.Tasks.Task Read_UsingLocationString_ResultReturned()
         {
-            var client = new FhirClient(_endpoint);
-            client.PreferredFormat = ResourceFormat.Json;
-            client.PreferredReturn = Prefer.ReturnRepresentation;
+            var client = new FhirClient(_endpoint)
+            {
+                PreferredFormat = ResourceFormat.Json,
+                PreferredReturn = Prefer.ReturnRepresentation
+            };
 
             Patient p = await client.ReadAsync<Patient>("/Patient/SMART-1288992");
             Assert.IsNotNull(p);

@@ -328,10 +328,12 @@ namespace Hl7.Fhir.Validation
         [Fact]
         public void ValidateChoiceWithConstraints()
         {
-            var obs = new Observation();
-            obs.Status = ObservationStatus.Final;
-            obs.Code = new CodeableConcept("http://somesystem.org/codes", "AABB");
-            obs.Meta = new Meta { Profile = new[] { "http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation" } };
+            var obs = new Observation()
+            {
+                Status = ObservationStatus.Final,
+                Code = new CodeableConcept("http://somesystem.org/codes", "AABB"),
+                Meta = new Meta { Profile = new[] { "http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation" } }
+            };
 
             _validator.Settings.Trace = true;
 
@@ -749,8 +751,7 @@ namespace Hl7.Fhir.Validation
 
             private static Resource clearSnapshot(Resource result)
             {
-                var sd = result as StructureDefinition;
-                if (sd != null && sd.HasSnapshot)
+                if (result is StructureDefinition sd && sd.HasSnapshot)
                 {
                     sd.Snapshot = null;
                 }
