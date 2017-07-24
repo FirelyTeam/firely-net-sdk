@@ -37,15 +37,28 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        private Bundle.EntryComponent newEntry(Bundle.HTTPVerb method)
+        internal enum InteractionType
         {
-            var newEntry = new Bundle.EntryComponent()
-            {
-                Request = new Bundle.RequestComponent()
-                {
-                    Method = method
-                }
-            };
+            Search,
+            Unspecified,
+            Read,
+            VRead,
+            Update,
+            Delete,
+            Create,
+            Capabilities,
+            History,
+            Operation,
+            Transaction
+        }
+
+        private Bundle.EntryComponent newEntry(Bundle.HTTPVerb method, InteractionType interactionType)
+        {
+            var newEntry = new Bundle.EntryComponent();
+            newEntry.Request = new Bundle.RequestComponent();
+            newEntry.Request.Method = method;
+            newEntry.AddAnnotation(interactionType);
+
             return newEntry;
         }
 
@@ -67,7 +80,7 @@ namespace Hl7.Fhir.Rest
 
         public TransactionBuilder Get(string url)
         {
-            var entry = newEntry(Bundle.HTTPVerb.GET);
+            var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.Unspecified);
             var uri = new Uri(url,UriKind.RelativeOrAbsolute);
 
             if (uri.IsAbsoluteUri)
@@ -90,7 +103,7 @@ namespace Hl7.Fhir.Rest
 
         public TransactionBuilder Read(string resourceType, string id, string versionId = null, DateTimeOffset? ifModifiedSince = null)
         {
-            var entry = newEntry(Bundle.HTTPVerb.GET);
+            var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.Read);
             entry.Request.IfNoneMatch = createIfMatchETag(versionId);
             entry.Request.IfModifiedSince = ifModifiedSince;
             var path = newRestUrl().AddPath(resourceType, id);
@@ -101,7 +114,7 @@ namespace Hl7.Fhir.Rest
 
         public TransactionBuilder VRead(string resourceType, string id, string vid)
         {
-            var entry = newEntry(Bundle.HTTPVerb.GET);
+            var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.VRead);
             var path = newRestUrl().AddPath(resourceType, id, HISTORY, vid);
             addEntry(entry, path);
 
@@ -111,7 +124,7 @@ namespace Hl7.Fhir.Rest
 
         public TransactionBuilder Update(string id, Resource body, string versionId=null)
         {
-            var entry = newEntry(Bundle.HTTPVerb.PUT);
+            var entry = newEntry(Bundle.HTTPVerb.PUT, InteractionType.Update);
             entry.Resource = body;
             entry.Request.IfMatch = createIfMatchETag(versionId);
             var path = newRestUrl().AddPath(body.TypeName, id);
@@ -122,7 +135,7 @@ namespace Hl7.Fhir.Rest
 
         public TransactionBuilder Update(SearchParams condition, Resource body, string versionId=null)
         {
-            var entry = newEntry(Bundle.HTTPVerb.PUT);
+            var entry = newEntry(Bundle.HTTPVerb.PUT, InteractionType.Update);
             entry.Resource = body;
             entry.Request.IfMatch = createIfMatchETag(versionId);
             var path = newRestUrl().AddPath(body.TypeName);
@@ -145,7 +158,7 @@ namespace Hl7.Fhir.Rest
 
         public TransactionBuilder Delete(string resourceType, string id)
         {
-            var entry = newEntry(Bundle.HTTPVerb.DELETE);
+            var entry = newEntry(Bundle.HTTPVerb.DELETE, InteractionType.Delete);
             var path = newRestUrl().AddPath(resourceType, id);
             addEntry(entry, path);
 
@@ -154,7 +167,7 @@ namespace Hl7.Fhir.Rest
 
         public TransactionBuilder Delete(string resourceType, SearchParams condition)
         {
-            var entry = newEntry(Bundle.HTTPVerb.DELETE);
+            var entry = newEntry(Bundle.HTTPVerb.DELETE, InteractionType.Delete);
             var path = newRestUrl().AddPath(resourceType);
             path.AddParams(condition.ToUriParamList());
             addEntry(entry, path);
@@ -164,7 +177,7 @@ namespace Hl7.Fhir.Rest
 
         public TransactionBuilder Create(Resource body)
         {
-            var entry = newEntry(Bundle.HTTPVerb.POST);
+            var entry = newEntry(Bundle.HTTPVerb.POST, InteractionType.Create);
             entry.Resource = body;
             var path = newRestUrl().AddPath(body.TypeName);
             addEntry(entry, path);
@@ -174,7 +187,7 @@ namespace Hl7.Fhir.Rest
 
         public TransactionBuilder Create(Resource body, SearchParams condition)
         {
-            var entry = newEntry(Bundle.HTTPVerb.POST);
+            var entry = newEntry(Bundle.HTTPVerb.POST, InteractionType.Create);
             entry.Resource = body;
             var path = newRestUrl().AddPath(body.TypeName);
 
@@ -187,7 +200,7 @@ namespace Hl7.Fhir.Rest
         
         public TransactionBuilder Conformance(SummaryType? summary)
         {
-            var entry =  newEntry(Bundle.HTTPVerb.GET);
+            var entry =  newEntry(Bundle.HTTPVerb.GET, InteractionType.Capabilities);
             var path = newRestUrl().AddPath(METADATA);
             if (summary.HasValue)
                 path.AddParam(SearchParams.SEARCH_PARAM_SUMMARY, summary.Value.ToString().ToLower());
@@ -199,7 +212,7 @@ namespace Hl7.Fhir.Rest
 
         private void addHistoryEntry(RestUrl path, SummaryType? summaryOnly = null, int? pageSize=null, DateTimeOffset? since = null)
         {
-            var entry = newEntry(Bundle.HTTPVerb.GET);
+            var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.History);
 
             if(summaryOnly.HasValue) path.AddParam(SearchParams.SEARCH_PARAM_SUMMARY, summaryOnly.Value.ToString().ToLower());
             if(pageSize.HasValue) path.AddParam(HttpUtil.HISTORY_PARAM_COUNT, pageSize.Value.ToString());
@@ -236,7 +249,7 @@ namespace Hl7.Fhir.Rest
 
         public TransactionBuilder EndpointOperation(RestUrl endpoint, Parameters parameters, bool useGet = false)
         {
-            var entry = newEntry(useGet ? Bundle.HTTPVerb.GET : Bundle.HTTPVerb.POST);
+            var entry = newEntry(useGet ? Bundle.HTTPVerb.GET : Bundle.HTTPVerb.POST, InteractionType.Operation);
 
             entry.Resource = parameters;
 
@@ -277,7 +290,7 @@ namespace Hl7.Fhir.Rest
 
         public TransactionBuilder Search(SearchParams q = null, string resourceType = null)
         {
-            var entry = newEntry(Bundle.HTTPVerb.GET);
+            var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.Search);
             var path = newRestUrl();
             if (resourceType != null) path.AddPath(resourceType);
             if(q != null) path.AddParams(q.ToUriParamList());
@@ -289,7 +302,7 @@ namespace Hl7.Fhir.Rest
 
         public TransactionBuilder Transaction(Bundle transaction)
         {
-            var entry = newEntry(Bundle.HTTPVerb.POST);
+            var entry = newEntry(Bundle.HTTPVerb.POST, InteractionType.Transaction);
             entry.Resource = transaction;
             addEntry(entry, newRestUrl());
 
