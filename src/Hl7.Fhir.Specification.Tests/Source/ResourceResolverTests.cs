@@ -70,14 +70,14 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var wa = new WebResolver();
 
-            var artifact = wa.ResolveByUri("http://fhir2.healthintersections.com.au/open/StructureDefinition/Observation");
+            var artifact = wa.ResolveByUri("http://test.fhir.org/r2/StructureDefinition/Observation");
 
             Assert.IsNotNull(artifact);
             Assert.IsTrue(artifact is StructureDefinition);
             Assert.AreEqual("Observation", ((StructureDefinition)artifact).Name);
 
             var ci = artifact.Annotation<OriginAnnotation>();
-            Assert.AreEqual("http://fhir2.healthintersections.com.au/open/StructureDefinition/Observation", ci.Origin);
+            Assert.AreEqual("http://test.fhir.org/r2/StructureDefinition/Observation", ci.Origin);
         }
 
         private class TestFhirClient : Rest.FhirClient
@@ -115,14 +115,14 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsNull(client);
 
-            var artifact = wa.ResolveByUri("http://fhir2.healthintersections.com.au/open/StructureDefinition/Flag");
+            var artifact = wa.ResolveByUri("http://test.fhir.org/r2/StructureDefinition/Patient");
 
             Assert.IsNotNull(client);
             Assert.AreEqual(client.Status, 3);
 
             Assert.IsNotNull(artifact);
             Assert.IsTrue(artifact is StructureDefinition);
-            Assert.AreEqual("Flag", ((StructureDefinition)artifact).Name);
+            Assert.AreEqual("Patient", ((StructureDefinition)artifact).Name);
         }
 
         [TestMethod,TestCategory("IntegrationTest")]
@@ -134,11 +134,11 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(vs);
             Assert.IsTrue(vs is ValueSet);
 
-            var artifact = resolver.ResolveByUri("http://fhir2.healthintersections.com.au/open/StructureDefinition/flag");
+            var artifact = resolver.ResolveByUri("http://test.fhir.org/r2/StructureDefinition/Patient");
 
             Assert.IsNotNull(artifact);
             Assert.IsTrue(artifact is StructureDefinition);
-            Assert.AreEqual("Flag", ((StructureDefinition)artifact).Name);
+            Assert.AreEqual("Patient", ((StructureDefinition)artifact).Name);
         }
 
 
