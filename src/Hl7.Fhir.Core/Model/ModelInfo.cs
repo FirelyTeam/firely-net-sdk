@@ -410,6 +410,15 @@ namespace Hl7.Fhir.Model
                 type == FHIRDefinedType.BackboneElement;
         }
 
+        public static bool IsCoreSuperType(string type)
+        {
+            var fat = FhirTypeNameToFhirType(type);
+
+            if (fat == null) return false;
+
+            return IsCoreSuperType(fat.Value);
+        }
+
         public static bool IsProfiledQuantity(FHIRDefinedType type)
         {
             return

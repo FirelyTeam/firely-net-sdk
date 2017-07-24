@@ -39,13 +39,11 @@ namespace Hl7.Fhir.Validation
                         Char.IsLower(path[0]);
         }
 
-        internal static bool HasDeclaredCoreSuperType(this ElementDefinition ed)
+        internal static bool IsResourcePlaceholder(this ElementDefinition ed)
         {
             if (ed.Type == null) return false;
-
-            return ed.Type.Any(t => t.Code != null && ModelInfo.IsCoreSuperType(t.Code.Value));
+            return ed.Type.Any(t => t.Code == FHIRDefinedType.Resource || t.Code == FHIRDefinedType.DomainResource);
         }
-
 
         public static string ConstraintDescription(this ElementDefinition.ConstraintComponent cc)
         {
