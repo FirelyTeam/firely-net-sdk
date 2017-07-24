@@ -328,6 +328,8 @@ namespace Hl7.Fhir.Rest
 
         internal static T OperationResult<T>(this Resource result) where T : Resource
         {
+            if (result == null) return null;
+
             //If this is immediately what we are expecting, that's fine
             if (result is T) return (T)result;
 

@@ -6,11 +6,13 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using System;
 using System.Linq;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.Specification.Terminology
 {
@@ -23,23 +25,29 @@ namespace Hl7.Fhir.Specification.Terminology
 
         public IFhirClient Endpoint { get; set; }
 
-        public OperationOutcome ValidateCode(string canonical, string code, string system, string display = null, bool abstractAllowed = false)
-                => invokeValidate(null, canonical, code, system, display, abstractAllowed);
-
-        public OperationOutcome ValidateCode(ValueSet vs, string code, string system, string display = null, bool abstractAllowed = false)
-                => invokeValidate(vs, null, code, system, display, abstractAllowed);
-
-
-        public OperationOutcome invokeValidate(ValueSet vs, string canonical, string code, string system, string display = null, bool abstractAllowed = false)
+        public OperationOutcome ValidateCode(string canonical = null, string context = null, ValueSet valueSet = null, 
+            string code = null, string system = null, string version = null, string display = null, 
+            Coding coding = null, CodeableConcept codeableConcept = null, FhirDateTime date = null, 
+            bool? @abstract = null, string displayLanguage = null)
         {
-            var coding = new Coding(system, code, display);
+            if (!String.IsNullOrEmpty(displayLanguage))
+                throw Error.NotSupported($"The '{nameof(displayLanguage)}' parameter is not supported in DSTU2 terminology services.");
 
             try
             {
-                var resultValidateCode = vs != null ? Endpoint.ValidateCode(valueSet: vs, coding: coding, @abstract: new FhirBoolean(abstractAllowed))
-                                            : Endpoint.ValidateCode(identifier: new FhirUri(canonical), coding: coding, @abstract: new FhirBoolean(abstractAllowed));
+                var resultValidateCode =
+                    Endpoint.ValidateCode(
+                                identifier: canonical != null ? new FhirUri(canonical) : null,
+                                context: context != null ? new FhirUri(context) : null,
+                                valueSet: valueSet, 
+                                code: code != null ? new Code(code) : null,
+                                system: system != null ? new FhirUri(system) : null,
+                                version: version != null ? new FhirString(version) : null,
+                                display: display != null ? new FhirString(display) : null,
+                                coding: coding, codeableConcept: codeableConcept, date: date, 
+                                @abstract: @abstract != null ? new FhirBoolean(@abstract) : null);
 
-                OperationOutcome outcome = processResult(code, system, display, resultValidateCode );
+                OperationOutcome outcome = processResult(code, system, display, coding, codeableConcept, resultValidateCode);
 
                 return outcome;
 
@@ -54,7 +62,8 @@ namespace Hl7.Fhir.Specification.Terminology
             }
         }
 
-        private OperationOutcome processResult(string code, string system, string display, ValidateCodeResult result)
+
+        private OperationOutcome processResult(string code, string system, string display, Coding coding, CodeableConcept codeableConcept, ValidateCodeResult result)
         {
             if (result?.Result?.Value == null)
                 throw Error.InvalidOperation($"Terminology service at {Endpoint.Endpoint.ToString()} did not return a result.");
@@ -68,9 +77,17 @@ namespace Hl7.Fhir.Specification.Terminology
                 if (message != null)
                     outcome.AddIssue(message, Issue.TERMINOLOGY_CODE_NOT_IN_VALUESET);
                 else
-                    outcome.AddIssue($"Validation of code '{code}', system '{system}' and display '{display}' failed, but" +
+                {
+                    if (code != null && coding == null)
+                        coding = new Coding(system, code, display);
+
+                    var codeDisplay = codeableConcept != null ? FhirSerializer.SerializeToJson(codeableConcept)
+                                            : FhirSerializer.SerializeToJson(coding);
+
+                    outcome.AddIssue($"Validation of '{codeDisplay}' failed, but" +
                                 $"the terminology service at {Endpoint.Endpoint.ToString()} did not provide further details.",
                                 Issue.TERMINOLOGY_CODE_NOT_IN_VALUESET);
+                }
             }
 
             return outcome;
