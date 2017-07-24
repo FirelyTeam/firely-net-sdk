@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Specification.Terminology
         }
     }
 
-    public class ValueSetUnknownException : Exception
+    public class ValueSetUnknownException : TerminologyServiceException
     {
         public ValueSetUnknownException(string message) : base(message)
         {
