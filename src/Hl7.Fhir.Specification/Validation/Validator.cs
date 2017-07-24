@@ -325,7 +325,7 @@ namespace Hl7.Fhir.Validation
                     return outcome;
                 }
 
-                ts = new LocalTerminologyServer(Settings.ResourceResolver);
+                ts = new LocalTerminologyService(Settings.ResourceResolver);
             }
 
             var bindingValidator = new BindingValidator(ts, instance.Location);
@@ -336,7 +336,7 @@ namespace Hl7.Fhir.Validation
             }
             catch (Exception e)
             {
-                Trace(outcome, $"Terminology service failed while validating code X (system Y): {e.Message}", Issue.UNAVAILABLE_VALIDATE_CODE_FAILED, instance);
+                Trace(outcome, $"Terminology service failed for binding at {definition.Path}: {e.Message}", Issue.TERMINOLOGY_SERVICE_FAILED, instance);
                 return outcome;
             }
         }

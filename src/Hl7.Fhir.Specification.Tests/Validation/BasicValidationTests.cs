@@ -320,8 +320,8 @@ namespace Hl7.Fhir.Validation
             //      http://validationtest.org/fhir/StructureDefinition/QuestionnaireWithFixedType
             var report = _validator.Validate(questionnaire, "http://validationtest.org/fhir/StructureDefinition/QuestionnaireWithFixedType");
             Assert.False(report.Success);
-            Assert.Equal(2, report.Errors);
-            Assert.Equal(0, report.Warnings);           // 3x narrative constraint with no fhirpath
+            Assert.Equal(51, report.Errors);
+            Assert.Equal(20, report.Warnings);           // 20 warnings about valueset too complex
         }
 
 
@@ -340,27 +340,27 @@ namespace Hl7.Fhir.Validation
             obs.Value = new FhirString("I should be ok");
             var report = _validator.Validate(obs);
             Assert.True(report.Success);
-            Assert.Equal(0, report.Warnings);
+            Assert.Equal(1, report.Warnings);   // 1 warning about valueset too complex
 
             obs.Value = FhirDateTime.Now();
             report = _validator.Validate(obs);
             Assert.False(report.Success);
-            Assert.Equal(0, report.Warnings);
+            Assert.Equal(1, report.Warnings);
 
             obs.Value = new Quantity(78m, "kg");
             report = _validator.Validate(obs);
             Assert.True(report.Success);
-            Assert.Equal(0, report.Warnings);
+            Assert.Equal(1, report.Warnings);
 
             obs.Value = new Quantity(183m, "cm");
             report = _validator.Validate(obs);
             Assert.True(report.Success);
-            Assert.Equal(0, report.Warnings);
+            Assert.Equal(1, report.Warnings);
 
             obs.Value = new Quantity(300m, "in");
             report = _validator.Validate(obs);
             Assert.False(report.Success);
-            Assert.Equal(0, report.Warnings);
+            Assert.Equal(1, report.Warnings);
         }
 
 
@@ -563,7 +563,7 @@ namespace Hl7.Fhir.Validation
             var report = _validator.Validate(bundle);
 
             Assert.True(report.Success);
-            Assert.Equal(1, report.Warnings);
+            Assert.Equal(2, report.Warnings);   // 2 warnings about valueset too complex
         }
     
 

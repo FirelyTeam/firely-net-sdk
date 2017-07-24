@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public void InvokeValidateCode()
+        public void InvokeValidateCodeById()
         {
             var client = new FhirClient("http://ontoserver.csiro.au/dstu2_1");
             var coding = new Coding("http://snomed.info/sct", "4322002");
@@ -118,6 +118,17 @@ namespace Hl7.Fhir.Tests.Rest
             var result = client.ValidateCode("c80-facilitycodes", coding, abstractAllowed: new FhirBoolean(false));
             Assert.IsTrue((result.Parameter.Single(p => p.Name == "result")?.Value as FhirBoolean)?.Value == true);
 
+        }
+
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public void InvokeValidateCodeByCanonical()
+        {
+            var client = new FhirClient("http://ontoserver.csiro.au/dstu2_1");
+            var coding = new Coding("http://snomed.info/sct", "4322002");
+
+            var result = client.ValidateCode(new FhirUri("http://hl7.org/fhir/ValueSet/c80-facilitycodes"), coding, abstractAllowed: new FhirBoolean(false));
+            Assert.IsTrue((result.Parameter.Single(p => p.Name == "result")?.Value as FhirBoolean)?.Value == true);
         }
 
         [TestMethod]

@@ -367,7 +367,7 @@ namespace Hl7.Fhir.Rest
 
         #region Validate Code
 
-        public static Task<Parameters> ValidateCodeAsync(this FhirClient client, String valueSetId, FhirUri system, 
+        public static Task<Parameters> ValidateCodeAsync(this IFhirClient client, String valueSetId, FhirUri system, 
             Code code, FhirString display = null, FhirBoolean abstractAllowed = null)
         {
             if (valueSetId == null) throw new ArgumentNullException(nameof(valueSetId));
@@ -384,13 +384,13 @@ namespace Hl7.Fhir.Rest
 
             return validateCodeForValueSetIdAsync(client, valueSetId, par);
         }
-        public static Parameters ValidateCode(this FhirClient client, String valueSetId, FhirUri system, Code code,
+        public static Parameters ValidateCode(this IFhirClient client, String valueSetId, FhirUri system, Code code,
             FhirString display = null, FhirBoolean abstractAllowed = null)
         {
             return ValidateCodeAsync(client, valueSetId, system, code, display, abstractAllowed).WaitResult();
         }
 
-        public static Task<Parameters> ValidateCodeAsync(this FhirClient client, ValueSet vs, Coding coding, FhirBoolean abstractAllowed = null)
+        public static Task<Parameters> ValidateCodeAsync(this IFhirClient client, ValueSet vs, Coding coding, FhirBoolean abstractAllowed = null)
         {
             if (vs == null) throw Error.ArgumentNull(nameof(vs));
             if (coding == null) throw new ArgumentNullException("coding");
@@ -405,12 +405,33 @@ namespace Hl7.Fhir.Rest
             return validateCodeForValueSetAsync(client, par);
         }
 
-        public static Parameters ValidateCode(this FhirClient client, ValueSet vs, Coding coding, FhirBoolean abstractAllowed = null)
+        public static Parameters ValidateCode(this IFhirClient client, ValueSet vs, Coding coding, FhirBoolean abstractAllowed = null)
         {
             return ValidateCodeAsync(client, vs, coding, abstractAllowed).WaitResult();
         }
 
-        public static Task<Parameters> ValidateCodeAsync(this FhirClient client, String valueSetId, Coding coding, FhirBoolean abstractAllowed = null)
+        public static Task<Parameters> ValidateCodeAsync(this IFhirClient client, FhirUri canonical, Coding coding, FhirBoolean abstractAllowed = null)
+        {
+            if (canonical == null) throw Error.ArgumentNull(nameof(canonical));
+            if (coding == null) throw new ArgumentNullException("coding");
+
+            var par = new Parameters()
+                .Add("identifier", canonical)           // TODO: Becomes "url" in STU3!
+                .Add("coding", coding);
+
+            if (abstractAllowed != null)
+                par.Add("abstract", abstractAllowed);
+
+            return validateCodeForValueSetAsync(client, par);
+        }
+
+        public static Parameters ValidateCode(this IFhirClient client, FhirUri canonical, Coding coding, FhirBoolean abstractAllowed = null)
+        {
+            return ValidateCodeAsync(client, canonical, coding, abstractAllowed).WaitResult();
+        }
+
+
+        public static Task<Parameters> ValidateCodeAsync(this IFhirClient client, String valueSetId, Coding coding, FhirBoolean abstractAllowed = null)
         {
             if (coding == null) throw new ArgumentNullException("coding");
 
@@ -421,12 +442,12 @@ namespace Hl7.Fhir.Rest
             return validateCodeForValueSetIdAsync(client, valueSetId, par);
         }
 
-        public static Parameters ValidateCode(this FhirClient client, String valueSetId, Coding coding, FhirBoolean abstractAllowed = null)
+        public static Parameters ValidateCode(this IFhirClient client, String valueSetId, Coding coding, FhirBoolean abstractAllowed = null)
         {
             return ValidateCodeAsync(client, valueSetId, coding, abstractAllowed).WaitResult();
         }
 
-        public static Task<Parameters> ValidateCodeAsync(this FhirClient client, String valueSetId, CodeableConcept codeableConcept, FhirBoolean abstractAllowed = null)
+        public static Task<Parameters> ValidateCodeAsync(this IFhirClient client, String valueSetId, CodeableConcept codeableConcept, FhirBoolean abstractAllowed = null)
         {
             if (codeableConcept == null) throw new ArgumentNullException("codeableConcept");
 
@@ -437,7 +458,7 @@ namespace Hl7.Fhir.Rest
             return validateCodeForValueSetIdAsync(client, valueSetId, par);
         }
 
-        public static Parameters ValidateCode(this FhirClient client, String valueSetId,
+        public static Parameters ValidateCode(this IFhirClient client, String valueSetId,
             CodeableConcept codeableConcept, FhirBoolean abstractAllowed = null)
         {
             return ValidateCodeAsync(client, valueSetId, codeableConcept, abstractAllowed).WaitResult();
@@ -543,12 +564,12 @@ namespace Hl7.Fhir.Rest
             return null;
         }
 
-        private static async Task<Parameters> validateCodeForValueSetAsync(FhirClient client, Parameters par)
+        private static async Task<Parameters> validateCodeForValueSetAsync(IFhirClient client, Parameters par)
         {
             return expect<Parameters>(await client.TypeOperationAsync<ValueSet>(Operation.VALIDATE_CODE, par).ConfigureAwait(false));
         }
 
-        private static async Task<Parameters> validateCodeForValueSetIdAsync(FhirClient client, string valueSetId, Parameters par)
+        private static async Task<Parameters> validateCodeForValueSetIdAsync(IFhirClient client, string valueSetId, Parameters par)
         {
             ResourceIdentity location = new ResourceIdentity("ValueSet/" + valueSetId);
 

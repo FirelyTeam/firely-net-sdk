@@ -14,13 +14,13 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Terminology
 {
-    public class LocalTerminologyServer : ITerminologyService
+    public class LocalTerminologyService : ITerminologyService
     {
         //private IConformanceSource _source;
         private IResourceResolver _resolver;
         private ValueSetExpander _expander;
 
-        public LocalTerminologyServer(IResourceResolver resolver, ValueSetExpanderSettings expanderSettings = null)
+        public LocalTerminologyService(IResourceResolver resolver, ValueSetExpanderSettings expanderSettings = null)
         {
             _resolver = resolver ?? throw Error.ArgumentNull(nameof(resolver));
 
@@ -30,12 +30,15 @@ namespace Hl7.Fhir.Specification.Terminology
             _expander = new ValueSetExpander(settings);
         }
 
+        internal ValueSet FindValueset(string canonical)
+        {
+            return _resolver.FindValueSet(canonical);
+        }
 
         public OperationOutcome ValidateCode(string uri, string code, string system, string display = null, bool abstractAllowed = false)
         {
             if (string.IsNullOrEmpty(uri)) throw Error.ArgumentNullOrEmpty(nameof(uri));
             if (string.IsNullOrEmpty(code)) throw Error.ArgumentNullOrEmpty(nameof(code));
-            if (string.IsNullOrEmpty(system)) throw Error.ArgumentNullOrEmpty(nameof(system));
 
             var result = new OperationOutcome();
 
@@ -60,7 +63,6 @@ namespace Hl7.Fhir.Specification.Terminology
         {
             if (vs == null) throw Error.ArgumentNull(nameof(vs));
             if (string.IsNullOrEmpty(code)) throw Error.ArgumentNullOrEmpty(nameof(code));
-            if (string.IsNullOrEmpty(system)) throw Error.ArgumentNullOrEmpty(nameof(system));
 
             // We might have a cached or pre-expanded version brought to us by the _source
             if (!vs.HasExpansion)
