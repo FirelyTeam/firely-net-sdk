@@ -120,6 +120,14 @@ namespace Hl7.Fhir.Validation
                 outcome.Add(Validate(instance, processor.Result));
 
             return outcome;
+
+            StructureDefinition profileResolutionNeeded(string canonical)
+            {
+                if (Settings.ResourceResolver != null)
+                    return Settings.ResourceResolver.FindStructureDefinition(canonical);
+                else
+                    return null;
+            }
         }
 
         internal OperationOutcome Validate(IElementNavigator instance, ElementDefinitionNavigator definition)
@@ -503,15 +511,6 @@ namespace Hl7.Fhir.Validation
             }
 
             return null;        // Sorry, nothing worked
-        }
-
-
-        private StructureDefinition profileResolutionNeeded(string canonical)
-        {
-            if (Settings.ResourceResolver != null)
-                return Settings.ResourceResolver.FindStructureDefinition(canonical);
-            else
-                return null;
         }
 
 

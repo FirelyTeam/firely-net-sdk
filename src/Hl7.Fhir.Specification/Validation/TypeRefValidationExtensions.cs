@@ -154,15 +154,24 @@ namespace Hl7.Fhir.Validation
                 // References within the instance are dealt with within the same validator,
                 // references to external entities will operate within a new instance of a validator (and hence a new tracking context).
                 // In both cases, the outcome is included in the result.
+                OperationOutcome childResult;
+
                 if (encounteredKind != ElementDefinition.AggregationMode.Referenced)
                 {
-                    outcome.Include(validator.Validate(referencedResource, typeRef.TargetProfile, statedProfiles: null, statedCanonicals: null));
+                    childResult = validator.Validate(referencedResource, typeRef.TargetProfile, statedProfiles: null, statedCanonicals: null);
                 }
                 else
                 {
                     var newValidator = validator.NewInstance();
-                    outcome.Include(newValidator.Validate(referencedResource, typeRef.TargetProfile, statedProfiles: null, statedCanonicals: null));
+                    childResult = newValidator.Validate(referencedResource, typeRef.TargetProfile, statedProfiles: null, statedCanonicals: null);
                 }
+
+                // Prefix each path with the referring resource's path to keep the locations
+                // interpretable
+                foreach (var issue in childResult.Issue)
+                    issue.Location = issue.Location.Concat(new string[] { instance.Location });
+
+                outcome.Include(childResult);
             }
             else
                 validator.Trace(outcome, $"Cannot resolve reference {reference}", Issue.UNAVAILABLE_REFERENCED_RESOURCE, instance);
