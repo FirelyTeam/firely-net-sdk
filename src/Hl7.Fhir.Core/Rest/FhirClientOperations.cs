@@ -17,66 +17,50 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Rest
 {
-    public static class FhirClientOperations
+    /// <summary>
+    /// Collection of the valid Operation values supported as const strings
+    /// </summary>
+    /// <remarks>
+    /// This static class is required to keep the operation const values
+    /// separate from the methods in the Fhir Client.
+    /// Specifically the Meta operation clashes with the META const value.
+    /// This would make it un-usable from VB.Net
+    /// </remarks>
+    public static partial class RestOperation
     {
         /// <summary>
-        /// Collection of the valid Operation values supported as const strings
+        /// "translate" operation
         /// </summary>
-        /// <remarks>
-        /// This static class is required to keep the operation const values
-        /// separate from the methods in the Fhir Client.
-        /// Specifically the Meta operation clashes with the META const value.
-        /// This would make it un-usable from VB.Net
-        /// </remarks>
-        public static class Operation
-        {
-            /// <summary>
-            /// "translate" operation
-            /// </summary>
-            public const string TRANSLATE = "translate"; 
-            
-            /// <summary>
-            /// "everything" operation
-            /// </summary>
-            public const string FETCH_PATIENT_RECORD = "everything";
+        public const string TRANSLATE = "translate";
 
-            /// <summary>
-            /// "expand" operation
-            /// </summary>
-            public const string EXPAND_VALUESET = "expand";
+        /// <summary>
+        /// "validate" operation
+        /// </summary>
+        public const string VALIDATE_RESOURCE = "validate";
 
-            /// <summary>
-            /// "lookup" operation
-            /// </summary>
-            public const string CONCEPT_LOOKUP = "lookup";
+        /// <summary>
+        /// "everything" operation
+        /// </summary>
+        public const string FETCH_PATIENT_RECORD = "everything";
 
-            /// <summary>
-            /// "validate" operation
-            /// </summary>
-            public const string VALIDATE_RESOURCE = "validate";
+        /// <summary>
+        /// "meta" operation
+        /// </summary>
+        public const string META = "meta";
 
-            /// <summary>
-            /// "meta" operation
-            /// </summary>
-            public const string META = "meta";
+        /// <summary>
+        /// "meta-add" operation
+        /// </summary>
+        public const string META_ADD = "meta-add";
 
-            /// <summary>
-            /// "meta-add" operation
-            /// </summary>
-            public const string META_ADD = "meta-add";
+        /// <summary>
+        /// "meta-delete" operation
+        /// </summary>
+        public const string META_DELETE = "meta-delete";
+    }
 
-            /// <summary>
-            /// "meta-delete" operation
-            /// </summary>
-            public const string META_DELETE = "meta-delete";
-
-            /// <summary>
-            /// "validate-code" operation
-            /// </summary>
-            public const string VALIDATE_CODE = "validate-code";
-        }
-
-
+    public static class FhirClientOperations
+    {  
         #region Validate (Create/Update/Delete/Resource)
 
         public static async Task<OperationOutcome> ValidateCreateAsync(this FhirClient client, DomainResource resource, FhirUri profile = null)
@@ -86,7 +70,7 @@ namespace Hl7.Fhir.Rest
             var par = new Parameters().Add("resource", resource).Add("mode", new Code("create"));
             if (profile != null) par.Add("profile", profile);
 
-            return expect<OperationOutcome>(await client.TypeOperationAsync(Operation.VALIDATE_RESOURCE, resource.TypeName, par).ConfigureAwait(false));
+            return OperationResult<OperationOutcome>(await client.TypeOperationAsync(RestOperation.VALIDATE_RESOURCE, resource.TypeName, par).ConfigureAwait(false));
         }
         public static OperationOutcome ValidateCreate(this FhirClient client, DomainResource resource,
             FhirUri profile = null)
@@ -103,7 +87,7 @@ namespace Hl7.Fhir.Rest
             if (profile != null) par.Add("profile", profile);
 
             var loc = ResourceIdentity.Build(resource.TypeName, id);
-            return expect<OperationOutcome>(await client.InstanceOperationAsync(loc, Operation.VALIDATE_RESOURCE, par).ConfigureAwait(false));
+            return OperationResult<OperationOutcome>(await client.InstanceOperationAsync(loc, RestOperation.VALIDATE_RESOURCE, par).ConfigureAwait(false));
         }
         public static OperationOutcome ValidateUpdate(this FhirClient client, DomainResource resource, string id,
             FhirUri profile = null)
@@ -118,7 +102,7 @@ namespace Hl7.Fhir.Rest
 
             var par = new Parameters().Add("mode", new Code("delete"));
 
-            return expect<OperationOutcome>(await client.InstanceOperationAsync(location.WithoutVersion().MakeRelative(), Operation.VALIDATE_RESOURCE, par).ConfigureAwait(false));
+            return OperationResult<OperationOutcome>(await client.InstanceOperationAsync(location.WithoutVersion().MakeRelative(), RestOperation.VALIDATE_RESOURCE, par).ConfigureAwait(false));
         }
         public static OperationOutcome ValidateDelete(this FhirClient client, ResourceIdentity location)
         {
@@ -134,12 +118,12 @@ namespace Hl7.Fhir.Rest
 
             if (id == null)
             {
-                return expect<OperationOutcome>(await client.TypeOperationAsync(Operation.VALIDATE_RESOURCE, resource.TypeName, par).ConfigureAwait(false));
+                return OperationResult<OperationOutcome>(await client.TypeOperationAsync(RestOperation.VALIDATE_RESOURCE, resource.TypeName, par).ConfigureAwait(false));
             }
             else
             {
                 var loc = ResourceIdentity.Build(resource.TypeName, id);
-                return expect<OperationOutcome>(await client.InstanceOperationAsync(loc, Operation.VALIDATE_RESOURCE, par).ConfigureAwait(false));
+                return OperationResult<OperationOutcome>(await client.InstanceOperationAsync(loc, RestOperation.VALIDATE_RESOURCE, par).ConfigureAwait(false));
             }
         }
 
@@ -162,14 +146,14 @@ namespace Hl7.Fhir.Rest
             
             Resource result;
             if (patient == null)
-                result = await client.TypeOperationAsync<Patient>(Operation.FETCH_PATIENT_RECORD, par).ConfigureAwait(false);
+                result = await client.TypeOperationAsync<Patient>(RestOperation.FETCH_PATIENT_RECORD, par).ConfigureAwait(false);
             else
             {
                 var location = new ResourceIdentity(patient);
-                result = await client.InstanceOperationAsync(location.WithoutVersion().MakeRelative(), Operation.FETCH_PATIENT_RECORD, par).ConfigureAwait(false);
+                result = await client.InstanceOperationAsync(location.WithoutVersion().MakeRelative(), RestOperation.FETCH_PATIENT_RECORD, par).ConfigureAwait(false);
             }
 
-            return expect<Bundle>(result);
+            return OperationResult<Bundle>(result);
         }
         public static Bundle FetchPatientRecord(this FhirClient client, Uri patient = null, FhirDateTime start = null,
             FhirDateTime end = null)
@@ -178,112 +162,13 @@ namespace Hl7.Fhir.Rest
         }
 
         #endregion
-        
-        #region Expand
-
-        public static async Task<ValueSet> ExpandValueSetAsync(this FhirClient client, Uri valueset, FhirString filter = null, FhirDateTime date = null)
-        {
-            if (valueset == null) throw Error.ArgumentNull(nameof(valueset));
-
-            var par = new Parameters();
-
-            if (filter != null) par.Add("filter", filter);
-            if (date != null) par.Add("date", date);
-
-            ResourceIdentity id = new ResourceIdentity(valueset);
-
-            return expect<ValueSet>(await client.InstanceOperationAsync(id.WithoutVersion().MakeRelative(), Operation.EXPAND_VALUESET, par).ConfigureAwait(false));
-        }
-
-        public static ValueSet ExpandValueSet(this FhirClient client, Uri valueset, FhirString filter = null,
-            FhirDateTime date = null)
-        {
-            return ExpandValueSetAsync(client, valueset, filter, date).WaitResult();
-        }
-
-        public static async Task<ValueSet> ExpandValueSetAsync(this FhirClient client, FhirUri identifier, FhirString filter = null, FhirDateTime date = null)
-        {
-            if (identifier == null) throw Error.ArgumentNull(nameof(identifier));
-
-            var par = new Parameters();
-
-            par.Add("identifier", identifier);
-            if (filter != null) par.Add("filter", filter);
-            if (date != null) par.Add("date", date);
-            
-            return expect<ValueSet>(await client.TypeOperationAsync<ValueSet>(Operation.EXPAND_VALUESET, par).ConfigureAwait(false));
-        }
-
-        public static ValueSet ExpandValueSet(this FhirClient client, FhirUri identifier, FhirString filter = null,
-            FhirDateTime date = null)
-        {
-            return ExpandValueSetAsync(client, identifier, filter, date).WaitResult();
-        }
-
-        public static async Task<ValueSet> ExpandValueSetAsync(this FhirClient client, ValueSet vs, FhirString filter = null, FhirDateTime date = null)
-        {
-            if (vs == null) throw Error.ArgumentNull(nameof(vs));
-
-            var par = new Parameters().Add("valueSet", vs);
-            if (filter != null) par.Add("filter", filter);
-            if (date != null) par.Add("date", date);
-
-            return expect<ValueSet>(await client.TypeOperationAsync<ValueSet>(Operation.EXPAND_VALUESET, par).ConfigureAwait(false));
-        }
-
-        public static ValueSet ExpandValueSet(this FhirClient client, ValueSet vs, FhirString filter = null,
-            FhirDateTime date = null)
-        {
-            return ExpandValueSetAsync(client, vs, filter, date).WaitResult();
-        }
-
-        #endregion
-
-        #region Concept Lookup
-
-        public static async Task<Parameters> ConceptLookupAsync(this FhirClient client, Coding coding, FhirDateTime date=null)
-        {
-            if (coding == null) throw Error.ArgumentNull(nameof(coding));
-
-            var par = new Parameters();
-            par.Add("coding", coding);
-            if (date != null) par.Add("date", date);
-
-            return expect<Parameters>(await client.TypeOperationAsync<CodeSystem>(Operation.CONCEPT_LOOKUP, par).ConfigureAwait(false));
-        }
-
-        public static Parameters ConceptLookup(this FhirClient client, Coding coding, FhirDateTime date = null)
-        {
-            return ConceptLookupAsync(client, coding, date).WaitResult();
-        }
-
-
-        public static async Task<Parameters> ConceptLookupAsync(this FhirClient client, Code code, FhirUri system, FhirString version = null, FhirDateTime date = null)
-        {
-            if (code == null) throw Error.ArgumentNull(nameof(code));
-            if (system == null) throw Error.ArgumentNull(nameof(system));
-
-            var par = new Parameters().Add("code",code).Add("system",system);
-            if (version != null) par.Add("version", version);
-            if (date != null) par.Add("date", date);
-
-            return expect<Parameters>(await client.TypeOperationAsync<CodeSystem>(Operation.CONCEPT_LOOKUP, par).ConfigureAwait(false));
-        }
-
-        public static Parameters ConceptLookup(this FhirClient client, Code code, FhirUri system,
-            FhirString version = null, FhirDateTime date = null)
-        {
-            return ConceptLookupAsync(client, code, system, version, date).WaitResult();
-        }
-
-        #endregion
-        
+                      
         #region Meta
 
         //[base]/$meta
         public static async Task<Meta> MetaAsync(this FhirClient client)
         {
-            return extractMeta(expect<Parameters>(await client.WholeSystemOperationAsync(Operation.META, useGet:true).ConfigureAwait(false)));
+            return extractMeta(OperationResult<Parameters>(await client.WholeSystemOperationAsync(RestOperation.META, useGet:true).ConfigureAwait(false)));
         }
         public static Meta Meta(this FhirClient client)
         {
@@ -293,7 +178,7 @@ namespace Hl7.Fhir.Rest
         //[base]/Resource/$meta
         public static async Task<Meta> MetaAsync(this FhirClient client, ResourceType type)
         {             
-            return extractMeta(expect<Parameters>(await client.TypeOperationAsync(Operation.META, type.ToString(), useGet: true).ConfigureAwait(false)));
+            return extractMeta(OperationResult<Parameters>(await client.TypeOperationAsync(RestOperation.META, type.ToString(), useGet: true).ConfigureAwait(false)));
         }
         public static Meta Meta(this FhirClient client, ResourceType type)
         {
@@ -304,9 +189,9 @@ namespace Hl7.Fhir.Rest
         public static async Task<Meta> MetaAsync(this FhirClient client, Uri location)
         {
             Resource result;
-            result = await client.InstanceOperationAsync(location, Operation.META, useGet: true).ConfigureAwait(false);
+            result = await client.InstanceOperationAsync(location, RestOperation.META, useGet: true).ConfigureAwait(false);
 
-            return extractMeta(expect<Parameters>(result));
+            return extractMeta(OperationResult<Parameters>(result));
         }
         public static Meta Meta(this FhirClient client, Uri location)
         {
@@ -325,7 +210,7 @@ namespace Hl7.Fhir.Rest
         public static async Task<Meta> AddMetaAsync(this FhirClient client, Uri location, Meta meta)
         {
             var par = new Parameters().Add("meta", meta);
-            return extractMeta(expect<Parameters>(await client.InstanceOperationAsync(location, Operation.META_ADD, par).ConfigureAwait(false)));
+            return extractMeta(OperationResult<Parameters>(await client.InstanceOperationAsync(location, RestOperation.META_ADD, par).ConfigureAwait(false)));
         }
         public static Meta AddMeta(this FhirClient client, Uri location, Meta meta)
         {
@@ -345,7 +230,7 @@ namespace Hl7.Fhir.Rest
         public static async Task<Meta> DeleteMetaAsync(this FhirClient client, Uri location, Meta meta)
         {
             var par = new Parameters().Add("meta", meta);
-            return extractMeta(expect<Parameters>(await client.InstanceOperationAsync(location, Operation.META_DELETE, par).ConfigureAwait(false)));
+            return extractMeta(OperationResult<Parameters>(await client.InstanceOperationAsync(location, RestOperation.META_DELETE, par).ConfigureAwait(false)));
         }
 
         public static Meta DeleteMeta(this FhirClient client, Uri location, Meta meta)
@@ -363,108 +248,7 @@ namespace Hl7.Fhir.Rest
             return DeleteMetaAsync(client, location, meta).WaitResult();
         }
 
-        #endregion
-
-        #region Validate Code
-
-        public static Task<Parameters> ValidateCodeAsync(this IFhirClient client, String valueSetId, FhirUri system, 
-            Code code, FhirString display = null, FhirBoolean abstractAllowed = null)
-        {
-            if (valueSetId == null) throw new ArgumentNullException(nameof(valueSetId));
-            if (code == null) throw new ArgumentNullException(nameof(code));
-            if (system == null) throw new ArgumentNullException(nameof(system));
-
-            var par = new Parameters().Add("code", code).Add("system", system);
-
-            if (display != null)
-                par.Add("display", display);
-
-            if (abstractAllowed != null)
-                par.Add("abstract", abstractAllowed);
-
-            return validateCodeForValueSetIdAsync(client, valueSetId, par);
-        }
-        public static Parameters ValidateCode(this IFhirClient client, String valueSetId, FhirUri system, Code code,
-            FhirString display = null, FhirBoolean abstractAllowed = null)
-        {
-            return ValidateCodeAsync(client, valueSetId, system, code, display, abstractAllowed).WaitResult();
-        }
-
-        public static Task<Parameters> ValidateCodeAsync(this IFhirClient client, ValueSet vs, Coding coding, FhirBoolean abstractAllowed = null)
-        {
-            if (vs == null) throw Error.ArgumentNull(nameof(vs));
-            if (coding == null) throw new ArgumentNullException("coding");
-
-            var par = new Parameters()
-                .Add("coding", coding)
-                .Add("valueSet", vs);
-
-            if (abstractAllowed != null)
-                par.Add("abstract", abstractAllowed);
-
-            return validateCodeForValueSetAsync(client, par);
-        }
-
-        public static Parameters ValidateCode(this IFhirClient client, ValueSet vs, Coding coding, FhirBoolean abstractAllowed = null)
-        {
-            return ValidateCodeAsync(client, vs, coding, abstractAllowed).WaitResult();
-        }
-
-        public static Task<Parameters> ValidateCodeAsync(this IFhirClient client, FhirUri canonical, Coding coding, FhirBoolean abstractAllowed = null)
-        {
-            if (canonical == null) throw Error.ArgumentNull(nameof(canonical));
-            if (coding == null) throw new ArgumentNullException("coding");
-
-            var par = new Parameters()
-                .Add("identifier", canonical)           // TODO: Becomes "url" in STU3!
-                .Add("coding", coding);
-
-            if (abstractAllowed != null)
-                par.Add("abstract", abstractAllowed);
-
-            return validateCodeForValueSetAsync(client, par);
-        }
-
-        public static Parameters ValidateCode(this IFhirClient client, FhirUri canonical, Coding coding, FhirBoolean abstractAllowed = null)
-        {
-            return ValidateCodeAsync(client, canonical, coding, abstractAllowed).WaitResult();
-        }
-
-
-        public static Task<Parameters> ValidateCodeAsync(this IFhirClient client, String valueSetId, Coding coding, FhirBoolean abstractAllowed = null)
-        {
-            if (coding == null) throw new ArgumentNullException("coding");
-
-            var par = new Parameters().Add("coding", coding);
-            if (abstractAllowed != null)
-                par.Add("abstract", abstractAllowed);
-
-            return validateCodeForValueSetIdAsync(client, valueSetId, par);
-        }
-
-        public static Parameters ValidateCode(this IFhirClient client, String valueSetId, Coding coding, FhirBoolean abstractAllowed = null)
-        {
-            return ValidateCodeAsync(client, valueSetId, coding, abstractAllowed).WaitResult();
-        }
-
-        public static Task<Parameters> ValidateCodeAsync(this IFhirClient client, String valueSetId, CodeableConcept codeableConcept, FhirBoolean abstractAllowed = null)
-        {
-            if (codeableConcept == null) throw new ArgumentNullException("codeableConcept");
-
-            var par = new Parameters().Add("codeableConcept", codeableConcept);
-            if (abstractAllowed != null)
-                par.Add("abstract", abstractAllowed);
-
-            return validateCodeForValueSetIdAsync(client, valueSetId, par);
-        }
-
-        public static Parameters ValidateCode(this IFhirClient client, String valueSetId,
-            CodeableConcept codeableConcept, FhirBoolean abstractAllowed = null)
-        {
-            return ValidateCodeAsync(client, valueSetId, codeableConcept, abstractAllowed).WaitResult();
-        }
-
-        #endregion
+        #endregion   
 
         #region Translate
 
@@ -481,7 +265,7 @@ namespace Hl7.Fhir.Rest
         {
             Parameters par = createTranslateConceptParams(code, system, version, valueSet, coding, codeableConcept, target, dependencies);
             var loc = ResourceIdentity.Build("ConceptMap", id);
-            return expect<Parameters>(await client.InstanceOperationAsync(loc, Operation.TRANSLATE, par).ConfigureAwait(false));
+            return OperationResult<Parameters>(await client.InstanceOperationAsync(loc, RestOperation.TRANSLATE, par).ConfigureAwait(false));
         }
         public static Parameters TranslateConcept(this FhirClient client, string id, Code code, FhirUri system,
             FhirString version,
@@ -498,7 +282,7 @@ namespace Hl7.Fhir.Rest
         {
             Parameters par = createTranslateConceptParams(code, system, version, valueSet, coding, codeableConcept, target, dependencies);
 
-            return expect<Parameters>(await client.TypeOperationAsync<ConceptMap>(Operation.TRANSLATE, par).ConfigureAwait(false));
+            return OperationResult<Parameters>(await client.TypeOperationAsync<ConceptMap>(RestOperation.TRANSLATE, par).ConfigureAwait(false));
         }
 
         public static Parameters TranslateConcept(this FhirClient client, Code code, FhirUri system, FhirString version,
@@ -542,13 +326,20 @@ namespace Hl7.Fhir.Rest
             return par;
         }
 
-        private static T expect<T>(Resource result) where T : Resource
+        internal static T OperationResult<T>(this Resource result) where T : Resource
         {
-            if (result is T)
-                return (T)result;
-            else
-                throw Error.InvalidOperation("Operation did not return a " + typeof(T).Name + " but a " + result.GetType().Name);
+            //If this is immediately what we are expecting, that's fine
+            if (result is T) return (T)result;
+
+            // If return value is a Parameters object with a single result of the expected type,
+            // return it (it should be called "return", but I don't care).
+            if (result is Parameters pars && pars.Parameter.Count == 1 && pars.Parameter[0].Resource is T)
+                return (T)pars.Parameter[0].Resource;
+
+            // Else, throw. The return type is unexpected
+            throw Error.InvalidOperation($"Operation did not return a {typeof(T).Name} but a {result.GetType().Name}");
         }
+
         private static Meta extractMeta(Parameters parms)
         {
             if (!parms.Parameter.IsNullOrEmpty())
@@ -564,17 +355,6 @@ namespace Hl7.Fhir.Rest
             return null;
         }
 
-        private static async Task<Parameters> validateCodeForValueSetAsync(IFhirClient client, Parameters par)
-        {
-            return expect<Parameters>(await client.TypeOperationAsync<ValueSet>(Operation.VALIDATE_CODE, par).ConfigureAwait(false));
-        }
-
-        private static async Task<Parameters> validateCodeForValueSetIdAsync(IFhirClient client, string valueSetId, Parameters par)
-        {
-            ResourceIdentity location = new ResourceIdentity("ValueSet/" + valueSetId);
-
-            return expect<Parameters>(await client.InstanceOperationAsync(location.WithoutVersion().MakeRelative(), Operation.VALIDATE_CODE, par).ConfigureAwait(false));
-        }
         #endregion
     }
 }
