@@ -43,11 +43,13 @@ namespace Hl7.Fhir.Rest
 
         public static ValidateCodeResult FromParameters(Parameters p)
         {
+            if (p == null) throw Error.ArgumentNull(nameof(p));
+
             return new ValidateCodeResult
             {
-                Result = p["result"].Value as FhirBoolean,
-                Message = p["message"].Value as FhirString,
-                Display = p["display"].Value as FhirString
+                Result = p["result"]?.Value as FhirBoolean,
+                Message = p.Get("message").FirstOrDefault()?.Value as FhirString,
+                Display = p.Get("display").FirstOrDefault()?.Value as FhirString
             };
         }
     }
@@ -184,8 +186,11 @@ namespace Hl7.Fhir.Rest
 
             ResourceIdentity location = new ResourceIdentity("ValueSet/" + valueSetId);
             var result = await client.InstanceOperationAsync(location.WithoutVersion().MakeRelative(), RestOperation.VALIDATE_CODE, par).ConfigureAwait(false);
-                
-            return ValidateCodeResult.FromParameters(result.OperationResult<Parameters>());
+
+            if (result != null)
+                return ValidateCodeResult.FromParameters(result.OperationResult<Parameters>());
+            else
+                return null;
         }
 
         public static ValidateCodeResult ValidateCode(this IFhirClient client, String valueSetId,
@@ -218,7 +223,11 @@ namespace Hl7.Fhir.Rest
                 .Add(nameof(@abstract), @abstract);
 
             var result = await client.TypeOperationAsync<ValueSet>(RestOperation.VALIDATE_CODE, par).ConfigureAwait(false);
-            return ValidateCodeResult.FromParameters(result.OperationResult<Parameters>());
+
+            if(result != null)
+                return ValidateCodeResult.FromParameters(result.OperationResult<Parameters>());
+            else
+                return null;
         }
 
         public static ValidateCodeResult ValidateCode(this IFhirClient client,

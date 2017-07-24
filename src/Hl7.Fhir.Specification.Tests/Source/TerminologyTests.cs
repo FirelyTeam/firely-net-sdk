@@ -92,38 +92,6 @@ namespace Hl7.Fhir.Source
         }
 
         [Fact]
-        public void TermServiceLoopupTest()
-        {
-            var svc = new LocalTerminologyService(_resolver);
-
-            var result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/data-absent-reason", "NaN", "http://hl7.org/fhir/data-absent-reason");
-            Assert.True(result.Success);
-
-            result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/data-absent-reason", "NaNX", "http://hl7.org/fhir/data-absent-reason");
-            Assert.False(result.Success);
-
-            result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/data-absent-reason", "NaN", "http://hl7.org/fhir/data-absent-reason", display: "Not a Number");
-            Assert.True(result.Success);
-
-            result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/data-absent-reason", "NaN", "http://hl7.org/fhir/data-absent-reason", display: "Not any Number");
-            Assert.True(result.Success);
-            Assert.Equal(1, result.Warnings);       // Warning for incorrect display
-
-            result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/v3-AcknowledgementDetailCode", "_AcknowledgementDetailNotSupportedCode",
-                "http://hl7.org/fhir/v3/AcknowledgementDetailCode");
-            Assert.False(result.Success);
-
-            result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/v3-AcknowledgementDetailCode", "_AcknowledgementDetailNotSupportedCode",
-                "http://hl7.org/fhir/v3/AcknowledgementDetailCode", abstractAllowed: true);
-            Assert.True(result.Success);
-
-            // But this won't, it's also a composition, but without expansion - the local term server won't help you here
-            Assert.Throws<ValueSetExpansionTooComplexException>( 
-                () => svc.ValidateCode("http://hl7.org/fhir/ValueSet/allergyintolerance-substance-code", "160244002", "http://snomed.info/sct") );
-        }
-
-
-        [Fact]
         public void TestPropertyRetrieval()
         {
             var testCs = _resolver.FindCodeSystem("http://hl7.org/fhir/item-type");
@@ -136,56 +104,117 @@ namespace Hl7.Fhir.Source
         }
 
 
-        [Fact, Trait("Category", "IntegrationTest")]
-        public void TermExternalServiceValidateCodeTest()
+        private void testService(ITerminologyService svc)
         {
-            var client = new FhirClient("http://ontoserver.csiro.au/dstu2_1");
-            var service = new ExternalTerminologyService(client);            
-
-            var result = service.ValidateCode("http://hl7.org/fhir/ValueSet/c80-facilitycodes", "4322002", "http://snomed.info/sct");
+            var vsUrl = "http://hl7.org/fhir/ValueSet/data-absent-reason";
+            var result = svc.ValidateCode(vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason");
             Assert.True(result.Success);
 
-            result = service.ValidateCode("http://hl7.org/fhir/ValueSet/c80-facilitycodes", "4322002crap", "http://snomed.info/sct");
+            result = svc.ValidateCode(vsUrl, code: "NaNX", system: "http://hl7.org/fhir/data-absent-reason");
             Assert.False(result.Success);
 
-            Assert.Throws<ValueSetUnknownException>(() => service.ValidateCode("http://hl7.org/fhir/ValueSet/c80crap-facilitycodes", "4322002", "http://snomed.info/sct"));
+            result = svc.ValidateCode(vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason", 
+                display: "Not a Number");
+            Assert.True(result.Success);
+
+            result = svc.ValidateCode(vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason", 
+                display: "Not any Number");
+            Assert.False(result.Success);
+
+            result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/v3-AcknowledgementDetailCode", code: "_AcknowledgementDetailNotSupportedCode",
+                system: "http://hl7.org/fhir/v3/AcknowledgementDetailCode");
+            Assert.True(result.Success);
+
+            Assert.Throws<ValueSetUnknownException>(() => svc.ValidateCode("http://hl7.org/fhir/ValueSet/crappy", code: "4322002", system: "http://snomed.info/sct"));
+
+            var coding = new Coding("http://hl7.org/fhir/data-absent-reason", "NaN");
+            result = svc.ValidateCode(vsUrl, coding: coding);
+            Assert.True(result.Success);
+
+            coding.Display = "Not a Number";
+            result = svc.ValidateCode(vsUrl, coding: coding);
+            Assert.True(result.Success);
+
+            coding.Code = "NaNX";
+            result = svc.ValidateCode(vsUrl, coding: coding);
+            Assert.False(result.Success);
+            coding.Code = "NaN";
+
+            var cc = new CodeableConcept("http://hl7.org/fhir/data-absent-reason", "NaNX", "Not a Number");
+            result = svc.ValidateCode(vsUrl, codeableConcept: cc);
+            Assert.False(result.Success);
+
+            cc.Coding.Add(new Coding("http://hl7.org/fhir/data-absent-reason", "asked"));
+            result = svc.ValidateCode(vsUrl, codeableConcept: cc);
+            Assert.True(result.Success);
+        }
+
+        [Fact]
+        public void LocalTermServiceValidateCodeTest()
+        {
+            var svc = new LocalTerminologyService(_resolver);
+
+            // Do common tests for service
+            testService(svc);
+
+            // This is a valueset with a compose - not supported locally normally, but it has been expanded in the zip, so this will work
+            var result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/yesnodontknow", code: "Y", system: "http://hl7.org/fhir/v2/0136");
+            Assert.True(result.Success);
+
+            // This test is not always correctly done by the external services, so copied here instead
+            result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/v3-AcknowledgementDetailCode", code: "_AcknowledgementDetailNotSupportedCode",
+                    system: "http://hl7.org/fhir/v3/AcknowledgementDetailCode", @abstract: false);
+            Assert.False(result.Success);
+
+            // And one that will specifically fail on the local service, since it's too complex too expand - the local term server won't help you here
+            Assert.Throws<ValueSetExpansionTooComplexException>(
+                () => svc.ValidateCode("http://hl7.org/fhir/ValueSet/substance-code", code: "1166006", system: "http://snomed.info/sct"));
         }
 
         [Fact, Trait("Category", "IntegrationTest")]
-        public void TermFallbackServiceValidateCodeTest()
+        public void ExternalServiceValidateCodeTest()
         {
             var client = new FhirClient("http://ontoserver.csiro.au/dstu2_1");
-            var service = new ExternalTerminologyService(client);
-            var local = new LocalTerminologyService(_resolver);
-            var fallback = new FallbackTerminologyService(local, service);
+            var svc = new ExternalTerminologyService(client);
 
-            // This should still work
-            var result = service.ValidateCode("http://hl7.org/fhir/ValueSet/c80-facilitycodes", "4322002", "http://snomed.info/sct");
+            // Do common tests for service
+            testService(svc);
+
+            // Any good external service should be able to handle this one
+            var result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/substance-code", code: "1166006", system:"http://snomed.info/sct");
             Assert.True(result.Success);
+        }
 
-            // This should still fail
-            result = service.ValidateCode("http://hl7.org/fhir/ValueSet/c80-facilitycodes", "4322002crap", "http://snomed.info/sct");
-            Assert.False(result.Success);
+        [Fact, Trait("Category", "IntegrationTest")]
+        public void FallbackServiceValidateCodeTest()
+        {
+            var client = new FhirClient("http://ontoserver.csiro.au/dstu2_1");
+            var external = new ExternalTerminologyService(client);
+            var local = new LocalTerminologyService(_resolver);
+            var svc = new FallbackTerminologyService(local, external);
+
+            testService(svc);
 
             // Now, this should fall back
-            result = fallback.ValidateCode("http://hl7.org/fhir/ValueSet/allergyintolerance-substance-code", "160244002", "http://snomed.info/sct");
+            var result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/substance-code", code: "1166006", system: "http://snomed.info/sct");
             Assert.True(result.Success);
         }
 
         [Fact, Trait("Category", "IntegrationTest")]
-        public void TermFallbackServiceValidateCodeTestWithVS()
+        public void FallbackServiceValidateCodeTestWithVS()
         {
             var client = new FhirClient("http://ontoserver.csiro.au/dstu2_1");
             var service = new ExternalTerminologyService(client);
-            var vs = _resolver.FindValueSet("http://hl7.org/fhir/ValueSet/allergyintolerance-substance-code");
+            var vs = _resolver.FindValueSet("http://hl7.org/fhir/ValueSet/substance-code");
             Assert.NotNull(vs);
 
+            // Override the canonical with something the remote server cannot know
             vs.Url = "http://furore.com/fhir/ValueSet/testVS";
             var local = new LocalTerminologyService(new IKnowOnlyMyTestVSResolver(vs));
             var fallback = new FallbackTerminologyService(local, service);
 
             // Now, this should fall back to external + send our vs (that the server cannot know about)
-            var result = fallback.ValidateCode("http://furore.com/fhir/ValueSet/testVS", "160244002", "http://snomed.info/sct");
+            var result = fallback.ValidateCode("http://furore.com/fhir/ValueSet/testVS", code: "1166006", system: "http://snomed.info/sct");
             Assert.True(result.Success);
         }
 

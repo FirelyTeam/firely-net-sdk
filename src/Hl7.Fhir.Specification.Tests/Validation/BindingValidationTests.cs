@@ -103,8 +103,7 @@ namespace Hl7.Fhir.Validation
 
             c.Display = "Not a NumberX";
             result = val.ValidateBinding(c, binding);
-            Assert.True(result.Success);
-            Assert.Equal(1, result.Warnings);   // Incorrect display
+            Assert.False(result.Success);
 
             // But this won't, it's also a composition, but without expansion - the local term server won't help you here
             var binding2 = new ElementDefinition.ElementDefinitionBindingComponent
