@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Model
 
                 if (Location.Any())
                 {
-                    text += " (at " + String.Join(", ", Location) + ")";
+                    text += " (at " + String.Join(" via ", Location) + ")";
                 }
 
                 return text;
