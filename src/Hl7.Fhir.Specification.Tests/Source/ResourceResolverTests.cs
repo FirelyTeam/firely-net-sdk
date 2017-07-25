@@ -196,11 +196,11 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNull(eventArgs);
 
             // Verify that we can remove the cache entry
-            var result = src.InvalidateUri(resourceUri);
+            var result = src.InvalidateByUri(resourceUri);
             Assert.IsTrue(result);
 
             // Verify that the cache entry has been removed
-            result = src.InvalidateUri(resourceUri);
+            result = src.InvalidateByUri(resourceUri);
             Assert.IsFalse(result);
 
             // Verify that the Load event is fired again on the next load

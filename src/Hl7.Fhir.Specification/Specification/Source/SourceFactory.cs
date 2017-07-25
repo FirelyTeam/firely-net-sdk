@@ -15,7 +15,7 @@ namespace Hl7.Fhir.Specification.Source
     public class SourceFactory
     {
         /// <summary>
-        /// Creates a default non-cached ArtifactResolver
+        /// Creates a default non-cached artifact resolver
         /// Default only searches in the executable directory files and the core zip. 
         /// This non-cached resolver is primary for testing purposes.
         /// </summary>
@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>
-        /// Creates an offline non-cached ArtifactResolver
+        /// Creates an offline non-cached artifact resolver
         /// Default only searches in the executable directory files and the core zip. 
         /// </summary>
         public static IResourceResolver CreateOffline()
@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>
-        /// Creates a default cached ArtifactResolver
+        /// Creates a default cached artifact resolver
         /// Default only searches in the executable directory files and the core zip. 
         /// </summary>
         public static IResourceResolver CreateCachedDefault()
@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>
-        /// Creates a default cached ArtifactResolver
+        /// Creates a default cached artifact resolver
         /// Default only searches in the executable directory files and the core zip. 
         /// </summary>
         public static IResourceResolver CreateCachedOffline()
