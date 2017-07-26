@@ -110,6 +110,17 @@ namespace Hl7.Fhir.Validation
             };
         }
 
+        public static ResourceReference ParseResourceReference(this IElementNavigator instance)
+        {
+            return new ResourceReference()
+            {
+                Reference = instance.Children("reference").GetString(),
+                Display = instance.Children("display").GetString()           
+            };
+        }
+
+
+
         public static CodeableConcept ParseCodeableConcept(this IElementNavigator instance)
         {
             return new CodeableConcept()
