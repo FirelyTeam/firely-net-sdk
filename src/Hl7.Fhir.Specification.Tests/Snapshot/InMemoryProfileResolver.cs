@@ -1,11 +1,12 @@
 ﻿using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Hl7.Fhir.Specification.Tests
 {
-    class InMemoryProfileResolver : IResourceResolver
+    class InMemoryProfileResolver : IResourceResolver, IConformanceSource
     {
         ILookup<string, Resource> _resources;
 
@@ -18,9 +19,29 @@ namespace Hl7.Fhir.Specification.Tests
 
         public InMemoryProfileResolver(IConformanceResource profile) : this(new IConformanceResource[] { profile }) { }
 
+        #region IResourceResolver
+
         public Resource ResolveByCanonicalUri(string uri) => _resources[uri].FirstOrDefault();
 
         public Resource ResolveByUri(string uri) => null;
+
+        #endregion
+
+        #region IConformanceResource
+
+        public CodeSystem FindCodeSystemByValueSet(string valueSetUri)
+            => throw new NotImplementedException();
+
+        public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
+            => throw new NotImplementedException();
+
+        public NamingSystem FindNamingSystem(string uniqueid)
+            => throw new NotImplementedException();
+
+        public IEnumerable<string> ListResourceUris(ResourceType? filter = default(ResourceType?))
+            => _resources.Select(g => g.Key);
+
+        #endregion
     }
 
 }
