@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Tests.Introspection
 
             Assert.AreEqual("ItemTwo", TestEnum.Item2.GetLiteral());
             Assert.AreEqual("Item1", TestEnum.Item1.GetLiteral());
-            Assert.AreEqual("yadayada", TestEnum.Item2.GetDocumentation());
+            Assert.AreEqual("yadayaday", TestEnum.Item2.GetDocumentation());
         }
 
 
@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Tests.Introspection
             Assert.AreEqual(X.a, EnumUtility.ParseLiteral<X>("a"));
 
             Assert.AreEqual("Male",AdministrativeGender.Male.GetDocumentation());
-            Assert.IsNull(X.a.GetDocumentation());
+            Assert.AreEqual("a", X.a.GetDocumentation()); // default documentation = name of item
         }
 
 
