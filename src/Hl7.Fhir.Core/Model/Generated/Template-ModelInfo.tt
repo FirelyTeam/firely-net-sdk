@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Model
 		if (e is System.Xml.XmlElement)
         {
 			var resourceName = (e as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value;
-
+			if(resourceName == "xhtml") continue;
 #>                { "<#= resourceName #>", typeof(<#= ConvertPropertyType(resourceName, e as XmlElement, nsR) #>) },
 <#
         }
@@ -170,6 +170,7 @@ namespace Hl7.Fhir.Model
 		if (e is System.Xml.XmlElement)
         {
 			var resourceName = (e as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value;
+			if(resourceName == "xhtml") continue;
 			// if (resourceName == "Resource" || resourceName == "DomainResource")
 			//	continue;
 
@@ -303,7 +304,7 @@ namespace Hl7.Fhir.Model
 				case "Meta" : return "Hl7.Fhir.Model.Meta";
 				case "decimal" : return "Hl7.Fhir.Model.FhirDecimal"; 
 				case "markdown" : return "Hl7.Fhir.Model.Markdown";
-				case "xhtml" : return "Hl7.Fhir.Model.Xhtml";
+//				case "xhtml" : return "Hl7.Fhir.Model.Xhtml";
 				case "instant" : return "Hl7.Fhir.Model.Instant";
 				case "integer" : return "Hl7.Fhir.Model.Integer";
 				case "unsignedInt" : return "Hl7.Fhir.Model.UnsignedInt";

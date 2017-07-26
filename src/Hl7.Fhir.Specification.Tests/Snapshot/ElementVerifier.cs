@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Specification.Tests
             _settings = settings;
             _elements = sd.Snapshot.Element;
             _pos = 0;
-            var ann = sd.Annotation<OriginInformation>();
+            var ann = sd.Annotation<OriginAnnotation>();
             Debug.Print($"Assert structure: url = '{sd.Url}' - origin = '{ann.Origin}'");
         }
 

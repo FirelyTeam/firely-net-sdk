@@ -53,8 +53,6 @@ namespace Hl7.Fhir.Model
         /// xml:id (or equivalent in JSON)
         /// </summary>
         [FhirElement("id", XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=10)]
-        // [WMR 20170714] WRONG! ElementId is of type string in STU3 (was type id in DSTU2)
-        // [IdPattern] 
         [DataMember]
         public string ElementId
         {

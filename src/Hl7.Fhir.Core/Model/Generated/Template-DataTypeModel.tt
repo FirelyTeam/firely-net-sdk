@@ -163,7 +163,8 @@
 				|| resourceName == "DomainResource"
 			//	|| resourceName == "ElementDefinition"
 				|| resourceName == "Narrative"
-				|| resourceName == "Extension")
+				|| resourceName == "Extension"
+				|| resourceName == "Xhtml")
 				continue;
 			manager.StartNewFile(resourceName + ".cs");
 
@@ -281,8 +282,8 @@ if (!abstractType){
         /// </summary>
         [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=30)]
 <#
-	if (!string.IsNullOrEmpty(pattern) && resourceName != "FhirDecimal" && resourceName != "Time" && resourceName != "Integer" && resourceName != "UnsignedInt" && resourceName != "PositiveInt"
-		|| resourceName == "Instant"
+	if (!string.IsNullOrEmpty(pattern) && resourceName != "FhirDecimal" && resourceName != "Time" && resourceName != "Integer" && 
+		resourceName != "UnsignedInt" && resourceName != "PositiveInt" && resourceName != "Instant"
 		|| resourceName == "FhirUri")
     {
 		WriteLine("        [{0}Pattern]", resourceName.Replace("Fhir", ""));
@@ -1272,8 +1273,8 @@ if (!abstractType){
 								break;
 				case "markdown" : result.PropType = "Hl7.Fhir.Model.Markdown";
 								break;
-				case "xhtml" : result.PropType = "Hl7.Fhir.Model.Xhtml";
-								break;
+//				case "xhtml" : result.PropType = "Hl7.Fhir.Model.Xhtml";
+//							   break;
 				case "HumanName" : result.PropType = "Hl7.Fhir.Model.HumanName"; 
 								break;
 				case "ContactPoint" : result.PropType = "Hl7.Fhir.Model.ContactPoint"; 

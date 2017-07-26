@@ -138,6 +138,23 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
+        public void UseIncludeExcludeFilter()
+        {
+            var fa = new DirectorySource(_testPath);
+            fa.Includes = new[] { "*.xml", "pa*.sch" };
+            fa.Excludes = new[] { "nonfhir*.*" };
+
+            var names = fa.ListArtifactNames();
+
+            Assert.AreEqual(4, names.Count());
+            Assert.IsTrue(names.Contains("extension-definitions.xml"));
+            Assert.IsTrue(names.Contains("TestPatient.xml"));
+            Assert.IsFalse(names.Contains("nonfhir.xml"));
+            Assert.IsTrue(names.Contains("invalid.xml"));
+            Assert.IsTrue(names.Contains("patient.sch"));
+        }
+
+        [TestMethod]
         public void FileSourceSkipsInvalidXml()
         {
             var fa = new DirectorySource(_testPath);
@@ -214,10 +231,11 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(1, artifacts.Length);
             Assert.AreEqual("profiles-types.xml", artifacts[0]);
 
-            var resourceIds = za.ListResourceUris(ResourceType.StructureDefinition).ToArray();
+            var resourceIds = za.ListResourceUris(ResourceType.StructureDefinition).ToList();
             Assert.IsNotNull(resourceIds);
-            Assert.IsTrue(resourceIds.Length > 0);
+            Assert.IsTrue(resourceIds.Count > 0);
             Assert.IsTrue(resourceIds.All(url => url.StartsWith("http://hl7.org/fhir/StructureDefinition/")));
+            resourceIds.Remove("http://hl7.org/fhir/StructureDefinition/xhtml");  // xhtml is not represented in the pocos
 
             // + total number of known FHIR core types
             // - total number of known (concrete) resources
@@ -232,15 +250,14 @@ namespace Hl7.Fhir.Specification.Tests
                                                             .Select(kvp => kvp.Value);
             var numCoreDataTypes = coreDataTypes.Count();
 
-            Assert.AreEqual(resourceIds.Length, numCoreDataTypes);
+            Assert.AreEqual(resourceIds.Count, numCoreDataTypes);
 
             // Assert.IsTrue(resourceIds.All(url => ModelInfo.CanonicalUriForFhirCoreType));
             var coreTypeUris = coreDataTypes.Select(typeName => ModelInfo.CanonicalUriForFhirCoreType(typeName)).ToArray();
             // Boths arrays should contains same urls, possibly in different order
-            Assert.AreEqual(coreTypeUris.Length, resourceIds.Length);
+            Assert.AreEqual(coreTypeUris.Length, resourceIds.Count);
             Assert.IsTrue(coreTypeUris.All(url => resourceIds.Contains(url)));
             Assert.IsTrue(resourceIds.All(url => coreTypeUris.Contains(url)));
-
         }
 
     }

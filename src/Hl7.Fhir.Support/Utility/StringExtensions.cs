@@ -33,6 +33,13 @@ namespace Hl7.Fhir.Utility
                 return instance;
         }
 
+        public static string Prepend(this string me, string prefix)
+        {
+            if (me == null) return "";
+
+            return prefix + me;
+        }
+
         public static string FormatWith(this string format, params object[] args)
         {
             if (format == null)

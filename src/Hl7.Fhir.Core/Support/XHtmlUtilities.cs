@@ -39,7 +39,7 @@ using System.Xml.Schema;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 
-namespace Hl7.Fhir.Model
+namespace Hl7.Fhir.Support
 {
     public static class XHtmlUtilities
     {

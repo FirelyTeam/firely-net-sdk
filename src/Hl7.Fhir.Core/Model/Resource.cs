@@ -233,10 +233,7 @@ namespace Hl7.Fhir.Model
         }
 
         [NotMapped]
-        public bool HasVersionId
-        {
-            get { return Meta != null && Meta.VersionId != null; }
-        }
+        public bool HasVersionId => Meta?.VersionId != null;
     }
 }
 

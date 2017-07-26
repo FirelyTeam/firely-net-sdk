@@ -59,17 +59,18 @@ namespace Hl7.Fhir.Model
         /// <returns>this (Parameters), so you can chain AddParameter calls</returns>
         public Parameters Add(string name, Base value)
         {
-            if (name == null) throw new ArgumentNullException("name");
-            if (value == null) throw new ArgumentNullException("value");
+            if (name == null) throw new ArgumentNullException(nameof(name));
 
-            var newParam = new ParameterComponent() { Name = name };            
-
-            if (value is Element)
-                newParam.Value = (Element)value;
-            else
-                newParam.Resource = (Resource)value;
-
-            Parameter.Add(newParam);
+            if (value != null)
+            {
+                Parameter.Add(
+                    new ParameterComponent()
+                    {
+                        Name = name,
+                        Value = value as Element,
+                        Resource = value as Resource
+                    });
+            }
 
             return this;
         }
@@ -149,6 +150,9 @@ namespace Hl7.Fhir.Model
 
             return Get(name, matchPrefix).SingleOrDefault();
         }
+
+        [NotMapped]
+        public ParameterComponent this[string name] => GetSingle(name);
 
         /// <summary>
         /// Returns the Value property of the requested parameter casted to the requested type

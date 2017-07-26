@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(artifact is StructureDefinition);
             Assert.AreEqual("Observation", ((StructureDefinition)artifact).Name);
 
-            var ci = artifact.Annotation<OriginInformation>();
+            var ci = artifact.Annotation<OriginAnnotation>();
             Assert.AreEqual("http://test.fhir.org/r3/StructureDefinition/Observation", ci.Origin);
         }
 
@@ -134,11 +134,11 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(vs);
             Assert.IsTrue(vs is ValueSet);
 
-            var artifact = resolver.ResolveByUri("http://test.fhir.org/r3/StructureDefinition/Flag");
+            var artifact = resolver.ResolveByUri("http://test.fhir.org/r3/StructureDefinition/Patient");
 
             Assert.IsNotNull(artifact);
             Assert.IsTrue(artifact is StructureDefinition);
-            Assert.AreEqual("Flag", ((StructureDefinition)artifact).Name);
+            Assert.AreEqual("Patient", ((StructureDefinition)artifact).Name);
         }
 
 

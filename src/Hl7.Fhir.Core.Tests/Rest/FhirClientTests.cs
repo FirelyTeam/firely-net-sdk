@@ -31,6 +31,8 @@ namespace Hl7.Fhir.Tests.Rest
         //public static Uri testEndpoint = new Uri("http://localhost:49911/fhir");
         //public static Uri testEndpoint = new Uri("http://sqlonfhir-stu3.azurewebsites.net/fhir");
 
+        public static Uri TerminologyEndpoint = new Uri("http://ontoserver.csiro.au/stu3-latest");
+
         [TestInitialize]
         public void TestInitialize()
         {
@@ -393,7 +395,7 @@ namespace Hl7.Fhir.Tests.Rest
         public void CreateAndFullRepresentation()
         {
             FhirClient client = new FhirClient(testEndpoint);
-            client.ReturnFullResource = true;       // which is also the default
+            client.PreferredReturn = Prefer.ReturnRepresentation;       // which is also the default
 
             var pat = client.Read<Patient>("Patient/glossy");
             ResourceIdentity ri = pat.ResourceIdentity().WithBase(client.Endpoint);
@@ -402,7 +404,7 @@ namespace Hl7.Fhir.Tests.Rest
             var patC = client.Create<Patient>(pat);
             Assert.IsNotNull(patC);
 
-            client.ReturnFullResource = false;
+            client.PreferredReturn = Prefer.ReturnMinimal;
             patC = client.Create<Patient>(pat);
 
             Assert.IsNull(patC);
@@ -414,7 +416,7 @@ namespace Hl7.Fhir.Tests.Rest
             }
 
             // Now validate this resource
-            client.ReturnFullResource = true;       // which is also the default
+            client.PreferredReturn = Prefer.ReturnRepresentation;      // which is also the default
             Parameters p = new Parameters();
           //  p.Add("mode", new FhirString("create"));
             p.Add("resource", pat);
@@ -855,7 +857,7 @@ namespace Hl7.Fhir.Tests.Rest
             result.Id = null;
             result.Meta = null;
 
-            client.ReturnFullResource = true;
+            client.PreferredReturn = Prefer.ReturnRepresentation;
             minimal = false;
             var posted = client.Create(result);
             Assert.IsNotNull(posted, "Patient example not found");
@@ -864,7 +866,7 @@ namespace Hl7.Fhir.Tests.Rest
             posted = client.Create(result);
             Assert.IsNotNull(posted, "Did not return a resource, even when ReturnFullResource=true");
 
-            client.ReturnFullResource = false;
+            client.PreferredReturn = Prefer.ReturnMinimal;
             minimal = true;
             posted = client.Create(result);
             Assert.IsNull(posted);

@@ -1077,7 +1077,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             foreach (var testSD in testSDs)
             {
-                var sdInfo = testSD.Annotation<OriginInformation>();
+                var sdInfo = testSD.Annotation<OriginAnnotation>();
                 // [WMR 20160721] Select all profiles in profiles-others.xml
                 var fileName = Path.GetFileNameWithoutExtension(sdInfo.Origin);
                 if (fileName == "profiles-others")
@@ -2719,7 +2719,7 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     if (sd.Differential.Element.Any(e => e.Path.StartsWith("Extension.extension.", StringComparison.Ordinal)))
                     {
-                        var orgInfo = sd.Annotation<OriginInformation>();
+                        var orgInfo = sd.Annotation<OriginAnnotation>();
                         Debug.WriteLine($"{uri} : '{orgInfo?.Origin}'");
                     }
                 }

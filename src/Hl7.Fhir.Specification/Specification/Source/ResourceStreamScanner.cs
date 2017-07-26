@@ -26,18 +26,16 @@ namespace Hl7.Fhir.Specification.Source
     /// </summary>
     internal class ResourceStreamScanner
     {
-        private Stream _input;
         private string _origin;
 
-        public ResourceStreamScanner(Stream input, string origin)
+        public ResourceStreamScanner(string origin)
         {
-            _input = input;
             _origin = origin;
         }
 
-        public IEnumerable<ResourceScanInformation> List()
+        public IEnumerable<ResourceScanInformation> List(Stream input)
         {
-            var resources = StreamResources();
+            var resources = StreamResources(input);
 
             return resources
 
@@ -116,9 +114,9 @@ namespace Hl7.Fhir.Specification.Source
 
         // Use a forward-only XmlReader to scan through a possibly huge bundled file,
         // and yield the feed entries, so only one entry is in memory at a time
-        internal IEnumerable<XElement> StreamResources()
+        internal IEnumerable<XElement> StreamResources(Stream input)
         {
-            var reader = SerializationUtil.XmlReaderFromStream(_input);
+            var reader = SerializationUtil.XmlReaderFromStream(input);
 
             var root = getRootName(reader);
 
@@ -205,11 +203,11 @@ namespace Hl7.Fhir.Specification.Source
         }
 
 
-        public XElement FindResourceByUri(string uri)
+        public XElement FindResourceByUri(Stream input, string uri)
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
 
-            var resources = StreamResources();
+            var resources = StreamResources(input);
 
             return resources.Where(res => fullUrl(res) == uri).SingleOrDefault();
         }
