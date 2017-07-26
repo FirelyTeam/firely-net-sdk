@@ -13,8 +13,9 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 using Xunit;
 using System;
+using Hl7.Fhir.Validation;
 
-namespace Hl7.Fhir.Validation
+namespace Hl7.Fhir.Specification.Tests
 {
     [Trait("Category", "Validation")]
     public class BasicValidationTests : IClassFixture<ValidationFixture>
@@ -597,25 +598,6 @@ namespace Hl7.Fhir.Validation
 
         }
 
-        class InMemoryResourceResolver : IResourceResolver
-        {
-            ILookup<string, Resource> _resources;
-
-            public InMemoryResourceResolver(IEnumerable<Resource> profiles)
-            {
-                _resources = profiles.ToLookup(r => getResourceUri(r), r => r as Resource);
-            }
-
-            public InMemoryResourceResolver(Resource profile) : this(new Resource[] { profile }) { }
-
-            public Resource ResolveByCanonicalUri(string uri) => null;
-
-            public Resource ResolveByUri(string uri) => _resources[uri].FirstOrDefault();
-
-            // cf. ResourceStreamScanner.StreamResources
-            static string getResourceUri(Resource res) => res.TypeName + "/" + res.Id;
-        }
-
         [Fact]
         public void HandlesParentElementOfCoreAbstractType()
         {
@@ -759,5 +741,26 @@ namespace Hl7.Fhir.Validation
         }
 
     }
+
+    class InMemoryResourceResolver : IResourceResolver
+    {
+        ILookup<string, Resource> _resources;
+
+        public InMemoryResourceResolver(IEnumerable<Resource> profiles)
+        {
+            _resources = profiles.ToLookup(r => getResourceUri(r), r => r as Resource);
+        }
+
+        public InMemoryResourceResolver(Resource profile) : this(new Resource[] { profile }) { }
+
+        public Resource ResolveByCanonicalUri(string uri) => null;
+
+        public Resource ResolveByUri(string uri) => _resources[uri].FirstOrDefault();
+
+        // cf. ResourceStreamScanner.StreamResources
+        static string getResourceUri(Resource res) => res.TypeName + "/" + res.Id;
+    }
+
+
 }
 
