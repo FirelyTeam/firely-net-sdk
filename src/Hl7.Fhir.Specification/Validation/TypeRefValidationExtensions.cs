@@ -103,18 +103,14 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
-            var references = instance.Children("reference");
-            var reference = references.FirstOrDefault()?.Value as string;
+            var reference = instance.ParseResourceReference();
 
-            if (reference == null)       // No reference found -> this is always valid
+            if (reference.Reference == null)       // No reference found -> this is always valid
                 return outcome;
 
-            if(references.Count() > 1)
-                validator.Trace(outcome, $"Encountered multiple references, just using first ({reference})", Issue.CONTENT_REFERENCE_HAS_MULTIPLE_REFERENCES, instance);
-
             // Try to resolve the reference *within* the current instance (Bundle, resource with contained resources) first
-            ElementDefinition.AggregationMode? encounteredKind;
-            var referencedResource = validator.ResolveReference(instance, reference, out encounteredKind, outcome);
+            var referencedResource = validator.ResolveReference(instance, reference.Reference, 
+                out ElementDefinition.AggregationMode? encounteredKind, outcome);
 
             // Validate the kind of aggregation.
             // If no aggregation is given, all kinds of aggregation are allowed, otherwise only allow
@@ -128,7 +124,7 @@ namespace Hl7.Fhir.Validation
             {
                 try
                 {
-                    referencedResource = validator.ExternalReferenceResolutionNeeded(reference, outcome, instance);
+                    referencedResource = validator.ExternalReferenceResolutionNeeded(reference.Reference, outcome, instance);
                 }
                 catch (Exception e)
                 {
