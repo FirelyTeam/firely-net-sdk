@@ -126,9 +126,9 @@ namespace Hl7.Fhir.Validation
             p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Other, Use = ContactPoint.ContactPointUse.Temp, Value = "skype://crap" });
             p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Other, Use = ContactPoint.ContactPointUse.Home, Value = "http://nu.nl" });
             p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Fax, Use = ContactPoint.ContactPointUse.Work, Value = "+31-20-6707070" });
-            var pnav = new PocoNavigator(p) as IElementNavigator;
+            var pnav = new ScopedNavigator(new PocoNavigator(p));
 
-            var telecoms = pnav.Children("telecom");
+            var telecoms = pnav.Children("telecom").Cast<ScopedNavigator>();
 
             foreach(var telecom in telecoms)
                 Assert.True(s.Add(telecom));

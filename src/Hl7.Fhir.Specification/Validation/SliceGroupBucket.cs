@@ -91,9 +91,9 @@ namespace Hl7.Fhir.Validation
 
         public string Name => Entry.Name;
 
-        public IList<IElementNavigator> Members => Entry.Members;
+        public IList<ScopedNavigator> Members => Entry.Members;
 
-        public bool Add(IElementNavigator candidate)
+        public bool Add(ScopedNavigator candidate)
         {
             return Entry.Add(candidate);
         }

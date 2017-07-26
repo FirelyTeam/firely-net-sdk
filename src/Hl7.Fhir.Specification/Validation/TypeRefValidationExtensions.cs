@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Validation
 {
     internal static class TypeRefValidationExtensions
     {
-        internal static OperationOutcome ValidateType(this Validator validator, ElementDefinition definition, IElementNavigator instance)
+        internal static OperationOutcome ValidateType(this Validator validator, ElementDefinition definition, ScopedNavigator instance)
         {
             var outcome = new OperationOutcome();
 
@@ -77,7 +77,8 @@ namespace Hl7.Fhir.Validation
         }
 
      
-        internal static OperationOutcome ValidateTypeReferences(this Validator validator, IEnumerable<ElementDefinition.TypeRefComponent> typeRefs, IElementNavigator instance)
+        internal static OperationOutcome ValidateTypeReferences(this Validator validator, 
+            IEnumerable<ElementDefinition.TypeRefComponent> typeRefs, ScopedNavigator instance)
         {
             //TODO: It's more efficient to do the non-reference types FIRST, since ANY match would be ok,
             //and validating non-references is cheaper
@@ -89,7 +90,7 @@ namespace Hl7.Fhir.Validation
             return validator.Combine(BatchValidationMode.Any, instance, validations);
         }
 
-        private static Func<OperationOutcome> createValidatorForTypeRef(Validator validator, IElementNavigator instance, ElementDefinition.TypeRefComponent tr)
+        private static Func<OperationOutcome> createValidatorForTypeRef(Validator validator, ScopedNavigator instance, ElementDefinition.TypeRefComponent tr)
         {
             // In STU3, we need to do BOTH
             // First, call Validate() against the profile (which is then a profile on Reference) THEN validate the referenced resource
@@ -99,7 +100,7 @@ namespace Hl7.Fhir.Validation
                 return () => validator.Validate(instance,tr.GetDeclaredProfiles(), statedCanonicals: null, statedProfiles: null);
         }
 
-        internal static OperationOutcome ValidateResourceReference(this Validator validator, IElementNavigator instance, ElementDefinition.TypeRefComponent typeRef)
+        internal static OperationOutcome ValidateResourceReference(this Validator validator, ScopedNavigator instance, ElementDefinition.TypeRefComponent typeRef)
         {
             var outcome = new OperationOutcome();
 
@@ -166,7 +167,7 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-        private static IElementNavigator ResolveReference(this Validator validator, IElementNavigator instance, string reference, out ElementDefinition.AggregationMode? referenceKind, OperationOutcome outcome)
+        private static IElementNavigator ResolveReference(this Validator validator, ScopedNavigator instance, string reference, out ElementDefinition.AggregationMode? referenceKind, OperationOutcome outcome)
         {
             var identity = new ResourceIdentity(reference);
 
@@ -180,7 +181,7 @@ namespace Hl7.Fhir.Validation
                 }
             }
 
-            var result = validator.ScopeTracker.Resolve(instance, reference);
+            var result = instance.Resolve(reference);
 
             if (identity.Form == ResourceIdentityForm.Local)
             {

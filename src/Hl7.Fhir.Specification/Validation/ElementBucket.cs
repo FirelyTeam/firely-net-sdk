@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Validation
 
         public Validator Validator { get; private set; }
 
-        public override bool Add(IElementNavigator instance)
+        public override bool Add(ScopedNavigator instance)
         {
             // Membership of an "element bucket" should be determined by element name
             //var matches = ChildNameMatcher.NameMatches(Root.PathName, candidate);

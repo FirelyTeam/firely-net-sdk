@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Validation
                     ElementNode.Node("nonExistant")
                         ).ToNavigator();
 
-            var matches = ChildNameMatcher.Match(boolDefNav, data);
+            var matches = ChildNameMatcher.Match(boolDefNav, new ScopedNavigator(data));
             Assert.Equal(1, matches.UnmatchedInstanceElements.Count);
             Assert.Equal(3, matches.Matches.Count());        // id, extension, value
             Assert.Equal(0, matches.Matches[0].InstanceElements.Count()); // id

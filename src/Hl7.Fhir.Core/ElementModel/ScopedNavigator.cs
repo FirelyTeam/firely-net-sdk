@@ -16,6 +16,15 @@ namespace Hl7.Fhir.ElementModel
 {
     public class ScopedNavigator : IElementNavigator
     {
+        private class Cache
+        {
+            public string Id;
+            public IEnumerable<ScopedNavigator> ContainedResources;
+            public IEnumerable<BundledResource> BundledResources;
+            public string FullUrl;
+        }
+        private Cache _cache = new Cache();
+
         private IElementNavigator _wrapped = null;
 
         public ScopedNavigator(IElementNavigator wrapped)
@@ -33,7 +42,11 @@ namespace Hl7.Fhir.ElementModel
 
         public string Location => _wrapped.Location;
 
-        public bool MoveToNext(string nameFilter = null) => _wrapped.MoveToNext(nameFilter);
+        public bool MoveToNext(string nameFilter = null)
+        {
+            _cache = new Cache();
+            return _wrapped.MoveToNext(nameFilter);
+        }
 
         public bool MoveToFirstChild(string nameFilter = null)
         {
@@ -47,6 +60,8 @@ namespace Hl7.Fhir.ElementModel
             // If the current position is a resource, we'll be the new _parentScope
             if (me != null)
                 Parent = me;
+
+            _cache = new Cache();
 
             return true;
         }
@@ -66,16 +81,26 @@ namespace Hl7.Fhir.ElementModel
             }
         }
 
-        //TODO: This could be cached
-        public string Id() => AtResource ? "#" + _wrapped.Children("id").FirstOrDefault()?.Value as string : null;
+        public string Id()
+        {
+            if (_cache.Id == null)
+            {
+                _cache.Id = AtResource ? "#" + _wrapped.Children("id").FirstOrDefault()?.Value as string : null;
+            }
+
+            return _cache.Id;
+        }
 
         public IEnumerable<ScopedNavigator> ContainedResources()
         {
-            //TODO: This could be cached
-            if (AtResource)
-                return this.Children("contained").Cast<ScopedNavigator>();
-            else
-                return Enumerable.Empty<ScopedNavigator>();
+            if (_cache.ContainedResources == null)
+            {
+                if (AtResource)
+                    _cache.ContainedResources = this.Children("contained").Cast<ScopedNavigator>();
+                else
+                    _cache.ContainedResources = Enumerable.Empty<ScopedNavigator>();
+            }
+            return _cache.ContainedResources;
         }
 
         public class BundledResource
@@ -86,30 +111,37 @@ namespace Hl7.Fhir.ElementModel
 
         public IEnumerable<BundledResource> BundledResources()
         {
-            //TODO: This could be cached
-            if (AtBundle)
-                return from e in this.Children("entry")
-                       let fullUrl = e.Children("fullUrl").FirstOrDefault()?.Value as string
-                       let resource = e.Children("resource").FirstOrDefault() as ScopedNavigator
-                       select new BundledResource { FullUrl = fullUrl, Resource = resource };
-            else
-                return Enumerable.Empty<BundledResource>();
+            if (_cache.BundledResources == null)
+            {
+                if (AtBundle)
+                    _cache.BundledResources = from e in this.Children("entry")
+                           let fullUrl = e.Children("fullUrl").FirstOrDefault()?.Value as string
+                           let resource = e.Children("resource").FirstOrDefault() as ScopedNavigator
+                           select new BundledResource { FullUrl = fullUrl, Resource = resource };
+                else
+                    _cache.BundledResources= Enumerable.Empty<BundledResource>();
+            }
+
+            return _cache.BundledResources;
         }
 
         public string FullUrl()
         {
-            foreach (var parent in Parents())
+            if (_cache.FullUrl == null)
             {
-                if(parent.AtBundle)
+                foreach (var parent in Parents())
                 {
-                    var fullUrl = parent.BundledResources()
-                        .SingleOrDefault(be => this.Location.StartsWith(be.Resource.Location))
-                        ?.FullUrl;
-                    if (fullUrl != null) return fullUrl;
+                    if (parent.AtBundle)
+                    {
+                        var fullUrl = parent.BundledResources()
+                            .SingleOrDefault(be => this.Location.StartsWith(be.Resource.Location))
+                            ?.FullUrl;
+                        if (fullUrl != null) _cache.FullUrl =  fullUrl;
+                    }
                 }
             }
 
-            return null;
+            return _cache.FullUrl;
         }
 
         public IElementNavigator Clone()
