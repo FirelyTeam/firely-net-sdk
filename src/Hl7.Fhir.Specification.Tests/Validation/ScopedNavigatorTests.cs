@@ -157,7 +157,23 @@ namespace Hl7.Fhir.Specification.Tests.Validation
             Assert.AreEqual("Bundle.entry[1].resource[0]", inner7.Resolve("urn:uuid:04121321-4af5-424c-a0e1-ed3aab1c349d").Location);
             Assert.IsNull(inner7.Resolve("#d"));
             Assert.IsNull(inner7.Resolve("http://nu.nl/3"));
-        }
 
+            Assert.AreEqual("Bundle.entry[6].resource[0].contained[1]", inner7.Resolve().Location);
+            Assert.IsTrue(inner7.MoveToFirstChild("reference"));
+            Assert.AreEqual("Bundle.entry[6].resource[0].contained[1]", inner7.Resolve().Location);
+
+            string lastUrlResolved = "";
+
+            Assert.IsNull(inner7.Resolve("#d", externalResolve));
+            Assert.AreEqual("#d", lastUrlResolved);
+            Assert.IsNull(inner7.Resolve("http://nu.nl/3", externalResolve));
+            Assert.AreEqual("http://nu.nl/3", lastUrlResolved);
+
+            IElementNavigator externalResolve(string url)
+            {
+                lastUrlResolved = url;
+                return null;
+            }
+        }
     }
 }

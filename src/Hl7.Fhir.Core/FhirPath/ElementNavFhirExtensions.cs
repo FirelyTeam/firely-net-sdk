@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Utility;
 using Hl7.FhirPath;
 using Hl7.FhirPath.Expressions;
 using System;
@@ -19,6 +20,8 @@ namespace Hl7.Fhir.FhirPath
 {
     public static class ElementNavFhirExtensions
     {
+        public static Func<string, IElementNavigator> Resolver = null;
+
         internal static bool _fhirSymbolTableExtensionsAdded = false;
         public static void PrepareFhirSymbolTableFunctions()
         {
@@ -29,12 +32,25 @@ namespace Hl7.Fhir.FhirPath
             }
         }
 
+        public static Func<string, IElementNavigator> ToFhirPathResolver(this Func<string, Resource> resolver)
+        {
+            return navResolver;
+
+            IElementNavigator navResolver(string url)
+            {
+                var resource = resolver(url);
+                if (resource == null) return null;
+
+                return new PocoNavigator(resource);
+            }
+        }
+
         // TODO: Add support for the custom fhirpath function hasValue() on the default symbol table
         //
         public static SymbolTable AddFhirExtensions(this SymbolTable t)
         {
             t.Add("hasValue", (ElementModel.IElementNavigator f) => f.HasValue(), doNullProp: false);
-            t.Add("resolve", (ElementModel.IElementNavigator f) => f.Resolve(), doNullProp: false);
+            t.Add("resolve", (ElementModel.IElementNavigator f) => f.Resolve(Resolver), doNullProp: false);
             t.Add("htmlchecks", (ElementModel.IElementNavigator f) => f.HtmlChecks(), doNullProp: false);
 
             return t;
@@ -71,33 +87,6 @@ namespace Hl7.Fhir.FhirPath
             return true;
         }
 
-        /// <summary>
-        /// Where this item is a reference, resolve it to an actual resource, and return that
-        /// </summary>
-        /// <param name="focus"></param>
-        /// <returns></returns>
-        public static ElementModel.IElementNavigator Resolve(this ElementModel.IElementNavigator focus)
-        {
-            if (focus == null)
-                return null;
-            if (focus.Value == null)
-                return null;
-            if (focus.Value is PocoElementNavigator)
-            {
-                var fv = (focus.Value as PocoElementNavigator).FhirValue;
-                if (fv is ResourceReference)
-                {
-                    string reference = (fv as ResourceReference).Reference;
-                    if (string.IsNullOrEmpty(reference))
-                        return null;
-                    Rest.ResourceIdentity ri = new Rest.ResourceIdentity(reference);
-
-                    // Go retrieve the resource? (seriously?)
-                    System.Diagnostics.Debug.WriteLine("Evaluating a reolve call: " + reference);
-                }
-            }
-            return null;
-        }
 
         public static IEnumerable<Base> ToFhirValues(this IEnumerable<ElementModel.IElementNavigator> results)
         {
@@ -151,10 +140,13 @@ namespace Hl7.Fhir.FhirPath
             });
         }
 
+
+        private static ScopedNavigator createNav(Base input) => new ScopedNavigator(new PocoNavigator(input));
+
         public static IEnumerable<Base> Select(this Base input, string expression, Resource resource = null)
         {
-            var inputNav = new PocoNavigator(input);
-            var resourceNav = resource != null ? new PocoNavigator(resource) : null;
+            var inputNav = createNav(input);
+            var resourceNav = resource != null ? createNav(resource) : null;
 
             var result = inputNav.Select(expression, resourceNav);
             return result.ToFhirValues();            
@@ -162,24 +154,24 @@ namespace Hl7.Fhir.FhirPath
 
         public static object Scalar(this Base input, string expression, Resource resource = null)
         {
-            var inputNav = new PocoNavigator(input);
-            var resourceNav = resource != null ? new PocoNavigator(resource) : null;
+            var inputNav = createNav(input);
+            var resourceNav = resource != null ? createNav(resource) : null;
 
             return inputNav.Scalar(expression, resourceNav);
         }
 
         public static bool Predicate(this Base input, string expression, Resource resource = null)
         {
-            var inputNav = new PocoNavigator(input);
-            var resourceNav = resource != null ? new PocoNavigator(resource) : null;
+            var inputNav = createNav(input);
+            var resourceNav = resource != null ? createNav(resource) : null;
 
             return inputNav.Predicate(expression, resourceNav);
         }
 
         public static bool IsBoolean(this Base input, string expression, bool value, Resource resource = null)
         {
-            var inputNav = new PocoNavigator(input);
-            var resourceNav = resource != null ? new PocoNavigator(resource) : null;
+            var inputNav = createNav(input);
+            var resourceNav = resource != null ? createNav(resource) : null;
 
             return inputNav.IsBoolean(expression, value, resourceNav);
         }

@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Validation
                 return outcome;
 
             // Try to resolve the reference *within* the current instance (Bundle, resource with contained resources) first
-            var referencedResource = validator.ResolveReference(instance, reference.Reference, 
+            var referencedResource = validator.resolveReference(instance, reference.Reference, 
                 out ElementDefinition.AggregationMode? encounteredKind, outcome);
 
             // Validate the kind of aggregation.
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Validation
             {
                 try
                 {
-                    referencedResource = validator.ExternalReferenceResolutionNeeded(reference.Reference, outcome, instance);
+                    referencedResource = validator.ExternalReferenceResolutionNeeded(reference.Reference, outcome, instance.Location);
                 }
                 catch (Exception e)
                 {
@@ -167,7 +167,7 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-        private static IElementNavigator ResolveReference(this Validator validator, ScopedNavigator instance, string reference, out ElementDefinition.AggregationMode? referenceKind, OperationOutcome outcome)
+        private static IElementNavigator resolveReference(this Validator validator, ScopedNavigator instance, string reference, out ElementDefinition.AggregationMode? referenceKind, OperationOutcome outcome)
         {
             var identity = new ResourceIdentity(reference);
 

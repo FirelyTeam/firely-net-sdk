@@ -36,6 +36,7 @@ using Hl7.Fhir.Rest;
 using Hl7.FhirPath;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.FhirPath;
 
 namespace Hl7.Fhir.Model
 {
@@ -85,8 +86,9 @@ namespace Hl7.Fhir.Model
         /// <param name="invariantRule"></param>
         /// <param name="model"></param>
         /// <param name="result">The OperationOutcome that will have the validation results appended</param>
+        /// <param name="context">Describes the context in which a validation check is performed.</param>
         /// <returns></returns>
-        public static bool ValidateInvariantRule(ElementDefinition.ConstraintComponent invariantRule, IElementNavigator model, OperationOutcome result)
+        public static bool ValidateInvariantRule(ValidationContext context, ElementDefinition.ConstraintComponent invariantRule, IElementNavigator model, OperationOutcome result)
         {
             string expression = invariantRule.GetStringExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression");
             try
@@ -105,19 +107,28 @@ namespace Hl7.Fhir.Model
                 }
 
                 // Ensure the FHIR extensions are registered
-                Hl7.Fhir.FhirPath.ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
-
-                if (model.Predicate(expression, model))
-                    return true;
-
-                result.Issue.Add(new OperationOutcome.IssueComponent()
+                var oldResolver = FhirPath.ElementNavFhirExtensions.Resolver;
+                try
                 {
-                    Code = OperationOutcome.IssueType.Invariant,
-                    Severity = OperationOutcome.IssueSeverity.Error,
-                    Details = new CodeableConcept(null, invariantRule.Key, invariantRule.Human),
-                    Diagnostics = expression
-                });
-                return false;
+                    FhirPath.ElementNavFhirExtensions.Resolver = context.Resolver()?.ToFhirPathResolver();
+                    Hl7.Fhir.FhirPath.ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
+
+                    if (model.Predicate(expression, model))
+                        return true;
+
+                    result.Issue.Add(new OperationOutcome.IssueComponent()
+                    {
+                        Code = OperationOutcome.IssueType.Invariant,
+                        Severity = OperationOutcome.IssueSeverity.Error,
+                        Details = new CodeableConcept(null, invariantRule.Key, invariantRule.Human),
+                        Diagnostics = expression
+                    });
+                    return false;
+                }
+                finally
+                {
+                    FhirPath.ElementNavFhirExtensions.Resolver = oldResolver;
+                }
             }
             catch (Exception ex)
             {
@@ -179,15 +190,18 @@ namespace Hl7.Fhir.Model
             }
 
             // and process all the invariants from the resource
-            ValidateInvariants(result);
+            ValidateInvariants(validationContext, result);
 
             return result;
         }
 
         public void ValidateInvariants(List<ValidationResult> result)
+             => ValidateInvariants(DotNetAttributeValidation.BuildContext(null), result);
+
+        public void ValidateInvariants(ValidationContext context, List<ValidationResult> result)
         {
             OperationOutcome results = new OperationOutcome();
-            ValidateInvariants(results);
+            ValidateInvariants(context, results);
             foreach (var item in results.Issue)
             {
                 if (item.Severity == OperationOutcome.IssueSeverity.Error
@@ -197,6 +211,9 @@ namespace Hl7.Fhir.Model
         }
 
         public void ValidateInvariants(OperationOutcome result)
+            => ValidateInvariants(DotNetAttributeValidation.BuildContext(null), result);
+
+        public void ValidateInvariants(ValidationContext context, OperationOutcome result)
         {
             if (InvariantConstraints != null && InvariantConstraints.Count > 0)
             {
@@ -207,7 +224,7 @@ namespace Hl7.Fhir.Model
                 var tree = new PocoNavigator(this);
                 foreach (var invariantRule in InvariantConstraints)
                 {
-                    ValidateInvariantRule(invariantRule, tree, result);
+                    ValidateInvariantRule(context,invariantRule, tree, result);
                 }
 
                 sw.Stop();
