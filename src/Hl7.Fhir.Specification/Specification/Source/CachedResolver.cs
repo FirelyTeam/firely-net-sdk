@@ -13,6 +13,17 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Source
 {
+    /// <summary>Defines options for the <see cref="CachedResolver"/> that determine how to load a resource.</summary>
+    public enum CachedResolverLoadingStrategy
+    {
+        /// <summary>Return from cache, if present. Otherwise (re-)load from source and update cache.</summary>
+        LoadOnDemand = 0,
+        /// <summary>Return from cache, if present. Do NOT (re-)load from source. Do NOT update cache.</summary>
+        LoadFromCache = 1,
+        /// <summary>Force (re-)load from source and update cache.</summary>
+        LoadFromSource = 2
+    }
+
     /// <summary>Reads and caches FHIR artifacts (Profiles, ValueSets, ...) from an internal <see cref="IResourceResolver"/> instance.</summary>
     public class CachedResolver : IResourceResolver
     {
@@ -47,7 +58,7 @@ namespace Hl7.Fhir.Specification.Source
         public Resource ResolveByUri(string url)
         {
             if (url == null) throw Error.ArgumentNull(nameof(url));
-            return _resourcesByUri.Get(url, true);
+            return _resourcesByUri.Get(url, CachedResolverLoadingStrategy.LoadOnDemand);
         }
 
         /// <summary>Retrieve the conformance resource with the specified canonical url.</summary>
@@ -57,14 +68,29 @@ namespace Hl7.Fhir.Specification.Source
         public Resource ResolveByCanonicalUri(string url)
         {
             if (url == null) throw Error.ArgumentNull(nameof(url));
-            return _resourcesByCanonical.Get(url, true);
+            return _resourcesByCanonical.Get(url, CachedResolverLoadingStrategy.LoadOnDemand);
         }
 
-        /// <summary>Clear the memory cache by removing all existing cache entries.</summary>
-        public void Clear()
+        /// <summary>Retrieve the artifact with the specified url.</summary>
+        /// <param name="url">The url of the target artifact.</param>
+        /// <param name="strategy">Option flag to control the loading strategy.</param>
+        /// <returns>A <see cref="Resource"/> instance, or <c>null</c> if unavailable.</returns>
+        /// <remarks>Return data from memory cache if available, otherwise load on demand from the internal artifact source.</remarks>
+        public Resource ResolveByUri(string url, CachedResolverLoadingStrategy strategy)
         {
-            _resourcesByUri.Clear();
-            _resourcesByCanonical.Clear();
+            if (url == null) throw Error.ArgumentNull(nameof(url));
+            return _resourcesByUri.Get(url, strategy);
+        }
+
+        /// <summary>Retrieve the conformance resource with the specified canonical url.</summary>
+        /// <param name="url">The canonical url of the target conformance resource.</param>
+        /// <param name="strategy">Option flag to control the loading strategy.</param>
+        /// <returns>A conformance <see cref="Resource"/> instance, or <c>null</c> if unavailable.</returns>
+        /// <remarks>Return data from memory cache if available, otherwise load on demand from the internal artifact source.</remarks>
+        public Resource ResolveByCanonicalUri(string url, CachedResolverLoadingStrategy strategy)
+        {
+            if (url == null) throw Error.ArgumentNull(nameof(url));
+            return _resourcesByCanonical.Get(url, strategy);
         }
 
         /// <summary>Clear the cache entry for the artifact with the specified url, if it exists.</summary>
@@ -85,31 +111,20 @@ namespace Hl7.Fhir.Specification.Source
             return _resourcesByCanonical.Invalidate(url);
         }
 
-        /// <summary>Retrieve the artifact with the specified url from memory cache, if present. Do not load on demand.</summary>
-        /// <returns>A cached <see cref="Resource"/> instance, or <c>null</c>.</returns>
-        /// <remarks>Does NOT load resource on demand from the internal artifact resolver.</remarks>
-        public Resource GetCachedByUri(string url)
+        /// <summary>Clear the memory cache by removing all existing cache entries.</summary>
+        public void Clear()
         {
-            if (url == null) throw Error.ArgumentNull(nameof(url));
-            return _resourcesByUri.Get(url, false);
-        }
-
-        /// <summary>Retrieve the conformance resource with the specified canonical url from memory cache, if present. Do not load on demand.</summary>
-        /// <returns>A cached conformance <see cref="Resource"/> instance, or <c>null</c>.</returns>
-        /// <remarks>Does NOT load conformance resource on demand from the internal artifact resolver.</remarks>
-        public Resource GetCachedByCanonicalUri(string url)
-        {
-            if (url == null) throw Error.ArgumentNull(nameof(url));
-            return _resourcesByCanonical.Get(url, false);
+            _resourcesByUri.Clear();
+            _resourcesByCanonical.Clear();
         }
 
         /// <summary>Determines if the memory cache contains a resource with the specified url.</summary>
         /// <returns><c>true</c> if the resource is cached, or <c>false</c> otherwise.</returns>
-        public bool IsCachedUri(string url) => GetCachedByUri(url) != null;
+        public bool IsCachedUri(string url) => ResolveByUri(url, CachedResolverLoadingStrategy.LoadFromCache) != null;
 
         /// <summary>Determines if the memory cache contains a conformance resource with the specified canonical url.</summary>
         /// <returns><c>true</c> if the conformance resource is cached, or <c>false</c> otherwise.</returns>
-        public bool IsCachedCanonicalUri(string url) => GetCachedByCanonicalUri(url) != null;
+        public bool IsCachedCanonicalUri(string url) => ResolveByCanonicalUri(url, CachedResolverLoadingStrategy.LoadFromCache) != null;
 
         /// <summary>Event arguments for the <see cref="LoadResourceEventHandler"/> delegate.</summary>
         public class LoadResourceEventArgs : EventArgs
@@ -150,11 +165,13 @@ namespace Hl7.Fhir.Specification.Source
             return resource;
         }
 
-        // [WMR 20170724] Add class constraint so we can test if Data is initialized (!= null)
-        private class Cache<T> where T : class
+        private class Cache<T>
         {
             readonly Func<string,T> _onCacheMiss;
             readonly int _duration;
+
+            Object _getLock = new Object();
+            Dictionary<string, CacheEntry<T>> _cache = new Dictionary<string, CacheEntry<T>>();
 
             public Cache(Func<string,T> onCacheMiss, int duration)
             {
@@ -162,52 +179,46 @@ namespace Hl7.Fhir.Specification.Source
                 _duration = duration;
             }
 
-            // private SynchronizedCollection<CacheEntry<T>> _cache = new SynchronizedCollection<CacheEntry<T>>();
-            private Object getLock = new Object();
-            private Dictionary<string, CacheEntry<T>> _cache = new Dictionary<string, CacheEntry<T>>();
-
-            // [WMR 20170725] Add loadOnDemand parameter
-            public T Get(string identifier, bool loadOnDemand)
+            public T Get(string identifier, CachedResolverLoadingStrategy strategy)
             {
-                lock (getLock)
+                lock (_getLock)
                 {
                     // Check the cache
-                    CacheEntry<T> entry;
-                    bool success = _cache.TryGetValue(identifier, out entry);
-                    //var entry = _cache.TryGetValue(Where(ce => ce.Identifier == identifier).SingleOrDefault();
-
-                    // Remove entry if it's too old
-                    if (success && entry.Expired)
+                    if (strategy != CachedResolverLoadingStrategy.LoadFromSource)
                     {
-                        _cache.Remove(identifier);
-                        entry = null;
-                        // [WMR 20170406] Clear flag so we (try to) re-create the entry
-                        success = false;
+                        if (_cache.TryGetValue(identifier, out CacheEntry<T> entry))
+                        {
+                            // If we still have a fresh entry, return it
+                            if (!entry.IsExpired)
+                            {
+                                return entry.Data;
+                            }
+
+                            // Remove entry if it's too old
+                            _cache.Remove(identifier);
+                        }
                     }
 
-                    // If we still have a fresh entry, return it
-                    if (success)
-                    {
-                        return entry.Data;
-                    }
-                    else if (loadOnDemand)
+                    // Load from source
+                    if (strategy != CachedResolverLoadingStrategy.LoadFromCache)
                     {
                         // Otherwise, fetch it and cache it.
-                        T newData = default(T);
+                        T newData = _onCacheMiss(identifier);
 
-                        newData = _onCacheMiss(identifier);
-                        // _cache.Add(identifier, new CacheEntry<T> { Data = newData, Identifier = identifier, Expires = DateTime.Now.AddSeconds(_duration) });
-                        _cache.Add(identifier, new CacheEntry<T>(newData, identifier, DateTime.Now.AddSeconds(_duration)));
+                        // _cache.Add(identifier, new CacheEntry<T>(newData, identifier, DateTime.Now.AddSeconds(_duration)));
+                        // Add new entry or update existing entry (for LoadFromSource)
+                        _cache[identifier] = new CacheEntry<T>(newData, identifier, DateTime.Now.AddSeconds(_duration));
 
                         return newData;
                     }
-                    return null; // default(T)
+
+                    return default(T);
                 }
             }
 
             public bool Invalidate(string identifier)
             {
-                lock (getLock)
+                lock (_getLock)
                 {
                     return _cache.Remove(identifier);
                 }
@@ -215,15 +226,14 @@ namespace Hl7.Fhir.Specification.Source
 
             public void Clear()
             {
-                lock (getLock)
+                lock (_getLock)
                 {
                     _cache.Clear();
                 }
             }
         }
 
-        // [WMR 20170724] Add class constraint so we can test if Data is initialized (!= null)
-        private class CacheEntry<T> where T : class
+        private class CacheEntry<T>
         {
             public readonly T Data;
             public readonly string Identifier;
@@ -237,7 +247,7 @@ namespace Hl7.Fhir.Specification.Source
             }
 
             /// <summary>Returns a boolean value that indicates if the cache entry is expired.</summary>
-            public bool Expired => DateTime.Now > Expires;
+            public bool IsExpired => DateTime.Now > Expires;
         }
     }
 }

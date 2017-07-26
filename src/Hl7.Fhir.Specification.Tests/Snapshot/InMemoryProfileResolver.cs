@@ -10,14 +10,25 @@ namespace Hl7.Fhir.Specification.Tests
     {
         ILookup<string, Resource> _resources;
 
+        public InMemoryProfileResolver(IEnumerable<IConformanceResource> profiles)
+        {
+            Reload(profiles);
+        }
+
         public InMemoryProfileResolver(params IConformanceResource[] profiles) : this(profiles.AsEnumerable()) { }
 
-        public InMemoryProfileResolver(IEnumerable<IConformanceResource> profiles)
+        public InMemoryProfileResolver(IConformanceResource profile) : this(new IConformanceResource[] { profile }) { }
+
+        public void Reload(IEnumerable<IConformanceResource> profiles)
         {
             _resources = profiles.ToLookup(r => r.Url, r => r as Resource);
         }
 
-        public InMemoryProfileResolver(IConformanceResource profile) : this(new IConformanceResource[] { profile }) { }
+        public void Reload(IConformanceResource[] profiles) => Reload(profiles.AsEnumerable());
+
+        public void Reload(IConformanceResource profile) => Reload(new IConformanceResource[] { profile });
+
+        public void Clear() => Reload(Enumerable.Empty<IConformanceResource>());
 
         #region IResourceResolver
 
