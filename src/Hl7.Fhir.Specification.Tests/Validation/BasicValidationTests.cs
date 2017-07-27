@@ -234,10 +234,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void ValidatesPatternValue()
         {
-            // [WMR 20170727] Fixed
-            // Do NOT modify common core Patient definition, as this would affect all subsequent tests.
-            // Instead, clone the core def and modify the clone
-            var patientSd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Patient).DeepCopy();
+            var patientSd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Patient);
 
             var instance1 = new CodeableConcept("http://hl7.org/fhir/marital-status", "U");
 
