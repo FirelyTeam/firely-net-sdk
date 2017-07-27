@@ -170,8 +170,8 @@ namespace Hl7.Fhir.Specification.Source
             readonly Func<string,T> _onCacheMiss;
             readonly int _duration;
 
-            Object _getLock = new Object();
-            Dictionary<string, CacheEntry<T>> _cache = new Dictionary<string, CacheEntry<T>>();
+            readonly Object _getLock = new Object();
+            readonly Dictionary<string, CacheEntry<T>> _cache = new Dictionary<string, CacheEntry<T>>();
 
             public Cache(Func<string,T> onCacheMiss, int duration)
             {
@@ -183,10 +183,12 @@ namespace Hl7.Fhir.Specification.Source
             {
                 lock (_getLock)
                 {
+                    var cache = _cache;
+
                     // Check the cache
                     if (strategy != CachedResolverLoadingStrategy.LoadFromSource)
                     {
-                        if (_cache.TryGetValue(identifier, out CacheEntry<T> entry))
+                        if (cache.TryGetValue(identifier, out CacheEntry<T> entry))
                         {
                             // If we still have a fresh entry, return it
                             if (!entry.IsExpired)
@@ -195,7 +197,7 @@ namespace Hl7.Fhir.Specification.Source
                             }
 
                             // Remove entry if it's too old
-                            _cache.Remove(identifier);
+                            cache.Remove(identifier);
                         }
                     }
 
@@ -205,9 +207,8 @@ namespace Hl7.Fhir.Specification.Source
                         // Otherwise, fetch it and cache it.
                         T newData = _onCacheMiss(identifier);
 
-                        // _cache.Add(identifier, new CacheEntry<T>(newData, identifier, DateTime.Now.AddSeconds(_duration)));
-                        // Add new entry or update existing entry (for LoadFromSource)
-                        _cache[identifier] = new CacheEntry<T>(newData, identifier, DateTime.Now.AddSeconds(_duration));
+                        // Add new entry or update existing entry
+                        cache[identifier] = new CacheEntry<T>(newData, identifier, DateTime.Now.AddSeconds(_duration));
 
                         return newData;
                     }
