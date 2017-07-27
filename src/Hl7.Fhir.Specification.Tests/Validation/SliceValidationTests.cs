@@ -4,11 +4,10 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
-using Hl7.Fhir.Validation;
 using System.Linq;
 using Xunit;
 
-namespace Hl7.Fhir.Specification.Tests
+namespace Hl7.Fhir.Validation
 {
     [Trait("Category", "Validation")]
     public class SliceValidationTests : IClassFixture<ValidationFixture>

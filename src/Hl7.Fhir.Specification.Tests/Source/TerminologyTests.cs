@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Hl7.Fhir.Specification.Tests
+namespace Hl7.Fhir.Source
 {
     public class TerminologyTests : IClassFixture<ValidationFixture>
     {            

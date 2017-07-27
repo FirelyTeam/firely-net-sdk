@@ -7,9 +7,8 @@ using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Validation;
 
-namespace Hl7.Fhir.Specification.Tests
+namespace Hl7.Fhir.Validation
 {
     [Trait("Category", "Validation")]
     public class BindingValidationTests : IClassFixture<ValidationFixture>
