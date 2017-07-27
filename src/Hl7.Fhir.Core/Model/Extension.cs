@@ -41,6 +41,9 @@ using Hl7.Fhir.Utility;
 //
 namespace Hl7.Fhir.Model
 {
+#if NET45
+    [Serializable]
+#endif
     [System.Diagnostics.DebuggerDisplay(@"\{Value={Value} Url={_Url}}")]
     [FhirType("Extension")]
     [DataContract]
