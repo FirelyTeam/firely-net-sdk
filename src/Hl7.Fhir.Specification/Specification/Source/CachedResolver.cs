@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2017, Furore (info@furore.com) and contributors
+ * Copyright (c) 2016, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -8,23 +8,25 @@
 
 using System;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Support;
 using System.Collections.Generic;
 using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Source
 {
-    /// <summary>Reads and caches FHIR artifacts (Profiles, ValueSets, ...) from an internal <see cref="IResourceResolver"/> instance.</summary>
+    /// <summary>
+    /// Reads FHIR artifacts (Profiles, ValueSets, ...) using a list of other IArtifactSources
+    /// </summary>
     public class CachedResolver : IResourceResolver
     {
-        /// <summary>Default expiration time for cached entries.</summary>
         public const int DEFAULT_CACHE_DURATION = 4 * 3600;     // 4 hours
 
         readonly Cache<Resource> _resourcesByUri;
         readonly Cache<Resource> _resourcesByCanonical;
 
-        /// <summary>Creates a new artifact resolver that caches loaded resources in memory.</summary>
-        /// <param name="source">Internal resolver from which artifacts are initially resolved on a cache miss.</param>
-        /// <param name="cacheDuration">Default expiration time of a cache entry, in seconds.</param>
+        /// <summary>Artifact resolver decorator to cache loaded resources in memory.</summary>
+        /// <param name="source">ArtifactSource that will be used to get data from on a cache miss</param>
+        /// <param name="cacheDuration">Duration before trying to refresh the cache, in seconds</param>
         public CachedResolver(IResourceResolver source, int cacheDuration = DEFAULT_CACHE_DURATION)
         {
             Source = source;
@@ -34,82 +36,56 @@ namespace Hl7.Fhir.Specification.Source
             _resourcesByCanonical = new Cache<Resource>(id => InternalResolveByCanonicalUri(id), CacheDuration);
         }
 
-        /// <summary>Returns a reference to the internal artifact source.</summary>
-        public IResourceResolver Source { get; }
+        public IResourceResolver Source { get; private set; }
 
-        /// <summary>Gets the default expiration time of a cache entry.</summary>
-        public int CacheDuration { get; }
+        public int CacheDuration { get; set; }
 
-        /// <summary>Retrieve the artifact with the specified url.</summary>
-        /// <param name="url">The url of the target artifact.</param>
-        /// <returns>A <see cref="Resource"/> instance, or <c>null</c> if unavailable.</returns>
-        /// <remarks>Return data from memory cache if available, otherwise load on demand from the internal artifact source.</remarks>
         public Resource ResolveByUri(string url)
         {
             if (url == null) throw Error.ArgumentNull(nameof(url));
-            return _resourcesByUri.Get(url, true);
+
+            return _resourcesByUri.Get(url);
         }
 
-        /// <summary>Retrieve the conformance resource with the specified canonical url.</summary>
-        /// <param name="url">The canonical url of the target conformance resource.</param>
-        /// <returns>A conformance <see cref="Resource"/> instance, or <c>null</c> if unavailable.</returns>
-        /// <remarks>Return data from memory cache if available, otherwise load on demand from the internal artifact source.</remarks>
         public Resource ResolveByCanonicalUri(string url)
         {
             if (url == null) throw Error.ArgumentNull(nameof(url));
-            return _resourcesByCanonical.Get(url, true);
+
+            return _resourcesByCanonical.Get(url);
         }
 
-        /// <summary>Clear the memory cache by removing all existing cache entries.</summary>
+        /// <summary>Remove the resource with the specified uri from the cache, if it exists.</summary>
+        /// <param name="url">The resource uri.</param>
+        /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
+        public bool InvalidateUri(string url) => _resourcesByUri.Invalidate(url);
+
+        /// <summary>Remove the resource with the specified canonical uri from the cache, if it exists.</summary>
+        /// <param name="url">The canonical resource uri.</param>
+        /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
+        public bool InvalidateCanonicalUri(string url) => _resourcesByCanonical.Invalidate(url);
+
+        /// <summary>Clear the cache by removing all existing cache entries.</summary>
         public void Clear()
         {
             _resourcesByUri.Clear();
             _resourcesByCanonical.Clear();
         }
 
-        /// <summary>Clear the cache entry for the artifact with the specified url, if it exists.</summary>
-        /// <param name="url">The url of the target resource.</param>
-        /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
-        public bool InvalidateByUri(string url)
-        {
-            if (url == null) throw Error.ArgumentNull(nameof(url));
-            return _resourcesByUri.Invalidate(url);
-        }
+        /// <summary>Determines if the resolver contains a cached resource for the specified uri.</summary>
+        /// <returns><c>true</c> if resource data is cached, or <c>false</c> otherwise.</returns>
+        public bool IsCachedUri(string url) => _resourcesByUri.IsCached(url);
 
-        /// <summary>Clear the cache entry for the conformance resource with the specified canonical uri, if it exists.</summary>
-        /// <param name="url">The canonical url of the target conformance resource.</param>
-        /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
-        public bool InvalidateByCanonicalUri(string url)
-        {
-            if (url == null) throw Error.ArgumentNull(nameof(url));
-            return _resourcesByCanonical.Invalidate(url);
-        }
+        /// <summary>Determines if the resolver contains a cached conformance resource for the specified canonical uri.</summary>
+        /// <returns><c>true</c> if conformance resource data is cached, or <c>false</c> otherwise.</returns>
+        public bool IsCachedCanonicalUri(string url) => _resourcesByCanonical.IsCached(url);
 
-        /// <summary>Retrieve the artifact with the specified url from memory cache, if present. Do not load on demand.</summary>
+        /// <summary>Returns resource data for the specified uri, if present in cache.</summary>
         /// <returns>A cached <see cref="Resource"/> instance, or <c>null</c>.</returns>
-        /// <remarks>Does NOT load resource on demand from the internal artifact resolver.</remarks>
-        public Resource GetCachedByUri(string url)
-        {
-            if (url == null) throw Error.ArgumentNull(nameof(url));
-            return _resourcesByUri.Get(url, false);
-        }
+        public Resource GetCachedByUri(string url) => _resourcesByUri.GetCached(url);
 
-        /// <summary>Retrieve the conformance resource with the specified canonical url from memory cache, if present. Do not load on demand.</summary>
+        /// <summary>Returns conformance resource data for the specified canonical uri, if present in cache.</summary>
         /// <returns>A cached conformance <see cref="Resource"/> instance, or <c>null</c>.</returns>
-        /// <remarks>Does NOT load conformance resource on demand from the internal artifact resolver.</remarks>
-        public Resource GetCachedByCanonicalUri(string url)
-        {
-            if (url == null) throw Error.ArgumentNull(nameof(url));
-            return _resourcesByCanonical.Get(url, false);
-        }
-
-        /// <summary>Determines if the memory cache contains a resource with the specified url.</summary>
-        /// <returns><c>true</c> if the resource is cached, or <c>false</c> otherwise.</returns>
-        public bool IsCachedUri(string url) => GetCachedByUri(url) != null;
-
-        /// <summary>Determines if the memory cache contains a conformance resource with the specified canonical url.</summary>
-        /// <returns><c>true</c> if the conformance resource is cached, or <c>false</c> otherwise.</returns>
-        public bool IsCachedCanonicalUri(string url) => GetCachedByCanonicalUri(url) != null;
+        public Resource GetCachedByCanonicalUri(string url) => _resourcesByCanonical.GetCached(url);
 
         /// <summary>Event arguments for the <see cref="LoadResourceEventHandler"/> delegate.</summary>
         public class LoadResourceEventArgs : EventArgs
@@ -128,12 +104,13 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>Handles the <see cref="Load"/> event that is fired when a new resources is loaded into the cache.</summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public delegate void LoadResourceEventHandler(object sender, LoadResourceEventArgs e);
 
-        /// <summary>Occurs when a artifact is loaded into the cache.</summary>
+        /// <summary>Occurs when a resource is loaded into the cache.</summary>
         public event LoadResourceEventHandler Load;
 
-        /// <summary>Called when an artifact is loaded into the cache.</summary>
         protected virtual void OnLoad(string url, Resource resource) => Load?.Invoke(this, new LoadResourceEventArgs(url, resource));
 
         Resource InternalResolveByUri(string url)
@@ -162,12 +139,11 @@ namespace Hl7.Fhir.Specification.Source
                 _duration = duration;
             }
 
-            // private SynchronizedCollection<CacheEntry<T>> _cache = new SynchronizedCollection<CacheEntry<T>>();
+           // private SynchronizedCollection<CacheEntry<T>> _cache = new SynchronizedCollection<CacheEntry<T>>();
             private Object getLock = new Object();
             private Dictionary<string, CacheEntry<T>> _cache = new Dictionary<string, CacheEntry<T>>();
 
-            // [WMR 20170725] Add loadOnDemand parameter
-            public T Get(string identifier, bool loadOnDemand)
+            public T Get(string identifier)
             {
                 lock (getLock)
                 {
@@ -190,7 +166,7 @@ namespace Hl7.Fhir.Specification.Source
                     {
                         return entry.Data;
                     }
-                    else if (loadOnDemand)
+                    else
                     {
                         // Otherwise, fetch it and cache it.
                         T newData = default(T);
@@ -201,8 +177,43 @@ namespace Hl7.Fhir.Specification.Source
 
                         return newData;
                     }
-                    return null; // default(T)
                 }
+            }
+
+            // [WMR 20170724] NEW, to determine if a resource is cached,
+            // i.e. if there is a cache entry and it represents a cache hit
+            public bool IsCached(string identifier)
+            {
+                lock (getLock)
+                {
+                    // Check the cache
+                    return GetCached(identifier) != null;
+                }
+            }
+
+            // [WMR 20170724] NEW, to retrieve cached items, if they exist (don't resolve from underlying source)
+            // Returns resource data for cache hit, or null for cache miss
+            public T GetCached(string identifier)
+            {
+                var success = false;
+                lock (getLock)
+                {
+                    // Check the cache
+                    success = _cache.TryGetValue(identifier, out CacheEntry<T> entry);
+
+                    if (success)
+                    {
+                        // Remove entry if it's too old
+                        if (entry.Expired)
+                        {
+                            _cache.Remove(identifier);
+                            return null;
+                        }
+                        // Cache hit
+                        return entry.Data;
+                    }
+                }
+                return null;
             }
 
             public bool Invalidate(string identifier)
@@ -238,6 +249,9 @@ namespace Hl7.Fhir.Specification.Source
 
             /// <summary>Returns a boolean value that indicates if the cache entry is expired.</summary>
             public bool Expired => DateTime.Now > Expires;
+
+            /// <summary>Determines if the entry represents a cache miss.</summary>
+            public bool IsEmpty => Data == null; // == default(T)
         }
     }
 }
