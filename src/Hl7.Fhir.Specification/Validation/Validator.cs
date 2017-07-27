@@ -264,7 +264,7 @@ namespace Hl7.Fhir.Validation
             // Make sure FHIR extensions are installed in FP compiler
             prepareFPProcessor();
 
-            var context = instance.Parent;
+            var context = instance.AtResource ? instance : instance.Parent;
 
             // <constraint>
             //  <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
