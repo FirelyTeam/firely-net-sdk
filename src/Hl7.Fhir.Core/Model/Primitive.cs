@@ -12,6 +12,9 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Model
 {
+#if NET45
+    [Serializable]
+#endif
     public abstract class Primitive : Element
     {
         [NotMapped]
@@ -66,6 +69,9 @@ namespace Hl7.Fhir.Model
         }
     }
 
+#if NET45
+    [Serializable]
+#endif
     public abstract class Primitive<T> : Primitive
     {
         // [WMR 20160615] Cannot provide common generic Value property, as subclasses differ in their implementation

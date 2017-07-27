@@ -38,6 +38,9 @@ using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Model
 {
+#if NET45
+    [Serializable]
+#endif
     [System.Diagnostics.DebuggerDisplay(@"{Value}")]
     public partial class FhirString : IStringValue
     {
