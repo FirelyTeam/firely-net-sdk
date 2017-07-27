@@ -65,25 +65,25 @@ namespace Hl7.Fhir.Model
             /// Little or no confidence in the asserted identity's accuracy.
             /// (system: http://hl7.org/fhir/identity-assuranceLevel)
             /// </summary>
-            [EnumLiteral("level1"), Description("Level 1")]
+            [EnumLiteral("level1", "http://hl7.org/fhir/identity-assuranceLevel"), Description("Level 1")]
             Level1,
             /// <summary>
             /// Some confidence in the asserted identity's accuracy.
             /// (system: http://hl7.org/fhir/identity-assuranceLevel)
             /// </summary>
-            [EnumLiteral("level2"), Description("Level 2")]
+            [EnumLiteral("level2", "http://hl7.org/fhir/identity-assuranceLevel"), Description("Level 2")]
             Level2,
             /// <summary>
             /// High confidence in the asserted identity's accuracy.
             /// (system: http://hl7.org/fhir/identity-assuranceLevel)
             /// </summary>
-            [EnumLiteral("level3"), Description("Level 3")]
+            [EnumLiteral("level3", "http://hl7.org/fhir/identity-assuranceLevel"), Description("Level 3")]
             Level3,
             /// <summary>
             /// Very high confidence in the asserted identity's accuracy.
             /// (system: http://hl7.org/fhir/identity-assuranceLevel)
             /// </summary>
-            [EnumLiteral("level4"), Description("Level 4")]
+            [EnumLiteral("level4", "http://hl7.org/fhir/identity-assuranceLevel"), Description("Level 4")]
             Level4,
         }
 

@@ -65,13 +65,13 @@ namespace Hl7.Fhir.Model
             /// This operation is invoked as an operation.
             /// (system: http://hl7.org/fhir/operation-kind)
             /// </summary>
-            [EnumLiteral("operation"), Description("Operation")]
+            [EnumLiteral("operation", "http://hl7.org/fhir/operation-kind"), Description("Operation")]
             Operation,
             /// <summary>
             /// This operation is a named query, invoked using the search mechanism.
             /// (system: http://hl7.org/fhir/operation-kind)
             /// </summary>
-            [EnumLiteral("query"), Description("Query")]
+            [EnumLiteral("query", "http://hl7.org/fhir/operation-kind"), Description("Query")]
             Query,
         }
 
@@ -86,13 +86,13 @@ namespace Hl7.Fhir.Model
             /// This is an input parameter.
             /// (system: http://hl7.org/fhir/operation-parameter-use)
             /// </summary>
-            [EnumLiteral("in"), Description("In")]
+            [EnumLiteral("in", "http://hl7.org/fhir/operation-parameter-use"), Description("In")]
             In,
             /// <summary>
             /// This is an output parameter.
             /// (system: http://hl7.org/fhir/operation-parameter-use)
             /// </summary>
-            [EnumLiteral("out"), Description("Out")]
+            [EnumLiteral("out", "http://hl7.org/fhir/operation-parameter-use"), Description("Out")]
             Out,
         }
 

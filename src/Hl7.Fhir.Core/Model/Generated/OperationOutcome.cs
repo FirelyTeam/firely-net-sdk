@@ -65,25 +65,25 @@ namespace Hl7.Fhir.Model
             /// The issue caused the action to fail, and no further checking could be performed.
             /// (system: http://hl7.org/fhir/issue-severity)
             /// </summary>
-            [EnumLiteral("fatal"), Description("Fatal")]
+            [EnumLiteral("fatal", "http://hl7.org/fhir/issue-severity"), Description("Fatal")]
             Fatal,
             /// <summary>
             /// The issue is sufficiently important to cause the action to fail.
             /// (system: http://hl7.org/fhir/issue-severity)
             /// </summary>
-            [EnumLiteral("error"), Description("Error")]
+            [EnumLiteral("error", "http://hl7.org/fhir/issue-severity"), Description("Error")]
             Error,
             /// <summary>
             /// The issue is not important enough to cause the action to fail, but may cause it to be performed suboptimally or in a way that is not as desired.
             /// (system: http://hl7.org/fhir/issue-severity)
             /// </summary>
-            [EnumLiteral("warning"), Description("Warning")]
+            [EnumLiteral("warning", "http://hl7.org/fhir/issue-severity"), Description("Warning")]
             Warning,
             /// <summary>
             /// The issue has no relation to the degree of success of the action.
             /// (system: http://hl7.org/fhir/issue-severity)
             /// </summary>
-            [EnumLiteral("information"), Description("Information")]
+            [EnumLiteral("information", "http://hl7.org/fhir/issue-severity"), Description("Information")]
             Information,
         }
 
@@ -98,175 +98,175 @@ namespace Hl7.Fhir.Model
             /// Content invalid against the specification or a profile.
             /// (system: http://hl7.org/fhir/issue-type)
             /// </summary>
-            [EnumLiteral("invalid"), Description("Invalid Content")]
+            [EnumLiteral("invalid", "http://hl7.org/fhir/issue-type"), Description("Invalid Content")]
             Invalid,
             /// <summary>
             /// A structural issue in the content such as wrong namespace, or unable to parse the content completely, or invalid json syntax.
             /// (system: http://hl7.org/fhir/issue-type)
             /// </summary>
-            [EnumLiteral("structure"), Description("Structural Issue")]
+            [EnumLiteral("structure", "http://hl7.org/fhir/issue-type"), Description("Structural Issue")]
             Structure,
             /// <summary>
             /// A required element is missing.
             /// (system: http://hl7.org/fhir/issue-type)
             /// </summary>
-            [EnumLiteral("required"), Description("Required element missing")]
+            [EnumLiteral("required", "http://hl7.org/fhir/issue-type"), Description("Required element missing")]
             Required,
             /// <summary>
             /// An element value is invalid.
             /// (system: http://hl7.org/fhir/issue-type)
             /// </summary>
-            [EnumLiteral("value"), Description("Element value invalid")]
+            [EnumLiteral("value", "http://hl7.org/fhir/issue-type"), Description("Element value invalid")]
             Value,
             /// <summary>
             /// A content validation rule failed - e.g. a schematron rule.
             /// (system: http://hl7.org/fhir/issue-type)
             /// </summary>
-            [EnumLiteral("invariant"), Description("Validation rule failed")]
+            [EnumLiteral("invariant", "http://hl7.org/fhir/issue-type"), Description("Validation rule failed")]
             Invariant,
             /// <summary>
             /// An authentication/authorization/permissions issue of some kind.
             /// (system: http://hl7.org/fhir/issue-type)
             /// </summary>
-            [EnumLiteral("security"), Description("Security Problem")]
+            [EnumLiteral("security", "http://hl7.org/fhir/issue-type"), Description("Security Problem")]
             Security,
             /// <summary>
             /// The client needs to initiate an authentication process.
             /// (system: http://hl7.org/fhir/issue-type)
             /// </summary>
-            [EnumLiteral("login"), Description("Login Required")]
+            [EnumLiteral("login", "http://hl7.org/fhir/issue-type"), Description("Login Required")]
             Login,
             /// <summary>
             /// The user or system was not able to be authenticated (either there is no process, or the proferred token is unacceptable).
             /// (system: http://hl7.org/fhir/issue-type)
             /// </summary>
-            [EnumLiteral("unknown"), Description("Unknown User")]
+            [EnumLiteral("unknown", "http://hl7.org/fhir/issue-type"), Description("Unknown User")]
             Unknown,
             /// <summary>
             /// User session expired; a login may be required.
             /// (system: http://hl7.org/fhir/issue-type)
             /// </summary>
-            [EnumLiteral("expired"), Description("Session Expired")]
+            [EnumLiteral("expired", "http://hl7.org/fhir/issue-type"), Description("Session Expired")]
             Expired,
             /// <summary>
             /// The user does not have the rights to perform this action.
             /// (system: http://hl7.org/fhir/issue-type)
             /// </summary>
-            [EnumLiteral("forbidden"), Description("Forbidden")]
+            [EnumLiteral("forbidden", "http://hl7.org/fhir/issue-type"), Description("Forbidden")]
             Forbidden,
             /// <summary>
             /// Some information was not or may not have been returned due to business rules, consent or privacy rules, or access permission constraints.  This information may be accessible through alternate processes.
             /// (system: http://hl7.org/fhir/issue-type)
             /// </summary>
-            [EnumLiteral("suppressed"), Description("Information  Suppressed")]
+            [EnumLiteral("suppressed", "http://hl7.org/fhir/issue-type"), Description("Information  Suppressed")]
             Suppressed,
             /// <summary>
             /// Processing issues. These are expected to be final e.g. there is no point resubmitting the same content unchanged.
             /// (system: http://hl7.org/fhir/issue-type)
             /// </summary>
-            [EnumLiteral("processing"), Description("Processing Failure")]
+            [EnumLiteral("processing", "http://hl7.org/fhir/issue-type"), Description("Processing Failure")]
             Processing,
             /// <summary>
             /// The resource or profile is not supported.
             /// (system: http://hl7.org/fhir/issue-type)
             /// </summary>
-            [EnumLiteral("not-supported"), Description("Content not supported")]
+            [EnumLiteral("not-supported", "http://hl7.org/fhir/issue-type"), Description("Content not supported")]
             NotSupported,
             /// <summary>
             /// An attempt was made to create a duplicate record.
             /// (system: http://hl7.org/fhir/issue-type)
             /// </summary>
-            [EnumLiteral("duplicate"), Description("Duplicate")]
+            [EnumLiteral("duplicate", "http://hl7.org/fhir/issue-type"), Description("Duplicate")]
             Duplicate,
             /// <summary>
             /// The reference provided was not found. In a pure RESTful environment, this would be an HTTP 404 error, but this code may be used where the content is not found further into the application architecture.
             /// (system: http://hl7.org/fhir/issue-type)
             /// </summary>
-            [EnumLiteral("not-found"), Description("Not Found")]
+            [EnumLiteral("not-found", "http://hl7.org/fhir/issue-type"), Description("Not Found")]
             NotFound,
             /// <summary>
             /// Provided content is too long (typically, this is a denial of service protection type of error).
             /// (system: http://hl7.org/fhir/issue-type)
             /// </summary>
-            [EnumLiteral("too-long"), Description("Content Too Long")]
+            [EnumLiteral("too-long", "http://hl7.org/fhir/issue-type"), Description("Content Too Long")]
             TooLong,
             /// <summary>
             /// The code or system could not be understood, or it was not valid in the context of a particular ValueSet.code.
             /// (system: http://hl7.org/fhir/issue-type)
             /// </summary>
-            [EnumLiteral("code-invalid"), Description("Invalid Code")]
+            [EnumLiteral("code-invalid", "http://hl7.org/fhir/issue-type"), Description("Invalid Code")]
             CodeInvalid,
             /// <summary>
             /// An extension was found that was not acceptable, could not be resolved, or a modifierExtension was not recognized.
             /// (system: http://hl7.org/fhir/issue-type)
             /// </summary>
-            [EnumLiteral("extension"), Description("Unacceptable Extension")]
+            [EnumLiteral("extension", "http://hl7.org/fhir/issue-type"), Description("Unacceptable Extension")]
             Extension,
             /// <summary>
             /// The operation was stopped to protect server resources; e.g. a request for a value set expansion on all of SNOMED CT.
             /// (system: http://hl7.org/fhir/issue-type)
             /// </summary>
-            [EnumLiteral("too-costly"), Description("Operation Too Costly")]
+            [EnumLiteral("too-costly", "http://hl7.org/fhir/issue-type"), Description("Operation Too Costly")]
             TooCostly,
             /// <summary>
             /// The content/operation failed to pass some business rule, and so could not proceed.
             /// (system: http://hl7.org/fhir/issue-type)
             /// </summary>
-            [EnumLiteral("business-rule"), Description("Business Rule Violation")]
+            [EnumLiteral("business-rule", "http://hl7.org/fhir/issue-type"), Description("Business Rule Violation")]
             BusinessRule,
             /// <summary>
             /// Content could not be accepted because of an edit conflict (i.e. version aware updates) (In a pure RESTful environment, this would be an HTTP 404 error, but this code may be used where the conflict is discovered further into the application architecture.)
             /// (system: http://hl7.org/fhir/issue-type)
             /// </summary>
-            [EnumLiteral("conflict"), Description("Edit Version Conflict")]
+            [EnumLiteral("conflict", "http://hl7.org/fhir/issue-type"), Description("Edit Version Conflict")]
             Conflict,
             /// <summary>
             /// Not all data sources typically accessed could be reached, or responded in time, so the returned information may not be complete.
             /// (system: http://hl7.org/fhir/issue-type)
             /// </summary>
-            [EnumLiteral("incomplete"), Description("Incomplete Results")]
+            [EnumLiteral("incomplete", "http://hl7.org/fhir/issue-type"), Description("Incomplete Results")]
             Incomplete,
             /// <summary>
             /// Transient processing issues. The system receiving the error may be able to resubmit the same content once an underlying issue is resolved.
             /// (system: http://hl7.org/fhir/issue-type)
             /// </summary>
-            [EnumLiteral("transient"), Description("Transient Issue")]
+            [EnumLiteral("transient", "http://hl7.org/fhir/issue-type"), Description("Transient Issue")]
             Transient,
             /// <summary>
             /// A resource/record locking failure (usually in an underlying database).
             /// (system: http://hl7.org/fhir/issue-type)
             /// </summary>
-            [EnumLiteral("lock-error"), Description("Lock Error")]
+            [EnumLiteral("lock-error", "http://hl7.org/fhir/issue-type"), Description("Lock Error")]
             LockError,
             /// <summary>
             /// The persistent store is unavailable; e.g. the database is down for maintenance or similar action.
             /// (system: http://hl7.org/fhir/issue-type)
             /// </summary>
-            [EnumLiteral("no-store"), Description("No Store Available")]
+            [EnumLiteral("no-store", "http://hl7.org/fhir/issue-type"), Description("No Store Available")]
             NoStore,
             /// <summary>
             /// An unexpected internal error has occurred.
             /// (system: http://hl7.org/fhir/issue-type)
             /// </summary>
-            [EnumLiteral("exception"), Description("Exception")]
+            [EnumLiteral("exception", "http://hl7.org/fhir/issue-type"), Description("Exception")]
             Exception,
             /// <summary>
             /// An internal timeout has occurred.
             /// (system: http://hl7.org/fhir/issue-type)
             /// </summary>
-            [EnumLiteral("timeout"), Description("Timeout")]
+            [EnumLiteral("timeout", "http://hl7.org/fhir/issue-type"), Description("Timeout")]
             Timeout,
             /// <summary>
             /// The system is not prepared to handle this request due to load management.
             /// (system: http://hl7.org/fhir/issue-type)
             /// </summary>
-            [EnumLiteral("throttled"), Description("Throttled")]
+            [EnumLiteral("throttled", "http://hl7.org/fhir/issue-type"), Description("Throttled")]
             Throttled,
             /// <summary>
             /// A message unrelated to the processing success of the completed operation (examples of the latter include things like reminders of password expiry, system maintenance times, etc.).
             /// (system: http://hl7.org/fhir/issue-type)
             /// </summary>
-            [EnumLiteral("informational"), Description("Informational Note")]
+            [EnumLiteral("informational", "http://hl7.org/fhir/issue-type"), Description("Informational Note")]
             Informational,
         }
 

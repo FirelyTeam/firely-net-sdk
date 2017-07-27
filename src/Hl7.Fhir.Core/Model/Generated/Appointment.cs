@@ -65,43 +65,43 @@ namespace Hl7.Fhir.Model
             /// None of the participant(s) have finalized their acceptance of the appointment request, and the start/end time may not be set yet.
             /// (system: http://hl7.org/fhir/appointmentstatus)
             /// </summary>
-            [EnumLiteral("proposed"), Description("Proposed")]
+            [EnumLiteral("proposed", "http://hl7.org/fhir/appointmentstatus"), Description("Proposed")]
             Proposed,
             /// <summary>
             /// Some or all of the participant(s) have not finalized their acceptance of the appointment request.
             /// (system: http://hl7.org/fhir/appointmentstatus)
             /// </summary>
-            [EnumLiteral("pending"), Description("Pending")]
+            [EnumLiteral("pending", "http://hl7.org/fhir/appointmentstatus"), Description("Pending")]
             Pending,
             /// <summary>
             /// All participant(s) have been considered and the appointment is confirmed to go ahead at the date/times specified.
             /// (system: http://hl7.org/fhir/appointmentstatus)
             /// </summary>
-            [EnumLiteral("booked"), Description("Booked")]
+            [EnumLiteral("booked", "http://hl7.org/fhir/appointmentstatus"), Description("Booked")]
             Booked,
             /// <summary>
             /// Some of the patients have arrived.
             /// (system: http://hl7.org/fhir/appointmentstatus)
             /// </summary>
-            [EnumLiteral("arrived"), Description("Arrived")]
+            [EnumLiteral("arrived", "http://hl7.org/fhir/appointmentstatus"), Description("Arrived")]
             Arrived,
             /// <summary>
             /// This appointment has completed and may have resulted in an encounter.
             /// (system: http://hl7.org/fhir/appointmentstatus)
             /// </summary>
-            [EnumLiteral("fulfilled"), Description("Fulfilled")]
+            [EnumLiteral("fulfilled", "http://hl7.org/fhir/appointmentstatus"), Description("Fulfilled")]
             Fulfilled,
             /// <summary>
             /// The appointment has been cancelled.
             /// (system: http://hl7.org/fhir/appointmentstatus)
             /// </summary>
-            [EnumLiteral("cancelled"), Description("Cancelled")]
+            [EnumLiteral("cancelled", "http://hl7.org/fhir/appointmentstatus"), Description("Cancelled")]
             Cancelled,
             /// <summary>
             /// Some or all of the participant(s) have not/did not appear for the appointment (usually the patient).
             /// (system: http://hl7.org/fhir/appointmentstatus)
             /// </summary>
-            [EnumLiteral("noshow"), Description("No Show")]
+            [EnumLiteral("noshow", "http://hl7.org/fhir/appointmentstatus"), Description("No Show")]
             Noshow,
         }
 
@@ -116,19 +116,19 @@ namespace Hl7.Fhir.Model
             /// The participant is required to attend the appointment.
             /// (system: http://hl7.org/fhir/participantrequired)
             /// </summary>
-            [EnumLiteral("required"), Description("Required")]
+            [EnumLiteral("required", "http://hl7.org/fhir/participantrequired"), Description("Required")]
             Required,
             /// <summary>
             /// The participant may optionally attend the appointment.
             /// (system: http://hl7.org/fhir/participantrequired)
             /// </summary>
-            [EnumLiteral("optional"), Description("Optional")]
+            [EnumLiteral("optional", "http://hl7.org/fhir/participantrequired"), Description("Optional")]
             Optional,
             /// <summary>
             /// The participant is excluded from the appointment, and may not be informed of the appointment taking place. (Appointment is about them, not for them - such as 2 doctors discussing results about a patient's test).
             /// (system: http://hl7.org/fhir/participantrequired)
             /// </summary>
-            [EnumLiteral("information-only"), Description("Information Only")]
+            [EnumLiteral("information-only", "http://hl7.org/fhir/participantrequired"), Description("Information Only")]
             InformationOnly,
         }
 
@@ -143,25 +143,25 @@ namespace Hl7.Fhir.Model
             /// The participant has accepted the appointment.
             /// (system: http://hl7.org/fhir/participationstatus)
             /// </summary>
-            [EnumLiteral("accepted"), Description("Accepted")]
+            [EnumLiteral("accepted", "http://hl7.org/fhir/participationstatus"), Description("Accepted")]
             Accepted,
             /// <summary>
             /// The participant has declined the appointment and will not participate in the appointment.
             /// (system: http://hl7.org/fhir/participationstatus)
             /// </summary>
-            [EnumLiteral("declined"), Description("Declined")]
+            [EnumLiteral("declined", "http://hl7.org/fhir/participationstatus"), Description("Declined")]
             Declined,
             /// <summary>
             /// The participant has  tentatively accepted the appointment. This could be automatically created by a system and requires further processing before it can be accepted. There is no commitment that attendance will occur.
             /// (system: http://hl7.org/fhir/participationstatus)
             /// </summary>
-            [EnumLiteral("tentative"), Description("Tentative")]
+            [EnumLiteral("tentative", "http://hl7.org/fhir/participationstatus"), Description("Tentative")]
             Tentative,
             /// <summary>
             /// The participant needs to indicate if they accept the appointment by changing this status to one of the other statuses.
             /// (system: http://hl7.org/fhir/participationstatus)
             /// </summary>
-            [EnumLiteral("needs-action"), Description("Needs Action")]
+            [EnumLiteral("needs-action", "http://hl7.org/fhir/participationstatus"), Description("Needs Action")]
             NeedsAction,
         }
 

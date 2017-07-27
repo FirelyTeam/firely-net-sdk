@@ -65,37 +65,37 @@ namespace Hl7.Fhir.Model
             /// This is a tentative diagnosis - still a candidate that is under consideration.
             /// (system: http://hl7.org/fhir/condition-ver-status)
             /// </summary>
-            [EnumLiteral("provisional"), Description("Provisional")]
+            [EnumLiteral("provisional", "http://hl7.org/fhir/condition-ver-status"), Description("Provisional")]
             Provisional,
             /// <summary>
             /// One of a set of potential (and typically mutually exclusive) diagnosis asserted to further guide the diagnostic process and preliminary treatment.
             /// (system: http://hl7.org/fhir/condition-ver-status)
             /// </summary>
-            [EnumLiteral("differential"), Description("Differential")]
+            [EnumLiteral("differential", "http://hl7.org/fhir/condition-ver-status"), Description("Differential")]
             Differential,
             /// <summary>
             /// There is sufficient diagnostic and/or clinical evidence to treat this as a confirmed condition.
             /// (system: http://hl7.org/fhir/condition-ver-status)
             /// </summary>
-            [EnumLiteral("confirmed"), Description("Confirmed")]
+            [EnumLiteral("confirmed", "http://hl7.org/fhir/condition-ver-status"), Description("Confirmed")]
             Confirmed,
             /// <summary>
             /// This condition has been ruled out by diagnostic and clinical evidence.
             /// (system: http://hl7.org/fhir/condition-ver-status)
             /// </summary>
-            [EnumLiteral("refuted"), Description("Refuted")]
+            [EnumLiteral("refuted", "http://hl7.org/fhir/condition-ver-status"), Description("Refuted")]
             Refuted,
             /// <summary>
             /// The statement was entered in error and is not valid.
             /// (system: http://hl7.org/fhir/condition-ver-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered In Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/condition-ver-status"), Description("Entered In Error")]
             EnteredInError,
             /// <summary>
             /// The condition status is unknown.  Note that "unknown" is a value of last resort and every attempt should be made to provide a meaningful value other than "unknown".
             /// (system: http://hl7.org/fhir/condition-ver-status)
             /// </summary>
-            [EnumLiteral("unknown"), Description("Unknown")]
+            [EnumLiteral("unknown", "http://hl7.org/fhir/condition-ver-status"), Description("Unknown")]
             Unknown,
         }
 

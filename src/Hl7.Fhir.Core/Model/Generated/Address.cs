@@ -63,25 +63,25 @@ namespace Hl7.Fhir.Model
             /// A communication address at a home.
             /// (system: http://hl7.org/fhir/address-use)
             /// </summary>
-            [EnumLiteral("home"), Description("Home")]
+            [EnumLiteral("home", "http://hl7.org/fhir/address-use"), Description("Home")]
             Home,
             /// <summary>
             /// An office address. First choice for business related contacts during business hours.
             /// (system: http://hl7.org/fhir/address-use)
             /// </summary>
-            [EnumLiteral("work"), Description("Work")]
+            [EnumLiteral("work", "http://hl7.org/fhir/address-use"), Description("Work")]
             Work,
             /// <summary>
             /// A temporary address. The period can provide more detailed information.
             /// (system: http://hl7.org/fhir/address-use)
             /// </summary>
-            [EnumLiteral("temp"), Description("Temporary")]
+            [EnumLiteral("temp", "http://hl7.org/fhir/address-use"), Description("Temporary")]
             Temp,
             /// <summary>
             /// This address is no longer in use (or was never correct, but retained for records).
             /// (system: http://hl7.org/fhir/address-use)
             /// </summary>
-            [EnumLiteral("old"), Description("Old / Incorrect")]
+            [EnumLiteral("old", "http://hl7.org/fhir/address-use"), Description("Old / Incorrect")]
             Old,
         }
 
@@ -97,19 +97,19 @@ namespace Hl7.Fhir.Model
             /// Mailing addresses - PO Boxes and care-of addresses.
             /// (system: http://hl7.org/fhir/address-type)
             /// </summary>
-            [EnumLiteral("postal"), Description("Postal")]
+            [EnumLiteral("postal", "http://hl7.org/fhir/address-type"), Description("Postal")]
             Postal,
             /// <summary>
             /// A physical address that can be visited.
             /// (system: http://hl7.org/fhir/address-type)
             /// </summary>
-            [EnumLiteral("physical"), Description("Physical")]
+            [EnumLiteral("physical", "http://hl7.org/fhir/address-type"), Description("Physical")]
             Physical,
             /// <summary>
             /// An address that is both physical and postal.
             /// (system: http://hl7.org/fhir/address-type)
             /// </summary>
-            [EnumLiteral("both"), Description("Postal & Physical")]
+            [EnumLiteral("both", "http://hl7.org/fhir/address-type"), Description("Postal & Physical")]
             Both,
         }
 

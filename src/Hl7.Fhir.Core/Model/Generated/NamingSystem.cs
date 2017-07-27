@@ -65,19 +65,19 @@ namespace Hl7.Fhir.Model
             /// The naming system is used to define concepts and symbols to represent those concepts; e.g. UCUM, LOINC, NDC code, local lab codes, etc.
             /// (system: http://hl7.org/fhir/namingsystem-type)
             /// </summary>
-            [EnumLiteral("codesystem"), Description("Code System")]
+            [EnumLiteral("codesystem", "http://hl7.org/fhir/namingsystem-type"), Description("Code System")]
             Codesystem,
             /// <summary>
             /// The naming system is used to manage identifiers (e.g. license numbers, order numbers, etc.).
             /// (system: http://hl7.org/fhir/namingsystem-type)
             /// </summary>
-            [EnumLiteral("identifier"), Description("Identifier")]
+            [EnumLiteral("identifier", "http://hl7.org/fhir/namingsystem-type"), Description("Identifier")]
             Identifier,
             /// <summary>
             /// The naming system is used as the root for other identifiers and naming systems.
             /// (system: http://hl7.org/fhir/namingsystem-type)
             /// </summary>
-            [EnumLiteral("root"), Description("Root")]
+            [EnumLiteral("root", "http://hl7.org/fhir/namingsystem-type"), Description("Root")]
             Root,
         }
 
@@ -92,25 +92,25 @@ namespace Hl7.Fhir.Model
             /// An ISO object identifier; e.g. 1.2.3.4.5.
             /// (system: http://hl7.org/fhir/namingsystem-identifier-type)
             /// </summary>
-            [EnumLiteral("oid"), Description("OID")]
+            [EnumLiteral("oid", "http://hl7.org/fhir/namingsystem-identifier-type"), Description("OID")]
             Oid,
             /// <summary>
             /// A universally unique identifier of the form a5afddf4-e880-459b-876e-e4591b0acc11.
             /// (system: http://hl7.org/fhir/namingsystem-identifier-type)
             /// </summary>
-            [EnumLiteral("uuid"), Description("UUID")]
+            [EnumLiteral("uuid", "http://hl7.org/fhir/namingsystem-identifier-type"), Description("UUID")]
             Uuid,
             /// <summary>
             /// A uniform resource identifier (ideally a URL - uniform resource locator); e.g. http://unitsofmeasure.org.
             /// (system: http://hl7.org/fhir/namingsystem-identifier-type)
             /// </summary>
-            [EnumLiteral("uri"), Description("URI")]
+            [EnumLiteral("uri", "http://hl7.org/fhir/namingsystem-identifier-type"), Description("URI")]
             Uri,
             /// <summary>
             /// Some other type of unique identifier; e.g. HL7-assigned reserved string such as LN for LOINC.
             /// (system: http://hl7.org/fhir/namingsystem-identifier-type)
             /// </summary>
-            [EnumLiteral("other"), Description("Other")]
+            [EnumLiteral("other", "http://hl7.org/fhir/namingsystem-identifier-type"), Description("Other")]
             Other,
         }
 

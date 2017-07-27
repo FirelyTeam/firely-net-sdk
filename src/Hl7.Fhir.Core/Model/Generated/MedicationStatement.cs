@@ -65,25 +65,25 @@ namespace Hl7.Fhir.Model
             /// The medication is still being taken.
             /// (system: http://hl7.org/fhir/medication-statement-status)
             /// </summary>
-            [EnumLiteral("active"), Description("Active")]
+            [EnumLiteral("active", "http://hl7.org/fhir/medication-statement-status"), Description("Active")]
             Active,
             /// <summary>
             /// The medication is no longer being taken.
             /// (system: http://hl7.org/fhir/medication-statement-status)
             /// </summary>
-            [EnumLiteral("completed"), Description("Completed")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/medication-statement-status"), Description("Completed")]
             Completed,
             /// <summary>
             /// The statement was entered in error.
             /// (system: http://hl7.org/fhir/medication-statement-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/medication-statement-status"), Description("Entered in Error")]
             EnteredInError,
             /// <summary>
             /// The medication may be taken at some time in the future.
             /// (system: http://hl7.org/fhir/medication-statement-status)
             /// </summary>
-            [EnumLiteral("intended"), Description("Intended")]
+            [EnumLiteral("intended", "http://hl7.org/fhir/medication-statement-status"), Description("Intended")]
             Intended,
         }
 

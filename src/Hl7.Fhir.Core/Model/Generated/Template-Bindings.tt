@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Model
         /// <#= defintion.Replace("\r", "\n").Replace("\n\n", "\n").Replace("<", "&lt;").Replace(">", "&gt;").Replace("\n", "<br/>\r\n        /// ") #><br/>
         /// (system: <#= system #>)
         /// </summary>
-        [EnumLiteral("<#= code #>"), Description("<#= display #>")]
+        [EnumLiteral("<#= code #>", "<#= system #>"), Description("<#= display #>")]
         <#= ConvertEnumValue(code) #>,
 <#
     }

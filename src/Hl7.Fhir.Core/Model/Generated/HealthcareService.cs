@@ -65,43 +65,43 @@ namespace Hl7.Fhir.Model
             /// Monday
             /// (system: http://hl7.org/fhir/days-of-week)
             /// </summary>
-            [EnumLiteral("mon"), Description("Monday")]
+            [EnumLiteral("mon", "http://hl7.org/fhir/days-of-week"), Description("Monday")]
             Mon,
             /// <summary>
             /// Tuesday
             /// (system: http://hl7.org/fhir/days-of-week)
             /// </summary>
-            [EnumLiteral("tue"), Description("Tuesday")]
+            [EnumLiteral("tue", "http://hl7.org/fhir/days-of-week"), Description("Tuesday")]
             Tue,
             /// <summary>
             /// Wednesday
             /// (system: http://hl7.org/fhir/days-of-week)
             /// </summary>
-            [EnumLiteral("wed"), Description("Wednesday")]
+            [EnumLiteral("wed", "http://hl7.org/fhir/days-of-week"), Description("Wednesday")]
             Wed,
             /// <summary>
             /// Thursday
             /// (system: http://hl7.org/fhir/days-of-week)
             /// </summary>
-            [EnumLiteral("thu"), Description("Thursday")]
+            [EnumLiteral("thu", "http://hl7.org/fhir/days-of-week"), Description("Thursday")]
             Thu,
             /// <summary>
             /// Friday
             /// (system: http://hl7.org/fhir/days-of-week)
             /// </summary>
-            [EnumLiteral("fri"), Description("Friday")]
+            [EnumLiteral("fri", "http://hl7.org/fhir/days-of-week"), Description("Friday")]
             Fri,
             /// <summary>
             /// Saturday
             /// (system: http://hl7.org/fhir/days-of-week)
             /// </summary>
-            [EnumLiteral("sat"), Description("Saturday")]
+            [EnumLiteral("sat", "http://hl7.org/fhir/days-of-week"), Description("Saturday")]
             Sat,
             /// <summary>
             /// Sunday
             /// (system: http://hl7.org/fhir/days-of-week)
             /// </summary>
-            [EnumLiteral("sun"), Description("Sunday")]
+            [EnumLiteral("sun", "http://hl7.org/fhir/days-of-week"), Description("Sunday")]
             Sun,
         }
 

@@ -65,25 +65,25 @@ namespace Hl7.Fhir.Model
             /// This is a preliminary composition or document (also known as initial or interim). The content may be incomplete or unverified.
             /// (system: http://hl7.org/fhir/composition-status)
             /// </summary>
-            [EnumLiteral("preliminary"), Description("Preliminary")]
+            [EnumLiteral("preliminary", "http://hl7.org/fhir/composition-status"), Description("Preliminary")]
             Preliminary,
             /// <summary>
             /// This version of the composition is complete and verified by an appropriate person and no further work is planned. Any subsequent updates would be on a new version of the composition.
             /// (system: http://hl7.org/fhir/composition-status)
             /// </summary>
-            [EnumLiteral("final"), Description("Final")]
+            [EnumLiteral("final", "http://hl7.org/fhir/composition-status"), Description("Final")]
             Final,
             /// <summary>
             /// The composition content or the referenced resources have been modified (edited or added to) subsequent to being released as "final" and the composition is complete and verified by an authorized person.
             /// (system: http://hl7.org/fhir/composition-status)
             /// </summary>
-            [EnumLiteral("amended"), Description("Amended")]
+            [EnumLiteral("amended", "http://hl7.org/fhir/composition-status"), Description("Amended")]
             Amended,
             /// <summary>
             /// The composition or document was originally created/issued in error, and this is an amendment that marks that the entire series should not be considered as valid.
             /// (system: http://hl7.org/fhir/composition-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/composition-status"), Description("Entered in Error")]
             EnteredInError,
         }
 
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Model
             /// A specializable code and its leaf codes used in Confidentiality value sets to value the Act.Confidentiality and Role.Confidentiality attribute in accordance with the definition for concept domain "Confidentiality".
             /// (system: http://hl7.org/fhir/v3/Confidentiality)
             /// </summary>
-            [EnumLiteral("_Confidentiality"), Description("Confidentiality")]
+            [EnumLiteral("_Confidentiality", "http://hl7.org/fhir/v3/Confidentiality"), Description("Confidentiality")]
             Confidentiality,
             /// <summary>
             /// Definition: Privacy metadata indicating that the information has been de-identified, and there are mitigating circumstances that prevent re-identification, which minimize risk of harm from unauthorized disclosure.  The information requires protection to maintain low sensitivity.
@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Model
         ///                            Usage Note: This metadata indicates the receiver may have an obligation to comply with a data use agreement.
             /// (system: http://hl7.org/fhir/v3/Confidentiality)
             /// </summary>
-            [EnumLiteral("L"), Description("low")]
+            [EnumLiteral("L", "http://hl7.org/fhir/v3/Confidentiality"), Description("low")]
             L,
             /// <summary>
             /// Definition: Privacy metadata indicating moderately sensitive information, which presents moderate risk of harm if disclosed without authorization.
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
         ///                            Usage Note: This metadata indicates that the receiver may be obligated to comply with the receiver's terms of use or privacy policies.
             /// (system: http://hl7.org/fhir/v3/Confidentiality)
             /// </summary>
-            [EnumLiteral("M"), Description("moderate")]
+            [EnumLiteral("M", "http://hl7.org/fhir/v3/Confidentiality"), Description("moderate")]
             M,
             /// <summary>
             /// Definition: Privacy metadata indicating that the information is typical, non-stigmatizing health information, which presents typical risk of harm if disclosed without authorization.
@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Model
         ///                            Usage Note: This metadata indicates that the receiver may be obligated to comply with applicable jurisdictional privacy law or disclosure authorization.
             /// (system: http://hl7.org/fhir/v3/Confidentiality)
             /// </summary>
-            [EnumLiteral("N"), Description("normal")]
+            [EnumLiteral("N", "http://hl7.org/fhir/v3/Confidentiality"), Description("normal")]
             N,
             /// <summary>
             /// Privacy metadata indicating highly sensitive, potentially stigmatizing information, which presents a high risk to the information subject if disclosed without authorization. May be pre-empted by jurisdictional law, e.g. for public health reporting or emergency treatment.
@@ -146,7 +146,7 @@ namespace Hl7.Fhir.Model
         ///                            Usage Note: This metadata indicates that the receiver may be obligated to comply with applicable, prevailing (default) jurisdictional privacy law or disclosure authorization..
             /// (system: http://hl7.org/fhir/v3/Confidentiality)
             /// </summary>
-            [EnumLiteral("R"), Description("restricted")]
+            [EnumLiteral("R", "http://hl7.org/fhir/v3/Confidentiality"), Description("restricted")]
             R,
             /// <summary>
             /// Definition: Privacy metadata indicating that the information is not classified as sensitive.
@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Model
         ///                            Usage Note: This metadata indicates that the receiver has no obligation to consider additional policies when making access control decisions.   Note that in some jurisdictions, personally identifiable information must be protected as confidential, so it would not be appropriate to assign a confidentiality code of "unrestricted"  to that information even if it is publicly available.
             /// (system: http://hl7.org/fhir/v3/Confidentiality)
             /// </summary>
-            [EnumLiteral("U"), Description("unrestricted")]
+            [EnumLiteral("U", "http://hl7.org/fhir/v3/Confidentiality"), Description("unrestricted")]
             U,
             /// <summary>
             /// . Privacy metadata indicating that the information is extremely sensitive and likely stigmatizing health information that presents a very high risk if disclosed without authorization.  This information must be kept in the highest confidence.  
@@ -168,7 +168,7 @@ namespace Hl7.Fhir.Model
         ///                            Usage Note:  This metadata indicates that the receiver may not disclose this information except as directed by the information custodian, who may be the information subject.
             /// (system: http://hl7.org/fhir/v3/Confidentiality)
             /// </summary>
-            [EnumLiteral("V"), Description("very restricted")]
+            [EnumLiteral("V", "http://hl7.org/fhir/v3/Confidentiality"), Description("very restricted")]
             V,
         }
 
@@ -183,25 +183,25 @@ namespace Hl7.Fhir.Model
             /// The person authenticated the content in their personal capacity.
             /// (system: http://hl7.org/fhir/composition-attestation-mode)
             /// </summary>
-            [EnumLiteral("personal"), Description("Personal")]
+            [EnumLiteral("personal", "http://hl7.org/fhir/composition-attestation-mode"), Description("Personal")]
             Personal,
             /// <summary>
             /// The person authenticated the content in their professional capacity.
             /// (system: http://hl7.org/fhir/composition-attestation-mode)
             /// </summary>
-            [EnumLiteral("professional"), Description("Professional")]
+            [EnumLiteral("professional", "http://hl7.org/fhir/composition-attestation-mode"), Description("Professional")]
             Professional,
             /// <summary>
             /// The person authenticated the content and accepted legal responsibility for its content.
             /// (system: http://hl7.org/fhir/composition-attestation-mode)
             /// </summary>
-            [EnumLiteral("legal"), Description("Legal")]
+            [EnumLiteral("legal", "http://hl7.org/fhir/composition-attestation-mode"), Description("Legal")]
             Legal,
             /// <summary>
             /// The organization authenticated the content as consistent with their policies and procedures.
             /// (system: http://hl7.org/fhir/composition-attestation-mode)
             /// </summary>
-            [EnumLiteral("official"), Description("Official")]
+            [EnumLiteral("official", "http://hl7.org/fhir/composition-attestation-mode"), Description("Official")]
             Official,
         }
 

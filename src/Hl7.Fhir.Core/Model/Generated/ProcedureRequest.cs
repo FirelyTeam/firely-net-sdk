@@ -65,61 +65,61 @@ namespace Hl7.Fhir.Model
             /// The request has been proposed.
             /// (system: http://hl7.org/fhir/procedure-request-status)
             /// </summary>
-            [EnumLiteral("proposed"), Description("Proposed")]
+            [EnumLiteral("proposed", "http://hl7.org/fhir/procedure-request-status"), Description("Proposed")]
             Proposed,
             /// <summary>
             /// The request is in preliminary form, prior to being requested.
             /// (system: http://hl7.org/fhir/procedure-request-status)
             /// </summary>
-            [EnumLiteral("draft"), Description("Draft")]
+            [EnumLiteral("draft", "http://hl7.org/fhir/procedure-request-status"), Description("Draft")]
             Draft,
             /// <summary>
             /// The request has been placed.
             /// (system: http://hl7.org/fhir/procedure-request-status)
             /// </summary>
-            [EnumLiteral("requested"), Description("Requested")]
+            [EnumLiteral("requested", "http://hl7.org/fhir/procedure-request-status"), Description("Requested")]
             Requested,
             /// <summary>
             /// The receiving system has received the request but not yet decided whether it will be performed.
             /// (system: http://hl7.org/fhir/procedure-request-status)
             /// </summary>
-            [EnumLiteral("received"), Description("Received")]
+            [EnumLiteral("received", "http://hl7.org/fhir/procedure-request-status"), Description("Received")]
             Received,
             /// <summary>
             /// The receiving system has accepted the request, but work has not yet commenced.
             /// (system: http://hl7.org/fhir/procedure-request-status)
             /// </summary>
-            [EnumLiteral("accepted"), Description("Accepted")]
+            [EnumLiteral("accepted", "http://hl7.org/fhir/procedure-request-status"), Description("Accepted")]
             Accepted,
             /// <summary>
             /// The work to fulfill the request is happening.
             /// (system: http://hl7.org/fhir/procedure-request-status)
             /// </summary>
-            [EnumLiteral("in-progress"), Description("In Progress")]
+            [EnumLiteral("in-progress", "http://hl7.org/fhir/procedure-request-status"), Description("In Progress")]
             InProgress,
             /// <summary>
             /// The work has been completed, the report(s) released, and no further work is planned.
             /// (system: http://hl7.org/fhir/procedure-request-status)
             /// </summary>
-            [EnumLiteral("completed"), Description("Completed")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/procedure-request-status"), Description("Completed")]
             Completed,
             /// <summary>
             /// The request has been held by originating system/user request.
             /// (system: http://hl7.org/fhir/procedure-request-status)
             /// </summary>
-            [EnumLiteral("suspended"), Description("Suspended")]
+            [EnumLiteral("suspended", "http://hl7.org/fhir/procedure-request-status"), Description("Suspended")]
             Suspended,
             /// <summary>
             /// The receiving system has declined to fulfill the request.
             /// (system: http://hl7.org/fhir/procedure-request-status)
             /// </summary>
-            [EnumLiteral("rejected"), Description("Rejected")]
+            [EnumLiteral("rejected", "http://hl7.org/fhir/procedure-request-status"), Description("Rejected")]
             Rejected,
             /// <summary>
             /// The request was attempted, but due to some procedural error, it could not be completed.
             /// (system: http://hl7.org/fhir/procedure-request-status)
             /// </summary>
-            [EnumLiteral("aborted"), Description("Aborted")]
+            [EnumLiteral("aborted", "http://hl7.org/fhir/procedure-request-status"), Description("Aborted")]
             Aborted,
         }
 
@@ -134,25 +134,25 @@ namespace Hl7.Fhir.Model
             /// The request has a normal priority.
             /// (system: http://hl7.org/fhir/procedure-request-priority)
             /// </summary>
-            [EnumLiteral("routine"), Description("Routine")]
+            [EnumLiteral("routine", "http://hl7.org/fhir/procedure-request-priority"), Description("Routine")]
             Routine,
             /// <summary>
             /// The request should be done urgently.
             /// (system: http://hl7.org/fhir/procedure-request-priority)
             /// </summary>
-            [EnumLiteral("urgent"), Description("Urgent")]
+            [EnumLiteral("urgent", "http://hl7.org/fhir/procedure-request-priority"), Description("Urgent")]
             Urgent,
             /// <summary>
             /// The request is time-critical.
             /// (system: http://hl7.org/fhir/procedure-request-priority)
             /// </summary>
-            [EnumLiteral("stat"), Description("Stat")]
+            [EnumLiteral("stat", "http://hl7.org/fhir/procedure-request-priority"), Description("Stat")]
             Stat,
             /// <summary>
             /// The request should be acted on as soon as possible.
             /// (system: http://hl7.org/fhir/procedure-request-priority)
             /// </summary>
-            [EnumLiteral("asap"), Description("ASAP")]
+            [EnumLiteral("asap", "http://hl7.org/fhir/procedure-request-priority"), Description("ASAP")]
             Asap,
         }
 

@@ -65,79 +65,79 @@ namespace Hl7.Fhir.Model
             /// The request has been proposed.
             /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
-            [EnumLiteral("proposed"), Description("Proposed")]
+            [EnumLiteral("proposed", "http://hl7.org/fhir/diagnostic-order-status"), Description("Proposed")]
             Proposed,
             /// <summary>
             /// The request is in preliminary form prior to being sent.
             /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
-            [EnumLiteral("draft"), Description("Draft")]
+            [EnumLiteral("draft", "http://hl7.org/fhir/diagnostic-order-status"), Description("Draft")]
             Draft,
             /// <summary>
             /// The request has been planned.
             /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
-            [EnumLiteral("planned"), Description("Planned")]
+            [EnumLiteral("planned", "http://hl7.org/fhir/diagnostic-order-status"), Description("Planned")]
             Planned,
             /// <summary>
             /// The request has been placed.
             /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
-            [EnumLiteral("requested"), Description("Requested")]
+            [EnumLiteral("requested", "http://hl7.org/fhir/diagnostic-order-status"), Description("Requested")]
             Requested,
             /// <summary>
             /// The receiving system has received the order, but not yet decided whether it will be performed.
             /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
-            [EnumLiteral("received"), Description("Received")]
+            [EnumLiteral("received", "http://hl7.org/fhir/diagnostic-order-status"), Description("Received")]
             Received,
             /// <summary>
             /// The receiving system has accepted the order, but work has not yet commenced.
             /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
-            [EnumLiteral("accepted"), Description("Accepted")]
+            [EnumLiteral("accepted", "http://hl7.org/fhir/diagnostic-order-status"), Description("Accepted")]
             Accepted,
             /// <summary>
             /// The work to fulfill the order is happening.
             /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
-            [EnumLiteral("in-progress"), Description("In-Progress")]
+            [EnumLiteral("in-progress", "http://hl7.org/fhir/diagnostic-order-status"), Description("In-Progress")]
             InProgress,
             /// <summary>
             /// The work is complete, and the outcomes are being reviewed for approval.
             /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
-            [EnumLiteral("review"), Description("Review")]
+            [EnumLiteral("review", "http://hl7.org/fhir/diagnostic-order-status"), Description("Review")]
             Review,
             /// <summary>
             /// The work has been completed, the report(s) released, and no further work is planned.
             /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
-            [EnumLiteral("completed"), Description("Completed")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/diagnostic-order-status"), Description("Completed")]
             Completed,
             /// <summary>
             /// The request has been withdrawn.
             /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
-            [EnumLiteral("cancelled"), Description("Cancelled")]
+            [EnumLiteral("cancelled", "http://hl7.org/fhir/diagnostic-order-status"), Description("Cancelled")]
             Cancelled,
             /// <summary>
             /// The request has been held by originating system/user request.
             /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
-            [EnumLiteral("suspended"), Description("Suspended")]
+            [EnumLiteral("suspended", "http://hl7.org/fhir/diagnostic-order-status"), Description("Suspended")]
             Suspended,
             /// <summary>
             /// The receiving system has declined to fulfill the request.
             /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
-            [EnumLiteral("rejected"), Description("Rejected")]
+            [EnumLiteral("rejected", "http://hl7.org/fhir/diagnostic-order-status"), Description("Rejected")]
             Rejected,
             /// <summary>
             /// The diagnostic investigation was attempted, but due to some procedural error, it could not be completed.
             /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
-            [EnumLiteral("failed"), Description("Failed")]
+            [EnumLiteral("failed", "http://hl7.org/fhir/diagnostic-order-status"), Description("Failed")]
             Failed,
         }
 
@@ -152,25 +152,25 @@ namespace Hl7.Fhir.Model
             /// The order has a normal priority .
             /// (system: http://hl7.org/fhir/diagnostic-order-priority)
             /// </summary>
-            [EnumLiteral("routine"), Description("Routine")]
+            [EnumLiteral("routine", "http://hl7.org/fhir/diagnostic-order-priority"), Description("Routine")]
             Routine,
             /// <summary>
             /// The order should be urgently.
             /// (system: http://hl7.org/fhir/diagnostic-order-priority)
             /// </summary>
-            [EnumLiteral("urgent"), Description("Urgent")]
+            [EnumLiteral("urgent", "http://hl7.org/fhir/diagnostic-order-priority"), Description("Urgent")]
             Urgent,
             /// <summary>
             /// The order is time-critical.
             /// (system: http://hl7.org/fhir/diagnostic-order-priority)
             /// </summary>
-            [EnumLiteral("stat"), Description("Stat")]
+            [EnumLiteral("stat", "http://hl7.org/fhir/diagnostic-order-priority"), Description("Stat")]
             Stat,
             /// <summary>
             /// The order should be acted on as soon as possible.
             /// (system: http://hl7.org/fhir/diagnostic-order-priority)
             /// </summary>
-            [EnumLiteral("asap"), Description("ASAP")]
+            [EnumLiteral("asap", "http://hl7.org/fhir/diagnostic-order-priority"), Description("ASAP")]
             Asap,
         }
 

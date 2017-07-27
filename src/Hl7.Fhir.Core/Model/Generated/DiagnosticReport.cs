@@ -65,43 +65,43 @@ namespace Hl7.Fhir.Model
             /// The existence of the report is registered, but there is nothing yet available.
             /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
-            [EnumLiteral("registered"), Description("Registered")]
+            [EnumLiteral("registered", "http://hl7.org/fhir/diagnostic-report-status"), Description("Registered")]
             Registered,
             /// <summary>
             /// This is a partial (e.g. initial, interim or preliminary) report: data in the report may be incomplete or unverified.
             /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
-            [EnumLiteral("partial"), Description("Partial")]
+            [EnumLiteral("partial", "http://hl7.org/fhir/diagnostic-report-status"), Description("Partial")]
             Partial,
             /// <summary>
             /// The report is complete and verified by an authorized person.
             /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
-            [EnumLiteral("final"), Description("Final")]
+            [EnumLiteral("final", "http://hl7.org/fhir/diagnostic-report-status"), Description("Final")]
             Final,
             /// <summary>
             /// The report has been modified subsequent to being Final, and is complete and verified by an authorized person. New content has been added, but existing content hasn't changed
             /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
-            [EnumLiteral("corrected"), Description("Corrected")]
+            [EnumLiteral("corrected", "http://hl7.org/fhir/diagnostic-report-status"), Description("Corrected")]
             Corrected,
             /// <summary>
             /// The report has been modified subsequent to being Final, and is complete and verified by an authorized person. New content has been added, but existing content hasn't changed.
             /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
-            [EnumLiteral("appended"), Description("Appended")]
+            [EnumLiteral("appended", "http://hl7.org/fhir/diagnostic-report-status"), Description("Appended")]
             Appended,
             /// <summary>
             /// The report is unavailable because the measurement was not started or not completed (also sometimes called "aborted").
             /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
-            [EnumLiteral("cancelled"), Description("Cancelled")]
+            [EnumLiteral("cancelled", "http://hl7.org/fhir/diagnostic-report-status"), Description("Cancelled")]
             Cancelled,
             /// <summary>
             /// The report has been withdrawn following a previous final release.
             /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/diagnostic-report-status"), Description("Entered in Error")]
             EnteredInError,
         }
 

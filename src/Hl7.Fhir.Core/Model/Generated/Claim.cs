@@ -65,31 +65,31 @@ namespace Hl7.Fhir.Model
             /// A claim for Institution based, typically in-patient, goods and services.
             /// (system: http://hl7.org/fhir/claim-type-link)
             /// </summary>
-            [EnumLiteral("institutional"), Description("Institutional")]
+            [EnumLiteral("institutional", "http://hl7.org/fhir/claim-type-link"), Description("Institutional")]
             Institutional,
             /// <summary>
             /// A claim for Oral Health (Dentist, Denturist, Hygienist) goods and services.
             /// (system: http://hl7.org/fhir/claim-type-link)
             /// </summary>
-            [EnumLiteral("oral"), Description("Oral Health")]
+            [EnumLiteral("oral", "http://hl7.org/fhir/claim-type-link"), Description("Oral Health")]
             Oral,
             /// <summary>
             /// A claim for Pharmacy based goods and services.
             /// (system: http://hl7.org/fhir/claim-type-link)
             /// </summary>
-            [EnumLiteral("pharmacy"), Description("Pharmacy")]
+            [EnumLiteral("pharmacy", "http://hl7.org/fhir/claim-type-link"), Description("Pharmacy")]
             Pharmacy,
             /// <summary>
             /// A claim for Professional, typically out-patient, goods and services.
             /// (system: http://hl7.org/fhir/claim-type-link)
             /// </summary>
-            [EnumLiteral("professional"), Description("Professional")]
+            [EnumLiteral("professional", "http://hl7.org/fhir/claim-type-link"), Description("Professional")]
             Professional,
             /// <summary>
             /// A claim for Vision (Ophthamologist, Optometrist and Optician) goods and services.
             /// (system: http://hl7.org/fhir/claim-type-link)
             /// </summary>
-            [EnumLiteral("vision"), Description("Vision")]
+            [EnumLiteral("vision", "http://hl7.org/fhir/claim-type-link"), Description("Vision")]
             Vision,
         }
 
@@ -104,25 +104,25 @@ namespace Hl7.Fhir.Model
             /// The treatment is complete and this represents a Claim for the services.
             /// (system: http://hl7.org/fhir/claim-use-link)
             /// </summary>
-            [EnumLiteral("complete"), Description("Complete")]
+            [EnumLiteral("complete", "http://hl7.org/fhir/claim-use-link"), Description("Complete")]
             Complete,
             /// <summary>
             /// The treatment is proposed and this represents a Pre-authorization for the services.
             /// (system: http://hl7.org/fhir/claim-use-link)
             /// </summary>
-            [EnumLiteral("proposed"), Description("Proposed")]
+            [EnumLiteral("proposed", "http://hl7.org/fhir/claim-use-link"), Description("Proposed")]
             Proposed,
             /// <summary>
             /// The treatment is proposed and this represents a Pre-determination for the services.
             /// (system: http://hl7.org/fhir/claim-use-link)
             /// </summary>
-            [EnumLiteral("exploratory"), Description("Exploratory")]
+            [EnumLiteral("exploratory", "http://hl7.org/fhir/claim-use-link"), Description("Exploratory")]
             Exploratory,
             /// <summary>
             /// A locally defined or otherwise resolved status.
             /// (system: http://hl7.org/fhir/claim-use-link)
             /// </summary>
-            [EnumLiteral("other"), Description("Other")]
+            [EnumLiteral("other", "http://hl7.org/fhir/claim-use-link"), Description("Other")]
             Other,
         }
 

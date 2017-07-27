@@ -65,19 +65,19 @@ namespace Hl7.Fhir.Model
             /// A current flag that should be displayed to a user. A system may use the category to determine which roles should view the flag.
             /// (system: http://hl7.org/fhir/flag-status)
             /// </summary>
-            [EnumLiteral("active"), Description("Active")]
+            [EnumLiteral("active", "http://hl7.org/fhir/flag-status"), Description("Active")]
             Active,
             /// <summary>
             /// The flag does not need to be displayed any more.
             /// (system: http://hl7.org/fhir/flag-status)
             /// </summary>
-            [EnumLiteral("inactive"), Description("Inactive")]
+            [EnumLiteral("inactive", "http://hl7.org/fhir/flag-status"), Description("Inactive")]
             Inactive,
             /// <summary>
             /// The flag was added in error, and should no longer be displayed.
             /// (system: http://hl7.org/fhir/flag-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/flag-status"), Description("Entered in Error")]
             EnteredInError,
         }
 

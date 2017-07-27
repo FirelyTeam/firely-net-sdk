@@ -65,55 +65,55 @@ namespace Hl7.Fhir.Model
             /// A goal is proposed for this patient
             /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("proposed"), Description("Proposed")]
+            [EnumLiteral("proposed", "http://hl7.org/fhir/goal-status"), Description("Proposed")]
             Proposed,
             /// <summary>
             /// A goal is planned for this patient
             /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("planned"), Description("Planned")]
+            [EnumLiteral("planned", "http://hl7.org/fhir/goal-status"), Description("Planned")]
             Planned,
             /// <summary>
             /// A proposed goal was accepted
             /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("accepted"), Description("Accepted")]
+            [EnumLiteral("accepted", "http://hl7.org/fhir/goal-status"), Description("Accepted")]
             Accepted,
             /// <summary>
             /// A proposed goal was rejected
             /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("rejected"), Description("Rejected")]
+            [EnumLiteral("rejected", "http://hl7.org/fhir/goal-status"), Description("Rejected")]
             Rejected,
             /// <summary>
             /// The goal is being sought but has not yet been reached.  (Also applies if goal was reached in the past but there has been regression and goal is being sought again)
             /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("in-progress"), Description("In Progress")]
+            [EnumLiteral("in-progress", "http://hl7.org/fhir/goal-status"), Description("In Progress")]
             InProgress,
             /// <summary>
             /// The goal has been met and no further action is needed
             /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("achieved"), Description("Achieved")]
+            [EnumLiteral("achieved", "http://hl7.org/fhir/goal-status"), Description("Achieved")]
             Achieved,
             /// <summary>
             /// The goal has been met, but ongoing activity is needed to sustain the goal objective
             /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("sustaining"), Description("Sustaining")]
+            [EnumLiteral("sustaining", "http://hl7.org/fhir/goal-status"), Description("Sustaining")]
             Sustaining,
             /// <summary>
             /// The goal remains a long term objective but is no longer being actively pursued for a temporary period of time.
             /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("on-hold"), Description("On Hold")]
+            [EnumLiteral("on-hold", "http://hl7.org/fhir/goal-status"), Description("On Hold")]
             OnHold,
             /// <summary>
             /// The goal is no longer being sought
             /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("cancelled"), Description("Cancelled")]
+            [EnumLiteral("cancelled", "http://hl7.org/fhir/goal-status"), Description("Cancelled")]
             Cancelled,
         }
 
