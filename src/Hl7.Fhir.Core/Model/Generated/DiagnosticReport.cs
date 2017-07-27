@@ -66,61 +66,61 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
-            [EnumLiteral("registered"), Description("Registered")]
+            [EnumLiteral("registered", "http://hl7.org/fhir/diagnostic-report-status"), Description("Registered")]
             Registered,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
-            [EnumLiteral("partial"), Description("Partial")]
+            [EnumLiteral("partial", "http://hl7.org/fhir/diagnostic-report-status"), Description("Partial")]
             Partial,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
-            [EnumLiteral("preliminary"), Description("Preliminary")]
+            [EnumLiteral("preliminary", "http://hl7.org/fhir/diagnostic-report-status"), Description("Preliminary")]
             Preliminary,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
-            [EnumLiteral("final"), Description("Final")]
+            [EnumLiteral("final", "http://hl7.org/fhir/diagnostic-report-status"), Description("Final")]
             Final,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
-            [EnumLiteral("amended"), Description("Amended")]
+            [EnumLiteral("amended", "http://hl7.org/fhir/diagnostic-report-status"), Description("Amended")]
             Amended,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
-            [EnumLiteral("corrected"), Description("Corrected")]
+            [EnumLiteral("corrected", "http://hl7.org/fhir/diagnostic-report-status"), Description("Corrected")]
             Corrected,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
-            [EnumLiteral("appended"), Description("Appended")]
+            [EnumLiteral("appended", "http://hl7.org/fhir/diagnostic-report-status"), Description("Appended")]
             Appended,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
-            [EnumLiteral("cancelled"), Description("Cancelled")]
+            [EnumLiteral("cancelled", "http://hl7.org/fhir/diagnostic-report-status"), Description("Cancelled")]
             Cancelled,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/diagnostic-report-status"), Description("Entered in Error")]
             EnteredInError,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
-            [EnumLiteral("unknown"), Description("Unknown")]
+            [EnumLiteral("unknown", "http://hl7.org/fhir/diagnostic-report-status"), Description("Unknown")]
             Unknown,
         }
 

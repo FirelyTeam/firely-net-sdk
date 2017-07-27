@@ -40,6 +40,9 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Model
 {
+#if NET45
+    [Serializable]
+#endif
     [InvokeIValidatableObject]
     [System.Runtime.Serialization.DataContract]
     public abstract class Base : Hl7.Fhir.Validation.IValidatableObject, IDeepCopyable, IDeepComparable, IAnnotated, IAnnotatable

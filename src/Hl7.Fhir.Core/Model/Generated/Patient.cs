@@ -66,25 +66,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/link-type)
             /// </summary>
-            [EnumLiteral("replaced-by"), Description("Replaced-by")]
+            [EnumLiteral("replaced-by", "http://hl7.org/fhir/link-type"), Description("Replaced-by")]
             ReplacedBy,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/link-type)
             /// </summary>
-            [EnumLiteral("replaces"), Description("Replaces")]
+            [EnumLiteral("replaces", "http://hl7.org/fhir/link-type"), Description("Replaces")]
             Replaces,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/link-type)
             /// </summary>
-            [EnumLiteral("refer"), Description("Refer")]
+            [EnumLiteral("refer", "http://hl7.org/fhir/link-type"), Description("Refer")]
             Refer,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/link-type)
             /// </summary>
-            [EnumLiteral("seealso"), Description("See also")]
+            [EnumLiteral("seealso", "http://hl7.org/fhir/link-type"), Description("See also")]
             Seealso,
         }
 

@@ -66,37 +66,37 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/medication-statement-status)
             /// </summary>
-            [EnumLiteral("active"), Description("Active")]
+            [EnumLiteral("active", "http://hl7.org/fhir/medication-statement-status"), Description("Active")]
             Active,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/medication-statement-status)
             /// </summary>
-            [EnumLiteral("completed"), Description("Completed")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/medication-statement-status"), Description("Completed")]
             Completed,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/medication-statement-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/medication-statement-status"), Description("Entered in Error")]
             EnteredInError,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/medication-statement-status)
             /// </summary>
-            [EnumLiteral("intended"), Description("Intended")]
+            [EnumLiteral("intended", "http://hl7.org/fhir/medication-statement-status"), Description("Intended")]
             Intended,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/medication-statement-status)
             /// </summary>
-            [EnumLiteral("stopped"), Description("Stopped")]
+            [EnumLiteral("stopped", "http://hl7.org/fhir/medication-statement-status"), Description("Stopped")]
             Stopped,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/medication-statement-status)
             /// </summary>
-            [EnumLiteral("on-hold"), Description("On Hold")]
+            [EnumLiteral("on-hold", "http://hl7.org/fhir/medication-statement-status"), Description("On Hold")]
             OnHold,
         }
 
@@ -111,25 +111,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/medication-statement-taken)
             /// </summary>
-            [EnumLiteral("y"), Description("Yes")]
+            [EnumLiteral("y", "http://hl7.org/fhir/medication-statement-taken"), Description("Yes")]
             Y,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/medication-statement-taken)
             /// </summary>
-            [EnumLiteral("n"), Description("No")]
+            [EnumLiteral("n", "http://hl7.org/fhir/medication-statement-taken"), Description("No")]
             N,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/medication-statement-taken)
             /// </summary>
-            [EnumLiteral("unk"), Description("Unknown")]
+            [EnumLiteral("unk", "http://hl7.org/fhir/medication-statement-taken"), Description("Unknown")]
             Unk,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/medication-statement-taken)
             /// </summary>
-            [EnumLiteral("na"), Description("Not Applicable")]
+            [EnumLiteral("na", "http://hl7.org/fhir/medication-statement-taken"), Description("Not Applicable")]
             Na,
         }
 

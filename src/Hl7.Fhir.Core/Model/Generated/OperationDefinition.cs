@@ -66,13 +66,13 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/operation-kind)
             /// </summary>
-            [EnumLiteral("operation"), Description("Operation")]
+            [EnumLiteral("operation", "http://hl7.org/fhir/operation-kind"), Description("Operation")]
             Operation,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/operation-kind)
             /// </summary>
-            [EnumLiteral("query"), Description("Query")]
+            [EnumLiteral("query", "http://hl7.org/fhir/operation-kind"), Description("Query")]
             Query,
         }
 

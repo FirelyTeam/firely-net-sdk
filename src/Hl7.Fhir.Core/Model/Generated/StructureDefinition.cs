@@ -66,25 +66,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/structure-definition-kind)
             /// </summary>
-            [EnumLiteral("primitive-type"), Description("Primitive Data Type")]
+            [EnumLiteral("primitive-type", "http://hl7.org/fhir/structure-definition-kind"), Description("Primitive Data Type")]
             PrimitiveType,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/structure-definition-kind)
             /// </summary>
-            [EnumLiteral("complex-type"), Description("Complex Data Type")]
+            [EnumLiteral("complex-type", "http://hl7.org/fhir/structure-definition-kind"), Description("Complex Data Type")]
             ComplexType,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/structure-definition-kind)
             /// </summary>
-            [EnumLiteral("resource"), Description("Resource")]
+            [EnumLiteral("resource", "http://hl7.org/fhir/structure-definition-kind"), Description("Resource")]
             Resource,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/structure-definition-kind)
             /// </summary>
-            [EnumLiteral("logical"), Description("Logical Model")]
+            [EnumLiteral("logical", "http://hl7.org/fhir/structure-definition-kind"), Description("Logical Model")]
             Logical,
         }
 
@@ -99,19 +99,19 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/extension-context)
             /// </summary>
-            [EnumLiteral("resource"), Description("Resource")]
+            [EnumLiteral("resource", "http://hl7.org/fhir/extension-context"), Description("Resource")]
             Resource,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/extension-context)
             /// </summary>
-            [EnumLiteral("datatype"), Description("Datatype")]
+            [EnumLiteral("datatype", "http://hl7.org/fhir/extension-context"), Description("Datatype")]
             Datatype,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/extension-context)
             /// </summary>
-            [EnumLiteral("extension"), Description("Extension")]
+            [EnumLiteral("extension", "http://hl7.org/fhir/extension-context"), Description("Extension")]
             Extension,
         }
 
@@ -126,13 +126,13 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/type-derivation-rule)
             /// </summary>
-            [EnumLiteral("specialization"), Description("Specialization")]
+            [EnumLiteral("specialization", "http://hl7.org/fhir/type-derivation-rule"), Description("Specialization")]
             Specialization,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/type-derivation-rule)
             /// </summary>
-            [EnumLiteral("constraint"), Description("Constraint")]
+            [EnumLiteral("constraint", "http://hl7.org/fhir/type-derivation-rule"), Description("Constraint")]
             Constraint,
         }
 

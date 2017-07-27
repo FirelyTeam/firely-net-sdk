@@ -66,19 +66,19 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/detectedissue-severity)
             /// </summary>
-            [EnumLiteral("high"), Description("High")]
+            [EnumLiteral("high", "http://hl7.org/fhir/detectedissue-severity"), Description("High")]
             High,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/detectedissue-severity)
             /// </summary>
-            [EnumLiteral("moderate"), Description("Moderate")]
+            [EnumLiteral("moderate", "http://hl7.org/fhir/detectedissue-severity"), Description("Moderate")]
             Moderate,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/detectedissue-severity)
             /// </summary>
-            [EnumLiteral("low"), Description("Low")]
+            [EnumLiteral("low", "http://hl7.org/fhir/detectedissue-severity"), Description("Low")]
             Low,
         }
 

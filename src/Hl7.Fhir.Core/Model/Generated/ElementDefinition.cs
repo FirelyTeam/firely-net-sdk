@@ -62,31 +62,31 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/property-representation)
             /// </summary>
-            [EnumLiteral("xmlAttr"), Description("XML Attribute")]
+            [EnumLiteral("xmlAttr", "http://hl7.org/fhir/property-representation"), Description("XML Attribute")]
             XmlAttr,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/property-representation)
             /// </summary>
-            [EnumLiteral("xmlText"), Description("XML Text")]
+            [EnumLiteral("xmlText", "http://hl7.org/fhir/property-representation"), Description("XML Text")]
             XmlText,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/property-representation)
             /// </summary>
-            [EnumLiteral("typeAttr"), Description("Type Attribute")]
+            [EnumLiteral("typeAttr", "http://hl7.org/fhir/property-representation"), Description("Type Attribute")]
             TypeAttr,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/property-representation)
             /// </summary>
-            [EnumLiteral("cdaText"), Description("CDA Text Format")]
+            [EnumLiteral("cdaText", "http://hl7.org/fhir/property-representation"), Description("CDA Text Format")]
             CdaText,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/property-representation)
             /// </summary>
-            [EnumLiteral("xhtml"), Description("XHTML")]
+            [EnumLiteral("xhtml", "http://hl7.org/fhir/property-representation"), Description("XHTML")]
             Xhtml,
         }
 
@@ -101,31 +101,31 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/discriminator-type)
             /// </summary>
-            [EnumLiteral("value"), Description("Value")]
+            [EnumLiteral("value", "http://hl7.org/fhir/discriminator-type"), Description("Value")]
             Value,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/discriminator-type)
             /// </summary>
-            [EnumLiteral("exists"), Description("Exists")]
+            [EnumLiteral("exists", "http://hl7.org/fhir/discriminator-type"), Description("Exists")]
             Exists,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/discriminator-type)
             /// </summary>
-            [EnumLiteral("pattern"), Description("Pattern")]
+            [EnumLiteral("pattern", "http://hl7.org/fhir/discriminator-type"), Description("Pattern")]
             Pattern,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/discriminator-type)
             /// </summary>
-            [EnumLiteral("type"), Description("Type")]
+            [EnumLiteral("type", "http://hl7.org/fhir/discriminator-type"), Description("Type")]
             Type,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/discriminator-type)
             /// </summary>
-            [EnumLiteral("profile"), Description("Profile")]
+            [EnumLiteral("profile", "http://hl7.org/fhir/discriminator-type"), Description("Profile")]
             Profile,
         }
 
@@ -140,19 +140,19 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-slicing-rules)
             /// </summary>
-            [EnumLiteral("closed"), Description("Closed")]
+            [EnumLiteral("closed", "http://hl7.org/fhir/resource-slicing-rules"), Description("Closed")]
             Closed,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-slicing-rules)
             /// </summary>
-            [EnumLiteral("open"), Description("Open")]
+            [EnumLiteral("open", "http://hl7.org/fhir/resource-slicing-rules"), Description("Open")]
             Open,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-slicing-rules)
             /// </summary>
-            [EnumLiteral("openAtEnd"), Description("Open at End")]
+            [EnumLiteral("openAtEnd", "http://hl7.org/fhir/resource-slicing-rules"), Description("Open at End")]
             OpenAtEnd,
         }
 
@@ -167,19 +167,19 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-aggregation-mode)
             /// </summary>
-            [EnumLiteral("contained"), Description("Contained")]
+            [EnumLiteral("contained", "http://hl7.org/fhir/resource-aggregation-mode"), Description("Contained")]
             Contained,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-aggregation-mode)
             /// </summary>
-            [EnumLiteral("referenced"), Description("Referenced")]
+            [EnumLiteral("referenced", "http://hl7.org/fhir/resource-aggregation-mode"), Description("Referenced")]
             Referenced,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-aggregation-mode)
             /// </summary>
-            [EnumLiteral("bundled"), Description("Bundled")]
+            [EnumLiteral("bundled", "http://hl7.org/fhir/resource-aggregation-mode"), Description("Bundled")]
             Bundled,
         }
 
@@ -194,19 +194,19 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/reference-version-rules)
             /// </summary>
-            [EnumLiteral("either"), Description("Either Specific or independent")]
+            [EnumLiteral("either", "http://hl7.org/fhir/reference-version-rules"), Description("Either Specific or independent")]
             Either,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/reference-version-rules)
             /// </summary>
-            [EnumLiteral("independent"), Description("Version independent")]
+            [EnumLiteral("independent", "http://hl7.org/fhir/reference-version-rules"), Description("Version independent")]
             Independent,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/reference-version-rules)
             /// </summary>
-            [EnumLiteral("specific"), Description("Version Specific")]
+            [EnumLiteral("specific", "http://hl7.org/fhir/reference-version-rules"), Description("Version Specific")]
             Specific,
         }
 
@@ -221,13 +221,13 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/constraint-severity)
             /// </summary>
-            [EnumLiteral("error"), Description("Error")]
+            [EnumLiteral("error", "http://hl7.org/fhir/constraint-severity"), Description("Error")]
             Error,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/constraint-severity)
             /// </summary>
-            [EnumLiteral("warning"), Description("Warning")]
+            [EnumLiteral("warning", "http://hl7.org/fhir/constraint-severity"), Description("Warning")]
             Warning,
         }
 

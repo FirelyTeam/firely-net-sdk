@@ -252,7 +252,7 @@ if(!abstractType) {
             /// <#= defintion.Replace("\r\n", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n        /// ").Replace("<", "&lt;").Replace(">", "&gt;") #>
             /// (system: <#= system #>)
             /// </summary>
-            [EnumLiteral("<#= code #>"), Description("<#= display #>")]
+            [EnumLiteral("<#= code #>", "<#= system #>"), Description("<#= display #>")]
             <#= ConvertEnumValue(code) #>,
 <#
     }

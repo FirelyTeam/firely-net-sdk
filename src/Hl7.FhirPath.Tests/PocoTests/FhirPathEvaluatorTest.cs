@@ -99,9 +99,16 @@ namespace Hl7.FhirPath.Tests
         public FhirPathEvaluatorTest(PatientFixture fixture, ITestOutputHelper output)
         {
             ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
+            ElementNavFhirExtensions.Resolver = testResolver;
 
             this.fixture = fixture;
             this.output = output;
+
+            IElementNavigator testResolver(string url)
+            {
+                Debug.WriteLine($"resolve({url}) was called");
+                return null;
+            }
         }
 
         [Fact]

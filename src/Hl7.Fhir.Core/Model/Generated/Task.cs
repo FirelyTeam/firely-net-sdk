@@ -66,73 +66,73 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/task-status)
             /// </summary>
-            [EnumLiteral("draft"), Description("Draft")]
+            [EnumLiteral("draft", "http://hl7.org/fhir/task-status"), Description("Draft")]
             Draft,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/task-status)
             /// </summary>
-            [EnumLiteral("requested"), Description("Requested")]
+            [EnumLiteral("requested", "http://hl7.org/fhir/task-status"), Description("Requested")]
             Requested,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/task-status)
             /// </summary>
-            [EnumLiteral("received"), Description("Received")]
+            [EnumLiteral("received", "http://hl7.org/fhir/task-status"), Description("Received")]
             Received,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/task-status)
             /// </summary>
-            [EnumLiteral("accepted"), Description("Accepted")]
+            [EnumLiteral("accepted", "http://hl7.org/fhir/task-status"), Description("Accepted")]
             Accepted,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/task-status)
             /// </summary>
-            [EnumLiteral("rejected"), Description("Rejected")]
+            [EnumLiteral("rejected", "http://hl7.org/fhir/task-status"), Description("Rejected")]
             Rejected,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/task-status)
             /// </summary>
-            [EnumLiteral("ready"), Description("Ready")]
+            [EnumLiteral("ready", "http://hl7.org/fhir/task-status"), Description("Ready")]
             Ready,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/task-status)
             /// </summary>
-            [EnumLiteral("cancelled"), Description("Cancelled")]
+            [EnumLiteral("cancelled", "http://hl7.org/fhir/task-status"), Description("Cancelled")]
             Cancelled,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/task-status)
             /// </summary>
-            [EnumLiteral("in-progress"), Description("In Progress")]
+            [EnumLiteral("in-progress", "http://hl7.org/fhir/task-status"), Description("In Progress")]
             InProgress,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/task-status)
             /// </summary>
-            [EnumLiteral("on-hold"), Description("On Hold")]
+            [EnumLiteral("on-hold", "http://hl7.org/fhir/task-status"), Description("On Hold")]
             OnHold,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/task-status)
             /// </summary>
-            [EnumLiteral("failed"), Description("Failed")]
+            [EnumLiteral("failed", "http://hl7.org/fhir/task-status"), Description("Failed")]
             Failed,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/task-status)
             /// </summary>
-            [EnumLiteral("completed"), Description("Completed")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/task-status"), Description("Completed")]
             Completed,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/task-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/task-status"), Description("Entered in Error")]
             EnteredInError,
         }
 

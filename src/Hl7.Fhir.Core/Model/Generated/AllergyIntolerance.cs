@@ -66,19 +66,19 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/allergy-clinical-status)
             /// </summary>
-            [EnumLiteral("active"), Description("Active")]
+            [EnumLiteral("active", "http://hl7.org/fhir/allergy-clinical-status"), Description("Active")]
             Active,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/allergy-clinical-status)
             /// </summary>
-            [EnumLiteral("inactive"), Description("Inactive")]
+            [EnumLiteral("inactive", "http://hl7.org/fhir/allergy-clinical-status"), Description("Inactive")]
             Inactive,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/allergy-clinical-status)
             /// </summary>
-            [EnumLiteral("resolved"), Description("Resolved")]
+            [EnumLiteral("resolved", "http://hl7.org/fhir/allergy-clinical-status"), Description("Resolved")]
             Resolved,
         }
 
@@ -93,25 +93,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/allergy-verification-status)
             /// </summary>
-            [EnumLiteral("unconfirmed"), Description("Unconfirmed")]
+            [EnumLiteral("unconfirmed", "http://hl7.org/fhir/allergy-verification-status"), Description("Unconfirmed")]
             Unconfirmed,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/allergy-verification-status)
             /// </summary>
-            [EnumLiteral("confirmed"), Description("Confirmed")]
+            [EnumLiteral("confirmed", "http://hl7.org/fhir/allergy-verification-status"), Description("Confirmed")]
             Confirmed,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/allergy-verification-status)
             /// </summary>
-            [EnumLiteral("refuted"), Description("Refuted")]
+            [EnumLiteral("refuted", "http://hl7.org/fhir/allergy-verification-status"), Description("Refuted")]
             Refuted,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/allergy-verification-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered In Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/allergy-verification-status"), Description("Entered In Error")]
             EnteredInError,
         }
 
@@ -126,13 +126,13 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/allergy-intolerance-type)
             /// </summary>
-            [EnumLiteral("allergy"), Description("Allergy")]
+            [EnumLiteral("allergy", "http://hl7.org/fhir/allergy-intolerance-type"), Description("Allergy")]
             Allergy,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/allergy-intolerance-type)
             /// </summary>
-            [EnumLiteral("intolerance"), Description("Intolerance")]
+            [EnumLiteral("intolerance", "http://hl7.org/fhir/allergy-intolerance-type"), Description("Intolerance")]
             Intolerance,
         }
 
@@ -147,25 +147,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/allergy-intolerance-category)
             /// </summary>
-            [EnumLiteral("food"), Description("Food")]
+            [EnumLiteral("food", "http://hl7.org/fhir/allergy-intolerance-category"), Description("Food")]
             Food,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/allergy-intolerance-category)
             /// </summary>
-            [EnumLiteral("medication"), Description("Medication")]
+            [EnumLiteral("medication", "http://hl7.org/fhir/allergy-intolerance-category"), Description("Medication")]
             Medication,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/allergy-intolerance-category)
             /// </summary>
-            [EnumLiteral("environment"), Description("Environment")]
+            [EnumLiteral("environment", "http://hl7.org/fhir/allergy-intolerance-category"), Description("Environment")]
             Environment,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/allergy-intolerance-category)
             /// </summary>
-            [EnumLiteral("biologic"), Description("Biologic")]
+            [EnumLiteral("biologic", "http://hl7.org/fhir/allergy-intolerance-category"), Description("Biologic")]
             Biologic,
         }
 
@@ -180,19 +180,19 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/allergy-intolerance-criticality)
             /// </summary>
-            [EnumLiteral("low"), Description("Low Risk")]
+            [EnumLiteral("low", "http://hl7.org/fhir/allergy-intolerance-criticality"), Description("Low Risk")]
             Low,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/allergy-intolerance-criticality)
             /// </summary>
-            [EnumLiteral("high"), Description("High Risk")]
+            [EnumLiteral("high", "http://hl7.org/fhir/allergy-intolerance-criticality"), Description("High Risk")]
             High,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/allergy-intolerance-criticality)
             /// </summary>
-            [EnumLiteral("unable-to-assess"), Description("Unable to Assess Risk")]
+            [EnumLiteral("unable-to-assess", "http://hl7.org/fhir/allergy-intolerance-criticality"), Description("Unable to Assess Risk")]
             UnableToAssess,
         }
 
@@ -207,19 +207,19 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/reaction-event-severity)
             /// </summary>
-            [EnumLiteral("mild"), Description("Mild")]
+            [EnumLiteral("mild", "http://hl7.org/fhir/reaction-event-severity"), Description("Mild")]
             Mild,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/reaction-event-severity)
             /// </summary>
-            [EnumLiteral("moderate"), Description("Moderate")]
+            [EnumLiteral("moderate", "http://hl7.org/fhir/reaction-event-severity"), Description("Moderate")]
             Moderate,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/reaction-event-severity)
             /// </summary>
-            [EnumLiteral("severe"), Description("Severe")]
+            [EnumLiteral("severe", "http://hl7.org/fhir/reaction-event-severity"), Description("Severe")]
             Severe,
         }
 

@@ -62,43 +62,43 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/trigger-type)
             /// </summary>
-            [EnumLiteral("named-event"), Description("Named Event")]
+            [EnumLiteral("named-event", "http://hl7.org/fhir/trigger-type"), Description("Named Event")]
             NamedEvent,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/trigger-type)
             /// </summary>
-            [EnumLiteral("periodic"), Description("Periodic")]
+            [EnumLiteral("periodic", "http://hl7.org/fhir/trigger-type"), Description("Periodic")]
             Periodic,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/trigger-type)
             /// </summary>
-            [EnumLiteral("data-added"), Description("Data Added")]
+            [EnumLiteral("data-added", "http://hl7.org/fhir/trigger-type"), Description("Data Added")]
             DataAdded,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/trigger-type)
             /// </summary>
-            [EnumLiteral("data-modified"), Description("Data Modified")]
+            [EnumLiteral("data-modified", "http://hl7.org/fhir/trigger-type"), Description("Data Modified")]
             DataModified,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/trigger-type)
             /// </summary>
-            [EnumLiteral("data-removed"), Description("Data Removed")]
+            [EnumLiteral("data-removed", "http://hl7.org/fhir/trigger-type"), Description("Data Removed")]
             DataRemoved,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/trigger-type)
             /// </summary>
-            [EnumLiteral("data-accessed"), Description("Data Accessed")]
+            [EnumLiteral("data-accessed", "http://hl7.org/fhir/trigger-type"), Description("Data Accessed")]
             DataAccessed,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/trigger-type)
             /// </summary>
-            [EnumLiteral("data-access-ended"), Description("Data Access Ended")]
+            [EnumLiteral("data-access-ended", "http://hl7.org/fhir/trigger-type"), Description("Data Access Ended")]
             DataAccessEnded,
         }
 

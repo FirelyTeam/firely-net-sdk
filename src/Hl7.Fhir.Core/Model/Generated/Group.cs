@@ -66,37 +66,37 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/group-type)
             /// </summary>
-            [EnumLiteral("person"), Description("Person")]
+            [EnumLiteral("person", "http://hl7.org/fhir/group-type"), Description("Person")]
             Person,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/group-type)
             /// </summary>
-            [EnumLiteral("animal"), Description("Animal")]
+            [EnumLiteral("animal", "http://hl7.org/fhir/group-type"), Description("Animal")]
             Animal,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/group-type)
             /// </summary>
-            [EnumLiteral("practitioner"), Description("Practitioner")]
+            [EnumLiteral("practitioner", "http://hl7.org/fhir/group-type"), Description("Practitioner")]
             Practitioner,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/group-type)
             /// </summary>
-            [EnumLiteral("device"), Description("Device")]
+            [EnumLiteral("device", "http://hl7.org/fhir/group-type"), Description("Device")]
             Device,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/group-type)
             /// </summary>
-            [EnumLiteral("medication"), Description("Medication")]
+            [EnumLiteral("medication", "http://hl7.org/fhir/group-type"), Description("Medication")]
             Medication,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/group-type)
             /// </summary>
-            [EnumLiteral("substance"), Description("Substance")]
+            [EnumLiteral("substance", "http://hl7.org/fhir/group-type"), Description("Substance")]
             Substance,
         }
 

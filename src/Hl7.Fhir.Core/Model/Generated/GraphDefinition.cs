@@ -66,25 +66,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/graph-compartment-rule)
             /// </summary>
-            [EnumLiteral("identical"), Description("Identical")]
+            [EnumLiteral("identical", "http://hl7.org/fhir/graph-compartment-rule"), Description("Identical")]
             Identical,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/graph-compartment-rule)
             /// </summary>
-            [EnumLiteral("matching"), Description("Matching")]
+            [EnumLiteral("matching", "http://hl7.org/fhir/graph-compartment-rule"), Description("Matching")]
             Matching,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/graph-compartment-rule)
             /// </summary>
-            [EnumLiteral("different"), Description("Different")]
+            [EnumLiteral("different", "http://hl7.org/fhir/graph-compartment-rule"), Description("Different")]
             Different,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/graph-compartment-rule)
             /// </summary>
-            [EnumLiteral("custom"), Description("Custom")]
+            [EnumLiteral("custom", "http://hl7.org/fhir/graph-compartment-rule"), Description("Custom")]
             Custom,
         }
 

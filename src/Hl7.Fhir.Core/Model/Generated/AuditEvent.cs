@@ -66,31 +66,31 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/audit-event-action)
             /// </summary>
-            [EnumLiteral("C"), Description("Create")]
+            [EnumLiteral("C", "http://hl7.org/fhir/audit-event-action"), Description("Create")]
             C,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/audit-event-action)
             /// </summary>
-            [EnumLiteral("R"), Description("Read/View/Print")]
+            [EnumLiteral("R", "http://hl7.org/fhir/audit-event-action"), Description("Read/View/Print")]
             R,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/audit-event-action)
             /// </summary>
-            [EnumLiteral("U"), Description("Update")]
+            [EnumLiteral("U", "http://hl7.org/fhir/audit-event-action"), Description("Update")]
             U,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/audit-event-action)
             /// </summary>
-            [EnumLiteral("D"), Description("Delete")]
+            [EnumLiteral("D", "http://hl7.org/fhir/audit-event-action"), Description("Delete")]
             D,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/audit-event-action)
             /// </summary>
-            [EnumLiteral("E"), Description("Execute")]
+            [EnumLiteral("E", "http://hl7.org/fhir/audit-event-action"), Description("Execute")]
             E,
         }
 
@@ -105,25 +105,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/audit-event-outcome)
             /// </summary>
-            [EnumLiteral("0"), Description("Success")]
+            [EnumLiteral("0", "http://hl7.org/fhir/audit-event-outcome"), Description("Success")]
             N0,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/audit-event-outcome)
             /// </summary>
-            [EnumLiteral("4"), Description("Minor failure")]
+            [EnumLiteral("4", "http://hl7.org/fhir/audit-event-outcome"), Description("Minor failure")]
             N4,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/audit-event-outcome)
             /// </summary>
-            [EnumLiteral("8"), Description("Serious failure")]
+            [EnumLiteral("8", "http://hl7.org/fhir/audit-event-outcome"), Description("Serious failure")]
             N8,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/audit-event-outcome)
             /// </summary>
-            [EnumLiteral("12"), Description("Major failure")]
+            [EnumLiteral("12", "http://hl7.org/fhir/audit-event-outcome"), Description("Major failure")]
             N12,
         }
 
@@ -138,31 +138,31 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/network-type)
             /// </summary>
-            [EnumLiteral("1"), Description("Machine Name")]
+            [EnumLiteral("1", "http://hl7.org/fhir/network-type"), Description("Machine Name")]
             N1,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/network-type)
             /// </summary>
-            [EnumLiteral("2"), Description("IP Address")]
+            [EnumLiteral("2", "http://hl7.org/fhir/network-type"), Description("IP Address")]
             N2,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/network-type)
             /// </summary>
-            [EnumLiteral("3"), Description("Telephone Number")]
+            [EnumLiteral("3", "http://hl7.org/fhir/network-type"), Description("Telephone Number")]
             N3,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/network-type)
             /// </summary>
-            [EnumLiteral("4"), Description("Email address")]
+            [EnumLiteral("4", "http://hl7.org/fhir/network-type"), Description("Email address")]
             N4,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/network-type)
             /// </summary>
-            [EnumLiteral("5"), Description("URI")]
+            [EnumLiteral("5", "http://hl7.org/fhir/network-type"), Description("URI")]
             N5,
         }
 

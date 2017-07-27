@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Validation
 {
     internal static class TypeRefValidationExtensions
     {
-        internal static OperationOutcome ValidateType(this Validator validator, ElementDefinition definition, IElementNavigator instance)
+        internal static OperationOutcome ValidateType(this Validator validator, ElementDefinition definition, ScopedNavigator instance)
         {
             var outcome = new OperationOutcome();
 
@@ -79,7 +79,8 @@ namespace Hl7.Fhir.Validation
         }
 
      
-        internal static OperationOutcome ValidateTypeReferences(this Validator validator, IEnumerable<ElementDefinition.TypeRefComponent> typeRefs, IElementNavigator instance)
+        internal static OperationOutcome ValidateTypeReferences(this Validator validator, 
+            IEnumerable<ElementDefinition.TypeRefComponent> typeRefs, ScopedNavigator instance)
         {
             //TODO: It's more efficient to do the non-reference types FIRST, since ANY match would be ok,
             //and validating non-references is cheaper
@@ -91,7 +92,7 @@ namespace Hl7.Fhir.Validation
             return validator.Combine(BatchValidationMode.Any, instance, validations);
         }
 
-        private static Func<OperationOutcome> createValidatorForTypeRef(Validator validator, IElementNavigator instance, ElementDefinition.TypeRefComponent tr)
+        private static Func<OperationOutcome> createValidatorForTypeRef(Validator validator, ScopedNavigator instance, ElementDefinition.TypeRefComponent tr)
         {
             return validate;
 
@@ -108,22 +109,18 @@ namespace Hl7.Fhir.Validation
             }
         }
 
-        internal static OperationOutcome ValidateResourceReference(this Validator validator, IElementNavigator instance, ElementDefinition.TypeRefComponent typeRef)
+        internal static OperationOutcome ValidateResourceReference(this Validator validator, ScopedNavigator instance, ElementDefinition.TypeRefComponent typeRef)
         {
             var outcome = new OperationOutcome();
 
-            var references = instance.Children("reference");
-            var reference = references.FirstOrDefault()?.Value as string;
+            var reference = instance.ParseResourceReference();
 
-            if (reference == null)       // No reference found -> this is always valid
+            if (reference.Reference == null)       // No reference found -> this is always valid
                 return outcome;
 
-            if(references.Count() > 1)
-                validator.Trace(outcome, $"Encountered multiple references, just using first ({reference})", Issue.CONTENT_REFERENCE_HAS_MULTIPLE_REFERENCES, instance);
-
             // Try to resolve the reference *within* the current instance (Bundle, resource with contained resources) first
-            ElementDefinition.AggregationMode? encounteredKind;
-            var referencedResource = validator.ResolveReference(instance, reference, out encounteredKind, outcome);
+            var referencedResource = validator.resolveReference(instance, reference.Reference, 
+                out ElementDefinition.AggregationMode? encounteredKind, outcome);
 
             // Validate the kind of aggregation.
             // If no aggregation is given, all kinds of aggregation are allowed, otherwise only allow
@@ -137,7 +134,7 @@ namespace Hl7.Fhir.Validation
             {
                 try
                 {
-                    referencedResource = validator.ExternalReferenceResolutionNeeded(reference, outcome, instance);
+                    referencedResource = validator.ExternalReferenceResolutionNeeded(reference.Reference, outcome, instance.Location);
                 }
                 catch (Exception e)
                 {
@@ -179,7 +176,7 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-        private static IElementNavigator ResolveReference(this Validator validator, IElementNavigator instance, string reference, out ElementDefinition.AggregationMode? referenceKind, OperationOutcome outcome)
+        private static IElementNavigator resolveReference(this Validator validator, ScopedNavigator instance, string reference, out ElementDefinition.AggregationMode? referenceKind, OperationOutcome outcome)
         {
             var identity = new ResourceIdentity(reference);
 
@@ -193,7 +190,7 @@ namespace Hl7.Fhir.Validation
                 }
             }
 
-            var result = validator.ScopeTracker.Resolve(instance, reference);
+            var result = instance.Resolve(reference);
 
             if (identity.Form == ResourceIdentityForm.Local)
             {

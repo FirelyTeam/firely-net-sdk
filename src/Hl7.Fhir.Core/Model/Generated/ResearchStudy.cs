@@ -66,37 +66,37 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/research-study-status)
             /// </summary>
-            [EnumLiteral("draft"), Description("Draft")]
+            [EnumLiteral("draft", "http://hl7.org/fhir/research-study-status"), Description("Draft")]
             Draft,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/research-study-status)
             /// </summary>
-            [EnumLiteral("in-progress"), Description("In-progress")]
+            [EnumLiteral("in-progress", "http://hl7.org/fhir/research-study-status"), Description("In-progress")]
             InProgress,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/research-study-status)
             /// </summary>
-            [EnumLiteral("suspended"), Description("Suspended")]
+            [EnumLiteral("suspended", "http://hl7.org/fhir/research-study-status"), Description("Suspended")]
             Suspended,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/research-study-status)
             /// </summary>
-            [EnumLiteral("stopped"), Description("Stopped")]
+            [EnumLiteral("stopped", "http://hl7.org/fhir/research-study-status"), Description("Stopped")]
             Stopped,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/research-study-status)
             /// </summary>
-            [EnumLiteral("completed"), Description("Completed")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/research-study-status"), Description("Completed")]
             Completed,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/research-study-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered in error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/research-study-status"), Description("Entered in error")]
             EnteredInError,
         }
 

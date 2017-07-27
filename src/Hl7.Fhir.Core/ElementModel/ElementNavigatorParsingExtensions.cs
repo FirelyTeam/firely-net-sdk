@@ -4,13 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Hl7.Fhir.Validation
+namespace Hl7.Fhir.ElementModel
 {
     /// <summary>
     /// A class to do basic parsing of POCO classes from an IElementNavigator.  Can be replaced by the real
     /// IElementNavigator-based PocoParser when we have that piece of infrastructure ready.
     /// </summary>
-    internal static class ElementNavigatorParsingExtensions
+    public static class ElementNavigatorParsingExtensions
     {
         public static Model.Quantity ParseQuantity(this IElementNavigator instance)
         {
@@ -109,6 +109,17 @@ namespace Hl7.Fhir.Validation
                 UserSelected = instance.Children("userSelected").SingleOrDefault()?.Value as bool?
             };
         }
+
+        public static ResourceReference ParseResourceReference(this IElementNavigator instance)
+        {
+            return new ResourceReference()
+            {
+                Reference = instance.Children("reference").GetString(),
+                Display = instance.Children("display").GetString()           
+            };
+        }
+
+
 
         public static CodeableConcept ParseCodeableConcept(this IElementNavigator instance)
         {

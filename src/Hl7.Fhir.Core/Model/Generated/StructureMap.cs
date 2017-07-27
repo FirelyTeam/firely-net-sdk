@@ -66,25 +66,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-model-mode)
             /// </summary>
-            [EnumLiteral("source"), Description("Source Structure Definition")]
+            [EnumLiteral("source", "http://hl7.org/fhir/map-model-mode"), Description("Source Structure Definition")]
             Source,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-model-mode)
             /// </summary>
-            [EnumLiteral("queried"), Description("Queried Structure Definition")]
+            [EnumLiteral("queried", "http://hl7.org/fhir/map-model-mode"), Description("Queried Structure Definition")]
             Queried,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-model-mode)
             /// </summary>
-            [EnumLiteral("target"), Description("Target Structure Definition")]
+            [EnumLiteral("target", "http://hl7.org/fhir/map-model-mode"), Description("Target Structure Definition")]
             Target,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-model-mode)
             /// </summary>
-            [EnumLiteral("produced"), Description("Produced Structure Definition")]
+            [EnumLiteral("produced", "http://hl7.org/fhir/map-model-mode"), Description("Produced Structure Definition")]
             Produced,
         }
 
@@ -99,19 +99,19 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-group-type-mode)
             /// </summary>
-            [EnumLiteral("none"), Description("Not a Default")]
+            [EnumLiteral("none", "http://hl7.org/fhir/map-group-type-mode"), Description("Not a Default")]
             None,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-group-type-mode)
             /// </summary>
-            [EnumLiteral("types"), Description("Default for Type Combination")]
+            [EnumLiteral("types", "http://hl7.org/fhir/map-group-type-mode"), Description("Default for Type Combination")]
             Types,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-group-type-mode)
             /// </summary>
-            [EnumLiteral("type-and-types"), Description("Default for type + combination")]
+            [EnumLiteral("type-and-types", "http://hl7.org/fhir/map-group-type-mode"), Description("Default for type + combination")]
             TypeAndTypes,
         }
 
@@ -126,13 +126,13 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-input-mode)
             /// </summary>
-            [EnumLiteral("source"), Description("Source Instance")]
+            [EnumLiteral("source", "http://hl7.org/fhir/map-input-mode"), Description("Source Instance")]
             Source,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-input-mode)
             /// </summary>
-            [EnumLiteral("target"), Description("Target Instance")]
+            [EnumLiteral("target", "http://hl7.org/fhir/map-input-mode"), Description("Target Instance")]
             Target,
         }
 
@@ -147,31 +147,31 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-source-list-mode)
             /// </summary>
-            [EnumLiteral("first"), Description("First")]
+            [EnumLiteral("first", "http://hl7.org/fhir/map-source-list-mode"), Description("First")]
             First,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-source-list-mode)
             /// </summary>
-            [EnumLiteral("not_first"), Description("All but the first")]
+            [EnumLiteral("not_first", "http://hl7.org/fhir/map-source-list-mode"), Description("All but the first")]
             Not_first,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-source-list-mode)
             /// </summary>
-            [EnumLiteral("last"), Description("Last")]
+            [EnumLiteral("last", "http://hl7.org/fhir/map-source-list-mode"), Description("Last")]
             Last,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-source-list-mode)
             /// </summary>
-            [EnumLiteral("not_last"), Description("All but the last")]
+            [EnumLiteral("not_last", "http://hl7.org/fhir/map-source-list-mode"), Description("All but the last")]
             Not_last,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-source-list-mode)
             /// </summary>
-            [EnumLiteral("only_one"), Description("Enforce only one")]
+            [EnumLiteral("only_one", "http://hl7.org/fhir/map-source-list-mode"), Description("Enforce only one")]
             Only_one,
         }
 
@@ -186,13 +186,13 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-context-type)
             /// </summary>
-            [EnumLiteral("type"), Description("Type")]
+            [EnumLiteral("type", "http://hl7.org/fhir/map-context-type"), Description("Type")]
             Type,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-context-type)
             /// </summary>
-            [EnumLiteral("variable"), Description("Variable")]
+            [EnumLiteral("variable", "http://hl7.org/fhir/map-context-type"), Description("Variable")]
             Variable,
         }
 
@@ -207,25 +207,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-target-list-mode)
             /// </summary>
-            [EnumLiteral("first"), Description("First")]
+            [EnumLiteral("first", "http://hl7.org/fhir/map-target-list-mode"), Description("First")]
             First,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-target-list-mode)
             /// </summary>
-            [EnumLiteral("share"), Description("Share")]
+            [EnumLiteral("share", "http://hl7.org/fhir/map-target-list-mode"), Description("Share")]
             Share,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-target-list-mode)
             /// </summary>
-            [EnumLiteral("last"), Description("Last")]
+            [EnumLiteral("last", "http://hl7.org/fhir/map-target-list-mode"), Description("Last")]
             Last,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-target-list-mode)
             /// </summary>
-            [EnumLiteral("collate"), Description("Collate")]
+            [EnumLiteral("collate", "http://hl7.org/fhir/map-target-list-mode"), Description("Collate")]
             Collate,
         }
 
@@ -240,103 +240,103 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-transform)
             /// </summary>
-            [EnumLiteral("create"), Description("create")]
+            [EnumLiteral("create", "http://hl7.org/fhir/map-transform"), Description("create")]
             Create,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-transform)
             /// </summary>
-            [EnumLiteral("copy"), Description("copy")]
+            [EnumLiteral("copy", "http://hl7.org/fhir/map-transform"), Description("copy")]
             Copy,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-transform)
             /// </summary>
-            [EnumLiteral("truncate"), Description("truncate")]
+            [EnumLiteral("truncate", "http://hl7.org/fhir/map-transform"), Description("truncate")]
             Truncate,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-transform)
             /// </summary>
-            [EnumLiteral("escape"), Description("escape")]
+            [EnumLiteral("escape", "http://hl7.org/fhir/map-transform"), Description("escape")]
             Escape,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-transform)
             /// </summary>
-            [EnumLiteral("cast"), Description("cast")]
+            [EnumLiteral("cast", "http://hl7.org/fhir/map-transform"), Description("cast")]
             Cast,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-transform)
             /// </summary>
-            [EnumLiteral("append"), Description("append")]
+            [EnumLiteral("append", "http://hl7.org/fhir/map-transform"), Description("append")]
             Append,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-transform)
             /// </summary>
-            [EnumLiteral("translate"), Description("translate")]
+            [EnumLiteral("translate", "http://hl7.org/fhir/map-transform"), Description("translate")]
             Translate,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-transform)
             /// </summary>
-            [EnumLiteral("reference"), Description("reference")]
+            [EnumLiteral("reference", "http://hl7.org/fhir/map-transform"), Description("reference")]
             Reference,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-transform)
             /// </summary>
-            [EnumLiteral("dateOp"), Description("dateOp")]
+            [EnumLiteral("dateOp", "http://hl7.org/fhir/map-transform"), Description("dateOp")]
             DateOp,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-transform)
             /// </summary>
-            [EnumLiteral("uuid"), Description("uuid")]
+            [EnumLiteral("uuid", "http://hl7.org/fhir/map-transform"), Description("uuid")]
             Uuid,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-transform)
             /// </summary>
-            [EnumLiteral("pointer"), Description("pointer")]
+            [EnumLiteral("pointer", "http://hl7.org/fhir/map-transform"), Description("pointer")]
             Pointer,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-transform)
             /// </summary>
-            [EnumLiteral("evaluate"), Description("evaluate")]
+            [EnumLiteral("evaluate", "http://hl7.org/fhir/map-transform"), Description("evaluate")]
             Evaluate,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-transform)
             /// </summary>
-            [EnumLiteral("cc"), Description("cc")]
+            [EnumLiteral("cc", "http://hl7.org/fhir/map-transform"), Description("cc")]
             Cc,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-transform)
             /// </summary>
-            [EnumLiteral("c"), Description("c")]
+            [EnumLiteral("c", "http://hl7.org/fhir/map-transform"), Description("c")]
             C,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-transform)
             /// </summary>
-            [EnumLiteral("qty"), Description("qty")]
+            [EnumLiteral("qty", "http://hl7.org/fhir/map-transform"), Description("qty")]
             Qty,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-transform)
             /// </summary>
-            [EnumLiteral("id"), Description("id")]
+            [EnumLiteral("id", "http://hl7.org/fhir/map-transform"), Description("id")]
             Id,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/map-transform)
             /// </summary>
-            [EnumLiteral("cp"), Description("cp")]
+            [EnumLiteral("cp", "http://hl7.org/fhir/map-transform"), Description("cp")]
             Cp,
         }
 

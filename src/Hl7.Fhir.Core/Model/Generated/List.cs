@@ -66,19 +66,19 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/list-status)
             /// </summary>
-            [EnumLiteral("current"), Description("Current")]
+            [EnumLiteral("current", "http://hl7.org/fhir/list-status"), Description("Current")]
             Current,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/list-status)
             /// </summary>
-            [EnumLiteral("retired"), Description("Retired")]
+            [EnumLiteral("retired", "http://hl7.org/fhir/list-status"), Description("Retired")]
             Retired,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/list-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered In Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/list-status"), Description("Entered In Error")]
             EnteredInError,
         }
 

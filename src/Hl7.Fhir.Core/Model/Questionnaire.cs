@@ -1,5 +1,14 @@
-﻿/*
-  Copyright (c) 2011-2013, HL7, Inc.
+﻿using System;
+using System.Collections.Generic;
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Validation;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.Diagnostics;
+using System.Text;
+
+/*
+  Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without modification, 
@@ -28,42 +37,31 @@
 
 */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Hl7.Fhir.Utility
+//
+// Generated on Wed, Dec 24, 2014 16:02+0100 for FHIR v0.4.0
+//
+namespace Hl7.Fhir.Model
 {
-    [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
-    public sealed class EnumLiteralAttribute : Attribute
+    public partial class Questionnaire
     {
-        private readonly string _literal;
-        private readonly string _system;
-
-        // This is a positional argument
-        public EnumLiteralAttribute(string literal, string system=null)
+        [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+        public partial class ItemComponent
         {
-            _literal = literal;
-            _system = system;
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            [NotMapped]
+            internal string DebuggerDisplay
+            {
+                get
+                {
+                    StringBuilder sb = new StringBuilder();
+                    if (!string.IsNullOrEmpty(this.LinkId))
+                        sb.AppendFormat(" LinkId=\"{0}\"", LinkId);
+                    if (!string.IsNullOrEmpty(this.Text))
+                        sb.AppendFormat(" Title=\"{0}\"", Text);
+
+                    return sb.ToString();
+                }
+            }
         }
-
-        public string Literal => _literal;
-
-        /// <summary>
-        /// The system name-space of the code system that this literal value comes from 
-        /// </summary>
-        public string System => _system;
-    }
-
-    [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
-    public sealed class DescriptionAttribute : Attribute
-    {
-        private readonly string _description;
-
-        // This is a positional argument
-        public DescriptionAttribute(string literal) => _description = literal;
-
-        public string Description => _description;
     }
 }

@@ -62,25 +62,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/identifier-use)
             /// </summary>
-            [EnumLiteral("usual"), Description("Usual")]
+            [EnumLiteral("usual", "http://hl7.org/fhir/identifier-use"), Description("Usual")]
             Usual,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/identifier-use)
             /// </summary>
-            [EnumLiteral("official"), Description("Official")]
+            [EnumLiteral("official", "http://hl7.org/fhir/identifier-use"), Description("Official")]
             Official,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/identifier-use)
             /// </summary>
-            [EnumLiteral("temp"), Description("Temp")]
+            [EnumLiteral("temp", "http://hl7.org/fhir/identifier-use"), Description("Temp")]
             Temp,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/identifier-use)
             /// </summary>
-            [EnumLiteral("secondary"), Description("Secondary")]
+            [EnumLiteral("secondary", "http://hl7.org/fhir/identifier-use"), Description("Secondary")]
             Secondary,
         }
 

@@ -66,19 +66,19 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/digital-media-type)
             /// </summary>
-            [EnumLiteral("photo"), Description("Photo")]
+            [EnumLiteral("photo", "http://hl7.org/fhir/digital-media-type"), Description("Photo")]
             Photo,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/digital-media-type)
             /// </summary>
-            [EnumLiteral("video"), Description("Video")]
+            [EnumLiteral("video", "http://hl7.org/fhir/digital-media-type"), Description("Video")]
             Video,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/digital-media-type)
             /// </summary>
-            [EnumLiteral("audio"), Description("Audio")]
+            [EnumLiteral("audio", "http://hl7.org/fhir/digital-media-type"), Description("Audio")]
             Audio,
         }
 

@@ -62,43 +62,43 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/name-use)
             /// </summary>
-            [EnumLiteral("usual"), Description("Usual")]
+            [EnumLiteral("usual", "http://hl7.org/fhir/name-use"), Description("Usual")]
             Usual,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/name-use)
             /// </summary>
-            [EnumLiteral("official"), Description("Official")]
+            [EnumLiteral("official", "http://hl7.org/fhir/name-use"), Description("Official")]
             Official,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/name-use)
             /// </summary>
-            [EnumLiteral("temp"), Description("Temp")]
+            [EnumLiteral("temp", "http://hl7.org/fhir/name-use"), Description("Temp")]
             Temp,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/name-use)
             /// </summary>
-            [EnumLiteral("nickname"), Description("Nickname")]
+            [EnumLiteral("nickname", "http://hl7.org/fhir/name-use"), Description("Nickname")]
             Nickname,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/name-use)
             /// </summary>
-            [EnumLiteral("anonymous"), Description("Anonymous")]
+            [EnumLiteral("anonymous", "http://hl7.org/fhir/name-use"), Description("Anonymous")]
             Anonymous,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/name-use)
             /// </summary>
-            [EnumLiteral("old"), Description("Old")]
+            [EnumLiteral("old", "http://hl7.org/fhir/name-use"), Description("Old")]
             Old,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/name-use)
             /// </summary>
-            [EnumLiteral("maiden"), Description("Name changed for Marriage")]
+            [EnumLiteral("maiden", "http://hl7.org/fhir/name-use"), Description("Name changed for Marriage")]
             Maiden,
         }
 

@@ -66,25 +66,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/history-status)
             /// </summary>
-            [EnumLiteral("partial"), Description("Partial")]
+            [EnumLiteral("partial", "http://hl7.org/fhir/history-status"), Description("Partial")]
             Partial,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/history-status)
             /// </summary>
-            [EnumLiteral("completed"), Description("Completed")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/history-status"), Description("Completed")]
             Completed,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/history-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered in error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/history-status"), Description("Entered in error")]
             EnteredInError,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/history-status)
             /// </summary>
-            [EnumLiteral("health-unknown"), Description("Health unknown")]
+            [EnumLiteral("health-unknown", "http://hl7.org/fhir/history-status"), Description("Health unknown")]
             HealthUnknown,
         }
 

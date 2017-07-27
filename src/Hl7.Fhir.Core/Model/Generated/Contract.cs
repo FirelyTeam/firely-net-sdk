@@ -66,91 +66,91 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contract-status)
             /// </summary>
-            [EnumLiteral("amended"), Description("Amended")]
+            [EnumLiteral("amended", "http://hl7.org/fhir/contract-status"), Description("Amended")]
             Amended,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contract-status)
             /// </summary>
-            [EnumLiteral("appended"), Description("Appended")]
+            [EnumLiteral("appended", "http://hl7.org/fhir/contract-status"), Description("Appended")]
             Appended,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contract-status)
             /// </summary>
-            [EnumLiteral("cancelled"), Description("Cancelled")]
+            [EnumLiteral("cancelled", "http://hl7.org/fhir/contract-status"), Description("Cancelled")]
             Cancelled,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contract-status)
             /// </summary>
-            [EnumLiteral("disputed"), Description("Disputed")]
+            [EnumLiteral("disputed", "http://hl7.org/fhir/contract-status"), Description("Disputed")]
             Disputed,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contract-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/contract-status"), Description("Entered in Error")]
             EnteredInError,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contract-status)
             /// </summary>
-            [EnumLiteral("executable"), Description("Executable")]
+            [EnumLiteral("executable", "http://hl7.org/fhir/contract-status"), Description("Executable")]
             Executable,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contract-status)
             /// </summary>
-            [EnumLiteral("executed"), Description("Executed")]
+            [EnumLiteral("executed", "http://hl7.org/fhir/contract-status"), Description("Executed")]
             Executed,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contract-status)
             /// </summary>
-            [EnumLiteral("negotiable"), Description("Negotiable")]
+            [EnumLiteral("negotiable", "http://hl7.org/fhir/contract-status"), Description("Negotiable")]
             Negotiable,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contract-status)
             /// </summary>
-            [EnumLiteral("offered"), Description("Offered")]
+            [EnumLiteral("offered", "http://hl7.org/fhir/contract-status"), Description("Offered")]
             Offered,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contract-status)
             /// </summary>
-            [EnumLiteral("policy"), Description("Policy")]
+            [EnumLiteral("policy", "http://hl7.org/fhir/contract-status"), Description("Policy")]
             Policy,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contract-status)
             /// </summary>
-            [EnumLiteral("rejected"), Description("Rejected")]
+            [EnumLiteral("rejected", "http://hl7.org/fhir/contract-status"), Description("Rejected")]
             Rejected,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contract-status)
             /// </summary>
-            [EnumLiteral("renewed"), Description("Renewed")]
+            [EnumLiteral("renewed", "http://hl7.org/fhir/contract-status"), Description("Renewed")]
             Renewed,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contract-status)
             /// </summary>
-            [EnumLiteral("revoked"), Description("Revoked")]
+            [EnumLiteral("revoked", "http://hl7.org/fhir/contract-status"), Description("Revoked")]
             Revoked,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contract-status)
             /// </summary>
-            [EnumLiteral("resolved"), Description("Resolved")]
+            [EnumLiteral("resolved", "http://hl7.org/fhir/contract-status"), Description("Resolved")]
             Resolved,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contract-status)
             /// </summary>
-            [EnumLiteral("terminated"), Description("Terminated")]
+            [EnumLiteral("terminated", "http://hl7.org/fhir/contract-status"), Description("Terminated")]
             Terminated,
         }
 
