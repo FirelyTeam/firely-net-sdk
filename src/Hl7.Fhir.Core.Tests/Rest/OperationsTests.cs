@@ -89,9 +89,10 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.AreEqual("Male", expansion.GetSingleValue<FhirString>("display").Value);
         }
 
+        // [WMR 20170727] Fixed, async test methods must return Task
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public async void InvokeValidateCodeById()
+        public async System.Threading.Tasks.Task InvokeValidateCodeById()
         {
             var client = new FhirClient(FhirClientTests.TerminologyEndpoint);
             var coding = new Coding("http://snomed.info/sct", "4322002");
