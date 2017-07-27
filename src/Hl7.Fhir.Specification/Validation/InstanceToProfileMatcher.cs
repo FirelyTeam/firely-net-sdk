@@ -18,16 +18,16 @@ namespace Hl7.Fhir.Validation
 
     internal class ChildNameMatcher
     {
-        public static MatchResult Match(ElementDefinitionNavigator definitionParent, IElementNavigator instanceParent)
+        public static MatchResult Match(ElementDefinitionNavigator definitionParent, ScopedNavigator instanceParent)
         {
-            List<ElementDefinitionNavigator> definitionElements = harvestDefinitionNames(definitionParent);
-            List<IElementNavigator> elementsToMatch = instanceParent.Children().ToList();
+            var definitionElements = harvestDefinitionNames(definitionParent);
+            var elementsToMatch = instanceParent.Children().Cast<ScopedNavigator>().ToList();
 
             List<Match> matches = new List<Match>();
 
             foreach(var definitionElement in definitionElements)
             {
-                var match = new Match() { Definition = definitionElement, InstanceElements = new List<IElementNavigator>() };
+                var match = new Match() { Definition = definitionElement, InstanceElements = new List<ScopedNavigator>() };
 
                 // Special case is the .value of a primitive fhir type, this is represented
                 // as the "Value" of the IValueProvider interface, not as a real child
@@ -106,12 +106,12 @@ namespace Hl7.Fhir.Validation
     internal class MatchResult
     {
         public List<Match> Matches;
-        public List<IElementNavigator> UnmatchedInstanceElements;
+        public List<ScopedNavigator> UnmatchedInstanceElements;
     }
 
     internal class Match
     {
         public ElementDefinitionNavigator Definition;
-        public List<IElementNavigator> InstanceElements;
+        public List<ScopedNavigator> InstanceElements;
     }
 }
