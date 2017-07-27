@@ -211,7 +211,7 @@ namespace Hl7.Fhir.Model
         }
 
         public void ValidateInvariants(OperationOutcome result)
-            => ValidateInvariants(DotNetAttributeValidation.BuildContext(null), result);
+            => ValidateInvariants(DotNetAttributeValidation.BuildContext(new object()), result);
 
         public void ValidateInvariants(ValidationContext context, OperationOutcome result)
         {
