@@ -567,10 +567,9 @@ namespace Hl7.Fhir.Specification.Snapshot
 #if CACHE_ROOT_ELEMDEF
             var isMerged = true;
             var diffElem = diff.Current;
-            var isRoot = diffElem.IsRootElement();
 
             ElementDefinition cachedRootElemDef = null;
-            if (isRoot && (cachedRootElemDef = diffElem.GetSnapshotElementAnnotation()) != null)
+            if (diffElem.IsRootElement() && (cachedRootElemDef = diffElem.GetSnapshotElementAnnotation()) != null)
             {
 
 #if CACHE_ROOT_ELEMDEF_ASSERT
@@ -598,11 +597,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // First merge constraints from element type profile, if it exists
                 // [WMR 20161004] Remove configuration setting; always merge type profiles
                 // if (_settings.MergeTypeProfiles) 
-                // [WMR 20170714] Can safely skip this step for the root node
-                if (!isRoot)
-                {
-                    isMerged = mergeTypeProfiles(snap, diff);
-                }
+                // {
+                isMerged = mergeTypeProfiles(snap, diff);
+                // }
 
                 // Then merge constraints from base profile
                 // [WMR 20170424] Merge custom element Id from diff, if specified
@@ -874,15 +871,15 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // Merge the type profile root element; no need to expand children
                     mergeElementDefinition(snap.Current, rebasedRootElem, false);
                 }
-
-                // [WMR 20170209] Remove invalid annotations after merging an extension definition
-                fixExtensionAnnotationsAfterMerge(snap.Current);
-
-                // [WMR 20170711]
-                // - Regenerate element IDs (NOT inherited from external rebased element type profiles!)
-                // - Notify subscribers by calling OnPrepareBaseElement, before merging diff constraints
-                prepareMergedTypeProfileElements(snap, typeStructure);
             }
+
+            // [WMR 20170209] Remove invalid annotations after merging an extension definition
+            fixExtensionAnnotationsAfterMerge(snap.Current);
+
+            // [WMR 20170711]
+            // - Regenerate element IDs (NOT inherited from external rebased element type profiles!)
+            // - Notify subscribers by calling OnPrepareBaseElement, before merging diff constraints
+            prepareMergedTypeProfileElements(snap, typeStructure);
 
             return true;
         }
@@ -1013,13 +1010,6 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             try
             {
-                // [WMR 20170714] Optimization: shortcut for single element
-                if (!typeNav.HasChildren)
-                {
-                    OnPrepareElement(snap.Current, typeProfile, typeNav.Current);
-                    return;
-                }
-
                 var matches = ElementMatcher.Match(snap, typeNav);
 
                 // Debug.WriteLine($"Type profile matches for children of {(snap.Path ?? "/")} '{(snap.Current?.SliceName ?? snap.Current?.Type.FirstOrDefault()?.Profile ?? snap.Current?.Type.FirstOrDefault()?.Code)}'");
