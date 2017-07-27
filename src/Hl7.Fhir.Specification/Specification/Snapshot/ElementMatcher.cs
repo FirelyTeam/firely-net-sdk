@@ -367,18 +367,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // [WMR 20170718] NEW - Accept & handle diff constraints on base slice entry
                 // Note: snapSliceBase still points to slice entry in snapNav base profile
-                // [WMR 20170727] Special case: extensions
-                // We must determine if the current diff element represents either a constraint
-                // on the (inherited) extension slicing entry, or a concrete extension slice.
-                // Extension slicing entry is implicit and optional in diff, may be omitted (or further constrained!)
-                // Extension slices are not guaranteed to have a slice name.
-                // However in extension slices, type[0].Profile != null per definition
-                // In theory, a derived profile could introduce a type profile on the extension
-                // slice entry element, however this is very obscure.
-                // => if the element has type extension and a type profile, we assume it represents
-                // a concrete extension slice and not the extension slicing entry.
-                var elem = diffNav.Current;
-                if (elem.SliceName == null && !isExtensionSlice(elem))
+                if (diffNav.Current.SliceName == null)
                 {
                     // Generate match for constraint on existing slice entry
                     var match = new MatchInfo()
@@ -438,14 +427,6 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             return result;
         }
-
-        /// <summary>Returns true if the element has type Extension and also specifies a custom type profile.</summary>
-        static bool isExtensionSlice(ElementDefinition element) => isExtensionSlice(element.Type.FirstOrDefault());
-
-        static bool isExtensionSlice(ElementDefinition.TypeRefComponent type)
-            => type != null
-               && type.Code == FHIRAllTypes.Extension.GetLiteral()
-               && type.Profile != null;
 
         // Match current snapshot and differential slice elements
         // Returns an initialized MatchInfo with action = Merge | Add
