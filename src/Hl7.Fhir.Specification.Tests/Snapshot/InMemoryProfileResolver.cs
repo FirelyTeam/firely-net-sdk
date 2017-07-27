@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         #region IConformanceResource
 
-        public CodeSystem FindCodeSystemByValueSet(string valueSetUri)
+        public ValueSet FindValueSetBySystem(string valueSetUri)
             => throw new NotImplementedException();
 
         public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
