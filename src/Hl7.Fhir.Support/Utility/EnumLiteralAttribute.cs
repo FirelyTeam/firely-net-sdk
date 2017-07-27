@@ -38,43 +38,32 @@ namespace Hl7.Fhir.Utility
     [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
     public sealed class EnumLiteralAttribute : Attribute
     {
-        readonly string literal;
-        readonly string system;
+        private readonly string _literal;
+        private readonly string _system;
 
         // This is a positional argument
-        public EnumLiteralAttribute(string literal, string system)
+        public EnumLiteralAttribute(string literal, string system=null)
         {
-            this.literal = literal;
-            this.system = system;
+            _literal = literal;
+            _system = system;
         }
 
-        public string Literal
-        {
-            get { return literal; }
-        }
+        public string Literal => _literal;
+
         /// <summary>
         /// The system name-space of the code system that this literal value comes from 
         /// </summary>
-        public string System
-        {
-            get { return system; }
-        }
+        public string System => _system;
     }
 
     [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
     public sealed class DescriptionAttribute : Attribute
     {
-        readonly string description;
+        private readonly string _description;
 
         // This is a positional argument
-        public DescriptionAttribute(string literal)
-        {
-            this.description = literal;
-        }
+        public DescriptionAttribute(string literal) => _description = literal;
 
-        public string Description
-        {
-            get { return description; }
-        }
+        public string Description => _description;
     }
 }
