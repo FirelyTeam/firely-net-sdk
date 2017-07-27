@@ -25,9 +25,25 @@ namespace Hl7.Fhir.Tests.Introspection
             Assert.AreEqual(TestEnum.Item2, EnumUtility.ParseLiteral<TestEnum>("ItemTwo"));
             Assert.IsNull(EnumUtility.ParseLiteral<TestEnum>("iTeM1"));
 
-            Assert.AreEqual("ItemTwo", TestEnum.Item2.GetLiteral());
             Assert.AreEqual("Item1", TestEnum.Item1.GetLiteral());
-            Assert.AreEqual("yadayaday", TestEnum.Item2.GetDocumentation());
+            Assert.AreEqual("ItemTwo", TestEnum.Item2.GetLiteral());
+            Assert.AreEqual("This is item two", TestEnum.Item2.GetDocumentation());
+            Assert.AreEqual("http://example.org/test-system", TestEnum.Item2.GetSystem());
+            Assert.AreEqual("ItemThree", TestEnum.Item3.GetLiteral());
+            Assert.AreEqual("Item3", TestEnum.Item3.GetDocumentation());
+            Assert.IsNull(TestEnum.Item3.GetSystem());
+        }
+
+        [FhirEnumeration("Testee")]
+        enum TestEnum
+        {
+            Item1 = 4,
+
+            [EnumLiteral("ItemTwo", "http://example.org/test-system"), Utility.Description("This is item two")]
+            Item2,
+
+            [EnumLiteral("ItemThree")]
+            Item3
         }
 
 
@@ -40,15 +56,6 @@ namespace Hl7.Fhir.Tests.Introspection
             Assert.AreEqual("markdown", t.GetLiteral());
             Assert.AreEqual("markdown", t.GetDocumentation());
         }
-
-        [TestMethod]
-        public void ParseFhirTypeName()
-        {
-            Assert.AreEqual(FHIRAllTypes.Markdown, ModelInfo.FhirTypeNameToFhirType("markdown"));
-            Assert.IsNull(ModelInfo.FhirTypeNameToFhirType("Markdown"));
-            Assert.AreEqual(FHIRAllTypes.Organization, ModelInfo.FhirTypeNameToFhirType("Organization"));
-        }
-
 
         [TestMethod]
         public void EnumParsingPerformance()
@@ -81,15 +88,6 @@ namespace Hl7.Fhir.Tests.Introspection
         {
             a,
             b
-        }
-
-        [FhirEnumeration("Testee")]
-        enum TestEnum
-        {
-            Item1 = 4,
-
-            [EnumLiteral("ItemTwo", "http://example.org/test-system"), Utility.Description("yadayaday")]
-            Item2
         }
     }
 }
