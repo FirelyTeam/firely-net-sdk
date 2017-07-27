@@ -1310,7 +1310,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // [WMR 20170614] NEW: ExpandElement should maintain the existing element ID...!
             var orgId = elem.ElementId;
-
+            
             var result = _generator.ExpandElement(elems, elem);
 
             Assert.AreEqual(orgId, elem.ElementId);
@@ -3579,7 +3579,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify slice "ehr_id"
             Assert.IsTrue(nav.MoveToNextSlice());
-
+            
             // [WMR 20170711] Disregard ElementDefinition.Base
             // Assert.AreEqual(corePatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
             Assert.IsTrue(isAlmostExactly(corePatientIdentifierElem, GetBaseElementAnnotation(nav.Current)));
@@ -4977,7 +4977,7 @@ namespace Hl7.Fhir.Specification.Tests
             _generator.BeforeExpandElement += beforeExpandElementHandler_DEBUG;
             try
             {
-                generateSnapshotAndCompare(patientProfile, out expanded);
+                    generateSnapshotAndCompare(patientProfile, out expanded);
             }
             finally
             {
@@ -5106,12 +5106,15 @@ namespace Hl7.Fhir.Specification.Tests
         // When expanding MyVitalSigns, the annotated base elements also include local diff constraints... WRONG!
         // As a result, Forge will not detect the existing local constraints (no yellow pen, excluded from output).
 
+        const string MyDerivedObservationUrl = @"http://example.org/fhir/StructureDefinition/MyDerivedObservation";
+        const string MyMoreDerivedObservationUrl = @"http://example.org/fhir/StructureDefinition/MyMoreDerivedObservation";
+
         static StructureDefinition MyDerivedObservation => new StructureDefinition()
         {
             Type = FHIRAllTypes.Observation.GetLiteral(),
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation),
             Name = "MyDerivedObservation",
-            Url = @"http://example.org/fhir/StructureDefinition/MyDerivedObservation",
+            Url = MyDerivedObservationUrl,
             Derivation = StructureDefinition.TypeDerivationRule.Constraint,
             Kind = StructureDefinition.StructureDefinitionKind.Resource,
             Differential = new StructureDefinition.DifferentialComponent()
@@ -5173,9 +5176,9 @@ namespace Hl7.Fhir.Specification.Tests
         static StructureDefinition MyMoreDerivedObservation => new StructureDefinition()
         {
             Type = FHIRAllTypes.Observation.GetLiteral(),
-            BaseDefinition = MyDerivedObservation.Url,
+            BaseDefinition = MyDerivedObservationUrl,
             Name = "MyMoreDerivedObservation",
-            Url = @"http://example.org/fhir/StructureDefinition/MyMoreDerivedObservation",
+            Url = MyMoreDerivedObservationUrl,
             Derivation = StructureDefinition.TypeDerivationRule.Constraint,
             Kind = StructureDefinition.StructureDefinitionKind.Resource,
             Differential = new StructureDefinition.DifferentialComponent()
@@ -5251,7 +5254,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(coreMethodElem.Comment, baseElem.Comment);
         }
 
-        // [WMR 20170718] Test for slicing issue
+        // [WMR 20170718] TODO - Test for slicing issue
         static StructureDefinition MySlicedDocumentReference => new StructureDefinition()
         {
             Type = FHIRAllTypes.Observation.GetLiteral(),
@@ -5342,101 +5345,6 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(sliceBase);
             // Verify that slice base always has Min = 0 (not inherited from base profile)
             Assert.AreEqual(0, sliceBase.Min);
-        }
-
-        // [WMR 20170718] NEW
-        // Accept and handle derived profile constraints on existing slice entry in base profile
-
-        static StructureDefinition MySlicedBasePatient => new StructureDefinition()
-        {
-            Type = FHIRAllTypes.Patient.GetLiteral(),
-            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
-            Name = "MySlicedBasePatient",
-            Url = @"http://example.org/fhir/StructureDefinition/MySlicedBasePatient",
-            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
-            Kind = StructureDefinition.StructureDefinitionKind.Resource,
-            Differential = new StructureDefinition.DifferentialComponent()
-            {
-                Element = new List<ElementDefinition>()
-                {
-                    new ElementDefinition("Patient.identifier")
-                    {
-                        Slicing = new ElementDefinition.SlicingComponent()
-                        {
-                            Description = "TEST"
-                        }
-                    },
-                    new ElementDefinition("Patient.identifier")
-                    {
-                        SliceName = "bsn"
-                    }
-                }
-            }
-        };
-
-        static StructureDefinition MyMoreDerivedPatient => new StructureDefinition()
-        {
-            Type = FHIRAllTypes.Patient.GetLiteral(),
-            BaseDefinition = MySlicedBasePatient.Url,
-            Name = "MyMoreDerivedPatient",
-            Url = @"http://example.org/fhir/StructureDefinition/MyMoreDerivedPatient",
-            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
-            Kind = StructureDefinition.StructureDefinitionKind.Resource,
-            Differential = new StructureDefinition.DifferentialComponent()
-            {
-                Element = new List<ElementDefinition>()
-                {
-                    // Further constrain existing slice entry
-                    new ElementDefinition("Patient.identifier")
-                    {
-                        Min = 1
-                    }
-                }
-            }
-        };
-
-        // https://trello.com/c/Mnn0EBOg
-        [TestMethod]
-        public void TestConstraintOnSliceEntry()
-        {
-            var sd = MyMoreDerivedPatient;
-            var resolver = new InMemoryProfileResolver(sd, MySlicedBasePatient);
-            var multiResolver = new MultiResolver(_testResolver, resolver);
-
-            _generator = new SnapshotGenerator(multiResolver, _settings);
-
-            StructureDefinition expanded = null;
-            // _generator.BeforeExpandElement += beforeExpandElementHandler_DEBUG;
-            _generator.PrepareElement += elementHandler;
-            try
-            {
-                generateSnapshotAndCompare(sd, out expanded);
-            }
-            finally
-            {
-                // _generator.BeforeExpandElement -= beforeExpandElementHandler_DEBUG;
-                _generator.PrepareElement -= elementHandler;
-            }
-
-            dumpOutcome(_generator.Outcome);
-            Assert.IsTrue(expanded.HasSnapshot);
-            // dumpElements(expanded.Snapshot.Element);
-            dumpBaseElems(expanded.Snapshot.Element);
-
-            // Snapshot generator should NOT emit any issues
-            // * Issue #0: Severity = 'Error' Code = 'Required' Details: '10008' Text : 'Element 'Patient.identifier' defines a slice without a name. Individual slices must always have a unique name, except extensions.' Profile: 'http://example.org/fhir/StructureDefinition/MyMoreDerivedPatient' Path: 'Patient.identifier'
-            Assert.IsNull(_generator.Outcome);
-
-            // Verify constraint on slice entry
-            var elems = expanded.Snapshot.Element;
-            var sliceEntry = elems.FirstOrDefault(e => e.Path == "Patient.identifier");
-            Assert.IsNotNull(sliceEntry);
-            Assert.IsNotNull(sliceEntry.Slicing);
-            Assert.AreEqual(1, sliceEntry.Min);
-            var ann = sliceEntry.Annotation<BaseDefAnnotation>();
-            Assert.IsNotNull(ann);
-            Assert.IsNotNull(ann.BaseElementDefinition);
-            Assert.AreEqual(0, ann.BaseElementDefinition.Min);
         }
 
     }
