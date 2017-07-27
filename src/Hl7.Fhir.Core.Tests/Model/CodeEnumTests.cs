@@ -15,6 +15,7 @@ using Hl7.Fhir.Model;
 using System.Xml.Linq;
 using System.ComponentModel.DataAnnotations;
 using Hl7.Fhir.Validation;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Tests.Model
 {
@@ -53,6 +54,25 @@ namespace Hl7.Fhir.Tests.Model
 
             c.ObjectValue = null;
             Assert.IsNull(c.Value);
+        }
+
+        [TestMethod]
+        public void TestISystemAndCode()
+        {
+            var c = new Code<AdministrativeGender>(AdministrativeGender.Female) as ISystemAndCode;
+
+            Assert.AreEqual("female", c.Code);
+            Assert.AreEqual("http://hl7.org/fhir/administrative-gender", c.System);
+
+            c = new Code<TestEnum>(TestEnum.IHaveNoSystem) as ISystemAndCode;
+            Assert.AreEqual("IHaveNoSystem", c.Code);
+            Assert.IsNull(c.System);
+        }
+
+        [FhirEnumeration("TestEnum")]
+        private enum TestEnum
+        {
+            IHaveNoSystem = 4
         }
 
     }
