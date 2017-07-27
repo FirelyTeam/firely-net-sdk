@@ -66,79 +66,79 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("proposed"), Description("Proposed")]
+            [EnumLiteral("proposed", "http://hl7.org/fhir/goal-status"), Description("Proposed")]
             Proposed,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("accepted"), Description("Accepted")]
+            [EnumLiteral("accepted", "http://hl7.org/fhir/goal-status"), Description("Accepted")]
             Accepted,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("planned"), Description("Planned")]
+            [EnumLiteral("planned", "http://hl7.org/fhir/goal-status"), Description("Planned")]
             Planned,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("in-progress"), Description("In Progress")]
+            [EnumLiteral("in-progress", "http://hl7.org/fhir/goal-status"), Description("In Progress")]
             InProgress,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("on-target"), Description("On Target")]
+            [EnumLiteral("on-target", "http://hl7.org/fhir/goal-status"), Description("On Target")]
             OnTarget,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("ahead-of-target"), Description("Ahead of Target")]
+            [EnumLiteral("ahead-of-target", "http://hl7.org/fhir/goal-status"), Description("Ahead of Target")]
             AheadOfTarget,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("behind-target"), Description("Behind Target")]
+            [EnumLiteral("behind-target", "http://hl7.org/fhir/goal-status"), Description("Behind Target")]
             BehindTarget,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("sustaining"), Description("Sustaining")]
+            [EnumLiteral("sustaining", "http://hl7.org/fhir/goal-status"), Description("Sustaining")]
             Sustaining,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("achieved"), Description("Achieved")]
+            [EnumLiteral("achieved", "http://hl7.org/fhir/goal-status"), Description("Achieved")]
             Achieved,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("on-hold"), Description("On Hold")]
+            [EnumLiteral("on-hold", "http://hl7.org/fhir/goal-status"), Description("On Hold")]
             OnHold,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("cancelled"), Description("Cancelled")]
+            [EnumLiteral("cancelled", "http://hl7.org/fhir/goal-status"), Description("Cancelled")]
             Cancelled,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered In Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/goal-status"), Description("Entered In Error")]
             EnteredInError,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("rejected"), Description("Rejected")]
+            [EnumLiteral("rejected", "http://hl7.org/fhir/goal-status"), Description("Rejected")]
             Rejected,
         }
 

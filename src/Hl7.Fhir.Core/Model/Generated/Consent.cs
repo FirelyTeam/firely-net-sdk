@@ -66,37 +66,37 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/consent-state-codes)
             /// </summary>
-            [EnumLiteral("draft"), Description("Pending")]
+            [EnumLiteral("draft", "http://hl7.org/fhir/consent-state-codes"), Description("Pending")]
             Draft,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/consent-state-codes)
             /// </summary>
-            [EnumLiteral("proposed"), Description("Proposed")]
+            [EnumLiteral("proposed", "http://hl7.org/fhir/consent-state-codes"), Description("Proposed")]
             Proposed,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/consent-state-codes)
             /// </summary>
-            [EnumLiteral("active"), Description("Active")]
+            [EnumLiteral("active", "http://hl7.org/fhir/consent-state-codes"), Description("Active")]
             Active,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/consent-state-codes)
             /// </summary>
-            [EnumLiteral("rejected"), Description("Rejected")]
+            [EnumLiteral("rejected", "http://hl7.org/fhir/consent-state-codes"), Description("Rejected")]
             Rejected,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/consent-state-codes)
             /// </summary>
-            [EnumLiteral("inactive"), Description("Inactive")]
+            [EnumLiteral("inactive", "http://hl7.org/fhir/consent-state-codes"), Description("Inactive")]
             Inactive,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/consent-state-codes)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/consent-state-codes"), Description("Entered in Error")]
             EnteredInError,
         }
 
@@ -111,25 +111,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/consent-data-meaning)
             /// </summary>
-            [EnumLiteral("instance"), Description("Instance")]
+            [EnumLiteral("instance", "http://hl7.org/fhir/consent-data-meaning"), Description("Instance")]
             Instance,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/consent-data-meaning)
             /// </summary>
-            [EnumLiteral("related"), Description("Related")]
+            [EnumLiteral("related", "http://hl7.org/fhir/consent-data-meaning"), Description("Related")]
             Related,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/consent-data-meaning)
             /// </summary>
-            [EnumLiteral("dependents"), Description("Dependents")]
+            [EnumLiteral("dependents", "http://hl7.org/fhir/consent-data-meaning"), Description("Dependents")]
             Dependents,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/consent-data-meaning)
             /// </summary>
-            [EnumLiteral("authoredby"), Description("AuthoredBy")]
+            [EnumLiteral("authoredby", "http://hl7.org/fhir/consent-data-meaning"), Description("AuthoredBy")]
             Authoredby,
         }
 
@@ -144,13 +144,13 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/consent-except-type)
             /// </summary>
-            [EnumLiteral("deny"), Description("Opt Out")]
+            [EnumLiteral("deny", "http://hl7.org/fhir/consent-except-type"), Description("Opt Out")]
             Deny,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/consent-except-type)
             /// </summary>
-            [EnumLiteral("permit"), Description("Opt In")]
+            [EnumLiteral("permit", "http://hl7.org/fhir/consent-except-type"), Description("Opt In")]
             Permit,
         }
 

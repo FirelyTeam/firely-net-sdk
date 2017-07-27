@@ -62,43 +62,43 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contact-point-system)
             /// </summary>
-            [EnumLiteral("phone"), Description("Phone")]
+            [EnumLiteral("phone", "http://hl7.org/fhir/contact-point-system"), Description("Phone")]
             Phone,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contact-point-system)
             /// </summary>
-            [EnumLiteral("fax"), Description("Fax")]
+            [EnumLiteral("fax", "http://hl7.org/fhir/contact-point-system"), Description("Fax")]
             Fax,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contact-point-system)
             /// </summary>
-            [EnumLiteral("email"), Description("Email")]
+            [EnumLiteral("email", "http://hl7.org/fhir/contact-point-system"), Description("Email")]
             Email,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contact-point-system)
             /// </summary>
-            [EnumLiteral("pager"), Description("Pager")]
+            [EnumLiteral("pager", "http://hl7.org/fhir/contact-point-system"), Description("Pager")]
             Pager,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contact-point-system)
             /// </summary>
-            [EnumLiteral("url"), Description("URL")]
+            [EnumLiteral("url", "http://hl7.org/fhir/contact-point-system"), Description("URL")]
             Url,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contact-point-system)
             /// </summary>
-            [EnumLiteral("sms"), Description("SMS")]
+            [EnumLiteral("sms", "http://hl7.org/fhir/contact-point-system"), Description("SMS")]
             Sms,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contact-point-system)
             /// </summary>
-            [EnumLiteral("other"), Description("Other")]
+            [EnumLiteral("other", "http://hl7.org/fhir/contact-point-system"), Description("Other")]
             Other,
         }
 
@@ -113,31 +113,31 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contact-point-use)
             /// </summary>
-            [EnumLiteral("home"), Description("Home")]
+            [EnumLiteral("home", "http://hl7.org/fhir/contact-point-use"), Description("Home")]
             Home,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contact-point-use)
             /// </summary>
-            [EnumLiteral("work"), Description("Work")]
+            [EnumLiteral("work", "http://hl7.org/fhir/contact-point-use"), Description("Work")]
             Work,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contact-point-use)
             /// </summary>
-            [EnumLiteral("temp"), Description("Temp")]
+            [EnumLiteral("temp", "http://hl7.org/fhir/contact-point-use"), Description("Temp")]
             Temp,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contact-point-use)
             /// </summary>
-            [EnumLiteral("old"), Description("Old")]
+            [EnumLiteral("old", "http://hl7.org/fhir/contact-point-use"), Description("Old")]
             Old,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contact-point-use)
             /// </summary>
-            [EnumLiteral("mobile"), Description("Mobile")]
+            [EnumLiteral("mobile", "http://hl7.org/fhir/contact-point-use"), Description("Mobile")]
             Mobile,
         }
 

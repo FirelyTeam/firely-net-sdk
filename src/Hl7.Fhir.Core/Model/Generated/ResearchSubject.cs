@@ -66,37 +66,37 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/research-subject-status)
             /// </summary>
-            [EnumLiteral("candidate"), Description("Candidate")]
+            [EnumLiteral("candidate", "http://hl7.org/fhir/research-subject-status"), Description("Candidate")]
             Candidate,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/research-subject-status)
             /// </summary>
-            [EnumLiteral("enrolled"), Description("Enrolled")]
+            [EnumLiteral("enrolled", "http://hl7.org/fhir/research-subject-status"), Description("Enrolled")]
             Enrolled,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/research-subject-status)
             /// </summary>
-            [EnumLiteral("active"), Description("Active")]
+            [EnumLiteral("active", "http://hl7.org/fhir/research-subject-status"), Description("Active")]
             Active,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/research-subject-status)
             /// </summary>
-            [EnumLiteral("suspended"), Description("Suspended")]
+            [EnumLiteral("suspended", "http://hl7.org/fhir/research-subject-status"), Description("Suspended")]
             Suspended,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/research-subject-status)
             /// </summary>
-            [EnumLiteral("withdrawn"), Description("Withdrawn")]
+            [EnumLiteral("withdrawn", "http://hl7.org/fhir/research-subject-status"), Description("Withdrawn")]
             Withdrawn,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/research-subject-status)
             /// </summary>
-            [EnumLiteral("completed"), Description("Completed")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/research-subject-status"), Description("Completed")]
             Completed,
         }
 

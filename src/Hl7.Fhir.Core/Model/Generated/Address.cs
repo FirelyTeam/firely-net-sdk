@@ -62,25 +62,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/address-use)
             /// </summary>
-            [EnumLiteral("home"), Description("Home")]
+            [EnumLiteral("home", "http://hl7.org/fhir/address-use"), Description("Home")]
             Home,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/address-use)
             /// </summary>
-            [EnumLiteral("work"), Description("Work")]
+            [EnumLiteral("work", "http://hl7.org/fhir/address-use"), Description("Work")]
             Work,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/address-use)
             /// </summary>
-            [EnumLiteral("temp"), Description("Temporary")]
+            [EnumLiteral("temp", "http://hl7.org/fhir/address-use"), Description("Temporary")]
             Temp,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/address-use)
             /// </summary>
-            [EnumLiteral("old"), Description("Old / Incorrect")]
+            [EnumLiteral("old", "http://hl7.org/fhir/address-use"), Description("Old / Incorrect")]
             Old,
         }
 
@@ -95,19 +95,19 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/address-type)
             /// </summary>
-            [EnumLiteral("postal"), Description("Postal")]
+            [EnumLiteral("postal", "http://hl7.org/fhir/address-type"), Description("Postal")]
             Postal,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/address-type)
             /// </summary>
-            [EnumLiteral("physical"), Description("Physical")]
+            [EnumLiteral("physical", "http://hl7.org/fhir/address-type"), Description("Physical")]
             Physical,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/address-type)
             /// </summary>
-            [EnumLiteral("both"), Description("Postal & Physical")]
+            [EnumLiteral("both", "http://hl7.org/fhir/address-type"), Description("Postal & Physical")]
             Both,
         }
 

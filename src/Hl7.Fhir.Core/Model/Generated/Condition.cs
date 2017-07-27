@@ -66,31 +66,31 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/condition-clinical)
             /// </summary>
-            [EnumLiteral("active"), Description("Active")]
+            [EnumLiteral("active", "http://hl7.org/fhir/condition-clinical"), Description("Active")]
             Active,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/condition-clinical)
             /// </summary>
-            [EnumLiteral("recurrence"), Description("Recurrence")]
+            [EnumLiteral("recurrence", "http://hl7.org/fhir/condition-clinical"), Description("Recurrence")]
             Recurrence,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/condition-clinical)
             /// </summary>
-            [EnumLiteral("inactive"), Description("Inactive")]
+            [EnumLiteral("inactive", "http://hl7.org/fhir/condition-clinical"), Description("Inactive")]
             Inactive,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/condition-clinical)
             /// </summary>
-            [EnumLiteral("remission"), Description("Remission")]
+            [EnumLiteral("remission", "http://hl7.org/fhir/condition-clinical"), Description("Remission")]
             Remission,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/condition-clinical)
             /// </summary>
-            [EnumLiteral("resolved"), Description("Resolved")]
+            [EnumLiteral("resolved", "http://hl7.org/fhir/condition-clinical"), Description("Resolved")]
             Resolved,
         }
 
@@ -105,37 +105,37 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/condition-ver-status)
             /// </summary>
-            [EnumLiteral("provisional"), Description("Provisional")]
+            [EnumLiteral("provisional", "http://hl7.org/fhir/condition-ver-status"), Description("Provisional")]
             Provisional,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/condition-ver-status)
             /// </summary>
-            [EnumLiteral("differential"), Description("Differential")]
+            [EnumLiteral("differential", "http://hl7.org/fhir/condition-ver-status"), Description("Differential")]
             Differential,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/condition-ver-status)
             /// </summary>
-            [EnumLiteral("confirmed"), Description("Confirmed")]
+            [EnumLiteral("confirmed", "http://hl7.org/fhir/condition-ver-status"), Description("Confirmed")]
             Confirmed,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/condition-ver-status)
             /// </summary>
-            [EnumLiteral("refuted"), Description("Refuted")]
+            [EnumLiteral("refuted", "http://hl7.org/fhir/condition-ver-status"), Description("Refuted")]
             Refuted,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/condition-ver-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered In Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/condition-ver-status"), Description("Entered In Error")]
             EnteredInError,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/condition-ver-status)
             /// </summary>
-            [EnumLiteral("unknown"), Description("Unknown")]
+            [EnumLiteral("unknown", "http://hl7.org/fhir/condition-ver-status"), Description("Unknown")]
             Unknown,
         }
 

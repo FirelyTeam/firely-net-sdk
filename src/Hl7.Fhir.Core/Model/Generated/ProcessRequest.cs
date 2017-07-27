@@ -66,25 +66,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/actionlist)
             /// </summary>
-            [EnumLiteral("cancel"), Description("Cancel, Reverse or Nullify")]
+            [EnumLiteral("cancel", "http://hl7.org/fhir/actionlist"), Description("Cancel, Reverse or Nullify")]
             Cancel,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/actionlist)
             /// </summary>
-            [EnumLiteral("poll"), Description("Poll")]
+            [EnumLiteral("poll", "http://hl7.org/fhir/actionlist"), Description("Poll")]
             Poll,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/actionlist)
             /// </summary>
-            [EnumLiteral("reprocess"), Description("Re-Process")]
+            [EnumLiteral("reprocess", "http://hl7.org/fhir/actionlist"), Description("Re-Process")]
             Reprocess,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/actionlist)
             /// </summary>
-            [EnumLiteral("status"), Description("Status Check")]
+            [EnumLiteral("status", "http://hl7.org/fhir/actionlist"), Description("Status Check")]
             Status,
         }
 

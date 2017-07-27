@@ -66,67 +66,67 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
-            [EnumLiteral("other"), Description("MSP Other")]
+            [EnumLiteral("other", "http://hl7.org/fhir/measurement-principle"), Description("MSP Other")]
             Other,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
-            [EnumLiteral("chemical"), Description("MSP Chemical")]
+            [EnumLiteral("chemical", "http://hl7.org/fhir/measurement-principle"), Description("MSP Chemical")]
             Chemical,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
-            [EnumLiteral("electrical"), Description("MSP Electrical")]
+            [EnumLiteral("electrical", "http://hl7.org/fhir/measurement-principle"), Description("MSP Electrical")]
             Electrical,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
-            [EnumLiteral("impedance"), Description("MSP Impedance")]
+            [EnumLiteral("impedance", "http://hl7.org/fhir/measurement-principle"), Description("MSP Impedance")]
             Impedance,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
-            [EnumLiteral("nuclear"), Description("MSP Nuclear")]
+            [EnumLiteral("nuclear", "http://hl7.org/fhir/measurement-principle"), Description("MSP Nuclear")]
             Nuclear,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
-            [EnumLiteral("optical"), Description("MSP Optical")]
+            [EnumLiteral("optical", "http://hl7.org/fhir/measurement-principle"), Description("MSP Optical")]
             Optical,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
-            [EnumLiteral("thermal"), Description("MSP Thermal")]
+            [EnumLiteral("thermal", "http://hl7.org/fhir/measurement-principle"), Description("MSP Thermal")]
             Thermal,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
-            [EnumLiteral("biological"), Description("MSP Biological")]
+            [EnumLiteral("biological", "http://hl7.org/fhir/measurement-principle"), Description("MSP Biological")]
             Biological,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
-            [EnumLiteral("mechanical"), Description("MSP Mechanical")]
+            [EnumLiteral("mechanical", "http://hl7.org/fhir/measurement-principle"), Description("MSP Mechanical")]
             Mechanical,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
-            [EnumLiteral("acoustical"), Description("MSP Acoustical")]
+            [EnumLiteral("acoustical", "http://hl7.org/fhir/measurement-principle"), Description("MSP Acoustical")]
             Acoustical,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
-            [EnumLiteral("manual"), Description("MSP Manual")]
+            [EnumLiteral("manual", "http://hl7.org/fhir/measurement-principle"), Description("MSP Manual")]
             Manual,
         }
 

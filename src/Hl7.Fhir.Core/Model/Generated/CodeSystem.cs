@@ -66,25 +66,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/codesystem-hierarchy-meaning)
             /// </summary>
-            [EnumLiteral("grouped-by"), Description("Grouped By")]
+            [EnumLiteral("grouped-by", "http://hl7.org/fhir/codesystem-hierarchy-meaning"), Description("Grouped By")]
             GroupedBy,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/codesystem-hierarchy-meaning)
             /// </summary>
-            [EnumLiteral("is-a"), Description("Is-A")]
+            [EnumLiteral("is-a", "http://hl7.org/fhir/codesystem-hierarchy-meaning"), Description("Is-A")]
             IsA,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/codesystem-hierarchy-meaning)
             /// </summary>
-            [EnumLiteral("part-of"), Description("Part Of")]
+            [EnumLiteral("part-of", "http://hl7.org/fhir/codesystem-hierarchy-meaning"), Description("Part Of")]
             PartOf,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/codesystem-hierarchy-meaning)
             /// </summary>
-            [EnumLiteral("classified-with"), Description("Classified With")]
+            [EnumLiteral("classified-with", "http://hl7.org/fhir/codesystem-hierarchy-meaning"), Description("Classified With")]
             ClassifiedWith,
         }
 
@@ -99,25 +99,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/codesystem-content-mode)
             /// </summary>
-            [EnumLiteral("not-present"), Description("Not Present")]
+            [EnumLiteral("not-present", "http://hl7.org/fhir/codesystem-content-mode"), Description("Not Present")]
             NotPresent,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/codesystem-content-mode)
             /// </summary>
-            [EnumLiteral("example"), Description("Example")]
+            [EnumLiteral("example", "http://hl7.org/fhir/codesystem-content-mode"), Description("Example")]
             Example,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/codesystem-content-mode)
             /// </summary>
-            [EnumLiteral("fragment"), Description("Fragment")]
+            [EnumLiteral("fragment", "http://hl7.org/fhir/codesystem-content-mode"), Description("Fragment")]
             Fragment,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/codesystem-content-mode)
             /// </summary>
-            [EnumLiteral("complete"), Description("Complete")]
+            [EnumLiteral("complete", "http://hl7.org/fhir/codesystem-content-mode"), Description("Complete")]
             Complete,
         }
 
@@ -132,37 +132,37 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/concept-property-type)
             /// </summary>
-            [EnumLiteral("code"), Description("code (internal reference)")]
+            [EnumLiteral("code", "http://hl7.org/fhir/concept-property-type"), Description("code (internal reference)")]
             Code,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/concept-property-type)
             /// </summary>
-            [EnumLiteral("Coding"), Description("Coding (external reference)")]
+            [EnumLiteral("Coding", "http://hl7.org/fhir/concept-property-type"), Description("Coding (external reference)")]
             Coding,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/concept-property-type)
             /// </summary>
-            [EnumLiteral("string"), Description("string")]
+            [EnumLiteral("string", "http://hl7.org/fhir/concept-property-type"), Description("string")]
             String,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/concept-property-type)
             /// </summary>
-            [EnumLiteral("integer"), Description("integer")]
+            [EnumLiteral("integer", "http://hl7.org/fhir/concept-property-type"), Description("integer")]
             Integer,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/concept-property-type)
             /// </summary>
-            [EnumLiteral("boolean"), Description("boolean")]
+            [EnumLiteral("boolean", "http://hl7.org/fhir/concept-property-type"), Description("boolean")]
             Boolean,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/concept-property-type)
             /// </summary>
-            [EnumLiteral("dateTime"), Description("dateTime")]
+            [EnumLiteral("dateTime", "http://hl7.org/fhir/concept-property-type"), Description("dateTime")]
             DateTime,
         }
 

@@ -66,55 +66,55 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-status)
             /// </summary>
-            [EnumLiteral("planned"), Description("Planned")]
+            [EnumLiteral("planned", "http://hl7.org/fhir/encounter-status"), Description("Planned")]
             Planned,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-status)
             /// </summary>
-            [EnumLiteral("arrived"), Description("Arrived")]
+            [EnumLiteral("arrived", "http://hl7.org/fhir/encounter-status"), Description("Arrived")]
             Arrived,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-status)
             /// </summary>
-            [EnumLiteral("triaged"), Description("Triaged")]
+            [EnumLiteral("triaged", "http://hl7.org/fhir/encounter-status"), Description("Triaged")]
             Triaged,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-status)
             /// </summary>
-            [EnumLiteral("in-progress"), Description("In Progress")]
+            [EnumLiteral("in-progress", "http://hl7.org/fhir/encounter-status"), Description("In Progress")]
             InProgress,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-status)
             /// </summary>
-            [EnumLiteral("onleave"), Description("On Leave")]
+            [EnumLiteral("onleave", "http://hl7.org/fhir/encounter-status"), Description("On Leave")]
             Onleave,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-status)
             /// </summary>
-            [EnumLiteral("finished"), Description("Finished")]
+            [EnumLiteral("finished", "http://hl7.org/fhir/encounter-status"), Description("Finished")]
             Finished,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-status)
             /// </summary>
-            [EnumLiteral("cancelled"), Description("Cancelled")]
+            [EnumLiteral("cancelled", "http://hl7.org/fhir/encounter-status"), Description("Cancelled")]
             Cancelled,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/encounter-status"), Description("Entered in Error")]
             EnteredInError,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-status)
             /// </summary>
-            [EnumLiteral("unknown"), Description("Unknown")]
+            [EnumLiteral("unknown", "http://hl7.org/fhir/encounter-status"), Description("Unknown")]
             Unknown,
         }
 
@@ -129,25 +129,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-location-status)
             /// </summary>
-            [EnumLiteral("planned"), Description("Planned")]
+            [EnumLiteral("planned", "http://hl7.org/fhir/encounter-location-status"), Description("Planned")]
             Planned,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-location-status)
             /// </summary>
-            [EnumLiteral("active"), Description("Active")]
+            [EnumLiteral("active", "http://hl7.org/fhir/encounter-location-status"), Description("Active")]
             Active,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-location-status)
             /// </summary>
-            [EnumLiteral("reserved"), Description("Reserved")]
+            [EnumLiteral("reserved", "http://hl7.org/fhir/encounter-location-status"), Description("Reserved")]
             Reserved,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-location-status)
             /// </summary>
-            [EnumLiteral("completed"), Description("Completed")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/encounter-location-status"), Description("Completed")]
             Completed,
         }
 

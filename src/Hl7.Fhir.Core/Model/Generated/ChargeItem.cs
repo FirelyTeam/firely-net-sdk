@@ -66,43 +66,43 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/chargeitem-status)
             /// </summary>
-            [EnumLiteral("planned"), Description("Planned")]
+            [EnumLiteral("planned", "http://hl7.org/fhir/chargeitem-status"), Description("Planned")]
             Planned,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/chargeitem-status)
             /// </summary>
-            [EnumLiteral("billable"), Description("Billable")]
+            [EnumLiteral("billable", "http://hl7.org/fhir/chargeitem-status"), Description("Billable")]
             Billable,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/chargeitem-status)
             /// </summary>
-            [EnumLiteral("not-billable"), Description("Not billable")]
+            [EnumLiteral("not-billable", "http://hl7.org/fhir/chargeitem-status"), Description("Not billable")]
             NotBillable,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/chargeitem-status)
             /// </summary>
-            [EnumLiteral("aborted"), Description("Aborted")]
+            [EnumLiteral("aborted", "http://hl7.org/fhir/chargeitem-status"), Description("Aborted")]
             Aborted,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/chargeitem-status)
             /// </summary>
-            [EnumLiteral("billed"), Description("Billed")]
+            [EnumLiteral("billed", "http://hl7.org/fhir/chargeitem-status"), Description("Billed")]
             Billed,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/chargeitem-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/chargeitem-status"), Description("Entered in Error")]
             EnteredInError,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/chargeitem-status)
             /// </summary>
-            [EnumLiteral("unknown"), Description("Unknown")]
+            [EnumLiteral("unknown", "http://hl7.org/fhir/chargeitem-status"), Description("Unknown")]
             Unknown,
         }
 

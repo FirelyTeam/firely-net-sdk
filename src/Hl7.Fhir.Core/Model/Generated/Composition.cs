@@ -66,37 +66,37 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/Confidentiality)
             /// </summary>
-            [EnumLiteral("U"), Description("unrestricted")]
+            [EnumLiteral("U", "http://hl7.org/fhir/v3/Confidentiality"), Description("unrestricted")]
             U,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/Confidentiality)
             /// </summary>
-            [EnumLiteral("L"), Description("low")]
+            [EnumLiteral("L", "http://hl7.org/fhir/v3/Confidentiality"), Description("low")]
             L,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/Confidentiality)
             /// </summary>
-            [EnumLiteral("M"), Description("moderate")]
+            [EnumLiteral("M", "http://hl7.org/fhir/v3/Confidentiality"), Description("moderate")]
             M,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/Confidentiality)
             /// </summary>
-            [EnumLiteral("N"), Description("normal")]
+            [EnumLiteral("N", "http://hl7.org/fhir/v3/Confidentiality"), Description("normal")]
             N,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/Confidentiality)
             /// </summary>
-            [EnumLiteral("R"), Description("restricted")]
+            [EnumLiteral("R", "http://hl7.org/fhir/v3/Confidentiality"), Description("restricted")]
             R,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/Confidentiality)
             /// </summary>
-            [EnumLiteral("V"), Description("very restricted")]
+            [EnumLiteral("V", "http://hl7.org/fhir/v3/Confidentiality"), Description("very restricted")]
             V,
         }
 
@@ -111,25 +111,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/composition-attestation-mode)
             /// </summary>
-            [EnumLiteral("personal"), Description("Personal")]
+            [EnumLiteral("personal", "http://hl7.org/fhir/composition-attestation-mode"), Description("Personal")]
             Personal,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/composition-attestation-mode)
             /// </summary>
-            [EnumLiteral("professional"), Description("Professional")]
+            [EnumLiteral("professional", "http://hl7.org/fhir/composition-attestation-mode"), Description("Professional")]
             Professional,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/composition-attestation-mode)
             /// </summary>
-            [EnumLiteral("legal"), Description("Legal")]
+            [EnumLiteral("legal", "http://hl7.org/fhir/composition-attestation-mode"), Description("Legal")]
             Legal,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/composition-attestation-mode)
             /// </summary>
-            [EnumLiteral("official"), Description("Official")]
+            [EnumLiteral("official", "http://hl7.org/fhir/composition-attestation-mode"), Description("Official")]
             Official,
         }
 

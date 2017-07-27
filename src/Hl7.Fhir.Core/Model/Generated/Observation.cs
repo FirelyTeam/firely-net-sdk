@@ -66,37 +66,37 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/observation-relationshiptypes)
             /// </summary>
-            [EnumLiteral("has-member"), Description("Has Member")]
+            [EnumLiteral("has-member", "http://hl7.org/fhir/observation-relationshiptypes"), Description("Has Member")]
             HasMember,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/observation-relationshiptypes)
             /// </summary>
-            [EnumLiteral("derived-from"), Description("Derived From")]
+            [EnumLiteral("derived-from", "http://hl7.org/fhir/observation-relationshiptypes"), Description("Derived From")]
             DerivedFrom,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/observation-relationshiptypes)
             /// </summary>
-            [EnumLiteral("sequel-to"), Description("Sequel To")]
+            [EnumLiteral("sequel-to", "http://hl7.org/fhir/observation-relationshiptypes"), Description("Sequel To")]
             SequelTo,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/observation-relationshiptypes)
             /// </summary>
-            [EnumLiteral("replaces"), Description("Replaces")]
+            [EnumLiteral("replaces", "http://hl7.org/fhir/observation-relationshiptypes"), Description("Replaces")]
             Replaces,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/observation-relationshiptypes)
             /// </summary>
-            [EnumLiteral("qualified-by"), Description("Qualified By")]
+            [EnumLiteral("qualified-by", "http://hl7.org/fhir/observation-relationshiptypes"), Description("Qualified By")]
             QualifiedBy,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/observation-relationshiptypes)
             /// </summary>
-            [EnumLiteral("interfered-by"), Description("Interfered By")]
+            [EnumLiteral("interfered-by", "http://hl7.org/fhir/observation-relationshiptypes"), Description("Interfered By")]
             InterferedBy,
         }
 

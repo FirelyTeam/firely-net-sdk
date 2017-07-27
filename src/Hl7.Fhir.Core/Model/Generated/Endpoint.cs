@@ -66,37 +66,37 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/endpoint-status)
             /// </summary>
-            [EnumLiteral("active"), Description("Active")]
+            [EnumLiteral("active", "http://hl7.org/fhir/endpoint-status"), Description("Active")]
             Active,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/endpoint-status)
             /// </summary>
-            [EnumLiteral("suspended"), Description("Suspended")]
+            [EnumLiteral("suspended", "http://hl7.org/fhir/endpoint-status"), Description("Suspended")]
             Suspended,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/endpoint-status)
             /// </summary>
-            [EnumLiteral("error"), Description("Error")]
+            [EnumLiteral("error", "http://hl7.org/fhir/endpoint-status"), Description("Error")]
             Error,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/endpoint-status)
             /// </summary>
-            [EnumLiteral("off"), Description("Off")]
+            [EnumLiteral("off", "http://hl7.org/fhir/endpoint-status"), Description("Off")]
             Off,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/endpoint-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered in error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/endpoint-status"), Description("Entered in error")]
             EnteredInError,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/endpoint-status)
             /// </summary>
-            [EnumLiteral("test"), Description("Test")]
+            [EnumLiteral("test", "http://hl7.org/fhir/endpoint-status"), Description("Test")]
             Test,
         }
 

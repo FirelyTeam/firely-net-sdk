@@ -66,19 +66,19 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/location-status)
             /// </summary>
-            [EnumLiteral("active"), Description("Active")]
+            [EnumLiteral("active", "http://hl7.org/fhir/location-status"), Description("Active")]
             Active,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/location-status)
             /// </summary>
-            [EnumLiteral("suspended"), Description("Suspended")]
+            [EnumLiteral("suspended", "http://hl7.org/fhir/location-status"), Description("Suspended")]
             Suspended,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/location-status)
             /// </summary>
-            [EnumLiteral("inactive"), Description("Inactive")]
+            [EnumLiteral("inactive", "http://hl7.org/fhir/location-status"), Description("Inactive")]
             Inactive,
         }
 
@@ -93,13 +93,13 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/location-mode)
             /// </summary>
-            [EnumLiteral("instance"), Description("Instance")]
+            [EnumLiteral("instance", "http://hl7.org/fhir/location-mode"), Description("Instance")]
             Instance,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/location-mode)
             /// </summary>
-            [EnumLiteral("kind"), Description("Kind")]
+            [EnumLiteral("kind", "http://hl7.org/fhir/location-mode"), Description("Kind")]
             Kind,
         }
 

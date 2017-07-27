@@ -66,19 +66,19 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/namingsystem-type)
             /// </summary>
-            [EnumLiteral("codesystem"), Description("Code System")]
+            [EnumLiteral("codesystem", "http://hl7.org/fhir/namingsystem-type"), Description("Code System")]
             Codesystem,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/namingsystem-type)
             /// </summary>
-            [EnumLiteral("identifier"), Description("Identifier")]
+            [EnumLiteral("identifier", "http://hl7.org/fhir/namingsystem-type"), Description("Identifier")]
             Identifier,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/namingsystem-type)
             /// </summary>
-            [EnumLiteral("root"), Description("Root")]
+            [EnumLiteral("root", "http://hl7.org/fhir/namingsystem-type"), Description("Root")]
             Root,
         }
 
@@ -93,25 +93,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/namingsystem-identifier-type)
             /// </summary>
-            [EnumLiteral("oid"), Description("OID")]
+            [EnumLiteral("oid", "http://hl7.org/fhir/namingsystem-identifier-type"), Description("OID")]
             Oid,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/namingsystem-identifier-type)
             /// </summary>
-            [EnumLiteral("uuid"), Description("UUID")]
+            [EnumLiteral("uuid", "http://hl7.org/fhir/namingsystem-identifier-type"), Description("UUID")]
             Uuid,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/namingsystem-identifier-type)
             /// </summary>
-            [EnumLiteral("uri"), Description("URI")]
+            [EnumLiteral("uri", "http://hl7.org/fhir/namingsystem-identifier-type"), Description("URI")]
             Uri,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/namingsystem-identifier-type)
             /// </summary>
-            [EnumLiteral("other"), Description("Other")]
+            [EnumLiteral("other", "http://hl7.org/fhir/namingsystem-identifier-type"), Description("Other")]
             Other,
         }
 

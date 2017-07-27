@@ -66,25 +66,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/claim-use)
             /// </summary>
-            [EnumLiteral("complete"), Description("Complete")]
+            [EnumLiteral("complete", "http://hl7.org/fhir/claim-use"), Description("Complete")]
             Complete,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/claim-use)
             /// </summary>
-            [EnumLiteral("proposed"), Description("Proposed")]
+            [EnumLiteral("proposed", "http://hl7.org/fhir/claim-use"), Description("Proposed")]
             Proposed,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/claim-use)
             /// </summary>
-            [EnumLiteral("exploratory"), Description("Exploratory")]
+            [EnumLiteral("exploratory", "http://hl7.org/fhir/claim-use"), Description("Exploratory")]
             Exploratory,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/claim-use)
             /// </summary>
-            [EnumLiteral("other"), Description("Other")]
+            [EnumLiteral("other", "http://hl7.org/fhir/claim-use"), Description("Other")]
             Other,
         }
 

@@ -66,31 +66,31 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-xpath-usage)
             /// </summary>
-            [EnumLiteral("normal"), Description("Normal")]
+            [EnumLiteral("normal", "http://hl7.org/fhir/search-xpath-usage"), Description("Normal")]
             Normal,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-xpath-usage)
             /// </summary>
-            [EnumLiteral("phonetic"), Description("Phonetic")]
+            [EnumLiteral("phonetic", "http://hl7.org/fhir/search-xpath-usage"), Description("Phonetic")]
             Phonetic,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-xpath-usage)
             /// </summary>
-            [EnumLiteral("nearby"), Description("Nearby")]
+            [EnumLiteral("nearby", "http://hl7.org/fhir/search-xpath-usage"), Description("Nearby")]
             Nearby,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-xpath-usage)
             /// </summary>
-            [EnumLiteral("distance"), Description("Distance")]
+            [EnumLiteral("distance", "http://hl7.org/fhir/search-xpath-usage"), Description("Distance")]
             Distance,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-xpath-usage)
             /// </summary>
-            [EnumLiteral("other"), Description("Other")]
+            [EnumLiteral("other", "http://hl7.org/fhir/search-xpath-usage"), Description("Other")]
             Other,
         }
 
@@ -105,55 +105,55 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-comparator)
             /// </summary>
-            [EnumLiteral("eq"), Description("Equals")]
+            [EnumLiteral("eq", "http://hl7.org/fhir/search-comparator"), Description("Equals")]
             Eq,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-comparator)
             /// </summary>
-            [EnumLiteral("ne"), Description("Not Equals")]
+            [EnumLiteral("ne", "http://hl7.org/fhir/search-comparator"), Description("Not Equals")]
             Ne,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-comparator)
             /// </summary>
-            [EnumLiteral("gt"), Description("Greater Than")]
+            [EnumLiteral("gt", "http://hl7.org/fhir/search-comparator"), Description("Greater Than")]
             Gt,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-comparator)
             /// </summary>
-            [EnumLiteral("lt"), Description("Less Then")]
+            [EnumLiteral("lt", "http://hl7.org/fhir/search-comparator"), Description("Less Then")]
             Lt,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-comparator)
             /// </summary>
-            [EnumLiteral("ge"), Description("Greater or Equals")]
+            [EnumLiteral("ge", "http://hl7.org/fhir/search-comparator"), Description("Greater or Equals")]
             Ge,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-comparator)
             /// </summary>
-            [EnumLiteral("le"), Description("Less of Equal")]
+            [EnumLiteral("le", "http://hl7.org/fhir/search-comparator"), Description("Less of Equal")]
             Le,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-comparator)
             /// </summary>
-            [EnumLiteral("sa"), Description("Starts After")]
+            [EnumLiteral("sa", "http://hl7.org/fhir/search-comparator"), Description("Starts After")]
             Sa,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-comparator)
             /// </summary>
-            [EnumLiteral("eb"), Description("Ends Before")]
+            [EnumLiteral("eb", "http://hl7.org/fhir/search-comparator"), Description("Ends Before")]
             Eb,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-comparator)
             /// </summary>
-            [EnumLiteral("ap"), Description("Approximately")]
+            [EnumLiteral("ap", "http://hl7.org/fhir/search-comparator"), Description("Approximately")]
             Ap,
         }
 
@@ -168,61 +168,61 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-modifier-code)
             /// </summary>
-            [EnumLiteral("missing"), Description("Missing")]
+            [EnumLiteral("missing", "http://hl7.org/fhir/search-modifier-code"), Description("Missing")]
             Missing,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-modifier-code)
             /// </summary>
-            [EnumLiteral("exact"), Description("Exact")]
+            [EnumLiteral("exact", "http://hl7.org/fhir/search-modifier-code"), Description("Exact")]
             Exact,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-modifier-code)
             /// </summary>
-            [EnumLiteral("contains"), Description("Contains")]
+            [EnumLiteral("contains", "http://hl7.org/fhir/search-modifier-code"), Description("Contains")]
             Contains,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-modifier-code)
             /// </summary>
-            [EnumLiteral("not"), Description("Not")]
+            [EnumLiteral("not", "http://hl7.org/fhir/search-modifier-code"), Description("Not")]
             Not,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-modifier-code)
             /// </summary>
-            [EnumLiteral("text"), Description("Text")]
+            [EnumLiteral("text", "http://hl7.org/fhir/search-modifier-code"), Description("Text")]
             Text,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-modifier-code)
             /// </summary>
-            [EnumLiteral("in"), Description("In")]
+            [EnumLiteral("in", "http://hl7.org/fhir/search-modifier-code"), Description("In")]
             In,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-modifier-code)
             /// </summary>
-            [EnumLiteral("not-in"), Description("Not In")]
+            [EnumLiteral("not-in", "http://hl7.org/fhir/search-modifier-code"), Description("Not In")]
             NotIn,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-modifier-code)
             /// </summary>
-            [EnumLiteral("below"), Description("Below")]
+            [EnumLiteral("below", "http://hl7.org/fhir/search-modifier-code"), Description("Below")]
             Below,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-modifier-code)
             /// </summary>
-            [EnumLiteral("above"), Description("Above")]
+            [EnumLiteral("above", "http://hl7.org/fhir/search-modifier-code"), Description("Above")]
             Above,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-modifier-code)
             /// </summary>
-            [EnumLiteral("type"), Description("Type")]
+            [EnumLiteral("type", "http://hl7.org/fhir/search-modifier-code"), Description("Type")]
             Type,
         }
 

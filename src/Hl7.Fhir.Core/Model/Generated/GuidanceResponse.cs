@@ -66,37 +66,37 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/guidance-response-status)
             /// </summary>
-            [EnumLiteral("success"), Description("Success")]
+            [EnumLiteral("success", "http://hl7.org/fhir/guidance-response-status"), Description("Success")]
             Success,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/guidance-response-status)
             /// </summary>
-            [EnumLiteral("data-requested"), Description("Data Requested")]
+            [EnumLiteral("data-requested", "http://hl7.org/fhir/guidance-response-status"), Description("Data Requested")]
             DataRequested,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/guidance-response-status)
             /// </summary>
-            [EnumLiteral("data-required"), Description("Data Required")]
+            [EnumLiteral("data-required", "http://hl7.org/fhir/guidance-response-status"), Description("Data Required")]
             DataRequired,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/guidance-response-status)
             /// </summary>
-            [EnumLiteral("in-progress"), Description("In Progress")]
+            [EnumLiteral("in-progress", "http://hl7.org/fhir/guidance-response-status"), Description("In Progress")]
             InProgress,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/guidance-response-status)
             /// </summary>
-            [EnumLiteral("failure"), Description("Failure")]
+            [EnumLiteral("failure", "http://hl7.org/fhir/guidance-response-status"), Description("Failure")]
             Failure,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/guidance-response-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered In Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/guidance-response-status"), Description("Entered In Error")]
             EnteredInError,
         }
 
