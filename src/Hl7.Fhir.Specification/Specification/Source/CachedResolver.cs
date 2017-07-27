@@ -71,22 +71,6 @@ namespace Hl7.Fhir.Specification.Source
             _resourcesByCanonical.Clear();
         }
 
-        /// <summary>Determines if the resolver contains a cached resource for the specified uri.</summary>
-        /// <returns><c>true</c> if resource data is cached, or <c>false</c> otherwise.</returns>
-        public bool IsCachedUri(string url) => _resourcesByUri.IsCached(url);
-
-        /// <summary>Determines if the resolver contains a cached conformance resource for the specified canonical uri.</summary>
-        /// <returns><c>true</c> if conformance resource data is cached, or <c>false</c> otherwise.</returns>
-        public bool IsCachedCanonicalUri(string url) => _resourcesByCanonical.IsCached(url);
-
-        /// <summary>Returns resource data for the specified uri, if present in cache.</summary>
-        /// <returns>A cached <see cref="Resource"/> instance, or <c>null</c>.</returns>
-        public Resource GetCachedByUri(string url) => _resourcesByUri.GetCached(url);
-
-        /// <summary>Returns conformance resource data for the specified canonical uri, if present in cache.</summary>
-        /// <returns>A cached conformance <see cref="Resource"/> instance, or <c>null</c>.</returns>
-        public Resource GetCachedByCanonicalUri(string url) => _resourcesByCanonical.GetCached(url);
-
         /// <summary>Event arguments for the <see cref="LoadResourceEventHandler"/> delegate.</summary>
         public class LoadResourceEventArgs : EventArgs
         {
@@ -127,8 +111,7 @@ namespace Hl7.Fhir.Specification.Source
             return resource;
         }
 
-        // [WMR 20170724] Add class constraint so we can test if Data is initialized (!= null)
-        private class Cache<T> where T : class
+        private class Cache<T>
         {
             readonly Func<string,T> _onCacheMiss;
             readonly int _duration;
@@ -180,42 +163,6 @@ namespace Hl7.Fhir.Specification.Source
                 }
             }
 
-            // [WMR 20170724] NEW, to determine if a resource is cached,
-            // i.e. if there is a cache entry and it represents a cache hit
-            public bool IsCached(string identifier)
-            {
-                lock (getLock)
-                {
-                    // Check the cache
-                    return GetCached(identifier) != null;
-                }
-            }
-
-            // [WMR 20170724] NEW, to retrieve cached items, if they exist (don't resolve from underlying source)
-            // Returns resource data for cache hit, or null for cache miss
-            public T GetCached(string identifier)
-            {
-                var success = false;
-                lock (getLock)
-                {
-                    // Check the cache
-                    success = _cache.TryGetValue(identifier, out CacheEntry<T> entry);
-
-                    if (success)
-                    {
-                        // Remove entry if it's too old
-                        if (entry.Expired)
-                        {
-                            _cache.Remove(identifier);
-                            return null;
-                        }
-                        // Cache hit
-                        return entry.Data;
-                    }
-                }
-                return null;
-            }
-
             public bool Invalidate(string identifier)
             {
                 lock (getLock)
@@ -233,8 +180,7 @@ namespace Hl7.Fhir.Specification.Source
             }
         }
 
-        // [WMR 20170724] Add class constraint so we can test if Data is initialized (!= null)
-        private class CacheEntry<T> where T : class
+        private class CacheEntry<T>
         {
             public readonly T Data;
             public readonly string Identifier;
@@ -249,9 +195,6 @@ namespace Hl7.Fhir.Specification.Source
 
             /// <summary>Returns a boolean value that indicates if the cache entry is expired.</summary>
             public bool Expired => DateTime.Now > Expires;
-
-            /// <summary>Determines if the entry represents a cache miss.</summary>
-            public bool IsEmpty => Data == null; // == default(T)
-        }
+        }    
     }
 }
