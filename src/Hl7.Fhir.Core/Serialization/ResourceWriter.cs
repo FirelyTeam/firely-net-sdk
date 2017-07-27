@@ -42,30 +42,29 @@ namespace Hl7.Fhir.Serialization
             _writer.WriteStartRootObject(rootName, contained);
 
             var complexSerializer = new ComplexTypeWriter(_writer);
+
             Coding subsettedTag = null;
+
             if (summary != Rest.SummaryType.False && instance is Resource)
             {
-                Resource r = (instance as Resource);
-                if (r != null)
+                var resource = instance as Resource;
+
+                if (resource.Meta == null)
+                    resource.Meta = new Meta();
+
+                if (resource.Meta.Tag.Any(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED"))
                 {
-                    // If we are subsetting the instance during serialization, ensure that there 
-                    // is a meta element with that subsetting in it
-                    // (Helps make it easier to create conformant instances)
-                    if (r.Meta == null)
-                        r.Meta = new Meta();
-                    if (r.Meta.Tag.Where(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED").Count() == 0)
-                    {
-                        subsettedTag = new Coding("http://hl7.org/fhir/v3/ObservationValue", "SUBSETTED");
-                        r.Meta.Tag.Add(subsettedTag);
-                    }
+                    subsettedTag = new Coding("http://hl7.org/fhir/v3/ObservationValue", "SUBSETTED");
+                    resource.Meta.Tag.Add(subsettedTag);
                 }
             }
+
             complexSerializer.Serialize(mapping, instance, summary);
 
             if (subsettedTag != null)
             {
-                Resource r = (instance as Resource);
-                r.Meta.Tag.Remove(subsettedTag);
+                var resource = instance as Resource;
+                resource.Meta.Tag.Remove(subsettedTag);
             }
 
             _writer.WriteEndRootObject(contained);

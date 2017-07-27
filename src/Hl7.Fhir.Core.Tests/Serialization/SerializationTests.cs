@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void SerializeMeta()
         {
-            var xml = FhirSerializer.SerializeToXml(metaPoco,root:"meta");
+            var xml = FhirSerializer.SerializeToXml(metaPoco, root: "meta");
             Assert.AreEqual(metaXml, xml);
         }
 
@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Tests.Serialization
         public void ParseMeta()
         {
             var poco = (Meta)(new FhirXmlParser().Parse(metaXml, typeof(Meta)));
-            var xml = FhirSerializer.SerializeToXml(poco,root:"meta");
+            var xml = FhirSerializer.SerializeToXml(poco, root: "meta");
 
             Assert.IsTrue(poco.IsExactly(metaPoco));
             Assert.AreEqual(metaXml, xml);
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(SerializationUtil.ProbeIsXml("<?xml />"));
         }
 
-        [TestMethod]
+        [TestMethod, Ignore] // Old tests, I'm note sure we need them anymore
         public void TestSummary()
         {
             var p = new Patient();
@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Tests.Serialization
         private FhirXmlParser FhirXmlParser = new FhirXmlParser();
         private FhirJsonParser FhirJsonParser = new FhirJsonParser();
 
-        [TestMethod]
+        [TestMethod, Ignore] // Old tests, not sure we need them anymore
         public void TestBundleSummary()
         {
             var p = new Patient();
@@ -191,6 +191,196 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(summ.Contains("<total"));
         }
 
+
+        [TestMethod]
+        public void TestBundleWithSummaryJson()
+        {
+            var patientOne = new Patient
+            {
+
+                Id = "patient-one",
+                Text = new Narrative { Div = "A great blues player" },
+                Meta = new Meta { VersionId = "eric-clapton" },
+
+                Name = new List<HumanName> { new HumanName { Family = "Clapton", Use = HumanName.NameUse.Official } },
+
+                Active = true,
+                BirthDate = "2015-07-09",
+                Gender = AdministrativeGender.Male
+            };
+
+            var patientTwo = new Patient()
+            {
+                Id = "patient-two",
+                Active = true,
+                Text = new Narrative { Div = "<div>Another great blues player</div>" },
+                Meta = new Meta { VersionId = "bb-king" },
+                Name = new List<HumanName> { new HumanName { Family = "King", Use = HumanName.NameUse.Nickname } }
+            };
+
+            var bundle = new Bundle()
+            {
+                Id = "my-bundle",
+                Total = 1803,
+                Type = Bundle.BundleType.Searchset,
+                Entry = new List<Bundle.EntryComponent> {
+                    new Bundle.EntryComponent { Resource = patientOne, FullUrl = "http://base/Patient/patient-one", Search = new Bundle.SearchComponent() { Mode = Bundle.SearchEntryMode.Match } },
+                    new Bundle.EntryComponent { Resource = patientTwo, FullUrl = "http://base/Patient/patient-two", Search = new Bundle.SearchComponent() { Mode = Bundle.SearchEntryMode.Match } }
+                }
+            };
+
+            var textBundle = FhirSerializer.SerializeResourceToJson(bundle, Fhir.Rest.SummaryType.Text);
+            var dataBundle = FhirSerializer.SerializeResourceToJson(bundle, Fhir.Rest.SummaryType.Data);
+            var countBundle = FhirSerializer.SerializeResourceToJson(bundle, Fhir.Rest.SummaryType.Count);
+            var trueBundle = FhirSerializer.SerializeResourceToJson(bundle, Fhir.Rest.SummaryType.True);
+            var falseBundle = FhirSerializer.SerializeResourceToJson(bundle, Fhir.Rest.SummaryType.False);
+
+            var shouldBeSummaryTrue = TestDataHelper.ReadTestData("summary\\bundle-summary-true.json");
+            var shouldBeSummaryText = TestDataHelper.ReadTestData("summary\\bundle-summary-text.json");
+            var shouldBeSummaryData = TestDataHelper.ReadTestData("summary\\bundle-summary-data.json");
+            var shouldBeSummaryCount = TestDataHelper.ReadTestData("summary\\bundle-summary-count.json");
+            var shouldBeSummaryFalse = TestDataHelper.ReadTestData("summary\\bundle-summary-false.json");
+
+            Assert.AreEqual(trueBundle, shouldBeSummaryTrue);
+            Assert.AreEqual(dataBundle, shouldBeSummaryData);
+            Assert.AreEqual(textBundle, shouldBeSummaryText);
+            Assert.AreEqual(countBundle, shouldBeSummaryCount);
+            Assert.AreEqual(falseBundle, shouldBeSummaryFalse);
+        }
+
+        [TestMethod]
+        public void TestBundleWithSummaryXML()
+        {
+            var patientOne = new Patient
+            {
+
+                Id = "patient-one",
+                Text = new Narrative { Div = "<div>A great blues player</div>" },
+                Meta = new Meta { VersionId = "eric-clapton" },
+
+                Name = new List<HumanName> { new HumanName { Family = "Clapton", Use = HumanName.NameUse.Official } },
+
+                Active = true,
+                BirthDate = "2015-07-09",
+                Gender = AdministrativeGender.Male
+            };
+
+            var patientTwo = new Patient()
+            {
+                Id = "patient-two",
+                Active = true,
+                Text = new Narrative { Div = "<div>Another great blues player</div>" },
+                Meta = new Meta { VersionId = "bb-king" },
+                Name = new List<HumanName> { new HumanName { Family = "King", Use = HumanName.NameUse.Nickname } }
+            };
+
+            var bundle = new Bundle()
+            {
+                Id = "my-bundle",
+                Total = 1803,
+                Type = Bundle.BundleType.Searchset,
+                Entry = new List<Bundle.EntryComponent> {
+                    new Bundle.EntryComponent { Resource = patientOne, FullUrl = "http://base/Patient/patient-one", Search = new Bundle.SearchComponent() { Mode = Bundle.SearchEntryMode.Match } },
+                    new Bundle.EntryComponent { Resource = patientTwo, FullUrl = "http://base/Patient/patient-two", Search = new Bundle.SearchComponent() { Mode = Bundle.SearchEntryMode.Match } }
+                }
+            };
+
+            var textBundle = FhirSerializer.SerializeResourceToXml(bundle, Fhir.Rest.SummaryType.Text);
+            var dataBundle = FhirSerializer.SerializeResourceToXml(bundle, Fhir.Rest.SummaryType.Data);
+            var countBundle = FhirSerializer.SerializeResourceToXml(bundle, Fhir.Rest.SummaryType.Count);
+            var trueBundle = FhirSerializer.SerializeResourceToXml(bundle, Fhir.Rest.SummaryType.True);
+            var falseBundle = FhirSerializer.SerializeResourceToXml(bundle, Fhir.Rest.SummaryType.False);
+
+            var shouldBeSummaryText = TestDataHelper.ReadTestData("summary\\bundle-summary-text.xml");
+            var shouldBeSummaryData = TestDataHelper.ReadTestData("summary\\bundle-summary-data.xml");
+            var shouldBeSummaryCount = TestDataHelper.ReadTestData("summary\\bundle-summary-count.xml");
+            var shouldBeSummaryTrue = TestDataHelper.ReadTestData("summary\\bundle-summary-true.xml");
+            var shouldBeSummaryFalse = TestDataHelper.ReadTestData("summary\\bundle-summary-false.xml");
+
+            Assert.AreEqual(trueBundle, shouldBeSummaryTrue);
+            Assert.AreEqual(dataBundle, shouldBeSummaryData);
+            Assert.AreEqual(textBundle, shouldBeSummaryText);
+            Assert.AreEqual(countBundle, shouldBeSummaryCount);
+            Assert.AreEqual(falseBundle, shouldBeSummaryFalse);
+
+        }
+
+        [TestMethod]
+        public void TestResourceWithSummaryJson()
+        {
+            var patientOne = new Patient
+            {
+
+                Id = "patient-one",
+                Text = new Narrative { Div = "A great blues player" },
+                Meta = new Meta { VersionId = "1234" },
+
+                Name = new List<HumanName> { new HumanName { Family = "Clapton", Use = HumanName.NameUse.Official } },
+
+                Active = true,
+                BirthDate = "2015-07-09",
+                Gender = AdministrativeGender.Male
+            };
+
+            // Properties with IsSummary == true -> Id, Meta, Active, BirthDate, Gender, Name
+
+            var summaryTrue = FhirSerializer.SerializeResourceToJson(patientOne, Fhir.Rest.SummaryType.True);
+            var summaryText = FhirSerializer.SerializeResourceToJson(patientOne, Fhir.Rest.SummaryType.Text);
+            var summaryData = FhirSerializer.SerializeResourceToJson(patientOne, Fhir.Rest.SummaryType.Data);
+            var summaryFalse = FhirSerializer.SerializeResourceToJson(patientOne, Fhir.Rest.SummaryType.False);
+            /* It doesn't make sense to use SummaryType.Count on a single resource hence why I'm not testing it here. */
+
+            var shouldBePatientOneTrue =
+                "{\"resourceType\":\"Patient\",\"id\":\"patient-one\",\"meta\":{\"versionId\":\"1234\"},\"active\":true,\"name\":[{\"use\":\"official\",\"family\":\"Clapton\"}],\"gender\":\"male\",\"birthDate\":\"2015-07-09\"}";
+            
+            var shouldBePatientOneText =
+                "{\"resourceType\":\"Patient\",\"id\":\"patient-one\",\"meta\":{\"versionId\":\"1234\"},\"text\":{\"div\":\"A great blues player\"}}";
+
+            var shouldBePationeOneData =
+                "{\"resourceType\":\"Patient\",\"id\":\"patient-one\",\"meta\":{\"versionId\":\"1234\"},\"active\":true,\"name\":[{\"use\":\"official\",\"family\":\"Clapton\"}],\"gender\":\"male\",\"birthDate\":\"2015-07-09\"}";
+
+            var shouldBePatientOneFalse = "{\"resourceType\":\"Patient\",\"id\":\"patient-one\",\"meta\":{\"versionId\":\"1234\"},\"text\":{\"div\":\"A great blues player\"},\"active\":true,\"name\":[{\"use\":\"official\",\"family\":\"Clapton\"}],\"gender\":\"male\",\"birthDate\":\"2015-07-09\"}";
+
+            Assert.AreEqual(summaryTrue, shouldBePatientOneTrue);
+            Assert.AreEqual(summaryText, shouldBePatientOneText);
+            Assert.AreEqual(summaryData, shouldBePationeOneData);
+            Assert.AreEqual(summaryFalse, shouldBePatientOneFalse);
+        }
+
+        [TestMethod]
+        public void TestResourceWithSummaryXML()
+        {
+            var patientOne = new Patient
+            {
+
+                Id = "patient-one",
+                Text = new Narrative { Status = Narrative.NarrativeStatus.Generated, Div = "<div>A great blues player</div>" },
+                Meta = new Meta { ElementId = "eric-clapton", VersionId = "1234" },
+
+                Name = new List<HumanName> { new HumanName { Family = "Clapton", Use = HumanName.NameUse.Official } },
+
+                Active = true,
+                BirthDate = "2015-07-09",
+                Gender = AdministrativeGender.Male
+            };
+
+            // Properties with IsSummary == true -> Id, Meta, Active, BirthDate, Gender, Name
+
+            var summaryTrue = FhirSerializer.SerializeResourceToXml(patientOne, Fhir.Rest.SummaryType.True);
+            var summaryText = FhirSerializer.SerializeResourceToXml(patientOne, Fhir.Rest.SummaryType.Text);
+            var summaryData = FhirSerializer.SerializeResourceToXml(patientOne, Fhir.Rest.SummaryType.Data);
+            var summaryFalse = FhirSerializer.SerializeResourceToXml(patientOne, Fhir.Rest.SummaryType.False);
+
+            var shouldBeSummaryTrue = TestDataHelper.ReadTestData("summary\\summary-true.xml");
+            var shouldBeSummaryText = TestDataHelper.ReadTestData("summary\\summary-text.xml");
+            var shouldBeSummaryData = TestDataHelper.ReadTestData("summary\\summary-data.xml");
+            var shouldBeSummaryFalse = TestDataHelper.ReadTestData("summary\\summary-false.xml");
+
+            Assert.AreEqual(summaryTrue, shouldBeSummaryTrue);
+            Assert.AreEqual(summaryText, shouldBeSummaryText);
+            Assert.AreEqual(summaryData, shouldBeSummaryData);
+            Assert.AreEqual(summaryFalse, shouldBeSummaryFalse);
+        }
 
         [TestMethod]
         public void HandleCommentsJson()
@@ -246,7 +436,6 @@ namespace Hl7.Fhir.Tests.Serialization
 
             Assert.IsTrue(!b.NextLink.ToString().EndsWith("/"));
         }
-
 
         [TestMethod]
         public void TestIdInSummary()
@@ -400,7 +589,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 Contact = new List<Patient.ContactComponent>
                 {
                     null,
-                    new Patient.ContactComponent { Name = HumanName.ForFamily("Kramer") }, 
+                    new Patient.ContactComponent { Name = HumanName.ForFamily("Kramer") },
                 }
             };
 
