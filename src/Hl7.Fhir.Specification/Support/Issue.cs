@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.ElementModel;
 
+#pragma warning disable 1591 // suppress XML summary warnings
+
 namespace Hl7.Fhir.Support
 {
     public class Issue
@@ -32,7 +34,7 @@ namespace Hl7.Fhir.Support
 
         public OperationOutcome.IssueComponent ToIssueComponent(string message, IElementNavigator location = null)
         {
-            return ToIssueComponent(message, location != null ? location.Location : null);
+            return ToIssueComponent(message, location?.Location);
         }
 
         public OperationOutcome.IssueComponent ToIssueComponent(string message, string path = null)
@@ -103,13 +105,12 @@ namespace Hl7.Fhir.Support
         public static readonly Issue PROFILE_ELEMENTDEF_IS_EMPTY = Create(2008, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
         public static readonly Issue PROFILE_ELEMENTDEF_INVALID_FHIRPATH_EXPRESSION = Create(2009, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
         public static readonly Issue PROFILE_NO_PROFILE_TO_VALIDATE_AGAINST = Create(2010, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
-        public static readonly Issue PROFILE_BINDING_WITHOUT_VALUESET = Create(2011, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
+        public static readonly Issue PROFILE_INCOMPLETE_BINDING = Create(2011, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
 
         // Unsupported 
         public static readonly Issue UNSUPPORTED_SLICING_NOT_SUPPORTED = Create(3000, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
         public static readonly Issue UNSUPPORTED_CONSTRAINT_WITHOUT_FHIRPATH = Create(3003, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
         public static readonly Issue UNSUPPORTED_MIN_MAX_QUANTITY = Create(3004, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
-        public static readonly Issue UNSUPPORTED_URI_BINDING_NOT_SUPPORTED = Create(3005, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
         public static readonly Issue UNSUPPORTED_BINDING_NOT_SUPPORTED_BY_SERVICE = Create(3006, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
 
         // Non-availability, incomplete data
@@ -118,7 +119,6 @@ namespace Hl7.Fhir.Support
         public static readonly Issue UNAVAILABLE_SNAPSHOT_GENERATION_FAILED = Create(4003, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Incomplete);
         public static readonly Issue UNAVAILABLE_NEED_DIFFERENTIAL = Create(4004, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Incomplete);
         public static readonly Issue UNAVAILABLE_REFERENCED_RESOURCE = Create(4005, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
-        public static readonly Issue UNAVAILABLE_VALUESET = Create(4006, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
         public static readonly Issue UNAVAILABLE_TERMINOLOGY_SERVER = Create(4007, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Incomplete);
         public static readonly Issue UNAVAILABLE_VALIDATE_CODE_FAILED = Create(4008, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Incomplete);
 
@@ -131,23 +131,24 @@ namespace Hl7.Fhir.Support
         // Terminology specific errors
         public static readonly Issue TERMINOLOGY_CODE_NOT_IN_VALUESET = Create(6001, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.CodeInvalid);
         public static readonly Issue TERMINOLOGY_ABSTRACT_CODE_NOT_ALLOWED = Create(6002, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.CodeInvalid);
-        public static readonly Issue TERMINOLOGY_INCORRECT_DISPLAY = Create(6003, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.CodeInvalid);
-        public static readonly Issue TERMINOLOGY_VALUESET_TOO_COMPLEX = Create(3005, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.NotSupported);
-        public static readonly Issue TERMINOLOGY_EXPANSION_FAILED = Create(3006, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
-        public static readonly Issue TERMINOLOGY_SYSTEM_VALUE_MISSING = Create(3007, OperationOutcome.IssueSeverity.Information, OperationOutcome.IssueType.Incomplete);
+        public static readonly Issue TERMINOLOGY_INCORRECT_DISPLAY = Create(6003, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.CodeInvalid);     
+        public static readonly Issue TERMINOLOGY_SERVICE_FAILED = Create(6004, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
+        public static readonly Issue TERMINOLOGY_NO_CODE_IN_INSTANCE = Create(6005, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.CodeInvalid);
     }
 
 
     public static class OperationOutcomeIssueExtensions
     {
-        public static void AddIssue(this OperationOutcome outcome, string message, Issue infoIssue, IElementNavigator location)
+        public static OperationOutcome AddIssue(this OperationOutcome outcome, string message, Issue infoIssue, IElementNavigator location)
         {
             outcome.AddIssue(infoIssue.ToIssueComponent(message, location));
+            return outcome;
         }
 
-        public static void AddIssue(this OperationOutcome outcome, string message, Issue infoIssue, string location=null)
+        public static OperationOutcome AddIssue(this OperationOutcome outcome, string message, Issue infoIssue, string location=null)
         {
             outcome.AddIssue(infoIssue.ToIssueComponent(message, location));
+            return outcome;
         }
 
     }

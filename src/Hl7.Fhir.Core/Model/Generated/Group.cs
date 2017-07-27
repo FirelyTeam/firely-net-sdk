@@ -36,6 +36,8 @@ using Hl7.Fhir.Utility;
 
 */
 
+#pragma warning disable 1591 // suppress XML summary warnings 
+
 //
 // Generated for FHIR v3.0.1
 //
@@ -244,6 +246,20 @@ namespace Hl7.Fhir.Model
                     if (Period != null) yield return Period;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Code != null) yield return new ElementValue("code", false, Code);
+                    if (Value != null) yield return new ElementValue("value", false, Value);
+                    if (ExcludeElement != null) yield return new ElementValue("exclude", false, ExcludeElement);
+                    if (Period != null) yield return new ElementValue("period", false, Period);
+                }
+            }
+
             
         }
         
@@ -375,6 +391,19 @@ namespace Hl7.Fhir.Model
                     if (InactiveElement != null) yield return InactiveElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Entity != null) yield return new ElementValue("entity", false, Entity);
+                    if (Period != null) yield return new ElementValue("period", false, Period);
+                    if (InactiveElement != null) yield return new ElementValue("inactive", false, InactiveElement);
+                }
+            }
+
             
         }
         
@@ -695,6 +724,25 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Member) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (ActiveElement != null) yield return new ElementValue("active", false, ActiveElement);
+                if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
+                if (ActualElement != null) yield return new ElementValue("actual", false, ActualElement);
+                if (Code != null) yield return new ElementValue("code", false, Code);
+                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                if (QuantityElement != null) yield return new ElementValue("quantity", false, QuantityElement);
+                foreach (var elem in Characteristic) { if (elem != null) yield return new ElementValue("characteristic", true, elem); }
+                foreach (var elem in Member) { if (elem != null) yield return new ElementValue("member", true, elem); }
+            }
+        }
+
     }
     
 }

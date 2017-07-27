@@ -336,6 +336,22 @@ namespace Hl7.Fhir.Model
                 if (Resource != null) yield return Resource;
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren 
+        { 
+            get 
+            { 
+                foreach (var item in base.NamedChildren) yield return item; 
+                if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
+                if (DisplayElement != null) yield return new ElementValue("display", false, DisplayElement);
+                if (CitationElement != null) yield return new ElementValue("citation", false, CitationElement);
+                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
+                if (Document != null) yield return new ElementValue("document", false, Document);
+                if (Resource != null) yield return new ElementValue("resource", false, Resource);
+ 
+            } 
+        } 
     
     
     }

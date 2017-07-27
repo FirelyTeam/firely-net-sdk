@@ -36,6 +36,8 @@ using Hl7.Fhir.Utility;
 
 */
 
+#pragma warning disable 1591 // suppress XML summary warnings 
+
 //
 // Generated for FHIR v3.0.1
 //
@@ -195,6 +197,18 @@ namespace Hl7.Fhir.Model
                     if (Actor != null) yield return Actor;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Role != null) yield return new ElementValue("role", false, Role);
+                    if (Actor != null) yield return new ElementValue("actor", false, Actor);
+                }
+            }
+
             
         }
         
@@ -770,6 +784,39 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in SupportingInformation) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                foreach (var elem in DefinitionElement) { if (elem != null) yield return new ElementValue("definition", true, elem); }
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                foreach (var elem in PartOf) { if (elem != null) yield return new ElementValue("partOf", true, elem); }
+                if (Code != null) yield return new ElementValue("code", false, Code);
+                if (Subject != null) yield return new ElementValue("subject", false, Subject);
+                if (Context != null) yield return new ElementValue("context", false, Context);
+                if (Occurrence != null) yield return new ElementValue("occurrence", false, Occurrence);
+                foreach (var elem in Participant) { if (elem != null) yield return new ElementValue("participant", true, elem); }
+                if (PerformingOrganization != null) yield return new ElementValue("performingOrganization", false, PerformingOrganization);
+                if (RequestingOrganization != null) yield return new ElementValue("requestingOrganization", false, RequestingOrganization);
+                if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
+                foreach (var elem in Bodysite) { if (elem != null) yield return new ElementValue("bodysite", true, elem); }
+                if (FactorOverrideElement != null) yield return new ElementValue("factorOverride", false, FactorOverrideElement);
+                if (PriceOverride != null) yield return new ElementValue("priceOverride", false, PriceOverride);
+                if (OverrideReasonElement != null) yield return new ElementValue("overrideReason", false, OverrideReasonElement);
+                if (Enterer != null) yield return new ElementValue("enterer", false, Enterer);
+                if (EnteredDateElement != null) yield return new ElementValue("enteredDate", false, EnteredDateElement);
+                foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", true, elem); }
+                foreach (var elem in Service) { if (elem != null) yield return new ElementValue("service", true, elem); }
+                foreach (var elem in Account) { if (elem != null) yield return new ElementValue("account", true, elem); }
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
+                foreach (var elem in SupportingInformation) { if (elem != null) yield return new ElementValue("supportingInformation", true, elem); }
+            }
+        }
+
     }
     
 }

@@ -35,10 +35,105 @@ using System.Runtime.Serialization;
 
 */
 
+//
+// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+//
 namespace Hl7.Fhir.Model
 {
-    public abstract partial class Element : IExtendable
+    /// <summary>
+    /// Base for all elements
+    /// </summary>
+    [DataContract]
+    public abstract partial class Element : Base, IExtendable
     {
+        [NotMapped]
+        public override string TypeName { get { return "Element"; } }
+        
+        /// <summary>
+        /// xml:id (or equivalent in JSON)
+        /// </summary>
+        [FhirElement("id", XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=10)]
+        [DataMember]
+        public string ElementId
+        {
+            get { return _ElementId; }
+            set { _ElementId = value; OnPropertyChanged("ElementId"); }
+        }
+        
+        private string _ElementId;
+        
+        /// <summary>
+        /// Additional Content defined by implementations
+        /// </summary>
+        [FhirElement("extension", InSummary=true, Order=20)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Extension> Extension
+        {
+            get { if(_Extension==null) _Extension = new List<Hl7.Fhir.Model.Extension>(); return _Extension; }
+            set { _Extension = value; OnPropertyChanged("Extension"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Extension> _Extension;
+        
+        public override IDeepCopyable CopyTo(IDeepCopyable other)
+        {
+            var dest = other as Element;
+            
+            if (dest != null)
+            {
+                base.CopyTo(dest);
+                if(ElementId != null) dest.ElementId = ElementId;
+                if(Extension != null) dest.Extension = new List<Hl7.Fhir.Model.Extension>(Extension.DeepCopy());
+                return dest;
+            }
+            else
+            	throw new ArgumentException("Can only copy to an object of the same type", "other");
+        }
+        
+        public override bool Matches(IDeepComparable other)
+        {
+            var otherT = other as Element;
+            if(otherT == null) return false;
+            
+            if( ElementId != otherT.ElementId ) return false;
+            if( !DeepComparable.Matches(Extension, otherT.Extension)) return false;
+            
+            return true;
+        }
+        
+        public override bool IsExactly(IDeepComparable other)
+        {
+            var otherT = other as Element;
+            if(otherT == null) return false;
+            
+            if( ElementId != otherT.ElementId ) return false;
+            if( !DeepComparable.IsExactly(Extension, otherT.Extension)) return false;
+            
+            return true;
+        }
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+                foreach (var item in base.Children) yield return item;
+                foreach (var p in Extension) { if (p != null) yield return p; }
+            }
+        }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (ElementId != null)  yield return new ElementValue("id", false, ElementId);
+                foreach (var p in Extension) { if (p != null) yield return new ElementValue("extension",true, p); }
+            }
+        }
+
     }
-    
+
 }

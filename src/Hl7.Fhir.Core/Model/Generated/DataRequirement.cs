@@ -233,10 +233,23 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in ValueCodeableConcept) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren 
+            { 
+                get 
+                { 
+                    foreach (var item in base.NamedChildren) yield return item; 
+                    if (PathElement != null) yield return new ElementValue("path", false, PathElement);
+                    if (ValueSet != null) yield return new ElementValue("valueSet", false, ValueSet);
+                    foreach (var elem in ValueCodeElement) { if (elem != null) yield return new ElementValue("valueCode", true, elem); }
+                    foreach (var elem in ValueCoding) { if (elem != null) yield return new ElementValue("valueCoding", true, elem); }
+                    foreach (var elem in ValueCodeableConcept) { if (elem != null) yield return new ElementValue("valueCodeableConcept", true, elem); }
+ 
+                } 
+            } 
             
-        }
-        
-        
+        }                
         [FhirType("DateFilterComponent")]
         [DataContract]
         public partial class DateFilterComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -346,10 +359,20 @@ namespace Hl7.Fhir.Model
                     if (Value != null) yield return Value;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren 
+            { 
+                get 
+                { 
+                    foreach (var item in base.NamedChildren) yield return item; 
+                    if (PathElement != null) yield return new ElementValue("path", false, PathElement);
+                    if (Value != null) yield return new ElementValue("value", false, Value);
+ 
+                } 
+            } 
             
-        }
-        
-        
+        }                
         /// <summary>
         /// The type of the required data
         /// </summary>
@@ -544,6 +567,21 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in DateFilter) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren 
+        { 
+            get 
+            { 
+                foreach (var item in base.NamedChildren) yield return item; 
+                if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
+                foreach (var elem in ProfileElement) { if (elem != null) yield return new ElementValue("profile", true, elem); }
+                foreach (var elem in MustSupportElement) { if (elem != null) yield return new ElementValue("mustSupport", true, elem); }
+                foreach (var elem in CodeFilter) { if (elem != null) yield return new ElementValue("codeFilter", true, elem); }
+                foreach (var elem in DateFilter) { if (elem != null) yield return new ElementValue("dateFilter", true, elem); }
+ 
+            } 
+        } 
     
     
     }

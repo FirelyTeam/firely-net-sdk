@@ -36,6 +36,8 @@ using Hl7.Fhir.Utility;
 
 */
 
+#pragma warning disable 1591 // suppress XML summary warnings 
+
 //
 // Generated for FHIR v3.0.1
 //
@@ -146,6 +148,18 @@ namespace Hl7.Fhir.Model
                     if (OnBehalfOf != null) yield return OnBehalfOf;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Agent != null) yield return new ElementValue("agent", false, Agent);
+                    if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", false, OnBehalfOf);
+                }
+            }
+
             
         }
         
@@ -651,6 +665,37 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in RelevantHistory) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                foreach (var elem in Definition) { if (elem != null) yield return new ElementValue("definition", true, elem); }
+                foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", true, elem); }
+                foreach (var elem in PriorRequest) { if (elem != null) yield return new ElementValue("priorRequest", true, elem); }
+                if (GroupIdentifier != null) yield return new ElementValue("groupIdentifier", false, GroupIdentifier);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (Intent != null) yield return new ElementValue("intent", false, Intent);
+                if (PriorityElement != null) yield return new ElementValue("priority", false, PriorityElement);
+                if (Code != null) yield return new ElementValue("code", false, Code);
+                if (Subject != null) yield return new ElementValue("subject", false, Subject);
+                if (Context != null) yield return new ElementValue("context", false, Context);
+                if (Occurrence != null) yield return new ElementValue("occurrence", false, Occurrence);
+                if (AuthoredOnElement != null) yield return new ElementValue("authoredOn", false, AuthoredOnElement);
+                if (Requester != null) yield return new ElementValue("requester", false, Requester);
+                if (PerformerType != null) yield return new ElementValue("performerType", false, PerformerType);
+                if (Performer != null) yield return new ElementValue("performer", false, Performer);
+                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", true, elem); }
+                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", true, elem); }
+                foreach (var elem in SupportingInfo) { if (elem != null) yield return new ElementValue("supportingInfo", true, elem); }
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
+                foreach (var elem in RelevantHistory) { if (elem != null) yield return new ElementValue("relevantHistory", true, elem); }
+            }
+        }
+
     }
     
 }

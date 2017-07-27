@@ -163,7 +163,8 @@
 				|| resourceName == "DomainResource"
 			//	|| resourceName == "ElementDefinition"
 				|| resourceName == "Narrative"
-				|| resourceName == "Extension")
+				|| resourceName == "Extension"
+				|| resourceName == "Xhtml")
 				continue;
 			manager.StartNewFile(resourceName + ".cs");
 
@@ -281,8 +282,8 @@ if (!abstractType){
         /// </summary>
         [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=30)]
 <#
-	if (!string.IsNullOrEmpty(pattern) && resourceName != "FhirDecimal" && resourceName != "Time" && resourceName != "Integer" && resourceName != "UnsignedInt" && resourceName != "PositiveInt"
-		|| resourceName == "Instant"
+	if (!string.IsNullOrEmpty(pattern) && resourceName != "FhirDecimal" && resourceName != "Time" && resourceName != "Integer" && 
+		resourceName != "UnsignedInt" && resourceName != "PositiveInt" && resourceName != "Instant"
 		|| resourceName == "FhirUri")
     {
 		WriteLine("        [{0}Pattern]", resourceName.Replace("Fhir", ""));
@@ -566,17 +567,26 @@ if (!abstractType){
                 {
                     foreach (var item in base.Children) yield return item;
 <#
-					YieldComponent(docTypes, componentName, "Element", component, nsR, enums, "                    ");
+					YieldComponent(docTypes, componentName, "Element", component, nsR, enums, "                    ", withName: false);
 #>
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren 
+            { 
+                get 
+                { 
+                    foreach (var item in base.NamedChildren) yield return item; 
+<# 
+					YieldComponent(docTypes, componentName, "Element", component, nsR, enums, "                    ", withName:true); 
+#> 
+                } 
+            } 
 <#
 		    // [WMR 20160818] END - implement generic properties collection
-#>
-            
-        }
-        
-        
+#>            
+        }                
 <#
     }
 
@@ -752,10 +762,22 @@ if (!abstractType){
             {
                 foreach (var item in base.Children) yield return item;
 <#
-                YieldChildren(docResources, e as System.Xml.XmlElement, nsR, enums, "                ");
+                YieldChildren(docResources, e as System.Xml.XmlElement, nsR, enums, "                ", withName: false);
 #>
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren 
+        { 
+            get 
+            { 
+                foreach (var item in base.NamedChildren) yield return item; 
+<# 
+                YieldChildren(docResources, e as System.Xml.XmlElement, nsR, enums, "                ", withName:true); 
+#> 
+            } 
+        } 
 <#
 		// [WMR 20160818] END - implement generic properties collection
 #>
@@ -1251,8 +1273,8 @@ if (!abstractType){
 								break;
 				case "markdown" : result.PropType = "Hl7.Fhir.Model.Markdown";
 								break;
-				case "xhtml" : result.PropType = "Hl7.Fhir.Model.Xhtml";
-								break;
+//				case "xhtml" : result.PropType = "Hl7.Fhir.Model.Xhtml";
+//							   break;
 				case "HumanName" : result.PropType = "Hl7.Fhir.Model.HumanName"; 
 								break;
 				case "ContactPoint" : result.PropType = "Hl7.Fhir.Model.ContactPoint"; 

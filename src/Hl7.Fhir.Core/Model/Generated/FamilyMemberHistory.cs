@@ -36,6 +36,8 @@ using Hl7.Fhir.Utility;
 
 */
 
+#pragma warning disable 1591 // suppress XML summary warnings 
+
 //
 // Generated for FHIR v3.0.1
 //
@@ -212,6 +214,20 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Note) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Code != null) yield return new ElementValue("code", false, Code);
+                    if (Outcome != null) yield return new ElementValue("outcome", false, Outcome);
+                    if (Onset != null) yield return new ElementValue("onset", false, Onset);
+                    foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
+                }
+            }
+
             
         }
         
@@ -740,6 +756,34 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Condition) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                foreach (var elem in Definition) { if (elem != null) yield return new ElementValue("definition", true, elem); }
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (NotDoneElement != null) yield return new ElementValue("notDone", false, NotDoneElement);
+                if (NotDoneReason != null) yield return new ElementValue("notDoneReason", false, NotDoneReason);
+                if (Patient != null) yield return new ElementValue("patient", false, Patient);
+                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
+                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                if (Relationship != null) yield return new ElementValue("relationship", false, Relationship);
+                if (GenderElement != null) yield return new ElementValue("gender", false, GenderElement);
+                if (Born != null) yield return new ElementValue("born", false, Born);
+                if (Age != null) yield return new ElementValue("age", false, Age);
+                if (EstimatedAgeElement != null) yield return new ElementValue("estimatedAge", false, EstimatedAgeElement);
+                if (Deceased != null) yield return new ElementValue("deceased", false, Deceased);
+                foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", true, elem); }
+                foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", true, elem); }
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
+                foreach (var elem in Condition) { if (elem != null) yield return new ElementValue("condition", true, elem); }
+            }
+        }
+
     }
     
 }

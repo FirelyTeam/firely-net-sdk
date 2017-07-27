@@ -28,6 +28,7 @@
 
 */
 
+using Hl7.Fhir.Serialization;
 using Hl7.FhirPath;
 using System;
 using System.Text.RegularExpressions;
@@ -54,6 +55,13 @@ namespace Hl7.Fhir.Model
         public static Date Today()
         {
             return new Date(DateTime.Now.ToString("yyyy-MM-dd"));
+        }
+
+        public DateTime? ToDateTime()
+        {
+            if (this.Value == null) return null;
+
+            return PrimitiveTypeConverter.ConvertTo<DateTime>(this.Value);
         }
 
         public Primitives.PartialDateTime? ToPartialDateTime()
@@ -137,9 +145,8 @@ namespace Hl7.Fhir.Model
 
         public override bool Equals(object obj)
         {
-            if (obj is Date)
+            if (obj is Date other)
             {
-                var other = (Date)obj;
                 var otherValue = !Object.ReferenceEquals(other, null) ? other.Value : null;
 
                 if (Value == null) return otherValue == null;

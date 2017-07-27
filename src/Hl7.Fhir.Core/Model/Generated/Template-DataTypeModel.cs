@@ -1,7 +1,7 @@
 ﻿
 
 //
-// Model Generated on Sat, 06 May 2017 12:42:15 GMT for FHIR v3.0.1
+// Model Generated on Tue, 18 Jul 2017 10:05:19 GMT for FHIR v3.0.1
 //
 // Generated Shared Enumeration: ResourceType
 
@@ -96,7 +96,6 @@
 // Hl7.Fhir.Core\Model\Generated\Attachment.cs
 // Hl7.Fhir.Core\Model\Generated\Annotation.cs
 // Hl7.Fhir.Core\Model\Generated\Address.cs
-// Hl7.Fhir.Core\Model\Generated\Xhtml.cs
 // Hl7.Fhir.Core\Model\Generated\Uuid.cs
 // Hl7.Fhir.Core\Model\Generated\FhirUri.cs
 // Hl7.Fhir.Core\Model\Generated\UnsignedInt.cs

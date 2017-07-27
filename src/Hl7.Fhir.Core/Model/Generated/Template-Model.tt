@@ -31,6 +31,7 @@
 	string fhirVersion = docResources.SelectSingleNode("//fhir:fhirVersion/@value", nsE).Value;
 	// string fhirVersion = "1.0.2";
 #>
+
 //
 // Model Generated on <#= DateTime.Now.ToString("R") #> for FHIR v<#= fhirVersion #>
 //
@@ -151,6 +152,8 @@ using Hl7.Fhir.Utility;
   
 
 */
+
+#pragma warning disable 1591 // suppress XML summary warnings 
 
 //
 // Generated for FHIR v<#= fhirVersion #>
@@ -440,10 +443,23 @@ if(!abstractType) {
                 {
                     foreach (var item in base.Children) yield return item;
 <#
-					YieldComponent(docTypes, componentName, "BackboneElement", component, nsR, enums, "                    ");
+					YieldComponent(docTypes, componentName, "BackboneElement", component, nsR, enums, "                    ", withName:false);
 #>
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+<#
+					YieldComponent(docTypes, componentName, "BackboneElement", component, nsR, enums, "                    ", withName:true);
+#>
+                }
+            }
+
 <#
 		    // [WMR 20160818] END - implement generic properties collection
 #>
@@ -649,10 +665,23 @@ if(!abstractType) {
             {
                 foreach (var item in base.Children) yield return item;
 <#
-				YieldChildren(docResources, e as System.Xml.XmlElement, nsR, enums, "				");
+				YieldChildren(docResources, e as System.Xml.XmlElement, nsR, enums, "				", withName:false);
 #>
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+<#
+                YieldChildren(docResources, e as System.Xml.XmlElement, nsR, enums, "                ", withName:true);
+#>
+            }
+        }
+
 <#
 		// [WMR 20160818] END - implement generic properties collection
 #>

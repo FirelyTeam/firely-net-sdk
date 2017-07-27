@@ -36,6 +36,8 @@ using Hl7.Fhir.Utility;
 
 */
 
+#pragma warning disable 1591 // suppress XML summary warnings 
+
 //
 // Generated for FHIR v3.0.1
 //
@@ -325,6 +327,20 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in HeaderElement) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
+                    if (EndpointElement != null) yield return new ElementValue("endpoint", false, EndpointElement);
+                    if (PayloadElement != null) yield return new ElementValue("payload", false, PayloadElement);
+                    foreach (var elem in HeaderElement) { if (elem != null) yield return new ElementValue("header", true, elem); }
+                }
+            }
+
             
         }
         
@@ -619,6 +635,24 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Tag) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
+                if (EndElement != null) yield return new ElementValue("end", false, EndElement);
+                if (ReasonElement != null) yield return new ElementValue("reason", false, ReasonElement);
+                if (CriteriaElement != null) yield return new ElementValue("criteria", false, CriteriaElement);
+                if (ErrorElement != null) yield return new ElementValue("error", false, ErrorElement);
+                if (Channel != null) yield return new ElementValue("channel", false, Channel);
+                foreach (var elem in Tag) { if (elem != null) yield return new ElementValue("tag", true, elem); }
+            }
+        }
+
     }
     
 }

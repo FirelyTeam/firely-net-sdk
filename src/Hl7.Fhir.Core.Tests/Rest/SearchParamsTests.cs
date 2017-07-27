@@ -138,9 +138,7 @@ namespace Hl7.Fhir.Test.Rest
         {
             var q = new SearchParams();
 
-            q.Add("_sort", "birthdate");
-            q.Add("_sort:asc", "name");
-            q.Add("_sort:desc", "active");
+            q.Add("_sort","birthdate,name,-active");
             Assert.AreEqual(3, q.Sort.Count());
             Assert.AreEqual(Tuple.Create("birthdate", SortOrder.Ascending), q.Sort.First());
             Assert.AreEqual(Tuple.Create("name", SortOrder.Ascending), q.Sort.Skip(1).First());
@@ -209,7 +207,7 @@ namespace Hl7.Fhir.Test.Rest
             q.Elements.Add("field2");
 
             var output = q.ToUriParamList().ToQueryString();
-            Assert.AreEqual("_query=special&_count=31&_include=Patient.name&_include=Observation.subject&_sort%3Adesc=sorted&_sort%3Aasc=sorted2&_summary=text&_elements=field1%2Cfield2", output);
+            Assert.AreEqual("_query=special&_count=31&_include=Patient.name&_include=Observation.subject&_sort=-sorted%2Csorted2&_summary=text&_elements=field1%2Cfield2", output);
         }
 
         [TestMethod]
@@ -219,14 +217,13 @@ namespace Hl7.Fhir.Test.Rest
             q.Add("_query", "special");
             q.Add("_count", "31");
             q.Add("_summary", "data");
-            q.Add("_sort:desc", "sorted");
-            q.Add("_sort:asc", "sorted2");
+            q.Add("_sort", "-sorted,sorted2");
             q.Add("_include", "Patient.name");
             q.Add("_include", "Observation.subject");
             q.Add("image:missing", "true");
             q.Add("_elements", "field1,field2");
             var output = q.ToUriParamList().ToQueryString();
-            Assert.AreEqual("_query=special&_count=31&_include=Patient.name&_include=Observation.subject&_sort%3Adesc=sorted&_sort%3Aasc=sorted2&_summary=data&_elements=field1%2Cfield2&image%3Amissing=true", output);
+            Assert.AreEqual("_query=special&_count=31&_include=Patient.name&_include=Observation.subject&_sort=-sorted%2Csorted2&_summary=data&_elements=field1%2Cfield2&image%3Amissing=true", output);
 
             var q2 = SearchParams.FromUriParamList(UriParamList.FromQueryString(output));
 
@@ -309,20 +306,22 @@ namespace Hl7.Fhir.Test.Rest
         public void FormatExceptionOnInvalidSortParam()
         {
             var q = new SearchParams();
-            var formatException = AssertThrows<FormatException>(() => q.Add("_sort:", "x"));
-            Assert.AreEqual("Invalid _sort: '' is not a recognized sort order", formatException.Message);
 
-            formatException = AssertThrows<FormatException>(() => q.Add("_sort:ascz", "x"));
-            Assert.AreEqual("Invalid _sort: 'ascz' is not a recognized sort order", formatException.Message);
+            // Make sure we no longer accept DSTU2-style _sort
+            var formatException = AssertThrows<FormatException>(() => q.Add("_sort:desc", "x"));
+            Assert.AreEqual("Invalid _sort: encountered DSTU2 (modifier) based sort, please change to STU3 format", formatException.Message);
+
+            formatException = AssertThrows<FormatException>(() => q.Add("_sort", ",x,"));
+            Assert.AreEqual("Invalid _sort: must be a list of non-empty element names", formatException.Message);
+
+            formatException = AssertThrows<FormatException>(() => q.Add("_sort", "a,,b"));
+            Assert.AreEqual("Invalid _sort: must be a list of non-empty element names", formatException.Message);
+
+            formatException = AssertThrows<FormatException>(() => q.Add("_sort", "+x"));
+            Assert.AreEqual("Invalid _sort: must be a list of element names, optionally prefixed with '-'", formatException.Message);
 
             formatException = AssertThrows<FormatException>(() => q.Add("_sort", String.Empty));
-            Assert.AreEqual("Invalid _sort value: it cannot be empty", formatException.Message);
-
-            formatException = AssertThrows<FormatException>(() => q.Add("_sort:asc", String.Empty));
-            Assert.AreEqual("Invalid _sort value: it cannot be empty", formatException.Message);
-
-            formatException = AssertThrows<FormatException>(() => q.Add("_sort:desc", String.Empty));
-            Assert.AreEqual("Invalid _sort value: it cannot be empty", formatException.Message);
+            Assert.AreEqual("Invalid _sort: value cannot be empty", formatException.Message);
         }
 
         [TestMethod]

@@ -36,6 +36,8 @@ using Hl7.Fhir.Utility;
 
 */
 
+#pragma warning disable 1591 // suppress XML summary warnings 
+
 //
 // Generated for FHIR v3.0.1
 //
@@ -437,6 +439,23 @@ namespace Hl7.Fhir.Model
                     if (EntryTypeElement != null) yield return EntryTypeElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (DeviceIdentifierElement != null) yield return new ElementValue("deviceIdentifier", false, DeviceIdentifierElement);
+                    if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                    if (JurisdictionElement != null) yield return new ElementValue("jurisdiction", false, JurisdictionElement);
+                    if (CarrierHRFElement != null) yield return new ElementValue("carrierHRF", false, CarrierHRFElement);
+                    if (CarrierAIDCElement != null) yield return new ElementValue("carrierAIDC", false, CarrierAIDCElement);
+                    if (IssuerElement != null) yield return new ElementValue("issuer", false, IssuerElement);
+                    if (EntryTypeElement != null) yield return new ElementValue("entryType", false, EntryTypeElement);
+                }
+            }
+
             
         }
         
@@ -945,6 +964,33 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Safety) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (Udi != null) yield return new ElementValue("udi", false, Udi);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (Type != null) yield return new ElementValue("type", false, Type);
+                if (LotNumberElement != null) yield return new ElementValue("lotNumber", false, LotNumberElement);
+                if (ManufacturerElement != null) yield return new ElementValue("manufacturer", false, ManufacturerElement);
+                if (ManufactureDateElement != null) yield return new ElementValue("manufactureDate", false, ManufactureDateElement);
+                if (ExpirationDateElement != null) yield return new ElementValue("expirationDate", false, ExpirationDateElement);
+                if (ModelElement != null) yield return new ElementValue("model", false, ModelElement);
+                if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
+                if (Patient != null) yield return new ElementValue("patient", false, Patient);
+                if (Owner != null) yield return new ElementValue("owner", false, Owner);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
+                if (Location != null) yield return new ElementValue("location", false, Location);
+                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
+                foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
+                foreach (var elem in Safety) { if (elem != null) yield return new ElementValue("safety", true, elem); }
+            }
+        }
+
     }
     
 }

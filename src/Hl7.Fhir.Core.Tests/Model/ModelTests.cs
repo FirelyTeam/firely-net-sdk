@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Tests.Model
 
             var stamp = new DateTimeOffset(1972, 11, 30, 15, 10, 0, TimeSpan.Zero);
             dt = new FhirDateTime(stamp);
-            Assert.IsTrue(dt.Value.EndsWith("Z"));
+            Assert.IsTrue(dt.Value.EndsWith("+00:00"));
         }
 
 
@@ -388,6 +388,17 @@ namespace Hl7.Fhir.Tests.Model
             var children = timing.Children.ToArray();
             Base[] expected = { };
             Assert.IsTrue(expected.SequenceEqual(children));
+        }
+
+
+        [TestMethod]
+        public void ToStringHandlesNullObjectValue()
+        {
+            var s = new FhirString(null);
+            Assert.IsNull(s.ToString());
+
+            var i = new FhirBoolean(null);
+            Assert.IsNull(i.ToString());
         }
 
         [TestMethod]

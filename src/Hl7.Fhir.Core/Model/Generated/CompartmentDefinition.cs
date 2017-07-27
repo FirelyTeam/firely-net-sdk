@@ -36,6 +36,8 @@ using Hl7.Fhir.Utility;
 
 */
 
+#pragma warning disable 1591 // suppress XML summary warnings 
+
 //
 // Generated for FHIR v3.0.1
 //
@@ -217,6 +219,19 @@ namespace Hl7.Fhir.Model
                     if (DocumentationElement != null) yield return DocumentationElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
+                    foreach (var elem in ParamElement) { if (elem != null) yield return new ElementValue("param", true, elem); }
+                    if (DocumentationElement != null) yield return new ElementValue("documentation", false, DocumentationElement);
+                }
+            }
+
             
         }
         
@@ -709,6 +724,31 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Resource) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
+                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (ExperimentalElement != null) yield return new ElementValue("experimental", false, ExperimentalElement);
+                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
+                if (PublisherElement != null) yield return new ElementValue("publisher", false, PublisherElement);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
+                if (Description != null) yield return new ElementValue("description", false, Description);
+                if (Purpose != null) yield return new ElementValue("purpose", false, Purpose);
+                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", true, elem); }
+                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", true, elem); }
+                if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
+                if (SearchElement != null) yield return new ElementValue("search", false, SearchElement);
+                foreach (var elem in Resource) { if (elem != null) yield return new ElementValue("resource", true, elem); }
+            }
+        }
+
     }
     
 }

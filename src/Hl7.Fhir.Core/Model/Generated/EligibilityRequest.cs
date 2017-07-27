@@ -36,6 +36,8 @@ using Hl7.Fhir.Utility;
 
 */
 
+#pragma warning disable 1591 // suppress XML summary warnings 
+
 //
 // Generated for FHIR v3.0.1
 //
@@ -435,6 +437,31 @@ namespace Hl7.Fhir.Model
 				if (BenefitSubCategory != null) yield return BenefitSubCategory;
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (Priority != null) yield return new ElementValue("priority", false, Priority);
+                if (Patient != null) yield return new ElementValue("patient", false, Patient);
+                if (Serviced != null) yield return new ElementValue("serviced", false, Serviced);
+                if (CreatedElement != null) yield return new ElementValue("created", false, CreatedElement);
+                if (Enterer != null) yield return new ElementValue("enterer", false, Enterer);
+                if (Provider != null) yield return new ElementValue("provider", false, Provider);
+                if (Organization != null) yield return new ElementValue("organization", false, Organization);
+                if (Insurer != null) yield return new ElementValue("insurer", false, Insurer);
+                if (Facility != null) yield return new ElementValue("facility", false, Facility);
+                if (Coverage != null) yield return new ElementValue("coverage", false, Coverage);
+                if (BusinessArrangementElement != null) yield return new ElementValue("businessArrangement", false, BusinessArrangementElement);
+                if (BenefitCategory != null) yield return new ElementValue("benefitCategory", false, BenefitCategory);
+                if (BenefitSubCategory != null) yield return new ElementValue("benefitSubCategory", false, BenefitSubCategory);
+            }
+        }
+
     }
     
 }

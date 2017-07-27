@@ -28,6 +28,7 @@
 
 */
 
+using Hl7.Fhir.Serialization;
 using Hl7.FhirPath;
 using System;
 using System.Collections.Generic;
@@ -41,7 +42,7 @@ namespace Hl7.Fhir.Model
     [System.Diagnostics.DebuggerDisplay(@"\{{Value}}")]
     public partial class FhirDateTime : IStringValue
     {
-        public FhirDateTime(DateTimeOffset dt) : this(XmlConvert.ToString(dt))
+        public FhirDateTime(DateTimeOffset dt) : this(PrimitiveTypeConverter.ConvertTo<string>(dt))
         {
         }
 
@@ -77,7 +78,7 @@ namespace Hl7.Fhir.Model
 
         public static FhirDateTime Now()
         {
-            return new FhirDateTime(XmlConvert.ToString(DateTimeOffset.Now));
+            return new FhirDateTime(PrimitiveTypeConverter.ConvertTo<string>(DateTimeOffset.Now));
         }
 
         /// <summary>
@@ -89,9 +90,11 @@ namespace Hl7.Fhir.Model
         /// effect on this, this merely converts the given Fhir datetime to the desired timezone</returns>
         public DateTimeOffset ToDateTimeOffset(TimeSpan? zone = null)
         {
+            if (this.Value == null) throw new InvalidOperationException("FhirDateTime's value is null");
+
             // ToDateTimeOffset() will convert partial date/times by filling out to midnight/january 1
             // When there's no timezone, the local timezone is assumed
-            var dto = XmlConvert.ToDateTimeOffset(this.Value);
+            var dto = PrimitiveTypeConverter.ConvertTo<DateTimeOffset>(this.Value);
 
             //NB: There's a useful TimeZone class, but Portable45 does not support it
             if (zone != null) dto = dto.ToOffset(zone.Value);
@@ -99,6 +102,12 @@ namespace Hl7.Fhir.Model
             return dto;
         }
 
+        public DateTime? ToDateTime()
+        {
+            if (this.Value == null) return null;
+
+            return PrimitiveTypeConverter.ConvertTo<DateTime>(this.Value);
+        }
 
         public Primitives.PartialDateTime? ToPartialDateTime()
         {

@@ -41,10 +41,10 @@ namespace Hl7.Fhir.Model
     {
         public static HumanName ForFamily(string family)
         {
-            var result = new HumanName();
-
-            result.Family = family;
-
+            var result = new HumanName()
+            {
+                Family = family
+            };
             return result;
         }
 

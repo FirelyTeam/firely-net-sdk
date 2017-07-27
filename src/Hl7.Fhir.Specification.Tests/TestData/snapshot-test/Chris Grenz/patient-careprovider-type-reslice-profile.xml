@@ -6108,7 +6108,10 @@
       </base>
       <type>
         <code value="Reference" />
+        <!-- [WMR 20170614 Fixed for STU3
         <profile value="http://hl7.org/fhir/StructureDefinition/Organization" />
+        -->
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Organization" />
       </type>
       <condition value="pat-1" />
       <condition value="ele-1" />
@@ -6899,7 +6902,10 @@
       </base>
       <type>
         <code value="Reference" />
+        <!-- [WMR 20170614 Fixed for STU3
         <profile value="http://example.com/fhir/SD/organization-team" />
+        -->
+        <targetProfile value="http://example.com/fhir/SD/organization-team" />
       </type>
       <condition value="ele-1" />
       <constraint>
@@ -6951,7 +6957,10 @@
       </base>
       <type>
         <code value="Reference" />
+        <!-- [WMR 20170614 Fixed for STU3
         <profile value="http://hl7.org/fhir/StructureDefinition/Practitioner" />
+        -->
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Practitioner" />
       </type>
       <condition value="ele-1" />
       <constraint>
@@ -7003,7 +7012,10 @@
       </base>
       <type>
         <code value="Reference" />
+        <!-- [WMR 20170614 Fixed for STU3
         <profile value="http://hl7.org/fhir/StructureDefinition/Organization" />
+        -->
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Organization" />
       </type>
       <condition value="ele-1" />
       <constraint>
@@ -7197,7 +7209,10 @@
       </base>
       <type>
         <code value="Reference" />
+        <!-- [WMR 20170614 Fixed for STU3
         <profile value="http://hl7.org/fhir/StructureDefinition/Patient" />
+        -->
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Patient" />
       </type>
       <condition value="ele-1" />
       <constraint>
@@ -7294,7 +7309,10 @@
       <sliceName value="organizationCare/teamCare" />
       <type>
         <code value="Reference" />
+        <!-- [WMR 20170614 Fixed for STU3
         <profile value="http://example.com/fhir/SD/organization-team" />
+        -->
+        <targetProfile value="http://example.com/fhir/SD/organization-team" />
       </type>
     </element>
   </differential>

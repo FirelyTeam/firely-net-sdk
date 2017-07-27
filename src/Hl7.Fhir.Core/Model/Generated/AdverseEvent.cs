@@ -36,6 +36,8 @@ using Hl7.Fhir.Utility;
 
 */
 
+#pragma warning disable 1591 // suppress XML summary warnings 
+
 //
 // Generated for FHIR v3.0.1
 //
@@ -311,6 +313,23 @@ namespace Hl7.Fhir.Model
                     if (CausalityResult != null) yield return CausalityResult;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Instance != null) yield return new ElementValue("instance", false, Instance);
+                    if (CausalityElement != null) yield return new ElementValue("causality", false, CausalityElement);
+                    if (CausalityAssessment != null) yield return new ElementValue("causalityAssessment", false, CausalityAssessment);
+                    if (CausalityProductRelatednessElement != null) yield return new ElementValue("causalityProductRelatedness", false, CausalityProductRelatednessElement);
+                    if (CausalityMethod != null) yield return new ElementValue("causalityMethod", false, CausalityMethod);
+                    if (CausalityAuthor != null) yield return new ElementValue("causalityAuthor", false, CausalityAuthor);
+                    if (CausalityResult != null) yield return new ElementValue("causalityResult", false, CausalityResult);
+                }
+            }
+
             
         }
         
@@ -720,6 +739,32 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Study) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                if (CategoryElement != null) yield return new ElementValue("category", false, CategoryElement);
+                if (Type != null) yield return new ElementValue("type", false, Type);
+                if (Subject != null) yield return new ElementValue("subject", false, Subject);
+                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
+                foreach (var elem in Reaction) { if (elem != null) yield return new ElementValue("reaction", true, elem); }
+                if (Location != null) yield return new ElementValue("location", false, Location);
+                if (Seriousness != null) yield return new ElementValue("seriousness", false, Seriousness);
+                if (Outcome != null) yield return new ElementValue("outcome", false, Outcome);
+                if (Recorder != null) yield return new ElementValue("recorder", false, Recorder);
+                if (EventParticipant != null) yield return new ElementValue("eventParticipant", false, EventParticipant);
+                if (DescriptionElement != null) yield return new ElementValue("description", false, DescriptionElement);
+                foreach (var elem in SuspectEntity) { if (elem != null) yield return new ElementValue("suspectEntity", true, elem); }
+                foreach (var elem in SubjectMedicalHistory) { if (elem != null) yield return new ElementValue("subjectMedicalHistory", true, elem); }
+                foreach (var elem in ReferenceDocument) { if (elem != null) yield return new ElementValue("referenceDocument", true, elem); }
+                foreach (var elem in Study) { if (elem != null) yield return new ElementValue("study", true, elem); }
+            }
+        }
+
     }
     
 }

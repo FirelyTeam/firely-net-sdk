@@ -36,6 +36,8 @@ using Hl7.Fhir.Utility;
 
 */
 
+#pragma warning disable 1591 // suppress XML summary warnings 
+
 //
 // Generated for FHIR v3.0.1
 //
@@ -195,6 +197,18 @@ namespace Hl7.Fhir.Model
                     if (Item != null) yield return Item;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Quantity != null) yield return new ElementValue("quantity", false, Quantity);
+                    if (Item != null) yield return new ElementValue("item", false, Item);
+                }
+            }
+
             
         }
         
@@ -292,6 +306,18 @@ namespace Hl7.Fhir.Model
                     if (OnBehalfOf != null) yield return OnBehalfOf;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Agent != null) yield return new ElementValue("agent", false, Agent);
+                    if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", false, OnBehalfOf);
+                }
+            }
+
             
         }
         
@@ -621,6 +647,28 @@ namespace Hl7.Fhir.Model
 				if (DeliverTo != null) yield return DeliverTo;
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (Category != null) yield return new ElementValue("category", false, Category);
+                if (PriorityElement != null) yield return new ElementValue("priority", false, PriorityElement);
+                if (OrderedItem != null) yield return new ElementValue("orderedItem", false, OrderedItem);
+                if (Occurrence != null) yield return new ElementValue("occurrence", false, Occurrence);
+                if (AuthoredOnElement != null) yield return new ElementValue("authoredOn", false, AuthoredOnElement);
+                if (Requester != null) yield return new ElementValue("requester", false, Requester);
+                foreach (var elem in Supplier) { if (elem != null) yield return new ElementValue("supplier", true, elem); }
+                if (Reason != null) yield return new ElementValue("reason", false, Reason);
+                if (DeliverFrom != null) yield return new ElementValue("deliverFrom", false, DeliverFrom);
+                if (DeliverTo != null) yield return new ElementValue("deliverTo", false, DeliverTo);
+            }
+        }
+
     }
     
 }

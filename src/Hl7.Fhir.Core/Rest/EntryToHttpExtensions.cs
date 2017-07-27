@@ -7,21 +7,9 @@
  */
 
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Support;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Linq;
 using System.Reflection;
 using Hl7.Fhir.Utility;
 
@@ -30,7 +18,7 @@ namespace Hl7.Fhir.Rest
     internal static class EntryToHttpExtensions
     {
         public static HttpWebRequest ToHttpRequest(this Bundle.EntryComponent entry, 
-            Prefer bodyPreference, ResourceFormat format, bool useFormatParameter, bool CompressRequestBody, out byte[] body)
+            SearchParameterHandling? handlingPreference, Prefer? returnPreference, ResourceFormat format, bool useFormatParameter, bool CompressRequestBody, out byte[] body)
         {
             System.Diagnostics.Debug.WriteLine("{0}: {1}", entry.Request.Method, entry.Request.Url);
 
@@ -61,10 +49,12 @@ namespace Hl7.Fhir.Rest
 #endif
             if (interaction.IfNoneExist != null) request.Headers["If-None-Exist"] = interaction.IfNoneExist;
 
-            if (interaction.Method == Bundle.HTTPVerb.POST || interaction.Method == Bundle.HTTPVerb.PUT)
-            {
-                request.Headers["Prefer"] = bodyPreference == Prefer.ReturnMinimal ? "return=minimal" : "return=representation";
-            }
+            var interactionType = entry.Annotation<TransactionBuilder.InteractionType>();
+
+            if (interactionType == TransactionBuilder.InteractionType.Create && returnPreference != null)
+                request.Headers["Prefer"] = "return=" + PrimitiveTypeConverter.ConvertTo<string>(returnPreference);
+            else if(interactionType == TransactionBuilder.InteractionType.Search && handlingPreference != null)
+                request.Headers["Prefer"] = "handling=" + PrimitiveTypeConverter.ConvertTo<string>(handlingPreference);
 
             if (entry.Resource != null)
                 setBodyAndContentType(request, entry.Resource, format, CompressRequestBody, out body);
@@ -75,7 +65,6 @@ namespace Hl7.Fhir.Rest
 #endif
             return request;
         }
-
 
         /// <summary>
         /// Flag to control the setting of the User Agent string (different platforms have different abilities)

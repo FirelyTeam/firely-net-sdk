@@ -8,10 +8,6 @@
 
 using Hl7.Fhir.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.Rest
@@ -25,23 +21,43 @@ namespace Hl7.Fhir.Rest
         private Bundle _result;
         private string _baseUrl;
 
-        public TransactionBuilder(string baseUrl)
+        public TransactionBuilder(string baseUrl, Bundle.BundleType type = Bundle.BundleType.Batch)
         {
-            _result = new Bundle();
-            _baseUrl = baseUrl;           
+            _result = new Bundle()
+            {
+                Type = type
+            };
+
+            _baseUrl = baseUrl;
         }
 
-        public TransactionBuilder(Uri baseUri)
-            : this(baseUri.OriginalString)
+        public TransactionBuilder(Uri baseUri, Bundle.BundleType type = Bundle.BundleType.Batch)
+            : this(baseUri.OriginalString, type)
         {
         }
 
 
-        private Bundle.EntryComponent newEntry(Bundle.HTTPVerb method)
+        internal enum InteractionType
+        {
+            Search,
+            Unspecified,
+            Read,
+            VRead,
+            Update,
+            Delete,
+            Create,
+            Capabilities,
+            History,
+            Operation,
+            Transaction
+        }
+
+        private Bundle.EntryComponent newEntry(Bundle.HTTPVerb method, InteractionType interactionType)
         {
             var newEntry = new Bundle.EntryComponent();
             newEntry.Request = new Bundle.RequestComponent();
             newEntry.Request.Method = method;
+            newEntry.AddAnnotation(interactionType);
 
             return newEntry;
         }
@@ -64,7 +80,7 @@ namespace Hl7.Fhir.Rest
 
         public TransactionBuilder Get(string url)
         {
-            var entry = newEntry(Bundle.HTTPVerb.GET);
+            var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.Unspecified);
             var uri = new Uri(url,UriKind.RelativeOrAbsolute);
 
             if (uri.IsAbsoluteUri)
@@ -85,10 +101,10 @@ namespace Hl7.Fhir.Rest
             return Get(uri.OriginalString);
         }
 
-        public TransactionBuilder Read(string resourceType, string id, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null)
+        public TransactionBuilder Read(string resourceType, string id, string versionId = null, DateTimeOffset? ifModifiedSince = null)
         {
-            var entry = newEntry(Bundle.HTTPVerb.GET);
-            entry.Request.IfNoneMatch = ifNoneMatch;
+            var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.Read);
+            entry.Request.IfNoneMatch = createIfMatchETag(versionId);
             entry.Request.IfModifiedSince = ifModifiedSince;
             var path = newRestUrl().AddPath(resourceType, id);
             addEntry(entry, path);
@@ -98,7 +114,7 @@ namespace Hl7.Fhir.Rest
 
         public TransactionBuilder VRead(string resourceType, string id, string vid)
         {
-            var entry = newEntry(Bundle.HTTPVerb.GET);
+            var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.VRead);
             var path = newRestUrl().AddPath(resourceType, id, HISTORY, vid);
             addEntry(entry, path);
 
@@ -106,21 +122,22 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public TransactionBuilder Update(string id, Resource body, string ifMatch=null)
+        public TransactionBuilder Update(string id, Resource body, string versionId=null)
         {
-            var entry = newEntry(Bundle.HTTPVerb.PUT);
+            var entry = newEntry(Bundle.HTTPVerb.PUT, InteractionType.Update);
             entry.Resource = body;
-            entry.Request.IfMatch = ifMatch;
+            entry.Request.IfMatch = createIfMatchETag(versionId);
             var path = newRestUrl().AddPath(body.TypeName, id);
             addEntry(entry, path);
 
             return this;
         }
 
-        public TransactionBuilder Update(SearchParams condition, Resource body, string ifMatch=null)
+        public TransactionBuilder Update(SearchParams condition, Resource body, string versionId=null)
         {
-            var entry = newEntry(Bundle.HTTPVerb.PUT);
+            var entry = newEntry(Bundle.HTTPVerb.PUT, InteractionType.Update);
             entry.Resource = body;
+            entry.Request.IfMatch = createIfMatchETag(versionId);
             var path = newRestUrl().AddPath(body.TypeName);
             path.AddParams(condition.ToUriParamList());
             addEntry(entry, path);
@@ -128,10 +145,20 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
+        private string createIfMatchETag(string versionId)
+        {
+            if (versionId == null) return versionId;
+
+            //To not break our previous public interface, we need to make sure we don't double
+            //convert to an eTag
+            if (versionId.StartsWith("W/")) return versionId;
+
+            return $"W/\"{versionId}\"";
+        }
 
         public TransactionBuilder Delete(string resourceType, string id)
         {
-            var entry = newEntry(Bundle.HTTPVerb.DELETE);
+            var entry = newEntry(Bundle.HTTPVerb.DELETE, InteractionType.Delete);
             var path = newRestUrl().AddPath(resourceType, id);
             addEntry(entry, path);
 
@@ -140,7 +167,7 @@ namespace Hl7.Fhir.Rest
 
         public TransactionBuilder Delete(string resourceType, SearchParams condition)
         {
-            var entry = newEntry(Bundle.HTTPVerb.DELETE);
+            var entry = newEntry(Bundle.HTTPVerb.DELETE, InteractionType.Delete);
             var path = newRestUrl().AddPath(resourceType);
             path.AddParams(condition.ToUriParamList());
             addEntry(entry, path);
@@ -150,7 +177,7 @@ namespace Hl7.Fhir.Rest
 
         public TransactionBuilder Create(Resource body)
         {
-            var entry = newEntry(Bundle.HTTPVerb.POST);
+            var entry = newEntry(Bundle.HTTPVerb.POST, InteractionType.Create);
             entry.Resource = body;
             var path = newRestUrl().AddPath(body.TypeName);
             addEntry(entry, path);
@@ -160,13 +187,11 @@ namespace Hl7.Fhir.Rest
 
         public TransactionBuilder Create(Resource body, SearchParams condition)
         {
-            var entry = newEntry(Bundle.HTTPVerb.POST);
+            var entry = newEntry(Bundle.HTTPVerb.POST, InteractionType.Create);
             entry.Resource = body;
             var path = newRestUrl().AddPath(body.TypeName);
 
-            var nonExist = new RestUrl(path);
-            nonExist.AddParams(condition.ToUriParamList());
-            entry.Request.IfNoneExist = nonExist.ToString();
+            entry.Request.IfNoneExist = condition.ToUriParamList().ToQueryString();
             addEntry(entry, path);
 
             return this;
@@ -175,7 +200,7 @@ namespace Hl7.Fhir.Rest
         
         public TransactionBuilder CapabilityStatement(SummaryType? summary)
         {
-            var entry =  newEntry(Bundle.HTTPVerb.GET);
+            var entry =  newEntry(Bundle.HTTPVerb.GET, InteractionType.Capabilities);
             var path = newRestUrl().AddPath(METADATA);
             if (summary.HasValue)
                 path.AddParam(SearchParams.SEARCH_PARAM_SUMMARY, summary.Value.ToString().ToLower());
@@ -187,7 +212,7 @@ namespace Hl7.Fhir.Rest
 
         private void addHistoryEntry(RestUrl path, SummaryType? summaryOnly = null, int? pageSize=null, DateTimeOffset? since = null)
         {
-            var entry = newEntry(Bundle.HTTPVerb.GET);
+            var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.History);
 
             if(summaryOnly.HasValue) path.AddParam(SearchParams.SEARCH_PARAM_SUMMARY, summaryOnly.Value.ToString().ToLower());
             if(pageSize.HasValue) path.AddParam(HttpUtil.HISTORY_PARAM_COUNT, pageSize.Value.ToString());
@@ -224,12 +249,8 @@ namespace Hl7.Fhir.Rest
 
         public TransactionBuilder EndpointOperation(RestUrl endpoint, Parameters parameters, bool useGet = false)
         {
-            var entry = newEntry(useGet ? Bundle.HTTPVerb.GET : Bundle.HTTPVerb.POST);
+            var entry = newEntry(useGet ? Bundle.HTTPVerb.GET : Bundle.HTTPVerb.POST, InteractionType.Operation);
 
-            // Brian: Not sure why we would create this parameters object as empty.
-            //        I would imagine that a null parameters object is different to an empty one?
-            // if (parameters == null)
-            //    parameters = new Parameters();
             entry.Resource = parameters;
 
             var path = new RestUrl(endpoint);
@@ -269,7 +290,7 @@ namespace Hl7.Fhir.Rest
 
         public TransactionBuilder Search(SearchParams q = null, string resourceType = null)
         {
-            var entry = newEntry(Bundle.HTTPVerb.GET);
+            var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.Search);
             var path = newRestUrl();
             if (resourceType != null) path.AddPath(resourceType);
             if(q != null) path.AddParams(q.ToUriParamList());
@@ -281,7 +302,7 @@ namespace Hl7.Fhir.Rest
 
         public TransactionBuilder Transaction(Bundle transaction)
         {
-            var entry = newEntry(Bundle.HTTPVerb.POST);
+            var entry = newEntry(Bundle.HTTPVerb.POST, InteractionType.Transaction);
             entry.Resource = transaction;
             addEntry(entry, newRestUrl());
 

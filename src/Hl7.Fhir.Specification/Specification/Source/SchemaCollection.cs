@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Specification.Source
     public class SchemaCollection
     {
 
-        private static Lazy<XmlSchemaSet> _validationSchemaSet = new Lazy<XmlSchemaSet>(compileValidationSchemas, true);
+        private static Lazy<XmlSchemaSet> _validationSchemaSet = new Lazy<XmlSchemaSet>(compileValidationSchemas);
 
         public static XmlSchemaSet ValidationSchemaSet
         {

@@ -804,10 +804,33 @@ namespace Hl7.Fhir.Model
                     if (OffsetElement != null) yield return OffsetElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren 
+            { 
+                get 
+                { 
+                    foreach (var item in base.NamedChildren) yield return item; 
+                    if (Bounds != null) yield return new ElementValue("bounds", false, Bounds);
+                    if (CountElement != null) yield return new ElementValue("count", false, CountElement);
+                    if (CountMaxElement != null) yield return new ElementValue("countMax", false, CountMaxElement);
+                    if (DurationElement != null) yield return new ElementValue("duration", false, DurationElement);
+                    if (DurationMaxElement != null) yield return new ElementValue("durationMax", false, DurationMaxElement);
+                    if (DurationUnitElement != null) yield return new ElementValue("durationUnit", false, DurationUnitElement);
+                    if (FrequencyElement != null) yield return new ElementValue("frequency", false, FrequencyElement);
+                    if (FrequencyMaxElement != null) yield return new ElementValue("frequencyMax", false, FrequencyMaxElement);
+                    if (PeriodElement != null) yield return new ElementValue("period", false, PeriodElement);
+                    if (PeriodMaxElement != null) yield return new ElementValue("periodMax", false, PeriodMaxElement);
+                    if (PeriodUnitElement != null) yield return new ElementValue("periodUnit", false, PeriodUnitElement);
+                    foreach (var elem in DayOfWeekElement) { if (elem != null) yield return new ElementValue("dayOfWeek", true, elem); }
+                    foreach (var elem in TimeOfDayElement) { if (elem != null) yield return new ElementValue("timeOfDay", true, elem); }
+                    foreach (var elem in WhenElement) { if (elem != null) yield return new ElementValue("when", true, elem); }
+                    if (OffsetElement != null) yield return new ElementValue("offset", false, OffsetElement);
+ 
+                } 
+            } 
             
-        }
-        
-        
+        }                
         /// <summary>
         /// When the event occurs
         /// </summary>
@@ -926,6 +949,19 @@ namespace Hl7.Fhir.Model
                 if (Code != null) yield return Code;
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren 
+        { 
+            get 
+            { 
+                foreach (var item in base.NamedChildren) yield return item; 
+                foreach (var elem in EventElement) { if (elem != null) yield return new ElementValue("event", true, elem); }
+                if (Repeat != null) yield return new ElementValue("repeat", false, Repeat);
+                if (Code != null) yield return new ElementValue("code", false, Code);
+ 
+            } 
+        } 
     
     
     }

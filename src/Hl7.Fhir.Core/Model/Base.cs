@@ -55,9 +55,7 @@ namespace Hl7.Fhir.Model
         /// <returns></returns>
         public virtual IDeepCopyable CopyTo(IDeepCopyable other)
         {
-            var dest = other as Base;
-
-            if (dest != null)
+            if (other is Base dest)
             {
                 // if (UserData != null) dest.UserData = new Dictionary<string, object>(UserData);
                 if (_annotations.IsValueCreated)
@@ -139,7 +137,7 @@ namespace Hl7.Fhir.Model
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> FhirComments
         {
-            get { return FhirCommentsElement != null ? FhirCommentsElement.Select(elem => elem.Value) : null; }
+            get => FhirCommentsElement?.Select(elem => elem.Value);
             set
             {
                 if (value == null)
@@ -154,8 +152,7 @@ namespace Hl7.Fhir.Model
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(String property)
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(property));
+            PropertyChanged?.Invoke(this, new System.ComponentModel.PropertyChangedEventArgs(property));
         }
 
 
@@ -170,5 +167,22 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [NotMapped]
         public virtual IEnumerable<Base> Children { get { return Enumerable.Empty<Base>(); } }
+
+        /// <summary>
+        /// Enumerate all child nodes.
+        /// Return a sequence of child elements, components and/or properties.
+        /// Child nodes are returned as tuples with the name and the node itself, in the order defined 
+        /// by the FHIR specification.
+        /// First returns child nodes inherited from any base class(es), recursively.
+        /// Finally returns child nodes defined by the current class.
+        /// </summary>
+        [NotMapped]
+        internal virtual IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var elem in FhirComments) { if (elem != null) yield return new ElementValue("fhir_comments", true, elem); }
+            }
+        }
     }
 }

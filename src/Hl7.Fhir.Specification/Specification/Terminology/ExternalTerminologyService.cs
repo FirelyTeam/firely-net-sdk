@@ -1,50 +1,96 @@
-﻿using Hl7.Fhir.Specification.Terminology;
+﻿/* 
+ * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
+using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.Specification.Terminology
 {
-    internal class ExternalTerminologyService : ITerminologyService
+    public class ExternalTerminologyService : ITerminologyService
     {
-        public ExternalTerminologyService(FhirClient client)
+        public ExternalTerminologyService(IFhirClient client)
         {
-            _server = client;
+            Endpoint = client;
         }
 
-        FhirClient _server;
+        public IFhirClient Endpoint { get; set; }
 
-        public OperationOutcome ValidateCode(string uri, string code, string system, string display = null, bool abstractAllowed = false)
+        public OperationOutcome ValidateCode(string canonical = null, string context = null, ValueSet valueSet = null, 
+            string code = null, string system = null, string version = null, string display = null, 
+            Coding coding = null, CodeableConcept codeableConcept = null, FhirDateTime date = null, 
+            bool? @abstract = null, string displayLanguage = null)
         {
-            OperationOutcome outcome = new OperationOutcome();
             try
             {
-                if (string.IsNullOrEmpty(system))
-                {
-                    outcome.AddIssue($"No system supplied to resolve {code} in valueset {uri}", Issue.TERMINOLOGY_SYSTEM_VALUE_MISSING);
-                    return outcome;
-                }
-                var resultValidateCode = _server.ValidateCode(uri, new Coding(system, code, display));
-                var result = resultValidateCode.GetSingleValue<FhirBoolean>("result");
-                if (result.Value.HasValue)
-                {
-                    if (!result.Value.Value)
-                    {
-                        string message = (resultValidateCode.Parameter.Where(p => p.Name == "message")?.FirstOrDefault()?.Value as FhirString).Value;
-                        outcome.AddIssue(message, Issue.TERMINOLOGY_CODE_NOT_IN_VALUESET);
-                    }
-                }
+                var resultValidateCode =
+                    Endpoint.ValidateCode(
+                                url: canonical != null ? new FhirUri(canonical) : null,
+                                context: context != null ? new FhirUri(context) : null,
+                                valueSet: valueSet, 
+                                code: code != null ? new Code(code) : null,
+                                system: system != null ? new FhirUri(system) : null,
+                                version: version != null ? new FhirString(version) : null,
+                                display: display != null ? new FhirString(display) : null,
+                                coding: coding, codeableConcept: codeableConcept, date: date, 
+                                @abstract: @abstract != null ? new FhirBoolean(@abstract) : null,
+                                displayLanguage: displayLanguage != null ? new Code(displayLanguage) : null);
+
+                OperationOutcome outcome = processResult(code, system, display, coding, codeableConcept, resultValidateCode);
+
                 return outcome;
+
             }
-            catch(FhirOperationException ex)
+            catch (FhirOperationException ex)
             {
-                return ex.Outcome;
+                // Special case, if term service returns 404, turn that into a more explicit exception
+                if (ex.Status == System.Net.HttpStatusCode.NotFound)
+                    throw new ValueSetUnknownException(ex.Message);
+                else
+                    return ex.Outcome;
             }
+        }
+
+
+        private OperationOutcome processResult(string code, string system, string display, Coding coding, CodeableConcept codeableConcept, ValidateCodeResult result)
+        {
+            if (result?.Result?.Value == null)
+                throw Error.InvalidOperation($"Terminology service at {Endpoint.Endpoint.ToString()} did not return a result.");
+
+            var outcome = new OperationOutcome();
+
+            if (result?.Result?.Value == false)
+            {
+                string message = result?.Message?.Value;
+
+                if (message != null)
+                    outcome.AddIssue(message, Issue.TERMINOLOGY_CODE_NOT_IN_VALUESET);
+                else
+                {
+                    if (code != null && coding == null)
+                        coding = new Coding(system, code, display);
+
+                    var codeDisplay = codeableConcept != null ? FhirSerializer.SerializeToJson(codeableConcept)
+                                            : FhirSerializer.SerializeToJson(coding);
+
+                    outcome.AddIssue($"Validation of '{codeDisplay}' failed, but" +
+                                $"the terminology service at {Endpoint.Endpoint.ToString()} did not provide further details.",
+                                Issue.TERMINOLOGY_CODE_NOT_IN_VALUESET);
+                }
+            }
+
+            return outcome;
         }
     }
 }

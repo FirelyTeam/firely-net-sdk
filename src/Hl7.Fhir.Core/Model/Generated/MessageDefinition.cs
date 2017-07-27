@@ -36,6 +36,8 @@ using Hl7.Fhir.Utility;
 
 */
 
+#pragma warning disable 1591 // suppress XML summary warnings 
+
 //
 // Generated for FHIR v3.0.1
 //
@@ -235,6 +237,20 @@ namespace Hl7.Fhir.Model
                     if (MaxElement != null) yield return MaxElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
+                    if (Profile != null) yield return new ElementValue("profile", false, Profile);
+                    if (MinElement != null) yield return new ElementValue("min", false, MinElement);
+                    if (MaxElement != null) yield return new ElementValue("max", false, MaxElement);
+                }
+            }
+
             
         }
         
@@ -330,6 +346,18 @@ namespace Hl7.Fhir.Model
                     if (Situation != null) yield return Situation;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Message != null) yield return new ElementValue("message", false, Message);
+                    if (Situation != null) yield return new ElementValue("situation", false, Situation);
+                }
+            }
+
             
         }
         
@@ -994,6 +1022,39 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in AllowedResponse) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
+                if (Identifier != null) yield return new ElementValue("identifier", false, Identifier);
+                if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
+                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (ExperimentalElement != null) yield return new ElementValue("experimental", false, ExperimentalElement);
+                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
+                if (PublisherElement != null) yield return new ElementValue("publisher", false, PublisherElement);
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
+                if (Description != null) yield return new ElementValue("description", false, Description);
+                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", true, elem); }
+                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", true, elem); }
+                if (Purpose != null) yield return new ElementValue("purpose", false, Purpose);
+                if (Copyright != null) yield return new ElementValue("copyright", false, Copyright);
+                if (Base != null) yield return new ElementValue("base", false, Base);
+                foreach (var elem in Parent) { if (elem != null) yield return new ElementValue("parent", true, elem); }
+                foreach (var elem in Replaces) { if (elem != null) yield return new ElementValue("replaces", true, elem); }
+                if (Event != null) yield return new ElementValue("event", false, Event);
+                if (CategoryElement != null) yield return new ElementValue("category", false, CategoryElement);
+                foreach (var elem in Focus) { if (elem != null) yield return new ElementValue("focus", true, elem); }
+                if (ResponseRequiredElement != null) yield return new ElementValue("responseRequired", false, ResponseRequiredElement);
+                foreach (var elem in AllowedResponse) { if (elem != null) yield return new ElementValue("allowedResponse", true, elem); }
+            }
+        }
+
     }
     
 }

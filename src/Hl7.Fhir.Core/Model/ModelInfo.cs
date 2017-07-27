@@ -126,7 +126,7 @@ namespace Hl7.Fhir.Model
         }
 
         private static Lazy<IDictionary<FHIRAllTypes, string>> _fhirTypeToFhirTypeName
-            = new Lazy<IDictionary<FHIRAllTypes, string>>(InitFhirTypeToFhirTypeName, System.Threading.LazyThreadSafetyMode.PublicationOnly);
+            = new Lazy<IDictionary<FHIRAllTypes, string>>(InitFhirTypeToFhirTypeName);
 
         private static IDictionary<FHIRAllTypes, string> InitFhirTypeToFhirTypeName()
         {
@@ -146,7 +146,7 @@ namespace Hl7.Fhir.Model
         }
 
         private static Lazy<IDictionary<string, FHIRAllTypes>> _fhirTypeNameToFhirType
-            = new Lazy<IDictionary<string, FHIRAllTypes>>(InitFhirTypeNameToFhirType, System.Threading.LazyThreadSafetyMode.PublicationOnly);
+            = new Lazy<IDictionary<string, FHIRAllTypes>>(InitFhirTypeNameToFhirType);
 
         private static IDictionary<string, FHIRAllTypes> InitFhirTypeNameToFhirType()
         {
@@ -379,6 +379,15 @@ namespace Hl7.Fhir.Model
                 type == FHIRAllTypes.DomainResource ||
                 type == FHIRAllTypes.Element ||
                 type == FHIRAllTypes.BackboneElement;
+        }
+
+        public static bool IsCoreSuperType(string type)
+        {
+            var fat = FhirTypeNameToFhirType(type);
+
+            if (fat == null) return false;
+
+            return IsCoreSuperType(fat.Value);
         }
 
         public static bool IsProfiledQuantity(FHIRAllTypes type)

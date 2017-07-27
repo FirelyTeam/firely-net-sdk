@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Specification.Terminology
             if (conceptSet.System != null)
             {
                 if (conceptSet.Filter.Any())
-                    throw Error.NotSupported($"ConceptSets with a filter are not yet supported.");
+                    throw new ValueSetExpansionTooComplexException($"ConceptSets with a filter are not yet supported.");
 
                 if (conceptSet.Concept.Any())
                 {
@@ -115,9 +115,9 @@ namespace Hl7.Fhir.Specification.Terminology
             if (conceptSet.ValueSet.Any())
             {
                 if (conceptSet.ValueSet.Count() > 1)
-                    throw Error.NotSupported($"ConceptSets with multiple valuesets are not yet supported.");
+                    throw new ValueSetExpansionTooComplexException($"ConceptSets with multiple valuesets are not yet supported.");
                 if (conceptSet.System != null)
-                    throw Error.NotSupported($"ConceptSets with combined 'system' and 'valueset'(s) are not yet supported.");
+                    throw new ValueSetExpansionTooComplexException($"ConceptSets with combined 'system' and 'valueset'(s) are not yet supported.");
 
                 var importedVs = conceptSet.ValueSet.Single();
                 var concepts = getExpansionForValueSet(importedVs);
@@ -180,14 +180,14 @@ namespace Hl7.Fhir.Specification.Terminology
                         "set ValueSetExpander.Settings.ValueSetSource to fix.");
 
             var importedVs = Settings.ValueSetSource.FindValueSet(uri);
-            if (importedVs == null) throw new ResourceReferenceNotFoundException(uri, $"Cannot resolve canonical reference '{uri}' to ValueSet");
+            if (importedVs == null) throw new ValueSetUnknownException($"Cannot resolve canonical reference '{uri}' to ValueSet");
 
             if (!importedVs.HasExpansion) Expand(importedVs);
 
             if (importedVs.HasExpansion)
                 return importedVs.Expansion.Contains;
             else
-                throw Error.InvalidOperation($"Expansion returned neither an error, nor an expansion for ValueSet with canonical reference '{uri}'");
+                throw new ValueSetUnknownException($"Expansion returned neither an error, nor an expansion for ValueSet with canonical reference '{uri}'");
         }
 
         private List<ValueSet.ContainsComponent> getConceptsFromCodeSystem(string uri)
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Specification.Terminology
                         "set ValueSetExpander.Settings.ValueSetSource to fix.");
 
             var importedCs = Settings.ValueSetSource.FindCodeSystem(uri);
-            if (importedCs == null) throw new ResourceReferenceNotFoundException(uri, $"Cannot resolve canonical reference '{uri}' to CodeSystem");
+            if (importedCs == null) throw new ValueSetUnknownException($"Cannot resolve canonical reference '{uri}' to CodeSystem");
 
             var result = new List<ValueSet.ContainsComponent>();
             result.AddRange(importedCs.Concept.Select(c => c.ToContainsComponent(importedCs)));

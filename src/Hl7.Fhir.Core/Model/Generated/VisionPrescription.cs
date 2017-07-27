@@ -36,6 +36,8 @@ using Hl7.Fhir.Utility;
 
 */
 
+#pragma warning disable 1591 // suppress XML summary warnings 
+
 //
 // Generated for FHIR v3.0.1
 //
@@ -645,6 +647,31 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Note) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Product != null) yield return new ElementValue("product", false, Product);
+                    if (EyeElement != null) yield return new ElementValue("eye", false, EyeElement);
+                    if (SphereElement != null) yield return new ElementValue("sphere", false, SphereElement);
+                    if (CylinderElement != null) yield return new ElementValue("cylinder", false, CylinderElement);
+                    if (AxisElement != null) yield return new ElementValue("axis", false, AxisElement);
+                    if (PrismElement != null) yield return new ElementValue("prism", false, PrismElement);
+                    if (BaseElement != null) yield return new ElementValue("base", false, BaseElement);
+                    if (AddElement != null) yield return new ElementValue("add", false, AddElement);
+                    if (PowerElement != null) yield return new ElementValue("power", false, PowerElement);
+                    if (BackCurveElement != null) yield return new ElementValue("backCurve", false, BackCurveElement);
+                    if (DiameterElement != null) yield return new ElementValue("diameter", false, DiameterElement);
+                    if (Duration != null) yield return new ElementValue("duration", false, Duration);
+                    if (ColorElement != null) yield return new ElementValue("color", false, ColorElement);
+                    if (BrandElement != null) yield return new ElementValue("brand", false, BrandElement);
+                    foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", true, elem); }
+                }
+            }
+
             
         }
         
@@ -886,6 +913,24 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Dispense) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (Patient != null) yield return new ElementValue("patient", false, Patient);
+                if (Encounter != null) yield return new ElementValue("encounter", false, Encounter);
+                if (DateWrittenElement != null) yield return new ElementValue("dateWritten", false, DateWrittenElement);
+                if (Prescriber != null) yield return new ElementValue("prescriber", false, Prescriber);
+                if (Reason != null) yield return new ElementValue("reason", false, Reason);
+                foreach (var elem in Dispense) { if (elem != null) yield return new ElementValue("dispense", true, elem); }
+            }
+        }
+
     }
     
 }

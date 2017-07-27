@@ -928,7 +928,10 @@
         <map value="n/a" />
       </mapping>
     </element>
-    <element id="Patient.extension:legalCase.valueBoolean">
+    <!-- [WMR 20170614] Fixed; element id for type slices is based on original element name ending with "[x]"
+         id="Patient.extension:legalCase.valueBoolean"
+    -->
+    <element id="Patient.extension:legalCase.value[x]">
       <path value="Patient.extension.valueBoolean" />
       <!--sliceName value="legalCase.valueBoolean" -->
       <short value="Value of extension" />
@@ -962,7 +965,10 @@
         <map value="n/a" />
       </mapping>
     </element>
-    <element id="Patient.extension:legalCase.valueBoolean.id">
+    <!-- [WMR 20170614] Fixed; element id for type slices is based on original element name ending with "[x]"
+         id="Patient.extension:legalCase.valueBoolean.id"
+    -->
+    <element id="Patient.extension:legalCase.value[x].id">
       <path value="Patient.extension.valueBoolean.id" />
       <representation value="xmlAttr" />
       <!--sliceName value="legalCase.valueBoolean.id" -->
@@ -983,7 +989,10 @@
         <map value="n/a" />
       </mapping>
     </element>
-    <element id="Patient.extension:legalCase.valueBoolean.extension">
+    <!-- [WMR 20170614] Fixed; element id for type slices is based on original element name ending with "[x]"
+         id="Patient.extension:legalCase.valueBoolean.extension"
+    -->
+    <element id="Patient.extension:legalCase.value[x].extension">
       <path value="Patient.extension.valueBoolean.extension" />
       <!--sliceName value="legalCase.valueBoolean.extension" -->
       <short value="Additional Content defined by implementations" />
@@ -1035,7 +1044,10 @@
         <map value="n/a" />
       </mapping>
     </element>
-    <element id="Patient.extension:legalCase.valueBoolean.extension.id">
+    <!-- [WMR 20170614] Fixed; element id for type slices is based on original element name ending with "[x]"
+         id="Patient.extension:legalCase.valueBoolean.extension.id"
+    -->
+    <element id="Patient.extension:legalCase.value[x].extension.id">
       <path value="Patient.extension.valueBoolean.extension.id" />
       <representation value="xmlAttr" />
       <!--sliceName value="legalCase.valueBoolean.id" -->
@@ -1056,7 +1068,10 @@
         <map value="n/a" />
       </mapping>
     </element>
-    <element id="Patient.extension:legalCase.valueBoolean.extension.extension">
+    <!-- [WMR 20170614] Fixed; element id for type slices is based on original element name ending with "[x]"
+         id="Patient.extension:legalCase.valueBoolean.extension.extension"
+    -->
+    <element id="Patient.extension:legalCase.value[x].extension.extension">
       <path value="Patient.extension.valueBoolean.extension.extension" />
       <!--sliceName value="legalCase.valueBoolean.extension" -->
       <short value="Additional Content defined by implementations" />
@@ -1110,7 +1125,10 @@
         <map value="n/a" />
       </mapping>
     </element>
-    <element id="Patient.extension:legalCase.valueBoolean.extension.url">
+    <!-- [WMR 20170614] Fixed; element id for type slices is based on original element name ending with "[x]"
+         id="Patient.extension:legalCase.valueBoolean.extension.url"
+    -->
+    <element id="Patient.extension:legalCase.value[x].extension.url">
       <path value="Patient.extension.valueBoolean.extension.url" />
       <representation value="xmlAttr" />
       <!--sliceName value="legalCase.valueBoolean.url" -->
@@ -1146,7 +1164,10 @@
         <map value="n/a" />
       </mapping>
     </element>
-    <element id="Patient.extension:legalCase.valueBoolean.extension.value[x]">
+    <!-- [WMR 20170614] Fixed; element id for type slices is based on original element name ending with "[x]"
+         id="Patient.extension:legalCase.valueBoolean.extension.value[x]"
+    -->
+    <element id="Patient.extension:legalCase.value[x].extension.value[x]">
       <path value="Patient.extension.valueBoolean.extension.value[x]" />
       <!--sliceName value="legalCase.valueBoolean.value[x]" -->
       <short value="Value of extension" />
@@ -1291,7 +1312,10 @@
         <map value="n/a" />
       </mapping>
     </element>
-    <element id="Patient.extension:legalCase.valueBoolean.extension:leadCounsel">
+    <!-- [WMR 20170614] Fixed; element id for type slices is based on original element name ending with "[x]"
+         id="Patient.extension:legalCase.valueBoolean.extension:leadCounsel"
+    -->
+    <element id="Patient.extension:legalCase.value[x].extension:leadCounsel">
       <path value="Patient.extension.valueBoolean.extension" />
       <!--sliceName value="legalCase.valueBoolean.leadCounsel" -->
       <label value="Lead Counsel" />
@@ -1340,7 +1364,10 @@
         <map value="n/a" />
       </mapping>
     </element>
-    <element id="Patient.extension:legalCase.valueBoolean.value">
+    <!-- [WMR 20170614] Fixed; element id for type slices is based on original element name ending with "[x]"
+         id="Patient.extension:legalCase.valueBoolean.value"
+    -->
+    <element id="Patient.extension:legalCase.value[x].value">
       <path value="Patient.extension.valueBoolean.value" />
       <representation value="xmlAttr" />
       <!--sliceName value="legalCase.valueBoolean.value" -->
@@ -2644,7 +2671,10 @@
       </base>
       <type>
         <code value="Reference" />
+        <!-- [WMR 20170614 Fixed for STU3
         <profile value="http://hl7.org/fhir/StructureDefinition/Organization" />
+        -->
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Organization" />
       </type>
       <condition value="pat-1" />
       <condition value="ele-1" />
@@ -3420,7 +3450,10 @@
       </base>
       <type>
         <code value="Reference" />
+        <!-- [WMR 20170614 Fixed for STU3
         <profile value="http://hl7.org/fhir/StructureDefinition/Organization" />
+        -->
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Organization" />
       </type>
       <condition value="ele-1" />
       <constraint>
@@ -3653,11 +3686,17 @@
       </base>
       <type>
         <code value="Reference" />
+        <!-- [WMR 20170614 Fixed for STU3
         <profile value="http://hl7.org/fhir/StructureDefinition/Patient" />
+        -->
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Patient" />
       </type>
       <type>
         <code value="Reference" />
+        <!-- [WMR 20170614 Fixed for STU3
         <profile value="http://hl7.org/fhir/StructureDefinition/RelatedPerson" />
+        -->
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/RelatedPerson" />
       </type>
       <condition value="ele-1" />
       <constraint>
@@ -3765,11 +3804,17 @@
       </base>
       <type>
         <code value="Reference" />
+        <!-- [WMR 20170614 Fixed for STU3
         <profile value="http://hl7.org/fhir/StructureDefinition/Organization" />
+        -->
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Organization" />
       </type>
       <type>
         <code value="Reference" />
+        <!-- [WMR 20170614 Fixed for STU3
         <profile value="http://hl7.org/fhir/StructureDefinition/Practitioner" />
+        -->
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Practitioner" />
       </type>
       <condition value="ele-1" />
       <constraint>
@@ -3834,14 +3879,20 @@
         <profile value="http://example.com/fhir/StructureDefinition/patient-legal-case" />
       </type>
     </element>
-    <element id="Patient.extension:legalCase.valueBoolean">
+    <!-- [WMR 20170614] Fixed; element id for type slices is based on original element name ending with "[x]"
+         id="Patient.extension:legalCase.valueBoolean"
+    -->
+    <element id="Patient.extension:legalCase.value[x]">
       <path value="Patient.extension.valueBoolean" />
       <!--sliceName value="legalCase.valueBoolean" -->
       <type>
         <code value="boolean" />
       </type>
     </element>
-    <element id="Patient.extension:legalCase.valueBoolean.extension:leadCounsel">
+    <!-- [WMR 20170614] Fixed; element id for type slices is based on original element name ending with "[x]"
+         id="Patient.extension:legalCase.valueBoolean.extension:leadCounsel"
+    -->
+    <element id="Patient.extension:legalCase.value[x].extension:leadCounsel">
       <path value="Patient.extension.valueBoolean.extension" />
       <!-- [WMR 20170421] Fixed -->
       <!--sliceName value="legalCase.valueBoolean.leadCounsel" -->

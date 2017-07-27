@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Sat, 06 May 2017 12:41:44 GMT for FHIR v3.0.1
+// Generated on Tue, 18 Jul 2017 09:59:39 GMT for FHIR v3.0.1
 //
 
 using Hl7.Fhir.Model;
@@ -232,7 +232,6 @@ namespace Hl7.Fhir.Model
                 { "uri", typeof(Hl7.Fhir.Model.FhirUri) },
                 { "UsageContext", typeof(UsageContext) },
                 { "uuid", typeof(Hl7.Fhir.Model.Uuid) },
-                { "xhtml", typeof(Hl7.Fhir.Model.Xhtml) },
 
                 { "Account", typeof(Hl7.Fhir.Model.Account) },
                 { "ActivityDefinition", typeof(Hl7.Fhir.Model.ActivityDefinition) },
@@ -411,7 +410,6 @@ namespace Hl7.Fhir.Model
                 { typeof(Hl7.Fhir.Model.FhirUri), "uri" },
                 { typeof(UsageContext), "UsageContext" },
                 { typeof(Hl7.Fhir.Model.Uuid), "uuid" },
-                { typeof(Hl7.Fhir.Model.Xhtml), "xhtml" },
 
                 { typeof(Hl7.Fhir.Model.Account), "Account" },
                 { typeof(Hl7.Fhir.Model.ActivityDefinition), "ActivityDefinition" },
@@ -564,7 +562,8 @@ namespace Hl7.Fhir.Model
                 new SearchParamDefinition() { Resource = "ActivityDefinition", Name = "topic", Description = @"Topics associated with the module", Type = SearchParamType.Token, Path = new string[] { "ActivityDefinition.topic", }, XPath = "f:ActivityDefinition/f:topic", Expression = "ActivityDefinition.topic", Url = "http://hl7.org/fhir/SearchParameter/ActivityDefinition-topic" },
                 new SearchParamDefinition() { Resource = "ActivityDefinition", Name = "url", Description = @"The uri that identifies the activity definition", Type = SearchParamType.Uri, Path = new string[] { "ActivityDefinition.url", }, XPath = "f:ActivityDefinition/f:url", Expression = "ActivityDefinition.url", Url = "http://hl7.org/fhir/SearchParameter/ActivityDefinition-url" },
                 new SearchParamDefinition() { Resource = "ActivityDefinition", Name = "version", Description = @"The business version of the activity definition", Type = SearchParamType.Token, Path = new string[] { "ActivityDefinition.version", }, XPath = "f:ActivityDefinition/f:version", Expression = "ActivityDefinition.version", Url = "http://hl7.org/fhir/SearchParameter/ActivityDefinition-version" },
-                new SearchParamDefinition() { Resource = "AdverseEvent", Name = "category", Description = @"AE | PAE An adverse event is an event that caused harm to a patient,  an adverse reaction is a something that is a subject-specific event that is a result of an exposure to a medication, food, device or environmental substance, a potential adverse event is something that occurred and that could have caused harm to a patient but did not", Type = SearchParamType.Token, Path = new string[] { "AdverseEvent.category", }, XPath = "f:AdverseEvent/f:category", Expression = "AdverseEvent.category", Url = "http://hl7.org/fhir/SearchParameter/AdverseEvent-category" },
+                new SearchParamDefinition() { Resource = "AdverseEvent", Name = "category", Description = @"AE | PAE 
+An adverse event is an event that caused harm to a patient,  an adverse reaction is a something that is a subject-specific event that is a result of an exposure to a medication, food, device or environmental substance, a potential adverse event is something that occurred and that could have caused harm to a patient but did not", Type = SearchParamType.Token, Path = new string[] { "AdverseEvent.category", }, XPath = "f:AdverseEvent/f:category", Expression = "AdverseEvent.category", Url = "http://hl7.org/fhir/SearchParameter/AdverseEvent-category" },
                 new SearchParamDefinition() { Resource = "AdverseEvent", Name = "date", Description = @"When the event occurred", Type = SearchParamType.Date, Path = new string[] { "AdverseEvent.date", }, XPath = "f:AdverseEvent/f:date", Expression = "AdverseEvent.date", Url = "http://hl7.org/fhir/SearchParameter/AdverseEvent-date" },
                 new SearchParamDefinition() { Resource = "AdverseEvent", Name = "location", Description = @"Location where adverse event occurred", Type = SearchParamType.Reference, Path = new string[] { "AdverseEvent.location", }, Target = new ResourceType[] { ResourceType.Location, }, XPath = "f:AdverseEvent/f:location", Expression = "AdverseEvent.location", Url = "http://hl7.org/fhir/SearchParameter/AdverseEvent-location" },
                 new SearchParamDefinition() { Resource = "AdverseEvent", Name = "reaction", Description = @"Adverse Reaction Events linked to exposure to substance", Type = SearchParamType.Reference, Path = new string[] { "AdverseEvent.reaction", }, Target = new ResourceType[] { ResourceType.Condition, }, XPath = "f:AdverseEvent/f:reaction", Expression = "AdverseEvent.reaction", Url = "http://hl7.org/fhir/SearchParameter/AdverseEvent-reaction" },

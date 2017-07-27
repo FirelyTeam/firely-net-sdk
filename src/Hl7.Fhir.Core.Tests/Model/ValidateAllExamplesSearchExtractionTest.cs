@@ -17,6 +17,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.FhirPath;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.ElementModel;
 
 namespace Hl7.Fhir.Tests.Model
 {
@@ -125,8 +126,8 @@ namespace Hl7.Fhir.Tests.Model
 
         private static void ExtractExamplesFromResource(Dictionary<string, int> exampleSearchValues, Resource resource, ModelInfo.SearchParamDefinition index, string key)
         {
-            var resourceModel = new FhirPath.PocoNavigator(resource);
-            var navigator = new FhirPath.PocoNavigator(resource);
+            var resourceModel = new PocoNavigator(resource);
+            var navigator = new PocoNavigator(resource);
 
             try
             {
@@ -137,7 +138,7 @@ namespace Hl7.Fhir.Tests.Model
                     {
                         if (t2 != null)
                         {
-                            if (t2 is FhirPath.PocoNavigator && (t2 as FhirPath.PocoNavigator).FhirValue != null)
+                            if (t2 is PocoNavigator && (t2 as PocoNavigator).FhirValue != null)
                             {
                                 // Validate the type of data returned against the type of search parameter
                             //    Debug.Write(index.Resource + "." + index.Name + ": ");

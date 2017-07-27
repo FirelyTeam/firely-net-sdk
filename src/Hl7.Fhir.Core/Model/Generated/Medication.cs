@@ -36,6 +36,8 @@ using Hl7.Fhir.Utility;
 
 */
 
+#pragma warning disable 1591 // suppress XML summary warnings 
+
 //
 // Generated for FHIR v3.0.1
 //
@@ -207,6 +209,19 @@ namespace Hl7.Fhir.Model
                     if (Amount != null) yield return Amount;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Item != null) yield return new ElementValue("item", false, Item);
+                    if (IsActiveElement != null) yield return new ElementValue("isActive", false, IsActiveElement);
+                    if (Amount != null) yield return new ElementValue("amount", false, Amount);
+                }
+            }
+
             
         }
         
@@ -318,6 +333,19 @@ namespace Hl7.Fhir.Model
                     foreach (var elem in Batch) { if (elem != null) yield return elem; }
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Container != null) yield return new ElementValue("container", false, Container);
+                    foreach (var elem in Content) { if (elem != null) yield return new ElementValue("content", true, elem); }
+                    foreach (var elem in Batch) { if (elem != null) yield return new ElementValue("batch", true, elem); }
+                }
+            }
+
             
         }
         
@@ -413,6 +441,18 @@ namespace Hl7.Fhir.Model
                     if (Amount != null) yield return Amount;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Item != null) yield return new ElementValue("item", false, Item);
+                    if (Amount != null) yield return new ElementValue("amount", false, Amount);
+                }
+            }
+
             
         }
         
@@ -543,6 +583,18 @@ namespace Hl7.Fhir.Model
                     if (ExpirationDateElement != null) yield return ExpirationDateElement;
                 }
             }
+
+            [NotMapped]
+            internal override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (LotNumberElement != null) yield return new ElementValue("lotNumber", false, LotNumberElement);
+                    if (ExpirationDateElement != null) yield return new ElementValue("expirationDate", false, ExpirationDateElement);
+                }
+            }
+
             
         }
         
@@ -814,6 +866,25 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Image) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (Code != null) yield return new ElementValue("code", false, Code);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (IsBrandElement != null) yield return new ElementValue("isBrand", false, IsBrandElement);
+                if (IsOverTheCounterElement != null) yield return new ElementValue("isOverTheCounter", false, IsOverTheCounterElement);
+                if (Manufacturer != null) yield return new ElementValue("manufacturer", false, Manufacturer);
+                if (Form != null) yield return new ElementValue("form", false, Form);
+                foreach (var elem in Ingredient) { if (elem != null) yield return new ElementValue("ingredient", true, elem); }
+                if (Package != null) yield return new ElementValue("package", false, Package);
+                foreach (var elem in Image) { if (elem != null) yield return new ElementValue("image", true, elem); }
+            }
+        }
+
     }
     
 }

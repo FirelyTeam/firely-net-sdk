@@ -36,6 +36,8 @@ using Hl7.Fhir.Utility;
 
 */
 
+#pragma warning disable 1591 // suppress XML summary warnings 
+
 //
 // Generated for FHIR v3.0.1
 //
@@ -769,6 +771,42 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Content) { if (elem != null) yield return elem; }
             }
         }
+
+        [NotMapped]
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
+                if (UrlElement != null) yield return new ElementValue("url", false, UrlElement);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", true, elem); }
+                if (VersionElement != null) yield return new ElementValue("version", false, VersionElement);
+                if (NameElement != null) yield return new ElementValue("name", false, NameElement);
+                if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
+                if (StatusElement != null) yield return new ElementValue("status", false, StatusElement);
+                if (ExperimentalElement != null) yield return new ElementValue("experimental", false, ExperimentalElement);
+                if (Type != null) yield return new ElementValue("type", false, Type);
+                if (DateElement != null) yield return new ElementValue("date", false, DateElement);
+                if (PublisherElement != null) yield return new ElementValue("publisher", false, PublisherElement);
+                if (Description != null) yield return new ElementValue("description", false, Description);
+                if (Purpose != null) yield return new ElementValue("purpose", false, Purpose);
+                if (UsageElement != null) yield return new ElementValue("usage", false, UsageElement);
+                if (ApprovalDateElement != null) yield return new ElementValue("approvalDate", false, ApprovalDateElement);
+                if (LastReviewDateElement != null) yield return new ElementValue("lastReviewDate", false, LastReviewDateElement);
+                if (EffectivePeriod != null) yield return new ElementValue("effectivePeriod", false, EffectivePeriod);
+                foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", true, elem); }
+                foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", true, elem); }
+                foreach (var elem in Topic) { if (elem != null) yield return new ElementValue("topic", true, elem); }
+                foreach (var elem in Contributor) { if (elem != null) yield return new ElementValue("contributor", true, elem); }
+                foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", true, elem); }
+                if (Copyright != null) yield return new ElementValue("copyright", false, Copyright);
+                foreach (var elem in RelatedArtifact) { if (elem != null) yield return new ElementValue("relatedArtifact", true, elem); }
+                foreach (var elem in Parameter) { if (elem != null) yield return new ElementValue("parameter", true, elem); }
+                foreach (var elem in DataRequirement) { if (elem != null) yield return new ElementValue("dataRequirement", true, elem); }
+                foreach (var elem in Content) { if (elem != null) yield return new ElementValue("content", true, elem); }
+            }
+        }
+
     }
     
 }

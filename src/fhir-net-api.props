@@ -12,8 +12,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <FhirApiVersion>0.93.4</FhirApiVersion>
-    <SupportApiVersion>0.4.2</SupportApiVersion>
+    <FhirApiVersion>0.93.5-alpha2</FhirApiVersion>
+    <SupportApiVersion>0.4.3</SupportApiVersion>
   </PropertyGroup>
 
   <!-- Compiler settings -->
@@ -28,7 +28,7 @@
      <GenerateDocumentationFile>true</GenerateDocumentationFile>
      <NoWarn>1591</NoWarn>
   </PropertyGroup>
- 
+
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>..\FhirNetApi.snk</AssemblyOriginatorKeyFile>

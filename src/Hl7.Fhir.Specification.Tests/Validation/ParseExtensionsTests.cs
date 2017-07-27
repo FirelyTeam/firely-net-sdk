@@ -1,4 +1,5 @@
-﻿using Hl7.Fhir.FhirPath;
+﻿using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.FhirPath;
 using System;
@@ -17,7 +18,7 @@ namespace Hl7.Fhir.Validation
         [Fact]
         public void TestParseQuantity()
         {
-            var i = new Model.Quantity(3.14m, "kg");
+            var i = new Model.Quantity(3.14m, "kg", "http://mysystsem.org");
             var nav = new PocoNavigator(i);
             var p = nav.ParseQuantity();
             Assert.True(p.IsExactly(i));
@@ -49,37 +50,85 @@ namespace Hl7.Fhir.Validation
 
 
         [Fact]
-        public void TestParseBindable()
+        public void TestParseBindableCode()
         {
             var ic = new Code("code");
             var nav = new PocoNavigator(ic);
-            var c = nav.ParseBindable(FHIRAllTypes.Code) as Coding;
+            var c = nav.ParseBindable() as Code;
             Assert.NotNull(c);
-            Assert.Equal(ic.Value, c.Code);
-            Assert.Null(c.System);
+            Assert.True(ic.IsExactly(c));
+        }
 
-            var iq = new Model.Quantity(4.0m, "kg");
-            nav = new PocoNavigator(iq);
-            c = nav.ParseBindable(FHIRAllTypes.Quantity) as Coding;
+        [Fact]
+        public void TestParseBindableCoding()
+        {
+            var ic = new Coding("system", "code");
+            var nav = new PocoNavigator(ic);
+            var c = nav.ParseBindable() as Coding;
+            Assert.NotNull(c);
+            Assert.True(ic.IsExactly(c));
+        }
+
+        [Fact]
+        public void TestParseBindableQuantity()
+        {
+            var iq = new Model.Quantity(4.0m, "kg", system: null);
+            var nav = new PocoNavigator(iq);
+            var c = nav.ParseBindable() as Coding;
             Assert.NotNull(c);
             Assert.Equal(iq.Code, c.Code);
-            Assert.Equal(iq.System, c.System);
+            Assert.Equal("http://unitsofmeasure.org", c.System);  // auto filled out by parsebinding()
+        }
 
+        [Fact]
+        public void TestParseBindableString()
+        {
             var ist = new Model.FhirString("Ewout");
-            nav = new PocoNavigator(ist);
-            c = nav.ParseBindable(FHIRAllTypes.String) as Coding;
+            var nav = new PocoNavigator(ist);
+            var c = nav.ParseBindable() as Code;
             Assert.NotNull(c);
-            Assert.Equal(ist.Value, c.Code);
-            Assert.Null(c.System);
+            Assert.Equal(ist.Value, c.Value);
+        }
 
+        [Fact]
+        public void TestParseBindableUri()
+        {
             var iu = new Model.FhirUri("http://somewhere.org");
-            nav = new PocoNavigator(iu);
-            c = nav.ParseBindable(FHIRAllTypes.Uri) as Coding;
+            var nav = new PocoNavigator(iu);
+            var c = nav.ParseBindable() as Code;
             Assert.NotNull(c);
-            Assert.Equal(iu.Value, c.Code);
-            Assert.Null(c.System);
+            Assert.Equal(iu.Value, c.Value);
+        }
 
-            // 'code','Coding','CodeableConcept','Quantity','Extension', 'string', 'uri'
+        [Fact]
+        public void TestParseBindableExtension()
+        {
+            var ic = new Coding("system", "code");
+            var ext = new Extension { Value = ic };
+            var nav = new PocoNavigator(ext);
+            var c = nav.ParseBindable() as Coding;
+            Assert.NotNull(c);
+            Assert.True(ic.IsExactly(c));
+
+            ext.Value = new HumanName();
+            nav = new PocoNavigator(ext);
+            c = nav.ParseBindable() as Coding;
+            Assert.Null(c);  // HumanName is not bindable
+
+            ext.Value = null;
+            nav = new PocoNavigator(ext);
+            c = nav.ParseBindable() as Coding;
+            Assert.Null(c);  // nothing to bind to
+        }
+
+        [Fact]
+        public void TestParseUnbindable()
+        { 
+            // Now, something non-bindable
+            var x = new HumanName().WithGiven("Ewout");
+            var nav = new PocoNavigator(x);
+            var xe = nav.ParseBindable();
+            Assert.Null(xe);
         }
     }
 }

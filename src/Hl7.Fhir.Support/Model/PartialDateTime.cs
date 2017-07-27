@@ -7,6 +7,7 @@
  */
 
 
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
 using System.Xml;
@@ -22,7 +23,7 @@ namespace Hl7.Fhir.Model.Primitives
         {
             try
             {
-                var dummy = XmlConvert.ToDateTimeOffset(value);
+                var dummy = PrimitiveTypeConverter.ConvertTo<DateTimeOffset>(value);
             }
             catch
             {
@@ -52,7 +53,7 @@ namespace Hl7.Fhir.Model.Primitives
 
         public DateTimeOffset ToUniversalTime()
         {
-            return XmlConvert.ToDateTimeOffset(_value).ToUniversalTime();
+            return PrimitiveTypeConverter.ConvertTo<DateTimeOffset>(_value).ToUniversalTime();
         }
 
 
@@ -101,9 +102,8 @@ namespace Hl7.Fhir.Model.Primitives
         {
             if (obj == null) return false;
 
-            if (obj is PartialDateTime)
+            if (obj is PartialDateTime other)
             {
-                var other = (PartialDateTime)obj;
 
                 // If we just have a date, do a straight compare
                 // otherwise, we have date + time, and DateTimeOffset will work as expected,
@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Model.Primitives
 
         public static PartialDateTime FromDateTime(DateTimeOffset dto)
         {
-            return new PartialDateTime { _value = XmlConvert.ToString(dto) };
+            return new PartialDateTime { _value = PrimitiveTypeConverter.ConvertTo<string>(dto) };
         }
 
         public static PartialDateTime FromDateTime(DateTime dt)
@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Model.Primitives
             // todo: check equivalence
             return new PartialDateTime { _value = XmlConvert.ToString(dt) };
 #else
-            return new PartialDateTime { _value = XmlConvert.ToString(dt, XmlDateTimeSerializationMode.RoundtripKind) };
+            return new PartialDateTime { _value = PrimitiveTypeConverter.ConvertTo<string>(dt) };
 #endif
 
         }
@@ -158,10 +158,8 @@ namespace Hl7.Fhir.Model.Primitives
         {
             if (obj == null) return 1;
 
-            if(obj is PartialDateTime)
+            if (obj is PartialDateTime p)
             {
-                var p = (PartialDateTime)obj;
-
                 if (this < p) return -1;
                 if (this > p) return 1;
                 return 0;
