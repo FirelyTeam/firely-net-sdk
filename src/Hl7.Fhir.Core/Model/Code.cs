@@ -43,6 +43,9 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Model
 {
+#if NET45
+    [Serializable]
+#endif
     [System.Diagnostics.DebuggerDisplay(@"\{{Value}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
     public partial class Code : IStringValue
     {
@@ -62,6 +65,9 @@ namespace Hl7.Fhir.Model
         string Code { get; }
     }
 
+#if NET45
+    [Serializable]
+#endif
     [FhirType("codeOfT")]
     [DataContract]
     [System.Diagnostics.DebuggerDisplay(@"\{{Value}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
