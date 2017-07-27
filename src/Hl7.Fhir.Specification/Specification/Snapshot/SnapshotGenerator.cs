@@ -986,6 +986,8 @@ namespace Hl7.Fhir.Specification.Snapshot
         // [WMR 20170713] NEW - for expandElementType
         // Raise OnPrepareElement event and provide matching base elements from typeNav
         // Cannot use prepareMergedTypeProfileElements, as the provided base element is incorrect in this case
+        // To determine correct matching base element from typeNav, we need to recursively match type profile children...
+        // This finds correct matching base elements, but is MUCH slower...
         void prepareExpandedTypeProfileElements(ElementDefinitionNavigator snap, ElementDefinitionNavigator typeNav)
         {
             // Recursively re-generate IDs for elements inherited from external rebased type profile
@@ -996,107 +998,89 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             if (MustRaisePrepareElement)
             {
-                Debug.Assert(typeNav.StructureDefinition != null);
-                prepareExpandedElementsInternal(snap, typeNav, false);
+                prepareExpandedTypeProfileElementsInternal(snap, typeNav);
             }
         }
 
-        // [WMR 20170718] NEW - for addSlice
-        void prepareSliceElements(ElementDefinitionNavigator snap, ElementDefinitionNavigator sliceBase)
-        {
-            if (MustRaisePrepareElement)
-            {
-                prepareExpandedElementsInternal(snap, sliceBase, true);
-            }
-        }
-
-        // Raise OnPrepareElement event for all elements in snap subtree
-        // Recurse all elements and find matching base element in typeNav
-        void prepareExpandedElementsInternal(ElementDefinitionNavigator snap, ElementDefinitionNavigator typeNav, bool prepareRoot)
+        void prepareExpandedTypeProfileElementsInternal(ElementDefinitionNavigator snap, ElementDefinitionNavigator typeNav)
         {
             Debug.Assert(MustRaisePrepareElement);
 
-            // [WMR 20170718] Note: typeProfile is null when called from addSlice / prepareSliceElements 
+            var snapPos = snap.Bookmark();
+            var typePos = typeNav.Bookmark();
             var typeProfile = typeNav.StructureDefinition;
+            Debug.Assert(typeProfile != null);
 
-            // [WMR 20170718] Explicitly process the (relative) root element
-            // ElementMatcher only operates on children
-            // Necessary for addSlice, but NOT for expandElementType
-            if (prepareRoot)
+            try
             {
-                OnPrepareElement(snap.Current, typeProfile, typeNav.Current);
-            }
-
-            // Optimization
-            if (typeNav.HasChildren)
-            {
-                var snapPos = snap.Bookmark();
-                var typePos = typeNav.Bookmark();
-
-                try
+                // [WMR 20170714] Optimization: shortcut for single element
+                if (!typeNav.HasChildren)
                 {
-                    var matches = ElementMatcher.Match(snap, typeNav);
+                    OnPrepareElement(snap.Current, typeProfile, typeNav.Current);
+                    return;
+                }
 
-                    // Debug.WriteLine($"Type profile matches for children of {(snap.Path ?? "/")} '{(snap.Current?.SliceName ?? snap.Current?.Type.FirstOrDefault()?.Profile ?? snap.Current?.Type.FirstOrDefault()?.Code)}'");
-                    // matches.DumpMatches(snap, typeNav);
+                var matches = ElementMatcher.Match(snap, typeNav);
 
-                    foreach (var match in matches)
+                // Debug.WriteLine($"Type profile matches for children of {(snap.Path ?? "/")} '{(snap.Current?.SliceName ?? snap.Current?.Type.FirstOrDefault()?.Profile ?? snap.Current?.Type.FirstOrDefault()?.Code)}'");
+                // matches.DumpMatches(snap, typeNav);
+
+                foreach (var match in matches)
+                {
+                    // Navigate to the matched elements
+                    if (!snap.ReturnToBookmark(match.BaseBookmark))
                     {
-                        // Navigate to the matched elements
-                        if (!snap.ReturnToBookmark(match.BaseBookmark))
-                        {
-                            throw Error.InvalidOperation($"Internal error in snapshot generator ({nameof(merge)}): bookmark '{match.BaseBookmark}' in snap is no longer available");
-                        }
-                        if (!typeNav.ReturnToBookmark(match.DiffBookmark))
-                        {
-                            throw Error.InvalidOperation($"Internal error in snapshot generator ({nameof(merge)}): bookmark '{match.DiffBookmark}' in typeNav is no longer available");
-                        }
-
-                        // Collect any reported issue
-                        if (match.Issue != null)
-                        {
-                            addIssue(match.Issue);
-                        }
-
-                        // Process the match, depending on the result
-                        switch (match.Action)
-                        {
-                            case ElementMatcher.MatchAction.Merge:
-                                OnPrepareElement(snap.Current, typeProfile, typeNav.Current);
-                                break;
-                            case ElementMatcher.MatchAction.Add:
-                                // var sliceBase = match.SliceBase?.Current ?? createExtensionSlicingEntry(snap.Current);
-                                Debug.Assert(match.SliceBase?.Current != null);
-                                OnPrepareElement(snap.Current, typeProfile, match.SliceBase.Current);
-                                break;
-                            case ElementMatcher.MatchAction.Slice:
-                                // For extensions, match.SliceBase may be null (slice entry is implicit and may be omitted)
-                                var sliceBase = match.SliceBase?.Current ?? createExtensionSlicingEntry(snap.Current);
-                                OnPrepareElement(snap.Current, typeProfile, sliceBase);
-                                break;
-                            case ElementMatcher.MatchAction.New:
-                                // No matching base element; this is a new element definition
-                                // snap is positioned at the associated parent element
-                                OnPrepareElement(snap.Current, null, null);
-                                break;
-                            case ElementMatcher.MatchAction.Invalid:
-                                // Collect issue and ignore invalid element
-                                break;
-                        }
-
-                        // Recurse children
-                        if (snap.HasChildren)
-                        {
-                            prepareExpandedElementsInternal(snap, typeNav, true);
-                        }
-
+                        throw Error.InvalidOperation($"Internal error in snapshot generator ({nameof(merge)}): bookmark '{match.BaseBookmark}' in snap is no longer available");
                     }
+                    if (!typeNav.ReturnToBookmark(match.DiffBookmark))
+                    {
+                        throw Error.InvalidOperation($"Internal error in snapshot generator ({nameof(merge)}): bookmark '{match.DiffBookmark}' in typeNav is no longer available");
+                    }
+
+                    // Collect any reported issue
+                    if (match.Issue != null)
+                    {
+                        addIssue(match.Issue);
+                    }
+
+                    // Process the match, depending on the result
+                    switch (match.Action)
+                    {
+                        case ElementMatcher.MatchAction.Merge:
+                            OnPrepareElement(snap.Current, typeProfile, typeNav.Current);
+                            break;
+                        case ElementMatcher.MatchAction.Add:
+                            // var sliceBase = match.SliceBase?.Current ?? createExtensionSlicingEntry(snap.Current);
+                            Debug.Assert(match.SliceBase?.Current != null);
+                            OnPrepareElement(snap.Current, typeProfile, match.SliceBase.Current);
+                            break;
+                        case ElementMatcher.MatchAction.Slice:
+                            // For extensions, match.SliceBase may be null (slice entry is implicit and may be omitted)
+                            var sliceBase = match.SliceBase?.Current ?? createExtensionSlicingEntry(snap.Current);
+                            OnPrepareElement(snap.Current, typeProfile, sliceBase);
+                            break;
+                        case ElementMatcher.MatchAction.New:
+                            // No matching base element; this is a new element definition
+                            // snap is positioned at the associated parent element
+                            OnPrepareElement(snap.Current, null, null);
+                            break;
+                        case ElementMatcher.MatchAction.Invalid:
+                            // Collect issue and ignore invalid element
+                            break;
+                    }
+
+                    // Recurse children
+                    if (snap.HasChildren)
+                    {
+                        prepareExpandedTypeProfileElementsInternal(snap, typeNav);
+                    }
+
                 }
-                finally
-                {
-                    snap.ReturnToBookmark(snapPos);
-                    typeNav.ReturnToBookmark(typePos);
-                }
+            }
+            finally
+            {
+                snap.ReturnToBookmark(snapPos);
+                typeNav.ReturnToBookmark(typePos);
             }
         }
 
@@ -1284,6 +1268,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 || ElementDefinitionNavigator.IsDirectResliceOf(diff.Current.SliceName, snap.Current.SliceName));
 
             // Append the new slice constraint to the existing slice group
+            // [WMR 20170308] TODO: Emit in-order
             // Slice definitions in StructureDef are always ordered! (only instances may contain unordered slices)
             // diff must specify constraints on existing slices in original order (just like regular elements)
             // diff can only append new slices after all constraints on existing slices
@@ -1298,13 +1283,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // Important: explicitly clear the slicing node in the copy!
             Debug.Assert(snap.Current.Slicing == null); // Taken care of by ElementMatcher.initSliceBase
-                                                        // snap.Current.Slicing = null;
-
-            // [WMR 20170718] NEW
-            // Update base annotations for named slices
-            // MUST replace existing annotations copied from sliceBase!
-            // Named slices should get base with Min = 0
-            prepareSliceElements(snap, sliceBase);
+            // snap.Current.Slicing = null;
 
             // Notify clients about a snapshot element with differential constraints
             OnConstraint(snap.Current);

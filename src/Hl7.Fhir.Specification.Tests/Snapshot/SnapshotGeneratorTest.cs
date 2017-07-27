@@ -2077,7 +2077,7 @@ namespace Hl7.Fhir.Specification.Tests
             var baseStruct = e.BaseStructure;
             elem.AddAnnotation(new BaseDefAnnotation(baseDef, baseStruct));
 
-            Debug.Write($"[{nameof(SnapshotGeneratorTest)}.{nameof(elementHandler)}] #{elem.GetHashCode()} '{elem.Path}:{elem.SliceName}' - Base: #{baseDef?.GetHashCode() ?? 0} '{(baseDef?.Path)}' - Base Structure '{baseStruct?.Url}'");
+            Debug.Write($"[{nameof(SnapshotGeneratorTest)}.{nameof(elementHandler)}] #{elem.GetHashCode()} '{elem.Path}' - Base: #{baseDef?.GetHashCode() ?? 0} '{(baseDef?.Path)}' - Base Structure '{baseStruct?.Url}'");
             Debug.WriteLine(ann?.BaseElementDefinition != null ? $" (old Base: #{ann.BaseElementDefinition.GetHashCode()} '{ann.BaseElementDefinition.Path}')" : "");
         }
 
@@ -5252,99 +5252,6 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(coreMethodElem);
             Assert.IsNotNull(coreMethodElem.Comment);
             Assert.AreEqual(coreMethodElem.Comment, baseElem.Comment);
-        }
-
-        // [WMR 20170718] TODO - Test for slicing issue
-        static StructureDefinition MySlicedDocumentReference => new StructureDefinition()
-        {
-            Type = FHIRAllTypes.Observation.GetLiteral(),
-            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.DocumentReference),
-            Name = "MySlicedDocumentReference",
-            Url = "http://example.org/fhir/StructureDefinition/MySlicedDocumentReference",
-            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
-            Kind = StructureDefinition.StructureDefinitionKind.Resource,
-            Differential = new StructureDefinition.DifferentialComponent()
-            {
-                Element = new List<ElementDefinition>()
-                {
-                    new ElementDefinition("DocumentReference.content")
-                    {
-                        Slicing = new ElementDefinition.SlicingComponent()
-                        {
-                            Description = "TEST"
-                            // Min = 1 in core resource definition
-                        }
-                    },
-                    new ElementDefinition("DocumentReference.content")
-                    {
-                        SliceName = "meta",
-                        // Following should be considered as a constraint!
-                        // As named slices should always start with Min = 0
-                        Min = 1
-                    },
-                }
-            }
-        };
-
-        // https://trello.com/c/d7EuVgZI
-        // Named slices should never inherit minimum cardinality from base element.
-        // Instead, named slice base should always have Min = 0
-        // Only slice entry inherits cardinality from base.
-        [TestMethod]
-        public void TestNamedSliceMinCardinality()
-        {
-            var sd = MySlicedDocumentReference;
-            var resolver = new InMemoryProfileResolver(sd);
-            var multiResolver = new MultiResolver(_testResolver, resolver);
-
-            _generator = new SnapshotGenerator(multiResolver, _settings);
-
-            StructureDefinition expanded = null;
-            // _generator.BeforeExpandElement += beforeExpandElementHandler_DEBUG;
-            _generator.PrepareElement += elementHandler;
-            try
-            {
-                generateSnapshotAndCompare(sd, out expanded);
-            }
-            finally
-            {
-                // _generator.BeforeExpandElement -= beforeExpandElementHandler_DEBUG;
-                _generator.PrepareElement -= elementHandler;
-            }
-
-            dumpOutcome(_generator.Outcome);
-            Assert.IsTrue(expanded.HasSnapshot);
-            // dumpElements(expanded.Snapshot.Element);
-            dumpBaseElems(expanded.Snapshot.Element);
-
-            var coreProfile = _testResolver.FindStructureDefinitionForCoreType(FHIRAllTypes.DocumentReference);
-            Assert.IsNotNull(coreProfile);
-            Assert.IsTrue(coreProfile.HasSnapshot);
-
-            // Verify slice entry in snapshot
-            var elems = expanded.Snapshot.Element;
-            var snapSliceEntry = elems.FirstOrDefault(e => e.Path == "DocumentReference.content");
-            Assert.IsNotNull(snapSliceEntry);
-            Assert.IsNotNull(snapSliceEntry.Slicing);
-
-            // Verify that slice entry inherits min cardinality from base profile
-            var coreElem = coreProfile.Snapshot.Element.FirstOrDefault(e => e.Path == snapSliceEntry.Path);
-            Assert.IsNotNull(coreElem);
-            Assert.AreEqual(1, coreElem.Min);
-            Assert.AreEqual(coreElem.Min, snapSliceEntry.Min);
-
-            // Verify that named slices do NOT inherit min cardinality from base profile
-            var diffSlice = sd.Differential.Element.FirstOrDefault(e => e.SliceName != null);
-            Assert.IsNotNull(diffSlice);
-            var snapSlice = elems.FirstOrDefault(e => e.SliceName == diffSlice.SliceName);
-            Assert.IsNotNull(snapSlice);
-            Assert.AreEqual(diffSlice.Min, snapSlice.Min);
-            var sliceBaseAnn = snapSlice.Annotation<BaseDefAnnotation>();
-            Assert.IsNotNull(sliceBaseAnn);
-            var sliceBase = sliceBaseAnn.BaseElementDefinition;
-            Assert.IsNotNull(sliceBase);
-            // Verify that slice base always has Min = 0 (not inherited from base profile)
-            Assert.AreEqual(0, sliceBase.Min);
         }
 
     }
