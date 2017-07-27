@@ -13,6 +13,7 @@ using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Tests.Introspection
 {
+    [TestClass]
     public class EnumMappingTest
     {
         [TestMethod]

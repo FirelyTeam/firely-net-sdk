@@ -259,11 +259,10 @@ namespace Hl7.Fhir.Validation
             var outcome = new OperationOutcome();
 
             if (!definition.Constraint.Any()) return outcome;
+            if (Settings.SkipConstraintValidation) return outcome;
 
             // Make sure FHIR extensions are installed in FP compiler
-            ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
-
-            if (Settings.SkipConstraintValidation) return outcome;
+            prepareFPProcessor();
 
             var context = instance.Parent;
 
@@ -310,6 +309,27 @@ namespace Hl7.Fhir.Validation
             }
 
             return outcome;
+        }
+
+        private void prepareFPProcessor()
+        {
+            //[20170726 EK] TODO: Mind you, there's a HUGE possiblity for race conditions here.
+            //We are setting a static variable (Resolver) to our local resolver - 
+            //if this stuff runs in parrallel, then threads will override each
+            //resolvers.  But unfortunately, there is no way to pass the resolver
+            //in with the execution of a fhirpath compiled expression :-(
+            ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
+            ElementNavFhirExtensions.Resolver = callExternalResolver;
+
+            IElementNavigator callExternalResolver(string url)
+            {
+                OperationOutcome o = new OperationOutcome();
+                var result = ExternalReferenceResolutionNeeded(url, o, "dummy");
+
+                if (o.Success && result != null) return result;
+
+                return null;
+            }
         }
 
         internal OperationOutcome ValidateBinding(ElementDefinition definition, IElementNavigator instance)
@@ -436,10 +456,15 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        internal void Trace(OperationOutcome outcome, string message, Issue issue, IElementNavigator location)
+        internal void Trace(OperationOutcome outcome, string message, Issue issue, string location)
         {
             if (Settings.Trace || issue.Severity != OperationOutcome.IssueSeverity.Information)
                 outcome.AddIssue(message, issue, location);
+        }
+
+        internal void Trace(OperationOutcome outcome, string message, Issue issue, IElementNavigator location)
+        {
+            Trace(outcome, message, issue, location.Location);
         }
 
         private string toStringRepresentation(IElementNavigator vp)
@@ -464,7 +489,7 @@ namespace Hl7.Fhir.Validation
                 return val.ToString();
         }
 
-        internal IElementNavigator ExternalReferenceResolutionNeeded(string reference, OperationOutcome outcome, IElementNavigator instance)
+        internal IElementNavigator ExternalReferenceResolutionNeeded(string reference, OperationOutcome outcome, string path)
         {
             if (!Settings.ResolveExteralReferences) return null;
 
@@ -480,7 +505,7 @@ namespace Hl7.Fhir.Validation
             }
             catch (Exception e)
             {
-                Trace(outcome, "External resolution of '{reference}' caused an error: " + e.Message, Issue.UNAVAILABLE_REFERENCED_RESOURCE, instance);
+                Trace(outcome, "External resolution of '{reference}' caused an error: " + e.Message, Issue.UNAVAILABLE_REFERENCED_RESOURCE, path);
             }
 
             // Else, try to resolve using the given ResourceResolver 
@@ -495,7 +520,7 @@ namespace Hl7.Fhir.Validation
                 }
                 catch (Exception e)
                 {
-                    Trace(outcome, $"Resolution of reference '{reference}' using the Resolver API failed: " + e.Message, Issue.UNAVAILABLE_REFERENCED_RESOURCE, instance);
+                    Trace(outcome, $"Resolution of reference '{reference}' using the Resolver API failed: " + e.Message, Issue.UNAVAILABLE_REFERENCED_RESOURCE, path);
                 }
             }
 

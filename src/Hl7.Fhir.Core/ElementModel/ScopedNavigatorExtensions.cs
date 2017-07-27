@@ -12,6 +12,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Utility;
+
 
 namespace Hl7.Fhir.ElementModel
 {
@@ -51,20 +54,33 @@ namespace Hl7.Fhir.ElementModel
             return identity;
         }
 
-        public static ScopedNavigator Resolve(this ScopedNavigator nav, string reference)
+        public static T Resolve<T>(this T nav, string reference, Func<string, T> externalResolver = null) where T:class,IElementNavigator
         {
-            var identity = nav.MakeAbsolute(new ResourceIdentity(reference));
+            // Then, resolve the url within the instance data first - this is only
+            // possibly if we have a ScopedNavigator at hand
+            var scopedNav = nav as ScopedNavigator;
+            if (scopedNav != null)
+            {
+                var identity = scopedNav.MakeAbsolute(new ResourceIdentity(reference));
 
-            if (identity.IsLocal || identity.IsAbsoluteRestUrl || identity.IsUrn)
-                return locateResource();
+                if (identity.IsLocal || identity.IsAbsoluteRestUrl || identity.IsUrn)
+                {
+                    var result = locateResource(identity);
+                    if (result != null) return (T)(object)result;
+                }
+            }
+
+            // Nothing found internally, now try the external resolver
+            if (externalResolver != null)
+                return externalResolver(reference);
             else
                 return null;
 
-            ScopedNavigator locateResource()
+            ScopedNavigator locateResource(ResourceIdentity identity)
             {
                 var url = identity.ToString();
 
-                foreach (var parent in nav.Parents())
+                foreach (var parent in scopedNav.Parents())
                 {
                     if (parent.AtBundle)
                     {
@@ -81,6 +97,28 @@ namespace Hl7.Fhir.ElementModel
 
                 return null;
             }
+        }
+
+
+        /// <summary>
+        /// Where this item is a reference, resolve it to an actual resource, and return that
+        /// </summary>
+        /// <param name="nav"></param>
+        /// <param name="externalResolver"></param>
+        /// <returns></returns>
+        public static T Resolve<T>(this T nav, Func<string, T> externalResolver=null) where T:class,IElementNavigator
+        {
+            // First, get the url to fetch from the focus
+            string url = null;
+
+            if (nav.Type == FHIRAllTypes.String.GetLiteral() && nav.Value is string s)
+                url = s;
+            else if (nav.Type == FHIRAllTypes.Reference.GetLiteral())
+                url = nav.ParseResourceReference()?.Reference;
+
+            if (url == null) return default(T);   // nothing found to resolve
+
+            return Resolve(nav, url, externalResolver);
         }
 
 
