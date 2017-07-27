@@ -33,7 +33,7 @@ Planned release DSTU2.1 was never published by HL7, but you will still find trac
 Get started by reading the [online documentation][netapi-docu]. Depending on the version of FHIR you require, you'll find the relevant links to the packages
 and develop branches in this repository below:
 
-|Spec version|Git branche|Core NuGet|Specification NuGet|
+|Spec version|Git branch|Core NuGet|Specification NuGet|
 |---|---|---|---|
 |STU3|https://github.com/ewoutkramer/fhir-net-api/tree/develop-stu3|https://www.nuget.org/packages/Hl7.Fhir.STU3/|https://www.nuget.org/packages/Hl7.Fhir.Specification.STU3/|
 |DSTU 2.1|N/A|https://www.nuget.org/packages/Hl7.Fhir.DSTU21/|https://www.nuget.org/packages/Hl7.Fhir.Specification.DSTU21/|
