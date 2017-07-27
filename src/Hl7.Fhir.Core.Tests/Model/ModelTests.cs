@@ -577,5 +577,13 @@ namespace Hl7.Fhir.Tests.Model
             Assert.IsTrue(expected.SequenceEqual(children));
         }
 
+        [TestMethod]
+        public void ParseFhirTypeName()
+        {
+            Assert.AreEqual(FHIRDefinedType.Markdown, ModelInfo.FhirTypeNameToFhirType("markdown"));
+            Assert.IsNull(ModelInfo.FhirTypeNameToFhirType("Markdown"));
+            Assert.AreEqual(FHIRDefinedType.Organization, ModelInfo.FhirTypeNameToFhirType("Organization"));
+        }
+
     }
 }
