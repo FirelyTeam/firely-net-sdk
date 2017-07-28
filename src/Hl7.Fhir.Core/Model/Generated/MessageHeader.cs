@@ -66,19 +66,19 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/response-code)
             /// </summary>
-            [EnumLiteral("ok"), Description("OK")]
+            [EnumLiteral("ok", "http://hl7.org/fhir/response-code"), Description("OK")]
             Ok,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/response-code)
             /// </summary>
-            [EnumLiteral("transient-error"), Description("Transient Error")]
+            [EnumLiteral("transient-error", "http://hl7.org/fhir/response-code"), Description("Transient Error")]
             TransientError,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/response-code)
             /// </summary>
-            [EnumLiteral("fatal-error"), Description("Fatal Error")]
+            [EnumLiteral("fatal-error", "http://hl7.org/fhir/response-code"), Description("Fatal Error")]
             FatalError,
         }
 

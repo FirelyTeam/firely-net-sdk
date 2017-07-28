@@ -66,19 +66,19 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/linkage-type)
             /// </summary>
-            [EnumLiteral("source"), Description("Source of truth")]
+            [EnumLiteral("source", "http://hl7.org/fhir/linkage-type"), Description("Source of truth")]
             Source,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/linkage-type)
             /// </summary>
-            [EnumLiteral("alternate"), Description("Alternate record")]
+            [EnumLiteral("alternate", "http://hl7.org/fhir/linkage-type"), Description("Alternate record")]
             Alternate,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/linkage-type)
             /// </summary>
-            [EnumLiteral("historical"), Description("Historical/obsolete record")]
+            [EnumLiteral("historical", "http://hl7.org/fhir/linkage-type"), Description("Historical/obsolete record")]
             Historical,
         }
 

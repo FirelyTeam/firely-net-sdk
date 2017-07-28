@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Validation
         private List<OperationOutcome> _successes = new List<OperationOutcome>();
         private List<OperationOutcome> _failures = new List<OperationOutcome>();
 
-        public override bool Add(IElementNavigator candidate)
+        public override bool Add(ScopedNavigator candidate)
         {
             var report = Validator.Validate(candidate, Root);
 

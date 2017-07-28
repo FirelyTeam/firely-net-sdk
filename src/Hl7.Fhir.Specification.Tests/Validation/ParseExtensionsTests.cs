@@ -48,6 +48,14 @@ namespace Hl7.Fhir.Validation
             Assert.True(p.IsExactly(i));
         }
 
+        [Fact]
+        public void TestParseResourceReference()
+        {
+            var i = new Model.ResourceReference("http://example.org/fhir/Patient/1", "a patient");
+            var nav = new PocoNavigator(i);
+            var p = nav.ParseResourceReference();
+            Assert.True(p.IsExactly(i));
+        }
 
         [Fact]
         public void TestParseBindableCode()

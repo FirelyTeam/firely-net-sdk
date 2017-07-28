@@ -66,31 +66,31 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/report-status-codes)
             /// </summary>
-            [EnumLiteral("completed"), Description("Completed")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/report-status-codes"), Description("Completed")]
             Completed,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/report-status-codes)
             /// </summary>
-            [EnumLiteral("in-progress"), Description("In Progress")]
+            [EnumLiteral("in-progress", "http://hl7.org/fhir/report-status-codes"), Description("In Progress")]
             InProgress,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/report-status-codes)
             /// </summary>
-            [EnumLiteral("waiting"), Description("Waiting")]
+            [EnumLiteral("waiting", "http://hl7.org/fhir/report-status-codes"), Description("Waiting")]
             Waiting,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/report-status-codes)
             /// </summary>
-            [EnumLiteral("stopped"), Description("Stopped")]
+            [EnumLiteral("stopped", "http://hl7.org/fhir/report-status-codes"), Description("Stopped")]
             Stopped,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/report-status-codes)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered In Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/report-status-codes"), Description("Entered In Error")]
             EnteredInError,
         }
 
@@ -105,19 +105,19 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/report-result-codes)
             /// </summary>
-            [EnumLiteral("pass"), Description("Pass")]
+            [EnumLiteral("pass", "http://hl7.org/fhir/report-result-codes"), Description("Pass")]
             Pass,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/report-result-codes)
             /// </summary>
-            [EnumLiteral("fail"), Description("Fail")]
+            [EnumLiteral("fail", "http://hl7.org/fhir/report-result-codes"), Description("Fail")]
             Fail,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/report-result-codes)
             /// </summary>
-            [EnumLiteral("pending"), Description("Pending")]
+            [EnumLiteral("pending", "http://hl7.org/fhir/report-result-codes"), Description("Pending")]
             Pending,
         }
 
@@ -132,19 +132,19 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/report-participant-type)
             /// </summary>
-            [EnumLiteral("test-engine"), Description("Test Engine")]
+            [EnumLiteral("test-engine", "http://hl7.org/fhir/report-participant-type"), Description("Test Engine")]
             TestEngine,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/report-participant-type)
             /// </summary>
-            [EnumLiteral("client"), Description("Client")]
+            [EnumLiteral("client", "http://hl7.org/fhir/report-participant-type"), Description("Client")]
             Client,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/report-participant-type)
             /// </summary>
-            [EnumLiteral("server"), Description("Server")]
+            [EnumLiteral("server", "http://hl7.org/fhir/report-participant-type"), Description("Server")]
             Server,
         }
 
@@ -159,31 +159,31 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/report-action-result-codes)
             /// </summary>
-            [EnumLiteral("pass"), Description("Pass")]
+            [EnumLiteral("pass", "http://hl7.org/fhir/report-action-result-codes"), Description("Pass")]
             Pass,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/report-action-result-codes)
             /// </summary>
-            [EnumLiteral("skip"), Description("Skip")]
+            [EnumLiteral("skip", "http://hl7.org/fhir/report-action-result-codes"), Description("Skip")]
             Skip,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/report-action-result-codes)
             /// </summary>
-            [EnumLiteral("fail"), Description("Fail")]
+            [EnumLiteral("fail", "http://hl7.org/fhir/report-action-result-codes"), Description("Fail")]
             Fail,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/report-action-result-codes)
             /// </summary>
-            [EnumLiteral("warning"), Description("Warning")]
+            [EnumLiteral("warning", "http://hl7.org/fhir/report-action-result-codes"), Description("Warning")]
             Warning,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/report-action-result-codes)
             /// </summary>
-            [EnumLiteral("error"), Description("Error")]
+            [EnumLiteral("error", "http://hl7.org/fhir/report-action-result-codes"), Description("Error")]
             Error,
         }
 

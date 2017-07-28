@@ -21,6 +21,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         #region Annotation: Created By Snapshot Generator
 
         /// <summary>Annotation to mark a generated element, so we can prevent duplicate re-generation.</summary>
+#if NET45
+        [Serializable]
+#endif
         sealed class CreatedBySnapshotGeneratorAnnotation
         {
             public DateTime Created { get; }
@@ -43,6 +46,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// Custom annotation for elements and properties in the <see cref="StructureDefinition.SnapshotComponent"/>
         /// that are constrained by the <see cref="StructureDefinition.DifferentialComponent"/>.
         /// </summary>
+#if NET45
+        [Serializable]
+#endif
         sealed class ConstrainedByDiffAnnotation
         {
             //
@@ -103,6 +109,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         #region Annotation: Snapshot ElementDefinition
 
         /// <summary>For annotating a differential element definition with a reference to the associated generated snapshot element definition.</summary>
+#if NET45
+        [Serializable]
+#endif
         sealed class SnapshotElementDefinitionAnnotation
         {
             /// <summary>

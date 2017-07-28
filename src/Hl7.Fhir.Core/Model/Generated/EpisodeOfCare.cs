@@ -66,43 +66,43 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/episode-of-care-status)
             /// </summary>
-            [EnumLiteral("planned"), Description("Planned")]
+            [EnumLiteral("planned", "http://hl7.org/fhir/episode-of-care-status"), Description("Planned")]
             Planned,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/episode-of-care-status)
             /// </summary>
-            [EnumLiteral("waitlist"), Description("Waitlist")]
+            [EnumLiteral("waitlist", "http://hl7.org/fhir/episode-of-care-status"), Description("Waitlist")]
             Waitlist,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/episode-of-care-status)
             /// </summary>
-            [EnumLiteral("active"), Description("Active")]
+            [EnumLiteral("active", "http://hl7.org/fhir/episode-of-care-status"), Description("Active")]
             Active,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/episode-of-care-status)
             /// </summary>
-            [EnumLiteral("onhold"), Description("On Hold")]
+            [EnumLiteral("onhold", "http://hl7.org/fhir/episode-of-care-status"), Description("On Hold")]
             Onhold,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/episode-of-care-status)
             /// </summary>
-            [EnumLiteral("finished"), Description("Finished")]
+            [EnumLiteral("finished", "http://hl7.org/fhir/episode-of-care-status"), Description("Finished")]
             Finished,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/episode-of-care-status)
             /// </summary>
-            [EnumLiteral("cancelled"), Description("Cancelled")]
+            [EnumLiteral("cancelled", "http://hl7.org/fhir/episode-of-care-status"), Description("Cancelled")]
             Cancelled,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/episode-of-care-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/episode-of-care-status"), Description("Entered in Error")]
             EnteredInError,
         }
 

@@ -36,8 +36,6 @@ namespace Hl7.Fhir.Validation
         public event EventHandler<OnSnapshotNeededEventArgs> OnSnapshotNeeded;
         public event EventHandler<OnResolveResourceReferenceEventArgs> OnExternalResolutionNeeded;
 
-        internal ScopeTracker ScopeTracker = new ScopeTracker();
-
 #if REUSE_SNAPSHOT_GENERATOR
         SnapshotGenerator _snapshotGenerator;
 
@@ -112,12 +110,14 @@ namespace Hl7.Fhir.Validation
         // This is the one and only main entry point for all external validation calls (i.e. invoked by the user of the API)
         internal OperationOutcome Validate(IElementNavigator instance, string declaredTypeProfile, IEnumerable<string> statedCanonicals, IEnumerable<StructureDefinition> statedProfiles)
         {
+            if (!(instance is ScopedNavigator)) instance = new ScopedNavigator(instance);
+
             var processor = new ProfilePreprocessor(profileResolutionNeeded, snapshotGenerationNeeded, instance, declaredTypeProfile, statedProfiles, statedCanonicals);
             var outcome = processor.Process();
 
             // Note: only start validating if the profiles are complete and consistent
             if (outcome.Success)
-                outcome.Add(Validate(instance, processor.Result));
+                outcome.Add(Validate((ScopedNavigator)instance, processor.Result));
 
             return outcome;
 
@@ -130,15 +130,15 @@ namespace Hl7.Fhir.Validation
             }
         }
 
-        internal OperationOutcome Validate(IElementNavigator instance, ElementDefinitionNavigator definition)
+        internal OperationOutcome Validate(ScopedNavigator instance, ElementDefinitionNavigator definition)
         {
             return Validate(instance, new[] { definition });
         }
 
 
         // This is the one and only main internal entry point for all validations, which in its term
-        // will call step 1 in the validator, the function 
-        internal OperationOutcome Validate(IElementNavigator instance, IEnumerable<ElementDefinitionNavigator> definitions)
+        // will call step 1 in the validator, the function validateElement
+        internal OperationOutcome Validate(ScopedNavigator instance, IEnumerable<ElementDefinitionNavigator> definitions)
         {
             var outcome = new OperationOutcome();
 
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        private Func<OperationOutcome> createValidator(ElementDefinitionNavigator nav, IElementNavigator instance)
+        private Func<OperationOutcome> createValidator(ElementDefinitionNavigator nav, ScopedNavigator instance)
         {
             return () => validateElement(nav, instance);
         }
@@ -171,112 +171,100 @@ namespace Hl7.Fhir.Validation
 
         //   private OperationOutcome validateElement(ElementDefinitionNavigator definition, IElementNavigator instance)
 
-        private OperationOutcome validateElement(ElementDefinitionNavigator definition, IElementNavigator instance)
+        private OperationOutcome validateElement(ElementDefinitionNavigator definition, ScopedNavigator instance)
         {
             var outcome = new OperationOutcome();
 
-            try
+            Trace(outcome, $"Start validation of ElementDefinition at path '{definition.QualifiedDefinitionPath()}'", Issue.PROCESSING_PROGRESS, instance);
+
+            // If navigator cannot be moved to content, there's really nothing to validate against.
+            if (definition.AtRoot && !definition.MoveToFirstChild())
             {
-                Trace(outcome, $"Start validation of ElementDefinition at path '{definition.QualifiedDefinitionPath()}'", Issue.PROCESSING_PROGRESS, instance);
-
-                ScopeTracker.Enter(instance);
-
-                // If navigator cannot be moved to content, there's really nothing to validate against.
-                if (definition.AtRoot && !definition.MoveToFirstChild())
-                {
-                    outcome.AddIssue($"Snapshot component of profile '{definition.StructureDefinition?.Url}' has no content.", Issue.PROFILE_ELEMENTDEF_IS_EMPTY, instance);
-                    return outcome;
-                }
-
-                // Any node must either have a value, or children, or both (e.g. extensions on primitives)
-                if (instance.Value == null && !instance.HasChildren())
-                {
-                    outcome.AddIssue("Element must not be empty", Issue.CONTENT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN, instance);
-                    return outcome;
-                }
-
-                var elementConstraints = definition.Current;
-
-                if (elementConstraints.IsPrimitiveValueConstraint())
-                {
-                    // The "value" property of a FHIR Primitive is the bottom of our recursion chain, it does not have a nameReference
-                    // nor a <type>, the only thing left to do to validate the content is to validate the string representation of the
-                    // primitive against the regex given in the core definition
-                    outcome.Add(VerifyPrimitiveContents(elementConstraints, instance));
-                }
-                else
-                {
-                    bool isInlineChildren = !definition.Current.IsRootElement();
-
-                    // Now, validate the children
-                    if (definition.HasChildren)
-                    {
-                        // If we are at the root of an abstract type (e.g. is this instance a Resource)?
-                        // or we are at a nested resource, we may expect more children in the instance than
-                        // we know about
-                        bool allowAdditionalChildren = (isInlineChildren && elementConstraints.IsResourcePlaceholder()) ||
-                                          (!isInlineChildren && definition.StructureDefinition.Abstract == true);
-
-                        // Handle in-lined constraints on children. In a snapshot, these children should be exhaustive,
-                        // so there's no point in also validating the <type> or <nameReference>
-                        // TODO: Check whether this is even true when the <type> has a profile?
-                        // Note: the snapshot is *not* exhaustive if the declared type is a base FHIR type (like Resource),
-                        // in which case there may be additional children (verified in the next step)
-                        outcome.Add(this.ValidateChildConstraints(definition, instance, allowAdditionalChildren: allowAdditionalChildren));
-
-                        // Special case: if we are located at a nested resource (i.e. contained or Bundle.entry.resource),
-                        // we need to validate based on the actual type of the instance
-                        if(isInlineChildren && elementConstraints.IsResourcePlaceholder())
-                        {
-                            outcome.Add(this.ValidateType(elementConstraints, instance));
-                        }
-                    }
-
-                    if (!definition.HasChildren)
-                    {
-                        // No inline-children, so validation depends on the presence of a <type> or <nameReference>
-                        if (elementConstraints.Type != null || elementConstraints.ContentReference != null)
-                        {
-                            outcome.Add(this.ValidateType(elementConstraints, instance));
-                            outcome.Add(ValidateNameReference(elementConstraints, definition, instance));
-                        }
-                        else
-                            Trace(outcome, "ElementDefinition has no child, nor does it specify a type or nameReference to validate the instance data against", Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE_OR_NAMEREF, instance);
-                    }
-                }
-
-                outcome.Add(this.ValidateFixed(elementConstraints, instance));
-                outcome.Add(this.ValidatePattern(elementConstraints, instance));
-                outcome.Add(this.ValidateMinMaxValue(elementConstraints, instance));
-                outcome.Add(ValidateMaxLength(elementConstraints, instance));
-                outcome.Add(ValidateConstraints(elementConstraints, instance));
-                outcome.Add(this.ValidateBinding(elementConstraints, instance));
-
-                // If the report only has partial information, no use to show the hierarchy, so flatten it.
-                if (Settings.Trace == false) outcome.Flatten();
-
+                outcome.AddIssue($"Snapshot component of profile '{definition.StructureDefinition?.Url}' has no content.", Issue.PROFILE_ELEMENTDEF_IS_EMPTY, instance);
                 return outcome;
             }
-            finally
+
+            // Any node must either have a value, or children, or both (e.g. extensions on primitives)
+            if (instance.Value == null && !instance.HasChildren())
             {
-                ScopeTracker.Leave(instance);
+                outcome.AddIssue("Element must not be empty", Issue.CONTENT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN, instance);
+                return outcome;
             }
+
+            var elementConstraints = definition.Current;
+
+            if (elementConstraints.IsPrimitiveValueConstraint())
+            {
+                // The "value" property of a FHIR Primitive is the bottom of our recursion chain, it does not have a nameReference
+                // nor a <type>, the only thing left to do to validate the content is to validate the string representation of the
+                // primitive against the regex given in the core definition
+                outcome.Add(VerifyPrimitiveContents(elementConstraints, instance));
+            }
+            else
+            {
+                bool isInlineChildren = !definition.Current.IsRootElement();
+
+                // Now, validate the children
+                if (definition.HasChildren)
+                {
+                    // If we are at the root of an abstract type (e.g. is this instance a Resource)?
+                    // or we are at a nested resource, we may expect more children in the instance than
+                    // we know about
+                    bool allowAdditionalChildren = (isInlineChildren && elementConstraints.IsResourcePlaceholder()) ||
+                                      (!isInlineChildren && definition.StructureDefinition.Abstract == true);
+
+                    // Handle in-lined constraints on children. In a snapshot, these children should be exhaustive,
+                    // so there's no point in also validating the <type> or <nameReference>
+                    // TODO: Check whether this is even true when the <type> has a profile?
+                    // Note: the snapshot is *not* exhaustive if the declared type is a base FHIR type (like Resource),
+                    // in which case there may be additional children (verified in the next step)
+                    outcome.Add(this.ValidateChildConstraints(definition, instance, allowAdditionalChildren: allowAdditionalChildren));
+
+                    // Special case: if we are located at a nested resource (i.e. contained or Bundle.entry.resource),
+                    // we need to validate based on the actual type of the instance
+                    if (isInlineChildren && elementConstraints.IsResourcePlaceholder())
+                    {
+                        outcome.Add(this.ValidateType(elementConstraints, instance));
+                    }
+                }
+
+                if (!definition.HasChildren)
+                {
+                    // No inline-children, so validation depends on the presence of a <type> or <contentReference>
+                    if (elementConstraints.Type != null || elementConstraints.ContentReference != null)
+                    {
+                            outcome.Add(this.ValidateType(elementConstraints, instance));
+                            outcome.Add(ValidateNameReference(elementConstraints, definition, instance));
+                    }
+                    else
+                        Trace(outcome, "ElementDefinition has no child, nor does it specify a type or contentReference to validate the instance data against", Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE_OR_NAMEREF, instance);
+                }
+            }
+
+            outcome.Add(this.ValidateFixed(elementConstraints, instance));
+            outcome.Add(this.ValidatePattern(elementConstraints, instance));
+            outcome.Add(this.ValidateMinMaxValue(elementConstraints, instance));
+            outcome.Add(ValidateMaxLength(elementConstraints, instance));
+            outcome.Add(ValidateConstraints(elementConstraints, instance));
+            outcome.Add(this.ValidateBinding(elementConstraints, instance));
+
+            // If the report only has partial information, no use to show the hierarchy, so flatten it.
+            if (Settings.Trace == false) outcome.Flatten();
+
+            return outcome;
         }
 
-        internal OperationOutcome ValidateConstraints(ElementDefinition definition, IElementNavigator instance)
+        internal OperationOutcome ValidateConstraints(ElementDefinition definition, ScopedNavigator instance)
         {
             var outcome = new OperationOutcome();
 
             if (!definition.Constraint.Any()) return outcome;
-
-            // Make sure FHIR extensions are installed in FP compiler
-            ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
-
-
-
             if (Settings.SkipConstraintValidation) return outcome;
 
-            var context = ScopeTracker.ResourceContext(instance);
+            // Make sure FHIR extensions are installed in FP compiler
+            prepareFPProcessor();
+
+            var context = instance.AtResource ? instance : instance.Parent;
 
             // <constraint>
             //  <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
@@ -323,6 +311,27 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
+        private void prepareFPProcessor()
+        {
+            //[20170726 EK] TODO: Mind you, there's a HUGE possiblity for race conditions here.
+            //We are setting a static variable (Resolver) to our local resolver - 
+            //if this stuff runs in parrallel, then threads will override each
+            //resolvers.  But unfortunately, there is no way to pass the resolver
+            //in with the execution of a fhirpath compiled expression :-(
+            ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
+            ElementNavFhirExtensions.Resolver = callExternalResolver;
+
+            IElementNavigator callExternalResolver(string url)
+            {
+                OperationOutcome o = new OperationOutcome();
+                var result = ExternalReferenceResolutionNeeded(url, o, "dummy");
+
+                if (o.Success && result != null) return result;
+
+                return null;
+            }
+        }
+
         internal OperationOutcome ValidateBinding(ElementDefinition definition, IElementNavigator instance)
         {
             var outcome = new OperationOutcome();
@@ -354,13 +363,13 @@ namespace Hl7.Fhir.Validation
             }
             catch (Exception e)
             {
-                Trace(outcome, $"Terminology service call failed for binding at {definition.Path}: {e.Message}", Issue.TERMINOLOGY_SERVICE_FAILED, instance);                
+                Trace(outcome, $"Terminology service call failed for binding at {definition.Path}: {e.Message}", Issue.TERMINOLOGY_SERVICE_FAILED, instance);
             }
 
             return outcome;
         }
 
-        internal OperationOutcome ValidateNameReference(ElementDefinition definition, ElementDefinitionNavigator allDefinitions, IElementNavigator instance)
+        internal OperationOutcome ValidateNameReference(ElementDefinition definition, ElementDefinitionNavigator allDefinitions, ScopedNavigator instance)
         {
             var outcome = new OperationOutcome();
 
@@ -447,10 +456,15 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        internal void Trace(OperationOutcome outcome, string message, Issue issue, IElementNavigator location)
+        internal void Trace(OperationOutcome outcome, string message, Issue issue, string location)
         {
             if (Settings.Trace || issue.Severity != OperationOutcome.IssueSeverity.Information)
                 outcome.AddIssue(message, issue, location);
+        }
+
+        internal void Trace(OperationOutcome outcome, string message, Issue issue, IElementNavigator location)
+        {
+            Trace(outcome, message, issue, location.Location);
         }
 
         private string toStringRepresentation(IElementNavigator vp)
@@ -475,7 +489,7 @@ namespace Hl7.Fhir.Validation
                 return val.ToString();
         }
 
-        internal IElementNavigator ExternalReferenceResolutionNeeded(string reference, OperationOutcome outcome, IElementNavigator instance)
+        internal IElementNavigator ExternalReferenceResolutionNeeded(string reference, OperationOutcome outcome, string path)
         {
             if (!Settings.ResolveExteralReferences) return null;
 
@@ -491,7 +505,7 @@ namespace Hl7.Fhir.Validation
             }
             catch (Exception e)
             {
-                Trace(outcome, "External resolution of '{reference}' caused an error: " + e.Message, Issue.UNAVAILABLE_REFERENCED_RESOURCE, instance);
+                Trace(outcome, "External resolution of '{reference}' caused an error: " + e.Message, Issue.UNAVAILABLE_REFERENCED_RESOURCE, path);
             }
 
             // Else, try to resolve using the given ResourceResolver 
@@ -506,7 +520,7 @@ namespace Hl7.Fhir.Validation
                 }
                 catch (Exception e)
                 {
-                    Trace(outcome, $"Resolution of reference '{reference}' using the Resolver API failed: " + e.Message, Issue.UNAVAILABLE_REFERENCED_RESOURCE, instance);
+                    Trace(outcome, $"Resolution of reference '{reference}' using the Resolver API failed: " + e.Message, Issue.UNAVAILABLE_REFERENCED_RESOURCE, path);
                 }
             }
 

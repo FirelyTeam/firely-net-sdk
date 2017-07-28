@@ -62,25 +62,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contributor-type)
             /// </summary>
-            [EnumLiteral("author"), Description("Author")]
+            [EnumLiteral("author", "http://hl7.org/fhir/contributor-type"), Description("Author")]
             Author,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contributor-type)
             /// </summary>
-            [EnumLiteral("editor"), Description("Editor")]
+            [EnumLiteral("editor", "http://hl7.org/fhir/contributor-type"), Description("Editor")]
             Editor,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contributor-type)
             /// </summary>
-            [EnumLiteral("reviewer"), Description("Reviewer")]
+            [EnumLiteral("reviewer", "http://hl7.org/fhir/contributor-type"), Description("Reviewer")]
             Reviewer,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contributor-type)
             /// </summary>
-            [EnumLiteral("endorser"), Description("Endorser")]
+            [EnumLiteral("endorser", "http://hl7.org/fhir/contributor-type"), Description("Endorser")]
             Endorser,
         }
 

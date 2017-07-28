@@ -66,19 +66,19 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/quality-type)
             /// </summary>
-            [EnumLiteral("indel"), Description("INDEL Comparison")]
+            [EnumLiteral("indel", "http://hl7.org/fhir/quality-type"), Description("INDEL Comparison")]
             Indel,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/quality-type)
             /// </summary>
-            [EnumLiteral("snp"), Description("SNP Comparison")]
+            [EnumLiteral("snp", "http://hl7.org/fhir/quality-type"), Description("SNP Comparison")]
             Snp,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/quality-type)
             /// </summary>
-            [EnumLiteral("unknown"), Description("UNKNOWN Comparison")]
+            [EnumLiteral("unknown", "http://hl7.org/fhir/quality-type"), Description("UNKNOWN Comparison")]
             Unknown,
         }
 
@@ -93,31 +93,31 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/repository-type)
             /// </summary>
-            [EnumLiteral("directlink"), Description("Click and see")]
+            [EnumLiteral("directlink", "http://hl7.org/fhir/repository-type"), Description("Click and see")]
             Directlink,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/repository-type)
             /// </summary>
-            [EnumLiteral("openapi"), Description("The URL is the RESTful or other kind of API that can access to the result.")]
+            [EnumLiteral("openapi", "http://hl7.org/fhir/repository-type"), Description("The URL is the RESTful or other kind of API that can access to the result.")]
             Openapi,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/repository-type)
             /// </summary>
-            [EnumLiteral("login"), Description("Result cannot be access unless an account is logged in")]
+            [EnumLiteral("login", "http://hl7.org/fhir/repository-type"), Description("Result cannot be access unless an account is logged in")]
             Login,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/repository-type)
             /// </summary>
-            [EnumLiteral("oauth"), Description("Result need to be fetched with API and need LOGIN( or cookies are required when visiting the link of resource)")]
+            [EnumLiteral("oauth", "http://hl7.org/fhir/repository-type"), Description("Result need to be fetched with API and need LOGIN( or cookies are required when visiting the link of resource)")]
             Oauth,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/repository-type)
             /// </summary>
-            [EnumLiteral("other"), Description("Some other complicated or particular way to get resource from URL.")]
+            [EnumLiteral("other", "http://hl7.org/fhir/repository-type"), Description("Some other complicated or particular way to get resource from URL.")]
             Other,
         }
 

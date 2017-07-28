@@ -17,50 +17,48 @@ namespace Hl7.Fhir.Validation
 {
     public class DotNetAttributeValidation
     {
-        public static void Validate(object value, bool recurse = false)
+        public static ValidationContext BuildContext(object value=null)
+        {
+#if NET40
+            return new ValidationContext(value, null, null);
+#else
+            return new ValidationContext(value);
+#endif
+        }
+
+        public static void Validate(object value, bool recurse = false, Func<string, Resource> resolver = null)
         {
             if (value == null) throw new ArgumentNullException("value");
             //    assertSupportedInstanceType(value);
 
-#if NET40
-            var validationContext = new ValidationContext(value, null, null);
-#else
-            var validationContext = new ValidationContext(value);
-#endif
+            var validationContext = BuildContext(value);
             validationContext.SetValidateRecursively(recurse);
+            validationContext.SetResolver(resolver);
+
             Validator.ValidateObject(value, validationContext, true);
         }
 
-        public static bool TryValidate(object value, ICollection<ValidationResult> validationResults = null, bool recurse = false)
+        public static bool TryValidate(object value, ICollection<ValidationResult> validationResults = null, bool recurse = false, Func<string,Resource> resolver=null)
         {
             if (value == null) throw new ArgumentNullException("value");
           // assertSupportedInstanceType(value);
 
             var results = validationResults ?? new List<ValidationResult>();
-#if NET40
-            var validationContext = new ValidationContext(value, null, null);
-#else
-            var validationContext = new ValidationContext(value);
-#endif
+            var validationContext = BuildContext(value);
             validationContext.SetValidateRecursively(recurse);
+            validationContext.SetResolver(resolver);
             return Validator.TryValidateObject(value, validationContext, results, true);
 
             // Note, if you pass a null validationResults, you will *not* get results (it's not an out param!)
         }
      
 
-        internal static IEnumerable<string> SingleMemberName(string name)
-        {
-            return new string[] { name };
-        }
-
-
         internal static ValidationResult BuildResult(ValidationContext context, string message, params object[] messageArgs)
         {
             var resultMessage = String.Format(message, messageArgs);
 
             if(context != null && context.MemberName != null)
-                return new ValidationResult(resultMessage, SingleMemberName(context.MemberName));
+                return new ValidationResult(resultMessage, new string[] { context.MemberName });
             else
                 return new ValidationResult(resultMessage);
         }

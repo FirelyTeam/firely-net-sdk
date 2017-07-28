@@ -66,19 +66,19 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/capability-statement-kind)
             /// </summary>
-            [EnumLiteral("instance"), Description("Instance")]
+            [EnumLiteral("instance", "http://hl7.org/fhir/capability-statement-kind"), Description("Instance")]
             Instance,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/capability-statement-kind)
             /// </summary>
-            [EnumLiteral("capability"), Description("Capability")]
+            [EnumLiteral("capability", "http://hl7.org/fhir/capability-statement-kind"), Description("Capability")]
             Capability,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/capability-statement-kind)
             /// </summary>
-            [EnumLiteral("requirements"), Description("Requirements")]
+            [EnumLiteral("requirements", "http://hl7.org/fhir/capability-statement-kind"), Description("Requirements")]
             Requirements,
         }
 
@@ -93,25 +93,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/unknown-content-code)
             /// </summary>
-            [EnumLiteral("no"), Description("Neither Elements or Extensions")]
+            [EnumLiteral("no", "http://hl7.org/fhir/unknown-content-code"), Description("Neither Elements or Extensions")]
             No,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/unknown-content-code)
             /// </summary>
-            [EnumLiteral("extensions"), Description("Unknown Extensions")]
+            [EnumLiteral("extensions", "http://hl7.org/fhir/unknown-content-code"), Description("Unknown Extensions")]
             Extensions,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/unknown-content-code)
             /// </summary>
-            [EnumLiteral("elements"), Description("Unknown Elements")]
+            [EnumLiteral("elements", "http://hl7.org/fhir/unknown-content-code"), Description("Unknown Elements")]
             Elements,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/unknown-content-code)
             /// </summary>
-            [EnumLiteral("both"), Description("Unknown Elements and Extensions")]
+            [EnumLiteral("both", "http://hl7.org/fhir/unknown-content-code"), Description("Unknown Elements and Extensions")]
             Both,
         }
 
@@ -126,13 +126,13 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/restful-capability-mode)
             /// </summary>
-            [EnumLiteral("client"), Description("Client")]
+            [EnumLiteral("client", "http://hl7.org/fhir/restful-capability-mode"), Description("Client")]
             Client,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/restful-capability-mode)
             /// </summary>
-            [EnumLiteral("server"), Description("Server")]
+            [EnumLiteral("server", "http://hl7.org/fhir/restful-capability-mode"), Description("Server")]
             Server,
         }
 
@@ -147,55 +147,55 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/restful-interaction)
             /// </summary>
-            [EnumLiteral("read"), Description("read")]
+            [EnumLiteral("read", "http://hl7.org/fhir/restful-interaction"), Description("read")]
             Read,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/restful-interaction)
             /// </summary>
-            [EnumLiteral("vread"), Description("vread")]
+            [EnumLiteral("vread", "http://hl7.org/fhir/restful-interaction"), Description("vread")]
             Vread,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/restful-interaction)
             /// </summary>
-            [EnumLiteral("update"), Description("update")]
+            [EnumLiteral("update", "http://hl7.org/fhir/restful-interaction"), Description("update")]
             Update,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/restful-interaction)
             /// </summary>
-            [EnumLiteral("patch"), Description("patch")]
+            [EnumLiteral("patch", "http://hl7.org/fhir/restful-interaction"), Description("patch")]
             Patch,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/restful-interaction)
             /// </summary>
-            [EnumLiteral("delete"), Description("delete")]
+            [EnumLiteral("delete", "http://hl7.org/fhir/restful-interaction"), Description("delete")]
             Delete,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/restful-interaction)
             /// </summary>
-            [EnumLiteral("history-instance"), Description("history-instance")]
+            [EnumLiteral("history-instance", "http://hl7.org/fhir/restful-interaction"), Description("history-instance")]
             HistoryInstance,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/restful-interaction)
             /// </summary>
-            [EnumLiteral("history-type"), Description("history-type")]
+            [EnumLiteral("history-type", "http://hl7.org/fhir/restful-interaction"), Description("history-type")]
             HistoryType,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/restful-interaction)
             /// </summary>
-            [EnumLiteral("create"), Description("create")]
+            [EnumLiteral("create", "http://hl7.org/fhir/restful-interaction"), Description("create")]
             Create,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/restful-interaction)
             /// </summary>
-            [EnumLiteral("search-type"), Description("search-type")]
+            [EnumLiteral("search-type", "http://hl7.org/fhir/restful-interaction"), Description("search-type")]
             SearchType,
         }
 
@@ -210,19 +210,19 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/versioning-policy)
             /// </summary>
-            [EnumLiteral("no-version"), Description("No VersionId Support")]
+            [EnumLiteral("no-version", "http://hl7.org/fhir/versioning-policy"), Description("No VersionId Support")]
             NoVersion,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/versioning-policy)
             /// </summary>
-            [EnumLiteral("versioned"), Description("Versioned")]
+            [EnumLiteral("versioned", "http://hl7.org/fhir/versioning-policy"), Description("Versioned")]
             Versioned,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/versioning-policy)
             /// </summary>
-            [EnumLiteral("versioned-update"), Description("VersionId tracked fully")]
+            [EnumLiteral("versioned-update", "http://hl7.org/fhir/versioning-policy"), Description("VersionId tracked fully")]
             VersionedUpdate,
         }
 
@@ -237,25 +237,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/conditional-read-status)
             /// </summary>
-            [EnumLiteral("not-supported"), Description("Not Supported")]
+            [EnumLiteral("not-supported", "http://hl7.org/fhir/conditional-read-status"), Description("Not Supported")]
             NotSupported,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/conditional-read-status)
             /// </summary>
-            [EnumLiteral("modified-since"), Description("If-Modified-Since")]
+            [EnumLiteral("modified-since", "http://hl7.org/fhir/conditional-read-status"), Description("If-Modified-Since")]
             ModifiedSince,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/conditional-read-status)
             /// </summary>
-            [EnumLiteral("not-match"), Description("If-None-Match")]
+            [EnumLiteral("not-match", "http://hl7.org/fhir/conditional-read-status"), Description("If-None-Match")]
             NotMatch,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/conditional-read-status)
             /// </summary>
-            [EnumLiteral("full-support"), Description("Full Support")]
+            [EnumLiteral("full-support", "http://hl7.org/fhir/conditional-read-status"), Description("Full Support")]
             FullSupport,
         }
 
@@ -270,19 +270,19 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/conditional-delete-status)
             /// </summary>
-            [EnumLiteral("not-supported"), Description("Not Supported")]
+            [EnumLiteral("not-supported", "http://hl7.org/fhir/conditional-delete-status"), Description("Not Supported")]
             NotSupported,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/conditional-delete-status)
             /// </summary>
-            [EnumLiteral("single"), Description("Single Deletes Supported")]
+            [EnumLiteral("single", "http://hl7.org/fhir/conditional-delete-status"), Description("Single Deletes Supported")]
             Single,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/conditional-delete-status)
             /// </summary>
-            [EnumLiteral("multiple"), Description("Multiple Deletes Supported")]
+            [EnumLiteral("multiple", "http://hl7.org/fhir/conditional-delete-status"), Description("Multiple Deletes Supported")]
             Multiple,
         }
 
@@ -297,31 +297,31 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/reference-handling-policy)
             /// </summary>
-            [EnumLiteral("literal"), Description("Literal References")]
+            [EnumLiteral("literal", "http://hl7.org/fhir/reference-handling-policy"), Description("Literal References")]
             Literal,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/reference-handling-policy)
             /// </summary>
-            [EnumLiteral("logical"), Description("Logical References")]
+            [EnumLiteral("logical", "http://hl7.org/fhir/reference-handling-policy"), Description("Logical References")]
             Logical,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/reference-handling-policy)
             /// </summary>
-            [EnumLiteral("resolves"), Description("Resolves References")]
+            [EnumLiteral("resolves", "http://hl7.org/fhir/reference-handling-policy"), Description("Resolves References")]
             Resolves,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/reference-handling-policy)
             /// </summary>
-            [EnumLiteral("enforced"), Description("Reference Integrity Enforced")]
+            [EnumLiteral("enforced", "http://hl7.org/fhir/reference-handling-policy"), Description("Reference Integrity Enforced")]
             Enforced,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/reference-handling-policy)
             /// </summary>
-            [EnumLiteral("local"), Description("Local References Only")]
+            [EnumLiteral("local", "http://hl7.org/fhir/reference-handling-policy"), Description("Local References Only")]
             Local,
         }
 
@@ -336,25 +336,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/restful-interaction)
             /// </summary>
-            [EnumLiteral("transaction"), Description("transaction")]
+            [EnumLiteral("transaction", "http://hl7.org/fhir/restful-interaction"), Description("transaction")]
             Transaction,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/restful-interaction)
             /// </summary>
-            [EnumLiteral("batch"), Description("batch")]
+            [EnumLiteral("batch", "http://hl7.org/fhir/restful-interaction"), Description("batch")]
             Batch,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/restful-interaction)
             /// </summary>
-            [EnumLiteral("search-system"), Description("search-system")]
+            [EnumLiteral("search-system", "http://hl7.org/fhir/restful-interaction"), Description("search-system")]
             SearchSystem,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/restful-interaction)
             /// </summary>
-            [EnumLiteral("history-system"), Description("history-system")]
+            [EnumLiteral("history-system", "http://hl7.org/fhir/restful-interaction"), Description("history-system")]
             HistorySystem,
         }
 
@@ -369,13 +369,13 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/event-capability-mode)
             /// </summary>
-            [EnumLiteral("sender"), Description("Sender")]
+            [EnumLiteral("sender", "http://hl7.org/fhir/event-capability-mode"), Description("Sender")]
             Sender,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/event-capability-mode)
             /// </summary>
-            [EnumLiteral("receiver"), Description("Receiver")]
+            [EnumLiteral("receiver", "http://hl7.org/fhir/event-capability-mode"), Description("Receiver")]
             Receiver,
         }
 
@@ -390,13 +390,13 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/document-mode)
             /// </summary>
-            [EnumLiteral("producer"), Description("Producer")]
+            [EnumLiteral("producer", "http://hl7.org/fhir/document-mode"), Description("Producer")]
             Producer,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/document-mode)
             /// </summary>
-            [EnumLiteral("consumer"), Description("Consumer")]
+            [EnumLiteral("consumer", "http://hl7.org/fhir/document-mode"), Description("Consumer")]
             Consumer,
         }
 

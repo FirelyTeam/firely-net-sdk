@@ -43,6 +43,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Base for all elements
     /// </summary>
+#if NET45
+    [Serializable]
+#endif
     [DataContract]
     public abstract partial class Element : Base, IExtendable
     {

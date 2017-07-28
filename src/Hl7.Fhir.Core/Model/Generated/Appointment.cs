@@ -66,49 +66,49 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/appointmentstatus)
             /// </summary>
-            [EnumLiteral("proposed"), Description("Proposed")]
+            [EnumLiteral("proposed", "http://hl7.org/fhir/appointmentstatus"), Description("Proposed")]
             Proposed,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/appointmentstatus)
             /// </summary>
-            [EnumLiteral("pending"), Description("Pending")]
+            [EnumLiteral("pending", "http://hl7.org/fhir/appointmentstatus"), Description("Pending")]
             Pending,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/appointmentstatus)
             /// </summary>
-            [EnumLiteral("booked"), Description("Booked")]
+            [EnumLiteral("booked", "http://hl7.org/fhir/appointmentstatus"), Description("Booked")]
             Booked,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/appointmentstatus)
             /// </summary>
-            [EnumLiteral("arrived"), Description("Arrived")]
+            [EnumLiteral("arrived", "http://hl7.org/fhir/appointmentstatus"), Description("Arrived")]
             Arrived,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/appointmentstatus)
             /// </summary>
-            [EnumLiteral("fulfilled"), Description("Fulfilled")]
+            [EnumLiteral("fulfilled", "http://hl7.org/fhir/appointmentstatus"), Description("Fulfilled")]
             Fulfilled,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/appointmentstatus)
             /// </summary>
-            [EnumLiteral("cancelled"), Description("Cancelled")]
+            [EnumLiteral("cancelled", "http://hl7.org/fhir/appointmentstatus"), Description("Cancelled")]
             Cancelled,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/appointmentstatus)
             /// </summary>
-            [EnumLiteral("noshow"), Description("No Show")]
+            [EnumLiteral("noshow", "http://hl7.org/fhir/appointmentstatus"), Description("No Show")]
             Noshow,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/appointmentstatus)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered in error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/appointmentstatus"), Description("Entered in error")]
             EnteredInError,
         }
 
@@ -123,19 +123,19 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/participantrequired)
             /// </summary>
-            [EnumLiteral("required"), Description("Required")]
+            [EnumLiteral("required", "http://hl7.org/fhir/participantrequired"), Description("Required")]
             Required,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/participantrequired)
             /// </summary>
-            [EnumLiteral("optional"), Description("Optional")]
+            [EnumLiteral("optional", "http://hl7.org/fhir/participantrequired"), Description("Optional")]
             Optional,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/participantrequired)
             /// </summary>
-            [EnumLiteral("information-only"), Description("Information Only")]
+            [EnumLiteral("information-only", "http://hl7.org/fhir/participantrequired"), Description("Information Only")]
             InformationOnly,
         }
 

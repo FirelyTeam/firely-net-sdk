@@ -66,37 +66,37 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/medication-admin-status)
             /// </summary>
-            [EnumLiteral("in-progress"), Description("In Progress")]
+            [EnumLiteral("in-progress", "http://hl7.org/fhir/medication-admin-status"), Description("In Progress")]
             InProgress,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/medication-admin-status)
             /// </summary>
-            [EnumLiteral("on-hold"), Description("On Hold")]
+            [EnumLiteral("on-hold", "http://hl7.org/fhir/medication-admin-status"), Description("On Hold")]
             OnHold,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/medication-admin-status)
             /// </summary>
-            [EnumLiteral("completed"), Description("Completed")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/medication-admin-status"), Description("Completed")]
             Completed,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/medication-admin-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/medication-admin-status"), Description("Entered in Error")]
             EnteredInError,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/medication-admin-status)
             /// </summary>
-            [EnumLiteral("stopped"), Description("Stopped")]
+            [EnumLiteral("stopped", "http://hl7.org/fhir/medication-admin-status"), Description("Stopped")]
             Stopped,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/medication-admin-status)
             /// </summary>
-            [EnumLiteral("unknown"), Description("Unknown")]
+            [EnumLiteral("unknown", "http://hl7.org/fhir/medication-admin-status"), Description("Unknown")]
             Unknown,
         }
 

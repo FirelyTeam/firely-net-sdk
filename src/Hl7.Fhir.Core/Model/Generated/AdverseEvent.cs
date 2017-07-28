@@ -66,13 +66,13 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/adverse-event-category)
             /// </summary>
-            [EnumLiteral("AE"), Description("Adverse Event")]
+            [EnumLiteral("AE", "http://hl7.org/fhir/adverse-event-category"), Description("Adverse Event")]
             AE,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/adverse-event-category)
             /// </summary>
-            [EnumLiteral("PAE"), Description("Potential Adverse Event")]
+            [EnumLiteral("PAE", "http://hl7.org/fhir/adverse-event-category"), Description("Potential Adverse Event")]
             PAE,
         }
 
@@ -87,13 +87,13 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/adverse-event-causality)
             /// </summary>
-            [EnumLiteral("causality1"), Description("causality1 placeholder")]
+            [EnumLiteral("causality1", "http://hl7.org/fhir/adverse-event-causality"), Description("causality1 placeholder")]
             Causality1,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/adverse-event-causality)
             /// </summary>
-            [EnumLiteral("causality2"), Description("causality2 placeholder")]
+            [EnumLiteral("causality2", "http://hl7.org/fhir/adverse-event-causality"), Description("causality2 placeholder")]
             Causality2,
         }
 

@@ -66,31 +66,31 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/provenance-entity-role)
             /// </summary>
-            [EnumLiteral("derivation"), Description("Derivation")]
+            [EnumLiteral("derivation", "http://hl7.org/fhir/provenance-entity-role"), Description("Derivation")]
             Derivation,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/provenance-entity-role)
             /// </summary>
-            [EnumLiteral("revision"), Description("Revision")]
+            [EnumLiteral("revision", "http://hl7.org/fhir/provenance-entity-role"), Description("Revision")]
             Revision,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/provenance-entity-role)
             /// </summary>
-            [EnumLiteral("quotation"), Description("Quotation")]
+            [EnumLiteral("quotation", "http://hl7.org/fhir/provenance-entity-role"), Description("Quotation")]
             Quotation,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/provenance-entity-role)
             /// </summary>
-            [EnumLiteral("source"), Description("Source")]
+            [EnumLiteral("source", "http://hl7.org/fhir/provenance-entity-role"), Description("Source")]
             Source,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/provenance-entity-role)
             /// </summary>
-            [EnumLiteral("removal"), Description("Removal")]
+            [EnumLiteral("removal", "http://hl7.org/fhir/provenance-entity-role"), Description("Removal")]
             Removal,
         }
 

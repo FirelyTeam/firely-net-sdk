@@ -66,37 +66,37 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/dataelement-stringency)
             /// </summary>
-            [EnumLiteral("comparable"), Description("Comparable")]
+            [EnumLiteral("comparable", "http://hl7.org/fhir/dataelement-stringency"), Description("Comparable")]
             Comparable,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/dataelement-stringency)
             /// </summary>
-            [EnumLiteral("fully-specified"), Description("Fully Specified")]
+            [EnumLiteral("fully-specified", "http://hl7.org/fhir/dataelement-stringency"), Description("Fully Specified")]
             FullySpecified,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/dataelement-stringency)
             /// </summary>
-            [EnumLiteral("equivalent"), Description("Equivalent")]
+            [EnumLiteral("equivalent", "http://hl7.org/fhir/dataelement-stringency"), Description("Equivalent")]
             Equivalent,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/dataelement-stringency)
             /// </summary>
-            [EnumLiteral("convertable"), Description("Convertable")]
+            [EnumLiteral("convertable", "http://hl7.org/fhir/dataelement-stringency"), Description("Convertable")]
             Convertable,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/dataelement-stringency)
             /// </summary>
-            [EnumLiteral("scaleable"), Description("Scaleable")]
+            [EnumLiteral("scaleable", "http://hl7.org/fhir/dataelement-stringency"), Description("Scaleable")]
             Scaleable,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/dataelement-stringency)
             /// </summary>
-            [EnumLiteral("flexible"), Description("Flexible")]
+            [EnumLiteral("flexible", "http://hl7.org/fhir/dataelement-stringency"), Description("Flexible")]
             Flexible,
         }
 

@@ -66,61 +66,61 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/concept-map-equivalence)
             /// </summary>
-            [EnumLiteral("relatedto"), Description("Related To")]
+            [EnumLiteral("relatedto", "http://hl7.org/fhir/concept-map-equivalence"), Description("Related To")]
             Relatedto,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/concept-map-equivalence)
             /// </summary>
-            [EnumLiteral("equivalent"), Description("Equivalent")]
+            [EnumLiteral("equivalent", "http://hl7.org/fhir/concept-map-equivalence"), Description("Equivalent")]
             Equivalent,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/concept-map-equivalence)
             /// </summary>
-            [EnumLiteral("equal"), Description("Equal")]
+            [EnumLiteral("equal", "http://hl7.org/fhir/concept-map-equivalence"), Description("Equal")]
             Equal,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/concept-map-equivalence)
             /// </summary>
-            [EnumLiteral("wider"), Description("Wider")]
+            [EnumLiteral("wider", "http://hl7.org/fhir/concept-map-equivalence"), Description("Wider")]
             Wider,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/concept-map-equivalence)
             /// </summary>
-            [EnumLiteral("subsumes"), Description("Subsumes")]
+            [EnumLiteral("subsumes", "http://hl7.org/fhir/concept-map-equivalence"), Description("Subsumes")]
             Subsumes,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/concept-map-equivalence)
             /// </summary>
-            [EnumLiteral("narrower"), Description("Narrower")]
+            [EnumLiteral("narrower", "http://hl7.org/fhir/concept-map-equivalence"), Description("Narrower")]
             Narrower,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/concept-map-equivalence)
             /// </summary>
-            [EnumLiteral("specializes"), Description("Specializes")]
+            [EnumLiteral("specializes", "http://hl7.org/fhir/concept-map-equivalence"), Description("Specializes")]
             Specializes,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/concept-map-equivalence)
             /// </summary>
-            [EnumLiteral("inexact"), Description("Inexact")]
+            [EnumLiteral("inexact", "http://hl7.org/fhir/concept-map-equivalence"), Description("Inexact")]
             Inexact,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/concept-map-equivalence)
             /// </summary>
-            [EnumLiteral("unmatched"), Description("Unmatched")]
+            [EnumLiteral("unmatched", "http://hl7.org/fhir/concept-map-equivalence"), Description("Unmatched")]
             Unmatched,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/concept-map-equivalence)
             /// </summary>
-            [EnumLiteral("disjoint"), Description("Disjoint")]
+            [EnumLiteral("disjoint", "http://hl7.org/fhir/concept-map-equivalence"), Description("Disjoint")]
             Disjoint,
         }
 
@@ -135,19 +135,19 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/conceptmap-unmapped-mode)
             /// </summary>
-            [EnumLiteral("provided"), Description("Provided Code")]
+            [EnumLiteral("provided", "http://hl7.org/fhir/conceptmap-unmapped-mode"), Description("Provided Code")]
             Provided,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/conceptmap-unmapped-mode)
             /// </summary>
-            [EnumLiteral("fixed"), Description("Fixed Code")]
+            [EnumLiteral("fixed", "http://hl7.org/fhir/conceptmap-unmapped-mode"), Description("Fixed Code")]
             Fixed,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/conceptmap-unmapped-mode)
             /// </summary>
-            [EnumLiteral("other-map"), Description("Other Map")]
+            [EnumLiteral("other-map", "http://hl7.org/fhir/conceptmap-unmapped-mode"), Description("Other Map")]
             OtherMap,
         }
 

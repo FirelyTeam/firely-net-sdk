@@ -66,43 +66,43 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/supplyrequest-status)
             /// </summary>
-            [EnumLiteral("draft"), Description("Draft")]
+            [EnumLiteral("draft", "http://hl7.org/fhir/supplyrequest-status"), Description("Draft")]
             Draft,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/supplyrequest-status)
             /// </summary>
-            [EnumLiteral("active"), Description("Active")]
+            [EnumLiteral("active", "http://hl7.org/fhir/supplyrequest-status"), Description("Active")]
             Active,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/supplyrequest-status)
             /// </summary>
-            [EnumLiteral("suspended"), Description("Suspended")]
+            [EnumLiteral("suspended", "http://hl7.org/fhir/supplyrequest-status"), Description("Suspended")]
             Suspended,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/supplyrequest-status)
             /// </summary>
-            [EnumLiteral("cancelled"), Description("Cancelled")]
+            [EnumLiteral("cancelled", "http://hl7.org/fhir/supplyrequest-status"), Description("Cancelled")]
             Cancelled,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/supplyrequest-status)
             /// </summary>
-            [EnumLiteral("completed"), Description("Completed")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/supplyrequest-status"), Description("Completed")]
             Completed,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/supplyrequest-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/supplyrequest-status"), Description("Entered in Error")]
             EnteredInError,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/supplyrequest-status)
             /// </summary>
-            [EnumLiteral("unknown"), Description("Unknown")]
+            [EnumLiteral("unknown", "http://hl7.org/fhir/supplyrequest-status"), Description("Unknown")]
             Unknown,
         }
 

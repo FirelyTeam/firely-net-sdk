@@ -66,13 +66,13 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/guide-dependency-type)
             /// </summary>
-            [EnumLiteral("reference"), Description("Reference")]
+            [EnumLiteral("reference", "http://hl7.org/fhir/guide-dependency-type"), Description("Reference")]
             Reference,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/guide-dependency-type)
             /// </summary>
-            [EnumLiteral("inclusion"), Description("Inclusion")]
+            [EnumLiteral("inclusion", "http://hl7.org/fhir/guide-dependency-type"), Description("Inclusion")]
             Inclusion,
         }
 
@@ -87,49 +87,49 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/guide-page-kind)
             /// </summary>
-            [EnumLiteral("page"), Description("Page")]
+            [EnumLiteral("page", "http://hl7.org/fhir/guide-page-kind"), Description("Page")]
             Page,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/guide-page-kind)
             /// </summary>
-            [EnumLiteral("example"), Description("Example")]
+            [EnumLiteral("example", "http://hl7.org/fhir/guide-page-kind"), Description("Example")]
             Example,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/guide-page-kind)
             /// </summary>
-            [EnumLiteral("list"), Description("List")]
+            [EnumLiteral("list", "http://hl7.org/fhir/guide-page-kind"), Description("List")]
             List,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/guide-page-kind)
             /// </summary>
-            [EnumLiteral("include"), Description("Include")]
+            [EnumLiteral("include", "http://hl7.org/fhir/guide-page-kind"), Description("Include")]
             Include,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/guide-page-kind)
             /// </summary>
-            [EnumLiteral("directory"), Description("Directory")]
+            [EnumLiteral("directory", "http://hl7.org/fhir/guide-page-kind"), Description("Directory")]
             Directory,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/guide-page-kind)
             /// </summary>
-            [EnumLiteral("dictionary"), Description("Dictionary")]
+            [EnumLiteral("dictionary", "http://hl7.org/fhir/guide-page-kind"), Description("Dictionary")]
             Dictionary,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/guide-page-kind)
             /// </summary>
-            [EnumLiteral("toc"), Description("Table Of Contents")]
+            [EnumLiteral("toc", "http://hl7.org/fhir/guide-page-kind"), Description("Table Of Contents")]
             Toc,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/guide-page-kind)
             /// </summary>
-            [EnumLiteral("resource"), Description("Resource")]
+            [EnumLiteral("resource", "http://hl7.org/fhir/guide-page-kind"), Description("Resource")]
             Resource,
         }
 

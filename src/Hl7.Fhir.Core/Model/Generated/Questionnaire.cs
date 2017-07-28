@@ -66,97 +66,97 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/item-type)
             /// </summary>
-            [EnumLiteral("group"), Description("Group")]
+            [EnumLiteral("group", "http://hl7.org/fhir/item-type"), Description("Group")]
             Group,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/item-type)
             /// </summary>
-            [EnumLiteral("display"), Description("Display")]
+            [EnumLiteral("display", "http://hl7.org/fhir/item-type"), Description("Display")]
             Display,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/item-type)
             /// </summary>
-            [EnumLiteral("boolean"), Description("Boolean")]
+            [EnumLiteral("boolean", "http://hl7.org/fhir/item-type"), Description("Boolean")]
             Boolean,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/item-type)
             /// </summary>
-            [EnumLiteral("decimal"), Description("Decimal")]
+            [EnumLiteral("decimal", "http://hl7.org/fhir/item-type"), Description("Decimal")]
             Decimal,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/item-type)
             /// </summary>
-            [EnumLiteral("integer"), Description("Integer")]
+            [EnumLiteral("integer", "http://hl7.org/fhir/item-type"), Description("Integer")]
             Integer,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/item-type)
             /// </summary>
-            [EnumLiteral("date"), Description("Date")]
+            [EnumLiteral("date", "http://hl7.org/fhir/item-type"), Description("Date")]
             Date,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/item-type)
             /// </summary>
-            [EnumLiteral("dateTime"), Description("Date Time")]
+            [EnumLiteral("dateTime", "http://hl7.org/fhir/item-type"), Description("Date Time")]
             DateTime,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/item-type)
             /// </summary>
-            [EnumLiteral("time"), Description("Time")]
+            [EnumLiteral("time", "http://hl7.org/fhir/item-type"), Description("Time")]
             Time,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/item-type)
             /// </summary>
-            [EnumLiteral("string"), Description("String")]
+            [EnumLiteral("string", "http://hl7.org/fhir/item-type"), Description("String")]
             String,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/item-type)
             /// </summary>
-            [EnumLiteral("text"), Description("Text")]
+            [EnumLiteral("text", "http://hl7.org/fhir/item-type"), Description("Text")]
             Text,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/item-type)
             /// </summary>
-            [EnumLiteral("url"), Description("Url")]
+            [EnumLiteral("url", "http://hl7.org/fhir/item-type"), Description("Url")]
             Url,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/item-type)
             /// </summary>
-            [EnumLiteral("choice"), Description("Choice")]
+            [EnumLiteral("choice", "http://hl7.org/fhir/item-type"), Description("Choice")]
             Choice,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/item-type)
             /// </summary>
-            [EnumLiteral("open-choice"), Description("Open Choice")]
+            [EnumLiteral("open-choice", "http://hl7.org/fhir/item-type"), Description("Open Choice")]
             OpenChoice,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/item-type)
             /// </summary>
-            [EnumLiteral("attachment"), Description("Attachment")]
+            [EnumLiteral("attachment", "http://hl7.org/fhir/item-type"), Description("Attachment")]
             Attachment,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/item-type)
             /// </summary>
-            [EnumLiteral("reference"), Description("Reference")]
+            [EnumLiteral("reference", "http://hl7.org/fhir/item-type"), Description("Reference")]
             Reference,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/item-type)
             /// </summary>
-            [EnumLiteral("quantity"), Description("Quantity")]
+            [EnumLiteral("quantity", "http://hl7.org/fhir/item-type"), Description("Quantity")]
             Quantity,
         }
 

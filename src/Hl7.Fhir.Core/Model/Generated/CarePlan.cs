@@ -66,43 +66,43 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-status)
             /// </summary>
-            [EnumLiteral("draft"), Description("Pending")]
+            [EnumLiteral("draft", "http://hl7.org/fhir/care-plan-status"), Description("Pending")]
             Draft,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-status)
             /// </summary>
-            [EnumLiteral("active"), Description("Active")]
+            [EnumLiteral("active", "http://hl7.org/fhir/care-plan-status"), Description("Active")]
             Active,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-status)
             /// </summary>
-            [EnumLiteral("suspended"), Description("Suspended")]
+            [EnumLiteral("suspended", "http://hl7.org/fhir/care-plan-status"), Description("Suspended")]
             Suspended,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-status)
             /// </summary>
-            [EnumLiteral("completed"), Description("Completed")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/care-plan-status"), Description("Completed")]
             Completed,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered In Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/care-plan-status"), Description("Entered In Error")]
             EnteredInError,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-status)
             /// </summary>
-            [EnumLiteral("cancelled"), Description("Cancelled")]
+            [EnumLiteral("cancelled", "http://hl7.org/fhir/care-plan-status"), Description("Cancelled")]
             Cancelled,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-status)
             /// </summary>
-            [EnumLiteral("unknown"), Description("Unknown")]
+            [EnumLiteral("unknown", "http://hl7.org/fhir/care-plan-status"), Description("Unknown")]
             Unknown,
         }
 
@@ -117,25 +117,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-intent)
             /// </summary>
-            [EnumLiteral("proposal"), Description("Proposal")]
+            [EnumLiteral("proposal", "http://hl7.org/fhir/care-plan-intent"), Description("Proposal")]
             Proposal,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-intent)
             /// </summary>
-            [EnumLiteral("plan"), Description("Plan")]
+            [EnumLiteral("plan", "http://hl7.org/fhir/care-plan-intent"), Description("Plan")]
             Plan,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-intent)
             /// </summary>
-            [EnumLiteral("order"), Description("Order")]
+            [EnumLiteral("order", "http://hl7.org/fhir/care-plan-intent"), Description("Order")]
             Order,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-intent)
             /// </summary>
-            [EnumLiteral("option"), Description("Option")]
+            [EnumLiteral("option", "http://hl7.org/fhir/care-plan-intent"), Description("Option")]
             Option,
         }
 
@@ -150,43 +150,43 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-activity-status)
             /// </summary>
-            [EnumLiteral("not-started"), Description("Not Started")]
+            [EnumLiteral("not-started", "http://hl7.org/fhir/care-plan-activity-status"), Description("Not Started")]
             NotStarted,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-activity-status)
             /// </summary>
-            [EnumLiteral("scheduled"), Description("Scheduled")]
+            [EnumLiteral("scheduled", "http://hl7.org/fhir/care-plan-activity-status"), Description("Scheduled")]
             Scheduled,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-activity-status)
             /// </summary>
-            [EnumLiteral("in-progress"), Description("In Progress")]
+            [EnumLiteral("in-progress", "http://hl7.org/fhir/care-plan-activity-status"), Description("In Progress")]
             InProgress,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-activity-status)
             /// </summary>
-            [EnumLiteral("on-hold"), Description("On Hold")]
+            [EnumLiteral("on-hold", "http://hl7.org/fhir/care-plan-activity-status"), Description("On Hold")]
             OnHold,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-activity-status)
             /// </summary>
-            [EnumLiteral("completed"), Description("Completed")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/care-plan-activity-status"), Description("Completed")]
             Completed,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-activity-status)
             /// </summary>
-            [EnumLiteral("cancelled"), Description("Cancelled")]
+            [EnumLiteral("cancelled", "http://hl7.org/fhir/care-plan-activity-status"), Description("Cancelled")]
             Cancelled,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-activity-status)
             /// </summary>
-            [EnumLiteral("unknown"), Description("Unknown")]
+            [EnumLiteral("unknown", "http://hl7.org/fhir/care-plan-activity-status"), Description("Unknown")]
             Unknown,
         }
 

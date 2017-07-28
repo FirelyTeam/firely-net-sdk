@@ -66,25 +66,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/specimen-status)
             /// </summary>
-            [EnumLiteral("available"), Description("Available")]
+            [EnumLiteral("available", "http://hl7.org/fhir/specimen-status"), Description("Available")]
             Available,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/specimen-status)
             /// </summary>
-            [EnumLiteral("unavailable"), Description("Unavailable")]
+            [EnumLiteral("unavailable", "http://hl7.org/fhir/specimen-status"), Description("Unavailable")]
             Unavailable,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/specimen-status)
             /// </summary>
-            [EnumLiteral("unsatisfactory"), Description("Unsatisfactory")]
+            [EnumLiteral("unsatisfactory", "http://hl7.org/fhir/specimen-status"), Description("Unsatisfactory")]
             Unsatisfactory,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/specimen-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered-in-error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/specimen-status"), Description("Entered-in-error")]
             EnteredInError,
         }
 

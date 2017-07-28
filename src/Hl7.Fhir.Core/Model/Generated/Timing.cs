@@ -62,43 +62,43 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://unitsofmeasure.org)
             /// </summary>
-            [EnumLiteral("s"), Description("秒")]
+            [EnumLiteral("s", "http://unitsofmeasure.org"), Description("秒")]
             S,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://unitsofmeasure.org)
             /// </summary>
-            [EnumLiteral("min"), Description("分钟")]
+            [EnumLiteral("min", "http://unitsofmeasure.org"), Description("分钟")]
             Min,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://unitsofmeasure.org)
             /// </summary>
-            [EnumLiteral("h"), Description("小时")]
+            [EnumLiteral("h", "http://unitsofmeasure.org"), Description("小时")]
             H,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://unitsofmeasure.org)
             /// </summary>
-            [EnumLiteral("d"), Description("天")]
+            [EnumLiteral("d", "http://unitsofmeasure.org"), Description("天")]
             D,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://unitsofmeasure.org)
             /// </summary>
-            [EnumLiteral("wk"), Description("星期")]
+            [EnumLiteral("wk", "http://unitsofmeasure.org"), Description("星期")]
             Wk,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://unitsofmeasure.org)
             /// </summary>
-            [EnumLiteral("mo"), Description("月")]
+            [EnumLiteral("mo", "http://unitsofmeasure.org"), Description("月")]
             Mo,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://unitsofmeasure.org)
             /// </summary>
-            [EnumLiteral("a"), Description("年")]
+            [EnumLiteral("a", "http://unitsofmeasure.org"), Description("年")]
             A,
         }
 
@@ -113,115 +113,115 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/event-timing)
             /// </summary>
-            [EnumLiteral("MORN"), Description("Morning")]
+            [EnumLiteral("MORN", "http://hl7.org/fhir/event-timing"), Description("Morning")]
             MORN,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/event-timing)
             /// </summary>
-            [EnumLiteral("AFT"), Description("Afternoon")]
+            [EnumLiteral("AFT", "http://hl7.org/fhir/event-timing"), Description("Afternoon")]
             AFT,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/event-timing)
             /// </summary>
-            [EnumLiteral("EVE"), Description("Evening")]
+            [EnumLiteral("EVE", "http://hl7.org/fhir/event-timing"), Description("Evening")]
             EVE,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/event-timing)
             /// </summary>
-            [EnumLiteral("NIGHT"), Description("Night")]
+            [EnumLiteral("NIGHT", "http://hl7.org/fhir/event-timing"), Description("Night")]
             NIGHT,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/event-timing)
             /// </summary>
-            [EnumLiteral("PHS"), Description("After Sleep")]
+            [EnumLiteral("PHS", "http://hl7.org/fhir/event-timing"), Description("After Sleep")]
             PHS,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/TimingEvent)
             /// </summary>
-            [EnumLiteral("HS"), Description("HS")]
+            [EnumLiteral("HS", "http://hl7.org/fhir/v3/TimingEvent"), Description("HS")]
             HS,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/TimingEvent)
             /// </summary>
-            [EnumLiteral("WAKE"), Description("WAKE")]
+            [EnumLiteral("WAKE", "http://hl7.org/fhir/v3/TimingEvent"), Description("WAKE")]
             WAKE,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/TimingEvent)
             /// </summary>
-            [EnumLiteral("C"), Description("C")]
+            [EnumLiteral("C", "http://hl7.org/fhir/v3/TimingEvent"), Description("C")]
             C,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/TimingEvent)
             /// </summary>
-            [EnumLiteral("CM"), Description("CM")]
+            [EnumLiteral("CM", "http://hl7.org/fhir/v3/TimingEvent"), Description("CM")]
             CM,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/TimingEvent)
             /// </summary>
-            [EnumLiteral("CD"), Description("CD")]
+            [EnumLiteral("CD", "http://hl7.org/fhir/v3/TimingEvent"), Description("CD")]
             CD,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/TimingEvent)
             /// </summary>
-            [EnumLiteral("CV"), Description("CV")]
+            [EnumLiteral("CV", "http://hl7.org/fhir/v3/TimingEvent"), Description("CV")]
             CV,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/TimingEvent)
             /// </summary>
-            [EnumLiteral("AC"), Description("AC")]
+            [EnumLiteral("AC", "http://hl7.org/fhir/v3/TimingEvent"), Description("AC")]
             AC,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/TimingEvent)
             /// </summary>
-            [EnumLiteral("ACM"), Description("ACM")]
+            [EnumLiteral("ACM", "http://hl7.org/fhir/v3/TimingEvent"), Description("ACM")]
             ACM,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/TimingEvent)
             /// </summary>
-            [EnumLiteral("ACD"), Description("ACD")]
+            [EnumLiteral("ACD", "http://hl7.org/fhir/v3/TimingEvent"), Description("ACD")]
             ACD,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/TimingEvent)
             /// </summary>
-            [EnumLiteral("ACV"), Description("ACV")]
+            [EnumLiteral("ACV", "http://hl7.org/fhir/v3/TimingEvent"), Description("ACV")]
             ACV,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/TimingEvent)
             /// </summary>
-            [EnumLiteral("PC"), Description("PC")]
+            [EnumLiteral("PC", "http://hl7.org/fhir/v3/TimingEvent"), Description("PC")]
             PC,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/TimingEvent)
             /// </summary>
-            [EnumLiteral("PCM"), Description("PCM")]
+            [EnumLiteral("PCM", "http://hl7.org/fhir/v3/TimingEvent"), Description("PCM")]
             PCM,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/TimingEvent)
             /// </summary>
-            [EnumLiteral("PCD"), Description("PCD")]
+            [EnumLiteral("PCD", "http://hl7.org/fhir/v3/TimingEvent"), Description("PCD")]
             PCD,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/TimingEvent)
             /// </summary>
-            [EnumLiteral("PCV"), Description("PCV")]
+            [EnumLiteral("PCV", "http://hl7.org/fhir/v3/TimingEvent"), Description("PCV")]
             PCV,
         }
 

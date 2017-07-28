@@ -62,25 +62,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/quantity-comparator)
             /// </summary>
-            [EnumLiteral("<"), Description("Less than")]
+            [EnumLiteral("<", "http://hl7.org/fhir/quantity-comparator"), Description("Less than")]
             LessThan,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/quantity-comparator)
             /// </summary>
-            [EnumLiteral("<="), Description("Less or Equal to")]
+            [EnumLiteral("<=", "http://hl7.org/fhir/quantity-comparator"), Description("Less or Equal to")]
             LessOrEqual,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/quantity-comparator)
             /// </summary>
-            [EnumLiteral(">="), Description("Greater or Equal to")]
+            [EnumLiteral(">=", "http://hl7.org/fhir/quantity-comparator"), Description("Greater or Equal to")]
             GreaterOrEqual,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/quantity-comparator)
             /// </summary>
-            [EnumLiteral(">"), Description("Greater than")]
+            [EnumLiteral(">", "http://hl7.org/fhir/quantity-comparator"), Description("Greater than")]
             GreaterThan,
         }
 

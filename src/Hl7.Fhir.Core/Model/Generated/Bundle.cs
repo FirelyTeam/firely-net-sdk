@@ -66,55 +66,55 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
-            [EnumLiteral("document"), Description("Document")]
+            [EnumLiteral("document", "http://hl7.org/fhir/bundle-type"), Description("Document")]
             Document,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
-            [EnumLiteral("message"), Description("Message")]
+            [EnumLiteral("message", "http://hl7.org/fhir/bundle-type"), Description("Message")]
             Message,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
-            [EnumLiteral("transaction"), Description("Transaction")]
+            [EnumLiteral("transaction", "http://hl7.org/fhir/bundle-type"), Description("Transaction")]
             Transaction,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
-            [EnumLiteral("transaction-response"), Description("Transaction Response")]
+            [EnumLiteral("transaction-response", "http://hl7.org/fhir/bundle-type"), Description("Transaction Response")]
             TransactionResponse,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
-            [EnumLiteral("batch"), Description("Batch")]
+            [EnumLiteral("batch", "http://hl7.org/fhir/bundle-type"), Description("Batch")]
             Batch,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
-            [EnumLiteral("batch-response"), Description("Batch Response")]
+            [EnumLiteral("batch-response", "http://hl7.org/fhir/bundle-type"), Description("Batch Response")]
             BatchResponse,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
-            [EnumLiteral("history"), Description("History List")]
+            [EnumLiteral("history", "http://hl7.org/fhir/bundle-type"), Description("History List")]
             History,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
-            [EnumLiteral("searchset"), Description("Search Results")]
+            [EnumLiteral("searchset", "http://hl7.org/fhir/bundle-type"), Description("Search Results")]
             Searchset,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
-            [EnumLiteral("collection"), Description("Collection")]
+            [EnumLiteral("collection", "http://hl7.org/fhir/bundle-type"), Description("Collection")]
             Collection,
         }
 
@@ -129,19 +129,19 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-entry-mode)
             /// </summary>
-            [EnumLiteral("match"), Description("Match")]
+            [EnumLiteral("match", "http://hl7.org/fhir/search-entry-mode"), Description("Match")]
             Match,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-entry-mode)
             /// </summary>
-            [EnumLiteral("include"), Description("Include")]
+            [EnumLiteral("include", "http://hl7.org/fhir/search-entry-mode"), Description("Include")]
             Include,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-entry-mode)
             /// </summary>
-            [EnumLiteral("outcome"), Description("Outcome")]
+            [EnumLiteral("outcome", "http://hl7.org/fhir/search-entry-mode"), Description("Outcome")]
             Outcome,
         }
 
@@ -156,25 +156,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/http-verb)
             /// </summary>
-            [EnumLiteral("GET"), Description("GET")]
+            [EnumLiteral("GET", "http://hl7.org/fhir/http-verb"), Description("GET")]
             GET,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/http-verb)
             /// </summary>
-            [EnumLiteral("POST"), Description("POST")]
+            [EnumLiteral("POST", "http://hl7.org/fhir/http-verb"), Description("POST")]
             POST,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/http-verb)
             /// </summary>
-            [EnumLiteral("PUT"), Description("PUT")]
+            [EnumLiteral("PUT", "http://hl7.org/fhir/http-verb"), Description("PUT")]
             PUT,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/http-verb)
             /// </summary>
-            [EnumLiteral("DELETE"), Description("DELETE")]
+            [EnumLiteral("DELETE", "http://hl7.org/fhir/http-verb"), Description("DELETE")]
             DELETE,
         }
 

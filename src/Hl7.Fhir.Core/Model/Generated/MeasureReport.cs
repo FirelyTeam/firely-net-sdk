@@ -66,19 +66,19 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measure-report-status)
             /// </summary>
-            [EnumLiteral("complete"), Description("Complete")]
+            [EnumLiteral("complete", "http://hl7.org/fhir/measure-report-status"), Description("Complete")]
             Complete,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measure-report-status)
             /// </summary>
-            [EnumLiteral("pending"), Description("Pending")]
+            [EnumLiteral("pending", "http://hl7.org/fhir/measure-report-status"), Description("Pending")]
             Pending,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measure-report-status)
             /// </summary>
-            [EnumLiteral("error"), Description("Error")]
+            [EnumLiteral("error", "http://hl7.org/fhir/measure-report-status"), Description("Error")]
             Error,
         }
 
@@ -93,19 +93,19 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measure-report-type)
             /// </summary>
-            [EnumLiteral("individual"), Description("Individual")]
+            [EnumLiteral("individual", "http://hl7.org/fhir/measure-report-type"), Description("Individual")]
             Individual,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measure-report-type)
             /// </summary>
-            [EnumLiteral("patient-list"), Description("Patient List")]
+            [EnumLiteral("patient-list", "http://hl7.org/fhir/measure-report-type"), Description("Patient List")]
             PatientList,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measure-report-type)
             /// </summary>
-            [EnumLiteral("summary"), Description("Summary")]
+            [EnumLiteral("summary", "http://hl7.org/fhir/measure-report-type"), Description("Summary")]
             Summary,
         }
 

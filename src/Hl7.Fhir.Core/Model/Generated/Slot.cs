@@ -66,31 +66,31 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/slotstatus)
             /// </summary>
-            [EnumLiteral("busy"), Description("Busy")]
+            [EnumLiteral("busy", "http://hl7.org/fhir/slotstatus"), Description("Busy")]
             Busy,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/slotstatus)
             /// </summary>
-            [EnumLiteral("free"), Description("Free")]
+            [EnumLiteral("free", "http://hl7.org/fhir/slotstatus"), Description("Free")]
             Free,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/slotstatus)
             /// </summary>
-            [EnumLiteral("busy-unavailable"), Description("Busy (Unavailable)")]
+            [EnumLiteral("busy-unavailable", "http://hl7.org/fhir/slotstatus"), Description("Busy (Unavailable)")]
             BusyUnavailable,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/slotstatus)
             /// </summary>
-            [EnumLiteral("busy-tentative"), Description("Busy (Tentative)")]
+            [EnumLiteral("busy-tentative", "http://hl7.org/fhir/slotstatus"), Description("Busy (Tentative)")]
             BusyTentative,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/slotstatus)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered in error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/slotstatus"), Description("Entered in error")]
             EnteredInError,
         }
 

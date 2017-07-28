@@ -66,1039 +66,1039 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("Address"), Description("Address")]
+            [EnumLiteral("Address", "http://hl7.org/fhir/data-types"), Description("Address")]
             Address,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("Age"), Description("Age")]
+            [EnumLiteral("Age", "http://hl7.org/fhir/data-types"), Description("Age")]
             Age,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("Annotation"), Description("Annotation")]
+            [EnumLiteral("Annotation", "http://hl7.org/fhir/data-types"), Description("Annotation")]
             Annotation,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("Attachment"), Description("Attachment")]
+            [EnumLiteral("Attachment", "http://hl7.org/fhir/data-types"), Description("Attachment")]
             Attachment,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("BackboneElement"), Description("BackboneElement")]
+            [EnumLiteral("BackboneElement", "http://hl7.org/fhir/data-types"), Description("BackboneElement")]
             BackboneElement,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("CodeableConcept"), Description("CodeableConcept")]
+            [EnumLiteral("CodeableConcept", "http://hl7.org/fhir/data-types"), Description("CodeableConcept")]
             CodeableConcept,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("Coding"), Description("Coding")]
+            [EnumLiteral("Coding", "http://hl7.org/fhir/data-types"), Description("Coding")]
             Coding,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("ContactDetail"), Description("ContactDetail")]
+            [EnumLiteral("ContactDetail", "http://hl7.org/fhir/data-types"), Description("ContactDetail")]
             ContactDetail,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("ContactPoint"), Description("ContactPoint")]
+            [EnumLiteral("ContactPoint", "http://hl7.org/fhir/data-types"), Description("ContactPoint")]
             ContactPoint,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("Contributor"), Description("Contributor")]
+            [EnumLiteral("Contributor", "http://hl7.org/fhir/data-types"), Description("Contributor")]
             Contributor,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("Count"), Description("Count")]
+            [EnumLiteral("Count", "http://hl7.org/fhir/data-types"), Description("Count")]
             Count,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("DataRequirement"), Description("DataRequirement")]
+            [EnumLiteral("DataRequirement", "http://hl7.org/fhir/data-types"), Description("DataRequirement")]
             DataRequirement,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("Distance"), Description("Distance")]
+            [EnumLiteral("Distance", "http://hl7.org/fhir/data-types"), Description("Distance")]
             Distance,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("Dosage"), Description("Dosage")]
+            [EnumLiteral("Dosage", "http://hl7.org/fhir/data-types"), Description("Dosage")]
             Dosage,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("Duration"), Description("Duration")]
+            [EnumLiteral("Duration", "http://hl7.org/fhir/data-types"), Description("Duration")]
             Duration,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("Element"), Description("Element")]
+            [EnumLiteral("Element", "http://hl7.org/fhir/data-types"), Description("Element")]
             Element,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("ElementDefinition"), Description("ElementDefinition")]
+            [EnumLiteral("ElementDefinition", "http://hl7.org/fhir/data-types"), Description("ElementDefinition")]
             ElementDefinition,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("Extension"), Description("Extension")]
+            [EnumLiteral("Extension", "http://hl7.org/fhir/data-types"), Description("Extension")]
             Extension,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("HumanName"), Description("HumanName")]
+            [EnumLiteral("HumanName", "http://hl7.org/fhir/data-types"), Description("HumanName")]
             HumanName,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("Identifier"), Description("Identifier")]
+            [EnumLiteral("Identifier", "http://hl7.org/fhir/data-types"), Description("Identifier")]
             Identifier,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("Meta"), Description("Meta")]
+            [EnumLiteral("Meta", "http://hl7.org/fhir/data-types"), Description("Meta")]
             Meta,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("Money"), Description("Money")]
+            [EnumLiteral("Money", "http://hl7.org/fhir/data-types"), Description("Money")]
             Money,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("Narrative"), Description("Narrative")]
+            [EnumLiteral("Narrative", "http://hl7.org/fhir/data-types"), Description("Narrative")]
             Narrative,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("ParameterDefinition"), Description("ParameterDefinition")]
+            [EnumLiteral("ParameterDefinition", "http://hl7.org/fhir/data-types"), Description("ParameterDefinition")]
             ParameterDefinition,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("Period"), Description("Period")]
+            [EnumLiteral("Period", "http://hl7.org/fhir/data-types"), Description("Period")]
             Period,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("Quantity"), Description("Quantity")]
+            [EnumLiteral("Quantity", "http://hl7.org/fhir/data-types"), Description("Quantity")]
             Quantity,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("Range"), Description("Range")]
+            [EnumLiteral("Range", "http://hl7.org/fhir/data-types"), Description("Range")]
             Range,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("Ratio"), Description("Ratio")]
+            [EnumLiteral("Ratio", "http://hl7.org/fhir/data-types"), Description("Ratio")]
             Ratio,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("Reference"), Description("Reference")]
+            [EnumLiteral("Reference", "http://hl7.org/fhir/data-types"), Description("Reference")]
             Reference,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("RelatedArtifact"), Description("RelatedArtifact")]
+            [EnumLiteral("RelatedArtifact", "http://hl7.org/fhir/data-types"), Description("RelatedArtifact")]
             RelatedArtifact,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("SampledData"), Description("SampledData")]
+            [EnumLiteral("SampledData", "http://hl7.org/fhir/data-types"), Description("SampledData")]
             SampledData,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("Signature"), Description("Signature")]
+            [EnumLiteral("Signature", "http://hl7.org/fhir/data-types"), Description("Signature")]
             Signature,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("SimpleQuantity"), Description("SimpleQuantity")]
+            [EnumLiteral("SimpleQuantity", "http://hl7.org/fhir/data-types"), Description("SimpleQuantity")]
             SimpleQuantity,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("Timing"), Description("Timing")]
+            [EnumLiteral("Timing", "http://hl7.org/fhir/data-types"), Description("Timing")]
             Timing,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("TriggerDefinition"), Description("TriggerDefinition")]
+            [EnumLiteral("TriggerDefinition", "http://hl7.org/fhir/data-types"), Description("TriggerDefinition")]
             TriggerDefinition,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("UsageContext"), Description("UsageContext")]
+            [EnumLiteral("UsageContext", "http://hl7.org/fhir/data-types"), Description("UsageContext")]
             UsageContext,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("base64Binary"), Description("base64Binary")]
+            [EnumLiteral("base64Binary", "http://hl7.org/fhir/data-types"), Description("base64Binary")]
             Base64Binary,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("boolean"), Description("boolean")]
+            [EnumLiteral("boolean", "http://hl7.org/fhir/data-types"), Description("boolean")]
             Boolean,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("code"), Description("code")]
+            [EnumLiteral("code", "http://hl7.org/fhir/data-types"), Description("code")]
             Code,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("date"), Description("date")]
+            [EnumLiteral("date", "http://hl7.org/fhir/data-types"), Description("date")]
             Date,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("dateTime"), Description("dateTime")]
+            [EnumLiteral("dateTime", "http://hl7.org/fhir/data-types"), Description("dateTime")]
             DateTime,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("decimal"), Description("decimal")]
+            [EnumLiteral("decimal", "http://hl7.org/fhir/data-types"), Description("decimal")]
             Decimal,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("id"), Description("id")]
+            [EnumLiteral("id", "http://hl7.org/fhir/data-types"), Description("id")]
             Id,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("instant"), Description("instant")]
+            [EnumLiteral("instant", "http://hl7.org/fhir/data-types"), Description("instant")]
             Instant,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("integer"), Description("integer")]
+            [EnumLiteral("integer", "http://hl7.org/fhir/data-types"), Description("integer")]
             Integer,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("markdown"), Description("markdown")]
+            [EnumLiteral("markdown", "http://hl7.org/fhir/data-types"), Description("markdown")]
             Markdown,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("oid"), Description("oid")]
+            [EnumLiteral("oid", "http://hl7.org/fhir/data-types"), Description("oid")]
             Oid,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("positiveInt"), Description("positiveInt")]
+            [EnumLiteral("positiveInt", "http://hl7.org/fhir/data-types"), Description("positiveInt")]
             PositiveInt,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("string"), Description("string")]
+            [EnumLiteral("string", "http://hl7.org/fhir/data-types"), Description("string")]
             String,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("time"), Description("time")]
+            [EnumLiteral("time", "http://hl7.org/fhir/data-types"), Description("time")]
             Time,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("unsignedInt"), Description("unsignedInt")]
+            [EnumLiteral("unsignedInt", "http://hl7.org/fhir/data-types"), Description("unsignedInt")]
             UnsignedInt,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("uri"), Description("uri")]
+            [EnumLiteral("uri", "http://hl7.org/fhir/data-types"), Description("uri")]
             Uri,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("uuid"), Description("uuid")]
+            [EnumLiteral("uuid", "http://hl7.org/fhir/data-types"), Description("uuid")]
             Uuid,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/data-types)
             /// </summary>
-            [EnumLiteral("xhtml"), Description("XHTML")]
+            [EnumLiteral("xhtml", "http://hl7.org/fhir/data-types"), Description("XHTML")]
             Xhtml,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Account"), Description("Account")]
+            [EnumLiteral("Account", "http://hl7.org/fhir/resource-types"), Description("Account")]
             Account,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("ActivityDefinition"), Description("ActivityDefinition")]
+            [EnumLiteral("ActivityDefinition", "http://hl7.org/fhir/resource-types"), Description("ActivityDefinition")]
             ActivityDefinition,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("AdverseEvent"), Description("AdverseEvent")]
+            [EnumLiteral("AdverseEvent", "http://hl7.org/fhir/resource-types"), Description("AdverseEvent")]
             AdverseEvent,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("AllergyIntolerance"), Description("AllergyIntolerance")]
+            [EnumLiteral("AllergyIntolerance", "http://hl7.org/fhir/resource-types"), Description("AllergyIntolerance")]
             AllergyIntolerance,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Appointment"), Description("Appointment")]
+            [EnumLiteral("Appointment", "http://hl7.org/fhir/resource-types"), Description("Appointment")]
             Appointment,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("AppointmentResponse"), Description("AppointmentResponse")]
+            [EnumLiteral("AppointmentResponse", "http://hl7.org/fhir/resource-types"), Description("AppointmentResponse")]
             AppointmentResponse,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("AuditEvent"), Description("AuditEvent")]
+            [EnumLiteral("AuditEvent", "http://hl7.org/fhir/resource-types"), Description("AuditEvent")]
             AuditEvent,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Basic"), Description("Basic")]
+            [EnumLiteral("Basic", "http://hl7.org/fhir/resource-types"), Description("Basic")]
             Basic,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Binary"), Description("Binary")]
+            [EnumLiteral("Binary", "http://hl7.org/fhir/resource-types"), Description("Binary")]
             Binary,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("BodySite"), Description("BodySite")]
+            [EnumLiteral("BodySite", "http://hl7.org/fhir/resource-types"), Description("BodySite")]
             BodySite,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Bundle"), Description("Bundle")]
+            [EnumLiteral("Bundle", "http://hl7.org/fhir/resource-types"), Description("Bundle")]
             Bundle,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("CapabilityStatement"), Description("CapabilityStatement")]
+            [EnumLiteral("CapabilityStatement", "http://hl7.org/fhir/resource-types"), Description("CapabilityStatement")]
             CapabilityStatement,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("CarePlan"), Description("CarePlan")]
+            [EnumLiteral("CarePlan", "http://hl7.org/fhir/resource-types"), Description("CarePlan")]
             CarePlan,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("CareTeam"), Description("CareTeam")]
+            [EnumLiteral("CareTeam", "http://hl7.org/fhir/resource-types"), Description("CareTeam")]
             CareTeam,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("ChargeItem"), Description("ChargeItem")]
+            [EnumLiteral("ChargeItem", "http://hl7.org/fhir/resource-types"), Description("ChargeItem")]
             ChargeItem,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Claim"), Description("Claim")]
+            [EnumLiteral("Claim", "http://hl7.org/fhir/resource-types"), Description("Claim")]
             Claim,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("ClaimResponse"), Description("ClaimResponse")]
+            [EnumLiteral("ClaimResponse", "http://hl7.org/fhir/resource-types"), Description("ClaimResponse")]
             ClaimResponse,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("ClinicalImpression"), Description("ClinicalImpression")]
+            [EnumLiteral("ClinicalImpression", "http://hl7.org/fhir/resource-types"), Description("ClinicalImpression")]
             ClinicalImpression,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("CodeSystem"), Description("CodeSystem")]
+            [EnumLiteral("CodeSystem", "http://hl7.org/fhir/resource-types"), Description("CodeSystem")]
             CodeSystem,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Communication"), Description("Communication")]
+            [EnumLiteral("Communication", "http://hl7.org/fhir/resource-types"), Description("Communication")]
             Communication,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("CommunicationRequest"), Description("CommunicationRequest")]
+            [EnumLiteral("CommunicationRequest", "http://hl7.org/fhir/resource-types"), Description("CommunicationRequest")]
             CommunicationRequest,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("CompartmentDefinition"), Description("CompartmentDefinition")]
+            [EnumLiteral("CompartmentDefinition", "http://hl7.org/fhir/resource-types"), Description("CompartmentDefinition")]
             CompartmentDefinition,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Composition"), Description("Composition")]
+            [EnumLiteral("Composition", "http://hl7.org/fhir/resource-types"), Description("Composition")]
             Composition,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("ConceptMap"), Description("ConceptMap")]
+            [EnumLiteral("ConceptMap", "http://hl7.org/fhir/resource-types"), Description("ConceptMap")]
             ConceptMap,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Condition"), Description("Condition")]
+            [EnumLiteral("Condition", "http://hl7.org/fhir/resource-types"), Description("Condition")]
             Condition,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Consent"), Description("Consent")]
+            [EnumLiteral("Consent", "http://hl7.org/fhir/resource-types"), Description("Consent")]
             Consent,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Contract"), Description("Contract")]
+            [EnumLiteral("Contract", "http://hl7.org/fhir/resource-types"), Description("Contract")]
             Contract,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Coverage"), Description("Coverage")]
+            [EnumLiteral("Coverage", "http://hl7.org/fhir/resource-types"), Description("Coverage")]
             Coverage,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("DataElement"), Description("DataElement")]
+            [EnumLiteral("DataElement", "http://hl7.org/fhir/resource-types"), Description("DataElement")]
             DataElement,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("DetectedIssue"), Description("DetectedIssue")]
+            [EnumLiteral("DetectedIssue", "http://hl7.org/fhir/resource-types"), Description("DetectedIssue")]
             DetectedIssue,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Device"), Description("Device")]
+            [EnumLiteral("Device", "http://hl7.org/fhir/resource-types"), Description("Device")]
             Device,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("DeviceComponent"), Description("DeviceComponent")]
+            [EnumLiteral("DeviceComponent", "http://hl7.org/fhir/resource-types"), Description("DeviceComponent")]
             DeviceComponent,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("DeviceMetric"), Description("DeviceMetric")]
+            [EnumLiteral("DeviceMetric", "http://hl7.org/fhir/resource-types"), Description("DeviceMetric")]
             DeviceMetric,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("DeviceRequest"), Description("DeviceRequest")]
+            [EnumLiteral("DeviceRequest", "http://hl7.org/fhir/resource-types"), Description("DeviceRequest")]
             DeviceRequest,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("DeviceUseStatement"), Description("DeviceUseStatement")]
+            [EnumLiteral("DeviceUseStatement", "http://hl7.org/fhir/resource-types"), Description("DeviceUseStatement")]
             DeviceUseStatement,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("DiagnosticReport"), Description("DiagnosticReport")]
+            [EnumLiteral("DiagnosticReport", "http://hl7.org/fhir/resource-types"), Description("DiagnosticReport")]
             DiagnosticReport,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("DocumentManifest"), Description("DocumentManifest")]
+            [EnumLiteral("DocumentManifest", "http://hl7.org/fhir/resource-types"), Description("DocumentManifest")]
             DocumentManifest,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("DocumentReference"), Description("DocumentReference")]
+            [EnumLiteral("DocumentReference", "http://hl7.org/fhir/resource-types"), Description("DocumentReference")]
             DocumentReference,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("DomainResource"), Description("DomainResource")]
+            [EnumLiteral("DomainResource", "http://hl7.org/fhir/resource-types"), Description("DomainResource")]
             DomainResource,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("EligibilityRequest"), Description("EligibilityRequest")]
+            [EnumLiteral("EligibilityRequest", "http://hl7.org/fhir/resource-types"), Description("EligibilityRequest")]
             EligibilityRequest,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("EligibilityResponse"), Description("EligibilityResponse")]
+            [EnumLiteral("EligibilityResponse", "http://hl7.org/fhir/resource-types"), Description("EligibilityResponse")]
             EligibilityResponse,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Encounter"), Description("Encounter")]
+            [EnumLiteral("Encounter", "http://hl7.org/fhir/resource-types"), Description("Encounter")]
             Encounter,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Endpoint"), Description("Endpoint")]
+            [EnumLiteral("Endpoint", "http://hl7.org/fhir/resource-types"), Description("Endpoint")]
             Endpoint,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("EnrollmentRequest"), Description("EnrollmentRequest")]
+            [EnumLiteral("EnrollmentRequest", "http://hl7.org/fhir/resource-types"), Description("EnrollmentRequest")]
             EnrollmentRequest,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("EnrollmentResponse"), Description("EnrollmentResponse")]
+            [EnumLiteral("EnrollmentResponse", "http://hl7.org/fhir/resource-types"), Description("EnrollmentResponse")]
             EnrollmentResponse,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("EpisodeOfCare"), Description("EpisodeOfCare")]
+            [EnumLiteral("EpisodeOfCare", "http://hl7.org/fhir/resource-types"), Description("EpisodeOfCare")]
             EpisodeOfCare,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("ExpansionProfile"), Description("ExpansionProfile")]
+            [EnumLiteral("ExpansionProfile", "http://hl7.org/fhir/resource-types"), Description("ExpansionProfile")]
             ExpansionProfile,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("ExplanationOfBenefit"), Description("ExplanationOfBenefit")]
+            [EnumLiteral("ExplanationOfBenefit", "http://hl7.org/fhir/resource-types"), Description("ExplanationOfBenefit")]
             ExplanationOfBenefit,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("FamilyMemberHistory"), Description("FamilyMemberHistory")]
+            [EnumLiteral("FamilyMemberHistory", "http://hl7.org/fhir/resource-types"), Description("FamilyMemberHistory")]
             FamilyMemberHistory,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Flag"), Description("Flag")]
+            [EnumLiteral("Flag", "http://hl7.org/fhir/resource-types"), Description("Flag")]
             Flag,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Goal"), Description("Goal")]
+            [EnumLiteral("Goal", "http://hl7.org/fhir/resource-types"), Description("Goal")]
             Goal,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("GraphDefinition"), Description("GraphDefinition")]
+            [EnumLiteral("GraphDefinition", "http://hl7.org/fhir/resource-types"), Description("GraphDefinition")]
             GraphDefinition,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Group"), Description("Group")]
+            [EnumLiteral("Group", "http://hl7.org/fhir/resource-types"), Description("Group")]
             Group,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("GuidanceResponse"), Description("GuidanceResponse")]
+            [EnumLiteral("GuidanceResponse", "http://hl7.org/fhir/resource-types"), Description("GuidanceResponse")]
             GuidanceResponse,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("HealthcareService"), Description("HealthcareService")]
+            [EnumLiteral("HealthcareService", "http://hl7.org/fhir/resource-types"), Description("HealthcareService")]
             HealthcareService,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("ImagingManifest"), Description("ImagingManifest")]
+            [EnumLiteral("ImagingManifest", "http://hl7.org/fhir/resource-types"), Description("ImagingManifest")]
             ImagingManifest,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("ImagingStudy"), Description("ImagingStudy")]
+            [EnumLiteral("ImagingStudy", "http://hl7.org/fhir/resource-types"), Description("ImagingStudy")]
             ImagingStudy,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Immunization"), Description("Immunization")]
+            [EnumLiteral("Immunization", "http://hl7.org/fhir/resource-types"), Description("Immunization")]
             Immunization,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("ImmunizationRecommendation"), Description("ImmunizationRecommendation")]
+            [EnumLiteral("ImmunizationRecommendation", "http://hl7.org/fhir/resource-types"), Description("ImmunizationRecommendation")]
             ImmunizationRecommendation,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("ImplementationGuide"), Description("ImplementationGuide")]
+            [EnumLiteral("ImplementationGuide", "http://hl7.org/fhir/resource-types"), Description("ImplementationGuide")]
             ImplementationGuide,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Library"), Description("Library")]
+            [EnumLiteral("Library", "http://hl7.org/fhir/resource-types"), Description("Library")]
             Library,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Linkage"), Description("Linkage")]
+            [EnumLiteral("Linkage", "http://hl7.org/fhir/resource-types"), Description("Linkage")]
             Linkage,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("List"), Description("List")]
+            [EnumLiteral("List", "http://hl7.org/fhir/resource-types"), Description("List")]
             List,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Location"), Description("Location")]
+            [EnumLiteral("Location", "http://hl7.org/fhir/resource-types"), Description("Location")]
             Location,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Measure"), Description("Measure")]
+            [EnumLiteral("Measure", "http://hl7.org/fhir/resource-types"), Description("Measure")]
             Measure,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("MeasureReport"), Description("MeasureReport")]
+            [EnumLiteral("MeasureReport", "http://hl7.org/fhir/resource-types"), Description("MeasureReport")]
             MeasureReport,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Media"), Description("Media")]
+            [EnumLiteral("Media", "http://hl7.org/fhir/resource-types"), Description("Media")]
             Media,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Medication"), Description("Medication")]
+            [EnumLiteral("Medication", "http://hl7.org/fhir/resource-types"), Description("Medication")]
             Medication,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("MedicationAdministration"), Description("MedicationAdministration")]
+            [EnumLiteral("MedicationAdministration", "http://hl7.org/fhir/resource-types"), Description("MedicationAdministration")]
             MedicationAdministration,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("MedicationDispense"), Description("MedicationDispense")]
+            [EnumLiteral("MedicationDispense", "http://hl7.org/fhir/resource-types"), Description("MedicationDispense")]
             MedicationDispense,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("MedicationRequest"), Description("MedicationRequest")]
+            [EnumLiteral("MedicationRequest", "http://hl7.org/fhir/resource-types"), Description("MedicationRequest")]
             MedicationRequest,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("MedicationStatement"), Description("MedicationStatement")]
+            [EnumLiteral("MedicationStatement", "http://hl7.org/fhir/resource-types"), Description("MedicationStatement")]
             MedicationStatement,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("MessageDefinition"), Description("MessageDefinition")]
+            [EnumLiteral("MessageDefinition", "http://hl7.org/fhir/resource-types"), Description("MessageDefinition")]
             MessageDefinition,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("MessageHeader"), Description("MessageHeader")]
+            [EnumLiteral("MessageHeader", "http://hl7.org/fhir/resource-types"), Description("MessageHeader")]
             MessageHeader,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("NamingSystem"), Description("NamingSystem")]
+            [EnumLiteral("NamingSystem", "http://hl7.org/fhir/resource-types"), Description("NamingSystem")]
             NamingSystem,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("NutritionOrder"), Description("NutritionOrder")]
+            [EnumLiteral("NutritionOrder", "http://hl7.org/fhir/resource-types"), Description("NutritionOrder")]
             NutritionOrder,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Observation"), Description("Observation")]
+            [EnumLiteral("Observation", "http://hl7.org/fhir/resource-types"), Description("Observation")]
             Observation,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("OperationDefinition"), Description("OperationDefinition")]
+            [EnumLiteral("OperationDefinition", "http://hl7.org/fhir/resource-types"), Description("OperationDefinition")]
             OperationDefinition,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("OperationOutcome"), Description("OperationOutcome")]
+            [EnumLiteral("OperationOutcome", "http://hl7.org/fhir/resource-types"), Description("OperationOutcome")]
             OperationOutcome,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Organization"), Description("Organization")]
+            [EnumLiteral("Organization", "http://hl7.org/fhir/resource-types"), Description("Organization")]
             Organization,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Parameters"), Description("Parameters")]
+            [EnumLiteral("Parameters", "http://hl7.org/fhir/resource-types"), Description("Parameters")]
             Parameters,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Patient"), Description("Patient")]
+            [EnumLiteral("Patient", "http://hl7.org/fhir/resource-types"), Description("Patient")]
             Patient,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("PaymentNotice"), Description("PaymentNotice")]
+            [EnumLiteral("PaymentNotice", "http://hl7.org/fhir/resource-types"), Description("PaymentNotice")]
             PaymentNotice,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("PaymentReconciliation"), Description("PaymentReconciliation")]
+            [EnumLiteral("PaymentReconciliation", "http://hl7.org/fhir/resource-types"), Description("PaymentReconciliation")]
             PaymentReconciliation,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Person"), Description("Person")]
+            [EnumLiteral("Person", "http://hl7.org/fhir/resource-types"), Description("Person")]
             Person,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("PlanDefinition"), Description("PlanDefinition")]
+            [EnumLiteral("PlanDefinition", "http://hl7.org/fhir/resource-types"), Description("PlanDefinition")]
             PlanDefinition,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Practitioner"), Description("Practitioner")]
+            [EnumLiteral("Practitioner", "http://hl7.org/fhir/resource-types"), Description("Practitioner")]
             Practitioner,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("PractitionerRole"), Description("PractitionerRole")]
+            [EnumLiteral("PractitionerRole", "http://hl7.org/fhir/resource-types"), Description("PractitionerRole")]
             PractitionerRole,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Procedure"), Description("Procedure")]
+            [EnumLiteral("Procedure", "http://hl7.org/fhir/resource-types"), Description("Procedure")]
             Procedure,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("ProcedureRequest"), Description("ProcedureRequest")]
+            [EnumLiteral("ProcedureRequest", "http://hl7.org/fhir/resource-types"), Description("ProcedureRequest")]
             ProcedureRequest,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("ProcessRequest"), Description("ProcessRequest")]
+            [EnumLiteral("ProcessRequest", "http://hl7.org/fhir/resource-types"), Description("ProcessRequest")]
             ProcessRequest,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("ProcessResponse"), Description("ProcessResponse")]
+            [EnumLiteral("ProcessResponse", "http://hl7.org/fhir/resource-types"), Description("ProcessResponse")]
             ProcessResponse,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Provenance"), Description("Provenance")]
+            [EnumLiteral("Provenance", "http://hl7.org/fhir/resource-types"), Description("Provenance")]
             Provenance,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Questionnaire"), Description("Questionnaire")]
+            [EnumLiteral("Questionnaire", "http://hl7.org/fhir/resource-types"), Description("Questionnaire")]
             Questionnaire,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("QuestionnaireResponse"), Description("QuestionnaireResponse")]
+            [EnumLiteral("QuestionnaireResponse", "http://hl7.org/fhir/resource-types"), Description("QuestionnaireResponse")]
             QuestionnaireResponse,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("ReferralRequest"), Description("ReferralRequest")]
+            [EnumLiteral("ReferralRequest", "http://hl7.org/fhir/resource-types"), Description("ReferralRequest")]
             ReferralRequest,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("RelatedPerson"), Description("RelatedPerson")]
+            [EnumLiteral("RelatedPerson", "http://hl7.org/fhir/resource-types"), Description("RelatedPerson")]
             RelatedPerson,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("RequestGroup"), Description("RequestGroup")]
+            [EnumLiteral("RequestGroup", "http://hl7.org/fhir/resource-types"), Description("RequestGroup")]
             RequestGroup,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("ResearchStudy"), Description("ResearchStudy")]
+            [EnumLiteral("ResearchStudy", "http://hl7.org/fhir/resource-types"), Description("ResearchStudy")]
             ResearchStudy,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("ResearchSubject"), Description("ResearchSubject")]
+            [EnumLiteral("ResearchSubject", "http://hl7.org/fhir/resource-types"), Description("ResearchSubject")]
             ResearchSubject,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Resource"), Description("Resource")]
+            [EnumLiteral("Resource", "http://hl7.org/fhir/resource-types"), Description("Resource")]
             Resource,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("RiskAssessment"), Description("RiskAssessment")]
+            [EnumLiteral("RiskAssessment", "http://hl7.org/fhir/resource-types"), Description("RiskAssessment")]
             RiskAssessment,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Schedule"), Description("Schedule")]
+            [EnumLiteral("Schedule", "http://hl7.org/fhir/resource-types"), Description("Schedule")]
             Schedule,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("SearchParameter"), Description("SearchParameter")]
+            [EnumLiteral("SearchParameter", "http://hl7.org/fhir/resource-types"), Description("SearchParameter")]
             SearchParameter,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Sequence"), Description("Sequence")]
+            [EnumLiteral("Sequence", "http://hl7.org/fhir/resource-types"), Description("Sequence")]
             Sequence,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("ServiceDefinition"), Description("ServiceDefinition")]
+            [EnumLiteral("ServiceDefinition", "http://hl7.org/fhir/resource-types"), Description("ServiceDefinition")]
             ServiceDefinition,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Slot"), Description("Slot")]
+            [EnumLiteral("Slot", "http://hl7.org/fhir/resource-types"), Description("Slot")]
             Slot,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Specimen"), Description("Specimen")]
+            [EnumLiteral("Specimen", "http://hl7.org/fhir/resource-types"), Description("Specimen")]
             Specimen,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("StructureDefinition"), Description("StructureDefinition")]
+            [EnumLiteral("StructureDefinition", "http://hl7.org/fhir/resource-types"), Description("StructureDefinition")]
             StructureDefinition,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("StructureMap"), Description("StructureMap")]
+            [EnumLiteral("StructureMap", "http://hl7.org/fhir/resource-types"), Description("StructureMap")]
             StructureMap,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Subscription"), Description("Subscription")]
+            [EnumLiteral("Subscription", "http://hl7.org/fhir/resource-types"), Description("Subscription")]
             Subscription,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Substance"), Description("Substance")]
+            [EnumLiteral("Substance", "http://hl7.org/fhir/resource-types"), Description("Substance")]
             Substance,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("SupplyDelivery"), Description("SupplyDelivery")]
+            [EnumLiteral("SupplyDelivery", "http://hl7.org/fhir/resource-types"), Description("SupplyDelivery")]
             SupplyDelivery,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("SupplyRequest"), Description("SupplyRequest")]
+            [EnumLiteral("SupplyRequest", "http://hl7.org/fhir/resource-types"), Description("SupplyRequest")]
             SupplyRequest,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("Task"), Description("Task")]
+            [EnumLiteral("Task", "http://hl7.org/fhir/resource-types"), Description("Task")]
             Task,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("TestReport"), Description("TestReport")]
+            [EnumLiteral("TestReport", "http://hl7.org/fhir/resource-types"), Description("TestReport")]
             TestReport,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("TestScript"), Description("TestScript")]
+            [EnumLiteral("TestScript", "http://hl7.org/fhir/resource-types"), Description("TestScript")]
             TestScript,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("ValueSet"), Description("ValueSet")]
+            [EnumLiteral("ValueSet", "http://hl7.org/fhir/resource-types"), Description("ValueSet")]
             ValueSet,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
-            [EnumLiteral("VisionPrescription"), Description("VisionPrescription")]
+            [EnumLiteral("VisionPrescription", "http://hl7.org/fhir/resource-types"), Description("VisionPrescription")]
             VisionPrescription,
         }
 
@@ -1113,25 +1113,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/content-type)
             /// </summary>
-            [EnumLiteral("xml"), Description("xml")]
+            [EnumLiteral("xml", "http://hl7.org/fhir/content-type"), Description("xml")]
             Xml,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/content-type)
             /// </summary>
-            [EnumLiteral("json"), Description("json")]
+            [EnumLiteral("json", "http://hl7.org/fhir/content-type"), Description("json")]
             Json,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/content-type)
             /// </summary>
-            [EnumLiteral("ttl"), Description("ttl")]
+            [EnumLiteral("ttl", "http://hl7.org/fhir/content-type"), Description("ttl")]
             Ttl,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/content-type)
             /// </summary>
-            [EnumLiteral("none"), Description("none")]
+            [EnumLiteral("none", "http://hl7.org/fhir/content-type"), Description("none")]
             None,
         }
 
@@ -1146,13 +1146,13 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/assert-direction-codes)
             /// </summary>
-            [EnumLiteral("response"), Description("response")]
+            [EnumLiteral("response", "http://hl7.org/fhir/assert-direction-codes"), Description("response")]
             Response,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/assert-direction-codes)
             /// </summary>
-            [EnumLiteral("request"), Description("request")]
+            [EnumLiteral("request", "http://hl7.org/fhir/assert-direction-codes"), Description("request")]
             Request,
         }
 
@@ -1167,67 +1167,67 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/assert-operator-codes)
             /// </summary>
-            [EnumLiteral("equals"), Description("equals")]
+            [EnumLiteral("equals", "http://hl7.org/fhir/assert-operator-codes"), Description("equals")]
             Equals,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/assert-operator-codes)
             /// </summary>
-            [EnumLiteral("notEquals"), Description("notEquals")]
+            [EnumLiteral("notEquals", "http://hl7.org/fhir/assert-operator-codes"), Description("notEquals")]
             NotEquals,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/assert-operator-codes)
             /// </summary>
-            [EnumLiteral("in"), Description("in")]
+            [EnumLiteral("in", "http://hl7.org/fhir/assert-operator-codes"), Description("in")]
             In,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/assert-operator-codes)
             /// </summary>
-            [EnumLiteral("notIn"), Description("notIn")]
+            [EnumLiteral("notIn", "http://hl7.org/fhir/assert-operator-codes"), Description("notIn")]
             NotIn,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/assert-operator-codes)
             /// </summary>
-            [EnumLiteral("greaterThan"), Description("greaterThan")]
+            [EnumLiteral("greaterThan", "http://hl7.org/fhir/assert-operator-codes"), Description("greaterThan")]
             GreaterThan,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/assert-operator-codes)
             /// </summary>
-            [EnumLiteral("lessThan"), Description("lessThan")]
+            [EnumLiteral("lessThan", "http://hl7.org/fhir/assert-operator-codes"), Description("lessThan")]
             LessThan,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/assert-operator-codes)
             /// </summary>
-            [EnumLiteral("empty"), Description("empty")]
+            [EnumLiteral("empty", "http://hl7.org/fhir/assert-operator-codes"), Description("empty")]
             Empty,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/assert-operator-codes)
             /// </summary>
-            [EnumLiteral("notEmpty"), Description("notEmpty")]
+            [EnumLiteral("notEmpty", "http://hl7.org/fhir/assert-operator-codes"), Description("notEmpty")]
             NotEmpty,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/assert-operator-codes)
             /// </summary>
-            [EnumLiteral("contains"), Description("contains")]
+            [EnumLiteral("contains", "http://hl7.org/fhir/assert-operator-codes"), Description("contains")]
             Contains,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/assert-operator-codes)
             /// </summary>
-            [EnumLiteral("notContains"), Description("notContains")]
+            [EnumLiteral("notContains", "http://hl7.org/fhir/assert-operator-codes"), Description("notContains")]
             NotContains,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/assert-operator-codes)
             /// </summary>
-            [EnumLiteral("eval"), Description("evaluate")]
+            [EnumLiteral("eval", "http://hl7.org/fhir/assert-operator-codes"), Description("evaluate")]
             Eval,
         }
 
@@ -1242,37 +1242,37 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/http-operations)
             /// </summary>
-            [EnumLiteral("delete"), Description("DELETE")]
+            [EnumLiteral("delete", "http://hl7.org/fhir/http-operations"), Description("DELETE")]
             Delete,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/http-operations)
             /// </summary>
-            [EnumLiteral("get"), Description("GET")]
+            [EnumLiteral("get", "http://hl7.org/fhir/http-operations"), Description("GET")]
             Get,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/http-operations)
             /// </summary>
-            [EnumLiteral("options"), Description("OPTIONS")]
+            [EnumLiteral("options", "http://hl7.org/fhir/http-operations"), Description("OPTIONS")]
             Options,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/http-operations)
             /// </summary>
-            [EnumLiteral("patch"), Description("PATCH")]
+            [EnumLiteral("patch", "http://hl7.org/fhir/http-operations"), Description("PATCH")]
             Patch,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/http-operations)
             /// </summary>
-            [EnumLiteral("post"), Description("POST")]
+            [EnumLiteral("post", "http://hl7.org/fhir/http-operations"), Description("POST")]
             Post,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/http-operations)
             /// </summary>
-            [EnumLiteral("put"), Description("PUT")]
+            [EnumLiteral("put", "http://hl7.org/fhir/http-operations"), Description("PUT")]
             Put,
         }
 
@@ -1287,73 +1287,73 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/assert-response-code-types)
             /// </summary>
-            [EnumLiteral("okay"), Description("okay")]
+            [EnumLiteral("okay", "http://hl7.org/fhir/assert-response-code-types"), Description("okay")]
             Okay,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/assert-response-code-types)
             /// </summary>
-            [EnumLiteral("created"), Description("created")]
+            [EnumLiteral("created", "http://hl7.org/fhir/assert-response-code-types"), Description("created")]
             Created,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/assert-response-code-types)
             /// </summary>
-            [EnumLiteral("noContent"), Description("noContent")]
+            [EnumLiteral("noContent", "http://hl7.org/fhir/assert-response-code-types"), Description("noContent")]
             NoContent,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/assert-response-code-types)
             /// </summary>
-            [EnumLiteral("notModified"), Description("notModified")]
+            [EnumLiteral("notModified", "http://hl7.org/fhir/assert-response-code-types"), Description("notModified")]
             NotModified,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/assert-response-code-types)
             /// </summary>
-            [EnumLiteral("bad"), Description("bad")]
+            [EnumLiteral("bad", "http://hl7.org/fhir/assert-response-code-types"), Description("bad")]
             Bad,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/assert-response-code-types)
             /// </summary>
-            [EnumLiteral("forbidden"), Description("forbidden")]
+            [EnumLiteral("forbidden", "http://hl7.org/fhir/assert-response-code-types"), Description("forbidden")]
             Forbidden,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/assert-response-code-types)
             /// </summary>
-            [EnumLiteral("notFound"), Description("notFound")]
+            [EnumLiteral("notFound", "http://hl7.org/fhir/assert-response-code-types"), Description("notFound")]
             NotFound,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/assert-response-code-types)
             /// </summary>
-            [EnumLiteral("methodNotAllowed"), Description("methodNotAllowed")]
+            [EnumLiteral("methodNotAllowed", "http://hl7.org/fhir/assert-response-code-types"), Description("methodNotAllowed")]
             MethodNotAllowed,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/assert-response-code-types)
             /// </summary>
-            [EnumLiteral("conflict"), Description("conflict")]
+            [EnumLiteral("conflict", "http://hl7.org/fhir/assert-response-code-types"), Description("conflict")]
             Conflict,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/assert-response-code-types)
             /// </summary>
-            [EnumLiteral("gone"), Description("gone")]
+            [EnumLiteral("gone", "http://hl7.org/fhir/assert-response-code-types"), Description("gone")]
             Gone,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/assert-response-code-types)
             /// </summary>
-            [EnumLiteral("preconditionFailed"), Description("preconditionFailed")]
+            [EnumLiteral("preconditionFailed", "http://hl7.org/fhir/assert-response-code-types"), Description("preconditionFailed")]
             PreconditionFailed,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/assert-response-code-types)
             /// </summary>
-            [EnumLiteral("unprocessable"), Description("unprocessable")]
+            [EnumLiteral("unprocessable", "http://hl7.org/fhir/assert-response-code-types"), Description("unprocessable")]
             Unprocessable,
         }
 

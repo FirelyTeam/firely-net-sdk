@@ -66,37 +66,37 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/udi-entry-type)
             /// </summary>
-            [EnumLiteral("barcode"), Description("BarCode")]
+            [EnumLiteral("barcode", "http://hl7.org/fhir/udi-entry-type"), Description("BarCode")]
             Barcode,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/udi-entry-type)
             /// </summary>
-            [EnumLiteral("rfid"), Description("RFID")]
+            [EnumLiteral("rfid", "http://hl7.org/fhir/udi-entry-type"), Description("RFID")]
             Rfid,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/udi-entry-type)
             /// </summary>
-            [EnumLiteral("manual"), Description("Manual")]
+            [EnumLiteral("manual", "http://hl7.org/fhir/udi-entry-type"), Description("Manual")]
             Manual,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/udi-entry-type)
             /// </summary>
-            [EnumLiteral("card"), Description("Card")]
+            [EnumLiteral("card", "http://hl7.org/fhir/udi-entry-type"), Description("Card")]
             Card,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/udi-entry-type)
             /// </summary>
-            [EnumLiteral("self-reported"), Description("Self Reported")]
+            [EnumLiteral("self-reported", "http://hl7.org/fhir/udi-entry-type"), Description("Self Reported")]
             SelfReported,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/udi-entry-type)
             /// </summary>
-            [EnumLiteral("unknown"), Description("Unknown")]
+            [EnumLiteral("unknown", "http://hl7.org/fhir/udi-entry-type"), Description("Unknown")]
             Unknown,
         }
 
@@ -111,25 +111,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/device-status)
             /// </summary>
-            [EnumLiteral("active"), Description("Active")]
+            [EnumLiteral("active", "http://hl7.org/fhir/device-status"), Description("Active")]
             Active,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/device-status)
             /// </summary>
-            [EnumLiteral("inactive"), Description("Inactive")]
+            [EnumLiteral("inactive", "http://hl7.org/fhir/device-status"), Description("Inactive")]
             Inactive,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/device-status)
             /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/device-status"), Description("Entered in Error")]
             EnteredInError,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/device-status)
             /// </summary>
-            [EnumLiteral("unknown"), Description("Unknown")]
+            [EnumLiteral("unknown", "http://hl7.org/fhir/device-status"), Description("Unknown")]
             Unknown,
         }
 

@@ -66,13 +66,13 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/vision-eye-codes)
             /// </summary>
-            [EnumLiteral("right"), Description("Right Eye")]
+            [EnumLiteral("right", "http://hl7.org/fhir/vision-eye-codes"), Description("Right Eye")]
             Right,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/vision-eye-codes)
             /// </summary>
-            [EnumLiteral("left"), Description("Left Eye")]
+            [EnumLiteral("left", "http://hl7.org/fhir/vision-eye-codes"), Description("Left Eye")]
             Left,
         }
 
@@ -87,25 +87,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/vision-base-codes)
             /// </summary>
-            [EnumLiteral("up"), Description("Up")]
+            [EnumLiteral("up", "http://hl7.org/fhir/vision-base-codes"), Description("Up")]
             Up,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/vision-base-codes)
             /// </summary>
-            [EnumLiteral("down"), Description("Down")]
+            [EnumLiteral("down", "http://hl7.org/fhir/vision-base-codes"), Description("Down")]
             Down,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/vision-base-codes)
             /// </summary>
-            [EnumLiteral("in"), Description("In")]
+            [EnumLiteral("in", "http://hl7.org/fhir/vision-base-codes"), Description("In")]
             In,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/vision-base-codes)
             /// </summary>
-            [EnumLiteral("out"), Description("Out")]
+            [EnumLiteral("out", "http://hl7.org/fhir/vision-base-codes"), Description("Out")]
             Out,
         }
 

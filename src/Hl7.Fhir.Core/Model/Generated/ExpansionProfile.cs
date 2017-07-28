@@ -66,19 +66,19 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/system-version-processing-mode)
             /// </summary>
-            [EnumLiteral("default"), Description("Default Version")]
+            [EnumLiteral("default", "http://hl7.org/fhir/system-version-processing-mode"), Description("Default Version")]
             Default,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/system-version-processing-mode)
             /// </summary>
-            [EnumLiteral("check"), Description("Check ValueSet Version")]
+            [EnumLiteral("check", "http://hl7.org/fhir/system-version-processing-mode"), Description("Check ValueSet Version")]
             Check,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/system-version-processing-mode)
             /// </summary>
-            [EnumLiteral("override"), Description("Override ValueSet Version")]
+            [EnumLiteral("override", "http://hl7.org/fhir/system-version-processing-mode"), Description("Override ValueSet Version")]
             Override,
         }
 

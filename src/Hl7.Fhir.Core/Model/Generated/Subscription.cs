@@ -66,25 +66,25 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/subscription-status)
             /// </summary>
-            [EnumLiteral("requested"), Description("Requested")]
+            [EnumLiteral("requested", "http://hl7.org/fhir/subscription-status"), Description("Requested")]
             Requested,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/subscription-status)
             /// </summary>
-            [EnumLiteral("active"), Description("Active")]
+            [EnumLiteral("active", "http://hl7.org/fhir/subscription-status"), Description("Active")]
             Active,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/subscription-status)
             /// </summary>
-            [EnumLiteral("error"), Description("Error")]
+            [EnumLiteral("error", "http://hl7.org/fhir/subscription-status"), Description("Error")]
             Error,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/subscription-status)
             /// </summary>
-            [EnumLiteral("off"), Description("Off")]
+            [EnumLiteral("off", "http://hl7.org/fhir/subscription-status"), Description("Off")]
             Off,
         }
 
@@ -99,31 +99,31 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/subscription-channel-type)
             /// </summary>
-            [EnumLiteral("rest-hook"), Description("Rest Hook")]
+            [EnumLiteral("rest-hook", "http://hl7.org/fhir/subscription-channel-type"), Description("Rest Hook")]
             RestHook,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/subscription-channel-type)
             /// </summary>
-            [EnumLiteral("websocket"), Description("Websocket")]
+            [EnumLiteral("websocket", "http://hl7.org/fhir/subscription-channel-type"), Description("Websocket")]
             Websocket,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/subscription-channel-type)
             /// </summary>
-            [EnumLiteral("email"), Description("Email")]
+            [EnumLiteral("email", "http://hl7.org/fhir/subscription-channel-type"), Description("Email")]
             Email,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/subscription-channel-type)
             /// </summary>
-            [EnumLiteral("sms"), Description("SMS")]
+            [EnumLiteral("sms", "http://hl7.org/fhir/subscription-channel-type"), Description("SMS")]
             Sms,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/subscription-channel-type)
             /// </summary>
-            [EnumLiteral("message"), Description("Message")]
+            [EnumLiteral("message", "http://hl7.org/fhir/subscription-channel-type"), Description("Message")]
             Message,
         }
 
