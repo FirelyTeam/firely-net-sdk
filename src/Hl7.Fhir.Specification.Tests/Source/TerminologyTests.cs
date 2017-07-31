@@ -2,14 +2,9 @@
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Validation;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Hl7.Fhir.Source
@@ -155,7 +150,7 @@ namespace Hl7.Fhir.Source
                 () => svc.ValidateCode("http://hl7.org/fhir/ValueSet/substance-code", code: "1166006", system: "http://snomed.info/sct"));
         }
 
-        [Fact, Trait("Category", "IntegrationTest")]
+        [Fact, Trait("TestCategory", "IntegrationTest")]
         public void ExternalServiceValidateCodeTest()
         {
             var client = new FhirClient("http://ontoserver.csiro.au/dstu2_1");
@@ -169,7 +164,7 @@ namespace Hl7.Fhir.Source
             Assert.True(result.Success);
         }
 
-        [Fact, Trait("Category", "IntegrationTest")]
+        [Fact, Trait("TestCategory", "IntegrationTest")]
         public void FallbackServiceValidateCodeTest()
         {
             var client = new FhirClient("http://ontoserver.csiro.au/dstu2_1");
@@ -184,7 +179,7 @@ namespace Hl7.Fhir.Source
             Assert.True(result.Success);
         }
 
-        [Fact, Trait("Category", "IntegrationTest")]
+        [Fact, Trait("TestCategory", "IntegrationTest")]
         public void FallbackServiceValidateCodeTestWithVS()
         {
             var client = new FhirClient("http://ontoserver.csiro.au/dstu2_1");
