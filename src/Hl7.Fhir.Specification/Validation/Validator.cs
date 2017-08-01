@@ -12,17 +12,15 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Support;
-using Hl7.Fhir.Utility;
 using Hl7.FhirPath;
+using Hl7.FhirPath.Expressions;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -36,10 +34,12 @@ namespace Hl7.Fhir.Validation
         public event EventHandler<OnSnapshotNeededEventArgs> OnSnapshotNeeded;
         public event EventHandler<OnResolveResourceReferenceEventArgs> OnExternalResolutionNeeded;
 
+        private FhirPathCompiler _fpCompiler;
+
 #if REUSE_SNAPSHOT_GENERATOR
         SnapshotGenerator _snapshotGenerator;
 
-        SnapshotGenerator SnapshotGenerator
+        internal SnapshotGenerator SnapshotGenerator
         {
             get
             {
@@ -245,7 +245,7 @@ namespace Hl7.Fhir.Validation
             outcome.Add(this.ValidatePattern(elementConstraints, instance));
             outcome.Add(this.ValidateMinMaxValue(elementConstraints, instance));
             outcome.Add(ValidateMaxLength(elementConstraints, instance));
-            outcome.Add(ValidateConstraints(elementConstraints, instance));
+            outcome.Add(this.ValidateFp(elementConstraints, instance));
             outcome.Add(this.ValidateBinding(elementConstraints, instance));
 
             // If the report only has partial information, no use to show the hierarchy, so flatten it.
@@ -254,81 +254,21 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-        internal OperationOutcome ValidateConstraints(ElementDefinition definition, ScopedNavigator instance)
+        internal FhirPathCompiler FpCompiler
         {
-            var outcome = new OperationOutcome();
-
-            if (!definition.Constraint.Any()) return outcome;
-            if (Settings.SkipConstraintValidation) return outcome;
-
-            // Make sure FHIR extensions are installed in FP compiler
-            prepareFPProcessor();
-
-            var context = instance.AtResource ? instance : instance.Parent;
-
-            // <constraint>
-            //  <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
-            //    <valueString value="reference.startsWith('#').not() or (reference.substring(1).trace('url') in %resource.contained.id.trace('ids'))"/>
-            //  </extension>
-            //  <key value="ref-1"/>
-            //  <severity value="error"/>
-            //  <human value="SHALL have a local reference if the resource is provided inline"/>
-            //  <xpath value="not(starts-with(f:reference/@value, &#39;#&#39;)) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)])"/>
-            //</constraint>
-            // 
-
-            foreach (var constraintElement in definition.Constraint)
+            get
             {
-                var fpExpression = constraintElement.GetFhirPathConstraint();
 
-                if (fpExpression != null)
+                if (_fpCompiler == null)
                 {
-                    try
-                    {
-                        bool success = instance.Predicate(fpExpression, context);
+                    var symbolTable = new SymbolTable();
+                    symbolTable.AddStandardFP();
+                    symbolTable.AddFhirExtensions();
 
-                        if (!success)
-                        {
-                            var text = "Instance failed constraint " + constraintElement.ConstraintDescription();
-                            var issue = constraintElement.Severity == ElementDefinition.ConstraintSeverity.Error ?
-                                Issue.CONTENT_ELEMENT_FAILS_ERROR_CONSTRAINT : Issue.CONTENT_ELEMENT_FAILS_WARNING_CONSTRAINT;
-
-                            Trace(outcome, text, issue, instance);
-                        }
-
-                    }
-                    catch (Exception e)
-                    {
-                        Trace(outcome, $"Evaluation of FhirPath for constraint '{constraintElement.Key}' failed: {e.Message}",
-                                        Issue.PROFILE_ELEMENTDEF_INVALID_FHIRPATH_EXPRESSION, instance);
-                    }
+                    _fpCompiler = new FhirPathCompiler(symbolTable);
                 }
-                else
-                    Trace(outcome, $"Encountered an invariant ({constraintElement.Key}) that has no FhirPath expression, skipping validation of this constraint",
-                                Issue.UNSUPPORTED_CONSTRAINT_WITHOUT_FHIRPATH, instance);
-            }
 
-            return outcome;
-        }
-
-        private void prepareFPProcessor()
-        {
-            //[20170726 EK] TODO: Mind you, there's a HUGE possiblity for race conditions here.
-            //We are setting a static variable (Resolver) to our local resolver - 
-            //if this stuff runs in parrallel, then threads will override each
-            //resolvers.  But unfortunately, there is no way to pass the resolver
-            //in with the execution of a fhirpath compiled expression :-(
-            ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
-            ElementNavFhirExtensions.Resolver = callExternalResolver;
-
-            IElementNavigator callExternalResolver(string url)
-            {
-                OperationOutcome o = new OperationOutcome();
-                var result = ExternalReferenceResolutionNeeded(url, o, "dummy");
-
-                if (o.Success && result != null) return result;
-
-                return null;
+                return _fpCompiler;
             }
         }
 

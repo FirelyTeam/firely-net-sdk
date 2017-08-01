@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
+using System.Reflection;
 
 namespace Hl7.FhirPath.Expressions
 {
@@ -57,8 +58,16 @@ namespace Hl7.FhirPath.Expressions
             {
                 var focus = args.First()(ctx, InvokeeFactory.EmptyArgs);
                 if (propNull && !focus.Any()) return FhirValueList.Empty;
-          
-                return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(Typecasts.CastTo<A>(focus)));
+
+                if (typeof(A) != typeof(EvaluationContext))
+                {
+                    return Typecasts.CastTo<IEnumerable<IElementNavigator>>(Typecasts.CastTo<A>(focus));
+                }
+                else
+                {
+                    A lastPar = (A)(object)ctx.EvaluationContext;
+                    return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(lastPar));
+                }
             };
         }
 
@@ -69,11 +78,19 @@ namespace Hl7.FhirPath.Expressions
                 var focus = args.First()(ctx, InvokeeFactory.EmptyArgs);
                 if (propNull && !focus.Any()) return FhirValueList.Empty;
 
-                var newCtx = ctx.Nest(focus);             
-                var argA = args.Skip(1).First()(newCtx, InvokeeFactory.EmptyArgs);
-                if (propNull && !argA.Any()) return FhirValueList.Empty;
+                if (typeof(B) != typeof(EvaluationContext))
+                {
+                    var newCtx = ctx.Nest(focus);
+                    var argA = args.Skip(1).First()(newCtx, InvokeeFactory.EmptyArgs);
+                    if (propNull && !argA.Any()) return FhirValueList.Empty;
 
-                return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA)));
+                    return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA)));
+                }
+                else
+                {
+                    B lastPar = (B)(object)ctx.EvaluationContext;
+                    return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(Typecasts.CastTo<A>(focus), lastPar));
+                }
             };
         }
 
@@ -84,13 +101,22 @@ namespace Hl7.FhirPath.Expressions
                 var focus = args.First()(ctx, InvokeeFactory.EmptyArgs);
                 if (propNull && !focus.Any()) return FhirValueList.Empty;
 
-                var newCtx = ctx.Nest(focus);
-                var argA = args.Skip(1).First()(newCtx, InvokeeFactory.EmptyArgs);
-                if (propNull && !argA.Any()) return FhirValueList.Empty;
-                var argB = args.Skip(2).First()(newCtx, InvokeeFactory.EmptyArgs);
-                if (propNull && !argB.Any()) return FhirValueList.Empty;
+                if (typeof(C) != typeof(EvaluationContext))
+                {
+                   var newCtx = ctx.Nest(focus);
+                    var argA = args.Skip(1).First()(newCtx, InvokeeFactory.EmptyArgs);
+                    if (propNull && !argA.Any()) return FhirValueList.Empty;
+                    var argB = args.Skip(2).First()(newCtx, InvokeeFactory.EmptyArgs);
+                    if (propNull && !argB.Any()) return FhirValueList.Empty;
 
-                return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA), Typecasts.CastTo<C>(argB)));
+                    return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA),
+                        Typecasts.CastTo<C>(argB)));
+                }
+                else
+                {
+                    return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA),
+                        lastPar));
+                }
             };
         }
 
@@ -109,8 +135,10 @@ namespace Hl7.FhirPath.Expressions
                 var argC = args.Skip(3).First()(newCtx, InvokeeFactory.EmptyArgs);
                 if (propNull && !argC.Any()) return FhirValueList.Empty;
 
+                D lastPar = typeof(D) == typeof(EvaluationContext) ? (D)(object)ctx.EvaluationContext : Typecasts.CastTo<D>(argC);
+
                 return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(Typecasts.CastTo<A>(focus), 
-                            Typecasts.CastTo<B>(argA), Typecasts.CastTo<C>(argB), Typecasts.CastTo<D>(argC)));
+                            Typecasts.CastTo<B>(argA), Typecasts.CastTo<C>(argB), lastPar));
             };
         }
 

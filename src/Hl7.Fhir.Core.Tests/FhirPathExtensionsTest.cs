@@ -39,12 +39,10 @@ namespace Hl7.Fhir.Tests.Introspection
         [TestMethod]
         public void TestResolve()
         {
-            var comp = new FhirPathCompiler();
             var statement = "Bundle.entry.where(fullUrl = 'http://example.org/fhir/Patient/e')" +
-                        ".resource.managingOrganization.resolve().id";
+                         ".resource.managingOrganization.resolve().id";
 
-            var expr = comp.Compile(statement);
-            var result = expr(_bundleNav, null);
+            var result = _bundleNav.Select(statement);
             Assert.AreEqual(1, result.Count());
             Assert.AreEqual("orgY", result.First().Value);
 
