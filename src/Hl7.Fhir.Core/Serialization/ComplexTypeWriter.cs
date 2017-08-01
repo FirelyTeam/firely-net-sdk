@@ -61,8 +61,19 @@ namespace Hl7.Fhir.Serialization
             }
             else if (summary == Rest.SummaryType.Text)
             {
+                bool isMetaTextOrIdElementInstance(object inst)
+                {
+                    return (inst is Meta) || (inst is Narrative) || (inst is Id);
+                }
+
+                bool isSummaryProperty(PropertyMapping propMapping)
+                {
+                    return summaryTextProperties
+                        .Contains(propMapping.Name.ToLower());
+                }
+
                 propertiesToWrite = propertiesToWrite.Where(property =>
-                       summaryTextProperties.Contains(property.Name.ToLower())
+                       isSummaryProperty(property)
                     || property.IsMandatoryElement
                     || isMetaTextOrIdElementInstance(instance));
             }
@@ -72,8 +83,8 @@ namespace Hl7.Fhir.Serialization
             }
             else if (summary == Rest.SummaryType.Count)
             {
-                propertiesToWrite = propertiesToWrite.Where(property => 
-                   summaryCountProperties.Contains(property.Name.ToLower()) 
+                propertiesToWrite = propertiesToWrite.Where(property =>
+                   summaryCountProperties.Contains(property.Name.ToLower())
                 || property.SerializationHint == XmlSerializationHint.Attribute);
             }
 
@@ -95,11 +106,11 @@ namespace Hl7.Fhir.Serialization
 
             object value = property.GetValue(instance);
 
-            if (value is IList && ((IList)value).Count == 0) return;
+            if (value is IList list && list.Count == 0) return;
 
             bool isEnum = property.ElementType.IsEnum(),
                  isValueElement = property.RepresentsValueElement,
-                 isEmptyPrimitive = instance is Primitive && string.IsNullOrEmpty(((Primitive)instance).ObjectValue as string);
+                 isEmptyPrimitive = instance is Primitive primitive && string.IsNullOrEmpty(primitive.ObjectValue as string);
 
             if (value == null && (!isEnum || !isValueElement || isEmptyPrimitive)) return;
 
@@ -167,9 +178,9 @@ namespace Hl7.Fhir.Serialization
             return memberName + upperCamel(suffix);
         }
 
-        private bool isMetaTextOrIdElementInstance(object instance)
-        {
-            return (instance is Meta) || (instance is Narrative) || (instance is Id);
-        }
+        //private bool isMetaTextOrIdElementInstance(object instance)
+        //{
+        //    return (instance is Meta) || (instance is Narrative) || (instance is Id);
+        //}
     }
 }
