@@ -107,28 +107,19 @@ namespace Hl7.Fhir.Model
                 }
 
                 // Ensure the FHIR extensions are registered
-                var oldResolver = FhirPath.ElementNavFhirExtensions.Resolver;
-                try
-                {
-                    FhirPath.ElementNavFhirExtensions.Resolver = context.Resolver()?.ToFhirPathResolver();
-                    Hl7.Fhir.FhirPath.ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
+                Hl7.Fhir.FhirPath.ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
 
-                    if (model.Predicate(expression, model))
-                        return true;
+                if (model.Predicate(expression, new EvaluationContext(model)))
+                    return true;
 
-                    result.Issue.Add(new OperationOutcome.IssueComponent()
-                    {
-                        Code = OperationOutcome.IssueType.Invariant,
-                        Severity = OperationOutcome.IssueSeverity.Error,
-                        Details = new CodeableConcept(null, invariantRule.Key, invariantRule.Human),
-                        Diagnostics = expression
-                    });
-                    return false;
-                }
-                finally
+                result.Issue.Add(new OperationOutcome.IssueComponent()
                 {
-                    FhirPath.ElementNavFhirExtensions.Resolver = oldResolver;
-                }
+                    Code = OperationOutcome.IssueType.Invariant,
+                    Severity = OperationOutcome.IssueSeverity.Error,
+                    Details = new CodeableConcept(null, invariantRule.Key, invariantRule.Human),
+                    Diagnostics = expression
+                });
+                return false;
             }
             catch (Exception ex)
             {
