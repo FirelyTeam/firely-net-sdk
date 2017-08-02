@@ -155,12 +155,19 @@ namespace Hl7.FhirPath.Expressions
 
         public static void Add<A, B, C, R>(this SymbolTable table, string name, Func<A, B,C, R> func, bool doNullProp = false)
         {
-            table.Add(new CallSignature(name, typeof(R), typeof(A), typeof(B), typeof(C)), InvokeeFactory.Wrap(func, doNullProp));
+            if (typeof(C) != typeof(EvaluationContext))
+                table.Add(new CallSignature(name, typeof(R), typeof(A), typeof(B), typeof(C)), InvokeeFactory.Wrap(func, doNullProp));
+            else
+                table.Add(new CallSignature(name, typeof(R), typeof(A), typeof(B)), InvokeeFactory.Wrap(func, doNullProp));
         }
 
         public static void Add<A, B, C, D, R>(this SymbolTable table, string name, Func<A,B,C,D,R> func, bool doNullProp = false)
         {
-            table.Add(new CallSignature(name, typeof(R), typeof(A), typeof(B), typeof(C), typeof(D)), InvokeeFactory.Wrap(func, doNullProp));
+            if (typeof(D) != typeof(EvaluationContext))
+                table.Add(new CallSignature(name, typeof(R), typeof(A), typeof(B), typeof(C), typeof(D)), InvokeeFactory.Wrap(func, doNullProp));
+            else
+                table.Add(new CallSignature(name, typeof(R), typeof(A), typeof(B), typeof(C)), InvokeeFactory.Wrap(func, doNullProp));
+
         }
 
         public static void AddLogic(this SymbolTable table, string name, Func<Func<bool?>, Func<bool?>, bool?> func)

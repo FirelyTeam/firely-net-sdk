@@ -50,5 +50,20 @@ namespace Hl7.Fhir.Tests.Introspection
             //Assert.IsNotNull(resultPoco);
             //Assert.AreEqual("orgY", resultPoco.Id);
         }
+
+        [TestMethod]
+        public void TestResolve2()
+        {
+            var statement = "'http://example.org/doesntexist'.resolve().id";
+            var called = false;
+            var result = _bundleNav.Select(statement, new FhirEvaluationContext() { Resolver = resolver });
+            Assert.IsTrue(called);
+
+            IElementNavigator resolver(string url)
+            {
+                called = true;
+                return null;
+            }
+        }
     }
 }
