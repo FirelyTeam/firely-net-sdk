@@ -104,13 +104,13 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
-            var reference = instance.ParseResourceReference();
+            var reference = instance.ParseResourceReference()?.Reference;
 
-            if (reference.Reference == null)       // No reference found -> this is always valid
+            if (reference == null)       // No reference found -> this is always valid
                 return outcome;
 
             // Try to resolve the reference *within* the current instance (Bundle, resource with contained resources) first
-            var referencedResource = validator.resolveReference(instance, reference.Reference, 
+            var referencedResource = validator.resolveReference(instance, reference, 
                 out ElementDefinition.AggregationMode? encounteredKind, outcome);
 
             // Validate the kind of aggregation.
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Validation
             {
                 try
                 {
-                    referencedResource = validator.ExternalReferenceResolutionNeeded(reference.Reference, outcome, instance.Location);
+                    referencedResource = validator.ExternalReferenceResolutionNeeded(reference, outcome, instance.Location);
                 }
                 catch (Exception e)
                 {
