@@ -95,6 +95,9 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
+        /// <summary>Indicates if the <see cref="PrepareElement"/> event has any active subscribers.</summary>
+        bool MustRaisePrepareElement => PrepareElement != null;
+
 
         // [WMR 20170105] NEW
 

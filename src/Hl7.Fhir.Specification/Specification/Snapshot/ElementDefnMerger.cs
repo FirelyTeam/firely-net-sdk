@@ -27,10 +27,10 @@ namespace Hl7.Fhir.Specification.Snapshot
         struct ElementDefnMerger
         {
             /// <summary>Merge two <see cref="ElementDefinition"/> instances. Existing diff properties override associated snap properties.</summary>
-            public static void Merge(SnapshotGenerator generator, ElementDefinition snap, ElementDefinition diff)
+            public static void Merge(SnapshotGenerator generator, ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
             {
                 var merger = new ElementDefnMerger(generator);
-                merger.merge(snap, diff);
+                merger.merge(snap, diff, mergeElementId);
             }
 
             SnapshotGenerator _generator;
@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 _generator = generator;
             }
 
-            void merge(ElementDefinition snap, ElementDefinition diff)
+            void merge(ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
             {
                 // [WMR 20160915] Important! Derived profiles should never inherit the ChangedByDiff extension
                 // Caller should make sure that existing extensions have been removed from snap,
@@ -61,15 +61,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                     snap.PathElement = mergePrimitiveAttribute(snap.PathElement, diff.PathElement);
                 }
 
-                // [WMR 20160906] Also merge Element.Id
-                // Tricky... like ElementDefinition.Base, this value depends on the position in the tree => can't inherit
-                //if (snap.ElementId == null)
-                //{
-                //    snap.ElementId = diff.ElementId;
-                //}
+                // [WMR 20170421] Element.Id is NOT inherited!
+                // Merge custom Element id value from differential in same profile into snapshot
+                // [WMR 20170424] NEW
+                snap.ElementId = mergeId(snap, diff, mergeElementId);
 
                 // representation cannot be overridden
-
                 snap.NameElement = mergePrimitiveAttribute(snap.NameElement, diff.NameElement);
 
                 // Codes are cumulative based on the code value
@@ -282,6 +279,35 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
                 else
                     return snap;
+            }
+
+            string mergeId(ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
+            {
+                // Note: Element.ElementId is a simple string property (not Element)
+                // Cannot call onConstraint to annotate
+
+                if (mergeElementId)
+                {
+                    // Merge custom elementId from differential, if specified
+                    if (diff.ElementId != null)
+                    {
+                        return diff.ElementId;
+                    }
+                    // Newly introduced named slices NEVER inherit element id
+                    // Must always regenerate new unique identifier for named slices
+                    else if (diff.Name != snap.Name)
+                    {
+                        // Regenerate; don't inherit from snap
+                        return null;
+                    }
+                    // Otherwise inherit existing element id from snap
+                    return snap.ElementId;
+                }
+                else
+                {
+                    // Don't merge elementId, e.g. for type profiles
+                    return null;
+                }
             }
 
         }
