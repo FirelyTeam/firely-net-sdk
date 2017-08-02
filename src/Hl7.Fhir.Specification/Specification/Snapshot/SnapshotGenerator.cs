@@ -843,7 +843,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // 2. Element (base) type IS expanded in the base profile, i.e. base profile has child elements
                     //    => call mergeElement to merge diff (derived) type profile onto snapshot (base) type profile
 
-                    var copied = copyChildren(snap, typeNav, typeStructure);
+                    copyChildren(snap, typeNav, typeStructure);
 
                     // But we also need to merge external type profile onto any existing inline snapshot constraints
                     // e.g. TestObservationProfileWithExtensions(_ExpandAll)
