@@ -1004,6 +1004,87 @@ namespace Hl7.Fhir.Specification.Tests
             // Don't advance snapNav (not sliced)
         }
 
+        // [WMR 20170718] New: Match constraint on existing slice entry
+        [TestMethod]
+        public void TestElementMatcher_ConstraintOnExistingSliceEntry()
+        {
+            var baseProfile = new StructureDefinition()
+            {
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Patient"),
+                        new ElementDefinition("Patient.identifier")
+                        {
+                            Slicing = new ElementDefinition.SlicingComponent() { Description = "TEST" },
+                        },
+                        new ElementDefinition("Patient.identifier")
+                        {
+                            Name = "bsn"
+                        }
+                    }
+                }
+            };
+            var userProfile = new StructureDefinition()
+            {
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Patient"),
+                        // Constraint on inherited slice entry
+                        new ElementDefinition("Patient.identifier")
+                        {
+                            Min = 1
+                        },
+                        // Constraint on inherited slice
+                        new ElementDefinition("Patient.identifier")
+                        {
+                            Name = "bsn"
+                        },
+                        // Introduce new slice
+                        new ElementDefinition("Patient.identifier")
+                        {
+                            Name = "ehrid"
+                        }
+                    }
+                }
+            };
+
+            var snapNav = ElementDefinitionNavigator.ForDifferential(baseProfile);
+            var diffNav = ElementDefinitionNavigator.ForDifferential(userProfile);
+
+            // Merge: Patient root
+            var matches = ElementMatcher.Match(snapNav, diffNav);
+            Assert.IsTrue(diffNav.MoveToFirstChild());
+            Assert.IsTrue(snapNav.MoveToFirstChild());
+            assertMatch(matches, ElementMatcher.MatchAction.Merge, snapNav, diffNav);
+
+            // Slice entry: Patient.identifier
+            matches = ElementMatcher.Match(snapNav, diffNav);
+            Assert.IsNotNull(matches);
+            matches.DumpMatches(snapNav, diffNav);
+            Assert.AreEqual(3, matches.Count);
+            Assert.IsTrue(diffNav.MoveToFirstChild());
+            Assert.IsTrue(snapNav.MoveToChild(diffNav.PathName));
+            assertMatch(matches[0], ElementMatcher.MatchAction.Merge, snapNav, diffNav);    // Constraint on slice entry
+            var snapSliceEntryBookmark = snapNav.Bookmark();
+
+            Assert.IsTrue(diffNav.MoveToNext());
+            Assert.IsTrue(snapNav.MoveToNext());
+            assertMatch(matches[1], ElementMatcher.MatchAction.Merge, snapNav, diffNav);    // Constraint on first slice
+            Assert.AreEqual("bsn", diffNav.Current.Name);
+
+            // New slice: Patient.identifier:ehrid
+            Assert.IsTrue(diffNav.MoveToNext());
+            Assert.IsFalse(snapNav.MoveToNext());
+            Assert.IsTrue(snapNav.ReturnToBookmark(snapSliceEntryBookmark));
+            assertMatch(matches[2], ElementMatcher.MatchAction.Add, snapNav, diffNav);    // New slice
+            Assert.AreEqual("ehrid", diffNav.Current.Name);
+            Assert.IsFalse(diffNav.MoveToNext());
+        }
+
         // ========== Helper functions ==========
 
         // Recursively match diffNav to snapNav and verify that all matches return the specified action (def. Merged)

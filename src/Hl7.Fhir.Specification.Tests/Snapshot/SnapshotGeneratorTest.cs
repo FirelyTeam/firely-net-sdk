@@ -1217,8 +1217,14 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Test...
             _generator = new SnapshotGenerator(_testResolver, _settings);
+
+            // [WMR 20170614] NEW: ExpandElement should maintain the existing element ID...!
+            var orgId = elem.ElementId;
+
             var result = _generator.ExpandElement(elems, elem);
 
+            Assert.AreEqual(orgId, elem.ElementId);
+ 
             // Verify results
             verifyExpandElement(elem, elems, result);
         }
@@ -2060,6 +2066,38 @@ namespace Hl7.Fhir.Specification.Tests
             baseClone.RemoveAllConstrainedByDiffAnnotations();
 
             var result = !baseClone.IsExactly(elemClone);
+            return result;
+        }
+
+
+        // Utility function to compare element and base element
+        // Path, Base and CHANGED_BY_DIFF_EXT extension are excluded from comparison
+        // Returns true if the element has no other constraints on base
+        static bool isAlmostExactly(ElementDefinition elem, ElementDefinition baseElem, bool ignoreTypeProfile = false)
+        {
+            var elemClone = (ElementDefinition)elem.DeepCopy();
+            var baseClone = (ElementDefinition)baseElem.DeepCopy();
+
+            // Id, Path & Base are expected to differ
+            baseClone.ElementId = elem.ElementId;
+            baseClone.Path = elem.Path;
+            baseClone.Base = elem.Base;
+
+            // [WMR 20170713] Added
+            if (ignoreTypeProfile)
+            {
+                Debug.Assert(elem.Type.Count > 0);
+                Debug.Assert(baseClone.Type.Count > 0);
+                baseClone.Type[0].Profile = elem.Type[0].Profile;
+            }
+
+            // Also ignore any Changed extensions on base and diff
+            elemClone.RemoveAllConstrainedByDiffExtensions();
+            baseClone.RemoveAllConstrainedByDiffExtensions();
+            elemClone.RemoveAllConstrainedByDiffAnnotations();
+            baseClone.RemoveAllConstrainedByDiffAnnotations();
+
+            var result = baseClone.IsExactly(elemClone);
             return result;
         }
 
@@ -3422,7 +3460,11 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify slice "ehr_id"
             Assert.IsTrue(nav.MoveToNextSlice());
-            assertNamedSliceBaseElement(corePatientIdentifierElem, nav.Current);
+
+            // [WMR 20170711] Disregard ElementDefinition.Base
+            // Assert.AreEqual(corePatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
+            Assert.IsTrue(isAlmostExactly(corePatientIdentifierElem, GetBaseElementAnnotation(nav.Current)));
+
             Assert.IsNull(nav.Current.Slicing);
             Assert.AreEqual("ehr_id", nav.Current.Name);
             Assert.AreEqual(0, nav.Current.Min);
@@ -4636,7 +4678,6 @@ namespace Hl7.Fhir.Specification.Tests
         // Three layers of derived profiles: MyVitalSigns => VitalSigns => Observation
         // When expanding MyVitalSigns, the annotated base elements also include local diff constraints... WRONG!
         // As a result, Forge will not detect the existing local constraints (no yellow pen, excluded from output).
-
         const string MyDerivedObservationUrl = @"http://example.org/fhir/StructureDefinition/MyDerivedObservation";
         const string MyMoreDerivedObservationUrl = @"http://example.org/fhir/StructureDefinition/MyMoreDerivedObservation";
 
@@ -4785,7 +4826,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(coreMethodElem.Comments, baseElem.Comments);
         }
 
-        // [WMR 20170718] TODO - Test for slicing issue
+        // [WMR 20170718] Test for slicing issue
         static StructureDefinition MySlicedDocumentReference => new StructureDefinition()
         {
             ConstrainedType = FHIRDefinedType.Observation,
@@ -4877,6 +4918,102 @@ namespace Hl7.Fhir.Specification.Tests
             // Verify that slice base always has Min = 0 (not inherited from base profile)
             Assert.AreEqual(0, sliceBase.Min);
         }
+
+        // [WMR 20170718] NEW
+        // Accept and handle derived profile constraints on existing slice entry in base profile
+
+        static StructureDefinition MySlicedBasePatient => new StructureDefinition()
+        {
+            ConstrainedType = FHIRDefinedType.Patient,
+            Base = ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Patient),
+            Name = "MySlicedBasePatient",
+            Url = @"http://example.org/fhir/StructureDefinition/MySlicedBasePatient",
+            //Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+            Kind = StructureDefinition.StructureDefinitionKind.Resource,
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("Patient.identifier")
+                    {
+                        Slicing = new ElementDefinition.SlicingComponent()
+                        {
+                            Description = "TEST"
+                        }
+                    },
+                    new ElementDefinition("Patient.identifier")
+                    {
+                        Name = "bsn"
+                    }
+                }
+            }
+        };
+
+        static StructureDefinition MyMoreDerivedPatient => new StructureDefinition()
+        {
+            ConstrainedType = FHIRDefinedType.Patient,
+            Base = MySlicedBasePatient.Url,
+            Name = "MyMoreDerivedPatient",
+            Url = @"http://example.org/fhir/StructureDefinition/MyMoreDerivedPatient",
+            //Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+            Kind = StructureDefinition.StructureDefinitionKind.Resource,
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    // Further constrain existing slice entry
+                    new ElementDefinition("Patient.identifier")
+                    {
+                        Min = 1
+                    }
+                }
+            }
+        };
+
+        // https://trello.com/c/Mnn0EBOg
+        [TestMethod]
+        public void TestConstraintOnSliceEntry()
+        {
+            var sd = MyMoreDerivedPatient;
+            var resolver = new InMemoryProfileResolver(sd, MySlicedBasePatient);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            StructureDefinition expanded = null;
+            // _generator.BeforeExpandElement += beforeExpandElementHandler_DEBUG;
+            _generator.PrepareElement += elementHandler;
+            try
+            {
+                generateSnapshotAndCompare(sd, out expanded);
+            }
+            finally
+            {
+                // _generator.BeforeExpandElement -= beforeExpandElementHandler_DEBUG;
+                _generator.PrepareElement -= elementHandler;
+            }
+
+            dumpOutcome(_generator.Outcome);
+            Assert.IsTrue(expanded.HasSnapshot);
+            // dumpElements(expanded.Snapshot.Element);
+            dumpBaseElems(expanded.Snapshot.Element);
+
+            // Snapshot generator should NOT emit any issues
+            // * Issue #0: Severity = 'Error' Code = 'Required' Details: '10008' Text : 'Element 'Patient.identifier' defines a slice without a name. Individual slices must always have a unique name, except extensions.' Profile: 'http://example.org/fhir/StructureDefinition/MyMoreDerivedPatient' Path: 'Patient.identifier'
+            Assert.IsNull(_generator.Outcome);
+
+            // Verify constraint on slice entry
+            var elems = expanded.Snapshot.Element;
+            var sliceEntry = elems.FirstOrDefault(e => e.Path == "Patient.identifier");
+            Assert.IsNotNull(sliceEntry);
+            Assert.IsNotNull(sliceEntry.Slicing);
+            Assert.AreEqual(1, sliceEntry.Min);
+            var ann = sliceEntry.Annotation<BaseDefAnnotation>();
+            Assert.IsNotNull(ann);
+            Assert.IsNotNull(ann.BaseElementDefinition);
+            Assert.AreEqual(0, ann.BaseElementDefinition.Min);
+        }
+
     }
 
 }
