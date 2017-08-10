@@ -18,27 +18,17 @@ namespace Hl7.FhirPath.Expressions
         {
         }
 
-        public static Closure Root(IElementNavigator root)
+        public EvaluationContext EvaluationContext { get; private set; }
+
+        public static Closure Root(IElementNavigator root, EvaluationContext ctx=null)
         {
-            var newContext = new Closure();
+            var newContext = new Closure() { EvaluationContext = ctx ?? EvaluationContext.Default };
 
             var input = new[] { root };
             newContext.SetThis(input);
             newContext.SetThat(input);
             newContext.SetOriginalContext(input);
-
-            return newContext;
-        }
-
-        public static Closure Root(IElementNavigator root, IElementNavigator resource)
-        {
-            var newContext = new Closure();
-
-            var input = new[] { root };
-            newContext.SetThis(input);
-            newContext.SetThat(input);
-            newContext.SetOriginalContext(input);
-            if(resource != null) newContext.SetResource(new[] { resource } );
+            if(ctx.Container != null) newContext.SetResource(new[] { ctx.Container } );
 
             return newContext;
         }
@@ -56,10 +46,11 @@ namespace Hl7.FhirPath.Expressions
 
         public virtual Closure Nest()
         {
-            var newContext = new Closure();
-            newContext.Parent = this;
-
-            return newContext;
+            return new Closure()
+            {
+                Parent = this,
+                EvaluationContext = this.EvaluationContext
+            };
         }
 
 

@@ -12,8 +12,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <FhirApiVersion>0.93.5-alpha91</FhirApiVersion>
-    <SupportApiVersion>0.4.3</SupportApiVersion>
+    <FhirApiVersion>0.93.5-beta3</FhirApiVersion>
+    <SupportApiVersion>0.4.4-beta3</SupportApiVersion>
   </PropertyGroup>
 
   <!-- Compiler settings -->
@@ -22,17 +22,20 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-<!--     <DocumentationFile>$(AssemblyName).xml</DocumentationFile> -->
      <DebugType>full</DebugType>
      <DebugSymbols>True</DebugSymbols>
-     <GenerateDocumentationFile>true</GenerateDocumentationFile>
      <NoWarn>1591</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>..\FhirNetApi.snk</AssemblyOriginatorKeyFile>
-    <IncludeSymbols>true</IncludeSymbols>
+    <IncludeSymbols>True</IncludeSymbols>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
+
+  <PropertyGroup>
+      <GenerateDocumentationFile>True</GenerateDocumentationFile>
+  </PropertyGroup>
 </Project>
+

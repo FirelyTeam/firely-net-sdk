@@ -39,18 +39,31 @@ namespace Hl7.Fhir.Tests.Introspection
         [TestMethod]
         public void TestResolve()
         {
-            var comp = new FhirPathCompiler();
             var statement = "Bundle.entry.where(fullUrl = 'http://example.org/fhir/Patient/e')" +
-                        ".resource.managingOrganization.resolve().id";
+                         ".resource.managingOrganization.resolve().id";
 
-            var expr = comp.Compile(statement);
-            var result = expr(_bundleNav, null);
+            var result = _bundleNav.Select(statement);
             Assert.AreEqual(1, result.Count());
             Assert.AreEqual("orgY", result.First().Value);
 
             //var resultPoco = _parsed.Select(statement).SingleOrDefault() as Organization;
             //Assert.IsNotNull(resultPoco);
             //Assert.AreEqual("orgY", resultPoco.Id);
+        }
+
+        [TestMethod]
+        public void TestResolve2()
+        {
+            var statement = "'http://example.org/doesntexist'.resolve().id";
+            var called = false;
+            var result = _bundleNav.Select(statement, new FhirEvaluationContext() { Resolver = resolver });
+            Assert.IsTrue(called);
+
+            IElementNavigator resolver(string url)
+            {
+                called = true;
+                return null;
+            }
         }
     }
 }
