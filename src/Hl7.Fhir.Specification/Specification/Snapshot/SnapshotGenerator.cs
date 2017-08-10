@@ -22,6 +22,12 @@
 // [WMR 20170216] Prevent slices on non-repeating non-choice type elements (max = 1)
 // #define REJECT_SLICE_NONREPEATING_ELEMENT
 
+// [WMR 20170810] STU3 bug: SimpleQuantity root element introduces non-empty sliceName = "SliceName"
+// Detect and fix invalid non-null sliceNames on specializations
+// #define FIX_SLICENAMES_ON_SPECIALIZATIONS
+// Detect and fix invalid non-null sliceNames on root elements
+#define FIX_SLICENAMES_ON_ROOT_ELEMENTS
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -266,6 +272,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                         throw Error.Argument(nameof(structure), $"Invalid argument. The StructureDefinition.type property value is empty or missing.");
                     }
                     snapshot.Rebase(rootPath);
+
+#if FIX_SLICENAMES_ON_SPECIALIZATIONS
+                    // [WMR 20170810] Handle bug in STU3
+                    // SimpleQuantity root element defines non-null sliceName = "SimpleQuantity" - WRONG!
+                    fixInvalidSliceNamesInSpecialization(structure);
+#endif
                 }
 
                 // [WMR 20170710] NEW: Generate element IDs while processing
@@ -313,12 +325,48 @@ namespace Hl7.Fhir.Specification.Snapshot
             var fullDifferential = DifferentialTreeConstructor.MakeTree(differential.Element);
             var diff = new ElementDefinitionNavigator(fullDifferential);
 
+#if FIX_SLICENAMES_ON_ROOT_ELEMENTS
+            var diffRoot = differential.GetRootElement();
+            fixInvalidSliceNameOnRootElement(diffRoot, structure);
+#endif
+
             merge(nav, diff);
 
             result = nav.ToListOfElements();
 
             return result;
         }
+
+#if FIX_SLICENAMES_ON_SPECIALIZATIONS
+        void fixInvalidSliceNamesInSpecialization(StructureDefinition sd)
+        {
+            Debug.Assert(sd.Derivation == StructureDefinition.TypeDerivationRule.Specialization);
+            var elems = sd.Differential.Element.Where(e => e.SliceName != null);
+            foreach (var elem in elems)
+            {
+                if (!string.IsNullOrEmpty(elem.SliceName))
+                {
+                    addIssueInvalidSliceNameOnSpecialization(elem);
+                    elem.SliceName = null;
+                }
+            }
+        }
+#endif
+
+#if FIX_SLICENAMES_ON_ROOT_ELEMENTS
+        void fixInvalidSliceNameOnRootElement(ElementDefinition elem, StructureDefinition sd)
+        {
+            if (elem != null)
+            {
+                Debug.Assert(elem.IsRootElement());
+                if (!string.IsNullOrEmpty(elem.SliceName))
+                {
+                    addIssueInvalidSliceNameOnRootElement(elem, sd);
+                    elem.SliceName = null;
+                }
+            }
+        }
+#endif
 
         /// <summary>
         /// Expand the currently active element within the specified <see cref="ElementDefinitionNavigator"/> instance.
@@ -1613,6 +1661,12 @@ namespace Hl7.Fhir.Specification.Snapshot
             // => first element is NOT guaranteed to be the root element!
             // var diffRoot = sd.Differential.Element[0];
             var diffRoot = sd.Differential.GetRootElement();
+
+#if FIX_SLICENAMES_ON_ROOT_ELEMENTS
+            // [WMR 20170810] Handle bug in STU3
+            // SimpleQuantity root element defines non-null sliceName = "SimpleQuantity" - WRONG!
+            fixInvalidSliceNameOnRootElement(diffRoot, sd);
+#endif
 
             var baseProfileUri = sd.BaseDefinition;
 
