@@ -15,6 +15,8 @@ using System.IO;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Utility;
+using ssac = System.Security.AccessControl;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -96,8 +98,9 @@ namespace Hl7.Fhir.Specification.Tests
             File.WriteAllText(Path.Combine(testPath, "nonfhir.xml"), "<root>this is not a valid FHIR xml resource.</root>");
             File.WriteAllText(Path.Combine(testPath, "invalid.xml"), "<root>this is invalid xml");
 
-            Directory.CreateDirectory(Path.Combine(testPath, "sub"));
-            copy(@"TestData", "TestPatient.json", testPath);
+            var subPath = Path.Combine(testPath, "sub");
+            Directory.CreateDirectory(subPath);
+            copy(@"TestData", "TestPatient.json", subPath);
 
             // If you add or remove files, please correct the numFiles here below
             numFiles = 8 - 1;   // 8 files - 1 binary (which should be ignored)
@@ -111,8 +114,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestInitialize]
         public void SetupExampleDir()
         {
-            int dummy;
-            _testPath = prepareExampleDirectory(out dummy);
+            _testPath = prepareExampleDirectory(out int numFiles);
         }
 
         [TestMethod]
@@ -189,8 +191,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void ReadsSubdirectories()
         {
-            int numFiles;
-            var testPath = prepareExampleDirectory(out numFiles);
+            var testPath = prepareExampleDirectory(out int numFiles);
             var fa = new DirectorySource(testPath, includeSubdirectories: true);
             var names = fa.ListArtifactNames();
 
@@ -261,5 +262,121 @@ namespace Hl7.Fhir.Specification.Tests
 
         }
 
-    }
+        // [WMR 20170817] NEW
+        // https://github.com/ewoutkramer/fhir-net-api/issues/410
+        // DirectorySource should gracefully handle insufficient access permissions
+        // i.e. silently ignore all inaccessible files & folders
+
+        // Can we modify access permissions on the CI build environment...?
+        [TestMethod, TestCategory("IntegrationTest")]
+        public void TestAccessPermissions()
+        {
+            var testPath = prepareExampleDirectory(out int numFiles);
+
+            // Additional temporary folder without read permissions
+            var subPath2 = Path.Combine(testPath, "sub2");
+            var forbiddenDir = Directory.CreateDirectory(subPath2);
+
+            // Additional temporary folder with ordinary permissions
+            var subPath3 = Path.Combine(testPath, "sub3");
+            Directory.CreateDirectory(subPath3);
+
+            const string srcPath = @"TestData\snapshot-test\WMR\";
+            const string srcFile1 = "MyBasic.structuredefinition.xml";
+            const string srcFile2 = "MyBundle.structuredefinition.xml";
+
+            // Create test file in inaccessible subfolder; should be ignored
+            copy(srcPath, srcFile1, subPath2);
+
+            // Create hidden test file in accessible subfolder; should also be ignored
+            copy(srcPath, srcFile1, subPath3);
+            var filePath = Path.Combine(subPath3, srcFile1);
+            var attr = File.GetAttributes(filePath);
+            File.SetAttributes(filePath, attr | FileAttributes.Hidden);
+
+            // Create regular test file in accessible subfolder; should be included
+            copy(srcPath, srcFile2, subPath3);
+            numFiles++;
+
+            bool initialized = false;
+            try
+            {
+                // Abort unit test if we can't access folder permissions
+                var ds = forbiddenDir.GetAccessControl();
+
+                // Revoke folder read permissions for the current user
+                string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+                var rule = new ssac.FileSystemAccessRule(userName, ssac.FileSystemRights.Read, ssac.AccessControlType.Deny);
+                ds.AddAccessRule(rule);
+                Debug.Print($"Removing read permissions from folder: '{subPath2}' ...");
+
+                // Abort unit test if we can't modify file permissions
+                forbiddenDir.SetAccessControl(ds);
+
+                try
+                {
+                    var forbiddenFile = new FileInfo(Path.Combine(subPath2, srcFile1));
+
+                    // Abort unit test if we can't access file permissions
+                    var fs = forbiddenFile.GetAccessControl();
+                    
+                    // Revoke file read permissions for the current user
+                    fs.AddAccessRule(rule);
+                    Debug.Print($"Removing read permissions from fole: '{forbiddenFile}' ...");
+                    
+                    // Abort unit test if we can't modify file permissions
+                    forbiddenFile.SetAccessControl(fs);
+
+                    initialized = true;
+
+                    try
+                    {
+                        // Note: we still have write permissions...
+
+                        var fa = new DirectorySource(testPath, includeSubdirectories: true);
+                        var names = fa.ListArtifactNames();
+
+                        Assert.AreEqual(numFiles, names.Count());
+                        Assert.IsFalse(names.Contains(srcFile1));
+                        Assert.IsTrue(names.Contains(srcFile2));
+                    }
+                    // API *should* grafecully handle security exceptions
+                    catch (UnauthorizedAccessException ex)
+                    {
+                        Assert.Fail($"Failed! Unexpected UnauthorizedAccessException: {ex.Message}");
+                    }
+                    finally
+                    {
+                        var result = fs.RemoveAccessRule(rule);
+                        Assert.IsTrue(result);
+                        Debug.Print($"Restoring file read permissions...");
+                        forbiddenFile.SetAccessControl(fs);
+                        Debug.Print($"Succesfully restored file read permissions.");
+
+                        // We should be able to delete the file
+                        File.Delete(forbiddenFile.FullName);
+                    }
+                }
+                finally
+                {
+                    var result = ds.RemoveAccessRule(rule);
+                    Assert.IsTrue(result);
+                    Debug.Print($"Restoring folder read permissions...");
+                    forbiddenDir.SetAccessControl(ds);
+                    Debug.Print($"Succesfully restored folder read permissions.");
+
+                    // We should be able to delete the subdirectory
+                    Directory.Delete(subPath2, true);
+                }
+
+            }
+            // If acl initialization failed, then consume the exception and return success
+            // Preferably, skip this unit test / return unknown result - how?
+            catch (Exception ex) when (!initialized)
+            {
+                Debug.Print($"[{nameof(TestAccessPermissions)}] Could not modify directory access permissions: '{ex.Message}'. Skip unit test...");
+            }
+        }
+
+   }
 }
