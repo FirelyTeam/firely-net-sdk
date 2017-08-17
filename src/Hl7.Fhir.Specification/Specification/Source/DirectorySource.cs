@@ -210,7 +210,7 @@ namespace Hl7.Fhir.Specification.Source
                         Debug.WriteLine($"Error enumerating files in '{currentFolder}': {ex.Message}");
                     }
 #else
-                    catch() { }
+                    catch { }
 #endif
                 }
 
@@ -235,7 +235,7 @@ namespace Hl7.Fhir.Specification.Source
                         Debug.WriteLine($"Error enumerating subfolders of '{currentFolder}': {ex.Message}");
                     }
 #else
-                    catch() { }
+                    catch { }
 #endif
 
                 }
