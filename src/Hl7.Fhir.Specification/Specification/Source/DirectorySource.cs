@@ -16,6 +16,7 @@ using System.Xml;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Utility;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -115,8 +116,13 @@ namespace Hl7.Fhir.Specification.Source
             // Add files present in the content directory
             var allFiles = new List<string>();
 
-            foreach (var mask in masks)
-                allFiles.AddRange(Directory.GetFiles(_contentDirectory, mask, _includeSubs ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly));
+            // [WMR 20170817] NEW
+            // Safely enumerate files in specified path and subfolders, recursively
+            allFiles.AddRange(SafeGetFiles(_contentDirectory, masks, _includeSubs));
+            //foreach (var mask in masks)
+            //{
+            //    allFiles.AddRange(Directory.GetFiles(_contentDirectory, mask, _includeSubs ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly));
+            //}
 
             // Always remove *.exe" and "*.dll"
             allFiles.RemoveAll(name => Path.GetExtension(name) == ".exe" || Path.GetExtension(name) == ".dll");
@@ -136,6 +142,108 @@ namespace Hl7.Fhir.Specification.Source
             _artifactFilePaths = allFiles;
             _filesPrepared = true;
         }
+
+        // [WMR 20170817]
+        // Safely enumerate files in specified path and subfolders, recursively
+        // Ignore files & folders with Hidden and/or System attributes
+        // Ignore subfolders with insufficient access permissions
+        // https://stackoverflow.com/a/38959208
+        // https://docs.microsoft.com/en-us/dotnet/standard/io/how-to-enumerate-directories-and-files
+
+        private static IEnumerable<string> SafeGetFiles(string path, IEnumerable<string> masks, bool searchSubfolders)
+        {
+            if (File.Exists(path))
+            {
+                return new string[] { path };
+            }
+
+            if (!Directory.Exists(path))
+            {
+                return Enumerable.Empty<string>();
+            }
+
+            // Not necessary; caller prepareFiles() validates the mask
+            //if (!masks.Any())
+            //{
+            //    return Enumerable.Empty<string>();
+            //}
+
+            Queue<string> folders = new Queue<string>();
+            // Use HashSet to remove duplicates; different masks could match same file(s)
+            HashSet<string> files = new HashSet<string>();
+            folders.Enqueue(path);
+
+            while (folders.Count != 0)
+            {
+                string currentFolder = folders.Dequeue();
+                var currentDirInfo = new DirectoryInfo(currentFolder);
+
+                // local helper function to validate file/folder attributes, exclude system and/or hidden
+                bool IsValid(FileAttributes attr) => (attr & (FileAttributes.System | FileAttributes.Hidden)) == 0;
+
+                foreach (var mask in masks)
+                {
+                    try
+                    {
+                        // https://docs.microsoft.com/en-us/dotnet/standard/io/how-to-enumerate-directories-and-files
+                        // "Although you can immediately enumerate all the files in the subdirectories of a
+                        // parent directory by using the AllDirectories search option provided by the SearchOption
+                        // enumeration, unauthorized access exceptions (UnauthorizedAccessException) may cause the
+                        // enumeration to be incomplete. If these exceptions are possible, you can catch them and
+                        // continue by first enumerating directories and then enumerating files."
+
+                        // Explicitly ignore system & hidden files
+                        var curFiles = currentDirInfo.EnumerateFiles(mask, SearchOption.TopDirectoryOnly);
+                        foreach (var file in curFiles)
+                        {
+                            // Skip system & hidden files
+                            if (IsValid(file.Attributes))
+                            {
+                                files.Add(file.FullName);
+                            }
+                        }
+                    }
+#if DEBUG
+                    catch (Exception ex)
+                    {
+                        // Do Nothing
+                        Debug.WriteLine($"Error enumerating files in '{currentFolder}': {ex.Message}");
+                    }
+#else
+                    catch() { }
+#endif
+                }
+
+                if (searchSubfolders)
+                {
+                    try
+                    {
+                        var subFolders = currentDirInfo.EnumerateDirectories("*", SearchOption.TopDirectoryOnly);
+                        foreach (var subFolder in subFolders)
+                        {
+                            // Skip system & hidden folders
+                            if (IsValid(subFolder.Attributes))
+                            {
+                                folders.Enqueue(subFolder.FullName);
+                            }
+                        }
+                    }
+#if DEBUG
+                    catch (Exception ex)
+                    {
+                        // Do Nothing
+                        Debug.WriteLine($"Error enumerating subfolders of '{currentFolder}': {ex.Message}");
+                    }
+#else
+                    catch() { }
+#endif
+
+                }
+            }
+
+            return files.AsEnumerable();
+        }
+
 
         internal static List<string> ResolveDuplicateFilenames(List<string> allFilenames, DuplicateFilenameResolution preference)
         {
