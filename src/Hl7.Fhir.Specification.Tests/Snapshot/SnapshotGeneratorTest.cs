@@ -1081,9 +1081,10 @@ namespace Hl7.Fhir.Specification.Tests
 
             foreach (var testSD in testSDs)
             {
-                var sdInfo = testSD.Annotation<OriginAnnotation>();
+                // var sdInfo = testSD.Annotation<OriginAnnotation>();
                 // [WMR 20160721] Select all profiles in profiles-others.xml
-                var fileName = Path.GetFileNameWithoutExtension(sdInfo.Origin);
+                // var fileName = Path.GetFileNameWithoutExtension(sdInfo.Origin);
+                var fileName = Path.GetFileNameWithoutExtension(testSD.GetOrigin());
                 if (fileName == "profiles-others")
                 {
                     //var sd = _testResolver.FindStructureDefinition(sdInfo.Canonical);
@@ -2723,8 +2724,9 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     if (sd.Differential.Element.Any(e => e.Path.StartsWith("Extension.extension.", StringComparison.Ordinal)))
                     {
-                        var orgInfo = sd.Annotation<OriginAnnotation>();
-                        Debug.WriteLine($"{uri} : '{orgInfo?.Origin}'");
+                        // var orgInfo = sd.Annotation<OriginAnnotation>();
+                        // Debug.WriteLine($"{uri} : '{orgInfo?.Origin}'");
+                        Debug.WriteLine($"{uri} : '{sd.GetOrigin()}'");
                     }
                 }
             }
