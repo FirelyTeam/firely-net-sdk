@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Specification.Source
             if (found == null) return null;
 
             var resultResource = new FhirJsonParser().Parse<Resource>(new JsonDomFhirReader(found));
-            resultResource.AddAnnotation(new OriginAnnotation { Origin = entry.Origin });
+            resultResource.SetOrigin(entry.Origin);
 
             return resultResource;
         }
