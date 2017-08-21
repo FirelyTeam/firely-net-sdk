@@ -58,10 +58,14 @@ namespace Hl7.Fhir.Specification.Tests
 
             var dirSource = new DirectorySource("TestData/snapshot-test", includeSubdirectories: true);
             _source = new TimingSource(dirSource);
+            // [WMR 20170810] Order is important!
+            // Specify source first to override core defs from
+            // TestData\snapshot-test\profiles-resources.xml and profiles-types.xml
             _testResolver = new CachedResolver(
                 new MultiResolver(
-                    _source,
-                    new ZipSource("specification.zip")));
+                    // _source,
+                    new ZipSource("specification.zip"),
+                    _source));
         }
 
         // [WMR 20160718] Generate snapshot for extension definition fails with exception:
@@ -1310,7 +1314,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // [WMR 20170614] NEW: ExpandElement should maintain the existing element ID...!
             var orgId = elem.ElementId;
-            
+
             var result = _generator.ExpandElement(elems, elem);
 
             Assert.AreEqual(orgId, elem.ElementId);
@@ -1954,6 +1958,78 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
+        // [WMR 20170714] NEW
+        // Annotated Base Element for backbone elements is not included in base structuredefinition ?
+
+        static StructureDefinition MyTestObservation => new StructureDefinition()
+        {
+            Type = FHIRAllTypes.Observation.GetLiteral(),
+            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation),
+            Name = "MyTestObservation",
+            Url = "http://example.org/fhir/StructureDefinition/MyTestObservation",
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+            Kind = StructureDefinition.StructureDefinitionKind.Resource,
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("Observation.component")
+                    {
+                        Min = 1
+                    },
+                }
+            }
+        };
+
+        [TestMethod]
+        public void TestBaseAnnotations_BackboneElement()
+        {
+            var sd = MyTestObservation;
+            var resolver = new InMemoryProfileResolver(sd);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            StructureDefinition expanded = null;
+            // _generator.BeforeExpandElement += beforeExpandElementHandler_DEBUG;
+            _generator.PrepareElement += elementHandler;
+            try
+            {
+                generateSnapshotAndCompare(sd, out expanded);
+            }
+            finally
+            {
+                // _generator.BeforeExpandElement -= beforeExpandElementHandler_DEBUG;
+                _generator.PrepareElement -= elementHandler;
+            }
+
+            dumpOutcome(_generator.Outcome);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            Debug.WriteLine("Core Observation:");
+            var obs = _testResolver.FindStructureDefinitionForCoreType(FHIRAllTypes.Observation);
+            Assert.IsNotNull(obs);
+            Assert.IsTrue(obs.HasSnapshot);
+            dumpBaseElems(obs.Snapshot.Element);
+
+            Debug.WriteLine("Derived Observation:");
+            // dumpElements(expanded.Snapshot.Element);
+            dumpBaseElems(expanded.Snapshot.Element);
+
+            assertBaseDefs(expanded, _settings);
+
+            // Additional check: verify that all annotated base element references
+            // point to existing instances in the base profile snapshot
+            var elems = expanded.Snapshot.Element;
+            var baseElems = obs.Snapshot.Element;
+            for (int i = 0; i < elems.Count; i++)
+            {
+                var elem = elems[i];
+                var baseElem = elem.Annotation<BaseDefAnnotation>()?.BaseElementDefinition;
+                Assert.IsTrue(baseElems.Contains(baseElem));
+            }
+        }
+
 
         // [WMR 20160816] Test custom annotations containing associated base definitions
         class BaseDefAnnotation
@@ -2005,7 +2081,7 @@ namespace Hl7.Fhir.Specification.Tests
             var baseStruct = e.BaseStructure;
             elem.AddAnnotation(new BaseDefAnnotation(baseDef, baseStruct));
 
-            Debug.Write($"[{nameof(SnapshotGeneratorTest)}.{nameof(elementHandler)}] #{elem.GetHashCode()} '{elem.Path}' - Base: #{baseDef?.GetHashCode() ?? 0} '{(baseDef?.Path)}' - Base Structure '{baseStruct?.Url}'");
+            Debug.Write($"[{nameof(SnapshotGeneratorTest)}.{nameof(elementHandler)}] #{elem.GetHashCode()} '{elem.Path}:{elem.SliceName}' - Base: #{baseDef?.GetHashCode() ?? 0} '{(baseDef?.Path)}' - Base Structure '{baseStruct?.Url}'");
             Debug.WriteLine(ann?.BaseElementDefinition != null ? $" (old Base: #{ann.BaseElementDefinition.GetHashCode()} '{ann.BaseElementDefinition.Path}')" : "");
         }
 
@@ -2980,8 +3056,12 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(nav.Current.Type.FirstOrDefault().Code, FHIRAllTypes.Integer.GetLiteral());
 
             Assert.IsNotNull(outcome);
-            Assert.AreEqual(1, outcome.Issue.Count);
-            assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT);
+            // [WMR 20170810] Fixed, now also expecting issue about invalid slice name on SimpleQuantity root element
+            //Assert.AreEqual(1, outcome.Issue.Count);
+            // assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT);
+            Assert.AreEqual(2, outcome.Issue.Count);
+            assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT);
+            assertIssue(outcome.Issue[1], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT);
         }
 
         static StructureDefinition ClosedExtensionSliceObservationProfile => new StructureDefinition()
@@ -3507,7 +3587,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify slice "ehr_id"
             Assert.IsTrue(nav.MoveToNextSlice());
-            
+
             // [WMR 20170711] Disregard ElementDefinition.Base
             // Assert.AreEqual(corePatientIdentifierElem, GetBaseElementAnnotation(nav.Current));
             Assert.IsTrue(isAlmostExactly(corePatientIdentifierElem, GetBaseElementAnnotation(nav.Current)));
@@ -4264,7 +4344,13 @@ namespace Hl7.Fhir.Specification.Tests
             //dumpElements(profile.Differential.Element);
             //dumpOutcome(_generator.Outcome);
             //Assert.IsTrue(result);
-            Assert.IsNull(_generator.Outcome);
+
+            // [WMR 20170810] Fixed, now also expecting issue about invalid slice name on SimpleQuantity root element
+            // Assert.IsNull(_generator.Outcome);
+            var outcome = _generator.Outcome;
+            Assert.IsNotNull(outcome);
+            Assert.AreEqual(1, outcome.Issue.Count);
+            assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT);
 
             // Ensure that renamed diff elements override base elements with original names
             var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
@@ -4905,7 +4991,7 @@ namespace Hl7.Fhir.Specification.Tests
             _generator.BeforeExpandElement += beforeExpandElementHandler_DEBUG;
             try
             {
-                    generateSnapshotAndCompare(patientProfile, out expanded);
+                generateSnapshotAndCompare(patientProfile, out expanded);
             }
             finally
             {
@@ -5034,15 +5120,12 @@ namespace Hl7.Fhir.Specification.Tests
         // When expanding MyVitalSigns, the annotated base elements also include local diff constraints... WRONG!
         // As a result, Forge will not detect the existing local constraints (no yellow pen, excluded from output).
 
-        const string MyDerivedObservationUrl = @"http://example.org/fhir/StructureDefinition/MyDerivedObservation";
-        const string MyMoreDerivedObservationUrl = @"http://example.org/fhir/StructureDefinition/MyMoreDerivedObservation";
-
         static StructureDefinition MyDerivedObservation => new StructureDefinition()
         {
             Type = FHIRAllTypes.Observation.GetLiteral(),
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation),
             Name = "MyDerivedObservation",
-            Url = MyDerivedObservationUrl,
+            Url = @"http://example.org/fhir/StructureDefinition/MyDerivedObservation",
             Derivation = StructureDefinition.TypeDerivationRule.Constraint,
             Kind = StructureDefinition.StructureDefinitionKind.Resource,
             Differential = new StructureDefinition.DifferentialComponent()
@@ -5104,9 +5187,9 @@ namespace Hl7.Fhir.Specification.Tests
         static StructureDefinition MyMoreDerivedObservation => new StructureDefinition()
         {
             Type = FHIRAllTypes.Observation.GetLiteral(),
-            BaseDefinition = MyDerivedObservationUrl,
+            BaseDefinition = MyDerivedObservation.Url,
             Name = "MyMoreDerivedObservation",
-            Url = MyMoreDerivedObservationUrl,
+            Url = @"http://example.org/fhir/StructureDefinition/MyMoreDerivedObservation",
             Derivation = StructureDefinition.TypeDerivationRule.Constraint,
             Kind = StructureDefinition.StructureDefinitionKind.Resource,
             Differential = new StructureDefinition.DifferentialComponent()
@@ -5180,6 +5263,241 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(coreMethodElem);
             Assert.IsNotNull(coreMethodElem.Comment);
             Assert.AreEqual(coreMethodElem.Comment, baseElem.Comment);
+        }
+
+        // [WMR 20170718] Test for slicing issue
+        static StructureDefinition MySlicedDocumentReference => new StructureDefinition()
+        {
+            Type = FHIRAllTypes.Observation.GetLiteral(),
+            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.DocumentReference),
+            Name = "MySlicedDocumentReference",
+            Url = "http://example.org/fhir/StructureDefinition/MySlicedDocumentReference",
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+            Kind = StructureDefinition.StructureDefinitionKind.Resource,
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("DocumentReference.content")
+                    {
+                        Slicing = new ElementDefinition.SlicingComponent()
+                        {
+                            Description = "TEST"
+                            // Min = 1 in core resource definition
+                        }
+                    },
+                    new ElementDefinition("DocumentReference.content")
+                    {
+                        SliceName = "meta",
+                        // Following should be considered as a constraint!
+                        // As named slices should always start with Min = 0
+                        Min = 1
+                    },
+                }
+            }
+        };
+
+        // https://trello.com/c/d7EuVgZI
+        // Named slices should never inherit minimum cardinality from base element.
+        // Instead, named slice base should always have Min = 0
+        // Only slice entry inherits cardinality from base.
+        [TestMethod]
+        public void TestNamedSliceMinCardinality()
+        {
+            var sd = MySlicedDocumentReference;
+            var resolver = new InMemoryProfileResolver(sd);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            StructureDefinition expanded = null;
+            // _generator.BeforeExpandElement += beforeExpandElementHandler_DEBUG;
+            _generator.PrepareElement += elementHandler;
+            try
+            {
+                generateSnapshotAndCompare(sd, out expanded);
+            }
+            finally
+            {
+                // _generator.BeforeExpandElement -= beforeExpandElementHandler_DEBUG;
+                _generator.PrepareElement -= elementHandler;
+            }
+
+            dumpOutcome(_generator.Outcome);
+            Assert.IsTrue(expanded.HasSnapshot);
+            // dumpElements(expanded.Snapshot.Element);
+            dumpBaseElems(expanded.Snapshot.Element);
+
+            var coreProfile = _testResolver.FindStructureDefinitionForCoreType(FHIRAllTypes.DocumentReference);
+            Assert.IsNotNull(coreProfile);
+            Assert.IsTrue(coreProfile.HasSnapshot);
+
+            // Verify slice entry in snapshot
+            var elems = expanded.Snapshot.Element;
+            var snapSliceEntry = elems.FirstOrDefault(e => e.Path == "DocumentReference.content");
+            Assert.IsNotNull(snapSliceEntry);
+            Assert.IsNotNull(snapSliceEntry.Slicing);
+
+            // Verify that slice entry inherits min cardinality from base profile
+            var coreElem = coreProfile.Snapshot.Element.FirstOrDefault(e => e.Path == snapSliceEntry.Path);
+            Assert.IsNotNull(coreElem);
+            Assert.AreEqual(1, coreElem.Min);
+            Assert.AreEqual(coreElem.Min, snapSliceEntry.Min);
+
+            // Verify that named slices do NOT inherit min cardinality from base profile
+            var diffSlice = sd.Differential.Element.FirstOrDefault(e => e.SliceName != null);
+            Assert.IsNotNull(diffSlice);
+            var snapSlice = elems.FirstOrDefault(e => e.SliceName == diffSlice.SliceName);
+            Assert.IsNotNull(snapSlice);
+            Assert.AreEqual(diffSlice.Min, snapSlice.Min);
+            var sliceBaseAnn = snapSlice.Annotation<BaseDefAnnotation>();
+            Assert.IsNotNull(sliceBaseAnn);
+            var sliceBase = sliceBaseAnn.BaseElementDefinition;
+            Assert.IsNotNull(sliceBase);
+            // Verify that slice base always has Min = 0 (not inherited from base profile)
+            Assert.AreEqual(0, sliceBase.Min);
+        }
+
+        // [WMR 20170718] NEW
+        // Accept and handle derived profile constraints on existing slice entry in base profile
+
+        static StructureDefinition MySlicedBasePatient => new StructureDefinition()
+        {
+            Type = FHIRAllTypes.Patient.GetLiteral(),
+            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
+            Name = "MySlicedBasePatient",
+            Url = @"http://example.org/fhir/StructureDefinition/MySlicedBasePatient",
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+            Kind = StructureDefinition.StructureDefinitionKind.Resource,
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("Patient.identifier")
+                    {
+                        Slicing = new ElementDefinition.SlicingComponent()
+                        {
+                            Description = "TEST"
+                        }
+                    },
+                    new ElementDefinition("Patient.identifier")
+                    {
+                        SliceName = "bsn"
+                    }
+                }
+            }
+        };
+
+        static StructureDefinition MyMoreDerivedPatient => new StructureDefinition()
+        {
+            Type = FHIRAllTypes.Patient.GetLiteral(),
+            BaseDefinition = MySlicedBasePatient.Url,
+            Name = "MyMoreDerivedPatient",
+            Url = @"http://example.org/fhir/StructureDefinition/MyMoreDerivedPatient",
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+            Kind = StructureDefinition.StructureDefinitionKind.Resource,
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    // Further constrain existing slice entry
+                    new ElementDefinition("Patient.identifier")
+                    {
+                        Min = 1
+                    }
+                }
+            }
+        };
+
+        // https://trello.com/c/Mnn0EBOg
+        [TestMethod]
+        public void TestConstraintOnSliceEntry()
+        {
+            var sd = MyMoreDerivedPatient;
+            var resolver = new InMemoryProfileResolver(sd, MySlicedBasePatient);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            StructureDefinition expanded = null;
+            // _generator.BeforeExpandElement += beforeExpandElementHandler_DEBUG;
+            _generator.PrepareElement += elementHandler;
+            try
+            {
+                generateSnapshotAndCompare(sd, out expanded);
+            }
+            finally
+            {
+                // _generator.BeforeExpandElement -= beforeExpandElementHandler_DEBUG;
+                _generator.PrepareElement -= elementHandler;
+            }
+
+            dumpOutcome(_generator.Outcome);
+            Assert.IsTrue(expanded.HasSnapshot);
+            // dumpElements(expanded.Snapshot.Element);
+            dumpBaseElems(expanded.Snapshot.Element);
+
+            // Snapshot generator should NOT emit any issues
+            // * Issue #0: Severity = 'Error' Code = 'Required' Details: '10008' Text : 'Element 'Patient.identifier' defines a slice without a name. Individual slices must always have a unique name, except extensions.' Profile: 'http://example.org/fhir/StructureDefinition/MyMoreDerivedPatient' Path: 'Patient.identifier'
+            Assert.IsNull(_generator.Outcome);
+
+            // Verify constraint on slice entry
+            var elems = expanded.Snapshot.Element;
+            var sliceEntry = elems.FirstOrDefault(e => e.Path == "Patient.identifier");
+            Assert.IsNotNull(sliceEntry);
+            Assert.IsNotNull(sliceEntry.Slicing);
+            Assert.AreEqual(1, sliceEntry.Min);
+            var ann = sliceEntry.Annotation<BaseDefAnnotation>();
+            Assert.IsNotNull(ann);
+            Assert.IsNotNull(ann.BaseElementDefinition);
+            Assert.AreEqual(0, ann.BaseElementDefinition.Min);
+        }
+
+        // [WMR 20170810] https://trello.com/c/KNMYa44V
+        [TestMethod]
+        public void TestDosage()
+        {
+            // Note: resolved from TestData\snapshot-test\profiles-types.xml
+            var sd = _testResolver.FindStructureDefinitionForCoreType(FHIRAllTypes.Dosage);
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+
+            StructureDefinition expanded = null;
+            // _generator.BeforeExpandElement += beforeExpandElementHandler_DEBUG;
+            // _generator.PrepareElement += elementHandler;
+            //try
+            //{
+                generateSnapshotAndCompare(sd, out expanded);
+            //}
+            //finally
+            //{
+            //    // _generator.BeforeExpandElement -= beforeExpandElementHandler_DEBUG;
+            //    _generator.PrepareElement -= elementHandler;
+            //}
+
+            dumpOutcome(_generator.Outcome);
+            Assert.IsTrue(expanded.HasSnapshot);
+            var elems = expanded.Snapshot.Element;
+            dumpElements(elems);
+            // dumpBaseElems(elems);
+
+            foreach (var elem in elems)
+            {
+                Assert.IsNull(elem.SliceName, $"Error! Unexpected slice name '{elem.SliceName}' on element with path '{elem.Path}'");
+            }
+
+            // Also verify the expanded snapshot of the referenced SimpleQuantity profile
+            sd = _testResolver.FindStructureDefinitionForCoreType(FHIRAllTypes.SimpleQuantity);
+            Assert.IsNotNull(sd);
+            Assert.IsTrue(sd.HasSnapshot);
+            Assert.IsNull(sd.Differential.GetRootElement()?.SliceName);
+
+            // Note: depending on the order of unit tests execution, SimpleQuantity snapshot
+            // may not have been fully (re-)generated. The original snapshot (from core ZIP)
+            // contains the invalid sliceName. Regenerated snapshot should be corrected.
+            if (sd.Snapshot.IsCreatedBySnapshotGenerator())
+            {
+                Assert.IsNull(sd.Snapshot.GetRootElement()?.SliceName);
+            }
         }
 
     }
