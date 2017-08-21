@@ -51,22 +51,26 @@ namespace Hl7.Fhir.Model
                 return Text.Div;
             }
 
-            var text = Success ?
-                "Overall result: SUCCESS" + Environment.NewLine :
-                $"Overall result: FAILURE ({Errors + Fatals} errors and {Warnings} warnings)" + Environment.NewLine;
+            var textBuilder = new StringBuilder();
+
+            if (Success)
+                textBuilder.Append("Overall result: SUCCESS");
+            else
+                textBuilder.AppendFormat("Overall result: FAILURE ({0} errors and {1} warnings)", Errors+Fatals, Warnings);
+            textBuilder.AppendLine();
 
             if (Issue.Any())
             {
-                text += Environment.NewLine;
+                textBuilder.AppendLine();
 
                 foreach (var issue in Issue)
                 {
-                    var indent = new string(' ', issue.HierarchyLevel * 2);
-                    text += indent + issue.ToString() + Environment.NewLine;
+                    textBuilder.Append(' ', issue.HierarchyLevel * 2);
+                    issue.ToStringBuilder(textBuilder);
                 }
             }
 
-            return text;
+            return textBuilder.ToString();
         }
 
         [NotMapped]
@@ -129,28 +133,37 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            public override string ToString()
+            internal void ToStringBuilder(StringBuilder buffer)
             {
-                string text = "";
-
                 if (Severity != null)
                 {
-                    text += "[" + Severity.ToString().ToUpper() + "] ";
+                    buffer.Append("[");
+                    buffer.Append(Severity.ToString().ToUpper());
+                    buffer.Append("] ");
                 }
 
-                text += Details?.Text ?? "(no details)";
+                buffer.Append(Details?.Text ?? "(no details)");
 
                 if (Diagnostics != null)
                 {
-                    text += $"(further diagnostics: {Diagnostics})";
+                    buffer.Append("(further diagnostics: ");
+                    buffer.Append(Diagnostics);
+                    buffer.Append(")");
                 }
 
                 if (Location.Any())
                 {
-                    text += " (at " + String.Join(" via ", Location) + ")";
+                    buffer.Append(" (at ");
+                    buffer.Append(String.Join(" via ", Location));
+                    buffer.Append(")");
                 }
+            }
 
-                return text;
+            public override string ToString()
+            {
+                var textBuffer = new StringBuilder();
+                ToStringBuilder(textBuffer);
+                return textBuffer.ToString();
             }
 
             public const string OPERATIONOUTCOME_ISSUE_HIERARCHY = "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-hierarchy";
