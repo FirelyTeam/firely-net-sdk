@@ -130,7 +130,7 @@ namespace Hl7.FhirPath.Tests
             var input = new PocoNavigator(focus);
             var container = resource != null ? new PocoNavigator(resource) : null;
 
-            Assert.True(input.IsBoolean(expression, value, container));
+            Assert.True(input.IsBoolean(expression, value, new EvaluationContext(container)));
         }
 
         enum ErrorType

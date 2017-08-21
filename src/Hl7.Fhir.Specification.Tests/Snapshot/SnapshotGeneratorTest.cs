@@ -58,10 +58,14 @@ namespace Hl7.Fhir.Specification.Tests
 
             var dirSource = new DirectorySource("TestData/snapshot-test", includeSubdirectories: true);
             _source = new TimingSource(dirSource);
+            // [WMR 20170810] Order is important!
+            // Specify source first to override core defs from
+            // TestData\snapshot-test\profiles-resources.xml and profiles-types.xml
             _testResolver = new CachedResolver(
                 new MultiResolver(
-                    _source,
-                    new ZipSource("specification.zip")));
+                    // _source,
+                    new ZipSource("specification.zip"),
+                    _source));
         }
 
         // [WMR 20160718] Generate snapshot for extension definition fails with exception:
@@ -3052,8 +3056,12 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(nav.Current.Type.FirstOrDefault().Code, FHIRAllTypes.Integer.GetLiteral());
 
             Assert.IsNotNull(outcome);
-            Assert.AreEqual(1, outcome.Issue.Count);
-            assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT);
+            // [WMR 20170810] Fixed, now also expecting issue about invalid slice name on SimpleQuantity root element
+            //Assert.AreEqual(1, outcome.Issue.Count);
+            // assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT);
+            Assert.AreEqual(2, outcome.Issue.Count);
+            assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT);
+            assertIssue(outcome.Issue[1], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT);
         }
 
         static StructureDefinition ClosedExtensionSliceObservationProfile => new StructureDefinition()
@@ -4336,7 +4344,13 @@ namespace Hl7.Fhir.Specification.Tests
             //dumpElements(profile.Differential.Element);
             //dumpOutcome(_generator.Outcome);
             //Assert.IsTrue(result);
-            Assert.IsNull(_generator.Outcome);
+
+            // [WMR 20170810] Fixed, now also expecting issue about invalid slice name on SimpleQuantity root element
+            // Assert.IsNull(_generator.Outcome);
+            var outcome = _generator.Outcome;
+            Assert.IsNotNull(outcome);
+            Assert.AreEqual(1, outcome.Issue.Count);
+            assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT);
 
             // Ensure that renamed diff elements override base elements with original names
             var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
@@ -5437,6 +5451,53 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(ann);
             Assert.IsNotNull(ann.BaseElementDefinition);
             Assert.AreEqual(0, ann.BaseElementDefinition.Min);
+        }
+
+        // [WMR 20170810] https://trello.com/c/KNMYa44V
+        [TestMethod]
+        public void TestDosage()
+        {
+            // Note: resolved from TestData\snapshot-test\profiles-types.xml
+            var sd = _testResolver.FindStructureDefinitionForCoreType(FHIRAllTypes.Dosage);
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+
+            StructureDefinition expanded = null;
+            // _generator.BeforeExpandElement += beforeExpandElementHandler_DEBUG;
+            // _generator.PrepareElement += elementHandler;
+            //try
+            //{
+                generateSnapshotAndCompare(sd, out expanded);
+            //}
+            //finally
+            //{
+            //    // _generator.BeforeExpandElement -= beforeExpandElementHandler_DEBUG;
+            //    _generator.PrepareElement -= elementHandler;
+            //}
+
+            dumpOutcome(_generator.Outcome);
+            Assert.IsTrue(expanded.HasSnapshot);
+            var elems = expanded.Snapshot.Element;
+            dumpElements(elems);
+            // dumpBaseElems(elems);
+
+            foreach (var elem in elems)
+            {
+                Assert.IsNull(elem.SliceName, $"Error! Unexpected slice name '{elem.SliceName}' on element with path '{elem.Path}'");
+            }
+
+            // Also verify the expanded snapshot of the referenced SimpleQuantity profile
+            sd = _testResolver.FindStructureDefinitionForCoreType(FHIRAllTypes.SimpleQuantity);
+            Assert.IsNotNull(sd);
+            Assert.IsTrue(sd.HasSnapshot);
+            Assert.IsNull(sd.Differential.GetRootElement()?.SliceName);
+
+            // Note: depending on the order of unit tests execution, SimpleQuantity snapshot
+            // may not have been fully (re-)generated. The original snapshot (from core ZIP)
+            // contains the invalid sliceName. Regenerated snapshot should be corrected.
+            if (sd.Snapshot.IsCreatedBySnapshotGenerator())
+            {
+                Assert.IsNull(sd.Snapshot.GetRootElement()?.SliceName);
+            }
         }
 
     }
