@@ -17,6 +17,12 @@
     <RootNamespace>Hl7.Fhir.Specification</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|AnyCPU'">
+    <DocumentationFile>bin\Debug\net45\Hl7.Fhir.STU3.Specification.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <DebugSymbols>True</DebugSymbols>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="System.ValueTuple" Version="4.3.0" />
   </ItemGroup>

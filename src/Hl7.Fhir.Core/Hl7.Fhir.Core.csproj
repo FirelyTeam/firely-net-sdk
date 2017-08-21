@@ -18,6 +18,11 @@
     <RootNamespace>Hl7.Fhir</RootNamespace>
   </PropertyGroup>
 
+   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|AnyCPU'">
+     <DocumentationFile>bin\Debug\net45\Hl7.Fhir.STU3.Core.xml</DocumentationFile>
+     <DebugType>full</DebugType>
+     <DebugSymbols>True</DebugSymbols>
+   </PropertyGroup>
    <ItemGroup>
      <Compile Remove="Rest\Search\**" />
      <EmbeddedResource Remove="Rest\Search\**" />
