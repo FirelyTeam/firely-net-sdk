@@ -102,20 +102,25 @@ namespace Hl7.Fhir.Specification.Navigation
         /// <param name="basePath">A base element path.</param>
         /// <param name="path">An derived element path.</param>
         /// <example><code>
-        /// IsCandidateBasePath("DomainResource.meta", "Patient.meta")
-        /// IsCandidateBasePath("Extension.value[x]", "Extension.valueBoolean")
-        /// IsCandidateBasePath("Element.id", "Extension.url.id")
+        /// IsCandidateBasePath("DomainResource.meta", "Patient.meta") == true
+        /// IsCandidateBasePath("Extension.value[x]", "Extension.valueBoolean") == true
+        /// IsCandidateBasePath("Element.id", "Extension.url.id") == true
+        /// IsCandidateBasePath("id", "id") == true
+        /// IsCandidateBasePath("value[x]", "valueBoolean") == true
+        /// IsCandidateBasePath("DomainResource.meta", "DomainResource.extension") == false
         /// </code></example>
         internal static bool IsCandidateBasePath(string basePath, string path)
         {
             var dot1 = basePath != null ? basePath.LastIndexOf('.') : -1;
             var dot2 = path != null ? path.LastIndexOf('.') : -1;
+
             if (dot1 > 0 && dot2 > 0)
             {
                 var basePathPart = basePath.Substring(dot1 + 1);
                 var pathPart = path.Substring(dot2 + 1);
                 return basePathPart == pathPart || IsRenamedChoiceTypeElement(basePathPart, pathPart);
             }
+
             return !string.IsNullOrEmpty(basePath)
                 && !string.IsNullOrEmpty(path)
                 && dot1 == -1 && dot2 == -1;

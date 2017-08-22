@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Validation
 
         private static StructureDefinition buildDutchPatient()
         {
-            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/DutchPatient", "Dutch Patient",
+            var result = CreateTestSD("http://validationtest.org/fhir/StructureDefinition/DutchPatient", "Dutch Patient",
                     "Test Patient which requires an Identifier with either BSN or drivers license", FHIRDefinedType.Patient);
             var cons = result.Differential.Element;
 
@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Validation
 
         private static StructureDefinition buildIdentifierWithBSN()
         {
-            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/IdentifierWithBSN", "BSN Identifier",
+            var result = CreateTestSD("http://validationtest.org/fhir/StructureDefinition/IdentifierWithBSN", "BSN Identifier",
                     "Test Identifier which requires a BSN oid", FHIRDefinedType.Identifier);
             var cons = result.Differential.Element;
 
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Validation
 
         private static StructureDefinition buildIdentifierWithDriversLicense()
         {
-            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/IdentifierWithDL", "Drivers license Identifier",
+            var result = CreateTestSD("http://validationtest.org/fhir/StructureDefinition/IdentifierWithDL", "Drivers license Identifier",
                     "Test Identifier which requires a drivers license oid", FHIRDefinedType.Identifier);
             var cons = result.Differential.Element;
 
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Validation
 
         private static StructureDefinition buildQuestionnaireWithFixedType()
         {
-            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/QuestionnaireWithFixedType", "Fixed Questionnaire",
+            var result = CreateTestSD("http://validationtest.org/fhir/StructureDefinition/QuestionnaireWithFixedType", "Fixed Questionnaire",
                     "Questionnaire with a fixed question type of 'decimal'", FHIRDefinedType.Questionnaire);
             var cons = result.Differential.Element;
 
@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Validation
 
         private static StructureDefinition buildWeightQuantity()
         {
-            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/WeightQuantity", "Weight Quantity",
+            var result = CreateTestSD("http://validationtest.org/fhir/StructureDefinition/WeightQuantity", "Weight Quantity",
                     "Quantity which allows just kilograms", FHIRDefinedType.Quantity);
 
             var cons = result.Differential.Element;
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Validation
 
         private static StructureDefinition buildHeightQuantity()
         {
-            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/HeightQuantity", "Height Quantity",
+            var result = CreateTestSD("http://validationtest.org/fhir/StructureDefinition/HeightQuantity", "Height Quantity",
                     "Quantity which allows just centimeters", FHIRDefinedType.Quantity);
 
             var cons = result.Differential.Element;
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Validation
 
         private static StructureDefinition buildWeightHeightObservation()
         {
-            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation", "Weight/Height Observation",
+            var result = CreateTestSD("http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation", "Weight/Height Observation",
                     "Observation with a choice of weight/height or another type of value", FHIRDefinedType.Observation);
 
             var cons = result.Differential.Element;
@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Validation
 
         private static StructureDefinition bundleWithSpecificEntries(string prefix)
         {
-            var result = createTestSD($"http://validationtest.org/fhir/StructureDefinition/BundleWith{prefix}Entries", $"Bundle with specific {prefix} test entries",
+            var result = CreateTestSD($"http://validationtest.org/fhir/StructureDefinition/BundleWith{prefix}Entries", $"Bundle with specific {prefix} test entries",
                     $"Bundle with just Organization or {prefix} Patient entries", FHIRDefinedType.Bundle);
 
             var cons = result.Differential.Element;
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Validation
 
         private static StructureDefinition bundleWithConstrainedContained()
         {
-            var result = createTestSD($"http://validationtest.org/fhir/StructureDefinition/BundleWithConstrainedContained", 
+            var result = CreateTestSD($"http://validationtest.org/fhir/StructureDefinition/BundleWithConstrainedContained", 
                             $"Bundle with a constraint on the Bundle.entry.resource",
                     $"Bundle with a constraint on the Bundle.entry.resource", FHIRDefinedType.Bundle);
 
@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Validation
 
         private static StructureDefinition patientWithSpecificOrganization(IEnumerable<ElementDefinition.AggregationMode> aggregation, string prefix)
         {
-            var result = createTestSD($"http://validationtest.org/fhir/StructureDefinition/PatientWith{prefix}Organization", $"Patient with {prefix} managing organization",
+            var result = CreateTestSD($"http://validationtest.org/fhir/StructureDefinition/PatientWith{prefix}Organization", $"Patient with {prefix} managing organization",
                     $"Patient for which the managingOrganization reference is limited to {prefix} references", FHIRDefinedType.Patient);
 
             var cons = result.Differential.Element;
@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Validation
 
         private static StructureDefinition buildParametersWithBoundParams()
         {
-            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/ParametersWithBoundParams", "Parameters with term binding on Params",
+            var result = CreateTestSD("http://validationtest.org/fhir/StructureDefinition/ParametersWithBoundParams", "Parameters with term binding on Params",
                     "Parameters resource where the parameter.value[x] is bound to a valueset", FHIRDefinedType.Parameters);
             var cons = result.Differential.Element;
 
@@ -208,7 +208,7 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        private static StructureDefinition createTestSD(string url, string name, string description, FHIRDefinedType constrainedType, string baseUri=null)
+        public static StructureDefinition CreateTestSD(string url, string name, string description, FHIRDefinedType constrainedType, string baseUri=null)
         {
             var result = new StructureDefinition();
 
