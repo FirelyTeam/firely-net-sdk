@@ -91,12 +91,12 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public async void InvokeValidateCodeById()
+        public void InvokeValidateCodeById()
         {
             var client = new FhirClient(FhirClientTests.TerminologyEndpoint);
             var coding = new Coding("http://snomed.info/sct", "4322002");
 
-            var result = await client.ValidateCodeAsync("c80-facilitycodes", coding: coding, @abstract: new FhirBoolean(false));
+            var result = client.ValidateCode("c80-facilitycodes", coding: coding, @abstract: new FhirBoolean(false));
             Assert.IsTrue(result.Result?.Value == true);
         }
 

@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
+using System.Reflection;
 
 namespace Hl7.FhirPath.Expressions
 {
@@ -20,7 +21,7 @@ namespace Hl7.FhirPath.Expressions
     internal static class InvokeeFactory
     {
         public static readonly IEnumerable<Invokee> EmptyArgs = Enumerable.Empty<Invokee>();
-    
+
 
         public static IEnumerable<IElementNavigator> GetThis(Closure context, IEnumerable<Invokee> args)
         {
@@ -55,10 +56,18 @@ namespace Hl7.FhirPath.Expressions
         {
             return (ctx, args) =>
             {
-                var focus = args.First()(ctx, InvokeeFactory.EmptyArgs);
-                if (propNull && !focus.Any()) return FhirValueList.Empty;
-          
-                return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(Typecasts.CastTo<A>(focus)));
+                if (typeof(A) != typeof(EvaluationContext))
+                {
+                    var focus = args.First()(ctx, InvokeeFactory.EmptyArgs);
+                    if (propNull && !focus.Any()) return FhirValueList.Empty;
+
+                    return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(Typecasts.CastTo<A>(focus)));
+                }
+                else
+                {
+                    A lastPar = (A)(object)ctx.EvaluationContext;
+                    return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(lastPar));
+                }
             };
         }
 
@@ -69,11 +78,19 @@ namespace Hl7.FhirPath.Expressions
                 var focus = args.First()(ctx, InvokeeFactory.EmptyArgs);
                 if (propNull && !focus.Any()) return FhirValueList.Empty;
 
-                var newCtx = ctx.Nest(focus);             
-                var argA = args.Skip(1).First()(newCtx, InvokeeFactory.EmptyArgs);
-                if (propNull && !argA.Any()) return FhirValueList.Empty;
+                if (typeof(B) != typeof(EvaluationContext))
+                {
+                    var newCtx = ctx.Nest(focus);
+                    var argA = args.Skip(1).First()(newCtx, InvokeeFactory.EmptyArgs);
+                    if (propNull && !argA.Any()) return FhirValueList.Empty;
 
-                return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA)));
+                    return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA)));
+                }
+                else
+                {
+                    B lastPar = (B)(object)ctx.EvaluationContext;
+                    return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(Typecasts.CastTo<A>(focus), lastPar));
+                }
             };
         }
 
@@ -83,14 +100,24 @@ namespace Hl7.FhirPath.Expressions
             {
                 var focus = args.First()(ctx, InvokeeFactory.EmptyArgs);
                 if (propNull && !focus.Any()) return FhirValueList.Empty;
-
                 var newCtx = ctx.Nest(focus);
                 var argA = args.Skip(1).First()(newCtx, InvokeeFactory.EmptyArgs);
                 if (propNull && !argA.Any()) return FhirValueList.Empty;
-                var argB = args.Skip(2).First()(newCtx, InvokeeFactory.EmptyArgs);
-                if (propNull && !argB.Any()) return FhirValueList.Empty;
 
-                return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA), Typecasts.CastTo<C>(argB)));
+                if (typeof(C) != typeof(EvaluationContext))
+                {
+                    var argB = args.Skip(2).First()(newCtx, InvokeeFactory.EmptyArgs);
+                    if (propNull && !argB.Any()) return FhirValueList.Empty;
+
+                    return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA),
+                        Typecasts.CastTo<C>(argB)));
+                }
+                else
+                {
+                    C lastPar = (C)(object)ctx.EvaluationContext;
+                    return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(Typecasts.CastTo<A>(focus),
+                        Typecasts.CastTo<B>(argA), lastPar));
+                }
             };
         }
 
@@ -106,11 +133,23 @@ namespace Hl7.FhirPath.Expressions
                 if (propNull && !argA.Any()) return FhirValueList.Empty;
                 var argB = args.Skip(2).First()(newCtx, InvokeeFactory.EmptyArgs);
                 if (propNull && !argB.Any()) return FhirValueList.Empty;
-                var argC = args.Skip(3).First()(newCtx, InvokeeFactory.EmptyArgs);
-                if (propNull && !argC.Any()) return FhirValueList.Empty;
 
-                return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(Typecasts.CastTo<A>(focus), 
-                            Typecasts.CastTo<B>(argA), Typecasts.CastTo<C>(argB), Typecasts.CastTo<D>(argC)));
+                if (typeof(D) != typeof(EvaluationContext))
+                {
+                    var argC = args.Skip(3).First()(newCtx, InvokeeFactory.EmptyArgs);
+                    if (propNull && !argC.Any()) return FhirValueList.Empty;
+
+                    return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(Typecasts.CastTo<A>(focus),
+                                 Typecasts.CastTo<B>(argA), Typecasts.CastTo<C>(argB), Typecasts.CastTo<D>(argC)));
+                }
+                else
+                {
+                    D lastPar = (D)(object)ctx.EvaluationContext;
+
+                    return Typecasts.CastTo<IEnumerable<IElementNavigator>>(func(Typecasts.CastTo<A>(focus),
+                                Typecasts.CastTo<B>(argA), Typecasts.CastTo<C>(argB), lastPar));
+
+                }
             };
         }
 
@@ -145,7 +184,7 @@ namespace Hl7.FhirPath.Expressions
 
             return (ctx, _) =>
             {
-              //  if (lastResult != null) return lastResult;
+                //  if (lastResult != null) return lastResult;
 
                 try
                 {

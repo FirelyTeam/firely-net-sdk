@@ -13,8 +13,9 @@ using Hl7.Fhir.Utility;
 using Xunit;
 using Hl7.Fhir.Specification.Terminology;
 using System;
+using Hl7.Fhir.Validation;
 
-namespace Hl7.Fhir.Validation
+namespace Hl7.Fhir.Specification.Tests
 {
     [Trait("Category", "Validation")]
     public class BasicValidationTests : IClassFixture<ValidationFixture>
@@ -166,7 +167,7 @@ namespace Hl7.Fhir.Validation
         [Fact]
         public void AutoGeneratesDifferential()
         {
-            var identifierBsn = _source.FindStructureDefinition("http://validationtest.org/fhir/StructureDefinition/IdentifierWithBSN");
+            var identifierBsn = (StructureDefinition)_source.FindStructureDefinition("http://validationtest.org/fhir/StructureDefinition/IdentifierWithBSN").DeepCopy();
             Assert.NotNull(identifierBsn);
             identifierBsn.Snapshot = null;
 
@@ -233,7 +234,10 @@ namespace Hl7.Fhir.Validation
         [Fact]
         public void ValidatesPatternValue()
         {
-            var patientSd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Patient);
+            // [WMR 20170727] Fixed
+            // Do NOT modify common core Patient definition, as this would affect all subsequent tests.
+            // Instead, clone the core def and modify the clone
+            var patientSd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRAllTypes.Patient).DeepCopy();
 
             var instance1 = new CodeableConcept("http://hl7.org/fhir/marital-status", "U");
 
@@ -598,25 +602,6 @@ namespace Hl7.Fhir.Validation
 
         }
 
-        class InMemoryResourceResolver : IResourceResolver
-        {
-            ILookup<string, Resource> _resources;
-
-            public InMemoryResourceResolver(IEnumerable<Resource> profiles)
-            {
-                _resources = profiles.ToLookup(r => getResourceUri(r), r => r as Resource);
-            }
-
-            public InMemoryResourceResolver(Resource profile) : this(new Resource[] { profile }) { }
-
-            public Resource ResolveByCanonicalUri(string uri) => null;
-
-            public Resource ResolveByUri(string uri) => _resources[uri].FirstOrDefault();
-
-            // cf. ResourceStreamScanner.StreamResources
-            static string getResourceUri(Resource res) => res.TypeName + "/" + res.Id;
-        }
-
         [Fact]
         public void HandlesParentElementOfCoreAbstractType()
         {
@@ -760,5 +745,26 @@ namespace Hl7.Fhir.Validation
         }
 
     }
+
+    class InMemoryResourceResolver : IResourceResolver
+    {
+        ILookup<string, Resource> _resources;
+
+        public InMemoryResourceResolver(IEnumerable<Resource> profiles)
+        {
+            _resources = profiles.ToLookup(r => getResourceUri(r), r => r as Resource);
+        }
+
+        public InMemoryResourceResolver(Resource profile) : this(new Resource[] { profile }) { }
+
+        public Resource ResolveByCanonicalUri(string uri) => null;
+
+        public Resource ResolveByUri(string uri) => _resources[uri].FirstOrDefault();
+
+        // cf. ResourceStreamScanner.StreamResources
+        static string getResourceUri(Resource res) => res.TypeName + "/" + res.Id;
+    }
+
+
 }
 
