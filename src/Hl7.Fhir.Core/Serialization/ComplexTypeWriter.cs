@@ -26,7 +26,9 @@ namespace Hl7.Fhir.Serialization
     {
         private IFhirWriter _writer;
         private ModelInspector _inspector;
- 
+
+        private readonly string[] summaryTextProperties = new[] { "id", "text", "meta", "fullurl", "resource", "entry", "search", "mode" };
+        private readonly string[] summaryCountProperties = new[] { "resourcetype", "id", "type", "total" };
 
         internal enum SerializationMode
         {
@@ -47,120 +49,115 @@ namespace Hl7.Fhir.Serialization
 
             _writer.WriteStartComplexContent();
 
-            // Emit members that need xml /attributes/ first (to facilitate stream writer API)
-            foreach (var prop in mapping.PropertyMappings.Where(pm => pm.SerializationHint == XmlSerializationHint.Attribute))
+            // Emit members that need xml attributes / first (to facilitate stream writer API)
+            // attributes first (xml) and order maintained for the rest
+            var propertiesToWrite = mapping.PropertyMappings
+                .Where(property => property.SerializationHint == XmlSerializationHint.Attribute)
+                .Concat(mapping.PropertyMappings.Where(property => property.SerializationHint != XmlSerializationHint.Attribute));
+
+            if (summary == Rest.SummaryType.True)
             {
-                writeProperty(mapping, instance, summary, mode, prop);
+                propertiesToWrite = propertiesToWrite.Where(property => property.InSummary);
+            }
+            else if (summary == Rest.SummaryType.Text)
+            {
+                bool isMetaTextOrIdElementInstance(object inst)
+                {
+                    return (inst is Meta) || (inst is Narrative) || (inst is Id);
+                }
+
+                bool isSummaryProperty(PropertyMapping propMapping)
+                {
+                    return summaryTextProperties
+                        .Contains(propMapping.Name.ToLower());
+                }
+
+                propertiesToWrite = propertiesToWrite.Where(property =>
+                       isSummaryProperty(property)
+                    || property.IsMandatoryElement
+                    || isMetaTextOrIdElementInstance(instance));
+            }
+            else if (summary == Rest.SummaryType.Data)
+            {
+                propertiesToWrite = propertiesToWrite.Where(property => property.Name.ToLower() != "text");
+            }
+            else if (summary == Rest.SummaryType.Count)
+            {
+                propertiesToWrite = propertiesToWrite.Where(property =>
+                   summaryCountProperties.Contains(property.Name.ToLower())
+                || property.SerializationHint == XmlSerializationHint.Attribute);
             }
 
-            // Then emit the rest
-            foreach (var prop in mapping.PropertyMappings.Where(pm => pm.SerializationHint != XmlSerializationHint.Attribute))
+            foreach (var property in propertiesToWrite)
             {
-                writeProperty(mapping, instance, summary, mode, prop);
+                writeProperty(instance, summary, property, mode);
             }
 
             _writer.WriteEndComplexContent();
         }
 
-        private void writeProperty(ClassMapping mapping, object instance, Rest.SummaryType summary, SerializationMode mode, PropertyMapping prop)
-        {
-            if (instance is Bundle && !(summary == Rest.SummaryType.Count && prop.Name.ToLower() == "entry")
-                || prop.Name == "id"
-                || summary == Rest.SummaryType.True && prop.InSummary
-                || summary == Rest.SummaryType.False
-                || summary == Rest.SummaryType.Data && !(prop.Name.ToLower() == "text" && prop.ElementType.Name == "Narrative")
-                || summary == Rest.SummaryType.Text && ((prop.Name.ToLower() == "text" && prop.ElementType.Name == "Narrative") || (prop.Name.ToLower() == "meta" && prop.ElementType.Name == "Meta") || prop.IsMandatoryElement)
-                )
-            {
-                write(mapping, instance, (summary == Rest.SummaryType.Text && prop.Name.ToLower() == "meta" && prop.ElementType.Name == "Meta") ? Rest.SummaryType.False : summary, prop, mode);
-            }
-        }
-
-        private void write(ClassMapping mapping, object instance, Rest.SummaryType summary, PropertyMapping prop, SerializationMode mode)
+        private void writeProperty(object instance, Rest.SummaryType summaryType, PropertyMapping property, SerializationMode mode)
         {
             // Check whether we are asked to just serialize the value element (Value members of primitive Fhir datatypes)
             // or only the other members (Extension, Id etc in primitive Fhir datatypes)
             // Default is all
-            if (mode == SerializationMode.ValueElement && !prop.RepresentsValueElement) return;
-            if (mode == SerializationMode.NonValueElements && prop.RepresentsValueElement) return;
+            if (mode == SerializationMode.ValueElement && !property.RepresentsValueElement) return;
+            if (mode == SerializationMode.NonValueElements && property.RepresentsValueElement) return;
 
-            object value = prop.GetValue(instance);
-            var isEmptyArray = (value as IList) != null && ((IList)value).Count == 0;
+            object value = property.GetValue(instance);
 
-         //   Message.Info("Handling member {0}.{1}", mapping.Name, prop.Name);
+            if (value is IList list && list.Count == 0) return;
 
-            if ((value != null || prop.RepresentsValueElement && prop.ElementType.IsEnum() && !string.IsNullOrEmpty(((Primitive)instance).ObjectValue as string)) && !isEmptyArray)
+            bool isEnum = property.ElementType.IsEnum(),
+                 isValueElement = property.RepresentsValueElement,
+                 isEmptyPrimitive = instance is Primitive primitive && string.IsNullOrEmpty(primitive.ObjectValue as string);
+
+            if (value == null && (!isEnum || !isValueElement || isEmptyPrimitive)) return;
+
+            // Enumerated Primitive.Value of Code<T> will always serialize the ObjectValue, not the derived enumeration
+            if (property.RepresentsValueElement && property.ElementType.IsEnum())
             {
-                string memberName = prop.Name;
+                value = ((Primitive)instance).ObjectValue;
+            }
 
-                // Enumerated Primitive.Value of Code<T> will always serialize the ObjectValue, not the derived enumeration
-                if (prop.RepresentsValueElement && prop.ElementType.IsEnum())
-                {
-                    value = ((Primitive)instance).ObjectValue;
-                    //var rawValueProp = ReflectionHelper.FindPublicProperty(mapping.NativeType, "RawValue");
-                    //var rawValue = rawValueProp.GetValue(instance, null);
-                    //if (rawValue != null)
-                    //    value = rawValue;
-                }
+            // For Choice properties, determine the actual name of the element
+            // by appending its type to the base property name (i.e. deceasedBoolean, deceasedDate)
+            string memberName = property.Choice == ChoiceType.DatatypeChoice
+                    ? determineElementMemberName(property.Name, value.GetType())
+                    : property.Name;
 
-                // For Choice properties, determine the actual name of the element
-                // by appending its type to the base property name (i.e. deceasedBoolean, deceasedDate)
-                if (prop.Choice == ChoiceType.DatatypeChoice)
-                {
-                    memberName = determineElementMemberName(prop.Name, GetSerializationTypeForDataTypeChoiceElements(prop, value));
-                }
+            _writer.WriteStartProperty(memberName);
 
-                _writer.WriteStartProperty(memberName);
-               
-                var writer = new DispatchingWriter(_writer);
+            var writer = new DispatchingWriter(_writer);
 
-                // Now, if our writer does not use dual properties for primitive values + rest (xml),
-                // or this is a complex property without value element, serialize data normally
-                if(!_writer.HasValueElementSupport || !serializedIntoTwoProperties(prop,value))
-                    writer.Serialize(prop, value, summary, SerializationMode.AllMembers);
-                else
-                {
-                    // else split up between two properties, name and _name
-                    writer.Serialize(prop,value, summary, SerializationMode.ValueElement);
-                    _writer.WriteEndProperty();
-                    _writer.WriteStartProperty("_" + memberName);
-                    writer.Serialize(prop, value, summary, SerializationMode.NonValueElements);
-                }
+            // Now, if our writer does not use dual properties for primitive values + rest (xml),
+            // or this is a complex property without value element, serialize data normally
 
+            if (_writer.HasValueElementSupport && serializedIntoTwoProperties(property, value))
+            {
+                writer.Serialize(property, value, summaryType, SerializationMode.ValueElement);
                 _writer.WriteEndProperty();
+                _writer.WriteStartProperty("_" + memberName);
+                writer.Serialize(property, value, summaryType, SerializationMode.NonValueElements);
             }
-        }
-
-        private Type GetSerializationTypeForDataTypeChoiceElements( PropertyMapping prop, object value)
-        {
-            Type serializationType = value.GetType();
-            if (!prop.IsPrimitive && false)
+            else
             {
-                Type baseType = serializationType.GetTypeInfo().BaseType;
-                while (baseType != typeof(Element) && baseType != typeof(object))
-                {
-                    serializationType = baseType;
-                    baseType = baseType.GetTypeInfo().BaseType;
-                }
+                writer.Serialize(property, value, summaryType, SerializationMode.AllMembers);
             }
 
-            return serializationType;
+            _writer.WriteEndProperty();
         }
-
 
         // If we have a normal complex property, for which the type has a primitive value member...
         private bool serializedIntoTwoProperties(PropertyMapping prop, object instance)
         {
-            if (instance is IList)
+            if (instance is IList && ((IList)instance).Count > 0)
                 instance = ((IList)instance)[0];
 
-            if (!prop.IsPrimitive && prop.Choice != ChoiceType.ResourceChoice)
-            {
-                var mapping = _inspector.ImportType(instance.GetType());
-                return mapping.HasPrimitiveValueMember;
-            }
-            else
+            if (prop.IsPrimitive || prop.Choice == ChoiceType.ResourceChoice)
                 return false;
+
+            return _inspector.ImportType(instance.GetType()).HasPrimitiveValueMember;
         }
 
         private static string upperCamel(string p)
@@ -177,9 +174,13 @@ namespace Hl7.Fhir.Serialization
             var mapping = _inspector.ImportType(type);
 
             var suffix = mapping.Name;
-//            if (suffix == "Reference") suffix = "Resource";
 
             return memberName + upperCamel(suffix);
         }
+
+        //private bool isMetaTextOrIdElementInstance(object instance)
+        //{
+        //    return (instance is Meta) || (instance is Narrative) || (instance is Id);
+        //}
     }
 }
