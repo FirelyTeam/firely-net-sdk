@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Specification.Navigation
         /// <summary>Determines if the specified element definition represents a type choice element by verifying that the element name ends with "[x]".</summary>
         /// <param name="defn">An <see cref="ElementDefinition"/> instance.</param>
         /// <returns><c>true</c> if the instance defines a type choice element, or <c>false</c> otherwise.</returns>
-        public static bool IsChoice(this ElementDefinition defn)
+        public static bool HasChoicePath(this ElementDefinition defn)
         {
             return defn.Path.EndsWith("[x]");
         }
@@ -188,6 +188,17 @@ namespace Hl7.Fhir.Specification.Navigation
 
             return pos != -1 ? path.Substring(pos + 1) : path;
         }
+
+        public static bool HasChoices(this ElementDefinition definition)
+        {
+            return definition.Type.Where(tr => tr.Code != null).Distinct().Count() > 1;
+        }
+
+        public static FHIRDefinedType[] ChoiceTypes(this ElementDefinition definition)
+        {
+            return definition.Type.Where(tr => tr.Code != null).Select(tr => tr.Code.Value).Distinct().ToArray();
+        }
+
 
         public static string GetNameFromPath(this ElementDefinition defn)
         {

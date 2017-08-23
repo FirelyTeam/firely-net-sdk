@@ -220,7 +220,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // - This is NOT a type slice => derived profile cannot contain multiple renamed elements!
             var result = new List<MatchInfo>() { match };
 
-            if (snapNav.Current.IsChoice())
+            if (snapNav.Current.HasChoicePath())
             {
                 var bm = diffNav.Bookmark();
 
@@ -654,7 +654,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             do
             {
-                if (snapNav.Current != null && snapNav.Current.IsChoice())
+                if (snapNav.Current != null && snapNav.Current.HasChoicePath())
                 {
                     result.Add(snapNav.PathName);
                 }
