@@ -8615,7 +8615,7 @@
               <key value="eld-16" />
               <severity value="error" />
               <human value="sliceName must be composed of proper tokens separated by &quot;/&quot;" />
-              <expression value="sliceName.empty() or sliceName.matches('^[a-zA-Z0-9\\/\\-\\_]+$')" />
+              <expression value="sliceName.empty() or sliceName.matches('^[a-zA-Z0-9\\/\\-_]+$')" />
               <xpath value="not(exists(f:sliceName/@value)) or matches(f:sliceName/@value, '^[a-zA-Z0-9\\/\\-\\_]+$')" />
             </constraint>
             <constraint>
@@ -11176,7 +11176,7 @@
               <key value="eld-16" />
               <severity value="error" />
               <human value="sliceName must be composed of proper tokens separated by &quot;/&quot;" />
-              <expression value="sliceName.empty() or sliceName.matches('^[a-zA-Z0-9\\/\\-\\_]+$')" />
+              <expression value="sliceName.empty() or sliceName.matches('^[a-zA-Z0-9\\/\\-_]+$')" />
               <xpath value="not(exists(f:sliceName/@value)) or matches(f:sliceName/@value, '^[a-zA-Z0-9\\/\\-\\_]+$')" />
             </constraint>
             <constraint>
