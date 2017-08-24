@@ -10,6 +10,7 @@
 using Hl7.Fhir.Introspection;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 
 namespace Hl7.Fhir.Model
@@ -43,6 +44,21 @@ namespace Hl7.Fhir.Model
                     sb.Append(Name);
                 }
                 return sb.ToString();
+            }
+        }
+
+        public partial class TypeRefComponent
+        {
+            public override bool Equals(object obj)
+            {
+                if (obj is TypeRefComponent other)
+                    return Code == other.Code && Profile.FirstOrDefault() == other.Profile.FirstOrDefault();
+
+                return false;
+            }
+            public override int GetHashCode()
+            {
+                return (Code?.GetHashCode() ?? 0) ^ (Profile?.FirstOrDefault()?.GetHashCode() ?? 0);
             }
         }
     }

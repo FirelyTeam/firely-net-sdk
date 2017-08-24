@@ -33,16 +33,8 @@ namespace Hl7.Fhir.Specification.Source
             return sd;
         }
 
-        public static StructureDefinition FindStructureDefinition(this IResourceResolver resolver, string uri, bool requireSnapshot = false)
-        {
-            var sd = resolver.ResolveByCanonicalUri(uri) as StructureDefinition;
-            if (sd == null) return null;
-
-            if (sd.Snapshot == null && requireSnapshot)
-                return null;
-
-            return sd;
-        }
+        public static StructureDefinition FindStructureDefinition(this IResourceResolver resolver, string uri) =>
+            resolver.ResolveByCanonicalUri(uri) as StructureDefinition;
 
         public static StructureDefinition FindStructureDefinitionForCoreType(this IResourceResolver resolver, string typename)
         {

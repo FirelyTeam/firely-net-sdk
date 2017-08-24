@@ -13,15 +13,10 @@ namespace Hl7.Fhir.Specification.FhirPath
         readonly public ElementDefinition.TypeRefComponent[] Types;
         readonly public ElementDefinitionNavigator Source;
 
-        private Constraint(IEnumerable<ElementDefinition.TypeRefComponent> types, ElementDefinitionNavigator source)
+        internal Constraint(IEnumerable<ElementDefinition.TypeRefComponent> types, ElementDefinitionNavigator source)
         {
             Types = types.ToArray();
             Source = source.ShallowCopy();
-        }
-
-        public static Constraint Create(Constraint constraint)
-        {
-            return new Constraint(constraint.Types, constraint.Source);
         }
 
         public static Constraint Create(StructureDefinition definition)
@@ -38,13 +33,7 @@ namespace Hl7.Fhir.Specification.FhirPath
 
             do
             {
-                if (pointer.Current?.Type != null)
-                {
-                    var types = pointer.Current.Type
-                            .Where(tr => tr.Code != null);
-
-                    result.Add(new Constraint(types, pointer));
-                }
+                result.Add(new Constraint(typesFromDefinition(pointer), pointer));
             }
             while (pointer.MoveToNextSliceAtAnyLevel());
 
@@ -67,14 +56,15 @@ namespace Hl7.Fhir.Specification.FhirPath
                 };
             }
             else
-                return navigator.Current.Type.ToArray();
+            {
+                return navigator.Current?.Type?.ToArray() ?? new ElementDefinition.TypeRefComponent[0];
+            }
         }
 
-        public bool MatchesType(FHIRDefinedType type, string profile = null)
+        public ElementDefinition.TypeRefComponent[] MatchingTypeRefs(FHIRDefinedType type, string profile = null)
         {
-            return Types.Any(tr => tr.Code == type && (profile == null || tr.Profile?.FirstOrDefault() == profile));
+            return Types.Where(tr => tr.Code == type && (profile == null || tr.Profile?.FirstOrDefault() == profile)).ToArray();
         }
-
     }
 
     internal class ConstraintSet : List<Constraint>
@@ -86,6 +76,11 @@ namespace Hl7.Fhir.Specification.FhirPath
         public ConstraintSet(IEnumerable<Constraint> constraints)
         {
             this.AddRange(constraints);
+        }
+
+        public ConstraintSet(StructureDefinition definition)
+        {
+            this.AddConstraint(definition);
         }
 
         public void AddConstraint(StructureDefinition definition)
@@ -114,20 +109,34 @@ namespace Hl7.Fhir.Specification.FhirPath
 
         public ConstraintSet WithType(FHIRDefinedType type, string profile = null)
         {
-            return new ConstraintSet(
-                this.Where(c => c.MatchesType(type, profile))
-                   .Select(c => Constraint.Create(c))
-                   );
+            var newConstraints =
+                from c in this
+                let matchingRefs = c.MatchingTypeRefs(type, profile)
+                where matchingRefs.Any()
+                select new Constraint(matchingRefs, c.Source);
+
+            return new ConstraintSet(newConstraints);
         }
+
+        public ElementDefinition.TypeRefComponent[] CandidateTypeRefs()
+        {
+            return  this.SelectMany(c => c.Types).Distinct().ToArray();
+        }
+
+        public FHIRDefinedType[] CandidateTypes()
+        {
+            return this.SelectMany(c => c.Types)
+                .Where(t=>t.Code != null)
+                .Select(t=> t.Code.Value)
+                .Distinct().ToArray();
+        }
+
 
         public ConstraintSet IncludeReferencedTypes(IResourceResolver resolver)
         {
-            var typesToInclude =
-                this.SelectMany(c => c.Types).Distinct(new TypeRefEqualityComparer());
-
             var result = new ConstraintSet(this);
 
-            foreach(var type in typesToInclude)
+            foreach(var type in result.CandidateTypeRefs())
             {
                 var profile = type.TypeProfile();
                 var sd = resolver.FindStructureDefinition(profile);
@@ -137,20 +146,6 @@ namespace Hl7.Fhir.Specification.FhirPath
 
             return result;
         }
-
-        private class TypeRefEqualityComparer : IEqualityComparer<ElementDefinition.TypeRefComponent>
-        {
-            public bool Equals(ElementDefinition.TypeRefComponent x, ElementDefinition.TypeRefComponent y)
-            {
-                return x.Code == y.Code && x.Profile == y.Profile;
-            }
-
-            public int GetHashCode(ElementDefinition.TypeRefComponent obj)
-            {
-                return (obj?.Code.GetHashCode() ?? 0) ^ (obj?.Profile?.GetHashCode() ?? 0);
-            }
-        }
-
 
         // Note: alters the position of the navigator passed into it
         private static bool tryMoveToName(ElementDefinitionNavigator navigator, string name)

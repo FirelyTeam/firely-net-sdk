@@ -585,5 +585,24 @@ namespace Hl7.Fhir.Tests.Model
             Assert.AreEqual(FHIRDefinedType.Organization, ModelInfo.FhirTypeNameToFhirType("Organization"));
         }
 
+
+        [TestMethod]
+        public void TypeRefEquality()
+        {
+            var types = new ElementDefinition.TypeRefComponent[]
+            {
+                new ElementDefinition.TypeRefComponent { Code = FHIRDefinedType.String },
+                new ElementDefinition.TypeRefComponent { Code = FHIRDefinedType.String },
+                new ElementDefinition.TypeRefComponent { Code = FHIRDefinedType.HumanName },
+                new ElementDefinition.TypeRefComponent { Code = FHIRDefinedType.HumanName, Profile = new string[]{ "http://example.org/StructureDefinition/MyHumanName" } }
+            };
+
+            Assert.IsTrue(types[0].Equals(types[1]));
+            Assert.AreEqual(types[0], types[1]);
+            Assert.AreNotEqual(types[0], types[2]);
+            Assert.AreEqual(types[2], types[2]);
+            Assert.AreNotEqual(types[2], types[3]);
+            Assert.AreEqual(3, types.Distinct().Count());
+        }
     }
 }
