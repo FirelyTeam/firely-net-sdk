@@ -2,11 +2,55 @@
 layout: default
 title: What's new?
 ---
-### In 0.90.6 (released 2016MMDD)
+## In 0.92.5 (DSTU2) / 0.93.5 (STU3) (released 201708DD)
+DSTU2+STU3:
+* Changed the IElementNavigator interface to enable skipping directly to a child with a given name, thus increasing navigation performance 
+* Improved performance of validation and fhirpath for POCOs
+* Split off IFhirClient interface from the FhirClient implementation (primarily for testing/mocking)
+* Many smaller bugfixes
+* Re-instated support for .NET framework 4. Thanks lstratman!
+* Improved error messages produced by the validator based on input from the NHS UK
+* The validator will now let you put a constraint on children of Resource.contained, Bundle.entry.resource and similar nested resources.
+* SerializationUtil.XmlReaderFromString() will no longer try to seek the stream passed in and rewind it.
+* TransactionBuilder now has a (default) argument to specify the type of Bundle to build. Thanks mbaltus!
+* DirectorySource now has Include/Exclude patterns (with globs) to have more control over directory scans for resource files.
+* DirectorySource now supports processing conformance resources in json
+* FhirClient now has async support
+* You can now have List<> properties (like Extensions and other repeating elements) with null elements - these will simply be ignored and not serialized. Thanks wdebeau1!
+* Made date->string and string->date conversion more consistent, fixing problems with locales using something else than ':' for time separators.
+* Fixed an error where the If-None-Exists header included the base url of the server. Thanks angusmiller+tstolker!
+* All Search() overloads on FhirClient now also have a reverseInclude parameter
+* Update with a conditional would not set the If-Match header when doing a version-aware update. Thanks tstolker!
+* DeepCopy() did not actually deep copy collections - if you changed the original collection before you iterated over the clone, you would see the changes. This has been fixed. Thanks mattiasflodin!
+* Client would not pass on 1xx and 3xx errors to client, instead throwing a generic NotSupported exception, making it harder to handle these errors by the client. Thanks tstolker!
+* Added a fall-back terminology service so the validator can now invoke an external terminology service if the local in-memory service (provided with the API)  fails.
+* You can now specify a binding on an Extension, which translates to a binding on Extension.value[x]
+* Fixed a bug where -if the definition of element[x] had a binding and a choice of bindeable and non-bindeable types- the validator would complain if the instance was actually a non-bindeable type.
+* BREAKING: FhirClientOperation.Operation has been renamed to RestOperation
+* BREAKING: Revision of calls to terminology services to support all parameters and overloads
+* Validation across references will now include the path of the referring resource in errors about the referred resource to make interpretation of the outcomes easier.
+* FhirPath's resolve() now actually works, and will resolve contained/bundled resources in the instance under evaluation. This also means the FhirPath evaluator will now take an EvaluationContext in which you can pass your resolver over to the evaluator.
+* The enums in the generated code now also have an attribute on them with information about the codesystem, which can be retrieved using GetSystem() on any enum. Thanks brianpos!
+* Added a few specific [Serializable] attributes to make the POCOs serializable with the Microsoft Orleans serializer. Thanks alexmarchis!
+* Several improvements & bug fixes on the SnapshotGenerator
+* [Excluded for now] CachedResolver can now be asked to clear its contents. As well, when doing a cache lookup, you can now optionally specify whether the cache should only be consulted, updated with a new copy or just return the cached entry (last one being the original behaviour)
+* [Excluded for now] Improvements to the serializer to better support _summary serialization of Bundles
+
+DSTU2: 
+* Fixed small errors in the generated ConstraintComponent properties, giving more correct validation results
+
+DSTU3:
+* Fixes to the snapshot generator to create better ElementDefinition ids
+* _sort parameter now uses STU3 format (_sort=a,-b,c) instead of modifier
+* You can now set the preferred return to OperationOutcome. Thanks cknaap!
+* You can now request the server to notify the client about unsupported search parameters. Thanks tstolker!
+
+
+## In 0.90.6 (released 2016MMDD)
 * Fix: FhirClient will no longer always add `_summary=false` to search queries
 * Fix: FhirClient will not throw parse errors anymore if the server indicated a non-success status (i.e. a 406)
 
-### In 0.90.5 (released 20160804)
+## In 0.90.5 (released 20160804)
 
 * Enhancement: Portable45 target includes support for validation, and no longer depends on Silverlight 5 SDK. Thanks Tilo!
 * Enhancement: Support for serialization where `_summary=data` (and automatically adds the Subsetted flag - temporarily adds the Tag then removes after serialization, if it wasn't there already)
@@ -45,7 +89,7 @@ generator.Generate(profile);
 * Fix: `Base.TypeName` would return incorrect name "Element" for Primitives and Code<T> (codes with enumerated values)
 * And of course numerous bugfixes and code cleanups.
 
-### In 0.90.4 (released 20160105)
+## In 0.90.4 (released 20160105)
 
 * Enhancement: Additional Extension methods for converting native types to/from FHIR types
 
@@ -68,7 +112,7 @@ Usual fix for this will be removing the resource typename prefix from the classn
 From this version on, the model is now code generated using T4 templates within the build from the specification profile files (profiles-resources.xml, profiles-types.xml, search-parameters.xml and expansions.xml)
 
 
-### In 0.90.3 (released 20151201)
+## In 0.90.3 (released 20151201)
 
 * Enhancement: IConformanceResource now also exposes the xxxElement members. Thanks, wmrutten!
 * Enhancement: Parameters.GetSingleValue<> now accepts non-primtives as generic param. Thanks, yunwang!
@@ -85,7 +129,7 @@ From this version on, the model is now code generated using T4 templates within 
 * Fix: FhirClient.Meta() operations will use GET and return Meta (not Parameters)
 
 
-### In 0.90.2
+## In 0.90.2
 
 * Added support for $translate operations on ConceptMap
 * Added support for the changed _summary parameter
@@ -93,7 +137,7 @@ From this version on, the model is now code generated using T4 templates within 
 * The CachedArtifactSource is now thread-safe
 
 
-### In 0.90.0
+## In 0.90.0
 
 * Updated the model to be compatible with DSTU2 (1.0.1)
 * Added support for comments in Json
@@ -102,7 +146,7 @@ From this version on, the model is now code generated using T4 templates within 
 * Bugfixes
 
 
-### In 0.50.2
+## In 0.50.2
 
 * Many bug and stability fixes
 * ReturnFullResource will not only set the Prefer header, but will do a subsequent read if the server ignores the Prefer header.
@@ -114,7 +158,7 @@ From this version on, the model is now code generated using T4 templates within 
 
 
 
-### In 0.20.2
+## In 0.20.2
 
 * FhirClient updated to handle conditional create/read/update, Preference header
 * Introduction of TransactionBuilder class to easily compose Bundles containing transactions
@@ -122,12 +166,12 @@ From this version on, the model is now code generated using T4 templates within 
 * Serialization of extensions back to "DSTU1" style (as agreed in San Antonio)
 
 
-### In 0.20.1
+## In 0.20.1
 
 * Added support for async
 
 
-### In 0.20.0
+## In 0.20.0
 
 * This is the new DSTU2 release
 * Supports the new DSTU2 resources and DSTU2 serialization
@@ -140,7 +184,7 @@ From this version on, the model is now code generated using T4 templates within 
 * Note: support for .NET 4.0 has been dropped, we support .NET 4.5 and PCL 4.5
 
 
-### In 0.11.1
+## In 0.11.1
 
 * Project now contains two assemblies: a "lightweight" core assembly (available across all platforms) and an additional library with profile and validation support.
 * Added an XmlNs class with constants for all relevant xml namespaces used in FHIR
@@ -154,7 +198,7 @@ From this version on, the model is now code generated using T4 templates within 
 * And of course we fixed numerous bugs brought forward by the community
 
 
-### In 0.10.0
+## In 0.10.0
 
 * There's a new `FhirParser.ParseQueryFromUriParameters()` function to parse URL parameters into a FHIR `Query` resource
 * The Model classes now implements `INotifyPropertyChanged`
@@ -167,7 +211,7 @@ From this version on, the model is now code generated using T4 templates within 
 * Models are up-to-date with FHIR 0.80, DSTU build 2408
 
 
-### In 0.9.5
+## In 0.9.5
 
 This release brings the .NET FHIR library up-to-date with the FHIR DSTU (0.8) version. Additionally, some major changes have been carried out:
 
@@ -183,6 +227,6 @@ This release brings the .NET FHIR library up-to-date with the FHIR DSTU (0.8) ve
 * After being updated continuously over the past two years, the FHIR client needed a big refactoring. The code should be readable again.
 
 
-### Before
+## Before
 
 Is history. If you really want, you can read the SVN and Git logs.
