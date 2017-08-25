@@ -1,4 +1,7 @@
-﻿/* 
+﻿// [WMR 20170825] OBSOLETE
+#if false
+
+/* 
  * Copyright (c) 2016, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -21,8 +24,6 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Source
 {
-    // [WMR 20170825] OBSOLETE?
-
     /// <summary>
     /// Internal class which is able to scan a (possibly) large Xml FHIR (conformance) resource from a given stream
     /// </summary>
@@ -251,3 +252,5 @@ namespace Hl7.Fhir.Specification.Source
         }
     }
 }
+
+#endif
