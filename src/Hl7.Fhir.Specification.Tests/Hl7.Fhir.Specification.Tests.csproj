@@ -52,6 +52,10 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="TestData\source-test\" />
+  </ItemGroup>
+
   <!-- Necessary to make the Test Explorer find the tests in this assembly 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugType>full</DebugType>

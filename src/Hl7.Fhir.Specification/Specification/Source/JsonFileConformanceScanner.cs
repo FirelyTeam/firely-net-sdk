@@ -15,6 +15,7 @@ using Hl7.Fhir.Utility;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Hl7.Fhir.Serialization;
+using System;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -33,6 +34,12 @@ namespace Hl7.Fhir.Specification.Source
         public List<ConformanceScanInformation> List()
         {
             var rootResourceType = pollResourceType(_path);
+
+            // [WMR 20170825] Handle invalid/non-FHIR resources
+            if (rootResourceType == null)
+            {
+                return new List<ConformanceScanInformation>();
+            }
 
             using (var input = File.OpenRead(_path))
             {
@@ -103,48 +110,50 @@ namespace Hl7.Fhir.Specification.Source
         {
             if (resourceType == null) throw Error.ArgumentNull(nameof(resourceType));
 
-            JsonTextReader reader = new JsonTextReader(new StreamReader(input));
-
-            if (resourceType == "Bundle")
+            using (var stream = new StreamReader(input))
+            using (var reader = new JsonTextReader(stream))
             {
-                if (!skipTo(reader, "entry")) yield break;
-
-                while (reader.Read())
+                if (resourceType == "Bundle")
                 {
-                    if (reader.TokenType == JsonToken.StartObject && reader.Path.StartsWith("entry["))
-                    {
-                        var entry = JObject.ReadFrom(reader);
+                    if (!skipTo(reader, "entry")) yield break;
 
-                        var fullUrl = entry.Value<string>("fullUrl");
-                        if (fullUrl != null)
+                    while (reader.Read())
+                    {
+                        if (reader.TokenType == JsonToken.StartObject && reader.Path.StartsWith("entry["))
                         {
-                            var resourceNode = entry["resource"];
-                            if (resourceNode is JObject resource) yield return (resource, fullUrl);
+                            var entry = JObject.ReadFrom(reader);
+
+                            var fullUrl = entry.Value<string>("fullUrl");
+                            if (fullUrl != null)
+                            {
+                                var resourceNode = entry["resource"];
+                                if (resourceNode is JObject resource) yield return (resource, fullUrl);
+                            }
                         }
                     }
                 }
-            }
 
-            else
-            {
-                var resource = (JObject)JObject.ReadFrom(reader);
-
-                if (resource != null)
+                else
                 {
-                    // First try to initialize from canonical url (conformance resources)
-                    var canonicalUrl = resource.Value<string>("url");
+                    var resource = (JObject)JObject.ReadFrom(reader);
 
-                    if (canonicalUrl != null)
-                        yield return (resource, canonicalUrl);
-
-                    // Otherwise try to initialize from resource id
-                    else
+                    if (resource != null)
                     {
-                        var resourceId = resource.Value<string>("id");
-                        if (resourceId != null)
+                        // First try to initialize from canonical url (conformance resources)
+                        var canonicalUrl = resource.Value<string>("url");
+
+                        if (canonicalUrl != null)
+                            yield return (resource, canonicalUrl);
+
+                        // Otherwise try to initialize from resource id
+                        else
                         {
-                            var fullUrl = "http://example.org/" + resourceType + "/" + resourceId;
-                            yield return (resource, fullUrl);
+                            var resourceId = resource.Value<string>("id");
+                            if (resourceId != null)
+                            {
+                                var fullUrl = "http://example.org/" + resourceType + "/" + resourceId;
+                                yield return (resource, fullUrl);
+                            }
                         }
                     }
                 }
@@ -154,12 +163,15 @@ namespace Hl7.Fhir.Specification.Source
         private string pollResourceType(string path)
         {
             using (var input = File.OpenRead(path))
+            using (var stream = new StreamReader(input))
+            using (var reader = new JsonTextReader(stream))
             {
-                JsonTextReader reader = new JsonTextReader(new StreamReader(input));
-
-                if (!skipTo(reader, "resourceType")) return null;
-                return reader.ReadAsString();
+                if (skipTo(reader, "resourceType"))
+                {
+                    return reader.ReadAsString();
+                }
             }
+            return null;
         }
 
         private static bool skipTo(JsonReader reader, string path)

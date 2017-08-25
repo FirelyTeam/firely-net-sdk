@@ -1,0 +1,15 @@
+{
+  "targets": {
+    ".NETFramework,Version=v4.5": {
+      "Newtonsoft.Json/9.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        }
+      },
+	},
+  },
+}

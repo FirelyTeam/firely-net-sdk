@@ -124,10 +124,10 @@ namespace Hl7.Fhir.Specification.Tests
             var tmpx = tmp + ".xml";
             var tmpj = tmp + ".json";
 
-            (Bundle b, var _, var  __) = makeTestData();
+            (Bundle b, var _, var __) = makeTestData();
             var bXml = FhirSerializer.SerializeResourceToXml(b);
             var bJson = FhirSerializer.SerializeResourceToJson(b);
-            
+
             File.WriteAllText(tmpx, bXml);
             File.WriteAllText(tmpj, bJson);
 
@@ -158,7 +158,7 @@ namespace Hl7.Fhir.Specification.Tests
             var tmpx = tmp + ".xml";
             var tmpj = tmp + ".json";
 
-            (_ , Resource r, var __) = makeTestData();
+            (_, Resource r, var __) = makeTestData();
             var rXml = FhirSerializer.SerializeResourceToXml(r);
             var rJson = FhirSerializer.SerializeResourceToJson(r);
 
@@ -218,13 +218,28 @@ namespace Hl7.Fhir.Specification.Tests
                     if (reader.TokenType == JsonToken.StartObject)
                     {
                         var p = reader.Path;
-                        if(Regex.IsMatch(p, @"^entry\[(\d+)\]\.resource$"))
+                        if (Regex.IsMatch(p, @"^entry\[(\d+)\]\.resource$"))
                         {
                             var r = JObject.ReadFrom(reader);
-                        }                        
+                        }
                     }
                 }
             }
+        }
+
+        // [WMR 20170825] Issue: json file generates exception "Value cannot be null. Parameter name:resourceType"
+        [TestMethod]
+        public void TestInvalidJsonFile()
+        {
+            var folderPath = Path.Combine(Directory.GetCurrentDirectory(), @"TestData\source-test\");
+            // var patientProfile = Path.Combine(path, "MyPatient.xml");
+            var filePath = Path.Combine(folderPath, "project.assets.json");
+            Assert.IsTrue(File.Exists(filePath));
+
+            var scanner = new JsonFileConformanceScanner(filePath);
+
+            var list = scanner.List();
+            Assert.AreEqual(0, list.Count);
         }
     }
 }
