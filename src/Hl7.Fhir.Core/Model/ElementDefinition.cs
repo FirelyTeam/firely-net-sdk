@@ -67,7 +67,9 @@ namespace Hl7.Fhir.Model
         {
             public static DiscriminatorComponent ForTypeSlice()
             {
-                return new DiscriminatorComponent { Type = DiscriminatorType.Type };
+                // [WMR 20170823] Also initialize Discriminator.Path = "$this", as defined here:
+                // https://www.hl7.org/fhir/profiling.html#discriminator
+                return new DiscriminatorComponent { Type = DiscriminatorType.Type, Path = "$this" };
             }
 
             public static DiscriminatorComponent ForValueSlice(string path)

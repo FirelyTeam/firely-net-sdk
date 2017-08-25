@@ -1,4 +1,7 @@
-﻿/* 
+﻿// [WMR 20170825] OBSOLETE
+#if false
+
+/* 
  * Copyright (c) 2016, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -116,78 +119,76 @@ namespace Hl7.Fhir.Specification.Source
         // and yield the feed entries, so only one entry is in memory at a time
         internal IEnumerable<XElement> StreamResources(Stream input)
         {
-            var reader = SerializationUtil.XmlReaderFromStream(input);
-
-            var root = getRootName(reader);
-
-            if (root == "Bundle")
+            using (var reader = SerializationUtil.XmlReaderFromStream(input))
             {
-                if (!reader.ReadToDescendant("entry", XmlNs.FHIR)) yield break;
+                var root = getRootName(reader);
 
-                while (!reader.EOF)
+                if (root == "Bundle")
                 {
-                    if (reader.NodeType == XmlNodeType.Element
-                        && reader.NamespaceURI == XmlNs.FHIR && reader.LocalName == "entry")
+                    if (!reader.ReadToDescendant("entry", XmlNs.FHIR)) yield break;
+
+                    while (!reader.EOF)
                     {
-                        var entryNode = (XElement)XElement.ReadFrom(reader);
-                        var fullUrl = entryNode.Elements(XmlNs.XFHIR + "fullUrl").Attributes("value").SingleOrDefault();
-                        if (fullUrl != null)
+                        if (reader.NodeType == XmlNodeType.Element
+                            && reader.NamespaceURI == XmlNs.FHIR && reader.LocalName == "entry")
                         {
-                            var resourceNode = entryNode.Element(XName.Get("resource", XmlNs.FHIR));
-                            if (resourceNode != null)
+                            var entryNode = (XElement)XElement.ReadFrom(reader);
+                            var fullUrl = entryNode.Elements(XmlNs.XFHIR + "fullUrl").Attributes("value").SingleOrDefault();
+                            if (fullUrl != null)
                             {
-                                var resource = resourceNode.Elements().First();
-                                resource.AddAnnotation(new FullUrlAnnotation { FullUrl = fullUrl.Value });
-                                yield return resource;
+                                var resourceNode = entryNode.Element(XName.Get("resource", XmlNs.FHIR));
+                                if (resourceNode != null)
+                                {
+                                    var resource = resourceNode.Elements().First();
+                                    resource.AddAnnotation(new FullUrlAnnotation { FullUrl = fullUrl.Value });
+                                    yield return resource;
+                                }
                             }
                         }
+                        else
+                            reader.Read();
                     }
-                    else
-                        reader.Read();
                 }
-            }
 
-#if true
-            // [WMR 20160908] Originally commented out logic
-            //else if (root != null)
-            //{
-            //    var resourceNode = (XElement)XElement.ReadFrom(reader);
-            //    var resourceId = resourceNode.Elements(XmlNs.XFHIR + "id").Attributes("value").SingleOrDefault();
-            //    if (resourceId != null)
-            //    {
-            //        var fullUrl = resourceNode.Name.LocalName + "/" + resourceId.Value;
-            //        resourceNode.Add(new XAttribute("scannerUrl", fullUrl));
-            //        yield return resourceNode;
-            //    }
-            //}
+                // [WMR 20160908] Originally commented out logic
+                //else if (root != null)
+                //{
+                //    var resourceNode = (XElement)XElement.ReadFrom(reader);
+                //    var resourceId = resourceNode.Elements(XmlNs.XFHIR + "id").Attributes("value").SingleOrDefault();
+                //    if (resourceId != null)
+                //    {
+                //        var fullUrl = resourceNode.Name.LocalName + "/" + resourceId.Value;
+                //        resourceNode.Add(new XAttribute("scannerUrl", fullUrl));
+                //        yield return resourceNode;
+                //    }
+                //}
 
-            // [WMR 20160908] Fixed, parse stand-alone (conformance) resources
-            else if (root != null)
-            {
-                var resourceNode = (XElement)XElement.ReadFrom(reader);
-                // First try to initialize from canonical url (conformance resources)
-                var canonicalUrl = resourceNode.Elements(XmlNs.XFHIR + "url").Attributes("value").SingleOrDefault();
-                if (canonicalUrl != null)
+                // [WMR 20160908] Fixed, parse stand-alone (conformance) resources
+                else if (root != null)
                 {
-                    resourceNode.AddAnnotation(new FullUrlAnnotation { FullUrl = canonicalUrl.Value });
-                    yield return resourceNode;
-                }
-                else
-                {
-                    // Otherwise try to initialize from resource id
-                    var resourceId = resourceNode.Elements(XmlNs.XFHIR + "id").Attributes("value").SingleOrDefault();
-                    if (resourceId != null)
+                    var resourceNode = (XElement)XElement.ReadFrom(reader);
+                    // First try to initialize from canonical url (conformance resources)
+                    var canonicalUrl = resourceNode.Elements(XmlNs.XFHIR + "url").Attributes("value").SingleOrDefault();
+                    if (canonicalUrl != null)
                     {
-                        var fullUrl = resourceNode.Name.LocalName + "/" + resourceId.Value;
-                        resourceNode.AddAnnotation(new FullUrlAnnotation { FullUrl = fullUrl });
+                        resourceNode.AddAnnotation(new FullUrlAnnotation { FullUrl = canonicalUrl.Value });
                         yield return resourceNode;
                     }
+                    else
+                    {
+                        // Otherwise try to initialize from resource id
+                        var resourceId = resourceNode.Elements(XmlNs.XFHIR + "id").Attributes("value").SingleOrDefault();
+                        if (resourceId != null)
+                        {
+                            var fullUrl = resourceNode.Name.LocalName + "/" + resourceId.Value;
+                            resourceNode.AddAnnotation(new FullUrlAnnotation { FullUrl = fullUrl });
+                            yield return resourceNode;
+                        }
+                    }
                 }
+                else
+                    yield break;
             }
-#endif
-
-            else
-                yield break;
         }
 
 
@@ -251,3 +252,5 @@ namespace Hl7.Fhir.Specification.Source
         }
     }
 }
+
+#endif

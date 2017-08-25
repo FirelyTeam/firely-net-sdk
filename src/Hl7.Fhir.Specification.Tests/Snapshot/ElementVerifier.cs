@@ -25,8 +25,9 @@ namespace Hl7.Fhir.Specification.Tests
             _settings = settings;
             _elements = sd.Snapshot.Element;
             _pos = 0;
-            var ann = sd.Annotation<OriginAnnotation>();
-            Debug.Print($"Assert structure: url = '{sd.Url}' - origin = '{ann.Origin}'");
+            // var ann = sd.Annotation<OriginAnnotation>();
+            // Debug.Print($"Assert structure: url = '{sd.Url}' - origin = '{ann.Origin}'");
+            Debug.Print($"Assert structure: url = '{sd.Url}' - origin = '{sd.GetOrigin()}'");
         }
 
         public ElementVerifier(IList<ElementDefinition> elements, SnapshotGeneratorSettings settings)

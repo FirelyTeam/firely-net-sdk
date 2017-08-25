@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Specification.Source
             if (found == null) return null;
 
             var resultResource = new FhirXmlParser().Parse<Resource>(new XmlDomFhirReader(found));
-            resultResource.AddAnnotation(new OriginAnnotation { Origin = entry.Origin });
+            resultResource.SetOrigin(entry.Origin);
 
             return resultResource;
         }
@@ -140,57 +140,57 @@ namespace Hl7.Fhir.Specification.Source
         // and yield the feed entries, so only one entry is in memory at a time
         private IEnumerable<(XElement element, string fullUrl)> streamResources(Stream input)
         {
-            var reader = SerializationUtil.XmlReaderFromStream(input);
-            var root = getRootName(reader);
-
-            if (root == "Bundle")
+            using (var reader = SerializationUtil.XmlReaderFromStream(input))
             {
-                if (!reader.ReadToDescendant("entry", XmlNs.FHIR)) yield break;
+                var root = getRootName(reader);
 
-                while (!reader.EOF)
+                if (root == "Bundle")
                 {
-                    if (reader.NodeType == XmlNodeType.Element
-                        && reader.NamespaceURI == XmlNs.FHIR && reader.LocalName == "entry")
+                    if (!reader.ReadToDescendant("entry", XmlNs.FHIR)) yield break;
+
+                    while (!reader.EOF)
                     {
-                        var entryNode = (XElement)XElement.ReadFrom(reader);
-                        var fullUrl = entryNode.Elements(XmlNs.XFHIR + "fullUrl").Attributes("value").SingleOrDefault();
-                        if (fullUrl != null)
+                        if (reader.NodeType == XmlNodeType.Element
+                            && reader.NamespaceURI == XmlNs.FHIR && reader.LocalName == "entry")
                         {
-                            var resourceNode = entryNode.Element(XName.Get("resource", XmlNs.FHIR));
-                            if (resourceNode != null)
+                            var entryNode = (XElement)XElement.ReadFrom(reader);
+                            var fullUrl = entryNode.Elements(XmlNs.XFHIR + "fullUrl").Attributes("value").SingleOrDefault();
+                            if (fullUrl != null)
                             {
-                                var resource = resourceNode.Elements().First();
-                                yield return (resource, fullUrl.Value);
+                                var resourceNode = entryNode.Element(XName.Get("resource", XmlNs.FHIR));
+                                if (resourceNode != null)
+                                {
+                                    var resource = resourceNode.Elements().First();
+                                    yield return (resource, fullUrl.Value);
+                                }
                             }
                         }
+                        else
+                            reader.Read();
                     }
-                    else
-                        reader.Read();
                 }
-            }
 
-            // [WMR 20160908] Fixed, parse stand-alone (conformance) resources
-            else if (root != null)
-            {
-                var resourceNode = (XElement)XElement.ReadFrom(reader);
-                // First try to initialize from canonical url (conformance resources)
-                var canonicalUrl = resourceNode.Elements(XmlNs.XFHIR + "url").Attributes("value").SingleOrDefault();
-                if (canonicalUrl != null)
-                    yield return (resourceNode, canonicalUrl.Value);
-                else
+                // [WMR 20160908] Fixed, parse stand-alone (conformance) resources
+                else if (root != null)
                 {
-                    // Otherwise try to initialize from resource id
-                    var resourceId = resourceNode.Elements(XmlNs.XFHIR + "id").Attributes("value").SingleOrDefault();
-                    if (resourceId != null)
+                    var resourceNode = (XElement)XElement.ReadFrom(reader);
+                    // First try to initialize from canonical url (conformance resources)
+                    var canonicalUrl = resourceNode.Elements(XmlNs.XFHIR + "url").Attributes("value").SingleOrDefault();
+                    if (canonicalUrl != null)
+                        yield return (resourceNode, canonicalUrl.Value);
+                    else
                     {
-                        var fullUrl = "http://example.org/" + resourceNode.Name.LocalName + "/" + resourceId.Value;
-                        yield return (resourceNode, fullUrl);
+                        // Otherwise try to initialize from resource id
+                        var resourceId = resourceNode.Elements(XmlNs.XFHIR + "id").Attributes("value").SingleOrDefault();
+                        if (resourceId != null)
+                        {
+                            var fullUrl = "http://example.org/" + resourceNode.Name.LocalName + "/" + resourceId.Value;
+                            yield return (resourceNode, fullUrl);
+                        }
                     }
                 }
             }
-
-            else
-                yield break;
+            yield break;
         }
 
 

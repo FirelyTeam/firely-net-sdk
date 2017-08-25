@@ -27,6 +27,7 @@ using Hl7.Fhir.Rest;
 using System.Text;
 using System.Xml;
 using Hl7.Fhir.Utility;
+using static Hl7.Fhir.Model.ElementDefinition.DiscriminatorComponent;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -1081,9 +1082,10 @@ namespace Hl7.Fhir.Specification.Tests
 
             foreach (var testSD in testSDs)
             {
-                var sdInfo = testSD.Annotation<OriginAnnotation>();
+                // var sdInfo = testSD.Annotation<OriginAnnotation>();
                 // [WMR 20160721] Select all profiles in profiles-others.xml
-                var fileName = Path.GetFileNameWithoutExtension(sdInfo.Origin);
+                // var fileName = Path.GetFileNameWithoutExtension(sdInfo.Origin);
+                var fileName = Path.GetFileNameWithoutExtension(testSD.GetOrigin());
                 if (fileName == "profiles-others")
                 {
                     //var sd = _testResolver.FindStructureDefinition(sdInfo.Canonical);
@@ -2723,8 +2725,9 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     if (sd.Differential.Element.Any(e => e.Path.StartsWith("Extension.extension.", StringComparison.Ordinal)))
                     {
-                        var orgInfo = sd.Annotation<OriginAnnotation>();
-                        Debug.WriteLine($"{uri} : '{orgInfo?.Origin}'");
+                        // var orgInfo = sd.Annotation<OriginAnnotation>();
+                        // Debug.WriteLine($"{uri} : '{orgInfo?.Origin}'");
+                        Debug.WriteLine($"{uri} : '{sd.GetOrigin()}'");
                     }
                 }
             }
@@ -5498,6 +5501,75 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 Assert.IsNull(sd.Snapshot.GetRootElement()?.SliceName);
             }
+        }
+
+        static StructureDefinition MedicationStatementWithSimpleQuantitySlice => new StructureDefinition()
+        {
+            Type = FHIRAllTypes.MedicationStatement.GetLiteral(),
+            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.MedicationStatement),
+            Name = "MedicationStatementWithSimpleQuantitySlice",
+            Url = @"http://example.org/fhir/StructureDefinition/MedicationStatementWithSimpleQuantitySlice",
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+            Kind = StructureDefinition.StructureDefinitionKind.Resource,
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("MedicationStatement.dosage.dose[x]")
+                    {
+                        Slicing = new ElementDefinition.SlicingComponent()
+                        {
+                            Discriminator = ForTypeSlice().ToList()
+                        }
+                    },
+                    new ElementDefinition("MedicationStatement.dosage.dose[x]")
+                    {
+                        SliceName = "doseSimpleQuantity",
+                        Type = new List<ElementDefinition.TypeRefComponent>()
+                        {
+                            new ElementDefinition.TypeRefComponent()
+                            {
+                                Code = FHIRAllTypes.Quantity.GetLiteral(),
+                                Profile = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.SimpleQuantity)
+                            }
+                        }
+                    },
+                    new ElementDefinition("MedicationStatement.dosage.dose[x]")
+                    {
+                        SliceName = "dosePeriod",
+                        Type = new List<ElementDefinition.TypeRefComponent>()
+                        {
+                            new ElementDefinition.TypeRefComponent()
+                            {
+                                Code = FHIRAllTypes.Period.GetLiteral()
+                            }
+                        }
+                    },
+
+                }
+            }
+        };
+
+        [TestMethod]
+        public void TestSimpleQuantitySlice()
+        {
+            var sd = MedicationStatementWithSimpleQuantitySlice;
+            var resolver = new InMemoryProfileResolver(sd);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+
+            generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+            dumpOutcome(_generator.Outcome);
+            Assert.IsTrue(expanded.HasSnapshot);
+            var elems = expanded.Snapshot.Element;
+            dumpElements(elems);
+            // dumpBaseElems(elems);
+
+            // Verify there is NO warning about invalid element type constraint
+            Assert.IsFalse(_generator.Outcome.Issue.Any(
+                i => i.Details.Coding.FirstOrDefault().Code == SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_PROFILE_TYPE.Code.ToString())
+            );
         }
 
     }
