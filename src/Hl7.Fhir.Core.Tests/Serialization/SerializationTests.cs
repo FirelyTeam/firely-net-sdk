@@ -16,6 +16,8 @@ using System.IO;
 using System.Linq;
 using System.Globalization;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Introspection;
+using System.Runtime.Serialization;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -332,7 +334,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var shouldBePatientOneTrue =
                 "{\"resourceType\":\"Patient\",\"id\":\"patient-one\",\"meta\":{\"versionId\":\"1234\"},\"active\":true,\"name\":[{\"use\":\"official\",\"family\":\"Clapton\"}],\"gender\":\"male\",\"birthDate\":\"2015-07-09\"}";
-            
+
             var shouldBePatientOneText =
                 "{\"resourceType\":\"Patient\",\"id\":\"patient-one\",\"meta\":{\"versionId\":\"1234\"},\"text\":{\"div\":\"A great blues player\"}}";
 
@@ -639,11 +641,36 @@ namespace Hl7.Fhir.Tests.Serialization
             c.Payee.ResourceType = new Coding(null, "test2");
             c.Payee.Party = new ResourceReference("Practitioner/example", "Example, Dr John");
 
-            string json = Hl7.Fhir.Serialization.FhirSerializer.SerializeResourceToJson(c);
+            string json = FhirSerializer.SerializeResourceToJson(c);
             var c2 = new FhirJsonParser().Parse<Claim>(json);
             Assert.AreEqual("test", c2.Payee.Type.Coding[0].Code);
             Assert.AreEqual("test2", c2.Payee.ResourceType.Code);
             Assert.AreEqual("Practitioner/example", c2.Payee.Party.Reference);
+        }
+
+        [FhirType("Bundle", IsResource = true)]
+        //[DataContract]
+        public class CustomBundle : Bundle
+        {
+            public CustomBundle() : base() { }
+        }
+
+        // [WMR 20170825] Richard Kavanagh: runtime exception while serializating derived PoCo classes
+        // Workaround: add the FhirType attribute to derived class
+        [TestMethod]
+        public void TestDerivedPoCoSerialization()
+        {
+            var bundle = new CustomBundle()
+            {
+                Type = Bundle.BundleType.Collection,
+                Id = "MyBundle"
+            };
+
+            var xml = FhirSerializer.SerializeResourceToXml(bundle);
+            Assert.IsNotNull(xml);
+
+            var json = FhirSerializer.SerializeResourceToJson(bundle);
+            Assert.IsNotNull(json);
         }
     }
 }
