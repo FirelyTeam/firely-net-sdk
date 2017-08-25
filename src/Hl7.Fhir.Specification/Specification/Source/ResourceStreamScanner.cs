@@ -1,4 +1,7 @@
-﻿/* 
+﻿// [WMR 20170825] OBSOLETE
+#if false
+
+/* 
  * Copyright (c) 2016, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -251,3 +254,5 @@ namespace Hl7.Fhir.Specification.Source
         }
     }
 }
+
+#endif
