@@ -13,7 +13,7 @@
 
   <PropertyGroup>
     <FhirApiVersion>0.93.6-alpha1</FhirApiVersion>
-    <SupportApiVersion>0.4.4-beta3</SupportApiVersion>
+    <SupportApiVersion>0.4.5-alpha1</SupportApiVersion>
   </PropertyGroup>
 
   <!-- Compiler settings -->
