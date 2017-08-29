@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var conceptMaps = source.FindConceptMaps("http://hl7.org/fhir/ValueSet/address-use");
             Assert.AreEqual(2, conceptMaps.Count());
-            Assert.IsNotNull(conceptMaps.First().Annotation<OriginAnnotation>());
+            Assert.IsNotNull(conceptMaps.First().GetOrigin());
 
             conceptMaps = source.FindConceptMaps("http://hl7.org/fhir/ValueSet/address-use", "http://hl7.org/fhir/ValueSet/v2-0190");
             Assert.AreEqual(1, conceptMaps.Count());
@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Specification.Tests
             // A Fhir valueset
             var vs = source.FindValueSetBySystem("http://hl7.org/fhir/contact-point-system");
             Assert.IsNotNull(vs);
-            Assert.IsNotNull(vs.Annotation<OriginAnnotation>());
+            Assert.IsNotNull(vs.GetOrigin());
 
             // A non-HL7 valueset
             vs = source.FindValueSetBySystem("http://nema.org/dicom/dicm");
@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var ns = source.FindNamingSystem("2.16.840.1.113883.6.88");
             Assert.IsNotNull(ns);
-            Assert.IsNotNull(ns.Annotation<OriginAnnotation>());
+            Assert.IsNotNull(ns.GetOrigin());
 
             ns = source.FindNamingSystem("http://www.nlm.nih.gov/research/umls/rxnorm");
             Assert.IsNotNull(ns);
@@ -117,8 +117,7 @@ namespace Hl7.Fhir.Specification.Tests
             var vs = fa.ResolveByUri("http://hl7.org/fhir/ValueSet/v2-0292");
             Assert.IsNotNull(vs);
             Assert.IsTrue(vs is ValueSet);
-            var ci = vs.Annotation<OriginAnnotation>();
-            Assert.IsTrue(ci.Origin.EndsWith("v2-tables.xml"));
+            Assert.IsTrue(vs.GetOrigin().EndsWith("v2-tables.xml"));
 
             vs = fa.ResolveByUri("http://hl7.org/fhir/ValueSet/administrative-gender");
             Assert.IsNotNull(vs);
@@ -131,8 +130,7 @@ namespace Hl7.Fhir.Specification.Tests
             var rs = fa.ResolveByUri("http://hl7.org/fhir/StructureDefinition/Condition");
             Assert.IsNotNull(rs);
             Assert.IsTrue(rs is StructureDefinition);
-            ci = rs.Annotation<OriginAnnotation>();
-            Assert.IsTrue(ci.Origin.EndsWith("profiles-resources.xml"));
+            Assert.IsTrue(rs.GetOrigin().EndsWith("profiles-resources.xml"));
 
             rs = fa.ResolveByUri("http://hl7.org/fhir/StructureDefinition/ValueSet");
             Assert.IsNotNull(rs);
