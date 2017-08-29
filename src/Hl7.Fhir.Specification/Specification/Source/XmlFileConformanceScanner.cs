@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Specification.Source
             if (found == null) return null;
 
             var resultResource = new FhirXmlParser().Parse<Resource>(new XmlDomFhirReader(found));
-            resultResource.AddAnnotation(new OriginAnnotation { Origin = entry.Origin });
+            resultResource.SetOrigin(entry.Origin);
 
             return resultResource;
         }

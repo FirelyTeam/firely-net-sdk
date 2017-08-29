@@ -34,6 +34,9 @@ namespace Hl7.Fhir.Specification.Tests
         {
             if (path.Contains("grahame-validation-examples"))
                 return;
+            if (path.Contains("source-test"))
+                return;
+
             var xmlParser = new Hl7.Fhir.Serialization.FhirXmlParser();
             var jsonParser = new Serialization.FhirJsonParser();
             Console.WriteLine($"Validating test files in {path.Replace(basePath, "")}");
