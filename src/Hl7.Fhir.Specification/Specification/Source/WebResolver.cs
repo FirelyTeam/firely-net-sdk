@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Specification.Source
             try
             {
                 var resultResource = client.Read<Resource>(id);
-                resultResource.AddAnnotation(new OriginAnnotation { Origin = uri });
+                resultResource.SetOrigin(uri);
                 return resultResource;
             }
             catch (FhirOperationException)
