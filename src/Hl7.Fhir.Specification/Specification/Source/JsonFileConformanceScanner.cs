@@ -34,6 +34,12 @@ namespace Hl7.Fhir.Specification.Source
         {
             var rootResourceType = pollResourceType(_path);
 
+            // [WMR 20170825] Handle invalid/non-FHIR resources
+            if (rootResourceType == null)
+            {
+                return new List<ConformanceScanInformation>();
+            }
+
             using (var input = File.OpenRead(_path))
             {
                 var result =                     
@@ -154,12 +160,15 @@ namespace Hl7.Fhir.Specification.Source
         private string pollResourceType(string path)
         {
             using (var input = File.OpenRead(path))
+            using (var stream = new StreamReader(input))
+            using (var reader = new JsonTextReader(stream))
             {
-                JsonTextReader reader = new JsonTextReader(new StreamReader(input));
-
-                if (!skipTo(reader, "resourceType")) return null;
-                return reader.ReadAsString();
+                if (skipTo(reader, "resourceType"))
+                {
+                    return reader.ReadAsString();
+                }
             }
+            return null;
         }
 
         private static bool skipTo(JsonReader reader, string path)
