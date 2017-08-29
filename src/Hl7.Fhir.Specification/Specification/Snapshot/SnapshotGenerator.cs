@@ -706,10 +706,20 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var typeStructure = _resolver.FindStructureDefinition(primaryDiffTypeProfile);
 
                 // [WMR 20170224] Verify that the resolved StructureDefinition is compatible with the element type
-                if (!_resolver.IsValidTypeProfile(primarySnapType.Code, typeStructure))
+                // [WMR 20170823] WRONG! Base element may specify multiple type options
+                //if (!_resolver.IsValidTypeProfile(primarySnapType.Code, typeStructure))
+                //{
+                //    addIssueInvalidProfileType(diff.Current, typeStructure);
+                //    return false;
+                //}
+
+                // The element type profile constraint must match at least one base type
+                var isCompatible = snap.Current.Type.Any(t => _resolver.IsValidTypeProfile(t.Code, typeStructure));
+                if (!isCompatible)
                 {
                     addIssueInvalidProfileType(diff.Current, typeStructure);
-                    return false;
+                    // [WMR 20170823] Emit warning, but continue
+                    // return false;
                 }
 
                 var diffNode = diff.Current.ToNamedNode();
