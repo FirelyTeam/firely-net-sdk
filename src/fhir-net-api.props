@@ -12,7 +12,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <FhirApiVersion>0.93.6-alpha1</FhirApiVersion>
+    <FhirApiVersion>0.93.6-alpha2</FhirApiVersion>
     <SupportApiVersion>0.4.5-alpha1</SupportApiVersion>
   </PropertyGroup>
 

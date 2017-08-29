@@ -284,6 +284,9 @@ namespace Hl7.Fhir.Specification.Tests
             const string srcFile1 = "MyBasic.structuredefinition.xml";
             const string srcFile2 = "MyBundle.structuredefinition.xml";
 
+            const string profileUrl1 = @"http://example.org/fhir/StructureDefinition/MyBasic";
+            const string profileUrl2 = @"http://example.org/fhir/StructureDefinition/MyBundle";
+
             // Create test file in inaccessible subfolder; should be ignored
             copy(srcPath, srcFile1, subPath2);
 
@@ -332,12 +335,22 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         // Note: we still have write permissions...
 
-                        var fa = new DirectorySource(testPath, includeSubdirectories: true);
-                        var names = fa.ListArtifactNames();
+                        var dirSource = new DirectorySource(testPath, includeSubdirectories: true);
+
+                        // [WMR 20170823] Test ListArtifactNames => prepareFiles()
+                        var names = dirSource.ListArtifactNames();
 
                         Assert.AreEqual(numFiles, names.Count());
                         Assert.IsFalse(names.Contains(srcFile1));
                         Assert.IsTrue(names.Contains(srcFile2));
+
+                        // [WMR 20170823] Also test ListResourceUris => prepareResources()
+                        var profileUrls = dirSource.ListResourceUris(ResourceType.StructureDefinition);
+                        
+                        // Materialize the sequence
+                        var urlList = profileUrls.ToList();
+                        Assert.IsFalse(urlList.Contains(profileUrl1));
+                        Assert.IsTrue(urlList.Contains(profileUrl2));
                     }
                     // API *should* grafecully handle security exceptions
                     catch (UnauthorizedAccessException ex)
