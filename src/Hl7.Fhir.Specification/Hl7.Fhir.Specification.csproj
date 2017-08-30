@@ -1,6 +1,7 @@
 ﻿ <Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
     <PropertyGroup>
     <TargetFrameworks>net45;netstandard1.3</TargetFrameworks>
+    <MinClientVersion>3.3.0</MinClientVersion>
   </PropertyGroup>
   <Import Project="..\platforms.props" />
   <Import Project="..\fhir-net-api.props" />
@@ -41,14 +42,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="install.ps1">
-      <Pack>true</Pack>
-      <PackagePath>tools</PackagePath>
-    </Content>
     <Content Include="specification.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Pack>true</Pack>
-      <PackagePath>content</PackagePath>
+      <PackagePath>contentFiles\any\any</PackagePath>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+      <PackageFlatten>true</PackageFlatten>
     </Content>
   </ItemGroup>
  
