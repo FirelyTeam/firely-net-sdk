@@ -1,16 +1,9 @@
-﻿using Hl7.Fhir.Utility;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections;
 
 #if NET_FILESYSTEM
 namespace Hl7.Fhir.Specification.Source.BlobDb
 {
-   
     public class BlobDatabase
     {
         public static BlobDatabase Open(string path) => throw new NotImplementedException();

@@ -15,8 +15,6 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
         }
 
         public static Blob ForText(string text, string mimeType = "text/plain") => new Blob(Encoding.UTF8.GetBytes(text), mimeType);
-
-        public int Length => Data.Length;
     }
 
 
