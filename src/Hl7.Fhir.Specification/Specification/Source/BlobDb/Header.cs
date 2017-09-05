@@ -4,14 +4,20 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
     public class Header
     {
         public readonly short Version;
-        public long IndexBlockPosition;
-        public long DataBlockPosition;
+        public long IndexBlockPosition = -1;
+        public long DataBlockPosition = -1;
+        public int BlobCount;
 
-        public Header(short version, long indexPosition, long dataPosition)
+        public Header(short version)
         {
             Version = version;
-            IndexBlockPosition = indexPosition;
-            DataBlockPosition = dataPosition;
+        }
+
+        public override string ToString()
+        {
+            return $"BlobDb file using binary format version {Version}. " 
+                + $"First index at position {IndexBlockPosition}, "
+                + $"first of {BlobCount} blobs at position {DataBlockPosition}";
         }
     }
 

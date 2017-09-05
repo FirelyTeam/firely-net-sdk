@@ -11,6 +11,14 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
 {
     internal static class BinaryReaderExtensions
     {
+        public static Header ReadManifest(this Stream s, out Index[] indices)
+        {
+            var readHeader = s.ReadHeader();
+            indices = s.ReadIndexBlock();
+
+            return readHeader;
+        }
+
         public static Header ReadHeader(this Stream s)
         {
             var pos = s.Position;
@@ -25,10 +33,16 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
                         throw new DatabaseFileCorruptException($"No header found at {pos}, found magic 0x{magic:X} instead", pos);
 
                     short version = reader.ReadInt16();
+                    int blobCount = reader.ReadInt32();
                     long indexBlockPosition = reader.ReadInt64();
                     long dataBlockPosition = reader.ReadInt64();
 
-                    return new Header(version, indexBlockPosition, dataBlockPosition);
+                    return new Header(version)
+                    {
+                        BlobCount = blobCount,
+                        IndexBlockPosition = indexBlockPosition,
+                        DataBlockPosition = dataBlockPosition
+                    };
                 }
             }
             catch (EndOfStreamException eos)
@@ -73,7 +87,7 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
 
             try
             {
-                int numIndices = -1;
+                ushort numIndices = 0;
 
                 using (var reader = new BinaryReader(s, Encoding.UTF8, leaveOpen: true))
                 {
@@ -83,7 +97,7 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
                     if (magic != BinaryWriterExtensions.INDEXBLOCK_MAGIC)
                         throw new DatabaseFileCorruptException($"No index block found at {pos}, found magic 0x{magic:X} instead", pos);
 
-                    numIndices = reader.ReadInt32();
+                    numIndices = reader.ReadUInt16();
                 }
 
                 var result = new List<Index>();
@@ -123,13 +137,10 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
                         using (var entriesReader = new BinaryReader(mem))
                         {
                             while (entriesReader.PeekChar() != -1)
-                                result.Add(readIndexEntry(entriesReader));
-
-                            IndexEntry readIndexEntry(BinaryReader r)
                             {
-                                string key = r.ReadString();
-                                long position = r.ReadInt64();
-                                return new IndexEntry(key, position);
+                                string key = entriesReader.ReadString();
+                                long position = entriesReader.ReadInt64();
+                                result.Add(new IndexEntry(key, position));
                             }
                         }
                     }

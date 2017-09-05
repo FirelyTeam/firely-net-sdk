@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 #if NET_COMPRESSION
@@ -15,10 +16,10 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
         public const ushort INDEX_MAGIC = 0x1DEC;
         public const ushort INDEXBLOCK_MAGIC = 0x1DEB;
 
-        public static long WriteManifest(this Stream s, short version, Index[] indices)
+        public static long WriteManifest(this Stream s, short version, int blobCount, Index[] indices)
         {
             // create a header which we will update later when we have the necessary file positions
-            var header = new Header(1, -1, -1);
+            var header = new Header(version);
 
             s.WriteHeader(header);
             s.Flush();
@@ -28,7 +29,10 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
             var dataPosition = s.Position;
 
             // And finally, update the header with the final positions
-            header = new Header(header.Version, indexPosition, dataPosition);
+            header.IndexBlockPosition = indexPosition;
+            header.DataBlockPosition = dataPosition;
+            header.BlobCount = blobCount;
+
             s.Seek(0, SeekOrigin.Begin);
             s.WriteHeader(header);
             s.Flush();
@@ -42,6 +46,7 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
             {
                 writer.Write(HEADER_MAGIC);
                 writer.Write(header.Version);
+                writer.Write(header.BlobCount);
                 writer.Write(header.IndexBlockPosition);
                 writer.Write(header.DataBlockPosition);
                 writer.Flush();
@@ -74,7 +79,7 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
             using (var writer = new BinaryWriter(s, Encoding.UTF8, leaveOpen: true))
             {
                 writer.Write(INDEXBLOCK_MAGIC);
-                int numIndices = indices.Length;
+                ushort numIndices = (ushort)indices.Length;
                 writer.Write(numIndices);
                 writer.Flush();
             }
@@ -96,14 +101,12 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
                     using (var entriesWriter = new BinaryWriter(mem))
                     {
                         foreach (var entry in index)
-                            writeIndexEntry(entriesWriter, entry);
-                        entriesWriter.Flush();
-
-                        void writeIndexEntry(BinaryWriter w, IndexEntry e)
                         {
-                            w.Write(e.Key);
-                            w.Write(e.Position);
+                            entriesWriter.Write(entry.Key);
+                            entriesWriter.Write(entry.Position);   // Position
                         }
+
+                        entriesWriter.Flush();
                     }
 
                     data = mem.ToArray();

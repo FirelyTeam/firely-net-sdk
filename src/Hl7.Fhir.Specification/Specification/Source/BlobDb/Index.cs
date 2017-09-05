@@ -1,27 +1,48 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 #if NET_FILESYSTEM
 namespace Hl7.Fhir.Specification.Source.BlobDb
 {
-    internal class Index : SortedSet<IndexEntry>
+    internal class Index : List<IndexEntry>
     {
         public readonly string Name;
 
-        public Index(string name) : base(new IndexEntryComparer())
+        public Index(string name) : base()
         {
             Name = name;
         }
 
-        private class IndexEntryComparer : IComparer<IndexEntry>
+        public override bool Equals(object obj) => (obj is Index ix) ? Equals(ix) : false;
+
+        public bool Equals(Index ix)
         {
-            public int Compare(IndexEntry x, IndexEntry y) => String.Compare(x.Key, y.Key);
+            if (Object.ReferenceEquals(ix, null)) return false;
+            if (Object.ReferenceEquals(ix, this)) return true;
+            return Name == ix.Name && this.SequenceEqual(ix);
+        }
+
+        public override int GetHashCode() => (Name, this).GetHashCode();
+
+        public override string ToString()
+        {
+            var builder = new StringBuilder();
+            builder.AppendLine($"Index '{Name}' contains {Count} entries:");
+            foreach(var index in this)
+            {
+                //builder.AppendLine("  " + index.ToString());
+                builder.AppendLine($"  [{index.Key}] at relative position {index.Position}");
+            }
+
+            return builder.ToString();
         }
     }
 
 
-    internal class IndexEntry
+    internal class IndexEntry : IComparable<IndexEntry>
     {
         public readonly string Key;
         public readonly long Position;
@@ -31,42 +52,24 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
             Key = key;
             Position = position;
         }
-    }
 
-    internal class IndexCollection : IEnumerable<Index>
-    {
-        private Dictionary<string, Index> _indices = new Dictionary<string, Index>();
+        public int CompareTo(IndexEntry other) => String.Compare(Key, other?.Key);
 
-        public Index this[string name]
+        public override bool Equals(object obj) => (obj is IndexEntry ie) ? Equals(ie) : false;
+
+        public bool Equals(IndexEntry ie)
         {
-            get
-            {
-                if (!_indices.TryGetValue(name, out Index result))
-                {
-                    result = new Index(name);
-                    _indices.Add(name, result);
-                }
-
-                return result;
-            }
-
-            set
-            {
-                _indices[name] = value;
-            }
+            if (Object.ReferenceEquals(ie, null)) return false;
+            if (Object.ReferenceEquals(ie, this)) return true;
+            return this.Key == ie.Key && this.Position == ie.Position;
         }
 
-        public void Add(string name, IndexEntry entry)
+        public override int GetHashCode() => (Key, Position).GetHashCode();
+
+        public override string ToString()
         {
-            var index = this[name];
-            index.Add(entry);
+            return $"[{Key}] at relative position {Position}";
         }
-
-        IEnumerator<Index> IEnumerable<Index>.GetEnumerator() => _indices.Values.GetEnumerator();
-
-        IEnumerator IEnumerable.GetEnumerator() => _indices.Values.GetEnumerator();
     }
-
-
 }
 #endif

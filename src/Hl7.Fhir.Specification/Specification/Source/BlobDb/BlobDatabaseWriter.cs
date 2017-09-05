@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,52 +10,62 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
 {
     public class BlobDatabaseWriter : IDisposable
     {
-        private readonly IndexCollection _indices = new IndexCollection();
+        private readonly List<Index> _indices = new List<Index>();
 
-        private FileStream _dataStream;
+        private FileStream _tempDataStream;
 
         private bool _buildCalled = false;
+        private int _blobCount = 0;
 
-        public string DataFilePath { get; private set; }        
+        public string TempDataFilePath { get; private set; }        
         public string OutputFilePath { get; private set; }
 
         public BlobDatabaseWriter(string path)
         {
-            var name = Path.GetFileNameWithoutExtension(path);
-            var baseDir = Path.GetDirectoryName(path);
-
-            DataFilePath =  Path.Combine(baseDir, name + ".dat");
             OutputFilePath = path;
-
-            _dataStream = new FileStream(DataFilePath, FileMode.Create, FileAccess.Write);
+            TempDataFilePath = Path.GetTempFileName();
+            
+            _tempDataStream = new FileStream(TempDataFilePath, FileMode.Create, FileAccess.ReadWrite);
         }
 
 
-        public void Add(Blob data, (string indexName, string key, int position)[] keys) 
+        public void Add(Blob data, (string indexName, string key)[] keys) 
         {
             if (_buildCalled)
                 throw new InvalidOperationException("Cannot add more data after Build() has been called. ");
 
-            var filePos = _dataStream.Position;     // must be flushed I guess - if that does not work, have to calculate ourselves by keeping a tally
+            _blobCount += 1;
+            var filePos = _tempDataStream.Position;     // if this does not work, have to calculate ourselves by keeping a tally
 
             foreach (var key in keys)
             {
-                var entry = new IndexEntry(key.key, key.position);
-                _indices.Add(key.indexName, entry);
+                var newEntry = new IndexEntry(key.key, filePos);
+                getOrCreateIndex(key.indexName).Add(newEntry);
             }
 
-            _dataStream.WriteBlob(data);
-            _dataStream.Flush();
+            _tempDataStream.WriteBlob(data);
+            _tempDataStream.Flush();
+
+            Index getOrCreateIndex(string name)
+            {
+                Index index = _indices.SingleOrDefault(i => i.Name == name);
+                if (index == null)
+                {
+                    index = new Index(name);
+                    _indices.Add(index);
+                }
+
+                return index;
+            }
         }
-
-
+      
         public void Build()
         {
             _buildCalled = true;
 
             // First, flush and write to make sure all blobs are written
-            _dataStream.Flush();
-            _dataStream.Seek(0, SeekOrigin.Begin);
+            _tempDataStream.Flush();
+            _tempDataStream.Seek(0, SeekOrigin.Begin);
 
             // Now, create the output file...
             using (var outputStream = new FileStream(OutputFilePath, FileMode.Create, FileAccess.Write))
@@ -62,13 +73,20 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
                 long dataPosition = -1;
 
                 //  Write the manifest....
-                dataPosition = outputStream.WriteManifest(1, _indices.ToArray());
+                var indices = _indices.ToArray();
+
+                dataPosition = outputStream.WriteManifest(1, _blobCount, _indices.ToArray());
 
                 // ..and finally append the blob data
                 outputStream.Seek(dataPosition, SeekOrigin.Begin);
-                _dataStream.CopyTo(outputStream);
+                _tempDataStream.CopyTo(outputStream);
                 outputStream.Flush();
             }
+
+            _tempDataStream.Dispose();
+            _tempDataStream = null;
+
+            File.Delete(TempDataFilePath);
         }
 
         bool _disposed;
@@ -76,29 +94,27 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
         public void Dispose()
         {
             Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        ~BlobDatabaseWriter()
-        {
-            Dispose(false);
         }
 
         protected virtual void Dispose(bool disposing)
         {
-            if (_disposed)
-                return;
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    if (_tempDataStream != null)
+                    {
+                        _tempDataStream.Dispose();
+                        _tempDataStream = null;
+                    }
+                }
 
-            if (disposing)
-                if (_dataStream != null) _dataStream.Dispose();
+                // release any unmanaged objects
+                // set the object references to null
 
-            // release any unmanaged objects
-            // set the object references to null
-
-            _disposed = true;
+                _disposed = true;
+            }
         }
     }
-
-
 }
 #endif
