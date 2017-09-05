@@ -126,6 +126,16 @@ namespace Hl7.Fhir.Utility
             return reader;
         }
 
+        public static JsonReader JsonReaderFromStream(Stream s)
+        {
+            JsonReader reader = new JsonTextReader(new StreamReader(s));
+            reader.DateParseHandling = DateParseHandling.None;
+            reader.FloatParseHandling = FloatParseHandling.Decimal;
+
+            return reader;
+        }
+
+
         public static JObject JObjectFromReader(JsonReader reader)
         {
             return JObject.Load(reader);
