@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             if (resourceType == null) throw Error.ArgumentNull(nameof(resourceType));
 
-            JsonTextReader reader = new JsonTextReader(new StreamReader(input));
+            JsonReader reader = SerializationUtil.JsonReaderFromStream(input);
 
             if (resourceType == "Bundle")
             {
