@@ -363,13 +363,14 @@ namespace Hl7.Fhir.Specification.Source
 
                 return (scanResult, errors.ToArray());
 
-                IConformanceScanner createScanner(string path)
-                {
-                    var ext = Path.GetExtension(path).ToLower();
-                    return ext == ".xml" ? new XmlFileConformanceScanner(path) :
-                                  ext == ".json" ? new JsonFileConformanceScanner(path) : (IConformanceScanner)null;
-                }
             }
+        }
+
+        private static IConformanceScanner createScanner(string path)
+        {
+            var ext = Path.GetExtension(path).ToLower();
+            return ext == ".xml" ? new XmlFileConformanceScanner(path) :
+                          ext == ".json" ? new JsonFileConformanceScanner(path) : (IConformanceScanner)null;
         }
 
 
@@ -439,8 +440,8 @@ namespace Hl7.Fhir.Specification.Source
         private static Resource getResourceFromScannedSource(ConformanceScanInformation info)
         {
             var path = info.Origin;
+            var scanner = createScanner(path);
 
-            var scanner = new XmlFileConformanceScanner(path);
             return scanner.Retrieve(info);
         }
 
