@@ -321,6 +321,19 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [TestMethod]
+        public void TestJsonBundleRetrieval()
+        {
+            var jsonSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData"), includeSubdirectories: false)
+            {
+                Mask = "*.json",
+                Includes = new[] { "profiles-types.json" }
+            };
+
+            var humanName = jsonSource.FindStructureDefinitionForCoreType(FHIRAllTypes.HumanName);
+            Assert.IsNotNull(humanName);
+        }
+
+        [TestMethod]
         public void TestSourceSpeedTest()
         {
             var jsonSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData"), includeSubdirectories: false)
