@@ -66,7 +66,7 @@ namespace Hl7.Fhir.Specification.Tests.Source
         {
             var filename = @"C:\git\fhir-net-api\src\Hl7.Fhir.Specification\data\profiles-resources.xml";
 
-            using (var w = new BlobDatabaseWriter(@"c:\temp\specification2.bin"))
+            using (var w = new BlobDatabaseWriter(@"c:\temp\specification-compressed.bin", compress:true))
             {
                 using (var s = new FileStream(filename, FileMode.Open))
                 {
@@ -86,8 +86,9 @@ namespace Hl7.Fhir.Specification.Tests.Source
         [TestMethod]
         public void DumpDb()
         {
-            using (var r = new BlobDatabase(@"c:\temp\specification.bin"))
+            using (var r = new BlobDatabase(@"c:\temp\specification-compressed.bin"))
             {
+                Debug.WriteLine(r.Dump());
                 Blob[] sds = null;
 
                 var sw = new Stopwatch();

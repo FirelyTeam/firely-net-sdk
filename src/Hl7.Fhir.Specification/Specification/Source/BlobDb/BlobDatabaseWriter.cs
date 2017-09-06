@@ -16,16 +16,18 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
 
         private bool _buildCalled = false;
         private int _blobCount = 0;
+        private bool _compress = false;
 
         public string TempDataFilePath { get; private set; }        
         public string OutputFilePath { get; private set; }
 
-        public BlobDatabaseWriter(string path)
+        public BlobDatabaseWriter(string path, bool compress=false)
         {
             OutputFilePath = path;
             TempDataFilePath = Path.GetTempFileName();
             
             _tempDataStream = new FileStream(TempDataFilePath, FileMode.Create, FileAccess.ReadWrite);
+            _compress = compress;
         }
 
 
@@ -36,14 +38,14 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
 
             _blobCount += 1;
             var filePos = _tempDataStream.Position;     // if this does not work, have to calculate ourselves by keeping a tally
-
+            System.Diagnostics.Debug.WriteLine("Pos: " + filePos);
             foreach (var key in keys)
             {
                 var newEntry = new IndexEntry(key.key, filePos);
                 getOrCreateIndex(key.indexName).Add(newEntry);
             }
 
-            _tempDataStream.WriteBlob(data);
+            _tempDataStream.WriteBlob(data, _compress);
             _tempDataStream.Flush();
 
             Index getOrCreateIndex(string name)
@@ -75,7 +77,7 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
                 //  Write the manifest....
                 var indices = _indices.ToArray();
 
-                dataPosition = outputStream.WriteManifest(1, _blobCount, _indices.ToArray());
+                dataPosition = outputStream.WriteManifest(1, _blobCount, _indices.ToArray(), _compress);
 
                 // ..and finally append the blob data
                 outputStream.Seek(dataPosition, SeekOrigin.Begin);

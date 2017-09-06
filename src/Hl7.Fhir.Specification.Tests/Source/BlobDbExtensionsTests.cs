@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Specification.Tests.Source
 
             assert(data, (Stream s) =>
             {
-                var readData = s.ReadIndex();
+                var readData = s.ReadIndex(s.Position);
                 Assert.AreEqual(testIndex1, readData);
             });
         }

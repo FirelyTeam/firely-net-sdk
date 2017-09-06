@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 
 #if NET_COMPRESSION
+using System.IO.Compression;
 #endif
 
 #if NET_FILESYSTEM
@@ -25,7 +26,7 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
 
             try
             {
-                using (var reader = new BinaryReader(s, Encoding.UTF8, leaveOpen: true))
+                using (var reader = getReader(s))
                 {
                     ushort magic = reader.ReadUInt16();
 
@@ -47,9 +48,11 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
             }
             catch (EndOfStreamException eos)
             {
-                throw new DatabaseFileCorruptException("Unexpected EOF while reading an index block", pos, eos);
+                throw new DatabaseFileCorruptException("Unexpected EOF while reading the header", pos, eos);
             }
         }
+
+        private static BinaryReader getReader(Stream s) => new BinaryReader(s, Encoding.UTF8, leaveOpen: true);
 
         public static Blob ReadBlob(this Stream s)
         {
@@ -57,22 +60,30 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
 
             try
             {
-                using (var reader = new BinaryReader(s, Encoding.UTF8, leaveOpen: true))
-                {
+                bool compressed = false;
 
+                using (var reader = getReader(s))
+                {
                     ushort magic = reader.ReadUInt16();
                     if (magic != BinaryWriterExtensions.BLOB_MAGIC)
                         throw new DatabaseFileCorruptException($"No blob found at {pos}, found magic 0x{magic:X} instead", pos);
-                    byte deflate = reader.ReadByte();
-
-                    if (deflate != 0)
-                        throw new NotImplementedException("Deflating a blob has not been implemented yet");
-
-                    string mimeType = reader.ReadString();
-                    int length = reader.ReadInt32();
-                    byte[] data = reader.ReadBytes(length);
-                    return new Blob(data, mimeType);
+                    compressed = reader.ReadByte() != 0;
                 }
+
+                Blob result = null;
+                readCompressed(s, compressed, ds =>
+                {
+                    using (var reader = getReader(ds))
+                    {
+                        string mimeType = reader.ReadString();
+                        int length = reader.ReadInt32();
+                        byte[] data = reader.ReadBytes(length);
+                        result = new Blob(data, mimeType);
+                    }
+                });
+
+                return result;
+
             }
             catch (EndOfStreamException eos)
             {
@@ -81,6 +92,24 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
         }
 
 
+        private static void readCompressed(Stream s, bool compressed, Action<Stream> action)
+        {
+            if (compressed)
+            {
+#if !NET_COMPRESSION
+                throw Error.NotImplemented("Data is compressed, but this platform does not support compression");
+#endif
+                using (var decompressedStream = new DeflateStream(s, CompressionMode.Decompress, leaveOpen: true))
+                {
+                    action(decompressedStream);
+                }
+            }
+            else
+            {
+                action(s);
+            }
+        }
+
         public static Index[] ReadIndexBlock(this Stream s)
         {
             var pos = s.Position;
@@ -88,22 +117,26 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
             try
             {
                 ushort numIndices = 0;
+                bool compressed = false;
 
-                using (var reader = new BinaryReader(s, Encoding.UTF8, leaveOpen: true))
+                using (var reader = getReader(s))
                 {
-
                     ushort magic = reader.ReadUInt16();
 
                     if (magic != BinaryWriterExtensions.INDEXBLOCK_MAGIC)
                         throw new DatabaseFileCorruptException($"No index block found at {pos}, found magic 0x{magic:X} instead", pos);
 
                     numIndices = reader.ReadUInt16();
+                    compressed = reader.ReadByte() != 0;
                 }
 
                 var result = new List<Index>();
 
-                for (var i = 0; i < numIndices; i++)
-                    result.Add(s.ReadIndex());
+                readCompressed(s, compressed, ds =>
+                {
+                    for (var i = 0; i < numIndices; i++)
+                        result.Add(ds.ReadIndex(s.Position));
+                });
 
                 return result.ToArray();
             }
@@ -113,10 +146,8 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
             }
         }
 
-        public static Index ReadIndex(this Stream s)
+        public static Index ReadIndex(this Stream s, long pos)
         {
-            var pos = s.Position;
-
             try
             {
                 using (var reader = new BinaryReader(s, Encoding.UTF8, leaveOpen: true))
@@ -125,7 +156,7 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
                     ushort magic = reader.ReadUInt16();
 
                     if (magic != BinaryWriterExtensions.INDEX_MAGIC)
-                        throw new DatabaseFileCorruptException($"No blob found at {pos}, found magic 0x{magic:X} instead", pos);
+                        throw new DatabaseFileCorruptException($"No index found at {pos}, found magic 0x{magic:X} instead", pos);
 
                     string name = reader.ReadString();
                     int length = reader.ReadInt32();
