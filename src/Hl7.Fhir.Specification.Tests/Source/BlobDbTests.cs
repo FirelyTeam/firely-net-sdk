@@ -1,4 +1,6 @@
-﻿using Hl7.Fhir.Specification.Source.BlobDb;
+﻿using Hl7.Fhir.Model;
+using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Specification.Source.BlobDb;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -59,5 +61,47 @@ namespace Hl7.Fhir.Specification.Tests.Source
             }
         }
 
+        [TestMethod]
+        public void CreateDbFromSpec()
+        {
+            var filename = @"C:\git\fhir-net-api\src\Hl7.Fhir.Specification\data\profiles-resources.xml";
+
+            using (var w = new BlobDatabaseWriter(@"c:\temp\specification2.bin"))
+            {
+                using (var s = new FileStream(filename, FileMode.Open))
+                {
+                    var stream = XmlFileConformanceScanner.StreamResources(s);
+
+                    foreach (var item in stream)
+                    {                        
+                        var b = new Blob(Encoding.UTF8.GetBytes(item.element.ToString()), "application/fhir+xml");
+                        w.Add(b, new[] { ("resourceUri", item.fullUrl), ("resourceType", item.element.Name.LocalName) });
+                    }
+                }
+
+                w.Build();
+            }
+        }
+
+        [TestMethod]
+        public void DumpDb()
+        {
+            using (var r = new BlobDatabase(@"c:\temp\specification.bin"))
+            {
+                Blob[] sds = null;
+
+                var sw = new Stopwatch();
+                sw.Start();
+                for (var repeat = 0; repeat < 1000; repeat++)
+                {
+                    sds = r.Get("resouceUri", ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Patient));
+                    //var p = parser.Parse<StructureDefinition>(SerializationUtil.JsonReaderFromStream(new MemoryStream(sds[0].Data)));
+                }
+                sw.Stop();
+                Debug.WriteLine(sw.ElapsedMilliseconds);
+
+                Assert.AreEqual(1,sds.Length);
+            }
+        }
     }
 }

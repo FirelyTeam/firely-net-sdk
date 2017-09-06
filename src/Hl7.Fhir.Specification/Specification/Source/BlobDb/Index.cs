@@ -31,10 +31,9 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
         {
             var builder = new StringBuilder();
             builder.AppendLine($"Index '{Name}' contains {Count} entries:");
-            foreach(var index in this)
+            foreach(var entry in this)
             {
-                //builder.AppendLine("  " + index.ToString());
-                builder.AppendLine($"  [{index.Key}] at relative position {index.Position}");
+                builder.AppendLine("  " + entry.ToString());
             }
 
             return builder.ToString();

@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Specification.Source
         /// </summary>
         /// <remarks>This is an expensive operations and should be run once. As well, it unpacks files on the
         /// file system and is not thread-safe.</remarks>
-        private void prepare()
+        public void Prepare()
         {
             if (_prepared) return;
 
@@ -88,50 +88,50 @@ namespace Hl7.Fhir.Specification.Source
 
         public IEnumerable<string> ListArtifactNames()
         {
-            prepare();
+            Prepare();
             return _filesSource.ListArtifactNames();
         }
 
         public Stream LoadArtifactByName(string name)
         {
-            prepare();
+            Prepare();
             return _filesSource.LoadArtifactByName(name);
         }
 
 
         public IEnumerable<string> ListResourceUris(ResourceType? filter = default(ResourceType?))
         {
-            prepare();
+            Prepare();
             return _filesSource.ListResourceUris(filter);
         }
 
         public ValueSet FindValueSetBySystem(string system)
         {
-            prepare();
+            Prepare();
             return _filesSource.FindValueSetBySystem(system);
         }
 
         public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
         {
-            prepare();
+            Prepare();
             return _filesSource.FindConceptMaps(sourceUri, targetUri);
         }
 
         public NamingSystem FindNamingSystem(string uniqueid)
         {
-            prepare();
+            Prepare();
             return _filesSource.FindNamingSystem(uniqueid);
         }
 
         public Resource ResolveByUri(string uri)
         {
-            prepare();
+            Prepare();
             return _filesSource.ResolveByUri(uri);
         }
 
         public Resource ResolveByCanonicalUri(string uri)
         {
-            prepare();
+            Prepare();
             return _filesSource.ResolveByCanonicalUri(uri);
         }
     }

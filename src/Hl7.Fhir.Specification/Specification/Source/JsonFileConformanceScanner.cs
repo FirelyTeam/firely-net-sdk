@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Specification.Source
             using (var input = File.OpenRead(_path))
             {
                 var result =                     
-                    from res in streamResources(input, rootResourceType)
+                    from res in StreamResources(input, isBundle: rootResourceType == "Bundle")
                     let resourceType = res.element.Value<string>("resourceType")
 
                     // [WMR 20170420] Issue: if the resource type is unknown (i.e. DSTU Conformance), 
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Specification.Source
             {
                 using (var input = File.OpenRead(entry.Origin))
                 {
-                    var resources = streamResources(input, resourceType);
+                    var resources = StreamResources(input, isBundle: resourceType == "Bundle");
                     found = resources.Where(res => res.fullUrl == entry.ResourceUri).SingleOrDefault().element;
                 }
             }
@@ -106,13 +106,11 @@ namespace Hl7.Fhir.Specification.Source
  
         // Use a forward-only XmlReader to scan through a possibly huge bundled file,
         // and yield the feed entries, so only one entry is in memory at a time
-        private IEnumerable<(JObject element, string fullUrl)> streamResources(Stream input, string resourceType)
+        internal static IEnumerable<(JObject element, string fullUrl)> StreamResources(Stream input, bool isBundle)
         {
-            if (resourceType == null) throw Error.ArgumentNull(nameof(resourceType));
-
             using (var reader = SerializationUtil.JsonReaderFromStream(input))
             {
-                if (resourceType == "Bundle")
+                if (isBundle)
                 {
                     if (!skipTo(reader, "entry")) yield break;
 
@@ -140,6 +138,7 @@ namespace Hl7.Fhir.Specification.Source
                     {
                         // First try to initialize from canonical url (conformance resources)
                         var canonicalUrl = resource.Value<string>("url");
+                        var resourceType = resource.Value<string>("resourceType");
 
                         if (canonicalUrl != null)
                             yield return (resource, canonicalUrl);

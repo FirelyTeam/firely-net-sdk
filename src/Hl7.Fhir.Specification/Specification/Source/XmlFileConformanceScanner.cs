@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             using (var input = File.OpenRead(_path))
             {
-                return streamResources(input)
+                return StreamResources(input)
 
                     // [WMR 20170420] Issue: if the resource type is unknown (i.e. DSTU Conformance), 
                     // then we cannot parse res.Name to a ResourceType enum value 
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Specification.Source
 
             using (var input = File.OpenRead(entry.Origin))
             {
-                var resources = streamResources(input);
+                var resources = StreamResources(input);
 
                 found = resources.Where(res => res.fullUrl == entry.ResourceUri).SingleOrDefault().element;
             }
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Specification.Source
 
         // Use a forward-only XmlReader to scan through a possibly huge bundled file,
         // and yield the feed entries, so only one entry is in memory at a time
-        private IEnumerable<(XElement element, string fullUrl)> streamResources(Stream input)
+        internal static IEnumerable<(XElement element, string fullUrl)> StreamResources(Stream input)
         {
             using (var reader = SerializationUtil.XmlReaderFromStream(input))
             {

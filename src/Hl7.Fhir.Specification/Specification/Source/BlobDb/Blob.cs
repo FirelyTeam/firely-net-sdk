@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
         {
             var builder = new StringBuilder();
 
-            builder.Append($"Blob of size {Data.Length} containing {MimeType}, starting with {dataHumanReadable(10)}");
+            builder.Append($"Blob of size {Data.Length} containing {MimeType}, starting with {dataHumanReadable(30)}");
             return builder.ToString();
         }
 

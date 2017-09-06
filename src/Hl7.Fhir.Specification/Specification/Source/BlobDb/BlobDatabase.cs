@@ -21,6 +21,8 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
 
         public Blob[] Get(string indexName, string key)
         {
+            Load();
+
             var result = new List<Blob>();
 
             if (_indices.TryGetValue(indexName, out var index))
@@ -39,21 +41,33 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
             return result.ToArray();
         }
 
-        private bool _initialized = false;
-        private void initialize()
+        private bool _loaded = false;
+        public void Load()
         {
-            if (_initialized) return;
+            if (_loaded) return;
 
             _header = _dataStream.ReadManifest(out var indices);
             foreach (var index in indices)
                 _indices.Add(index.Name, index.ToLookup(ie => ie.Key));
 
-            _initialized = true;
+            _loaded = true;
+        }
+
+        private string dumpIndex(string name, ILookup<string,IndexEntry> entries)
+        {
+            var builder = new StringBuilder();
+            builder.AppendLine($"Index '{name}' contains {entries.Count} entries:");
+            foreach (var entry in entries)
+            {
+                builder.AppendLine($"  [{entry.Key}] at relative position(s) " + String.Join(", ", entry.Select(e => e.Position)));
+            }
+
+            return builder.ToString();
         }
 
         public string Dump()
         {
-            initialize();
+            Load();
 
             var builder = new StringBuilder();
 
@@ -63,7 +77,9 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
 
             builder.AppendLine("= Indices =");
             foreach (var index in _indices)
-                builder.Append(index.ToString());
+            {
+                builder.Append(dumpIndex(index.Key, index.Value));
+            }
             builder.AppendLine();
 
             builder.AppendLine("= Blobs =");
