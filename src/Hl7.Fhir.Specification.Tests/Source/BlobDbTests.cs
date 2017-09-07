@@ -66,7 +66,7 @@ namespace Hl7.Fhir.Specification.Tests.Source
         {
             var filename = @"C:\git\fhir-net-api\src\Hl7.Fhir.Specification\data\profiles-resources.xml";
 
-            using (var w = new BlobDatabaseWriter(@"c:\temp\specification-compressed.bin", compress:true))
+            using (var w = new BlobDatabaseWriter(@"c:\temp\specification.bin", compress:false))
             {
                 using (var s = new FileStream(filename, FileMode.Open))
                 {
@@ -86,16 +86,16 @@ namespace Hl7.Fhir.Specification.Tests.Source
         [TestMethod]
         public void DumpDb()
         {
-            using (var r = new BlobDatabase(@"c:\temp\specification-compressed.bin"))
+            using (var r = new BlobDatabase(@"c:\temp\specification.bin"))
             {
-                Debug.WriteLine(r.Dump());
+                //Debug.WriteLine(r.Dump());
                 Blob[] sds = null;
 
                 var sw = new Stopwatch();
                 sw.Start();
                 for (var repeat = 0; repeat < 1000; repeat++)
                 {
-                    sds = r.Get("resouceUri", ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Patient));
+                    sds = r.Get("resourceUri", ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Patient));
                     //var p = parser.Parse<StructureDefinition>(SerializationUtil.JsonReaderFromStream(new MemoryStream(sds[0].Data)));
                 }
                 sw.Stop();

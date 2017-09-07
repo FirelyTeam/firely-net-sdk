@@ -13,6 +13,57 @@ namespace Hl7.Fhir.Specification.Tests.Source
     public class BlobDbExtensionsTests
     {
         [TestMethod]
+        public void ReadAndWriteBinaryData()
+        {
+            using (var mem = new MemoryStream())
+            {
+                mem.WriteBinary(bw => { bw.Write(31415); bw.Write("Hello world!"); });
+                mem.WriteBinary(bw => { bw.Write(12345); bw.Write("Qwerty"); });
+
+                mem.Seek(0);
+
+                mem.ReadBinary(br =>
+                {
+                    Assert.AreEqual(31415, br.ReadInt32());
+                    Assert.AreEqual("Hello world!", br.ReadString());
+                });
+
+                // Test sequential read without repositioning
+                mem.ReadBinary(br =>
+                {
+                    Assert.AreEqual(12345, br.ReadInt32());
+                    Assert.AreEqual("Qwerty", br.ReadString());
+                });
+            }            
+        }
+
+
+        [TestMethod]
+        public void ReadAndWriteCompressedData()
+        {
+            using (var mem = new MemoryStream())
+            {
+                mem.WriteCompressed(cs => cs.WriteBinary(bw => { bw.Write(31415); bw.Write("Hello world!"); }));
+                mem.WriteCompressed(cs => cs.WriteBinary(bw => { bw.Write(12345); bw.Write("Qwerty"); }));
+
+                mem.Seek(0);
+
+                mem.ReadCompressed(cs => cs.ReadBinary(br =>
+                {
+                    Assert.AreEqual(31415, br.ReadInt32());
+                    Assert.AreEqual("Hello world!", br.ReadString());
+                }));
+
+                // Test sequential read without repositioning
+                mem.ReadCompressed(cs => cs.ReadBinary(br =>
+                {
+                    Assert.AreEqual(12345, br.ReadInt32());
+                    Assert.AreEqual("Qwerty", br.ReadString());
+                }));
+            }
+        }
+
+        [TestMethod]
         public void TestWriteAndReadBlob()
         {
             Blob originalBlob = new Blob(new byte[] { 1, 2, 3, 4 }, "application/data");
@@ -93,7 +144,7 @@ namespace Hl7.Fhir.Specification.Tests.Source
                 Assert.AreEqual(10, readHeader.Version);
                 Assert.AreEqual(100, readHeader.BlobCount);
                 Assert.AreEqual(24, readHeader.IndexBlockPosition);
-                Assert.AreEqual(132, readHeader.DataBlockPosition);
+                Assert.AreEqual(133, readHeader.DataBlockPosition);
                 Assert.IsTrue(block.SequenceEqual(readIxBlock));
             });
         }

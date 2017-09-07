@@ -17,107 +17,137 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
         public const ushort INDEX_MAGIC = 0x1DEC;
         public const ushort INDEXBLOCK_MAGIC = 0x1DEB;
 
-        public static long WriteManifest(this Stream s, short version, int blobCount, Index[] indices, bool compress=false)
+        public static void WriteBinary(this Stream destination, Action<BinaryWriter> action)
+        {
+            using (var writer = getWriter(destination))
+            {
+                action(writer);
+                writer.Flush();
+            }
+
+            BinaryWriter getWriter(Stream s) => new BinaryWriter(s, Encoding.UTF8, leaveOpen: true);
+        }
+
+
+        public static void WriteCompressed(this Stream destination, Action<Stream> action)
+        {
+#if !NET_COMPRESSION
+            throw new NotSupportedException("This platform does not support compression, which is required to write the data.");
+#endif
+            long lengthPosition = destination.Position;  // need to get back here to update compressed size
+            WriteBinary(destination, writer => writer.Write(0));  // write a placeholder first, will get back to it later
+
+            long startPosition = destination.Position;
+
+            using (var compressedStream = new DeflateStream(destination, CompressionLevel.Fastest, leaveOpen: true))
+            {
+                action(compressedStream);
+                compressedStream.Flush();
+            }
+
+            long endPosition = destination.Position;
+            long compressedSize = endPosition - startPosition;
+
+            destination.Seek(lengthPosition);
+            WriteBinary(destination, writer => writer.Write((int)compressedSize));
+            destination.Seek(endPosition);
+        }
+
+        //public static void WriteCompressed(this Stream destination, byte[] data) => destination.WriteCompressed(ws => ws.Write(data, 0, data.Length));
+
+        //public static void CopyToCompressed(this Stream source, Stream destination) => destination.WriteCompressed(ws => source.CopyTo(ws));
+
+        public static long Seek(this Stream s, long offset) => s.Seek(offset, SeekOrigin.Begin);
+
+
+        public static long WriteManifest(this Stream destination, short version, int blobCount, Index[] indices, bool compress = false)
         {
             // create a header which we will update later when we have the necessary file positions
             var header = new Header(version);
 
-            s.WriteHeader(header);
-            s.Flush();
-            var indexPosition = s.Position;
-            s.WriteIndexBlock(indices, compress);
-            s.Flush();
-            var dataPosition = s.Position;
+            destination.WriteHeader(header);
+            destination.Flush();
+            var indexPosition = destination.Position;
+            destination.WriteIndexBlock(indices, compress);
+            destination.Flush();
+            var dataPosition = destination.Position;
 
             // And finally, update the header with the final positions
             header.IndexBlockPosition = indexPosition;
             header.DataBlockPosition = dataPosition;
             header.BlobCount = blobCount;
 
-            s.Seek(0, SeekOrigin.Begin);
-            s.WriteHeader(header);
-            s.Flush();
+            destination.Seek(0);
+            destination.WriteHeader(header);
+            destination.Flush();
 
             return dataPosition;
         }
 
-        public static void WriteHeader(this Stream s, Header header)
+        public static void WriteHeader(this Stream destination, Header header)
         {
-            using (var writer = getWriter(s))
+            destination.WriteBinary(writer =>
             {
                 writer.Write(HEADER_MAGIC);
                 writer.Write(header.Version);
                 writer.Write(header.BlobCount);
                 writer.Write(header.IndexBlockPosition);
-                writer.Write(header.DataBlockPosition);
-                writer.Flush();
-            }
+                writer.Write(header.DataBlockPosition);                
+            });
         }
 
-        private static BinaryWriter getWriter(Stream s) => new BinaryWriter(s, Encoding.UTF8, leaveOpen: true);
 
-        public static void WriteBlob(this Stream s, Blob blob, bool compressed = false)
+
+        public static void WriteBlob(this Stream destination, Blob blob, bool compressed = false)
         {
-            using (var writer = getWriter(s))
+            destination.WriteBinary(writer =>
             {
                 writer.Write(BLOB_MAGIC);
                 writer.Write(compressed ? (byte)1 : (byte)0);
-                writer.Flush();
-            }
+            });
 
-            writeCompressed(s, compressed, (cs) =>
+            writeCompressedOrNot(destination, compressed, (cs) =>
             {
-                using (var w = getWriter(cs))
+                // We need to know the compressed size of the data in order to write it 
+                WriteBinary(cs, w =>
                 {
                     w.Write(blob.MimeType);
                     byte[] data = blob.Data;
                     w.Write(data.Length);
                     w.Write(data);
                     w.Flush();
-                }
+                });
             });
         }
 
-        private static void writeCompressed(Stream s, bool compressed, Action<Stream> action)
+        private static void writeCompressedOrNot(Stream destination, bool compressed, Action<Stream> action)
         {
             if (compressed)
-            {
-#if !NET_COMPRESSION
-                throw Error.NotImplemented("Data is compressed, but this platform does not support compression");
-#endif
-                using (var compressedStream = new DeflateStream(s, CompressionLevel.Fastest, leaveOpen: true))
-                {
-                    action(compressedStream);
-                    compressedStream.Flush();
-                }
-            }
+                destination.WriteCompressed(action);
             else
-            {
-                action(s);
-            }
+                action(destination);
         }
     
-        public static void WriteIndexBlock(this Stream s, Index[] indices, bool compressed=false)
+        public static void WriteIndexBlock(this Stream destination, Index[] indices, bool compressed=false)
         {
-            using (var writer = getWriter(s))
+            destination.WriteBinary(writer =>
             {
                 writer.Write(INDEXBLOCK_MAGIC);
                 ushort numIndices = (ushort)indices.Length;
                 writer.Write(numIndices);
                 writer.Write(compressed ? (byte)1 : (byte)0);
-                writer.Flush();
-            }
+            });
 
-            writeCompressed(s, compressed, cs =>
+            writeCompressedOrNot(destination, compressed, cs =>
             {
                 foreach (var index in indices)
                     cs.WriteIndex(index);
             });
         }
 
-        public static void WriteIndex(this Stream s, Index index)
+        public static void WriteIndex(this Stream destination, Index index)
         {
-            using (var writer = getWriter(s))
+            destination.WriteBinary(writer =>
             {
                 writer.Write(INDEX_MAGIC);
                 writer.Write(index.Name);
@@ -142,7 +172,7 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
                 writer.Write(data.Length);
                 writer.Write(data);
                 writer.Flush();
-            }
+            });
         }
     }
 }
