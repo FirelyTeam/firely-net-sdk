@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Rest
             if (status.IsInformational())
                 message = $"Operation resulted in an informational response ({status})";
             else if (status.IsRedirection())
-                message = $"Operation resulted in an redirection response ({status})";
+                message = $"Operation resulted in a redirection response ({status})";
             else if (status.IsClientError())
                 message = $"Operation was unsuccessful because of a client error ({status})";
             else

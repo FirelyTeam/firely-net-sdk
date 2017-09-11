@@ -142,9 +142,10 @@ namespace Hl7.Fhir.Specification.Navigation
             if (elem.Type != null)
             {
                 var type = elem.Type.FirstOrDefault();
-                if (type != null)
+                if (type != null && !string.IsNullOrEmpty(type.Code))
                 {
-                    return (FHIRAllTypes)Enum.Parse(typeof(FHIRAllTypes), type.Code);
+                    return Utility.EnumUtility.ParseLiteral<FHIRAllTypes>(type.Code);
+                    // return (FHIRAllTypes)Enum.Parse(typeof(FHIRAllTypes), type.Code);
                 }
             }
             return null;
