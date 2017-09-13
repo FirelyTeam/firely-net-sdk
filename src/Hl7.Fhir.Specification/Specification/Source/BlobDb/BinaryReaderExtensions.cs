@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Specification.Source.BlobDb
             // limit the readable bytes to the original compressedSize as calculated at the time of writing.
             byte[] limitedBuffer = new byte[compressedSize];
             source.Read(limitedBuffer, 0, compressedSize);
-
+            
             using(var limitedStream = new MemoryStream(limitedBuffer, writable: false))
             //using(var limitedStream = new RestrictedStream(source,compressedSize))
             using (var decompressedStream = new DeflateStream(limitedStream, CompressionMode.Decompress, leaveOpen: true))
