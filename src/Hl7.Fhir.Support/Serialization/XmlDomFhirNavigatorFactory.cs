@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -34,6 +35,14 @@ namespace Hl7.Fhir.Serialization
         public static IElementNavigator Create(string xml)
         {
             using (var reader = SerializationUtil.XmlReaderFromXmlText(xml))
+            {
+                return Create(reader);
+            }
+        }
+
+        public static IElementNavigator Create(Stream stream)
+        {
+            using (var reader = SerializationUtil.XmlReaderFromStream(stream))
             {
                 return Create(reader);
             }

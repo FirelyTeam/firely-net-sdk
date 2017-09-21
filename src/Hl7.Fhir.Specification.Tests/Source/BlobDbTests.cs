@@ -127,6 +127,7 @@ namespace Hl7.Fhir.Specification.Tests.Source
                             var entryName = uri.Host + uri.AbsolutePath + ".xml";
                             var entry = za.CreateEntry(entryName);
                             urlIndex.Add(item.fullUrl, new JArray(new JValue(entryName)));
+                            var xmlContents = item.element.ToString();
 
                             var typeKey = (JArray)typeIndex[type];
                             if (typeKey == null)
@@ -139,7 +140,7 @@ namespace Hl7.Fhir.Specification.Tests.Source
 
                             using (StreamWriter writer = new StreamWriter(entry.Open()))
                             {
-                                writer.Write(item.element.ToString());
+                                writer.Write(xmlContents);
                             }
                             //var b = new Blob(Encoding.UTF8.GetBytes(item.element.ToString()), "application/fhir+xml");
                             //w.Add(b, new[] { ("resourceUri", item.fullUrl), ("resourceType", item.element.Name.LocalName) });
