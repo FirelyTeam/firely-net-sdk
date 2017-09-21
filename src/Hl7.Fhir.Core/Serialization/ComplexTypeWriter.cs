@@ -55,17 +55,17 @@ namespace Hl7.Fhir.Serialization
                 .Where(property => property.SerializationHint == XmlSerializationHint.Attribute)
                 .Concat(mapping.PropertyMappings.Where(property => property.SerializationHint != XmlSerializationHint.Attribute));
 
+            bool isMetaTextOrIdElementInstance(object inst)
+            {
+                return (inst is Meta) || (inst is Narrative) || (inst is Id);
+            }
+
             if (summary == Rest.SummaryType.True)
             {
                 propertiesToWrite = propertiesToWrite.Where(property => property.InSummary);
             }
             else if (summary == Rest.SummaryType.Text)
             {
-                bool isMetaTextOrIdElementInstance(object inst)
-                {
-                    return (inst is Meta) || (inst is Narrative) || (inst is Id);
-                }
-
                 bool isSummaryProperty(PropertyMapping propMapping)
                 {
                     return summaryTextProperties
@@ -90,7 +90,10 @@ namespace Hl7.Fhir.Serialization
 
             foreach (var property in propertiesToWrite)
             {
-                writeProperty(instance, summary, property, mode);
+                if (isMetaTextOrIdElementInstance(instance) && summary == Rest.SummaryType.Text)
+                    writeProperty(instance, Rest.SummaryType.False, property, mode);
+                else
+                    writeProperty(instance, summary, property, mode);
             }
 
             _writer.WriteEndComplexContent();

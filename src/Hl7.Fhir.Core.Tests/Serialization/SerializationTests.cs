@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Tests.Serialization
         private FhirXmlParser FhirXmlParser = new FhirXmlParser();
         private FhirJsonParser FhirJsonParser = new FhirJsonParser();
 
-        [TestMethod, Ignore] // Old tests, not sure we need them anymore
+        [TestMethod]
         public void TestBundleSummary()
         {
             var p = new Patient();
@@ -243,11 +243,11 @@ namespace Hl7.Fhir.Tests.Serialization
             var shouldBeSummaryCount = TestDataHelper.ReadTestData("summary\\bundle-summary-count.json");
             var shouldBeSummaryFalse = TestDataHelper.ReadTestData("summary\\bundle-summary-false.json");
 
-            Assert.AreEqual(trueBundle, shouldBeSummaryTrue);
-            Assert.AreEqual(dataBundle, shouldBeSummaryData);
-            Assert.AreEqual(textBundle, shouldBeSummaryText);
-            Assert.AreEqual(countBundle, shouldBeSummaryCount);
-            Assert.AreEqual(falseBundle, shouldBeSummaryFalse);
+            Assert.AreEqual(shouldBeSummaryTrue, trueBundle);
+            Assert.AreEqual(shouldBeSummaryData, dataBundle);
+            Assert.AreEqual(shouldBeSummaryText, textBundle);
+            Assert.AreEqual(shouldBeSummaryCount, countBundle);
+            Assert.AreEqual(shouldBeSummaryFalse, falseBundle);
         }
 
         [TestMethod]
@@ -255,9 +255,8 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             var patientOne = new Patient
             {
-
                 Id = "patient-one",
-                Text = new Narrative { Div = "<div>A great blues player</div>" },
+                Text = new Narrative { Div = "<div>A great blues player</div>", Status = Narrative.NarrativeStatus.Additional },
                 Meta = new Meta { VersionId = "eric-clapton" },
 
                 Name = new List<HumanName> { new HumanName { Family = "Clapton", Use = HumanName.NameUse.Official } },
@@ -271,7 +270,7 @@ namespace Hl7.Fhir.Tests.Serialization
             {
                 Id = "patient-two",
                 Active = true,
-                Text = new Narrative { Div = "<div>Another great blues player</div>" },
+                Text = new Narrative { Div = "<div>Another great blues player</div>", Status = Narrative.NarrativeStatus.Additional },
                 Meta = new Meta { VersionId = "bb-king" },
                 Name = new List<HumanName> { new HumanName { Family = "King", Use = HumanName.NameUse.Nickname } }
             };
@@ -299,11 +298,11 @@ namespace Hl7.Fhir.Tests.Serialization
             var shouldBeSummaryTrue = TestDataHelper.ReadTestData("summary\\bundle-summary-true.xml");
             var shouldBeSummaryFalse = TestDataHelper.ReadTestData("summary\\bundle-summary-false.xml");
 
+            Assert.AreEqual(falseBundle, shouldBeSummaryFalse);
             Assert.AreEqual(trueBundle, shouldBeSummaryTrue);
             Assert.AreEqual(dataBundle, shouldBeSummaryData);
-            Assert.AreEqual(textBundle, shouldBeSummaryText);
             Assert.AreEqual(countBundle, shouldBeSummaryCount);
-            Assert.AreEqual(falseBundle, shouldBeSummaryFalse);
+            Assert.AreEqual(textBundle, shouldBeSummaryText);
 
         }
 
@@ -333,13 +332,13 @@ namespace Hl7.Fhir.Tests.Serialization
             /* It doesn't make sense to use SummaryType.Count on a single resource hence why I'm not testing it here. */
 
             var shouldBePatientOneTrue =
-                "{\"resourceType\":\"Patient\",\"id\":\"patient-one\",\"meta\":{\"versionId\":\"1234\"},\"active\":true,\"name\":[{\"use\":\"official\",\"family\":\"Clapton\"}],\"gender\":\"male\",\"birthDate\":\"2015-07-09\"}";
+                "{\"resourceType\":\"Patient\",\"id\":\"patient-one\",\"meta\":{\"versionId\":\"1234\",\"tag\":[{\"system\":\"http://hl7.org/fhir/v3/ObservationValue\",\"code\":\"SUBSETTED\"}]},\"active\":true,\"name\":[{\"use\":\"official\",\"family\":\"Clapton\"}],\"gender\":\"male\",\"birthDate\":\"2015-07-09\"}";
 
             var shouldBePatientOneText =
-                "{\"resourceType\":\"Patient\",\"id\":\"patient-one\",\"meta\":{\"versionId\":\"1234\"},\"text\":{\"div\":\"A great blues player\"}}";
+                "{\"resourceType\":\"Patient\",\"id\":\"patient-one\",\"meta\":{\"versionId\":\"1234\",\"tag\":[{\"system\":\"http://hl7.org/fhir/v3/ObservationValue\",\"code\":\"SUBSETTED\"}]},\"text\":{\"div\":\"A great blues player\"}}";
 
             var shouldBePationeOneData =
-                "{\"resourceType\":\"Patient\",\"id\":\"patient-one\",\"meta\":{\"versionId\":\"1234\"},\"active\":true,\"name\":[{\"use\":\"official\",\"family\":\"Clapton\"}],\"gender\":\"male\",\"birthDate\":\"2015-07-09\"}";
+                "{\"resourceType\":\"Patient\",\"id\":\"patient-one\",\"meta\":{\"versionId\":\"1234\",\"tag\":[{\"system\":\"http://hl7.org/fhir/v3/ObservationValue\",\"code\":\"SUBSETTED\"}]},\"active\":true,\"name\":[{\"use\":\"official\",\"family\":\"Clapton\"}],\"gender\":\"male\",\"birthDate\":\"2015-07-09\"}";
 
             var shouldBePatientOneFalse = "{\"resourceType\":\"Patient\",\"id\":\"patient-one\",\"meta\":{\"versionId\":\"1234\"},\"text\":{\"div\":\"A great blues player\"},\"active\":true,\"name\":[{\"use\":\"official\",\"family\":\"Clapton\"}],\"gender\":\"male\",\"birthDate\":\"2015-07-09\"}";
 
@@ -378,10 +377,10 @@ namespace Hl7.Fhir.Tests.Serialization
             var shouldBeSummaryData = TestDataHelper.ReadTestData("summary\\summary-data.xml");
             var shouldBeSummaryFalse = TestDataHelper.ReadTestData("summary\\summary-false.xml");
 
-            Assert.AreEqual(summaryTrue, shouldBeSummaryTrue);
-            Assert.AreEqual(summaryText, shouldBeSummaryText);
-            Assert.AreEqual(summaryData, shouldBeSummaryData);
-            Assert.AreEqual(summaryFalse, shouldBeSummaryFalse);
+            Assert.AreEqual(shouldBeSummaryTrue, summaryTrue);
+            Assert.AreEqual(shouldBeSummaryText, summaryText);
+            Assert.AreEqual(shouldBeSummaryData, summaryData);
+            Assert.AreEqual(shouldBeSummaryFalse, summaryFalse);
         }
 
         [TestMethod]
