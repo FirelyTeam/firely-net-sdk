@@ -220,5 +220,16 @@ namespace Hl7.FhirPath.Tests.JsonNavTests
             Assert.True(compare.Success);
         }
 
+        [Fact]
+        public void FindFirstChild()
+        {
+            var tpJson = File.ReadAllText(@"TestData\fp-test-patient.json");
+
+            var patient = JsonDomFhirNavigator.Create(tpJson);
+
+            patient.MoveToFirstChild("gender");
+            Assert.Equal("male", patient.Value.ToString());
+            Assert.Equal("Patient.gender[0]", patient.Location);
+        }
     }
 }
