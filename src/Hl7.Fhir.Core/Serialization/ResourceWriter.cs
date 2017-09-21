@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Serialization
                 if (resource.Meta == null)
                     resource.Meta = new Meta();
 
-                if (resource.Meta.Tag.Any(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED"))
+                if (!resource.Meta.Tag.Any(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED"))
                 {
                     subsettedTag = new Coding("http://hl7.org/fhir/v3/ObservationValue", "SUBSETTED");
                     resource.Meta.Tag.Add(subsettedTag);
