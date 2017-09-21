@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Serialization
 
             Coding subsettedTag = null;
 
-            if (summary != Rest.SummaryType.False && instance is Resource)
+            if (summary != Rest.SummaryType.False && instance is Resource && !(instance is Bundle))
             {
                 var resource = instance as Resource;
 
