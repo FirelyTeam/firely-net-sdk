@@ -35,6 +35,12 @@ namespace Hl7.FhirPath
 
     public static class CompiledExpressionExtensions
     {
+        [Obsolete("Replace with the overload taking an EvaluationContext, initialized with the resource parameter")]
+        public static object Scalar(this CompiledExpression evaluator, IElementNavigator input, IElementNavigator container)
+        {
+            return Scalar(evaluator, input, new EvaluationContext(container));
+        }
+
         public static object Scalar(this CompiledExpression evaluator, IElementNavigator input, EvaluationContext ctx)
         {
             var result = evaluator(input, ctx);
@@ -42,6 +48,13 @@ namespace Hl7.FhirPath
                 return evaluator(input, ctx).Single().Value;
             else
                 return null;
+        }
+
+
+        [Obsolete("Replace with the overload taking an EvaluationContext, initialized with the resource parameter")]
+        public static bool Predicate(this CompiledExpression evaluator, IElementNavigator input, IElementNavigator container)
+        {
+            return Predicate(evaluator, input, new EvaluationContext(container));
         }
 
         // For predicates, Empty is considered true
@@ -53,6 +66,12 @@ namespace Hl7.FhirPath
                 return true;
             else
                 return result.Value;
+        }
+
+        [Obsolete("Replace with the overload taking an EvaluationContext, initialized with the resource parameter")]
+        public static bool IsBoolean(this CompiledExpression evaluator, bool value, IElementNavigator input, IElementNavigator container)
+        {
+            return IsBoolean(evaluator, value, input, new EvaluationContext(container));
         }
 
         public static bool IsBoolean(this CompiledExpression evaluator, bool value, IElementNavigator input, EvaluationContext ctx)
