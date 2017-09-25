@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Serialization
 
             _parentPath = Location;
             _siblings = children;
-            _index = 0;
+            _index = found;
             _nameIndex = 0;
 
             return true;
