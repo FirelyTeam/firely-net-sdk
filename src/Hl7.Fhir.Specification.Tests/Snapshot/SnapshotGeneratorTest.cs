@@ -5557,7 +5557,7 @@ namespace Hl7.Fhir.Specification.Tests
             var resolver = new InMemoryProfileResolver(sd);
             var multiResolver = new MultiResolver(_testResolver, resolver);
 
-            _generator = new SnapshotGenerator(_testResolver, _settings);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
 
             generateSnapshotAndCompare(sd, out StructureDefinition expanded);
             dumpOutcome(_generator.Outcome);
@@ -5570,6 +5570,183 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsFalse(_generator.Outcome.Issue.Any(
                 i => i.Details.Coding.FirstOrDefault().Code == SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_PROFILE_TYPE.Code.ToString())
             );
+        }
+
+        // [WMR 20170925] BUG: Stefan Lang - Forge displays both valueString and value[x]
+        // https://trello.com/c/XI8krV6j
+
+        const string SL_HumanNameTitleSuffixUri = @"http://example.org/fhir/StructureDefinition/SL-HumanNameTitleSuffix";
+
+        // Extension on complex datatype HumanName
+        static StructureDefinition SL_HumanNameTitleSuffix => new StructureDefinition()
+        {
+            Type = FHIRAllTypes.Extension.GetLiteral(),
+            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Extension),
+            Name = "SL-HumanNameTitleSuffix",
+            Url = SL_HumanNameTitleSuffixUri,
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+            Kind = StructureDefinition.StructureDefinitionKind.ComplexType,
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("Extension.url")
+                    {
+                        Fixed = new FhirUri(SL_HumanNameTitleSuffixUri)
+                    },
+                    // Constrain type to string
+                    new ElementDefinition("Extension.valueString")
+                    {
+                        Short = "NameSuffix",
+                        Type = new List<ElementDefinition.TypeRefComponent>()
+                        {
+                            new ElementDefinition.TypeRefComponent()
+                            {
+                                Code = FHIRAllTypes.String.GetLiteral()
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        // Profile on complex datatype HumanName with extension element
+        static StructureDefinition SL_HumanNameBasis => new StructureDefinition()
+        {
+            Type = FHIRAllTypes.HumanName.GetLiteral(),
+            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.HumanName),
+            Name = "SL-HumanNameBasis",
+            Url = @"http://example.org/fhir/StructureDefinition/SL-HumanNameBasis",
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+            Kind = StructureDefinition.StructureDefinitionKind.ComplexType,
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("HumanName.family.extension")
+                    {
+                        SliceName = "NameSuffix",
+                        Max = "1",
+                        Type = new List<ElementDefinition.TypeRefComponent>()
+                        {
+                            new ElementDefinition.TypeRefComponent()
+                            {
+                                Code = FHIRAllTypes.Extension.GetLiteral(),
+                                Profile = SL_HumanNameTitleSuffix.Url
+                            }
+                        }
+                    },
+                }
+            }
+        };
+
+        // Profile on Patient referencing custom HumanName datatype profile
+        static StructureDefinition SL_PatientBasis => new StructureDefinition()
+        {
+            Type = FHIRAllTypes.Patient.GetLiteral(),
+            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
+            Name = "SL-PatientBasis",
+            Url = @"http://example.org/fhir/StructureDefinition/SL-PatientBasis",
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+            Kind = StructureDefinition.StructureDefinitionKind.Resource,
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("Patient.name")
+                    {
+                        Type = new List<ElementDefinition.TypeRefComponent>()
+                        {
+                            new ElementDefinition.TypeRefComponent()
+                            {
+                                Code = FHIRAllTypes.HumanName.GetLiteral(),
+                                Profile = SL_HumanNameBasis.Url
+                            }
+                        }
+                    },
+                }
+            }
+        };
+
+
+        const string SL_NameSuffixValueSetUri = @"http://fhir.de/ValueSet/deuev/anlage-7-namenszusaetze";
+
+        // Derived profile on Patient
+        static StructureDefinition SL_PatientDerived => new StructureDefinition()
+        {
+            Type = FHIRAllTypes.Patient.GetLiteral(),
+            BaseDefinition = SL_PatientBasis.Url,
+            Name = "SL-PatientDerived",
+            Url = @"http://example.org/fhir/StructureDefinition/SL-PatientDerived",
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+            Kind = StructureDefinition.StructureDefinitionKind.Resource,
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("Patient.name.family.extension")
+                    {
+                        SliceName = "NameSuffix",
+                        MustSupport = true
+                    },
+                    new ElementDefinition("Patient.name.family.extension.value[x]")
+                    // new ElementDefinition("Patient.name.family.extension.valueString")
+                    {
+                        Binding = new ElementDefinition.ElementDefinitionBindingComponent()
+                        {
+                            Strength = BindingStrength.Required,
+                            ValueSet = new FhirUri(SL_NameSuffixValueSetUri)
+                        }
+                    }
+                }
+            }
+        };
+
+        [TestMethod]
+        public void TestPatientDe()
+        {
+            var sd = SL_PatientDerived;
+            var resolver = new InMemoryProfileResolver(sd, SL_PatientBasis, SL_HumanNameBasis, SL_HumanNameTitleSuffix);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+            dumpOutcome(_generator.Outcome);
+            Assert.IsTrue(expanded.HasSnapshot);
+            var elems = expanded.Snapshot.Element;
+            dumpElements(elems);
+            // dumpBaseElems(elems);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            // Verify slice entry
+            Assert.IsTrue(nav.JumpToFirst("Patient.name.family.extension"));
+            Assert.IsNotNull(nav.Current.Slicing);
+            Assert.IsNull(nav.Current.SliceName);
+            // Verify first extension slice: NameSuffix
+            Assert.IsTrue(nav.MoveToNextSlice());
+            Assert.AreEqual("NameSuffix", nav.Current.SliceName);
+            // Verify constraint inherited from base patient profile
+            Assert.AreEqual("1", nav.Current.Max);
+            // Verify constraint specified by derived patient profile
+            Assert.AreEqual(true, nav.Current.MustSupport);
+            Assert.IsTrue(nav.MoveToFirstChild());
+            // Verify constraints on url child element inherited from extension definition
+            Assert.IsTrue(nav.MoveToNext("url"));
+            var url = nav.Current.Fixed as FhirUri;
+            Assert.IsNotNull(url);
+            Assert.AreEqual(SL_HumanNameTitleSuffixUri, url.Value);
+            // Verify there are no constraints on value[x]
+            Assert.IsFalse(nav.MoveToNext("value[x]"));
+            // Verify merged constraints on valueString
+            Assert.IsTrue(nav.MoveToNext("valueString"));
+            Assert.AreEqual("NameSuffix", nav.Current.Short);
+            Assert.AreEqual(1, nav.Current.Type.Count);
+            Assert.AreEqual(FHIRAllTypes.String.GetLiteral(), nav.Current.Type[0].Code);
+            Assert.IsNotNull(nav.Current.Binding);
+            Assert.AreEqual(BindingStrength.Required, nav.Current.Binding.Strength);
+            url = nav.Current.Binding.ValueSet as FhirUri;
+            Assert.AreEqual(SL_NameSuffixValueSetUri, url?.Value);
         }
 
     }
