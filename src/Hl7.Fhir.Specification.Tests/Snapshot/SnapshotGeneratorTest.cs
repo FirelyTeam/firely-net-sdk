@@ -5469,7 +5469,7 @@ namespace Hl7.Fhir.Specification.Tests
             // _generator.PrepareElement += elementHandler;
             //try
             //{
-                generateSnapshotAndCompare(sd, out expanded);
+            generateSnapshotAndCompare(sd, out expanded);
             //}
             //finally
             //{
@@ -5748,6 +5748,66 @@ namespace Hl7.Fhir.Specification.Tests
             url = nav.Current.Binding.ValueSet as FhirUri;
             Assert.AreEqual(SL_NameSuffixValueSetUri, url?.Value);
         }
+
+        // [WMR 20170927] ContentReference
+        // Observation.component.referenceRange => Observation.referenceRange
+        // https://trello.com/c/p1RbTjwi
+        [TestMethod]
+        public void TestObservationComponentReferenceRange()
+        {
+            var sd = new StructureDefinition()
+            {
+                Url = "http://example.org/fhir/StructureDefinition/ObservationWithComponentReferenceRange",
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation),
+                Type = FHIRAllTypes.Observation.GetLiteral(),
+                Name = "ObservationWithComponentReferenceRange",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        // Specify a child constraint on Observation.component.referenceRange
+                        // in order to force child element expansion
+                        new ElementDefinition("Observation.component.referenceRange.low")
+                        {
+                            Min = 1,
+                            Fixed = new SimpleQuantity()
+                            {
+                                Value = 1.0m
+                            }
+                        }
+                    }
+                }
+            };
+
+            var resolver = new InMemoryProfileResolver(sd);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+            _generator.BeforeExpandElement += beforeExpandElementHandler;
+            StructureDefinition expanded = null;
+            try
+            {
+                generateSnapshotAndCompare(sd, out expanded);
+            }
+            finally
+            {
+                _generator.BeforeExpandElement -= beforeExpandElementHandler;
+            }
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            // Verify inherited constraints on Observation.component.referenceRange.low
+            Assert.IsTrue(nav.JumpToFirst("Observation.component.referenceRange.low"));
+            // Verify inherited cardinality constraint { min = 1 }
+            Assert.AreEqual(1, nav.Current.Min);
+            // Verify inherited fixed value constraint { fixedDecimal = 1.0 }
+            Assert.IsNotNull(nav.Current.Fixed);
+            var q = nav.Current.Fixed as SimpleQuantity;
+            Assert.IsNotNull(q);
+            Assert.AreEqual(1.0m, q.Value);
+       }
 
     }
 }
