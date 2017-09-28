@@ -5810,7 +5810,130 @@ namespace Hl7.Fhir.Specification.Tests
             var q = nav.Current.Fixed as SimpleQuantity;
             Assert.IsNotNull(q);
             Assert.AreEqual(1.0m, q.Value);
-       }
+        }
+
+        // https://trello.com/c/pA4uF7IR
+        [TestMethod]
+        public void TestInheritedDataTypeProfileExtensions()
+        {
+            var sdHumanNameExtension = new StructureDefinition()
+            {
+                Url = "http://example.org/fhir/StructureDefinition/HumanNameExtension",
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Extension),
+                Type = FHIRAllTypes.Extension.GetLiteral(),
+                Name = "HumanNameExtension",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.ComplexType,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Extension.valueString")
+                        {
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = FHIRAllTypes.String.GetLiteral()
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            var sdHumanName = new StructureDefinition()
+            {
+                Url = "http://example.org/fhir/StructureDefinition/HumanNameWithExtension",
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.HumanName),
+                Type = FHIRAllTypes.HumanName.GetLiteral(),
+                Name = "HumanNameWithExtension",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.ComplexType,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("HumanName.extension")
+                        {
+                            SliceName = "MyExtension",
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = FHIRAllTypes.Extension.GetLiteral(),
+                                    Profile = sdHumanNameExtension.Url
+                                }
+
+                            }
+                        }
+                    }
+                }
+            };
+
+            var sdBasePatient = new StructureDefinition()
+            {
+                Url = "http://example.org/fhir/StructureDefinition/MyBasePatient",
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
+                Type = FHIRAllTypes.Patient.GetLiteral(),
+                Name = "MyBasePatient",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Patient.name")
+                        {
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = FHIRAllTypes.HumanName.GetLiteral(),
+                                    Profile = sdHumanName.Url
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            var sdDerivedPatient = new StructureDefinition()
+            {
+                Url = "http://example.org/fhir/StructureDefinition/MyDerivedPatient",
+                BaseDefinition = sdBasePatient.Url,
+                Type = FHIRAllTypes.Patient.GetLiteral(),
+                Name = "MyDerivedPatient",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource
+            };
+
+            var resolver = new InMemoryProfileResolver(sdHumanNameExtension, sdHumanName, sdBasePatient, sdDerivedPatient);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+            _generator.BeforeExpandElement += beforeExpandElementHandler;
+            StructureDefinition expanded = null;
+            try
+            {
+                generateSnapshotAndCompare(sdDerivedPatient, out expanded);
+            }
+            finally
+            {
+                _generator.BeforeExpandElement -= beforeExpandElementHandler;
+            }
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+            dumpOutcome(_generator.Outcome);
+            dumpElements(expanded.Snapshot.Element);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.JumpToFirst("Patient.name.extension"));
+            Assert.IsNotNull(nav.Current.Slicing);
+            Assert.IsNull(nav.Current.SliceName);
+            Assert.IsTrue(nav.MoveToNext());
+            Assert.AreEqual("MyExtension", nav.Current.SliceName);
+        }
 
     }
 }
