@@ -44,6 +44,9 @@ namespace Hl7.Fhir.Specification.Snapshot
     // Functionality is implemented as a set of partial classes, in order to share common state and
     // minimize memory pressure while recursively generating snapshots of base and/or type profiles.
 
+    /// <summary>
+    /// Provides functionality to generate the snapshot component of a <see cref="StructureDefinition"/> resource.
+    /// </summary>
     public sealed partial class SnapshotGenerator
     {
         // TODO: Properly test SnapshotGenerator for multi-threading support
@@ -55,16 +58,24 @@ namespace Hl7.Fhir.Specification.Snapshot
         readonly SnapshotGeneratorSettings _settings;
         readonly SnapshotRecursionStack _stack = new SnapshotRecursionStack();
 
-        // Error messages
+        /// <summary>
+        /// Create a new instance of the <see cref="SnapshotGenerator"/> class
+        /// for the specified resource resolver and configuration settings.
+        /// </summary>
+        /// <param name="resolver">A <see cref="IResourceResolver"/> instance.</param>
+        /// <param name="settings">Configuration settings that control the behavior of the snapshot generator.</param>
         public SnapshotGenerator(IResourceResolver resolver, SnapshotGeneratorSettings settings) // : this()
         {
-            if (resolver == null) { throw Error.ArgumentNull(nameof(resolver)); }
-            if (settings == null) { throw Error.ArgumentNull(nameof(settings)); }
-            _resolver = resolver;
-            _settings = settings;
+            _resolver = resolver ?? throw Error.ArgumentNull(nameof(resolver));
+            _settings = settings ?? throw Error.ArgumentNull(nameof(settings));
         }
 
-        public SnapshotGenerator(IResourceResolver source) : this(source, SnapshotGeneratorSettings.Default)
+        /// <summary>
+        /// Create a new instance of the <see cref="SnapshotGenerator"/> class
+        /// for the specified resource resolver and with default configuration settings.
+        /// </summary>
+        /// <param name="resolver">A <see cref="IResourceResolver"/> instance.</param>
+        public SnapshotGenerator(IResourceResolver resolver) : this(resolver, SnapshotGeneratorSettings.Default)
         {
             // ...
         }

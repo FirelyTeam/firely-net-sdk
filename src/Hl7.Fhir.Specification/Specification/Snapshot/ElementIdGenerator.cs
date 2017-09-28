@@ -44,6 +44,7 @@ namespace Hl7.Fhir.Specification.Snapshot
     /// <summary>Represents a segment of an element Id, derived from the (original) element name and the (optional) slice name.</summary>
     public struct ElementIdSegment
     {
+        /// <summary>Represents an empty segment.</summary>
         public static readonly ElementIdSegment Empty = new ElementIdSegment(null, null);
 
         /// <summary>Create a new <see cref="ElementIdSegment"/> from the specified (original) element name and (optional) slice name.</summary>
