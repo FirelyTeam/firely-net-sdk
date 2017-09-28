@@ -1113,9 +1113,10 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsFalse(diffNav.MoveToNext());
         }
 
-        // [WMR 20170927] New: match existing type slice
+        // [WMR 20170927] New: match layered constraints on choice types
+
         [TestMethod]
-        public void TestElementMatcher_TypeSlice()
+        public void TestElementMatcher_ChoiceType1()
         {
             var baseProfile = new StructureDefinition()
             {
@@ -1124,14 +1125,7 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Observation"),
-                        new ElementDefinition("Observation.valueString")
-                        {
-                            Type = new List<ElementDefinition.TypeRefComponent>()
-                            {
-                                new ElementDefinition.TypeRefComponent() { Code = FHIRAllTypes.String.GetLiteral() }
-                            },
-                            Min = 1
-                        }
+                        new ElementDefinition("Observation.value[x]")
                     }
                 }
             };
@@ -1143,11 +1137,55 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Observation"),
-                        // Refer to base using new element name
+                        new ElementDefinition("Observation.value[x]")
+                    }
+                }
+            };
+
+            var snapNav = ElementDefinitionNavigator.ForDifferential(baseProfile);
+            var diffNav = ElementDefinitionNavigator.ForDifferential(userProfile);
+
+            // Merge: Observation root
+            var matches = ElementMatcher.Match(snapNav, diffNav);
+            Assert.IsTrue(diffNav.MoveToFirstChild());
+            Assert.IsTrue(snapNav.MoveToFirstChild());
+            assertMatch(matches, ElementMatcher.MatchAction.Merge, snapNav, diffNav);
+
+            // Merge: Observation.value[x]
+            matches = ElementMatcher.Match(snapNav, diffNav);
+            Assert.IsNotNull(matches);
+            matches.DumpMatches(snapNav, diffNav);
+
+            // Verify: B:value[x] <-- merge --> D:value[x]
+            Assert.AreEqual(1, matches.Count);
+            Assert.IsTrue(diffNav.MoveToFirstChild());
+            Assert.IsTrue(snapNav.MoveToFirstChild());
+            assertMatch(matches[0], ElementMatcher.MatchAction.Merge, snapNav, diffNav);
+        }
+
+        [TestMethod]
+        public void TestElementMatcher_ChoiceType2()
+        {
+            var baseProfile = new StructureDefinition()
+            {
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Observation"),
                         new ElementDefinition("Observation.valueString")
-                        {
-                            Max = "1"
-                        }
+                    }
+                }
+            };
+
+            var userProfile = new StructureDefinition()
+            {
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Observation"),
+                        new ElementDefinition("Observation.valueString")
                     }
                 }
             };
@@ -1173,10 +1211,8 @@ namespace Hl7.Fhir.Specification.Tests
             assertMatch(matches[0], ElementMatcher.MatchAction.Merge, snapNav, diffNav);
         }
 
-        // [WMR 20170927] New: match existing type slice
         [TestMethod]
-        [Ignore] // Controversial, still under discussion - does FHIR actually allow this?
-        public void TestElementMatcher_TypeSlice2()
+        public void TestElementMatcher_ChoiceType3()
         {
             var baseProfile = new StructureDefinition()
             {
@@ -1185,14 +1221,7 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Observation"),
-                        new ElementDefinition("Observation.valueString")
-                        {
-                            Type = new List<ElementDefinition.TypeRefComponent>()
-                            {
-                                new ElementDefinition.TypeRefComponent() { Code = FHIRAllTypes.String.GetLiteral() }
-                            },
-                            Min = 1
-                        }
+                        new ElementDefinition("Observation.value[x]")
                     }
                 }
             };
@@ -1204,15 +1233,7 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = new List<ElementDefinition>()
                     {
                         new ElementDefinition("Observation"),
-                        // Refer to base using original element name + type constraint
-                        new ElementDefinition("Observation.value[x]")
-                        {
-                            Type = new List<ElementDefinition.TypeRefComponent>()
-                            {
-                                new ElementDefinition.TypeRefComponent() { Code = FHIRAllTypes.String.GetLiteral() }
-                            },
-                            Max = "1"
-                        }
+                        new ElementDefinition("Observation.valueString")
                     }
                 }
             };
@@ -1228,15 +1249,76 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(snapNav.MoveToFirstChild());
             assertMatch(matches, ElementMatcher.MatchAction.Merge, snapNav, diffNav);
 
-            // Merge: Observation.valueString
+            // Merge: Observation.value[x]
             matches = ElementMatcher.Match(snapNav, diffNav);
             Assert.IsNotNull(matches);
             matches.DumpMatches(snapNav, diffNav);
-            // Verify: B:valueString <-- merge --> D:value[x]
+            // Verify: B:value[x] <-- merge --> D:valueString
             Assert.AreEqual(1, matches.Count);
             Assert.IsTrue(diffNav.MoveToFirstChild());
             Assert.IsTrue(snapNav.MoveToFirstChild());
             assertMatch(matches[0], ElementMatcher.MatchAction.Merge, snapNav, diffNav);
+        }
+
+        [TestMethod]
+        public void TestElementMatcher_ChoiceType4()
+        {
+            var baseProfile = new StructureDefinition()
+            {
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Observation"),
+                        new ElementDefinition("Observation.valueString")
+                    }
+                }
+            };
+
+            var userProfile = new StructureDefinition()
+            {
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Observation"),
+                        // STU3: INVALID!
+                        // If the inherited element is already renamed, then derived profile MUST use new name
+                        new ElementDefinition("Observation.value[x]")
+                    }
+                }
+            };
+
+            var snapNav = ElementDefinitionNavigator.ForDifferential(baseProfile);
+            var diffNav = ElementDefinitionNavigator.ForDifferential(userProfile);
+
+            // Merge: Observation root
+            var matches = ElementMatcher.Match(snapNav, diffNav);
+            Assert.IsTrue(diffNav.MoveToFirstChild());
+            Assert.IsTrue(snapNav.MoveToFirstChild());
+            assertMatch(matches, ElementMatcher.MatchAction.Merge, snapNav, diffNav);
+
+            // Base profile renames value[x] to valueString
+            // Derived profile refers to value[x] - WRONG! SHALL refer to valueString
+            // Expected behavior: add new constraint for value[x] next to existing valueString constraint
+            // This actually creates a profile that is invalid in STU3, but the validator will handle that
+            // STU3: only rename choice type elements if constrained to a single type
+            // R4: allow combinations of constraints on both value[x] and on renamed type slices
+
+            // Add: Observation.value[x]
+            matches = ElementMatcher.Match(snapNav, diffNav);
+            Assert.IsNotNull(matches);
+            matches.DumpMatches(snapNav, diffNav);
+            // Verify: B:Observation <-- new --> D:value[x]
+            Assert.AreEqual(1, matches.Count);
+            Assert.IsTrue(diffNav.MoveToFirstChild());
+            var match = matches[0];
+            assertMatch(match, ElementMatcher.MatchAction.New, snapNav, diffNav);
+            // Verify: matcher should emit a warning
+            Assert.IsNotNull(match.Issue);
+            Debug.Print(match.Issue.Details?.Text);
+            Assert.IsTrue(int.TryParse(match.Issue.Details?.Coding?[0]?.Code, out int code));
+            Assert.AreEqual(SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICETYPE_NAME.Code, code);
         }
 
         // ========== Helper functions ==========

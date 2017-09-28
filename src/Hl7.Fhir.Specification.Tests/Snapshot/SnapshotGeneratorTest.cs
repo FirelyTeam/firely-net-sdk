@@ -5689,8 +5689,11 @@ namespace Hl7.Fhir.Specification.Tests
                         SliceName = "NameSuffix",
                         MustSupport = true
                     },
-                    new ElementDefinition("Patient.name.family.extension.value[x]")
-                    // new ElementDefinition("Patient.name.family.extension.valueString")
+                    // WRONG! Derived profiles must maintain name of inherited renamed elements
+                    // => SnapshotGenerator should emit a warning
+                    // new ElementDefinition("Patient.name.family.extension.value[x]")
+                    // CORRECT
+                    new ElementDefinition("Patient.name.family.extension.valueString")
                     {
                         Binding = new ElementDefinition.ElementDefinitionBindingComponent()
                         {
