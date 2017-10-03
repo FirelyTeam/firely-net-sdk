@@ -23,6 +23,26 @@ namespace Hl7.Fhir.Rest
 
             return task.Result;
         }
+        
+        /// <summary>
+        /// Use the WaitNoResult so that the exception handling throws what you expect,
+        /// and not the Aggregate exception
+        /// </summary>
+        /// <param name="task"></param>
+        public static void WaitNoResult(this Task task)
+        {
+            if (task == null) return;
+
+            try
+            {
+                task.Wait();
+            }
+            catch (AggregateException ae)
+            {
+                //throw ae;
+                throw ae.Flatten().InnerException;
+            }
+        }
 
         public static Task<TResult> FromResult<TResult>(TResult resultValue)
         {

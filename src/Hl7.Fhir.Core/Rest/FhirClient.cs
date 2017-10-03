@@ -432,7 +432,7 @@ namespace Hl7.Fhir.Rest
         /// already deleted).</returns>
         public void Delete(Uri location)
         {
-            DeleteAsync(location).Wait();
+            DeleteAsync(location).WaitNoResult();
         }
         /// <summary>
         /// Delete a resource at the given endpoint.
@@ -454,7 +454,7 @@ namespace Hl7.Fhir.Rest
         /// already deleted).</returns>
         public void Delete(string location)
         {
-            DeleteAsync(location).Wait();
+            DeleteAsync(location).WaitNoResult();
         }
 
 
@@ -475,7 +475,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="resource">The resource to delete</param>
         public void Delete(Resource resource)
         {
-            DeleteAsync(resource).Wait();
+            DeleteAsync(resource).WaitNoResult();
         }
 
         /// <summary>
@@ -498,7 +498,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="condition">Criteria to use to match the resource to delete.</param>
         public void Delete(string resourceType, SearchParams condition)
         {
-            DeleteAsync(resourceType, condition).Wait();
+            DeleteAsync(resourceType, condition).WaitNoResult();
         }
 
         #endregion
