@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Serialization
         {
             while (reader.Read())
             {
-                if (reader.TokenType == JsonToken.PropertyName && reader.Path == path)
+                if (reader.TokenType == JsonToken.PropertyName && reader.Value.Equals(path))
                     return true;
             }
 
@@ -70,7 +70,9 @@ namespace Hl7.Fhir.Serialization
 
         private (JObject element, string fullUrl)? _current = null;
 
-        public bool MoveNext()
+        public bool MoveNext() => MoveNext(null);
+
+        public bool MoveNext(string fullUrl)
         {
             if (ResourceType == null) return false;
 
@@ -80,14 +82,17 @@ namespace Hl7.Fhir.Serialization
                 {
                     if (_reader.TokenType == JsonToken.StartObject && _reader.Path.StartsWith("entry["))
                     {
-                        var entry = (JObject)JObject.ReadFrom(_reader);
-                        var fullUrl = entry.Value<string>("fullUrl");
-                        if (fullUrl != null)
+                        if (skipTo(_reader, "fullUrl"))
                         {
-                            if (entry["resource"] is JObject resourceNode)
+                            var entryUrl = _reader.ReadAsString();
+                            if (entryUrl != null && (fullUrl == null || entryUrl == fullUrl))
                             {
-                                _current = (resourceNode, fullUrl);
-                                return true;
+                                if (skipTo(_reader, "resource") && _reader.Read())
+                                {
+                                    var resourceNode = (JObject)JObject.ReadFrom(_reader);
+                                    _current = (resourceNode, entryUrl);
+                                    return true;
+                                }
                             }
                         }
                     }
@@ -115,16 +120,14 @@ namespace Hl7.Fhir.Serialization
                                 canonicalUrl = "http://example.org/" + ResourceType + "/" + resourceId;
                         }
 
-                        if (canonicalUrl != null)
-                        {
+                        if (canonicalUrl != null && (fullUrl == null || canonicalUrl == fullUrl))
                             _current = (resource, canonicalUrl);
-                            return true;
-                        }
+                        return true;
                     }
                 }
-
-                return false;
             }
+
+            return false;
         }
 
         public bool Seek(string position)
@@ -134,12 +137,7 @@ namespace Hl7.Fhir.Serialization
             // start looking from the beginning
             Reset();
 
-            while (MoveNext())
-            {
-                if (Position == position) return true;
-            }
-
-            return false;
+            return MoveNext(position);
 
             //This code needs to be moved to the DirectorySource - which now assumes the streamer
             //does this (but no longer - as we don't return Resources anymore)
@@ -180,7 +178,6 @@ namespace Hl7.Fhir.Serialization
                 _disposed = true;
             }
         }
-
 
         public string Position => _current?.fullUrl;
 

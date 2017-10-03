@@ -14,5 +14,7 @@ namespace Hl7.Fhir.Serialization
         string Position { get; }
 
         bool Seek(string position);
+
+        bool MoveNext(string position);
     }
 }

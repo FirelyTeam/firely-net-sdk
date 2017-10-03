@@ -60,40 +60,50 @@ namespace Hl7.Fhir.Serialization
 
             return null;
         }
-   
+
         private (XElement element, string fullUrl)? _current = null;
 
-        public bool MoveNext()
+        public bool MoveNext() => MoveNext(null);
+        public bool MoveNext(string fullUrl)
         {
+            if (_reader.EOF) return false;
             if (RootName == null) return false;
 
+            // Move to first real content node
+            if (_reader.NodeType != XmlNodeType.Element)
+            {
+                while (_reader.Read() && _reader.NodeType != XmlNodeType.Element) ;
+                if (_reader.NodeType != XmlNodeType.Element) return false;
+            }
+             
             if (IsBundle)
             {
-                // do....while(!_reader.ReadToSibling()) ??
-                while (!_reader.EOF)
+                do
                 {
-                    if (_reader.NodeType == XmlNodeType.Element
-                        && _reader.NamespaceURI == XmlNs.FHIR && _reader.LocalName == "entry")
+                    using (var entryReader = _reader.ReadSubtree())
                     {
-                        var entryNode = (XElement)XElement.ReadFrom(_reader);
-                        var fullUrl = entryNode.Elements(XmlNs.XFHIR + "fullUrl").Attributes("value").SingleOrDefault();
-                        if (fullUrl != null)
+                        var entryUrl = readFullUrl(entryReader);
+
+                        if (entryUrl != null && (fullUrl == null || entryUrl == fullUrl))
                         {
-                            var resourceNode = entryNode.Element(XName.Get("resource", XmlNs.FHIR));
-                            if (resourceNode != null)
+                            if (entryReader.ReadToNextSibling("resource", XmlNs.FHIR))
                             {
-                                var resource = resourceNode.Elements().FirstOrDefault();
-                                if (resource != null)
+                                var resourceNode = (XElement)XElement.ReadFrom(entryReader);
+
+                                if (resourceNode != null)
                                 {
-                                    _current = (resource, fullUrl.Value);
-                                    return true;
+                                    var resource = resourceNode.Elements().FirstOrDefault();
+                                    if (resource != null)
+                                    {
+                                        _current = (resource, entryUrl);
+                                        return true;
+                                    }
                                 }
                             }
                         }
                     }
-                    else
-                        _reader.Read();
                 }
+                while (_reader.ReadToNextSibling("entry", XmlNs.FHIR));
 
                 return false;
             }
@@ -101,32 +111,47 @@ namespace Hl7.Fhir.Serialization
             // [WMR 20160908] Fixed, parse stand-alone (conformance) resources
             else
             {
-                if (!_reader.EOF)
+                // A bit wasteful to parse the whole resource if we're just scanning for the url,
+                // but by the time we have the url, we're too late to use ReadFrom() to parse the resource
+                // unless we do Reset(). This is left as an exercise to the reader.
+                var resourceNode = (XElement)XElement.ReadFrom(_reader);
+
+                // First try to initialize from canonical url (conformance resources)
+                var canonicalUrl = resourceNode.Elements(XmlNs.XFHIR + "url").Attributes("value").SingleOrDefault()?.Value;
+
+                // Otherwise try to initialize from resource id
+                if (canonicalUrl == null)
                 {
-                    var resourceNode = (XElement)XElement.ReadFrom(_reader);
+                    var resourceId = resourceNode.Elements(XmlNs.XFHIR + "id").Attributes("value").SingleOrDefault();
+                    if (resourceId != null)
+                        canonicalUrl = "http://example.org/" + resourceNode.Name.LocalName + "/" + resourceId.Value;
+                }
 
-                    // First try to initialize from canonical url (conformance resources)
-                    var canonicalUrl = resourceNode.Elements(XmlNs.XFHIR + "url").Attributes("value").SingleOrDefault()?.Value;
-
-                    // Otherwise try to initialize from resource id
-                    if (canonicalUrl == null)
-                    {
-                        var resourceId = resourceNode.Elements(XmlNs.XFHIR + "id").Attributes("value").SingleOrDefault();
-                        if (resourceId != null)
-                            canonicalUrl = "http://example.org/" + resourceNode.Name.LocalName + "/" + resourceId.Value;
-                    }
-
-                    if (canonicalUrl != null)
-                    {
-                        _current = (resourceNode, canonicalUrl);
-                        return true;
-                    }
+                if (canonicalUrl != null && (fullUrl == null || canonicalUrl == fullUrl))
+                {
+                    _current = (resourceNode, canonicalUrl);
+                    return true;
                 }
 
                 return false;
             }
         }
 
+
+        private static string readFullUrl(XmlReader reader)
+        {
+            if (reader.ReadToDescendant("fullUrl", XmlNs.FHIR))
+            {
+                if (reader.MoveToAttribute("value"))
+                {
+                    var result = reader.Value;
+                    reader.MoveToElement();
+                    return result;
+                }
+            }
+
+            return null;
+        }
 
         // Klopt niet -> kan static zijn. Maar de aanroepers creeren toch een instance met het pad -> komt dus van twee plekken
         public bool Seek(string position)
@@ -136,14 +161,7 @@ namespace Hl7.Fhir.Serialization
             // start looking from the beginning
             Reset();
 
-            // Slow - this parses all resources on the way (same in the old code). Better to just look
-            // at the XmlReader
-            while(MoveNext())
-            {
-                if (Position == position) return true;
-            }
-
-            return false;
+            return MoveNext(position);
 
             //This code needs to be moved to the DirectorySource - which now assumes the streamer
             //does this (but no longer - as we don't return Resources anymore)
@@ -171,7 +189,7 @@ namespace Hl7.Fhir.Serialization
                         _reader = null;
                     }
 
-                    if(_fileStream != null)
+                    if (_fileStream != null)
                     {
                         _fileStream.Dispose();
                         _fileStream = null;
