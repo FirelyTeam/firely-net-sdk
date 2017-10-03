@@ -9,7 +9,7 @@ namespace Hl7.Fhir.Serialization
     /// <summary>
     /// Represents a stream of resources which is both enumerable and enables the user to return to previous positions.
     /// </summary>
-    public interface IElementNavigatorStream : IEnumerator<IElementNavigator>
+    public interface ISeekableEnumerator<T> : IEnumerator<T>
     {
         string Position { get; }
 

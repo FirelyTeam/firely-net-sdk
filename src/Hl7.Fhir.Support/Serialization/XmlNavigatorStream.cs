@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Serialization
     /// Internal class which is able to scan a (possibly) large Xml FHIR Bundle into separate entries, each represented by an
     /// IElementNavigator. Supports files with a single resource too.
     /// </summary>
-    public class XmlNavigatorStream : IElementNavigatorStream, IDisposable
+    public class XmlNavigatorStream : ISeekableEnumerator<IElementNavigator>, IDisposable
     {
         private XmlReader _reader = null;
         private Stream _fileStream = null;
@@ -101,23 +101,26 @@ namespace Hl7.Fhir.Serialization
             // [WMR 20160908] Fixed, parse stand-alone (conformance) resources
             else
             {
-                var resourceNode = (XElement)XElement.ReadFrom(_reader);
-
-                // First try to initialize from canonical url (conformance resources)
-                var canonicalUrl = resourceNode.Elements(XmlNs.XFHIR + "url").Attributes("value").SingleOrDefault()?.Value;
-
-                // Otherwise try to initialize from resource id
-                if (canonicalUrl == null)
+                if (!_reader.EOF)
                 {
-                    var resourceId = resourceNode.Elements(XmlNs.XFHIR + "id").Attributes("value").SingleOrDefault();
-                    if (resourceId != null)
-                        canonicalUrl = "http://example.org/" + resourceNode.Name.LocalName + "/" + resourceId.Value;
-                }
+                    var resourceNode = (XElement)XElement.ReadFrom(_reader);
 
-                if (canonicalUrl != null)
-                {
-                    _current = (resourceNode, canonicalUrl);
-                    return true;
+                    // First try to initialize from canonical url (conformance resources)
+                    var canonicalUrl = resourceNode.Elements(XmlNs.XFHIR + "url").Attributes("value").SingleOrDefault()?.Value;
+
+                    // Otherwise try to initialize from resource id
+                    if (canonicalUrl == null)
+                    {
+                        var resourceId = resourceNode.Elements(XmlNs.XFHIR + "id").Attributes("value").SingleOrDefault();
+                        if (resourceId != null)
+                            canonicalUrl = "http://example.org/" + resourceNode.Name.LocalName + "/" + resourceId.Value;
+                    }
+
+                    if (canonicalUrl != null)
+                    {
+                        _current = (resourceNode, canonicalUrl);
+                        return true;
+                    }
                 }
 
                 return false;
@@ -133,6 +136,8 @@ namespace Hl7.Fhir.Serialization
             // start looking from the beginning
             Reset();
 
+            // Slow - this parses all resources on the way (same in the old code). Better to just look
+            // at the XmlReader
             while(MoveNext())
             {
                 if (Position == position) return true;

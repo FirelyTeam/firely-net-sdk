@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Serialization
     /// <summary>
     /// Internal class which is able to scan a (possibly) large Xml FHIR (conformance) resource from a given stream
     /// </summary>
-    public class JsonNavigatorStream : IElementNavigatorStream, IDisposable
+    public class JsonNavigatorStream : ISeekableEnumerator<IElementNavigator>, IDisposable
     {
         private JsonReader _reader = null;
         private Stream _fileStream = null;
@@ -78,7 +78,6 @@ namespace Hl7.Fhir.Serialization
             {
                 while (_reader.Read())
                 {
-                    // Does this even work? entry[] is an array, I don't see that accounted for here
                     if (_reader.TokenType == JsonToken.StartObject && _reader.Path.StartsWith("entry["))
                     {
                         var entry = (JObject)JObject.ReadFrom(_reader);

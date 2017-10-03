@@ -215,20 +215,5 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             }
         }
-
-        // [WMR 20170825] Issue: json file generates exception "Value cannot be null. Parameter name:resourceType"
-        [TestMethod]
-        public void TestInvalidJsonFile()
-        {
-            var folderPath = Path.Combine(Directory.GetCurrentDirectory(), @"TestData\source-test\");
-            // var patientProfile = Path.Combine(path, "MyPatient.xml");
-            var filePath = Path.Combine(folderPath, "project.assets.json");
-            Assert.IsTrue(File.Exists(filePath));
-
-            var scanner = new JsonFileConformanceScanner(filePath);
-
-            var list = scanner.List();
-            Assert.AreEqual(0, list.Count);
-        }
     }
 }
