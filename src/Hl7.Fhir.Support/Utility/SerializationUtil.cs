@@ -131,9 +131,11 @@ namespace Hl7.Fhir.Utility
 
         public static JsonReader JsonReaderFromStream(Stream s)
         {
-            JsonReader reader = new JsonTextReader(new StreamReader(s));
-            reader.DateParseHandling = DateParseHandling.None;
-            reader.FloatParseHandling = FloatParseHandling.Decimal;
+            JsonReader reader = new JsonTextReader(new StreamReader(s))
+            {
+                DateParseHandling = DateParseHandling.None,
+                FloatParseHandling = FloatParseHandling.Decimal
+            };
 
             return reader;
         }

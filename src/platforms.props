@@ -8,6 +8,7 @@
     <NetStandard15>$(NetStandard14);NET_ASSEMBLY_LOAD_CTX</NetStandard15>
     <!-- [WMR 20170823] TODO: Add feature flag(s) for NetStandard 1.6 ? -->
     <NetStandard16>$(NetStandard15)</NetStandard16>
+    <NetFramework40>NET_FILESYSTEM</NetFramework40>
     <NetFramework45>$(NetStandard11);NET_REGEX_COMPILE;NET_FILESYSTEM;NET_CONSOLE;NET_THREADPOOL;NET_CRYPTO;NET_WEBSOCK;NET_PROCESS;NET_DRAWING;NET_SYSTEM_WEB;NET_WPF;NET_WINFORMS;NET_WCF;NET_XSD_SCHEMA</NetFramework45>
     <NetFramework451>$(NetStandard12);$(NetFramework45)</NetFramework451>
     <NetFramework452>$(NetStandard12);$(NetFramework451)</NetFramework452>
@@ -40,7 +41,7 @@
     <DefineConstants>$(DefineConstants);$(NetStandard16);NETSTANDARD</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net40' ">
-    <DefineConstants>$(DefineConstants);DOTNETFW</DefineConstants>
+    <DefineConstants>$(DefineConstants);$(NetFramework40);DOTNETFW</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
     <DefineConstants>$(DefineConstants);$(NetFramework45);DOTNETFW</DefineConstants>

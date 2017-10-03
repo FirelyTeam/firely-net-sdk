@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Specification.Source
             _path = path;
         }
 
-        public List<ConformanceScanInformation> List()
+        public List<ArtifactSummary> List()
         {
             using (var input = File.OpenRead(_path))
             {
@@ -46,9 +46,9 @@ namespace Hl7.Fhir.Specification.Source
                     .Where(res => ModelInfo.IsKnownResource(res.element.Name.LocalName))
 
                     .Select(res =>
-                            new ConformanceScanInformation()
+                            new ArtifactSummary()
                             {
-                                ResourceType = EnumUtility.ParseLiteral<ResourceType>(res.element.Name.LocalName).Value,
+                                ResourceType = res.element.Name.LocalName,
                                 ResourceUri = res.fullUrl,
                                 Canonical = getPrimitiveValueElement(res.element, "url"),
                                 ValueSetSystem = getValueSetSystem(res.element),
@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Specification.Source
         }
 
 
-        public Resource Retrieve(ConformanceScanInformation entry)
+        public Resource Retrieve(ArtifactSummary entry)
         {
             if (entry == null) throw Error.ArgumentNull(nameof(entry));
 

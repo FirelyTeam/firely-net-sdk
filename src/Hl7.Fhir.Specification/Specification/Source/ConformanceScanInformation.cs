@@ -8,31 +8,56 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Hl7.Fhir.ElementModel;
 
 namespace Hl7.Fhir.Specification.Source
 {
-        internal class ConformanceScanInformation
+    internal class SummaryHarvester
+    { 
+        public Action<IElementNavigator, ArtifactSummary> Generator { get; set; }
+
+        public ArtifactSummary Harvest(IElementNavigator input) => throw new NotImplementedException();
+
+        public IEnumerable<ArtifactSummary> Harvest(IEnumerable<IElementNavigator> input) => throw new NotImplementedException();
+    
+    }
+
+
+
+
+    internal class ArtifactSummary : Dictionary<string,string>
+    {
+        public ArtifactSummary()
         {
-            public ResourceType ResourceType { get; set; }
-
-            public string ResourceUri { get; set; }
-
-            public string Canonical { get; set; }
-
-            public string ValueSetSystem { get; set; }
-
-            public string[] UniqueIds { get; set; }
-
-            public string ConceptMapSource { get; set; }
-
-            public string ConceptMapTarget { get; set; }
-
-            public string Origin { get; set; }
-
-            public override string ToString()
-            {
-                return "{0} resource with uri {1} (canonical {2}), read from {2}"
-                    .FormatWith(ResourceType, ResourceUri ?? "(unknown)", Canonical ?? "(unknown)", Origin);
-            }
         }
+
+        protected void Set(string key, string value) => throw new NotImplementedException();
+
+        protected string GetOrDefault(string key) => TryGetValue(key, out string value) ? value : null;
+        
+        public string ResourceType { get; set; }
+
+        public string ResourceUri { get; set; }
+
+        public string Canonical { get; set; }
+
+        public string ValueSetSystem { get; set; }
+
+        public string[] UniqueIds { get; set; }
+
+        public string ConceptMapSource { get; set; }
+
+        public string ConceptMapTarget { get; set; }
+
+        public string Origin { get; set; }
+
+        public override string ToString()
+        {
+            return "{0} resource with uri {1} (canonical {2}), read from {2}"
+                .FormatWith(ResourceType, ResourceUri ?? "(unknown)", Canonical ?? "(unknown)", Origin);
+        }
+    }
 }

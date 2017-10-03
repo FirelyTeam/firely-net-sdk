@@ -2,6 +2,7 @@
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Source.BlobDb;
+using Hl7.Fhir.Support.FhirArchive;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
@@ -109,60 +110,33 @@ namespace Hl7.Fhir.Specification.Tests.Source
         {
             var filename = @"C:\git\fhir-net-api\src\Hl7.Fhir.Specification\data\profiles-resources.xml";
 
-            using (var zs = new FileStream(@"c:\temp\specification-bundle.zip", FileMode.Create, FileAccess.ReadWrite))
+            using (var zs = new FhirArchive(@"c:\temp\specification-bundle.zip"))
             {
-                using (var za = new ZipArchive(zs, ZipArchiveMode.Create))
+                using (var s = new FileStream(filename, FileMode.Open))
                 {
-                    var urlIndex = new JObject();
-                    var typeIndex = new JObject();
+                    var stream = XmlFileConformanceScanner.StreamResources(s);
 
-                    using (var s = new FileStream(filename, FileMode.Open))
+                    foreach (var item in stream)
                     {
-                        var stream = XmlFileConformanceScanner.StreamResources(s);
+                        var uri = new Uri(item.fullUrl);
+                        var type = item.element.Name.LocalName;
+                        var entryName = uri.Host + uri.AbsolutePath + ".xml";
+                        var xmlContents = item.element.ToString();
 
-                        foreach (var item in stream)
+                        var summary = new List<SummaryItem>
                         {
-                            var uri = new Uri(item.fullUrl);
-                            var type = item.element.Name.LocalName;
-                            var entryName = uri.Host + uri.AbsolutePath + ".xml";
-                            var entry = za.CreateEntry(entryName);
-                            urlIndex.Add(item.fullUrl, new JArray(new JValue(entryName)));
-                            var xmlContents = item.element.ToString();
+                            new SummaryItem { Name = "url", Value = item.fullUrl, Indexed = true },
+                            new SummaryItem { Name = "type", Value = type, Indexed = true }
+                        };
 
-                            var typeKey = (JArray)typeIndex[type];
-                            if (typeKey == null)
-                            {
-                                typeKey = new JArray();
-                                typeIndex.Add(type, typeKey);
-                            }
-
-                            typeKey.Add(entryName);
-
-                            using (StreamWriter writer = new StreamWriter(entry.Open()))
-                            {
-                                writer.Write(xmlContents);
-                            }
-                            //var b = new Blob(Encoding.UTF8.GetBytes(item.element.ToString()), "application/fhir+xml");
-                            //w.Add(b, new[] { ("resourceUri", item.fullUrl), ("resourceType", item.element.Name.LocalName) });
-
-                        }
-
-                        var ie = za.CreateEntry("url-index.json");
-
-                        using (StreamWriter writer = new StreamWriter(ie.Open()))
-                        {
-                            writer.Write(urlIndex.ToString());
-                        }
-
-                        ie = za.CreateEntry("type-index.json");
-
-                        using (StreamWriter writer = new StreamWriter(ie.Open()))
-                        {
-                            writer.Write(typeIndex.ToString());
-                        }
+                        zs.Add(xmlContents, entryName, summary);
+                        //var b = new Blob(Encoding.UTF8.GetBytes(item.element.ToString()), "application/fhir+xml");
+                        //w.Add(b, new[] { ("resourceUri", item.fullUrl), ("resourceType", item.element.Name.LocalName) });
 
                     }
                 }
+                //nuget, npm, jar, chrome extensions
+                zs.Build();
             }
         }
 

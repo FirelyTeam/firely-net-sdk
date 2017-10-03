@@ -31,14 +31,14 @@ namespace Hl7.Fhir.Specification.Source
             _path = path;
         }
 
-        public List<ConformanceScanInformation> List()
+        public List<ArtifactSummary> List()
         {
             var rootResourceType = pollResourceType(_path);
 
             // [WMR 20170825] Handle invalid/non-FHIR resources
             if (rootResourceType == null)
             {
-                return new List<ConformanceScanInformation>();
+                return new List<ArtifactSummary>();
             }
 
             using (var input = File.OpenRead(_path))
@@ -53,9 +53,9 @@ namespace Hl7.Fhir.Specification.Source
                     // => First skip unknown resources 
                     where ModelInfo.IsKnownResource(resourceType)
 
-                    select  new ConformanceScanInformation()
+                    select  new ArtifactSummary()
                     {
-                        ResourceType = EnumUtility.ParseLiteral<ResourceType>(resourceType).Value,
+                        ResourceType = resourceType,
                         ResourceUri = res.fullUrl,
                         Canonical = res.element.Value<string>("url"),
                         ValueSetSystem = getValueSetSystem(res.element),
@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Specification.Source
         }
 
 
-        public Resource Retrieve(ConformanceScanInformation entry)
+        public Resource Retrieve(ArtifactSummary entry)
         {
             if (entry == null) throw Error.ArgumentNull(nameof(entry));
 

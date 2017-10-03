@@ -16,6 +16,11 @@ namespace Hl7.Fhir.Serialization
 {
     public partial struct XmlDomFhirNavigator
     {
+        public static IElementNavigator Create(XElement doc)
+        {
+            return new XmlDomFhirNavigator(doc);
+        }
+
         public static IElementNavigator Create(XmlReader reader)
         {
             XDocument doc = null;
@@ -29,7 +34,7 @@ namespace Hl7.Fhir.Serialization
                 throw Error.Format("Cannot parse xml: " + xec.Message);
             }
 
-            return new XmlDomFhirNavigator(doc.Root);
+            return Create(doc.Root);
         }
 
         public static IElementNavigator Create(string xml)
@@ -39,18 +44,5 @@ namespace Hl7.Fhir.Serialization
                 return Create(reader);
             }
         }
-
-        public static IElementNavigator Create(Stream stream)
-        {
-            using (var reader = SerializationUtil.XmlReaderFromStream(stream))
-            {
-                return Create(reader);
-            }
-        }
-
-        //public static IElementNavigator Create(JsonReader reader, bool disallowXsiAttributesOnRoot = false)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }

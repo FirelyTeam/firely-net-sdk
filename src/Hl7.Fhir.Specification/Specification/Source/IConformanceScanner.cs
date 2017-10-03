@@ -7,7 +7,7 @@ namespace Hl7.Fhir.Specification.Source
 {
     internal interface IConformanceScanner
     {
-        Resource Retrieve(ConformanceScanInformation entry);
-        List<ConformanceScanInformation> List();
+        Resource Retrieve(ArtifactSummary entry);
+        List<ArtifactSummary> List();
     }
 }
