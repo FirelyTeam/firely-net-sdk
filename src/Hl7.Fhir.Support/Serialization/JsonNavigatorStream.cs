@@ -98,25 +98,28 @@ namespace Hl7.Fhir.Serialization
 
             else
             {
-                var resource = (JObject)JObject.ReadFrom(_reader);
-
-                if (resource != null)
+                if (_reader.TokenType != JsonToken.EndObject)
                 {
-                    // First try to initialize from canonical url (conformance resources)
-                    var canonicalUrl = resource.Value<string>("url");
+                    var resource = (JObject)JObject.ReadFrom(_reader);
 
-                    // Otherwise try to initialize from resource id
-                    if (canonicalUrl == null)
+                    if (resource != null)
                     {
-                        var resourceId = resource.Value<string>("id");
-                        if (resourceId != null)
-                            canonicalUrl = "http://example.org/" + ResourceType + "/" + resourceId;
-                    }
+                        // First try to initialize from canonical url (conformance resources)
+                        var canonicalUrl = resource.Value<string>("url");
 
-                    if(canonicalUrl != null)
-                    {
-                        _current = (resource, canonicalUrl);
-                        return true;
+                        // Otherwise try to initialize from resource id
+                        if (canonicalUrl == null)
+                        {
+                            var resourceId = resource.Value<string>("id");
+                            if (resourceId != null)
+                                canonicalUrl = "http://example.org/" + ResourceType + "/" + resourceId;
+                        }
+
+                        if (canonicalUrl != null)
+                        {
+                            _current = (resource, canonicalUrl);
+                            return true;
+                        }
                     }
                 }
 
