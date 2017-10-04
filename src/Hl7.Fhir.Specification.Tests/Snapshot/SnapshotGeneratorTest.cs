@@ -970,7 +970,7 @@ namespace Hl7.Fhir.Specification.Tests
             assertIssue(outcome.Issue[2], Issue.UNAVAILABLE_REFERENCED_PROFILE, "http://example.org/fhir/StructureDefinition/MyCodeableConcept");
         }
 
-        static void assertIssue(OperationOutcome.IssueComponent issue, Issue expected, string diagnostics = null)
+        static void assertIssue(OperationOutcome.IssueComponent issue, Issue expected, string diagnostics = null, params string[] location)
         {
             Assert.IsNotNull(issue);
             Assert.AreEqual(expected.Type, issue.Code);
@@ -980,6 +980,10 @@ namespace Hl7.Fhir.Specification.Tests
             if (diagnostics != null)
             {
                 Assert.AreEqual(diagnostics, issue.Diagnostics);
+            }
+            if (location != null && location.Length > 0)
+            {
+                Assert.IsTrue(location.SequenceEqual(issue.Location));
             }
         }
 
@@ -5933,6 +5937,234 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNull(nav.Current.SliceName);
             Assert.IsTrue(nav.MoveToNext());
             Assert.AreEqual("MyExtension", nav.Current.SliceName);
+        }
+
+        // [WMR 20171004] NEW
+
+        // Verify generated outcome issue for incompatible type profile
+        // Also verify that choice type element renaming is not affected
+        [TestMethod]
+        public void TestIncompatibleTypeProfile()
+        {
+            const string extensionUrl = @"http://example.org/fhir/StructureDefinition/ValueReferenceExtension";
+            var sd = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Extension.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Extension),
+                Name = "ValueReferenceExtension",
+                Url = extensionUrl,
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.ComplexType,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Extension.url")
+                        {
+                            Fixed = new FhirUri(extensionUrl)
+                        },
+                        new ElementDefinition("Extension.valueReference")
+                        {
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = FHIRAllTypes.Reference.GetLiteral(),
+                                    // WRONG! Should be TargetProfile
+                                    // Expecting outcome issue about incompatible profile
+                                    Profile = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient)
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            var resolver = new InMemoryProfileResolver(sd);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+            _generator.BeforeExpandElement += beforeExpandElementHandler;
+            StructureDefinition expanded = null;
+            try
+            {
+                generateSnapshotAndCompare(sd, out expanded);
+            }
+            finally
+            {
+                _generator.BeforeExpandElement -= beforeExpandElementHandler;
+            }
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+            dumpOutcome(_generator.Outcome);
+            dumpElements(expanded.Snapshot.Element);
+
+            // Expecting a single warning about incompatible type profile on element Extension.valueSetReference
+            Assert.IsNotNull(_generator.Outcome);
+            Assert.IsNotNull(_generator.Outcome.Issue);
+            Assert.AreEqual(1, _generator.Outcome.Issue.Count);
+
+            assertIssue(_generator.Outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_PROFILE_TYPE, extensionUrl, sd.Differential.Element[1].Path);
+
+            // Verify element renaming is not affected
+            // Expecting valueReference in snapshot, not value[x]
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.JumpToFirst("Extension.valueReference"));
+            // Verify expansion of child element valueReference.reference
+            // Expect expansion of core type profile for ResourceReference
+            Assert.IsTrue(nav.MoveToChild("reference"));
+        }
+
+        // If an element constraint introduces multiple type profiles,
+        // then the snapshot generator should not expand profile children.
+        // Verify no outcome issue for incompatible type profiles
+        // Also verify that choice type element renaming is not affected
+        [TestMethod]
+        public void TestMultipleIncompatibleTypeProfiles()
+        {
+            const string extensionUrl = @"http://example.org/fhir/StructureDefinition/ValueReferenceExtension";
+            var sd = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Extension.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Extension),
+                Name = "ValueReferenceExtension",
+                Url = extensionUrl,
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.ComplexType,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Extension.url")
+                        {
+                            Fixed = new FhirUri(extensionUrl)
+                        },
+                        new ElementDefinition("Extension.valueReference")
+                        {
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = FHIRAllTypes.Reference.GetLiteral(),
+                                    // WRONG! Should be TargetProfile
+                                    // Expecting outcome issue about incompatible profile
+                                    Profile = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient)
+                                },
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = FHIRAllTypes.Reference.GetLiteral(),
+                                    // WRONG! Should be TargetProfile
+                                    // Expecting outcome issue about incompatible profile
+                                    Profile = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation)
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            var resolver = new InMemoryProfileResolver(sd);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+            _generator.BeforeExpandElement += beforeExpandElementHandler;
+            StructureDefinition expanded = null;
+            try
+            {
+                generateSnapshotAndCompare(sd, out expanded);
+            }
+            finally
+            {
+                _generator.BeforeExpandElement -= beforeExpandElementHandler;
+            }
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+            dumpOutcome(_generator.Outcome);
+            dumpElements(expanded.Snapshot.Element);
+
+            // Element specifies multiple type profiles, so snapshot generator will not try to expand
+            // Expecting no warnings about incompatible type profiles
+            Assert.IsNull(_generator.Outcome);
+
+            // Verify element renaming is not affected
+            // Expecting valueReference in snapshot, not value[x]
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.JumpToFirst("Extension.valueReference"));
+            // Verify expansion of child element valueReference.reference
+            // Expect expansion of core type profile for ResourceReference
+            Assert.IsTrue(nav.MoveToChild("reference"));
+        }
+
+        // Verify that choice type elements constrained to a single type code are properly renamed,
+        // even if there are multiple type options (with same code)
+        // https://trello.com/c/OvQFRdCJ
+        [TestMethod]
+        public void TestExtensionValueReferenceRenaming()
+        {
+            const string extensionUrl = @"http://example.org/fhir/StructureDefinition/ValueReferenceExtension";
+            var sd = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Extension.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Extension),
+                Name = "ValueReferenceExtension",
+                Url = extensionUrl,
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.ComplexType,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Extension.url")
+                        {
+                            Fixed = new FhirUri(extensionUrl)
+                        },
+                        new ElementDefinition("Extension.valueReference")
+                        {
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = FHIRAllTypes.Reference.GetLiteral(),
+                                    TargetProfile = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient)
+                                },
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = FHIRAllTypes.Reference.GetLiteral(),
+                                    TargetProfile = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation)
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            var resolver = new InMemoryProfileResolver(sd);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+            _generator.BeforeExpandElement += beforeExpandElementHandler;
+            StructureDefinition expanded = null;
+            try
+            {
+                generateSnapshotAndCompare(sd, out expanded);
+            }
+            finally
+            {
+                _generator.BeforeExpandElement -= beforeExpandElementHandler;
+            }
+
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+            dumpOutcome(_generator.Outcome);
+            dumpElements(expanded.Snapshot.Element);
+
+            Assert.IsNull(_generator.Outcome);
+
+            // Expecting valueReference in snapshot, not value[x]
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.JumpToFirst("Extension.valueReference"));
+            // Verify expansion of child element valueReference.reference
+            // Expect expansion of core type profile for ResourceReference
+            Assert.IsTrue(nav.MoveToChild("reference"));
         }
 
     }
