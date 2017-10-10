@@ -1,10 +1,13 @@
 ﻿/* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2017, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
+
+// [WMR 20171010] Use new ArtifactSummary instead of obsolete ConformanceScanInformation
+#define ARTIFACTSUMMARY
 
 using System;
 using System.Collections.Generic;
@@ -15,6 +18,7 @@ using System.IO;
 using System.Xml;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Serialization;
 using Newtonsoft.Json;
 using System.Diagnostics;
 
@@ -285,7 +289,11 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         bool _resourcesPrepared = false;
+#if ARTIFACTSUMMARY
+        private List<ArtifactSummary> _resourceScanInformation;
+#else
         private List<ConformanceScanInformation> _resourceScanInformation;
+#endif
 
         public enum DuplicateFilenameResolution
         {
@@ -337,9 +345,16 @@ namespace Hl7.Fhir.Specification.Source
             _resourcesPrepared = true;
             return;
 
+#if ARTIFACTSUMMARY
+            (List<ArtifactSummary>, ErrorInfo[]) scanPaths(List<string> paths)
+            {
+                var scanResult = new List<ArtifactSummary>();
+#else
             (List<ConformanceScanInformation>, ErrorInfo[]) scanPaths(List<string> paths)
             {
                 var scanResult = new List<ConformanceScanInformation>();
+#endif
+
                 var errors = new List<ErrorInfo>();
 
                 foreach (var file in paths)
@@ -366,12 +381,33 @@ namespace Hl7.Fhir.Specification.Source
             }
         }
 
+#if ARTIFACTSUMMARY
+        private static IArtifactScanner createScanner(string path)
+        {
+            // TODO: Allow injection of custom harvester
+            var harvester = new ArtifactSummaryHarvester();
+
+            var ext = Path.GetExtension(path).ToLower();
+            switch (ext)
+            {
+                case ".xml":
+                    return new XmlArtifactScanner(path, harvester);
+                case ".json":
+                    // return new JsonArtifactScanner(path, harvester);
+                    throw new NotImplementedException();
+            }
+            // Unsupported extension
+            return null;
+        }
+#else
         private static IConformanceScanner createScanner(string path)
         {
             var ext = Path.GetExtension(path).ToLower();
             return ext == ".xml" ? new XmlFileConformanceScanner(path) :
                           ext == ".json" ? new JsonFileConformanceScanner(path) : (IConformanceScanner)null;
         }
+#endif
+
 
 
         public void Refresh()
@@ -405,10 +441,19 @@ namespace Hl7.Fhir.Specification.Source
         public IEnumerable<string> ListResourceUris(ResourceType? filter = null)
         {
             prepareResources();
-            IEnumerable<ConformanceScanInformation> scan = _resourceScanInformation;
 
+#if ARTIFACTSUMMARY
+            IEnumerable<ArtifactSummary> scan = _resourceScanInformation;
+            if (filter != null)
+            {
+                var resType = filter.GetLiteral();
+                scan = scan.Where(dsi => dsi.ResourceType == resType);
+            }
+#else
+            IEnumerable<ConformanceScanInformation> scan = _resourceScanInformation;
             if (filter != null)
                 scan = scan.Where(dsi => dsi.ResourceType == filter);
+#endif
 
             return scan.Select(dsi => dsi.ResourceUri);
         }
@@ -437,7 +482,11 @@ namespace Hl7.Fhir.Specification.Source
             return getResourceFromScannedSource(info);
         }
 
+#if ARTIFACTSUMMARY
+        private static Resource getResourceFromScannedSource(ArtifactSummary info)
+#else
         private static Resource getResourceFromScannedSource(ConformanceScanInformation info)
+#endif
         {
             var path = info.Origin;
             var scanner = createScanner(path);
@@ -462,7 +511,11 @@ namespace Hl7.Fhir.Specification.Source
 
             prepareResources();
 
+#if ARTIFACTSUMMARY
+            IEnumerable<ArtifactSummary> infoList = _resourceScanInformation;
+#else
             IEnumerable<ConformanceScanInformation> infoList = _resourceScanInformation;
+#endif
 
             if (sourceUri != null)
                 infoList = infoList.Where(ci => ci.ConceptMapSource == sourceUri);
@@ -485,4 +538,4 @@ namespace Hl7.Fhir.Specification.Source
         }
     }
 #endif
-}
+    }

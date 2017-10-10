@@ -1,77 +1,61 @@
 ﻿/* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2017, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Hl7.Fhir.Serialization;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace Hl7.Fhir.Specification.Source
 {
-    [Obsolete("Replaced by ArtifactScanner & JsonNavigatorStream")]
-    /// <summary>
-    /// Internal class which is able to scan a (possibly) large Xml FHIR (conformance) resource from a given stream
-    /// </summary>
-    internal class JsonFileConformanceScanner : IConformanceScanner
+    internal sealed class JsonArtifactScanner : IArtifactScanner
     {
+        /// <summary>Default base url used for generating virtual resource urls.</summary>
+        public const string DefaultBaseUrl = "http://example.org/";
+
+        ArtifactSummaryHarvester _harvester;
         string _path;
 
-        public JsonFileConformanceScanner(string path)
+        public JsonArtifactScanner(string path, ArtifactSummaryHarvester harvester)
         {
-            _path = path;
+            _path = path ?? throw new ArgumentNullException(nameof(path));
+            _harvester = harvester ?? throw new ArgumentNullException(nameof(harvester));
         }
 
-        public List<ConformanceScanInformation> List()
+        /// <summary>Scan the source and extract summary information from all the available artifacts.</summary>
+        /// <returns>A list of <see cref="ArtifactSummary"/> instances.</returns>
+        public List<ArtifactSummary> List()
         {
-            var rootResourceType = pollResourceType(_path);
-
-            // [WMR 20170825] Handle invalid/non-FHIR resources
-            if (rootResourceType == null)
+            IEnumerable<ArtifactSummary> summaries = Enumerable.Empty<ArtifactSummary>();
+            var input = createStream(_path);
+            if (input != null)
             {
-                return new List<ConformanceScanInformation>();
+                using (input)
+                {
+                    summaries = _harvester.Harvest(input);
+                }
             }
-
-            using (var input = File.OpenRead(_path))
-            {
-                var result =                     
-                    from res in StreamResources(input, isBundle: rootResourceType == "Bundle")
-                    let resourceType = res.element.Value<string>("resourceType")
-
-                    // [WMR 20170420] Issue: if the resource type is unknown (i.e. DSTU Conformance), 
-                    // then we cannot parse res.Name to a ResourceType enum value 
-                    // (ParseLiteral returns null and .Value throws an exception) 
-                    // => First skip unknown resources 
-                    where ModelInfo.IsKnownResource(resourceType)
-
-                    select new ConformanceScanInformation()
-                    {
-                        ResourceType = EnumUtility.ParseLiteral<ResourceType>(resourceType).Value,
-                        ResourceUri = res.fullUrl,
-                        Canonical = res.element.Value<string>("url"),
-                        ValueSetSystem = getValueSetSystem(res.element),
-                        UniqueIds = getUniqueIds(res.element),
-                        ConceptMapSource = getCmSource(res.element),
-                        ConceptMapTarget = getCmTarget(res.element),
-                        Origin = _path,
-                    };
-
-                return result.ToList();
-            }
+            return new List<ArtifactSummary>(summaries);
         }
 
+        #region Json specific logic
 
-        public Resource Retrieve(ConformanceScanInformation entry)
+        static INavigatorStream createStream(string path) => new JsonNavigatorStream(path);
+
+        /// <summary>Retrieve the artifact that is identified by the specified summary information.</summary>
+        /// <param name="entry">Artifact summary.</param>
+        /// <returns>A <see cref="Resource"/> instance.</returns>
+        public Resource Retrieve(ArtifactSummary entry)
         {
             if (entry == null) throw Error.ArgumentNull(nameof(entry));
 
@@ -95,16 +79,6 @@ namespace Hl7.Fhir.Specification.Source
             return resultResource;
         }
 
-
-        private string getValueSetSystem(JObject vs) => vs["codeSystem"]?["system"]?.Value<string>();
-
-        private string[] getUniqueIds(JObject ns) => ns["uniqueId"]?.Select(id => (string)id["value"]).ToArray() ?? new string[0];
-
-        private string getCmSource(JObject cm) => cm["sourceUri"]?.Value<string>() + cm["sourceReference"]?["reference"]?.Value<string>();
-
-        private string getCmTarget(JObject cm) => cm["targetUri"]?.Value<string>() + cm["targetReference"]?["reference"]?.Value<string>();
-
- 
         // Use a forward-only XmlReader to scan through a possibly huge bundled file,
         // and yield the feed entries, so only one entry is in memory at a time
         internal static IEnumerable<(JObject element, string fullUrl)> StreamResources(Stream input, bool isBundle)
@@ -150,7 +124,7 @@ namespace Hl7.Fhir.Specification.Source
                             var resourceId = resource.Value<string>("id");
                             if (resourceId != null)
                             {
-                                var fullUrl = "http://example.org/" + resourceType + "/" + resourceId;
+                                var fullUrl = DefaultBaseUrl + resourceType + "/" + resourceId;
                                 yield return (resource, fullUrl);
                             }
                         }
@@ -183,5 +157,9 @@ namespace Hl7.Fhir.Specification.Source
 
             return false;
         }
+
+        #endregion
+
     }
+
 }

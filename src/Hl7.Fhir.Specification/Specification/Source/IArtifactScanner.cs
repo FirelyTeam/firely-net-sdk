@@ -13,13 +13,14 @@ namespace Hl7.Fhir.Specification.Source
 {
     internal interface IArtifactScanner
     {
+        /// <summary>Scan the source and extract summary information from all the available artifacts.</summary>
+        /// <returns>A list of <see cref="ArtifactSummary"/> instances.</returns>
+        List<ArtifactSummary> List();
+
         /// <summary>Retrieve the artifact that is identified by the specified summary information.</summary>
         /// <param name="entry">Artifact summary.</param>
         /// <returns>A <see cref="Resource"/> instance.</returns>
         Resource Retrieve(ArtifactSummary entry);
-
-        /// <summary>Scan the source and extract summary information from all the available artifacts.</summary>
-        /// <returns>A list of <see cref="ArtifactSummary"/> instances.</returns>
-        List<ArtifactSummary> List();
     }
 }
+

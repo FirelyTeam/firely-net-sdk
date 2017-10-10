@@ -25,4 +25,9 @@ namespace Hl7.Fhir.Serialization
 
         bool MoveNext(string position);
     }
+
+    public interface INavigatorStream : ISeekableEnumerator<IElementNavigator>, IDisposable
+    {
+
+    }
 }

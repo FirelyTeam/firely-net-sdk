@@ -12,23 +12,14 @@ using System;
 
 namespace Hl7.Fhir.Specification.Source
 {
-    internal class SummaryHarvester
-    { 
-        // [WMR 20171010] What is this for?
-        // public Action<IElementNavigator, ArtifactSummary> Generator { get; set; }
-
-        public ArtifactSummary Harvest(IElementNavigator input) => throw new NotImplementedException();
-
-        public IEnumerable<ArtifactSummary> Harvest(IEnumerable<IElementNavigator> input) => throw new NotImplementedException();
-    
-    }
+    // [WMR 20171010] TODO: Allow consumers to create specialized subclasses
 
     // [WMR 20171010] TODO
     // * ReadOnlyDictionary? (supported by all platforms?)
     //   DirectorySource needs to publicly expose this information => no public setters!
     // * Create common base class for all artifacts
     //   Create specialized subclasses for specific resource types, e.g. StructureDefinition
-    internal class ArtifactSummary : Dictionary<string,string>
+    public class ArtifactSummary : Dictionary<string,string>
     {
         public ArtifactSummary()
         {
@@ -63,5 +54,39 @@ namespace Hl7.Fhir.Specification.Source
         public override string ToString()
             => $"{ResourceType} resource with uri {ResourceUri ?? "(unknown)"} (canonical {Canonical ?? "(unknown)"}), read from {Origin}";
     }
+
+    /// <summary>Base class for extracting summary information from FHIR artifacts.</summary>
+    public class ArtifactSummaryHarvester
+    {
+        public ArtifactSummaryHarvester() { }
+
+        //public IEnumerable<ArtifactSummary> Harvest(IEnumerable<IElementNavigator> input)
+        //{
+        //    foreach (var entry in input)
+        //    {
+        //        yield return Harvest(entry);
+        //    }
+        //}
+
+        public IEnumerable<ArtifactSummary> Harvest(IEnumerator<IElementNavigator> input)
+        {
+            while (input.MoveNext())
+            {
+                yield return Harvest(input.Current);
+            }
+        }
+
+        public virtual ArtifactSummary Harvest(IElementNavigator input)
+        {
+            return new ArtifactSummary()
+            {
+                // TODO
+                Origin = @"D:\Temp\Test.xml",
+                ResourceType = "TEST"
+            };
+        }
+    }
+
+
 
 }

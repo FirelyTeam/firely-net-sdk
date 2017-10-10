@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Serialization
     /// <summary>
     /// Internal class which is able to scan a (possibly) large Xml FHIR (conformance) resource from a given stream
     /// </summary>
-    public class JsonNavigatorStream : ISeekableEnumerator<IElementNavigator>, IDisposable
+    public class JsonNavigatorStream : INavigatorStream
     {
         private JsonReader _reader = null;
         private Stream _fileStream = null;

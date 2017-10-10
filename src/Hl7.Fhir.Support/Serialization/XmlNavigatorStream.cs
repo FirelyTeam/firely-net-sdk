@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Serialization
     /// Internal class which is able to scan a (possibly) large Xml FHIR Bundle into separate entries, each represented by an
     /// IElementNavigator. Supports files with a single resource too.
     /// </summary>
-    public class XmlNavigatorStream : ISeekableEnumerator<IElementNavigator>, IDisposable
+    public class XmlNavigatorStream : INavigatorStream
     {
         private XmlReader _reader = null;
         private Stream _fileStream = null;

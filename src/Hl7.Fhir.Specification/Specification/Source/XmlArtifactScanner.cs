@@ -1,70 +1,61 @@
 ﻿/* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2017, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
-using Hl7.Fhir.Support;
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Introspection;
-using System.Diagnostics;
-using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Source
 {
-    [Obsolete("Replaced by ArtifactScanner & XmlNavigatorStream")]
-    /// <summary>
-    /// Internal class which is able to scan a (possibly) large Xml FHIR (conformance) resource from a given stream
-    /// </summary>
-    internal class XmlFileConformanceScanner : IConformanceScanner
+    internal sealed class XmlArtifactScanner : IArtifactScanner
     {
+        /// <summary>Default base url used for generating virtual resource urls.</summary>
+        public const string DefaultBaseUrl = "http://example.org/";
+
+        ArtifactSummaryHarvester _harvester;
         string _path;
 
-        public XmlFileConformanceScanner(string path)
+        public XmlArtifactScanner(string path, ArtifactSummaryHarvester harvester)
         {
-            _path = path;
+            _path = path ?? throw new ArgumentNullException(nameof(path));
+            _harvester = harvester ?? throw new ArgumentNullException(nameof(harvester));
         }
 
-        public List<ConformanceScanInformation> List()
+        /// <summary>Scan the source and extract summary information from all the available artifacts.</summary>
+        /// <returns>A list of <see cref="ArtifactSummary"/> instances.</returns>
+        public List<ArtifactSummary> List()
         {
-            using (var input = File.OpenRead(_path))
+            IEnumerable<ArtifactSummary> summaries = Enumerable.Empty<ArtifactSummary>();
+            var input = createStream(_path);
+            if (input != null)
             {
-                return StreamResources(input)
-
-                    // [WMR 20170420] Issue: if the resource type is unknown (i.e. DSTU Conformance), 
-                    // then we cannot parse res.Name to a ResourceType enum value 
-                    // (ParseLiteral returns null and .Value throws an exception) 
-                    // => First skip unknown resources 
-                    .Where(res => ModelInfo.IsKnownResource(res.element.Name.LocalName))
-
-                    .Select(res =>
-                            new ConformanceScanInformation()
-                            {
-                                ResourceType = EnumUtility.ParseLiteral<ResourceType>(res.element.Name.LocalName).Value,
-                                ResourceUri = res.fullUrl,
-                                Canonical = getPrimitiveValueElement(res.element, "url"),
-                                ValueSetSystem = getValueSetSystem(res.element),
-                                UniqueIds = getUniqueIds(res.element),
-                                ConceptMapSource = getCmSource(res.element),
-                                ConceptMapTarget = getCmTarget(res.element),
-                                Origin = _path,
-                            })
-
-                     .ToList();
+                using (input)
+                {
+                    summaries = _harvester.Harvest(input);
+                }
             }
+            return new List<ArtifactSummary>(summaries);
         }
 
+        #region Xml specific logic
 
-        public Resource Retrieve(ConformanceScanInformation entry)
+        static INavigatorStream createStream(string path) => new XmlNavigatorStream(path);
+
+        /// <summary>Retrieve the artifact that is identified by the specified summary information.</summary>
+        /// <param name="entry">Artifact summary.</param>
+        /// <returns>A <see cref="Resource"/> instance.</returns>
+        public Resource Retrieve(ArtifactSummary entry)
         {
             if (entry == null) throw Error.ArgumentNull(nameof(entry));
 
@@ -83,55 +74,6 @@ namespace Hl7.Fhir.Specification.Source
             resultResource.SetOrigin(entry.Origin);
 
             return resultResource;
-        }
-
-
-        private string getValueSetSystem(XElement vs)
-        {
-            return vs.Elements(XmlNs.XFHIR + "codeSystem")
-                     .Elements(XmlNs.XFHIR + "system")
-                     .Attributes("value")
-                     .Select(a => a.Value).SingleOrDefault();
-        }
-
-        private string[] getUniqueIds(XElement ns)
-        {
-            return ns.Elements(XmlNs.XFHIR + "uniqueId")
-                     .Elements(XmlNs.XFHIR + "value")
-                     .Attributes("value")
-                     .Select(a => a.Value).ToArray<string>();
-        }
-
-        private string getCmSource(XElement cm)
-        {
-            return cm
-                 .Elements(XmlNs.XFHIR + "sourceUri")
-                 .Concat(cm
-                    .Elements(XmlNs.XFHIR + "sourceReference")
-                    .Elements(XmlNs.XFHIR + "reference"))
-                 .Attributes("value").Select(a => a.Value).SingleOrDefault();
-        }
-
-        private string getCmTarget(XElement cm)
-        {
-            return cm
-                 .Elements(XmlNs.XFHIR + "targetUri")
-                 .Concat(cm
-                    .Elements(XmlNs.XFHIR + "targetReference")
-                    .Elements(XmlNs.XFHIR + "reference"))
-                 .Attributes("value").Select(a => a.Value).SingleOrDefault();
-        }
-
-        private string getPrimitiveValueElement(XElement element, string name)
-        {
-            return element.Elements(XmlNs.XFHIR + name)
-                    .Attributes("value")
-                    .Select(a => a.Value).SingleOrDefault();
-        }
-
-        private class FullUrlAnnotation
-        {
-            public string FullUrl { get; set; }
         }
 
         // Use a forward-only XmlReader to scan through a possibly huge bundled file,
@@ -182,7 +124,7 @@ namespace Hl7.Fhir.Specification.Source
                         var resourceId = resourceNode.Elements(XmlNs.XFHIR + "id").Attributes("value").SingleOrDefault();
                         if (resourceId != null)
                         {
-                            var fullUrl = "http://example.org/" + resourceNode.Name.LocalName + "/" + resourceId.Value;
+                            var fullUrl = DefaultBaseUrl + resourceNode.Name.LocalName + "/" + resourceId.Value;
                             yield return (resourceNode, fullUrl);
                         }
                     }
@@ -190,7 +132,6 @@ namespace Hl7.Fhir.Specification.Source
             }
             yield break;
         }
-
 
         private static string getRootName(XmlReader reader)
         {
@@ -202,5 +143,9 @@ namespace Hl7.Fhir.Specification.Source
 
             return null;
         }
+
+        #endregion
+
     }
+
 }
