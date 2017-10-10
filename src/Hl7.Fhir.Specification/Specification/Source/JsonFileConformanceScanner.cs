@@ -19,6 +19,7 @@ using System;
 
 namespace Hl7.Fhir.Specification.Source
 {
+    [Obsolete("Replaced by JsonNavigatorStream")]
     /// <summary>
     /// Internal class which is able to scan a (possibly) large Xml FHIR (conformance) resource from a given stream
     /// </summary>
@@ -31,14 +32,14 @@ namespace Hl7.Fhir.Specification.Source
             _path = path;
         }
 
-        public List<ArtifactSummary> List()
+        public List<ConformanceScanInformation> List()
         {
             var rootResourceType = pollResourceType(_path);
 
             // [WMR 20170825] Handle invalid/non-FHIR resources
             if (rootResourceType == null)
             {
-                return new List<ArtifactSummary>();
+                return new List<ConformanceScanInformation>();
             }
 
             using (var input = File.OpenRead(_path))
@@ -53,9 +54,9 @@ namespace Hl7.Fhir.Specification.Source
                     // => First skip unknown resources 
                     where ModelInfo.IsKnownResource(resourceType)
 
-                    select  new ArtifactSummary()
+                    select new ConformanceScanInformation()
                     {
-                        ResourceType = resourceType,
+                        ResourceType = EnumUtility.ParseLiteral<ResourceType>(resourceType).Value,
                         ResourceUri = res.fullUrl,
                         Canonical = res.element.Value<string>("url"),
                         ValueSetSystem = getValueSetSystem(res.element),
@@ -70,7 +71,7 @@ namespace Hl7.Fhir.Specification.Source
         }
 
 
-        public Resource Retrieve(ArtifactSummary entry)
+        public Resource Retrieve(ConformanceScanInformation entry)
         {
             if (entry == null) throw Error.ArgumentNull(nameof(entry));
 

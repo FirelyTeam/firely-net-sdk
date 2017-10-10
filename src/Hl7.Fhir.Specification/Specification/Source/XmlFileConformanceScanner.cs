@@ -21,6 +21,7 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Source
 {
+    [Obsolete("Replaced by XmlNavigatorStream")]
     /// <summary>
     /// Internal class which is able to scan a (possibly) large Xml FHIR (conformance) resource from a given stream
     /// </summary>
@@ -33,7 +34,7 @@ namespace Hl7.Fhir.Specification.Source
             _path = path;
         }
 
-        public List<ArtifactSummary> List()
+        public List<ConformanceScanInformation> List()
         {
             using (var input = File.OpenRead(_path))
             {
@@ -46,9 +47,9 @@ namespace Hl7.Fhir.Specification.Source
                     .Where(res => ModelInfo.IsKnownResource(res.element.Name.LocalName))
 
                     .Select(res =>
-                            new ArtifactSummary()
+                            new ConformanceScanInformation()
                             {
-                                ResourceType = res.element.Name.LocalName,
+                                ResourceType = EnumUtility.ParseLiteral<ResourceType>(res.element.Name.LocalName).Value,
                                 ResourceUri = res.fullUrl,
                                 Canonical = getPrimitiveValueElement(res.element, "url"),
                                 ValueSetSystem = getValueSetSystem(res.element),
@@ -63,7 +64,7 @@ namespace Hl7.Fhir.Specification.Source
         }
 
 
-        public Resource Retrieve(ArtifactSummary entry)
+        public Resource Retrieve(ConformanceScanInformation entry)
         {
             if (entry == null) throw Error.ArgumentNull(nameof(entry));
 

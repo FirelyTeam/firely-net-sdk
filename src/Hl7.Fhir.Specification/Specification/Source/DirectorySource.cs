@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         bool _resourcesPrepared = false;
-        private List<ArtifactSummary> _resourceScanInformation;
+        private List<ConformanceScanInformation> _resourceScanInformation;
 
         public enum DuplicateFilenameResolution
         {
@@ -337,9 +337,9 @@ namespace Hl7.Fhir.Specification.Source
             _resourcesPrepared = true;
             return;
 
-            (List<ArtifactSummary>, ErrorInfo[]) scanPaths(List<string> paths)
+            (List<ConformanceScanInformation>, ErrorInfo[]) scanPaths(List<string> paths)
             {
-                var scanResult = new List<ArtifactSummary>();
+                var scanResult = new List<ConformanceScanInformation>();
                 var errors = new List<ErrorInfo>();
 
                 foreach (var file in paths)
@@ -405,10 +405,10 @@ namespace Hl7.Fhir.Specification.Source
         public IEnumerable<string> ListResourceUris(ResourceType? filter = null)
         {
             prepareResources();
-            IEnumerable<ArtifactSummary> scan = _resourceScanInformation;
+            IEnumerable<ConformanceScanInformation> scan = _resourceScanInformation;
 
             if (filter != null)
-                scan = scan.Where(dsi => dsi.ResourceType == filter?.GetLiteral());
+                scan = scan.Where(dsi => dsi.ResourceType == filter);
 
             return scan.Select(dsi => dsi.ResourceUri);
         }
@@ -437,7 +437,7 @@ namespace Hl7.Fhir.Specification.Source
             return getResourceFromScannedSource(info);
         }
 
-        private static Resource getResourceFromScannedSource(ArtifactSummary info)
+        private static Resource getResourceFromScannedSource(ConformanceScanInformation info)
         {
             var path = info.Origin;
             var scanner = createScanner(path);
@@ -462,7 +462,7 @@ namespace Hl7.Fhir.Specification.Source
 
             prepareResources();
 
-            IEnumerable<ArtifactSummary> infoList = _resourceScanInformation;
+            IEnumerable<ConformanceScanInformation> infoList = _resourceScanInformation;
 
             if (sourceUri != null)
                 infoList = infoList.Where(ci => ci.ConceptMapSource == sourceUri);
