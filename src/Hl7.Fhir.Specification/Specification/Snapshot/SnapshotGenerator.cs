@@ -436,11 +436,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Also verify that diff only specifies child constraints on common elements (.extension | .modifierExtension) ... ?
                 // Actually, we should determine the intersection of the specified type profiles... ouch
 
-                var distinctTypeCodes = defn.Type.Select(t => t.Code).Distinct().ToList();
-                if (distinctTypeCodes.Count == 1)
+                var distinctTypeCode = defn.CommonTypeCode();
+                if (distinctTypeCode != null)
                 {
                     // Different profiles for common base type => expand the common base type (w/o custom profile)
-                    var typeRef = new ElementDefinition.TypeRefComponent() { Code = distinctTypeCodes[0] };
+                    // var typeRef = new ElementDefinition.TypeRefComponent() { Code = distinctTypeCodes[0] };
+                    var typeRef = new ElementDefinition.TypeRefComponent() { Code = distinctTypeCode };
                     StructureDefinition typeStructure = getStructureForTypeRef(defn, typeRef, true);
                     return expandElementType(nav, typeStructure);
                 }
@@ -795,16 +796,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // 1) The element defines multiple different type codes
 
             var diffTypes = diff.Current.Type;
-            //var distinctTypeCodes = diffTypes.Select(t => t.Code).Distinct().ToList();
-            //if (distinctTypeCodes.Count != 1)
-            //{
-            //    // cnt = 0: Element has no type constraints, nothing to merge
-            //    //          => return true to continue merging child constraints
-            //    // cnt > 1: Multiple type codes, cannot expand children
-            //    //          => return false to prevent merging child constraints
-            //    return distinctTypeCodes.Count == 0;
-            //}
-            var distinctTypeCodeCnt = diffTypes.Select(t => t.Code).Distinct().Count();
+            var distinctTypeCodeCnt = diffTypes.DistinctTypeCodes().Count;
             if (distinctTypeCodeCnt == 0)
             {
                 // Element has no type constraints, nothing to merge

@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // if (snap.Path != diff.Path && snap.IsChoice() && diff.Type.Count() == 1)
                 if (snap.Path != diff.Path && snap.IsChoice())
                 {
-                    var distinctTypeCodes = diff.Type.Select(t => t.Code).Distinct().ToList();
+                    var distinctTypeCodes = diff.DistinctTypeCodes();
                     if (distinctTypeCodes.Count == 1)
                     {
                         // [WMR 20160906] WRONG! Must also handle snap.Path="Extension.value[x]" vs. diff.Path="Extension.extension.value[x]
