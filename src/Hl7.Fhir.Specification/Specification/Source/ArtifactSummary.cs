@@ -6,57 +6,161 @@
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
-using System.Collections.Generic;
 using System;
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Utility;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Source
 {
-    // [WMR 20171010] TODO: Allow consumers to create specialized subclasses
-
-    // [WMR 20171010] TODO
-    // * ReadOnlyDictionary? (supported by all platforms?)
-    //   DirectorySource needs to publicly expose this information => no public setters!
-    // * Create common base class for all artifacts
-    //   Create specialized subclasses for specific resource types, e.g. StructureDefinition
-    public class ArtifactSummary : Dictionary<string,string>
+    /// <summary>Common summary information for generic FHIR artifacts.</summary>
+    public class ArtifactSummary
     {
-        public ArtifactSummary(string url, IElementNavigator input)
+        public ArtifactSummary(string path, string url, IElementNavigator input)
         {
-            // TODO
+            Origin = path;
             ResourceUri = url;
-            ResourceType = input.Name;
+            ResourceTypeName = input.Name;
+            // Try to decode the typename, if well-known
+            ResourceType = EnumUtility.ParseLiteral<ResourceType>(input.Name);
         }
 
-        protected void Set(string key, string value) => throw new NotImplementedException();
-
-        protected string GetOrDefault(string key) => TryGetValue(key, out string value) ? value : null;
-
-
-        /// <summary>Represents the original location of the artifact.</summary>
-        public string Origin { get; set; }
-
-        /// <summary>The resource type.</summary>
-        public string ResourceType { get; set; }
+        /// <summary>The original location of the artifact (container).</summary>
+        public string Origin { get; }
 
         /// <summary>The resource Uri.</summary>
-        public string ResourceUri { get; set; }
+        public string ResourceUri { get; }
 
-        // Conformance resources
+        /// <summary>The (raw) resource type name.</summary>
+        public string ResourceTypeName { get; }
 
-        /// <summary>The canonical resource url.</summary>
-        public string Canonical { get; set; }
+        /// <summary>The decoded resource type, or <c>null</c> if the type is unknown.</summary>
+        public ResourceType? ResourceType { get; }
+    }
 
-        public string ValueSetSystem { get; set; }
 
-        public string[] UniqueIds { get; set; }
+    /// <summary>Extended summary information for FHIR conformance resources.</summary>
+    public class ConformanceResourceSummary : ArtifactSummary
+    {
+        public static bool IsSupported(string typeName) => ModelInfo.IsConformanceResource(typeName);
 
-        public string ConceptMapSource { get; set; }
+        public ConformanceResourceSummary(string path, string url, IElementNavigator input) : base(path, url, input)
+        {
+            Debug.Assert(IsSupported(ResourceTypeName));
 
-        public string ConceptMapTarget { get; set; }
+            if (input.MoveToFirstChild("url"))
+            {
+                Canonical = input.Value?.ToString();
+            }
+        }
+
+        /// <summary>The canonical url, or <c>null</c> if not a conformance resource.</summary>
+        public string Canonical { get; }
 
         public override string ToString()
             => $"{ResourceType} resource with uri {ResourceUri ?? "(unknown)"} (canonical {Canonical ?? "(unknown)"}), read from {Origin}";
     }
 
+
+    /// <summary>Extended summary information for FHIR ValueSet resources.</summary>
+    public class ValueSetSummary : ConformanceResourceSummary
+    {
+        public const ResourceType SupportedType = Model.ResourceType.ValueSet;
+
+        public ValueSetSummary(string path, string url, IElementNavigator input) : base(path, url, input)
+        {
+            Debug.Assert(ResourceType == SupportedType);
+
+            if (input.MoveToNext("codeSystem"))
+            {
+                var nav = input.Clone();
+                if (nav.MoveToFirstChild("system"))
+                {
+                    ValueSetSystem = nav.Value?.ToString();
+                }
+            }
+        }
+
+        // [WMR 20171011] DSTU2!
+
+        /// <summary>The Uri of the inline code system.</summary>
+        public string ValueSetSystem { get; }
+    }
+
+
+    /// <summary>Extended summary information for FHIR NamingSystem resources.</summary>
+    public class NamingSystemSummary : ArtifactSummary
+    {
+        public const ResourceType SupportedType = Model.ResourceType.NamingSystem;
+
+        public NamingSystemSummary(string path, string url, IElementNavigator input) : base(path, url, input)
+        {
+            Debug.Assert(ResourceType == SupportedType);
+
+            var list = new List<string>();
+            if (input.MoveToFirstChild("uniqueId"))
+            {
+                do
+                {
+                    var nav = input.Clone();
+                    if (nav.MoveToFirstChild("value"))
+                    {
+                        list.Add(nav.Value?.ToString());
+                    }
+                } while (input.MoveToNext("uniqueId"));
+            }
+            UniqueIds = list.ToArray();
+        }
+
+        /// <summary>Unique identifiers of the naming system.</summary>
+        public string[] UniqueIds { get; }
+    }
+
+
+    /// <summary>Extended summary information for FHIR ConceptMap resources.</summary>
+    public class ConceptMapSummary : ConformanceResourceSummary
+    {
+        public const ResourceType SupportedType = Model.ResourceType.ConceptMap;
+
+        public ConceptMapSummary(string path, string url, IElementNavigator input) : base(path, url, input)
+        {
+            Debug.Assert(ResourceType == SupportedType);
+
+            if (input.MoveToNext("sourceUri"))
+            {
+                ConceptMapSource = input.Value?.ToString();
+            }
+            else if (input.MoveToNext("sourceReference"))
+            {
+                var nav = input.Clone();
+                if (nav.MoveToFirstChild("reference"))
+                {
+                    ConceptMapSource = nav.Value?.ToString();
+                }
+
+            }
+
+            if (input.MoveToNext("targetUri"))
+            {
+                ConceptMapTarget = input.Value?.ToString();
+            }
+            else if (input.MoveToNext("targetReference"))
+            {
+                var nav = input.Clone();
+                if (nav.MoveToFirstChild("reference"))
+                {
+                    ConceptMapTarget = nav.Value?.ToString();
+                }
+
+            }
+        }
+
+        /// <summary>Url that identifies the source of the mapping.</summary>
+        public string ConceptMapSource { get; }
+
+        /// <summary>Url that identifies the target of the mapping.</summary>
+        public string ConceptMapTarget { get; }
+    }
 }

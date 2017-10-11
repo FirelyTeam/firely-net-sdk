@@ -7,7 +7,9 @@
  */
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Utility;
 using System.Collections.Generic;
 
 namespace Hl7.Fhir.Specification.Source
@@ -28,6 +30,9 @@ namespace Hl7.Fhir.Specification.Source
     /// </summary>
     public class ArtifactSummaryHarvester
     {
+        /// <summary>Returns the global default instance.</summary>
+        public static ArtifactSummaryHarvester Default { get; } = new ArtifactSummaryHarvester();
+
         /// <summary>ctor</summary>
         public ArtifactSummaryHarvester() { }
 
@@ -49,7 +54,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             while (input.MoveNext())
             {
-                yield return Generate(input.Position, input.Current);
+                yield return Generate(input.Path, input.Position, input.Current);
             }
         }
 
@@ -59,11 +64,23 @@ namespace Hl7.Fhir.Specification.Source
         /// <see cref="IElementNavigator"/>, independent of the actual resource serialization format.
         /// Derived classes can override this method to harvest additional custom summary information.
         /// </summary>
+        /// <param name="path">The full path specification the current resource container file.</param>
         /// <param name="url">The fully qualified uri of the current resource.</param>
         /// <param name="input">An <see cref="IElementNavigator"/> to access the raw resource.</param>
         /// <returns>A new <see cref="ArtifactSummary"/> record.</returns>
-        protected virtual ArtifactSummary Generate(string url, IElementNavigator input)
-            => new ArtifactSummary(url, input);
+        protected virtual ArtifactSummary Generate(string path, string url, IElementNavigator input)
+        {
+            // TODO: Dynamically create subtypes depending on resource type
+            // return new ArtifactSummary(path, url, input);
+
+            var resType = EnumUtility.ParseLiteral<ResourceType>(input.Name);
+            if (resType == null) { return new ArtifactSummary(path, url, input); }
+            else if (resType == ResourceType.ConceptMap) { return new ConceptMapSummary(path, url, input); }
+            else if (resType == ResourceType.NamingSystem) { return new NamingSystemSummary(path, url, input); }
+            else if (resType == ResourceType.ValueSet) { return new ValueSetSummary(path, url, input); }
+            else if (ModelInfo.IsConformanceResource(input.Name)) { return new ConformanceResourceSummary(path, url, input); }
+            else return new ArtifactSummary(path, url, input);
+        }
     }
 
 }

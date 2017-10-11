@@ -334,6 +334,9 @@ namespace Hl7.Fhir.Specification.Source
             // Check for duplicate canonical urls, this is forbidden within a single source (and actually, universally,
             // but if another source has the same url, the order of polling in the MultiArtifactSource matters)
             var doubles = from ci in _resourceScanInformation
+#if ARTIFACTSUMMARY
+                          .OfType<ConformanceResourceSummary>()
+#endif
                           where ci.Canonical != null
                           group ci by ci.Canonical into g
                           where g.Count() > 1
@@ -445,16 +448,13 @@ namespace Hl7.Fhir.Specification.Source
 
 #if ARTIFACTSUMMARY
             IEnumerable<ArtifactSummary> scan = _resourceScanInformation;
-            if (filter != null)
-            {
-                var resType = filter.GetLiteral();
-                scan = scan.Where(dsi => dsi.ResourceType == resType);
-            }
 #else
             IEnumerable<ConformanceScanInformation> scan = _resourceScanInformation;
-            if (filter != null)
-                scan = scan.Where(dsi => dsi.ResourceType == filter);
 #endif
+            if (filter != null)
+            {
+                scan = scan.Where(dsi => dsi.ResourceType == filter);
+            }
 
             return scan.Select(dsi => dsi.ResourceUri);
         }
@@ -477,7 +477,13 @@ namespace Hl7.Fhir.Specification.Source
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
             prepareResources();
 
-            var info = _resourceScanInformation.SingleOrDefault(ci => ci.Canonical == uri);
+            var info = _resourceScanInformation
+#if ARTIFACTSUMMARY
+                .OfType<ConformanceResourceSummary>()
+#endif
+                .SingleOrDefault(ci => ci.Canonical == uri);
+                         
+
             if (info == null) return null;
 
             return getResourceFromScannedSource(info);
@@ -499,7 +505,12 @@ namespace Hl7.Fhir.Specification.Source
         {
             prepareResources();
 
-            var info = _resourceScanInformation.SingleOrDefault(ci => ci.ValueSetSystem == system);
+            var info = _resourceScanInformation
+#if ARTIFACTSUMMARY
+                .OfType<ValueSetSummary>()
+#endif
+                .SingleOrDefault(ci => ci.ValueSetSystem == system);
+
             if (info == null) return null;
 
             return getResourceFromScannedSource(info) as ValueSet;
@@ -508,21 +519,26 @@ namespace Hl7.Fhir.Specification.Source
         public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
         {
             if (sourceUri == null && targetUri == null)
+            {
                 throw Error.ArgumentNull(nameof(targetUri), "sourceUri and targetUri cannot both be null");
+            }
 
             prepareResources();
 
 #if ARTIFACTSUMMARY
-            IEnumerable<ArtifactSummary> infoList = _resourceScanInformation;
+            IEnumerable<ConceptMapSummary> infoList = _resourceScanInformation.OfType<ConceptMapSummary>();
 #else
             IEnumerable<ConformanceScanInformation> infoList = _resourceScanInformation;
 #endif
-
             if (sourceUri != null)
+            {
                 infoList = infoList.Where(ci => ci.ConceptMapSource == sourceUri);
+            }
 
             if (targetUri != null)
+            {
                 infoList = infoList.Where(ci => ci.ConceptMapTarget == targetUri);
+            }
 
             return infoList.Select(info => getResourceFromScannedSource(info)).Where(r => r != null).Cast<ConceptMap>();
         }
@@ -532,11 +548,17 @@ namespace Hl7.Fhir.Specification.Source
             if (uniqueId == null) throw Error.ArgumentNull(nameof(uniqueId));
             prepareResources();
 
-            var info = _resourceScanInformation.SingleOrDefault(ci => ci.UniqueIds.Contains(uniqueId));
+            var info = _resourceScanInformation
+#if ARTIFACTSUMMARY
+                .OfType<NamingSystemSummary>()
+#endif
+                .SingleOrDefault(ci => ci.UniqueIds.Contains(uniqueId));
+
             if (info == null) return null;
 
             return getResourceFromScannedSource(info) as NamingSystem;
         }
     }
 #endif
-    }
+
+}

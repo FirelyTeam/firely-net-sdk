@@ -1,7 +1,4 @@
-﻿// [WMR 20171011] OBSOLETE; see ArtifactScannerTests
-#if false
-
-using Hl7.Fhir.Model;
+﻿using Hl7.Fhir.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -19,7 +16,7 @@ using Newtonsoft.Json.Linq;
 namespace Hl7.Fhir.Specification.Tests
 {
     [TestClass]
-    public class ConformanceScannerTests
+    public class ArtifactScannerTests
     {
         private (Bundle b, Resource r, Patient p) makeTestData()
         {
@@ -78,33 +75,41 @@ namespace Hl7.Fhir.Specification.Tests
             return (b, r, p);
         }
 
-        private void assertBundle(IConformanceScanner scanner, string origin)
+        private void assertBundle(ArtifactScanner scanner, string origin)
         {
             var list = scanner.List();
             Assert.AreEqual(4, list.Count);
 
             Assert.AreEqual(ResourceType.StructureDefinition, list[0].ResourceType);
             Assert.AreEqual("http://test.org/StructureDefinition/sd", list[0].ResourceUri);
-            Assert.AreEqual("http://test.org/StructureDefinition/sd", list[0].Canonical);
+            var crs = list[0] as ConformanceResourceSummary;
+            Assert.IsNotNull(crs);
+            Assert.AreEqual("http://test.org/StructureDefinition/sd", crs.Canonical);
             Assert.AreEqual(origin, list[0].Origin);
 
             Assert.AreEqual(ResourceType.ValueSet, list[1].ResourceType);
             Assert.AreEqual("http://test.org/ValueSet/vs", list[1].ResourceUri);
-            Assert.AreEqual("http://test.org/ValueSet/vs", list[1].Canonical);
-            Assert.AreEqual("http://test.org/vs/testsystem", list[1].ValueSetSystem);
+            var vss = list[1] as ValueSetSummary;
+            Assert.IsNotNull(vss);
+            Assert.AreEqual("http://test.org/ValueSet/vs", vss.Canonical);
+            Assert.AreEqual("http://test.org/vs/testsystem", vss.ValueSetSystem);
             Assert.AreEqual(origin, list[1].Origin);
 
             Assert.AreEqual(ResourceType.NamingSystem, list[2].ResourceType);
             Assert.AreEqual("http://test.org/NamingSystem/ns", list[2].ResourceUri);
-            Assert.AreEqual("http://test.org/ns/testname1", list[2].UniqueIds.First());
-            Assert.AreEqual("http://test.org/ns/testname2", list[2].UniqueIds.Skip(1).First());
+            var nss = list[2] as NamingSystemSummary;
+            Assert.IsNotNull(nss);
+            Assert.AreEqual("http://test.org/ns/testname1", nss.UniqueIds.First());
+            Assert.AreEqual("http://test.org/ns/testname2", nss.UniqueIds.Skip(1).First());
             Assert.AreEqual(origin, list[2].Origin);
 
             Assert.AreEqual(ResourceType.ConceptMap, list[3].ResourceType);
             Assert.AreEqual("http://test.org/ConceptMap/cm", list[3].ResourceUri);
-            Assert.AreEqual("http://test.org/ConceptMap/cm", list[3].Canonical);
-            Assert.AreEqual("http://test.org/source", list[3].ConceptMapSource);
-            Assert.AreEqual("http://test.org/target", list[3].ConceptMapTarget);
+            var cms = list[3] as ConceptMapSummary;
+            Assert.IsNotNull(cms);
+            Assert.AreEqual("http://test.org/ConceptMap/cm", cms.Canonical);
+            Assert.AreEqual("http://test.org/source", cms.ConceptMapSource);
+            Assert.AreEqual("http://test.org/target", cms.ConceptMapTarget);
             Assert.AreEqual(origin, list[3].Origin);
         }
 
@@ -123,8 +128,8 @@ namespace Hl7.Fhir.Specification.Tests
             File.WriteAllText(tmpx, bXml);
             File.WriteAllText(tmpj, bJson);
 
-            var x = new XmlFileConformanceScanner(tmpx);
-            var j = new JsonFileConformanceScanner(tmpj);
+            var x = new XmlArtifactScanner(tmpx, ArtifactSummaryHarvester.Default);
+            var j = new JsonArtifactScanner(tmpj, ArtifactSummaryHarvester.Default);
 
             assertBundle(x, tmpx);
             assertBundle(j, tmpj);
@@ -132,14 +137,16 @@ namespace Hl7.Fhir.Specification.Tests
             doiets(bJson);
         }
 
-        private void assertSingle(IConformanceScanner scanner, string origin)
+        private void assertSingle(ArtifactScanner scanner, string origin)
         {
             var list = scanner.List();
             Assert.AreEqual(1, list.Count);
 
             Assert.AreEqual(ResourceType.StructureDefinition, list[0].ResourceType);
             Assert.AreEqual("http://test.org/StructureDefinition/sd", list[0].ResourceUri);
-            Assert.AreEqual("http://test.org/StructureDefinition/sd", list[0].Canonical);
+            var crs = list[0] as ConformanceResourceSummary;
+            Assert.IsNotNull(crs);
+            Assert.AreEqual("http://test.org/StructureDefinition/sd", crs.Canonical);
             Assert.AreEqual(origin, list[0].Origin);
         }
 
@@ -157,21 +164,21 @@ namespace Hl7.Fhir.Specification.Tests
             File.WriteAllText(tmpx, rXml);
             File.WriteAllText(tmpj, rJson);
 
-            var x = new XmlFileConformanceScanner(tmpx);
-            var j = new JsonFileConformanceScanner(tmpj);
+            var x = new XmlArtifactScanner(tmpx, ArtifactSummaryHarvester.Default);
+            var j = new JsonArtifactScanner(tmpj, ArtifactSummaryHarvester.Default);
 
             assertSingle(x, tmpx);
             assertSingle(j, tmpj);
         }
 
-        private void assertExample(IConformanceScanner scanner, string origin)
+        private void assertExample(ArtifactScanner scanner, string origin)
         {
             var list = scanner.List();
             Assert.AreEqual(1, list.Count);
 
             Assert.AreEqual(ResourceType.Patient, list[0].ResourceType);
             Assert.AreEqual("http://example.org/Patient/1234", list[0].ResourceUri);
-            Assert.IsNull(list[0].Canonical);
+            Assert.AreEqual(typeof(ArtifactSummary), list[0].GetType());
             Assert.AreEqual(origin, list[0].Origin);
         }
 
@@ -190,8 +197,8 @@ namespace Hl7.Fhir.Specification.Tests
             File.WriteAllText(tmpx, rXml);
             File.WriteAllText(tmpj, rJson);
 
-            var x = new XmlFileConformanceScanner(tmpx);
-            var j = new JsonFileConformanceScanner(tmpj);
+            var x = new XmlArtifactScanner(tmpx, ArtifactSummaryHarvester.Default);
+            var j = new JsonArtifactScanner(tmpj, ArtifactSummaryHarvester.Default);
 
             assertExample(x, tmpx);
             assertExample(j, tmpj);
@@ -220,5 +227,3 @@ namespace Hl7.Fhir.Specification.Tests
         }
     }
 }
-
-#endif

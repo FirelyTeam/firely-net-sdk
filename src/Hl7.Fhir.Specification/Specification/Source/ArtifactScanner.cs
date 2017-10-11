@@ -26,10 +26,13 @@ namespace Hl7.Fhir.Specification.Source
         readonly ArtifactSummaryHarvester _harvester;
         readonly string _path;
 
-        /// <summary>ctor</summary>
+        /// <summary>
+        /// Create a new <see cref="ArtifactScanner"/> instance to extract resource summary
+        /// information using the specified custom <see cref="ArtifactSummaryHarvester"/> instance.
+        /// </summary>
         /// <param name="path">Full path specification of a FHIR resource file.</param>
         /// <param name="harvester">An <see cref="ArtifactSummaryHarvester"/> instance to extract a concrete set of summary data from the resource.</param>
-        public ArtifactScanner(string path, ArtifactSummaryHarvester harvester)
+        protected ArtifactScanner(string path, ArtifactSummaryHarvester harvester)
         {
             _path = path ?? throw new ArgumentNullException(nameof(path));
             _harvester = harvester ?? throw new ArgumentNullException(nameof(harvester));
@@ -39,16 +42,17 @@ namespace Hl7.Fhir.Specification.Source
         /// <returns>A list of <see cref="ArtifactSummary"/> instances.</returns>
         public List<ArtifactSummary> List()
         {
-            IEnumerable<ArtifactSummary> summaries = Enumerable.Empty<ArtifactSummary>();
             var input = CreateStream(_path);
             if (input != null)
             {
                 using (input)
                 {
-                    summaries = _harvester.Generate(input);
+                    var summaries = _harvester.Generate(input);
+                    return new List<ArtifactSummary>(summaries);
                 }
             }
-            return new List<ArtifactSummary>(summaries);
+            // Return empty list
+            return new List<ArtifactSummary>();
         }
 
         /// <summary>
