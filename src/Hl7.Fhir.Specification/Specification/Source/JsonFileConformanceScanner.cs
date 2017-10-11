@@ -19,10 +19,10 @@ using System;
 
 namespace Hl7.Fhir.Specification.Source
 {
-    [Obsolete("Replaced by ArtifactScanner & JsonNavigatorStream")]
     /// <summary>
     /// Internal class which is able to scan a (possibly) large Xml FHIR (conformance) resource from a given stream
     /// </summary>
+    [Obsolete("Replaced by ArtifactScanner & JsonNavigatorStream")]
     internal class JsonFileConformanceScanner : IConformanceScanner
     {
         string _path;

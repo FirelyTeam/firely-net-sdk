@@ -21,15 +21,14 @@ using System.Collections;
 namespace Hl7.Fhir.Serialization
 {
     /// <summary>
-    /// Internal class which is able to scan a (possibly) large Xml FHIR (conformance) resource from a given stream
+    /// Provides efficient extraction of summary information from a raw FHIR JSON resource file,
+    /// without actually deserializing the full resource. Also supports resource bundles.
     /// </summary>
     public class JsonNavigatorStream : INavigatorStream
     {
+        private readonly FileStream _fileStream = null;
         private JsonReader _reader = null;
-        private Stream _fileStream = null;
-
-        public string ResourceType { get; private set; }
-        public bool IsBundle => ResourceType == "Bundle";
+        private (JObject element, string fullUrl)? _current = null;
 
         public JsonNavigatorStream(string path)
         {
@@ -39,8 +38,53 @@ namespace Hl7.Fhir.Serialization
             Reset();
         }
 
+        #region IDisposable
+
+        bool _disposed;
+
+        public void Dispose() => Dispose(true);
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    if (_reader != null)
+                    {
+                        ((IDisposable)_reader).Dispose();
+                        _reader = null;
+                    }
+
+                    if (_fileStream != null)
+                    {
+                        _fileStream.Dispose();
+                        // _fileStream = null;
+                    }
+                }
+
+                // release any unmanaged objects
+                // set the object references to null
+
+                _disposed = true;
+            }
+        }
+
+        #endregion
+
+        /// <summary>The typename of the underlying resource.</summary>
+        public string ResourceType { get; private set; }
+
+        /// <summary>The full path of the current resource file, or of the containing resource bundle file.</summary>
+        public string Path => _fileStream?.Name;
+
+        /// <summary>Returns <c>true</c> if the underlying file represents a Bundle resource, or <c>false</c> otherwise.</summary>
+        public bool IsBundle => ResourceType == "Bundle";
+
         public void Reset()
         {
+            throwIfDisposed();
+
             _fileStream.Seek(0, SeekOrigin.Begin);
             _reader = SerializationUtil.JsonReaderFromStream(_fileStream);
 
@@ -55,25 +99,11 @@ namespace Hl7.Fhir.Serialization
             if (IsBundle) skipTo(_reader, "entry");
         }
 
-        private string scanForResourceType(JsonReader reader) => skipTo(reader, "resourceType") ? reader.ReadAsString() : null;
-
-        private static bool skipTo(JsonReader reader, string path)
-        {
-            while (reader.Read())
-            {
-                if (reader.TokenType == JsonToken.PropertyName && reader.Value.Equals(path))
-                    return true;
-            }
-
-            return false;
-        }
-
-        private (JObject element, string fullUrl)? _current = null;
-
         public bool MoveNext() => MoveNext(null);
 
         public bool MoveNext(string fullUrl)
         {
+            throwIfDisposed();
             if (ResourceType == null) return false;
 
             if (IsBundle)
@@ -132,6 +162,7 @@ namespace Hl7.Fhir.Serialization
 
         public bool Seek(string position)
         {
+            throwIfDisposed();
             if (position == null) throw Error.ArgumentNull(nameof(position));
 
             // start looking from the beginning
@@ -146,45 +177,13 @@ namespace Hl7.Fhir.Serialization
             //return resultResource
         }
 
-        bool _disposed;
-
-        public void Dispose()
-        {
-            Dispose(true);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_disposed)
-            {
-                if (disposing)
-                {
-                    if (_reader != null)
-                    {
-                        ((IDisposable)_reader).Dispose();
-                        _reader = null;
-                    }
-
-                    if (_fileStream != null)
-                    {
-                        _fileStream.Dispose();
-                        _fileStream = null;
-                    }
-                }
-
-                // release any unmanaged objects
-                // set the object references to null
-
-                _disposed = true;
-            }
-        }
-
         public string Position => _current?.fullUrl;
 
         public IElementNavigator Current
         {
             get
             {
+                throwIfDisposed();
                 var jelem = _current?.element;
                 if (jelem != null)
                     return JsonDomFhirNavigator.Create(jelem);
@@ -194,6 +193,29 @@ namespace Hl7.Fhir.Serialization
         }
 
         object IEnumerator.Current => this.Current;
+
+        #region private helpers
+
+        string scanForResourceType(JsonReader reader) => skipTo(reader, "resourceType") ? reader.ReadAsString() : null;
+
+        static bool skipTo(JsonReader reader, string path)
+        {
+            while (reader.Read())
+            {
+                if (reader.TokenType == JsonToken.PropertyName && reader.Value.Equals(path))
+                    return true;
+            }
+
+            return false;
+        }
+
+        void throwIfDisposed()
+        {
+            if (_disposed) { throw new ObjectDisposedException(GetType().FullName); }
+        }
+
+        #endregion
+
     }
 }
 

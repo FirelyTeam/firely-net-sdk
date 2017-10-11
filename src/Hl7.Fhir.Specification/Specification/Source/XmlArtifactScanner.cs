@@ -18,44 +18,25 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Specification.Source
 {
-    internal sealed class XmlArtifactScanner : IArtifactScanner
+    /// <summary>
+    /// For efficiently extracting identifying metadata from a raw FHIR resource file in XML format.
+    /// Also allows to actually deserialize and resolve the resource based on the previously extracted metadata.
+    /// </summary>
+    internal sealed class XmlArtifactScanner : ArtifactScanner
     {
-        /// <summary>Default base url used for generating virtual resource urls.</summary>
-        public const string DefaultBaseUrl = "http://example.org/";
-
-        ArtifactSummaryHarvester _harvester;
-        string _path;
-
-        public XmlArtifactScanner(string path, ArtifactSummaryHarvester harvester)
+        /// <summary>ctor</summary>
+        /// <param name="path">Full path specification of a FHIR resource file.</param>
+        /// <param name="harvester">An <see cref="ArtifactSummaryHarvester"/> instance to extract a concrete set of summary data from the resource.</param>
+        public XmlArtifactScanner(string path, ArtifactSummaryHarvester harvester) : base(path, harvester)
         {
-            _path = path ?? throw new ArgumentNullException(nameof(path));
-            _harvester = harvester ?? throw new ArgumentNullException(nameof(harvester));
         }
 
-        /// <summary>Scan the source and extract summary information from all the available artifacts.</summary>
-        /// <returns>A list of <see cref="ArtifactSummary"/> instances.</returns>
-        public List<ArtifactSummary> List()
-        {
-            IEnumerable<ArtifactSummary> summaries = Enumerable.Empty<ArtifactSummary>();
-            var input = createStream(_path);
-            if (input != null)
-            {
-                using (input)
-                {
-                    summaries = _harvester.Harvest(input);
-                }
-            }
-            return new List<ArtifactSummary>(summaries);
-        }
-
-        #region Xml specific logic
-
-        static INavigatorStream createStream(string path) => new XmlNavigatorStream(path);
+        protected override INavigatorStream CreateStream(string path) => new XmlNavigatorStream(path);
 
         /// <summary>Retrieve the artifact that is identified by the specified summary information.</summary>
         /// <param name="entry">Artifact summary.</param>
         /// <returns>A <see cref="Resource"/> instance.</returns>
-        public Resource Retrieve(ArtifactSummary entry)
+        public override Resource Retrieve(ArtifactSummary entry)
         {
             if (entry == null) throw Error.ArgumentNull(nameof(entry));
 
@@ -124,7 +105,8 @@ namespace Hl7.Fhir.Specification.Source
                         var resourceId = resourceNode.Elements(XmlNs.XFHIR + "id").Attributes("value").SingleOrDefault();
                         if (resourceId != null)
                         {
-                            var fullUrl = DefaultBaseUrl + resourceNode.Name.LocalName + "/" + resourceId.Value;
+                            // var fullUrl = DefaultBaseUrl + resourceNode.Name.LocalName + "/" + resourceId.Value;
+                            var fullUrl = CreateResourceUri(resourceNode.Name.LocalName, resourceId.Value);
                             yield return (resourceNode, fullUrl);
                         }
                     }
@@ -143,8 +125,6 @@ namespace Hl7.Fhir.Specification.Source
 
             return null;
         }
-
-        #endregion
 
     }
 

@@ -382,20 +382,21 @@ namespace Hl7.Fhir.Specification.Source
         }
 
 #if ARTIFACTSUMMARY
-        private static IArtifactScanner createScanner(string path)
+        private static ArtifactScanner createScanner(string path)
         {
             // TODO: Allow injection of custom harvester
             var harvester = new ArtifactSummaryHarvester();
 
-            var ext = Path.GetExtension(path).ToLower();
-            switch (ext)
+            var ext = Path.GetExtension(path);
+            if (StringComparer.OrdinalIgnoreCase.Equals(ext, ".xml"))
             {
-                case ".xml":
-                    return new XmlArtifactScanner(path, harvester);
-                case ".json":
-                    // return new JsonArtifactScanner(path, harvester);
-                    throw new NotImplementedException();
+                return new XmlArtifactScanner(path, harvester);
             }
+            if (StringComparer.OrdinalIgnoreCase.Equals(ext, ".json"))
+            {
+                return new JsonArtifactScanner(path, harvester);
+            }
+
             // Unsupported extension
             return null;
         }

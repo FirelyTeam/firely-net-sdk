@@ -1,15 +1,19 @@
-﻿using Hl7.Fhir.Serialization;
+﻿/* 
+ * Copyright (c) 2017, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ */
+
+using Hl7.Fhir.Serialization;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Hl7.Fhir.Support.Tests.Serialization
 {
-    public class StreamJsonResources
+    public class NavigatorStreamJsonTests
     {
         [Fact]
         public void ScanThroughBundle()
@@ -90,5 +94,24 @@ namespace Hl7.Fhir.Support.Tests.Serialization
                 Assert.False(stream.MoveNext());
             }
         }
+
+        // [WMR 20170825] Issue: json file generates exception "Value cannot be null. Parameter name:resourceType"
+        [Fact]
+        public void TestInvalidJsonFile()
+        {
+            var folderPath = Path.Combine(Directory.GetCurrentDirectory(), @"TestData\source-test\");
+            // var patientProfile = Path.Combine(path, "MyPatient.xml");
+            var filePath = Path.Combine(folderPath, "project.assets.json");
+            Assert.True(File.Exists(filePath));
+
+            using (var stream = new JsonNavigatorStream(filePath))
+            {
+                Assert.False(stream.MoveNext());
+                Assert.Null(stream.Current);
+            }
+
+        }
+
+
     }
 }

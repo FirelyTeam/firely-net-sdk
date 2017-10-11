@@ -6,9 +6,9 @@
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
-using Hl7.Fhir.ElementModel;
 using System.Collections.Generic;
 using System;
+using Hl7.Fhir.ElementModel;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -21,13 +21,17 @@ namespace Hl7.Fhir.Specification.Source
     //   Create specialized subclasses for specific resource types, e.g. StructureDefinition
     public class ArtifactSummary : Dictionary<string,string>
     {
-        public ArtifactSummary()
+        public ArtifactSummary(string url, IElementNavigator input)
         {
+            // TODO
+            ResourceUri = url;
+            ResourceType = input.Name;
         }
 
         protected void Set(string key, string value) => throw new NotImplementedException();
 
         protected string GetOrDefault(string key) => TryGetValue(key, out string value) ? value : null;
+
 
         /// <summary>Represents the original location of the artifact.</summary>
         public string Origin { get; set; }
@@ -54,39 +58,5 @@ namespace Hl7.Fhir.Specification.Source
         public override string ToString()
             => $"{ResourceType} resource with uri {ResourceUri ?? "(unknown)"} (canonical {Canonical ?? "(unknown)"}), read from {Origin}";
     }
-
-    /// <summary>Base class for extracting summary information from FHIR artifacts.</summary>
-    public class ArtifactSummaryHarvester
-    {
-        public ArtifactSummaryHarvester() { }
-
-        //public IEnumerable<ArtifactSummary> Harvest(IEnumerable<IElementNavigator> input)
-        //{
-        //    foreach (var entry in input)
-        //    {
-        //        yield return Harvest(entry);
-        //    }
-        //}
-
-        public IEnumerable<ArtifactSummary> Harvest(IEnumerator<IElementNavigator> input)
-        {
-            while (input.MoveNext())
-            {
-                yield return Harvest(input.Current);
-            }
-        }
-
-        public virtual ArtifactSummary Harvest(IElementNavigator input)
-        {
-            return new ArtifactSummary()
-            {
-                // TODO
-                Origin = @"D:\Temp\Test.xml",
-                ResourceType = "TEST"
-            };
-        }
-    }
-
-
 
 }

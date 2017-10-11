@@ -9,8 +9,6 @@
 using Hl7.Fhir.ElementModel;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -26,8 +24,20 @@ namespace Hl7.Fhir.Serialization
         bool MoveNext(string position);
     }
 
+    /// <summary>
+    /// Provides a sequence of <see cref="IElementNavigator"/> instances to efficiently
+    /// extract summary information from a raw FHIR resource file, independent of the
+    /// underlying resource serialization format. Also supports resource bundles.
+    /// </summary>
     public interface INavigatorStream : ISeekableEnumerator<IElementNavigator>, IDisposable
     {
+        /// <summary>The typename of the underlying resource.</summary>
+        string ResourceType { get; }
 
+        /// <summary>The full path of the current resource file, or of the containing resource bundle file.</summary>
+        string Path { get; }
+
+        /// <summary>Returns <c>true</c> if the underlying file represents a Bundle resource, or <c>false</c> otherwise.</summary>
+        bool IsBundle { get; }
     }
 }

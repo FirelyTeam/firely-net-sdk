@@ -24,6 +24,9 @@ namespace Hl7.Fhir.Specification.Source
         /// <returns></returns>
         IEnumerable<string> ListResourceUris(ResourceType? filter = null);
 
+        // [WMR 20171011] New
+        // IEnumerable<ArtifactSummary> List(ResourceType? filter = null);
+
         /// <summary>
         /// Find ValueSets that define codes for a Codesystem with the given system uri
         /// </summary>
