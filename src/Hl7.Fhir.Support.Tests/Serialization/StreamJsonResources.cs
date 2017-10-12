@@ -1,84 +1,81 @@
 ﻿using Hl7.Fhir.Serialization;
-using System;
-using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
 
 namespace Hl7.Fhir.Support.Tests.Serialization
 {
+    [TestClass]
     public class StreamJsonResources
     {
-        [Fact]
+        [TestMethod]
         public void ScanThroughBundle()
         {
             var jsonBundle = Path.Combine(Directory.GetCurrentDirectory(), @"TestData\profiles-types.json");
             using (var stream = new JsonNavigatorStream(jsonBundle))
             {
-                Assert.True(stream.IsBundle);
-                Assert.Null(stream.Current);
+                Assert.IsTrue(stream.IsBundle);
+                Assert.IsNull(stream.Current);
 
-                Assert.True(stream.MoveNext());
-                Assert.True(stream.MoveNext());
-                Assert.Equal("http://hl7.org/fhir/StructureDefinition/integer", stream.Position);
+                Assert.IsTrue(stream.MoveNext());
+                Assert.IsTrue(stream.MoveNext());
+                Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/integer", stream.Position);
 
                 var nav = stream.Current;
-                Assert.True(nav.MoveToFirstChild("name"));
-                Assert.Equal("integer", nav.Value);
+                Assert.IsTrue(nav.MoveToFirstChild("name"));
+                Assert.AreEqual("integer", nav.Value);
 
                 var current = stream.Position;
 
-                Assert.True(stream.MoveNext());
-                Assert.True(stream.MoveNext());
-                Assert.Equal("http://hl7.org/fhir/StructureDefinition/unsignedInt", stream.Position);
+                Assert.IsTrue(stream.MoveNext());
+                Assert.IsTrue(stream.MoveNext());
+                Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/unsignedInt", stream.Position);
 
                 stream.Seek(current);
-                Assert.Equal("http://hl7.org/fhir/StructureDefinition/integer", stream.Position);
+                Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/integer", stream.Position);
 
                 stream.Reset();
-                Assert.True(stream.MoveNext());
-                Assert.Equal("http://hl7.org/fhir/StructureDefinition/markdown", stream.Position);
+                Assert.IsTrue(stream.MoveNext());
+                Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/markdown", stream.Position);
 
                 while (stream.MoveNext()) ;     // read to end
 
-                Assert.Equal("http://hl7.org/fhir/StructureDefinition/SimpleQuantity", stream.Position);
+                Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/SimpleQuantity", stream.Position);
 
                 // Reading past end does not change position
-                Assert.False(stream.MoveNext());
-                Assert.Equal("http://hl7.org/fhir/StructureDefinition/SimpleQuantity", stream.Position);
+                Assert.IsFalse(stream.MoveNext());
+                Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/SimpleQuantity", stream.Position);
             }
         }
 
-        [Fact]
+        [TestMethod]
         public void ScanThroughSingle()
         {
             var xmlPatient = Path.Combine(Directory.GetCurrentDirectory(), @"TestData\fp-test-patient.json");
             using (var stream = new JsonNavigatorStream(xmlPatient))
             {
-                Assert.False(stream.IsBundle);
-                Assert.Equal("Patient", stream.ResourceType);
-                Assert.Null(stream.Current);
+                Assert.IsFalse(stream.IsBundle);
+                Assert.AreEqual("Patient", stream.ResourceType);
+                Assert.IsNull(stream.Current);
 
-                Assert.True(stream.MoveNext());
-                Assert.Equal("http://example.org/Patient/pat1", stream.Position);
+                Assert.IsTrue(stream.MoveNext());
+                Assert.AreEqual("http://example.org/Patient/pat1", stream.Position);
                 var current = stream.Position;
 
                 var nav = stream.Current;
-                Assert.True(nav.MoveToFirstChild("gender"));
-                Assert.Equal("male", nav.Value);
+                Assert.IsTrue(nav.MoveToFirstChild("gender"));
+                Assert.AreEqual("male", nav.Value);
 
                 stream.Reset();
                 stream.Seek(current);
-                Assert.Equal("http://example.org/Patient/pat1", stream.Position);
+                Assert.AreEqual("http://example.org/Patient/pat1", stream.Position);
 
-                Assert.False(stream.MoveNext());
-                Assert.Equal("http://example.org/Patient/pat1", stream.Position);
+                Assert.IsFalse(stream.MoveNext());
+                Assert.AreEqual("http://example.org/Patient/pat1", stream.Position);
             }
         }
 
-        [Fact]
+        [TestMethod]
         public void ReadCrap()
         {
             // Try a random other xml file
@@ -86,9 +83,29 @@ namespace Hl7.Fhir.Support.Tests.Serialization
 
             using (var stream = new JsonNavigatorStream(jsonfile))
             {
-                Assert.Null(stream.ResourceType);
-                Assert.False(stream.MoveNext());
+                Assert.IsNull(stream.ResourceType);
+                Assert.IsFalse(stream.MoveNext());
             }
+        }
+
+        [TestMethod]
+        public void ScanPerformance()
+        {
+            var xmlBundle = Path.Combine(Directory.GetCurrentDirectory(), @"TestData\profiles-types.json");
+
+            var sw = new Stopwatch();
+            sw.Start();
+
+            for (int i = 0; i < 250; i++)
+            {
+                using (var stream = new JsonNavigatorStream(xmlBundle))
+                {
+                    Assert.IsTrue(stream.MoveNext("http://hl7.org/fhir/StructureDefinition/SimpleQuantity"));
+                }
+            }
+
+            sw.Stop();
+            Debug.WriteLine($"Scanning took {sw.ElapsedMilliseconds / 250} ms");
         }
     }
 }
