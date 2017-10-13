@@ -39,7 +39,8 @@ namespace Hl7.Fhir.Serialization
             using (var reader = SerializationUtil.XmlReaderFromXmlText(xml))
             {
                 // [WMR 20160421] Safely dispose reader after executing JsonDomFhirReader ctor
-                return new XmlDomFhirReader(reader, disallowXsiAttributesOnRoot);
+                return new XmlNavFhirReader(reader, disallowXsiAttributesOnRoot);
+                //return new XmlDomFhirReader(reader, disallowXsiAttributesOnRoot);
             }
         }
 
@@ -67,7 +68,8 @@ namespace Hl7.Fhir.Serialization
         {
             if (dataType == null) throw Error.ArgumentNull(nameof(dataType));
 
-            var xmlReader = new XmlDomFhirReader(reader, Settings.DisallowXsiAttributesOnRoot);
+            var xmlReader = new XmlNavFhirReader(reader, Settings.DisallowXsiAttributesOnRoot);
+           // var xmlReader = new XmlDomFhirReader(reader, Settings.DisallowXsiAttributesOnRoot);
             return Parse(xmlReader, dataType);
         }
 

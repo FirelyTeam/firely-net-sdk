@@ -100,6 +100,13 @@ namespace Hl7.Fhir.Tests.Serialization
             // Assume that we can happily read the patient gender when enums are enforced
             var p = pser.Parse<Patient>(xml);
 
+            var sw = new Stopwatch();
+            sw.Start();
+            for(var i = 0; i < 100; i++)
+                p = pser.Parse<Patient>(xml);
+            sw.Stop();
+            Debug.WriteLine($"Parsing took {sw.ElapsedMilliseconds} ms");
+
             Assert.IsNotNull(p.Gender);
             Assert.AreEqual("male", p.GenderElement.ObjectValue);
             Assert.AreEqual(AdministrativeGender.Male, p.Gender.Value);
