@@ -93,7 +93,8 @@ namespace Hl7.Fhir.Serialization
             using (var reader = SerializationUtil.JsonReaderFromJsonText(json))
             {
                 // [WMR 20160421] Safely dispose reader after executing JsonDomFhirReader ctor
-                return new JsonDomFhirReader(reader);
+                //return new JsonDomFhirReader(reader);
+                return new JsonNavFhirReader(reader);
             }
         }
 
@@ -117,7 +118,8 @@ namespace Hl7.Fhir.Serialization
         // [WMR 20160421] Caller is responsible for disposing reader
         public Base Parse(JsonReader reader, Type dataType)
         {
-            var jsonReader = new JsonDomFhirReader(reader);
+            //var jsonReader = new JsonDomFhirReader(reader);
+            var jsonReader = new JsonNavFhirReader(reader);
             return Parse(jsonReader, dataType);
         }
     }

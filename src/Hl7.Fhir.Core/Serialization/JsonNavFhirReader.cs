@@ -25,31 +25,31 @@ namespace Hl7.Fhir.Serialization
 
         private IElementNavigator _current;
 
-        internal JsonNavFhirReader(JToken root)
+        public JsonNavFhirReader(IElementNavigator root)
         {
-            _current = JsonDomFhirNavigator.Create( root;
+            _current = root;
+        }
+
+        internal JsonNavFhirReader(JObject root)
+        {
+            _current = JsonDomFhirNavigator.Create(root);
         }
 
         // [WMR 20160421] Caller can safely dispose reader after calling this ctor
-        public JsonDomFhirReader(JsonReader reader)
+        public JsonNavFhirReader(JsonReader reader)
         {
             reader.DateParseHandling = DateParseHandling.None;
             reader.FloatParseHandling = FloatParseHandling.Decimal;
 
             try
             {
-                _current = JObject.Load(reader);
+                _current = JsonDomFhirNavigator.Create(reader);
                 //rewriteExtensionProperties(_current);
             }
             catch (Exception e)
             {
                 throw Error.Format("Cannot parse json: " + e.Message);
             }
-        }
-
-        public JsonDomFhirReader(JObject source)
-        {
-            _current = source;
         }
 
         // This code implements the San Antonio timeframe DSTU2 Json serialization of extensions
@@ -156,47 +156,12 @@ namespace Hl7.Fhir.Serialization
 
         public object GetPrimitiveValue()
         {
-            if (_current is JValue)
-                return ((JValue)_current).Value;
-            else if(_current is JObject)
-            {
-                // Hack: primitives have been expanded to objects by the JsonTreeRewriter, so if this is the case, just get the "value" property
-                var cplx = _current as JObject;
-                JToken value = null;
-
-                if (cplx.TryGetValue(JsonTreeRewriter.PRIMITIVE_PROP_NAME, out value))
-                {
-                    var nestedReader = new JsonDomFhirReader(value);
-                    return nestedReader.GetPrimitiveValue();
-                }
-                else
-                    throw Error.Format("Tried to read a primitive value while reader is at a complex object", this);
-            }
-            else
-                throw Error.Format("Tried to read a primitive value while reader is not at a json primitive", this);
+            return _current.Value;
         }
 
         public string GetResourceTypeName()
         {
-            if (!(_current is JObject))
-                throw Error.Format("Cannot read resource type: reader not at a complex object", this);
-
-            var resourceTypeMember = ((JObject)_current)[JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME];
-
-            if (resourceTypeMember != null)
-            {
-                if (resourceTypeMember is JValue)
-                {
-                    var memberValue = (JValue)resourceTypeMember;
-
-                    if (memberValue.Type == JTokenType.String)
-                    {
-                        return (string)memberValue.Value;
-                    }
-                }
-
-                throw Error.Format("resourceType should be a primitive string json value", this);
-            }
+            if (_current.Type != null) return _current.Type;
 
             throw Error.Format("Cannot determine type of resource to create from json input data: no member {0} was found".FormatWith(JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME), this);
         }
@@ -204,30 +169,12 @@ namespace Hl7.Fhir.Serialization
 
         public IEnumerable<Tuple<string, IFhirReader>> GetMembers()
         {
-            var complex = _current as JObject;
- 
-            if (complex == null)
-                throw Error.Format("Need to be at a complex object to list child members", this);
+            if (_current.Value != null)
+                yield return Tuple.Create("value", (IFhirReader)new JsonNavFhirReader(_current));
 
-            var members = JsonTreeRewriter.ExpandComplexObject(complex);
-
-            foreach(var member in members)
-            {
-                var memberName = member.Name;
-
-                //When enumerating properties for a complex object, make sure not to let resourceType get through
-                if(memberName != JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME)
-                {
-                    IFhirReader nestedReader = new JsonDomFhirReader(member.Value);
-
-                    // Remove [nn] appendix that was there to allow a JObject have repeating members
-                    // with the same name
-                    var pos = memberName.IndexOf('[');
-                    if (pos > 0) memberName = memberName.Substring(0, pos);
-
-                    yield return Tuple.Create(memberName,nestedReader);
-                }
-            }
+            var children = _current.Children();
+            foreach (var child in _current.Children())
+                yield return Tuple.Create(child.Name, (IFhirReader)new JsonNavFhirReader(child));
         }
 
 
@@ -236,29 +183,8 @@ namespace Hl7.Fhir.Serialization
             return new JsonDomFhirReader(obj);
         }
 
-        public int LineNumber
-        {
-            get
-            {
-                var li = (IJsonLineInfo)_current;
+        public int LineNumber => -1;
 
-                if (!li.HasLineInfo()) return -1;
-                    
-                return li.LineNumber;
-            }
-        }
-
-        public int LinePosition
-        {
-            get
-            {
-                var li = (IJsonLineInfo)_current;
-
-                if (!li.HasLineInfo()) return -1;
-
-                return li.LinePosition;
-            }
-        }
-
+        public int LinePosition => -1;
     }
 }
