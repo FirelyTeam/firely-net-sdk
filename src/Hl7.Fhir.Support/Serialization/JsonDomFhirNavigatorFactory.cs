@@ -41,5 +41,10 @@ namespace Hl7.Fhir.Serialization
                 return Create(reader, rootName);
             }
         }
+
+        public static IElementNavigator Create(JToken root, string rootName = null)
+        {
+
+        }
     }
 }

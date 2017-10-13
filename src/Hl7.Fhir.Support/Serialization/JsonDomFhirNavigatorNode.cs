@@ -112,50 +112,39 @@ namespace Hl7.Fhir.Serialization
             if (JsonObject == null || JsonObject.HasValues == false) yield break;
 
             // ToList() added explicitly here, we really need our own copy of the list of children
-            var children = JsonObject.Children<JProperty>().Where(c => c.Name != JTokenExtensions.RESOURCETYPE_MEMBER_NAME).ToList();
+            var children = JsonObject.Children<JProperty>().ToLookup(jp => isMainProperty(jp) ? jp.Name : deriveMainName(jp));
+            var processed = new HashSet<string>();
+            //var children = JsonObject.Children<JProperty>().Where(c => c.Name != JTokenExtensions.RESOURCETYPE_MEMBER_NAME);
 
-            while (children.Any())
+            foreach(var child in children)
             {
-                (string name, JProperty main, JProperty shadow) = getNextElementPair(children);
+                if (child.Key == JTokenExtensions.RESOURCETYPE_MEMBER_NAME) continue;
+                //if (isDeferred(current)) continue;
+                if (processed.Contains(child.Key)) continue;
 
-                IEnumerable<JsonNavigatorNode> nodes = enumerateElement(name, main, shadow);
+                (JProperty main, JProperty shadow) = getNextElementPair(child);
+                processed.Add(child.Key);
+
+                IEnumerable<JsonNavigatorNode> nodes = enumerateElement(child.Key, main, shadow);
 
                 foreach (var node in nodes)
                     yield return node;
-
-                if (main != null) children.Remove(main);
-                if (shadow != null) children.Remove(shadow);
-            }
-        }
-
-        private (string name, JProperty main, JProperty shadow) getNextElementPair(List<JProperty> children)
-        {
-            JProperty main, shadow;
-            string name;
-
-            var child = children.First();
-
-            if (isMainProperty(child))
-            {
-                main = child;
-                name = child.Name;
-                var shadowPropName = makeShadowName(child);
-                shadow = children.SingleOrDefault(c => c.Name == shadowPropName);
-            }
-            else
-            {
-                shadow = child;
-                var mainPropName = deriveMainName(child);
-                name = mainPropName;
-                main = children.SingleOrDefault(c => c.Name == mainPropName);
             }
 
-            return (name, main, shadow);
-
-            bool isMainProperty(JProperty prop) => prop.Name[0] != '_';
-            string makeShadowName(JProperty prop) => "_" + prop.Name;
             string deriveMainName(JProperty prop) => prop.Name.Substring(1);
         }
+
+        private (JProperty main, JProperty shadow) getNextElementPair(IGrouping<string,JProperty> child)
+        {
+            JProperty main = child.First(), shadow = child.Skip(1).FirstOrDefault();
+
+            if (isMainProperty(main))
+                return (main, shadow);
+            else
+                return (shadow, main);
+        }
+
+        private static bool isMainProperty(JProperty prop) => prop.Name[0] != '_';
 
         private IEnumerable<JsonNavigatorNode> enumerateElement(string name, JProperty main, JProperty shadow)
         {

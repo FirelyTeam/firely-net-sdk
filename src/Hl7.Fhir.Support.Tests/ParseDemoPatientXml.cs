@@ -63,7 +63,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         }
 
         [TestMethod]
-        public void ElementNavPerformance()
+        public void ElementNavPerformanceXml()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var nav = XmlDomFhirNavigator.Create(tpXml);

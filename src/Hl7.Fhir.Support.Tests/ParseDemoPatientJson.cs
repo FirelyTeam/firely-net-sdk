@@ -6,6 +6,7 @@ using Xunit.Abstractions;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Hl7.FhirPath.Tests.JsonNavTests
 {
@@ -195,6 +196,31 @@ namespace Hl7.FhirPath.Tests.JsonNavTests
             cont.MoveToFirstChild();
             Assert.AreEqual("Patient.name[1].given[0]", cont.Location);
         }
+
+
+        [TestMethod]
+        public void ElementNavPerformanceJson()
+        {
+            var tpJson = File.ReadAllText(@"TestData\fp-test-patient.json");
+            var nav = JsonDomFhirNavigator.Create(tpJson);
+
+            var sw = new Stopwatch();
+            sw.Start();
+            for (var i = 0; i < 10_000; i++)
+            {
+                var usual = nav.Children("identifier").First().Children("use").First().Value;
+                //Assert.AreEqual("usual", usual);
+                var phone = nav.Children("telecom").First().Children("system").First().Value;
+                //Assert.AreEqual("phone", phone);
+                var prefs = nav.Children("communication").Where(c => c.Children("preferred").Any(pr => pr.Value is string s && s == "true")).Count();
+                //Assert.AreEqual(2, prefs);
+                var link = nav.Children("link").Children("other").Children("reference");
+            }
+            sw.Stop();
+
+            Debug.WriteLine($"Navigating took {sw.ElapsedMilliseconds / 10} micros");
+        }
+
 
         [TestMethod]
         public void CompareJsonXmlParseOutcomes()
