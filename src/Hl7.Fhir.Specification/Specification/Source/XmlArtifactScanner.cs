@@ -22,6 +22,7 @@ namespace Hl7.Fhir.Specification.Source
     /// For efficiently extracting identifying metadata from a raw FHIR resource file in XML format.
     /// Also allows to actually deserialize and resolve the resource based on the previously extracted metadata.
     /// </summary>
+    [Obsolete("Use XmlNavigatorStream")]
     internal sealed class XmlArtifactScanner : ArtifactScanner
     {
         /// <summary>ctor</summary>

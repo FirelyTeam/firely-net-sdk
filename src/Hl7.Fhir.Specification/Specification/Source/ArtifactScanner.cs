@@ -18,6 +18,7 @@ namespace Hl7.Fhir.Specification.Source
     /// Abstract base class for efficiently extracting metadata from a raw FHIR resource file.
     /// Also provides a method resolve the full resource based on the previously extracted metadata.
     /// </summary>
+    [Obsolete("Use INavigatorStream")]
     internal abstract class ArtifactScanner
     {
         /// <summary>Base url for generating virtual resource urls.</summary>
@@ -47,7 +48,7 @@ namespace Hl7.Fhir.Specification.Source
             {
                 using (input)
                 {
-                    var summaries = _harvester.Generate(input);
+                    var summaries = _harvester.Enumerate(input);
                     return new List<ArtifactSummary>(summaries);
                 }
             }

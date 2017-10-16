@@ -22,6 +22,7 @@ namespace Hl7.Fhir.Specification.Source
     /// For efficiently extracting identifying metadata from a raw FHIR resource file in JSON format.
     /// Also allows to actually deserialize and resolve the resource based on the previously extracted metadata.
     /// </summary>
+    [Obsolete("Use JsonNavigatorStream")]
     internal sealed class JsonArtifactScanner : ArtifactScanner
     {
         /// <summary>ctor</summary>

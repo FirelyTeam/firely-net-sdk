@@ -12,23 +12,45 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.Specification.Source
 {
     /// <summary>Common summary information for generic FHIR artifacts.</summary>
     public class ArtifactSummary
     {
-        public ArtifactSummary(string path, string url, IElementNavigator input)
+        // [WMR 20171016] TODO: Determine Resource Uri
+        // Can't assume we can always initialize Resource Uri from Position...?
+
+        public ArtifactSummary(INavigatorStream stream)
+            : this(stream.Path, stream.Position, stream.Position, stream.Current) { }
+
+        /// <summary>Constructor for subclasses.</summary>
+        /// <remarks>
+        /// The IElementNavigator.Current property always returns a new navigator instance.
+        /// This constructor allows subclass and base class to share a common navigator instance.
+        /// </remarks>
+        public ArtifactSummary(INavigatorStream stream, IElementNavigator current)
+            : this(stream.Path, stream.Position, stream.Position, current) { }
+
+        ArtifactSummary(string origin, string position, string uri, IElementNavigator nav)
         {
-            Origin = path;
-            ResourceUri = url;
-            ResourceTypeName = input.Name;
+            Origin = origin;
+            Position = position;
+            ResourceUri = uri;
+            ResourceTypeName = nav.Type;
             // Try to decode the typename, if well-known
-            ResourceType = EnumUtility.ParseLiteral<ResourceType>(input.Name);
+            ResourceType = EnumUtility.ParseLiteral<ResourceType>(nav.Type);
         }
 
-        /// <summary>The original location of the artifact (container).</summary>
+        /// <summary>Original location of the underlying resource (container).</summary>
         public string Origin { get; }
+
+        /// <summary>
+        /// An opaque identifier that allows the generating <see cref="IElementNavigator"/> to retrieve the associated resource.
+        /// The actual value is implementation-dependent.
+        /// </summary>
+        public string Position { get; }
 
         /// <summary>The resource Uri.</summary>
         public string ResourceUri { get; }
@@ -46,13 +68,15 @@ namespace Hl7.Fhir.Specification.Source
     {
         public static bool IsSupported(string typeName) => ModelInfo.IsConformanceResource(typeName);
 
-        public ConformanceResourceSummary(string path, string url, IElementNavigator input) : base(path, url, input)
+        public ConformanceResourceSummary(INavigatorStream stream) : this(stream, stream.Current) { }
+
+        public ConformanceResourceSummary(INavigatorStream stream, IElementNavigator current) : base(stream, current)
         {
             Debug.Assert(IsSupported(ResourceTypeName));
 
-            if (input.MoveToFirstChild("url"))
+            if (current.MoveToFirstChild("url"))
             {
-                Canonical = input.Value?.ToString();
+                Canonical = current.Value?.ToString();
             }
         }
 
@@ -69,16 +93,18 @@ namespace Hl7.Fhir.Specification.Source
     {
         public const ResourceType SupportedType = Model.ResourceType.ValueSet;
 
-        public ValueSetSummary(string path, string url, IElementNavigator input) : base(path, url, input)
+        public ValueSetSummary(INavigatorStream stream) : this(stream, stream.Current) { }
+
+        public ValueSetSummary(INavigatorStream stream, IElementNavigator current) : base(stream, current)
         {
             Debug.Assert(ResourceType == SupportedType);
 
-            if (input.MoveToNext("codeSystem"))
+            if (current.MoveToNext("codeSystem"))
             {
-                var nav = input.Clone();
-                if (nav.MoveToFirstChild("system"))
+                var child = current.Clone();
+                if (child.MoveToFirstChild("system"))
                 {
-                    ValueSetSystem = nav.Value?.ToString();
+                    ValueSetSystem = child.Value?.ToString();
                 }
             }
         }
@@ -95,21 +121,24 @@ namespace Hl7.Fhir.Specification.Source
     {
         public const ResourceType SupportedType = Model.ResourceType.NamingSystem;
 
-        public NamingSystemSummary(string path, string url, IElementNavigator input) : base(path, url, input)
+        public NamingSystemSummary(INavigatorStream stream) : this(stream, stream.Current) { }
+
+        public NamingSystemSummary(INavigatorStream stream, IElementNavigator current) : base(stream, current)
         {
             Debug.Assert(ResourceType == SupportedType);
 
             var list = new List<string>();
-            if (input.MoveToFirstChild("uniqueId"))
+
+            if (current.MoveToFirstChild("uniqueId"))
             {
                 do
                 {
-                    var nav = input.Clone();
-                    if (nav.MoveToFirstChild("value"))
+                    var child = current.Clone();
+                    if (child.MoveToFirstChild("value"))
                     {
-                        list.Add(nav.Value?.ToString());
+                        list.Add(child.Value?.ToString());
                     }
-                } while (input.MoveToNext("uniqueId"));
+                } while (current.MoveToNext("uniqueId"));
             }
             UniqueIds = list.ToArray();
         }
@@ -124,34 +153,36 @@ namespace Hl7.Fhir.Specification.Source
     {
         public const ResourceType SupportedType = Model.ResourceType.ConceptMap;
 
-        public ConceptMapSummary(string path, string url, IElementNavigator input) : base(path, url, input)
+        public ConceptMapSummary(INavigatorStream stream) : this(stream, stream.Current) { }
+
+        public ConceptMapSummary(INavigatorStream stream, IElementNavigator current) : base(stream, current)
         {
             Debug.Assert(ResourceType == SupportedType);
 
-            if (input.MoveToNext("sourceUri"))
+            if (current.MoveToNext("sourceUri"))
             {
-                ConceptMapSource = input.Value?.ToString();
+                ConceptMapSource = current.Value?.ToString();
             }
-            else if (input.MoveToNext("sourceReference"))
+            else if (current.MoveToNext("sourceReference"))
             {
-                var nav = input.Clone();
-                if (nav.MoveToFirstChild("reference"))
+                var child = current.Clone();
+                if (child.MoveToFirstChild("reference"))
                 {
-                    ConceptMapSource = nav.Value?.ToString();
+                    ConceptMapSource = child.Value?.ToString();
                 }
 
             }
 
-            if (input.MoveToNext("targetUri"))
+            if (current.MoveToNext("targetUri"))
             {
-                ConceptMapTarget = input.Value?.ToString();
+                ConceptMapTarget = current.Value?.ToString();
             }
-            else if (input.MoveToNext("targetReference"))
+            else if (current.MoveToNext("targetReference"))
             {
-                var nav = input.Clone();
-                if (nav.MoveToFirstChild("reference"))
+                var child = current.Clone();
+                if (child.MoveToFirstChild("reference"))
                 {
-                    ConceptMapTarget = nav.Value?.ToString();
+                    ConceptMapTarget = child.Value?.ToString();
                 }
 
             }

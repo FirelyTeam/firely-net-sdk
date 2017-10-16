@@ -360,21 +360,26 @@ namespace Hl7.Fhir.Specification.Source
 
                 var errors = new List<ErrorInfo>();
 
-                foreach (var file in paths)
+                foreach (var filePath in paths)
                 {
                     try
                     {
-                        var scanner = createScanner(file);
-                        if (scanner != null)
-                            scanResult.AddRange(scanner.List());
+                        var navStream = createNavigatorStream(filePath);
+                        // createNavigatorStream returns null for unknown file extensions
+                        if (navStream != null)
+                        {
+                            var harvester = ArtifactSummaryHarvester.Default;
+                            var summaryStream = harvester.Enumerate(navStream);
+                            scanResult.AddRange(summaryStream);
+                        }
                     }
                     catch (XmlException ex)
                     {
-                        errors.Add(new ErrorInfo(file, ex));    // Log the exception
+                        errors.Add(new ErrorInfo(filePath, ex));    // Log the exception
                     }
                     catch(JsonException ej)
                     {
-                        errors.Add(new ErrorInfo(file, ej));    // Log the exception
+                        errors.Add(new ErrorInfo(filePath, ej));    // Log the exception
                     }
                     // Don't catch other exceptions (fatal error)
                 }
@@ -385,19 +390,24 @@ namespace Hl7.Fhir.Specification.Source
         }
 
 #if ARTIFACTSUMMARY
-        private static ArtifactScanner createScanner(string path)
-        {
-            // TODO: Allow injection of custom harvester
-            var harvester = new ArtifactSummaryHarvester();
+        // TODO: Instead, return INavigatorStream
+        // 1. DirectorySource creates streamer
+        // 2. DirectorySource initializes harvester with streamer
+        // 3. Harvester generates summaries
 
+        // [WMR 20171016] Allow subclasses to override this method
+        // and return custom INavigatorStream implementations
+        protected virtual INavigatorStream createNavigatorStream(string path)
+        {
             var ext = Path.GetExtension(path);
+
             if (StringComparer.OrdinalIgnoreCase.Equals(ext, ".xml"))
             {
-                return new XmlArtifactScanner(path, harvester);
+                return new XmlNavigatorStream(path);
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(ext, ".json"))
             {
-                return new JsonArtifactScanner(path, harvester);
+                return new JsonNavigatorStream(path);
             }
 
             // Unsupported extension
@@ -495,10 +505,13 @@ namespace Hl7.Fhir.Specification.Source
         private static Resource getResourceFromScannedSource(ConformanceScanInformation info)
 #endif
         {
-            var path = info.Origin;
-            var scanner = createScanner(path);
+            // [WMR 20171016] TODO: rewrite obsolete logic
 
-            return scanner.Retrieve(info);
+            // var path = info.Origin;
+            // var scanner = createScanner(path);
+            // return scanner.Retrieve(info);
+
+            throw new NotImplementedException("TODO: Call new overload on deserializers that accept an IElementNavigator.");
         }
 
         public ValueSet FindValueSetBySystem(string system)

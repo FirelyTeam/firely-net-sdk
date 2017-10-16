@@ -17,8 +17,10 @@ using System.IO;
 
 namespace Hl7.Fhir.Specification.Tests
 {
+    // [WMR 20171016] Renamed from: ArtifactResolverTests
+
     [TestClass]
-    public class ArtifactResolverTests
+    public class ConformanceSourceTests 
     {
         [ClassInitialize]
         public static void SetupSource(TestContext t)

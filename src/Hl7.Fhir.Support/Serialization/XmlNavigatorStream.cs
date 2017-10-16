@@ -23,6 +23,7 @@ namespace Hl7.Fhir.Serialization
     /// Provides efficient extraction of summary information from a raw FHIR XML resource file,
     /// without actually deserializing the full resource. Also supports resource bundles.
     /// </summary>
+    /// <remarks>Replacement for XmlArtifactScanner (now obsolete).</remarks>
     public class XmlNavigatorStream : INavigatorStream
     {
         private readonly FileStream _fileStream = null;
@@ -69,7 +70,8 @@ namespace Hl7.Fhir.Serialization
 
         #endregion
 
-        /// <summary>The typename of the underlying resource.</summary>
+        /// <summary>The typename of the underlying resource (container).</summary>
+        /// <remarks>Call Current.Type to determine the type of the currently enumerated resource.</remarks>
         public string ResourceType { get; private set; }
 
         /// <summary>The full path of the current resource file, or of the containing resource bundle file.</summary>
@@ -190,6 +192,7 @@ namespace Hl7.Fhir.Serialization
 
         public string Position => _current?.fullUrl;
 
+        /// <summary>Returns a new <see cref="IElementNavigator"/> instance positioned on the current entry.</summary>
         public IElementNavigator Current
         {
             get

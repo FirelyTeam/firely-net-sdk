@@ -3,8 +3,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Hl7.Fhir.Serialization;
 using System.IO;
 using Hl7.Fhir.Specification.Source;
@@ -16,6 +14,7 @@ using Newtonsoft.Json.Linq;
 namespace Hl7.Fhir.Specification.Tests
 {
     [TestClass]
+    [Obsolete("ArtifactScanner is obsolete, instead use INavigatorStream")]
     public class ArtifactScannerTests
     {
         private (Bundle b, Resource r, Patient p) makeTestData()

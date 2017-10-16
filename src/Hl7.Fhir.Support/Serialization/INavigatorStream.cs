@@ -29,9 +29,19 @@ namespace Hl7.Fhir.Serialization
     /// extract summary information from a raw FHIR resource file, independent of the
     /// underlying resource serialization format. Also supports resource bundles.
     /// </summary>
+    /// <remarks>
+    /// Implements <see cref="IEnumerator{T}"/>, but not <see cref="IEnumerable{T}"/>.
+    /// Iteration state is tied to the stream instance.
+    /// Nested enumeration is NOT supported.
+    /// </remarks>
     public interface INavigatorStream : ISeekableEnumerator<IElementNavigator>, IDisposable
     {
-        /// <summary>The typename of the underlying resource.</summary>
+        // [WMR 20171016] Maybe rename "ResourceType" to "ContainerType" ?
+        // * Bundle: ResourceType returns "Bundle" and Current.Type returns type of current entry
+        // * Others: ResourceType and Current.Type return the same value
+
+        /// <summary>The typename of the underlying resource (container).</summary>
+        /// <remarks>Call Current.Type to determine the type of the currently enumerated resource.</remarks>
         string ResourceType { get; }
 
         /// <summary>The full path of the current resource file, or of the containing resource bundle file.</summary>

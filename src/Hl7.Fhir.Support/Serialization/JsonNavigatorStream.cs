@@ -24,6 +24,7 @@ namespace Hl7.Fhir.Serialization
     /// Provides efficient extraction of summary information from a raw FHIR JSON resource file,
     /// without actually deserializing the full resource. Also supports resource bundles.
     /// </summary>
+    /// <remarks>Replacement for JsonArtifactScanner (now obsolete).</remarks>
     public class JsonNavigatorStream : INavigatorStream
     {
         private readonly FileStream _fileStream = null;
@@ -72,7 +73,8 @@ namespace Hl7.Fhir.Serialization
 
         #endregion
 
-        /// <summary>The typename of the underlying resource.</summary>
+        /// <summary>The typename of the underlying resource (container).</summary>
+        /// <remarks>Call Current.Type to determine the type of the currently enumerated resource.</remarks>
         public string ResourceType { get; private set; }
 
         /// <summary>The full path of the current resource file, or of the containing resource bundle file.</summary>
@@ -145,9 +147,17 @@ namespace Hl7.Fhir.Serialization
                         // Otherwise try to initialize from resource id
                         if (canonicalUrl == null)
                         {
+                            // [WMR 20171016] Note: ResourceType property returns container type (e.g. Bundle)
+                            // But here we need the type of the *current* entry
+                            // Q: Should we call scanForResourceType() ?
+                            //    Inefficient; must reset/recreate reader afterwards...
+                            var resType = resource.Value<string>("resourceType");
+
                             var resourceId = resource.Value<string>("id");
                             if (resourceId != null)
-                                canonicalUrl = "http://example.org/" + ResourceType + "/" + resourceId;
+                            {
+                                canonicalUrl = "http://example.org/" + resType + "/" + resourceId;
+                            }
                         }
 
                         if (canonicalUrl != null && (fullUrl == null || canonicalUrl == fullUrl))
@@ -179,6 +189,7 @@ namespace Hl7.Fhir.Serialization
 
         public string Position => _current?.fullUrl;
 
+        /// <summary>Returns a new <see cref="IElementNavigator"/> instance positioned on the current entry.</summary>
         public IElementNavigator Current
         {
             get

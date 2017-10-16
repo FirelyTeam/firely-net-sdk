@@ -10,6 +10,7 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using System;
 using System.Collections.Generic;
 
 namespace Hl7.Fhir.Specification.Source
@@ -36,50 +37,63 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>ctor</summary>
         public ArtifactSummaryHarvester() { }
 
-        //internal IEnumerable<ArtifactSummary> Harvest(IEnumerable<IElementNavigator> input)
-        //{
-        //    foreach (var entry in input)
-        //    {
-        //        yield return Harvest(entry);
-        //    }
-        //}
-
         /// <summary>
         /// Extract summary information from a sequence of resources via the <see cref="IElementNavigator"/>
         /// interface, independent of the underlying resource serialization format.
         /// </summary>
-        /// <param name="input">A sequence of <see cref="IElementNavigator"/> instances for a set of (bundle) resources.</param>
+        /// <param name="stream">A sequence of <see cref="IElementNavigator"/> instances for a set of (bundle) resources.</param>
         /// <returns>A sequence of <see cref="ArtifactSummary"/> instances for each of the target resources.</returns>
-        internal IEnumerable<ArtifactSummary> Generate(INavigatorStream input)
+        public IEnumerable<ArtifactSummary> Enumerate(INavigatorStream stream)
         {
-            while (input.MoveNext())
+            while (stream.MoveNext())
             {
-                yield return Generate(input.Path, input.Position, input.Current);
+                yield return Generate(stream);
             }
         }
 
         /// <summary>
         /// Creates and initializes a new <see cref="ArtifactSummary"/> record by extracting
-        /// a concrete set of summary information from a raw FHIR resource file via the specified
-        /// <see cref="IElementNavigator"/>, independent of the actual resource serialization format.
-        /// Derived classes can override this method to harvest additional custom summary information.
+        /// a concrete set of summary information from the current entry of the specified
+        /// <see cref="INavigatorStream"/>, independent of the actual resource serialization format.
+        /// Derived classes can override this method to generate custom summary information.
         /// </summary>
-        /// <param name="path">The full path specification the current resource container file.</param>
-        /// <param name="url">The fully qualified uri of the current resource.</param>
-        /// <param name="input">An <see cref="IElementNavigator"/> to access the raw resource.</param>
+        /// <param name="stream">An <see cref="INavigatorStream"/> instance that is positioned on a current entry.</param>
         /// <returns>A new <see cref="ArtifactSummary"/> record.</returns>
-        protected virtual ArtifactSummary Generate(string path, string url, IElementNavigator input)
+        protected virtual ArtifactSummary Generate(INavigatorStream stream)
         {
-            // TODO: Dynamically create subtypes depending on resource type
-            // return new ArtifactSummary(path, url, input);
+            // Dynamically create subtypes depending on resource type
 
-            var resType = EnumUtility.ParseLiteral<ResourceType>(input.Name);
-            if (resType == null) { return new ArtifactSummary(path, url, input); }
-            else if (resType == ResourceType.ConceptMap) { return new ConceptMapSummary(path, url, input); }
-            else if (resType == ResourceType.NamingSystem) { return new NamingSystemSummary(path, url, input); }
-            else if (resType == ResourceType.ValueSet) { return new ValueSetSummary(path, url, input); }
-            else if (ModelInfo.IsConformanceResource(input.Name)) { return new ConformanceResourceSummary(path, url, input); }
-            else return new ArtifactSummary(path, url, input);
+            // INavigatorStream.Current property always returns a new navigator instance
+            // => cache and reuse the returned instance
+            var current = stream.Current;
+
+            var rawType = current.Type;
+            var resType = EnumUtility.ParseLiteral<ResourceType>(rawType);
+
+            if (resType == null)
+            {
+                return new ArtifactSummary(stream, current);
+            }
+            else if (resType == ResourceType.ConceptMap)
+            {
+                return new ConceptMapSummary(stream, current);
+            }
+            else if (resType == ResourceType.NamingSystem)
+            {
+                return new NamingSystemSummary(stream, current);
+            }
+            else if (resType == ResourceType.ValueSet)
+            {
+                return new ValueSetSummary(stream, current);
+            }
+            else if (ModelInfo.IsConformanceResource(rawType))
+            {
+                return new ConformanceResourceSummary(stream, current);
+            }
+            else
+            {
+                return new ArtifactSummary(stream, current);
+            }
         }
     }
 
