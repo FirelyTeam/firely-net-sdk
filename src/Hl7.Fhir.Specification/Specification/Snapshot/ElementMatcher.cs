@@ -154,10 +154,10 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             // Not found, maybe this is a type slice shorthand, look if we have a matching choice prefix in snap
-            var typeSliceShorthand = diffNav.PathName;
+            var diffName = diffNav.PathName;
 
             // Try to match nameXXXXX to name[x]
-            var matchingChoice = choiceNames.SingleOrDefault(xName => ElementDefinitionNavigator.IsRenamedChoiceTypeElement(xName, typeSliceShorthand));
+            var matchingChoice = choiceNames.SingleOrDefault(xName => ElementDefinitionNavigator.IsRenamedChoiceTypeElement(xName, diffName));
 
             if (matchingChoice != null)
             {
@@ -277,6 +277,28 @@ namespace Hl7.Fhir.Specification.Snapshot
                 BaseBookmark = snapNav.Bookmark(),
                 DiffBookmark = diffNav.Bookmark()
             };
+
+            // [WMR 20170928] Special case
+            // STU3:
+            // - A profile shall rename a choice type element if the element is constrained to a single type
+            // - A derived profile SHALL maintain the new name of inherited renamed elements
+            var diffName = diffNav.PathName;
+            if (ElementDefinitionNavigator.IsChoiceTypeElement(diffName))
+            {
+                // Profile specifies constraint on choice type element (name ending with "[x]")
+                // but there is no matching constraint in base profile for that path
+                // Detect if the base profile has renamed the choice type element
+                var candidate = findRenamedChoiceElement(snapNav, diffName);
+                if (candidate != null)
+                {
+                    // Generate warning that a profile further constraining a
+                    // renamed choice type element cannot refer to the original element name,
+                    // but should use the inherited element name.
+                    match.Issue = SnapshotGenerator.CreateIssueInvalidChoiceTypeName(diffNav.Current, candidate);
+                }
+            }
+
+
             snapNav.ReturnToBookmark(bm);
             return match;
         }
@@ -545,7 +567,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 Debug.WriteLine($"[{nameof(ElementMatcher)}.{nameof(matchSliceByTypeCode)}] Error! Element '{diffNav.Path}' is part of a @type slice group, but the element itself has no type.");
 
                 match.Action = MatchAction.Invalid;
-                match.Issue = SnapshotGenerator.CreateIssueTypeSliceWithoutType(diffNav.Current);
+                match.Issue = SnapshotGenerator.createIssueTypeSliceWithoutType(diffNav.Current);
                 return;
             }
 
@@ -645,23 +667,51 @@ namespace Hl7.Fhir.Specification.Snapshot
             return false;
         }
 
-        /// <summary>List all names of nodes in the current navigator that are choice ('[x]') elements.</summary>
-        static List<string> listChoiceElements(ElementDefinitionNavigator snapNav)
+        /// <summary>List names of all following choice type elements ('[x]').</summary>
+        static List<string> listChoiceElements(ElementDefinitionNavigator nav)
         {
-            var bm = snapNav.Bookmark();
+            var bm = nav.Bookmark();
             var result = new List<string>();
 
             do
             {
-                if (snapNav.Current != null && snapNav.Current.IsChoice())
+                if (nav.Current != null && nav.Current.IsChoice())
                 {
-                    result.Add(snapNav.PathName);
+                    result.Add(nav.PathName);
                 }
-            } while (snapNav.MoveToNext());
+            } while (nav.MoveToNext());
 
-            snapNav.ReturnToBookmark(bm);
+            nav.ReturnToBookmark(bm);
 
             return result;
+        }
+
+        /// <summary>Find name of child element that represent a rename of the specified choice type element name.</summary>
+        /// <param name="nav">An <see cref="ElementDefinitionNavigator "/> instance.</param>
+        /// <param name="choiceName">Original choice type element name ending with "[x]".</param>
+        static string findRenamedChoiceElement(ElementDefinitionNavigator nav, string choiceName)
+        {
+            var bm = nav.Bookmark();
+            var result = new List<string>();
+
+            if (nav.MoveToFirstChild())
+            {
+                do
+                {
+                    if (ElementDefinitionNavigator.IsRenamedChoiceTypeElement(choiceName, nav.PathName))
+                    {
+                        // Found match
+                        // Renaming is only allowed for a single type constraint,
+                        // so we're not expecting other matches (...)
+                        return nav.PathName;
+                    }
+
+                } while (nav.MoveToNext());
+            }
+
+            nav.ReturnToBookmark(bm);
+
+            return null;
         }
 
         static string previousElementName(ElementDefinitionNavigator nav)

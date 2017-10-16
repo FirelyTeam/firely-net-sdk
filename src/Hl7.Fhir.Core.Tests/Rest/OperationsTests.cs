@@ -61,7 +61,19 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsTrue(vsX.Expansion.Contains.Any());
         }
 
-  
+        // [WMR 20170927] Chris Munro
+        // https://chat.fhir.org/#narrow/stream/implementers/subject/How.20to.20expand.20ValueSets.20with.20the.20C.23.20FHIR.20API.3F
+        //[TestMethod]
+        //[TestCategory("IntegrationTest")]
+        //[Ignore]
+        //public void TestExpandValueSet()
+        //{
+        //    const string endpoint = @"https://stu3.simplifier.net/open/";
+        //    var location = new FhirUri("https://stu3.simplifier.net/open/ValueSet/043d233c-4ecf-4802-a4ac-75d82b4291c2");
+        //    var client = new FhirClient(endpoint);
+        //    var expandedValueSet = client.ExpandValueSet(location, null);
+        //}
+
         /// <summary>
         /// http://hl7.org/fhir/valueset-operations.html#lookup
         /// </summary>
