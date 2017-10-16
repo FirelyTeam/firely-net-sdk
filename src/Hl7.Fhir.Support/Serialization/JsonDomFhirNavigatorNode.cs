@@ -73,10 +73,14 @@ namespace Hl7.Fhir.Serialization
                         throw Error.Format($"FHIR serialization only supports objects or primitive values, not a {main.Type}", main.Path);
                 }
             }
-            else
+            else if(!isNull(shadow))
             {
                 // No main property, just return the shadow prop                        
                 return new JsonNavigatorNode(name, getShadowObject(shadow));
+            }
+            else
+            {
+                throw Error.Format("FHIR Serialization requires an element to have non-null data", main.Path);
             }
 
             bool isNull(JToken t) => t == null || t.Type == JTokenType.Null;

@@ -6,6 +6,7 @@ using Xunit.Abstractions;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Hl7.FhirPath.Tests.JsonNavTests
 {
@@ -165,6 +166,27 @@ namespace Hl7.FhirPath.Tests.JsonNavTests
             Assert.ThrowsException<FormatException>(() => nav.MoveToFirstChild());
         }
 
+        [TestMethod]
+        public void CatchArrayWithNull()
+        {
+            var json = @"{
+                'resourceType': 'Patient',
+                'identifier': [null]
+                }";
+
+            try
+            {
+                var prof = JsonDomFhirNavigator.Create(json);
+
+                var id = prof.Children("identifier").First();
+
+                Assert.Fail("Should have failed parsing");
+            }
+            catch (FormatException ex)
+            {
+                Assert.IsTrue(ex.Message.Contains("non-null data"));
+            }
+        }
 
         [TestMethod]
         public void ProducesCorrectLocations()
