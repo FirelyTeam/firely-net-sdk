@@ -57,8 +57,9 @@ namespace Hl7.Fhir.Tests.Serialization
                 parser.Parse<Resource>(xml);
                 Assert.Fail("Should have failed on xsi: elements in root");
             }
-            catch (FormatException)
+            catch (FormatException fe)
             {
+                Debug.WriteLine(fe.Message);
             }
         }
 
