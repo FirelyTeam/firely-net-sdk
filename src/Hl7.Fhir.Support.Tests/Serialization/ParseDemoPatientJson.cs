@@ -1,207 +1,202 @@
 ﻿using System;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Serialization;
-using Xunit;
 using Hl7.Fhir.Utility;
 using Xunit.Abstractions;
 using System.IO;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Diagnostics;
 
 namespace Hl7.FhirPath.Tests.JsonNavTests
 {
+    [TestClass]
     public class ParseDemoPatientJson
     {
-        private readonly ITestOutputHelper output;
-
-        public ParseDemoPatientJson(ITestOutputHelper output)
-        {
-            this.output = output;
-        }
-
-        [Fact]
+        [TestMethod]
         public void CanReadThroughNavigator()
         {
             var tpJson = File.ReadAllText(@"TestData\json-edge-cases.json");
 
             var patient = JsonDomFhirNavigator.Create(tpJson);
 
-            Assert.Equal("Patient", patient.Name);
-            Assert.Equal("Patient", patient.Type);
-            Assert.False(patient.MoveToNext());
+            Assert.AreEqual("Patient", patient.Name);
+            Assert.AreEqual("Patient", patient.Type);
+            Assert.IsFalse(patient.MoveToNext());
 
             // Move into child Patient.identifier
-            Assert.True(patient.MoveToFirstChild());
+            Assert.IsTrue(patient.MoveToFirstChild());
             var identifier = patient.Clone();
-            Assert.Null(identifier.Type);
-            Assert.Null(identifier.Value);
+            Assert.IsNull(identifier.Type);
+            Assert.IsNull(identifier.Value);
 
             // Move to child Patient.identifier.period
-            Assert.True(identifier.MoveToFirstChild());
+            Assert.IsTrue(identifier.MoveToFirstChild());
             var period = identifier.Clone();
 
             // Move to child Patient.identifier.period.start
-            Assert.True(period.MoveToFirstChild("start"));
-            Assert.Equal("start", period.Name);
-            Assert.Equal("2001-05-06", period.Value);
+            Assert.IsTrue(period.MoveToFirstChild("start"));
+            Assert.AreEqual("start", period.Name);
+            Assert.AreEqual("2001-05-06", period.Value);
 
-            Assert.True(identifier.MoveToNext());    // assigner
-            Assert.True(identifier.MoveToNext());    // use
-            Assert.Equal("usual", identifier.Value);
-            Assert.True(identifier.MoveToNext());    // system
-            Assert.True(identifier.MoveToNext());    // value
+            Assert.IsTrue(identifier.MoveToNext());    // assigner
+            Assert.IsTrue(identifier.MoveToNext());    // use
+            Assert.AreEqual("usual", identifier.Value);
+            Assert.IsTrue(identifier.MoveToNext());    // system
+            Assert.IsTrue(identifier.MoveToNext());    // value
 
             // Check the value + extensions on Patient.identifier.value
-            Assert.Equal("12345", identifier.Value);
+            Assert.AreEqual("12345", identifier.Value);
             var value = identifier.Clone();
-            Assert.True(value.MoveToFirstChild());
-            Assert.Equal("fhir_comments", value.Name);
-            Assert.Equal("     seems like a likely choice     ", value.Value);
-            Assert.False(value.MoveToNext());
+            Assert.IsTrue(value.MoveToFirstChild());
+            Assert.AreEqual("fhir_comments", value.Name);
+            Assert.AreEqual("     seems like a likely choice     ", value.Value);
+            Assert.IsFalse(value.MoveToNext());
 
-            Assert.False(identifier.MoveToNext());
+            Assert.IsFalse(identifier.MoveToNext());
 
             // Move to sibling Patient.managingOrganization
-            Assert.True(patient.MoveToNext());
-            Assert.Equal("managingOrganization", patient.Name);
+            Assert.IsTrue(patient.MoveToNext());
+            Assert.AreEqual("managingOrganization", patient.Name);
 
             // Move to sibling Patient.active
-            Assert.True(patient.MoveToNext());
-            Assert.Equal("active", patient.Name);
-            Assert.Null(patient.Value);
+            Assert.IsTrue(patient.MoveToNext());
+            Assert.AreEqual("active", patient.Name);
+            Assert.IsNull(patient.Value);
 
             // Move to sibling Patient.name (2x)
-            Assert.True(patient.MoveToNext());
-            Assert.Equal("name", patient.Name);
-            Assert.True(patient.MoveToNext());
-            Assert.Equal("name", patient.Name);
+            Assert.IsTrue(patient.MoveToNext());
+            Assert.AreEqual("name", patient.Name);
+            Assert.IsTrue(patient.MoveToNext());
+            Assert.AreEqual("name", patient.Name);
 
-            Assert.True(patient.MoveToNext("deceasedBoolean"));
-            Assert.Equal("deceasedBoolean", patient.Name);
-            Assert.Equal("true", patient.Value);
+            Assert.IsTrue(patient.MoveToNext("deceasedBoolean"));
+            Assert.AreEqual("deceasedBoolean", patient.Name);
+            Assert.AreEqual("true", patient.Value);
 
             var details = (patient as IAnnotated).Annotation<JsonSerializationDetails>();
-            Assert.Equal(true, details.RawValue);
+            Assert.AreEqual(true, details.RawValue);
 
-            Assert.True(patient.MoveToNext()); // address
-            Assert.True(patient.MoveToNext()); // maritalStatus
-            Assert.True(patient.MoveToNext()); // multipleBirthInteger
-            Assert.Equal("3", patient.Value);
+            Assert.IsTrue(patient.MoveToNext()); // address
+            Assert.IsTrue(patient.MoveToNext()); // maritalStatus
+            Assert.IsTrue(patient.MoveToNext()); // multipleBirthInteger
+            Assert.AreEqual("3", patient.Value);
 
-            Assert.True(patient.MoveToNext()); // text
-            Assert.True(patient.MoveToNext()); // contained
+            Assert.IsTrue(patient.MoveToNext()); // text
+            Assert.IsTrue(patient.MoveToNext()); // contained
 
             // Check Patient.contained[0], a Binary
-            Assert.Equal("contained", patient.Name);
-            Assert.Equal("Binary", patient.Type);
+            Assert.AreEqual("contained", patient.Name);
+            Assert.AreEqual("Binary", patient.Type);
 
-            Assert.True(patient.MoveToNext()); // contained
+            Assert.IsTrue(patient.MoveToNext()); // contained
 
             // Check Patient.contained[1], an Organization
-            Assert.Equal("contained", patient.Name);
-            Assert.Equal("Organization", patient.Type);
+            Assert.AreEqual("contained", patient.Name);
+            Assert.AreEqual("Organization", patient.Type);
 
-            Assert.True(patient.MoveToNext()); // contact
+            Assert.IsTrue(patient.MoveToNext()); // contact
             validateContact(patient);
 
-            Assert.True(patient.MoveToNext()); // careProvider
-            Assert.True(patient.MoveToNext()); // telecom (2x)
-            Assert.True(patient.MoveToNext());
-            Assert.False(patient.MoveToNext());
+            Assert.IsTrue(patient.MoveToNext()); // careProvider
+            Assert.IsTrue(patient.MoveToNext()); // telecom (2x)
+            Assert.IsTrue(patient.MoveToNext());
+            Assert.IsFalse(patient.MoveToNext());
         }
 
         private void validateContact(IElementNavigator patient)
         {
             var contact = patient.Clone();
 
-            Assert.True(contact.MoveToFirstChild()); // contact.name
+            Assert.IsTrue(contact.MoveToFirstChild()); // contact.name
 
-            Assert.True(contact.MoveToFirstChild()); // contact.name.family[0]            
-            Assert.Null(contact.Value);
+            Assert.IsTrue(contact.MoveToFirstChild()); // contact.name.family[0]            
+            Assert.IsNull(contact.Value);
 
-            Assert.True(contact.MoveToNext()); // family[1]
-            Assert.Equal("du", contact.Value);
+            Assert.IsTrue(contact.MoveToNext()); // family[1]
+            Assert.AreEqual("du", contact.Value);
 
-            Assert.True(contact.MoveToNext()); // family[2]
-            Assert.True(contact.MoveToNext()); // family[3]
+            Assert.IsTrue(contact.MoveToNext()); // family[2]
+            Assert.IsTrue(contact.MoveToNext()); // family[3]
 
-            Assert.Equal("Marché", contact.Value);
-            Assert.False(contact.MoveToFirstChild());
+            Assert.AreEqual("Marché", contact.Value);
+            Assert.IsFalse(contact.MoveToFirstChild());
 
-            Assert.True(contact.MoveToNext()); // family[4]
-            Assert.Null(contact.Value);
-            Assert.True(contact.MoveToFirstChild()); // family[4].extension
-            Assert.Equal("extension", contact.Name);
+            Assert.IsTrue(contact.MoveToNext()); // family[4]
+            Assert.IsNull(contact.Value);
+            Assert.IsTrue(contact.MoveToFirstChild()); // family[4].extension
+            Assert.AreEqual("extension", contact.Name);
         }
 
-        [Fact]
+        [TestMethod]
         public void CatchesArrayMisMatch()
         {
             var nav = JsonDomFhirNavigator.Create("{ 'a': [2,3,4], '_a' : [{},null] }", "test");
-            Assert.Throws<FormatException>(() => nav.MoveToFirstChild());
+            Assert.ThrowsException<FormatException>(() => nav.MoveToFirstChild());
 
             nav = JsonDomFhirNavigator.Create("{ 'a': 2, '_a' : [{},null] }", "test");
-            Assert.Throws<FormatException>(() => nav.MoveToFirstChild());
+            Assert.ThrowsException<FormatException>(() => nav.MoveToFirstChild());
 
             nav = JsonDomFhirNavigator.Create("{ 'a': [2,3,4], '_a' : {} }", "test");
-            Assert.Throws<FormatException>(() => nav.MoveToFirstChild());
+            Assert.ThrowsException<FormatException>(() => nav.MoveToFirstChild());
 
             nav = JsonDomFhirNavigator.Create("{ 'a': [2,3,4] }", "test");
-            Assert.True(nav.MoveToFirstChild());
+            Assert.IsTrue(nav.MoveToFirstChild());
 
             nav = JsonDomFhirNavigator.Create("{ '_a': [{},{},{}] }", "test");
-            Assert.True(nav.MoveToFirstChild());
+            Assert.IsTrue(nav.MoveToFirstChild());
 
             nav = JsonDomFhirNavigator.Create("{ 'a': [null,2], '_a' : [{},null] }", "test");
-            Assert.True(nav.MoveToFirstChild());
+            Assert.IsTrue(nav.MoveToFirstChild());
         }
 
-        [Fact]
+        [TestMethod]
         public void CatchesUnsupportedFeatures()
         {
             var nav = JsonDomFhirNavigator.Create("{ 'a': {}, '_a' : {} }", "test");
-            Assert.Throws<FormatException>(() => nav.MoveToFirstChild());
+            Assert.ThrowsException<FormatException>(() => nav.MoveToFirstChild());
 
             nav = JsonDomFhirNavigator.Create("{ 'a': 3, '_a' : 4 }", "test");
-            Assert.Throws<FormatException>(() => nav.MoveToFirstChild());
+            Assert.ThrowsException<FormatException>(() => nav.MoveToFirstChild());
 
             nav = JsonDomFhirNavigator.Create("{ 'a': 3, '_a' : new DateTime() }", "test");
-            Assert.Throws<FormatException>(() => nav.MoveToFirstChild());
+            Assert.ThrowsException<FormatException>(() => nav.MoveToFirstChild());
 
             nav = JsonDomFhirNavigator.Create("{ 'a': new DateTime() }", "test");
-            Assert.Throws<FormatException>(() => nav.MoveToFirstChild());
+            Assert.ThrowsException<FormatException>(() => nav.MoveToFirstChild());
         }
 
 
-        [Fact]
+        [TestMethod]
         public void ProducesCorrectLocations()
         {
             var tpJson = File.ReadAllText(@"TestData\json-edge-cases.json");
 
             var patient = JsonDomFhirNavigator.Create(tpJson);
 
-            Assert.Equal("Patient", patient.Location);
+            Assert.AreEqual("Patient", patient.Location);
 
             patient.MoveToFirstChild();
             var cont = patient.Clone();
 
-            Assert.Equal("Patient.identifier[0]", patient.Location);
+            Assert.AreEqual("Patient.identifier[0]", patient.Location);
             patient.MoveToFirstChild();
-            Assert.Equal("Patient.identifier[0].period[0]", patient.Location);
+            Assert.AreEqual("Patient.identifier[0].period[0]", patient.Location);
 
             cont.MoveToNext(); // managingOrganization
             cont.MoveToNext();
-            Assert.Equal("Patient.active[0]", cont.Location);
+            Assert.AreEqual("Patient.active[0]", cont.Location);
 
             cont.MoveToNext();
-            Assert.Equal("Patient.name[0]", cont.Location);
+            Assert.AreEqual("Patient.name[0]", cont.Location);
 
             cont.MoveToNext();
-            Assert.Equal("Patient.name[1]", cont.Location);
+            Assert.AreEqual("Patient.name[1]", cont.Location);
 
             cont.MoveToFirstChild();
-            Assert.Equal("Patient.name[1].given[0]", cont.Location);
+            Assert.AreEqual("Patient.name[1].given[0]", cont.Location);
         }
 
-        [Fact]
+        [TestMethod]
         public void CompareJsonXmlParseOutcomes()
         {
             var tpJson = File.ReadAllText(@"TestData\json-edge-cases.json");
@@ -214,13 +209,13 @@ namespace Hl7.FhirPath.Tests.JsonNavTests
 
             if (compare.Success == false)
             {
-                output.WriteLine($"Difference in {compare.Details} at {compare.FailureLocation}");
-                Assert.True(compare.Success);
+                Debug.WriteLine($"Difference in {compare.Details} at {compare.FailureLocation}");
+                Assert.IsTrue(compare.Success);
             }
-            Assert.True(compare.Success);
+            Assert.IsTrue(compare.Success);
         }
 
-        [Fact]
+        [TestMethod]
         public void FindFirstChild()
         {
             var tpJson = File.ReadAllText(@"TestData\fp-test-patient.json");
@@ -228,8 +223,8 @@ namespace Hl7.FhirPath.Tests.JsonNavTests
             var patient = JsonDomFhirNavigator.Create(tpJson);
 
             patient.MoveToFirstChild("gender");
-            Assert.Equal("male", patient.Value.ToString());
-            Assert.Equal("Patient.gender[0]", patient.Location);
+            Assert.AreEqual("male", patient.Value.ToString());
+            Assert.AreEqual("Patient.gender[0]", patient.Location);
         }
     }
 }

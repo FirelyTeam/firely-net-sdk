@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Serialization
             {
                 JObject doc = null;
                 doc = SerializationUtil.JObjectFromReader(reader);
-                return Create(doc);
+                return Create(doc, rootName);
             }
             catch (JsonException jec)
             {
