@@ -60,61 +60,10 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>The decoded resource type, or <c>null</c> if the type is unknown.</summary>
         public ResourceType? ResourceType { get; }
-    }
-
-
-    /// <summary>Extended summary information for FHIR conformance resources.</summary>
-    public class ConformanceResourceSummary : ArtifactSummary
-    {
-        public static bool IsSupported(string typeName) => ModelInfo.IsConformanceResource(typeName);
-
-        public ConformanceResourceSummary(INavigatorStream stream) : this(stream, stream.Current) { }
-
-        public ConformanceResourceSummary(INavigatorStream stream, IElementNavigator current) : base(stream, current)
-        {
-            Debug.Assert(IsSupported(ResourceTypeName));
-
-            if (current.MoveToFirstChild("url"))
-            {
-                Canonical = current.Value?.ToString();
-            }
-        }
-
-        /// <summary>The canonical url, or <c>null</c> if not a conformance resource.</summary>
-        public string Canonical { get; }
 
         public override string ToString()
-            => $"{ResourceType} resource with uri {ResourceUri ?? "(unknown)"} (canonical {Canonical ?? "(unknown)"}), read from {Origin}";
+            => $"{GetType().Name} for {ResourceType} | Uri: {ResourceUri ?? "(unknown)"} | Origin: {Origin}";
     }
-
-
-    /// <summary>Extended summary information for FHIR ValueSet resources.</summary>
-    public class ValueSetSummary : ConformanceResourceSummary
-    {
-        public const ResourceType SupportedType = Model.ResourceType.ValueSet;
-
-        public ValueSetSummary(INavigatorStream stream) : this(stream, stream.Current) { }
-
-        public ValueSetSummary(INavigatorStream stream, IElementNavigator current) : base(stream, current)
-        {
-            Debug.Assert(ResourceType == SupportedType);
-
-            if (current.MoveToNext("codeSystem"))
-            {
-                var child = current.Clone();
-                if (child.MoveToFirstChild("system"))
-                {
-                    ValueSetSystem = child.Value?.ToString();
-                }
-            }
-        }
-
-        // [WMR 20171011] DSTU2!
-
-        /// <summary>The Uri of the inline code system.</summary>
-        public string ValueSetSystem { get; }
-    }
-
 
     /// <summary>Extended summary information for FHIR NamingSystem resources.</summary>
     public class NamingSystemSummary : ArtifactSummary
@@ -145,8 +94,66 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Unique identifiers of the naming system.</summary>
         public string[] UniqueIds { get; }
+
+        public override string ToString()
+            => $"{GetType().Name} for {ResourceType} | Uri: {ResourceUri ?? "(unknown)"} | UniqueIds: {string.Join(",", UniqueIds)} | Origin: {Origin}";
+
     }
 
+    /// <summary>Extended summary information for FHIR conformance resources.</summary>
+    public class ConformanceResourceSummary : ArtifactSummary
+    {
+        public static bool IsSupported(string typeName) => ModelInfo.IsConformanceResource(typeName);
+
+        public ConformanceResourceSummary(INavigatorStream stream) : this(stream, stream.Current) { }
+
+        public ConformanceResourceSummary(INavigatorStream stream, IElementNavigator current) : base(stream, current)
+        {
+            Debug.Assert(IsSupported(ResourceTypeName));
+
+            if (current.MoveToFirstChild("url"))
+            {
+                Canonical = current.Value?.ToString();
+            }
+        }
+
+        /// <summary>The canonical url, or <c>null</c> if not a conformance resource.</summary>
+        public string Canonical { get; }
+
+        public override string ToString()
+            => $"{GetType().Name} for {ResourceType} | Canonical: {Canonical ?? "(unknown)"}) | Origin: {Origin}";
+    }
+
+
+    /// <summary>Extended summary information for FHIR ValueSet resources.</summary>
+    public class ValueSetSummary : ConformanceResourceSummary
+    {
+        public const ResourceType SupportedType = Model.ResourceType.ValueSet;
+
+        public ValueSetSummary(INavigatorStream stream) : this(stream, stream.Current) { }
+
+        public ValueSetSummary(INavigatorStream stream, IElementNavigator current) : base(stream, current)
+        {
+            Debug.Assert(ResourceType == SupportedType);
+
+            if (current.MoveToNext("codeSystem"))
+            {
+                var child = current.Clone();
+                if (child.MoveToFirstChild("system"))
+                {
+                    ValueSetSystem = child.Value?.ToString();
+                }
+            }
+        }
+
+        // [WMR 20171011] DSTU2!
+
+        /// <summary>The Uri of the inline code system.</summary>
+        public string ValueSetSystem { get; }
+
+        public override string ToString()
+            => $"{GetType().Name} for {ResourceType} | Canonical: {Canonical ?? "(unknown)"}) | System: {ValueSetSystem ?? "(unknown)"} | Origin: {Origin}";
+    }
 
     /// <summary>Extended summary information for FHIR ConceptMap resources.</summary>
     public class ConceptMapSummary : ConformanceResourceSummary
@@ -193,5 +200,8 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Url that identifies the target of the mapping.</summary>
         public string ConceptMapTarget { get; }
+
+        public override string ToString()
+            => $"{GetType().Name} for {ResourceType} | Canonical: {Canonical ?? "(unknown)"}) | Source: {ConceptMapSource ?? "(unknown)"} | Target: {ConceptMapTarget ?? "(unknown)"} | Origin: {Origin}";
     }
 }

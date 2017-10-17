@@ -212,12 +212,12 @@ namespace Hl7.Fhir.Serialization
 
         static string getRootName(XmlReader reader)
         {
+            // Throws on invalid input
             while (reader.Read())
             {
                 if (reader.NodeType == XmlNodeType.Element && reader.NamespaceURI == XmlNs.FHIR)
                     return reader.LocalName;
             }
-
             return null;
         }
 

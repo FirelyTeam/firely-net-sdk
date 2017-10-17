@@ -211,12 +211,12 @@ namespace Hl7.Fhir.Serialization
 
         static bool skipTo(JsonReader reader, string path)
         {
+            // Throws on invalid input
             while (reader.Read())
             {
                 if (reader.TokenType == JsonToken.PropertyName && reader.Value.Equals(path))
                     return true;
             }
-
             return false;
         }
 

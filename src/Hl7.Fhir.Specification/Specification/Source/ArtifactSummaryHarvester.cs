@@ -47,7 +47,12 @@ namespace Hl7.Fhir.Specification.Source
         {
             while (stream.MoveNext())
             {
-                yield return Generate(stream);
+                var summary = Generate(stream);
+                // Skip invalid input (no summary)
+                if (summary != null)
+                {
+                    yield return summary;
+                }
             }
         }
 
@@ -67,33 +72,40 @@ namespace Hl7.Fhir.Specification.Source
             // => cache and reuse the returned instance
             var current = stream.Current;
 
-            var rawType = current.Type;
-            var resType = EnumUtility.ParseLiteral<ResourceType>(rawType);
+            // Current returns null for invalid input
+            if (current != null)
+            {
+                var rawType = current.Type;
+                var resType = EnumUtility.ParseLiteral<ResourceType>(rawType);
 
-            if (resType == null)
-            {
-                return new ArtifactSummary(stream, current);
+                if (resType == null)
+                {
+                    return new ArtifactSummary(stream, current);
+                }
+                else if (resType == ResourceType.ConceptMap)
+                {
+                    return new ConceptMapSummary(stream, current);
+                }
+                else if (resType == ResourceType.NamingSystem)
+                {
+                    return new NamingSystemSummary(stream, current);
+                }
+                else if (resType == ResourceType.ValueSet)
+                {
+                    return new ValueSetSummary(stream, current);
+                }
+                else if (ModelInfo.IsConformanceResource(rawType))
+                {
+                    return new ConformanceResourceSummary(stream, current);
+                }
+                else
+                {
+                    return new ArtifactSummary(stream, current);
+                }
             }
-            else if (resType == ResourceType.ConceptMap)
-            {
-                return new ConceptMapSummary(stream, current);
-            }
-            else if (resType == ResourceType.NamingSystem)
-            {
-                return new NamingSystemSummary(stream, current);
-            }
-            else if (resType == ResourceType.ValueSet)
-            {
-                return new ValueSetSummary(stream, current);
-            }
-            else if (ModelInfo.IsConformanceResource(rawType))
-            {
-                return new ConformanceResourceSummary(stream, current);
-            }
-            else
-            {
-                return new ArtifactSummary(stream, current);
-            }
+
+            // Invalid input
+            return null;
         }
     }
 
