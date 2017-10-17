@@ -21,8 +21,6 @@ namespace Hl7.Fhir.Serialization
     [Obsolete("Replace this class with JsonDomFhirNavigator from the Hl7.Fhir.Support assembly, and pass it to a Parse() overload which accepts IElementNavigator")]
     public class JsonDomFhirReader : IFhirReader
     {
-        public const string RESOURCETYPE_MEMBER_NAME = "resourceType";
-
         private JToken _current;
 
         internal JToken Current { get { return _current; } }            // just for while refactoring
@@ -183,7 +181,7 @@ namespace Hl7.Fhir.Serialization
             if (!(_current is JObject))
                 throw Error.Format("Cannot read resource type: reader not at a complex object", this);
 
-            var resourceTypeMember = ((JObject)_current)[JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME];
+            var resourceTypeMember = ((JObject)_current)[JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME];
 
             if (resourceTypeMember != null)
             {
@@ -200,7 +198,7 @@ namespace Hl7.Fhir.Serialization
                 throw Error.Format("resourceType should be a primitive string json value", this);
             }
 
-            throw Error.Format("Cannot determine type of resource to create from json input data: no member {0} was found".FormatWith(JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME), this);
+            throw Error.Format("Cannot determine type of resource to create from json input data: no member {0} was found".FormatWith(JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME), this);
         }
 
 
@@ -218,7 +216,7 @@ namespace Hl7.Fhir.Serialization
                 var memberName = member.Name;
 
                 //When enumerating properties for a complex object, make sure not to let resourceType get through
-                if(memberName != JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME)
+                if(memberName != JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME)
                 {
                     IFhirReader nestedReader = new JsonDomFhirReader(member.Value);
 

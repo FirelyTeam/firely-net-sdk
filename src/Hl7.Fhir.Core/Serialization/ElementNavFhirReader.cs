@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.ElementModel;
+using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -41,9 +42,36 @@ namespace Hl7.Fhir.Serialization
         {
             if (_current.Type != null) return _current.Type;
 
-            throw Error.Format("Cannot determine type of resource to create from json input data.", this);
+            // No type name on this element....give the users some details about why?
+            var xmlDetails = getXmlDetails(_current);
+            if (xmlDetails != null)
+            {
+                throw Error.Format($"Cannot derive type name from element with name '{xmlDetails.Name.LocalName}' and namespace '{xmlDetails.Name.NamespaceName}'", this);
+            }
+            else
+            {
+                throw Error.Format("Cannot determine type of resource to create from json input data. " +
+                                    $"Is there a '{JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME}' member present? ", this);
+            }
+
         }
 
+
+        private static XmlSerializationDetails getXmlDetails(IElementNavigator nav)
+        {
+            if (nav is IAnnotated ia)
+                return ia.Annotation<XmlSerializationDetails>();
+            else
+                return null;
+        }
+
+        private static JsonSerializationDetails getJsonDetails(IElementNavigator nav)
+        {
+            if (nav is IAnnotated ia)
+                return ia.Annotation<JsonSerializationDetails>();
+            else
+                return null;
+        }
 
 #pragma warning disable 612, 618
         public IEnumerable<Tuple<string, IFhirReader>> GetMembers()
@@ -53,9 +81,47 @@ namespace Hl7.Fhir.Serialization
 
             var children = _current.Children();
             foreach (var child in _current.Children())
-                yield return Tuple.Create(child.Name, (IFhirReader)new ElementNavFhirReader(child));
+            {
+                bool mustSkip = verifyXmlSpecificDetails(child);
+
+                if(!mustSkip)
+                    yield return Tuple.Create(child.Name, (IFhirReader)new ElementNavFhirReader(child));
+            }
         }
 #pragma warning restore 612, 618
+
+        /// <summary>
+        /// Verify xml specific details.
+        /// </summary>
+        /// <param name="child"></param>
+        /// <returns>'true' if the child is ok, but needs to be skipped, 'false' if it is ok and needs to be processed, throws otherwise</returns>
+        private bool verifyXmlSpecificDetails(IElementNavigator child)
+        {
+            var xmlDetails = getXmlDetails(child);
+            if (xmlDetails == null) return false;
+
+            if (xmlDetails.NodeType == System.Xml.XmlNodeType.Attribute)
+            {
+                if (xmlDetails.IsNamespaceDeclaration) return true;      // skip xmlns declarations
+                if (xmlDetails.Name == XName.Get("{http://www.w3.org/2000/xmlns/}xsi") && !DisallowXsiAttributesOnRoot) return true; // skip xmlns:xsi declaration
+                if (xmlDetails.Name == XName.Get("{http://www.w3.org/2001/XMLSchema-instance}schemaLocation") && !DisallowXsiAttributesOnRoot) return true;     // skip schemaLocation
+
+                if (xmlDetails.Name.NamespaceName == "") return false;
+
+                throw Error.Format($"Encountered unsupported attribute {xmlDetails.Name}", this);
+            }
+
+            else if (xmlDetails.NodeType == System.Xml.XmlNodeType.Element)
+            {
+                if (xmlDetails.Name.NamespaceName == XmlNs.FHIR) return false;
+                if (xmlDetails.Name == XmlNs.XHTMLDIV) return false;
+
+                throw Error.Format($"Encountered element '{xmlDetails.Name.LocalName}' from unsupported namespace '{xmlDetails.Name.NamespaceName}'", this);
+            }
+
+            else
+                throw Error.Format($"Xml node of type '{xmlDetails.NodeType}' is unexpected at this point", this);
+        }
 
         public int LineNumber => -1;
 

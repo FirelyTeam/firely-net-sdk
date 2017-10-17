@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Serialization
 
         private static IEnumerable<JProperty> expandPrimitiveChildren(IEnumerable<JProperty> children, string parentName)
         {
-            bool inResource = children.Any(prop => prop.Name == JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME);
+            bool inResource = children.Any(prop => prop.Name == JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME);
 
             foreach (var child in children)
             {

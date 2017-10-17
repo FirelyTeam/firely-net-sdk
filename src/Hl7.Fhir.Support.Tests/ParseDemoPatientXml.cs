@@ -110,7 +110,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             Assert.IsTrue(nav.MoveToFirstChild());
             Assert.AreEqual("myattr", nav.Name);        // none-xmlns attributes will come through
             var xmldetails = (nav as IAnnotated).Annotation<XmlSerializationDetails>();
-            Assert.AreEqual("http://somenamespace", xmldetails.Namespace);
+            Assert.AreEqual("http://somenamespace", xmldetails.Name.NamespaceName);
 
             Assert.AreEqual("Patient.myattr[0]", nav.Location);
         }

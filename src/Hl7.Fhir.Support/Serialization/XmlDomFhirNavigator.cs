@@ -42,24 +42,8 @@ namespace Hl7.Fhir.Serialization
         private int _nameIndex;
         private string _parentPath;
 
-        public string Name
-        {
-            get
-            {
-                if (_current.NodeType == XmlNodeType.Element)
-                {
-                    return ((XElement)_current).Name.LocalName;
-                }
-                else if (_current.NodeType == XmlNodeType.Attribute)
-                {
-                    return ((XAttribute)_current).Name.LocalName;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-        }
+        public string Name => XName?.LocalName;
+
 
         public string Type
         {
@@ -227,7 +211,8 @@ namespace Hl7.Fhir.Serialization
                     new XmlSerializationDetails()
                     {
                         NodeType = _current.NodeType,
-                        Namespace = XName.NamespaceName
+                        Name = XName,
+                        IsNamespaceDeclaration = (_current is XAttribute xa) ? xa.IsNamespaceDeclaration : false
                     }
                 };
             }

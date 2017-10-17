@@ -14,7 +14,9 @@ namespace Hl7.Fhir.Serialization
     public class XmlSerializationDetails
     {
         public XmlNodeType NodeType;
-        public XNamespace Namespace;
+        public XName Name;
+
+        public bool IsNamespaceDeclaration;
 
         public string[] CommentBefore;
         public string[] CommentAfter;
