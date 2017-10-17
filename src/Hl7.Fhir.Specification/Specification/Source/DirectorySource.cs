@@ -6,9 +6,6 @@
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
-// [WMR 20171010] Use new ArtifactSummary instead of obsolete ConformanceScanInformation
-#define ARTIFACTSUMMARY
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -289,12 +286,7 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         bool _resourcesPrepared = false;
-#if ARTIFACTSUMMARY
         private List<ArtifactSummary> _resourceScanInformation;
-#else
-        private List<ConformanceScanInformation> _resourceScanInformation;
-#endif
-
         public enum DuplicateFilenameResolution
         {
             PreferXml,
@@ -334,9 +326,7 @@ namespace Hl7.Fhir.Specification.Source
             // Check for duplicate canonical urls, this is forbidden within a single source (and actually, universally,
             // but if another source has the same url, the order of polling in the MultiArtifactSource matters)
             var doubles = from ci in _resourceScanInformation
-#if ARTIFACTSUMMARY
                           .OfType<ConformanceResourceSummary>()
-#endif
                           where ci.Canonical != null
                           group ci by ci.Canonical into g
                           where g.Count() > 1
@@ -348,22 +338,19 @@ namespace Hl7.Fhir.Specification.Source
             _resourcesPrepared = true;
             return;
 
-#if ARTIFACTSUMMARY
             (List<ArtifactSummary>, ErrorInfo[]) scanPaths(List<string> paths)
             {
                 var scanResult = new List<ArtifactSummary>();
-#else
-            (List<ConformanceScanInformation>, ErrorInfo[]) scanPaths(List<string> paths)
-            {
-                var scanResult = new List<ConformanceScanInformation>();
-#endif
-
                 var errors = new List<ErrorInfo>();
 
                 foreach (var filePath in paths)
                 {
                     try
                     {
+                        // 1. DirectorySource creates INavigatorStream
+                        // 2. DirectorySource initializes ArtifactSummaryHarvester with streamer
+                        // 3. DirectorySource calls Harvester to generate summaries
+
                         var navStream = createNavigatorStream(filePath);
                         // createNavigatorStream returns null for unknown file extensions
                         if (navStream != null)
@@ -389,12 +376,6 @@ namespace Hl7.Fhir.Specification.Source
             }
         }
 
-#if ARTIFACTSUMMARY
-        // TODO: Instead, return INavigatorStream
-        // 1. DirectorySource creates streamer
-        // 2. DirectorySource initializes harvester with streamer
-        // 3. Harvester generates summaries
-
         // [WMR 20171016] Allow subclasses to override this method
         // and return custom INavigatorStream implementations
         protected virtual INavigatorStream createNavigatorStream(string path)
@@ -413,16 +394,6 @@ namespace Hl7.Fhir.Specification.Source
             // Unsupported extension
             return null;
         }
-#else
-        private static IConformanceScanner createScanner(string path)
-        {
-            var ext = Path.GetExtension(path).ToLower();
-            return ext == ".xml" ? new XmlFileConformanceScanner(path) :
-                          ext == ".json" ? new JsonFileConformanceScanner(path) : (IConformanceScanner)null;
-        }
-#endif
-
-
 
         public void Refresh()
         {
@@ -456,11 +427,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             prepareResources();
 
-#if ARTIFACTSUMMARY
             IEnumerable<ArtifactSummary> scan = _resourceScanInformation;
-#else
-            IEnumerable<ConformanceScanInformation> scan = _resourceScanInformation;
-#endif
             if (filter != null)
             {
                 scan = scan.Where(dsi => dsi.ResourceType == filter);
@@ -488,22 +455,15 @@ namespace Hl7.Fhir.Specification.Source
             prepareResources();
 
             var info = _resourceScanInformation
-#if ARTIFACTSUMMARY
                 .OfType<ConformanceResourceSummary>()
-#endif
                 .SingleOrDefault(ci => ci.Canonical == uri);
-                         
 
             if (info == null) return null;
 
             return getResourceFromScannedSource(info);
         }
 
-#if ARTIFACTSUMMARY
         private static Resource getResourceFromScannedSource(ArtifactSummary info)
-#else
-        private static Resource getResourceFromScannedSource(ConformanceScanInformation info)
-#endif
         {
             // [WMR 20171016] TODO: rewrite obsolete logic
 
@@ -519,9 +479,7 @@ namespace Hl7.Fhir.Specification.Source
             prepareResources();
 
             var info = _resourceScanInformation
-#if ARTIFACTSUMMARY
                 .OfType<ValueSetSummary>()
-#endif
                 .SingleOrDefault(ci => ci.ValueSetSystem == system);
 
             if (info == null) return null;
@@ -538,11 +496,7 @@ namespace Hl7.Fhir.Specification.Source
 
             prepareResources();
 
-#if ARTIFACTSUMMARY
             IEnumerable<ConceptMapSummary> infoList = _resourceScanInformation.OfType<ConceptMapSummary>();
-#else
-            IEnumerable<ConformanceScanInformation> infoList = _resourceScanInformation;
-#endif
             if (sourceUri != null)
             {
                 infoList = infoList.Where(ci => ci.ConceptMapSource == sourceUri);
@@ -562,9 +516,7 @@ namespace Hl7.Fhir.Specification.Source
             prepareResources();
 
             var info = _resourceScanInformation
-#if ARTIFACTSUMMARY
                 .OfType<NamingSystemSummary>()
-#endif
                 .SingleOrDefault(ci => ci.UniqueIds.Contains(uniqueId));
 
             if (info == null) return null;
