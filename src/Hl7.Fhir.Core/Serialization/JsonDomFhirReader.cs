@@ -18,6 +18,7 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Serialization
 {
+    [Obsolete("Replace this class with JsonDomFhirNavigator from the Hl7.Fhir.Support assembly, and pass it to a Parse() overload which accepts IElementNavigator")]
     public class JsonDomFhirReader : IFhirReader
     {
         public const string RESOURCETYPE_MEMBER_NAME = "resourceType";

@@ -12,6 +12,8 @@ namespace Hl7.Fhir.Serialization
 {
     public class JsonSerializationDetails
     {
+        public const string RESOURCETYPE_MEMBER_NAME = "resourceType";
+
         public object RawValue;
     }   
 }

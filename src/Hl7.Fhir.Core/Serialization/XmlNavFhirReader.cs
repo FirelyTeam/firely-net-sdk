@@ -7,29 +7,31 @@
  */
 
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public class XmlNavFhirReader : IFhirReader
+    /// <summary>
+    /// This class wraps an IElementNavigator to implement IFhirReader. This is a temporary solution to use IElementNavigator
+    /// with the POCO-parsers.
+    /// </summary>
+#pragma warning disable 612, 618
+
+    internal class XmlNavFhirReader : IFhirReader
     {
-        public const string BINARY_CONTENT_MEMBER_NAME = "content";
+#pragma warning restore 612, 618
 
         public bool DisallowXsiAttributesOnRoot { get; set; }
 
         IElementNavigator _current;
 
         // [WMR 20160421] Caller can safely dispose reader after calling this ctor
-        public XmlNavFhirReader(XmlReader reader, bool disallowXsiAttributesOnRoot = false)
+        public XmlNavFhirReader(IElementNavigator root, bool disallowXsiAttributesOnRoot = false)
         {
             DisallowXsiAttributesOnRoot = disallowXsiAttributesOnRoot;
 
@@ -77,6 +79,7 @@ namespace Hl7.Fhir.Serialization
 
         private static readonly XName XHTMLDIV = XmlNs.XHTMLNS + "div";
 
+#pragma warning disable 612, 618
         public IEnumerable<Tuple<string, IFhirReader>> GetMembers()
         {
             if (_current.Value != null)
@@ -86,6 +89,7 @@ namespace Hl7.Fhir.Serialization
             foreach (var child in _current.Children())
                 yield return Tuple.Create(child.Name, (IFhirReader)new XmlNavFhirReader(child));
         }
+#pragma warning restore 612, 618
 
         public object GetPrimitiveValue()
         {

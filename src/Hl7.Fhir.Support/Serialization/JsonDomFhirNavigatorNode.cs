@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Serialization
 
             foreach(var child in children)
             {
-                if (child.Key == JTokenExtensions.RESOURCETYPE_MEMBER_NAME) continue;
+                if (child.Key == JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME) continue;
                 //if (isDeferred(current)) continue;
                 if (processed.Contains(child.Key)) continue;
 

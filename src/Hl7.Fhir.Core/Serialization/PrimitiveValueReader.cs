@@ -22,6 +22,7 @@ using System.Xml;
 
 namespace Hl7.Fhir.Serialization
 {
+#pragma warning disable 612, 618
     internal class PrimitiveValueReader
     {
         private IFhirReader _current;
@@ -57,5 +58,5 @@ namespace Hl7.Fhir.Serialization
             }
         }
     }
-
+#pragma warning restore 612,618
 }
