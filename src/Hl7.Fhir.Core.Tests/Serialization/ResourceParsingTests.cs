@@ -57,8 +57,9 @@ namespace Hl7.Fhir.Tests.Serialization
                 parser.Parse<Resource>(xml);
                 Assert.Fail("Should have failed on xsi: elements in root");
             }
-            catch (FormatException)
+            catch (FormatException fe)
             {
+                Debug.WriteLine(fe.Message);
             }
         }
 
@@ -89,9 +90,25 @@ namespace Hl7.Fhir.Tests.Serialization
         internal FhirXmlParser FhirXmlParser = new FhirXmlParser();
         internal FhirJsonParser FhirJsonParser = new FhirJsonParser();
 
+        [TestMethod]
+        public void ParsePerfJson()
+        {
+            string json = TestDataHelper.ReadTestData("TestPatient.json");
+            var pser = new FhirJsonParser();
+
+            // Assume that we can happily read the patient gender when enums are enforced
+            var p = pser.Parse<Patient>(json);
+
+            var sw = new Stopwatch();
+            sw.Start();
+            for (var i = 0; i < 500; i++)
+                p = pser.Parse<Patient>(json);
+            sw.Stop();
+            Debug.WriteLine($"Parsing took {sw.ElapsedMilliseconds/500.0*1000} micros");
+        }
 
         [TestMethod]
-        public void AcceptUnknownEnums()
+        public void ParsePerfXml()
         {
             string xml = TestDataHelper.ReadTestData("TestPatient.xml");
             var pser = new FhirXmlParser();
@@ -99,13 +116,30 @@ namespace Hl7.Fhir.Tests.Serialization
             // Assume that we can happily read the patient gender when enums are enforced
             var p = pser.Parse<Patient>(xml);
 
+            var sw = new Stopwatch();
+            sw.Start();
+            for (var i = 0; i < 500; i++)
+                p = pser.Parse<Patient>(xml);
+            sw.Stop();
+            Debug.WriteLine($"Parsing took {sw.ElapsedMilliseconds / 500.0 * 1000} micros");
+        }
+
+     
+        [TestMethod]
+        public void AcceptUnknownEnums()
+        {
+            string json = TestDataHelper.ReadTestData("TestPatient.json");
+            var pser = new FhirJsonParser();
+
+            // Assume that we can happily read the patient gender when enums are enforced
+            var p = pser.Parse<Patient>(json);
             Assert.IsNotNull(p.Gender);
             Assert.AreEqual("male", p.GenderElement.ObjectValue);
             Assert.AreEqual(AdministrativeGender.Male, p.Gender.Value);
 
             // Verify that if we relax the restriction that everything still works
             pser.Settings.AllowUnrecognizedEnums = true;
-            p = pser.Parse<Patient>(xml);
+            p = pser.Parse<Patient>(json);
 
             Assert.IsNotNull(p.Gender);
             Assert.AreEqual("male", p.GenderElement.ObjectValue);
@@ -114,7 +148,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             // Now, pollute the data with an incorrect administrative gender
             // and verify that the system throws the format exception
-            var xml2 = xml.Replace("\"male\"", "\"superman\"");
+            var xml2 = json.Replace("\"male\"", "\"superman\"");
 
             try
             {

@@ -143,6 +143,9 @@ namespace Hl7.Fhir.Utility
 
         public static JObject JObjectFromReader(JsonReader reader)
         {
+            reader.DateParseHandling = DateParseHandling.None;
+            reader.FloatParseHandling = FloatParseHandling.Decimal;
+
             return JObject.Load(reader);
         }
 
