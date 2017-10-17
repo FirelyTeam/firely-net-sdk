@@ -50,4 +50,5 @@ namespace Hl7.Fhir.Serialization
         /// <summary>Returns <c>true</c> if the underlying file represents a Bundle resource, or <c>false</c> otherwise.</summary>
         bool IsBundle { get; }
     }
+
 }

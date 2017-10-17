@@ -20,6 +20,7 @@ namespace Hl7.Fhir.Serialization
         {
             XDocument doc = null;
 
+            // [WMR 20171017] Why catch and rethrow? Original error info is lost...
             try
             {
                 doc = SerializationUtil.XDocumentFromReader(reader);

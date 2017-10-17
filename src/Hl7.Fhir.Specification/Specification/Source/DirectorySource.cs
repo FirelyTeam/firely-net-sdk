@@ -27,6 +27,7 @@ namespace Hl7.Fhir.Specification.Source
     /// </summary>
     public class DirectorySource : IConformanceSource, IArtifactSource
     {
+        private readonly Func<string, INavigatorStream> _streamFactory;
         private readonly string _contentDirectory;
         private readonly bool _includeSubs;
 
@@ -41,21 +42,35 @@ namespace Hl7.Fhir.Specification.Source
         private List<ArtifactSummary> _resourceScanInformation;
 
         /// <summary>
+        /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources from the specified content directory
+        /// and using the specified (custom) <see cref="INavigatorStream"/> factory delegate.
+        /// </summary>
+        /// <param name="streamFactory">Reference to a (custom) <see cref="INavigatorStream"/> factory delegate.</param>
+        /// <param name="contentDirectory">The file path of the target directory.</param>
+        /// <param name="includeSubdirectories">Specify <c>true</c> to include resources from subdirectories (recursively), or <c>false</c> otherwise.</param>
+        public DirectorySource(Func<string, INavigatorStream> streamFactory, string contentDirectory, bool includeSubdirectories = false)
+        {
+            _streamFactory = streamFactory ?? throw Error.ArgumentNull(nameof(streamFactory));
+            _contentDirectory = contentDirectory ?? throw Error.ArgumentNull(nameof(contentDirectory));
+            _includeSubs = includeSubdirectories;
+        }
+
+        /// <summary>
         /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources from the specified content directory.
         /// </summary>
         /// <param name="contentDirectory">The file path of the target directory.</param>
         /// <param name="includeSubdirectories">Specify <c>true</c> to include resources from subdirectories (recursively), or <c>false</c> otherwise.</param>
         public DirectorySource(string contentDirectory, bool includeSubdirectories = false)
+            : this (NavigatorStreamFactory.Create, contentDirectory, includeSubdirectories)
         {
-            _contentDirectory = contentDirectory ?? throw Error.ArgumentNull(nameof(contentDirectory));
-            _includeSubs = includeSubdirectories;
         }
 
         /// <summary>
         /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources from the <see cref="SpecificationDirectory"/>.
         /// </summary>
         /// <param name="includeSubdirectories">Specify <c>true</c> to include resources from subdirectories (recursively), or <c>false</c> otherwise.</param>
-        public DirectorySource(bool includeSubdirectories = false) : this(SpecificationDirectory, includeSubdirectories)
+        public DirectorySource(bool includeSubdirectories = false)
+            : this(NavigatorStreamFactory.Create, SpecificationDirectory, includeSubdirectories)
         {
         }
 
@@ -124,9 +139,9 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>
-        /// Gets or sets an array of search strings to match against the names of files in the content directory.
-        /// The source will only provide resources from files that match the specified include mask(s).
-        /// The source will ignore all files that don't match the specified include mask(s).
+        /// Gets or sets an array of search strings to match against the names of subdirectories of the content directory.
+        /// The source will only provide resources from subdirectories that match the specified include mask(s).
+        /// The source will ignore all subdirectories that don't match the specified include mask(s).
         /// </summary>
         /// <remarks>
         /// Include filters are applied after <see cref="Mask"/> filters and before <see cref="Excludes"/> filters.
@@ -136,7 +151,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <list type="bullet">
         /// <item>
         /// <term>*</term>
-        /// <description>Matches zero or more characters within a file or directory name.</description>
+        /// <description>Matches zero or more characters within a directory name.</description>
         /// </item>
         /// <item>
         /// <term>**</term>
@@ -148,7 +163,7 @@ namespace Hl7.Fhir.Specification.Source
         /// </list>
         /// </value>
         /// <example>
-        /// <code>Includes = new string[] { "**/file*.xml", "temp/*/*.json" };</code>
+        /// <code>Includes = new string[] { "profiles/**/*", "**/valuesets" };</code>
         /// </example>
         public string[] Includes
         {
@@ -157,9 +172,9 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>
-        /// Gets or sets an array of search strings to match against the names of files in the content directory.
-        /// The source will ignore all files that match the specified exclude mask(s).
-        /// The source will only provide resources from files that don't match the specified exclude mask(s).
+        /// Gets or sets an array of search strings to match against the names of subdirectories of the content directory.
+        /// The source will ignore all subdirectories that match the specified exclude mask(s).
+        /// The source will only provide resources from subdirectories that don't match the specified exclude mask(s).
         /// </summary>
         /// <remarks>
         /// Exclude filters are applied last, after any <see cref="Mask"/> and <see cref="Includes"/> filters.
@@ -169,7 +184,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <list type="bullet">
         /// <item>
         /// <term>*</term>
-        /// <description>Matches zero or more characters within a file or directory name.</description>
+        /// <description>Matches zero or more characters within a directory name.</description>
         /// </item>
         /// <item>
         /// <term>**</term>
@@ -181,7 +196,7 @@ namespace Hl7.Fhir.Specification.Source
         /// </list>
         /// </value>
         /// <example>
-        /// <code>Excludes = new string[] { "**/file*.xml", "temp/*/*.json" };</code>
+        /// <code>Excludes = new string[] { "profiles/**/old", "temp/**/*" };</code>
         /// </example>
         public string[] Excludes
         {
@@ -259,6 +274,17 @@ namespace Hl7.Fhir.Specification.Source
             _resourcesPrepared = false;
         }
 
+        /// <summary>
+        /// Returns a list of summary information describing all valid
+        /// FHIR artifacts that exist in the specified content directory.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ArtifactSummary> List()
+        {
+            prepareResources();
+
+            return _resourceScanInformation.AsEnumerable();
+        }
 
         public IEnumerable<string> ListArtifactNames()
         {
@@ -304,7 +330,7 @@ namespace Hl7.Fhir.Specification.Source
             var info = _resourceScanInformation.SingleOrDefault(ci => ci.ResourceUri == uri);
             if (info == null) return null;
 
-            return getResourceFromScannedSource(info);
+            return getResourceFromScannedSource<Resource>(info);
 
         }
 
@@ -319,7 +345,7 @@ namespace Hl7.Fhir.Specification.Source
 
             if (info == null) return null;
 
-            return getResourceFromScannedSource(info);
+            return getResourceFromScannedSource<Resource>(info);
         }
 
         public ValueSet FindValueSetBySystem(string system)
@@ -332,7 +358,7 @@ namespace Hl7.Fhir.Specification.Source
 
             if (info == null) return null;
 
-            return getResourceFromScannedSource(info) as ValueSet;
+            return getResourceFromScannedSource<ValueSet>(info);
         }
 
         public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
@@ -355,7 +381,7 @@ namespace Hl7.Fhir.Specification.Source
                 infoList = infoList.Where(ci => ci.ConceptMapTarget == targetUri);
             }
 
-            return infoList.Select(info => getResourceFromScannedSource(info)).Where(r => r != null).Cast<ConceptMap>();
+            return infoList.Select(info => getResourceFromScannedSource<ConceptMap>(info)).Where(r => r != null);
         }
 
         public NamingSystem FindNamingSystem(string uniqueId)
@@ -369,29 +395,8 @@ namespace Hl7.Fhir.Specification.Source
 
             if (info == null) return null;
 
-            return getResourceFromScannedSource(info) as NamingSystem;
+            return getResourceFromScannedSource<NamingSystem>(info);
         }
-
-        #region Protected members
-
-        // [WMR 20171016] Allow subclasses to override this method
-        // and return custom INavigatorStream implementations
-        protected virtual INavigatorStream createNavigatorStream(string path)
-        {
-            if (isXml(path))
-            {
-                return new XmlNavigatorStream(path);
-            }
-            if (isJson(path))
-            {
-                return new JsonNavigatorStream(path);
-            }
-
-            // Unsupported extension
-            return null;
-        }
-
-        #endregion
 
         #region Private members
 
@@ -538,7 +543,7 @@ namespace Hl7.Fhir.Specification.Source
 
             foreach (var filename in allFilenames.Distinct())
             {
-                if (isXml(filename) || isJson(filename))
+                if (FileFormats.HasXmlOrJsonExtension(filename))
                     xmlOrJson.Add(filename);
                 else
                     result.Add(filename);
@@ -554,9 +559,9 @@ namespace Hl7.Fhir.Specification.Source
                 {
                     // count must be 2
                     var first = group.First();
-                    if (preference == DuplicateFilenameResolution.PreferXml && isXml(first))
+                    if (preference == DuplicateFilenameResolution.PreferXml && FileFormats.HasXmlExtension(first))
                         result.Add(first);
-                    else if (preference == DuplicateFilenameResolution.PreferJson && isJson(first))
+                    else if (preference == DuplicateFilenameResolution.PreferJson && FileFormats.HasJsonExtension(first))
                         result.Add(first);
                     else
                         result.Add(group.Skip(1).First());
@@ -569,17 +574,6 @@ namespace Hl7.Fhir.Specification.Source
 
         private static string fullPathWithoutExtension(string fullPath)
             => fullPath.Replace(Path.GetFileName(fullPath), Path.GetFileNameWithoutExtension(fullPath));
-
-
-        // [WMR 20171017] Maybe we should publicly expose the following utility methods?
-
-        private static bool isXml(string fullPath)
-            // => Path.GetExtension(fullPath).ToLower() == ".xml";
-            => StringComparer.OrdinalIgnoreCase.Equals(Path.GetExtension(fullPath), ".xml");
-
-        private static bool isJson(string fullPath)
-            // => Path.GetExtension(fullPath).ToLower() == ".json";
-            => StringComparer.OrdinalIgnoreCase.Equals(Path.GetExtension(fullPath), ".json");
 
         /// <summary>Scan all xml files found by prepareFiles and find conformance resources and their id.</summary>
         private void prepareResources()
@@ -617,9 +611,9 @@ namespace Hl7.Fhir.Specification.Source
                         // 1. DirectorySource creates INavigatorStream
                         // 2. DirectorySource initializes ArtifactSummaryHarvester with streamer
                         // 3. DirectorySource calls Harvester to generate summaries
+                        var navStream = _streamFactory(filePath);
 
-                        var navStream = createNavigatorStream(filePath);
-                        // createNavigatorStream returns null for unknown file extensions
+                        // INavigatorStreamFactory.Create() returns null for unknown file extensions
                         if (navStream != null)
                         {
                             var harvester = ArtifactSummaryHarvester.Default;
@@ -643,15 +637,37 @@ namespace Hl7.Fhir.Specification.Source
             }
         }
 
-        private static Resource getResourceFromScannedSource(ArtifactSummary info)
+        /// <summary>
+        /// Try to deserialize the full resource represented by the specified <see cref="ArtifactSummary"/>.
+        /// </summary>
+        /// <param name="info">An <see cref="ArtifactSummary"/> instance.</param>
+        /// <typeparam name="T">The expected resource type.</typeparam>
+        /// <returns>A new instance of type <typeparamref name="T"/>, or <c>null</c>.</returns>
+        private T getResourceFromScannedSource<T>(ArtifactSummary info)
+            where T : Resource
         {
-            // [WMR 20171016] TODO: rewrite obsolete logic
-
-            // var path = info.Origin;
-            // var scanner = createScanner(path);
-            // return scanner.Retrieve(info);
-
-            throw new NotImplementedException("TODO: Call new overload on deserializers that accept an IElementNavigator.");
+            // File path of the containing resource file (could be a Bundle)
+            var path = info.Origin;
+            var navStream = _streamFactory(path);
+            // Advance stream to the target resource (e.g. specific Bundle entry)
+            if (navStream.Seek(info.Position))
+            {
+                // Create navigator for the target resource
+                var nav = navStream.Current;
+                if (nav != null)
+                {
+                    // Parse target resource from navigator
+                    var parser = new BaseFhirParser();
+                    var result = parser.Parse<T>(nav);
+                    if (result != null)
+                    {
+                        // Add origin annotation
+                        result.SetOrigin(info.Origin);
+                        return result;
+                    }
+                }
+            }
+            return null;
         }
 
         #endregion
