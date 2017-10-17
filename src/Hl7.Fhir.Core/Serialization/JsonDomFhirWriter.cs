@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Serialization
 
         public void WriteStartRootObject(string name, bool contained)
         {
-            _createdRootObject = new JObject(new JProperty(JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME, name));
+            _createdRootObject = new JObject(new JProperty(JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME, name));
 
             if (!contained)
                 _root = _createdRootObject;                    

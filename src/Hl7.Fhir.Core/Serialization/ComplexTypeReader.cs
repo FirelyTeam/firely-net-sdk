@@ -21,6 +21,7 @@ using System.Text;
 
 namespace Hl7.Fhir.Serialization
 {
+#pragma warning disable 612,618
     internal class ComplexTypeReader
     {
         private IFhirReader _current;
@@ -130,4 +131,5 @@ namespace Hl7.Fhir.Serialization
 
         }
     }
+#pragma warning restore 612, 618
 }

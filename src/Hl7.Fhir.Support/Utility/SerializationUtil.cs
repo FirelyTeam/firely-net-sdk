@@ -119,18 +119,22 @@ namespace Hl7.Fhir.Utility
         // [WMR 20160421] Caller is responsible for disposing the returned Json(Text)Reader
         public static JsonReader JsonReaderFromJsonText(string json)
         {
-            JsonReader reader = new JsonTextReader(new StringReader(json));
-            reader.DateParseHandling = DateParseHandling.None;
-            reader.FloatParseHandling = FloatParseHandling.Decimal;
+            JsonReader reader = new JsonTextReader(new StringReader(json))
+            {
+                DateParseHandling = DateParseHandling.None,
+                FloatParseHandling = FloatParseHandling.Decimal
+            };
 
             return reader;
         }
 
         public static JsonReader JsonReaderFromStream(Stream s)
         {
-            JsonReader reader = new JsonTextReader(new StreamReader(s));
-            reader.DateParseHandling = DateParseHandling.None;
-            reader.FloatParseHandling = FloatParseHandling.Decimal;
+            JsonReader reader = new JsonTextReader(new StreamReader(s))
+            {
+                DateParseHandling = DateParseHandling.None,
+                FloatParseHandling = FloatParseHandling.Decimal
+            };
 
             return reader;
         }
@@ -138,6 +142,9 @@ namespace Hl7.Fhir.Utility
 
         public static JObject JObjectFromReader(JsonReader reader)
         {
+            reader.DateParseHandling = DateParseHandling.None;
+            reader.FloatParseHandling = FloatParseHandling.Decimal;
+
             return JObject.Load(reader);
         }
 

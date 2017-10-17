@@ -48,10 +48,5 @@ namespace Hl7.Fhir.Serialization
                 return Create(reader);
             }
         }
-
-        //public static IElementNavigator Create(JsonReader reader, bool disallowXsiAttributesOnRoot = false)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }

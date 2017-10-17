@@ -19,17 +19,18 @@ namespace Hl7.Fhir.Serialization
     /// This class wraps an IElementNavigator to implement IFhirReader. This is a temporary solution to use IElementNavigator
     /// with the POCO-parsers.
     /// </summary>
-#pragma warning disable 612,618
-    internal class JsonNavFhirReader : IFhirReader
+#pragma warning disable 612, 618
+    internal class ElementNavFhirReader : IFhirReader
 #pragma warning restore 612,618
     {
         private IElementNavigator _current;
+        public bool DisallowXsiAttributesOnRoot { get; set; }
 
-        public JsonNavFhirReader(IElementNavigator root)
+        public ElementNavFhirReader(IElementNavigator root, bool disallowXsiAttributesOnRoot = false)
         {
+            DisallowXsiAttributesOnRoot = disallowXsiAttributesOnRoot;
             _current = root;
         }
-
 
         public object GetPrimitiveValue()
         {
@@ -40,8 +41,7 @@ namespace Hl7.Fhir.Serialization
         {
             if (_current.Type != null) return _current.Type;
 
-            throw Error.Format("Cannot determine type of resource to create from json input data. " + 
-                                $"Is there a member '{JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME}' on the root?", this);
+            throw Error.Format("Cannot determine type of resource to create from json input data.", this);
         }
 
 
@@ -49,11 +49,11 @@ namespace Hl7.Fhir.Serialization
         public IEnumerable<Tuple<string, IFhirReader>> GetMembers()
         {
             if (_current.Value != null)
-                yield return Tuple.Create("value", (IFhirReader)new JsonNavFhirReader(_current));
+                yield return Tuple.Create("value", (IFhirReader)new ElementNavFhirReader(_current));
 
             var children = _current.Children();
             foreach (var child in _current.Children())
-                yield return Tuple.Create(child.Name, (IFhirReader)new JsonNavFhirReader(child));
+                yield return Tuple.Create(child.Name, (IFhirReader)new ElementNavFhirReader(child));
         }
 #pragma warning restore 612, 618
 
