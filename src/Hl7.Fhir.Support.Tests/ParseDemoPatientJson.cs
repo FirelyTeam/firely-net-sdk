@@ -273,5 +273,19 @@ namespace Hl7.FhirPath.Tests.JsonNavTests
             Assert.AreEqual("male", patient.Value.ToString());
             Assert.AreEqual("Patient.gender[0]", patient.Location);
         }
+
+        [TestMethod]
+        public void HasLineNumbersJson()
+        {
+            var tpJson = File.ReadAllText(@"TestData\fp-test-patient.json");
+            var nav = JsonDomFhirNavigator.Create(tpJson);
+
+            Assert.IsTrue(nav.MoveToFirstChild());
+
+            var jsonDetails = (nav as IAnnotated)?.Annotation<JsonSerializationDetails>();
+            Assert.IsNotNull(jsonDetails);
+            Assert.AreNotEqual(-1, jsonDetails.LineNumber);
+            Assert.AreNotEqual(-1, jsonDetails.LinePosition);
+        }
     }
 }

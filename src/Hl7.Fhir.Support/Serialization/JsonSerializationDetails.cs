@@ -6,14 +6,20 @@
 * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE 
 */
 
+using Hl7.Fhir.Utility;
 using Newtonsoft.Json.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public class JsonSerializationDetails
+    public class JsonSerializationDetails : IPositionInfo
     {
         public const string RESOURCETYPE_MEMBER_NAME = "resourceType";
 
         public object RawValue;
-    }   
+
+        public int LineNumber { get; internal set; }
+
+        public int LinePosition { get; internal set; }
+
+    }
 }

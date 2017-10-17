@@ -123,8 +123,8 @@ namespace Hl7.Fhir.Serialization
                 throw Error.Format($"Xml node of type '{xmlDetails.NodeType}' is unexpected at this point", this);
         }
 
-        public int LineNumber => -1;
+        public int LineNumber => (_current as IPositionInfo)?.LineNumber ?? -1;
 
-        public int LinePosition => -1;
+        public int LinePosition => (_current as IPositionInfo)?.LinePosition ?? -1;
     }
 }

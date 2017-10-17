@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
 
-        [TestMethod,Ignore]
+        [TestMethod]
         public void ReturnsLineNumbersXml()
         {
             var xml = "<Patient xmlns='http://hl7.org/fhir'><iDontExist value='piet' /></Patient>";
@@ -48,16 +48,15 @@ namespace Hl7.Fhir.Tests.Serialization
             try
             {
                 parser.Parse<Resource>(xml);
+                Assert.Fail("Should have thrown");
             }
             catch(FormatException fe)
             {
                 Assert.IsFalse(fe.Message.Contains("pos -1"));
-            }
-
-            Assert.Fail("Should have thrown");
+            }            
         }
 
-        [TestMethod,Ignore]
+        [TestMethod]
         public void ReturnsLineNumbersJson()
         {
             var xml = "<Patient xmlns='http://hl7.org/fhir'><iDontExist value='piet' /></Patient>";
@@ -66,13 +65,12 @@ namespace Hl7.Fhir.Tests.Serialization
             try
             {
                 parser.Parse<Resource>(xml);
+                Assert.Fail("Should have thrown");
             }
             catch (FormatException fe)
             {
                 Assert.IsFalse(fe.Message.Contains("pos -1"));
-            }
-
-            Assert.Fail("Should have thrown");
+            }            
         }
 
 
