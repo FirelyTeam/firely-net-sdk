@@ -16,7 +16,7 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public partial struct XmlDomFhirNavigator : IElementNavigator, IAnnotated
+    public partial struct XmlDomFhirNavigator : IElementNavigator, IAnnotated, IPositionInfo
     {
         internal XmlDomFhirNavigator(XObject current)
         {
@@ -202,6 +202,10 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
+        public int LineNumber => (_current as IXmlLineInfo)?.LineNumber ?? -1;
+
+        public int LinePosition => (_current as IXmlLineInfo)?.LinePosition ?? -1;
+
         public IEnumerable<object> Annotations(Type type)
         {
             if (type == typeof(XmlSerializationDetails))
@@ -212,7 +216,9 @@ namespace Hl7.Fhir.Serialization
                     {
                         NodeType = _current.NodeType,
                         Name = XName,
-                        IsNamespaceDeclaration = (_current is XAttribute xa) ? xa.IsNamespaceDeclaration : false
+                        IsNamespaceDeclaration = (_current is XAttribute xa) ? xa.IsNamespaceDeclaration : false,
+                        LineNumber = this.LineNumber,
+                        LinePosition = this.LinePosition
                     }
                 };
             }

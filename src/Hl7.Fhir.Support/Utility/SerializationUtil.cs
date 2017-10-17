@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Utility
             JsonReader reader = new JsonTextReader(new StringReader(json))
             {
                 DateParseHandling = DateParseHandling.None,
-                FloatParseHandling = FloatParseHandling.Decimal
+                FloatParseHandling = FloatParseHandling.Decimal,                
             };
 
             return reader;

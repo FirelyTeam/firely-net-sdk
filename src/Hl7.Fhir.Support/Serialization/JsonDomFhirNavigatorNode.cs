@@ -7,6 +7,7 @@
 */
 
 using Hl7.Fhir.Utility;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace Hl7.Fhir.Serialization
                 JRaw
      */
 
-    internal struct JsonNavigatorNode
+    internal struct JsonNavigatorNode : IPositionInfo
     {
         public JValue JsonValue;
         public JObject JsonObject;
@@ -110,6 +111,27 @@ namespace Hl7.Fhir.Serialization
                 return null;
             }
         }
+
+        public int LineNumber
+        {
+            get
+            {
+                IJsonLineInfo li = this.JsonValue as IJsonLineInfo ?? this.JsonObject as IJsonLineInfo;
+
+                return li?.LineNumber ?? -1;
+            }
+        }
+
+        public int LinePosition
+        {
+            get
+            {
+                IJsonLineInfo li = this.JsonValue as IJsonLineInfo ?? this.JsonObject as IJsonLineInfo;
+
+                return li?.LinePosition ?? -1;
+            }
+        }
+
 
         public IEnumerable<JsonNavigatorNode> GetChildren()
         {
