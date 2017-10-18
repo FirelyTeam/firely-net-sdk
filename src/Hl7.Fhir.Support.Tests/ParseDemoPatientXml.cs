@@ -63,7 +63,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
         }
 
         [TestMethod]
-        public void ElementNavPerformance()
+        public void ElementNavPerformanceXml()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
             var nav = XmlDomFhirNavigator.Create(tpXml);
@@ -79,7 +79,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             }
             sw.Stop();
 
-            Debug.WriteLine($"Navigating took {sw.ElapsedMilliseconds/10} micros");
+            Debug.WriteLine($"Navigating took {sw.ElapsedMilliseconds / 10} micros");
         }
 
         [TestMethod]
@@ -110,7 +110,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             Assert.IsTrue(nav.MoveToFirstChild());
             Assert.AreEqual("myattr", nav.Name);        // none-xmlns attributes will come through
             var xmldetails = (nav as IAnnotated).Annotation<XmlSerializationDetails>();
-            Assert.AreEqual("http://somenamespace", xmldetails.Namespace);
+            Assert.AreEqual("http://somenamespace", xmldetails.Name.NamespaceName);
 
             Assert.AreEqual("Patient.myattr[0]", nav.Location);
         }
@@ -125,7 +125,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
 
             var compare = navXml.IsEqualTo(navJson);
 
-            if(compare.Success == false)
+            if (compare.Success == false)
             {
                 Debug.WriteLine($"Difference in {compare.Details} at {compare.FailureLocation}");
                 Assert.IsTrue(compare.Success);
@@ -133,6 +133,18 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             Assert.IsTrue(compare.Success);
         }
 
+        [TestMethod]
+        public void HasLineNumbersXml()
+        {
+            var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
+            var nav = XmlDomFhirNavigator.Create(tpXml);
 
+            Assert.IsTrue(nav.MoveToFirstChild());
+
+            var xmlDetails = (nav as IAnnotated)?.Annotation<XmlSerializationDetails>();
+            Assert.IsNotNull(xmlDetails);
+            Assert.AreNotEqual(-1, xmlDetails.LineNumber);
+            Assert.AreNotEqual(-1, xmlDetails.LinePosition);
+        }      
     }
 }

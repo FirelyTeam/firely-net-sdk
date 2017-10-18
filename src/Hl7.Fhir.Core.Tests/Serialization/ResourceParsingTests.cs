@@ -40,6 +40,70 @@ namespace Hl7.Fhir.Tests.Serialization
 
 
         [TestMethod]
+        public void ReturnsLineNumbersXml()
+        {
+            var xml = "<Patient xmlns='http://hl7.org/fhir'><iDontExist value='piet' /></Patient>";
+            var parser = new FhirXmlParser();
+
+            try
+            {
+                parser.Parse<Resource>(xml);
+                Assert.Fail("Should have thrown");
+            }
+            catch(FormatException fe)
+            {
+                Assert.IsFalse(fe.Message.Contains("pos -1"));
+            }            
+        }
+
+        [TestMethod]
+        public void ReturnsLineNumbersJson()
+        {
+            var xml = "<Patient xmlns='http://hl7.org/fhir'><iDontExist value='piet' /></Patient>";
+            var parser = new FhirXmlParser();
+
+            try
+            {
+                parser.Parse<Resource>(xml);
+                Assert.Fail("Should have thrown");
+            }
+            catch (FormatException fe)
+            {
+                Assert.IsFalse(fe.Message.Contains("pos -1"));
+            }            
+        }
+
+
+        [TestMethod]
+        public void RequiresHl7Namespace()
+        {
+            var xml = "<Patient><active value='false' /></Patient>";
+            var parser = new FhirXmlParser();
+
+            try
+            {
+                parser.Parse<Resource>(xml);
+                Assert.Fail("Should have thrown on Patient without namespace");
+            }
+            catch (FormatException fe)
+            {
+                Assert.IsTrue(fe.Message.Contains("Cannot derive type"));
+            }
+
+            xml = "<Patient xmlns='http://hl7.org/fhir'><f:active value='false' xmlns:f='http://somehwere.else.nl' /></Patient>";
+            
+            try
+            {
+                parser.Parse<Resource>(xml);
+                Assert.Fail("Should have thrown on Patient.active with incorrect namespace");
+            }
+            catch (FormatException fe)
+            {
+                Assert.IsTrue(fe.Message.Contains("unsupported namespace"));
+            }
+        }
+
+        [TestMethod]
         public void AcceptXsiStuffOnRoot()
         {
             var xml = "<Patient xmlns='http://hl7.org/fhir' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' " +
@@ -90,9 +154,25 @@ namespace Hl7.Fhir.Tests.Serialization
         internal FhirXmlParser FhirXmlParser = new FhirXmlParser();
         internal FhirJsonParser FhirJsonParser = new FhirJsonParser();
 
+        [TestMethod]
+        public void ParsePerfJson()
+        {
+            string json = TestDataHelper.ReadTestData("TestPatient.json");
+            var pser = new FhirJsonParser();
+
+            // Assume that we can happily read the patient gender when enums are enforced
+            var p = pser.Parse<Patient>(json);
+
+            var sw = new Stopwatch();
+            sw.Start();
+            for (var i = 0; i < 500; i++)
+                p = pser.Parse<Patient>(json);
+            sw.Stop();
+            Debug.WriteLine($"Parsing took {sw.ElapsedMilliseconds/500.0*1000} micros");
+        }
 
         [TestMethod]
-        public void AcceptUnknownEnums()
+        public void ParsePerfXml()
         {
             string xml = TestDataHelper.ReadTestData("TestPatient.xml");
             var pser = new FhirXmlParser();
@@ -100,13 +180,30 @@ namespace Hl7.Fhir.Tests.Serialization
             // Assume that we can happily read the patient gender when enums are enforced
             var p = pser.Parse<Patient>(xml);
 
+            var sw = new Stopwatch();
+            sw.Start();
+            for (var i = 0; i < 500; i++)
+                p = pser.Parse<Patient>(xml);
+            sw.Stop();
+            Debug.WriteLine($"Parsing took {sw.ElapsedMilliseconds / 500.0 * 1000} micros");
+        }
+
+     
+        [TestMethod]
+        public void AcceptUnknownEnums()
+        {
+            string json = TestDataHelper.ReadTestData("TestPatient.json");
+            var pser = new FhirJsonParser();
+
+            // Assume that we can happily read the patient gender when enums are enforced
+            var p = pser.Parse<Patient>(json);
             Assert.IsNotNull(p.Gender);
             Assert.AreEqual("male", p.GenderElement.ObjectValue);
             Assert.AreEqual(AdministrativeGender.Male, p.Gender.Value);
 
             // Verify that if we relax the restriction that everything still works
             pser.Settings.AllowUnrecognizedEnums = true;
-            p = pser.Parse<Patient>(xml);
+            p = pser.Parse<Patient>(json);
 
             Assert.IsNotNull(p.Gender);
             Assert.AreEqual("male", p.GenderElement.ObjectValue);
@@ -115,7 +212,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             // Now, pollute the data with an incorrect administrative gender
             // and verify that the system throws the format exception
-            var xml2 = xml.Replace("\"male\"", "\"superman\"");
+            var xml2 = json.Replace("\"male\"", "\"superman\"");
 
             try
             {
@@ -188,27 +285,6 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsNotNull(FhirXmlParser.Parse<Resource>(xml));
             var json = FhirSerializer.SerializeResourceToJson(p);
             Assert.IsNotNull(FhirJsonParser.Parse<Resource>(json));
-        }
-
-        // TODO: Unfortunately, this is currently too much work to validate. See comments on the bottom of
-        // https://github.com/ewoutkramer/fhir-net-api/issues/20
-        [TestMethod]
-        public void CatchArrayWithNull()
-        {
-            var json = @"{
-                'resourceType': 'Patient',
-                'identifier': [null]
-                }";
-
-            try
-            {
-                var prof = FhirJsonParser.Parse<Resource>(json);
-                Assert.Fail("Should have failed parsing");
-            }
-            catch (FormatException ex)
-            {
-                Assert.IsTrue(ex.Message.Contains("both be null"));
-            }
         }
     }
 }

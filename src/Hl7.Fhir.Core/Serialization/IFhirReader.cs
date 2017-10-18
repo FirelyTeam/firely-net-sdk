@@ -12,6 +12,7 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Serialization
 {
+    [Obsolete("Use IElementNavigator interface in the Hl7.Fhir.Support assembly instead, and pass it to a Parse() overload which accepts IElementNavigator")]
     public interface IFhirReader : IPositionInfo
     {
         string GetResourceTypeName();

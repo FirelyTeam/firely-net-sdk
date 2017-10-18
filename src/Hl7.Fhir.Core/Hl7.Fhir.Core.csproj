@@ -23,6 +23,11 @@
      <EmbeddedResource Remove="Rest\Search\**" />
      <None Remove="Rest\Search\**" />
    </ItemGroup>
+
+   <ItemGroup>
+     <Compile Remove="Serialization\JsonNavFhirReader.cs" />
+     <Compile Remove="Serialization\XmlNavFhirReader.cs" />
+   </ItemGroup>
  
   <ItemGroup>    
     <PackageReference Include="System.ValueTuple" Version="4.3.0" />

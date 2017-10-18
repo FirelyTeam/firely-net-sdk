@@ -31,6 +31,16 @@ namespace Hl7.Fhir.Serialization
             return new XmlDomFhirNavigator(doc.Root);
         }
 
+        public static IElementNavigator Create(XDocument doc)
+        {
+            return new XmlDomFhirNavigator(doc.Root);
+        }
+
+        public static IElementNavigator Create(XElement elem)
+        {
+            return new XmlDomFhirNavigator(elem);
+        }
+
         public static IElementNavigator Create(string xml)
         {
             using (var reader = SerializationUtil.XmlReaderFromXmlText(xml))
@@ -38,10 +48,5 @@ namespace Hl7.Fhir.Serialization
                 return Create(reader);
             }
         }
-
-        //public static IElementNavigator Create(JsonReader reader, bool disallowXsiAttributesOnRoot = false)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }
