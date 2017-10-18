@@ -21,7 +21,8 @@ using System.Text;
 namespace Hl7.Fhir.Serialization
 {
     public class ResourceReader
-    {       
+    {
+#pragma warning disable 612, 618
         private IFhirReader _reader;
         private ModelInspector _inspector;
 
@@ -33,6 +34,7 @@ namespace Hl7.Fhir.Serialization
             _inspector = BaseFhirParser.Inspector;
             Settings = settings;
         }
+#pragma warning restore 612,618
 
         public Resource Deserialize(Resource existing=null)
         {
