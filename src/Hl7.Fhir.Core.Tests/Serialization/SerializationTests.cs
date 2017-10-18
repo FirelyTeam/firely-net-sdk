@@ -93,10 +93,12 @@ namespace Hl7.Fhir.Tests.Serialization
             var full = FhirSerializer.SerializeResourceToXml(p);
             Assert.IsTrue(full.Contains("<birthDate"));
             Assert.IsTrue(full.Contains("<photo"));
+            Assert.IsNull(p.Meta, "Meta element should not be introduced here.");
 
             var summ = FhirSerializer.SerializeResourceToXml(p, summary: Fhir.Rest.SummaryType.True);
             Assert.IsTrue(summ.Contains("<birthDate"));
             Assert.IsFalse(summ.Contains("<photo"));
+            Assert.IsNull(p.Meta, "Meta element should not be introduced here.");
 
             var q = new Questionnaire();
             q.Text = new Narrative() { Div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">Test Questionnaire</div>" };
@@ -110,7 +112,9 @@ namespace Hl7.Fhir.Tests.Serialization
                 Text = "TEXT"
             });
 
+            Assert.IsNull(q.Meta, "Meta element has not been created.");
             var qfull = FhirSerializer.SerializeResourceToXml(q);
+            Assert.IsNull(q.Meta, "Meta element should not be introduced here.");
             Console.WriteLine("summary: Fhir.Rest.SummaryType.False");
             Console.WriteLine(qfull);
             Assert.IsTrue(qfull.Contains("Test Questionnaire"));
@@ -141,6 +145,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(qData.Contains("<title value=\"TITLE\""));
             Assert.IsTrue(qData.Contains("<linkId value=\"linkid\""));
 
+            q.Meta = new Meta { VersionId = "v2" };
             var qText = FhirSerializer.SerializeResourceToXml(q, summary: Fhir.Rest.SummaryType.Text);
             Console.WriteLine("summary: Fhir.Rest.SummaryType.Text");
             Console.WriteLine(qText);
@@ -158,6 +163,23 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual(1, qInflate.Meta.Tag.Where(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED").Count(), "Subsetted Tag should not still be there.");
         }
 
+        [TestMethod]
+        public void TestWithMetadata()
+        {
+            var p = new Patient
+            {
+                BirthDate = "1972-11-30"
+            };
+
+            var pSum = FhirSerializer.SerializeResourceToXml(p, summary: Fhir.Rest.SummaryType.True);
+            Assert.IsNull(p.Meta, "Meta should not be there");
+
+            p.Meta = new Meta { VersionId = "v2" }; // introducing meta data ourselves. 
+
+            pSum = FhirSerializer.SerializeResourceToXml(p, summary: Fhir.Rest.SummaryType.True);
+            Assert.IsNotNull(p.Meta, "Meta should still be there");
+            Assert.AreEqual(0, p.Meta.Tag.Where(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED").Count(), "Subsetted Tag should not still be there.");
+        }
 
         private FhirXmlParser FhirXmlParser = new FhirXmlParser();
         private FhirJsonParser FhirJsonParser = new FhirJsonParser();

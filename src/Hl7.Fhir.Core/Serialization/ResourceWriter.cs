@@ -44,13 +44,16 @@ namespace Hl7.Fhir.Serialization
             var complexSerializer = new ComplexTypeWriter(_writer);
 
             Coding subsettedTag = null;
-
+            bool createdMetaElement = false;
             if (summary != Rest.SummaryType.False && instance is Resource && !(instance is Bundle))
             {
                 var resource = instance as Resource;
 
                 if (resource.Meta == null)
+                {
                     resource.Meta = new Meta();
+                    createdMetaElement = true;
+                }
 
                 if (!resource.Meta.Tag.Any(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED"))
                 {
@@ -61,11 +64,12 @@ namespace Hl7.Fhir.Serialization
 
             complexSerializer.Serialize(mapping, instance, summary);
 
+            Resource r = (instance as Resource);
             if (subsettedTag != null)
-            {
-                var resource = instance as Resource;
-                resource.Meta.Tag.Remove(subsettedTag);
-            }
+                r.Meta.Tag.Remove(subsettedTag);
+
+            if (createdMetaElement)
+                r.Meta = null; // remove the meta element again.
 
             _writer.WriteEndRootObject(contained);
         }
