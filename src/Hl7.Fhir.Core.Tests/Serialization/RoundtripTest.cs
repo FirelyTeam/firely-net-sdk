@@ -155,8 +155,12 @@ namespace Hl7.Fhir.Tests.Serialization
                 var toExt = ext == ".xml" ? ".json" : ".xml";
                 string outputFile = Path.Combine(outputPath, exampleName) + toExt;
 
+                
+#if ELABORATE_OUTPUT
+                // Disabled this WriteLine() since it makes the CI build output HUGE
+                // Could be re-enabled for local use to track down errors!
                 Debug.WriteLine("Converting {0} [{1}->{2}] ", exampleName, ext, toExt);
-
+#endif
                 if (file.Contains("expansions.") || file.Contains("profiles-resources") || file.Contains("profiles-others") || file.Contains("valuesets."))
                     continue;
                 if (!isFeed(file))
