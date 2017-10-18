@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2017, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -15,6 +15,7 @@ using System.IO;
 using System.Xml;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Serialization;
 using Newtonsoft.Json;
 using System.Diagnostics;
 
@@ -26,6 +27,7 @@ namespace Hl7.Fhir.Specification.Source
     /// </summary>
     public class DirectorySource : IConformanceSource, IArtifactSource
     {
+        private readonly Func<string, INavigatorStream> _streamFactory;
         private readonly string _contentDirectory;
         private readonly bool _includeSubs;
 
@@ -33,12 +35,70 @@ namespace Hl7.Fhir.Specification.Source
         private string[] _includes;
         private string[] _excludes;
 
+        private bool _filesPrepared = false;
+        private List<string> _artifactFilePaths;
+
+        private bool _resourcesPrepared = false;
+        private List<ArtifactSummary> _resourceScanInformation;
+
+        /// <summary>
+        /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources from the specified content directory
+        /// and using the specified (custom) <see cref="INavigatorStream"/> factory delegate.
+        /// </summary>
+        /// <param name="streamFactory">Reference to a (custom) <see cref="INavigatorStream"/> factory delegate.</param>
+        /// <param name="contentDirectory">The file path of the target directory.</param>
+        /// <param name="includeSubdirectories">Specify <c>true</c> to include resources from subdirectories (recursively), or <c>false</c> otherwise.</param>
+        public DirectorySource(Func<string, INavigatorStream> streamFactory, string contentDirectory, bool includeSubdirectories = false)
+        {
+            _streamFactory = streamFactory ?? throw Error.ArgumentNull(nameof(streamFactory));
+            _contentDirectory = contentDirectory ?? throw Error.ArgumentNull(nameof(contentDirectory));
+            _includeSubs = includeSubdirectories;
+        }
+
+        /// <summary>
+        /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources from the specified content directory.
+        /// </summary>
+        /// <param name="contentDirectory">The file path of the target directory.</param>
+        /// <param name="includeSubdirectories">Specify <c>true</c> to include resources from subdirectories (recursively), or <c>false</c> otherwise.</param>
+        public DirectorySource(string contentDirectory, bool includeSubdirectories = false)
+            : this (NavigatorStreamFactory.Create, contentDirectory, includeSubdirectories)
+        {
+        }
+
+        /// <summary>
+        /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources from the <see cref="SpecificationDirectory"/>.
+        /// </summary>
+        /// <param name="includeSubdirectories">Specify <c>true</c> to include resources from subdirectories (recursively), or <c>false</c> otherwise.</param>
+        public DirectorySource(bool includeSubdirectories = false)
+            : this(NavigatorStreamFactory.Create, SpecificationDirectory, includeSubdirectories)
+        {
+        }
+
         /// <summary>
         /// Gets or sets the search string to match against the names of files in the content directory.
         /// The source will only provide resources from files that match the specified mask.
         /// The source will ignore all files that don't match the specified mask.
-        /// Multiple masks can be split by '|'
+        /// Multiple masks can be split by '|'.
         /// </summary>
+        /// <remarks>
+        /// Mask filters are applied first, before any <see cref="Includes"/> and <see cref="Excludes"/> filters.
+        /// </remarks>
+        /// <value>
+        /// Supported wildcards:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>*</term>
+        /// <description>Matches zero or more characters within a file or directory name.</description>
+        /// </item>
+        /// <item>
+        /// <term>?</term>
+        /// <description>Matches any single character</description>
+        /// </item>
+        /// </list>
+        /// </value>
+        /// <example>
+        /// <code>Mask = "v2*.*|*.StructureDefinition.*";</code>
+        /// </example>
         public string Mask
         {
             get => String.Join("|", Masks);
@@ -48,36 +108,104 @@ namespace Hl7.Fhir.Specification.Source
             }
         }
 
+        /// <summary>
+        /// Gets or sets an array of search strings to match against the names of files in the content directory.
+        /// The source will only provide resources from files that match the specified mask.
+        /// The source will ignore all files that don't match the specified mask.
+        /// </summary>
+        /// <remarks>
+        /// Mask filters are applied first, before <see cref="Includes"/> and <see cref="Excludes"/> filters.
+        /// </remarks>
+        /// <value>
+        /// Supported wildcards:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>*</term>
+        /// <description>Matches zero or more characters within a file or directory name.</description>
+        /// </item>
+        /// <item>
+        /// <term>?</term>
+        /// <description>Matches any single character</description>
+        /// </item>
+        /// </list>
+        /// </value>
+        /// <example>
+        /// <code>Masks = new string[] { "v2*.*", "*.StructureDefinition.*" };</code>
+        /// </example>
         public string[] Masks
         {
             get { return _masks; }
             set { _masks = value; Refresh(); }
         }
 
+        /// <summary>
+        /// Gets or sets an array of search strings to match against the names of subdirectories of the content directory.
+        /// The source will only provide resources from subdirectories that match the specified include mask(s).
+        /// The source will ignore all subdirectories that don't match the specified include mask(s).
+        /// </summary>
+        /// <remarks>
+        /// Include filters are applied after <see cref="Mask"/> filters and before <see cref="Excludes"/> filters.
+        /// </remarks>
+        /// <value>
+        /// Supported wildcards:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>*</term>
+        /// <description>Matches zero or more characters within a directory name.</description>
+        /// </item>
+        /// <item>
+        /// <term>**</term>
+        /// <description>
+        /// Recursive wildcard.
+        /// For example, <c>/hello/**/*</c> matches all descendants of <c>/hello</c>.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </value>
+        /// <example>
+        /// <code>Includes = new string[] { "profiles/**/*", "**/valuesets" };</code>
+        /// </example>
         public string[] Includes
         {
             get { return _includes; }
             set { _includes = value; Refresh(); }
         }
 
+        /// <summary>
+        /// Gets or sets an array of search strings to match against the names of subdirectories of the content directory.
+        /// The source will ignore all subdirectories that match the specified exclude mask(s).
+        /// The source will only provide resources from subdirectories that don't match the specified exclude mask(s).
+        /// </summary>
+        /// <remarks>
+        /// Exclude filters are applied last, after any <see cref="Mask"/> and <see cref="Includes"/> filters.
+        /// </remarks>
+        /// <value>
+        /// Supported wildcards:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>*</term>
+        /// <description>Matches zero or more characters within a directory name.</description>
+        /// </item>
+        /// <item>
+        /// <term>**</term>
+        /// <description>
+        /// Recursive wildcard.
+        /// For example, <c>/hello/**/*</c> matches all descendants of <c>/hello</c>.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </value>
+        /// <example>
+        /// <code>Excludes = new string[] { "profiles/**/old", "temp/**/*" };</code>
+        /// </example>
         public string[] Excludes
         {
             get { return _excludes; }
             set { _excludes = value; Refresh(); }
         }
 
-
-        public DirectorySource(string contentDirectory, bool includeSubdirectories = false)
-        {
-            _contentDirectory = contentDirectory ?? throw Error.ArgumentNull(nameof(contentDirectory));
-            _includeSubs = includeSubdirectories;
-        }
-
-
-        public DirectorySource(bool includeSubdirectories = false) : this(SpecificationDirectory, includeSubdirectories)
-        {
-        }
-
+        /// <summary>Returns the content directory as specified to the constructor.</summary>
+        public string ContentDirectory => _contentDirectory;
 
         /// <summary>
         /// The default directory this artifact source will access for its files.
@@ -98,11 +226,179 @@ namespace Hl7.Fhir.Specification.Source
             }
         }
 
-        /// <summary>Returns the content directory as specified to the constructor.</summary>
-        public string ContentDirectory => _contentDirectory;
+        /// <summary>
+        /// Specifies how the <see cref="DirectorySource"/> should process duplicate files with multiple serialization formats.
+        /// </summary>
+        public enum DuplicateFilenameResolution
+        {
+            /// <summary>Prefer file with ".xml" extension over duplicate file with ".json" extension.</summary>
+            PreferXml,
+            /// <summary>Prefer file with ".json" extension over duplicate file with ".xml" extension.</summary>
+            PreferJson,
+            /// <summary>Return all files, do not filter duplicates.</summary>
+            KeepBoth
+        }
 
-        private bool _filesPrepared = false;
-        private List<string> _artifactFilePaths;
+        /// <summary>
+        /// Gets or sets a value that determines how to process duplicate files with multiple serialization formats.
+        /// </summary>
+        public DuplicateFilenameResolution FormatPreference
+        {
+            get;
+            set;
+        } = DuplicateFilenameResolution.PreferXml;
+
+
+        // [WMR 20170217] Ignore invalid xml files, aggregate parsing errors
+        // https://github.com/ewoutkramer/fhir-net-api/issues/301
+
+        /// <summary>
+        /// Returns information about a runtime error that occured while parsing a specific resource.
+        /// </summary>
+        public struct ErrorInfo
+        {
+            public ErrorInfo(string fileName, Exception error) { FileName = fileName; Error = error; }
+            public string FileName { get; }
+            public Exception Error { get; }
+        }
+
+        /// <summary>Returns an array of runtime errors that occured while parsing the resources.</summary>
+        public ErrorInfo[] Errors = new ErrorInfo[0];
+
+        /// <summary>
+        /// Request a full re-scan of the specified content directory.
+        /// </summary>
+        public void Refresh()
+        {
+            _filesPrepared = false;
+            _resourcesPrepared = false;
+        }
+
+        /// <summary>
+        /// Returns a list of summary information describing all valid
+        /// FHIR artifacts that exist in the specified content directory.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ArtifactSummary> List()
+        {
+            prepareResources();
+
+            return _resourceScanInformation.AsEnumerable();
+        }
+
+        public IEnumerable<string> ListArtifactNames()
+        {
+            prepareFiles();
+
+            return _artifactFilePaths.Select(path => Path.GetFileName(path));
+        }
+
+        public Stream LoadArtifactByName(string name)
+        {
+            if (name == null) throw Error.ArgumentNull(nameof(name));
+
+            prepareFiles();
+
+            var searchString = (Path.DirectorySeparatorChar + name).ToLower();
+
+            // NB: uses _artifactFiles (full paths), not ArtifactFiles (which only has public list of names, not full path)
+            var fullFileName = _artifactFilePaths.SingleOrDefault(fn => fn.ToLower().EndsWith(searchString));
+
+            return fullFileName == null ? null : File.OpenRead(fullFileName);
+        }
+
+
+        public IEnumerable<string> ListResourceUris(ResourceType? filter = null)
+        {
+            prepareResources();
+
+            IEnumerable<ArtifactSummary> scan = _resourceScanInformation;
+            if (filter != null)
+            {
+                scan = scan.Where(dsi => dsi.ResourceType == filter);
+            }
+
+            return scan.Select(dsi => dsi.ResourceUri);
+        }
+
+
+        public Resource ResolveByUri(string uri)
+        {
+            if (uri == null) throw Error.ArgumentNull(nameof(uri));
+            prepareResources();
+
+            var info = _resourceScanInformation.SingleOrDefault(ci => ci.ResourceUri == uri);
+            if (info == null) return null;
+
+            return getResourceFromScannedSource<Resource>(info);
+
+        }
+
+        public Resource ResolveByCanonicalUri(string uri)
+        {
+            if (uri == null) throw Error.ArgumentNull(nameof(uri));
+            prepareResources();
+
+            var info = _resourceScanInformation
+                .OfType<ConformanceResourceSummary>()
+                .SingleOrDefault(ci => ci.Canonical == uri);
+
+            if (info == null) return null;
+
+            return getResourceFromScannedSource<Resource>(info);
+        }
+
+        public ValueSet FindValueSetBySystem(string system)
+        {
+            prepareResources();
+
+            var info = _resourceScanInformation
+                .OfType<ValueSetSummary>()
+                .SingleOrDefault(ci => ci.ValueSetSystem == system);
+
+            if (info == null) return null;
+
+            return getResourceFromScannedSource<ValueSet>(info);
+        }
+
+        public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
+        {
+            if (sourceUri == null && targetUri == null)
+            {
+                throw Error.ArgumentNull(nameof(targetUri), "sourceUri and targetUri cannot both be null");
+            }
+
+            prepareResources();
+
+            IEnumerable<ConceptMapSummary> infoList = _resourceScanInformation.OfType<ConceptMapSummary>();
+            if (sourceUri != null)
+            {
+                infoList = infoList.Where(ci => ci.ConceptMapSource == sourceUri);
+            }
+
+            if (targetUri != null)
+            {
+                infoList = infoList.Where(ci => ci.ConceptMapTarget == targetUri);
+            }
+
+            return infoList.Select(info => getResourceFromScannedSource<ConceptMap>(info)).Where(r => r != null);
+        }
+
+        public NamingSystem FindNamingSystem(string uniqueId)
+        {
+            if (uniqueId == null) throw Error.ArgumentNull(nameof(uniqueId));
+            prepareResources();
+
+            var info = _resourceScanInformation
+                .OfType<NamingSystemSummary>()
+                .SingleOrDefault(ci => ci.UniqueIds.Contains(uniqueId));
+
+            if (info == null) return null;
+
+            return getResourceFromScannedSource<NamingSystem>(info);
+        }
+
+        #region Private members
 
         /// <summary>
         /// Prepares the source by reading all files present in the directory (matching the mask, if given)
@@ -118,11 +414,7 @@ namespace Hl7.Fhir.Specification.Source
 
             // [WMR 20170817] NEW
             // Safely enumerate files in specified path and subfolders, recursively
-            allFiles.AddRange(SafeGetFiles(_contentDirectory, masks, _includeSubs));
-            //foreach (var mask in masks)
-            //{
-            //    allFiles.AddRange(Directory.GetFiles(_contentDirectory, mask, _includeSubs ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly));
-            //}
+            allFiles.AddRange(safeGetFiles(_contentDirectory, masks, _includeSubs));
 
             // Always remove *.exe" and "*.dll"
             allFiles.RemoveAll(name => Path.GetExtension(name) == ".exe" || Path.GetExtension(name) == ".dll");
@@ -150,7 +442,7 @@ namespace Hl7.Fhir.Specification.Source
         // https://stackoverflow.com/a/38959208
         // https://docs.microsoft.com/en-us/dotnet/standard/io/how-to-enumerate-directories-and-files
 
-        private static IEnumerable<string> SafeGetFiles(string path, IEnumerable<string> masks, bool searchSubfolders)
+        private static IEnumerable<string> safeGetFiles(string path, IEnumerable<string> masks, bool searchSubfolders)
         {
             if (File.Exists(path))
             {
@@ -244,7 +536,6 @@ namespace Hl7.Fhir.Specification.Source
             return files.AsEnumerable();
         }
 
-
         internal static List<string> ResolveDuplicateFilenames(List<string> allFilenames, DuplicateFilenameResolution preference)
         {
             var result = new List<string>();
@@ -252,14 +543,14 @@ namespace Hl7.Fhir.Specification.Source
 
             foreach (var filename in allFilenames.Distinct())
             {
-                if (isXml(filename) || isJson(filename))
+                if (FileFormats.HasXmlOrJsonExtension(filename))
                     xmlOrJson.Add(filename);
                 else
                     result.Add(filename);
             }
 
             var groups = xmlOrJson.GroupBy(path => fullPathWithoutExtension(path));
-            
+
             foreach (var group in groups)
             {
                 if (group.Count() == 1 || preference == DuplicateFilenameResolution.KeepBoth)
@@ -268,51 +559,21 @@ namespace Hl7.Fhir.Specification.Source
                 {
                     // count must be 2
                     var first = group.First();
-                    if (preference == DuplicateFilenameResolution.PreferXml && isXml(first))
+                    if (preference == DuplicateFilenameResolution.PreferXml && FileFormats.HasXmlExtension(first))
                         result.Add(first);
-                    else if (preference == DuplicateFilenameResolution.PreferJson && isJson(first))
+                    else if (preference == DuplicateFilenameResolution.PreferJson && FileFormats.HasJsonExtension(first))
                         result.Add(first);
                     else
-                        result.Add(group.Skip(1).First());                
+                        result.Add(group.Skip(1).First());
                 }
             }
 
             return result;
 
-            string fullPathWithoutExtension(string fullPath) => fullPath.Replace(Path.GetFileName(fullPath), Path.GetFileNameWithoutExtension(fullPath));
-            bool isXml(string fullPath) => Path.GetExtension(fullPath).ToLower() == ".xml";
-            bool isJson(string fullPath) => Path.GetExtension(fullPath).ToLower() == ".json";
         }
 
-        bool _resourcesPrepared = false;
-        private List<ArtifactSummary> _resourceScanInformation;
-
-        public enum DuplicateFilenameResolution
-        {
-            PreferXml,
-            PreferJson,
-            KeepBoth
-        }
-
-
-        public DuplicateFilenameResolution FormatPreference
-        {
-            get;
-            set;
-        } = DuplicateFilenameResolution.PreferXml;
-
-
-        // [WMR 20170217] Ignore invalid xml files, aggregate parsing errors
-        // https://github.com/ewoutkramer/fhir-net-api/issues/301
-        public struct ErrorInfo
-        {
-            public ErrorInfo(string fileName, Exception error) { FileName = fileName; Error = error; }
-            public string FileName { get; }
-            public Exception Error { get; }
-        }
-
-        /// <summary>Returns an array of runtime errors that occured while parsing the resources.</summary>
-        public ErrorInfo[] Errors = new ErrorInfo[0];
+        private static string fullPathWithoutExtension(string fullPath)
+            => fullPath.Replace(Path.GetFileName(fullPath), Path.GetFileNameWithoutExtension(fullPath));
 
         /// <summary>Scan all xml files found by prepareFiles and find conformance resources and their id.</summary>
         private void prepareResources()
@@ -326,6 +587,7 @@ namespace Hl7.Fhir.Specification.Source
             // Check for duplicate canonical urls, this is forbidden within a single source (and actually, universally,
             // but if another source has the same url, the order of polling in the MultiArtifactSource matters)
             var doubles = from ci in _resourceScanInformation
+                          .OfType<ConformanceResourceSummary>()
                           where ci.Canonical != null
                           group ci by ci.Canonical into g
                           where g.Count() > 1
@@ -342,21 +604,30 @@ namespace Hl7.Fhir.Specification.Source
                 var scanResult = new List<ArtifactSummary>();
                 var errors = new List<ErrorInfo>();
 
-                foreach (var file in paths)
+                foreach (var filePath in paths)
                 {
                     try
                     {
-                        var scanner = createScanner(file);
-                        if (scanner != null)
-                            scanResult.AddRange(scanner.List());
+                        // 1. DirectorySource creates INavigatorStream
+                        // 2. DirectorySource initializes ArtifactSummaryHarvester with streamer
+                        // 3. DirectorySource calls Harvester to generate summaries
+                        var navStream = _streamFactory(filePath);
+
+                        // INavigatorStreamFactory.Create() returns null for unknown file extensions
+                        if (navStream != null)
+                        {
+                            var harvester = ArtifactSummaryHarvester.Default;
+                            var summaryStream = harvester.Enumerate(navStream);
+                            scanResult.AddRange(summaryStream);
+                        }
                     }
                     catch (XmlException ex)
                     {
-                        errors.Add(new ErrorInfo(file, ex));    // Log the exception
+                        errors.Add(new ErrorInfo(filePath, ex));    // Log the exception
                     }
-                    catch(JsonException ej)
+                    catch (JsonException ej)
                     {
-                        errors.Add(new ErrorInfo(file, ej));    // Log the exception
+                        errors.Add(new ErrorInfo(filePath, ej));    // Log the exception
                     }
                     // Don't catch other exceptions (fatal error)
                 }
@@ -366,123 +637,44 @@ namespace Hl7.Fhir.Specification.Source
             }
         }
 
-        private static IConformanceScanner createScanner(string path)
+        /// <summary>
+        /// Try to deserialize the full resource represented by the specified <see cref="ArtifactSummary"/>.
+        /// </summary>
+        /// <param name="info">An <see cref="ArtifactSummary"/> instance.</param>
+        /// <typeparam name="T">The expected resource type.</typeparam>
+        /// <returns>A new instance of type <typeparamref name="T"/>, or <c>null</c>.</returns>
+        private T getResourceFromScannedSource<T>(ArtifactSummary info)
+            where T : Resource
         {
-            var ext = Path.GetExtension(path).ToLower();
-            return ext == ".xml" ? new XmlFileConformanceScanner(path) :
-                          ext == ".json" ? new JsonFileConformanceScanner(path) : (IConformanceScanner)null;
-        }
-
-
-        public void Refresh()
-        {
-            _filesPrepared = false;
-            _resourcesPrepared = false;
-        }
-
-        public IEnumerable<string> ListArtifactNames()
-        {
-            prepareFiles();
-
-            return _artifactFilePaths.Select(path => Path.GetFileName(path));
-        }
-
-        public Stream LoadArtifactByName(string name)
-        {
-            if (name == null) throw Error.ArgumentNull(nameof(name));
-
-            prepareFiles();
-
-            var searchString = (Path.DirectorySeparatorChar + name).ToLower();
-
-            // NB: uses _artifactFiles (full paths), not ArtifactFiles (which only has public list of names, not full path)
-            var fullFileName = _artifactFilePaths.SingleOrDefault(fn => fn.ToLower().EndsWith(searchString));
-
-            return fullFileName == null ? null : File.OpenRead(fullFileName);
-        }
-
-
-        public IEnumerable<string> ListResourceUris(ResourceType? filter = null)
-        {
-            prepareResources();
-            IEnumerable<ArtifactSummary> scan = _resourceScanInformation;
-
-            if (filter != null)
-                scan = scan.Where(dsi => dsi.ResourceType == filter?.GetLiteral());
-
-            return scan.Select(dsi => dsi.ResourceUri);
-        }
-
-
-        public Resource ResolveByUri(string uri)
-        {
-            if (uri == null) throw Error.ArgumentNull(nameof(uri));
-            prepareResources();
-
-            var info = _resourceScanInformation.SingleOrDefault(ci => ci.ResourceUri == uri);
-            if (info == null) return null;
-
-            return getResourceFromScannedSource(info);
-
-        }
-
-        public Resource ResolveByCanonicalUri(string uri)
-        {
-            if (uri == null) throw Error.ArgumentNull(nameof(uri));
-            prepareResources();
-
-            var info = _resourceScanInformation.SingleOrDefault(ci => ci.Canonical == uri);
-            if (info == null) return null;
-
-            return getResourceFromScannedSource(info);
-        }
-
-        private static Resource getResourceFromScannedSource(ArtifactSummary info)
-        {
+            // File path of the containing resource file (could be a Bundle)
             var path = info.Origin;
-            var scanner = createScanner(path);
-
-            return scanner.Retrieve(info);
+            var navStream = _streamFactory(path);
+            // Advance stream to the target resource (e.g. specific Bundle entry)
+            if (navStream.Seek(info.Position))
+            {
+                // Create navigator for the target resource
+                var nav = navStream.Current;
+                if (nav != null)
+                {
+                    // Parse target resource from navigator
+                    var parser = new BaseFhirParser();
+                    var result = parser.Parse<T>(nav);
+                    if (result != null)
+                    {
+                        // Add origin annotation
+                        result.SetOrigin(info.Origin);
+                        return result;
+                    }
+                }
+            }
+            return null;
         }
 
-        public ValueSet FindValueSetBySystem(string system)
-        {
-            prepareResources();
+        #endregion
 
-            var info = _resourceScanInformation.SingleOrDefault(ci => ci.ValueSetSystem == system);
-            if (info == null) return null;
 
-            return getResourceFromScannedSource(info) as ValueSet;
-        }
-
-        public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
-        {
-            if (sourceUri == null && targetUri == null)
-                throw Error.ArgumentNull(nameof(targetUri), "sourceUri and targetUri cannot both be null");
-
-            prepareResources();
-
-            IEnumerable<ArtifactSummary> infoList = _resourceScanInformation;
-
-            if (sourceUri != null)
-                infoList = infoList.Where(ci => ci.ConceptMapSource == sourceUri);
-
-            if (targetUri != null)
-                infoList = infoList.Where(ci => ci.ConceptMapTarget == targetUri);
-
-            return infoList.Select(info => getResourceFromScannedSource(info)).Where(r => r != null).Cast<ConceptMap>();
-        }
-
-        public NamingSystem FindNamingSystem(string uniqueId)
-        {
-            if (uniqueId == null) throw Error.ArgumentNull(nameof(uniqueId));
-            prepareResources();
-
-            var info = _resourceScanInformation.SingleOrDefault(ci => ci.UniqueIds.Contains(uniqueId));
-            if (info == null) return null;
-
-            return getResourceFromScannedSource(info) as NamingSystem;
-        }
     }
+
 #endif
+
 }

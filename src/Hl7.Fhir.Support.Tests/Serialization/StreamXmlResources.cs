@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Support.Tests.Serialization
             using (var stream = new XmlNavigatorStream(xmlPatient))
             {
                 Assert.IsFalse(stream.IsBundle);
-                Assert.AreEqual("Patient", stream.RootName);
+                Assert.AreEqual("Patient", stream.ResourceType);
                 Assert.IsNull(stream.Current);
 
                 Assert.IsTrue(stream.MoveNext());
@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Support.Tests.Serialization
 
             using (var stream = new XmlNavigatorStream(xmlfile))
             {
-                Assert.IsNull(stream.RootName);
+                Assert.IsNull(stream.ResourceType);
                 Assert.IsFalse(stream.MoveNext());
             }
         }

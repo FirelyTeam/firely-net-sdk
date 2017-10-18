@@ -16,15 +16,11 @@ namespace Hl7.Fhir.Serialization
 {
     public partial struct XmlDomFhirNavigator
     {
-        public static IElementNavigator Create(XElement doc)
-        {
-            return new XmlDomFhirNavigator(doc);
-        }
-
         public static IElementNavigator Create(XmlReader reader)
         {
             XDocument doc = null;
 
+            // [WMR 20171017] Why catch and rethrow? Original error info is lost...
             try
             {
                 doc = SerializationUtil.XDocumentFromReader(reader);
@@ -35,6 +31,16 @@ namespace Hl7.Fhir.Serialization
             }
 
             return Create(doc.Root);
+        }
+
+        public static IElementNavigator Create(XDocument doc)
+        {
+            return new XmlDomFhirNavigator(doc.Root);
+        }
+
+        public static IElementNavigator Create(XElement elem)
+        {
+            return new XmlDomFhirNavigator(elem);
         }
 
         public static IElementNavigator Create(string xml)

@@ -1,77 +1,43 @@
 ﻿/* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2017, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Hl7.Fhir.Serialization;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace Hl7.Fhir.Specification.Source
 {
     /// <summary>
-    /// Internal class which is able to scan a (possibly) large Xml FHIR (conformance) resource from a given stream
+    /// For efficiently extracting identifying metadata from a raw FHIR resource file in JSON format.
+    /// Also allows to actually deserialize and resolve the resource based on the previously extracted metadata.
     /// </summary>
-    [Obsolete("Replaced by ArtifactScanner & JsonNavigatorStream")]
-    internal class JsonFileConformanceScanner : IConformanceScanner
+    [Obsolete("Use JsonNavigatorStream")]
+    internal sealed class JsonArtifactScanner : ArtifactScanner
     {
-        string _path;
-
-        public JsonFileConformanceScanner(string path)
+        /// <summary>ctor</summary>
+        /// <param name="path">Full path specification of a FHIR resource file.</param>
+        /// <param name="harvester">An <see cref="ArtifactSummaryHarvester"/> instance to extract a concrete set of summary data from the resource.</param>
+        public JsonArtifactScanner(string path, ArtifactSummaryHarvester harvester) : base(path, harvester)
         {
-            _path = path;
         }
 
-        public List<ConformanceScanInformation> List()
-        {
-            var rootResourceType = pollResourceType(_path);
+        protected override INavigatorStream CreateStream(string path) => new JsonNavigatorStream(path);
 
-            // [WMR 20170825] Handle invalid/non-FHIR resources
-            if (rootResourceType == null)
-            {
-                return new List<ConformanceScanInformation>();
-            }
-
-            using (var input = File.OpenRead(_path))
-            {
-                var result =                     
-                    from res in StreamResources(input, isBundle: rootResourceType == "Bundle")
-                    let resourceType = res.element.Value<string>("resourceType")
-
-                    // [WMR 20170420] Issue: if the resource type is unknown (i.e. DSTU Conformance), 
-                    // then we cannot parse res.Name to a ResourceType enum value 
-                    // (ParseLiteral returns null and .Value throws an exception) 
-                    // => First skip unknown resources 
-                    where ModelInfo.IsKnownResource(resourceType)
-
-                    select new ConformanceScanInformation()
-                    {
-                        ResourceType = EnumUtility.ParseLiteral<ResourceType>(resourceType).Value,
-                        ResourceUri = res.fullUrl,
-                        Canonical = res.element.Value<string>("url"),
-                        ValueSetSystem = getValueSetSystem(res.element),
-                        UniqueIds = getUniqueIds(res.element),
-                        ConceptMapSource = getCmSource(res.element),
-                        ConceptMapTarget = getCmTarget(res.element),
-                        Origin = _path,
-                    };
-
-                return result.ToList();
-            }
-        }
-
-
-        public Resource Retrieve(ConformanceScanInformation entry)
+        /// <summary>Retrieve the artifact that is identified by the specified summary information.</summary>
+        /// <param name="entry">Artifact summary.</param>
+        /// <returns>A <see cref="Resource"/> instance.</returns>
+        public override Resource Retrieve(ArtifactSummary entry)
         {
             if (entry == null) throw Error.ArgumentNull(nameof(entry));
 
@@ -95,16 +61,6 @@ namespace Hl7.Fhir.Specification.Source
             return resultResource;
         }
 
-
-        private string getValueSetSystem(JObject vs) => vs["codeSystem"]?["system"]?.Value<string>();
-
-        private string[] getUniqueIds(JObject ns) => ns["uniqueId"]?.Select(id => (string)id["value"]).ToArray() ?? new string[0];
-
-        private string getCmSource(JObject cm) => cm["sourceUri"]?.Value<string>() + cm["sourceReference"]?["reference"]?.Value<string>();
-
-        private string getCmTarget(JObject cm) => cm["targetUri"]?.Value<string>() + cm["targetReference"]?["reference"]?.Value<string>();
-
- 
         // Use a forward-only XmlReader to scan through a possibly huge bundled file,
         // and yield the feed entries, so only one entry is in memory at a time
         internal static IEnumerable<(JObject element, string fullUrl)> StreamResources(Stream input, bool isBundle)
@@ -150,7 +106,8 @@ namespace Hl7.Fhir.Specification.Source
                             var resourceId = resource.Value<string>("id");
                             if (resourceId != null)
                             {
-                                var fullUrl = "http://example.org/" + resourceType + "/" + resourceId;
+                                // var fullUrl = DefaultBaseUrl + resourceType + "/" + resourceId;
+                                var fullUrl = CreateResourceUri(resourceType, resourceId);
                                 yield return (resource, fullUrl);
                             }
                         }
@@ -183,5 +140,7 @@ namespace Hl7.Fhir.Specification.Source
 
             return false;
         }
+
     }
+
 }

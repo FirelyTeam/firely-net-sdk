@@ -15,7 +15,7 @@ namespace Hl7.Fhir.Serialization
 {
     public partial struct JsonDomFhirNavigator
     {
-        public static IElementNavigator Create(JObject root, string rootName=null)
+        public static IElementNavigator Create(JObject root, string rootName = null)
         {
             var type = root.GetCoreTypeFromObject();
 
@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Serialization
             return new JsonDomFhirNavigator(rootName ?? type, root);
 
         }
-        public static IElementNavigator Create(JsonReader reader, string rootName=null)
+        public static IElementNavigator Create(JsonReader reader, string rootName = null)
         {
             try
             {
