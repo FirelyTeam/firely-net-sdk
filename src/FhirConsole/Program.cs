@@ -2,6 +2,8 @@
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Specification.Snapshot;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -47,6 +49,19 @@ namespace FhirConsole
                         Console.Error.WriteLine(">> Output Turtle");
                         Console.WriteLine(FhirSerializer.SerializeResourceToTurtle(resource));
                         break;
+                    case "-sx":
+                        SnapshotGeneratorSettings settings = SnapshotGeneratorSettings.Default;
+                        settings.ForceRegenerateSnapshots = true;
+                        var coreSource = new CachedResolver(ZipSource.CreateValidationSource());
+                        var directorySource = new DirectorySource(Path.GetDirectoryName(args[1]), true);
+                        var combinedSource = new CachedResolver(new MultiResolver(directorySource, coreSource));
+                        SnapshotGenerator gen = new SnapshotGenerator(combinedSource, settings);
+                        gen.Update((StructureDefinition)resource);
+                        Console.WriteLine(FhirSerializer.SerializeResourceToXml(resource));
+                        if (gen.Outcome != null) {
+                            Console.Error.WriteLine(gen.Outcome.ToString());
+                        }
+                        break;
                     /**
                      * When <fhir:id> is set use update!!!
                      * For the ZIB LoMo this is the case.
@@ -68,6 +83,54 @@ namespace FhirConsole
                         break;
                 }
             }
+            else if (args.Length == 1 && "mz" == args[0])
+            {
+                SnapshotGeneratorSettings settings = SnapshotGeneratorSettings.Default;
+                settings.ForceRegenerateSnapshots = true;
+
+                var inputFolder = @"E:\MedMij-STU3";
+                var allFiles = new List<string>();
+                allFiles.AddRange(Directory.GetFiles(inputFolder, "*.xml", SearchOption.AllDirectories));
+                allFiles.RemoveAll(name => name.Contains("example"));
+
+                var outputFolder = @"E:\MedMij-STU3-snapshots";
+                var coreSource = new CachedResolver(ZipSource.CreateValidationSource());
+                var directorySource = new DirectorySource(inputFolder, true);
+                var combinedSource = new CachedResolver(new MultiResolver(directorySource, coreSource));
+                SnapshotGenerator gen = new SnapshotGenerator(combinedSource, settings);
+
+                foreach (var file in allFiles)
+                {
+                    try
+                    {
+                        var input = File.ReadAllText(file);
+                        Resource resource = FhirParser.ParseResourceFromXml(input);
+                        if (resource is StructureDefinition)
+                        {
+                            gen.Update((StructureDefinition)resource);
+                            if (gen.Outcome != null)
+                            {
+                                Console.Error.WriteLine(file + ":" + gen.Outcome.ToString());
+                            }
+                            else
+                            {
+                                var outputFile = outputFolder + "\\" + Path.GetFileName(file);
+                                Console.WriteLine(outputFile);
+                                File.WriteAllText(outputFile, FhirSerializer.SerializeResourceToXml(resource));
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Not StructureDefinition " + file);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(file);
+                        Console.Error.WriteLine(e.ToString());
+                    }
+                }
+            }
             else
             {
                 usage();
@@ -85,6 +148,8 @@ FhirConsole [-o[x|j|t]|-h[c|u]] [input-fhir-file] > [output-fhir-file]
   -ox   Serialize [input-fhir-file] as XML
   -oj   Serialize [input-fhir-file] as JSON
   -ot   Serialize [input-fhir-file] as Turtle
+
+  -sx   Update snapshot for profiles as XML
 
   -hc   REST create [input-fhir-file] to http://fhirtest.uhn.ca/baseDstu2
   -hu   REST update [input-fhir-file] to http://fhirtest.uhn.ca/baseDstu2
