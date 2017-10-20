@@ -13,34 +13,87 @@ using Hl7.Fhir.Utility;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Introspection;
+using System.Linq;
 
 namespace Hl7.Fhir.Specification.Source
 {
-    /// <summary>Common summary information for generic FHIR artifacts.</summary>
+    /// <summary>Extension methods for the <see cref="ArtifactSummary"/> class.</summary>
+    public static class ArtifactSummaryExtensions
+    {
+        /// <summary>
+        /// Filter the specified sequence of <see cref="ArtifactSummary"/> instances
+        /// to only invalid summaries with <see cref="ArtifactSummary.Error"/> information.
+        /// </summary>
+        /// <param name="summaries"></param>
+        /// <returns></returns>
+        public static IEnumerable<ArtifactSummary> Errors(this IEnumerable<ArtifactSummary> summaries)
+            => summaries.Where(s => !s.IsValid);
+    }
+
+    /// <summary>
+    /// Common base class for summary information about a generic FHIR artifact.
+    /// The API also defines a number of specialized subclasses
+    /// with additional summary information for specific resource types.
+    /// </summary>
+    [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
     public class ArtifactSummary
     {
-        // [WMR 20171016] TODO: Determine Resource Uri
-        // Can't assume we can always initialize Resource Uri from Position...?
-
+        /// <summary>
+        /// Create a new <see cref="ArtifactSummary"/> for the current resource
+        /// of the specified <see cref="INavigatorStream"/>.
+        /// </summary>
+        /// <param name="stream">An <see cref="INavigatorStream"/> instance.</param>
         public ArtifactSummary(INavigatorStream stream)
-            : this(stream.Path, stream.Position, stream.Position, stream.Current) { }
+            : this(stream.Path, stream.Position, stream.Position, stream.Current, null) { }
+
+        /// <summary>
+        /// Create a new <see cref="ArtifactSummary"/> to represent an exception
+        /// that occured while harvesting the summary information of a resource.
+        /// </summary>
+        /// <param name="origin">The original file path of the target resource file.</param>
+        /// <param name="error">The <see cref="Exception"/> that occured while harvesting the summary.</param>
+        public ArtifactSummary(string origin, Exception error)
+            : this(origin, null, null, null, error) { }
 
         /// <summary>Constructor for subclasses.</summary>
         /// <remarks>
         /// The IElementNavigator.Current property always returns a new navigator instance.
         /// This constructor allows subclass and base class to share a common navigator instance.
+        /// It allows consumers to efficiently scan resources using a forward-only stream.
+        /// <para>
+        /// A subclass constructor should first call a base class constructor with an explicit reference
+        /// to the current <see cref="IElementNavigator"/> instance, as returned by IElementNavigator.Current.
+        /// The base class will use the navigator to harvest some summary information, while advancing the
+        /// navigator position. Afterwards, the subclass can harvest additional summary information from
+        /// the same navigator, starting at the current navitor position.
+        /// </para>
         /// </remarks>
+        /// <param name="stream">An <see cref="INavigatorStream"/> instance.</param>
+        /// <param name="current">Reference to the current <see cref="IElementNavigator"/> instance, returned by IElementNavigator.Current.</param>
         public ArtifactSummary(INavigatorStream stream, IElementNavigator current)
-            : this(stream.Path, stream.Position, stream.Position, current) { }
+            : this(stream.Path, stream.Position, stream.Position, current, null) { }
 
-        ArtifactSummary(string origin, string position, string uri, IElementNavigator nav)
+        /// <summary>
+        /// Create a new <see cref="ArtifactSummary"/> to represent an exception
+        /// that occured while harvesting the summary information of a bundle entry.
+        /// </summary>
+        /// <param name="stream">An <see cref="INavigatorStream"/> instance.</param>
+        /// <param name="current">Reference to the current <see cref="IElementNavigator"/> instance, returned by IElementNavigator.Current.</param>
+        /// <param name="error">The <see cref="Exception"/> that occured while harvesting the summary.</param>
+        public ArtifactSummary(INavigatorStream stream, IElementNavigator current, Exception error)
+            : this(stream.Path, stream.Position, stream.Position, current, error) { }
+
+        // Private ctor; initialize all properties
+        ArtifactSummary(string origin, string position, string uri, IElementNavigator nav, Exception error)
         {
             Origin = origin;
             Position = position;
             ResourceUri = uri;
-            ResourceTypeName = nav.Type;
+            var t = ResourceTypeName = nav?.Type;
             // Try to decode the typename, if well-known
-            ResourceType = EnumUtility.ParseLiteral<ResourceType>(nav.Type);
+            ResourceType = t != null ? EnumUtility.ParseLiteral<ResourceType>(t) : null;
+            Error = error;
         }
 
         /// <summary>Original location of the underlying resource (container).</summary>
@@ -61,11 +114,49 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>The decoded resource type, or <c>null</c> if the type is unknown.</summary>
         public ResourceType? ResourceType { get; }
 
-        public override string ToString()
-            => $"{GetType().Name} for {ResourceType} | Uri: {ResourceUri ?? "(unknown)"} | Origin: {Origin}";
+        /// <summary>Error that occured while harvesting information, if any, or <c>null</c> otherwise.</summary>
+        public Exception Error { get; }
+
+        /// <summary>
+        /// Determines if the summary information was harvested succesfully.
+        /// If <c>false</c>, the <see cref="Error"/> property returns error information.
+        /// </summary>
+        [NotMapped]
+        public bool IsValid => Error == null;
+
+        // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [NotMapped]
+        string DebuggerDisplay
+            => $"{GetType().Name} for {ResourceTypeName} | Origin: {Origin} | "
+                + (IsValid ? DebuggerDisplayInfo : $"Error: {Error.Message}");
+
+        /// <summary>
+        /// Returns a formatted description string for debugging purposes.
+        /// Override in subclass to provide additional and/or custom debug information.
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [NotMapped]
+        protected virtual string DebuggerDisplayInfo => $"Uri: {ResourceUri ?? "(unknown)"} ";
+
+        /// <summary>Utility method to convert the specified raw object value into an enumeration value.</summary>
+        /// <typeparam name="T">An <see cref="Enum"/> type.</typeparam>
+        /// <param name="value">A deserialized object value.</param>
+        /// <returns>An enumeration value of type <typeparamref name="T"/>, or <c>null</c>.</returns>
+        protected static T? ParseLiteral<T>(object value) where T : struct
+        {
+            var s = value?.ToString();
+            if (!string.IsNullOrEmpty(s))
+            {
+                return EnumUtility.ParseLiteral<T>(s);
+            }
+            return null;
+        }
     }
 
-    /// <summary>Extended summary information for FHIR NamingSystem resources.</summary>
+
+    /// <summary>Extended summary information for FHIR <see cref="NamingSystem"/> resources.</summary>
+    [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
     public class NamingSystemSummary : ArtifactSummary
     {
         public const ResourceType SupportedType = Model.ResourceType.NamingSystem;
@@ -95,12 +186,11 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Unique identifiers of the naming system.</summary>
         public string[] UniqueIds { get; }
 
-        public override string ToString()
-            => $"{GetType().Name} for {ResourceType} | Uri: {ResourceUri ?? "(unknown)"} | UniqueIds: {string.Join(",", UniqueIds)} | Origin: {Origin}";
-
+        protected override string DebuggerDisplayInfo => $"{base.DebuggerDisplayInfo} | UniqueIds: {string.Join(",", UniqueIds)}";
     }
 
-    /// <summary>Extended summary information for FHIR conformance resources.</summary>
+    /// <summary>Extended summary information for FHIR conformance resources (see <seealso cref="IConformanceResource"/>).</summary>
+    [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
     public class ConformanceResourceSummary : ArtifactSummary
     {
         public static bool IsSupported(string typeName) => ModelInfo.IsConformanceResource(typeName);
@@ -111,21 +201,39 @@ namespace Hl7.Fhir.Specification.Source
         {
             Debug.Assert(IsSupported(ResourceTypeName));
 
-            if (current.MoveToFirstChild("url"))
+            if (current.MoveToFirstChild())
             {
-                Canonical = current.Value?.ToString();
+                if (current.MoveToNext("url"))
+                {
+                    Canonical = current.Value?.ToString();
+                }
+                if (current.MoveToNext("name"))
+                {
+                    Name = current.Value?.ToString();
+                }
+                if (current.MoveToNext("status"))
+                {
+                    Status = ParseLiteral<ConformanceResourceStatus>(current.Value);
+                }
             }
+
         }
 
         /// <summary>The canonical url, or <c>null</c> if not a conformance resource.</summary>
         public string Canonical { get; }
 
-        public override string ToString()
-            => $"{GetType().Name} for {ResourceType} | Canonical: {Canonical ?? "(unknown)"}) | Origin: {Origin}";
+        /// <summary>The name of the conformance resource.</summary>
+        public string Name { get; }
+
+        /// <summary>The publication status of the conformance resource.</summary>
+        public ConformanceResourceStatus? Status { get; }
+
+        protected override string DebuggerDisplayInfo => $"{base.DebuggerDisplayInfo} | Canonical: {Canonical ?? "(unknown)"}";
     }
 
 
-    /// <summary>Extended summary information for FHIR ValueSet resources.</summary>
+    /// <summary>Extended summary information for FHIR <see cref="ValueSet"/> resources.</summary>
+    [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
     public class ValueSetSummary : ConformanceResourceSummary
     {
         public const ResourceType SupportedType = Model.ResourceType.ValueSet;
@@ -151,11 +259,11 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>The Uri of the inline code system.</summary>
         public string ValueSetSystem { get; }
 
-        public override string ToString()
-            => $"{GetType().Name} for {ResourceType} | Canonical: {Canonical ?? "(unknown)"}) | System: {ValueSetSystem ?? "(unknown)"} | Origin: {Origin}";
+        protected override string DebuggerDisplayInfo => $"{base.DebuggerDisplayInfo} | System: {ValueSetSystem ?? "(unknown)"}";
     }
 
-    /// <summary>Extended summary information for FHIR ConceptMap resources.</summary>
+    /// <summary>Extended summary information for FHIR <see cref="ConceptMap"/> resources.</summary>
+    [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
     public class ConceptMapSummary : ConformanceResourceSummary
     {
         public const ResourceType SupportedType = Model.ResourceType.ConceptMap;
@@ -201,7 +309,71 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Url that identifies the target of the mapping.</summary>
         public string ConceptMapTarget { get; }
 
-        public override string ToString()
-            => $"{GetType().Name} for {ResourceType} | Canonical: {Canonical ?? "(unknown)"}) | Source: {ConceptMapSource ?? "(unknown)"} | Target: {ConceptMapTarget ?? "(unknown)"} | Origin: {Origin}";
+        protected override string DebuggerDisplayInfo => $"{base.DebuggerDisplayInfo} | Source: {ConceptMapSource ?? "(unknown)"} | Target: {ConceptMapTarget ?? "(unknown)"}";
     }
+
+    /// <summary>Extended summary information for FHIR <see cref="StructureDefinition"/> resources.</summary>
+    [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
+    public class StructureDefinitionSummary : ConformanceResourceSummary
+    {
+        public const ResourceType SupportedType = Model.ResourceType.StructureDefinition;
+
+        public StructureDefinitionSummary(INavigatorStream stream) : this(stream, stream.Current) { }
+
+        public StructureDefinitionSummary(INavigatorStream stream, IElementNavigator current) : base(stream, current)
+        {
+            Debug.Assert(ResourceType == SupportedType);
+
+            if (current.MoveToNext("kind"))
+            {
+                Kind = ParseLiteral<StructureDefinition.StructureDefinitionKind>(current.Value);
+            }
+
+            // DSTU2
+            if (current.MoveToNext("constrainedType"))
+            {
+                var v = current.Value;
+                ConstrainedTypeName = v?.ToString();
+                ConstrainedType = ParseLiteral<FHIRDefinedType>(v);
+            }
+
+            if (current.MoveToNext("contextType"))
+            {
+                ContextType = ParseLiteral<StructureDefinition.ExtensionContext>(current.Value);
+            }
+
+            // STU3: type
+            // ... TODO ...
+
+            // STU3: baseDefinition
+            if (current.MoveToNext("base"))
+            {
+                Base = current.Value?.ToString();
+            }
+            // STU3: Derivation
+            // ... TODO ...
+        }
+
+        public StructureDefinition.StructureDefinitionKind? Kind { get; }
+
+        // DSTU2
+        public string ConstrainedTypeName { get; }
+
+        // DSTU2
+        public FHIRDefinedType? ConstrainedType { get; }
+
+        public StructureDefinition.ExtensionContext? ContextType { get; }
+
+        // STU3: TypeName
+        // STU3: Type
+        // STU3: BaseDefinition
+        public string Base { get; }
+
+        // STU3
+        // public StructureDefinition.XXX Derivation { get; }
+
+        protected override string DebuggerDisplayInfo => $"{base.DebuggerDisplayInfo} | Kind: {Kind}";
+    }
+
+
 }

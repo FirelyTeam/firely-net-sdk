@@ -12,6 +12,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
@@ -25,6 +26,27 @@ namespace Hl7.Fhir.Specification.Source
     /// <summary>Provides a default implementation for the <see cref="ArtifactSummaryHarvester"/> delegate.</summary>
     public static class DefaultArtifactSummaryHarvester
     {
+        public static IEnumerable<ArtifactSummary> HarvestAll(this ArtifactSummaryHarvester harvester, NavigatorStreamFactory factory, string filePath)
+        {
+            try
+            {
+                // 1. Create INavigatorStream
+                // 2. Initializes ArtifactSummaryHarvester with streamer
+                // 3. Call Harvester to generate summaries
+                var navStream = factory(filePath);
+                return harvester.HarvestAll(navStream);
+            }
+            // NavigatorStreamFactory failed to deserialize the bundle
+            catch (Exception ex)
+            {
+                return new ArtifactSummary[]
+                {
+                    new ArtifactSummary(filePath, ex)
+                };
+            }
+
+        }
+
         /// <summary>
         /// Extension method to harvest summary information from a set of resources via the specified
         /// <see cref="INavigatorStream"/>, independent of the underlying resource serialization format.
@@ -34,13 +56,16 @@ namespace Hl7.Fhir.Specification.Source
         /// <returns>A sequence of <see cref="ArtifactSummary"/> instances for each of the target resources.</returns>
         public static IEnumerable<ArtifactSummary> HarvestAll(this ArtifactSummaryHarvester harvester, INavigatorStream stream)
         {
-            while (stream.MoveNext())
+            if (stream != null)
             {
-                var summary = harvester(stream);
-                // Skip invalid input (no summary)
-                if (summary != null)
+                while (stream.MoveNext())
                 {
-                    yield return summary;
+                    var summary = harvester(stream);
+                    // Skip invalid input (no summary)
+                    if (summary != null)
+                    {
+                        yield return summary;
+                    }
                 }
             }
         }
@@ -62,31 +87,38 @@ namespace Hl7.Fhir.Specification.Source
             // Current returns null for invalid input
             if (current != null)
             {
-                var rawType = current.Type;
-                var resType = EnumUtility.ParseLiteral<ResourceType>(rawType);
-
-                switch (resType)
+                try
                 {
-                    case null:
-                        return new ArtifactSummary(stream, current);
-                    case ResourceType.ConceptMap:
-                        return new ConceptMapSummary(stream, current);
-                    case ResourceType.NamingSystem:
-                        return new NamingSystemSummary(stream, current);
-                    case ResourceType.ValueSet:
-                        return new ValueSetSummary(stream, current);
-                    default:
-                        if (ModelInfo.IsConformanceResource(rawType))
-                        {
-                            return new ConformanceResourceSummary(stream, current);
-                        }
-                        else
-                        {
-                            return new ArtifactSummary(stream, current);
-                        }
-                }
-            }
+                    // Note: each call to INavigatorStream.Current returns a new instance
+                    // In order to perform an efficient forward-only scan, we only call
+                    // .Current once and inject the created navigator into the ctors.
 
+                    var rawType = current.Type;
+                    var resType = EnumUtility.ParseLiteral<ResourceType>(rawType);
+
+                    switch (resType)
+                    {
+                        case ResourceType.ConceptMap:
+                            return new ConceptMapSummary(stream, current);
+                        case ResourceType.NamingSystem:
+                            return new NamingSystemSummary(stream, current);
+                        case ResourceType.ValueSet:
+                            return new ValueSetSummary(stream, current);
+                        default:
+                            if (ModelInfo.IsConformanceResource(rawType))
+                            {
+                                return new ConformanceResourceSummary(stream, current);
+                            };
+                            return new ArtifactSummary(stream, current);
+                    }
+                }
+                // XmlException, JsonException
+                catch (Exception ex)
+                {
+                    return new ArtifactSummary(stream, current, ex);
+                }
+
+            }
             // Invalid input
             return null;
         }

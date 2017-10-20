@@ -14,6 +14,7 @@ using Hl7.Fhir.Utility;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -316,25 +317,39 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsNotNull(xmlSource.LoadArtifactByName("profiles-types.xml"));
 
-            var duration = runTest(jsonSource);
+            var xmlSourceLarge = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), includeSubdirectories: true)
+            {
+                Mask = "*.xml",
+            };
+
+            Assert.IsNotNull(xmlSourceLarge.LoadArtifactByName("profiles-types.xml"));
+
+            (var duration, var count) = runTest(jsonSource);
+            Debug.WriteLine($"jsonSource: {count} resources, duration {duration} ms");
             Assert.IsTrue(duration < 1000);
 
-            duration = runTest(xmlSource);
+            (duration, count) = runTest(xmlSource);
+            Debug.WriteLine($"xmlSource: {count} resources, duration {duration} ms");
             Assert.IsTrue(duration < 500);
 
-            long runTest(DirectorySource s)
+            (duration, count) = runTest(xmlSourceLarge);
+            Debug.WriteLine($"xmlSourceLarge: {count} resources, duration {duration} ms");
+            Assert.IsTrue(duration < 10000);
+
+            (long duration, int count) runTest(DirectorySource s)
             {
                 var sw = new Stopwatch();
                 sw.Start();
 
+                int cnt = 0;
                 for (var repeat = 0; repeat < 10; repeat++)
                 {
                     s.Refresh();  // force reload of whole file
-                    s.ListResourceUris().Count();
+                    cnt = s.ListResourceUris().Count();
                 }
 
                 sw.Stop();
-                return sw.ElapsedMilliseconds;
+                return (sw.ElapsedMilliseconds, cnt);
             }
         }
     }
