@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Serialization
 
     /// <summary>
     /// Provides a sequence of <see cref="IElementNavigator"/> instances to efficiently
-    /// extract summary information from a raw FHIR resource file, independent of the
+    /// extract information from a raw FHIR resource file, independent of the
     /// underlying resource serialization format. Also supports resource bundles.
     /// </summary>
     /// <remarks>
@@ -36,7 +36,6 @@ namespace Hl7.Fhir.Serialization
     /// </remarks>
     public interface INavigatorStream : ISeekableEnumerator<IElementNavigator>, IDisposable
     {
-        // [WMR 20171016] Maybe rename "ResourceType" to "ContainerType" ?
         // * Bundle: ResourceType returns "Bundle" and Current.Type returns type of current entry
         // * Others: ResourceType and Current.Type return the same value
 

@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Specification.Source
         /// information using the specified custom <see cref="ArtifactSummaryHarvester"/> instance.
         /// </summary>
         /// <param name="path">Full path specification of a FHIR resource file.</param>
-        /// <param name="harvester">An <see cref="ArtifactSummaryHarvester"/> instance to extract a concrete set of summary data from the resource.</param>
+        /// <param name="harvester">An <see cref="ArtifactSummaryHarvester"/> delegate to extract summary information from a resource.</param>
         protected ArtifactScanner(string path, ArtifactSummaryHarvester harvester)
         {
             _path = path ?? throw new ArgumentNullException(nameof(path));
@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Specification.Source
             {
                 using (input)
                 {
-                    var summaries = _harvester.Enumerate(input);
+                    var summaries = _harvester.HarvestAll(input);
                     return new List<ArtifactSummary>(summaries);
                 }
             }

@@ -6,6 +6,8 @@
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
+#define PREPARE_ASYNC
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +20,7 @@ using Hl7.Fhir.Utility;
 using Hl7.Fhir.Serialization;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -27,7 +30,8 @@ namespace Hl7.Fhir.Specification.Source
     /// </summary>
     public class DirectorySource : IConformanceSource, IArtifactSource
     {
-        private readonly Func<string, INavigatorStream> _streamFactory;
+        private readonly NavigatorStreamFactory _streamFactory;
+        private readonly ArtifactSummaryHarvester _harvester;
         private readonly string _contentDirectory;
         private readonly bool _includeSubs;
 
@@ -43,13 +47,15 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>
         /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources from the specified content directory
-        /// and using the specified (custom) <see cref="INavigatorStream"/> factory delegate.
+        /// using the specified <see cref="ArtifactSummary"/> harvester delegate and <see cref="INavigatorStream"/> factory delegate.
         /// </summary>
-        /// <param name="streamFactory">Reference to a (custom) <see cref="INavigatorStream"/> factory delegate.</param>
+        /// <param name="streamFactory">A function that creates an <see cref="INavigatorStream"/> instance for the resource with the specified file path.</param>
+        /// <param name="harvester">An <see cref="ArtifactSummaryHarvester"/> delegate to extract summary information from a resource.</param>
         /// <param name="contentDirectory">The file path of the target directory.</param>
         /// <param name="includeSubdirectories">Specify <c>true</c> to include resources from subdirectories (recursively), or <c>false</c> otherwise.</param>
-        public DirectorySource(Func<string, INavigatorStream> streamFactory, string contentDirectory, bool includeSubdirectories = false)
+        public DirectorySource(NavigatorStreamFactory streamFactory, ArtifactSummaryHarvester harvester, string contentDirectory, bool includeSubdirectories = false)
         {
+            _harvester = harvester ?? throw Error.ArgumentNull(nameof(harvester));
             _streamFactory = streamFactory ?? throw Error.ArgumentNull(nameof(streamFactory));
             _contentDirectory = contentDirectory ?? throw Error.ArgumentNull(nameof(contentDirectory));
             _includeSubs = includeSubdirectories;
@@ -61,7 +67,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <param name="contentDirectory">The file path of the target directory.</param>
         /// <param name="includeSubdirectories">Specify <c>true</c> to include resources from subdirectories (recursively), or <c>false</c> otherwise.</param>
         public DirectorySource(string contentDirectory, bool includeSubdirectories = false)
-            : this (NavigatorStreamFactory.Create, contentDirectory, includeSubdirectories)
+            : this(DefaultNavigatorStreamFactory.Create, DefaultArtifactSummaryHarvester.Harvest, contentDirectory, includeSubdirectories)
         {
         }
 
@@ -70,7 +76,7 @@ namespace Hl7.Fhir.Specification.Source
         /// </summary>
         /// <param name="includeSubdirectories">Specify <c>true</c> to include resources from subdirectories (recursively), or <c>false</c> otherwise.</param>
         public DirectorySource(bool includeSubdirectories = false)
-            : this(NavigatorStreamFactory.Create, SpecificationDirectory, includeSubdirectories)
+            : this(DefaultNavigatorStreamFactory.Create, DefaultArtifactSummaryHarvester.Harvest, SpecificationDirectory, includeSubdirectories)
         {
         }
 
@@ -286,6 +292,24 @@ namespace Hl7.Fhir.Specification.Source
             return _resourceScanInformation.AsEnumerable();
         }
 
+        /// <summary>
+        /// Returns a list of summary information describing all valid
+        /// FHIR artifacts that exist in the specified content directory.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ArtifactSummary> List(ResourceType? filter)
+        {
+            prepareResources();
+
+            var scan = _resourceScanInformation.AsEnumerable();
+            if (filter != null)
+            {
+                scan = scan.Where(dsi => dsi.ResourceType == filter);
+            }
+            return scan;
+
+        }
+
         public IEnumerable<string> ListArtifactNames()
         {
             prepareFiles();
@@ -310,14 +334,15 @@ namespace Hl7.Fhir.Specification.Source
 
         public IEnumerable<string> ListResourceUris(ResourceType? filter = null)
         {
-            prepareResources();
+            //prepareResources();
 
-            IEnumerable<ArtifactSummary> scan = _resourceScanInformation;
-            if (filter != null)
-            {
-                scan = scan.Where(dsi => dsi.ResourceType == filter);
-            }
+            //IEnumerable<ArtifactSummary> scan = _resourceScanInformation;
+            //if (filter != null)
+            //{
+            //    scan = scan.Where(dsi => dsi.ResourceType == filter);
+            //}
 
+            var scan = List(filter);
             return scan.Select(dsi => dsi.ResourceUri);
         }
 
@@ -603,7 +628,50 @@ namespace Hl7.Fhir.Specification.Source
             {
                 var scanResult = new List<ArtifactSummary>();
                 var errors = new List<ErrorInfo>();
+                var factory = _streamFactory;
+                var harvester = _harvester;
 
+#if PREPARE_ASYNC
+                // Optimization: Async IO
+
+                var tasks = new List<Task<IEnumerable<ArtifactSummary>>>(paths.Count);
+                foreach (var filePath in paths)
+                {
+                    // 1. DirectorySource creates INavigatorStream
+                    // 2. DirectorySource initializes ArtifactSummaryHarvester with streamer
+                    // 3. DirectorySource calls Harvester to generate summaries
+                    var task = Task.Run(() => {
+                        try
+                        {
+                            var navStream = factory(filePath);
+                            // INavigatorStreamFactory.Create() returns null for unknown file extensions
+                            if (navStream != null)
+                            {
+                                return harvester.HarvestAll(navStream);
+                            }
+                        }
+                        catch (XmlException ex)
+                        {
+                            // TODO: Return ErrorSummary
+                            // errors.Add(new ErrorInfo(filePath, ex));    // Log the exception
+                            Debug.WriteLine(ex.Message);
+                        }
+                        catch (JsonException ej)
+                        {
+                            // TODO: Return ErrorSummary
+                            // errors.Add(new ErrorInfo(filePath, ej));    // Log the exception
+                            Debug.WriteLine(ej.Message);
+                        }
+                        // Don't catch other exceptions (fatal error)
+
+                        return Enumerable.Empty<ArtifactSummary>();
+                    });
+                    tasks.Add(task);
+                }
+                Task.WaitAll(tasks.ToArray()); // await Task.WhenAll
+                var results = tasks.Where(t => t.IsCompleted).SelectMany(t => t.Result);
+                scanResult.AddRange(results);
+#else
                 foreach (var filePath in paths)
                 {
                     try
@@ -611,13 +679,12 @@ namespace Hl7.Fhir.Specification.Source
                         // 1. DirectorySource creates INavigatorStream
                         // 2. DirectorySource initializes ArtifactSummaryHarvester with streamer
                         // 3. DirectorySource calls Harvester to generate summaries
-                        var navStream = _streamFactory(filePath);
+                        var navStream = factory(filePath);
 
                         // INavigatorStreamFactory.Create() returns null for unknown file extensions
                         if (navStream != null)
                         {
-                            var harvester = ArtifactSummaryHarvester.Default;
-                            var summaryStream = harvester.Enumerate(navStream);
+                            var summaryStream = harvester.HarvestAll(navStream);
                             scanResult.AddRange(summaryStream);
                         }
                     }
@@ -631,6 +698,8 @@ namespace Hl7.Fhir.Specification.Source
                     }
                     // Don't catch other exceptions (fatal error)
                 }
+#endif
+
 
                 return (scanResult, errors.ToArray());
 
@@ -670,11 +739,11 @@ namespace Hl7.Fhir.Specification.Source
             return null;
         }
 
-        #endregion
+#endregion
 
 
     }
 
 #endif
 
-}
+                    }

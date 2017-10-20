@@ -12,42 +12,31 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
 {
-    // [WMR 20171011] Note:
-    // - Derive from ArtifactSummary to define additional custom properties
-    // - Derive from ArtifactSummaryHarvester to actually initialize the custom properties
-
     /// <summary>
-    /// Default factory for <see cref="ArtifactSummary"/> records.
-    /// Extracts a concrete set of summary information from a raw FHIR artifact,
-    /// independent of the underlying serialization format, by calling the
-    /// generic <see cref="IElementNavigator"/> interface.
-    /// 
-    /// Consumers can implement support for additional custom resource summary information
-    /// by defining two specialized classes that derive from <see cref="ArtifactSummary"/>
-    /// and <see cref="ArtifactSummaryHarvester"/>.
+    /// Delegate for harvesting an <see cref="ArtifactSummary"/> from the current resource of an
+    /// <see cref="INavigatorStream"/>, independent of the underlying serialization format.
     /// </summary>
-    public class ArtifactSummaryHarvester
+    public delegate ArtifactSummary ArtifactSummaryHarvester(INavigatorStream nav);
+
+    /// <summary>Provides a default implementation for the <see cref="ArtifactSummaryHarvester"/> delegate.</summary>
+    public static class DefaultArtifactSummaryHarvester
     {
-        /// <summary>Returns the global default instance.</summary>
-        public static ArtifactSummaryHarvester Default { get; } = new ArtifactSummaryHarvester();
-
-        /// <summary>ctor</summary>
-        public ArtifactSummaryHarvester() { }
-
         /// <summary>
-        /// Extract summary information from a sequence of resources via the <see cref="IElementNavigator"/>
-        /// interface, independent of the underlying resource serialization format.
+        /// Extension method to harvest summary information from a set of resources via the specified
+        /// <see cref="INavigatorStream"/>, independent of the underlying resource serialization format.
         /// </summary>
-        /// <param name="stream">A sequence of <see cref="IElementNavigator"/> instances for a set of (bundle) resources.</param>
+        /// <param name="harvester">A function that generates an <see cref="ArtifactSummary"/> from the current resource of the specified <see cref="INavigatorStream"/> instance.</param>
+        /// <param name="stream">A sequence of <see cref="IElementNavigator"/> instances for a set of resources.</param>
         /// <returns>A sequence of <see cref="ArtifactSummary"/> instances for each of the target resources.</returns>
-        public IEnumerable<ArtifactSummary> Enumerate(INavigatorStream stream)
+        public static IEnumerable<ArtifactSummary> HarvestAll(this ArtifactSummaryHarvester harvester, INavigatorStream stream)
         {
             while (stream.MoveNext())
             {
-                var summary = Generate(stream);
+                var summary = harvester(stream);
                 // Skip invalid input (no summary)
                 if (summary != null)
                 {
@@ -57,14 +46,12 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>
-        /// Creates and initializes a new <see cref="ArtifactSummary"/> record by extracting
-        /// a concrete set of summary information from the current entry of the specified
+        /// Harvest summary information from the current resource of the specified
         /// <see cref="INavigatorStream"/>, independent of the actual resource serialization format.
-        /// Derived classes can override this method to generate custom summary information.
         /// </summary>
         /// <param name="stream">An <see cref="INavigatorStream"/> instance that is positioned on a current entry.</param>
         /// <returns>A new <see cref="ArtifactSummary"/> record.</returns>
-        protected virtual ArtifactSummary Generate(INavigatorStream stream)
+        public static ArtifactSummary Harvest(INavigatorStream stream)
         {
             // Dynamically create subtypes depending on resource type
 
@@ -78,29 +65,25 @@ namespace Hl7.Fhir.Specification.Source
                 var rawType = current.Type;
                 var resType = EnumUtility.ParseLiteral<ResourceType>(rawType);
 
-                if (resType == null)
+                switch (resType)
                 {
-                    return new ArtifactSummary(stream, current);
-                }
-                else if (resType == ResourceType.ConceptMap)
-                {
-                    return new ConceptMapSummary(stream, current);
-                }
-                else if (resType == ResourceType.NamingSystem)
-                {
-                    return new NamingSystemSummary(stream, current);
-                }
-                else if (resType == ResourceType.ValueSet)
-                {
-                    return new ValueSetSummary(stream, current);
-                }
-                else if (ModelInfo.IsConformanceResource(rawType))
-                {
-                    return new ConformanceResourceSummary(stream, current);
-                }
-                else
-                {
-                    return new ArtifactSummary(stream, current);
+                    case null:
+                        return new ArtifactSummary(stream, current);
+                    case ResourceType.ConceptMap:
+                        return new ConceptMapSummary(stream, current);
+                    case ResourceType.NamingSystem:
+                        return new NamingSystemSummary(stream, current);
+                    case ResourceType.ValueSet:
+                        return new ValueSetSummary(stream, current);
+                    default:
+                        if (ModelInfo.IsConformanceResource(rawType))
+                        {
+                            return new ConformanceResourceSummary(stream, current);
+                        }
+                        else
+                        {
+                            return new ArtifactSummary(stream, current);
+                        }
                 }
             }
 

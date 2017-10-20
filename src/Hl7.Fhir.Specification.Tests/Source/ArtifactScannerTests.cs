@@ -127,8 +127,8 @@ namespace Hl7.Fhir.Specification.Tests
             File.WriteAllText(tmpx, bXml);
             File.WriteAllText(tmpj, bJson);
 
-            var x = new XmlArtifactScanner(tmpx, ArtifactSummaryHarvester.Default);
-            var j = new JsonArtifactScanner(tmpj, ArtifactSummaryHarvester.Default);
+            var x = new XmlArtifactScanner(tmpx, DefaultArtifactSummaryHarvester.Harvest);
+            var j = new JsonArtifactScanner(tmpj, DefaultArtifactSummaryHarvester.Harvest);
 
             assertBundle(x, tmpx);
             assertBundle(j, tmpj);
@@ -163,8 +163,8 @@ namespace Hl7.Fhir.Specification.Tests
             File.WriteAllText(tmpx, rXml);
             File.WriteAllText(tmpj, rJson);
 
-            var x = new XmlArtifactScanner(tmpx, ArtifactSummaryHarvester.Default);
-            var j = new JsonArtifactScanner(tmpj, ArtifactSummaryHarvester.Default);
+            var x = new XmlArtifactScanner(tmpx, DefaultArtifactSummaryHarvester.Harvest);
+            var j = new JsonArtifactScanner(tmpj, DefaultArtifactSummaryHarvester.Harvest);
 
             assertSingle(x, tmpx);
             assertSingle(j, tmpj);
@@ -196,8 +196,8 @@ namespace Hl7.Fhir.Specification.Tests
             File.WriteAllText(tmpx, rXml);
             File.WriteAllText(tmpj, rJson);
 
-            var x = new XmlArtifactScanner(tmpx, ArtifactSummaryHarvester.Default);
-            var j = new JsonArtifactScanner(tmpj, ArtifactSummaryHarvester.Default);
+            var x = new XmlArtifactScanner(tmpx, DefaultArtifactSummaryHarvester.Harvest);
+            var j = new JsonArtifactScanner(tmpj, DefaultArtifactSummaryHarvester.Harvest);
 
             assertExample(x, tmpx);
             assertExample(j, tmpj);
