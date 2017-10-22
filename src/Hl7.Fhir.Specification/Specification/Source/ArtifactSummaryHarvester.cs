@@ -12,6 +12,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,23 +27,28 @@ namespace Hl7.Fhir.Specification.Source
     /// <summary>Provides a default implementation for the <see cref="ArtifactSummaryHarvester"/> delegate.</summary>
     public static class DefaultArtifactSummaryHarvester
     {
-        public static IEnumerable<ArtifactSummary> HarvestAll(this ArtifactSummaryHarvester harvester, NavigatorStreamFactory factory, string filePath)
+        public static List<ArtifactSummary> HarvestAll(this ArtifactSummaryHarvester harvester, NavigatorStreamFactory factory, string filePath)
         {
+            // using (var navStream = factory(filePath))
+            // {
+            // return harvester.HarvestAll(navStream);
+            // }
+
+            // Note: HarvestAll may throw while enumerating, must handle exceptions here
+
+            INavigatorStream navStream = null;
             try
             {
-                // 1. Create INavigatorStream
-                // 2. Initializes ArtifactSummaryHarvester with streamer
-                // 3. Call Harvester to generate summaries
-                var navStream = factory(filePath);
-                return harvester.HarvestAll(navStream);
+                navStream = factory(filePath);
+                return harvester.HarvestAll(navStream).ToList();
             }
-            // NavigatorStreamFactory failed to deserialize the bundle
             catch (Exception ex)
             {
-                return new ArtifactSummary[]
-                {
-                    new ArtifactSummary(filePath, ex)
-                };
+                return new List<ArtifactSummary> { ArtifactSummary.FromException(ex, filePath) };
+            }
+            finally
+            {
+                navStream?.Dispose();
             }
 
         }
@@ -58,6 +64,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             if (stream != null)
             {
+                // Note: MoveNext may throw, but yield is not allowed within try/catch
                 while (stream.MoveNext())
                 {
                     var summary = harvester(stream);
@@ -104,6 +111,8 @@ namespace Hl7.Fhir.Specification.Source
                             return new NamingSystemSummary(stream, current);
                         case ResourceType.ValueSet:
                             return new ValueSetSummary(stream, current);
+                        case ResourceType.StructureDefinition:
+                            return new StructureDefinitionSummary(stream, current);
                         default:
                             if (ModelInfo.IsConformanceResource(rawType))
                             {

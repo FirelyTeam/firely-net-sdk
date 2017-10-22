@@ -46,10 +46,18 @@ namespace Hl7.Fhir.Specification.Source
             var input = CreateStream(_path);
             if (input != null)
             {
-                using (input)
+                // HarvestAll may throw, must handle exception here
+                try
                 {
-                    var summaries = _harvester.HarvestAll(input);
-                    return new List<ArtifactSummary>(summaries);
+                    return _harvester.HarvestAll(input).ToList();
+                }
+                catch (Exception ex)
+                {
+                    return new List<ArtifactSummary> { ArtifactSummary.FromException(ex, _path) };
+                }
+                finally
+                {
+                    input.Dispose();
                 }
             }
             // Return empty list

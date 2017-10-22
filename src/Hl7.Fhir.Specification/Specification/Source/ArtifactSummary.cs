@@ -53,8 +53,16 @@ namespace Hl7.Fhir.Specification.Source
         /// </summary>
         /// <param name="origin">The original file path of the target resource file.</param>
         /// <param name="error">The <see cref="Exception"/> that occured while harvesting the summary.</param>
-        public ArtifactSummary(string origin, Exception error)
+        ArtifactSummary(string origin, Exception error)
             : this(origin, null, null, null, error) { }
+
+        /// <summary>
+        /// Create a new <see cref="ArtifactSummary"/> to represent an exception
+        /// that occured while harvesting the summary information of a resource.
+        /// </summary>
+        /// <param name="error">The <see cref="Exception"/> that occured while harvesting the summary.</param>
+        /// <param name="origin">The original file path of the target resource file.</param>
+        public static ArtifactSummary FromException(Exception error, string origin) => new ArtifactSummary(origin, error);
 
         /// <summary>Constructor for subclasses.</summary>
         /// <remarks>

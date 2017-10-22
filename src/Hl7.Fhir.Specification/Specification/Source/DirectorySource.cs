@@ -642,8 +642,9 @@ namespace Hl7.Fhir.Specification.Source
             var tasks = new List<Task<List<ArtifactSummary>>>(paths.Count);
             foreach (var filePath in paths)
             {
-                // Note: call ToList() to force evaluation on bg thread!
-                var task = Task.Run((Func<List<ArtifactSummary>>)harvester.HarvestAll(factory, filePath).ToList);
+                var task = Task.Run(
+                    () => { return harvester.HarvestAll(factory, filePath); }
+                );
                 tasks.Add(task);
             }
 
@@ -662,7 +663,9 @@ namespace Hl7.Fhir.Specification.Source
                 Debug.WriteLine($"[{nameof(DirectorySource)}.{nameof(scanPaths)}] {ex.GetType().Name}: {ex.Message}");
             }
 
-            var results = tasks.Where(t => t.IsCompleted).SelectMany(t => t.Result);
+            // Skip canceled and faulted tasks
+            // TODO: Tasks shouldn't fault but return ArtifactSummary with Error info...
+            var results = tasks.Where(t => t.IsCompleted /* && !t.IsFaulted */).SelectMany(t => t.Result);
             scanResult.AddRange(results);
 #else
             foreach (var filePath in paths)
