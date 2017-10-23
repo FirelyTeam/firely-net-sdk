@@ -6,6 +6,11 @@
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
+// [WMR 20171023] TODO
+// - Allow configuration of sync/async summary harvesting strategy
+// - Allow configuration of duplicate canonical url handling strategy
+
+// PrepareResources strategy configuration
 #define PREPARE_PARALLEL_FOR
 //#define PREPARE_PARALLEL
 //#define PREPARE_ASYNC
@@ -311,7 +316,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             prepareResources();
 
-            var scan = _resourceScanInformation.AsEnumerable();
+            IEnumerable<ArtifactSummary> scan = _resourceScanInformation;
             if (filter != null)
             {
                 scan = scan.Where(dsi => dsi.ResourceType == filter);
@@ -332,10 +337,12 @@ namespace Hl7.Fhir.Specification.Source
 
             prepareFiles();
 
-            var searchString = (Path.DirectorySeparatorChar + name).ToLower();
+            // var searchString = (Path.DirectorySeparatorChar + name).ToLower();
+            var searchString = Path.DirectorySeparatorChar + name;
 
             // NB: uses _artifactFiles (full paths), not ArtifactFiles (which only has public list of names, not full path)
-            var fullFileName = _artifactFilePaths.SingleOrDefault(fn => fn.ToLower().EndsWith(searchString));
+            // var fullFileName = _artifactFilePaths.SingleOrDefault(fn => fn.ToLower().EndsWith(searchString));
+            var fullFileName = _artifactFilePaths.SingleOrDefault(fn => fn.EndsWith(searchString, StringComparison.InvariantCultureIgnoreCase));
 
             return fullFileName == null ? null : File.OpenRead(fullFileName);
         }
@@ -446,7 +453,7 @@ namespace Hl7.Fhir.Specification.Source
             allFiles.RemoveAll(name => Path.GetExtension(name) == ".exe" || Path.GetExtension(name) == ".dll");
 
             // var unsafeExtensions = new[] { ".exe", ".dll" };
-            // allFiles.RemoveAll(name => unsafeExtensions.Contains(Path.GetExtension(name), StringComparer.OrdinalIgnoreCase));
+            // allFiles.RemoveAll(name => unsafeExtensions.Contains(Path.GetExtension(name), StringComparer.InvariantCultureIgnoreCase));
 
             if (_includes?.Length > 0)
             {
@@ -528,7 +535,7 @@ namespace Hl7.Fhir.Specification.Source
                     catch (Exception ex)
                     {
                         // Do Nothing
-                        Debug.WriteLine($"Error enumerating files in '{currentFolder}': {ex.Message}");
+                        Debug.WriteLine($"[{nameof(DirectorySource)}.{nameof(scanPaths)}] {ex.GetType().Name} while enumerating files in '{currentFolder}':\r\n{ex.Message}");
                     }
 #else
                     catch { }
@@ -667,6 +674,7 @@ namespace Hl7.Fhir.Specification.Source
             // Pre-allocate results array, one entry per file
             // Each entry receives a list with summaries harvested from a single file (Bundles return 0..*)
             var results = new List<ArtifactSummary>[cnt];
+            Exception ex = null;
             try
             {
                 // Process files in parallel
@@ -678,17 +686,24 @@ namespace Hl7.Fhir.Specification.Source
                         results[i] = harvester.HarvestAll(factory, paths[i]);
                     });
             }
-            catch (AggregateException ex)
+            catch (AggregateException aex)
             {
-                // Failed... timeout or canceled?
-                // var isCanceled = ex.InnerExceptions.OfType<TaskCanceledException>().Any();
-                Debug.WriteLine($"[{nameof(DirectorySource)}.{nameof(scanPaths)}] {ex.GetType().Name}: {ex.Message}"
-                    + $"{ex.InnerExceptions?.Select(ix => $"\r\n\t{ix.GetType().Name}: {ix.Message}")}");
+                // ArtifactSummaryHarvester.HarvestAll catches and returns exceptions using ArtifactSummary.FromException
+                // However Parallel.For may still throw, e.g. due to time out or cancel
 
-                // [WMR 20171023] Return using ArtifactSummary.FromException ?
+                // var isCanceled = ex.InnerExceptions.OfType<TaskCanceledException>().Any();
+                Debug.WriteLine($"[{nameof(DirectorySource)}.{nameof(scanPaths)}] {aex.GetType().Name}: {aex.Message}"
+                    + $"{aex.InnerExceptions?.Select(ix => $"\r\n\t{ix.GetType().Name}: {ix.Message}")}");
+
+                // [WMR 20171023] Return exceptions via ArtifactSummary.FromException
+                ex = aex;
             }
             // Aggregate completed results into single list
             scanResult.AddRange(results.SelectMany(r => r ?? Enumerable.Empty<ArtifactSummary>()));
+            if (ex != null)
+            {
+                scanResult.Add(ArtifactSummary.FromException(ex, null));
+            }
 
 #elif PREPARE_PARALLEL
             // Using PLINQ
