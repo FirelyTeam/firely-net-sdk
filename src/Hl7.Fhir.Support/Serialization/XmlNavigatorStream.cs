@@ -158,7 +158,11 @@ namespace Hl7.Fhir.Serialization
                 {
                     var resourceId = resourceNode.Elements(XmlNs.XFHIR + "id").Attributes("value").SingleOrDefault();
                     if (resourceId != null)
-                        canonicalUrl = "http://example.org/" + resourceNode.Name.LocalName + "/" + resourceId.Value;
+                    {
+                        // [WMR 20171023] This is not a Bundle, so ResourceType
+                        // property returns the actual type of the current entry
+                        canonicalUrl = "http://example.org/" + ResourceType + "/" + resourceId.Value;
+                    }
                 }
 
                 if (canonicalUrl != null && (fullUrl == null || canonicalUrl == fullUrl))
