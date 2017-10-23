@@ -54,7 +54,10 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (resolver == null) { throw Error.ArgumentNull(nameof(resolver)); }
             if (settings == null) { throw Error.ArgumentNull(nameof(settings)); }
             _resolver = resolver;
-            _settings = settings;
+
+            // [WMR 20171023] Always copy the specified settings, to prevent shared state
+            // Especially important to prevent corruption of the global SnapshotGeneratorSettings.Default instance.
+            _settings = new SnapshotGeneratorSettings(settings);
         }
 
         public SnapshotGenerator(IResourceResolver source) : this(source, SnapshotGeneratorSettings.Default)
