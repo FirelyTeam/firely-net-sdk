@@ -35,14 +35,8 @@ namespace Hl7.Fhir.Specification.Source
     /// </summary>
     public class DirectorySource : IConformanceSource, IArtifactSource
     {
-        private readonly NavigatorStreamFactory _streamFactory;
-        private readonly ArtifactSummaryHarvester _harvester;
+        private DirectorySourceSettings _settings;
         private readonly string _contentDirectory;
-        private readonly bool _includeSubs;
-
-        private string[] _masks;
-        private string[] _includes;
-        private string[] _excludes;
 
         private bool _filesPrepared = false;
         private List<string> _artifactFilePaths;
@@ -52,47 +46,69 @@ namespace Hl7.Fhir.Specification.Source
 
         // netstandard has no CurrentCultureIgnoreCase comparer
 #if DOTNETFW
-        static readonly StringComparer ExtensionComparer = StringComparer.CurrentCultureIgnoreCase;
-        static readonly StringComparison ExtensionComparison = StringComparison.CurrentCultureIgnoreCase;
+        private static readonly StringComparer ExtensionComparer = StringComparer.CurrentCultureIgnoreCase;
+        private static readonly StringComparison ExtensionComparison = StringComparison.CurrentCultureIgnoreCase;
 #else
-        static readonly StringComparer ExtensionComparer = StringComparer.OrdinalIgnoreCase;
-        static readonly StringComparison ExtensionComparison = StringComparison.OrdinalIgnoreCase;
+        private static readonly StringComparer ExtensionComparer = StringComparer.OrdinalIgnoreCase;
+        private static readonly StringComparison ExtensionComparison = StringComparison.OrdinalIgnoreCase;
 #endif
 
         /// <summary>
-        /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources from the specified content directory
-        /// using the specified <see cref="ArtifactSummary"/> harvester delegate and <see cref="INavigatorStream"/> factory delegate.
+        /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources
+        /// from the default <see cref="SpecificationDirectory"/>
+        /// and using the default <see cref="DirectorySourceSettings"/>.
         /// </summary>
-        /// <param name="streamFactory">A function that creates an <see cref="INavigatorStream"/> instance for the resource with the specified file path.</param>
-        /// <param name="harvester">An <see cref="ArtifactSummaryHarvester"/> delegate to extract summary information from a resource.</param>
+        public DirectorySource() : this(SpecificationDirectory) { }
+
+        /// <summary>
+        /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources
+        /// from the specified content directory and using the default <see cref="DirectorySourceSettings"/>.
+        /// </summary>
         /// <param name="contentDirectory">The file path of the target directory.</param>
-        /// <param name="includeSubdirectories">Specify <c>true</c> to include resources from subdirectories (recursively), or <c>false</c> otherwise.</param>
-        public DirectorySource(NavigatorStreamFactory streamFactory, ArtifactSummaryHarvester harvester, string contentDirectory, bool includeSubdirectories = false)
+        public DirectorySource(string contentDirectory) : this(contentDirectory, DirectorySourceSettings.Default)
         {
-            _harvester = harvester ?? throw Error.ArgumentNull(nameof(harvester));
-            _streamFactory = streamFactory ?? throw Error.ArgumentNull(nameof(streamFactory));
+            //
+        }
+
+        /// <summary>
+        /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources
+        /// from the specified content directory and optionally also from subdirectories.
+        /// </summary>
+        /// <param name="includeSubdirectories">
+        /// Determines wether the <see cref="DirectorySource"/> should also
+        /// recursively scan all subdirectories of the specified content directory.
+        /// </param>
+        [Obsolete("Instead, use DirectorySource(DirectorySourceSettings settings)")]
+        public DirectorySource(bool includeSubdirectories) : this(SpecificationDirectory, includeSubdirectories)
+        {
+            //
+        }
+
+        [Obsolete("Instead, use DirectorySource(string contentDirectory, DirectorySourceSettings settings)")]
+        public DirectorySource(string contentDirectory, bool includeSubdirectories)
+            : this(contentDirectory,
+                  new DirectorySourceSettings() { IncludeSubDirectories = includeSubdirectories })
+        {
+            //
+        }
+
+        /// <summary>
+        /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources
+        /// from the specified content directory and using the specified <see cref="DirectorySourceSettings"/>.
+        /// </summary>
+        /// <param name="contentDirectory">The file path of the target directory.</param>
+        /// <param name="settings">Configuration settings that control the behavior of the <see cref="DirectorySource"/>.</param>
+        public DirectorySource(string contentDirectory, DirectorySourceSettings settings)
+        {
             _contentDirectory = contentDirectory ?? throw Error.ArgumentNull(nameof(contentDirectory));
-            _includeSubs = includeSubdirectories;
+
+            // [WMR 20171023] Always copy the specified settings, to prevent shared state
+            // Especially important to prevent corruption of the global DirectorySourceSettings.Default instance.
+            _settings = new DirectorySourceSettings(settings) ?? throw Error.ArgumentNull(nameof(settings));
         }
 
-        /// <summary>
-        /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources from the specified content directory.
-        /// </summary>
-        /// <param name="contentDirectory">The file path of the target directory.</param>
-        /// <param name="includeSubdirectories">Specify <c>true</c> to include resources from subdirectories (recursively), or <c>false</c> otherwise.</param>
-        public DirectorySource(string contentDirectory, bool includeSubdirectories = false)
-            : this(DefaultNavigatorStreamFactory.Create, DefaultArtifactSummaryHarvester.Harvest, contentDirectory, includeSubdirectories)
-        {
-        }
-
-        /// <summary>
-        /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources from the <see cref="SpecificationDirectory"/>.
-        /// </summary>
-        /// <param name="includeSubdirectories">Specify <c>true</c> to include resources from subdirectories (recursively), or <c>false</c> otherwise.</param>
-        public DirectorySource(bool includeSubdirectories = false)
-            : this(DefaultNavigatorStreamFactory.Create, DefaultArtifactSummaryHarvester.Harvest, SpecificationDirectory, includeSubdirectories)
-        {
-        }
+        /// <summary>Returns a reference to the associated <see cref="DirectorySourceSettings"/>.</summary>
+        public DirectorySourceSettings Settings => _settings;
 
         /// <summary>
         /// Gets or sets the search string to match against the names of files in the content directory.
@@ -122,10 +138,7 @@ namespace Hl7.Fhir.Specification.Source
         public string Mask
         {
             get => String.Join("|", Masks);
-            set
-            {
-                Masks = value?.Split('|').Select(s => s.Trim()).Where(s => !String.IsNullOrEmpty(s)).ToArray();
-            }
+            set { Masks = DirectorySourceSettings.SplitMask(value); }
         }
 
         /// <summary>
@@ -154,8 +167,8 @@ namespace Hl7.Fhir.Specification.Source
         /// </example>
         public string[] Masks
         {
-            get { return _masks; }
-            set { _masks = value; Refresh(); }
+            get { return _settings.Masks; }
+            set { _settings.Masks = value; Refresh(); }
         }
 
         /// <summary>
@@ -187,8 +200,8 @@ namespace Hl7.Fhir.Specification.Source
         /// </example>
         public string[] Includes
         {
-            get { return _includes; }
-            set { _includes = value; Refresh(); }
+            get { return _settings.Includes; }
+            set { _settings.Includes = value; Refresh(); }
         }
 
         /// <summary>
@@ -220,8 +233,8 @@ namespace Hl7.Fhir.Specification.Source
         /// </example>
         public string[] Excludes
         {
-            get { return _excludes; }
-            set { _excludes = value; Refresh(); }
+            get { return _settings.Excludes; }
+            set { _settings.Excludes = value; Refresh(); }
         }
 
         /// <summary>Returns the content directory as specified to the constructor.</summary>
@@ -230,21 +243,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>
         /// The default directory this artifact source will access for its files.
         /// </summary>
-        public static string SpecificationDirectory
-        {
-            get
-            {
-#if DOTNETFW
-                var codebase = AppDomain.CurrentDomain.BaseDirectory;
-#else
-                var codebase = AppContext.BaseDirectory;
-#endif
-                if (Directory.Exists(codebase))
-                    return codebase;
-                else
-                    return Directory.GetCurrentDirectory();
-            }
-        }
+        public static string SpecificationDirectory => DirectorySourceSettings.SpecificationDirectory;
 
         /// <summary>
         /// Specifies how the <see cref="DirectorySource"/> should process duplicate files with multiple serialization formats.
@@ -264,9 +263,9 @@ namespace Hl7.Fhir.Specification.Source
         /// </summary>
         public DuplicateFilenameResolution FormatPreference
         {
-            get;
-            set;
-        } = DuplicateFilenameResolution.PreferXml;
+            get { return _settings.FormatPreference; }
+            set { _settings.FormatPreference = value; }
+        }
 
 /*
         // [WMR 20171020] OBSOLETE; Use ArtifactSummary.Error
@@ -449,14 +448,14 @@ namespace Hl7.Fhir.Specification.Source
         {
             if (_filesPrepared) return;
 
-            var masks = _masks ?? (new[] { "*.*" });
+            var masks = _settings.Masks ?? (new[] { "*.*" });
 
             // Add files present in the content directory
             var allFiles = new List<string>();
 
             // [WMR 20170817] NEW
             // Safely enumerate files in specified path and subfolders, recursively
-            allFiles.AddRange(safeGetFiles(_contentDirectory, masks, _includeSubs));
+            allFiles.AddRange(safeGetFiles(_contentDirectory, masks, _settings.IncludeSubDirectories));
 
             // Always remove *.exe" and "*.dll"
             allFiles.RemoveAll(name => Path.GetExtension(name) == ".exe" || Path.GetExtension(name) == ".dll");
@@ -464,15 +463,17 @@ namespace Hl7.Fhir.Specification.Source
             // var unsafeExtensions = new[] { ".exe", ".dll" };
             // allFiles.RemoveAll(name => unsafeExtensions.Contains(Path.GetExtension(name), ExtensionComparer));
 
-            if (_includes?.Length > 0)
+            var includes = Includes;
+            if (includes?.Length > 0)
             {
-                var includeFilter = new FilePatternFilter(_includes);
+                var includeFilter = new FilePatternFilter(includes);
                 allFiles = includeFilter.Filter(_contentDirectory, allFiles).ToList();
             }
 
-            if (_excludes?.Length > 0)
+            var excludes = Excludes;
+            if (excludes?.Length > 0)
             {
-                var excludeFilter = new FilePatternFilter(_excludes, negate: true);
+                var excludeFilter = new FilePatternFilter(excludes, negate: true);
                 allFiles = excludeFilter.Filter(_contentDirectory, allFiles).ToList();
             }
 
@@ -627,8 +628,9 @@ namespace Hl7.Fhir.Specification.Source
             if (_resourcesPrepared) return;
             prepareFiles();
 
-            var uniqueArtifacts = ResolveDuplicateFilenames(_artifactFilePaths, FormatPreference);
-            var scanInfo = _resourceScanInformation = scanPaths(uniqueArtifacts, _streamFactory, _harvester);
+            var settings = _settings;
+            var uniqueArtifacts = ResolveDuplicateFilenames(_artifactFilePaths, _settings.FormatPreference);
+            var scanInfo = _resourceScanInformation = scanPaths(uniqueArtifacts, settings.StreamFactory, settings.Harvester);
 
             // Check for duplicate canonical urls, this is forbidden within a single source (and actually, universally,
             // but if another source has the same url, the order of polling in the MultiArtifactSource matters)
@@ -790,7 +792,8 @@ namespace Hl7.Fhir.Specification.Source
         {
             // File path of the containing resource file (could be a Bundle)
             var path = info.Origin;
-            var navStream = _streamFactory(path);
+            var factory = _settings.StreamFactory;
+            var navStream = factory(path);
             // Advance stream to the target resource (e.g. specific Bundle entry)
             if (navStream.Seek(info.Position))
             {

@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void ReadsSubdirectories()
         {
             var testPath = prepareExampleDirectory(out int numFiles);
-            var fa = new DirectorySource(testPath, includeSubdirectories: true);
+            var fa = new DirectorySource(testPath, new DirectorySourceSettings() {  IncludeSubDirectories = true });
             var names = fa.ListArtifactNames();
 
             Assert.AreEqual(numFiles, names.Count());
@@ -338,7 +338,7 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         // Note: we still have write permissions...
 
-                        var dirSource = new DirectorySource(testPath, includeSubdirectories: true);
+                        var dirSource = new DirectorySource(testPath, new DirectorySourceSettings() { IncludeSubDirectories = true });
 
                         // [WMR 20170823] Test ListArtifactNames => prepareFiles()
                         var names = dirSource.ListArtifactNames();
