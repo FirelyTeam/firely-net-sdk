@@ -37,8 +37,16 @@ namespace Hl7.Fhir.Specification.Source
                
         private bool _prepared = false;
         private string _mask;
+        private DirectorySource _filesSource;
 
-        public string ZipPath { get; private set; }
+        /// <summary>Create a new <see cref="ZipSource"/> instance for the ZIP archive with the specified file path.</summary>
+        /// <param name="zipPath">File path to a ZIP archive.</param>
+        public ZipSource(string zipPath)
+        {
+            ZipPath = zipPath;
+        }
+
+        public string ZipPath { get; }
 
         /// <summary>
         /// Gets or sets the search string to match against the names of files in the ZIP archive.
@@ -58,13 +66,8 @@ namespace Hl7.Fhir.Specification.Source
             }
         }
 
-        public ZipSource(string zipPath)
-        {
-            ZipPath = zipPath;
-        }
-
-
-        private DirectorySource _filesSource;
+        /// <summary>Returns a reference to the internal conformance source that exposes the contents of the ZIP archive.</summary>
+        public IConformanceSource Source => _filesSource;
 
         /// <summary>
         /// Unpacks the zip-file and constructs a new FileArtifactSource on the unzipped directory
