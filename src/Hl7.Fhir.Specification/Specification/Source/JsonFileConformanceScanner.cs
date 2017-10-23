@@ -6,6 +6,9 @@
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
+// [WMR 20171023] OBSOLETE
+#if false
+
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -185,3 +188,5 @@ namespace Hl7.Fhir.Specification.Source
         }
     }
 }
+
+#endif
