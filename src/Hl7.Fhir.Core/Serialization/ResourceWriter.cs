@@ -25,10 +25,13 @@ namespace Hl7.Fhir.Serialization
         private IFhirWriter _writer;
         private ModelInspector _inspector;
 
-        public ResourceWriter(IFhirWriter writer)
+        public ParserSettings Settings { get; private set; }
+
+        public ResourceWriter(IFhirWriter writer, ParserSettings settings)
         {
             _writer = writer;
             _inspector = BaseFhirParser.Inspector;
+            Settings = settings;
         }
 
         public void Serialize(object instance, Rest.SummaryType summary, bool contained = false, string root = null)
@@ -41,7 +44,7 @@ namespace Hl7.Fhir.Serialization
 
             _writer.WriteStartRootObject(rootName, contained);
 
-            var complexSerializer = new ComplexTypeWriter(_writer);
+            var complexSerializer = new ComplexTypeWriter(_writer, Settings);
             Coding subsettedTag = null;
             bool createdMetaElement = false;
             if (summary != Rest.SummaryType.False && instance is Resource)
