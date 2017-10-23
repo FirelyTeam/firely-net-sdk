@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Serialization
                     {
                         // [WMR 20171023] This is not a Bundle, so ResourceType
                         // property returns the actual type of the current entry
-                        canonicalUrl = "http://example.org/" + ResourceType + "/" + resourceId.Value;
+                        canonicalUrl = NavigatorStreamHelper.FormatCanonicalUrlForBundleEntry(ResourceType, resourceId.Value);
                     }
                 }
 
