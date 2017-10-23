@@ -5,6 +5,9 @@
  * This file is licensed under the BSD 3-Clause license
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
+
+// [WMR 20171023] OBSOLETE
+#if false
  
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
@@ -90,3 +93,6 @@ namespace Hl7.Fhir.Specification.Source
 
     }
 }
+
+
+#endif

@@ -1,4 +1,6 @@
-﻿using Hl7.Fhir.Model;
+﻿#if false
+
+using Hl7.Fhir.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -111,7 +113,6 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("http://test.org/target", cms.ConceptMapTarget);
             Assert.AreEqual(origin, list[3].Origin);
         }
-
 
         [TestMethod]
         public void TestBundle()
@@ -226,3 +227,5 @@ namespace Hl7.Fhir.Specification.Tests
         }
     }
 }
+
+#endif
