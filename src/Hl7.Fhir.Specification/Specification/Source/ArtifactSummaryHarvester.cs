@@ -36,21 +36,29 @@ namespace Hl7.Fhir.Specification.Source
 
             // Note: HarvestAll may throw while enumerating, must handle exceptions here
 
+            // [WMR 20171023] In case of error, return completed summaries and error info
+            var result = new List<ArtifactSummary>();
+
             INavigatorStream navStream = null;
             try
             {
                 navStream = factory(filePath);
-                return harvester.HarvestAll(navStream).ToList();
+                // return harvester.HarvestAll(navStream).ToList();
+                foreach (var summary in harvester.HarvestAll(navStream))
+                {
+                    result.Add(summary);
+                }
             }
             catch (Exception ex)
             {
-                return new List<ArtifactSummary> { ArtifactSummary.FromException(ex, filePath) };
+                // return new List<ArtifactSummary> { ArtifactSummary.FromException(ex, filePath) };
+                result.Add(ArtifactSummary.FromException(ex, filePath));
             }
             finally
             {
                 navStream?.Dispose();
             }
-
+            return result;
         }
 
         /// <summary>

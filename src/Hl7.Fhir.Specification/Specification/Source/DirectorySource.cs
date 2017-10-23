@@ -6,7 +6,9 @@
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
-#define PREPARE_ASYNC
+#define PREPARE_PARALLEL_FOR
+//#define PREPARE_PARALLEL
+//#define PREPARE_ASYNC
 
 using System;
 using System.Collections.Generic;
@@ -443,6 +445,9 @@ namespace Hl7.Fhir.Specification.Source
             // Always remove *.exe" and "*.dll"
             allFiles.RemoveAll(name => Path.GetExtension(name) == ".exe" || Path.GetExtension(name) == ".dll");
 
+            // var unsafeExtensions = new[] { ".exe", ".dll" };
+            // allFiles.RemoveAll(name => unsafeExtensions.Contains(Path.GetExtension(name), StringComparer.OrdinalIgnoreCase));
+
             if (_includes?.Length > 0)
             {
                 var includeFilter = new FilePatternFilter(_includes);
@@ -619,6 +624,7 @@ namespace Hl7.Fhir.Specification.Source
 
             if (doubles.Any())
             {
+                // [WMR 20171023] TODO: Allow configuration, e.g. optional callback delegate
                 throw new CanonicalUrlConflictException(doubles.Select(d => new CanonicalUrlConflictException.CanonicalUrlConflict(d.Key, d.Select(ci => ci.Origin))));
             }
 
@@ -628,16 +634,88 @@ namespace Hl7.Fhir.Specification.Source
 
         private static List<ArtifactSummary> scanPaths(List<string> paths, NavigatorStreamFactory factory, ArtifactSummaryHarvester harvester)
         {
-            var scanResult = new List<ArtifactSummary>(paths.Count);
+            // [WMR 20171023] Note: some files may no longer exist
 
-#if PREPARE_ASYNC
+            var cnt = paths.Count;
+            var scanResult = new List<ArtifactSummary>(cnt);
+
+            // var sw = new Stopwatch();
+            // sw.Start();
+
             // Optimization: (partially) async I/O
-            // Assuming I/O is slow, spin a separate async task per file
             // Unfortunately, deserialization is still synchronous, so individual tasks are blocking
             // However, we do achieve some performance gain when scanning many files
             // (depending on default TaskScheduler)
             // With proper async deserialization support (Microsoft: TODO), tasks would yield while
             // performing I/O, further increasing multi-threading performance gains
+
+            // [WMR 20171020] TODO:
+            // - Expose configuration option to control sync/async behavior
+            // - Support TimeOut
+            // - Support CancellationToken (how to inject?)
+
+#if PREPARE_PARALLEL_FOR
+            // Optimization: use Task.Parallel.ForEach to process files in parallel
+            // More efficient then creating task per file (esp. if many files)
+            //
+            // For netstandard13, add NuGet package System.Threading.Tasks.Parallel
+            //
+            //   <ItemGroup Condition=" '$(TargetFramework)' != 'net45' ">
+            //    <PackageReference Include="System.Threading.Tasks.Parallel" Version="4.3.0" />
+            //   </ItemGroup>
+
+            // Pre-allocate results array, one entry per file
+            // Each entry receives a list with summaries harvested from a single file (Bundles return 0..*)
+            var results = new List<ArtifactSummary>[cnt];
+            try
+            {
+                // Process files in parallel
+                var loopResult = Parallel.For(0, cnt,
+                    // new ParallelOptions() {  },
+                    i => {
+                        // Harvest summaries from single file
+                        // Save each result to a separate array entry (no locking required)
+                        results[i] = harvester.HarvestAll(factory, paths[i]);
+                    });
+            }
+            catch (AggregateException ex)
+            {
+                // Failed... timeout or canceled?
+                // var isCanceled = ex.InnerExceptions.OfType<TaskCanceledException>().Any();
+                Debug.WriteLine($"[{nameof(DirectorySource)}.{nameof(scanPaths)}] {ex.GetType().Name}: {ex.Message}"
+                    + $"{ex.InnerExceptions?.Select(ix => $"\r\n\t{ix.GetType().Name}: {ix.Message}")}");
+
+                // [WMR 20171023] Return using ArtifactSummary.FromException ?
+            }
+            // Aggregate completed results into single list
+            scanResult.AddRange(results.SelectMany(r => r ?? Enumerable.Empty<ArtifactSummary>()));
+
+#elif PREPARE_PARALLEL
+            // Using PLINQ
+            // Less efficient than Task.Parallel
+            //
+            // For netstandard13, add NuGet package System.Linq.Parallel
+            //
+            //   <ItemGroup Condition=" '$(TargetFramework)' != 'net45' ">
+            //    <PackageReference Include="System.Linq.Parallel" Version="4.3.0" />
+            //   </ItemGroup>
+
+            // Pre-allocate results array, one entry per file
+            List<ArtifactSummary>[] results = { };
+            try
+            {
+                results = paths.AsParallel().Select(path => harvester.HarvestAll(factory, path)).ToArray();
+            }
+            catch (AggregateException ex)
+            {
+                // Failed... timeout or canceled?
+                // var isCanceled = ex.InnerExceptions.OfType<TaskCanceledException>().Any();
+                Debug.WriteLine($"[{nameof(DirectorySource)}.{nameof(scanPaths)}] {ex.GetType().Name}: {ex.Message}");
+            }
+            scanResult.AddRange(results.SelectMany(r => r ?? Enumerable.Empty<ArtifactSummary>()));
+
+#elif PREPARE_ASYNC
+            // Spin a separate async task per file
 
             var tasks = new List<Task<List<ArtifactSummary>>>(paths.Count);
             foreach (var filePath in paths)
@@ -648,10 +726,6 @@ namespace Hl7.Fhir.Specification.Source
                 tasks.Add(task);
             }
 
-            // [WMR 20171020] TODO:
-            // - Expose configuration option to control sync/async behavior
-            // - Support TimeOut
-            // - Support CancellationToken (how to inject?)
             try
             {
                 Task.WaitAll(tasks.ToArray());
@@ -675,6 +749,9 @@ namespace Hl7.Fhir.Specification.Source
 
             }
 #endif
+            // sw.Stop();
+            // Debug.WriteLine($"[{nameof(DirectorySource)}.{nameof(scanPaths)}] Duration: {sw.ElapsedMilliseconds} ms | {cnt} paths | {scanResult.Count} resources");
+
             return scanResult;
         }
 
