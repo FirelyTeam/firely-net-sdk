@@ -50,6 +50,15 @@ namespace Hl7.Fhir.Specification.Source
         private bool _resourcesPrepared = false;
         private List<ArtifactSummary> _resourceScanInformation;
 
+        // netstandard has no CurrentCultureIgnoreCase comparer
+#if DOTNETFW
+        static readonly StringComparer ExtensionComparer = StringComparer.CurrentCultureIgnoreCase;
+        static readonly StringComparison ExtensionComparison = StringComparison.CurrentCultureIgnoreCase;
+#else
+        static readonly StringComparer ExtensionComparer = StringComparer.OrdinalIgnoreCase;
+        static readonly StringComparison ExtensionComparison = StringComparison.OrdinalIgnoreCase;
+#endif
+
         /// <summary>
         /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources from the specified content directory
         /// using the specified <see cref="ArtifactSummary"/> harvester delegate and <see cref="INavigatorStream"/> factory delegate.
@@ -342,7 +351,7 @@ namespace Hl7.Fhir.Specification.Source
 
             // NB: uses _artifactFiles (full paths), not ArtifactFiles (which only has public list of names, not full path)
             // var fullFileName = _artifactFilePaths.SingleOrDefault(fn => fn.ToLower().EndsWith(searchString));
-            var fullFileName = _artifactFilePaths.SingleOrDefault(fn => fn.EndsWith(searchString, StringComparison.InvariantCultureIgnoreCase));
+            var fullFileName = _artifactFilePaths.SingleOrDefault(fn => fn.EndsWith(searchString, ExtensionComparison));
 
             return fullFileName == null ? null : File.OpenRead(fullFileName);
         }
@@ -453,7 +462,7 @@ namespace Hl7.Fhir.Specification.Source
             allFiles.RemoveAll(name => Path.GetExtension(name) == ".exe" || Path.GetExtension(name) == ".dll");
 
             // var unsafeExtensions = new[] { ".exe", ".dll" };
-            // allFiles.RemoveAll(name => unsafeExtensions.Contains(Path.GetExtension(name), StringComparer.InvariantCultureIgnoreCase));
+            // allFiles.RemoveAll(name => unsafeExtensions.Contains(Path.GetExtension(name), ExtensionComparer));
 
             if (_includes?.Length > 0)
             {
@@ -803,11 +812,11 @@ namespace Hl7.Fhir.Specification.Source
             return null;
         }
 
-#endregion
+        #endregion
 
 
     }
 
 #endif
 
-            }
+    }
