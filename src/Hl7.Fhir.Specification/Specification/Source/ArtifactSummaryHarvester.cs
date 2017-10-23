@@ -19,18 +19,23 @@ namespace Hl7.Fhir.Specification.Source
     /// Delegate for harvesting an <see cref="ArtifactSummary"/> from the current resource of an
     /// <see cref="INavigatorStream"/>, independent of the underlying serialization format.
     /// </summary>
-    public delegate ArtifactSummary ArtifactSummaryHarvester(INavigatorStream nav);
+    /// <param name="origin">The original location of the underlying resource (container).</param>
+    /// <param name="nav">Reference to an <see cref="INavigatorStream"/> instance.</param>
+    public delegate ArtifactSummary ArtifactSummaryHarvester(string origin, INavigatorStream nav);
 
     /// <summary>Provides a default implementation for the <see cref="ArtifactSummaryHarvester"/> delegate.</summary>
     public static class DefaultArtifactSummaryHarvester
     {
-        public static List<ArtifactSummary> HarvestAll(this ArtifactSummaryHarvester harvester, NavigatorStreamFactory factory, string filePath)
+        /// <summary>
+        /// Extension method to harvest summary information from a set of resources via <see cref="INavigatorStream"/>,
+        /// independent of the underlying resource serialization format.
+        /// </summary>
+        /// <param name="harvester">A function that generates an <see cref="ArtifactSummary"/> from the current resource of the specified <see cref="INavigatorStream"/> instance.</param>
+        /// <param name="factory">Reference to a <see cref="NavigatorStreamFactory"/>.</param>
+        /// <param name="origin">The original location of the underlying resource (container).</param>
+        /// <returns>A sequence of <see cref="ArtifactSummary"/> instances for each of the target resources.</returns>
+        public static List<ArtifactSummary> HarvestAll(this ArtifactSummaryHarvester harvester, NavigatorStreamFactory factory, string origin)
         {
-            // using (var navStream = factory(filePath))
-            // {
-            // return harvester.HarvestAll(navStream);
-            // }
-
             // Note: HarvestAll may throw while enumerating, must handle exceptions here
 
             // [WMR 20171023] In case of error, return completed summaries and error info
@@ -39,17 +44,15 @@ namespace Hl7.Fhir.Specification.Source
             INavigatorStream navStream = null;
             try
             {
-                navStream = factory(filePath);
-                // return harvester.HarvestAll(navStream).ToList();
-                foreach (var summary in harvester.HarvestAll(navStream))
+                navStream = factory(origin);
+                foreach (var summary in harvester.HarvestAll(origin, navStream))
                 {
                     result.Add(summary);
                 }
             }
             catch (Exception ex)
             {
-                // return new List<ArtifactSummary> { ArtifactSummary.FromException(ex, filePath) };
-                result.Add(ArtifactSummary.FromException(ex, filePath));
+                result.Add(ArtifactSummary.FromException(origin, ex));
             }
             finally
             {
@@ -63,16 +66,17 @@ namespace Hl7.Fhir.Specification.Source
         /// <see cref="INavigatorStream"/>, independent of the underlying resource serialization format.
         /// </summary>
         /// <param name="harvester">A function that generates an <see cref="ArtifactSummary"/> from the current resource of the specified <see cref="INavigatorStream"/> instance.</param>
+        /// <param name="origin">The original location of the underlying resource (container).</param>
         /// <param name="stream">A sequence of <see cref="IElementNavigator"/> instances for a set of resources.</param>
         /// <returns>A sequence of <see cref="ArtifactSummary"/> instances for each of the target resources.</returns>
-        public static IEnumerable<ArtifactSummary> HarvestAll(this ArtifactSummaryHarvester harvester, INavigatorStream stream)
+        public static IEnumerable<ArtifactSummary> HarvestAll(this ArtifactSummaryHarvester harvester, string origin, INavigatorStream stream)
         {
             if (stream != null)
             {
                 // Note: MoveNext may throw, but yield is not allowed within try/catch
                 while (stream.MoveNext())
                 {
-                    var summary = harvester(stream);
+                    var summary = harvester(origin, stream);
                     // Skip invalid input (no summary)
                     if (summary != null)
                     {
@@ -86,9 +90,10 @@ namespace Hl7.Fhir.Specification.Source
         /// Harvest summary information from the current resource of the specified
         /// <see cref="INavigatorStream"/>, independent of the actual resource serialization format.
         /// </summary>
+        /// <param name="origin">The original location of the underlying resource (container).</param>
         /// <param name="stream">An <see cref="INavigatorStream"/> instance that is positioned on a current entry.</param>
         /// <returns>A new <see cref="ArtifactSummary"/> record.</returns>
-        public static ArtifactSummary Harvest(INavigatorStream stream)
+        public static ArtifactSummary Harvest(string origin, INavigatorStream stream)
         {
             // Dynamically create subtypes depending on resource type
 
@@ -111,25 +116,26 @@ namespace Hl7.Fhir.Specification.Source
                     switch (resType)
                     {
                         case ResourceType.ConceptMap:
-                            return new ConceptMapSummary(stream, current);
+                            return new ConceptMapSummary(origin, stream, current);
                         case ResourceType.NamingSystem:
-                            return new NamingSystemSummary(stream, current);
+                            return new NamingSystemSummary(origin, stream, current);
                         case ResourceType.ValueSet:
-                            return new ValueSetSummary(stream, current);
+                            return new ValueSetSummary(origin, stream, current);
                         case ResourceType.StructureDefinition:
-                            return new StructureDefinitionSummary(stream, current);
+                            return new StructureDefinitionSummary(origin, stream, current);
                         default:
                             if (ModelInfo.IsConformanceResource(rawType))
                             {
-                                return new ConformanceResourceSummary(stream, current);
+                                return new ConformanceResourceSummary(origin, stream, current);
                             };
-                            return new ArtifactSummary(stream, current);
+                            return new ArtifactSummary(origin, stream, current);
                     }
                 }
                 // XmlException, JsonException
                 catch (Exception ex)
                 {
-                    return new ArtifactSummary(stream, current, ex);
+                    // return new ArtifactSummary(origin, stream, current, ex);
+                    return ArtifactSummary.FromException(origin, ex);
                 }
 
             }

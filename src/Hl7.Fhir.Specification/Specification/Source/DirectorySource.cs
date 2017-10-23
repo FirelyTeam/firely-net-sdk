@@ -711,7 +711,7 @@ namespace Hl7.Fhir.Specification.Source
             scanResult.AddRange(results.SelectMany(r => r ?? Enumerable.Empty<ArtifactSummary>()));
             if (ex != null)
             {
-                scanResult.Add(ArtifactSummary.FromException(ex, null));
+                scanResult.Add(ArtifactSummary.FromException(null, ex));
             }
 
 #elif PREPARE_PARALLEL

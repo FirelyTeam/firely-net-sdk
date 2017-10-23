@@ -43,26 +43,27 @@ namespace Hl7.Fhir.Specification.Source
         /// Create a new <see cref="ArtifactSummary"/> for the current resource
         /// of the specified <see cref="INavigatorStream"/>.
         /// </summary>
+        /// <param name="origin">The original location of the underlying resource (container).</param>
         /// <param name="stream">An <see cref="INavigatorStream"/> instance.</param>
-        public ArtifactSummary(INavigatorStream stream)
-            : this(stream.Path, stream.Position, stream.Position, stream.Current, null) { }
+        public ArtifactSummary(string origin, INavigatorStream stream)
+            : this(origin, stream.Position, stream.Position, stream.Current, null) { }
 
         /// <summary>
         /// Create a new <see cref="ArtifactSummary"/> to represent an exception
         /// that occured while harvesting the summary information of a resource.
         /// </summary>
-        /// <param name="origin">The original file path of the target resource file.</param>
+        /// <param name="origin">The original location of the underlying resource (container).</param>
+        /// <param name="error">The <see cref="Exception"/> that occured while harvesting the summary.</param>
+        public static ArtifactSummary FromException(string origin, Exception error) => new ArtifactSummary(origin, error);
+
+        /// <summary>
+        /// Create a new <see cref="ArtifactSummary"/> to represent an exception
+        /// that occured while harvesting the summary information of a resource.
+        /// </summary>
+        /// <param name="origin">The original location of the underlying resource (container).</param>
         /// <param name="error">The <see cref="Exception"/> that occured while harvesting the summary.</param>
         ArtifactSummary(string origin, Exception error)
             : this(origin, null, null, null, error) { }
-
-        /// <summary>
-        /// Create a new <see cref="ArtifactSummary"/> to represent an exception
-        /// that occured while harvesting the summary information of a resource.
-        /// </summary>
-        /// <param name="error">The <see cref="Exception"/> that occured while harvesting the summary.</param>
-        /// <param name="origin">The original file path of the target resource file.</param>
-        public static ArtifactSummary FromException(Exception error, string origin) => new ArtifactSummary(origin, error);
 
         /// <summary>Constructor for subclasses.</summary>
         /// <remarks>
@@ -77,20 +78,22 @@ namespace Hl7.Fhir.Specification.Source
         /// the same navigator, starting at the current navitor position.
         /// </para>
         /// </remarks>
+        /// <param name="origin">The original location of the underlying resource (container).</param>
         /// <param name="stream">An <see cref="INavigatorStream"/> instance.</param>
         /// <param name="current">Reference to the current <see cref="IElementNavigator"/> instance, returned by IElementNavigator.Current.</param>
-        public ArtifactSummary(INavigatorStream stream, IElementNavigator current)
-            : this(stream.Path, stream.Position, stream.Position, current, null) { }
+        public ArtifactSummary(string origin, INavigatorStream stream, IElementNavigator current)
+            : this(origin, stream.Position, stream.Position, current, null) { }
 
         /// <summary>
         /// Create a new <see cref="ArtifactSummary"/> to represent an exception
         /// that occured while harvesting the summary information of a bundle entry.
         /// </summary>
+        /// <param name="origin">The original location of the underlying resource (container).</param>
         /// <param name="stream">An <see cref="INavigatorStream"/> instance.</param>
         /// <param name="current">Reference to the current <see cref="IElementNavigator"/> instance, returned by IElementNavigator.Current.</param>
         /// <param name="error">The <see cref="Exception"/> that occured while harvesting the summary.</param>
-        public ArtifactSummary(INavigatorStream stream, IElementNavigator current, Exception error)
-            : this(stream.Path, stream.Position, stream.Position, current, error) { }
+        public ArtifactSummary(string origin, INavigatorStream stream, IElementNavigator current, Exception error)
+            : this(origin, stream.Position, stream.Position, current, error) { }
 
         // Private ctor; initialize all properties
         ArtifactSummary(string origin, string position, string uri, IElementNavigator nav, Exception error)
@@ -169,9 +172,9 @@ namespace Hl7.Fhir.Specification.Source
     {
         public const ResourceType SupportedType = Model.ResourceType.NamingSystem;
 
-        public NamingSystemSummary(INavigatorStream stream) : this(stream, stream.Current) { }
+        public NamingSystemSummary(string origin, INavigatorStream stream) : this(origin, stream, stream.Current) { }
 
-        public NamingSystemSummary(INavigatorStream stream, IElementNavigator current) : base(stream, current)
+        public NamingSystemSummary(string origin, INavigatorStream stream, IElementNavigator current) : base(origin, stream, current)
         {
             Debug.Assert(ResourceType == SupportedType);
 
@@ -203,9 +206,9 @@ namespace Hl7.Fhir.Specification.Source
     {
         public static bool IsSupported(string typeName) => ModelInfo.IsConformanceResource(typeName);
 
-        public ConformanceResourceSummary(INavigatorStream stream) : this(stream, stream.Current) { }
+        public ConformanceResourceSummary(string origin, INavigatorStream stream) : this(origin, stream, stream.Current) { }
 
-        public ConformanceResourceSummary(INavigatorStream stream, IElementNavigator current) : base(stream, current)
+        public ConformanceResourceSummary(string origin, INavigatorStream stream, IElementNavigator current) : base(origin, stream, current)
         {
             Debug.Assert(IsSupported(ResourceTypeName));
 
@@ -246,9 +249,9 @@ namespace Hl7.Fhir.Specification.Source
     {
         public const ResourceType SupportedType = Model.ResourceType.ValueSet;
 
-        public ValueSetSummary(INavigatorStream stream) : this(stream, stream.Current) { }
+        public ValueSetSummary(string origin, INavigatorStream stream) : this(origin, stream, stream.Current) { }
 
-        public ValueSetSummary(INavigatorStream stream, IElementNavigator current) : base(stream, current)
+        public ValueSetSummary(string origin, INavigatorStream stream, IElementNavigator current) : base(origin, stream, current)
         {
             Debug.Assert(ResourceType == SupportedType);
 
@@ -276,9 +279,9 @@ namespace Hl7.Fhir.Specification.Source
     {
         public const ResourceType SupportedType = Model.ResourceType.ConceptMap;
 
-        public ConceptMapSummary(INavigatorStream stream) : this(stream, stream.Current) { }
+        public ConceptMapSummary(string origin, INavigatorStream stream) : this(origin, stream, stream.Current) { }
 
-        public ConceptMapSummary(INavigatorStream stream, IElementNavigator current) : base(stream, current)
+        public ConceptMapSummary(string origin, INavigatorStream stream, IElementNavigator current) : base(origin, stream, current)
         {
             Debug.Assert(ResourceType == SupportedType);
 
@@ -326,9 +329,9 @@ namespace Hl7.Fhir.Specification.Source
     {
         public const ResourceType SupportedType = Model.ResourceType.StructureDefinition;
 
-        public StructureDefinitionSummary(INavigatorStream stream) : this(stream, stream.Current) { }
+        public StructureDefinitionSummary(string origin, INavigatorStream stream) : this(origin, stream, stream.Current) { }
 
-        public StructureDefinitionSummary(INavigatorStream stream, IElementNavigator current) : base(stream, current)
+        public StructureDefinitionSummary(string origin, INavigatorStream stream, IElementNavigator current) : base(origin, stream, current)
         {
             Debug.Assert(ResourceType == SupportedType);
 
