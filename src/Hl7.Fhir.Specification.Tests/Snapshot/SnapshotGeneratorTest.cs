@@ -4579,32 +4579,27 @@ namespace Hl7.Fhir.Specification.Tests
             Base = ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.QuestionnaireResponse),
             Name = "QuestionnaireResponseWithSlice",
             Url = @"http://example.org/fhir/StructureDefinition/QuestionnaireResponseWithSlice",
-            //Derivation = StructureDefinition.TypeDerivationRule.Constraint,
             Kind = StructureDefinition.StructureDefinitionKind.Resource,
             Differential = new StructureDefinition.DifferentialComponent()
             {
                 Element = new List<ElementDefinition>()
                 {
-                    new ElementDefinition("QuestionnaireResponse")
-                    {
-                    },
-
-                    new ElementDefinition("QuestionnaireResponse.group.group")
+                    new ElementDefinition("QuestionnaireResponse.group.question")
                     {
                         Slicing = new ElementDefinition.SlicingComponent()
                         {
-                            Discriminator = new string[] { "text" }
+                            Discriminator = new List<string>() { "text" }
                         }
                     },
-                    new ElementDefinition("QuestionnaireResponse.group.group")
+                    new ElementDefinition("QuestionnaireResponse.group.question")
                     {
                         Name = "Q1"
                     },
-                    new ElementDefinition("QuestionnaireResponse.group.group")
+                    new ElementDefinition("QuestionnaireResponse.group.question")
                     {
                         Name = "Q2"
                     },
-                    new ElementDefinition("QuestionnaireResponse.group.group.linkid")
+                    new ElementDefinition("QuestionnaireResponse.group.question.linkid")
                     {
                         Max = "0"
                     },
@@ -4640,19 +4635,19 @@ namespace Hl7.Fhir.Specification.Tests
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
             StructureDefinition expanded = null;
-           // _generator.BeforeExpandElement += beforeExpandElementHandler_DEBUG;
+            // _generator.BeforeExpandElement += beforeExpandElementHandler_DEBUG;
             try
             {
                 generateSnapshotAndCompare(sd, out expanded);
             }
             finally
             {
-          //      _generator.BeforeExpandElement -= beforeExpandElementHandler_DEBUG;
+                // _generator.BeforeExpandElement -= beforeExpandElementHandler_DEBUG;
             }
 
             dumpOutcome(_generator.Outcome);
             Assert.IsTrue(expanded.HasSnapshot);
-         //   dumpElements(expanded.Snapshot.Element);
+            // dumpElements(expanded.Snapshot.Element);
 
             // Verify the inherited example binding on QuestionnaireResponse.item.answer.value[x]
             var answerValues = expanded.Snapshot.Element.Where(e => e.Path == "QuestionnaireResponse.group.group.question.answer.value[x]").ToList();
@@ -5014,6 +5009,32 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(ann);
             Assert.IsNotNull(ann.BaseElementDefinition);
             Assert.AreEqual(0, ann.BaseElementDefinition.Min);
+            // dumpElements(expanded.Snapshot.Element);
+
+            // Verify the inherited example binding on QuestionnaireResponse.item.answer.value[x] 
+            var answerValues = expanded.Snapshot.Element.Where(e => e.Path == "QuestionnaireResponse.group.question.answer.value[x]").ToList();
+            Assert.AreEqual(3, answerValues.Count);
+            foreach (var elem in answerValues)
+            {
+                // In core resource definition, QuestionnaireResponse.group.question.answer.value[x] element
+                // specifies binding strength & description, but no valueset reference
+                var binding = elem.Binding;
+                Assert.IsNotNull(binding);
+                Assert.AreEqual(BindingStrength.Example, binding.Strength);
+                Assert.IsNotNull(binding.Description);
+
+                var ValueSetReference = binding.ValueSet as ResourceReference;
+                Assert.IsNull(ValueSetReference);
+
+                //Assert.IsNotNull(ValueSetReference);
+                //// Assert.AreEqual("http://hl7.org/fhir/ValueSet/questionnaire-answers", ValueSetReference.Url.OriginalString); 
+                //Assert.IsTrue(ValueSetReference.Url.Equals("http://hl7.org/fhir/ValueSet/questionnaire-answers"));
+                //var bindingNameExtension = binding.Extension.FirstOrDefault(e => e.Url == "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName");
+                //Assert.IsNotNull(bindingNameExtension);
+                //var bindingNameValue = bindingNameExtension.Value as FhirString;
+                //Assert.IsNotNull(bindingNameValue);
+                //Assert.AreEqual("QuestionnaireAnswer", bindingNameValue.Value);
+            }
         }
 
     }
