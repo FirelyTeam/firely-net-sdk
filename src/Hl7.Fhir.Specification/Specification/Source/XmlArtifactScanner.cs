@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Specification.Source
     {
         /// <summary>ctor</summary>
         /// <param name="path">Full path specification of a FHIR resource file.</param>
-        /// <param name="harvester">An <see cref="ArtifactSummaryHarvester"/> instance to extract a concrete set of summary data from the resource.</param>
+        /// <param name="harvester">An <see cref="ArtifactSummaryHarvester"/> delegate to extract summary information from a resource.</param>
         public XmlArtifactScanner(string path, ArtifactSummaryHarvester harvester) : base(path, harvester)
         {
         }

@@ -6,18 +6,21 @@
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
+#define PREPARE_PARALLEL_FOR
+//#define PREPARE_PARALLEL
+//#define PREPARE_ASYNC
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System.IO;
-using System.Xml;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Serialization;
-using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -27,7 +30,8 @@ namespace Hl7.Fhir.Specification.Source
     /// </summary>
     public class DirectorySource : IConformanceSource, IArtifactSource
     {
-        private readonly Func<string, INavigatorStream> _streamFactory;
+        private readonly NavigatorStreamFactory _streamFactory;
+        private readonly ArtifactSummaryHarvester _harvester;
         private readonly string _contentDirectory;
         private readonly bool _includeSubs;
 
@@ -43,13 +47,15 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>
         /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources from the specified content directory
-        /// and using the specified (custom) <see cref="INavigatorStream"/> factory delegate.
+        /// using the specified <see cref="ArtifactSummary"/> harvester delegate and <see cref="INavigatorStream"/> factory delegate.
         /// </summary>
-        /// <param name="streamFactory">Reference to a (custom) <see cref="INavigatorStream"/> factory delegate.</param>
+        /// <param name="streamFactory">A function that creates an <see cref="INavigatorStream"/> instance for the resource with the specified file path.</param>
+        /// <param name="harvester">An <see cref="ArtifactSummaryHarvester"/> delegate to extract summary information from a resource.</param>
         /// <param name="contentDirectory">The file path of the target directory.</param>
         /// <param name="includeSubdirectories">Specify <c>true</c> to include resources from subdirectories (recursively), or <c>false</c> otherwise.</param>
-        public DirectorySource(Func<string, INavigatorStream> streamFactory, string contentDirectory, bool includeSubdirectories = false)
+        public DirectorySource(NavigatorStreamFactory streamFactory, ArtifactSummaryHarvester harvester, string contentDirectory, bool includeSubdirectories = false)
         {
+            _harvester = harvester ?? throw Error.ArgumentNull(nameof(harvester));
             _streamFactory = streamFactory ?? throw Error.ArgumentNull(nameof(streamFactory));
             _contentDirectory = contentDirectory ?? throw Error.ArgumentNull(nameof(contentDirectory));
             _includeSubs = includeSubdirectories;
@@ -61,7 +67,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <param name="contentDirectory">The file path of the target directory.</param>
         /// <param name="includeSubdirectories">Specify <c>true</c> to include resources from subdirectories (recursively), or <c>false</c> otherwise.</param>
         public DirectorySource(string contentDirectory, bool includeSubdirectories = false)
-            : this (NavigatorStreamFactory.Create, contentDirectory, includeSubdirectories)
+            : this(DefaultNavigatorStreamFactory.Create, DefaultArtifactSummaryHarvester.Harvest, contentDirectory, includeSubdirectories)
         {
         }
 
@@ -70,7 +76,7 @@ namespace Hl7.Fhir.Specification.Source
         /// </summary>
         /// <param name="includeSubdirectories">Specify <c>true</c> to include resources from subdirectories (recursively), or <c>false</c> otherwise.</param>
         public DirectorySource(bool includeSubdirectories = false)
-            : this(NavigatorStreamFactory.Create, SpecificationDirectory, includeSubdirectories)
+            : this(DefaultNavigatorStreamFactory.Create, DefaultArtifactSummaryHarvester.Harvest, SpecificationDirectory, includeSubdirectories)
         {
         }
 
@@ -248,6 +254,8 @@ namespace Hl7.Fhir.Specification.Source
             set;
         } = DuplicateFilenameResolution.PreferXml;
 
+/*
+        // [WMR 20171020] OBSOLETE; Use ArtifactSummary.Error
 
         // [WMR 20170217] Ignore invalid xml files, aggregate parsing errors
         // https://github.com/ewoutkramer/fhir-net-api/issues/301
@@ -264,6 +272,7 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Returns an array of runtime errors that occured while parsing the resources.</summary>
         public ErrorInfo[] Errors = new ErrorInfo[0];
+*/
 
         /// <summary>
         /// Request a full re-scan of the specified content directory.
@@ -282,8 +291,32 @@ namespace Hl7.Fhir.Specification.Source
         public IEnumerable<ArtifactSummary> List()
         {
             prepareResources();
-
             return _resourceScanInformation.AsEnumerable();
+        }
+
+        /// <summary>Returns a list of error information for FHIR artifacts where summary information could not be retrieved.</summary>
+        /// <returns></returns>
+        public IEnumerable<ArtifactSummary> Errors()
+        {
+            prepareResources();
+            return _resourceScanInformation.Errors();
+        }
+
+        /// <summary>
+        /// Returns a list of summary information describing all valid
+        /// FHIR artifacts that exist in the specified content directory.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ArtifactSummary> List(ResourceType? filter)
+        {
+            prepareResources();
+
+            var scan = _resourceScanInformation.AsEnumerable();
+            if (filter != null)
+            {
+                scan = scan.Where(dsi => dsi.ResourceType == filter);
+            }
+            return scan;
         }
 
         public IEnumerable<string> ListArtifactNames()
@@ -310,14 +343,7 @@ namespace Hl7.Fhir.Specification.Source
 
         public IEnumerable<string> ListResourceUris(ResourceType? filter = null)
         {
-            prepareResources();
-
-            IEnumerable<ArtifactSummary> scan = _resourceScanInformation;
-            if (filter != null)
-            {
-                scan = scan.Where(dsi => dsi.ResourceType == filter);
-            }
-
+            var scan = List(filter);
             return scan.Select(dsi => dsi.ResourceUri);
         }
 
@@ -418,6 +444,9 @@ namespace Hl7.Fhir.Specification.Source
 
             // Always remove *.exe" and "*.dll"
             allFiles.RemoveAll(name => Path.GetExtension(name) == ".exe" || Path.GetExtension(name) == ".dll");
+
+            // var unsafeExtensions = new[] { ".exe", ".dll" };
+            // allFiles.RemoveAll(name => unsafeExtensions.Contains(Path.GetExtension(name), StringComparer.OrdinalIgnoreCase));
 
             if (_includes?.Length > 0)
             {
@@ -575,6 +604,7 @@ namespace Hl7.Fhir.Specification.Source
         private static string fullPathWithoutExtension(string fullPath)
             => fullPath.Replace(Path.GetFileName(fullPath), Path.GetFileNameWithoutExtension(fullPath));
 
+
         /// <summary>Scan all xml files found by prepareFiles and find conformance resources and their id.</summary>
         private void prepareResources()
         {
@@ -582,59 +612,147 @@ namespace Hl7.Fhir.Specification.Source
             prepareFiles();
 
             var uniqueArtifacts = ResolveDuplicateFilenames(_artifactFilePaths, FormatPreference);
-            (_resourceScanInformation, Errors) = scanPaths(uniqueArtifacts);
+            var scanInfo = _resourceScanInformation = scanPaths(uniqueArtifacts, _streamFactory, _harvester);
 
             // Check for duplicate canonical urls, this is forbidden within a single source (and actually, universally,
             // but if another source has the same url, the order of polling in the MultiArtifactSource matters)
-            var doubles = from ci in _resourceScanInformation
-                          .OfType<ConformanceResourceSummary>()
+            var doubles = from ci in scanInfo.OfType<ConformanceResourceSummary>()
                           where ci.Canonical != null
                           group ci by ci.Canonical into g
                           where g.Count() > 1
                           select g;
 
             if (doubles.Any())
+            {
+                // [WMR 20171023] TODO: Allow configuration, e.g. optional callback delegate
                 throw new CanonicalUrlConflictException(doubles.Select(d => new CanonicalUrlConflictException.CanonicalUrlConflict(d.Key, d.Select(ci => ci.Origin))));
+            }
 
             _resourcesPrepared = true;
             return;
+        }
 
-            (List<ArtifactSummary>, ErrorInfo[]) scanPaths(List<string> paths)
+        private static List<ArtifactSummary> scanPaths(List<string> paths, NavigatorStreamFactory factory, ArtifactSummaryHarvester harvester)
+        {
+            // [WMR 20171023] Note: some files may no longer exist
+
+            var cnt = paths.Count;
+            var scanResult = new List<ArtifactSummary>(cnt);
+
+            // var sw = new Stopwatch();
+            // sw.Start();
+
+            // Optimization: (partially) async I/O
+            // Unfortunately, deserialization is still synchronous, so individual tasks are blocking
+            // However, we do achieve some performance gain when scanning many files
+            // (depending on default TaskScheduler)
+            // With proper async deserialization support (Microsoft: TODO), tasks would yield while
+            // performing I/O, further increasing multi-threading performance gains
+
+            // [WMR 20171020] TODO:
+            // - Expose configuration option to control sync/async behavior
+            // - Support TimeOut
+            // - Support CancellationToken (how to inject?)
+
+#if PREPARE_PARALLEL_FOR
+            // Optimization: use Task.Parallel.ForEach to process files in parallel
+            // More efficient then creating task per file (esp. if many files)
+            //
+            // For netstandard13, add NuGet package System.Threading.Tasks.Parallel
+            //
+            //   <ItemGroup Condition=" '$(TargetFramework)' != 'net45' ">
+            //    <PackageReference Include="System.Threading.Tasks.Parallel" Version="4.3.0" />
+            //   </ItemGroup>
+
+            // Pre-allocate results array, one entry per file
+            // Each entry receives a list with summaries harvested from a single file (Bundles return 0..*)
+            var results = new List<ArtifactSummary>[cnt];
+            try
             {
-                var scanResult = new List<ArtifactSummary>();
-                var errors = new List<ErrorInfo>();
+                // Process files in parallel
+                var loopResult = Parallel.For(0, cnt,
+                    // new ParallelOptions() {  },
+                    i => {
+                        // Harvest summaries from single file
+                        // Save each result to a separate array entry (no locking required)
+                        results[i] = harvester.HarvestAll(factory, paths[i]);
+                    });
+            }
+            catch (AggregateException ex)
+            {
+                // Failed... timeout or canceled?
+                // var isCanceled = ex.InnerExceptions.OfType<TaskCanceledException>().Any();
+                Debug.WriteLine($"[{nameof(DirectorySource)}.{nameof(scanPaths)}] {ex.GetType().Name}: {ex.Message}"
+                    + $"{ex.InnerExceptions?.Select(ix => $"\r\n\t{ix.GetType().Name}: {ix.Message}")}");
 
-                foreach (var filePath in paths)
-                {
-                    try
-                    {
-                        // 1. DirectorySource creates INavigatorStream
-                        // 2. DirectorySource initializes ArtifactSummaryHarvester with streamer
-                        // 3. DirectorySource calls Harvester to generate summaries
-                        var navStream = _streamFactory(filePath);
+                // [WMR 20171023] Return using ArtifactSummary.FromException ?
+            }
+            // Aggregate completed results into single list
+            scanResult.AddRange(results.SelectMany(r => r ?? Enumerable.Empty<ArtifactSummary>()));
 
-                        // INavigatorStreamFactory.Create() returns null for unknown file extensions
-                        if (navStream != null)
-                        {
-                            var harvester = ArtifactSummaryHarvester.Default;
-                            var summaryStream = harvester.Enumerate(navStream);
-                            scanResult.AddRange(summaryStream);
-                        }
-                    }
-                    catch (XmlException ex)
-                    {
-                        errors.Add(new ErrorInfo(filePath, ex));    // Log the exception
-                    }
-                    catch (JsonException ej)
-                    {
-                        errors.Add(new ErrorInfo(filePath, ej));    // Log the exception
-                    }
-                    // Don't catch other exceptions (fatal error)
-                }
+#elif PREPARE_PARALLEL
+            // Using PLINQ
+            // Less efficient than Task.Parallel
+            //
+            // For netstandard13, add NuGet package System.Linq.Parallel
+            //
+            //   <ItemGroup Condition=" '$(TargetFramework)' != 'net45' ">
+            //    <PackageReference Include="System.Linq.Parallel" Version="4.3.0" />
+            //   </ItemGroup>
 
-                return (scanResult, errors.ToArray());
+            // Pre-allocate results array, one entry per file
+            List<ArtifactSummary>[] results = { };
+            try
+            {
+                results = paths.AsParallel().Select(path => harvester.HarvestAll(factory, path)).ToArray();
+            }
+            catch (AggregateException ex)
+            {
+                // Failed... timeout or canceled?
+                // var isCanceled = ex.InnerExceptions.OfType<TaskCanceledException>().Any();
+                Debug.WriteLine($"[{nameof(DirectorySource)}.{nameof(scanPaths)}] {ex.GetType().Name}: {ex.Message}");
+            }
+            scanResult.AddRange(results.SelectMany(r => r ?? Enumerable.Empty<ArtifactSummary>()));
+
+#elif PREPARE_ASYNC
+            // Spin a separate async task per file
+
+            var tasks = new List<Task<List<ArtifactSummary>>>(paths.Count);
+            foreach (var filePath in paths)
+            {
+                var task = Task.Run(
+                    () => { return harvester.HarvestAll(factory, filePath); }
+                );
+                tasks.Add(task);
+            }
+
+            try
+            {
+                Task.WaitAll(tasks.ToArray());
+            }
+            catch (AggregateException ex)
+            {
+                // Failed... timeout or canceled?
+                // var isCanceled = ex.InnerExceptions.OfType<TaskCanceledException>().Any();
+                Debug.WriteLine($"[{nameof(DirectorySource)}.{nameof(scanPaths)}] {ex.GetType().Name}: {ex.Message}");
+            }
+
+            // Skip canceled and faulted tasks
+            // TODO: Tasks shouldn't fault but return ArtifactSummary with Error info...
+            var results = tasks.Where(t => t.IsCompleted /* && !t.IsFaulted */).SelectMany(t => t.Result);
+            scanResult.AddRange(results);
+#else
+            foreach (var filePath in paths)
+            {
+                var summaries = harvester.HarvestAll(factory, filePath);
+                scanResult.AddRange(summaries);
 
             }
+#endif
+            // sw.Stop();
+            // Debug.WriteLine($"[{nameof(DirectorySource)}.{nameof(scanPaths)}] Duration: {sw.ElapsedMilliseconds} ms | {cnt} paths | {scanResult.Count} resources");
+
+            return scanResult;
         }
 
         /// <summary>
@@ -670,11 +788,11 @@ namespace Hl7.Fhir.Specification.Source
             return null;
         }
 
-        #endregion
+#endregion
 
 
     }
 
 #endif
 
-}
+            }
