@@ -34,15 +34,15 @@ namespace Hl7.Fhir.Serialization
             Settings = settings;
         }
 
-        public void Serialize(object instance, Rest.SummaryType summary, bool contained = false, string root = null)
+        public void Serialize(Resource instance, Rest.SummaryType summary, bool contained = false)
         {
             if (instance == null) throw Error.ArgumentNull(nameof(instance));
 
             var mapping = _inspector.ImportType(instance.GetType());
+            if (mapping == null)
+                throw Error.Format($"Asked to serialize unknown resource type '{instance.GetType()}'");
 
-            var rootName = root ?? mapping.Name;
-
-            _writer.WriteStartRootObject(rootName, contained);
+            _writer.WriteStartRootObject(mapping.Name, contained);
 
             var complexSerializer = new ComplexTypeWriter(_writer, Settings);
             Coding subsettedTag = null;

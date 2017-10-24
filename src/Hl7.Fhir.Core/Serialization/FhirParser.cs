@@ -77,14 +77,14 @@ namespace Hl7.Fhir.Serialization
 #pragma warning disable 612,618
         public Base Parse(string json, Type dataType)
         {
-            IFhirReader jsonReader = new ElementNavFhirReader(JsonDomFhirNavigator.Create(json));
+            IFhirReader jsonReader = new ElementNavFhirReader(JsonDomFhirNavigator.Create(json, ModelInfo.GetFhirTypeNameForType(dataType)));
             return Parse(jsonReader, dataType);
         }
 
         // [WMR 20160421] Caller is responsible for disposing reader
         public Base Parse(JsonReader reader, Type dataType)
         {
-            IFhirReader jsonReader = new ElementNavFhirReader(JsonDomFhirNavigator.Create(reader));
+            IFhirReader jsonReader = new ElementNavFhirReader(JsonDomFhirNavigator.Create(reader, ModelInfo.GetFhirTypeNameForType(dataType)));
             return Parse(jsonReader, dataType);
         }
 #pragma warning restore 612, 618

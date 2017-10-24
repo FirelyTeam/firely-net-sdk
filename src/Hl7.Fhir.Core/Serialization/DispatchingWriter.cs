@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System.Collections;
 
@@ -68,7 +69,7 @@ namespace Hl7.Fhir.Serialization
             if (property.Choice == ChoiceType.ResourceChoice)
             {
                 var writer = new ResourceWriter(_writer, Settings);
-                writer.Serialize(instance, summary, contained: true);
+                writer.Serialize((Resource)instance, summary, contained: true);
                 return;
             }
 
