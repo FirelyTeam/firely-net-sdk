@@ -25,31 +25,29 @@ namespace Hl7.Fhir.Specification.Source
         // public static readonly ArtifactSummaryHarvester DefaultHarvester = DefaultArtifactSummaryHarvester.Harvest;
         // public static readonly NavigatorStreamFactory DefaultStreamFactory = DefaultNavigatorStreamFactory.Create;
 
-        /// <summary>Returns the default configuration settings for the <see cref="DirectorySource"/> class.</summary>
-        public static DirectorySourceSettings Default = new DirectorySourceSettings()
-            {
-                StreamFactory = DefaultNavigatorStreamFactory.Create,
-                Harvester = DefaultArtifactSummaryHarvester.Harvest,
-                IncludeSubDirectories = false,
-                Masks = new[] { "*.*" }
-        };
-
-        /// <summary>Creates a new <see cref="DirectorySourceSettings"/> instance.</summary>
+        /// <summary>Default constructor. Creates a new <see cref="DirectorySourceSettings"/> instance initialized from the default values.</summary>
         public DirectorySourceSettings()
         {
-
+            // See property declarations for default initializers
         }
 
-        /// <summary>Clone ctor. Generates a new <see cref="DirectorySourceSettings"/> instance with the same state as the specified instance.</summary>
+        /// <summary>Clone constructor. Generates a new <see cref="DirectorySourceSettings"/> instance initialized from the state of the specified instance.</summary>
         public DirectorySourceSettings(DirectorySourceSettings settings)
         {
             if (settings == null) { throw Error.ArgumentNull(nameof(settings)); }
             settings.CopyTo(this);
         }
 
+        /// <summary>Copy the current state to the specified instance.</summary>
+        /// <param name="other">Another <see cref="DirectorySourceSettings"/> instance.</param>
         public void CopyTo(DirectorySourceSettings other)
         {
+            if (other == null) { throw Error.ArgumentNull(nameof(other)); }
+            // other.ContentDirectory = this.ContentDirectory;
             other.IncludeSubDirectories = this.IncludeSubDirectories;
+            other.Masks = this.Masks;
+            other.Includes = this.Includes;
+            other.Excludes = this.Excludes;
             other.StreamFactory = this.StreamFactory;
             other.Harvester = this.Harvester;
         }
@@ -75,9 +73,28 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>
-        /// Gets or sets a value that determines wether the <see cref="DirectorySource"/> should also
-        /// recursively scan all subdirectories of the specified content directory.
+        /// Gets or sets a value that determines wether the <see cref="DirectorySource"/> should
+        /// also include artifacts from (nested) subdirectories of the specified content directory.
+        /// <para>
+        /// Returns <c>false</c> by default.
+        /// </para>
         /// </summary>
+        /// <remarks>
+        /// Take caution when enabling this setting, as it may potentially cause a
+        /// <see cref="DirectorySource"/> instance to scan a (very) large number of files.
+        /// Specifically, it is strongly advised NOT to enable this setting for:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Directories with many deeply nested subdirectories</term>
+        /// </item>
+        /// <item>
+        /// <term>Common folders such as Desktop, My Documents etc.</term>
+        /// </item>
+        /// <item>
+        /// <term>Drive root folders, e.g. C:\</term>
+        /// </item>
+        /// </list>
+        /// </remarks>
         public bool IncludeSubDirectories { get; set; } // = false;
 
         /// <summary>
@@ -85,6 +102,9 @@ namespace Hl7.Fhir.Specification.Source
         /// The source will only provide resources from files that match the specified mask.
         /// The source will ignore all files that don't match the specified mask.
         /// Multiple masks can be split by '|'.
+        /// <para>
+        /// Returns <c>"*.*"</c> by default.
+        /// </para>
         /// </summary>
         /// <remarks>
         /// Mask filters are applied first, before any <see cref="Includes"/> and <see cref="Excludes"/> filters.
@@ -117,6 +137,9 @@ namespace Hl7.Fhir.Specification.Source
         /// Gets or sets an array of search strings to match against the names of files in the content directory.
         /// The source will only provide resources from files that match the specified mask.
         /// The source will ignore all files that don't match the specified mask.
+        /// <para>
+        /// Returns <c>{ "*.*" }</c> by default.
+        /// </para>
         /// </summary>
         /// <remarks>
         /// Mask filters are applied first, before <see cref="Includes"/> and <see cref="Excludes"/> filters.
@@ -137,7 +160,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <example>
         /// <code>Masks = new string[] { "v2*.*", "*.StructureDefinition.*" };</code>
         /// </example>
-        public string[] Masks { get; set; } // = new[] { "*.*" }
+        public string[] Masks { get; set; } = new[] { "*.*" };
 
         /// <summary>
         /// Gets or sets an array of search strings to match against the names of subdirectories of the content directory.
@@ -199,6 +222,9 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>
         /// Gets or sets a value that determines how to process duplicate files with multiple serialization formats.
+        /// <para>
+        /// Returns <see cref="DirectorySource.DuplicateFilenameResolution.PreferXml"/> by default.
+        /// </para>
         /// </summary>
         public DirectorySource.DuplicateFilenameResolution FormatPreference { get; set; } = DirectorySource.DuplicateFilenameResolution.PreferXml;
 
@@ -206,7 +232,9 @@ namespace Hl7.Fhir.Specification.Source
         /// Gets or sets the <see cref="NavigatorStreamFactory"/> delegate that the <see cref="DirectorySource"/>
         /// uses to create <see cref="INavigatorStream"/> instances for harvesting summary information from
         /// FHIR artifacts, independent of the underlying resource serialization format.
-        /// By default, this delegate calls the <see cref="DefaultNavigatorStreamFactory.Create"/> method.
+        /// <para>
+        /// Calls <see cref="DefaultNavigatorStreamFactory.Create"/> by default.
+        /// </para>
         /// </summary>
         public NavigatorStreamFactory StreamFactory { get; set; } = DefaultNavigatorStreamFactory.Create;
 
@@ -214,7 +242,9 @@ namespace Hl7.Fhir.Specification.Source
         /// Gets or sets the <see cref="ArtifactSummaryHarvester"/> delegate that the <see cref="DirectorySource"/>
         /// uses to harvest summary information from all the available FHIR artifacts,
         /// independent of the underlying resource serialization format.
-        /// By default, this delegate calls the <see cref="DefaultArtifactSummaryHarvester.Harvest"/> method.
+        /// <para>
+        /// Calls <see cref="DefaultArtifactSummaryHarvester.Harvest"/> by default.
+        /// </para>
         /// </summary>
         public ArtifactSummaryHarvester Harvester { get; set; } = DefaultArtifactSummaryHarvester.Harvest;
 

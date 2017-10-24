@@ -10,10 +10,8 @@
 // - Allow configuration of sync/async summary harvesting strategy
 // - Allow configuration of duplicate canonical url handling strategy
 
-// PrepareResources strategy configuration
+// Enable for async, disable for sync
 #define PREPARE_PARALLEL_FOR
-//#define PREPARE_PARALLEL
-//#define PREPARE_ASYNC
 
 using System;
 using System.Collections.Generic;
@@ -35,15 +33,6 @@ namespace Hl7.Fhir.Specification.Source
     /// </summary>
     public class DirectorySource : IConformanceSource, IArtifactSource
     {
-        private DirectorySourceSettings _settings;
-        private readonly string _contentDirectory;
-
-        private bool _filesPrepared = false;
-        private List<string> _artifactFilePaths;
-
-        private bool _resourcesPrepared = false;
-        private List<ArtifactSummary> _resourceScanInformation;
-
         // netstandard has no CurrentCultureIgnoreCase comparer
 #if DOTNETFW
         private static readonly StringComparer ExtensionComparer = StringComparer.CurrentCultureIgnoreCase;
@@ -52,6 +41,15 @@ namespace Hl7.Fhir.Specification.Source
         private static readonly StringComparer ExtensionComparer = StringComparer.OrdinalIgnoreCase;
         private static readonly StringComparison ExtensionComparison = StringComparison.OrdinalIgnoreCase;
 #endif
+
+        private DirectorySourceSettings _settings;
+        private readonly string _contentDirectory;
+
+        private bool _filesPrepared = false;
+        private List<string> _artifactFilePaths;
+
+        private bool _resourcesPrepared = false;
+        private List<ArtifactSummary> _resourceScanInformation;
 
         /// <summary>
         /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources
@@ -65,9 +63,23 @@ namespace Hl7.Fhir.Specification.Source
         /// from the specified content directory and using the default <see cref="DirectorySourceSettings"/>.
         /// </summary>
         /// <param name="contentDirectory">The file path of the target directory.</param>
-        public DirectorySource(string contentDirectory) : this(contentDirectory, DirectorySourceSettings.Default)
+        public DirectorySource(string contentDirectory)
         {
-            //
+            _contentDirectory = contentDirectory ?? throw Error.ArgumentNull(nameof(contentDirectory));
+            _settings = new DirectorySourceSettings();
+        }
+
+        /// <summary>
+        /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources
+        /// from the specified content directory and using the specified <see cref="DirectorySourceSettings"/>.
+        /// </summary>
+        /// <param name="contentDirectory">The file path of the target directory.</param>
+        /// <param name="settings">Configuration settings that control the behavior of the <see cref="DirectorySource"/>.</param>
+        public DirectorySource(string contentDirectory, DirectorySourceSettings settings)
+        {
+            _contentDirectory = contentDirectory ?? throw Error.ArgumentNull(nameof(contentDirectory));
+            // [WMR 20171023] Always copy the specified settings, to prevent shared state
+            _settings = new DirectorySourceSettings(settings);
         }
 
         /// <summary>
@@ -92,23 +104,13 @@ namespace Hl7.Fhir.Specification.Source
             //
         }
 
+        /// <summary>Returns the content directory as specified to the constructor.</summary>
+        public string ContentDirectory => _contentDirectory;
+
         /// <summary>
-        /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources
-        /// from the specified content directory and using the specified <see cref="DirectorySourceSettings"/>.
+        /// The default directory this artifact source will access for its files.
         /// </summary>
-        /// <param name="contentDirectory">The file path of the target directory.</param>
-        /// <param name="settings">Configuration settings that control the behavior of the <see cref="DirectorySource"/>.</param>
-        public DirectorySource(string contentDirectory, DirectorySourceSettings settings)
-        {
-            _contentDirectory = contentDirectory ?? throw Error.ArgumentNull(nameof(contentDirectory));
-
-            // [WMR 20171023] Always copy the specified settings, to prevent shared state
-            // Especially important to prevent corruption of the global DirectorySourceSettings.Default instance.
-            _settings = new DirectorySourceSettings(settings) ?? throw Error.ArgumentNull(nameof(settings));
-        }
-
-        /// <summary>Returns a reference to the associated <see cref="DirectorySourceSettings"/>.</summary>
-        public DirectorySourceSettings Settings => _settings;
+        public static string SpecificationDirectory => DirectorySourceSettings.SpecificationDirectory;
 
         /// <summary>
         /// Gets or sets the search string to match against the names of files in the content directory.
@@ -137,8 +139,8 @@ namespace Hl7.Fhir.Specification.Source
         /// </example>
         public string Mask
         {
-            get => String.Join("|", Masks);
-            set { Masks = DirectorySourceSettings.SplitMask(value); }
+            get { return _settings.Mask; }
+            set { _settings.Mask = value; Refresh(); }
         }
 
         /// <summary>
@@ -237,14 +239,6 @@ namespace Hl7.Fhir.Specification.Source
             set { _settings.Excludes = value; Refresh(); }
         }
 
-        /// <summary>Returns the content directory as specified to the constructor.</summary>
-        public string ContentDirectory => _contentDirectory;
-
-        /// <summary>
-        /// The default directory this artifact source will access for its files.
-        /// </summary>
-        public static string SpecificationDirectory => DirectorySourceSettings.SpecificationDirectory;
-
         /// <summary>
         /// Specifies how the <see cref="DirectorySource"/> should process duplicate files with multiple serialization formats.
         /// </summary>
@@ -264,32 +258,10 @@ namespace Hl7.Fhir.Specification.Source
         public DuplicateFilenameResolution FormatPreference
         {
             get { return _settings.FormatPreference; }
-            set { _settings.FormatPreference = value; }
+            set { _settings.FormatPreference = value; Refresh(); }
         }
 
-/*
-        // [WMR 20171020] OBSOLETE; Use ArtifactSummary.Error
-
-        // [WMR 20170217] Ignore invalid xml files, aggregate parsing errors
-        // https://github.com/ewoutkramer/fhir-net-api/issues/301
-
-        /// <summary>
-        /// Returns information about a runtime error that occured while parsing a specific resource.
-        /// </summary>
-        public struct ErrorInfo
-        {
-            public ErrorInfo(string fileName, Exception error) { FileName = fileName; Error = error; }
-            public string FileName { get; }
-            public Exception Error { get; }
-        }
-
-        /// <summary>Returns an array of runtime errors that occured while parsing the resources.</summary>
-        public ErrorInfo[] Errors = new ErrorInfo[0];
-*/
-
-        /// <summary>
-        /// Request a full re-scan of the specified content directory.
-        /// </summary>
+        /// <summary>Request a full re-scan of the specified content directory.</summary>
         public void Refresh()
         {
             _filesPrepared = false;
@@ -300,7 +272,6 @@ namespace Hl7.Fhir.Specification.Source
         /// Returns a list of summary information describing all valid
         /// FHIR artifacts that exist in the specified content directory.
         /// </summary>
-        /// <returns></returns>
         public IEnumerable<ArtifactSummary> List()
         {
             prepareResources();
@@ -715,58 +686,6 @@ namespace Hl7.Fhir.Specification.Source
             {
                 scanResult.Add(ArtifactSummary.FromException(null, ex));
             }
-
-#elif PREPARE_PARALLEL
-            // Using PLINQ
-            // Less efficient than Task.Parallel
-            //
-            // For netstandard13, add NuGet package System.Linq.Parallel
-            //
-            //   <ItemGroup Condition=" '$(TargetFramework)' != 'net45' ">
-            //    <PackageReference Include="System.Linq.Parallel" Version="4.3.0" />
-            //   </ItemGroup>
-
-            // Pre-allocate results array, one entry per file
-            List<ArtifactSummary>[] results = { };
-            try
-            {
-                results = paths.AsParallel().Select(path => harvester.HarvestAll(factory, path)).ToArray();
-            }
-            catch (AggregateException ex)
-            {
-                // Failed... timeout or canceled?
-                // var isCanceled = ex.InnerExceptions.OfType<TaskCanceledException>().Any();
-                Debug.WriteLine($"[{nameof(DirectorySource)}.{nameof(scanPaths)}] {ex.GetType().Name}: {ex.Message}");
-            }
-            scanResult.AddRange(results.SelectMany(r => r ?? Enumerable.Empty<ArtifactSummary>()));
-
-#elif PREPARE_ASYNC
-            // Spin a separate async task per file
-
-            var tasks = new List<Task<List<ArtifactSummary>>>(paths.Count);
-            foreach (var filePath in paths)
-            {
-                var task = Task.Run(
-                    () => { return harvester.HarvestAll(factory, filePath); }
-                );
-                tasks.Add(task);
-            }
-
-            try
-            {
-                Task.WaitAll(tasks.ToArray());
-            }
-            catch (AggregateException ex)
-            {
-                // Failed... timeout or canceled?
-                // var isCanceled = ex.InnerExceptions.OfType<TaskCanceledException>().Any();
-                Debug.WriteLine($"[{nameof(DirectorySource)}.{nameof(scanPaths)}] {ex.GetType().Name}: {ex.Message}");
-            }
-
-            // Skip canceled and faulted tasks
-            // TODO: Tasks shouldn't fault but return ArtifactSummary with Error info...
-            var results = tasks.Where(t => t.IsCompleted /* && !t.IsFaulted */).SelectMany(t => t.Result);
-            scanResult.AddRange(results);
 #else
             foreach (var filePath in paths)
             {
