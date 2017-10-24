@@ -35,7 +35,10 @@ namespace Hl7.Fhir.Serialization
         // [WMR 20160421] Caller is responsible for disposing writer
         internal protected void Serialize(Base instance, IFhirWriter writer, SummaryType summary = SummaryType.False, string root = null)
         {
-            new ResourceWriter(writer, Settings).Serialize(instance, summary, root: root);
+            if (instance is Resource resource)
+                new ResourceWriter(writer, Settings).Serialize(resource, summary);
+            else
+                new ComplexTypeWriter(writer, Settings).Serialize(instance, summary, root: root);
         }
 
     }
@@ -50,12 +53,7 @@ namespace Hl7.Fhir.Serialization
         {
         }
 
-        public string SerializeResourceToXml(Resource resource, SummaryType summary = SummaryType.False)
-        {
-            return SerializeToXml(resource, summary);
-        }
-
-        public string SerializeToXml(Base data, SummaryType summary = SummaryType.False, string root = null)
+        public string SerializeToString(Base data, SummaryType summary = SummaryType.False, string root = null)
         {
             // [WMR 20160421] Explicit disposal
             return xmlWriterToString(xw =>
@@ -68,12 +66,7 @@ namespace Hl7.Fhir.Serialization
             });
         }
 
-        public byte[] SerializeResourceToXmlBytes(Resource resource, SummaryType summary = SummaryType.False)
-        {
-            return SerializeToXmlBytes(resource, summary);
-        }
-
-        public byte[] SerializeToXmlBytes(Base instance, SummaryType summary = SummaryType.False, string root = null)
+        public byte[] SerializeToBytes(Base instance, SummaryType summary = SummaryType.False, string root = null)
         {
             // [WMR 20160421] Explicit disposal
             return xmlWriterToBytes(xw =>
@@ -147,12 +140,7 @@ namespace Hl7.Fhir.Serialization
         {
         }
 
-        public string SerializeResourceToJson(Resource resource, SummaryType summary = SummaryType.False)
-        {
-            return SerializeToJson(resource, summary);
-        }
-
-        public string SerializeToJson(Base instance, SummaryType summary = SummaryType.False, string root = null)
+        public string SerializeToString(Base instance, SummaryType summary = SummaryType.False)
         {
             // [WMR 20160421] Explicit disposal
             // return jsonWriterToString(jw => Serialize(instance, new JsonDomFhirWriter(jw), summary, root));
@@ -160,18 +148,13 @@ namespace Hl7.Fhir.Serialization
             {
                 using (var writer = new JsonDomFhirWriter(jw))
                 {
-                    Serialize(instance, writer, summary, root);
+                    Serialize(instance, writer, summary, null);
                     jw.Flush();
                 }
             });
         }
 
-        public byte[] SerializeResourceToJsonBytes(Resource resource, SummaryType summary = SummaryType.False)
-        {
-            return SerializeToJsonBytes(resource, summary);
-        }
-
-        public byte[] SerializeToJsonBytes(Base instance, SummaryType summary = SummaryType.False, string root = null)
+        public byte[] SerializeToBytes(Base instance, SummaryType summary = SummaryType.False)
         {
             // [WMR 20160421] Explicit disposal
             // return jsonWriterToBytes(jw => Serialize(instance, new JsonDomFhirWriter(jw), summary, root));
@@ -179,14 +162,14 @@ namespace Hl7.Fhir.Serialization
             {
                 using (var writer = new JsonDomFhirWriter(jw))
                 {
-                    Serialize(instance, writer, summary, root);
+                    Serialize(instance, writer, summary, null);
                     jw.Flush();
                 }
             });
         }
 
         // [WMR 20160421] Caller is responsible for disposing writer
-        public void SerializeResource(Resource resource, JsonWriter writer, SummaryType summary = SummaryType.False)
+        public void Serialize(Resource resource, JsonWriter writer, SummaryType summary = SummaryType.False)
         {
             Serialize(resource, new JsonDomFhirWriter(writer), summary);
         }
@@ -245,15 +228,24 @@ namespace Hl7.Fhir.Serialization
         private static FhirXmlSerializer _xmlSerializer = new FhirXmlSerializer();
         private static FhirJsonSerializer _jsonSerializer = new FhirJsonSerializer();
 
-        public static string SerializeResourceToXml(Resource resource, SummaryType summary = SummaryType.False) => _xmlSerializer.SerializeResourceToXml(resource, summary);
-        public static string SerializeToXml(Base data, SummaryType summary = SummaryType.False, string root = null) => _xmlSerializer.SerializeToXml(data, summary, root);
-        public static byte[] SerializeResourceToXmlBytes(Resource resource, SummaryType summary = SummaryType.False) => _xmlSerializer.SerializeResourceToXmlBytes(resource, summary);
-        public static byte[] SerializeToXmlBytes(Base instance, SummaryType summary = SummaryType.False, string root = null) => _xmlSerializer.SerializeToXmlBytes(instance, summary, root);
+        [Obsolete("Create a new FhirXmlSerializer and call SerializeToString()")]
+        public static string SerializeResourceToXml(Resource resource, SummaryType summary = SummaryType.False) => _xmlSerializer.SerializeToString(resource, summary);
+
+        [Obsolete("Create a new FhirXmlSerializer and call SerializeToString()")]
+        public static string SerializeToXml(Base data, SummaryType summary = SummaryType.False, string root = null) => _xmlSerializer.SerializeToString(data, summary, root);
+
+        [Obsolete("Create a new FhirXmlSerializer and call SerializeToBytes()")]
+        public static byte[] SerializeResourceToXmlBytes(Resource resource, SummaryType summary = SummaryType.False) => _xmlSerializer.SerializeToBytes(resource, summary);
+
+        [Obsolete("Create a new FhirXmlSerializer and call SerializeToBytes()")]
+        public static byte[] SerializeToXmlBytes(Base instance, SummaryType summary = SummaryType.False, string root = null) => _xmlSerializer.SerializeToBytes(instance, summary, root);
+
+        [Obsolete("Create a new FhirXmlSerializer and call SerializeResource()")]
         public static void SerializeResource(Resource resource, XmlWriter writer, SummaryType summary = SummaryType.False) => _xmlSerializer.SerializeResource(resource, writer, summary);
-        public static string SerializeResourceToJson(Resource resource, SummaryType summary = SummaryType.False) => _jsonSerializer.SerializeResourceToJson(resource, summary);
-        public static string SerializeToJson(Base instance, SummaryType summary = SummaryType.False, string root = null) => _jsonSerializer.SerializeToJson(instance, summary, root);
-        public static byte[] SerializeResourceToJsonBytes(Resource resource, SummaryType summary = SummaryType.False) => _jsonSerializer.SerializeResourceToJsonBytes(resource, summary);
-        public static byte[] SerializeToJsonBytes(Base instance, SummaryType summary = SummaryType.False, string root = null) => _jsonSerializer.SerializeToJsonBytes(instance, summary, root);
-        public static void SerializeResource(Resource resource, JsonWriter writer, SummaryType summary = SummaryType.False) => _jsonSerializer.SerializeResource(resource, writer, summary);
+        public static string SerializeResourceToJson(Resource resource, SummaryType summary = SummaryType.False) => _jsonSerializer.SerializeToString(resource, summary);
+        public static string SerializeToJson(Base instance, SummaryType summary = SummaryType.False) => _jsonSerializer.SerializeToString(instance, summary);
+        public static byte[] SerializeResourceToJsonBytes(Resource resource, SummaryType summary = SummaryType.False) => _jsonSerializer.SerializeToBytes(resource, summary);
+        public static byte[] SerializeToJsonBytes(Base instance, SummaryType summary = SummaryType.False) => _jsonSerializer.SerializeToBytes(instance, summary);
+        public static void SerializeResource(Resource resource, JsonWriter writer, SummaryType summary = SummaryType.False) => _jsonSerializer.Serialize(resource, writer, summary);
     }
 }

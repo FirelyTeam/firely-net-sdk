@@ -39,6 +39,24 @@ namespace Hl7.Fhir.Serialization
             Settings = settings;
         }
 
+
+        internal void Serialize(Base instance, Rest.SummaryType summary, SerializationMode mode = SerializationMode.AllMembers, string root=null)
+        {
+            if (instance == null) throw Error.ArgumentNull(nameof(instance));
+
+            ClassMapping mapping = _inspector.ImportType(instance.GetType());
+            if (mapping == null)
+                throw Error.Format($"Asked to serialize unknown type '{instance.GetType()}'");
+
+            var rootName = root ?? mapping.Name;
+
+            _writer.WriteStartProperty(rootName);
+
+            Serialize(mapping, instance, summary, mode);
+
+            _writer.WriteEndProperty();
+        }
+
         internal void Serialize(ClassMapping mapping, object instance, Rest.SummaryType summary, SerializationMode mode = SerializationMode.AllMembers)
         {
             if (mapping == null) throw Error.ArgumentNull(nameof(mapping));
