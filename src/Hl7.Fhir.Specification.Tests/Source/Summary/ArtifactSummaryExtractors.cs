@@ -2,99 +2,37 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
-using System.Collections.Generic;
 
 namespace Hl7.Fhir.Specification.Tests.Source.Summary
 {
-    public delegate bool ArtifactSummaryExtractor(IElementNavigator nav, ArtifactSummaryProperties properties);
-    // Func<IElementNavigator nav, ArtifactSummaryProperties properties, bool>
+    /// <summary>Represents a method that extracts summary details from an artifact.</summary>
+    /// <param name="nav">An <see cref="IElementNavigator"/> instance to navigate the artifact.</param>
+    /// <param name="details">A property bag for saving the extracted summary details.</param>
+    /// <returns>
+    /// Returns <c>true </c> to indicate that all relevant details have been extracted from the artifact and the extraction process can finish.
+    /// Returns <c>false</c> to try and continue extracting additional summary details.
+    /// </returns>
+    /// <remarks>
+    /// The specified <see cref="IElementNavigator"/> is positioned on the first child element level (e.g. <c>StructureDefinition.url</c>).
+    /// The target method can extract summary details starting from the current position in a forward direction.
+    /// When finished, the navigator should again be positioned an the first level,
+    /// for other extractors to continue reading.
+    /// </remarks>
+    public delegate bool ArtifactSummaryDetailsExtractor(IElementNavigator nav, ArtifactSummaryDetails details);
+    // Func<IElementNavigator nav, ArtifactSummaryDetails details, bool>
 
-    // Move to separate namespace in order to avoid pollution?
-    public static class SummaryNavigationExtensions
-    {
-        /// <summary>
-        /// Try to position the navigator on the element with the specified name.
-        /// Maintain current position if element name matches, otherwise move to next match (if it exists).
-        /// </summary>
-        public static bool Find(this IElementNavigator nav, string element)
-        {
-            return nav.Name == element || nav.MoveToNext(element);
-        }
-
-        /// <summary>Extract the value of the current element into the property bag using the specified key.</summary>
-        public static bool TryExtractValue(this IElementNavigator nav, ArtifactSummaryProperties properties, string key)
-        {
-            var value = nav.Value?.ToString();
-            if (value != null)
-            {
-                properties[key] = value;
-                return true;
-            }
-            return false;
-        }
-
-        /// <summary>Extract the value of the (current or sibling) element with the specified name into the property bag using the specified key.</summary>
-        public static bool TryExtractValue(this IElementNavigator nav, ArtifactSummaryProperties properties, string key, string element)
-        {
-            return nav.Find(element) && nav.TryExtractValue(properties, key);
-        }
-
-        /// <summary>Extract the value of a child element into the property bag using the specified key.</summary>
-        public static bool TryExtractValue(this IElementNavigator nav, ArtifactSummaryProperties properties, string key, string element, string childElement)
-        {
-            if (nav.Find(element))
-            {
-                var childNav = nav.Clone();
-                return childNav.MoveToFirstChild(childElement) && childNav.TryExtractValue(properties, key);
-            }
-            return false;
-        }
-
-        /// <summary>Add the value of the current element to the specified list, if not missing or empty.</summary>
-        public static bool TryExtractValue(this IElementNavigator nav, List<string> values)
-        {
-            var value = nav.Value?.ToString();
-            if (value != null)
-            {
-                values.Add(value);
-                return true;
-            }
-            return false;
-        }
-
-        /// <summary>Extract an array of child element values into the property bag using the specified key.</summary>
-        public static bool TryExtractValues(this IElementNavigator nav, ArtifactSummaryProperties properties, string key, string element, string childElement)
-        {
-            if (nav.Find(element))
-            {
-                var values = new List<string>();
-                do
-                {
-                    var childNav = nav.Clone();
-                    if (childNav.MoveToFirstChild(childElement))
-                    {
-                        TryExtractValue(childNav, values);
-                    }
-                } while (nav.MoveToNext(element));
-                if (values.Count > 0)
-                {
-                    properties[key] = values.ToArray();
-                    return true;
-                }
-            }
-            return false;
-        }
-    }
-
-    public static class NamingSystemSummaryProperties
+    /// <summary>For extracting summary details from a NamingSystem resource.</summary>
+    public static class NamingSystemSummaryDetails
     {
         static readonly string NamingSystemTypeName = ResourceType.NamingSystem.GetLiteral();
 
         public static readonly string UniqueIdKey = "UniqueId";
 
-        public static string[] UniqueId(this ArtifactSummaryProperties properties) => properties[UniqueIdKey] as string[];
+        public static string[] UniqueId(this ArtifactSummaryDetails details) => details[UniqueIdKey] as string[];
 
-        public static bool Extract(IElementNavigator nav, ArtifactSummaryProperties properties)
+        /// <summary>Extract summary details from a NamingSystem resource.</summary>
+        /// <returns><c>true</c> if the current target is a NamingSystem resource, or <c>false</c> otherwise.</returns>
+        public static bool Extract(IElementNavigator nav, ArtifactSummaryDetails details)
         {
             if (nav.Type == NamingSystemTypeName)
             {
@@ -102,7 +40,7 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
                 // Better: let caller handle this; move to first child and call extractors
                 if (nav.MoveToFirstChild())
                 {
-                    nav.TryExtractValues(properties, UniqueIdKey, "uniqueId", "value");
+                    nav.TryExtractValues(details, UniqueIdKey, "uniqueId", "value");
                 }
                 return true;
             }
@@ -110,26 +48,29 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         }
     }
 
-    public static class ConformanceSummaryProperties
+    /// <summary>For extracting summary details from a conformance resource.</summary>
+    public static class ConformanceSummaryDetails
     {
         public static readonly string CanonicalKey = "Canonical";
         public static readonly string NameKey = "Name";
         public static readonly string StatusKey = "Status";
 
-        public static string Canonical(this ArtifactSummaryProperties properties) => properties[CanonicalKey] as string;
-        public static string Name(this ArtifactSummaryProperties properties) => properties[NameKey] as string;
-        public static string Status(this ArtifactSummaryProperties properties) => properties[StatusKey] as string;
+        public static string Canonical(this ArtifactSummaryDetails details) => details[CanonicalKey] as string;
+        public static string Name(this ArtifactSummaryDetails details) => details[NameKey] as string;
+        public static string Status(this ArtifactSummaryDetails details) => details[StatusKey] as string;
 
-        public static bool Extract(IElementNavigator nav, ArtifactSummaryProperties properties)
+        /// <summary>Extract summary details from a Conformance Resource.</summary>
+        /// <returns><c>true</c> if the current target is a conformance resource, or <c>false</c> otherwise.</returns>
+        public static bool Extract(IElementNavigator nav, ArtifactSummaryDetails details)
         {
             if (ModelInfo.IsConformanceResource(nav.Type))
             {
                 // Assume nav is on root
                 if (nav.MoveToFirstChild())
                 {
-                    nav.TryExtractValue(properties, "url", CanonicalKey);
-                    nav.TryExtractValue(properties, "name", NameKey);
-                    nav.TryExtractValue(properties, "status", StatusKey);
+                    nav.TryExtractValue(details, "url", CanonicalKey);
+                    nav.TryExtractValue(details, "name", NameKey);
+                    nav.TryExtractValue(details, "status", StatusKey);
                 }
                 return true;
             }
@@ -137,22 +78,25 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         }
     }
 
-    public static class ValueSetSummaryProperties
+    /// <summary>For extracting summary details from a ValueSet resource.</summary>
+    public static class ValueSetSummaryDetails
     {
         static readonly string ValueSetTypeName = ResourceType.ValueSet.GetLiteral();
 
         public static readonly string ValueSetSystemKey = "ValueSetSystem";
 
-        public static string ValueSetSystem(this ArtifactSummaryProperties properties) => properties[ValueSetSystemKey] as string;
+        public static string ValueSetSystem(this ArtifactSummaryDetails details) => details[ValueSetSystemKey] as string;
 
-        public static bool Extract(IElementNavigator nav, ArtifactSummaryProperties properties)
+        /// <summary>Extract summary details from a ValueSet resource.</summary>
+        /// <returns><c>true</c> if the current target is a ValueSet, or <c>false</c> otherwise.</returns>
+        public static bool Extract(IElementNavigator nav, ArtifactSummaryDetails details)
         {
             if (nav.Type == ValueSetTypeName)
             {
                 // Extractor chaining
-                if (ConformanceSummaryProperties.Extract(nav, properties))
+                if (ConformanceSummaryDetails.Extract(nav, details))
                 {
-                    nav.TryExtractValue(properties, ValueSetSystemKey, "codeSystem", "system");
+                    nav.TryExtractValue(details, ValueSetSystemKey, "codeSystem", "system");
                 }
                 return true;
             }
@@ -160,32 +104,35 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         }
     }
 
-    public static class ConceptMapSummaryProperties
+    /// <summary>For extracting summary details from a ConceptMap resource.</summary>
+    public static class ConceptMapSummaryDetails
     {
         static readonly string ConcentMapTypeName = ResourceType.ConceptMap.GetLiteral();
 
         public static readonly string ConceptMapSourceKey = "ConceptMapSource";
         public static readonly string ConceptMapTargetKey = "ConceptMapTarget";
 
-        public static string ConceptMapSource(this ArtifactSummaryProperties properties) => properties[ConceptMapSourceKey] as string;
+        public static string ConceptMapSource(this ArtifactSummaryDetails details) => details[ConceptMapSourceKey] as string;
 
-        public static string ConceptMapTarget(this ArtifactSummaryProperties properties) => properties[ConceptMapTargetKey] as string;
+        public static string ConceptMapTarget(this ArtifactSummaryDetails details) => details[ConceptMapTargetKey] as string;
 
-        public static bool Extract(IElementNavigator nav, ArtifactSummaryProperties properties)
+        /// <summary>Extract summary details from a ConceptMap resource.</summary>
+        /// <returns><c>true</c> if the current target is a ConceptMap, or <c>false</c> otherwise.</returns>
+        public static bool Extract(IElementNavigator nav, ArtifactSummaryDetails details)
         {
             if (nav.Type == ConcentMapTypeName)
             {
                 // Extractor chaining
-                if (ConformanceSummaryProperties.Extract(nav, properties))
+                if (ConformanceSummaryDetails.Extract(nav, details))
                 {
-                    if (!nav.TryExtractValue(properties, ConceptMapSourceKey, "sourceUri"))
+                    if (!nav.TryExtractValue(details, ConceptMapSourceKey, "sourceUri"))
                     {
-                        nav.TryExtractValue(properties, ConceptMapSourceKey, "sourceReference", "reference");
+                        nav.TryExtractValue(details, ConceptMapSourceKey, "sourceReference", "reference");
                     }
 
-                    if (!nav.TryExtractValue(properties, ConceptMapTargetKey, "targetUri"))
+                    if (!nav.TryExtractValue(details, ConceptMapTargetKey, "targetUri"))
                     {
-                        nav.TryExtractValue(properties, ConceptMapTargetKey, "targetReference", "reference");
+                        nav.TryExtractValue(details, ConceptMapTargetKey, "targetReference", "reference");
                     }
                 }
                 return true;
@@ -194,7 +141,8 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         }
     }
 
-    public static class StructureDefinitionSummaryProperties
+    /// <summary>For extracting summary details from a StructureDefinition resource.</summary>
+    public static class StructureDefinitionSummaryDetails
     {
         static readonly string StructureDefinitionTypeName = ResourceType.StructureDefinition.GetLiteral();
 
@@ -203,22 +151,24 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         public static readonly string ContextTypeKey = "ContextType";
         public static readonly string BaseKey = "Base";
 
-        public static string Kind(this ArtifactSummaryProperties properties) => properties[KindKey] as string;
-        public static string ConstrainedType(this ArtifactSummaryProperties properties) => properties[ConstrainedTypeKey] as string;
-        public static string ContextType(this ArtifactSummaryProperties properties) => properties[ContextTypeKey] as string;
-        public static string Base(this ArtifactSummaryProperties properties) => properties[BaseKey] as string;
+        public static string Kind(this ArtifactSummaryDetails details) => details[KindKey] as string;
+        public static string ConstrainedType(this ArtifactSummaryDetails details) => details[ConstrainedTypeKey] as string;
+        public static string ContextType(this ArtifactSummaryDetails details) => details[ContextTypeKey] as string;
+        public static string Base(this ArtifactSummaryDetails details) => details[BaseKey] as string;
 
-        public static bool Extract(IElementNavigator nav, ArtifactSummaryProperties properties)
+        /// <summary>Extract summary details from a StructureDefinition resource.</summary>
+        /// <returns><c>true</c> if the current target is a StructureDefinition, or <c>false</c> otherwise.</returns>
+        public static bool Extract(IElementNavigator nav, ArtifactSummaryDetails details)
         {
             if (nav.Type == StructureDefinitionTypeName)
             {
                 // Extractor chaining
-                if (ConformanceSummaryProperties.Extract(nav, properties))
+                if (ConformanceSummaryDetails.Extract(nav, details))
                 {
-                    nav.TryExtractValue(properties, KindKey, "kind");
-                    nav.TryExtractValue(properties, ConstrainedTypeKey, "constrainedType");
-                    nav.TryExtractValue(properties, ContextTypeKey, "contextType");
-                    nav.TryExtractValue(properties, BaseKey, "base");
+                    nav.TryExtractValue(details, KindKey, "kind");
+                    nav.TryExtractValue(details, ConstrainedTypeKey, "constrainedType");
+                    nav.TryExtractValue(details, ContextTypeKey, "contextType");
+                    nav.TryExtractValue(details, BaseKey, "base");
                 }
                 return true;
             }
