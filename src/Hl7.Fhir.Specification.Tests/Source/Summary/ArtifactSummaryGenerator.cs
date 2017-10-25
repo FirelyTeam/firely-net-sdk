@@ -118,8 +118,17 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
                 {
                     foreach (var extractor in extractors)
                     {
-                        try { extractor?.Invoke(nav, props); }
-                        catch (Exception ex) { errors.Add(ex); }
+                        try
+                        {
+                            if (extractor?.Invoke(nav, props) == true)
+                            {
+                                break;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            errors.Add(ex);
+                        }
                     }
                 }
 

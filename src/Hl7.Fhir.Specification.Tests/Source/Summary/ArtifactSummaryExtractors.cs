@@ -34,7 +34,8 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         /// <returns><c>true</c> if the current target is a NamingSystem resource, or <c>false</c> otherwise.</returns>
         public static bool Extract(IElementNavigator nav, ArtifactSummaryDetailsCollection details)
         {
-            if (nav.Type == NamingSystemTypeName)
+            var typeName = details[ArtifactSummary.ResourceTypeKey].ToString();
+            if (typeName == NamingSystemTypeName)
             {
                 // Assume nav is on root
                 // Better: let caller handle this; move to first child and call extractors
@@ -63,7 +64,8 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         /// <returns><c>true</c> if the current target is a conformance resource, or <c>false</c> otherwise.</returns>
         public static bool Extract(IElementNavigator nav, ArtifactSummaryDetailsCollection details)
         {
-            if (ModelInfo.IsConformanceResource(nav.Type))
+            var typeName = details[ArtifactSummary.ResourceTypeKey].ToString();
+            if (ModelInfo.IsConformanceResource(typeName))
             {
                 // Assume nav is on root
                 if (nav.MoveToFirstChild())
@@ -91,7 +93,8 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         /// <returns><c>true</c> if the current target is a ValueSet, or <c>false</c> otherwise.</returns>
         public static bool Extract(IElementNavigator nav, ArtifactSummaryDetailsCollection details)
         {
-            if (nav.Type == ValueSetTypeName)
+            var typeName = details[ArtifactSummary.ResourceTypeKey].ToString();
+            if (typeName == ValueSetTypeName)
             {
                 // Extractor chaining
                 if (ConformanceSummaryDetails.Extract(nav, details))
@@ -120,7 +123,8 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         /// <returns><c>true</c> if the current target is a ConceptMap, or <c>false</c> otherwise.</returns>
         public static bool Extract(IElementNavigator nav, ArtifactSummaryDetailsCollection details)
         {
-            if (nav.Type == ConcentMapTypeName)
+            var typeName = details[ArtifactSummary.ResourceTypeKey].ToString();
+            if (typeName == ConcentMapTypeName)
             {
                 // Extractor chaining
                 if (ConformanceSummaryDetails.Extract(nav, details))
@@ -160,7 +164,8 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         /// <returns><c>true</c> if the current target is a StructureDefinition, or <c>false</c> otherwise.</returns>
         public static bool Extract(IElementNavigator nav, ArtifactSummaryDetailsCollection details)
         {
-            if (nav.Type == StructureDefinitionTypeName)
+            var typeName = details[ArtifactSummary.ResourceTypeKey].ToString();
+            if (typeName == StructureDefinitionTypeName)
             {
                 // Extractor chaining
                 if (ConformanceSummaryDetails.Extract(nav, details))
