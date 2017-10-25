@@ -63,6 +63,9 @@ namespace Hl7.Fhir.Serialization
 
             _writer.WriteStartComplexContent();
 
+#pragma warning disable 618
+            if (Settings.CustomSerializer != null) Settings.CustomSerializer.OnBeforeSerializeComplexType(instance, _writer);
+#pragma warning restore
             // Emit members that need xml /attributes/ first (to facilitate stream writer API)
             foreach (var prop in mapping.PropertyMappings.Where(pm => pm.SerializationHint == XmlSerializationHint.Attribute))
             {
@@ -74,6 +77,10 @@ namespace Hl7.Fhir.Serialization
             {
                 writeProperty(mapping, instance, summary, mode, prop);
             }
+
+#pragma warning disable 618
+            if (Settings.CustomSerializer != null) Settings.CustomSerializer.OnAfterSerializeComplexType(instance, _writer);
+#pragma warning restore
 
             _writer.WriteEndComplexContent();
         }
@@ -94,6 +101,14 @@ namespace Hl7.Fhir.Serialization
 
         private void write(ClassMapping mapping, object instance, Rest.SummaryType summary, PropertyMapping prop, SerializationMode mode)
         {
+            if (Settings.CustomSerializer != null)
+            {
+#pragma warning disable 618
+                bool done = Settings.CustomSerializer.OnBeforeSerializeProperty(prop.Name, instance, _writer);
+#pragma warning restore
+                if (done) return;
+            }
+
             // Check whether we are asked to just serialize the value element (Value members of primitive Fhir datatypes)
             // or only the other members (Extension, Id etc in primitive Fhir datatypes)
             // Default is all

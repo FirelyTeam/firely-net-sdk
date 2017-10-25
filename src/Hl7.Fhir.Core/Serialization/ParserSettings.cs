@@ -6,10 +6,12 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using System;
 
 namespace Hl7.Fhir.Serialization
-{ 
+{
     public class ParserSettings
     {
         public static readonly ParserSettings Default = new ParserSettings() { AcceptUnknownMembers = false, AllowUnrecognizedEnums = false, DisallowXsiAttributesOnRoot = true };
@@ -19,5 +21,30 @@ namespace Hl7.Fhir.Serialization
         public bool DisallowXsiAttributesOnRoot { get; set; }
 
         public bool AllowUnrecognizedEnums { get; set; }
+
+        public ISerializeCustomization CustomSerializer { get; set; }
+
+        public IParseCustomization CustomParser { get; set; }
+    }
+
+    public interface ISerializeCustomization
+    {
+        [Obsolete("The parameter and type IFhirWriter will be replaced with a more flexible solution in the next version of the library. Use at your own peril.")]
+        void OnBeforeSerializeComplexType(object instance, IFhirWriter writer);
+
+        [Obsolete("The parameter and type IFhirWriter will be replaced with a more flexible solution in the next version of the library. Use at your own peril.")]
+        bool OnBeforeSerializeProperty(string name, object value, IFhirWriter writer);
+
+        [Obsolete("The parameter and type IFhirWriter will be replaced with a more flexible solution in the next version of the library. Use at your own peril.")]
+        void OnAfterSerializeComplexType(object instance, IFhirWriter writer);
+    }
+
+    public interface IParseCustomization
+    {
+        void OnBeforeParseComplexType(Base instance, IElementNavigator current);
+
+        bool OnBeforeSerializeProperty(string name, Base parent, IElementNavigator current);
+
+        void OnAfterSerializeComplexType(Base instance, IElementNavigator current);
     }
 }
