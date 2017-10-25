@@ -448,7 +448,7 @@ namespace Hl7.Fhir.Tests.Rest
             pat.Identifier.Clear();
             pat.Identifier.Add(new Identifier("http://hl7.org/test/2", "99999"));
 
-            System.Diagnostics.Trace.WriteLine(Hl7.Fhir.Serialization.FhirSerializer.SerializeResourceToXml(pat));
+            System.Diagnostics.Trace.WriteLine(new FhirXmlSerializer().SerializeToString(pat));
 
             var fe = client.Create(pat); // Create as we are not providing the ID to be used.
             Assert.IsNotNull(fe);
@@ -780,7 +780,7 @@ namespace Hl7.Fhir.Tests.Rest
             };
 
             FhirClient client = new FhirClient(testEndpoint);
-            System.Diagnostics.Trace.WriteLine(Hl7.Fhir.Serialization.FhirSerializer.SerializeResourceToXml(furore));
+            System.Diagnostics.Trace.WriteLine(new FhirXmlSerializer().SerializeToString(furore));
 
             var fe = client.Create(furore);
             Assert.IsNotNull(fe);

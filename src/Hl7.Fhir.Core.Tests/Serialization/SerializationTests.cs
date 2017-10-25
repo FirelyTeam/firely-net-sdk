@@ -274,11 +274,11 @@ namespace Hl7.Fhir.Tests.Serialization
                 }
             };
 
-            var textBundle = FhirSerializer.SerializeResourceToJson(bundle, Fhir.Rest.SummaryType.Text);
-            var dataBundle = FhirSerializer.SerializeResourceToJson(bundle, Fhir.Rest.SummaryType.Data);
-            var countBundle = FhirSerializer.SerializeResourceToJson(bundle, Fhir.Rest.SummaryType.Count);
-            var trueBundle = FhirSerializer.SerializeResourceToJson(bundle, Fhir.Rest.SummaryType.True);
-            var falseBundle = FhirSerializer.SerializeResourceToJson(bundle, Fhir.Rest.SummaryType.False);
+            var textBundle = FhirJsonSerializer.SerializeToString(bundle, Fhir.Rest.SummaryType.Text);
+            var dataBundle = FhirJsonSerializer.SerializeToString(bundle, Fhir.Rest.SummaryType.Data);
+            var countBundle = FhirJsonSerializer.SerializeToString(bundle, Fhir.Rest.SummaryType.Count);
+            var trueBundle = FhirJsonSerializer.SerializeToString(bundle, Fhir.Rest.SummaryType.True);
+            var falseBundle = FhirJsonSerializer.SerializeToString(bundle, Fhir.Rest.SummaryType.False);
 
             var shouldBeSummaryTrue = TestDataHelper.ReadTestData("summary\\bundle-summary-true.json");
             var shouldBeSummaryText = TestDataHelper.ReadTestData("summary\\bundle-summary-text.json");
@@ -329,11 +329,11 @@ namespace Hl7.Fhir.Tests.Serialization
                 }
             };
 
-            var textBundle = FhirSerializer.SerializeResourceToXml(bundle, Fhir.Rest.SummaryType.Text);
-            var dataBundle = FhirSerializer.SerializeResourceToXml(bundle, Fhir.Rest.SummaryType.Data);
-            var countBundle = FhirSerializer.SerializeResourceToXml(bundle, Fhir.Rest.SummaryType.Count);
-            var trueBundle = FhirSerializer.SerializeResourceToXml(bundle, Fhir.Rest.SummaryType.True);
-            var falseBundle = FhirSerializer.SerializeResourceToXml(bundle, Fhir.Rest.SummaryType.False);
+            var textBundle = FhirXmlSerializer.SerializeToString(bundle, Fhir.Rest.SummaryType.Text);
+            var dataBundle = FhirXmlSerializer.SerializeToString(bundle, Fhir.Rest.SummaryType.Data);
+            var countBundle = FhirXmlSerializer.SerializeToString(bundle, Fhir.Rest.SummaryType.Count);
+            var trueBundle = FhirXmlSerializer.SerializeToString(bundle, Fhir.Rest.SummaryType.True);
+            var falseBundle = FhirXmlSerializer.SerializeToString(bundle, Fhir.Rest.SummaryType.False);
 
             var shouldBeSummaryText = TestDataHelper.ReadTestData("summary\\bundle-summary-text.xml");
             var shouldBeSummaryData = TestDataHelper.ReadTestData("summary\\bundle-summary-data.xml");
@@ -368,10 +368,10 @@ namespace Hl7.Fhir.Tests.Serialization
 
             // Properties with IsSummary == true -> Id, Meta, Active, BirthDate, Gender, Name
 
-            var summaryTrue = FhirSerializer.SerializeResourceToJson(patientOne, Fhir.Rest.SummaryType.True);
-            var summaryText = FhirSerializer.SerializeResourceToJson(patientOne, Fhir.Rest.SummaryType.Text);
-            var summaryData = FhirSerializer.SerializeResourceToJson(patientOne, Fhir.Rest.SummaryType.Data);
-            var summaryFalse = FhirSerializer.SerializeResourceToJson(patientOne, Fhir.Rest.SummaryType.False);
+            var summaryTrue = FhirJsonSerializer.SerializeToString(patientOne, Fhir.Rest.SummaryType.True);
+            var summaryText = FhirJsonSerializer.SerializeToString(patientOne, Fhir.Rest.SummaryType.Text);
+            var summaryData = FhirJsonSerializer.SerializeToString(patientOne, Fhir.Rest.SummaryType.Data);
+            var summaryFalse = FhirJsonSerializer.SerializeToString(patientOne, Fhir.Rest.SummaryType.False);
             /* It doesn't make sense to use SummaryType.Count on a single resource hence why I'm not testing it here. */
 
             var shouldBePatientOneTrue =
@@ -410,10 +410,10 @@ namespace Hl7.Fhir.Tests.Serialization
 
             // Properties with IsSummary == true -> Id, Meta, Active, BirthDate, Gender, Name
 
-            var summaryTrue = FhirSerializer.SerializeResourceToXml(patientOne, Fhir.Rest.SummaryType.True);
-            var summaryText = FhirSerializer.SerializeResourceToXml(patientOne, Fhir.Rest.SummaryType.Text);
-            var summaryData = FhirSerializer.SerializeResourceToXml(patientOne, Fhir.Rest.SummaryType.Data);
-            var summaryFalse = FhirSerializer.SerializeResourceToXml(patientOne, Fhir.Rest.SummaryType.False);
+            var summaryTrue = FhirXmlSerializer.SerializeToString(patientOne, Fhir.Rest.SummaryType.True);
+            var summaryText = FhirXmlSerializer.SerializeToString(patientOne, Fhir.Rest.SummaryType.Text);
+            var summaryData = FhirXmlSerializer.SerializeToString(patientOne, Fhir.Rest.SummaryType.Data);
+            var summaryFalse = FhirXmlSerializer.SerializeToString(patientOne, Fhir.Rest.SummaryType.False);
 
             var shouldBeSummaryTrue = TestDataHelper.ReadTestData("summary\\summary-true.xml");
             var shouldBeSummaryText = TestDataHelper.ReadTestData("summary\\summary-text.xml");
@@ -682,7 +682,7 @@ namespace Hl7.Fhir.Tests.Serialization
             c.Payee.ResourceType = new Coding(null, "test2");
             c.Payee.Party = new ResourceReference("Practitioner/example", "Example, Dr John");
 
-            string json = FhirSerializer.SerializeResourceToJson(c);
+            string json = FhirJsonSerializer.SerializeToString(c);
             var c2 = new FhirJsonParser().Parse<Claim>(json);
             Assert.AreEqual("test", c2.Payee.Type.Coding[0].Code);
             Assert.AreEqual("test2", c2.Payee.ResourceType.Code);
@@ -707,10 +707,10 @@ namespace Hl7.Fhir.Tests.Serialization
                 Id = "MyBundle"
             };
 
-            var xml = FhirSerializer.SerializeResourceToXml(bundle);
+            var xml = FhirXmlSerializer.SerializeToString(bundle);
             Assert.IsNotNull(xml);
 
-            var json = FhirSerializer.SerializeResourceToJson(bundle);
+            var json = FhirJsonSerializer.SerializeToString(bundle);
             Assert.IsNotNull(json);
         }
     }

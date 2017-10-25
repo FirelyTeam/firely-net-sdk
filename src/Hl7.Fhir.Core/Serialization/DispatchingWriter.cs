@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Serialization
             if (mode == ComplexTypeWriter.SerializationMode.AllMembers || mode == ComplexTypeWriter.SerializationMode.NonValueElements)
             {
                 var cplxWriter = new ComplexTypeWriter(_writer, Settings);
-                complexWriter.Serialize(mapping, instance, summary, mode);
+                cplxWriter.Serialize(mapping, instance, summary, mode);
             }
             else
             {
