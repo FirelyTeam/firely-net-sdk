@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Tests.Serialization
                             }
 
                             Trace.WriteLine("-------------------------");
-                            Trace.WriteLine(FhirSerializer.SerializeResourceToXml(resource));
+                            Trace.WriteLine(new FhirXmlSerializer().SerializeToString(resource));
                             Trace.WriteLine("-------------------------");
                         }
                         if (outcome.Issue.Count != 0)
