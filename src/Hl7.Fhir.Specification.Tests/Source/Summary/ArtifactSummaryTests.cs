@@ -39,17 +39,23 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 var summary = summaries[i];
                 Assert.IsFalse(summary.IsFaulted);
+
+                // Common properties
                 Assert.AreEqual(path, summary.Origin);
                 Assert.AreEqual(ResourceType.StructureDefinition.GetLiteral(), summary.ResourceType);
-                
-                // TODO: Provide extension methods on SummaryDetails
-                Assert.AreEqual(StructureDefinition.StructureDefinitionKind.Datatype.GetLiteral(), summary[StructureDefinitionSummaryDetails.KindKey]);
+
+                // Conformance resource properties
+                Assert.IsNotNull(summary.Canonical());
+                Assert.IsTrue(summary.Canonical().ToString().StartsWith("http://hl7.org/fhir/StructureDefinition/"));
+                Assert.IsNotNull(summary.Name());
+                Assert.AreEqual(ConformanceResourceStatus.Draft.GetLiteral(), summary.Status());
+
+                //Debug.WriteLine($"{summary.ResourceType} | {summary.Canonical()} | {summary.Name()}");
+
+                // StructureDefinition properties
+                Assert.AreEqual(StructureDefinition.StructureDefinitionKind.Datatype.GetLiteral(), summary.Kind());
                 // If this is a constraining StructDef, then Base should also be specified
-                Assert.IsTrue(
-                    summary[StructureDefinitionSummaryDetails.ConstrainedTypeKey] == null
-                    || summary[StructureDefinitionSummaryDetails.BaseKey] != null
-                );
-                Debug.WriteLine($"{summary.ResourceType} | {summary[StructureDefinitionSummaryDetails.ConstrainedTypeKey]} | {summary[StructureDefinitionSummaryDetails.BaseKey]}");
+                Assert.IsTrue(summary.ConstrainedType() == null || summary.Base() != null);
             }
         }
 

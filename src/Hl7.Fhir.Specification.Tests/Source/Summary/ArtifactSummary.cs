@@ -8,7 +8,7 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
 {
     /// <summary>Represents summary information extracted from a FHIR artifact.</summary>
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
-    public class ArtifactSummary
+    public class ArtifactSummary : IArtifactSummaryDetailsProvider
     {
         /// <summary>Collection key for the <see cref="Origin"/> property value.</summary>
         public const string OriginKey = nameof(Origin);

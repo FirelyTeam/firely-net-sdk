@@ -4,6 +4,11 @@ using System.Collections.Generic;
 
 namespace Hl7.Fhir.Specification.Tests.Source.Summary
 {
+    public interface IArtifactSummaryDetailsProvider
+    {
+        object this[string key] { get; }
+    }
+
     /// <summary>Associative container for storing and retrieving artifact summary details by key.</summary>
     /// <remarks>
     /// The <see cref="ArtifactSummaryGenerator"/> creates a new <see cref="ArtifactSummaryDetailsCollection"/>
@@ -14,7 +19,9 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
     /// </remarks>
     /// <seealso cref="ArtifactSummaryDetailsExtractor"/>.
     /// <seealso cref="ArtifactSummaryGenerator"/>.
-    public class ArtifactSummaryDetailsCollection : IEnumerable<KeyValuePair<string, object>>, IEnumerable
+    public class ArtifactSummaryDetailsCollection :
+        IArtifactSummaryDetailsProvider,
+        IEnumerable<KeyValuePair<string, object>>, IEnumerable
     {
         Dictionary<string, object> _props = new Dictionary<string, object>();
 
