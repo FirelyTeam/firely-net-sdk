@@ -22,11 +22,11 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
             return nav.Name == element || nav.MoveToNext(element);
         }
 
-        /// <summary>Extract the value of the current element into an <see cref="ArtifactSummaryDetails"/> collection using the specified key.</summary>
+        /// <summary>Extract the value of the current element into an <see cref="ArtifactSummaryDetailsCollection"/> using the specified key.</summary>
         /// <param name="nav">An <see cref="IElementNavigator"/> instance.</param>
-        /// <param name="details">An <see cref="ArtifactSummaryDetails"/> collection.</param>
+        /// <param name="details">An <see cref="ArtifactSummaryDetailsCollection"/> instance.</param>
         /// <param name="key">A collection key.</param>
-        public static bool TryExtractValue(this IElementNavigator nav, ArtifactSummaryDetails details, string key)
+        public static bool TryExtractValue(this IElementNavigator nav, ArtifactSummaryDetailsCollection details, string key)
         {
             var value = nav.Value?.ToString();
             if (value != null)
@@ -37,23 +37,23 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
             return false;
         }
 
-        /// <summary>Extract the value of the (current or sibling) element with the specified name into an <see cref="ArtifactSummaryDetails"/> collection using the specified key.</summary>
+        /// <summary>Extract the value of the (current or sibling) element with the specified name into an <see cref="ArtifactSummaryDetailsCollection"/> using the specified key.</summary>
         /// <param name="nav">An <see cref="IElementNavigator"/> instance.</param>
-        /// <param name="details">An <see cref="ArtifactSummaryDetails"/> collection.</param>
+        /// <param name="details">An <see cref="ArtifactSummaryDetailsCollection"/> instance.</param>
         /// <param name="key">A collection key.</param>
         /// <param name="element">An element name.</param>
-        public static bool TryExtractValue(this IElementNavigator nav, ArtifactSummaryDetails details, string key, string element)
+        public static bool TryExtractValue(this IElementNavigator nav, ArtifactSummaryDetailsCollection details, string key, string element)
         {
             return nav.Find(element) && nav.TryExtractValue(details, key);
         }
 
-        /// <summary>Extract the value of a child element into an <see cref="ArtifactSummaryDetails"/> collection using the specified key.</summary>
+        /// <summary>Extract the value of a child element into an <see cref="ArtifactSummaryDetailsCollection"/> using the specified key.</summary>
         /// <param name="nav">An <see cref="IElementNavigator"/> instance.</param>
-        /// <param name="details">An <see cref="ArtifactSummaryDetails"/> collection.</param>
+        /// <param name="details">An <see cref="ArtifactSummaryDetailsCollection"/> instance.</param>
         /// <param name="key">A collection key.</param>
         /// <param name="element">An element name.</param>
         /// <param name="childElement">A child element name.</param>
-        public static bool TryExtractValue(this IElementNavigator nav, ArtifactSummaryDetails details, string key, string element, string childElement)
+        public static bool TryExtractValue(this IElementNavigator nav, ArtifactSummaryDetailsCollection details, string key, string element, string childElement)
         {
             if (nav.Find(element))
             {
@@ -77,13 +77,13 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
             return false;
         }
 
-        /// <summary>Extract an array of child element values into an <see cref="ArtifactSummaryDetails"/> collection using the specified key.</summary>
+        /// <summary>Extract an array of child element values into an <see cref="ArtifactSummaryDetailsCollection"/> using the specified key.</summary>
         /// <param name="nav">An <see cref="IElementNavigator"/> instance.</param>
-        /// <param name="details">An <see cref="ArtifactSummaryDetails"/> collection.</param>
+        /// <param name="details">An <see cref="ArtifactSummaryDetailsCollection"/> instance.</param>
         /// <param name="key">A collection key.</param>
         /// <param name="element">An element name.</param>
         /// <param name="childElement">A child element name.</param>
-        public static bool TryExtractValues(this IElementNavigator nav, ArtifactSummaryDetails details, string key, string element, string childElement)
+        public static bool TryExtractValues(this IElementNavigator nav, ArtifactSummaryDetailsCollection details, string key, string element, string childElement)
         {
             if (nav.Find(element))
             {

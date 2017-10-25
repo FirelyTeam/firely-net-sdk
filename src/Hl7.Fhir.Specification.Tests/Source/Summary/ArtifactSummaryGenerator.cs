@@ -2,7 +2,6 @@
 using Hl7.Fhir.Serialization;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Hl7.Fhir.Specification.Tests.Source.Summary
 {
@@ -11,7 +10,7 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
     /// <param name="details">A collection of summary details extracted from the artifact.</param>
     /// <param name="error">A error that occured while extracting details from the artifact, or <c>null</c>.</param>
     /// <returns>A new <see cref="ArtifactSummary"/> instance.</returns>
-    public delegate ArtifactSummary ArtifactSummaryFactory(string typeName, ArtifactSummaryDetails details, Exception error = null);
+    public delegate ArtifactSummary ArtifactSummaryFactory(string typeName, ArtifactSummaryDetailsCollection details, Exception error = null);
 
     /// <summary>
     /// For generating artifact summary information from an <see cref="INavigatorStream"/>,
@@ -76,7 +75,7 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
                     var current = navStream.Current;
                     if (current != null)
                     {
-                        var props = new ArtifactSummaryDetails();
+                        var props = new ArtifactSummaryDetailsCollection();
 
                         // Add default summary details
                         props[ArtifactSummary.OriginKey] = origin;
@@ -103,7 +102,7 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
 
         // Extract summary from a single artifact
         static ArtifactSummary generate(
-            ArtifactSummaryDetails props,
+            ArtifactSummaryDetailsCollection props,
             IElementNavigator nav, 
             ArtifactSummaryFactory summaryFactory, 
             ArtifactSummaryDetailsExtractor[] extractors)
@@ -142,7 +141,7 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
 
         // Default ArtifactSummaryFactory, always returns a new ArtifactSummary instance
         // Custom ArtifactSummaryFactory implementations can return specialized ArtifactSummary subclasses, depending on the type name
-        static ArtifactSummary DefaultArtifactSummaryFactory(string typeName, ArtifactSummaryDetails details, Exception error = null)
+        static ArtifactSummary DefaultArtifactSummaryFactory(string typeName, ArtifactSummaryDetailsCollection details, Exception error = null)
         {
             // Example:
             //

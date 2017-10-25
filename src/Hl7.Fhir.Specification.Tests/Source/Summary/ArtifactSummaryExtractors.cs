@@ -7,7 +7,7 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
 {
     /// <summary>Represents a method that extracts summary details from an artifact.</summary>
     /// <param name="nav">An <see cref="IElementNavigator"/> instance to navigate the artifact.</param>
-    /// <param name="details">A property bag for saving the extracted summary details.</param>
+    /// <param name="details">A collection for saving the summary details extracted from the artifact.</param>
     /// <returns>
     /// Returns <c>true </c> to indicate that all relevant details have been extracted from the artifact and the extraction process can finish.
     /// Returns <c>false</c> to try and continue extracting additional summary details.
@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
     /// When finished, the navigator should again be positioned an the first level,
     /// for other extractors to continue reading.
     /// </remarks>
-    public delegate bool ArtifactSummaryDetailsExtractor(IElementNavigator nav, ArtifactSummaryDetails details);
+    public delegate bool ArtifactSummaryDetailsExtractor(IElementNavigator nav, ArtifactSummaryDetailsCollection details);
     // Func<IElementNavigator nav, ArtifactSummaryDetails details, bool>
 
     /// <summary>For extracting summary details from a NamingSystem resource.</summary>
@@ -28,11 +28,11 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
 
         public static readonly string UniqueIdKey = "UniqueId";
 
-        public static string[] UniqueId(this ArtifactSummaryDetails details) => details[UniqueIdKey] as string[];
+        public static string[] UniqueId(this ArtifactSummaryDetailsCollection details) => details[UniqueIdKey] as string[];
 
         /// <summary>Extract summary details from a NamingSystem resource.</summary>
         /// <returns><c>true</c> if the current target is a NamingSystem resource, or <c>false</c> otherwise.</returns>
-        public static bool Extract(IElementNavigator nav, ArtifactSummaryDetails details)
+        public static bool Extract(IElementNavigator nav, ArtifactSummaryDetailsCollection details)
         {
             if (nav.Type == NamingSystemTypeName)
             {
@@ -55,13 +55,13 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         public static readonly string NameKey = "Name";
         public static readonly string StatusKey = "Status";
 
-        public static string Canonical(this ArtifactSummaryDetails details) => details[CanonicalKey] as string;
-        public static string Name(this ArtifactSummaryDetails details) => details[NameKey] as string;
-        public static string Status(this ArtifactSummaryDetails details) => details[StatusKey] as string;
+        public static string Canonical(this ArtifactSummaryDetailsCollection details) => details[CanonicalKey] as string;
+        public static string Name(this ArtifactSummaryDetailsCollection details) => details[NameKey] as string;
+        public static string Status(this ArtifactSummaryDetailsCollection details) => details[StatusKey] as string;
 
         /// <summary>Extract summary details from a Conformance Resource.</summary>
         /// <returns><c>true</c> if the current target is a conformance resource, or <c>false</c> otherwise.</returns>
-        public static bool Extract(IElementNavigator nav, ArtifactSummaryDetails details)
+        public static bool Extract(IElementNavigator nav, ArtifactSummaryDetailsCollection details)
         {
             if (ModelInfo.IsConformanceResource(nav.Type))
             {
@@ -85,11 +85,11 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
 
         public static readonly string ValueSetSystemKey = "ValueSetSystem";
 
-        public static string ValueSetSystem(this ArtifactSummaryDetails details) => details[ValueSetSystemKey] as string;
+        public static string ValueSetSystem(this ArtifactSummaryDetailsCollection details) => details[ValueSetSystemKey] as string;
 
         /// <summary>Extract summary details from a ValueSet resource.</summary>
         /// <returns><c>true</c> if the current target is a ValueSet, or <c>false</c> otherwise.</returns>
-        public static bool Extract(IElementNavigator nav, ArtifactSummaryDetails details)
+        public static bool Extract(IElementNavigator nav, ArtifactSummaryDetailsCollection details)
         {
             if (nav.Type == ValueSetTypeName)
             {
@@ -112,13 +112,13 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         public static readonly string ConceptMapSourceKey = "ConceptMapSource";
         public static readonly string ConceptMapTargetKey = "ConceptMapTarget";
 
-        public static string ConceptMapSource(this ArtifactSummaryDetails details) => details[ConceptMapSourceKey] as string;
+        public static string ConceptMapSource(this ArtifactSummaryDetailsCollection details) => details[ConceptMapSourceKey] as string;
 
-        public static string ConceptMapTarget(this ArtifactSummaryDetails details) => details[ConceptMapTargetKey] as string;
+        public static string ConceptMapTarget(this ArtifactSummaryDetailsCollection details) => details[ConceptMapTargetKey] as string;
 
         /// <summary>Extract summary details from a ConceptMap resource.</summary>
         /// <returns><c>true</c> if the current target is a ConceptMap, or <c>false</c> otherwise.</returns>
-        public static bool Extract(IElementNavigator nav, ArtifactSummaryDetails details)
+        public static bool Extract(IElementNavigator nav, ArtifactSummaryDetailsCollection details)
         {
             if (nav.Type == ConcentMapTypeName)
             {
@@ -151,14 +151,14 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         public static readonly string ContextTypeKey = "ContextType";
         public static readonly string BaseKey = "Base";
 
-        public static string Kind(this ArtifactSummaryDetails details) => details[KindKey] as string;
-        public static string ConstrainedType(this ArtifactSummaryDetails details) => details[ConstrainedTypeKey] as string;
-        public static string ContextType(this ArtifactSummaryDetails details) => details[ContextTypeKey] as string;
-        public static string Base(this ArtifactSummaryDetails details) => details[BaseKey] as string;
+        public static string Kind(this ArtifactSummaryDetailsCollection details) => details[KindKey] as string;
+        public static string ConstrainedType(this ArtifactSummaryDetailsCollection details) => details[ConstrainedTypeKey] as string;
+        public static string ContextType(this ArtifactSummaryDetailsCollection details) => details[ContextTypeKey] as string;
+        public static string Base(this ArtifactSummaryDetailsCollection details) => details[BaseKey] as string;
 
         /// <summary>Extract summary details from a StructureDefinition resource.</summary>
         /// <returns><c>true</c> if the current target is a StructureDefinition, or <c>false</c> otherwise.</returns>
-        public static bool Extract(IElementNavigator nav, ArtifactSummaryDetails details)
+        public static bool Extract(IElementNavigator nav, ArtifactSummaryDetailsCollection details)
         {
             if (nav.Type == StructureDefinitionTypeName)
             {

@@ -20,22 +20,22 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         public const string ResourceTypeKey = nameof(ResourceType);
 
         // Available to derived classes
-        protected readonly ArtifactSummaryDetails _details;
+        protected readonly ArtifactSummaryDetailsCollection _details;
 
         /// <summary>Create a new <see cref="ArtifactSummary"/> instance for the specified collection of summary details.</summary>
         /// <param name="details">A collection of summary details extracted from the artifact.</param>
-        public ArtifactSummary(ArtifactSummaryDetails details) { _details = details; }
+        public ArtifactSummary(ArtifactSummaryDetailsCollection details) { _details = details; }
 
         /// <summary>Create a new <see cref="ArtifactSummary"/> instance to represent an error that occured while processing an artifact.</summary>
         /// <param name="details">A collection of summary details extracted from the artifact.</param>
         /// <param name="error">An exception that occured while processing the artifact.</param>
-        public ArtifactSummary(ArtifactSummaryDetails details, Exception error) : this(details) { Error = error; }
+        public ArtifactSummary(ArtifactSummaryDetailsCollection details, Exception error) : this(details) { Error = error; }
 
         /// <summary>Create a new <see cref="ArtifactSummary"/> instance to represent an error that occured while processing an artifact.</summary>
         /// <param name="details">A collection of summary details extracted from the artifact.</param>
         /// <param name="error">An exception that occured while processing the artifact.</param>
         /// <returns></returns>
-        public static ArtifactSummary FromException(ArtifactSummaryDetails details, Exception error) => new ArtifactSummary(details, error);
+        public static ArtifactSummary FromException(ArtifactSummaryDetailsCollection details, Exception error) => new ArtifactSummary(details, error);
 
         /// <summary>Create a new <see cref="ArtifactSummary"/> instance to represent an error that occured while processing an artifact.</summary>
         /// <param name="origin">The original location of the artifact on disk.</param>
@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         /// <returns></returns>
         public static ArtifactSummary FromException(string origin, Exception error)
         {
-            var props = new ArtifactSummaryDetails();
+            var props = new ArtifactSummaryDetailsCollection();
             props[OriginKey] = origin;
             return new ArtifactSummary(props, error);
         }
