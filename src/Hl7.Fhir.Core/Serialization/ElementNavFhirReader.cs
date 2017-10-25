@@ -21,10 +21,11 @@ namespace Hl7.Fhir.Serialization
     /// with the POCO-parsers.
     /// </summary>
 #pragma warning disable 612, 618
-    internal class ElementNavFhirReader : IFhirReader
+    internal class ElementNavFhirReader : IFhirReader, IElementNavigator
 #pragma warning restore 612,618
     {
         private IElementNavigator _current;
+
         public bool DisallowXsiAttributesOnRoot { get; set; }
 
         public ElementNavFhirReader(IElementNavigator root, bool disallowXsiAttributesOnRoot = false)
@@ -33,14 +34,11 @@ namespace Hl7.Fhir.Serialization
             _current = root;
         }
 
-        public object GetPrimitiveValue()
-        {
-            return _current.Value;
-        }
+        public object GetPrimitiveValue() => Value;
 
         public string GetResourceTypeName()
         {
-            if (_current.Type != null) return _current.Type;
+            if (Type != null) return Type;
 
             // No type name on this element....give the users some details about why?
             var xmlDetails = getXmlDetails(_current);
@@ -76,10 +74,9 @@ namespace Hl7.Fhir.Serialization
 #pragma warning disable 612, 618
         public IEnumerable<Tuple<string, IFhirReader>> GetMembers()
         {
-            if (_current.Value != null)
+            if (Value != null)
                 yield return Tuple.Create("value", (IFhirReader)new ElementNavFhirReader(_current));
 
-            var children = _current.Children();
             foreach (var child in _current.Children())
             {
                 bool mustSkip = verifyXmlSpecificDetails(child);
@@ -123,8 +120,31 @@ namespace Hl7.Fhir.Serialization
                 throw Error.Format($"Xml node of type '{xmlDetails.NodeType}' is unexpected at this point", this);
         }
 
+        public bool MoveToNext(string nameFilter = null)
+        {
+            return _current.MoveToNext(nameFilter);
+        }
+
+        public bool MoveToFirstChild(string nameFilter = null)
+        {
+            return _current.MoveToFirstChild(nameFilter);
+        }
+
+        public IElementNavigator Clone()
+        {
+            return _current.Clone();
+        }
+
         public int LineNumber => (_current as IPositionInfo)?.LineNumber ?? -1;
 
         public int LinePosition => (_current as IPositionInfo)?.LinePosition ?? -1;
+
+        public string Name => _current.Name;
+
+        public string Type => _current.Type;
+
+        public object Value => _current.Value;
+
+        public string Location => _current.Location;
     }
 }

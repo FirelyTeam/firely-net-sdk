@@ -22,12 +22,12 @@ namespace Hl7.Fhir.Serialization
 
         public bool AllowUnrecognizedEnums { get; set; }
 
-        public ISerializeCustomization CustomSerializer { get; set; }
+        public ISerializerCustomization CustomSerializer { get; set; }
 
-        public IParseCustomization CustomParser { get; set; }
+        public IDeserializerCustomization CustomDeserializer { get; set; }
     }
 
-    public interface ISerializeCustomization
+    public interface ISerializerCustomization
     {
         [Obsolete("The parameter and type IFhirWriter will be replaced with a more flexible solution in the next version of the library. Use at your own peril.")]
         void OnBeforeSerializeComplexType(object instance, IFhirWriter writer);
@@ -39,12 +39,8 @@ namespace Hl7.Fhir.Serialization
         void OnAfterSerializeComplexType(object instance, IFhirWriter writer);
     }
 
-    public interface IParseCustomization
+    public interface IDeserializerCustomization
     {
-        void OnBeforeParseComplexType(Base instance, IElementNavigator current);
-
-        bool OnBeforeSerializeProperty(string name, Base parent, IElementNavigator current);
-
-        void OnAfterSerializeComplexType(Base instance, IElementNavigator current);
+        bool OnBeforeDeserializeProperty(string name, Base parent, IElementNavigator current);
     }
 }
