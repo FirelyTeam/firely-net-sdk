@@ -78,10 +78,10 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
                         var props = new ArtifactSummaryDetailsCollection();
 
                         // Add default summary details
-                        props[ArtifactSummary.OriginKey] = origin;
-                        props[ArtifactSummary.PositionKey] = navStream.Position;
-                        props[ArtifactSummary.ResourceUriKey] = navStream.Position;
-                        props[ArtifactSummary.ResourceTypeKey] = current.Type;
+                        props[ArtifactSummaryDetails.OriginKey] = origin;
+                        props[ArtifactSummaryDetails.PositionKey] = navStream.Position;
+                        props[ArtifactSummaryDetails.ResourceUriKey] = navStream.Position;
+                        props[ArtifactSummaryDetails.ResourceTypeKey] = current.Type;
 
                         var summary = generate(props, current, summaryFactory, allExtractors);
 

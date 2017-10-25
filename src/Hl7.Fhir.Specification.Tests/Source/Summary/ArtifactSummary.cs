@@ -10,15 +10,6 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
     public class ArtifactSummary : IArtifactSummaryDetailsProvider
     {
-        /// <summary>Collection key for the <see cref="Origin"/> property value.</summary>
-        public const string OriginKey = nameof(Origin);
-        /// <summary>Collection key for the <see cref="Position"/> property value.</summary>
-        public const string PositionKey = nameof(Position);
-        /// <summary>Collection key for the <see cref="ResourceUri"/> property value.</summary>
-        public const string ResourceUriKey = nameof(ResourceUri);
-        /// <summary>Collection key for the <see cref="ResourceType"/> property value.</summary>
-        public const string ResourceTypeKey = nameof(ResourceType);
-
         // Available to derived classes
         protected readonly ArtifactSummaryDetailsCollection _details;
 
@@ -44,7 +35,7 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         public static ArtifactSummary FromException(string origin, Exception error)
         {
             var props = new ArtifactSummaryDetailsCollection();
-            props[OriginKey] = origin;
+            props[ArtifactSummaryDetails.OriginKey] = origin;
             return new ArtifactSummary(props, error);
         }
 
@@ -61,20 +52,20 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         public object this[string key] => _details[key];
 
         /// <summary>The original location of the associated artifact.</summary>
-        public string Origin => _details[OriginKey] as string;
+        public string Origin => _details.Origin();
 
         /// <summary>
         /// Opaque value that represents the position of the artifact within the container.
         /// Allows the <see cref="DirectorySource"/> to retrieve and deserialize the associated artifact.
         /// </summary>
-        public string Position => _details[PositionKey] as string;
+        public string Position => _details.Position();
 
         /// <summary>The resource uri.</summary>
         /// <remarks>The <see cref="IElementNavigator"/> returns a generated value for resources that are not bundle entries.</remarks>
-        public string ResourceUri => _details[ResourceUriKey] as string;
+        public string ResourceUri => _details.ResourceUri();
 
         /// <summary>Returns the type name of the resource.</summary>
-        public string ResourceType => _details[ResourceTypeKey] as string;
+        public string ResourceType => _details.ResourceType();
 
         /// <summary>Returns the type of the resource.</summary>
         public ResourceType? Type => ModelInfo.FhirTypeNameToResourceType(ResourceType);

@@ -1,6 +1,7 @@
 ﻿using Hl7.Fhir.ElementModel;
 using System.Collections.Generic;
 using System;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Tests.Source.Summary
 {
@@ -28,7 +29,7 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         /// <param name="key">A collection key.</param>
         public static bool TryExtractValue(this IElementNavigator nav, ArtifactSummaryDetailsCollection details, string key)
         {
-            var value = nav.Value?.ToString();
+            var value = nav.Value;
             if (value != null)
             {
                 details[key] = value;
@@ -66,9 +67,9 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         /// <summary>Add the value of the current element to a list, if not missing or empty.</summary>
         /// <param name="nav">An <see cref="IElementNavigator"/> instance.</param>
         /// <param name="values">A list of values.</param>
-        public static bool TryExtractValue(this IElementNavigator nav, List<string> values)
+        public static bool TryExtractValue(this IElementNavigator nav, List<object> values)
         {
-            var value = nav.Value?.ToString();
+            var value = nav.Value; // ?.ToString();
             if (value != null)
             {
                 values.Add(value);
@@ -87,7 +88,7 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         {
             if (nav.Find(element))
             {
-                var values = new List<string>();
+                var values = new List<object>();
                 do
                 {
                     var childNav = nav.Clone();

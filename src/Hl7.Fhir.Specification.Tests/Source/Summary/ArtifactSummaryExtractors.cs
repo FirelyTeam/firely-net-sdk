@@ -21,6 +21,24 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
     public delegate bool ArtifactSummaryDetailsExtractor(IElementNavigator nav, ArtifactSummaryDetailsCollection details);
     // Func<IElementNavigator nav, ArtifactSummaryDetails details, bool>
 
+    /// <summary>For accessing common artifact summary details.</summary>
+    public static class ArtifactSummaryDetails
+    {
+        /// <summary>Collection key for the <see cref="Origin"/> property value.</summary>
+        public const string OriginKey = "Origin";
+        /// <summary>Collection key for the <see cref="Position"/> property value.</summary>
+        public const string PositionKey = "Position";
+        /// <summary>Collection key for the <see cref="ResourceUri"/> property value.</summary>
+        public const string ResourceUriKey = "ResourceUri";
+        /// <summary>Collection key for the <see cref="ResourceType"/> property value.</summary>
+        public const string ResourceTypeKey = "ResourceType";
+
+        public static string Origin(this IArtifactSummaryDetailsProvider details) => details[OriginKey] as string;
+        public static string Position(this IArtifactSummaryDetailsProvider details) => details[PositionKey] as string;
+        public static string ResourceUri(this IArtifactSummaryDetailsProvider details) => details[ResourceUriKey] as string;
+        public static string ResourceType(this IArtifactSummaryDetailsProvider details) => details[ResourceTypeKey] as string;
+    }
+
     /// <summary>For extracting summary details from a NamingSystem resource.</summary>
     public static class NamingSystemSummaryDetails
     {
@@ -34,7 +52,7 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         /// <returns><c>true</c> if the current target is a NamingSystem resource, or <c>false</c> otherwise.</returns>
         public static bool Extract(IElementNavigator nav, ArtifactSummaryDetailsCollection details)
         {
-            var typeName = details[ArtifactSummary.ResourceTypeKey].ToString();
+            var typeName = details.ResourceType();
             if (typeName == NamingSystemTypeName)
             {
                 nav.TryExtractValues(details, UniqueIdKey, "uniqueId", "value");
@@ -59,7 +77,7 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         /// <returns><c>true</c> if the current target is a conformance resource, or <c>false</c> otherwise.</returns>
         public static bool Extract(IElementNavigator nav, ArtifactSummaryDetailsCollection details)
         {
-            var typeName = details[ArtifactSummary.ResourceTypeKey].ToString();
+            var typeName = details.ResourceType();
             if (ModelInfo.IsConformanceResource(typeName))
             {
                 nav.TryExtractValue(details, CanonicalKey, "url");
@@ -84,7 +102,7 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         /// <returns><c>true</c> if the current target is a ValueSet, or <c>false</c> otherwise.</returns>
         public static bool Extract(IElementNavigator nav, ArtifactSummaryDetailsCollection details)
         {
-            var typeName = details[ArtifactSummary.ResourceTypeKey].ToString();
+            var typeName = details.ResourceType();
             if (typeName == ValueSetTypeName)
             {
                 // Extractor chaining
@@ -114,7 +132,7 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         /// <returns><c>true</c> if the current target is a ConceptMap, or <c>false</c> otherwise.</returns>
         public static bool Extract(IElementNavigator nav, ArtifactSummaryDetailsCollection details)
         {
-            var typeName = details[ArtifactSummary.ResourceTypeKey].ToString();
+            var typeName = details.ResourceType();
             if (typeName == ConcentMapTypeName)
             {
                 // Extractor chaining
@@ -155,7 +173,7 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         /// <returns><c>true</c> if the current target is a StructureDefinition, or <c>false</c> otherwise.</returns>
         public static bool Extract(IElementNavigator nav, ArtifactSummaryDetailsCollection details)
         {
-            var typeName = details[ArtifactSummary.ResourceTypeKey].ToString();
+            var typeName = details.ResourceType();
             if (typeName == StructureDefinitionTypeName)
             {
                 // Extractor chaining
