@@ -121,8 +121,8 @@ namespace Hl7.Fhir.Rest
             else
             {
                 body = format == ResourceFormat.Xml ?
-                    FhirSerializer.SerializeToXmlBytes(data, summary: Fhir.Rest.SummaryType.False) :
-                    FhirSerializer.SerializeToJsonBytes(data, summary: Fhir.Rest.SummaryType.False);
+                    new FhirXmlSerializer().SerializeToBytes(data, summary: Fhir.Rest.SummaryType.False) :
+                    new FhirJsonSerializer().SerializeToBytes(data, summary: Fhir.Rest.SummaryType.False);
 
                 // This is done by the caller after the OnBeforeRequest is called so that other properties
                 // can be set before the content is committed
