@@ -7,15 +7,8 @@
  */
 
 using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
-using Newtonsoft.Json.Linq;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -24,10 +17,13 @@ namespace Hl7.Fhir.Serialization
         private readonly IFhirWriter _writer;
         private readonly ModelInspector _inspector;
 
-        public DispatchingWriter(IFhirWriter data)
+        public ParserSettings Settings { get; private set; }
+
+        public DispatchingWriter(IFhirWriter data, ParserSettings settings)
         {
             _writer = data;
             _inspector = BaseFhirParser.Inspector;
+            Settings = settings;
         }
 
         internal void Serialize(PropertyMapping prop, object instance, Rest.SummaryType summary, ComplexTypeWriter.SerializationMode mode)
@@ -71,7 +67,7 @@ namespace Hl7.Fhir.Serialization
             // (as used in Resource.contained)
             if (property.Choice == ChoiceType.ResourceChoice)
             {
-                var writer = new ResourceWriter(_writer);
+                var writer = new ResourceWriter(_writer, Settings);
                 writer.Serialize(instance, summary, contained: true);
                 return;
             }
@@ -84,7 +80,7 @@ namespace Hl7.Fhir.Serialization
 
             if (mode == ComplexTypeWriter.SerializationMode.AllMembers || mode == ComplexTypeWriter.SerializationMode.NonValueElements)
             {
-                var complexWriter = new ComplexTypeWriter(_writer);
+                var cplxWriter = new ComplexTypeWriter(_writer, Settings);
                 complexWriter.Serialize(mapping, instance, summary, mode);
             }
             else

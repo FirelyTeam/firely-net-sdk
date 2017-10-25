@@ -8,16 +8,11 @@
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 
 namespace Hl7.Fhir.Serialization
@@ -37,10 +32,13 @@ namespace Hl7.Fhir.Serialization
             NonValueElements
         }
 
-        public ComplexTypeWriter(IFhirWriter writer)
+        public ParserSettings Settings { get; private set; }
+
+        public ComplexTypeWriter(IFhirWriter writer, ParserSettings settings)
         {
             _writer = writer;
             _inspector = BaseFhirParser.Inspector;
+            Settings = settings;
         }
 
         internal void Serialize(ClassMapping mapping, object instance, Rest.SummaryType summary, SerializationMode mode = SerializationMode.AllMembers)
@@ -131,7 +129,7 @@ namespace Hl7.Fhir.Serialization
 
             _writer.WriteStartProperty(memberName);
 
-            var writer = new DispatchingWriter(_writer);
+            var writer = new DispatchingWriter(_writer, Settings);
 
             // Now, if our writer does not use dual properties for primitive values + rest (xml),
             // or this is a complex property without value element, serialize data normally
