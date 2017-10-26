@@ -372,30 +372,8 @@ namespace Hl7.Fhir.Model
                 return false;
         }
 
-        /// <summary>
-        /// Determines if the specified <see cref="FHIRDefinedType"/> value represents a FHIR conformance resource type,
-        /// i.e. if it equals one of the following values:
-        /// <list type="bullet">
-        /// <item>FHIRDefinedType.Conformance</item>
-        /// <item>FHIRDefinedType.StructureDefinition</item>
-        /// <item>FHIRDefinedType.ValueSet</item>
-        /// <item>FHIRDefinedType.ConceptMap</item>
-        /// <item>FHIRDefinedType.DataElement</item>
-        /// <item>FHIRDefinedType.OperationDefinition</item>
-        /// <item>FHIRDefinedType.SearchParameter</item>
-        /// <item>FHIRDefinedType.NamingSystem</item>
-        /// <item>FHIRDefinedType.ImplementationGuide</item>
-        /// <item>FHIRDefinedType.TestScript</item>
-        /// </list>
-        /// </summary>
-        public static bool IsConformanceResource(FHIRDefinedType type)
-        {
-            return ConformanceResources.Contains(type);
-        }
-
-
-
-        public static readonly FHIRDefinedType[] ConformanceResources = 
+        /// <summary>Subset of <see cref="FHIRDefinedType"/> enumeration values for conformance resources.</summary>
+        public static readonly FHIRDefinedType[] ConformanceResources =
         {
             FHIRDefinedType.Conformance,
             FHIRDefinedType.StructureDefinition,
@@ -408,6 +386,33 @@ namespace Hl7.Fhir.Model
             FHIRDefinedType.ImplementationGuide,
             FHIRDefinedType.TestScript
         };
+
+        /// <summary>Determines if the specified <see cref="FHIRDefinedType"/> value represents a FHIR conformance resource.</summary>
+        public static bool IsConformanceResource(FHIRDefinedType type) => ConformanceResources.Contains(type);
+
+        /// <summary>Determines if the specified <see cref="FHIRDefinedType"/> value represents a FHIR conformance resource.</summary>
+        public static bool IsConformanceResource(FHIRDefinedType? type) => type.HasValue && ConformanceResources.Contains(type.Value);
+
+        /// <summary>Subset of <see cref="ResourceType"/> enumeration values for conformance resources.</summary>
+        public static readonly ResourceType[] ConformanceResourceTypes =
+        {
+            ResourceType.Conformance,
+            ResourceType.StructureDefinition,
+            ResourceType.ValueSet,
+            ResourceType.ConceptMap,
+            ResourceType.DataElement,
+            ResourceType.OperationDefinition,
+            ResourceType.SearchParameter,
+            ResourceType.NamingSystem,
+            ResourceType.ImplementationGuide,
+            ResourceType.TestScript
+        };
+
+        /// <summary>Determines if the specified <see cref="ResourceType"/> value represents a FHIR conformance resource.</summary>
+        public static bool IsConformanceResource(ResourceType type) => ConformanceResourceTypes.Contains(type);
+
+        /// <summary>Determines if the specified <see cref="ResourceType"/> value represents a FHIR conformance resource.</summary>
+        public static bool IsConformanceResource(ResourceType? type) => type.HasValue && ConformanceResourceTypes.Contains(type.Value);
 
         /// <summary>Determines if the specified value represents the name of a core Resource, Datatype or primitive.</summary>
         public static bool IsCoreModelType(string name) => FhirTypeToCsType.ContainsKey(name);
