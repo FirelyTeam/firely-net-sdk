@@ -89,12 +89,13 @@ namespace Hl7.Fhir.Utility
 
         public static XmlReader WrapXmlReader(XmlReader xmlReader)
         {
-            var settings = new XmlReaderSettings();
-
-            settings.IgnoreComments = true;
-            settings.IgnoreProcessingInstructions = true;
-            settings.IgnoreWhitespace = true;
-            settings.DtdProcessing = DtdProcessing.Prohibit;
+            var settings = new XmlReaderSettings
+            {
+                IgnoreComments = true,
+                IgnoreProcessingInstructions = true,
+                IgnoreWhitespace = true,
+                DtdProcessing = DtdProcessing.Prohibit
+            };
 
             return XmlReader.Create(xmlReader, settings);
         }
@@ -197,6 +198,23 @@ namespace Hl7.Fhir.Utility
             return resultRE;
         }
 
+//#if NET_FILESYSTEM
+//        public static void JoinFiles(string[] inputFilePaths, string outputFilePath)
+//        {
+//            using (var outputStream = File.Create(outputFilePath))
+//            {
+//                foreach (var inputFilePath in inputFilePaths)
+//                {
+//                    using (var inputStream = File.OpenRead(inputFilePath))
+//                    {
+//                        // Buffer size can be passed as the second argument.
+//                        inputStream.CopyTo(outputStream);
+//                    }
+//                }
+//            }
+//        }
+//#endif
+
 #if NET_REGEX_COMPILE
         private static Regex _re = new Regex("(&[a-zA-Z0-9]+;)", RegexOptions.Compiled | RegexOptions.CultureInvariant);
 #else
@@ -208,146 +226,223 @@ namespace Hl7.Fhir.Utility
             if (_xmlReplacements != null)
                 return _xmlReplacements;
 
-            Dictionary<string, string> xr = new Dictionary<string, string>();
-            xr.Add("&quot;", "&#34;");
-            xr.Add("&amp;", "&#38;");
-            xr.Add("&lt;", "&#60;");
-            xr.Add("&gt;", "&#62;");
-            xr.Add("&apos;", "&#39;");
-            xr.Add("&OElig;", "&#338;");
-            xr.Add("&oelig;", "&#339;");
-            xr.Add("&Scaron;", "&#352;");
-            xr.Add("&scaron;", "&#353;");
-            xr.Add("&Yuml;", "&#376;");
-            xr.Add("&circ;", "&#710;");
-            xr.Add("&tilde;", "&#732;");
-            xr.Add("&ensp;", "&#8194;");
-            xr.Add("&emsp;", "&#8195;");
-            xr.Add("&thinsp;", "&#8201;");
-            xr.Add("&zwnj;", "&#8204;");
-            xr.Add("&zwj;", "&#8205;");
-            xr.Add("&lrm;", "&#8206;");
-            xr.Add("&rlm;", "&#8207;");
-            xr.Add("&ndash;", "&#8211;");
-            xr.Add("&mdash;", "&#8212;");
-            xr.Add("&lsquo;", "&#8216;");
-            xr.Add("&rsquo;", "&#8217;");
-            xr.Add("&sbquo;", "&#8218;");
-            xr.Add("&ldquo;", "&#8220;");
-            xr.Add("&rdquo;", "&#8221;");
-            xr.Add("&bdquo;", "&#8222;");
-            xr.Add("&dagger;", "&#8224;");
-            xr.Add("&Dagger;", "&#8225;");
-            xr.Add("&permil;", "&#8240;");
-            xr.Add("&lsaquo;", "&#8249;");
-            xr.Add("&rsaquo;", "&#8250;");
-            xr.Add("&euro;", "&#8364;");
-            xr.Add("&fnof;", "&#402;");
-            xr.Add("&Alpha;", "&#913;");
-            xr.Add("&Beta;", "&#914;");
-            xr.Add("&Gamma;", "&#915;");
-            xr.Add("&Delta;", "&#916;");
-            xr.Add("&Epsilon;", "&#917;");
-            xr.Add("&Zeta;", "&#918;");
-            xr.Add("&Eta;", "&#919;");
-            xr.Add("&Theta;", "&#920;");
-            xr.Add("&Iota;", "&#921;");
-            xr.Add("&Kappa;", "&#922;");
-            xr.Add("&Lambda;", "&#923;");
-            xr.Add("&Mu;", "&#924;");
-            xr.Add("&Nu;", "&#925;");
-            xr.Add("&Xi;", "&#926;");
-            xr.Add("&Omicron;", "&#927;");
-            xr.Add("&Pi;", "&#928;");
-            xr.Add("&Rho;", "&#929;");
-            xr.Add("&Sigma;", "&#931;");
-            xr.Add("&Tau;", "&#932;");
-            xr.Add("&Upsilon;", "&#933;");
-            xr.Add("&Phi;", "&#934;");
-            xr.Add("&Chi;", "&#935;");
-            xr.Add("&Psi;", "&#936;");
-            xr.Add("&Omega;", "&#937;");
-            xr.Add("&alpha;", "&#945;");
-            xr.Add("&beta;", "&#946;");
-            xr.Add("&gamma;", "&#947;");
-            xr.Add("&delta;", "&#948;");
-            xr.Add("&epsilon;", "&#949;");
-            xr.Add("&zeta;", "&#950;");
-            xr.Add("&eta;", "&#951;");
-            xr.Add("&theta;", "&#952;");
-            xr.Add("&iota;", "&#953;");
-            xr.Add("&kappa;", "&#954;");
-            xr.Add("&lambda;", "&#955;");
-            xr.Add("&mu;", "&#956;");
-            xr.Add("&nu;", "&#957;");
-            xr.Add("&xi;", "&#958;");
-            xr.Add("&omicron;", "&#959;");
-            xr.Add("&pi;", "&#960;");
-            xr.Add("&rho;", "&#961;");
-            xr.Add("&sigmaf;", "&#962;");
-            xr.Add("&sigma;", "&#963;");
-            xr.Add("&tau;", "&#964;");
-            xr.Add("&upsilon;", "&#965;");
-            xr.Add("&phi;", "&#966;");
-            xr.Add("&chi;", "&#967;");
-            xr.Add("&psi;", "&#968;");
-            xr.Add("&omega;", "&#969;");
-            xr.Add("&thetasym;", "&#977;");
-            xr.Add("&upsih;", "&#978;");
-            xr.Add("&piv;", "&#982;");
-            xr.Add("&bull;", "&#8226;");
-            xr.Add("&hellip;", "&#8230;");
-            xr.Add("&prime;", "&#8242;");
-            xr.Add("&Prime;", "&#8243;");
-            xr.Add("&oline;", "&#8254;");
-            xr.Add("&frasl;", "&#8260;");
-            xr.Add("&weierp;", "&#8472;");
-            xr.Add("&image;", "&#8465;");
-            xr.Add("&real;", "&#8476;");
-            xr.Add("&trade;", "&#8482;");
-            xr.Add("&alefsym;", "&#8501;");
-            xr.Add("&larr;", "&#8592;"); xr.Add("&uarr;", "&#8593;");
-            xr.Add("&rarr;", "&#8594;"); xr.Add("&darr;", "&#8595;"); xr.Add("&harr;", "&#8596;");
-            xr.Add("&crarr;", "&#8629;");
-            xr.Add("&lArr;", "&#8656;"); xr.Add("&uArr;", "&#8657;");
-            xr.Add("&rArr;", "&#8658;"); xr.Add("&dArr;", "&#8659;"); xr.Add("&hArr;", "&#8660;");
-            xr.Add("&forall;", "&#8704;"); xr.Add("&part;", "&#8706;"); xr.Add("&exist;", "&#8707;");
-            xr.Add("&empty;", "&#8709;"); xr.Add("&nabla;", "&#8711;"); xr.Add("&isin;", "&#8712;");
-            xr.Add("&notin;", "&#8713;"); xr.Add("&ni;", "&#8715;"); xr.Add("&prod;", "&#8719;");
-            xr.Add("&sum;", "&#8721;"); xr.Add("&minus;", "&#8722;"); xr.Add("&lowast;", "&#8727;");
-            xr.Add("&radic;", "&#8730;"); xr.Add("&prop;", "&#8733;"); xr.Add("&infin;", "&#8734;");
-            xr.Add("&ang;", "&#8736;"); xr.Add("&and;", "&#8743;"); xr.Add("&or;", "&#8744;");
-            xr.Add("&cap;", "&#8745;"); xr.Add("&cup;", "&#8746;"); xr.Add("&int;", "&#8747;");
-            xr.Add("&there4;", "&#8756;"); xr.Add("&sim;", "&#8764;"); xr.Add("&cong;", "&#8773;");
-            xr.Add("&asymp;", "&#8776;"); xr.Add("&ne;", "&#8800;"); xr.Add("&equiv;", "&#8801;");
-            xr.Add("&le;", "&#8804;"); xr.Add("&ge;", "&#8805;"); xr.Add("&sub;", "&#8834;");
-            xr.Add("&sup;", "&#8835;"); xr.Add("&nsub;", "&#8836;"); xr.Add("&sube;", "&#8838;");
-            xr.Add("&supe;", "&#8839;"); xr.Add("&oplus;", "&#8853;"); xr.Add("&otimes;", "&#8855;");
-            xr.Add("&perp;", "&#8869;"); xr.Add("&sdot;", "&#8901;"); xr.Add("&lceil;", "&#8968;");
-            xr.Add("&rceil;", "&#8969;"); xr.Add("&lfloor;", "&#8970;"); xr.Add("&rfloor;", "&#8971;");
-            xr.Add("&lang;", "&#9001;"); xr.Add("&rang;", "&#9002;"); xr.Add("&loz;", "&#9674;");
-            xr.Add("&spades;", "&#9824;"); xr.Add("&clubs;", "&#9827;"); xr.Add("&hearts;", "&#9829;");
-            xr.Add("&diams;", "&#9830;");
-            xr.Add("&nbsp;", "&#160;"); xr.Add("&iexcl;", "&#161;"); xr.Add("&cent;", "&#162;");
-            xr.Add("&pound;", "&#163;"); xr.Add("&curren;", "&#164;"); xr.Add("&yen;", "&#165;");
-            xr.Add("&brvbar;", "&#166;"); xr.Add("&sect;", "&#167;"); xr.Add("&uml;", "&#168;");
-            xr.Add("&copy;", "&#169;"); xr.Add("&ordf;", "&#170;"); xr.Add("&laquo;", "&#171;");
-            xr.Add("&not;", "&#172;"); xr.Add("&shy;", "&#173;"); xr.Add("&reg;", "&#174;");
-            xr.Add("&macr;", "&#175;"); xr.Add("&deg;", "&#176;"); xr.Add("&plusmn;", "&#177;");
-            xr.Add("&sup2;", "&#178;"); xr.Add("&sup3;", "&#179;"); xr.Add("&acute;", "&#180;");
-            xr.Add("&micro;", "&#181;"); xr.Add("&para;", "&#182;"); xr.Add("&middot;", "&#183;");
-            xr.Add("&cedil;", "&#184;"); xr.Add("&sup1;", "&#185;"); xr.Add("&ordm;", "&#186;");
-            xr.Add("&raquo;", "&#187;"); xr.Add("&frac14;", "&#188;"); xr.Add("&frac12;", "&#189;");
-            xr.Add("&frac34;", "&#190;"); xr.Add("&iquest;", "&#191;");
-            xr.Add("&Agrave;", "&#192;");
-            xr.Add("&Aacute;", "&#193;"); xr.Add("&Acirc;", "&#194;"); xr.Add("&Atilde;", "&#195;");
-            xr.Add("&Auml;", "&#196;"); xr.Add("&Aring;", "&#197;"); xr.Add("&AElig;", "&#198;");
-            xr.Add("&Ccedil;", "&#199;"); xr.Add("&Egrave;", "&#200;"); xr.Add("&Eacute;", "&#201;");
-            xr.Add("&Ecirc;", "&#202;"); xr.Add("&Euml;", "&#203;"); xr.Add("&Igrave;", "&#204;");
-            xr.Add("&Iacute;", "&#205;"); xr.Add("&Icirc;", "&#206;"); xr.Add("&Iuml;", "&#207;");
-            xr.Add("&ETH;", "&#208;"); xr.Add("&Ntilde;", "&#209;"); xr.Add("&Ograve;", "&#210;");
-            xr.Add("&Oacute;", "&#211;"); xr.Add("&Ocirc;", "&#212;"); xr.Add("&Otilde;", "&#213;");
-            xr.Add("&Ouml;", "&#214;"); xr.Add("&times;", "&#215;"); xr.Add("&Oslash;", "&#216;");
+            Dictionary<string, string> xr = new Dictionary<string, string>
+            {
+                { "&quot;", "&#34;" },
+                { "&amp;", "&#38;" },
+                { "&lt;", "&#60;" },
+                { "&gt;", "&#62;" },
+                { "&apos;", "&#39;" },
+                { "&OElig;", "&#338;" },
+                { "&oelig;", "&#339;" },
+                { "&Scaron;", "&#352;" },
+                { "&scaron;", "&#353;" },
+                { "&Yuml;", "&#376;" },
+                { "&circ;", "&#710;" },
+                { "&tilde;", "&#732;" },
+                { "&ensp;", "&#8194;" },
+                { "&emsp;", "&#8195;" },
+                { "&thinsp;", "&#8201;" },
+                { "&zwnj;", "&#8204;" },
+                { "&zwj;", "&#8205;" },
+                { "&lrm;", "&#8206;" },
+                { "&rlm;", "&#8207;" },
+                { "&ndash;", "&#8211;" },
+                { "&mdash;", "&#8212;" },
+                { "&lsquo;", "&#8216;" },
+                { "&rsquo;", "&#8217;" },
+                { "&sbquo;", "&#8218;" },
+                { "&ldquo;", "&#8220;" },
+                { "&rdquo;", "&#8221;" },
+                { "&bdquo;", "&#8222;" },
+                { "&dagger;", "&#8224;" },
+                { "&Dagger;", "&#8225;" },
+                { "&permil;", "&#8240;" },
+                { "&lsaquo;", "&#8249;" },
+                { "&rsaquo;", "&#8250;" },
+                { "&euro;", "&#8364;" },
+                { "&fnof;", "&#402;" },
+                { "&Alpha;", "&#913;" },
+                { "&Beta;", "&#914;" },
+                { "&Gamma;", "&#915;" },
+                { "&Delta;", "&#916;" },
+                { "&Epsilon;", "&#917;" },
+                { "&Zeta;", "&#918;" },
+                { "&Eta;", "&#919;" },
+                { "&Theta;", "&#920;" },
+                { "&Iota;", "&#921;" },
+                { "&Kappa;", "&#922;" },
+                { "&Lambda;", "&#923;" },
+                { "&Mu;", "&#924;" },
+                { "&Nu;", "&#925;" },
+                { "&Xi;", "&#926;" },
+                { "&Omicron;", "&#927;" },
+                { "&Pi;", "&#928;" },
+                { "&Rho;", "&#929;" },
+                { "&Sigma;", "&#931;" },
+                { "&Tau;", "&#932;" },
+                { "&Upsilon;", "&#933;" },
+                { "&Phi;", "&#934;" },
+                { "&Chi;", "&#935;" },
+                { "&Psi;", "&#936;" },
+                { "&Omega;", "&#937;" },
+                { "&alpha;", "&#945;" },
+                { "&beta;", "&#946;" },
+                { "&gamma;", "&#947;" },
+                { "&delta;", "&#948;" },
+                { "&epsilon;", "&#949;" },
+                { "&zeta;", "&#950;" },
+                { "&eta;", "&#951;" },
+                { "&theta;", "&#952;" },
+                { "&iota;", "&#953;" },
+                { "&kappa;", "&#954;" },
+                { "&lambda;", "&#955;" },
+                { "&mu;", "&#956;" },
+                { "&nu;", "&#957;" },
+                { "&xi;", "&#958;" },
+                { "&omicron;", "&#959;" },
+                { "&pi;", "&#960;" },
+                { "&rho;", "&#961;" },
+                { "&sigmaf;", "&#962;" },
+                { "&sigma;", "&#963;" },
+                { "&tau;", "&#964;" },
+                { "&upsilon;", "&#965;" },
+                { "&phi;", "&#966;" },
+                { "&chi;", "&#967;" },
+                { "&psi;", "&#968;" },
+                { "&omega;", "&#969;" },
+                { "&thetasym;", "&#977;" },
+                { "&upsih;", "&#978;" },
+                { "&piv;", "&#982;" },
+                { "&bull;", "&#8226;" },
+                { "&hellip;", "&#8230;" },
+                { "&prime;", "&#8242;" },
+                { "&Prime;", "&#8243;" },
+                { "&oline;", "&#8254;" },
+                { "&frasl;", "&#8260;" },
+                { "&weierp;", "&#8472;" },
+                { "&image;", "&#8465;" },
+                { "&real;", "&#8476;" },
+                { "&trade;", "&#8482;" },
+                { "&alefsym;", "&#8501;" },
+                { "&larr;", "&#8592;" },
+                { "&uarr;", "&#8593;" },
+                { "&rarr;", "&#8594;" },
+                { "&darr;", "&#8595;" },
+                { "&harr;", "&#8596;" },
+                { "&crarr;", "&#8629;" },
+                { "&lArr;", "&#8656;" },
+                { "&uArr;", "&#8657;" },
+                { "&rArr;", "&#8658;" },
+                { "&dArr;", "&#8659;" },
+                { "&hArr;", "&#8660;" },
+                { "&forall;", "&#8704;" },
+                { "&part;", "&#8706;" },
+                { "&exist;", "&#8707;" },
+                { "&empty;", "&#8709;" },
+                { "&nabla;", "&#8711;" },
+                { "&isin;", "&#8712;" },
+                { "&notin;", "&#8713;" },
+                { "&ni;", "&#8715;" },
+                { "&prod;", "&#8719;" },
+                { "&sum;", "&#8721;" },
+                { "&minus;", "&#8722;" },
+                { "&lowast;", "&#8727;" },
+                { "&radic;", "&#8730;" },
+                { "&prop;", "&#8733;" },
+                { "&infin;", "&#8734;" },
+                { "&ang;", "&#8736;" },
+                { "&and;", "&#8743;" },
+                { "&or;", "&#8744;" },
+                { "&cap;", "&#8745;" },
+                { "&cup;", "&#8746;" },
+                { "&int;", "&#8747;" },
+                { "&there4;", "&#8756;" },
+                { "&sim;", "&#8764;" },
+                { "&cong;", "&#8773;" },
+                { "&asymp;", "&#8776;" },
+                { "&ne;", "&#8800;" },
+                { "&equiv;", "&#8801;" },
+                { "&le;", "&#8804;" },
+                { "&ge;", "&#8805;" },
+                { "&sub;", "&#8834;" },
+                { "&sup;", "&#8835;" },
+                { "&nsub;", "&#8836;" },
+                { "&sube;", "&#8838;" },
+                { "&supe;", "&#8839;" },
+                { "&oplus;", "&#8853;" },
+                { "&otimes;", "&#8855;" },
+                { "&perp;", "&#8869;" },
+                { "&sdot;", "&#8901;" },
+                { "&lceil;", "&#8968;" },
+                { "&rceil;", "&#8969;" },
+                { "&lfloor;", "&#8970;" },
+                { "&rfloor;", "&#8971;" },
+                { "&lang;", "&#9001;" },
+                { "&rang;", "&#9002;" },
+                { "&loz;", "&#9674;" },
+                { "&spades;", "&#9824;" },
+                { "&clubs;", "&#9827;" },
+                { "&hearts;", "&#9829;" },
+                { "&diams;", "&#9830;" },
+                { "&nbsp;", "&#160;" },
+                { "&iexcl;", "&#161;" },
+                { "&cent;", "&#162;" },
+                { "&pound;", "&#163;" },
+                { "&curren;", "&#164;" },
+                { "&yen;", "&#165;" },
+                { "&brvbar;", "&#166;" },
+                { "&sect;", "&#167;" },
+                { "&uml;", "&#168;" },
+                { "&copy;", "&#169;" },
+                { "&ordf;", "&#170;" },
+                { "&laquo;", "&#171;" },
+                { "&not;", "&#172;" },
+                { "&shy;", "&#173;" },
+                { "&reg;", "&#174;" },
+                { "&macr;", "&#175;" },
+                { "&deg;", "&#176;" },
+                { "&plusmn;", "&#177;" },
+                { "&sup2;", "&#178;" },
+                { "&sup3;", "&#179;" },
+                { "&acute;", "&#180;" },
+                { "&micro;", "&#181;" },
+                { "&para;", "&#182;" },
+                { "&middot;", "&#183;" },
+                { "&cedil;", "&#184;" },
+                { "&sup1;", "&#185;" },
+                { "&ordm;", "&#186;" },
+                { "&raquo;", "&#187;" },
+                { "&frac14;", "&#188;" },
+                { "&frac12;", "&#189;" },
+                { "&frac34;", "&#190;" },
+                { "&iquest;", "&#191;" },
+                { "&Agrave;", "&#192;" },
+                { "&Aacute;", "&#193;" },
+                { "&Acirc;", "&#194;" },
+                { "&Atilde;", "&#195;" },
+                { "&Auml;", "&#196;" },
+                { "&Aring;", "&#197;" },
+                { "&AElig;", "&#198;" },
+                { "&Ccedil;", "&#199;" },
+                { "&Egrave;", "&#200;" },
+                { "&Eacute;", "&#201;" },
+                { "&Ecirc;", "&#202;" },
+                { "&Euml;", "&#203;" },
+                { "&Igrave;", "&#204;" },
+                { "&Iacute;", "&#205;" },
+                { "&Icirc;", "&#206;" },
+                { "&Iuml;", "&#207;" },
+                { "&ETH;", "&#208;" },
+                { "&Ntilde;", "&#209;" },
+                { "&Ograve;", "&#210;" },
+                { "&Oacute;", "&#211;" },
+                { "&Ocirc;", "&#212;" },
+                { "&Otilde;", "&#213;" },
+                { "&Ouml;", "&#214;" },
+                { "&times;", "&#215;" },
+                { "&Oslash;", "&#216;" }
+            };
 
             _xmlReplacements = xr;
             return xr;

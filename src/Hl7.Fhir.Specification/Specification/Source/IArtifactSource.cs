@@ -16,7 +16,10 @@ namespace Hl7.Fhir.Specification.Source
 
     public interface IArtifactSource
     {
+        /// <summary>Returns a list of artifact filenames.</summary>
         IEnumerable<string> ListArtifactNames();
+
+        /// <summary>Load the artifact with the specified filename.</summary>
         Stream LoadArtifactByName(string artifactName);
     }
 

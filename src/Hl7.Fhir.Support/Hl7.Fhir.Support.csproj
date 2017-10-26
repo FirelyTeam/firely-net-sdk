@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
-    <TargetFrameworks>net45;net40;netstandard1.0</TargetFrameworks>
+    <TargetFrameworks>net40;net45;netstandard1.0;netstandard1.3</TargetFrameworks>
   </PropertyGroup>
 
   <Import Project="..\platforms.props" />
@@ -26,5 +26,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System" />
+    <Reference Include="System.IO.Compression" />
   </ItemGroup>
 </Project>
