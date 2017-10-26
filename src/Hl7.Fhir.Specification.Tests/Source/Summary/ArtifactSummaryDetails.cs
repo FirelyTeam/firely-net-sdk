@@ -8,6 +8,7 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
     // DSTU2 Specific!
 
     /// <summary>For accessing common artifact summary details.</summary>
+    /// <remarks>Common details are initialized by the <see cref="ArtifactSummaryGenerator"/> itself.</remarks>
     public static class ArtifactSummaryDetails
     {
         public const string OriginKey = nameof(GetOrigin);
@@ -34,7 +35,7 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
 
         /// <summary>Extract summary details from a NamingSystem resource.</summary>
         /// <returns><c>true</c> if the current target is a NamingSystem resource, or <c>false</c> otherwise.</returns>
-        /// <remarks>Called via the <see cref="ArtifactSummaryDetailsExtractor"/> delegate.</remarks>
+        /// <remarks>The <see cref="ArtifactSummaryGenerator"/> calls this method from a <see cref="ArtifactSummaryDetailsExtractor"/> delegate.</remarks>
         internal static bool Extract(IElementNavigator nav, ArtifactSummaryDetailsCollection details)
         {
             if (details.IsNamingSystem())
@@ -44,7 +45,6 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
             }
             return false;
         }
-
     }
 
     /// <summary>For extracting summary details from a conformance resource.</summary>
@@ -62,7 +62,14 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
 
         /// <summary>Extract summary details from a Conformance Resource.</summary>
         /// <returns><c>true</c> if the current target is a conformance resource, or <c>false</c> otherwise.</returns>
-        /// <remarks>Called via the <see cref="ArtifactSummaryDetailsExtractor"/> delegate.</remarks>
+        /// <remarks>
+        /// The <see cref="ArtifactSummaryGenerator"/> calls this method from a <see cref="ArtifactSummaryDetailsExtractor"/> delegate.
+        /// Also called directly by other ArtifactSummaryDetailsExtractor handlers for specific conformance
+        /// resources, before extracting additional summary details.
+        /// </remarks>
+        /// <seealso cref="StructureDefinitionSummaryDetails"/>
+        /// <seealso cref="ValueSetSummaryDetails"/>
+        /// <seealso cref="ConceptMapSummaryDetails"/>
         internal static bool Extract(IElementNavigator nav, ArtifactSummaryDetailsCollection details)
         {
             if (details.IsConformanceResource())
@@ -74,6 +81,45 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
             }
             return false;
         }
+    }
+
+    /// <summary>For extracting summary details from a StructureDefinition resource.</summary>
+    public static class StructureDefinitionSummaryDetails
+    {
+        static readonly string StructureDefinitionTypeName = ResourceType.StructureDefinition.GetLiteral();
+
+        public static readonly string StructureDefinitionKindKey = nameof(GetStructureDefinitionKind);
+        public static readonly string StructureDefinitionConstrainedTypeKey = nameof(GetStructureDefinitionConstrainedType);
+        public static readonly string StructureDefinitionContextTypeKey = nameof(GetStructureDefinitionContextType);
+        public static readonly string StructureDefinitionBaseKey = nameof(GetStructureDefinitionBase);
+
+        public static string GetStructureDefinitionKind(this IArtifactSummaryDetailsProvider details) => details[StructureDefinitionKindKey] as string;
+        public static string GetStructureDefinitionConstrainedType(this IArtifactSummaryDetailsProvider details) => details[StructureDefinitionConstrainedTypeKey] as string;
+        public static string GetStructureDefinitionContextType(this IArtifactSummaryDetailsProvider details) => details[StructureDefinitionContextTypeKey] as string;
+        public static string GetStructureDefinitionBase(this IArtifactSummaryDetailsProvider details) => details[StructureDefinitionBaseKey] as string;
+
+        public static bool IsStructureDefinition(this IArtifactSummaryDetailsProvider details) => details.GetResourceType() == StructureDefinitionTypeName;
+
+        /// <summary>Extract summary details from a StructureDefinition resource.</summary>
+        /// <returns><c>true</c> if the current target is a StructureDefinition, or <c>false</c> otherwise.</returns>
+        /// <remarks>The <see cref="ArtifactSummaryGenerator"/> calls this method from a <see cref="ArtifactSummaryDetailsExtractor"/> delegate.</remarks>
+        internal static bool Extract(IElementNavigator nav, ArtifactSummaryDetailsCollection details)
+        {
+            if (details.IsStructureDefinition())
+            {
+                // Explicit extractor chaining
+                if (ConformanceSummaryDetails.Extract(nav, details))
+                {
+                    nav.TryExtractValue(details, StructureDefinitionKindKey, "kind");
+                    nav.TryExtractValue(details, StructureDefinitionConstrainedTypeKey, "constrainedType");
+                    nav.TryExtractValue(details, StructureDefinitionContextTypeKey, "contextType");
+                    nav.TryExtractValue(details, StructureDefinitionBaseKey, "base");
+                }
+                return true;
+            }
+            return false;
+        }
+
     }
 
     /// <summary>For extracting summary details from a ValueSet resource.</summary>
@@ -89,7 +135,7 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
 
         /// <summary>Extract summary details from a ValueSet resource.</summary>
         /// <returns><c>true</c> if the current target is a ValueSet, or <c>false</c> otherwise.</returns>
-        /// <remarks>Called via the <see cref="ArtifactSummaryDetailsExtractor"/> delegate.</remarks>
+        /// <remarks>The <see cref="ArtifactSummaryGenerator"/> calls this method from a <see cref="ArtifactSummaryDetailsExtractor"/> delegate.</remarks>
         internal static bool Extract(IElementNavigator nav, ArtifactSummaryDetailsCollection details)
         {
             if (details.IsValueSet())
@@ -120,7 +166,7 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
 
         /// <summary>Extract summary details from a ConceptMap resource.</summary>
         /// <returns><c>true</c> if the current target is a ConceptMap, or <c>false</c> otherwise.</returns>
-        /// <remarks>Called via the <see cref="ArtifactSummaryDetailsExtractor"/> delegate.</remarks>
+        /// <remarks>The <see cref="ArtifactSummaryGenerator"/> calls this method from a <see cref="ArtifactSummaryDetailsExtractor"/> delegate.</remarks>
         internal static bool Extract(IElementNavigator nav, ArtifactSummaryDetailsCollection details)
         {
             if (details.IsConceptMap())
@@ -142,45 +188,6 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
             }
             return false;
         }
-    }
-
-    /// <summary>For extracting summary details from a StructureDefinition resource.</summary>
-    public static class StructureDefinitionSummaryDetails
-    {
-        static readonly string StructureDefinitionTypeName = ResourceType.StructureDefinition.GetLiteral();
-
-        public static readonly string StructureDefinitionKindKey = nameof(GetStructureDefinitionKind);
-        public static readonly string StructureDefinitionConstrainedTypeKey = nameof(GetStructureDefinitionConstrainedType);
-        public static readonly string StructureDefinitionContextTypeKey = nameof(GetStructureDefinitionContextType);
-        public static readonly string StructureDefinitionBaseKey = nameof(GetStructureDefinitionBase);
-
-        public static string GetStructureDefinitionKind(this IArtifactSummaryDetailsProvider details) => details[StructureDefinitionKindKey] as string;
-        public static string GetStructureDefinitionConstrainedType(this IArtifactSummaryDetailsProvider details) => details[StructureDefinitionConstrainedTypeKey] as string;
-        public static string GetStructureDefinitionContextType(this IArtifactSummaryDetailsProvider details) => details[StructureDefinitionContextTypeKey] as string;
-        public static string GetStructureDefinitionBase(this IArtifactSummaryDetailsProvider details) => details[StructureDefinitionBaseKey] as string;
-
-        public static bool IsStructureDefinition(this IArtifactSummaryDetailsProvider details) => details.GetResourceType() == StructureDefinitionTypeName;
-
-        /// <summary>Extract summary details from a StructureDefinition resource.</summary>
-        /// <returns><c>true</c> if the current target is a StructureDefinition, or <c>false</c> otherwise.</returns>
-        /// <remarks>Called via the <see cref="ArtifactSummaryDetailsExtractor"/> delegate.</remarks>
-        internal static bool Extract(IElementNavigator nav, ArtifactSummaryDetailsCollection details)
-        {
-            if (details.IsStructureDefinition())
-            {
-                // Explicit extractor chaining
-                if (ConformanceSummaryDetails.Extract(nav, details))
-                {
-                    nav.TryExtractValue(details, StructureDefinitionKindKey, "kind");
-                    nav.TryExtractValue(details, StructureDefinitionConstrainedTypeKey, "constrainedType");
-                    nav.TryExtractValue(details, StructureDefinitionContextTypeKey, "contextType");
-                    nav.TryExtractValue(details, StructureDefinitionBaseKey, "base");
-                }
-                return true;
-            }
-            return false;
-        }
-
     }
 
 }

@@ -7,6 +7,10 @@ using System.Diagnostics;
 namespace Hl7.Fhir.Specification.Tests.Source.Summary
 {
     /// <summary>Represents summary information extracted from a FHIR artifact.</summary>
+    /// <remarks>
+    /// Implements the <see cref="IArtifactSummaryDetailsProvider"/> interface for
+    /// generic access to the extracted summary details.
+    /// </remarks>
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
     public class ArtifactSummary : IArtifactSummaryDetailsProvider
     {
@@ -75,6 +79,7 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         protected virtual string DebuggerDisplay
             => $"{GetType().Name} for {ResourceType} | Origin: {Origin}"
-                + (IsFaulted ? $" | Error: {Error.Message}" : string.Empty);
+            // + (IsFaulted ? $" | Error: {Error.Message}" : string.Empty);
+             + $"{(IsFaulted ? " | Error: " + Error.Message : string.Empty)}";
     }
 }

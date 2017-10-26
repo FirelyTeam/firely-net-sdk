@@ -6,8 +6,8 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
 {
     /// <summary>Common interface for retrieving artifact summary details by key.</summary>
     /// <remarks>
-    /// Implemented by both <see cref="ArtifactSummary"/> and <see cref="ArtifactSummaryDetailsCollection"/>.
-    /// Target of common extension methods for retrieving specific summary details.
+    /// Implemented by <see cref="ArtifactSummaryDetailsCollection"/> as well as <see cref="ArtifactSummary"/>.
+    /// Allows common extension methods for retrieving specific summary details.
     /// </remarks>
     public interface IArtifactSummaryDetailsProvider
     {
@@ -17,13 +17,13 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         object this[string key] { get; }
     }
 
-    /// <summary>Associative container for storing and retrieving artifact summary details by key.</summary>
+    /// <summary>Stores and retrieves artifact summary details by key.</summary>
     /// <remarks>
     /// The <see cref="ArtifactSummaryGenerator"/> creates a new <see cref="ArtifactSummaryDetailsCollection"/>
-    /// instance for each artifact it has discovered. Then the generator calls all the available
+    /// instance for each input artifact it encounters. Then the generator calls all the default and custom
     /// <see cref="ArtifactSummaryDetailsExtractor"/> delegates to allow them to extract various summary
     /// details from the artifact and store the results into the collection. Finally, the generator
-    /// creates an <see cref="ArtifactSummary"/> instance from the summary details collection.
+    /// creates an <see cref="ArtifactSummary"/> instance from the initialized collection.
     /// </remarks>
     /// <seealso cref="ArtifactSummaryDetailsExtractor"/>.
     /// <seealso cref="ArtifactSummaryGenerator"/>.
@@ -36,8 +36,8 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         /// <summary>Internal ctor.</summary>
         internal ArtifactSummaryDetailsCollection() { }
 
-        /// <summary>Gets or sets the property value associated with the specified collection key.</summary>
-        /// <param name="key">A collection key.</param>
+        /// <summary>Gets or sets the property value associated with the specified key.</summary>
+        /// <param name="key">The key of the value to get or set.</param>
         /// <returns>A property value, or <c>null</c>.</returns>
         public object this[string key]
         {

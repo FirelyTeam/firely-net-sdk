@@ -187,9 +187,9 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
             {
                 NamingSystemSummaryDetails.Extract,
                 // Specific conformance resources first
-                ConceptMapSummaryDetails.Extract,
-                ValueSetSummaryDetails.Extract,
                 StructureDefinitionSummaryDetails.Extract,
+                ValueSetSummaryDetails.Extract,
+                ConceptMapSummaryDetails.Extract,
                 // Fall back for all other conformance resources
                 ConformanceSummaryDetails.Extract
             };
