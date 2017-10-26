@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Serialization
             if (Settings.CustomSerializer != null)
             {
 #pragma warning disable 618
-                bool done = Settings.CustomSerializer.OnBeforeSerializeProperty(prop.Name, instance, _writer);
+                bool done = Settings.CustomSerializer.OnBeforeSerializeProperty(property.Name, instance, _writer);
 #pragma warning restore
                 if (done) return;
             }
