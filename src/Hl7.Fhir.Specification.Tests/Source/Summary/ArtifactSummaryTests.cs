@@ -28,6 +28,25 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
+        public void TestValueSetXmlSummary()
+        {
+            const string path = @"TestData\validation\SectionTitles.valueset.xml";
+            var summary = assertSummary(path);
+
+            // Common properties
+            Assert.AreEqual(ResourceType.ValueSet.GetLiteral(), summary.ResourceType);
+            Assert.IsTrue(summary.IsValueSet());
+
+            // Conformance resource properties
+            Assert.IsNotNull(summary.GetConformanceCanonicalUrl());
+            Assert.AreEqual(@"http://example.org/ValueSet/SectionTitles", summary.GetConformanceCanonicalUrl());
+            Assert.AreEqual("MainBundle Section title codes", summary.GetConformanceName());
+            Assert.AreEqual(ConformanceResourceStatus.Draft.GetLiteral(), summary.GetConformanceStatus());
+
+            Assert.IsNotNull(summary.GetValueSetSystem());
+        }
+
+        [TestMethod]
         public void TestProfilesTypesJson()
         {
             const string path = @"TestData\profiles-types.json";
@@ -43,6 +62,7 @@ namespace Hl7.Fhir.Specification.Tests
                 // Common properties
                 Assert.AreEqual(path, summary.Origin);
                 Assert.AreEqual(ResourceType.StructureDefinition.GetLiteral(), summary.ResourceType);
+                Assert.IsTrue(summary.IsStructureDefinition());
 
                 // Conformance resource properties
                 Assert.IsNotNull(summary.GetConformanceCanonicalUrl());
