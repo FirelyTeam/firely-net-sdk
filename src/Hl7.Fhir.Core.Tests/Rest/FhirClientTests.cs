@@ -26,6 +26,7 @@ namespace Hl7.Fhir.Tests.Rest
         //public static Uri testEndpoint = new Uri("https://localhost:44346/fhir");
         //public static Uri testEndpoint = new Uri("http://localhost:1396/fhir");
         public static Uri testEndpoint = new Uri("http://test.fhir.org/r3");
+        //public static Uri testEndpoint = new Uri("http://vonk.furore.com");
         //public static Uri testEndpoint = new Uri("https://api.fhir.me");
         //public static Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu3");
         //public static Uri testEndpoint = new Uri("http://localhost:49911/fhir");
@@ -1072,6 +1073,33 @@ namespace Hl7.Fhir.Tests.Rest
             {
                 Assert.IsTrue(ex.Status == HttpStatusCode.Forbidden || ex.Status == HttpStatusCode.Unauthorized, "Excpeted a security exception");
             }
+        }
+
+        [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
+        public void TestOperationEverything()
+        {
+            FhirClient client = new FhirClient(testEndpoint)
+            {
+                UseFormatParam = true,
+                PreferredFormat = ResourceFormat.Json
+            };
+
+            // GET operation $everything without parameters
+            var loc = client.TypeOperation<Patient>("everything", null, true);
+            Assert.IsNotNull(loc);
+
+            // POST operation $everything without parameters
+            loc = client.TypeOperation<Patient>("everything", null, false);
+            Assert.IsNotNull(loc);
+
+            // GET operation $everything with 1 parameter
+            // This doesn't work yet. When an operation is used with primitive types then those parameters must be appended to the url as query parameters.
+            // loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Date(2017, 10)), true);
+            // Assert.IsNotNull(loc);
+
+            // POST operation $everything with 1 parameter
+            loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Date(2017, 10)), false);
+            Assert.IsNotNull(loc);
         }
 
     }
