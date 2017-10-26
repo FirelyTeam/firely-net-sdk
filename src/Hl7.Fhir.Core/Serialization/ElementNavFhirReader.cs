@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Serialization
     /// with the POCO-parsers.
     /// </summary>
 #pragma warning disable 612, 618
-    internal class ElementNavFhirReader : IFhirReader, IElementNavigator
+    internal struct ElementNavFhirReader : IFhirReader, IElementNavigator
 #pragma warning restore 612,618
     {
         private IElementNavigator _current;
@@ -120,20 +120,12 @@ namespace Hl7.Fhir.Serialization
                 throw Error.Format($"Xml node of type '{xmlDetails.NodeType}' is unexpected at this point", this);
         }
 
-        public bool MoveToNext(string nameFilter = null)
-        {
-            return _current.MoveToNext(nameFilter);
-        }
+        #region IElementNavigator members
+        public bool MoveToNext(string nameFilter = null) => _current.MoveToNext(nameFilter);
 
-        public bool MoveToFirstChild(string nameFilter = null)
-        {
-            return _current.MoveToFirstChild(nameFilter);
-        }
+        public bool MoveToFirstChild(string nameFilter = null) => _current.MoveToFirstChild(nameFilter);
 
-        public IElementNavigator Clone()
-        {
-            return _current.Clone();
-        }
+        public IElementNavigator Clone() => new ElementNavFhirReader(_current.Clone(), DisallowXsiAttributesOnRoot);
 
         public int LineNumber => (_current as IPositionInfo)?.LineNumber ?? -1;
 
@@ -146,5 +138,6 @@ namespace Hl7.Fhir.Serialization
         public object Value => _current.Value;
 
         public string Location => _current.Location;
+        #endregion
     }
 }
