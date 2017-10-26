@@ -25,23 +25,26 @@ namespace Hl7.Fhir.Serialization
         private IFhirWriter _writer;
         private ModelInspector _inspector;
 
-        public ResourceWriter(IFhirWriter writer)
+        public ParserSettings Settings { get; private set; }
+
+        public ResourceWriter(IFhirWriter writer, ParserSettings settings)
         {
             _writer = writer;
             _inspector = BaseFhirParser.Inspector;
+            Settings = settings;
         }
 
-        public void Serialize(object instance, Rest.SummaryType summary, bool contained = false, string root = null)
+        public void Serialize(Resource instance, Rest.SummaryType summary, bool contained = false)
         {
             if (instance == null) throw Error.ArgumentNull(nameof(instance));
 
             var mapping = _inspector.ImportType(instance.GetType());
+            if (mapping == null)
+                throw Error.Format($"Asked to serialize unknown resource type '{instance.GetType()}'");
 
-            var rootName = root ?? mapping.Name;
+            _writer.WriteStartRootObject(mapping.Name, contained);
 
-            _writer.WriteStartRootObject(rootName, contained);
-
-            var complexSerializer = new ComplexTypeWriter(_writer);
+            var complexSerializer = new ComplexTypeWriter(_writer, Settings);
             Coding subsettedTag = null;
             bool createdMetaElement = false;
             if (summary != Rest.SummaryType.False && instance is Resource)

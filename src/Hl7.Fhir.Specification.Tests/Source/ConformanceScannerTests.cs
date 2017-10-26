@@ -105,6 +105,9 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(origin, list[3].Origin);
         }
 
+        internal FhirXmlSerializer FhirXmlSerializer = new FhirXmlSerializer();
+        internal FhirJsonSerializer FhirJsonSerializer = new FhirJsonSerializer();
+
 
         [TestMethod]
         public void TestBundle()
@@ -114,8 +117,8 @@ namespace Hl7.Fhir.Specification.Tests
             var tmpj = tmp + ".json";
 
             (Bundle b, var _, var __) = makeTestData();
-            var bXml = FhirSerializer.SerializeResourceToXml(b);
-            var bJson = FhirSerializer.SerializeResourceToJson(b);
+            var bXml = FhirXmlSerializer.SerializeToString(b);
+            var bJson = FhirJsonSerializer.SerializeToString(b);
 
             File.WriteAllText(tmpx, bXml);
             File.WriteAllText(tmpj, bJson);
@@ -148,8 +151,8 @@ namespace Hl7.Fhir.Specification.Tests
             var tmpj = tmp + ".json";
 
             (_, Resource r, var __) = makeTestData();
-            var rXml = FhirSerializer.SerializeResourceToXml(r);
-            var rJson = FhirSerializer.SerializeResourceToJson(r);
+            var rXml = FhirXmlSerializer.SerializeToString(r);
+            var rJson = FhirJsonSerializer.SerializeToString(r);
 
             File.WriteAllText(tmpx, rXml);
             File.WriteAllText(tmpj, rJson);
@@ -181,8 +184,8 @@ namespace Hl7.Fhir.Specification.Tests
             var tmpj = tmp + ".json";
 
             (var _, var __, Patient p) = makeTestData();
-            var rXml = FhirSerializer.SerializeResourceToXml(p);
-            var rJson = FhirSerializer.SerializeResourceToJson(p);
+            var rXml = FhirXmlSerializer.SerializeToString(p);
+            var rJson = FhirJsonSerializer.SerializeToString(p);
 
             File.WriteAllText(tmpx, rXml);
             File.WriteAllText(tmpj, rJson);

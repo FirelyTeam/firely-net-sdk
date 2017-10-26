@@ -77,14 +77,14 @@ namespace Hl7.Fhir.Serialization
 #pragma warning disable 612,618
         public Base Parse(string json, Type dataType)
         {
-            IFhirReader jsonReader = new ElementNavFhirReader(JsonDomFhirNavigator.Create(json));
+            IFhirReader jsonReader = new ElementNavFhirReader(JsonDomFhirNavigator.Create(json, ModelInfo.GetFhirTypeNameForType(dataType)));
             return Parse(jsonReader, dataType);
         }
 
         // [WMR 20160421] Caller is responsible for disposing reader
         public Base Parse(JsonReader reader, Type dataType)
         {
-            IFhirReader jsonReader = new ElementNavFhirReader(JsonDomFhirNavigator.Create(reader));
+            IFhirReader jsonReader = new ElementNavFhirReader(JsonDomFhirNavigator.Create(reader, ModelInfo.GetFhirTypeNameForType(dataType)));
             return Parse(jsonReader, dataType);
         }
 #pragma warning restore 612, 618
@@ -128,25 +128,31 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-#pragma warning disable 612,618
+        [Obsolete("Create a new navigating parser (Xml/JsonDomFhirNavigator.Create()), and then use one of the Parse() overloads taking IElementNavigator")]
         public T Parse<T>(IFhirReader reader) where T : Base
         {
             return (T)Parse(reader, typeof(T));
         }
 
+        [Obsolete("Create a new navigating parser (Xml/JsonDomFhirNavigator.Create()), and then use one of the Parse() overloads taking IElementNavigator")]
         public Base Parse(IFhirReader reader, Type dataType)
         {
+            if (reader == null) throw Error.ArgumentNull(nameof(reader));
+            if (dataType == null) throw Error.ArgumentNull(nameof(dataType));
+
             if(dataType.CanBeTreatedAsType(typeof(Resource)))
                 return new ResourceReader(reader, Settings).Deserialize();
             else
                 return new ComplexTypeReader(reader, Settings).Deserialize(dataType);
         }
-#pragma warning restore 612, 618
 
         public T Parse<T>(IElementNavigator nav) where T : Base => (T)Parse(nav, typeof(T));
 
         public Base Parse(IElementNavigator nav, Type dataType)
         {
+            if (nav == null) throw Error.ArgumentNull(nameof(nav));
+            if (dataType == null) throw Error.ArgumentNull(nameof(dataType));
+
             var reader = new ElementNavFhirReader(nav, Settings.DisallowXsiAttributesOnRoot);
 
             if (dataType.CanBeTreatedAsType(typeof(Resource)))
@@ -162,34 +168,19 @@ namespace Hl7.Fhir.Serialization
         #region Helper methods / stream creation methods
 
         [Obsolete("Use SerializationUtil.ProbeIsXml() instead")]
-        public static bool ProbeIsXml(string data)
-        {
-            return SerializationUtil.ProbeIsXml(data);
-        }
+        public static bool ProbeIsXml(string data) => SerializationUtil.ProbeIsXml(data);
 
         [Obsolete("Use SerializationUtil.ProbeIsJson() instead")]
-        public static bool ProbeIsJson(string data)
-        {
-            return SerializationUtil.ProbeIsJson(data);
-        }
+        public static bool ProbeIsJson(string data) => SerializationUtil.ProbeIsJson(data);
 
         [Obsolete("Use SerializationUtil.XDocumentFromXmlText() instead")]
-        public static XDocument XDocumentFromXml(string xml)
-        {
-            return SerializationUtil.XDocumentFromXmlText(xml);
-        }
+        public static XDocument XDocumentFromXml(string xml) => SerializationUtil.XDocumentFromXmlText(xml);
 
         [Obsolete("Use FhirXmlParser.CreateFhirReader() instead")]
-        public static IFhirReader FhirReaderFromXml(string xml, bool disallowXsiAttributesOnRoot = false)
-        {
-            return FhirXmlParser.CreateFhirReader(xml, disallowXsiAttributesOnRoot);
-        }
+        public static IFhirReader FhirReaderFromXml(string xml, bool disallowXsiAttributesOnRoot = false) => FhirXmlParser.CreateFhirReader(xml, disallowXsiAttributesOnRoot);
 
         [Obsolete("Use FhirJsonParser.CreateFhirReader() instead")]
-        public static IFhirReader FhirReaderFromJson(string json)
-        {
-            return FhirJsonParser.CreateFhirReader(json);
-        }
+        public static IFhirReader FhirReaderFromJson(string json) => FhirJsonParser.CreateFhirReader(json);
 
         #endregion
 
@@ -206,7 +197,7 @@ namespace Hl7.Fhir.Serialization
         public static Base ParseFromXml(string xml, Type dataType = null)
         {
             if (dataType == null)
-                return _xmlParser.Parse<Resource>(xml);
+                return _xmlParser.Parse<Base>(xml);
             else
                 return _xmlParser.Parse(xml, dataType);
         }
@@ -221,7 +212,7 @@ namespace Hl7.Fhir.Serialization
         public static Base ParseFromJson(string json, Type dataType = null)
         {
             if (dataType == null)
-                return _jsonParser.Parse<Resource>(json);
+                return _jsonParser.Parse<Base>(json);
             else
                 return _jsonParser.Parse(json, dataType);
         }
@@ -245,7 +236,7 @@ namespace Hl7.Fhir.Serialization
         public static Base Parse(XmlReader reader, Type dataType = null)
         {
             if (dataType == null)
-                return _xmlParser.Parse<Resource>(reader);
+                return _xmlParser.Parse<Base>(reader);
             else
                 return _xmlParser.Parse(reader, dataType);
         }
@@ -255,7 +246,7 @@ namespace Hl7.Fhir.Serialization
         public static Base Parse(JsonReader reader, Type dataType = null)
         {
             if (dataType == null)
-                return _jsonParser.Parse<Resource>(reader);
+                return _jsonParser.Parse<Base>(reader);
             else
                 return _jsonParser.Parse(reader, dataType);
         }
