@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Hl7.Fhir.Specification.Tests.Source.Summary
+namespace Hl7.Fhir.Specification.Source.Summary
 {
     /// <summary>Common interface for retrieving artifact summary details by key.</summary>
     /// <remarks>

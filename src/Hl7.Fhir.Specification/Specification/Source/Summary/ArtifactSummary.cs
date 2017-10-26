@@ -4,7 +4,7 @@ using Hl7.Fhir.Specification.Source;
 using System;
 using System.Diagnostics;
 
-namespace Hl7.Fhir.Specification.Tests.Source.Summary
+namespace Hl7.Fhir.Specification.Source.Summary
 {
     /// <summary>Represents summary information extracted from a FHIR artifact.</summary>
     /// <remarks>
@@ -16,10 +16,19 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
     {
         // Available to derived classes
         protected readonly ArtifactSummaryDetailsCollection _details;
+        private readonly ResourceType? _resourceType = null;
 
         /// <summary>Create a new <see cref="ArtifactSummary"/> instance for the specified collection of summary details.</summary>
         /// <param name="details">A collection of summary details extracted from the artifact.</param>
-        public ArtifactSummary(ArtifactSummaryDetailsCollection details) { _details = details; }
+        public ArtifactSummary(ArtifactSummaryDetailsCollection details)
+        {
+            _details = details;
+            var typeName = _details.GetResourceTypeName();
+            if (!string.IsNullOrEmpty(typeName))
+            {
+                _resourceType = ModelInfo.FhirTypeNameToResourceType(ResourceTypeName);
+            }
+        }
 
         /// <summary>Create a new <see cref="ArtifactSummary"/> instance to represent an error that occured while processing an artifact.</summary>
         /// <param name="details">A collection of summary details extracted from the artifact.</param>
@@ -31,6 +40,9 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         /// <param name="error">An exception that occured while processing the artifact.</param>
         /// <returns></returns>
         public static ArtifactSummary FromException(ArtifactSummaryDetailsCollection details, Exception error) => new ArtifactSummary(details, error);
+
+        /// <summary>Create a new <see cref="ArtifactSummary"/> instance to represent an error that occured while processing the list of artifacts.</summary>
+        public static ArtifactSummary FromException(Exception error) => new ArtifactSummary(new ArtifactSummaryDetailsCollection(), error);
 
         /// <summary>Create a new <see cref="ArtifactSummary"/> instance to represent an error that occured while processing an artifact.</summary>
         /// <param name="origin">The original location of the artifact on disk.</param>
@@ -69,16 +81,16 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         public string ResourceUri => _details.GetResourceUri();
 
         /// <summary>Returns the type name of the resource.</summary>
-        public string ResourceType => _details.GetResourceType();
+        public string ResourceTypeName => _details.GetResourceTypeName();
 
         /// <summary>Returns the type of the resource.</summary>
-        public ResourceType? Type => ModelInfo.FhirTypeNameToResourceType(ResourceType);
+        public ResourceType? ResourceType => _resourceType;
 
         // Allow derived classes to override
         // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         protected virtual string DebuggerDisplay
-            => $"{GetType().Name} for {ResourceType} | Origin: {Origin}"
+            => $"{GetType().Name} for {ResourceTypeName} | Origin: {Origin}"
             // + (IsFaulted ? $" | Error: {Error.Message}" : string.Empty);
              + $"{(IsFaulted ? " | Error: " + Error.Message : string.Empty)}";
     }

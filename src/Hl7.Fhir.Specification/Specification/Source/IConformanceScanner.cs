@@ -6,6 +6,9 @@
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
+// OBSOLETE, Replaced by ArtifactSummaryGenerator
+#if false
+
 using System;
 using Hl7.Fhir.Model;
 using System.Collections.Generic;
@@ -19,3 +22,5 @@ namespace Hl7.Fhir.Specification.Source
         List<ConformanceScanInformation> List();
     }
 }
+
+#endif

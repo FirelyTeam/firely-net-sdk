@@ -6,7 +6,7 @@
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
-// [WMR 20171023] OBSOLETE
+// [WMR 20171023] OBSOLETE, Replaced by ArtifactSummaryGenerator
 #if false
 
 using System.Collections.Generic;

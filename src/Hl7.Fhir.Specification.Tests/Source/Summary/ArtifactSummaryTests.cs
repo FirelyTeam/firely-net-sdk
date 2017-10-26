@@ -1,5 +1,5 @@
 ﻿using Hl7.Fhir.Model;
-using Hl7.Fhir.Specification.Tests.Source.Summary;
+using Hl7.Fhir.Specification.Source.Summary;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             const string path = @"TestData\TestPatient.xml";
             var summary = assertSummary(path);
-            Assert.AreEqual(ResourceType.Patient.GetLiteral(), summary.ResourceType);
+            Assert.AreEqual(ResourceType.Patient.GetLiteral(), summary.ResourceTypeName);
         }
 
         [TestMethod]
@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             const string path = @"TestData\TestPatient.json";
             var summary = assertSummary(path);
-            Assert.AreEqual(ResourceType.Patient.GetLiteral(), summary.ResourceType);
+            Assert.AreEqual(ResourceType.Patient.GetLiteral(), summary.ResourceTypeName);
         }
 
         [TestMethod]
@@ -34,8 +34,8 @@ namespace Hl7.Fhir.Specification.Tests
             var summary = assertSummary(path);
 
             // Common properties
-            Assert.AreEqual(ResourceType.ValueSet.GetLiteral(), summary.ResourceType);
-            Assert.IsTrue(summary.IsValueSet());
+            Assert.AreEqual(ResourceType.ValueSet.GetLiteral(), summary.ResourceTypeName);
+            Assert.IsTrue(summary.ResourceType == ResourceType.ValueSet);
 
             // Conformance resource properties
             Assert.IsNotNull(summary.GetConformanceCanonicalUrl());
@@ -61,8 +61,8 @@ namespace Hl7.Fhir.Specification.Tests
 
                 // Common properties
                 Assert.AreEqual(path, summary.Origin);
-                Assert.AreEqual(ResourceType.StructureDefinition.GetLiteral(), summary.ResourceType);
-                Assert.IsTrue(summary.IsStructureDefinition());
+                Assert.AreEqual(ResourceType.StructureDefinition.GetLiteral(), summary.ResourceTypeName);
+                Assert.IsTrue(summary.ResourceType == ResourceType.StructureDefinition);
 
                 // Conformance resource properties
                 Assert.IsNotNull(summary.GetConformanceCanonicalUrl());

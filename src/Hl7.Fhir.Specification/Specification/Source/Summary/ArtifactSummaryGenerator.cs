@@ -3,7 +3,7 @@ using Hl7.Fhir.Serialization;
 using System;
 using System.Collections.Generic;
 
-namespace Hl7.Fhir.Specification.Tests.Source.Summary
+namespace Hl7.Fhir.Specification.Source.Summary
 {
     /// <summary>Represents a factory method that creates a new <see cref="ArtifactSummary"/> instance.</summary>
     /// <param name="typeName">The type name of the artifact.</param>
@@ -73,16 +73,21 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
                 navStream = streamFactory?.Invoke(origin)
                     ?? DefaultNavigatorStreamFactory.Create(origin);
 
+                // Factory returns null for unknown file formats
+                if (navStream == null) { return result; }
+
                 // Use custom or default summary factory
                 if (summaryFactory == null)
                 {
                     summaryFactory = DefaultArtifactSummaryFactory;
                 }
+
                 // Always run default extractors first, then any custom extractors
                 ArtifactSummaryDetailsExtractor[] allExtractors = DefaultArtifactSummaryExtractors;
-                if (extractors.Length > 0)
+                if (extractors != null && extractors.Length > 0)
                 {
-                    Array.Resize(ref allExtractors, DefaultArtifactSummaryExtractors.Length + extractors.Length);
+                    allExtractors = new ArtifactSummaryDetailsExtractor[DefaultArtifactSummaryExtractors.Length + extractors.Length];
+                    DefaultArtifactSummaryExtractors.CopyTo(allExtractors, 0);
                     extractors.CopyTo(allExtractors, DefaultArtifactSummaryExtractors.Length);
                 }
 
@@ -97,7 +102,7 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
                         props[ArtifactSummaryDetails.OriginKey] = origin;
                         props[ArtifactSummaryDetails.PositionKey] = navStream.Position;
                         props[ArtifactSummaryDetails.ResourceUriKey] = navStream.Position;
-                        props[ArtifactSummaryDetails.ResourceTypeKey] = current.Type;
+                        props[ArtifactSummaryDetails.ResourceTypeNameKey] = current.Type;
 
                         var summary = generate(props, current, summaryFactory, allExtractors);
 

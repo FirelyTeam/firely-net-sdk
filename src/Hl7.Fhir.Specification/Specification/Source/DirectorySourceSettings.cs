@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification.Source.Summary;
 using Hl7.Fhir.Utility;
 using System;
 using System.IO;
@@ -48,8 +49,10 @@ namespace Hl7.Fhir.Specification.Source
             other.Masks = this.Masks;
             other.Includes = this.Includes;
             other.Excludes = this.Excludes;
+            other.FormatPreference = this.FormatPreference;
             other.StreamFactory = this.StreamFactory;
-            other.Harvester = this.Harvester;
+            other.SummaryFactory = this.SummaryFactory;
+            other.SummaryDetailsExtractors = this.SummaryDetailsExtractors;
         }
 
         /// <summary>Returns an exact clone of the current configuration settings instance.</summary>
@@ -228,25 +231,45 @@ namespace Hl7.Fhir.Specification.Source
         /// </summary>
         public DirectorySource.DuplicateFilenameResolution FormatPreference { get; set; } = DirectorySource.DuplicateFilenameResolution.PreferXml;
 
-        /// <summary>
-        /// Gets or sets the <see cref="NavigatorStreamFactory"/> delegate that the <see cref="DirectorySource"/>
-        /// uses to create <see cref="INavigatorStream"/> instances for harvesting summary information from
-        /// FHIR artifacts, independent of the underlying resource serialization format.
-        /// <para>
-        /// Calls <see cref="DefaultNavigatorStreamFactory.Create"/> by default.
-        /// </para>
-        /// </summary>
+        /// <summary>Gets or sets a custom <see cref="NavigatorStreamFactory"/> delegate.</summary>
+        /// <remarks>
+        /// The <see cref="ArtifactSummaryGenerator"/> depends on the <see cref="INavigatorStream"/>
+        /// interface to extract summary information from FHIR artifacts, independent of the underlying
+        /// resource serialization format. By default, the <see cref="DirectorySource"/> calls the
+        /// <see cref="DefaultNavigatorStreamFactory.Create(string)"/> method to create
+        /// a concrete navigator stream for the current file. The default factory supports
+        /// navigators for "*.xml" and "*.json" files.
+        /// The caller can override the default navigator streams by specifying a custom
+        /// <see cref="NavigatorStreamFactory"/> delegate. This allows clients to implement
+        /// support for alternative serialization formats.
+        /// </remarks>
         public NavigatorStreamFactory StreamFactory { get; set; } = DefaultNavigatorStreamFactory.Create;
 
         /// <summary>
-        /// Gets or sets the <see cref="ArtifactSummaryHarvester"/> delegate that the <see cref="DirectorySource"/>
-        /// uses to harvest summary information from all the available FHIR artifacts,
-        /// independent of the underlying resource serialization format.
-        /// <para>
-        /// Calls <see cref="DefaultArtifactSummaryHarvester.Harvest"/> by default.
-        /// </para>
+        /// Gets or sets a custom <see cref="ArtifactSummaryFactory"/> delegate that the
+        /// <see cref="ArtifactSummaryGenerator"/> calls to create the final <see cref="ArtifactSummary"/>
+        /// instance.
         /// </summary>
-        public ArtifactSummaryHarvester Harvester { get; set; } = DefaultArtifactSummaryHarvester.Harvest;
+        /// <remarks>
+        /// By default, the <see cref="ArtifactSummaryGenerator"/> returns a list of <see cref="ArtifactSummary"/>
+        /// instances. Alternatively, you can specify a custom <see cref="ArtifactSummaryFactory"/> delegate
+        /// to create custom return values, depending on the extracted summary details. This allows you to
+        /// generate various specialized subclasses with additional strongly typed properties.
+        /// </remarks>
+        public ArtifactSummaryFactory SummaryFactory { get; set; }
+
+        /// <summary>
+        /// An array of <see cref="ArtifactSummaryDetailsExtractor"/> delegates for
+        /// extracting custom summary details from an artifact.
+        /// </summary>
+        /// <remarks>
+        /// For each artifact, the <see cref="ArtifactSummaryGenerator"/> first extracts the default
+        /// summary details and then calls any custom extractor delegates in the specified order.
+        /// If a delegate returns <c>true</c> to signal extraction has finished, the generator will not
+        /// call any of the remaining delegates, but immediately proceed to create the
+        /// <see cref="ArtifactSummary"/> return value.
+        /// </remarks>
+        public ArtifactSummaryDetailsExtractor[] SummaryDetailsExtractors { get; set; }
 
     }
 

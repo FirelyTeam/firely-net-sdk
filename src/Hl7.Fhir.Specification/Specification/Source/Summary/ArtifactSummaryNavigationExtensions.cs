@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 using System.Diagnostics;
 
-namespace Hl7.Fhir.Specification.Tests.Source.Summary
+namespace Hl7.Fhir.Specification.Source.Summary
 {
     // Q: Move to separate namespace in order to avoid pollution?
 
@@ -32,7 +32,10 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
             var value = nav.Value;
             if (value != null)
             {
-                details[key] = value;
+                // Assumption: navigator always returns string values (?)
+                Debug.Assert(nav.Value is string);
+
+                details[key] = (string)value;
                 return true;
             }
             return false;
@@ -67,12 +70,15 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         /// <summary>Add the value of the current element to a list, if not missing or empty.</summary>
         /// <param name="nav">An <see cref="IElementNavigator"/> instance.</param>
         /// <param name="values">A list of values.</param>
-        public static bool TryExtractValue(this IElementNavigator nav, List<object> values)
+        public static bool TryExtractValue(this IElementNavigator nav, List<string> values)
         {
             var value = nav.Value; // ?.ToString();
             if (value != null)
             {
-                values.Add(value);
+                // Assumption: navigator always returns string values (?)
+                Debug.Assert(nav.Value is string);
+
+                values.Add((string)value);
                 return true;
             }
             return false;
@@ -88,7 +94,7 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         {
             if (nav.Find(element))
             {
-                var values = new List<object>();
+                var values = new List<string>();
                 do
                 {
                     var childNav = nav.Clone();
@@ -105,6 +111,7 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
             }
             return false;
         }
+
     }
 
 }

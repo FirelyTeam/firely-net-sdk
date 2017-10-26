@@ -13,17 +13,19 @@
 // Enable for async, disable for sync
 #define PREPARE_PARALLEL_FOR
 
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification.Source.Summary;
+using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
-using System.IO;
-using Hl7.Fhir.Rest;
-using Hl7.Fhir.Utility;
-using Hl7.Fhir.Serialization;
 using System.Diagnostics;
+using System.Linq;
+using System.IO;
 using System.Threading.Tasks;
+
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -275,7 +277,7 @@ namespace Hl7.Fhir.Specification.Source
         public IEnumerable<ArtifactSummary> List()
         {
             prepareResources();
-            return _resourceScanInformation.AsEnumerable();
+            return _resourceScanInformation; //.AsEnumerable();
         }
 
         /// <summary>Returns a list of error information for FHIR artifacts where summary information could not be retrieved.</summary>
@@ -339,7 +341,7 @@ namespace Hl7.Fhir.Specification.Source
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
             prepareResources();
 
-            var info = _resourceScanInformation.SingleOrDefault(ci => ci.ResourceUri == uri);
+            var info = _resourceScanInformation.ResolveByUri(uri);
             if (info == null) return null;
 
             return getResourceFromScannedSource<Resource>(info);
@@ -351,10 +353,7 @@ namespace Hl7.Fhir.Specification.Source
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
             prepareResources();
 
-            var info = _resourceScanInformation
-                .OfType<ConformanceResourceSummary>()
-                .SingleOrDefault(ci => ci.Canonical == uri);
-
+            var info = _resourceScanInformation.ResolveByCanonicalUri(uri);
             if (info == null) return null;
 
             return getResourceFromScannedSource<Resource>(info);
@@ -364,10 +363,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             prepareResources();
 
-            var info = _resourceScanInformation
-                .OfType<ValueSetSummary>()
-                .SingleOrDefault(ci => ci.ValueSetSystem == system);
-
+            var info = _resourceScanInformation.ResolveValueSet(system);
             if (info == null) return null;
 
             return getResourceFromScannedSource<ValueSet>(info);
@@ -382,17 +378,7 @@ namespace Hl7.Fhir.Specification.Source
 
             prepareResources();
 
-            IEnumerable<ConceptMapSummary> infoList = _resourceScanInformation.OfType<ConceptMapSummary>();
-            if (sourceUri != null)
-            {
-                infoList = infoList.Where(ci => ci.ConceptMapSource == sourceUri);
-            }
-
-            if (targetUri != null)
-            {
-                infoList = infoList.Where(ci => ci.ConceptMapTarget == targetUri);
-            }
-
+            var infoList = _resourceScanInformation.ConceptMaps(sourceUri, targetUri);
             return infoList.Select(info => getResourceFromScannedSource<ConceptMap>(info)).Where(r => r != null);
         }
 
@@ -401,10 +387,7 @@ namespace Hl7.Fhir.Specification.Source
             if (uniqueId == null) throw Error.ArgumentNull(nameof(uniqueId));
             prepareResources();
 
-            var info = _resourceScanInformation
-                .OfType<NamingSystemSummary>()
-                .SingleOrDefault(ci => ci.UniqueIds.Contains(uniqueId));
-
+            var info = _resourceScanInformation.ResolveNamingSystem(uniqueId);
             if (info == null) return null;
 
             return getResourceFromScannedSource<NamingSystem>(info);
@@ -601,27 +584,29 @@ namespace Hl7.Fhir.Specification.Source
 
             var settings = _settings;
             var uniqueArtifacts = ResolveDuplicateFilenames(_artifactFilePaths, _settings.FormatPreference);
-            var scanInfo = _resourceScanInformation = scanPaths(uniqueArtifacts, settings.StreamFactory, settings.Harvester);
+            var scanInfo = _resourceScanInformation = scanPaths(uniqueArtifacts, settings.StreamFactory, settings.SummaryFactory, settings.SummaryDetailsExtractors);
 
             // Check for duplicate canonical urls, this is forbidden within a single source (and actually, universally,
             // but if another source has the same url, the order of polling in the MultiArtifactSource matters)
-            var doubles = from ci in scanInfo.OfType<ConformanceResourceSummary>()
-                          where ci.Canonical != null
-                          group ci by ci.Canonical into g
-                          where g.Count() > 1
-                          select g;
+            var duplicates =
+                from cr in scanInfo.ConformanceResources()
+                let canonical = cr.GetConformanceCanonicalUrl()
+                where canonical != null
+                group cr by canonical into g
+                where g.Count() > 1 // g.Skip(1).Any()
+                select g;
 
-            if (doubles.Any())
+            if (duplicates.Any())
             {
                 // [WMR 20171023] TODO: Allow configuration, e.g. optional callback delegate
-                throw new CanonicalUrlConflictException(doubles.Select(d => new CanonicalUrlConflictException.CanonicalUrlConflict(d.Key, d.Select(ci => ci.Origin))));
+                throw new CanonicalUrlConflictException(duplicates.Select(d => new CanonicalUrlConflictException.CanonicalUrlConflict(d.Key, d.Select(ci => ci.Origin))));
             }
 
             _resourcesPrepared = true;
             return;
         }
 
-        private static List<ArtifactSummary> scanPaths(List<string> paths, NavigatorStreamFactory factory, ArtifactSummaryHarvester harvester)
+        private static List<ArtifactSummary> scanPaths(List<string> paths, NavigatorStreamFactory streamFactory, ArtifactSummaryFactory summaryFactory, ArtifactSummaryDetailsExtractor[] extractors)
         {
             // [WMR 20171023] Note: some files may no longer exist
 
@@ -665,7 +650,7 @@ namespace Hl7.Fhir.Specification.Source
                     i => {
                         // Harvest summaries from single file
                         // Save each result to a separate array entry (no locking required)
-                        results[i] = harvester.HarvestAll(factory, paths[i]);
+                        results[i] = ArtifactSummaryGenerator.Generate(paths[i], streamFactory, summaryFactory, extractors);
                     });
             }
             catch (AggregateException aex)
@@ -684,14 +669,13 @@ namespace Hl7.Fhir.Specification.Source
             scanResult.AddRange(results.SelectMany(r => r ?? Enumerable.Empty<ArtifactSummary>()));
             if (ex != null)
             {
-                scanResult.Add(ArtifactSummary.FromException(null, ex));
+                scanResult.Add(ArtifactSummary.FromException(ex));
             }
 #else
             foreach (var filePath in paths)
             {
-                var summaries = harvester.HarvestAll(factory, filePath);
+                var summaries = ArtifactSummaryGenerator.Generate(filePath, streamFactory, summaryFactory, extractors);
                 scanResult.AddRange(summaries);
-
             }
 #endif
             // sw.Stop();
@@ -713,6 +697,10 @@ namespace Hl7.Fhir.Specification.Source
             var path = info.Origin;
             var factory = _settings.StreamFactory;
             var navStream = factory(path);
+
+            // TODO: Handle exceptions & null return values
+            // e.g. file may have been deleted/renamed since last scan
+
             // Advance stream to the target resource (e.g. specific Bundle entry)
             if (navStream.Seek(info.Position))
             {
