@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Specification.Source
             return _resourceScanInformation; //.AsEnumerable();
         }
 
-        /// <summary>Returns a list of error information for FHIR artifacts where summary information could not be retrieved.</summary>
+        /// <summary>Returns a list of <see cref="ArtifactSummary"/> instances with error information.</summary>
         /// <returns></returns>
         public IEnumerable<ArtifactSummary> Errors()
         {
@@ -289,10 +289,8 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>
-        /// Returns a list of summary information describing all valid
-        /// FHIR artifacts that exist in the specified content directory.
+        /// Returns a list of <see cref="ArtifactSummary"/> information for all the available FHIR artifacts.
         /// </summary>
-        /// <returns></returns>
         public IEnumerable<ArtifactSummary> List(ResourceType? filter)
         {
             prepareResources();
@@ -305,6 +303,7 @@ namespace Hl7.Fhir.Specification.Source
             return scan;
         }
 
+        /// <summary>Returns a list of artifact filenames.</summary>
         public IEnumerable<string> ListArtifactNames()
         {
             prepareFiles();
@@ -312,23 +311,19 @@ namespace Hl7.Fhir.Specification.Source
             return _artifactFilePaths.Select(path => Path.GetFileName(path));
         }
 
+        /// <summary>Resolve the artifact with the specified filename.</summary>
         public Stream LoadArtifactByName(string name)
         {
             if (name == null) throw Error.ArgumentNull(nameof(name));
 
             prepareFiles();
 
-            // var searchString = (Path.DirectorySeparatorChar + name).ToLower();
-            var searchString = Path.DirectorySeparatorChar + name;
-
-            // NB: uses _artifactFiles (full paths), not ArtifactFiles (which only has public list of names, not full path)
-            // var fullFileName = _artifactFilePaths.SingleOrDefault(fn => fn.ToLower().EndsWith(searchString));
-            var fullFileName = _artifactFilePaths.SingleOrDefault(fn => fn.EndsWith(searchString, ExtensionComparison));
-
+            var fullFileName = _artifactFilePaths.SingleOrDefault(path => path.EndsWith(Path.DirectorySeparatorChar + name, ExtensionComparison));
             return fullFileName == null ? null : File.OpenRead(fullFileName);
         }
 
 
+        /// <summary>Returns a list of resource uris.</summary>
         public IEnumerable<string> ListResourceUris(ResourceType? filter = null)
         {
             var scan = List(filter);
@@ -336,6 +331,7 @@ namespace Hl7.Fhir.Specification.Source
         }
 
 
+        /// <summary>Resolve the resource with the specified uri.</summary>
         public Resource ResolveByUri(string uri)
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
@@ -348,6 +344,7 @@ namespace Hl7.Fhir.Specification.Source
 
         }
 
+        /// <summary>Resolve the conformance resource with the specified canonical url.</summary>
         public Resource ResolveByCanonicalUri(string uri)
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
@@ -359,6 +356,7 @@ namespace Hl7.Fhir.Specification.Source
             return getResourceFromScannedSource<Resource>(info);
         }
 
+        /// <summary>Resolve the ValueSet with the specified codeSystem system.</summary>
         public ValueSet FindValueSetBySystem(string system)
         {
             prepareResources();
@@ -369,6 +367,7 @@ namespace Hl7.Fhir.Specification.Source
             return getResourceFromScannedSource<ValueSet>(info);
         }
 
+        /// <summary>Resolve ConceptMap resources with the specified source and/or target uri(s).</summary>
         public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
         {
             if (sourceUri == null && targetUri == null)
@@ -382,6 +381,7 @@ namespace Hl7.Fhir.Specification.Source
             return infoList.Select(info => getResourceFromScannedSource<ConceptMap>(info)).Where(r => r != null);
         }
 
+        /// <summary>Resolve the NamingSystem resource with the specified uniqueId.</summary>
         public NamingSystem FindNamingSystem(string uniqueId)
         {
             if (uniqueId == null) throw Error.ArgumentNull(nameof(uniqueId));
@@ -695,8 +695,9 @@ namespace Hl7.Fhir.Specification.Source
         {
             // File path of the containing resource file (could be a Bundle)
             var path = info.Origin;
-            var factory = _settings.StreamFactory;
-            var navStream = factory(path);
+
+            var navStream = _settings.StreamFactory?.Invoke(path)
+                ?? DefaultNavigatorStreamFactory.Create(path);
 
             // TODO: Handle exceptions & null return values
             // e.g. file may have been deleted/renamed since last scan

@@ -7,8 +7,6 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.IO;
 using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Specification.Source
@@ -28,7 +26,7 @@ namespace Hl7.Fhir.Specification.Source
         /// </summary>
         /// <param name="uri"></param>
         /// <returns></returns>
-        Resource ResolveByCanonicalUri(string uri);
+        Resource ResolveByCanonicalUri(string uri); // IConformanceResource
     }
 
 }

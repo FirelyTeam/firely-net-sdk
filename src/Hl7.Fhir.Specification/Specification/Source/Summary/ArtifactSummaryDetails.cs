@@ -38,13 +38,7 @@ namespace Hl7.Fhir.Specification.Source.Summary
             {
                 var ids = GetNamingSystemUniqueId(details);
                 // return ids != null ? ids.Contains(id) : false;
-                if (ids != null)
-                {
-                    for (int i = 0; i < ids.Length; i++)
-                    {
-                        if (ids[i] == uniqueId) { return true; }
-                    }
-                }
+                return ids != null && Array.IndexOf(ids, uniqueId) > -1;
             }
             return false;
         }
