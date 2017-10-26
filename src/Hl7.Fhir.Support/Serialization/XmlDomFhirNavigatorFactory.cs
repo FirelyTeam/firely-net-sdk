@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -19,6 +20,7 @@ namespace Hl7.Fhir.Serialization
         {
             XDocument doc = null;
 
+            // [WMR 20171017] Why catch and rethrow? Original error info is lost...
             try
             {
                 doc = SerializationUtil.XDocumentFromReader(reader);
@@ -28,7 +30,7 @@ namespace Hl7.Fhir.Serialization
                 throw Error.Format("Cannot parse xml: " + xec.Message);
             }
 
-            return new XmlDomFhirNavigator(doc.Root);
+            return Create(doc.Root);
         }
 
         public static IElementNavigator Create(XDocument doc)

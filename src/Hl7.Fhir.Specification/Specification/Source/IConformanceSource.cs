@@ -7,9 +7,7 @@
  */
 
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.IO;
 using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Specification.Source
@@ -23,6 +21,9 @@ namespace Hl7.Fhir.Specification.Source
         /// <param name="filter"></param>
         /// <returns></returns>
         IEnumerable<string> ListResourceUris(ResourceType? filter = null);
+
+        // [WMR 20171011] New
+        // IEnumerable<ArtifactSummary> List(ResourceType? filter = null);
 
         /// <summary>
         /// Find a CodeSystem by a ValueSet canonical url that contains all codes from that codesystem.

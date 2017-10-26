@@ -14,11 +14,14 @@ using Hl7.Fhir.Utility;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
+    // [WMR 20171016] Renamed from: ArtifactResolverTests
+
     [TestClass]
-    public class ArtifactResolverTests
+    public class ConformanceSourceTests 
     {
         [ClassInitialize]
         public static void SetupSource(TestContext t)
@@ -352,26 +355,68 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsNotNull(xmlSource.LoadArtifactByName("profiles-types.xml"));
 
-            var duration = runTest(jsonSource);
+            var xmlSourceLarge = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), includeSubdirectories: true)
+            {
+                Mask = "*.xml",
+            };
+
+            Assert.IsNotNull(xmlSourceLarge.LoadArtifactByName("profiles-types.xml"));
+
+            (var duration, var count) = runTest(jsonSource);
+            Debug.WriteLine($"jsonSource: {count} resources, duration {duration} ms");
             Assert.IsTrue(duration < 1000);
 
-            duration = runTest(xmlSource);
+            (duration, count) = runTest(xmlSource);
+            Debug.WriteLine($"xmlSource: {count} resources, duration {duration} ms");
             Assert.IsTrue(duration < 500);
 
-            long runTest(DirectorySource s)
+            (duration, count) = runTest(xmlSourceLarge);
+            Debug.WriteLine($"xmlSourceLarge: {count} resources, duration {duration} ms");
+            Assert.IsTrue(duration < 10000);
+
+            (long duration, int count) runTest(DirectorySource s)
             {
                 var sw = new Stopwatch();
                 sw.Start();
 
+                int cnt = 0;
                 for (var repeat = 0; repeat < 10; repeat++)
                 {
                     s.Refresh();  // force reload of whole file
-                    s.ListResourceUris().Count();
+                    cnt = s.ListResourceUris().Count();
                 }
 
                 sw.Stop();
-                return sw.ElapsedMilliseconds;
+                return (sw.ElapsedMilliseconds, cnt);
             }
+        }
+
+        [TestMethod]
+        public void ListSummaries()
+        {
+            var source = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), includeSubdirectories: true);
+
+            var sd = source.List(ResourceType.StructureDefinition); Assert.IsTrue(sd.Any());
+            var sm = source.List(ResourceType.StructureMap); Assert.IsTrue(sd.Any());
+            var de = source.List(ResourceType.DataElement); Assert.IsFalse(de.Any());
+            var cf = source.List(ResourceType.CapabilityStatement); Assert.IsTrue(cf.Any());
+            var md = source.List(ResourceType.MessageDefinition); Assert.IsFalse(md.Any());
+            var od = source.List(ResourceType.OperationDefinition); Assert.IsTrue(od.Any());
+            var sp = source.List(ResourceType.SearchParameter); Assert.IsFalse(sp.Any());
+            var cd = source.List(ResourceType.CompartmentDefinition); Assert.IsFalse(md.Any());
+            var ig = source.List(ResourceType.ImplementationGuide); Assert.IsFalse(ig.Any());
+
+            var cs = source.List(ResourceType.CodeSystem); Assert.IsFalse(cs.Any());
+            var vs = source.List(ResourceType.ValueSet); Assert.IsTrue(vs.Any());
+            var cm = source.List(ResourceType.ConceptMap); Assert.IsFalse(cm.Any());
+            var ep = source.List(ResourceType.ExpansionProfile); Assert.IsFalse(ep.Any());
+            var ns = source.List(ResourceType.NamingSystem); Assert.IsFalse(ns.Any());
+
+            var all = source.List();
+
+            Assert.AreEqual(sd.Count() + sm.Count() + de.Count() + cf.Count() + md.Count() + od.Count() +
+                        sp.Count() + cd.Count() + ig.Count() + cs.Count() + vs.Count() + cm.Count() +
+                        ep.Count() + ns.Count(), all.Count());
         }
     }
 }

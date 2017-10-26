@@ -37,8 +37,16 @@ namespace Hl7.Fhir.Specification.Source
        
         private bool _prepared = false;
         private string _mask;
+        private DirectorySource _filesSource;
 
-        public string ZipPath { get; private set; }
+        /// <summary>Create a new <see cref="ZipSource"/> instance for the ZIP archive with the specified file path.</summary>
+        /// <param name="zipPath">File path to a ZIP archive.</param>
+        public ZipSource(string zipPath)
+        {
+            ZipPath = zipPath;
+        }
+
+        public string ZipPath { get; }
 
         /// <summary>
         /// Gets or sets the search string to match against the names of files in the ZIP archive.
@@ -58,20 +66,15 @@ namespace Hl7.Fhir.Specification.Source
             }
         }
 
-        public ZipSource(string zipPath)
-        {
-            ZipPath = zipPath;
-        }
-
-
-        private DirectorySource _filesSource;
+        /// <summary>Returns a reference to the internal conformance source that exposes the contents of the ZIP archive.</summary>
+        public IConformanceSource Source => _filesSource;
 
         /// <summary>
         /// Unpacks the zip-file and constructs a new FileArtifactSource on the unzipped directory
         /// </summary>
         /// <remarks>This is an expensive operations and should be run once. As well, it unpacks files on the
         /// file system and is not thread-safe.</remarks>
-        private void prepare()
+        public void Prepare()
         {
             if (_prepared) return;
 
@@ -88,50 +91,50 @@ namespace Hl7.Fhir.Specification.Source
 
         public IEnumerable<string> ListArtifactNames()
         {
-            prepare();
+            Prepare();
             return _filesSource.ListArtifactNames();
         }
 
         public Stream LoadArtifactByName(string name)
         {
-            prepare();
+            Prepare();
             return _filesSource.LoadArtifactByName(name);
         }
 
 
         public IEnumerable<string> ListResourceUris(ResourceType? filter = default(ResourceType?))
         {
-            prepare();
+            Prepare();
             return _filesSource.ListResourceUris(filter);
         }
 
         public CodeSystem FindCodeSystemByValueSet(string system)
         {
-            prepare();
+            Prepare();
             return _filesSource.FindCodeSystemByValueSet(system);
         }
 
         public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
         {
-            prepare();
+            Prepare();
             return _filesSource.FindConceptMaps(sourceUri, targetUri);
         }
 
         public NamingSystem FindNamingSystem(string uniqueid)
         {
-            prepare();
+            Prepare();
             return _filesSource.FindNamingSystem(uniqueid);
         }
 
         public Resource ResolveByUri(string uri)
         {
-            prepare();
+            Prepare();
             return _filesSource.ResolveByUri(uri);
         }
 
         public Resource ResolveByCanonicalUri(string uri)
         {
-            prepare();
+            Prepare();
             return _filesSource.ResolveByCanonicalUri(uri);
         }
     }
