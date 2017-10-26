@@ -74,8 +74,9 @@ namespace Hl7.Fhir.Serialization
         /// <remarks>Call Current.Type to determine the type of the currently enumerated resource.</remarks>
         public string ResourceType { get; private set; }
 
-        /// <summary>The full path of the current resource file, or of the containing resource bundle file.</summary>
-        public string Path => _fileStream?.Name;
+        // [WMR 20171023] Obsolete, to make INavigatorStream more generic (e.g. allow PoCo input)
+        // <summary>The full path of the current resource file, or of the containing resource bundle file.</summary>
+        // public string Path => _fileStream?.Name;
 
         /// <summary>Returns <c>true</c> if the underlying file represents a Bundle resource, or <c>false</c> otherwise.</summary>
         public bool IsBundle => ResourceType == "Bundle";
@@ -158,7 +159,11 @@ namespace Hl7.Fhir.Serialization
                 {
                     var resourceId = resourceNode.Elements(XmlNs.XFHIR + "id").Attributes("value").SingleOrDefault();
                     if (resourceId != null)
-                        canonicalUrl = "http://example.org/" + resourceNode.Name.LocalName + "/" + resourceId.Value;
+                    {
+                        // [WMR 20171023] This is not a Bundle, so ResourceType
+                        // property returns the actual type of the current entry
+                        canonicalUrl = NavigatorStreamHelper.FormatCanonicalUrlForBundleEntry(ResourceType, resourceId.Value);
+                    }
                 }
 
                 if (canonicalUrl != null && (fullUrl == null || canonicalUrl == fullUrl))

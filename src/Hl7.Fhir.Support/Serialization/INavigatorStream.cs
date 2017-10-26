@@ -43,11 +43,11 @@ namespace Hl7.Fhir.Serialization
         /// <remarks>Call Current.Type to determine the type of the currently enumerated resource.</remarks>
         string ResourceType { get; }
 
-        /// <summary>The full path of the current resource file, or of the containing resource bundle file.</summary>
-        string Path { get; }
+        // [WMR 20171023] Obsolete, to make INavigatorStream more generic (e.g. allow PoCo input)
+        // <summary>The full path of the current resource file, or of the containing resource bundle file.</summary>
+        // string Path { get; }
 
         /// <summary>Returns <c>true</c> if the underlying file represents a Bundle resource, or <c>false</c> otherwise.</summary>
         bool IsBundle { get; }
     }
-
 }

@@ -77,8 +77,9 @@ namespace Hl7.Fhir.Serialization
         /// <remarks>Call Current.Type to determine the type of the currently enumerated resource.</remarks>
         public string ResourceType { get; private set; }
 
-        /// <summary>The full path of the current resource file, or of the containing resource bundle file.</summary>
-        public string Path => _fileStream?.Name;
+        // [WMR 20171023] Obsolete, to make INavigatorStream more generic (e.g. allow PoCo input)
+        // <summary>The full path of the current resource file, or of the containing resource bundle file.</summary>
+        // public string Path => _fileStream?.Name;
 
         /// <summary>Returns <c>true</c> if the underlying file represents a Bundle resource, or <c>false</c> otherwise.</summary>
         public bool IsBundle => ResourceType == "Bundle";
@@ -147,16 +148,12 @@ namespace Hl7.Fhir.Serialization
                         // Otherwise try to initialize from resource id
                         if (canonicalUrl == null)
                         {
-                            // [WMR 20171016] Note: ResourceType property returns container type (e.g. Bundle)
-                            // But here we need the type of the *current* entry
-                            // Q: Should we call scanForResourceType() ?
-                            //    Inefficient; must reset/recreate reader afterwards...
-                            var resType = resource.Value<string>("resourceType");
-
                             var resourceId = resource.Value<string>("id");
                             if (resourceId != null)
                             {
-                                canonicalUrl = "http://example.org/" + resType + "/" + resourceId;
+                                // [WMR 20171023] This is not a Bundle, so ResourceType
+                                // property returns the actual type of the current entry
+                                canonicalUrl = NavigatorStreamHelper.FormatCanonicalUrlForBundleEntry(ResourceType, resourceId);
                             }
                         }
 

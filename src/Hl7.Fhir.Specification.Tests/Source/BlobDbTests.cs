@@ -105,13 +105,40 @@ namespace Hl7.Fhir.Specification.Tests.Source
         }
 
 
+// [WMR 20171011] TODO - Rewrite to IElementNavigator
+#if false
+
         [TestMethod]
         public void CreateZipFromBundle()
         {
             var filename = @"C:\git\fhir-net-api\src\Hl7.Fhir.Specification\data\profiles-resources.xml";
 
+
+            ArtifactSummaryHarvester harvester = DefaultArtifactSummaryHarvester.Harvest;
             using (var zs = new FhirArchive(@"c:\temp\specification-bundle.zip"))
             {
+                var summaries = harvester.HarvestAll(DefaultNavigatorStreamFactory.Create, filename);
+                foreach (var item in summaries)
+                {
+                    var uri = new Uri(item.ResourceUri);
+                    //var type = item.ResourceTypeName;
+                    var entryName = uri.Host + uri.AbsolutePath + ".xml";
+                    var xmlContents = item.element.ToString(); ???
+
+                    var summary = new List<SummaryItem>
+                        {
+                            new SummaryItem { Name = "url", Value = item.ResourceUri, Indexed = true },
+                            new SummaryItem { Name = "type", Value = item.ResourceTypeName, Indexed = true }
+                        };
+
+                    zs.Add(xmlContents, entryName, summary);
+
+                    //var b = new Blob(Encoding.UTF8.GetBytes(item.element.ToString()), "application/fhir+xml");
+                    //w.Add(b, new[] { ("resourceUri", item.fullUrl), ("resourceType", item.element.Name.LocalName) });
+
+                }
+
+                /*
                 using (var s = new FileStream(filename, FileMode.Open))
                 {
                     var stream = XmlFileConformanceScanner.StreamResources(s);
@@ -135,10 +162,13 @@ namespace Hl7.Fhir.Specification.Tests.Source
 
                     }
                 }
+                */
+
                 //nuget, npm, jar, chrome extensions
                 zs.Build();
             }
         }
+
 
         [TestMethod]
         public void CreateDbFromSpec()
@@ -162,6 +192,7 @@ namespace Hl7.Fhir.Specification.Tests.Source
             }
         }
 
+#endif
 
         [TestMethod]
         public void DumpDb()
@@ -187,3 +218,4 @@ namespace Hl7.Fhir.Specification.Tests.Source
         }
     }
 }
+
