@@ -12,6 +12,22 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
     /// <returns>A new <see cref="ArtifactSummary"/> instance.</returns>
     public delegate ArtifactSummary ArtifactSummaryFactory(string typeName, ArtifactSummaryDetailsCollection details, Exception error = null);
 
+    /// <summary>Represents a method that extracts summary details from an artifact.</summary>
+    /// <param name="nav">An <see cref="IElementNavigator"/> instance to navigate the artifact.</param>
+    /// <param name="details">A collection for saving the summary details extracted from the artifact.</param>
+    /// <returns>
+    /// Returns <c>true </c> to indicate that all relevant details have been extracted from the artifact and the extraction process can finish.
+    /// Returns <c>false</c> to try and continue extracting additional summary details.
+    /// </returns>
+    /// <remarks>
+    /// The specified <see cref="IElementNavigator"/> is positioned on the first child element level (e.g. <c>StructureDefinition.url</c>).
+    /// The target method can extract summary details starting from the current position in a forward direction.
+    /// When finished, the navigator should again be positioned an the first level,
+    /// for other extractors to continue reading.
+    /// </remarks>
+    public delegate bool ArtifactSummaryDetailsExtractor(IElementNavigator nav, ArtifactSummaryDetailsCollection details);
+    // Func<IElementNavigator nav, ArtifactSummaryDetails details, bool>
+
     /// <summary>
     /// For generating artifact summary information from an <see cref="INavigatorStream"/>,
     /// independent of the underlying resource serialization format.

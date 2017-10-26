@@ -52,20 +52,20 @@ namespace Hl7.Fhir.Specification.Tests.Source.Summary
         public object this[string key] => _details[key];
 
         /// <summary>The original location of the associated artifact.</summary>
-        public string Origin => _details.Origin();
+        public string Origin => _details.GetOrigin();
 
         /// <summary>
-        /// Opaque value that represents the position of the artifact within the container.
+        /// Returns an opaque value that represents the position of the artifact within the container.
         /// Allows the <see cref="DirectorySource"/> to retrieve and deserialize the associated artifact.
         /// </summary>
-        public string Position => _details.Position();
+        public string Position => _details.GetPosition();
 
-        /// <summary>The resource uri.</summary>
+        /// <summary>Returns the resource uri.</summary>
         /// <remarks>The <see cref="IElementNavigator"/> returns a generated value for resources that are not bundle entries.</remarks>
-        public string ResourceUri => _details.ResourceUri();
+        public string ResourceUri => _details.GetResourceUri();
 
         /// <summary>Returns the type name of the resource.</summary>
-        public string ResourceType => _details.ResourceType();
+        public string ResourceType => _details.GetResourceType();
 
         /// <summary>Returns the type of the resource.</summary>
         public ResourceType? Type => ModelInfo.FhirTypeNameToResourceType(ResourceType);

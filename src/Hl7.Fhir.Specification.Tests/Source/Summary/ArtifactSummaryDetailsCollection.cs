@@ -4,8 +4,16 @@ using System.Collections.Generic;
 
 namespace Hl7.Fhir.Specification.Tests.Source.Summary
 {
+    /// <summary>Common interface for retrieving artifact summary details by key.</summary>
+    /// <remarks>
+    /// Implemented by both <see cref="ArtifactSummary"/> and <see cref="ArtifactSummaryDetailsCollection"/>.
+    /// Target of common extension methods for retrieving specific summary details.
+    /// </remarks>
     public interface IArtifactSummaryDetailsProvider
     {
+        /// <summary>Get the summary detail value with the specified key, if it exists, or <c>null</c> otherwise.</summary>
+        /// <param name="key">A collection key.</param>
+        /// <returns>A summary detail value, or <c>null</c>.</returns>
         object this[string key] { get; }
     }
 

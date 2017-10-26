@@ -45,21 +45,19 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.AreEqual(ResourceType.StructureDefinition.GetLiteral(), summary.ResourceType);
 
                 // Conformance resource properties
-                Assert.IsNotNull(summary.Canonical());
-                Assert.IsTrue(summary.Canonical().ToString().StartsWith("http://hl7.org/fhir/StructureDefinition/"));
-                Assert.IsNotNull(summary.Name());
-                Assert.AreEqual(ConformanceResourceStatus.Draft.GetLiteral(), summary.Status());
+                Assert.IsNotNull(summary.GetConformanceCanonicalUrl());
+                Assert.IsTrue(summary.GetConformanceCanonicalUrl().ToString().StartsWith("http://hl7.org/fhir/StructureDefinition/"));
+                Assert.IsNotNull(summary.GetConformanceName());
+                Assert.AreEqual(ConformanceResourceStatus.Draft.GetLiteral(), summary.GetConformanceStatus());
 
                 //Debug.WriteLine($"{summary.ResourceType} | {summary.Canonical()} | {summary.Name()}");
 
                 // StructureDefinition properties
-                Assert.AreEqual(StructureDefinition.StructureDefinitionKind.Datatype.GetLiteral(), summary.Kind());
+                Assert.AreEqual(StructureDefinition.StructureDefinitionKind.Datatype.GetLiteral(), summary.GetStructureDefinitionKind());
                 // If this is a constraining StructDef, then Base should also be specified
-                Assert.IsTrue(summary.ConstrainedType() == null || summary.Base() != null);
+                Assert.IsTrue(summary.GetStructureDefinitionConstrainedType() == null || summary.GetStructureDefinitionBase() != null);
             }
         }
-
-        // TODO: Verify that Generate throws FileNotFound exception for invalid path
 
         ArtifactSummary assertSummary(string path)
         {
