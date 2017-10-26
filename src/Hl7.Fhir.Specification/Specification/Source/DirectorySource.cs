@@ -37,14 +37,14 @@ namespace Hl7.Fhir.Specification.Source
     {
         // netstandard has no CurrentCultureIgnoreCase comparer
 #if DOTNETFW
-        private static readonly StringComparer ExtensionComparer = StringComparer.CurrentCultureIgnoreCase;
-        private static readonly StringComparison ExtensionComparison = StringComparison.CurrentCultureIgnoreCase;
+        private static readonly StringComparer ExtensionComparer = StringComparer.InvariantCultureIgnoreCase;
+        private static readonly StringComparison ExtensionComparison = StringComparison.InvariantCultureIgnoreCase;
 #else
         private static readonly StringComparer ExtensionComparer = StringComparer.OrdinalIgnoreCase;
         private static readonly StringComparison ExtensionComparison = StringComparison.OrdinalIgnoreCase;
 #endif
 
-        private DirectorySourceSettings _settings;
+        private readonly DirectorySourceSettings _settings;
         private readonly string _contentDirectory;
 
         private bool _filesPrepared = false;
@@ -311,7 +311,7 @@ namespace Hl7.Fhir.Specification.Source
             return _artifactFilePaths.Select(path => Path.GetFileName(path));
         }
 
-        /// <summary>Resolve the artifact with the specified filename.</summary>
+        /// <summary>Load the artifact with the specified filename.</summary>
         public Stream LoadArtifactByName(string name)
         {
             if (name == null) throw Error.ArgumentNull(nameof(name));
@@ -572,9 +572,7 @@ namespace Hl7.Fhir.Specification.Source
 
         }
 
-        private static string fullPathWithoutExtension(string fullPath)
-            => fullPath.Replace(Path.GetFileName(fullPath), Path.GetFileNameWithoutExtension(fullPath));
-
+        static string fullPathWithoutExtension(string fullPath) => Path.ChangeExtension(fullPath, null);
 
         /// <summary>Scan all xml files found by prepareFiles and find conformance resources and their id.</summary>
         private void prepareResources()

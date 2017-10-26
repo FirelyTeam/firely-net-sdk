@@ -7,9 +7,7 @@
  */
 
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.IO;
 using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Specification.Source

@@ -13,19 +13,11 @@ namespace Hl7.Fhir.Specification.Source
 {
     public interface IResourceResolver // open ended domain
     {
-        /// <summary>
-        /// Find resources based on its relative or absolute uri.
-        /// </summary>
-        /// <param name="uri"></param>
-        /// <returns></returns>
+        /// <summary>Find a resource based on its relative or absolute uri.</summary>
         Resource ResolveByUri(string uri);
 
 
-        /// <summary>
-        /// Find a (conformance) resource based on its canonical uri
-        /// </summary>
-        /// <param name="uri"></param>
-        /// <returns></returns>
+        /// <summary>Find a (conformance) resource based on its canonical uri.</summary>
         Resource ResolveByCanonicalUri(string uri); // IConformanceResource
     }
 

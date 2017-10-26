@@ -23,9 +23,6 @@ namespace Hl7.Fhir.Specification.Source
         : ICloneable
 #endif
     {
-        // public static readonly ArtifactSummaryHarvester DefaultHarvester = DefaultArtifactSummaryHarvester.Harvest;
-        // public static readonly NavigatorStreamFactory DefaultStreamFactory = DefaultNavigatorStreamFactory.Create;
-
         /// <summary>Default constructor. Creates a new <see cref="DirectorySourceSettings"/> instance initialized from the default values.</summary>
         public DirectorySourceSettings()
         {
@@ -243,7 +240,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <see cref="NavigatorStreamFactory"/> delegate. This allows clients to implement
         /// support for alternative serialization formats.
         /// </remarks>
-        public NavigatorStreamFactory StreamFactory { get; set; } = DefaultNavigatorStreamFactory.Create;
+        public NavigatorStreamFactory StreamFactory { get; set; } // = DefaultNavigatorStreamFactory.Create;
 
         /// <summary>
         /// Gets or sets a custom <see cref="ArtifactSummaryFactory"/> delegate that the
