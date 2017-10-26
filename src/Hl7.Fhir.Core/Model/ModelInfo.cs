@@ -110,8 +110,7 @@ namespace Hl7.Fhir.Model
             else
                 return null;
         }
-
-#else
+#elif false
         // [WMR 20160421] NEW - Improved & optimized
         // 1. Convert from/to FHIR type names as defined by EnumLiteral attributes on FHIRDefinedType enum members
         // 2. Cache lookup tables, to optimize runtime reflection
@@ -152,8 +151,40 @@ namespace Hl7.Fhir.Model
             var values = Enum.GetValues(typeof(FHIRDefinedType)).OfType<FHIRDefinedType>();
             return values.ToDictionary(type => type.GetLiteral());
         }
+#else
+        // [WMR 2017-10-25] Remove Lazy initialization
+        // These methods are used frequently throughout the API (and by clients) and initialization cost is low
 
+        static readonly Dictionary<string, FHIRDefinedType> _fhirTypeNameToFhirType
+            = Enum.GetValues(typeof(FHIRDefinedType)).OfType<FHIRDefinedType>().ToDictionary(type => type.GetLiteral());
+
+        static readonly Dictionary<FHIRDefinedType, string> _fhirTypeToFhirTypeName
+            = _fhirTypeNameToFhirType.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
+
+        /// <summary>Returns the FHIR type name represented by the specified <see cref="FHIRDefinedType"/> enum value, or <c>null</c>.</summary>
+        public static FHIRDefinedType? FhirTypeNameToFhirType(string typeName)
+            => _fhirTypeNameToFhirType.TryGetValue(typeName, out var result) ? (FHIRDefinedType?)result : null;
+
+        /// <summary>Returns the <see cref="FHIRDefinedType"/> enum value that represents the specified FHIR type name, or <c>null</c>.</summary>
+        public static string FhirTypeToFhirTypeName(FHIRDefinedType type)
+            => _fhirTypeToFhirTypeName.TryGetValue(type, out var result) ? result : null;
 #endif
+
+        // [WMR 20171025] NEW: Conversion methods for ResourceType
+
+        static readonly Dictionary<string, ResourceType> _fhirTypeNameToResourceType
+            = Enum.GetValues(typeof(ResourceType)).OfType<ResourceType>().ToDictionary(type => type.GetLiteral());
+
+        static readonly Dictionary<ResourceType, string> _resourceTypeToFhirTypeName
+            = _fhirTypeNameToResourceType.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
+
+        /// <summary>Returns the FHIR type name represented by the specified <see cref="ResourceType"/> enum value, or <c>null</c>.</summary>
+        public static ResourceType? FhirTypeNameToResourceType(string typeName)
+            => _fhirTypeNameToResourceType.TryGetValue(typeName, out var result) ? (ResourceType?)result : null;
+
+        /// <summary>Returns the <see cref="ResourceType"/> enum value that represents the specified FHIR type name, or <c>null</c>.</summary>
+        public static string ResourceTypeToFhirTypeName(ResourceType type)
+            => _resourceTypeToFhirTypeName.TryGetValue(type, out var result) ? result : null;
 
         /// <summary>Returns the C# <see cref="Type"/> that represents the FHIR type with the specified name, or <c>null</c>.</summary>
         public static Type GetTypeForFhirType(string name)
