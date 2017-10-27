@@ -91,6 +91,12 @@ namespace Hl7.Fhir.Specification.Source.Summary
                     extractors.CopyTo(allExtractors, DefaultArtifactSummaryExtractors.Length);
                 }
 
+                // Or allow user to completely replace the default behavior...?
+                //if (extractors == null)
+                //{
+                //    extractors = DefaultArtifactSummaryExtractors;
+                //}
+
                 while (navStream.MoveNext())
                 {
                     var current = navStream.Current;

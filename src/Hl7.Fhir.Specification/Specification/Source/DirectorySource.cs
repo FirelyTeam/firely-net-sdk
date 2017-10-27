@@ -626,7 +626,7 @@ namespace Hl7.Fhir.Specification.Source
             // - Support CancellationToken (how to inject?)
 
 #if PREPARE_PARALLEL_FOR
-            // Optimization: use Task.Parallel.ForEach to process files in parallel
+            // Optimization: use Task.Parallel.For to process files in parallel
             // More efficient then creating task per file (esp. if many files)
             //
             // For netstandard13, add NuGet package System.Threading.Tasks.Parallel
