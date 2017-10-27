@@ -96,13 +96,14 @@ namespace Hl7.Fhir.Specification.Source.Summary
                     var current = navStream.Current;
                     if (current != null)
                     {
-                        var props = new ArtifactSummaryDetailsCollection();
-
-                        // Add default summary details
-                        props[ArtifactSummaryDetails.OriginKey] = origin;
-                        props[ArtifactSummaryDetails.PositionKey] = navStream.Position;
-                        props[ArtifactSummaryDetails.ResourceUriKey] = navStream.Position;
-                        props[ArtifactSummaryDetails.ResourceTypeNameKey] = current.Type;
+                        var props = new ArtifactSummaryDetailsCollection
+                        {
+                            // Add default summary details
+                            [ArtifactSummaryDetails.OriginKey] = origin,
+                            [ArtifactSummaryDetails.PositionKey] = navStream.Position,
+                            [ArtifactSummaryDetails.ResourceUriKey] = navStream.Position,
+                            [ArtifactSummaryDetails.ResourceTypeNameKey] = current.Type
+                        };
 
                         var summary = generate(props, current, summaryFactory, allExtractors);
 
@@ -193,7 +194,7 @@ namespace Hl7.Fhir.Specification.Source.Summary
                 NamingSystemSummaryDetails.Extract,
                 // Specific conformance resources first
                 StructureDefinitionSummaryDetails.Extract,
-                ValueSetSummaryDetails.Extract,
+                CodeSystemSummaryDetails.Extract,
                 ConceptMapSummaryDetails.Extract,
                 // Fall back for all other conformance resources
                 ConformanceSummaryDetails.Extract

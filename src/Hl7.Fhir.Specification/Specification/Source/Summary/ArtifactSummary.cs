@@ -15,15 +15,16 @@ namespace Hl7.Fhir.Specification.Source.Summary
     public class ArtifactSummary : IArtifactSummaryDetailsProvider
     {
         // Available to derived classes
-        protected readonly ArtifactSummaryDetailsCollection _details;
+        protected readonly ArtifactSummaryDetailsCollection details; // Underscore prefix is not CLS-compliant
+
         private readonly ResourceType? _resourceType = null;
 
         /// <summary>Create a new <see cref="ArtifactSummary"/> instance for the specified collection of summary details.</summary>
         /// <param name="details">A collection of summary details extracted from the artifact.</param>
         public ArtifactSummary(ArtifactSummaryDetailsCollection details)
         {
-            _details = details;
-            var typeName = _details.GetResourceTypeName();
+            this.details = details;
+            var typeName = this.details.GetResourceTypeName();
             if (!string.IsNullOrEmpty(typeName))
             {
                 _resourceType = ModelInfo.FhirTypeNameToResourceType(ResourceTypeName);
@@ -50,8 +51,10 @@ namespace Hl7.Fhir.Specification.Source.Summary
         /// <returns></returns>
         public static ArtifactSummary FromException(string origin, Exception error)
         {
-            var props = new ArtifactSummaryDetailsCollection();
-            props[ArtifactSummaryDetails.OriginKey] = origin;
+            var props = new ArtifactSummaryDetailsCollection
+            {
+                [ArtifactSummaryDetails.OriginKey] = origin
+            };
             return new ArtifactSummary(props, error);
         }
 
@@ -65,23 +68,21 @@ namespace Hl7.Fhir.Specification.Source.Summary
         /// <summary>Returns the summary details associated with the specified key, or <c>null</c>.</summary>
         /// <param name="key">A collection key.</param>
         /// <returns>An object value, or <c>null</c>.</returns>
-        public object this[string key] => _details[key];
+        public object this[string key] => details[key];
 
-        /// <summary>The original location of the associated artifact.</summary>
-        public string Origin => _details.GetOrigin();
+        /// <summary>The original location of the artifact (bundle).</summary>
+        public string Origin => details.GetOrigin();
 
-        /// <summary>
-        /// Returns an opaque value that represents the position of the artifact within the container.
-        /// Allows the <see cref="DirectorySource"/> to retrieve and deserialize the associated artifact.
-        /// </summary>
-        public string Position => _details.GetPosition();
+        /// <summary>Returns an opaque value that represents the position of the artifact within the container.</summary>
+        /// <remarks>Allows the <see cref="DirectorySource"/> to retrieve and deserialize the associated artifact.</remarks>
+        public string Position => details.GetPosition();
 
         /// <summary>Returns the resource uri.</summary>
         /// <remarks>The <see cref="IElementNavigator"/> returns a generated value for resources that are not bundle entries.</remarks>
-        public string ResourceUri => _details.GetResourceUri();
+        public string ResourceUri => details.GetResourceUri();
 
         /// <summary>Returns the type name of the resource.</summary>
-        public string ResourceTypeName => _details.GetResourceTypeName();
+        public string ResourceTypeName => details.GetResourceTypeName();
 
         /// <summary>Returns the type of the resource.</summary>
         public ResourceType? ResourceType => _resourceType;

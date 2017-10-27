@@ -31,10 +31,6 @@ namespace Hl7.Fhir.Specification.Source.Summary
         public static IEnumerable<ArtifactSummary> CodeSystems(this IEnumerable<ArtifactSummary> summaries, string valueSetUri)
             => summaries.OfResourceType(ResourceType.CodeSystem).Where(r => r.GetCodeSystemValueSet() == valueSetUri);
 
-        /// <summary>Filter <see cref="ArtifactSummary"/> instances for <see cref="ValueSet"/> resources with the specified codeSystem system.</summary>
-        public static IEnumerable<ArtifactSummary> ValueSets(this IEnumerable<ArtifactSummary> summaries, string system)
-            => summaries.OfResourceType(ResourceType.ValueSet).Where(r => r.GetValueSetSystem() == system);
-
         /// <summary>Filter <see cref="ArtifactSummary"/> instances for <see cref="ConceptMap"/> resources with the specified source and/or target uri(s).</summary>
         public static IEnumerable<ArtifactSummary> ConceptMaps(this IEnumerable<ArtifactSummary> summaries, string sourceUri = null, string targetUri = null)
         {
@@ -65,10 +61,6 @@ namespace Hl7.Fhir.Specification.Source.Summary
         /// <summary>Resolve the <see cref="ArtifactSummary"/> for the <see cref="CodeSystem"/> resource with the specified ValueSet uri.</summary>
         public static ArtifactSummary ResolveCodeSystem(this IEnumerable<ArtifactSummary> summaries, string uri)
             => summaries.CodeSystems(uri).SingleOrDefault();
-
-        /// <summary>Resolve the <see cref="ArtifactSummary"/> for the <see cref="ValueSet"/> resource with the specified codeSystem system.</summary>
-        public static ArtifactSummary ResolveValueSet(this IEnumerable<ArtifactSummary> summaries, string system)
-            => summaries.ValueSets(system).SingleOrDefault();
 
         /// <summary>Resolve the <see cref="ArtifactSummary"/> for the <see cref="ConceptMap"/> resource with the specified source and/or target uri(s).</summary>
         public static ArtifactSummary ResolveConceptMap(this IEnumerable<ArtifactSummary> summaries, string sourceUri = null, string targetUri = null)

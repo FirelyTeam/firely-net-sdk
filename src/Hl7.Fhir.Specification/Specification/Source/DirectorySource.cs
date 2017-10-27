@@ -356,17 +356,6 @@ namespace Hl7.Fhir.Specification.Source
             return getResourceFromScannedSource<Resource>(info);
         }
 
-        /// <summary>Resolve the ValueSet with the specified codeSystem system.</summary>
-        public ValueSet FindValueSetBySystem(string system)
-        {
-            prepareResources();
-
-            var info = _resourceScanInformation.ResolveValueSet(system);
-            if (info == null) return null;
-
-            return getResourceFromScannedSource<ValueSet>(info);
-        }
-
         public CodeSystem FindCodeSystemByValueSet(string valueSetUri)
         {
             prepareResources();
