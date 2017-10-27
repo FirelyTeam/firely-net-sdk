@@ -5011,31 +5011,6 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(ann.BaseElementDefinition);
             Assert.AreEqual(0, ann.BaseElementDefinition.Min);
             // dumpElements(expanded.Snapshot.Element);
-
-            // Verify the inherited example binding on QuestionnaireResponse.item.answer.value[x] 
-            var answerValues = expanded.Snapshot.Element.Where(e => e.Path == "QuestionnaireResponse.group.question.answer.value[x]").ToList();
-            Assert.AreEqual(3, answerValues.Count);
-            foreach (var elem in answerValues)
-            {
-                // In core resource definition, QuestionnaireResponse.group.question.answer.value[x] element
-                // specifies binding strength & description, but no valueset reference
-                var binding = elem.Binding;
-                Assert.IsNotNull(binding);
-                Assert.AreEqual(BindingStrength.Example, binding.Strength);
-                Assert.IsNotNull(binding.Description);
-
-                var ValueSetReference = binding.ValueSet as ResourceReference;
-                Assert.IsNull(ValueSetReference);
-
-                //Assert.IsNotNull(ValueSetReference);
-                //// Assert.AreEqual("http://hl7.org/fhir/ValueSet/questionnaire-answers", ValueSetReference.Url.OriginalString); 
-                //Assert.IsTrue(ValueSetReference.Url.Equals("http://hl7.org/fhir/ValueSet/questionnaire-answers"));
-                //var bindingNameExtension = binding.Extension.FirstOrDefault(e => e.Url == "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName");
-                //Assert.IsNotNull(bindingNameExtension);
-                //var bindingNameValue = bindingNameExtension.Value as FhirString;
-                //Assert.IsNotNull(bindingNameValue);
-                //Assert.AreEqual("QuestionnaireAnswer", bindingNameValue.Value);
-            }
         }
 
     }
