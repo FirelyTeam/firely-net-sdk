@@ -16,49 +16,59 @@
       {
         "url": "http://hl7.org/fhir/example-do-not-use#recordStatus",
         "valueCode": "archived"
-    }]},
-    "name": [
-        {
-            "given": [
-                "Peter",
-                "James"
-            ],
-            "use": "official",
-            "family": "Chalmers"
-        },
-        {
-            "given": ["Jim"],
-            "use": "usual"
-        }
-    ],
+      }
+    ]
+  },
+  "name": [
+    {
+      "given": [
+        "Peter",
+        "James"
+      ],
+      "use": "official",
+      "family": "Chalmers"
+    },
+    {
+      "given": [ "Jim" ],
+      "use": "usual"
+    }
+  ],
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/example-do-not-use#Patient.avatar",
+      "valueResource": {
+        "reference": "#pic1",
+        "display": "Duck image"
+      }
+    },
+    {
+      "url": "urn:example-do-not-use:pi",
+      "valueDecimal": 3.141592653589793
+    }
+  ],
+  "gender": "male",
+  "birthDate": "1974-12",
+  "deceasedBoolean": true,
+  "_birthDate": {
     "extension": [
-        {
-            "url": "http://hl7.org/fhir/example-do-not-use#Patient.avatar",
-            "valueResource": {
-                "reference": "#pic1",
-                "display": "Duck image"
-            }
-        },
-        {
-            "url": "urn:example-do-not-use:pi",
-            "valueDecimal": 3.141592653589793
-        }
-    ],
-    "gender": "male",
-    "birthDate": "1974-12",
-    "deceasedBoolean": true,
-    "_birthDate": {"extension": [{
+      {
         "url": "http://hl7.org/fhir/example-do-not-use#DateTime.calendar",
         "valueCode": "gregorian"
-    }]},
-    "address": [{
-        "use": "home",
-        "line": ["534 Erewhon St"],
-        "city": "PleasantVille",
-        "state": "Vic",
-        "postalCode": "3999"
-    }],
-    "maritalStatus": {"extension": [{
+      }
+    ]
+  },
+  "address": [
+    {
+      "use": "home",
+      "line": [ "534 Erewhon St" ],
+      "city": "PleasantVille",
+      "state": "Vic",
+      "postalCode": "3999"
+    }
+  ],
+  "maritalStatus": {
+    "extension": [
+      {
         "valueCode": "ASKU",
         "url": "http://hl7.org/fhir/Profileiso-21090#nullFlavor"
       }
@@ -88,39 +98,34 @@
           "system": "urn:ietf:rfc:3986",
           "value": "2.16.840.1.113883.19.5"
         }
-    ],
-    "contact": [{
-        "name": {
-            "family": "du Marché",
-            "_given": [
-                null,
-                {
-                    "id": "a3",
-                    "extension": [{
-                        "url": "http://hl7.org/fhir/Profileiso-21090#qualifier",
-                        "valueCode": "MID"
-                    }]
-                },
-                null
-            ],
-            "given": [
-                "Bénédicte",
-                "Denise",
-                "Marie"
+      ],
+      "name": "Good Health Clinic"
+    }
+  ],
+  "contact": [
+    {
+      "name": {
+        "family": "du Marché",
+        "_given": [
+          null,
+          {
+            "id": "a3",
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/Profileiso-21090#qualifier",
+                "valueCode": "MID"
+              }
             ]
-        },
-        "relationship": [{"coding": [{
-            "system": "http://hl7.org/fhir/patient-contact-relationship",
-            "code": "partner"
-        }]}],
-        "telecom": [{
-            "system": "phone",
-            "value": "+33 (237) 998327"
-        }]
-    }],
-    "generalPractitioner": [{"reference": "#org3141"}],
-    "telecom": [
-        {"use": "home"},
+          },
+          null
+        ],
+        "given": [
+          "Bénédicte",
+          "Denise",
+          "Marie"
+        ]
+      },
+      "relationship": [
         {
           "coding": [
             {
@@ -138,7 +143,7 @@
       ]
     }
   ],
-  "careProvider": [ { "reference": "#org3141" } ],
+  "generalPractitioner": [ { "reference": "#org3141" } ],
   "telecom": [
     { "use": "home" },
     {
