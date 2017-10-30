@@ -18,6 +18,7 @@ using System.IO;
 using Hl7.Fhir.Serialization;
 using System.Linq;
 using Hl7.Fhir.Utility;
+using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -348,6 +349,14 @@ namespace Hl7.Fhir.Specification.Tests
                 File.Delete(filePath2);
             }
             Assert.IsTrue(conflictException);
+        }
+
+        [TestMethod]
+        public async Task TestLoadAsync()
+        {
+            var patient = NonReentrantResolver.TestAsync(@"TestData\TestPatient.xml");
+            await patient;
+            Assert.IsNotNull(patient);
         }
 
     }
