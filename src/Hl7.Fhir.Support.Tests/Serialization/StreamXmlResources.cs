@@ -12,7 +12,7 @@ namespace Hl7.Fhir.Support.Tests.Serialization
         public void ScanThroughBundle()
         {
             var xmlBundle = Path.Combine(Directory.GetCurrentDirectory(), @"TestData\profiles-types.xml");
-            using (var stream = new XmlNavigatorStream(xmlBundle))
+            using (var stream = XmlNavigatorStream.FromPath(xmlBundle))
             {
                 Assert.IsTrue(stream.IsBundle);
                 Assert.IsNull(stream.Current);
@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Support.Tests.Serialization
         public void ScanThroughSingle()
         {
             var xmlPatient = Path.Combine(Directory.GetCurrentDirectory(), @"TestData\fp-test-patient.xml");
-            using (var stream = new XmlNavigatorStream(xmlPatient))
+            using (var stream = XmlNavigatorStream.FromPath(xmlPatient))
             {
                 Assert.IsFalse(stream.IsBundle);
                 Assert.AreEqual("Patient", stream.ResourceType);
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Support.Tests.Serialization
             // Try a random other xml file
             var xmlfile = Path.Combine(Directory.GetCurrentDirectory(), @"TestData\source-test\books.xml");
 
-            using (var stream = new XmlNavigatorStream(xmlfile))
+            using (var stream = XmlNavigatorStream.FromPath(xmlfile))
             {
                 Assert.IsNull(stream.ResourceType);
                 Assert.IsFalse(stream.MoveNext());
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Support.Tests.Serialization
 
             for (int i = 0; i < 250; i++)
             {
-                using (var stream = new XmlNavigatorStream(xmlBundle))
+                using (var stream = XmlNavigatorStream.FromPath(xmlBundle))
                 {
                     Assert.IsTrue(stream.MoveNext("http://hl7.org/fhir/StructureDefinition/Age"));
                 }

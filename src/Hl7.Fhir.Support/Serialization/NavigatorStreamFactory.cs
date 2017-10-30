@@ -41,11 +41,11 @@ namespace Hl7.Fhir.Serialization
         {
             if (FileFormats.HasXmlExtension(path))
             {
-                return new XmlNavigatorStream(path);
+                return XmlNavigatorStream.FromPath(path);
             }
             if (FileFormats.HasJsonExtension(path))
             {
-                return new JsonNavigatorStream(path);
+                return JsonNavigatorStream.FromPath(path);
             }
 
             // Unsupported extension
