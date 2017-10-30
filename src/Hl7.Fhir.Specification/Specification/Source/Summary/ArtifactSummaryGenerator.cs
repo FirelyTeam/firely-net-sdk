@@ -5,13 +5,6 @@ using System.Collections.Generic;
 
 namespace Hl7.Fhir.Specification.Source.Summary
 {
-    /// <summary>Represents a factory method that creates a new <see cref="ArtifactSummary"/> instance.</summary>
-    /// <param name="typeName">The type name of the artifact.</param>
-    /// <param name="details">A collection of summary details extracted from the artifact.</param>
-    /// <param name="error">A error that occured while extracting details from the artifact, or <c>null</c>.</param>
-    /// <returns>A new <see cref="ArtifactSummary"/> instance.</returns>
-    public delegate ArtifactSummary ArtifactSummaryFactory(string typeName, ArtifactSummaryDetailsCollection details, Exception error = null);
-
     /// <summary>Represents a method that extracts summary details from an artifact.</summary>
     /// <param name="nav">An <see cref="IElementNavigator"/> instance to navigate the artifact.</param>
     /// <param name="details">A collection for saving the summary details extracted from the artifact.</param>
@@ -34,20 +27,21 @@ namespace Hl7.Fhir.Specification.Source.Summary
     /// </summary>
     public static class ArtifactSummaryGenerator
     {
+        // <param name="summaryFactory">
+        // By default, the generator returns a list of <see cref="ArtifactSummary"/> instances.
+        // Alternatively, you can specify a custom <see cref="ArtifactSummaryFactory"/> delegate
+        // to create custom return values, depending on the extracted summary details.
+        // This allows you to generate various specialized subclasses with additional strongly typed properties.
+        // </param>
+        // <param name="streamFactory">
+        // An optional <see cref="NavigatorStreamFactory"/> delegate for creating the
+        // <see cref="INavigatorStream"/> instance to navigate the underlying resource (container).
+        // By default, the generator calls <see cref="DefaultNavigatorStreamFactory.Create(string)"/>,
+        // which supports navigation for "*.xml" and "*.json" files.
+        // </param>
+
         /// <summary>Generate a list of summary information from a <see cref="INavigatorStream"/> instance.</summary>
         /// <param name="origin">The original location of the underlying resource (bundle).</param>
-        /// <param name="streamFactory">
-        /// An optional <see cref="NavigatorStreamFactory"/> delegate for creating the
-        /// <see cref="INavigatorStream"/> instance to navigate the underlying resource (container).
-        /// By default, the generator calls <see cref="DefaultNavigatorStreamFactory.Create(string)"/>,
-        /// which supports navigation for "*.xml" and "*.json" files.
-        /// </param>
-        /// <param name="summaryFactory">
-        /// By default, the generator returns a list of <see cref="ArtifactSummary"/> instances.
-        /// Alternatively, you can specify a custom <see cref="ArtifactSummaryFactory"/> delegate
-        /// to create custom return values, depending on the extracted summary details.
-        /// This allows you to generate various specialized subclasses with additional strongly typed properties.
-        /// </param>
         /// <param name="extractors">
         /// One or more optional (custom) <see cref="ArtifactSummaryDetailsExtractor"/> delegates to
         /// extract (custom) summary details from an artifact. For each artifact, the generator first
@@ -58,9 +52,9 @@ namespace Hl7.Fhir.Specification.Source.Summary
         /// </param>
         /// <returns>A list of new <see cref="ArtifactSummary"/> instances.</returns>
         public static List<ArtifactSummary> Generate(
-            string origin, 
-            NavigatorStreamFactory streamFactory = null,
-            ArtifactSummaryFactory summaryFactory = null, 
+            string origin,
+            // NavigatorStreamFactory streamFactory = null,
+            // ArtifactSummaryFactory summaryFactory = null, 
             params ArtifactSummaryDetailsExtractor[] extractors)
         {
             // [WMR 20171023] In case of error, return completed summaries and error info
@@ -70,17 +64,14 @@ namespace Hl7.Fhir.Specification.Source.Summary
             try
             {
                 // Call custom or default navigator factory
-                navStream = streamFactory?.Invoke(origin)
-                    ?? DefaultNavigatorStreamFactory.Create(origin);
+                // navStream = streamFactory?.Invoke(origin) ?? DefaultNavigatorStreamFactory.Create(origin);
+                navStream = DefaultNavigatorStreamFactory.Create(origin);
 
                 // Factory returns null for unknown file formats
                 if (navStream == null) { return result; }
 
                 // Use custom or default summary factory
-                if (summaryFactory == null)
-                {
-                    summaryFactory = DefaultArtifactSummaryFactory;
-                }
+                // if (summaryFactory == null) { summaryFactory = DefaultArtifactSummaryFactory; }
 
                 // Always run default extractors first, then any custom extractors
                 ArtifactSummaryDetailsExtractor[] allExtractors = DefaultArtifactSummaryExtractors;
@@ -99,12 +90,14 @@ namespace Hl7.Fhir.Specification.Source.Summary
                         var props = new ArtifactSummaryDetailsCollection();
 
                         // Add default summary details
+                        // Note: manually initialize, not exposed by IElementNavigator
                         props[ArtifactSummaryDetails.OriginKey] = origin;
                         props[ArtifactSummaryDetails.PositionKey] = navStream.Position;
                         props[ArtifactSummaryDetails.ResourceUriKey] = navStream.Position;
                         props[ArtifactSummaryDetails.ResourceTypeNameKey] = current.Type;
 
-                        var summary = generate(props, current, summaryFactory, allExtractors);
+                        // var summary = generate(props, current, summaryFactory, allExtractors);
+                        var summary = generate(props, current, allExtractors);
 
                         result.Add(summary);
                     }
@@ -125,7 +118,7 @@ namespace Hl7.Fhir.Specification.Source.Summary
         static ArtifactSummary generate(
             ArtifactSummaryDetailsCollection props,
             IElementNavigator nav, 
-            ArtifactSummaryFactory summaryFactory, 
+            // ArtifactSummaryFactory summaryFactory, 
             ArtifactSummaryDetailsExtractor[] extractors)
         {
             try
@@ -157,7 +150,8 @@ namespace Hl7.Fhir.Specification.Source.Summary
                 var error = errors.Count > 0 ? new AggregateException(errors) : null;
 
                 // Call factory to create final summary from extracted details
-                var result = summaryFactory.Invoke(nav.Type, props, error);
+                // var result = summaryFactory.Invoke(nav.Type, props, error);
+                var result = new ArtifactSummary(props, error);
 
                 return result;
             }
@@ -167,23 +161,6 @@ namespace Hl7.Fhir.Specification.Source.Summary
                 // Make sure we always return a valid summary
                 return ArtifactSummary.FromException(props, ex);
             }
-        }
-
-        // Default ArtifactSummaryFactory, always returns a new ArtifactSummary instance
-        // Custom ArtifactSummaryFactory implementations can return specialized ArtifactSummary subclasses, depending on the type name
-        static ArtifactSummary DefaultArtifactSummaryFactory(string typeName, ArtifactSummaryDetailsCollection details, Exception error = null)
-        {
-            // Example:
-            //
-            //if (!string.IsNullOrEmpty(typeName))
-            //{
-            //    switch (typeName)
-            //    {
-            //        case NamingSystemSummaryDetails.TypeName: return new NamingSystemSummary(details, error)
-            //        // ... etc ...
-            //    }
-            //}
-            return new ArtifactSummary(details, error);
         }
 
         // Default extractors, executed in-order until one extractor returns true
@@ -198,6 +175,33 @@ namespace Hl7.Fhir.Specification.Source.Summary
                 // Fall back for all other conformance resources
                 ConformanceSummaryDetails.Extract
             };
+
+/*  [WMR 20171030] YAGNI
+
+    /// <summary>Represents a factory method that creates a new <see cref="ArtifactSummary"/> instance.</summary>
+    /// <param name="typeName">The type name of the artifact.</param>
+    /// <param name="details">A collection of summary details extracted from the artifact.</param>
+    /// <param name="error">A error that occured while extracting details from the artifact, or <c>null</c>.</param>
+    /// <returns>A new <see cref="ArtifactSummary"/> instance.</returns>
+    public delegate ArtifactSummary ArtifactSummaryFactory(string typeName, ArtifactSummaryDetailsCollection details, Exception error = null);
+
+    // Default ArtifactSummaryFactory, always returns a new ArtifactSummary instance
+    // Custom ArtifactSummaryFactory implementations can return specialized ArtifactSummary subclasses, depending on the type name
+    static ArtifactSummary DefaultArtifactSummaryFactory(string typeName, ArtifactSummaryDetailsCollection details, Exception error = null)
+    {
+        // Example:
+        //
+        //if (!string.IsNullOrEmpty(typeName))
+        //{
+        //    switch (typeName)
+        //    {
+        //        case NamingSystemSummaryDetails.TypeName: return new NamingSystemSummary(details, error)
+        //        // ... etc ...
+        //    }
+        //}
+        return new ArtifactSummary(details, error);
+    }
+*/
 
     }
 }

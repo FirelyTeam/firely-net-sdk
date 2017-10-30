@@ -582,7 +582,8 @@ namespace Hl7.Fhir.Specification.Source
 
             var settings = _settings;
             var uniqueArtifacts = ResolveDuplicateFilenames(_artifactFilePaths, settings.FormatPreference);
-            var scanInfo = _resourceScanInformation = scanPaths(uniqueArtifacts, settings.StreamFactory, settings.SummaryFactory, settings.SummaryDetailsExtractors);
+            // var scanInfo = _resourceScanInformation = scanPaths(uniqueArtifacts, settings.StreamFactory, settings.SummaryFactory, settings.SummaryDetailsExtractors);
+            var scanInfo = _resourceScanInformation = scanPaths(uniqueArtifacts, settings.SummaryDetailsExtractors);
 
             // Check for duplicate canonical urls, this is forbidden within a single source (and actually, universally,
             // but if another source has the same url, the order of polling in the MultiArtifactSource matters)
@@ -604,7 +605,8 @@ namespace Hl7.Fhir.Specification.Source
             return;
         }
 
-        private static List<ArtifactSummary> scanPaths(List<string> paths, NavigatorStreamFactory streamFactory, ArtifactSummaryFactory summaryFactory, ArtifactSummaryDetailsExtractor[] extractors)
+        // private static List<ArtifactSummary> scanPaths(List<string> paths, NavigatorStreamFactory streamFactory, ArtifactSummaryFactory summaryFactory, ArtifactSummaryDetailsExtractor[] extractors)
+        private static List<ArtifactSummary> scanPaths(List<string> paths, ArtifactSummaryDetailsExtractor[] extractors)
         {
             // [WMR 20171023] Note: some files may no longer exist
 
@@ -647,7 +649,8 @@ namespace Hl7.Fhir.Specification.Source
                     i => {
                         // Harvest summaries from single file
                         // Save each result to a separate array entry (no locking required)
-                        results[i] = ArtifactSummaryGenerator.Generate(paths[i], streamFactory, summaryFactory, extractors);
+                        // results[i] = ArtifactSummaryGenerator.Generate(paths[i], streamFactory, summaryFactory, extractors);
+                        results[i] = ArtifactSummaryGenerator.Generate(paths[i], extractors);
                     });
             }
             catch (AggregateException aex)
@@ -691,8 +694,8 @@ namespace Hl7.Fhir.Specification.Source
             // File path of the containing resource file (could be a Bundle)
             var path = info.Origin;
 
-            var navStream = _settings.StreamFactory?.Invoke(path)
-                ?? DefaultNavigatorStreamFactory.Create(path);
+            // var navStream = _settings.StreamFactory?.Invoke(path) ?? DefaultNavigatorStreamFactory.Create(path);
+            var navStream = DefaultNavigatorStreamFactory.Create(path);
 
             // TODO: Handle exceptions & null return values
             // e.g. file may have been deleted/renamed since last scan

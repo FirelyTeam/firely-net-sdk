@@ -23,6 +23,12 @@ namespace Hl7.Fhir.Specification.Source
         : ICloneable
 #endif
     {
+        /// <summary>Default value of the <see cref="FormatPreference"/> configuration setting.</summary>
+        public const DirectorySource.DuplicateFilenameResolution DefaultFormatPreference = DirectorySource.DuplicateFilenameResolution.PreferXml;
+
+        /// <summary>Default value of the <see cref="Masks"/> configuration setting.</summary>
+        public readonly static string[] DefaultMasks = new[] { "*.*" };
+
         /// <summary>Default constructor. Creates a new <see cref="DirectorySourceSettings"/> instance initialized from the default values.</summary>
         public DirectorySourceSettings()
         {
@@ -41,22 +47,23 @@ namespace Hl7.Fhir.Specification.Source
         public void CopyTo(DirectorySourceSettings other)
         {
             if (other == null) { throw Error.ArgumentNull(nameof(other)); }
-            // other.ContentDirectory = this.ContentDirectory;
             other.IncludeSubDirectories = this.IncludeSubDirectories;
             other.Masks = this.Masks;
             other.Includes = this.Includes;
             other.Excludes = this.Excludes;
             other.FormatPreference = this.FormatPreference;
-            other.StreamFactory = this.StreamFactory;
-            other.SummaryFactory = this.SummaryFactory;
+            // other.StreamFactory = this.StreamFactory;
+            // other.SummaryFactory = this.SummaryFactory;
             other.SummaryDetailsExtractors = this.SummaryDetailsExtractors;
         }
 
         /// <summary>Returns an exact clone of the current configuration settings instance.</summary>
-        public object Clone() => new DirectorySourceSettings(this);
+        public DirectorySourceSettings Clone() => new DirectorySourceSettings(this);
 
-        // <summary>Gets or sets the full path of the target directory for the <see cref="DirectorySource"/>.</summary>
-        // public string ContentDirectory { get; set; }
+#if DOTNETFW
+        /// <summary>Returns an exact clone of the current configuration settings instance.</summary>
+        object ICloneable.Clone() => Clone();
+#endif
 
         /// <summary>Returns the default content directory of the <see cref="DirectorySource"/>.</summary>
         public static string SpecificationDirectory
@@ -160,7 +167,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <example>
         /// <code>Masks = new string[] { "v2*.*", "*.StructureDefinition.*" };</code>
         /// </example>
-        public string[] Masks { get; set; } = new[] { "*.*" };
+        public string[] Masks { get; set; } = DefaultMasks;
 
         /// <summary>
         /// Gets or sets an array of search strings to match against the names of subdirectories of the content directory.
@@ -226,8 +233,10 @@ namespace Hl7.Fhir.Specification.Source
         /// Returns <see cref="DirectorySource.DuplicateFilenameResolution.PreferXml"/> by default.
         /// </para>
         /// </summary>
-        public DirectorySource.DuplicateFilenameResolution FormatPreference { get; set; } = DirectorySource.DuplicateFilenameResolution.PreferXml;
+        public DirectorySource.DuplicateFilenameResolution FormatPreference { get; set; } = DefaultFormatPreference;
 
+/*      [WMR 20171030] YAGNI
+ 
         /// <summary>Gets or sets a custom <see cref="NavigatorStreamFactory"/> delegate.</summary>
         /// <remarks>
         /// The <see cref="ArtifactSummaryGenerator"/> depends on the <see cref="INavigatorStream"/>
@@ -240,7 +249,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <see cref="NavigatorStreamFactory"/> delegate. This allows clients to implement
         /// support for alternative serialization formats.
         /// </remarks>
-        public NavigatorStreamFactory StreamFactory { get; set; } // = DefaultNavigatorStreamFactory.Create;
+        public NavigatorStreamFactory StreamFactory { get; set; }
 
         /// <summary>
         /// Gets or sets a custom <see cref="ArtifactSummaryFactory"/> delegate that the
@@ -254,6 +263,7 @@ namespace Hl7.Fhir.Specification.Source
         /// generate various specialized subclasses with additional strongly typed properties.
         /// </remarks>
         public ArtifactSummaryFactory SummaryFactory { get; set; }
+*/
 
         /// <summary>
         /// An array of <see cref="ArtifactSummaryDetailsExtractor"/> delegates for
