@@ -581,7 +581,7 @@ namespace Hl7.Fhir.Specification.Source
             prepareFiles();
 
             var settings = _settings;
-            var uniqueArtifacts = ResolveDuplicateFilenames(_artifactFilePaths, _settings.FormatPreference);
+            var uniqueArtifacts = ResolveDuplicateFilenames(_artifactFilePaths, settings.FormatPreference);
             var scanInfo = _resourceScanInformation = scanPaths(uniqueArtifacts, settings.StreamFactory, settings.SummaryFactory, settings.SummaryDetailsExtractors);
 
             // Check for duplicate canonical urls, this is forbidden within a single source (and actually, universally,
@@ -639,12 +639,11 @@ namespace Hl7.Fhir.Specification.Source
             // Pre-allocate results array, one entry per file
             // Each entry receives a list with summaries harvested from a single file (Bundles return 0..*)
             var results = new List<ArtifactSummary>[cnt];
-            Exception ex = null;
             try
             {
                 // Process files in parallel
                 var loopResult = Parallel.For(0, cnt,
-                    // new ParallelOptions() {  },
+                    // new ParallelOptions() { MaxDegreeOfParallelism = Environment.ProcessorCount },
                     i => {
                         // Harvest summaries from single file
                         // Save each result to a separate array entry (no locking required)
@@ -658,17 +657,15 @@ namespace Hl7.Fhir.Specification.Source
 
                 // var isCanceled = ex.InnerExceptions.OfType<TaskCanceledException>().Any();
                 Debug.WriteLine($"[{nameof(DirectorySource)}.{nameof(scanPaths)}] {aex.GetType().Name}: {aex.Message}"
-                    + $"{aex.InnerExceptions?.Select(ix => $"\r\n\t{ix.GetType().Name}: {ix.Message}")}");
+                    + aex.InnerExceptions?.Select(ix => $"\r\n\t{ix.GetType().Name}: {ix.Message}"));
 
                 // [WMR 20171023] Return exceptions via ArtifactSummary.FromException
-                ex = aex;
+                // Or unwrap all inner exceptions?
+                // scanResult.Add(ArtifactSummary.FromException(aex));
+                scanResult.AddRange(aex.InnerExceptions.Select(ArtifactSummary.FromException));
             }
             // Aggregate completed results into single list
             scanResult.AddRange(results.SelectMany(r => r ?? Enumerable.Empty<ArtifactSummary>()));
-            if (ex != null)
-            {
-                scanResult.Add(ArtifactSummary.FromException(ex));
-            }
 #else
             foreach (var filePath in paths)
             {

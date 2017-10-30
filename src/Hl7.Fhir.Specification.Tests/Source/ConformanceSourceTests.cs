@@ -288,11 +288,15 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestJsonBundleRetrieval()
         {
-            var jsonSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData"), includeSubdirectories: false)
-            {
-                Mask = "*.json",
-                Includes = new[] { "profiles-types.json" }
-            };
+            //var jsonSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData"), includeSubdirectories: false)
+            var jsonSource = new DirectorySource(
+                Path.Combine(DirectorySource.SpecificationDirectory, "TestData"),
+                new DirectorySourceSettings()
+                {
+                    Mask = "*.json",
+                    Includes = new[] { "profiles-types.json" },
+                    IncludeSubDirectories = false
+                });
 
             var humanName = jsonSource.FindStructureDefinitionForCoreType(FHIRDefinedType.HumanName);
             Assert.IsNotNull(humanName);
@@ -301,26 +305,38 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestSourceSpeedTest()
         {
-            var jsonSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData"), includeSubdirectories: false)
-            {
-                Mask = "*.json",
-                Includes = new[] { "profiles-types.json" }
-            };
+            // var jsonSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData"), includeSubdirectories: false)
+            var jsonSource = new DirectorySource(
+                Path.Combine(DirectorySource.SpecificationDirectory, "TestData"), 
+                new DirectorySourceSettings()
+                {
+                    Mask = "*.json",
+                    Includes = new[] { "profiles-types.json" },
+                    IncludeSubDirectories= false
+                });
 
             Assert.IsNotNull(jsonSource.LoadArtifactByName("profiles-types.json"));
 
-            var xmlSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), includeSubdirectories: false)
-            {
-                Mask = "*.xml",
-                Includes = new[] { "profiles-types.xml" }
-            };
+            // var xmlSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), includeSubdirectories: false)
+            var xmlSource = new DirectorySource(
+                Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"),
+                new DirectorySourceSettings()
+                {
+                    Mask = "*.xml",
+                    Includes = new[] { "profiles-types.xml" },
+                    IncludeSubDirectories = false
+                });
 
             Assert.IsNotNull(xmlSource.LoadArtifactByName("profiles-types.xml"));
 
-            var xmlSourceLarge = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), includeSubdirectories: true)
-            {
-                Mask = "*.xml",
-            };
+            // var xmlSourceLarge = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), includeSubdirectories: true)
+            var xmlSourceLarge = new DirectorySource(
+                Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), 
+                new DirectorySourceSettings()
+                {
+                    Mask = "*.xml",
+                    IncludeSubDirectories = true
+                });
 
             Assert.IsNotNull(xmlSourceLarge.LoadArtifactByName("profiles-types.xml"));
 
