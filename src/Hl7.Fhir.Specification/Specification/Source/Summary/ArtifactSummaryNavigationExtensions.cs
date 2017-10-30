@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System;
 using System.Diagnostics;
+using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.Specification.Source.Summary
 {
@@ -32,10 +33,8 @@ namespace Hl7.Fhir.Specification.Source.Summary
             var value = nav.Value;
             if (value != null)
             {
-                // Assumption: navigator always returns string values (?)
-                Debug.Assert(nav.Value is string);
-
-                details[key] = (string)value;
+                var s = PrimitiveTypeConverter.ConvertTo<string>(value);
+                details[key] = s;
                 return true;
             }
             return false;
@@ -50,6 +49,8 @@ namespace Hl7.Fhir.Specification.Source.Summary
         {
             return nav.Find(element) && nav.TryExtractValue(details, key);
         }
+
+        // TODO: Use nav.Children("name")
 
         /// <summary>Extract the value of a child element into an <see cref="ArtifactSummaryDetailsCollection"/> using the specified key.</summary>
         /// <param name="nav">An <see cref="IElementNavigator"/> instance.</param>
@@ -72,13 +73,11 @@ namespace Hl7.Fhir.Specification.Source.Summary
         /// <param name="values">A list of values.</param>
         public static bool TryExtractValue(this IElementNavigator nav, List<string> values)
         {
-            var value = nav.Value; // ?.ToString();
+            var value = nav.Value;
             if (value != null)
             {
-                // Assumption: navigator always returns string values (?)
-                Debug.Assert(nav.Value is string);
-
-                values.Add((string)value);
+                var s = PrimitiveTypeConverter.ConvertTo<string>(value);
+                values.Add(s);
                 return true;
             }
             return false;
