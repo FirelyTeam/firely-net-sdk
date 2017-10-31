@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Specification.Source.Summary
         /// <summary>Add the value of the current element to a list, if not missing or empty.</summary>
         /// <param name="nav">An <see cref="IElementNavigator"/> instance.</param>
         /// <param name="values">A list of values.</param>
-        public static bool HarvestValue(this IElementNavigator nav, List<string> values)
+        public static bool HarvestValue(this IElementNavigator nav, IList<string> values)
         {
             var value = nav.Value;
             if (value != null)
