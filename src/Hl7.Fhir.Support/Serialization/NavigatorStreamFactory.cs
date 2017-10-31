@@ -6,22 +6,23 @@
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
+using Hl7.Fhir.Utility;
 using System;
+using System.IO;
 
 #if NET_FILESYSTEM
 
 namespace Hl7.Fhir.Serialization
 {
-/*  [WMR 20171030] YAGNI
+    // [WMR 20171031] We want consumers to be able to implement custom serialization formats.
+    // By defining format constants as strings (instead of enum), consumers can define additional values.
 
-    /// <summary>
-    /// Factory delegate for creating a new <see cref="INavigatorStream"/> instance for a
-    /// serialized resource, independent of the underlying resource serialization format.
-    /// </summary>
-    public delegate INavigatorStream NavigatorStreamFactory(string path);
-
-    /// <summary>Provides a default implementation for the <see cref="NavigatorStreamFactory"/> delegate.</summary>
-*/
+    /// <summary>Constants that represent different FHIR serialization formats.</summary>
+    public static class FhirSerializationFormats
+    {
+        public const string Xml = "xml";
+        public const string Json = "json";
+    }
 
     /// <summary>
     /// Factory to create new <see cref="INavigatorStream"/> instances to navigate
@@ -30,6 +31,44 @@ namespace Hl7.Fhir.Serialization
     /// <remarks>Supports FHIR resource files with ".xml" and ".json" extensions.</remarks>
     public static class DefaultNavigatorStreamFactory
     {
+        /// <summary>
+        /// Creates a new <see cref="INavigatorStream"/> instance to access the contents of a
+        /// serialized resource stream, independent of the serialization format.
+        /// </summary>
+        /// <param name="stream">A <see cref="Stream"/> for reading a serialized FHIR resource.</param>
+        /// <param name="format">A string that indicates the resource serialization format.</param>
+        /// <returns>A new <see cref="INavigatorStream"/> instance.</returns>
+        /// <remarks>Supports FHIR resource files with ".xml" and ".json" extensions.</remarks>
+        /// <exception cref="NotSupportedException">The specified serialization format is not supported.</exception>
+        public static INavigatorStream Create(Stream stream, string format)
+        {
+            switch (format)
+            {
+                case FhirSerializationFormats.Xml:
+                    return new XmlNavigatorStream(stream);
+                case FhirSerializationFormats.Json:
+                    return new JsonNavigatorStream(stream);
+                default:
+                    throw Error.NotSupported($"Unsupported FHIR serialization format ('{format}').");
+            }
+        }
+
+        /// <summary>Determines serialization format by inspecting the file extension.</summary>
+        /// <param name="path">File path to a FHIR artifact.</param>
+        /// <returns>A constant string value as defined by <see cref="FhirSerializationFormats"/>, or <c>null</c>.</returns>
+        public static string GetSerializationFormat(string path)
+        {
+            if (FileFormats.HasXmlExtension(path))
+            {
+                return FhirSerializationFormats.Xml;
+            }
+            if (FileFormats.HasJsonExtension(path))
+            {
+                return FhirSerializationFormats.Json;
+            }
+            return null;
+        }
+
         /// <summary>
         /// Creates a new <see cref="INavigatorStream"/> instance to access the contents of a
         /// serialized resource, independent of the underlying resource serialization format.
@@ -51,6 +90,7 @@ namespace Hl7.Fhir.Serialization
             // Unsupported extension
             return null;
         }
+
     }
 }
 
