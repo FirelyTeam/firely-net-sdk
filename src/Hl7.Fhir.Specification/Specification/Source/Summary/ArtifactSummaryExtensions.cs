@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+#if NET_FILESYSTEM
+
 namespace Hl7.Fhir.Specification.Source.Summary
 {
     /// <summary>Extension methods for filtering <see cref="IEnumerable{T}"/> sequences of <see cref="ArtifactSummary"/> instances.</summary>
@@ -68,3 +70,5 @@ namespace Hl7.Fhir.Specification.Source.Summary
             => summaries.FindConceptMaps(sourceUri, targetUri).SingleOrDefault();
     }
 }
+
+#endif

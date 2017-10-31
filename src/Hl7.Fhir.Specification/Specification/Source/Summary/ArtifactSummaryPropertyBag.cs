@@ -6,6 +6,8 @@
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
+#if NET_FILESYSTEM
+
 using System;
 using System.Collections.Generic;
 
@@ -35,3 +37,5 @@ namespace Hl7.Fhir.Specification.Source.Summary
         public ArtifactSummaryPropertyBag() : base(DefaultCapacity) { }
     }
 }
+
+#endif

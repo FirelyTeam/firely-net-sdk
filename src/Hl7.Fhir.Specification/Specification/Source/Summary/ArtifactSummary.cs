@@ -13,10 +13,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Collections;
 
+#if NET_FILESYSTEM
+
 namespace Hl7.Fhir.Specification.Source.Summary
 {
     // Note:
-    // 1. ArtifactSummaryGenerator creates new (writeabe) ArtifactSummaryPropertyBag
+    // 1. ArtifactSummaryGenerator creates new (writeable) ArtifactSummaryPropertyBag
     // 2. ArtifactSummaryGenerator calls the available ArtifactSummaryHarvester delegates
     //    to harvest artifact summary information and add it to the property bag
     // 3. ArtifactSummaryGenerator creates a new (read-only) ArtifactSummary instance
@@ -147,3 +149,5 @@ namespace Hl7.Fhir.Specification.Source.Summary
              + (IsFaulted ? " | Error: " + Error.Message : string.Empty);
     }
 }
+
+#endif

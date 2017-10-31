@@ -6,6 +6,8 @@
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
+#if NET_FILESYSTEM
+
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Serialization;
 using System;
@@ -81,9 +83,9 @@ namespace Hl7.Fhir.Specification.Source.Summary
             string origin,
             params ArtifactSummaryHarvester[] harvesters)
         {
-            // [WMR 20171023] In case of error, return completed summaries and error info
             var result = new List<ArtifactSummary>();
 
+            // In case of error, return completed summaries and error info
             INavigatorStream navStream = null;
             try
             {
@@ -178,3 +180,5 @@ namespace Hl7.Fhir.Specification.Source.Summary
 
     }
 }
+
+#endif
