@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Specification.Source.Summary
         /// <summary>Harvest specific summary information from a <see cref="NamingSystem"/> resource.</summary>
         /// <returns><c>true</c> if the current target represents a <see cref="NamingSystem"/> resource, or <c>false</c> otherwise.</returns>
         /// <remarks>The <see cref="ArtifactSummaryGenerator"/> calls this method through a <see cref="ArtifactSummaryHarvester"/> delegate.</remarks>
-        internal static bool Harvest(IElementNavigator nav, ArtifactSummaryPropertyBag properties)
+        public static bool Harvest(IElementNavigator nav, ArtifactSummaryPropertyBag properties)
         {
             if (IsNamingSystemSummary(properties))
             {
@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Specification.Source.Summary
         /// <seealso cref="StructureDefinitionSummaryProperties"/>
         /// <seealso cref="ValueSetSummaryProperties"/>
         /// <seealso cref="ConceptMapSummaryProperties"/>
-        internal static bool Harvest(IElementNavigator nav, ArtifactSummaryPropertyBag properties)
+        public static bool Harvest(IElementNavigator nav, ArtifactSummaryPropertyBag properties)
         {
             if (IsConformanceSummary(properties))
             {
@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Specification.Source.Summary
         /// <summary>Harvest specific summary information from a <see cref="StructureDefinition"/> resource.</summary>
         /// <returns><c>true</c> if the current target represents a <see cref="StructureDefinition"/> resource, or <c>false</c> otherwise.</returns>
         /// <remarks>The <see cref="ArtifactSummaryGenerator"/> calls this method from a <see cref="ArtifactSummaryHarvester"/> delegate.</remarks>
-        internal static bool Harvest(IElementNavigator nav, ArtifactSummaryPropertyBag properties)
+        public static bool Harvest(IElementNavigator nav, ArtifactSummaryPropertyBag properties)
         {
             if (IsStructureDefinitionSummary(properties))
             {
@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Specification.Source.Summary
         /// <summary>Harvest specific summary information from a <see cref="ValueSet"/> resource.</summary>
         /// <returns><c>true</c> if the current target is a ValueSet, or <c>false</c> otherwise.</returns>
         /// <remarks>The <see cref="ArtifactSummaryGenerator"/> calls this method from a <see cref="ArtifactSummaryHarvester"/> delegate.</remarks>
-        internal static bool Harvest(IElementNavigator nav, ArtifactSummaryPropertyBag properties)
+        public static bool Harvest(IElementNavigator nav, ArtifactSummaryPropertyBag properties)
         {
             if (IsValueSetSummary(properties))
             {
@@ -282,7 +282,7 @@ namespace Hl7.Fhir.Specification.Source.Summary
         /// <summary>Harvest specific summary information from a <see cref="ConceptMap"/> resource.</summary>
         /// <returns><c>true</c> if the current target represents a <see cref="ConceptMap"/> resource, or <c>false</c> otherwise.</returns>
         /// <remarks>The <see cref="ArtifactSummaryGenerator"/> calls this method from a <see cref="ArtifactSummaryHarvester"/> delegate.</remarks>
-        internal static bool Harvest(IElementNavigator nav, ArtifactSummaryPropertyBag properties)
+        public static bool Harvest(IElementNavigator nav, ArtifactSummaryPropertyBag properties)
         {
             if (IsConceptMapSummary(properties))
             {
