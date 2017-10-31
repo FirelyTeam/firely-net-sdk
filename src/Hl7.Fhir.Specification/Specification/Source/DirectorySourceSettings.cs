@@ -12,10 +12,27 @@ using Hl7.Fhir.Utility;
 using System;
 using System.IO;
 using System.Linq;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Source
 {
     // cf. SnapshotGeneratorSettings, ValidationSettings
+
+    // Global design choices for API settings:
+    // * Configuration setting classes are read/write
+    //   Consumers can use (default) ctor and object initializer syntax
+    //   Note: Read-only classes are not serializable, mutation is clumsy (via custom clone ctor)
+    // * public default (parameterless) ctor creates instance with default settings
+    // * public static CreateDefault() also returns a new instance with default settings
+    // * Preferably, design properties such that default values are equal to false/null/0 etc.
+    // * Deprecate old syntax using Obsolete & DebuggerHidden attributes
+    // * Support cloning:
+    //   - clone ctor T(T other)     = create new instance from existing instance
+    //   - public T Clone()          = public method with strongly typed return value
+    //   - object ICloneable.Clone() = explicit ICloneable interface implementation (DOTNETFW only)
+    // * Christiaan: ASP.NET provides ctors with lambda argument to change internal config settings
+    //   This way, caller does not obtain "ownership" of settings instance.
+
 
     /// <summary>Configuration settings for the <see cref="DirectorySource"/> class.</summary>
     public sealed class DirectorySourceSettings
@@ -29,7 +46,10 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Default value of the <see cref="Masks"/> configuration setting.</summary>
         public readonly static string[] DefaultMasks = new[] { "*.*" };
 
-        /// <summary>Default constructor. Creates a new <see cref="DirectorySourceSettings"/> instance initialized from the default values.</summary>
+        /// <summary>Creates a new <see cref="DirectorySourceSettings"/> instance with default property values.</summary>
+        public static DirectorySourceSettings CreateDefault => new DirectorySourceSettings();
+
+        /// <summary>Default constructor. Creates a new <see cref="DirectorySourceSettings"/> instance with default property values.</summary>
         public DirectorySourceSettings()
         {
             // See property declarations for default initializers
