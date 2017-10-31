@@ -1,4 +1,12 @@
-﻿using Hl7.Fhir.ElementModel;
+﻿/* 
+ * Copyright (c) 2017, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ */
+
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Serialization;
 using System;
 using System.Collections.Generic;

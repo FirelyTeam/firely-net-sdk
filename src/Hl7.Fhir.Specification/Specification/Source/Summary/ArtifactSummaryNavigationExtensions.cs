@@ -1,12 +1,18 @@
-﻿using Hl7.Fhir.ElementModel;
+﻿/* 
+ * Copyright (c) 2017, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ */
+
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Serialization;
 using System;
 using System.Collections.Generic;
 
 namespace Hl7.Fhir.Specification.Source.Summary
 {
-    // Q: Move to separate namespace in order to avoid pollution?
-
     /// <summary>Extension methods on <see cref="IElementNavigator"/> to allow easy extraction of summary details from an artifact.</summary>
     public static class ArtifactSummaryNavigationExtensions
     {
@@ -48,8 +54,6 @@ namespace Hl7.Fhir.Specification.Source.Summary
         {
             return nav.Find(element) && nav.TryExtractValue(properties, key);
         }
-
-        // TODO: Use nav.Children("name")
 
         /// <summary>Extract the value of a child element into a property bag.</summary>
         /// <param name="nav">An <see cref="IElementNavigator"/> instance.</param>
