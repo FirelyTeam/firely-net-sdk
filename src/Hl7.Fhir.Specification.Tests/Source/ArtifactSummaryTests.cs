@@ -1,9 +1,11 @@
-﻿using Hl7.Fhir.Model;
+﻿using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source.Summary;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -12,19 +14,50 @@ namespace Hl7.Fhir.Specification.Tests
     {
 
         [TestMethod]
-        public void TestPatientXmlSummary()
+        public void TestPatientXmlSummary() => TestPatientSummary(@"TestData\TestPatient.xml");
+
+        [TestMethod]
+        public void TestPatientJsonSummary() => TestPatientSummary(@"TestData\TestPatient.json");
+
+        void TestPatientSummary(string path)
         {
-            const string path = @"TestData\TestPatient.xml";
             var summary = assertSummary(path);
             Assert.AreEqual(ResourceType.Patient.GetLiteral(), summary.ResourceTypeName);
         }
 
         [TestMethod]
-        public void TestPatientJsonSummary()
+        public void TestPatientXmlSummaryWithCustomHarvester()
+            => TestPatientSummaryWithCustomHarvester(@"TestData\TestPatient.xml", "Donald");
+
+        [TestMethod]
+        public void TestPatientJsonSummaryWithCustomHarvester()
+            => TestPatientSummaryWithCustomHarvester(@"TestData\TestPatient.json", "Chalmers");
+
+        void TestPatientSummaryWithCustomHarvester(string path, params string[] expectedNames)
         {
-            const string path = @"TestData\TestPatient.json";
-            var summary = assertSummary(path);
+            // Combine default harvesters and custom harvester
+            var harvesters = new ArtifactSummaryHarvester[ArtifactSummaryGenerator.DefaultArtifactSummaryHarvesters.Length + 1];
+            Array.Copy(ArtifactSummaryGenerator.DefaultArtifactSummaryHarvesters, harvesters, ArtifactSummaryGenerator.DefaultArtifactSummaryHarvesters.Length);
+            harvesters[ArtifactSummaryGenerator.DefaultArtifactSummaryHarvesters.Length] = HarvestPatientSummary;
+
+            var summary = assertSummary(path, harvesters);
             Assert.AreEqual(ResourceType.Patient.GetLiteral(), summary.ResourceTypeName);
+            var familyNames = summary.GetValueOrDefault<string[]>(PatientFamilyNameKey);
+            Assert.IsNotNull(familyNames);
+            Assert.AreEqual(1, familyNames.Length);
+            Assert.IsTrue(expectedNames.SequenceEqual(familyNames));
+        }
+
+        // Custom artifact summary harvester implementation to extract family name(s) from Patient resources
+        const string PatientFamilyNameKey = "Patient.name.family";
+        static bool HarvestPatientSummary(IElementNavigator nav, ArtifactSummaryPropertyBag properties)
+        {
+            if (properties.GetResourceTypeName() == ResourceType.Patient.GetLiteral())
+            {
+                nav.TryExtractValues(properties, PatientFamilyNameKey, "name", "family");
+                return true;
+            }
+            return false;
         }
 
         [TestMethod]
@@ -79,9 +112,9 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-        ArtifactSummary assertSummary(string path)
+        ArtifactSummary assertSummary(string path, params ArtifactSummaryHarvester[] harvesters)
         {
-            var summaries = ArtifactSummaryGenerator.Generate(path);
+            var summaries = ArtifactSummaryGenerator.Generate(path, harvesters);
             Assert.IsNotNull(summaries);
             Assert.AreEqual(1, summaries.Count);
             var summary = summaries[0];

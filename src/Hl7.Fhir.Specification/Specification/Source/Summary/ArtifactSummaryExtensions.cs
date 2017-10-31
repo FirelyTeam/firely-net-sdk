@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.Specification.Source.Summary
 {
+    /// <summary>Extension methods for filtering <see cref="IEnumerable{T}"/> sequences of <see cref="ArtifactSummary"/> instances.</summary>
     public static class ArtifactSummaryExtensions
     {
         /// <summary>Filter <see cref="ArtifactSummary"/> instances with errors.</summary>

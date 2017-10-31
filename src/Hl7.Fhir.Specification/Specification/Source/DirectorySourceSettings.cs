@@ -6,13 +6,11 @@
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source.Summary;
 using Hl7.Fhir.Utility;
 using System;
 using System.IO;
 using System.Linq;
-using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -20,7 +18,7 @@ namespace Hl7.Fhir.Specification.Source
 
     // Global design choices for API settings:
     // * Configuration setting classes are read/write
-    //   Consumers can use (default) ctor and object initializer syntax
+    //   This allows consumers to use (default) ctor and object initializer syntax
     //   Note: Read-only classes are not serializable, mutation is clumsy (via custom clone ctor)
     // * public default (parameterless) ctor creates instance with default settings
     // * public static CreateDefault() also returns a new instance with default settings
@@ -72,9 +70,7 @@ namespace Hl7.Fhir.Specification.Source
             other.Includes = this.Includes;
             other.Excludes = this.Excludes;
             other.FormatPreference = this.FormatPreference;
-            // other.StreamFactory = this.StreamFactory;
-            // other.SummaryFactory = this.SummaryFactory;
-            other.SummaryDetailsExtractors = this.SummaryDetailsExtractors;
+            other.SummaryDetailsHarvesters = this.SummaryDetailsHarvesters;
         }
 
         /// <summary>Returns an exact clone of the current configuration settings instance.</summary>
@@ -123,6 +119,17 @@ namespace Hl7.Fhir.Specification.Source
         /// </list>
         /// </remarks>
         public bool IncludeSubDirectories { get; set; } // = false;
+
+        /// <summary>
+        /// Determines if the <see cref="DirectorySource"/> instance should
+        /// use only a single thread to harvest the artifact summary information.
+        /// </summary>
+        /// <remarks>
+        /// By default, the <see cref="DirectorySource"/> leverages the thread pool
+        /// to try and speed up the artifact summary generation process.
+        /// Set this property to <c>true</c> to force single threaded processing.
+        /// </remarks>
+        public bool SingleThreaded { get; set; } // = false;
 
         /// <summary>
         /// Gets or sets the search string to match against the names of files in the content directory.
@@ -247,57 +254,22 @@ namespace Hl7.Fhir.Specification.Source
         /// </example>
         public string[] Excludes { get; set; }
 
-        /// <summary>
-        /// Gets or sets a value that determines how to process duplicate files with multiple serialization formats.
-        /// <para>
-        /// Returns <see cref="DirectorySource.DuplicateFilenameResolution.PreferXml"/> by default.
-        /// </para>
-        /// </summary>
+        /// <summary>Gets or sets a value that determines how to process duplicate files with multiple serialization formats.<para>
+        /// <remarks>The default value is <see cref="DirectorySource.DuplicateFilenameResolution.PreferXml"/>.</remarks>
         public DirectorySource.DuplicateFilenameResolution FormatPreference { get; set; } = DefaultFormatPreference;
 
-/*      [WMR 20171030] YAGNI
- 
-        /// <summary>Gets or sets a custom <see cref="NavigatorStreamFactory"/> delegate.</summary>
-        /// <remarks>
-        /// The <see cref="ArtifactSummaryGenerator"/> depends on the <see cref="INavigatorStream"/>
-        /// interface to extract summary information from FHIR artifacts, independent of the underlying
-        /// resource serialization format. By default, the <see cref="DirectorySource"/> calls the
-        /// <see cref="DefaultNavigatorStreamFactory.Create(string)"/> method to create
-        /// a concrete navigator stream for the current file. The default factory supports
-        /// navigators for "*.xml" and "*.json" files.
-        /// The caller can override the default navigator streams by specifying a custom
-        /// <see cref="NavigatorStreamFactory"/> delegate. This allows clients to implement
-        /// support for alternative serialization formats.
-        /// </remarks>
-        public NavigatorStreamFactory StreamFactory { get; set; }
-
         /// <summary>
-        /// Gets or sets a custom <see cref="ArtifactSummaryFactory"/> delegate that the
-        /// <see cref="ArtifactSummaryGenerator"/> calls to create the final <see cref="ArtifactSummary"/>
-        /// instance.
+        /// An array of <see cref="ArtifactSummaryHarvester"/> delegates for
+        /// harvesting summary details from an artifact.
         /// </summary>
         /// <remarks>
-        /// By default, the <see cref="ArtifactSummaryGenerator"/> returns a list of <see cref="ArtifactSummary"/>
-        /// instances. Alternatively, you can specify a custom <see cref="ArtifactSummaryFactory"/> delegate
-        /// to create custom return values, depending on the extracted summary details. This allows you to
-        /// generate various specialized subclasses with additional strongly typed properties.
+        /// By default, the <see cref="ArtifactSummaryGenerator"/> calls all the default harvesters
+        /// as defined by <see cref="ArtifactSummaryGenerator.DefaultArtifactSummaryHarvesters"/>.
+        /// However if the caller specifies one or more summary harvester delegates, then the generator
+        /// will call only the provided delegates in the specified order. The caller can also explicitly
+        /// include one or more default harvester delegates in the specified list.
         /// </remarks>
-        public ArtifactSummaryFactory SummaryFactory { get; set; }
-*/
-
-        /// <summary>
-        /// An array of <see cref="ArtifactSummaryDetailsExtractor"/> delegates for
-        /// extracting custom summary details from an artifact.
-        /// </summary>
-        /// <remarks>
-        /// For each artifact, the <see cref="ArtifactSummaryGenerator"/> first extracts the default
-        /// summary details and then calls any custom extractor delegates in the specified order.
-        /// If a delegate returns <c>true</c> to signal extraction has finished, the generator will not
-        /// call any of the remaining delegates, but immediately proceed to create the
-        /// <see cref="ArtifactSummary"/> return value.
-        /// </remarks>
-        public ArtifactSummaryDetailsExtractor[] SummaryDetailsExtractors { get; set; }
-
+        public ArtifactSummaryHarvester[] SummaryDetailsHarvesters { get; set; }
     }
 
 }

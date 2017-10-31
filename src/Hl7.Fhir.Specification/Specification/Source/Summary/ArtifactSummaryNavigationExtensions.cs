@@ -1,8 +1,7 @@
 ﻿using Hl7.Fhir.ElementModel;
-using System.Collections.Generic;
-using System;
-using System.Diagnostics;
 using Hl7.Fhir.Serialization;
+using System;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Specification.Source.Summary
 {
@@ -24,46 +23,46 @@ namespace Hl7.Fhir.Specification.Source.Summary
             return nav.Name == element || nav.MoveToNext(element);
         }
 
-        /// <summary>Extract the value of the current element into an <see cref="ArtifactSummaryDetailsCollection"/> using the specified key.</summary>
+        /// <summary>Extract the value of the current element into a property bag.</summary>
         /// <param name="nav">An <see cref="IElementNavigator"/> instance.</param>
-        /// <param name="details">An <see cref="ArtifactSummaryDetailsCollection"/> instance.</param>
-        /// <param name="key">A collection key.</param>
-        public static bool TryExtractValue(this IElementNavigator nav, ArtifactSummaryDetailsCollection details, string key)
+        /// <param name="properties">A dictionary to store extracted properties.</param>
+        /// <param name="key">A dictionary key.</param>
+        public static bool TryExtractValue(this IElementNavigator nav, IDictionary<string, object> properties, string key)
         {
             var value = nav.Value;
             if (value != null)
             {
                 var s = PrimitiveTypeConverter.ConvertTo<string>(value);
-                details[key] = s;
+                properties[key] = s;
                 return true;
             }
             return false;
         }
 
-        /// <summary>Extract the value of the (current or sibling) element with the specified name into an <see cref="ArtifactSummaryDetailsCollection"/> using the specified key.</summary>
+        /// <summary>Extract the value of the (current or sibling) element with the specified name into a property bag.</summary>
         /// <param name="nav">An <see cref="IElementNavigator"/> instance.</param>
-        /// <param name="details">An <see cref="ArtifactSummaryDetailsCollection"/> instance.</param>
-        /// <param name="key">A collection key.</param>
+        /// <param name="properties">A dictionary to store extracted properties.</param>
+        /// <param name="key">A dictionary key.</param>
         /// <param name="element">An element name.</param>
-        public static bool TryExtractValue(this IElementNavigator nav, ArtifactSummaryDetailsCollection details, string key, string element)
+        public static bool TryExtractValue(this IElementNavigator nav, IDictionary<string, object> properties, string key, string element)
         {
-            return nav.Find(element) && nav.TryExtractValue(details, key);
+            return nav.Find(element) && nav.TryExtractValue(properties, key);
         }
 
         // TODO: Use nav.Children("name")
 
-        /// <summary>Extract the value of a child element into an <see cref="ArtifactSummaryDetailsCollection"/> using the specified key.</summary>
+        /// <summary>Extract the value of a child element into a property bag.</summary>
         /// <param name="nav">An <see cref="IElementNavigator"/> instance.</param>
-        /// <param name="details">An <see cref="ArtifactSummaryDetailsCollection"/> instance.</param>
-        /// <param name="key">A collection key.</param>
+        /// <param name="properties">A dictionary to store extracted properties.</param>
+        /// <param name="key">A dictionary key.</param>
         /// <param name="element">An element name.</param>
         /// <param name="childElement">A child element name.</param>
-        public static bool TryExtractValue(this IElementNavigator nav, ArtifactSummaryDetailsCollection details, string key, string element, string childElement)
+        public static bool TryExtractValue(this IElementNavigator nav, IDictionary<string, object> properties, string key, string element, string childElement)
         {
             if (nav.Find(element))
             {
                 var childNav = nav.Clone();
-                return childNav.MoveToFirstChild(childElement) && childNav.TryExtractValue(details, key);
+                return childNav.MoveToFirstChild(childElement) && childNav.TryExtractValue(properties, key);
             }
             return false;
         }
@@ -83,13 +82,13 @@ namespace Hl7.Fhir.Specification.Source.Summary
             return false;
         }
 
-        /// <summary>Extract an array of child element values into an <see cref="ArtifactSummaryDetailsCollection"/> using the specified key.</summary>
+        /// <summary>Extract an array of child element values into a property bag.</summary>
         /// <param name="nav">An <see cref="IElementNavigator"/> instance.</param>
-        /// <param name="details">An <see cref="ArtifactSummaryDetailsCollection"/> instance.</param>
-        /// <param name="key">A collection key.</param>
+        /// <param name="properties">A dictionary to store extracted properties.</param>
+        /// <param name="key">A dictionary key.</param>
         /// <param name="element">An element name.</param>
         /// <param name="childElement">A child element name.</param>
-        public static bool TryExtractValues(this IElementNavigator nav, ArtifactSummaryDetailsCollection details, string key, string element, string childElement)
+        public static bool TryExtractValues(this IElementNavigator nav, IDictionary<string, object> properties, string key, string element, string childElement)
         {
             if (nav.Find(element))
             {
@@ -104,7 +103,7 @@ namespace Hl7.Fhir.Specification.Source.Summary
                 } while (nav.MoveToNext(element));
                 if (values.Count > 0)
                 {
-                    details[key] = values.ToArray();
+                    properties[key] = values.ToArray();
                     return true;
                 }
             }
