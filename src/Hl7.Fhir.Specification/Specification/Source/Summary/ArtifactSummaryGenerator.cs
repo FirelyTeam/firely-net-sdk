@@ -104,15 +104,14 @@ namespace Hl7.Fhir.Specification.Source.Summary
                     var current = navStream.Current;
                     if (current != null)
                     {
-                        var properties = new ArtifactSummaryPropertyBag
-                        {
-                            // Add default summary information
-                            // Note: not exposed by IElementNavigator, cannot use harvester
-                            [ArtifactSummaryProperties.OriginKey] = origin,
-                            [ArtifactSummaryProperties.PositionKey] = navStream.Position,
-                            [ArtifactSummaryProperties.ResourceUriKey] = navStream.Position,
-                            [ArtifactSummaryProperties.ResourceTypeNameKey] = current.Type
-                        };
+                        var properties = new ArtifactSummaryPropertyBag();
+
+                        // Initialize default summary information
+                        // Note: not exposed by IElementNavigator, cannot use harvester
+                        properties.SetOrigin(origin);
+                        properties.SetPosition(navStream.Position);
+                        properties.SetTypeName(current.Type);
+                        properties.SetResourceUri(navStream.Position);
 
                         var summary = generate(properties, current, harvesters); // allHarvesters
 

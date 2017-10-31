@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Specification.Tests
         const string PatientFamilyNameKey = "Patient.name.family";
         static bool HarvestPatientSummary(IElementNavigator nav, ArtifactSummaryPropertyBag properties)
         {
-            if (properties.GetResourceTypeName() == ResourceType.Patient.GetLiteral())
+            if (properties.GetTypeName() == ResourceType.Patient.GetLiteral())
             {
                 nav.HarvestValues(properties, PatientFamilyNameKey, "name", "family");
                 return true;

@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Specification.Source.Summary
         public string Position => properties.GetPosition();
 
         /// <summary>Returns the type name of the resource.</summary>
-        public string ResourceTypeName => properties.GetResourceTypeName();
+        public string ResourceTypeName => properties.GetTypeName();
 
         /// <summary>Returns the type of the resource, parsed from the original <see cref="ResourceTypeName"/> value, or <c>null</c>.</summary>
         public ResourceType? ResourceType { get; }

@@ -11,11 +11,11 @@ using System.Collections.Generic;
 
 namespace Hl7.Fhir.Specification.Source.Summary
 {
-    /// <summary>Generic read-only interface to access previously harvested artifact summary properties by key.</summary>
+    /// <summary>Read-only dictionary interface to access harvested artifact summary properties by key.</summary>
     /// <remarks>
     /// Implemented by both <see cref="ArtifactSummaryPropertyBag"/> and <see cref="ArtifactSummary"/>,
-    /// so summary harvester implementations can define common extension methods to access specific
-    /// property values that operate on both types.
+    /// to allow <see cref="ArtifactSummaryHarvester"/> implementations to define common extension
+    /// methods to access specific property values that operate on both types.
     /// </remarks>
     public interface IArtifactSummaryPropertyBag : IReadOnlyDictionary<string, object>
     {
