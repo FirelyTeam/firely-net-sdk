@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Specification.Source.Summary
         {
             if (IsNamingSystemSummary(properties))
             {
-                nav.TryExtractValues(properties, UniqueIdKey, "uniqueId", "value");
+                nav.HarvestValues(properties, UniqueIdKey, "uniqueId", "value");
                 return true;
             }
             return false;
@@ -138,9 +138,9 @@ namespace Hl7.Fhir.Specification.Source.Summary
         {
             if (IsConformanceSummary(properties))
             {
-                nav.TryExtractValue(properties, ConformanceCanonicalUrlKey, "url");
-                nav.TryExtractValue(properties, ConformanceNameKey, "name");
-                nav.TryExtractValue(properties, ConformanceStatusKey, "status");
+                nav.HarvestValue(properties, ConformanceCanonicalUrlKey, "url");
+                nav.HarvestValue(properties, ConformanceNameKey, "name");
+                nav.HarvestValue(properties, ConformanceStatusKey, "status");
                 return true;
             }
             return false;
@@ -186,10 +186,10 @@ namespace Hl7.Fhir.Specification.Source.Summary
                 // Explicit extractor chaining
                 if (ConformanceSummaryProperties.Harvest(nav, properties))
                 {
-                    nav.TryExtractValue(properties, StructureDefinitionKindKey, "kind");
-                    nav.TryExtractValue(properties, StructureDefinitionConstrainedTypeKey, "constrainedType");
-                    nav.TryExtractValue(properties, StructureDefinitionContextTypeKey, "contextType");
-                    nav.TryExtractValue(properties, StructureDefinitionBaseKey, "base");
+                    nav.HarvestValue(properties, StructureDefinitionKindKey, "kind");
+                    nav.HarvestValue(properties, StructureDefinitionConstrainedTypeKey, "constrainedType");
+                    nav.HarvestValue(properties, StructureDefinitionContextTypeKey, "contextType");
+                    nav.HarvestValue(properties, StructureDefinitionBaseKey, "base");
                 }
                 return true;
             }
@@ -222,7 +222,7 @@ namespace Hl7.Fhir.Specification.Source.Summary
                 // Explicit extractor chaining
                 if (ConformanceSummaryProperties.Harvest(nav, properties))
                 {
-                    nav.TryExtractValue(properties, ValueSetSystemKey, "codeSystem", "system");
+                    nav.HarvestValue(properties, ValueSetSystemKey, "codeSystem", "system");
                 }
                 return true;
             }
@@ -259,14 +259,14 @@ namespace Hl7.Fhir.Specification.Source.Summary
                 // Explicit extractor chaining
                 if (ConformanceSummaryProperties.Harvest(nav, properties))
                 {
-                    if (!nav.TryExtractValue(properties, ConceptMapSourceKey, "sourceUri"))
+                    if (!nav.HarvestValue(properties, ConceptMapSourceKey, "sourceUri"))
                     {
-                        nav.TryExtractValue(properties, ConceptMapSourceKey, "sourceReference", "reference");
+                        nav.HarvestValue(properties, ConceptMapSourceKey, "sourceReference", "reference");
                     }
 
-                    if (!nav.TryExtractValue(properties, ConceptMapTargetKey, "targetUri"))
+                    if (!nav.HarvestValue(properties, ConceptMapTargetKey, "targetUri"))
                     {
-                        nav.TryExtractValue(properties, ConceptMapTargetKey, "targetReference", "reference");
+                        nav.HarvestValue(properties, ConceptMapTargetKey, "targetReference", "reference");
                     }
                 }
                 return true;

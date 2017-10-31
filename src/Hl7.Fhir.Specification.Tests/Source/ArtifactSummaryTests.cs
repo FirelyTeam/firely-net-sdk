@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             if (properties.GetResourceTypeName() == ResourceType.Patient.GetLiteral())
             {
-                nav.TryExtractValues(properties, PatientFamilyNameKey, "name", "family");
+                nav.HarvestValues(properties, PatientFamilyNameKey, "name", "family");
                 return true;
             }
             return false;

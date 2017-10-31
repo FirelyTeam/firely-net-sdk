@@ -17,13 +17,6 @@ namespace Hl7.Fhir.Serialization
     // [WMR 20171031] We want consumers to be able to implement custom serialization formats.
     // By defining format constants as strings (instead of enum), consumers can define additional values.
 
-    /// <summary>Constants that represent different FHIR serialization formats.</summary>
-    public static class FhirSerializationFormats
-    {
-        public const string Xml = "xml";
-        public const string Json = "json";
-    }
-
     /// <summary>
     /// Factory to create new <see cref="INavigatorStream"/> instances to navigate
     /// serialized resources, independent of the underlying resource serialization format.
@@ -36,10 +29,11 @@ namespace Hl7.Fhir.Serialization
         /// serialized resource stream, independent of the serialization format.
         /// </summary>
         /// <param name="stream">A <see cref="Stream"/> for reading a serialized FHIR resource.</param>
-        /// <param name="format">A string that indicates the resource serialization format.</param>
+        /// <param name="format">A string value that represents the FHIR resource serialization format, as defined by <see cref="FhirSerializationFormats"/>.</param>
         /// <returns>A new <see cref="INavigatorStream"/> instance.</returns>
-        /// <remarks>Supports FHIR resource files with ".xml" and ".json" extensions.</remarks>
-        /// <exception cref="NotSupportedException">The specified serialization format is not supported.</exception>
+        /// <remarks>Supports XML and JSON serialization formats.</remarks>
+        /// <exception cref="NotSupportedException">The specified FHIR resource serialization format is not supported.</exception>
+        /// <seealso cref="FhirSerializationFormats"/>
         public static INavigatorStream Create(Stream stream, string format)
         {
             switch (format)
@@ -58,11 +52,11 @@ namespace Hl7.Fhir.Serialization
         /// <returns>A constant string value as defined by <see cref="FhirSerializationFormats"/>, or <c>null</c>.</returns>
         public static string GetSerializationFormat(string path)
         {
-            if (FileFormats.HasXmlExtension(path))
+            if (FhirFileFormats.HasXmlExtension(path))
             {
                 return FhirSerializationFormats.Xml;
             }
-            if (FileFormats.HasJsonExtension(path))
+            if (FhirFileFormats.HasJsonExtension(path))
             {
                 return FhirSerializationFormats.Json;
             }
@@ -78,11 +72,11 @@ namespace Hl7.Fhir.Serialization
         /// <remarks>Supports FHIR resource files with ".xml" and ".json" extensions.</remarks>
         public static INavigatorStream Create(string path)
         {
-            if (FileFormats.HasXmlExtension(path))
+            if (FhirFileFormats.HasXmlExtension(path))
             {
                 return XmlNavigatorStream.FromPath(path);
             }
-            if (FileFormats.HasJsonExtension(path))
+            if (FhirFileFormats.HasJsonExtension(path))
             {
                 return JsonNavigatorStream.FromPath(path);
             }

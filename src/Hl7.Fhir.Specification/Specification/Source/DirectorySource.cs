@@ -242,6 +242,8 @@ namespace Hl7.Fhir.Specification.Source
             set { _settings.Excludes = value; Refresh(); }
         }
 
+        // Note: DuplicateFilenameResolution must be in sync with FhirSerializationFormats
+
         /// <summary>
         /// Specifies how the <see cref="DirectorySource"/> should process duplicate files with multiple serialization formats.
         /// </summary>
@@ -586,7 +588,7 @@ namespace Hl7.Fhir.Specification.Source
 
             foreach (var filename in allFilenames.Distinct())
             {
-                if (FileFormats.HasXmlOrJsonExtension(filename))
+                if (FhirFileFormats.HasXmlOrJsonExtension(filename))
                     xmlOrJson.Add(filename);
                 else
                     result.Add(filename);
@@ -602,9 +604,9 @@ namespace Hl7.Fhir.Specification.Source
                 {
                     // count must be 2
                     var first = group.First();
-                    if (preference == DuplicateFilenameResolution.PreferXml && FileFormats.HasXmlExtension(first))
+                    if (preference == DuplicateFilenameResolution.PreferXml && FhirFileFormats.HasXmlExtension(first))
                         result.Add(first);
-                    else if (preference == DuplicateFilenameResolution.PreferJson && FileFormats.HasJsonExtension(first))
+                    else if (preference == DuplicateFilenameResolution.PreferJson && FhirFileFormats.HasJsonExtension(first))
                         result.Add(first);
                     else
                         result.Add(group.Skip(1).First());
