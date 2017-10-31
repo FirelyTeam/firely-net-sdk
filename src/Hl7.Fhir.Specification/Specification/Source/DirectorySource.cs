@@ -402,7 +402,7 @@ namespace Hl7.Fhir.Specification.Source
             return getResourceFromScannedSource<Resource>(info);
         }
 
-        /// <summary>Resolve the ValueSet with the specified codeSystem system.</summary>
+        /// <summary>Resolve the <see cref="ValueSet"/> resource with the specified codeSystem system.</summary>
         public ValueSet FindValueSetBySystem(string system)
         {
             prepareResources();
@@ -413,7 +413,7 @@ namespace Hl7.Fhir.Specification.Source
             return getResourceFromScannedSource<ValueSet>(info);
         }
 
-        /// <summary>Resolve ConceptMap resources with the specified source and/or target uri(s).</summary>
+        /// <summary>Resolve <see cref="ConceptMap"/> resources with the specified source and/or target uri(s).</summary>
         public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
         {
             if (sourceUri == null && targetUri == null)
@@ -422,11 +422,11 @@ namespace Hl7.Fhir.Specification.Source
             }
             prepareResources();
 
-            var infoList = _resourceScanInformation.ConceptMaps(sourceUri, targetUri);
+            var infoList = _resourceScanInformation.FindConceptMaps(sourceUri, targetUri);
             return infoList.Select(info => getResourceFromScannedSource<ConceptMap>(info)).Where(r => r != null);
         }
 
-        /// <summary>Resolve the NamingSystem resource with the specified uniqueId.</summary>
+        /// <summary>Resolve the <see cref="NamingSystem"/> resource with the specified uniqueId.</summary>
         public NamingSystem FindNamingSystem(string uniqueId)
         {
             if (uniqueId == null) throw Error.ArgumentNull(nameof(uniqueId));

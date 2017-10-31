@@ -15,6 +15,7 @@ namespace Hl7.Fhir.Specification.Source.Summary
 {
     // Defines a set of default artifact summary harvester delegates,
     // with associated property keys and helper extension methods
+    // for accessing the harvested properties.
 
     // DSTU2 Specific!
 

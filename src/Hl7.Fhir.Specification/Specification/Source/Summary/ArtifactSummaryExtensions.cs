@@ -12,28 +12,28 @@ namespace Hl7.Fhir.Specification.Source.Summary
         public static IEnumerable<ArtifactSummary> Errors(this IEnumerable<ArtifactSummary> summaries)
             => summaries.Where(s => s.IsFaulted);
 
-        /// <summary>Filter <see cref="ArtifactSummary"/> instances with the specified <see cref="ResourceType"/>.</summary>
+        /// <summary>Filter <see cref="ArtifactSummary"/> instances for resources with the specified <see cref="ResourceType"/>.</summary>
         public static IEnumerable<ArtifactSummary> OfResourceType(this IEnumerable<ArtifactSummary> summaries, ResourceType resourceType)
             => summaries.Where(s => s.ResourceType == resourceType);
 
-        /// <summary>Filter <see cref="ArtifactSummary"/> instances for NamingSystem artifacts with the specified uniqueId value.</summary>
-        public static IEnumerable<ArtifactSummary> NamingSystems(this IEnumerable<ArtifactSummary> summaries, string uniqueId)
+        /// <summary>Find <see cref="ArtifactSummary"/> instances for <see cref="NamingSystem"/> resources with the specified uniqueId value.</summary>
+        public static IEnumerable<ArtifactSummary> FindNamingSystems(this IEnumerable<ArtifactSummary> summaries, string uniqueId)
             => summaries.OfResourceType(ResourceType.NamingSystem).Where(ns => ns.HasNamingSystemUniqueId(uniqueId));
 
         /// <summary>Filter <see cref="ArtifactSummary"/> instances for conformance resources.</summary>
         public static IEnumerable<ArtifactSummary> ConformanceResources(this IEnumerable<ArtifactSummary> summaries)
             => summaries.Where(s => ModelInfo.IsConformanceResource(s.ResourceType));
 
-        /// <summary>Filter <see cref="ArtifactSummary"/> instances for conformance resources with the specified canonical url.</summary>
-        public static IEnumerable<ArtifactSummary> ConformanceResources(this IEnumerable<ArtifactSummary> summaries, string canonicalUrl)
+        /// <summary>Find <see cref="ArtifactSummary"/> instances for conformance resources with the specified canonical url.</summary>
+        public static IEnumerable<ArtifactSummary> FindConformanceResources(this IEnumerable<ArtifactSummary> summaries, string canonicalUrl)
             => summaries.ConformanceResources().Where(r => r.GetConformanceCanonicalUrl() == canonicalUrl);
 
-        /// <summary>Filter <see cref="ArtifactSummary"/> instances for ValueSet resources with the specified codeSystem system.</summary>
-        public static IEnumerable<ArtifactSummary> ValueSets(this IEnumerable<ArtifactSummary> summaries, string system)
+        /// <summary>Find <see cref="ArtifactSummary"/> instances for <see cref="ValueSet"/> resources with the specified codeSystem system.</summary>
+        public static IEnumerable<ArtifactSummary> FindValueSets(this IEnumerable<ArtifactSummary> summaries, string system)
             => summaries.OfResourceType(ResourceType.ValueSet).Where(r => r.GetValueSetSystem() == system);
 
-        /// <summary>Filter <see cref="ArtifactSummary"/> instances for ConceptMap resources with the specified source and/or target uri(s).</summary>
-        public static IEnumerable<ArtifactSummary> ConceptMaps(this IEnumerable<ArtifactSummary> summaries, string sourceUri = null, string targetUri = null)
+        /// <summary>Find <see cref="ArtifactSummary"/> instances for <see cref="ConceptMap"/> resources with the specified source and/or target uri(s).</summary>
+        public static IEnumerable<ArtifactSummary> FindConceptMaps(this IEnumerable<ArtifactSummary> summaries, string sourceUri = null, string targetUri = null)
         {
             IEnumerable<ArtifactSummary> result = summaries.OfResourceType(ResourceType.ConceptMap);
             if (sourceUri != null)
@@ -53,18 +53,18 @@ namespace Hl7.Fhir.Specification.Source.Summary
 
         /// <summary>Resolve the <see cref="ArtifactSummary"/> for the comformance resource with the specified canonical uri.</summary>
         public static ArtifactSummary ResolveByCanonicalUri(this IEnumerable<ArtifactSummary> summaries, string canonicalUrl)
-            => summaries.ConformanceResources(canonicalUrl).SingleOrDefault();
+            => summaries.FindConformanceResources(canonicalUrl).SingleOrDefault();
 
         /// <summary>Resolve the <see cref="ArtifactSummary"/> for the NamingSystem resource with the specified uniqueId.</summary>
         public static ArtifactSummary ResolveNamingSystem(this IEnumerable<ArtifactSummary> summaries, string uniqueId)
-            => summaries.NamingSystems(uniqueId).SingleOrDefault();
+            => summaries.FindNamingSystems(uniqueId).SingleOrDefault();
 
         /// <summary>Resolve the <see cref="ArtifactSummary"/> for the ValueSet resource with the specified codeSystem system.</summary>
         public static ArtifactSummary ResolveValueSet(this IEnumerable<ArtifactSummary> summaries, string system)
-            => summaries.ValueSets(system).SingleOrDefault();
+            => summaries.FindValueSets(system).SingleOrDefault();
 
         /// <summary>Resolve the <see cref="ArtifactSummary"/> for the ConceptMap resource with the specified source and/or target uri(s).</summary>
         public static ArtifactSummary ResolveConceptMap(this IEnumerable<ArtifactSummary> summaries, string sourceUri = null, string targetUri = null)
-            => summaries.ConceptMaps(sourceUri, targetUri).SingleOrDefault();
+            => summaries.FindConceptMaps(sourceUri, targetUri).SingleOrDefault();
     }
 }
