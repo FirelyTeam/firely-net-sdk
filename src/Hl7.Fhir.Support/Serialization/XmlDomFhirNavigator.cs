@@ -49,9 +49,10 @@ namespace Hl7.Fhir.Serialization
         {
             get
             {
-                // We only know the type in two occasions:
+                // We only know the type in a few occasions:
                 // 1. We are on a root element have the same name as a resource (e.g. <Patient>....</Patient>)
                 // 2. We are on an element that contains a nested resource (e.g. <contained><Patient>...</Patient></contained>)
+                // 3. We are on an xhtml <div>
 
                 if (isXhtmlDiv(_current))
                     return "xhtml";

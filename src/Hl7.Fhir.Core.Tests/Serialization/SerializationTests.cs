@@ -16,6 +16,8 @@ using System.IO;
 using System.Linq;
 using System.Globalization;
 using Hl7.Fhir.Utility;
+using System.Xml;
+using Hl7.Fhir.ElementModel;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -480,5 +482,25 @@ namespace Hl7.Fhir.Tests.Serialization
             var xml = FhirXmlSerializer.SerializeToString(vs);
             Assert.IsNotNull(xml);
         }
+
+        [TestMethod]
+        public void CanSerializeThroughNavigatorAndCompare()
+        {
+            string xml = TestDataHelper.ReadTestData("fp-test-patient.xml");
+            var pser = new FhirXmlParser();
+            var pat = pser.Parse<Patient>(xml);
+
+            var nav = new PocoNavigator(pat);
+            var xmlBuilder = new StringBuilder();
+            var serializer = new NavigatorXmlWriter();
+            using (var writer = XmlWriter.Create(xmlBuilder))
+            {
+                serializer.Write(nav, writer);
+            }
+
+            var output = xmlBuilder.ToString();
+            XmlAssert.AreSame("fp-test-patient.xml", xml, output);
+        }
+
     }
 }

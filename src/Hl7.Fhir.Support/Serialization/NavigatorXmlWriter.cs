@@ -49,13 +49,14 @@ namespace Hl7.Fhir.Serialization
                 return;
             }
 
-            var ns = xmlDetails?.Name.NamespaceName;
+            var ns = xmlDetails?.Name.NamespaceName ?? XmlNs.FHIR;
             var prefix = ns != null ? destination.LookupPrefix(ns) : null;
             var localName = xmlDetails?.Name.LocalName ?? source.Name;
+            var usesAttribute = xmlDetails?.NodeType == XmlNodeType.Attribute;
 
             // If the node is represented by an attribute (e.g. an "id" child), write
             // an attribute with the child's name + the child's Value into the parent
-            if(xmlDetails.NodeType == XmlNodeType.Attribute && destination.WriteState == WriteState.Element)
+            if(usesAttribute && destination.WriteState == WriteState.Element)
             {
                 destination.WriteAttributeString(prefix, localName, ns, value);
                 return;
