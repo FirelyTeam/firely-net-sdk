@@ -42,6 +42,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Compile Remove="Rest\NewSearchParamsTests.cs" />
+    <Compile Include="..\Hl7.Fhir.Support.Tests\Utils\XmlAssert.cs" Link="XmlAssert.cs" />
     <Content Include="..\Hl7.Fhir.Specification\data\profiles-others.xml" Link="TestData\profiles-others.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -53,7 +53,9 @@ namespace Hl7.Fhir.Serialization
                 // 1. We are on a root element have the same name as a resource (e.g. <Patient>....</Patient>)
                 // 2. We are on an element that contains a nested resource (e.g. <contained><Patient>...</Patient></contained>)
 
-                if (_current is XElement element)
+                if (isXhtmlDiv(_current))
+                    return "xhtml";
+                else if (_current is XElement element)
                 {
                     if (isResourceNameElement(element.Name))
                         return element.Name.LocalName;
@@ -70,7 +72,7 @@ namespace Hl7.Fhir.Serialization
                 return null;
             }
         }
-     
+
 
         private static bool isResourceNameElement(XName elementName)
         {
@@ -91,7 +93,7 @@ namespace Hl7.Fhir.Serialization
                     // TODO: this will hide the nested text value of the element, thus making it
                     // impossible to have both
                     var attrVal = xelem.Attribute("value")?.Value;
-                   
+
                     return attrVal;
                 }
                 else
@@ -115,11 +117,11 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        private XObject nextMatch (XObject root, string name, XObject startAfter = null)
+        private XObject nextMatch(XObject root, string name, XObject startAfter = null)
         {
             var scan = startAfter == null ? root.FirstChild() : startAfter.NextChild();
-        
-            while(scan != null)
+
+            while (scan != null)
             {
                 XName scanName;
 
@@ -171,17 +173,17 @@ namespace Hl7.Fhir.Serialization
             if (found == null) return false;
 
             var currentName = Name;
-             _current = found;  // this will change property Name
+            _current = found;  // this will change property Name
 
             if (currentName == Name)
                 _nameIndex += 1;
             else
                 _nameIndex = 0;
 
-            return true;            
+            return true;
         }
 
-        private bool isReservedAttribute(XAttribute attr) => 
+        private bool isReservedAttribute(XAttribute attr) =>
             attr.Name == (XName)"xmlns" || attr.Name.NamespaceName == XmlNs.XMLNS || attr.Name == "value";
 
         public override string ToString()

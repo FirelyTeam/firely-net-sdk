@@ -48,7 +48,7 @@
     </Patient>
   </contained>
   <contained>
-    <Questionnaire xmlns="http://hl7.org/fhir">
+    <Questionnaire>
       <id value="3141"/>
       <text>
         <status value="generated"/>
