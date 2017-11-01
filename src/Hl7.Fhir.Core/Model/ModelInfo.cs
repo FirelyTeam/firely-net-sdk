@@ -108,10 +108,10 @@ namespace Hl7.Fhir.Model
 
         // [WMR 20171025] NEW: Conversion methods for ResourceType
 
-        static readonly Dictionary<string, ResourceType> _fhirTypeNameToResourceType
+        private static readonly Dictionary<string, ResourceType> _fhirTypeNameToResourceType
             = Enum.GetValues(typeof(ResourceType)).OfType<ResourceType>().ToDictionary(type => type.GetLiteral());
 
-        static readonly Dictionary<ResourceType, string> _resourceTypeToFhirTypeName
+        private static readonly Dictionary<ResourceType, string> _resourceTypeToFhirTypeName
             = _fhirTypeNameToResourceType.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
 
         /// <summary>Returns the FHIR type name represented by the specified <see cref="ResourceType"/> enum value, or <c>null</c>.</summary>

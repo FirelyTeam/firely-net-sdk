@@ -1,12 +1,19 @@
-﻿using System;
+﻿/* 
+ * Copyright (c) 2017, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ */
+
+using System;
 using System.IO;
 
 namespace Hl7.Fhir.Serialization
 {
-    /// <summary>
-    /// Provides generic helper methods for different FHIR file serialization formats.
-    /// </summary>
-    public static class FileFormats
+    /// <summary>Provides generic definitions and methods for FHIR file formats supported by the API.</summary>
+    /// <seealso cref="FhirSerializationFormats"/>
+    public static class FhirFileFormats
     {
         static StringComparer ExtensionComparer = StringComparer.OrdinalIgnoreCase;
 
@@ -15,6 +22,9 @@ namespace Hl7.Fhir.Serialization
 
         /// <summary>Default Json file extension: ".json"</summary>
         public const string JsonFileExtension = ".json";
+
+        // <summary>Default Json file extension: ".rdf"</summary>
+        // public const string JsonFileExtension = ".rdf";
 
         /// <summary>Determines if the file extension equals ".xml" (case insensitive).</summary>
         public static bool HasXmlExtension(string filePath) => HasExtension(filePath, XmlFileExtension);
