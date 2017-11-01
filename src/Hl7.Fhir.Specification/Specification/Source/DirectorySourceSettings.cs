@@ -70,6 +70,7 @@ namespace Hl7.Fhir.Specification.Source
             other.Includes = this.Includes;
             other.Excludes = this.Excludes;
             other.FormatPreference = this.FormatPreference;
+            other.SingleThreaded = this.SingleThreaded;
             other.SummaryDetailsHarvesters = this.SummaryDetailsHarvesters;
         }
 
@@ -265,7 +266,7 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>
         /// An array of <see cref="ArtifactSummaryHarvester"/> delegates for harvesting
-        /// summary details from an artifact.
+        /// summary information from an artifact.
         /// </summary>
         /// <remarks>
         /// Allows consumers to harvest additional custom summary properties,
