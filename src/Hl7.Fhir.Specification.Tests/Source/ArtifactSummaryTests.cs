@@ -36,9 +36,9 @@ namespace Hl7.Fhir.Specification.Tests
         void TestPatientSummaryWithCustomHarvester(string path, params string[] expectedNames)
         {
             // Combine default harvesters and custom harvester
-            var harvesters = new ArtifactSummaryHarvester[ArtifactSummaryGenerator.DefaultArtifactSummaryHarvesters.Length + 1];
-            Array.Copy(ArtifactSummaryGenerator.DefaultArtifactSummaryHarvesters, harvesters, ArtifactSummaryGenerator.DefaultArtifactSummaryHarvesters.Length);
-            harvesters[ArtifactSummaryGenerator.DefaultArtifactSummaryHarvesters.Length] = HarvestPatientSummary;
+            var harvesters = new ArtifactSummaryHarvester[ArtifactSummaryGenerator.DefaultHarvesters.Length + 1];
+            Array.Copy(ArtifactSummaryGenerator.DefaultHarvesters, harvesters, ArtifactSummaryGenerator.DefaultHarvesters.Length);
+            harvesters[ArtifactSummaryGenerator.DefaultHarvesters.Length] = HarvestPatientSummary;
 
             var summary = assertSummary(path, harvesters);
             Assert.AreEqual(ResourceType.Patient.GetLiteral(), summary.ResourceTypeName);

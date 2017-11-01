@@ -15,9 +15,13 @@ namespace Hl7.Fhir.Specification.Source.Summary
 {
     /// <summary>Read-only dictionary interface to access harvested artifact summary properties by key.</summary>
     /// <remarks>
-    /// Implemented by both <see cref="ArtifactSummaryPropertyBag"/> and <see cref="ArtifactSummary"/>,
-    /// to allow <see cref="ArtifactSummaryHarvester"/> implementations to define common extension
-    /// methods to access specific property values that operate on both types.
+    /// A common interface for both harvester implementation logic and client logic.
+    /// Implemented by both <see cref="ArtifactSummaryPropertyBag"/> and <see cref="ArtifactSummary"/>.
+    /// This allows <see cref="ArtifactSummaryHarvester"/> implementations to define common property
+    /// accessor extension methods that operate on both types, and are available during processing to
+    /// other harvesters (providing access to information contained in the property bag that has already
+    /// been harvested by preceding delegates) as well as after processing to consumers (providing access
+    /// to the final and completed summary).
     /// </remarks>
     public interface IArtifactSummaryPropertyBag : IReadOnlyDictionary<string, object>
     {

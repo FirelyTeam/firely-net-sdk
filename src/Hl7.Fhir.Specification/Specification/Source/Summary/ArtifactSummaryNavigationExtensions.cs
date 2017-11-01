@@ -15,7 +15,18 @@ using System.Collections.Generic;
 
 namespace Hl7.Fhir.Specification.Source.Summary
 {
-    /// <summary>Extension methods on <see cref="IElementNavigator"/> to facilitate harvesting summary information from a FHIR artifact.</summary>
+    /// <summary>
+    /// Extension methods on <see cref="IElementNavigator"/> to facilitate harvesting summary information
+    /// from a FHIR artifact in a forward direction and storing the harvested values in a property bag.
+    /// </summary>
+    /// <remarks>
+    /// The extension methods with element name parameters try to harvest a value from the a matching element
+    /// (or from an also matching child element).
+    /// If the current element does not match, the methods advance the navigator to the first matching
+    /// sibling element in forward direction, if it exists. The boolean return value indicates if a
+    /// matching element was found.
+    /// After returning, the navigator is positioned on the original element or on a following sibling.
+    /// </remarks>
     public static class ArtifactSummaryNavigationExtensions
     {
         /// <summary>

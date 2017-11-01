@@ -103,33 +103,24 @@ namespace Hl7.Fhir.Specification.Source
         /// </para>
         /// </summary>
         /// <remarks>
-        /// Take caution when enabling this setting, as it may potentially cause a
-        /// <see cref="DirectorySource"/> instance to scan a (very) large number of files.
-        /// Specifically, it is strongly advised NOT to enable this setting for:
+        /// Enabling this setting requires the <see cref="DirectorySource"/> instance
+        /// to recursively scan all xml and json files that exist in the target directory
+        /// structure, which could unexpectedly turn into a long running operation.
+        /// Therefore, consumers should usually try to avoid to enable this setting when
+        /// the DirectorySource is targeting:
         /// <list type="bullet">
         /// <item>
-        /// <term>Directories with many deeply nested subdirectories</term>
+        /// <description>Directories with many deeply nested subdirectories</description>
         /// </item>
         /// <item>
-        /// <term>Common folders such as Desktop, My Documents etc.</term>
+        /// <description>Common folders such as Desktop, My Documents etc.</description>
         /// </item>
         /// <item>
-        /// <term>Drive root folders, e.g. C:\</term>
+        /// <description>Drive root folders such as C:\</description>
         /// </item>
         /// </list>
         /// </remarks>
         public bool IncludeSubDirectories { get; set; } // = false;
-
-        /// <summary>
-        /// Determines if the <see cref="DirectorySource"/> instance should
-        /// use only a single thread to harvest the artifact summary information.
-        /// </summary>
-        /// <remarks>
-        /// By default, the <see cref="DirectorySource"/> leverages the thread pool
-        /// to try and speed up the artifact summary generation process.
-        /// Set this property to <c>true</c> to force single threaded processing.
-        /// </remarks>
-        public bool SingleThreaded { get; set; } // = false;
 
         /// <summary>
         /// Gets or sets the search string to match against the names of files in the content directory.
@@ -145,7 +136,7 @@ namespace Hl7.Fhir.Specification.Source
         /// </remarks>
         /// <value>
         /// Supported wildcards:
-        /// <list type="bullet">
+        /// <list type="table">
         /// <item>
         /// <term>*</term>
         /// <description>Matches zero or more characters within a file or directory name.</description>
@@ -180,7 +171,7 @@ namespace Hl7.Fhir.Specification.Source
         /// </remarks>
         /// <value>
         /// Supported wildcards:
-        /// <list type="bullet">
+        /// <list type="table">
         /// <item>
         /// <term>*</term>
         /// <description>Matches zero or more characters within a file or directory name.</description>
@@ -206,7 +197,7 @@ namespace Hl7.Fhir.Specification.Source
         /// </remarks>
         /// <value>
         /// Supported wildcards:
-        /// <list type="bullet">
+        /// <list type="table">
         /// <item>
         /// <term>*</term>
         /// <description>Matches zero or more characters within a directory name.</description>
@@ -235,7 +226,7 @@ namespace Hl7.Fhir.Specification.Source
         /// </remarks>
         /// <value>
         /// Supported wildcards:
-        /// <list type="bullet">
+        /// <list type="table">
         /// <item>
         /// <term>*</term>
         /// <description>Matches zero or more characters within a directory name.</description>
@@ -259,15 +250,34 @@ namespace Hl7.Fhir.Specification.Source
         public DirectorySource.DuplicateFilenameResolution FormatPreference { get; set; } = DefaultFormatPreference;
 
         /// <summary>
-        /// An array of <see cref="ArtifactSummaryHarvester"/> delegates for
-        /// harvesting summary details from an artifact.
+        /// Determines if the <see cref="DirectorySource"/> instance should harvest artifact
+        /// summary information serially on the calling thread.
         /// </summary>
         /// <remarks>
-        /// By default, the <see cref="ArtifactSummaryGenerator"/> calls all the default harvesters
-        /// as defined by <see cref="ArtifactSummaryGenerator.DefaultArtifactSummaryHarvesters"/>.
-        /// However if the caller specifies one or more summary harvester delegates, then the generator
-        /// will call only the provided delegates in the specified order. The caller can also explicitly
-        /// include one or more default harvester delegates in the specified list.
+        /// By default, the <see cref="DirectorySource"/> tries to harvest artifact summaries
+        /// in parallel on the thread pool, in order to speed up the process. This is especially
+        /// effective when the DirectorySource needs to scan a directory (structure) that contains
+        /// many files.
+        /// By enabling this property, a consumer can prevent the DirectorySource from using the
+        /// thread pool and force it to perform all the work serially on the calling thread.
+        /// </remarks>
+        public bool SingleThreaded { get; set; } // = false;
+
+        /// <summary>
+        /// An array of <see cref="ArtifactSummaryHarvester"/> delegates for harvesting
+        /// summary details from an artifact.
+        /// </summary>
+        /// <remarks>
+        /// Allows consumers to harvest additional custom summary properties,
+        /// depending on the resource type or other (previously harvested) information.
+        /// <para>
+        /// By default, if this array is null or empty, the
+        /// <see cref="ArtifactSummaryGenerator"/> calls the built-in default harvesters
+        /// as specified by <see cref="ArtifactSummaryGenerator.DefaultHarvesters"/>.
+        /// However if the caller specifies one or more harvester delegates, then the summary
+        /// generator calls only the provided delegates, in the specified order.
+        /// A custom delegate array may include one or more of the default harvesters.
+        /// </para>
         /// </remarks>
         public ArtifactSummaryHarvester[] SummaryDetailsHarvesters { get; set; }
     }

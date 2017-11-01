@@ -18,7 +18,7 @@ using System.Collections;
 namespace Hl7.Fhir.Specification.Source.Summary
 {
     // Note:
-    // 1. ArtifactSummaryGenerator creates new (writeable) ArtifactSummaryPropertyBag
+    // 1. ArtifactSummaryGenerator creates new (mutable) ArtifactSummaryPropertyBag
     // 2. ArtifactSummaryGenerator calls the available ArtifactSummaryHarvester delegates
     //    to harvest artifact summary information and add it to the property bag
     // 3. ArtifactSummaryGenerator creates a new (read-only) ArtifactSummary instance

@@ -116,6 +116,37 @@ namespace Hl7.Fhir.Specification.Source
         public static string SpecificationDirectory => DirectorySourceSettings.SpecificationDirectory;
 
         /// <summary>
+        /// Gets or sets a value that determines wether the <see cref="DirectorySource"/> should
+        /// also include artifacts from (nested) subdirectories of the specified content directory.
+        /// <para>
+        /// Returns <c>false</c> by default.
+        /// </para>
+        /// </summary>
+        /// <remarks>
+        /// Enabling this setting requires the <see cref="DirectorySource"/> instance
+        /// to recursively scan all xml and json files that exist in the target directory
+        /// structure, which could unexpectedly turn into a long running operation.
+        /// Therefore, consumers should usually try to avoid to enable this setting when
+        /// the DirectorySource is targeting:
+        /// <list type="bullet">
+        /// <item>
+        /// <description>Directories with many deeply nested subdirectories</description>
+        /// </item>
+        /// <item>
+        /// <description>Common folders such as Desktop, My Documents etc.</description>
+        /// </item>
+        /// <item>
+        /// <description>Drive root folders such as C:\</description>
+        /// </item>
+        /// </list>
+        /// </remarks>
+        public bool IncludeSubDirectories
+        {
+            get { return _settings.IncludeSubDirectories; }
+            set { _settings.IncludeSubDirectories = value; Refresh(); }
+        }
+
+        /// <summary>
         /// Gets or sets the search string to match against the names of files in the content directory.
         /// The source will only provide resources from files that match the specified mask.
         /// The source will ignore all files that don't match the specified mask.
@@ -126,7 +157,7 @@ namespace Hl7.Fhir.Specification.Source
         /// </remarks>
         /// <value>
         /// Supported wildcards:
-        /// <list type="bullet">
+        /// <list type="table">
         /// <item>
         /// <term>*</term>
         /// <description>Matches zero or more characters within a file or directory name.</description>
@@ -156,7 +187,7 @@ namespace Hl7.Fhir.Specification.Source
         /// </remarks>
         /// <value>
         /// Supported wildcards:
-        /// <list type="bullet">
+        /// <list type="table">
         /// <item>
         /// <term>*</term>
         /// <description>Matches zero or more characters within a file or directory name.</description>
@@ -186,7 +217,7 @@ namespace Hl7.Fhir.Specification.Source
         /// </remarks>
         /// <value>
         /// Supported wildcards:
-        /// <list type="bullet">
+        /// <list type="table">
         /// <item>
         /// <term>*</term>
         /// <description>Matches zero or more characters within a directory name.</description>
@@ -219,7 +250,7 @@ namespace Hl7.Fhir.Specification.Source
         /// </remarks>
         /// <value>
         /// Supported wildcards:
-        /// <list type="bullet">
+        /// <list type="table">
         /// <item>
         /// <term>*</term>
         /// <description>Matches zero or more characters within a directory name.</description>
@@ -263,35 +294,6 @@ namespace Hl7.Fhir.Specification.Source
         {
             get { return _settings.FormatPreference; }
             set { _settings.FormatPreference = value; Refresh(); }
-        }
-
-        /// <summary>
-        /// Gets or sets a value that determines wether the <see cref="DirectorySource"/> should
-        /// also include artifacts from (nested) subdirectories of the specified content directory.
-        /// <para>
-        /// Returns <c>false</c> by default.
-        /// </para>
-        /// </summary>
-        /// <remarks>
-        /// Take caution when enabling this setting, as it may potentially cause a
-        /// <see cref="DirectorySource"/> instance to scan a (very) large number of files.
-        /// Specifically, it is strongly advised NOT to enable this setting for:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Directories with many deeply nested subdirectories</term>
-        /// </item>
-        /// <item>
-        /// <term>Common folders such as Desktop, My Documents etc.</term>
-        /// </item>
-        /// <item>
-        /// <term>Drive root folders, e.g. C:\</term>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        public bool IncludeSubDirectories
-        {
-            get { return _settings.IncludeSubDirectories; }
-            set { _settings.IncludeSubDirectories = value; Refresh(); }
         }
 
         /// <summary>
@@ -649,7 +651,7 @@ namespace Hl7.Fhir.Specification.Source
             return;
         }
 
-        private static List<ArtifactSummary> scanPaths(List<string> paths, ArtifactSummaryHarvester[] extractors, bool singleThreaded)
+        private static List<ArtifactSummary> scanPaths(List<string> paths, ArtifactSummaryHarvester[] harvesters, bool singleThreaded)
         {
             // [WMR 20171023] Note: some files may no longer exist
 
@@ -660,7 +662,7 @@ namespace Hl7.Fhir.Specification.Source
             {
                 foreach (var filePath in paths)
                 {
-                    var summaries = ArtifactSummaryGenerator.Generate(filePath, extractors);
+                    var summaries = ArtifactSummaryGenerator.Generate(filePath, harvesters);
                     scanResult.AddRange(summaries);
                 }
             }
@@ -691,7 +693,7 @@ namespace Hl7.Fhir.Specification.Source
                         {
                         // Harvest summaries from single file
                         // Save each result to a separate array entry (no locking required)
-                        results[i] = ArtifactSummaryGenerator.Generate(paths[i], extractors);
+                        results[i] = ArtifactSummaryGenerator.Generate(paths[i], harvesters);
                         });
                 }
                 catch (AggregateException aex)

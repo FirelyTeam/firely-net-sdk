@@ -38,10 +38,11 @@ namespace Hl7.Fhir.Specification.Source.Summary
     {
 
         /// <summary>
-        /// A list of default <see cref="ArtifactSummaryHarvester"/> delegates
-        /// for the <see cref="ArtifactSummaryGenerator"/> class.
+        /// A list of default <see cref="ArtifactSummaryHarvester"/> delegates that the
+        /// <see cref="ArtifactSummaryGenerator"/> calls to harvest summary information
+        /// from an artifact.
         /// </summary>
-        public static readonly ArtifactSummaryHarvester[] DefaultArtifactSummaryHarvesters
+        public static readonly ArtifactSummaryHarvester[] DefaultHarvesters
             = new ArtifactSummaryHarvester[]
             {
                 NamingSystemSummaryProperties.Harvest,
@@ -56,27 +57,27 @@ namespace Hl7.Fhir.Specification.Source.Summary
         /// <summary>Generate a list of artifact summary information from an <see cref="INavigatorStream"/> instance.</summary>
         /// <param name="origin">The original location of the target artifact (or the containing Bundle).</param>
         /// <param name="harvesters">
-        /// An optional list of <see cref="ArtifactSummaryHarvester"/> delegates to harvest summary information
-        /// from an artifact. By default, if this argument is missing or empty, the generator executes all of
-        /// the default summary harvesters as defined by <see cref="DefaultArtifactSummaryHarvesters"/>.
+        /// An optional list of <see cref="ArtifactSummaryHarvester"/> delegates that the generator will call
+        /// instead of the default harvesters to harvest summary information from an artifact.
         /// </param>
         /// <returns>A list of new <see cref="ArtifactSummary"/> instances.</returns>
         /// <remarks>
-        /// For each artifact, the generator executes all the harvester delegates in the specified order.
-        /// If a caller returns <c>true</c> to signal that harvesting has finished, the
-        /// generator will not call any of the remaining delegates and immediately proceed to create
-        /// the final <see cref="ArtifactSummary"/> return value.
+        /// For each artifact, the generator executes all (default or specified) harvester delegates
+        /// in the specified order. When a delegate returns <c>true</c> to signal that harvesting has
+        /// finished, the generator will not call any of the remaining delegates and immediately
+        /// proceed to create the final <see cref="ArtifactSummary"/> return value.
         /// <para>
-        /// By default, the generator calls all the harvesters defined by <see cref="DefaultArtifactSummaryHarvesters"/>.
-        /// However if the caller specifies one or more harvester delegates, then the generator will
-        /// call only the provided delegates in the specified order. The caller can also explicitly
-        /// specify one or more default harvester delegates.
+        /// By default, if the <paramref name="harvesters"/> parameter value is null or empty, the
+        /// <see cref="ArtifactSummaryGenerator"/> calls the built-in default harvesters
+        /// as specified by <see cref="ArtifactSummaryGenerator.DefaultHarvesters"/>.
+        /// However if the caller specifies one or more harvester delegates, then the summary
+        /// generator calls only the provided delegates, in the specified order.
+        /// A custom delegate array may include one or more of the default harvesters.
         /// </para>
         /// <para>
-        /// The generator catches all runtime exceptions that occur during harvesting and converts
-        /// the errors to <see cref="ArtifactSummary"/> instances, with the <see cref="ArtifactSummary.IsFaulted"/>
-        /// property equal to <c>true</c> and the <see cref="ArtifactSummary.Error"/> property returning the
-        /// exception.
+        /// The generator catches all runtime exceptions that occur during harvesting and returns
+        /// them as <see cref="ArtifactSummary"/> instances with <see cref="ArtifactSummary.IsFaulted"/>
+        /// equal to <c>true</c> and <see cref="ArtifactSummary.Error"/> returning the exception.
         /// </para>
         /// </remarks>
         public static List<ArtifactSummary> Generate(
@@ -98,7 +99,7 @@ namespace Hl7.Fhir.Specification.Source.Summary
                 // Run default or specified (custom) harvesters
                 if (harvesters == null || harvesters.Length == 0)
                 {
-                    harvesters = DefaultArtifactSummaryHarvesters;
+                    harvesters = DefaultHarvesters;
                 }
 
                 while (navStream.MoveNext())
@@ -115,12 +116,17 @@ namespace Hl7.Fhir.Specification.Source.Summary
                         properties.SetTypeName(current.Type);
                         properties.SetResourceUri(navStream.Position);
 
-                        var summary = generate(properties, current, harvesters); // allHarvesters
+                        var summary = generate(properties, current, harvesters);
 
                         result.Add(summary);
                     }
                 }
             }
+            // TODO Catch specific exceptions
+            // catch (System.IO.FileNotFoundException)
+            // catch (UnauthorizedAccessException)
+            // catch (System.Security.SecurityException)
+            // catch (FormatException)
             catch (Exception ex)
             {
                 result.Add(ArtifactSummary.FromException(ex, origin));
@@ -157,6 +163,8 @@ namespace Hl7.Fhir.Specification.Source.Summary
                                 break;
                             }
                         }
+                        // TODO Catch specific exceptions
+                        // catch (FormatException)
                         catch (Exception ex)
                         {
                             errors.Add(ex);
@@ -167,6 +175,9 @@ namespace Hl7.Fhir.Specification.Source.Summary
                 // Combine all errors into single AggregateException
                 error = errors.Count > 0 ? new AggregateException(errors) : null;
             }
+            // TODO Catch specific exceptions
+            // catch (FormatException)
+            // catch (NotSupportedException)
             catch (Exception ex)
             {
                 // Error in summary factory?
