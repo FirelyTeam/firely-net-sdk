@@ -1,13 +1,32 @@
-﻿using Hl7.Fhir.ElementModel;
-using System.Collections.Generic;
+﻿/* 
+ * Copyright (c) 2017, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ */
+
+#if NET_FILESYSTEM
+
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Serialization;
 using System;
-using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Specification.Source.Summary
 {
-    // Q: Move to separate namespace in order to avoid pollution?
-
-    /// <summary>Extension methods on <see cref="IElementNavigator"/> to allow easy extraction of summary details from an artifact.</summary>
+    /// <summary>
+    /// Extension methods on <see cref="IElementNavigator"/> to facilitate harvesting summary information
+    /// from a FHIR artifact in a forward direction and storing the harvested values in a property bag.
+    /// </summary>
+    /// <remarks>
+    /// The extension methods with element name parameters try to harvest a value from the a matching element
+    /// (or from an also matching child element).
+    /// If the current element does not match, the methods advance the navigator to the first matching
+    /// sibling element in forward direction, if it exists. The boolean return value indicates if a
+    /// matching element was found.
+    /// After returning, the navigator is positioned on the original element or on a following sibling.
+    /// </remarks>
     public static class ArtifactSummaryNavigationExtensions
     {
         /// <summary>
@@ -23,46 +42,44 @@ namespace Hl7.Fhir.Specification.Source.Summary
             return nav.Name == element || nav.MoveToNext(element);
         }
 
-        /// <summary>Extract the value of the current element into an <see cref="ArtifactSummaryDetailsCollection"/> using the specified key.</summary>
+        /// <summary>Harvest the value of the current element into a property bag.</summary>
         /// <param name="nav">An <see cref="IElementNavigator"/> instance.</param>
-        /// <param name="details">An <see cref="ArtifactSummaryDetailsCollection"/> instance.</param>
-        /// <param name="key">A collection key.</param>
-        public static bool TryExtractValue(this IElementNavigator nav, ArtifactSummaryDetailsCollection details, string key)
+        /// <param name="properties">A property bag to store harvested summary information.</param>
+        /// <param name="key">A property key.</param>
+        public static bool HarvestValue(this IElementNavigator nav, IDictionary<string, object> properties, string key)
         {
             var value = nav.Value;
             if (value != null)
             {
-                // Assumption: navigator always returns string values (?)
-                Debug.Assert(nav.Value is string);
-
-                details[key] = (string)value;
+                var s = PrimitiveTypeConverter.ConvertTo<string>(value);
+                properties[key] = s;
                 return true;
             }
             return false;
         }
 
-        /// <summary>Extract the value of the (current or sibling) element with the specified name into an <see cref="ArtifactSummaryDetailsCollection"/> using the specified key.</summary>
+        /// <summary>Harvest the value of the (current or sibling) element with the specified name into a property bag.</summary>
         /// <param name="nav">An <see cref="IElementNavigator"/> instance.</param>
-        /// <param name="details">An <see cref="ArtifactSummaryDetailsCollection"/> instance.</param>
-        /// <param name="key">A collection key.</param>
+        /// <param name="properties">A property bag to store harvested summary information.</param>
+        /// <param name="key">A property key.</param>
         /// <param name="element">An element name.</param>
-        public static bool TryExtractValue(this IElementNavigator nav, ArtifactSummaryDetailsCollection details, string key, string element)
+        public static bool HarvestValue(this IElementNavigator nav, IDictionary<string, object> properties, string key, string element)
         {
-            return nav.Find(element) && nav.TryExtractValue(details, key);
+            return nav.Find(element) && nav.HarvestValue(properties, key);
         }
 
-        /// <summary>Extract the value of a child element into an <see cref="ArtifactSummaryDetailsCollection"/> using the specified key.</summary>
+        /// <summary>Harvest the value of a child element into a property bag.</summary>
         /// <param name="nav">An <see cref="IElementNavigator"/> instance.</param>
-        /// <param name="details">An <see cref="ArtifactSummaryDetailsCollection"/> instance.</param>
-        /// <param name="key">A collection key.</param>
+        /// <param name="properties">A property bag to store harvested summary information.</param>
+        /// <param name="key">A property key.</param>
         /// <param name="element">An element name.</param>
         /// <param name="childElement">A child element name.</param>
-        public static bool TryExtractValue(this IElementNavigator nav, ArtifactSummaryDetailsCollection details, string key, string element, string childElement)
+        public static bool HarvestValue(this IElementNavigator nav, IDictionary<string, object> properties, string key, string element, string childElement)
         {
             if (nav.Find(element))
             {
                 var childNav = nav.Clone();
-                return childNav.MoveToFirstChild(childElement) && childNav.TryExtractValue(details, key);
+                return childNav.MoveToFirstChild(childElement) && childNav.HarvestValue(properties, key);
             }
             return false;
         }
@@ -70,27 +87,25 @@ namespace Hl7.Fhir.Specification.Source.Summary
         /// <summary>Add the value of the current element to a list, if not missing or empty.</summary>
         /// <param name="nav">An <see cref="IElementNavigator"/> instance.</param>
         /// <param name="values">A list of values.</param>
-        public static bool TryExtractValue(this IElementNavigator nav, List<string> values)
+        public static bool HarvestValue(this IElementNavigator nav, IList<string> values)
         {
-            var value = nav.Value; // ?.ToString();
+            var value = nav.Value;
             if (value != null)
             {
-                // Assumption: navigator always returns string values (?)
-                Debug.Assert(nav.Value is string);
-
-                values.Add((string)value);
+                var s = PrimitiveTypeConverter.ConvertTo<string>(value);
+                values.Add(s);
                 return true;
             }
             return false;
         }
 
-        /// <summary>Extract an array of child element values into an <see cref="ArtifactSummaryDetailsCollection"/> using the specified key.</summary>
+        /// <summary>Harvest an array of child element values into a property bag.</summary>
         /// <param name="nav">An <see cref="IElementNavigator"/> instance.</param>
-        /// <param name="details">An <see cref="ArtifactSummaryDetailsCollection"/> instance.</param>
-        /// <param name="key">A collection key.</param>
+        /// <param name="properties">A property bag to store harvested summary information.</param>
+        /// <param name="key">A property key.</param>
         /// <param name="element">An element name.</param>
         /// <param name="childElement">A child element name.</param>
-        public static bool TryExtractValues(this IElementNavigator nav, ArtifactSummaryDetailsCollection details, string key, string element, string childElement)
+        public static bool HarvestValues(this IElementNavigator nav, IDictionary<string, object> properties, string key, string element, string childElement)
         {
             if (nav.Find(element))
             {
@@ -100,12 +115,12 @@ namespace Hl7.Fhir.Specification.Source.Summary
                     var childNav = nav.Clone();
                     if (childNav.MoveToFirstChild(childElement))
                     {
-                        TryExtractValue(childNav, values);
+                        HarvestValue(childNav, values);
                     }
                 } while (nav.MoveToNext(element));
                 if (values.Count > 0)
                 {
-                    details[key] = values.ToArray();
+                    properties[key] = values.ToArray();
                     return true;
                 }
             }
@@ -115,3 +130,5 @@ namespace Hl7.Fhir.Specification.Source.Summary
     }
 
 }
+
+#endif

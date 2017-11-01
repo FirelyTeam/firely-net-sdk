@@ -33,6 +33,7 @@ namespace Hl7.Fhir.Specification.Source
     /// <summary>
     /// Reads FHIR artifacts (Profiles, ValueSets, ...) from directories with individual files
     /// </summary>
+    [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
     public class DirectorySource : IConformanceSource, IArtifactSource
     {
         // netstandard has no CurrentCultureIgnoreCase comparer
@@ -115,6 +116,37 @@ namespace Hl7.Fhir.Specification.Source
         public static string SpecificationDirectory => DirectorySourceSettings.SpecificationDirectory;
 
         /// <summary>
+        /// Gets or sets a value that determines wether the <see cref="DirectorySource"/> should
+        /// also include artifacts from (nested) subdirectories of the specified content directory.
+        /// <para>
+        /// Returns <c>false</c> by default.
+        /// </para>
+        /// </summary>
+        /// <remarks>
+        /// Enabling this setting requires the <see cref="DirectorySource"/> instance
+        /// to recursively scan all xml and json files that exist in the target directory
+        /// structure, which could unexpectedly turn into a long running operation.
+        /// Therefore, consumers should usually try to avoid to enable this setting when
+        /// the DirectorySource is targeting:
+        /// <list type="bullet">
+        /// <item>
+        /// <description>Directories with many deeply nested subdirectories</description>
+        /// </item>
+        /// <item>
+        /// <description>Common folders such as Desktop, My Documents etc.</description>
+        /// </item>
+        /// <item>
+        /// <description>Drive root folders such as C:\</description>
+        /// </item>
+        /// </list>
+        /// </remarks>
+        public bool IncludeSubDirectories
+        {
+            get { return _settings.IncludeSubDirectories; }
+            set { _settings.IncludeSubDirectories = value; Refresh(); }
+        }
+
+        /// <summary>
         /// Gets or sets the search string to match against the names of files in the content directory.
         /// The source will only provide resources from files that match the specified mask.
         /// The source will ignore all files that don't match the specified mask.
@@ -125,7 +157,7 @@ namespace Hl7.Fhir.Specification.Source
         /// </remarks>
         /// <value>
         /// Supported wildcards:
-        /// <list type="bullet">
+        /// <list type="table">
         /// <item>
         /// <term>*</term>
         /// <description>Matches zero or more characters within a file or directory name.</description>
@@ -155,7 +187,7 @@ namespace Hl7.Fhir.Specification.Source
         /// </remarks>
         /// <value>
         /// Supported wildcards:
-        /// <list type="bullet">
+        /// <list type="table">
         /// <item>
         /// <term>*</term>
         /// <description>Matches zero or more characters within a file or directory name.</description>
@@ -185,7 +217,7 @@ namespace Hl7.Fhir.Specification.Source
         /// </remarks>
         /// <value>
         /// Supported wildcards:
-        /// <list type="bullet">
+        /// <list type="table">
         /// <item>
         /// <term>*</term>
         /// <description>Matches zero or more characters within a directory name.</description>
@@ -218,7 +250,7 @@ namespace Hl7.Fhir.Specification.Source
         /// </remarks>
         /// <value>
         /// Supported wildcards:
-        /// <list type="bullet">
+        /// <list type="table">
         /// <item>
         /// <term>*</term>
         /// <description>Matches zero or more characters within a directory name.</description>
@@ -241,6 +273,8 @@ namespace Hl7.Fhir.Specification.Source
             set { _settings.Excludes = value; Refresh(); }
         }
 
+        // Note: DuplicateFilenameResolution must be in sync with FhirSerializationFormats
+
         /// <summary>
         /// Specifies how the <see cref="DirectorySource"/> should process duplicate files with multiple serialization formats.
         /// </summary>
@@ -254,13 +288,27 @@ namespace Hl7.Fhir.Specification.Source
             KeepBoth
         }
 
-        /// <summary>
-        /// Gets or sets a value that determines how to process duplicate files with multiple serialization formats.
-        /// </summary>
+        /// <summary>Gets or sets a value that determines how to process duplicate files with multiple serialization formats.<para>
+        /// <remarks>The default value is <see cref="DirectorySource.DuplicateFilenameResolution.PreferXml"/>.</remarks>
         public DuplicateFilenameResolution FormatPreference
         {
             get { return _settings.FormatPreference; }
             set { _settings.FormatPreference = value; Refresh(); }
+        }
+
+        /// <summary>
+        /// Determines if the <see cref="DirectorySource"/> instance should
+        /// use only a single thread to harvest the artifact summary information.
+        /// </summary>
+        /// <remarks>
+        /// By default, the <see cref="DirectorySource"/> leverages the thread pool
+        /// to try and speed up the artifact summary generation process.
+        /// Set this property to <c>true</c> to force single threaded processing.
+        /// </remarks>
+        public bool SingleThreaded
+        {
+            get { return _settings.SingleThreaded; }
+            set { _settings.SingleThreaded = value; } // Refresh();
         }
 
         /// <summary>Request a full re-scan of the specified content directory.</summary>
@@ -356,7 +404,7 @@ namespace Hl7.Fhir.Specification.Source
             return getResourceFromScannedSource<Resource>(info);
         }
 
-        /// <summary>Resolve the ValueSet with the specified codeSystem system.</summary>
+        /// <summary>Resolve the <see cref="ValueSet"/> resource with the specified codeSystem system.</summary>
         public ValueSet FindValueSetBySystem(string system)
         {
             prepareResources();
@@ -367,21 +415,20 @@ namespace Hl7.Fhir.Specification.Source
             return getResourceFromScannedSource<ValueSet>(info);
         }
 
-        /// <summary>Resolve ConceptMap resources with the specified source and/or target uri(s).</summary>
+        /// <summary>Resolve <see cref="ConceptMap"/> resources with the specified source and/or target uri(s).</summary>
         public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
         {
             if (sourceUri == null && targetUri == null)
             {
                 throw Error.ArgumentNull(nameof(targetUri), "sourceUri and targetUri cannot both be null");
             }
-
             prepareResources();
 
-            var infoList = _resourceScanInformation.ConceptMaps(sourceUri, targetUri);
+            var infoList = _resourceScanInformation.FindConceptMaps(sourceUri, targetUri);
             return infoList.Select(info => getResourceFromScannedSource<ConceptMap>(info)).Where(r => r != null);
         }
 
-        /// <summary>Resolve the NamingSystem resource with the specified uniqueId.</summary>
+        /// <summary>Resolve the <see cref="NamingSystem"/> resource with the specified uniqueId.</summary>
         public NamingSystem FindNamingSystem(string uniqueId)
         {
             if (uniqueId == null) throw Error.ArgumentNull(nameof(uniqueId));
@@ -543,7 +590,7 @@ namespace Hl7.Fhir.Specification.Source
 
             foreach (var filename in allFilenames.Distinct())
             {
-                if (FileFormats.HasXmlOrJsonExtension(filename))
+                if (FhirFileFormats.HasXmlOrJsonExtension(filename))
                     xmlOrJson.Add(filename);
                 else
                     result.Add(filename);
@@ -559,9 +606,9 @@ namespace Hl7.Fhir.Specification.Source
                 {
                     // count must be 2
                     var first = group.First();
-                    if (preference == DuplicateFilenameResolution.PreferXml && FileFormats.HasXmlExtension(first))
+                    if (preference == DuplicateFilenameResolution.PreferXml && FhirFileFormats.HasXmlExtension(first))
                         result.Add(first);
-                    else if (preference == DuplicateFilenameResolution.PreferJson && FileFormats.HasJsonExtension(first))
+                    else if (preference == DuplicateFilenameResolution.PreferJson && FhirFileFormats.HasJsonExtension(first))
                         result.Add(first);
                     else
                         result.Add(group.Skip(1).First());
@@ -581,8 +628,8 @@ namespace Hl7.Fhir.Specification.Source
             prepareFiles();
 
             var settings = _settings;
-            var uniqueArtifacts = ResolveDuplicateFilenames(_artifactFilePaths, _settings.FormatPreference);
-            var scanInfo = _resourceScanInformation = scanPaths(uniqueArtifacts, settings.StreamFactory, settings.SummaryFactory, settings.SummaryDetailsExtractors);
+            var uniqueArtifacts = ResolveDuplicateFilenames(_artifactFilePaths, settings.FormatPreference);
+            var scanInfo = _resourceScanInformation = scanPaths(uniqueArtifacts, settings.SummaryDetailsHarvesters, SingleThreaded);
 
             // Check for duplicate canonical urls, this is forbidden within a single source (and actually, universally,
             // but if another source has the same url, the order of polling in the MultiArtifactSource matters)
@@ -604,80 +651,68 @@ namespace Hl7.Fhir.Specification.Source
             return;
         }
 
-        private static List<ArtifactSummary> scanPaths(List<string> paths, NavigatorStreamFactory streamFactory, ArtifactSummaryFactory summaryFactory, ArtifactSummaryDetailsExtractor[] extractors)
+        private static List<ArtifactSummary> scanPaths(List<string> paths, ArtifactSummaryHarvester[] harvesters, bool singleThreaded)
         {
             // [WMR 20171023] Note: some files may no longer exist
 
             var cnt = paths.Count;
             var scanResult = new List<ArtifactSummary>(cnt);
 
-            // var sw = new Stopwatch();
-            // sw.Start();
-
-            // Optimization: (partially) async I/O
-            // Unfortunately, deserialization is still synchronous, so individual tasks are blocking
-            // However, we do achieve some performance gain when scanning many files
-            // (depending on default TaskScheduler)
-            // With proper async deserialization support (Microsoft: TODO), tasks would yield while
-            // performing I/O, further increasing multi-threading performance gains
-
-            // [WMR 20171020] TODO:
-            // - Expose configuration option to control sync/async behavior
-            // - Support TimeOut
-            // - Support CancellationToken (how to inject?)
-
-#if PREPARE_PARALLEL_FOR
-            // Optimization: use Task.Parallel.ForEach to process files in parallel
-            // More efficient then creating task per file (esp. if many files)
-            //
-            // For netstandard13, add NuGet package System.Threading.Tasks.Parallel
-            //
-            //   <ItemGroup Condition=" '$(TargetFramework)' != 'net45' ">
-            //    <PackageReference Include="System.Threading.Tasks.Parallel" Version="4.3.0" />
-            //   </ItemGroup>
-
-            // Pre-allocate results array, one entry per file
-            // Each entry receives a list with summaries harvested from a single file (Bundles return 0..*)
-            var results = new List<ArtifactSummary>[cnt];
-            Exception ex = null;
-            try
+            if (singleThreaded)
             {
-                // Process files in parallel
-                var loopResult = Parallel.For(0, cnt,
-                    // new ParallelOptions() {  },
-                    i => {
+                foreach (var filePath in paths)
+                {
+                    var summaries = ArtifactSummaryGenerator.Generate(filePath, harvesters);
+                    scanResult.AddRange(summaries);
+                }
+            }
+            else
+            {
+                // Optimization: use Task.Parallel.ForEach to process files in parallel
+                // More efficient then creating task per file (esp. if many files)
+                //
+                // For netstandard13, add NuGet package System.Threading.Tasks.Parallel
+                //
+                //   <ItemGroup Condition=" '$(TargetFramework)' != 'net45' ">
+                //    <PackageReference Include="System.Threading.Tasks.Parallel" Version="4.3.0" />
+                //   </ItemGroup>
+                //
+                // TODO:
+                // - Support TimeOut
+                // - Support CancellationToken (how to inject?)
+
+                // Pre-allocate results array, one entry per file
+                // Each entry receives a list with summaries harvested from a single file (Bundles return 0..*)
+                var results = new List<ArtifactSummary>[cnt];
+                try
+                {
+                    // Process files in parallel
+                    var loopResult = Parallel.For(0, cnt,
+                        // new ParallelOptions() { MaxDegreeOfParallelism = Environment.ProcessorCount },
+                        i =>
+                        {
                         // Harvest summaries from single file
                         // Save each result to a separate array entry (no locking required)
-                        results[i] = ArtifactSummaryGenerator.Generate(paths[i], streamFactory, summaryFactory, extractors);
-                    });
-            }
-            catch (AggregateException aex)
-            {
-                // ArtifactSummaryHarvester.HarvestAll catches and returns exceptions using ArtifactSummary.FromException
-                // However Parallel.For may still throw, e.g. due to time out or cancel
+                        results[i] = ArtifactSummaryGenerator.Generate(paths[i], harvesters);
+                        });
+                }
+                catch (AggregateException aex)
+                {
+                    // ArtifactSummaryHarvester.HarvestAll catches and returns exceptions using ArtifactSummary.FromException
+                    // However Parallel.For may still throw, e.g. due to time out or cancel
 
-                // var isCanceled = ex.InnerExceptions.OfType<TaskCanceledException>().Any();
-                Debug.WriteLine($"[{nameof(DirectorySource)}.{nameof(scanPaths)}] {aex.GetType().Name}: {aex.Message}"
-                    + $"{aex.InnerExceptions?.Select(ix => $"\r\n\t{ix.GetType().Name}: {ix.Message}")}");
+                    // var isCanceled = ex.InnerExceptions.OfType<TaskCanceledException>().Any();
+                    Debug.WriteLine($"[{nameof(DirectorySource)}.{nameof(scanPaths)}] {aex.GetType().Name}: {aex.Message}"
+                        + aex.InnerExceptions?.Select(ix => $"\r\n\t{ix.GetType().Name}: {ix.Message}"));
 
-                // [WMR 20171023] Return exceptions via ArtifactSummary.FromException
-                ex = aex;
+                    // [WMR 20171023] Return exceptions via ArtifactSummary.FromException
+                    // Or unwrap all inner exceptions?
+                    // scanResult.Add(ArtifactSummary.FromException(aex));
+                    scanResult.AddRange(aex.InnerExceptions.Select(ArtifactSummary.FromException));
+                }
+                // Aggregate completed results into single list
+                scanResult.AddRange(results.SelectMany(r => r ?? Enumerable.Empty<ArtifactSummary>()));
             }
-            // Aggregate completed results into single list
-            scanResult.AddRange(results.SelectMany(r => r ?? Enumerable.Empty<ArtifactSummary>()));
-            if (ex != null)
-            {
-                scanResult.Add(ArtifactSummary.FromException(ex));
-            }
-#else
-            foreach (var filePath in paths)
-            {
-                var summaries = ArtifactSummaryGenerator.Generate(filePath, streamFactory, summaryFactory, extractors);
-                scanResult.AddRange(summaries);
-            }
-#endif
-            // sw.Stop();
-            // Debug.WriteLine($"[{nameof(DirectorySource)}.{nameof(scanPaths)}] Duration: {sw.ElapsedMilliseconds} ms | {cnt} paths | {scanResult.Count} resources");
 
             return scanResult;
         }
@@ -694,8 +729,7 @@ namespace Hl7.Fhir.Specification.Source
             // File path of the containing resource file (could be a Bundle)
             var path = info.Origin;
 
-            var navStream = _settings.StreamFactory?.Invoke(path)
-                ?? DefaultNavigatorStreamFactory.Create(path);
+            var navStream = DefaultNavigatorStreamFactory.Create(path);
 
             // TODO: Handle exceptions & null return values
             // e.g. file may have been deleted/renamed since last scan
@@ -723,9 +757,16 @@ namespace Hl7.Fhir.Specification.Source
 
         #endregion
 
+        // Allow derived classes to override
+        // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        protected virtual string DebuggerDisplay
+            => $"{GetType().Name} for '{_contentDirectory}'"
+            + (_filesPrepared ? $"| {_artifactFilePaths.Count} files" : null)
+            + (_resourcesPrepared ? $"| {_resourceScanInformation.Count} resources" : null);
 
     }
 
 #endif
 
-    }
+}

@@ -26,13 +26,37 @@ namespace Hl7.Fhir.Serialization
     /// <remarks>Replacement for XmlArtifactScanner (now obsolete).</remarks>
     public class XmlNavigatorStream : INavigatorStream
     {
-        private readonly FileStream _fileStream = null;
+        private readonly Stream _stream = null;
         private XmlReader _reader = null;
         private (XElement element, string fullUrl)? _current = null;
+        private bool _disposeStream;
 
-        public XmlNavigatorStream(string path)
+        /// <summary>Create a new <see cref="XmlNavigatorStream"/> instance for the specified serialized xml resource file.</summary>
+        /// <param name="path">The filepath of a serialized xml resource.</param>
+        [Obsolete("Use XmlNavigatorStream.FromPath()")]
+        public XmlNavigatorStream(string path) : this(new FileStream(path, FileMode.Open, FileAccess.Read))
         {
-            _fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
+            //
+        }
+
+        /// <summary>Create a new <see cref="XmlNavigatorStream"/> instance for the specified serialized xml resource file.</summary>
+        /// <param name="path">The filepath of a serialized xml resource.</param>
+        /// <returns>A new <see cref="XmlNavigatorStream"/> instance.</returns>
+        public static XmlNavigatorStream FromPath(string path)
+            => new XmlNavigatorStream(new FileStream(path, FileMode.Open, FileAccess.Read));
+
+        /// <summary>Create a new <see cref="XmlNavigatorStream"/> instance for the specified xml resource stream.</summary>
+        /// <param name="stream">A stream that returns a serialized xml resource.</param>
+        /// <remarks>The <see cref="Dispose()"/> method also disposes the specified <paramref name="stream"/> instance.</remarks>
+        public XmlNavigatorStream(Stream stream) : this(stream, true) { }
+
+        /// <summary>Create a new <see cref="XmlNavigatorStream"/> instance for the specified xml resource stream.</summary>
+        /// <param name="stream">A stream that returns a serialized xml resource.</param>
+        /// <param name="disposeStream">Determines if the <see cref="Dispose()"/> method should also dispose the specified <paramref name="stream"/> instance.</param>
+        public XmlNavigatorStream(Stream stream, bool disposeStream)
+        {
+            _stream = stream ?? throw Error.ArgumentNull(nameof(stream));
+            _disposeStream = disposeStream;
             Reset();
         }
 
@@ -54,10 +78,10 @@ namespace Hl7.Fhir.Serialization
                         _reader = null;
                     }
 
-                    if (_fileStream != null)
+                    if (_stream != null && _disposeStream)
                     {
-                        _fileStream.Dispose();
-                        //_fileStream = null;
+                        _stream.Dispose();
+                        //_stream = null;
                     }
                 }
 
@@ -85,8 +109,8 @@ namespace Hl7.Fhir.Serialization
         {
             throwIfDisposed();
 
-            _fileStream.Seek(0, SeekOrigin.Begin);
-            _reader = SerializationUtil.XmlReaderFromStream(_fileStream);
+            _stream.Seek(0, SeekOrigin.Begin);
+            _reader = SerializationUtil.XmlReaderFromStream(_stream);
 
             ResourceType = getRootName(_reader);
 
