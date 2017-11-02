@@ -70,6 +70,7 @@ namespace Hl7.Fhir.Specification.Source
             other.Includes = this.Includes;
             other.Excludes = this.Excludes;
             other.FormatPreference = this.FormatPreference;
+            other.SingleThreaded = this.SingleThreaded;
             other.SummaryDetailsHarvesters = this.SummaryDetailsHarvesters;
         }
 
