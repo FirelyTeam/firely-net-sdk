@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Specification.Source
             settings.CopyTo(this);
         }
 
-        /// <summary>Copy the current state to the specified instance.</summary>
+        /// <summary>Copy all configuration settings to another instance.</summary>
         /// <param name="other">Another <see cref="DirectorySourceSettings"/> instance.</param>
         public void CopyTo(DirectorySourceSettings other)
         {
@@ -76,11 +76,11 @@ namespace Hl7.Fhir.Specification.Source
             other.SummaryDetailsHarvesters = this.SummaryDetailsHarvesters;
         }
 
-        /// <summary>Returns an exact clone of the current configuration settings instance.</summary>
+        /// <summary>Creates a new <see cref="DirectorySourceSettings"/> object that is a copy of the current instance.</summary>
         public DirectorySourceSettings Clone() => new DirectorySourceSettings(this);
 
 #if DOTNETFW
-        /// <summary>Returns an exact clone of the current configuration settings instance.</summary>
+        /// <summary>Creates a new <see cref="DirectorySourceSettings"/> object that is a copy of the current instance.</summary>
         object ICloneable.Clone() => Clone();
 #endif
 
