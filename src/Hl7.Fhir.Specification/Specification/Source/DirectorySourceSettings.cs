@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Specification.Source
         public readonly static string[] DefaultMasks = new[] { "*.*" };
 
         /// <summary>Creates a new <see cref="DirectorySourceSettings"/> instance with default property values.</summary>
-        public static DirectorySourceSettings CreateDefault => new DirectorySourceSettings();
+        public static DirectorySourceSettings CreateDefault() => new DirectorySourceSettings();
 
         /// <summary>Default constructor. Creates a new <see cref="DirectorySourceSettings"/> instance with default property values.</summary>
         public DirectorySourceSettings()

@@ -10,6 +10,7 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source.Summary;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -45,16 +46,20 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Create a new <see cref="ZipSource"/> instance for the ZIP archive with the specified file path.</summary>
         /// <param name="zipPath">File path to a ZIP archive.</param>
-        public ZipSource(string zipPath) : this(zipPath, DirectorySourceSettings.CreateDefault) { }
+        public ZipSource(string zipPath) : this(zipPath, DirectorySourceSettings.CreateDefault()) { }
 
         /// <summary>Create a new <see cref="ZipSource"/> instance for the ZIP archive with the specified file path.</summary>
         /// <param name="zipPath">File path to a ZIP archive.</param>
         /// <param name="settings">Configuration settings for the internal <see cref="DirectorySource"/> instance.</param>
         public ZipSource(string zipPath, DirectorySourceSettings settings)
         {
+            if (string.IsNullOrEmpty(zipPath)) { throw Error.ArgumentNull(nameof(zipPath)); }
             ZipPath = zipPath;
-            _settings = settings ?? throw new ArgumentNullException(nameof(settings));
-            _settings.IncludeSubDirectories = false;
+            if (settings == null) { throw Error.ArgumentNull(nameof(settings)); }
+            // Always clone the incoming reference, especially since we're forcing IncludeSubDirectories
+            settings = settings.Clone();
+            settings.IncludeSubDirectories = false;
+            _settings = settings;
             _lazySource = new Lazy<DirectorySource>(createSource, true);
         }
 
