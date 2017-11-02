@@ -106,6 +106,9 @@ namespace Hl7.Fhir.Specification.Tests
                 //Debug.WriteLine($"{summary.ResourceType} | {summary.Canonical()} | {summary.Name()}");
 
                 // StructureDefinition properties
+                Assert.IsNotNull(summary.GetStructureDefinitionFhirVersion());
+                Assert.AreEqual(ModelInfo.Version, summary.GetStructureDefinitionFhirVersion());
+
                 Assert.AreEqual(StructureDefinition.StructureDefinitionKind.Datatype.GetLiteral(), summary.GetStructureDefinitionKind());
                 // If this is a constraining StructDef, then Base should also be specified
                 Assert.IsTrue(summary.GetStructureDefinitionConstrainedType() == null || summary.GetStructureDefinitionBase() != null);

@@ -185,6 +185,7 @@ namespace Hl7.Fhir.Specification.Source.Summary
     {
         static readonly string StructureDefinitionTypeName = ResourceType.StructureDefinition.GetLiteral();
 
+        public static readonly string FhirVersionKey = "StructureDefinition.fhirVersion";
         public static readonly string KindKey = "StructureDefinition.kind";
         public static readonly string ConstrainedTypeKey = "StructureDefinition.constrainedType";
         public static readonly string ContextTypeKey = "StructureDefinition.contextType";
@@ -204,6 +205,7 @@ namespace Hl7.Fhir.Specification.Source.Summary
                 // Explicit extractor chaining
                 if (ConformanceSummaryProperties.Harvest(nav, properties))
                 {
+                    nav.HarvestValue(properties, FhirVersionKey, "fhirVersion");
                     nav.HarvestValue(properties, KindKey, "kind");
                     nav.HarvestValue(properties, ConstrainedTypeKey, "constrainedType");
                     nav.HarvestValue(properties, ContextTypeKey, "contextType");
@@ -213,6 +215,11 @@ namespace Hl7.Fhir.Specification.Source.Summary
             }
             return false;
         }
+
+        /// <summary>Get the <c>StructureDefinition.fhirVersion</c> property value from the specified artifact summary property bag, if available.</summary>
+        /// <remarks>Only applies to summaries of <see cref="StructureDefinition"/> resources.</remarks>
+        public static string GetStructureDefinitionFhirVersion(this IArtifactSummaryPropertyBag properties)
+            => properties.GetValueOrDefault<string>(FhirVersionKey);
 
         /// <summary>Get the <c>StructureDefinition.Kind</c> property value from the specified artifact summary property bag, if available.</summary>
         /// <remarks>Only applies to summaries of <see cref="StructureDefinition"/> resources.</remarks>
