@@ -18,7 +18,7 @@ using System.Reflection;
 
 namespace Hl7.Fhir.Specification.Source
 {
-    /// <summary>Reads FHIR artifacts (Profiles, ValueSets, ...) from a ZIP archive.</summary>
+    /// <summary>Reads FHIR artifacts (Profiles, ValueSets, ...) from a ZIP archive. Thread-safe.</summary>
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
     public class ZipSource : IConformanceSource, IArtifactSource
     {

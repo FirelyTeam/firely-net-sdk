@@ -40,7 +40,7 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
 {
-    /// <summary>Reads FHIR artifacts (Profiles, ValueSets, ...) from a directory on disk.</summary>
+    /// <summary>Reads FHIR artifacts (Profiles, ValueSets, ...) from a directory on disk. Thread-safe.</summary>
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
     public class DirectorySource : IConformanceSource, IArtifactSource
     {
