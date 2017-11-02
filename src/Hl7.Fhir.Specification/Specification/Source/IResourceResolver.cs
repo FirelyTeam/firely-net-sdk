@@ -11,6 +11,7 @@ using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Specification.Source
 {
+    /// <summary>Interface for resolving FHIR artifacts by (canonical) uri.</summary>
     public interface IResourceResolver // open ended domain
     {
         /// <summary>Find a resource based on its relative or absolute uri.</summary>
