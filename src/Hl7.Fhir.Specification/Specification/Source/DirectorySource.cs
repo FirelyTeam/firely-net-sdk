@@ -7,11 +7,9 @@
  */
 
 // [WMR 20171023] TODO
-// - Allow configuration of sync/async summary harvesting strategy
 // - Allow configuration of duplicate canonical url handling strategy
 
-// Enable for async, disable for sync
-#define PREPARE_PARALLEL_FOR
+#if NET_FILESYSTEM
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
@@ -29,7 +27,6 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
 {
-#if NET_FILESYSTEM
     /// <summary>
     /// Reads FHIR artifacts (Profiles, ValueSets, ...) from directories with individual files
     /// </summary>
@@ -767,6 +764,6 @@ namespace Hl7.Fhir.Specification.Source
 
     }
 
-#endif
-
 }
+
+#endif

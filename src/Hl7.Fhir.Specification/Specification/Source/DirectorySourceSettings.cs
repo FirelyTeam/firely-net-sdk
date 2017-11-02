@@ -6,6 +6,8 @@
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
+#if NET_FILESYSTEM
+
 using Hl7.Fhir.Specification.Source.Summary;
 using Hl7.Fhir.Utility;
 using System;
@@ -284,3 +286,5 @@ namespace Hl7.Fhir.Specification.Source
     }
 
 }
+
+#endif

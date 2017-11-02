@@ -5,13 +5,13 @@
  * This file is licensed under the BSD 3-Clause license
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
- 
+
+#if NET_FILESYSTEM
+
 using Hl7.Fhir.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
-#if NET_FILESYSTEM
 
 namespace Hl7.Fhir.Specification.Source.Summary
 {
