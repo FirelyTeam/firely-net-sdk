@@ -75,6 +75,7 @@ namespace Hl7.Fhir.Specification.Source
         /// from the specified content directory and using the default <see cref="DirectorySourceSettings"/>.
         /// </summary>
         /// <param name="contentDirectory">The file path of the target directory.</param>
+        /// <exception cref="ArgumentNullException">The specified argument is <c>null</c>.</exception>
         public DirectorySource(string contentDirectory)
         {
             _contentDirectory = contentDirectory ?? throw Error.ArgumentNull(nameof(contentDirectory));
@@ -87,6 +88,7 @@ namespace Hl7.Fhir.Specification.Source
         /// </summary>
         /// <param name="contentDirectory">The file path of the target directory.</param>
         /// <param name="settings">Configuration settings that control the behavior of the <see cref="DirectorySource"/>.</param>
+        /// <exception cref="ArgumentNullException">One of the specified arguments is <c>null</c>.</exception>
         public DirectorySource(string contentDirectory, DirectorySourceSettings settings)
         {
             _contentDirectory = contentDirectory ?? throw Error.ArgumentNull(nameof(contentDirectory));
