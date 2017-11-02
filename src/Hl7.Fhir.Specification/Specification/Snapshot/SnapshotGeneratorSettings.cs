@@ -6,9 +6,10 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.Support;
+using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Utility;
 using System;
+using System.ComponentModel;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -19,30 +20,46 @@ namespace Hl7.Fhir.Specification.Snapshot
 #endif
     {
         /// <summary>Default configuration settings for the <see cref="SnapshotGenerator"/> class.</summary>
-        public static readonly SnapshotGeneratorSettings Default = new SnapshotGeneratorSettings()
-        {
-            GenerateSnapshotForExternalProfiles = true,
-            ForceRegenerateSnapshots = false,           // Only enable this when using a cached source...!
-            GenerateExtensionsOnConstraints = false,    // Enabled by Simplifier (not used...)
-            GenerateAnnotationsOnConstraints = false,   // For snapshot rendering
-            GenerateElementIds = false                  // for STU3
-            // MergeTypeProfiles = true
-        };
+        [Obsolete("Use the CreateDefault() method")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static readonly SnapshotGeneratorSettings Default = new SnapshotGeneratorSettings();
+        //{
+        //    GenerateSnapshotForExternalProfiles = true,
+        //    ForceRegenerateSnapshots = false,           // Only enable this when using a cached source...!
+        //    GenerateExtensionsOnConstraints = false,    // Enabled by Simplifier (not used...)
+        //    GenerateAnnotationsOnConstraints = false,   // For snapshot rendering
+        //    GenerateElementIds = false                  // for STU3
+        //    // MergeTypeProfiles = true
+        //};
+
+        /// <summary>Creates a new <see cref="SnapshotGeneratorSettings"/> instance with default property values.</summary>
+        public static SnapshotGeneratorSettings CreateDefault() => new SnapshotGeneratorSettings();
 
         /// <summary>Default ctor.</summary>
-        public SnapshotGeneratorSettings() { }
+        public SnapshotGeneratorSettings()
+        {
+            // See property declarations for default initializers
+        }
 
         /// <summary>Clone ctor. Generates a new instance with the same state as the specified instance.</summary>
+        /// <exception cref="ArgumentNullException">The specified argument is <c>null</c>.</exception>
         public SnapshotGeneratorSettings(SnapshotGeneratorSettings settings)
         {
             if (settings == null) { throw Error.ArgumentNull(nameof(settings)); }
             settings.CopyTo(this);
         }
 
-        /// <summary>Returns an exact clone of the current configuration settings instance.</summary>
-        public object Clone() => new SnapshotGeneratorSettings(this);
+        /// <summary>Creates a new <see cref="SnapshotGeneratorSettings"/> object that is a copy of the current instance.</summary>
+        public SnapshotGeneratorSettings Clone() => new SnapshotGeneratorSettings(this);
+
+#if DOTNETFW
+        /// <summary>Creates a new <see cref="SnapshotGeneratorSettings"/> object that is a copy of the current instance.</summary>
+        object ICloneable.Clone() => Clone();
+#endif
 
         /// <summary>Copy all configuration settings to another instance.</summary>
+        /// <param name="other">Another <see cref="SnapshotGeneratorSettings"/> instance.</param>
+        /// <exception cref="ArgumentNullException">The specified argument is <c>null</c>.</exception>
         public void CopyTo(SnapshotGeneratorSettings other)
         {
             if (other == null) { throw Error.ArgumentNull(nameof(other)); }
@@ -55,41 +72,63 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         /// <summary>
-        /// If enabled (default), the snapshot generator will automatically generate the snapshot component
-        /// of any referenced external profiles on demand if necessary.
-        /// If disabled, then skip the merging of any external type profiles without a snapshot component.
+        /// Determines if the <see cref="SnapshotGenerator"/> should automatically
+        /// (re-)generate snapshots for all referenced external profiles if necessary.
         /// </summary>
-        public bool GenerateSnapshotForExternalProfiles { get; set; } // ExpandExternalProfiles
+        /// <remarks>
+        /// If this setting is disabled, then the snapshot generator will
+        /// not merge any external type profiles without a snapshot component.
+        /// </remarks>
+        public bool GenerateSnapshotForExternalProfiles { get; set; } = true;
 
         /// <summary>
-        /// Force expansion of all external profiles, disregarding any existing snapshot components.
-        /// If enabled, the snapshot generator will re-generate the snapshot components of all the core resource and datatype profiles
+        /// Determines if the <see cref="SnapshotGenerator"/> should always discard
+        /// any existing snapshot component and always (re-)generate the snapshot.
+        /// </summary>
+        /// <remarks>
+        /// If this setting is enabled, then the snapshot generator will re-generate
+        /// the snapshot components of all the core resource and datatype profiles
         /// as well as of all other referenced external profiles.
-        /// Re-generated snapshots are annotated to prevent duplicate re-generation (assuming the provided resource resolver uses caching).
-        /// If disabled (default), then the snapshot generator relies on existing snapshot components, if they exist.
-        /// </summary>
-        public bool ForceRegenerateSnapshots { get; set; } // ForceExpandAll
+        /// Re-generated snapshots are annotated to prevent duplicate re-generation
+        /// (assuming the provided resource resolver uses caching).
+        /// If this setting is disabled (default), then the snapshot generator relies
+        /// on existing snapshot components, if they exist.
+        /// <para>
+        /// Only enable this option when the specified resolver is a <see cref="CachedResolver"/>.
+        /// </para>
+        /// </remarks>
+        public bool ForceRegenerateSnapshots { get; set; } // = false;
 
         /// <summary>
-        /// Enable this setting to add a custom <see cref="SnapshotGeneratorExtensions.CONSTRAINED_BY_DIFF_EXT"/> extension
-        /// to elements and properties in the snapshot that are constrained by the differential with respect to the base profile.
-        /// <br />
-        /// Note that this extension only applies to the containing profile and should NOT be inherited by derived profiles.
-        /// The FHIR API snapshot generator explicitly removes and re-generates these extensions for each profile.
-        /// The <seealso cref="SnapshotGeneratorExtensions"/> class provides utility methods to read and/or remove the generated extensions.
+        /// Determines if the <see cref="SnapshotGenerator"/> should assign the custom
+        /// <see cref="SnapshotGeneratorExtensions.CONSTRAINED_BY_DIFF_EXT"/> extension
+        /// to snapshot elements and properties that are constrained by the differential.
         /// </summary>
-        public bool GenerateExtensionsOnConstraints { get; set; } // MarkChanges
+        /// <remarks>
+        /// Enable this setting to add a custom
+        /// <see cref="SnapshotGeneratorExtensions.CONSTRAINED_BY_DIFF_EXT"/> extension
+        /// to elements and properties in the snapshot that are constrained by the
+        /// differential with respect to the base profile.
+        /// <para>
+        /// Note that this extension only applies to the containing profile and should NOT
+        /// be inherited by derived profiles. The FHIR API snapshot generator explicitly
+        /// removes and re-generates these extensions for each profile.
+        /// The <seealso cref="SnapshotGeneratorExtensions"/> class provides utility methods
+        /// to read and/or remove the generated extensions.
+        /// </para>
+        /// </remarks>
+        public bool GenerateExtensionsOnConstraints { get; set; } // = false;
 
         /// <summary>Enable this setting to annotate all elements and properties in the snapshot that are constrained by the differential.</summary>
         /// <remarks>The <seealso cref="SnapshotGeneratorAnnotations"/> class provides utility methods to read and/or remove the generated annotations.</remarks>
-        public bool GenerateAnnotationsOnConstraints { get; set; } // AnnotateDifferentialConstraints
+        public bool GenerateAnnotationsOnConstraints { get; set; } // = false;
 
-        /// <summary>Enable this setting to automatically generate missing element id values.</summary>
+        /// <summary>Enable this setting to automatically generate element ids for the snapshot.</summary>
         /// <remarks>
         /// The generated element ids conform to the STU3 FHIR specification.
         /// Do NOT enable this setting for DSTU2!
         /// </remarks>
-        public bool GenerateElementIds { get; set; }
+        public bool GenerateElementIds { get; set; } // = false;
 
         // [WMR 20161004] Always try to merge element type profiles
 
@@ -99,6 +138,6 @@ namespace Hl7.Fhir.Specification.Snapshot
         // If disabled, the snapshot generator ignores custom type profiles and merges constraints from the base profile.
         // </summary>
         // <remarks>See GForge #9791</remarks>
-        // public bool MergeTypeProfiles { get; set; }
+        // public bool MergeTypeProfiles { get; set; } // = true
     }
 }

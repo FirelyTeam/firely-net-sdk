@@ -49,20 +49,33 @@ namespace Hl7.Fhir.Specification.Snapshot
         readonly SnapshotGeneratorSettings _settings;
         readonly SnapshotRecursionStack _stack = new SnapshotRecursionStack();
 
-        public SnapshotGenerator(IResourceResolver resolver, SnapshotGeneratorSettings settings) // : this()
+        /// <summary>
+        /// Create a new instance of the <see cref="SnapshotGenerator"/>
+        /// for the specified resource resolver and configuration settings.
+        /// </summary>
+        /// <param name="resolver">A <see cref="IResourceResolver"/> instance.</param>
+        /// <exception cref="ArgumentNullException">The specified argument is <c>null</c>.</exception>
+        public SnapshotGenerator(IResourceResolver resolver)
         {
             if (resolver == null) { throw Error.ArgumentNull(nameof(resolver)); }
-            if (settings == null) { throw Error.ArgumentNull(nameof(settings)); }
             _resolver = resolver;
+            _settings = SnapshotGeneratorSettings.CreateDefault();
+        }
 
+        /// <summary>
+        /// Create a new instance of the <see cref="SnapshotGenerator"/>
+        /// for the specified resource resolver and configuration settings.
+        /// </summary>
+        /// <param name="resolver">A <see cref="IResourceResolver"/> instance.</param>
+        /// <param name="settings">A <see cref="SnapshotGeneratorSettings"/> instance.</param>
+        /// <exception cref="ArgumentNullException">One of the specified arguments is <c>null</c>.</exception>
+        public SnapshotGenerator(IResourceResolver resolver, SnapshotGeneratorSettings settings)
+        {
+            _resolver = resolver ?? throw Error.ArgumentNull(nameof(resolver));
+            if (settings == null) { throw Error.ArgumentNull(nameof(settings)); }
             // [WMR 20171023] Always copy the specified settings, to prevent shared state
             // Especially important to prevent corruption of the global SnapshotGeneratorSettings.Default instance.
             _settings = new SnapshotGeneratorSettings(settings);
-        }
-
-        public SnapshotGenerator(IResourceResolver source) : this(source, SnapshotGeneratorSettings.Default)
-        {
-            // ...
         }
 
         /// <summary>Returns the snapshot generator configuration settings.</summary>
