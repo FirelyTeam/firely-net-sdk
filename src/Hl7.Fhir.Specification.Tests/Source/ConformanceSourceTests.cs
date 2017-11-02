@@ -15,13 +15,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using System;
 
 namespace Hl7.Fhir.Specification.Tests
 {
     // [WMR 20171016] Renamed from: ArtifactResolverTests
 
     [TestClass]
-    public class ConformanceSourceTests 
+    public class ConformanceSourceTests
     {
         [ClassInitialize]
         public static void SetupSource(TestContext t)
@@ -85,7 +86,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(ns);
             Assert.AreEqual("RxNorm (US NLM)", ns.Name);
         }
-    
+
 
         [TestMethod]
         public void ListCanonicalUris()
@@ -165,8 +166,8 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(5, res.Count);
             Assert.IsTrue(res.Any(p => p.EndsWith("bit.xml")));
             Assert.IsTrue(res.Any(p => p.EndsWith("bit.txt")));
-            Assert.IsFalse(res.Any(p=> p.EndsWith("bit.json")));
-            Assert.IsTrue(res.Any(p=>p.EndsWith("yadi.json")));
+            Assert.IsFalse(res.Any(p => p.EndsWith("bit.json")));
+            Assert.IsTrue(res.Any(p => p.EndsWith("yadi.json")));
 
             res = DirectorySource.ResolveDuplicateFilenames(paths, DirectorySource.DuplicateFilenameResolution.PreferJson);
             Assert.AreEqual(5, res.Count);
@@ -307,12 +308,12 @@ namespace Hl7.Fhir.Specification.Tests
         {
             // var jsonSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData"), includeSubdirectories: false)
             var jsonSource = new DirectorySource(
-                Path.Combine(DirectorySource.SpecificationDirectory, "TestData"), 
+                Path.Combine(DirectorySource.SpecificationDirectory, "TestData"),
                 new DirectorySourceSettings()
                 {
                     Mask = "*.json",
                     Includes = new[] { "profiles-types.json" },
-                    IncludeSubDirectories= false
+                    IncludeSubDirectories = false
                 });
 
             Assert.IsNotNull(jsonSource.LoadArtifactByName("profiles-types.json"));
@@ -331,7 +332,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // var xmlSourceLarge = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), includeSubdirectories: true)
             var xmlSourceLarge = new DirectorySource(
-                Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), 
+                Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"),
                 new DirectorySourceSettings()
                 {
                     Mask = "*.xml",
@@ -374,15 +375,15 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var source = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), includeSubdirectories: true);
 
-            var vs = source.List(ResourceType.ValueSet); Assert.IsTrue(vs.Any());
-            var cm = source.List(ResourceType.ConceptMap); Assert.IsFalse(cm.Any());
-            var ns = source.List(ResourceType.NamingSystem); Assert.IsFalse(ns.Any());
-            var sd = source.List(ResourceType.StructureDefinition); Assert.IsTrue(sd.Any());
-            var de = source.List(ResourceType.DataElement); Assert.IsFalse(de.Any());
-            var cf = source.List(ResourceType.Conformance); Assert.IsTrue(cf.Any());
-            var od = source.List(ResourceType.OperationDefinition); Assert.IsTrue(od.Any());
-            var sp = source.List(ResourceType.SearchParameter); Assert.IsFalse(sp.Any());
-            var all = source.List();
+            var vs = source.Summaries(ResourceType.ValueSet); Assert.IsTrue(vs.Any());
+            var cm = source.Summaries(ResourceType.ConceptMap); Assert.IsFalse(cm.Any());
+            var ns = source.Summaries(ResourceType.NamingSystem); Assert.IsFalse(ns.Any());
+            var sd = source.Summaries(ResourceType.StructureDefinition); Assert.IsTrue(sd.Any());
+            var de = source.Summaries(ResourceType.DataElement); Assert.IsFalse(de.Any());
+            var cf = source.Summaries(ResourceType.Conformance); Assert.IsTrue(cf.Any());
+            var od = source.Summaries(ResourceType.OperationDefinition); Assert.IsTrue(od.Any());
+            var sp = source.Summaries(ResourceType.SearchParameter); Assert.IsFalse(sp.Any());
+            var all = source.Summaries;
 
             Assert.AreEqual(vs.Count() + cm.Count() + ns.Count() + sd.Count() + de.Count() + cf.Count() + od.Count() + sp.Count(), all.Count());
 
@@ -394,6 +395,50 @@ namespace Hl7.Fhir.Specification.Tests
             //Assert.IsTrue(vs.OfType<ConformanceResourceSummary>().Any(s => s.Canonical == "http://hl7.org/fhir/SearchParameter/Condition-onset-info"));
             //Assert.IsTrue(vs.OfType<ConformanceResourceSummary>().Any(s => s.Canonical == "http://hl7.org/fhir/OperationDefinition/ValueSet-validate-code"));
             //Assert.IsTrue(vs.OfType<ConformanceResourceSummary>().Any(s => s.Canonical == "http://hl7.org/fhir/Conformance/base"));
+        }
+
+        [TestMethod]
+        public async Task TestThreadSafety()
+        {
+            const int threadCount = 10;
+            const string uri = @"http://example.org/fhir/StructureDefinition/human-group";
+
+            var source = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), includeSubdirectories: true);
+
+            var tasks = new Task[threadCount];
+            var results = new(Resource resource, int threadId, DateTime start, DateTime stop)[threadCount];
+
+            for (int i = 0; i < threadCount; i++)
+            {
+                var idx = i;
+                tasks[i] = Task.Run(
+                    () =>
+                    {
+#if DOTNETFW
+                        var threadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
+#else
+                        const int threadId = 0;
+#endif
+                        var start = DateTime.Now;
+                        //source.List(ResourceType.StructureDefinition).Where()
+                        var resource = source.ResolveByCanonicalUri(uri);
+                        results[idx] = (resource, threadId, start, DateTime.Now);
+                        // Try: source.Refresh
+                    }
+                );
+            }
+
+            await Task.WhenAll(tasks);
+
+            var first = results[0];
+            for (int i = 0; i < threadCount; i++)
+            {
+                var result = results[i];
+                Assert.IsNotNull(result.resource);
+                var duration = result.stop.Subtract(result.start);
+                Debug.WriteLine($"{i,2} Thread: {result.threadId} Start: {result.start.Ticks} Stop: {result.stop.Ticks} Duration: {duration.Ticks}");
+            }
+
         }
     }
 }

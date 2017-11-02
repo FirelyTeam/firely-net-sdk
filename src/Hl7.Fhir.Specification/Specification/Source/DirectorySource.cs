@@ -7,9 +7,22 @@
  */
 
 // [WMR 20171023] TODO
+// - Make thread safe (!)
 // - Allow configuration of duplicate canonical url handling strategy
 
 #if NET_FILESYSTEM
+
+// [WMR 20171102] NEW
+// Implement thread-safe access
+// Only necessary for clients that trigger Refresh() by changing settings at runtime
+// Use locking to prevent multiple threads from calling prepareXXX() simultaneously
+// Note: without locking, multiple threads could initiate a re-scan, but the results of
+// all but one thread would be discarded. Considering that scanning is a costly operation,
+// we use locking to avoid unnecessary I/O and processing.
+// Performance tests seem to indicate that locking does not add significant overhead to
+// simple single-threaded use.
+
+#define THREADSAFE
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
@@ -27,9 +40,7 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
 {
-    /// <summary>
-    /// Reads FHIR artifacts (Profiles, ValueSets, ...) from directories with individual files
-    /// </summary>
+    /// <summary>Reads FHIR artifacts (Profiles, ValueSets, ...) from a directory on disk.</summary>
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
     public class DirectorySource : IConformanceSource, IArtifactSource
     {
@@ -45,11 +56,12 @@ namespace Hl7.Fhir.Specification.Source
         private readonly DirectorySourceSettings _settings;
         private readonly string _contentDirectory;
 
-        private bool _filesPrepared = false;
         private List<string> _artifactFilePaths;
-
-        private bool _resourcesPrepared = false;
-        private List<ArtifactSummary> _resourceScanInformation;
+        private List<ArtifactSummary> _artifactSummaries;
+#if THREADSAFE
+        private object _syncFilePaths = new object();
+        private object _syncSummaries = new object();
+#endif
 
         /// <summary>
         /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources
@@ -309,107 +321,55 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>Request a full re-scan of the specified content directory.</summary>
+        /// <remarks>
+        /// Clears the internal artifact summary cache.
+        /// New summaries will be regenerated on demand during the next resolving call.
+        /// </remarks>
         public void Refresh()
         {
-            _filesPrepared = false;
-            _resourcesPrepared = false;
-        }
-
-        /// <summary>
-        /// Returns a list of summary information describing all valid
-        /// FHIR artifacts that exist in the specified content directory.
-        /// </summary>
-        public IEnumerable<ArtifactSummary> List()
-        {
-            prepareResources();
-            return _resourceScanInformation; //.AsEnumerable();
-        }
-
-        /// <summary>Returns a list of <see cref="ArtifactSummary"/> instances with error information.</summary>
-        /// <returns></returns>
-        public IEnumerable<ArtifactSummary> Errors()
-        {
-            prepareResources();
-            return _resourceScanInformation.Errors();
-        }
-
-        /// <summary>
-        /// Returns a list of <see cref="ArtifactSummary"/> information for all the available FHIR artifacts.
-        /// </summary>
-        public IEnumerable<ArtifactSummary> List(ResourceType? filter)
-        {
-            prepareResources();
-
-            IEnumerable<ArtifactSummary> scan = _resourceScanInformation;
-            if (filter != null)
+            lock (_syncFilePaths)
+            lock (_syncSummaries)
             {
-                scan = scan.Where(dsi => dsi.ResourceType == filter);
+                _artifactFilePaths = null;
+                _artifactSummaries = null;
             }
-            return scan;
         }
+
+        #region IArtifactSource
 
         /// <summary>Returns a list of artifact filenames.</summary>
-        public IEnumerable<string> ListArtifactNames()
-        {
-            prepareFiles();
-
-            return _artifactFilePaths.Select(path => Path.GetFileName(path));
-        }
+        public IEnumerable<string> ListArtifactNames() => GetFilePaths().Select(path => Path.GetFileName(path));
 
         /// <summary>Load the artifact with the specified filename.</summary>
         public Stream LoadArtifactByName(string name)
         {
             if (name == null) throw Error.ArgumentNull(nameof(name));
-
-            prepareFiles();
-
-            var fullFileName = _artifactFilePaths.SingleOrDefault(path => path.EndsWith(Path.DirectorySeparatorChar + name, ExtensionComparison));
+            var fullFileName = GetFilePaths().SingleOrDefault(path => path.EndsWith(Path.DirectorySeparatorChar + name, ExtensionComparison));
             return fullFileName == null ? null : File.OpenRead(fullFileName);
         }
 
+        #endregion
 
-        /// <summary>Returns a list of resource uris.</summary>
+        #region IConformanceSource
+
+        /// <summary>Returns a list of summary information for all FHIR artifacts in the specified content directory.</summary>
+        public IEnumerable<ArtifactSummary> Summaries
+            => GetSummaries().Select(s => s); // Prevent caller from modifying internal list
+
+        /// <summary>List all resource uris, optionally filtered by type.</summary>
+        /// <param name="filter">A <see cref="ResourceType"/> enum value.</param>
+        /// <returns>A <see cref="IEnumerable{T}"/> sequence of uri strings.</returns>
         public IEnumerable<string> ListResourceUris(ResourceType? filter = null)
         {
-            var scan = List(filter);
-            return scan.Select(dsi => dsi.ResourceUri);
-        }
-
-
-        /// <summary>Resolve the resource with the specified uri.</summary>
-        public Resource ResolveByUri(string uri)
-        {
-            if (uri == null) throw Error.ArgumentNull(nameof(uri));
-            prepareResources();
-
-            var info = _resourceScanInformation.ResolveByUri(uri);
-            if (info == null) return null;
-
-            return getResourceFromScannedSource<Resource>(info);
-
-        }
-
-        /// <summary>Resolve the conformance resource with the specified canonical url.</summary>
-        public Resource ResolveByCanonicalUri(string uri)
-        {
-            if (uri == null) throw Error.ArgumentNull(nameof(uri));
-            prepareResources();
-
-            var info = _resourceScanInformation.ResolveByCanonicalUri(uri);
-            if (info == null) return null;
-
-            return getResourceFromScannedSource<Resource>(info);
+            return Summaries.OfResourceType(filter).Select(dsi => dsi.ResourceUri);
         }
 
         /// <summary>Resolve the <see cref="ValueSet"/> resource with the specified codeSystem system.</summary>
         public ValueSet FindValueSetBySystem(string system)
         {
-            prepareResources();
-
-            var info = _resourceScanInformation.ResolveValueSet(system);
-            if (info == null) return null;
-
-            return getResourceFromScannedSource<ValueSet>(info);
+            // if (system == null) throw Error.ArgumentNull(nameof(system));
+            var summary = GetSummaries().ResolveValueSet(system);
+            return summary != null ? getResourceFromScannedSource<ValueSet>(summary) : null;
         }
 
         /// <summary>Resolve <see cref="ConceptMap"/> resources with the specified source and/or target uri(s).</summary>
@@ -419,44 +379,62 @@ namespace Hl7.Fhir.Specification.Source
             {
                 throw Error.ArgumentNull(nameof(targetUri), "sourceUri and targetUri cannot both be null");
             }
-            prepareResources();
-
-            var infoList = _resourceScanInformation.FindConceptMaps(sourceUri, targetUri);
-            return infoList.Select(info => getResourceFromScannedSource<ConceptMap>(info)).Where(r => r != null);
+            var summaries = GetSummaries().FindConceptMaps(sourceUri, targetUri);
+            return summaries.Select(summary => getResourceFromScannedSource<ConceptMap>(summary)).Where(r => r != null);
         }
 
         /// <summary>Resolve the <see cref="NamingSystem"/> resource with the specified uniqueId.</summary>
         public NamingSystem FindNamingSystem(string uniqueId)
         {
             if (uniqueId == null) throw Error.ArgumentNull(nameof(uniqueId));
-            prepareResources();
-
-            var info = _resourceScanInformation.ResolveNamingSystem(uniqueId);
-            if (info == null) return null;
-
-            return getResourceFromScannedSource<NamingSystem>(info);
+            var summary = GetSummaries().ResolveNamingSystem(uniqueId);
+            return summary != null ? getResourceFromScannedSource<NamingSystem>(summary) : null;
         }
+
+
+        #endregion
+
+        #region IResourceResolver
+
+        /// <summary>Resolve the resource with the specified uri.</summary>
+        public Resource ResolveByUri(string uri)
+        {
+            if (uri == null) throw Error.ArgumentNull(nameof(uri));
+            var summary = GetSummaries().ResolveByUri(uri);
+            return summary != null ? getResourceFromScannedSource<Resource>(summary) : null;
+        }
+
+        /// <summary>Resolve the conformance resource with the specified canonical url.</summary>
+        public Resource ResolveByCanonicalUri(string uri)
+        {
+            if (uri == null) throw Error.ArgumentNull(nameof(uri));
+            var summary = GetSummaries().ResolveByCanonicalUri(uri);
+            return summary != null ? getResourceFromScannedSource<Resource>(summary) : null;
+        }
+
+        #endregion
 
         #region Private members
 
         /// <summary>
         /// Prepares the source by reading all files present in the directory (matching the mask, if given)
         /// </summary>
-        private void prepareFiles()
+        private List<string> prepareFiles()
         {
-            if (_filesPrepared) return;
+            var filePaths = _artifactFilePaths;
+            if (filePaths != null) return filePaths;
 
             var masks = _settings.Masks ?? (new[] { "*.*" });
 
             // Add files present in the content directory
-            var allFiles = new List<string>();
+            filePaths = new List<string>();
 
             // [WMR 20170817] NEW
             // Safely enumerate files in specified path and subfolders, recursively
-            allFiles.AddRange(safeGetFiles(_contentDirectory, masks, _settings.IncludeSubDirectories));
+            filePaths.AddRange(safeGetFiles(_contentDirectory, masks, _settings.IncludeSubDirectories));
 
             // Always remove *.exe" and "*.dll"
-            allFiles.RemoveAll(name => Path.GetExtension(name) == ".exe" || Path.GetExtension(name) == ".dll");
+            filePaths.RemoveAll(name => Path.GetExtension(name) == ".exe" || Path.GetExtension(name) == ".dll");
 
             // var unsafeExtensions = new[] { ".exe", ".dll" };
             // allFiles.RemoveAll(name => unsafeExtensions.Contains(Path.GetExtension(name), ExtensionComparer));
@@ -465,18 +443,18 @@ namespace Hl7.Fhir.Specification.Source
             if (includes?.Length > 0)
             {
                 var includeFilter = new FilePatternFilter(includes);
-                allFiles = includeFilter.Filter(_contentDirectory, allFiles).ToList();
+                filePaths = includeFilter.Filter(_contentDirectory, filePaths).ToList();
             }
 
             var excludes = Excludes;
             if (excludes?.Length > 0)
             {
                 var excludeFilter = new FilePatternFilter(excludes, negate: true);
-                allFiles = excludeFilter.Filter(_contentDirectory, allFiles).ToList();
+                filePaths = excludeFilter.Filter(_contentDirectory, filePaths).ToList();
             }
 
-            _artifactFilePaths = allFiles;
-            _filesPrepared = true;
+            _artifactFilePaths = filePaths;
+            return filePaths;
         }
 
         // [WMR 20170817]
@@ -543,7 +521,7 @@ namespace Hl7.Fhir.Specification.Source
                     catch (Exception ex)
                     {
                         // Do Nothing
-                        Debug.WriteLine($"[{nameof(DirectorySource)}.{nameof(scanPaths)}] {ex.GetType().Name} while enumerating files in '{currentFolder}':\r\n{ex.Message}");
+                        Debug.WriteLine($"[{nameof(DirectorySource)}.{nameof(harvestSummaries)}] {ex.GetType().Name} while enumerating files in '{currentFolder}':\r\n{ex.Message}");
                     }
 #else
                     catch { }
@@ -580,6 +558,7 @@ namespace Hl7.Fhir.Specification.Source
             return files.AsEnumerable();
         }
 
+        // Internal for unit testing purposes
         internal static List<string> ResolveDuplicateFilenames(List<string> allFilenames, DuplicateFilenameResolution preference)
         {
             var result = new List<string>();
@@ -616,27 +595,28 @@ namespace Hl7.Fhir.Specification.Source
 
         }
 
-        static string fullPathWithoutExtension(string fullPath) => Path.ChangeExtension(fullPath, null);
+        private static string fullPathWithoutExtension(string fullPath) => Path.ChangeExtension(fullPath, null);
 
         /// <summary>Scan all xml files found by prepareFiles and find conformance resources and their id.</summary>
-        private void prepareResources()
+        private void prepareSummaries()
         {
-            if (_resourcesPrepared) return;
+            var summaries = _artifactSummaries;
+            if (summaries != null) return;
             prepareFiles();
 
             var settings = _settings;
             var uniqueArtifacts = ResolveDuplicateFilenames(_artifactFilePaths, settings.FormatPreference);
-            var scanInfo = _resourceScanInformation = scanPaths(uniqueArtifacts, settings.SummaryDetailsHarvesters, SingleThreaded);
+            summaries = harvestSummaries(uniqueArtifacts, settings.SummaryDetailsHarvesters, SingleThreaded);
 
             // Check for duplicate canonical urls, this is forbidden within a single source (and actually, universally,
             // but if another source has the same url, the order of polling in the MultiArtifactSource matters)
             var duplicates =
-                from cr in scanInfo.ConformanceResources()
+                from cr in summaries.ConformanceResources()
                 let canonical = cr.GetConformanceCanonicalUrl()
                 where canonical != null
                 group cr by canonical into g
                 where g.Count() > 1 // g.Skip(1).Any()
-                select g;
+            select g;
 
             if (duplicates.Any())
             {
@@ -644,11 +624,11 @@ namespace Hl7.Fhir.Specification.Source
                 throw new CanonicalUrlConflictException(duplicates.Select(d => new CanonicalUrlConflictException.CanonicalUrlConflict(d.Key, d.Select(ci => ci.Origin))));
             }
 
-            _resourcesPrepared = true;
+            _artifactSummaries = summaries;
             return;
         }
 
-        private static List<ArtifactSummary> scanPaths(List<string> paths, ArtifactSummaryHarvester[] harvesters, bool singleThreaded)
+        private static List<ArtifactSummary> harvestSummaries(List<string> paths, ArtifactSummaryHarvester[] harvesters, bool singleThreaded)
         {
             // [WMR 20171023] Note: some files may no longer exist
 
@@ -699,7 +679,7 @@ namespace Hl7.Fhir.Specification.Source
                     // However Parallel.For may still throw, e.g. due to time out or cancel
 
                     // var isCanceled = ex.InnerExceptions.OfType<TaskCanceledException>().Any();
-                    Debug.WriteLine($"[{nameof(DirectorySource)}.{nameof(scanPaths)}] {aex.GetType().Name}: {aex.Message}"
+                    Debug.WriteLine($"[{nameof(DirectorySource)}.{nameof(harvestSummaries)}] {aex.GetType().Name}: {aex.Message}"
                         + aex.InnerExceptions?.Select(ix => $"\r\n\t{ix.GetType().Name}: {ix.Message}"));
 
                     // [WMR 20171023] Return exceptions via ArtifactSummary.FromException
@@ -720,7 +700,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <param name="info">An <see cref="ArtifactSummary"/> instance.</param>
         /// <typeparam name="T">The expected resource type.</typeparam>
         /// <returns>A new instance of type <typeparamref name="T"/>, or <c>null</c>.</returns>
-        private T getResourceFromScannedSource<T>(ArtifactSummary info)
+        private static T getResourceFromScannedSource<T>(ArtifactSummary info)
             where T : Resource
         {
             // File path of the containing resource file (could be a Bundle)
@@ -732,7 +712,7 @@ namespace Hl7.Fhir.Specification.Source
             // e.g. file may have been deleted/renamed since last scan
 
             // Advance stream to the target resource (e.g. specific Bundle entry)
-            if (navStream.Seek(info.Position))
+            if (navStream != null && navStream.Seek(info.Position))
             {
                 // Create navigator for the target resource
                 var nav = navStream.Current;
@@ -754,13 +734,43 @@ namespace Hl7.Fhir.Specification.Source
 
         #endregion
 
+        /// <summary>Provides synchronized access to the list of file paths. May enter lock to re-generate the list on demand.</summary>
+        protected List<string> GetFilePaths()
+        {
+#if THREADSAFE
+            lock (_syncFilePaths)
+            {
+                prepareFiles();
+                return _artifactFilePaths;
+            }
+#else
+                prepareFiles();
+                return _artifactFilePaths;
+#endif
+        }
+
+        /// <summary>Provides synchronized access to the list of artifact summaries. May enter lock to re-generate the list on demand.</summary>
+        protected List<ArtifactSummary> GetSummaries()
+        {
+#if THREADSAFE
+            lock (_syncSummaries)
+            {
+                prepareSummaries();
+                return _artifactSummaries;
+            }
+#else
+            prepareSummaries();
+            return _artifactSummaries;
+#endif
+        }
+
         // Allow derived classes to override
         // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         protected virtual string DebuggerDisplay
             => $"{GetType().Name} for '{_contentDirectory}'"
-            + (_filesPrepared ? $"| {_artifactFilePaths.Count} files" : null)
-            + (_resourcesPrepared ? $"| {_resourceScanInformation.Count} resources" : null);
+            + (_artifactFilePaths != null ? $" | {_artifactFilePaths.Count} files" : null)
+            + (_artifactSummaries != null ? $" | {_artifactSummaries.Count} resources" : null);
 
     }
 
