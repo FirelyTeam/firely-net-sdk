@@ -6,6 +6,8 @@
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
+#if NET_FILESYSTEM
+
 using Hl7.Fhir.Specification.Source.Summary;
 using Hl7.Fhir.Utility;
 using System;
@@ -45,7 +47,7 @@ namespace Hl7.Fhir.Specification.Source
         public readonly static string[] DefaultMasks = new[] { "*.*" };
 
         /// <summary>Creates a new <see cref="DirectorySourceSettings"/> instance with default property values.</summary>
-        public static DirectorySourceSettings CreateDefault => new DirectorySourceSettings();
+        public static DirectorySourceSettings CreateDefault() => new DirectorySourceSettings();
 
         /// <summary>Default constructor. Creates a new <see cref="DirectorySourceSettings"/> instance with default property values.</summary>
         public DirectorySourceSettings()
@@ -60,7 +62,7 @@ namespace Hl7.Fhir.Specification.Source
             settings.CopyTo(this);
         }
 
-        /// <summary>Copy the current state to the specified instance.</summary>
+        /// <summary>Copy all configuration settings to another instance.</summary>
         /// <param name="other">Another <see cref="DirectorySourceSettings"/> instance.</param>
         public void CopyTo(DirectorySourceSettings other)
         {
@@ -74,11 +76,11 @@ namespace Hl7.Fhir.Specification.Source
             other.SummaryDetailsHarvesters = this.SummaryDetailsHarvesters;
         }
 
-        /// <summary>Returns an exact clone of the current configuration settings instance.</summary>
+        /// <summary>Creates a new <see cref="DirectorySourceSettings"/> object that is a copy of the current instance.</summary>
         public DirectorySourceSettings Clone() => new DirectorySourceSettings(this);
 
 #if DOTNETFW
-        /// <summary>Returns an exact clone of the current configuration settings instance.</summary>
+        /// <summary>Creates a new <see cref="DirectorySourceSettings"/> object that is a copy of the current instance.</summary>
         object ICloneable.Clone() => Clone();
 #endif
 
@@ -246,7 +248,7 @@ namespace Hl7.Fhir.Specification.Source
         /// </example>
         public string[] Excludes { get; set; }
 
-        /// <summary>Gets or sets a value that determines how to process duplicate files with multiple serialization formats.<para>
+        /// <summary>Gets or sets a value that determines how to process duplicate files with multiple serialization formats.</summary>
         /// <remarks>The default value is <see cref="DirectorySource.DuplicateFilenameResolution.PreferXml"/>.</remarks>
         public DirectorySource.DuplicateFilenameResolution FormatPreference { get; set; } = DefaultFormatPreference;
 
@@ -284,3 +286,5 @@ namespace Hl7.Fhir.Specification.Source
     }
 
 }
+
+#endif

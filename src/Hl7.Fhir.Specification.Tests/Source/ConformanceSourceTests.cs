@@ -6,22 +6,24 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source;
-using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification.Source.Summary;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Threading.Tasks;
+using System.Linq;
+// Use alias to avoid conflict with Hl7.Fhir.Model.Task
+using Tasks = System.Threading.Tasks;
+using System;
 
 namespace Hl7.Fhir.Specification.Tests
 {
     // [WMR 20171016] Renamed from: ArtifactResolverTests
 
     [TestClass]
-    public class ConformanceSourceTests 
+    public class ConformanceSourceTests
     {
         [ClassInitialize]
         public static void SetupSource(TestContext t)
@@ -203,8 +205,8 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(5, res.Count);
             Assert.IsTrue(res.Any(p => p.EndsWith("bit.xml")));
             Assert.IsTrue(res.Any(p => p.EndsWith("bit.txt")));
-            Assert.IsFalse(res.Any(p=> p.EndsWith("bit.json")));
-            Assert.IsTrue(res.Any(p=>p.EndsWith("yadi.json")));
+            Assert.IsFalse(res.Any(p => p.EndsWith("bit.json")));
+            Assert.IsTrue(res.Any(p => p.EndsWith("yadi.json")));
 
             res = DirectorySource.ResolveDuplicateFilenames(paths, DirectorySource.DuplicateFilenameResolution.PreferJson);
             Assert.AreEqual(5, res.Count);
@@ -345,12 +347,12 @@ namespace Hl7.Fhir.Specification.Tests
         {
             // var jsonSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData"), includeSubdirectories: false)
             var jsonSource = new DirectorySource(
-                Path.Combine(DirectorySource.SpecificationDirectory, "TestData"), 
+                Path.Combine(DirectorySource.SpecificationDirectory, "TestData"),
                 new DirectorySourceSettings()
                 {
                     Mask = "*.json",
                     Includes = new[] { "profiles-types.json" },
-                    IncludeSubDirectories= false
+                    IncludeSubDirectories = false
                 });
 
             Assert.IsNotNull(jsonSource.LoadArtifactByName("profiles-types.json"));
@@ -369,7 +371,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // var xmlSourceLarge = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), includeSubdirectories: true)
             var xmlSourceLarge = new DirectorySource(
-                Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), 
+                Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"),
                 new DirectorySourceSettings()
                 {
                     Mask = "*.xml",
@@ -412,27 +414,80 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var source = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), includeSubdirectories: true);
 
-            var sd = source.List(ResourceType.StructureDefinition); Assert.IsTrue(sd.Any());
-            var sm = source.List(ResourceType.StructureMap); Assert.IsTrue(sd.Any());
-            var de = source.List(ResourceType.DataElement); Assert.IsFalse(de.Any());
-            var cf = source.List(ResourceType.CapabilityStatement); Assert.IsTrue(cf.Any());
-            var md = source.List(ResourceType.MessageDefinition); Assert.IsFalse(md.Any());
-            var od = source.List(ResourceType.OperationDefinition); Assert.IsTrue(od.Any());
-            var sp = source.List(ResourceType.SearchParameter); Assert.IsFalse(sp.Any());
-            var cd = source.List(ResourceType.CompartmentDefinition); Assert.IsFalse(md.Any());
-            var ig = source.List(ResourceType.ImplementationGuide); Assert.IsFalse(ig.Any());
+            var sd = source.Summaries(ResourceType.StructureDefinition); Assert.IsTrue(sd.Any());
+            var sm = source.Summaries(ResourceType.StructureMap); Assert.IsTrue(sd.Any());
+            var de = source.Summaries(ResourceType.DataElement); Assert.IsFalse(de.Any());
+            var cf = source.Summaries(ResourceType.CapabilityStatement); Assert.IsTrue(cf.Any());
+            var md = source.Summaries(ResourceType.MessageDefinition); Assert.IsFalse(md.Any());
+            var od = source.Summaries(ResourceType.OperationDefinition); Assert.IsTrue(od.Any());
+            var sp = source.Summaries(ResourceType.SearchParameter); Assert.IsFalse(sp.Any());
+            var cd = source.Summaries(ResourceType.CompartmentDefinition); Assert.IsFalse(md.Any());
+            var ig = source.Summaries(ResourceType.ImplementationGuide); Assert.IsFalse(ig.Any());
 
-            var cs = source.List(ResourceType.CodeSystem); Assert.IsFalse(cs.Any());
-            var vs = source.List(ResourceType.ValueSet); Assert.IsTrue(vs.Any());
-            var cm = source.List(ResourceType.ConceptMap); Assert.IsFalse(cm.Any());
-            var ep = source.List(ResourceType.ExpansionProfile); Assert.IsFalse(ep.Any());
-            var ns = source.List(ResourceType.NamingSystem); Assert.IsFalse(ns.Any());
+            var cs = source.Summaries(ResourceType.CodeSystem); Assert.IsFalse(cs.Any());
+            var vs = source.Summaries(ResourceType.ValueSet); Assert.IsTrue(vs.Any());
+            var cm = source.Summaries(ResourceType.ConceptMap); Assert.IsFalse(cm.Any());
+            var ep = source.Summaries(ResourceType.ExpansionProfile); Assert.IsFalse(ep.Any());
+            var ns = source.Summaries(ResourceType.NamingSystem); Assert.IsFalse(ns.Any());
 
-            var all = source.List();
+            var all = source.Summaries;
 
             Assert.AreEqual(sd.Count() + sm.Count() + de.Count() + cf.Count() + md.Count() + od.Count() +
                         sp.Count() + cd.Count() + ig.Count() + cs.Count() + vs.Count() + cm.Count() +
                         ep.Count() + ns.Count(), all.Count());
+        }
+
+        [TestMethod]
+        public async Tasks.Task TestThreadSafety()
+        {
+            // Verify thread safety by resolving same uri simultaneously from different threads
+            // DirectorySource should synchronize access and only call prepare once.
+
+            const int threadCount = 25;
+            const string uri = @"http://example.org/fhir/StructureDefinition/human-group";
+
+            var source = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), includeSubdirectories: true);
+
+            var tasks = new Tasks.Task[threadCount];
+            var results = new(Resource resource, ArtifactSummary summary, int threadId, TimeSpan start, TimeSpan stop)[threadCount];
+
+            var sw = new Stopwatch();
+            sw.Start();
+            for (int i = 0; i < threadCount; i++)
+            {
+                var idx = i;
+                tasks[i] = Tasks.Task.Run(
+                    () =>
+                    {
+#if DOTNETFW
+                        var threadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
+#else
+                        const int threadId = 0;
+#endif
+                        var start = sw.Elapsed;
+                        var resource = source.ResolveByCanonicalUri(uri);
+                        var summary = source.Summaries.ResolveByUri(uri);
+                        var stop = sw.Elapsed;
+                        results[idx] = (resource, summary, threadId, start, stop);
+                    }
+                );
+            }
+
+            await Tasks.Task.WhenAll(tasks);
+            sw.Stop();
+
+            var first = results[0];
+            for (int i = 0; i < threadCount; i++)
+            {
+                var result = results[i];
+                var duration = result.stop.Subtract(result.start);
+                Debug.WriteLine($"{i:0#} Thread: {result.threadId:00#} | Start: {result.start.TotalMilliseconds:0000.00} | Stop: {result.stop.TotalMilliseconds:0000.00} | Duration: {duration.TotalMilliseconds:0000.00}");
+                Assert.IsNotNull(result.resource);
+                Assert.IsNotNull(result.summary);
+                // Verify that all threads return the same summary instances
+                Assert.AreSame(first.summary, result.summary);
+            }
+
         }
     }
 }

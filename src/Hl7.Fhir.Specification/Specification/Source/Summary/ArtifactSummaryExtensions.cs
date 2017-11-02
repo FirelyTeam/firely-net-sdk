@@ -6,12 +6,12 @@
  * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
  */
 
+#if NET_FILESYSTEM
+
 using Hl7.Fhir.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
-#if NET_FILESYSTEM
 
 namespace Hl7.Fhir.Specification.Source.Summary
 {
@@ -25,6 +25,12 @@ namespace Hl7.Fhir.Specification.Source.Summary
         /// <summary>Filter <see cref="ArtifactSummary"/> instances for resources with the specified <see cref="ResourceType"/>.</summary>
         public static IEnumerable<ArtifactSummary> OfResourceType(this IEnumerable<ArtifactSummary> summaries, ResourceType resourceType)
             => summaries.Where(s => s.ResourceType == resourceType);
+
+        /// <summary>Filter <see cref="ArtifactSummary"/> instances for resources with the specified <see cref="ResourceType"/>.</summary>
+        public static IEnumerable<ArtifactSummary> OfResourceType(this IEnumerable<ArtifactSummary> summaries, ResourceType? resourceType)
+            => resourceType.HasValue
+            ? summaries.Where(s => s.ResourceType == resourceType.Value)
+            : summaries;
 
         /// <summary>Find <see cref="ArtifactSummary"/> instances for <see cref="NamingSystem"/> resources with the specified uniqueId value.</summary>
         public static IEnumerable<ArtifactSummary> FindNamingSystems(this IEnumerable<ArtifactSummary> summaries, string uniqueId)

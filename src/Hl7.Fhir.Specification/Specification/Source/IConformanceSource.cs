@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * Copyright (c) 2017, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -9,46 +9,55 @@
 using System;
 using System.Collections.Generic;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Specification.Source.Summary;
 
 namespace Hl7.Fhir.Specification.Source
 {
-
+    /// <summary>Interface for browsing and resolving FHIR conformance resources.</summary>
     public interface IConformanceSource : IResourceResolver
     {
-        /// <summary>
-        /// List all resource uris for the resources managed by the source, optionally filtered by type.
-        /// </summary>
-        /// <param name="filter"></param>
-        /// <returns></returns>
+        /// <summary>Returns a list of summary information for all the FHIR artifacts provided by the source.</summary>
+        IEnumerable<ArtifactSummary> Summaries { get; }
+
+        /// <summary>List all resource uris for the resources managed by the source, optionally filtered by type.</summary>
+        /// <param name="filter">A <see cref="ResourceType"/> enum value.</param>
+        /// <returns>A <see cref="IEnumerable{T}"/> sequence of uri strings.</returns>
         IEnumerable<string> ListResourceUris(ResourceType? filter = null);
 
-        // [WMR 20171011] New
-        // IEnumerable<ArtifactSummary> List(ResourceType? filter = null);
-
         /// <summary>
-        /// Find a CodeSystem by a ValueSet canonical url that contains all codes from that codesystem.
+        /// Find a <see cref="CodeSystem"/> resource by a <see cref="ValueSet"/> canonical url that contains all codes from that codesystem.
         /// </summary>
-        /// <param name="valueSetUri"></param>
-        /// <returns></returns>
-        /// <remarks>It is very common for valuesets to represent all codes from a specific/smaller code system. These
-        /// are indicated by he CodeSystem.valueSet element, which is searched here.</remarks>
+        /// <param name="valueSetUri">The canonical uri of a <see cref="ValueSet"/> resource.</param>
+        /// <returns>A <see cref="CodeSystem"/> resource, or <c>null</c>.</returns>
+        /// <remarks>
+        /// It is very common for valuesets to represent all codes from a specific/smaller code system.
+        /// These are indicated by he CodeSystem.valueSet element, which is searched here.
+        /// </remarks>
         CodeSystem FindCodeSystemByValueSet(string valueSetUri);
 
-        /// <summary>
-        /// Find ConceptMaps which map from the given sourceUri to the given targetUri
-        /// </summary>
+        /// <summary>Find <see cref="ConceptMap"/> resources which map from the given source to the given target.</summary>
         /// <param name="sourceUri">An uri that is either the source uri, source ValueSet system or source StructureDefinition canonical url for the map.</param>
         /// <param name="targetUri">An uri that is either the target uri, target ValueSet system or target StructureDefinition canonical url for the map.</param>
-        /// <returns></returns>
+        /// <returns>A sequence of <see cref="ConceptMap"/> resources.</returns>
         /// <remarks>Either sourceUri may be null, or targetUri, but not both</remarks>
         IEnumerable<ConceptMap> FindConceptMaps(string sourceUri=null, string targetUri=null);
 
-        /// <summary>
-        /// Finds a NamingSystem resource by matching any of a system's UniqueIds
-        /// </summary>
-        /// <param name="uniqueid"></param>
-        /// <returns></returns>
-        NamingSystem FindNamingSystem(string uniqueid);
+        /// <summary>Finds a <see cref="NamingSystem"/> resource by matching any of a system's UniqueIds.</summary>
+        /// <param name="uniqueId">The unique id of a <see cref="NamingSystem"/> resource.</param>
+        /// <returns>A <see cref="NamingSystem"/> resource, or <c>null</c>.</returns>
+        NamingSystem FindNamingSystem(string uniqueId);
+    }
+
+    /// <summary>Extension methods for the <see cref="IConformanceSource"/> interface.</summary>
+    public static class ConformanceSourceExtensions
+    {
+        /// <summary>Returns a list of <see cref="ArtifactSummary"/> instances with error information.</summary>
+        /// <returns>A <see cref="List{T}"/> of <see cref="ArtifactSummary"/> instances.</returns>
+        public static IEnumerable<ArtifactSummary> Errors(this IConformanceSource source) => source.Summaries.Errors();
+
+        /// <summary>Returns a list of <see cref="ArtifactSummary"/> instances for resources of the specified <see cref="ResourceType"/>.</summary>
+        /// <returns>A <see cref="List{T}"/> of <see cref="ArtifactSummary"/> instances.</returns>
+        public static IEnumerable<ArtifactSummary> Summaries(this IConformanceSource source, ResourceType resourceType) => source.Summaries.OfResourceType(resourceType);
     }
 
 }
