@@ -40,13 +40,21 @@ namespace Hl7.Fhir.Specification.Source
 
         private string _mask;
         // [WMR 20171102] Use Lazy<T> for thread-safe initialization
-        private Lazy<DirectorySource> _lazySource;
+        private readonly Lazy<DirectorySource> _lazySource;
+        private readonly DirectorySourceSettings _settings;
 
         /// <summary>Create a new <see cref="ZipSource"/> instance for the ZIP archive with the specified file path.</summary>
         /// <param name="zipPath">File path to a ZIP archive.</param>
-        public ZipSource(string zipPath)
+        public ZipSource(string zipPath) : this(zipPath, DirectorySourceSettings.CreateDefault) { }
+
+        /// <summary>Create a new <see cref="ZipSource"/> instance for the ZIP archive with the specified file path.</summary>
+        /// <param name="zipPath">File path to a ZIP archive.</param>
+        /// <param name="settings">Configuration settings for the internal <see cref="DirectorySource"/> instance.</param>
+        public ZipSource(string zipPath, DirectorySourceSettings settings)
         {
             ZipPath = zipPath;
+            _settings = settings ?? throw new ArgumentNullException(nameof(settings));
+            _settings.IncludeSubDirectories = false;
             _lazySource = new Lazy<DirectorySource>(createSource, true);
         }
 
@@ -149,7 +157,7 @@ namespace Hl7.Fhir.Specification.Source
             if (!File.Exists(ZipPath)) throw new FileNotFoundException(String.Format("Cannot prepare ZipArtifactSource: file '{0}' was not found", ZipPath));
 
             var zc = new ZipCacher(ZipPath, CACHE_KEY);
-            var source = new DirectorySource(zc.GetContentDirectory(), includeSubdirectories: false);
+            var source = new DirectorySource(zc.GetContentDirectory(), _settings);
 
             var mask = Mask;
             if (!string.IsNullOrEmpty(mask))
