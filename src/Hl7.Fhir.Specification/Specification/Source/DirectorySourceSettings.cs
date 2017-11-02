@@ -248,7 +248,7 @@ namespace Hl7.Fhir.Specification.Source
         /// </example>
         public string[] Excludes { get; set; }
 
-        /// <summary>Gets or sets a value that determines how to process duplicate files with multiple serialization formats.<para>
+        /// <summary>Gets or sets a value that determines how to process duplicate files with multiple serialization formats.</summary>
         /// <remarks>The default value is <see cref="DirectorySource.DuplicateFilenameResolution.PreferXml"/>.</remarks>
         public DirectorySource.DuplicateFilenameResolution FormatPreference { get; set; } = DefaultFormatPreference;
 
