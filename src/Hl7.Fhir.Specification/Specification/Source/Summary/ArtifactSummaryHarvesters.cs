@@ -250,43 +250,6 @@ namespace Hl7.Fhir.Specification.Source.Summary
 
     }
 
-    /*  DSTU2
-
-        /// <summary>For harvesting specific summary information from a <see cref="ValueSet"/> resource.</summary>
-        public static class ValueSetSummaryProperties
-        {
-            static readonly string ValueSetTypeName = ResourceType.ValueSet.GetLiteral();
-
-            public static readonly string SystemKey = "ValueSet.system";
-
-            /// <summary>Determines if the specified instance represents summary information about a <see cref="StructureDefinition"/> resource.</summary>
-            public static bool IsValueSetSummary(this IArtifactSummaryPropertyBag properties)
-                => properties.GetTypeName() == ValueSetTypeName;
-
-            /// <summary>Harvest specific summary information from a <see cref="ValueSet"/> resource.</summary>
-            /// <returns><c>true</c> if the current target is a ValueSet, or <c>false</c> otherwise.</returns>
-            /// <remarks>The <see cref="ArtifactSummaryGenerator"/> calls this method from a <see cref="ArtifactSummaryHarvester"/> delegate.</remarks>
-            public static bool Harvest(IElementNavigator nav, ArtifactSummaryPropertyBag properties)
-            {
-                if (IsValueSetSummary(properties))
-                {
-                    // Explicit harvester chaining
-                    if (ConformanceSummaryProperties.Harvest(nav, properties))
-                    {
-                        nav.HarvestValue(properties, SystemKey, "codeSystem", "system");
-                    }
-                    return true;
-                }
-                return false;
-            }
-
-            /// <summary>Get the <c>ValueSet.system</c> property value from the specified artifact summary property bag, if available.</summary>
-            /// <remarks>Only applies to summaries of <see cref="ValueSet"/> resources.</remarks>
-            public static string GetValueSetSystem(this IArtifactSummaryPropertyBag properties)
-                => properties.GetValueOrDefault<string>(SystemKey);
-        }
-    */
-
     /// <summary>For harvesting specific summary information from a <see cref="CodeSystem"/> resource.</summary>
     public static class CodeSystemSummaryProperties
     { 
