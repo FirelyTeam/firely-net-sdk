@@ -7,7 +7,6 @@
  */
 
 // [WMR 20171023] TODO
-// - Make thread safe (!)
 // - Allow configuration of duplicate canonical url handling strategy
 
 #if NET_FILESYSTEM
@@ -52,6 +51,9 @@ namespace Hl7.Fhir.Specification.Source
         private static readonly StringComparer ExtensionComparer = StringComparer.OrdinalIgnoreCase;
         private static readonly StringComparison ExtensionComparison = StringComparison.OrdinalIgnoreCase;
 #endif
+        // Files with following extensions are ALWAYS excluded from the result
+        private static readonly string[] ExecutableExtensions = { ".exe", ".dll", ".cpl", ".scr" };
+
 
         private readonly DirectorySourceSettings _settings;
         private readonly string _contentDirectory;
@@ -59,8 +61,8 @@ namespace Hl7.Fhir.Specification.Source
         private List<string> _artifactFilePaths;
         private List<ArtifactSummary> _artifactSummaries;
 #if THREADSAFE
-        private object _syncFilePaths = new object();
-        private object _syncSummaries = new object();
+        // Shared synchronization object for _artifactFilePaths & _artifactSummaries
+        private readonly object _syncRoot = new object();
 #endif
 
         /// <summary>
@@ -324,20 +326,107 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Request a full re-scan of the specified content directory.</summary>
         /// <remarks>
-        /// Clears the internal artifact summary cache.
-        /// New summaries will be regenerated on demand during the next resolving call.
+        /// Clear the internal artifact file path and summary caches.
+        /// Re-scan the current <see cref="ContentDirectory"/> and generate new summaries on demand,
+        /// during the next resolving request.
         /// </remarks>
-        public void Refresh()
+        public void Refresh() => Refresh(false);
+
+        /// <summary>Request a full re-scan of the specified content directory.</summary>
+        /// <param name="force">Determines if the source should perform the re-scan immediately (<c>true</c>) or on demand (<c>false</c>).</param>
+        /// <remarks>
+        /// Clear the internal artifact file path and summary caches.
+        /// Re-scan the current <see cref="ContentDirectory"/> and generate new summaries.
+        /// If <paramref name="force"/> equals <c>true</c>, then the source performs the re-scan immediately.
+        /// Otherwise, if <paramref name="force"/> equals <c>false</c>, the re-scan is performed
+        /// on demand during the next resolving request.
+        /// </remarks>
+        public void Refresh(bool force)
         {
-            lock (_syncFilePaths)
-            lock (_syncSummaries)
+            // OPTIMIZE: Implement incremental update
+            // - Remove file paths & summaries for files that no longer exist
+            // - Update summaries for files with new modification date
+            // - Add new summaries for new files
+#if THREADSAFE
+            lock (_syncRoot)
+#endif
             {
                 _artifactFilePaths = null;
                 _artifactSummaries = null;
+                if (force)
+                {
+                    prepareSummaries();
+                }
             }
         }
 
-        #region IArtifactSource
+        /// <summary>Request a re-scan of one or more specific  artifact file(s).</summary>
+        /// <param name="filePaths">One or more artifact file path(s).</param>
+        /// <remarks>
+        /// Notify the <see cref="DirectorySource"/> that specific files in the current
+        /// <see cref="ContentDirectory"/> have been created, updated or deleted.
+        /// The <paramref name="filePaths"/> argument should specify an array of artifact
+        /// file paths that (may) have been deleted, modified or created.
+        /// The source will:
+        /// <list type="number">
+        /// <item>
+        /// <description>
+        /// Remove any existing summary information for the specified artifacts, if available.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Try to harvest new summary information from the specified artifacts, if they still exist.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </remarks>
+        public void Refresh(params string[] filePaths)
+        {
+            if (filePaths == null || filePaths.Length == 0)
+            {
+                throw Error.ArgumentNullOrEmpty(nameof(filePaths));
+            }
+#if THREADSAFE
+            lock (_syncRoot)
+#endif
+            {
+                if (_artifactFilePaths == null)
+                {
+                    // Cache is empty, perform full scan on demand
+                    return;
+                }
+                // Update file paths
+                foreach (var filePath in filePaths)
+                {
+                    // Update file paths
+                    bool exists = File.Exists(filePath);
+                    if (!exists)
+                    {
+                        _artifactFilePaths.Remove(filePath);
+                    }
+                    else if (!_artifactFilePaths.Contains(filePath))
+                    {
+                        _artifactFilePaths.Add(filePath);
+                    }
+
+                    // Update summaries (if cached)
+                    if (_artifactSummaries != null)
+                    {
+                        _artifactSummaries.RemoveAll(s => StringComparer.OrdinalIgnoreCase.Equals(filePath, s.Origin));
+                        if (exists)
+                        {
+                            // May fail, e.g. if another thread/process has deleted the target file
+                            // Generate will catch exceptions and return empty list
+                            var summaries = ArtifactSummaryGenerator.Generate(filePath, _settings.SummaryDetailsHarvesters);
+                            _artifactSummaries.AddRange(summaries);
+                        }
+                    }
+                }
+            }
+        }
+
+#region IArtifactSource
 
         /// <summary>Returns a list of artifact filenames.</summary>
         public IEnumerable<string> ListArtifactNames() => GetFilePaths().Select(path => Path.GetFileName(path));
@@ -350,9 +439,9 @@ namespace Hl7.Fhir.Specification.Source
             return fullFileName == null ? null : File.OpenRead(fullFileName);
         }
 
-        #endregion
+#endregion
 
-        #region IConformanceSource
+#region IConformanceSource
 
         /// <summary>Returns a list of summary information for all FHIR artifacts in the specified content directory.</summary>
         public IEnumerable<ArtifactSummary> Summaries
@@ -394,9 +483,9 @@ namespace Hl7.Fhir.Specification.Source
         }
 
 
-        #endregion
+#endregion
 
-        #region IResourceResolver
+#region IResourceResolver
 
         /// <summary>Resolve the resource with the specified uri.</summary>
         public Resource ResolveByUri(string uri)
@@ -414,9 +503,12 @@ namespace Hl7.Fhir.Specification.Source
             return summary != null ? getResourceFromScannedSource<Resource>(summary) : null;
         }
 
-        #endregion
+#endregion
 
-        #region Private members
+#region Private members
+
+        // IMPORTANT!
+        // prepareFiles & prepareSummaries callers MUST lock on _syncLock
 
         /// <summary>
         /// Prepares the source by reading all files present in the directory (matching the mask, if given)
@@ -435,12 +527,6 @@ namespace Hl7.Fhir.Specification.Source
             // Safely enumerate files in specified path and subfolders, recursively
             filePaths.AddRange(safeGetFiles(_contentDirectory, masks, _settings.IncludeSubDirectories));
 
-            // Always remove *.exe" and "*.dll"
-            filePaths.RemoveAll(name => Path.GetExtension(name) == ".exe" || Path.GetExtension(name) == ".dll");
-
-            // var unsafeExtensions = new[] { ".exe", ".dll" };
-            // allFiles.RemoveAll(name => unsafeExtensions.Contains(Path.GetExtension(name), ExtensionComparer));
-
             var includes = Includes;
             if (includes?.Length > 0)
             {
@@ -456,6 +542,7 @@ namespace Hl7.Fhir.Specification.Source
             }
 
             _artifactFilePaths = filePaths;
+            _artifactSummaries = null;
             return filePaths;
         }
 
@@ -495,7 +582,10 @@ namespace Hl7.Fhir.Specification.Source
                 var currentDirInfo = new DirectoryInfo(currentFolder);
 
                 // local helper function to validate file/folder attributes, exclude system and/or hidden
-                bool IsValid(FileAttributes attr) => (attr & (FileAttributes.System | FileAttributes.Hidden)) == 0;
+                bool isValid(FileAttributes attr) => (attr & (FileAttributes.System | FileAttributes.Hidden)) == 0;
+                
+                // local helper function to filter executables (*.exe, *.dll)
+                bool isExtensionSafe(string extension) => !ExecutableExtensions.Contains(extension, ExtensionComparer);
 
                 foreach (var mask in masks)
                 {
@@ -513,7 +603,8 @@ namespace Hl7.Fhir.Specification.Source
                         foreach (var file in curFiles)
                         {
                             // Skip system & hidden files
-                            if (IsValid(file.Attributes))
+                            // Exclude executables (*.exe, *.dll)
+                            if (isValid(file.Attributes) && isExtensionSafe(file.Extension))
                             {
                                 files.Add(file.FullName);
                             }
@@ -538,7 +629,7 @@ namespace Hl7.Fhir.Specification.Source
                         foreach (var subFolder in subFolders)
                         {
                             // Skip system & hidden folders
-                            if (IsValid(subFolder.Attributes))
+                            if (isValid(subFolder.Attributes))
                             {
                                 folders.Enqueue(subFolder.FullName);
                             }
@@ -734,36 +825,42 @@ namespace Hl7.Fhir.Specification.Source
             return null;
         }
 
-        #endregion
+#endregion
 
-        /// <summary>Provides synchronized access to the list of file paths. May enter lock to re-generate the list on demand.</summary>
+        // <summary>Provides synchronized access to the list of file paths. May enter lock to re-generate the list on demand.</summary>
+
+        /// <summary>
+        /// Provides access to the list of artifact file paths.
+        /// Ensures that the list is (re-)initialized on demand.
+        /// Lazy initialization is synchronized (thread-safe).
+        /// </summary>
+        /// <returns>A list of strings.</returns>
         protected List<string> GetFilePaths()
         {
 #if THREADSAFE
-            lock (_syncFilePaths)
+            lock (_syncRoot)
+#endif
             {
                 prepareFiles();
                 return _artifactFilePaths;
             }
-#else
-                prepareFiles();
-                return _artifactFilePaths;
-#endif
         }
 
-        /// <summary>Provides synchronized access to the list of artifact summaries. May enter lock to re-generate the list on demand.</summary>
+        /// <summary>
+        /// Provides access to the list of artifact summaries.
+        /// Ensures that the list is (re-)initialized on demand.
+        /// Lazy initialization is synchronized (thread-safe).
+        /// </summary>
+        /// <returns>A list of <see cref="ArtifactSummary"/> instances.</returns>
         protected List<ArtifactSummary> GetSummaries()
         {
 #if THREADSAFE
-            lock (_syncSummaries)
+            lock (_syncRoot)
+#endif
             {
                 prepareSummaries();
                 return _artifactSummaries;
             }
-#else
-            prepareSummaries();
-            return _artifactSummaries;
-#endif
         }
 
         // Allow derived classes to override
