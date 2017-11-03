@@ -6,17 +6,16 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source;
-using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification.Source.Summary;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
-using System;
-using Hl7.Fhir.Specification.Source.Summary;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -448,7 +447,53 @@ namespace Hl7.Fhir.Specification.Tests
                 // Verify that all threads return the same summary instances
                 Assert.AreSame(first.summary, result.summary);
             }
+        }
 
+        [TestMethod]
+        public void TestRefresh()
+        {
+            // Create a temporary folder with a single artifact file
+            const string srcFileName = "TestPatient.xml";
+            var srcFilePath = Path.Combine(DirectorySource.SpecificationDirectory, "TestData", srcFileName);
+            var tmpFolderPath = Path.Combine(DirectorySource.SpecificationDirectory, "ConformanceSourceTestData");
+            try
+            {
+                Directory.CreateDirectory(tmpFolderPath);
+                var tmpFilePath = Path.Combine(tmpFolderPath, srcFileName);
+                File.Copy(srcFilePath, tmpFilePath);
+
+                // Initialize source and verify index
+                var source = new DirectorySource(tmpFolderPath);
+                var fileNames = source.ListArtifactNames().ToList();
+                Assert.AreEqual(1, fileNames.Count);
+                Assert.AreEqual(srcFileName, fileNames[0]);
+
+                // Rename file and refresh source
+                const string newFileName = "New" + srcFileName;
+                var newFilePath = Path.Combine(tmpFolderPath, newFileName);
+                File.Move(tmpFilePath, newFilePath);
+                source.Refresh(tmpFilePath, newFilePath);
+                fileNames = source.ListArtifactNames().ToList();
+                Assert.AreEqual(1, fileNames.Count);
+                Assert.AreEqual(newFileName, fileNames[0]);
+
+                // Delete file and refresh source
+                File.Delete(newFilePath);
+                source.Refresh(newFilePath);
+                fileNames = source.ListArtifactNames().ToList();
+                Assert.AreEqual(0, fileNames.Count);
+
+                // Recreate file and refresh source
+                File.Copy(srcFilePath, tmpFilePath);
+                source.Refresh(tmpFilePath);
+                fileNames = source.ListArtifactNames().ToList();
+                Assert.AreEqual(1, fileNames.Count);
+                Assert.AreEqual(srcFileName, fileNames[0]);
+            }
+            finally
+            {
+                Directory.Delete(tmpFolderPath, true);
+            }
         }
     }
 }
