@@ -7,7 +7,6 @@
  */
 
 // [WMR 20171023] TODO
-// - Make thread safe (!)
 // - Allow configuration of duplicate canonical url handling strategy
 
 #if NET_FILESYSTEM
