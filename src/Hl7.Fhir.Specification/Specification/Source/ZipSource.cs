@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Specification.Source
             settings = settings.Clone();
             settings.IncludeSubDirectories = false;
             _settings = settings;
-            _lazySource = new Lazy<DirectorySource>(createSource, true);
+            _lazySource = new Lazy<DirectorySource>(createSource);
         }
 
         /// <summary>Gets the location of the ZIP archive, as specified in the constructor.</summary>
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Specification.Source
         #region IConformanceSource
 
         /// <summary>Returns a list of summary information for all the FHIR artifacts in the ZIP archive.</summary>
-        public IEnumerable<ArtifactSummary> Summaries => FileSource.Summaries;
+        public IEnumerable<ArtifactSummary> ListSummaries() => FileSource.ListSummaries();
 
         /// <summary>List all resource uris, optionally filtered by type.</summary>
         /// <param name="filter">A <see cref="ResourceType"/> enum value.</param>

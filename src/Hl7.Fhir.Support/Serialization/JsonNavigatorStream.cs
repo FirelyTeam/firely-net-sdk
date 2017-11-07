@@ -68,17 +68,22 @@ namespace Hl7.Fhir.Serialization
 
         public void Dispose() => Dispose(true);
 
+        private void disposeReader()
+        {
+            if (_reader != null)
+            {
+                ((IDisposable)_reader).Dispose();
+                _reader = null;
+            }
+        }
+
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposed)
             {
                 if (disposing)
                 {
-                    if (_reader != null)
-                    {
-                        ((IDisposable)_reader).Dispose();
-                        _reader = null;
-                    }
+                    disposeReader();
 
                     if (_stream != null && _disposeStream)
                     {
@@ -112,6 +117,13 @@ namespace Hl7.Fhir.Serialization
             throwIfDisposed();
 
             _stream.Seek(0, SeekOrigin.Begin);
+
+            //[EK 2017-11-07]
+            //We should probably do this, but somewhere in the stack from _stream to _reader,
+            //something is disposing _stream as well when _reader gets disposed. Probably
+            //has something to do with the StreamReader that gets created and which will close
+            //its parent stream, whether you like it or not...
+            disposeReader();
             _reader = SerializationUtil.JsonReaderFromStream(_stream);
 
             ResourceType = scanForResourceType(_reader);
