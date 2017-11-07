@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Serialization
             //something is disposing _stream as well when _reader gets disposed. Probably
             //has something to do with the StreamReader that gets created and which will close
             //its parent stream, whether you like it or not...
-            //disposeReader();
+            disposeReader();
             _reader = SerializationUtil.JsonReaderFromStream(_stream);
 
             ResourceType = scanForResourceType(_reader);
