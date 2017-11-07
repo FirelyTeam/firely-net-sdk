@@ -150,7 +150,6 @@ namespace Hl7.Fhir.Specification.Source.Summary
         /// information.
         /// </remarks>
         /// <seealso cref="StructureDefinitionSummaryProperties"/>
-        /// <seealso cref="ValueSetSummaryProperties"/>
         /// <seealso cref="ConceptMapSummaryProperties"/>
         public static bool Harvest(IElementNavigator nav, ArtifactSummaryPropertyBag properties)
         {

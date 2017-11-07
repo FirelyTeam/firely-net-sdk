@@ -14,7 +14,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         public TimingSource(IConformanceSource source) { _source = source; }
 
-        public IEnumerable<ArtifactSummary> Summaries => throw new NotImplementedException();
+        public IEnumerable<ArtifactSummary> ListSummaries() => throw new NotImplementedException();
 
         public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
             => measureDuration(() => _source.FindConceptMaps(sourceUri, targetUri));
