@@ -444,16 +444,14 @@ namespace Hl7.Fhir.Specification.Source
 #region IConformanceSource
 
         /// <summary>Returns a list of summary information for all FHIR artifacts in the specified content directory.</summary>
-        public IEnumerable<ArtifactSummary> Summaries
+        public IEnumerable<ArtifactSummary> ListSummaries() 
             => GetSummaries().Select(s => s); // Prevent caller from modifying internal list
 
         /// <summary>List all resource uris, optionally filtered by type.</summary>
         /// <param name="filter">A <see cref="ResourceType"/> enum value.</param>
         /// <returns>A <see cref="IEnumerable{T}"/> sequence of uri strings.</returns>
         public IEnumerable<string> ListResourceUris(ResourceType? filter = null)
-        {
-            return Summaries.OfResourceType(filter).Select(dsi => dsi.ResourceUri);
-        }
+            => ListSummaries().OfResourceType(filter).Select(dsi => dsi.ResourceUri);
 
         /// <summary>Resolve the <see cref="ValueSet"/> resource with the specified codeSystem system.</summary>
         public ValueSet FindValueSetBySystem(string system)

@@ -383,7 +383,7 @@ namespace Hl7.Fhir.Specification.Tests
             var cf = source.Summaries(ResourceType.Conformance); Assert.IsTrue(cf.Any());
             var od = source.Summaries(ResourceType.OperationDefinition); Assert.IsTrue(od.Any());
             var sp = source.Summaries(ResourceType.SearchParameter); Assert.IsFalse(sp.Any());
-            var all = source.Summaries;
+            var all = source.ListSummaries();
 
             Assert.AreEqual(vs.Count() + cm.Count() + ns.Count() + sd.Count() + de.Count() + cf.Count() + od.Count() + sp.Count(), all.Count());
 
@@ -426,7 +426,7 @@ namespace Hl7.Fhir.Specification.Tests
 #endif
                         var start = sw.Elapsed;
                         var resource = source.ResolveByCanonicalUri(uri);
-                        var summary = source.Summaries.ResolveByUri(uri);
+                        var summary = source.ListSummaries().ResolveByUri(uri);
                         var stop = sw.Elapsed;
                         results[idx] = (resource, summary, threadId, start, stop);
                     }
