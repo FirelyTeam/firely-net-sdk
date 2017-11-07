@@ -1,32 +1,34 @@
-﻿using Hl7.Fhir.ElementModel;
+﻿/* 
+ * Copyright (c) 2017, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://github.com/ewoutkramer/fhir-net-api/blob/master/LICENSE
+ */
+
+#if NET_FILESYSTEM
+
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Serialization;
 using System;
 using System.Collections.Generic;
 
 namespace Hl7.Fhir.Specification.Source.Summary
 {
-    /// <summary>Represents a factory method that creates a new <see cref="ArtifactSummary"/> instance.</summary>
-    /// <param name="typeName">The type name of the artifact.</param>
-    /// <param name="details">A collection of summary details extracted from the artifact.</param>
-    /// <param name="error">A error that occured while extracting details from the artifact, or <c>null</c>.</param>
-    /// <returns>A new <see cref="ArtifactSummary"/> instance.</returns>
-    public delegate ArtifactSummary ArtifactSummaryFactory(string typeName, ArtifactSummaryDetailsCollection details, Exception error = null);
-
-    /// <summary>Represents a method that extracts summary details from an artifact.</summary>
+    /// <summary>Represents a method that tries to harvest specific summary information from an artifact.</summary>
     /// <param name="nav">An <see cref="IElementNavigator"/> instance to navigate the artifact.</param>
-    /// <param name="details">A collection for saving the summary details extracted from the artifact.</param>
+    /// <param name="properties">A dictionary for storing the harvested summary information.</param>
     /// <returns>
-    /// Returns <c>true </c> to indicate that all relevant details have been extracted from the artifact and the extraction process can finish.
-    /// Returns <c>false</c> to try and continue extracting additional summary details.
+    /// Returns <c>true </c> to indicate that all relevant properties have been harvested from the artifact and the summary is ready to be generated.
+    /// Returns <c>false</c> to try and continue harvesting additional summary information.
     /// </returns>
     /// <remarks>
     /// The specified <see cref="IElementNavigator"/> is positioned on the first child element level (e.g. <c>StructureDefinition.url</c>).
-    /// The target method can extract summary details starting from the current position in a forward direction.
-    /// When finished, the navigator should again be positioned an the first level,
-    /// for other extractors to continue reading.
+    /// The target method can fetch summary information starting from the current position in a forward direction.
+    /// When finished, the navigator should again be positioned on the first nesting level, so any remaining
+    /// delegates can continue harvesting additional information from there.
     /// </remarks>
-    public delegate bool ArtifactSummaryDetailsExtractor(IElementNavigator nav, ArtifactSummaryDetailsCollection details);
-    // Func<IElementNavigator nav, ArtifactSummaryDetails details, bool>
+    public delegate bool ArtifactSummaryHarvester(IElementNavigator nav, ArtifactSummaryPropertyBag properties);
 
     /// <summary>
     /// For generating artifact summary information from an <see cref="INavigatorStream"/>,
@@ -34,61 +36,70 @@ namespace Hl7.Fhir.Specification.Source.Summary
     /// </summary>
     public static class ArtifactSummaryGenerator
     {
-        /// <summary>Generate a list of summary information from a <see cref="INavigatorStream"/> instance.</summary>
-        /// <param name="origin">The original location of the underlying resource (bundle).</param>
-        /// <param name="streamFactory">
-        /// An optional <see cref="NavigatorStreamFactory"/> delegate for creating the
-        /// <see cref="INavigatorStream"/> instance to navigate the underlying resource (container).
-        /// By default, the generator calls <see cref="DefaultNavigatorStreamFactory.Create(string)"/>,
-        /// which supports navigation for "*.xml" and "*.json" files.
-        /// </param>
-        /// <param name="summaryFactory">
-        /// By default, the generator returns a list of <see cref="ArtifactSummary"/> instances.
-        /// Alternatively, you can specify a custom <see cref="ArtifactSummaryFactory"/> delegate
-        /// to create custom return values, depending on the extracted summary details.
-        /// This allows you to generate various specialized subclasses with additional strongly typed properties.
-        /// </param>
-        /// <param name="extractors">
-        /// One or more optional (custom) <see cref="ArtifactSummaryDetailsExtractor"/> delegates to
-        /// extract (custom) summary details from an artifact. For each artifact, the generator first
-        /// extracts the default summary details and then calls any custom extractor delegates in the
-        /// specified order. If a delegate returns <c>true</c> to signal extraction has finished, the
-        /// generator will not call any of the remaining delegates and immediately proceed to create
-        /// the <see cref="ArtifactSummary"/> return value.
+
+        /// <summary>
+        /// A list of default <see cref="ArtifactSummaryHarvester"/> delegates that the
+        /// <see cref="ArtifactSummaryGenerator"/> calls to harvest summary information
+        /// from an artifact.
+        /// </summary>
+        public static readonly ArtifactSummaryHarvester[] DefaultHarvesters
+            = new ArtifactSummaryHarvester[]
+            {
+                NamingSystemSummaryProperties.Harvest,
+                // Specific conformance resources first
+                StructureDefinitionSummaryProperties.Harvest,
+                ValueSetSummaryProperties.Harvest,
+                ConceptMapSummaryProperties.Harvest,
+                // Fall back for all other conformance resources
+                ConformanceSummaryProperties.Harvest
+            };
+
+        /// <summary>Generate a list of artifact summary information from an <see cref="INavigatorStream"/> instance.</summary>
+        /// <param name="origin">The original location of the target artifact (or the containing Bundle).</param>
+        /// <param name="harvesters">
+        /// An optional list of <see cref="ArtifactSummaryHarvester"/> delegates that the generator will call
+        /// instead of the default harvesters to harvest summary information from an artifact.
         /// </param>
         /// <returns>A list of new <see cref="ArtifactSummary"/> instances.</returns>
+        /// <remarks>
+        /// For each artifact, the generator executes all (default or specified) harvester delegates
+        /// in the specified order. When a delegate returns <c>true</c> to signal that harvesting has
+        /// finished, the generator will not call any of the remaining delegates and immediately
+        /// proceed to create the final <see cref="ArtifactSummary"/> return value.
+        /// <para>
+        /// By default, if the <paramref name="harvesters"/> parameter value is null or empty, the
+        /// <see cref="ArtifactSummaryGenerator"/> calls the built-in default harvesters
+        /// as specified by <see cref="ArtifactSummaryGenerator.DefaultHarvesters"/>.
+        /// However if the caller specifies one or more harvester delegates, then the summary
+        /// generator calls only the provided delegates, in the specified order.
+        /// A custom delegate array may include one or more of the default harvesters.
+        /// </para>
+        /// <para>
+        /// The generator catches all runtime exceptions that occur during harvesting and returns
+        /// them as <see cref="ArtifactSummary"/> instances with <see cref="ArtifactSummary.IsFaulted"/>
+        /// equal to <c>true</c> and <see cref="ArtifactSummary.Error"/> returning the exception.
+        /// </para>
+        /// </remarks>
         public static List<ArtifactSummary> Generate(
-            string origin, 
-            NavigatorStreamFactory streamFactory = null,
-            ArtifactSummaryFactory summaryFactory = null, 
-            params ArtifactSummaryDetailsExtractor[] extractors)
+            string origin,
+            params ArtifactSummaryHarvester[] harvesters)
         {
-            // [WMR 20171023] In case of error, return completed summaries and error info
             var result = new List<ArtifactSummary>();
 
+            // In case of error, return completed summaries and error info
             INavigatorStream navStream = null;
             try
             {
-                // Call custom or default navigator factory
-                navStream = streamFactory?.Invoke(origin)
-                    ?? DefaultNavigatorStreamFactory.Create(origin);
+                // Call default navigator factory
+                navStream = DefaultNavigatorStreamFactory.Create(origin);
 
                 // Factory returns null for unknown file formats
                 if (navStream == null) { return result; }
 
-                // Use custom or default summary factory
-                if (summaryFactory == null)
+                // Run default or specified (custom) harvesters
+                if (harvesters == null || harvesters.Length == 0)
                 {
-                    summaryFactory = DefaultArtifactSummaryFactory;
-                }
-
-                // Always run default extractors first, then any custom extractors
-                ArtifactSummaryDetailsExtractor[] allExtractors = DefaultArtifactSummaryExtractors;
-                if (extractors != null && extractors.Length > 0)
-                {
-                    allExtractors = new ArtifactSummaryDetailsExtractor[DefaultArtifactSummaryExtractors.Length + extractors.Length];
-                    DefaultArtifactSummaryExtractors.CopyTo(allExtractors, 0);
-                    extractors.CopyTo(allExtractors, DefaultArtifactSummaryExtractors.Length);
+                    harvesters = DefaultHarvesters;
                 }
 
                 while (navStream.MoveNext())
@@ -96,23 +107,29 @@ namespace Hl7.Fhir.Specification.Source.Summary
                     var current = navStream.Current;
                     if (current != null)
                     {
-                        var props = new ArtifactSummaryDetailsCollection();
+                        var properties = new ArtifactSummaryPropertyBag();
 
-                        // Add default summary details
-                        props[ArtifactSummaryDetails.OriginKey] = origin;
-                        props[ArtifactSummaryDetails.PositionKey] = navStream.Position;
-                        props[ArtifactSummaryDetails.ResourceUriKey] = navStream.Position;
-                        props[ArtifactSummaryDetails.ResourceTypeNameKey] = current.Type;
+                        // Initialize default summary information
+                        // Note: not exposed by IElementNavigator, cannot use harvester
+                        properties.SetOrigin(origin);
+                        properties.SetPosition(navStream.Position);
+                        properties.SetTypeName(current.Type);
+                        properties.SetResourceUri(navStream.Position);
 
-                        var summary = generate(props, current, summaryFactory, allExtractors);
+                        var summary = generate(properties, current, harvesters);
 
                         result.Add(summary);
                     }
                 }
             }
+            // TODO Catch specific exceptions
+            // catch (System.IO.FileNotFoundException)
+            // catch (UnauthorizedAccessException)
+            // catch (System.Security.SecurityException)
+            // catch (FormatException)
             catch (Exception ex)
             {
-                result.Add(ArtifactSummary.FromException(origin, ex));
+                result.Add(ArtifactSummary.FromException(ex, origin));
             }
             finally
             {
@@ -121,31 +138,33 @@ namespace Hl7.Fhir.Specification.Source.Summary
             return result;
         }
 
-        // Extract summary from a single artifact
+        // Generate summary for a single artifact
         static ArtifactSummary generate(
-            ArtifactSummaryDetailsCollection props,
+            ArtifactSummaryPropertyBag props,
             IElementNavigator nav, 
-            ArtifactSummaryFactory summaryFactory, 
-            ArtifactSummaryDetailsExtractor[] extractors)
+            ArtifactSummaryHarvester[] harvesters)
         {
+            Exception error = null;
             try
             {
-                // Extract summary details via specified extractors
-                // Top-level extractors receive navigator positioned on the first child element level
+                // Harvest summary information via specified harvesters
+                // Top-level harvesters receive navigator positioned on the first child element level
 
                 // Catch individual exceptions inside loop, return as AggregateException
                 var errors = new List<Exception>();
                 if (nav.MoveToFirstChild())
                 {
-                    foreach (var extractor in extractors)
+                    foreach (var harvester in harvesters)
                     {
                         try
                         {
-                            if (extractor?.Invoke(nav, props) == true)
+                            if (harvester != null &&  harvester.Invoke(nav, props))
                             {
                                 break;
                             }
                         }
+                        // TODO Catch specific exceptions
+                        // catch (FormatException)
                         catch (Exception ex)
                         {
                             errors.Add(ex);
@@ -154,50 +173,23 @@ namespace Hl7.Fhir.Specification.Source.Summary
                 }
 
                 // Combine all errors into single AggregateException
-                var error = errors.Count > 0 ? new AggregateException(errors) : null;
-
-                // Call factory to create final summary from extracted details
-                var result = summaryFactory.Invoke(nav.Type, props, error);
-
-                return result;
+                error = errors.Count > 0 ? new AggregateException(errors) : null;
             }
+            // TODO Catch specific exceptions
+            // catch (FormatException)
+            // catch (NotSupportedException)
             catch (Exception ex)
             {
                 // Error in summary factory?
                 // Make sure we always return a valid summary
-                return ArtifactSummary.FromException(props, ex);
+                error = ex;
             }
-        }
 
-        // Default ArtifactSummaryFactory, always returns a new ArtifactSummary instance
-        // Custom ArtifactSummaryFactory implementations can return specialized ArtifactSummary subclasses, depending on the type name
-        static ArtifactSummary DefaultArtifactSummaryFactory(string typeName, ArtifactSummaryDetailsCollection details, Exception error = null)
-        {
-            // Example:
-            //
-            //if (!string.IsNullOrEmpty(typeName))
-            //{
-            //    switch (typeName)
-            //    {
-            //        case NamingSystemSummaryDetails.TypeName: return new NamingSystemSummary(details, error)
-            //        // ... etc ...
-            //    }
-            //}
-            return new ArtifactSummary(details, error);
+            // Create final summary from harvested properties and optional error
+            return new ArtifactSummary(props, error);
         }
-
-        // Default extractors, executed in-order until one extractor returns true
-        static readonly ArtifactSummaryDetailsExtractor[] DefaultArtifactSummaryExtractors
-            = new ArtifactSummaryDetailsExtractor[]
-            {
-                NamingSystemSummaryDetails.Extract,
-                // Specific conformance resources first
-                StructureDefinitionSummaryDetails.Extract,
-                ValueSetSummaryDetails.Extract,
-                ConceptMapSummaryDetails.Extract,
-                // Fall back for all other conformance resources
-                ConformanceSummaryDetails.Extract
-            };
 
     }
 }
+
+#endif

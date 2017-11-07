@@ -155,10 +155,10 @@ namespace Hl7.Fhir.Model
         // [WMR 2017-10-25] Remove Lazy initialization
         // These methods are used frequently throughout the API (and by clients) and initialization cost is low
 
-        static readonly Dictionary<string, FHIRDefinedType> _fhirTypeNameToFhirType
+        private static readonly Dictionary<string, FHIRDefinedType> _fhirTypeNameToFhirType
             = Enum.GetValues(typeof(FHIRDefinedType)).OfType<FHIRDefinedType>().ToDictionary(type => type.GetLiteral());
 
-        static readonly Dictionary<FHIRDefinedType, string> _fhirTypeToFhirTypeName
+        private static readonly Dictionary<FHIRDefinedType, string> _fhirTypeToFhirTypeName
             = _fhirTypeNameToFhirType.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
 
         /// <summary>Returns the FHIR type name represented by the specified <see cref="FHIRDefinedType"/> enum value, or <c>null</c>.</summary>
@@ -172,10 +172,10 @@ namespace Hl7.Fhir.Model
 
         // [WMR 20171025] NEW: Conversion methods for ResourceType
 
-        static readonly Dictionary<string, ResourceType> _fhirTypeNameToResourceType
+        private static readonly Dictionary<string, ResourceType> _fhirTypeNameToResourceType
             = Enum.GetValues(typeof(ResourceType)).OfType<ResourceType>().ToDictionary(type => type.GetLiteral());
 
-        static readonly Dictionary<ResourceType, string> _resourceTypeToFhirTypeName
+        private static readonly Dictionary<ResourceType, string> _resourceTypeToFhirTypeName
             = _fhirTypeNameToResourceType.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
 
         /// <summary>Returns the FHIR type name represented by the specified <see cref="ResourceType"/> enum value, or <c>null</c>.</summary>

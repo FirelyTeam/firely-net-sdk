@@ -12,7 +12,7 @@ namespace Hl7.Fhir.Support.Tests.Serialization
         public void ScanThroughBundle()
         {
             var jsonBundle = Path.Combine(Directory.GetCurrentDirectory(), @"TestData\profiles-types.json");
-            using (var stream = new JsonNavigatorStream(jsonBundle))
+            using (var stream = JsonNavigatorStream.FromPath(jsonBundle))
             {
                 Assert.IsTrue(stream.IsBundle);
                 Assert.IsNull(stream.Current);
@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Support.Tests.Serialization
         public void ScanThroughSingle()
         {
             var xmlPatient = Path.Combine(Directory.GetCurrentDirectory(), @"TestData\fp-test-patient.json");
-            using (var stream = new JsonNavigatorStream(xmlPatient))
+            using (var stream = JsonNavigatorStream.FromPath(xmlPatient))
             {
                 Assert.IsFalse(stream.IsBundle);
                 Assert.AreEqual("Patient", stream.ResourceType);
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Support.Tests.Serialization
             // Try a random other xml file
             var jsonfile = Path.Combine(Directory.GetCurrentDirectory(), @"TestData\source-test\project.assets.json");
 
-            using (var stream = new JsonNavigatorStream(jsonfile))
+            using (var stream = JsonNavigatorStream.FromPath(jsonfile))
             {
                 Assert.IsNull(stream.ResourceType);
                 Assert.IsFalse(stream.MoveNext());
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Support.Tests.Serialization
 
             for (int i = 0; i < 250; i++)
             {
-                using (var stream = new JsonNavigatorStream(xmlBundle))
+                using (var stream = JsonNavigatorStream.FromPath(xmlBundle))
                 {
                     Assert.IsTrue(stream.MoveNext("http://hl7.org/fhir/StructureDefinition/SimpleQuantity"));
                 }
