@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Specification.Source
             settings = settings.Clone();
             settings.IncludeSubDirectories = false;
             _settings = settings;
-            _lazySource = new Lazy<DirectorySource>(createSource, true);
+            _lazySource = new Lazy<DirectorySource>(createSource);
         }
 
         /// <summary>Gets the location of the ZIP archive, as specified in the constructor.</summary>

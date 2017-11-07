@@ -21,7 +21,7 @@
 // Performance tests seem to indicate that locking does not add significant overhead to
 // simple single-threaded use.
 
-#define THREADSAFE
+//#define THREADSAFE
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
