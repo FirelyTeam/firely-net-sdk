@@ -73,18 +73,21 @@ namespace Hl7.Fhir.Utility
             }
         }
 
+        public static XName Name(this XObject node)
+        {
+            if (node is XElement xe) return xe.Name;
+            if (node is XAttribute xa) return xa.Name;
+
+            return null;
+        }
+
         public static string Value(this XObject node)
         {
-            if (node.NodeType == XmlNodeType.Attribute)
-            {
-                return ((XAttribute)node).Value;
-            }
-            else if (node.NodeType == XmlNodeType.Text)
-            {
-                return ((XText)node).Value;
-            }
-            else
-                return null;
+            if (node is XElement xe) return xe.Value;
+            if (node is XAttribute xa) return xa.Value;
+            if (node is XText xt) return xt.Value;
+
+            return null;
         }
     }
 }

@@ -7,6 +7,7 @@
 */
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Support.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -42,7 +43,7 @@ namespace Hl7.Fhir.Serialization
         private int _nameIndex;
         private string _parentPath;
 
-        public string Name => XName?.LocalName;
+        public string Name => XmlName?.LocalName;
 
 
         public string Type
@@ -54,37 +55,53 @@ namespace Hl7.Fhir.Serialization
                 // 2. We are on an element that contains a nested resource (e.g. <contained><Patient>...</Patient></contained>)
                 // 3. We are on an xhtml <div>
 
-                if (isXhtmlDiv(_current))
+                if (AtXhtmlDiv)
                     return "xhtml";
-                else if (_current is XElement element)
-                {
-                    if (isResourceNameElement(element.Name))
-                        return element.Name.LocalName;
-
-                    if (element.HasElements)
-                    {
-                        var candidate = element.Elements().First();
-                        if (isResourceNameElement(candidate.Name))
-                            return candidate.Name.LocalName;
-                    }
-                }
-
-                // Else, no type information available
-                return null;
+                else if (_current is XElement element && tryGetResourceName(element, out var name))
+                    return name;
+                else
+                    // Else, no type information available
+                    return null;
             }
         }
 
-
-        private static bool isResourceNameElement(XName elementName)
+        private static bool tryGetResourceName(XElement xe, out string name)
         {
-            return Char.IsUpper(elementName.LocalName, 0) && elementName.Namespace == XmlNs.XFHIR;
+            name = null;
+
+            if (isResourceName(xe.Name))
+            {
+                name = xe.Name.LocalName;
+                return true;
+            }
+
+            // We might still be on a resource if this elements contains a
+            // contained resource
+            if (xe.HasElements)
+            {
+                var candidate = xe.Elements().First();
+
+                if (isResourceName(candidate.Name))
+                {
+                    name = candidate.Name.LocalName;
+                    return true;
+                }
+            }
+
+            // Not on a resource, no name to be found
+            return false;
         }
+
+        public bool AtResource => _current is XElement xe && tryGetResourceName(xe, out var dummy);
+
+        private static bool isResourceName(XName elementName) =>
+                Char.IsUpper(elementName.LocalName, 0) && elementName.Namespace == XmlNs.XFHIR;
 
         public object Value
         {
             get
             {
-                if (isXhtmlDiv(_current))
+                if (AtXhtmlDiv)
                 {
                     return ((XElement)_current).ToString(SaveOptions.DisableFormatting);
                 }
@@ -102,10 +119,7 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        private static bool isXhtmlDiv(XObject node)
-        {
-            return (node as XElement)?.Name == XmlNs.XHTMLDIV;
-        }
+        public bool AtXhtmlDiv => (_current as XElement)?.Name == XmlNs.XHTMLDIV;
 
         public string Location
         {
@@ -148,8 +162,7 @@ namespace Hl7.Fhir.Serialization
         public bool MoveToFirstChild(string nameFilter = null)
         {
             // don't move into xhtml
-            if (isXhtmlDiv(_current))
-                return false;
+            if (AtXhtmlDiv) return false;
 
             var found = nextMatch(_current, nameFilter);
             if (found == null) return false;
@@ -158,7 +171,7 @@ namespace Hl7.Fhir.Serialization
 
             // Move the _current position to the newly found element,
             // unless that is the (xml) type name in a contained resource, in which case we move one level deeper
-            if (found is XElement xe && isResourceNameElement(xe.Name))
+            if (found is XElement xe && isResourceName(xe.Name))
                 _current = xe.FirstNode;
             else
                 _current = found;
@@ -187,23 +200,9 @@ namespace Hl7.Fhir.Serialization
         private bool isReservedAttribute(XAttribute attr) =>
             attr.Name == (XName)"xmlns" || attr.Name.NamespaceName == XmlNs.XMLNS || attr.Name == "value";
 
-        public override string ToString()
-        {
-            return _current.ToString();
-        }
+        public override string ToString() => _current.ToString();
 
-        internal XName XName
-        {
-            get
-            {
-                if (_current is XElement elem)
-                    return elem.Name;
-                else if (_current is XAttribute attr)
-                    return attr.Name;
-                else
-                    return null;
-            }
-        }
+        internal XName XmlName => _current.Name();
 
         public int LineNumber => (_current as IXmlLineInfo)?.LineNumber ?? -1;
 
@@ -218,10 +217,21 @@ namespace Hl7.Fhir.Serialization
                     new XmlSerializationDetails()
                     {
                         NodeType = _current.NodeType,
-                        Name = XName,
+                        Name = XmlName,
                         IsNamespaceDeclaration = (_current is XAttribute xa) ? xa.IsNamespaceDeclaration : false,
                         LineNumber = this.LineNumber,
                         LinePosition = this.LinePosition
+                    }
+                };
+            }
+            else if(type == typeof(BasicTypeInfo))
+            {
+                return new[]
+                {
+                    new BasicTypeInfo
+                    {
+                        IsResource = AtResource,
+                        Type = this.Type
                     }
                 };
             }
