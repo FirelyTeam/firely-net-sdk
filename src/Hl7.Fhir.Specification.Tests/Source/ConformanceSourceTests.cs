@@ -430,7 +430,7 @@ namespace Hl7.Fhir.Specification.Tests
             var ep = source.Summaries(ResourceType.ExpansionProfile); Assert.IsFalse(ep.Any());
             var ns = source.Summaries(ResourceType.NamingSystem); Assert.IsFalse(ns.Any());
 
-            var all = source.Summaries;
+            var all = source.ListSummaries();
 
             Assert.AreEqual(sd.Count() + sm.Count() + de.Count() + cf.Count() + md.Count() + od.Count() +
                         sp.Count() + cd.Count() + ig.Count() + cs.Count() + vs.Count() + cm.Count() +
@@ -466,7 +466,7 @@ namespace Hl7.Fhir.Specification.Tests
 #endif
                         var start = sw.Elapsed;
                         var resource = source.ResolveByCanonicalUri(uri);
-                        var summary = source.Summaries.ResolveByUri(uri);
+                        var summary = source.ListSummaries().ResolveByUri(uri);
                         var stop = sw.Elapsed;
                         results[idx] = (resource, summary, threadId, start, stop);
                     }

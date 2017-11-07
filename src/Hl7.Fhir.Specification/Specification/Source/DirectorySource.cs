@@ -443,16 +443,14 @@ namespace Hl7.Fhir.Specification.Source
         #region IConformanceSource
 
         /// <summary>Returns a list of summary information for all FHIR artifacts in the specified content directory.</summary>
-        public IEnumerable<ArtifactSummary> Summaries
+        public IEnumerable<ArtifactSummary> ListSummaries() 
             => GetSummaries().Select(s => s); // Prevent caller from modifying internal list
 
         /// <summary>List all resource uris, optionally filtered by type.</summary>
         /// <param name="filter">A <see cref="ResourceType"/> enum value.</param>
         /// <returns>A <see cref="IEnumerable{T}"/> sequence of uri strings.</returns>
         public IEnumerable<string> ListResourceUris(ResourceType? filter = null)
-        {
-            return Summaries.OfResourceType(filter).Select(dsi => dsi.ResourceUri);
-        }
+            => ListSummaries().OfResourceType(filter).Select(dsi => dsi.ResourceUri);
 
         /// <summary>
         /// Find a <see cref="CodeSystem"/> resource by a <see cref="ValueSet"/> canonical url that contains all codes from that codesystem.
@@ -814,30 +812,33 @@ namespace Hl7.Fhir.Specification.Source
             // File path of the containing resource file (could be a Bundle)
             var path = info.Origin;
 
-            var navStream = DefaultNavigatorStreamFactory.Create(path);
-
-            // TODO: Handle exceptions & null return values
-            // e.g. file may have been deleted/renamed since last scan
-
-            // Advance stream to the target resource (e.g. specific Bundle entry)
-            if (navStream != null && navStream.Seek(info.Position))
+            using (var navStream = DefaultNavigatorStreamFactory.Create(path))
             {
-                // Create navigator for the target resource
-                var nav = navStream.Current;
-                if (nav != null)
+
+                // TODO: Handle exceptions & null return values
+                // e.g. file may have been deleted/renamed since last scan
+
+                // Advance stream to the target resource (e.g. specific Bundle entry)
+                if (navStream != null && navStream.Seek(info.Position))
                 {
-                    // Parse target resource from navigator
-                    var parser = new BaseFhirParser();
-                    var result = parser.Parse<T>(nav);
-                    if (result != null)
+                    // Create navigator for the target resource
+                    var nav = navStream.Current;
+                    if (nav != null)
                     {
-                        // Add origin annotation
-                        result.SetOrigin(info.Origin);
-                        return result;
+                        // Parse target resource from navigator
+                        var parser = new BaseFhirParser();
+                        var result = parser.Parse<T>(nav);
+                        if (result != null)
+                        {
+                            // Add origin annotation
+                            result.SetOrigin(info.Origin);
+                            return result;
+                        }
                     }
                 }
+
+                return null;
             }
-            return null;
         }
 
         #endregion

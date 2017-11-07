@@ -134,7 +134,8 @@ namespace Hl7.Fhir.Utility
             JsonReader reader = new JsonTextReader(new StreamReader(s))
             {
                 DateParseHandling = DateParseHandling.None,
-                FloatParseHandling = FloatParseHandling.Decimal
+                FloatParseHandling = FloatParseHandling.Decimal,
+                CloseInput = false      // Unbelievable, the default is 'true' (and is false for the XmlReaderSettings :-()
             };
 
             return reader;

@@ -17,7 +17,7 @@ namespace Hl7.Fhir.Specification.Source
     public interface IConformanceSource : IResourceResolver
     {
         /// <summary>Returns a list of summary information for all the FHIR artifacts provided by the source.</summary>
-        IEnumerable<ArtifactSummary> Summaries { get; }
+        IEnumerable<ArtifactSummary> ListSummaries();
 
         /// <summary>List all resource uris for the resources managed by the source, optionally filtered by type.</summary>
         /// <param name="filter">A <see cref="ResourceType"/> enum value.</param>
@@ -53,11 +53,11 @@ namespace Hl7.Fhir.Specification.Source
     {
         /// <summary>Returns a list of <see cref="ArtifactSummary"/> instances with error information.</summary>
         /// <returns>A <see cref="List{T}"/> of <see cref="ArtifactSummary"/> instances.</returns>
-        public static IEnumerable<ArtifactSummary> Errors(this IConformanceSource source) => source.Summaries.Errors();
+        public static IEnumerable<ArtifactSummary> Errors(this IConformanceSource source) => source.ListSummaries().Errors();
 
         /// <summary>Returns a list of <see cref="ArtifactSummary"/> instances for resources of the specified <see cref="ResourceType"/>.</summary>
         /// <returns>A <see cref="List{T}"/> of <see cref="ArtifactSummary"/> instances.</returns>
-        public static IEnumerable<ArtifactSummary> Summaries(this IConformanceSource source, ResourceType resourceType) => source.Summaries.OfResourceType(resourceType);
+        public static IEnumerable<ArtifactSummary> Summaries(this IConformanceSource source, ResourceType resourceType) => source.ListSummaries().OfResourceType(resourceType);
     }
 
 }
