@@ -6,19 +6,24 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source;
-using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification.Source.Summary;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+// Use alias to avoid conflict with Hl7.Fhir.Model.Task
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
+    // [WMR 20171016] Renamed from: ArtifactResolverTests
+
     [TestClass]
-    public class ArtifactResolverTests
+    public class ConformanceSourceTests
     {
         [ClassInitialize]
         public static void SetupSource(TestContext t)
@@ -200,8 +205,8 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(5, res.Count);
             Assert.IsTrue(res.Any(p => p.EndsWith("bit.xml")));
             Assert.IsTrue(res.Any(p => p.EndsWith("bit.txt")));
-            Assert.IsFalse(res.Any(p=> p.EndsWith("bit.json")));
-            Assert.IsTrue(res.Any(p=>p.EndsWith("yadi.json")));
+            Assert.IsFalse(res.Any(p => p.EndsWith("bit.json")));
+            Assert.IsTrue(res.Any(p => p.EndsWith("yadi.json")));
 
             res = DirectorySource.ResolveDuplicateFilenames(paths, DirectorySource.DuplicateFilenameResolution.PreferJson);
             Assert.AreEqual(5, res.Count);
@@ -323,11 +328,15 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestJsonBundleRetrieval()
         {
-            var jsonSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData"), includeSubdirectories: false)
-            {
-                Mask = "*.json",
-                Includes = new[] { "profiles-types.json" }
-            };
+            //var jsonSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData"), includeSubdirectories: false)
+            var jsonSource = new DirectorySource(
+                Path.Combine(DirectorySource.SpecificationDirectory, "TestData"),
+                new DirectorySourceSettings()
+                {
+                    Mask = "*.json",
+                    Includes = new[] { "profiles-types.json" },
+                    IncludeSubDirectories = false
+                });
 
             var humanName = jsonSource.FindStructureDefinitionForCoreType(FHIRAllTypes.HumanName);
             Assert.IsNotNull(humanName);
@@ -336,41 +345,194 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestSourceSpeedTest()
         {
-            var jsonSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData"), includeSubdirectories: false)
-            {
-                Mask = "*.json",
-                Includes = new[] { "profiles-types.json" }
-            };
+            // var jsonSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData"), includeSubdirectories: false)
+            var jsonSource = new DirectorySource(
+                Path.Combine(DirectorySource.SpecificationDirectory, "TestData"),
+                new DirectorySourceSettings()
+                {
+                    Mask = "*.json",
+                    Includes = new[] { "profiles-types.json" },
+                    IncludeSubDirectories = false
+                });
 
             Assert.IsNotNull(jsonSource.LoadArtifactByName("profiles-types.json"));
 
-            var xmlSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), includeSubdirectories: false)
-            {
-                Mask = "*.xml",
-                Includes = new[] { "profiles-types.xml" }
-            };
+            // var xmlSource = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), includeSubdirectories: false)
+            var xmlSource = new DirectorySource(
+                Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"),
+                new DirectorySourceSettings()
+                {
+                    Mask = "*.xml",
+                    Includes = new[] { "profiles-types.xml" },
+                    IncludeSubDirectories = false
+                });
 
             Assert.IsNotNull(xmlSource.LoadArtifactByName("profiles-types.xml"));
 
-            var duration = runTest(jsonSource);
+            // var xmlSourceLarge = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), includeSubdirectories: true)
+            var xmlSourceLarge = new DirectorySource(
+                Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"),
+                new DirectorySourceSettings()
+                {
+                    Mask = "*.xml",
+                    IncludeSubDirectories = true
+                });
+
+            Assert.IsNotNull(xmlSourceLarge.LoadArtifactByName("profiles-types.xml"));
+
+            (var duration, var count) = runTest(jsonSource);
+            Debug.WriteLine($"jsonSource: {count} resources, duration {duration} ms");
             Assert.IsTrue(duration < 1000);
 
-            duration = runTest(xmlSource);
+            (duration, count) = runTest(xmlSource);
+            Debug.WriteLine($"xmlSource: {count} resources, duration {duration} ms");
             Assert.IsTrue(duration < 500);
 
-            long runTest(DirectorySource s)
+            (duration, count) = runTest(xmlSourceLarge);
+            Debug.WriteLine($"xmlSourceLarge: {count} resources, duration {duration} ms");
+            Assert.IsTrue(duration < 10000);
+
+            (long duration, int count) runTest(DirectorySource s)
             {
                 var sw = new Stopwatch();
                 sw.Start();
 
+                int cnt = 0;
                 for (var repeat = 0; repeat < 10; repeat++)
                 {
                     s.Refresh();  // force reload of whole file
-                    s.ListResourceUris().Count();
+                    cnt = s.ListResourceUris().Count();
                 }
 
                 sw.Stop();
-                return sw.ElapsedMilliseconds;
+                return (sw.ElapsedMilliseconds, cnt);
+            }
+        }
+
+        [TestMethod]
+        public void ListSummaries()
+        {
+            var source = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), includeSubdirectories: true);
+
+            var sd = source.Summaries(ResourceType.StructureDefinition); Assert.IsTrue(sd.Any());
+            var sm = source.Summaries(ResourceType.StructureMap); Assert.IsTrue(sd.Any());
+            var de = source.Summaries(ResourceType.DataElement); Assert.IsFalse(de.Any());
+            var cf = source.Summaries(ResourceType.CapabilityStatement); Assert.IsTrue(cf.Any());
+            var md = source.Summaries(ResourceType.MessageDefinition); Assert.IsFalse(md.Any());
+            var od = source.Summaries(ResourceType.OperationDefinition); Assert.IsTrue(od.Any());
+            var sp = source.Summaries(ResourceType.SearchParameter); Assert.IsFalse(sp.Any());
+            var cd = source.Summaries(ResourceType.CompartmentDefinition); Assert.IsFalse(md.Any());
+            var ig = source.Summaries(ResourceType.ImplementationGuide); Assert.IsFalse(ig.Any());
+
+            var cs = source.Summaries(ResourceType.CodeSystem); Assert.IsFalse(cs.Any());
+            var vs = source.Summaries(ResourceType.ValueSet); Assert.IsTrue(vs.Any());
+            var cm = source.Summaries(ResourceType.ConceptMap); Assert.IsFalse(cm.Any());
+            var ep = source.Summaries(ResourceType.ExpansionProfile); Assert.IsFalse(ep.Any());
+            var ns = source.Summaries(ResourceType.NamingSystem); Assert.IsFalse(ns.Any());
+
+            var all = source.Summaries;
+
+            Assert.AreEqual(sd.Count() + sm.Count() + de.Count() + cf.Count() + md.Count() + od.Count() +
+                        sp.Count() + cd.Count() + ig.Count() + cs.Count() + vs.Count() + cm.Count() +
+                        ep.Count() + ns.Count(), all.Count());
+        }
+
+        [TestMethod]
+        public async Tasks.Task TestThreadSafety()
+        {
+            // Verify thread safety by resolving same uri simultaneously from different threads
+            // DirectorySource should synchronize access and only call prepare once.
+
+            const int threadCount = 25;
+            const string uri = @"http://example.org/fhir/StructureDefinition/human-group";
+
+            var source = new DirectorySource(Path.Combine(DirectorySource.SpecificationDirectory, "TestData", "snapshot-test"), includeSubdirectories: true);
+
+            var tasks = new Tasks.Task[threadCount];
+            var results = new(Resource resource, ArtifactSummary summary, int threadId, TimeSpan start, TimeSpan stop)[threadCount];
+
+            var sw = new Stopwatch();
+            sw.Start();
+            for (int i = 0; i < threadCount; i++)
+            {
+                var idx = i;
+                tasks[i] = Tasks.Task.Run(
+                    () =>
+                    {
+#if DOTNETFW
+                        var threadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
+#else
+                        const int threadId = 0;
+#endif
+                        var start = sw.Elapsed;
+                        var resource = source.ResolveByCanonicalUri(uri);
+                        var summary = source.Summaries.ResolveByUri(uri);
+                        var stop = sw.Elapsed;
+                        results[idx] = (resource, summary, threadId, start, stop);
+                    }
+                );
+            }
+
+            await Tasks.Task.WhenAll(tasks);
+            sw.Stop();
+
+            var first = results[0];
+            for (int i = 0; i < threadCount; i++)
+            {
+                var result = results[i];
+                var duration = result.stop.Subtract(result.start);
+                Debug.WriteLine($"{i:0#} Thread: {result.threadId:00#} | Start: {result.start.TotalMilliseconds:0000.00} | Stop: {result.stop.TotalMilliseconds:0000.00} | Duration: {duration.TotalMilliseconds:0000.00}");
+                Assert.IsNotNull(result.resource);
+                Assert.IsNotNull(result.summary);
+                // Verify that all threads return the same summary instances
+                Assert.AreSame(first.summary, result.summary);
+            }
+        }
+
+        [TestMethod]
+        public void TestRefresh()
+        {
+            // Create a temporary folder with a single artifact file
+            const string srcFileName = "TestPatient.xml";
+            var srcFilePath = Path.Combine(DirectorySource.SpecificationDirectory, "TestData", srcFileName);
+            var tmpFolderPath = Path.Combine(DirectorySource.SpecificationDirectory, "ConformanceSourceTestData");
+            try
+            {
+                Directory.CreateDirectory(tmpFolderPath);
+                var tmpFilePath = Path.Combine(tmpFolderPath, srcFileName);
+                File.Copy(srcFilePath, tmpFilePath);
+
+                // Initialize source and verify index
+                var source = new DirectorySource(tmpFolderPath);
+                var fileNames = source.ListArtifactNames().ToList();
+                Assert.AreEqual(1, fileNames.Count);
+                Assert.AreEqual(srcFileName, fileNames[0]);
+
+                // Rename file and refresh source
+                const string newFileName = "New" + srcFileName;
+                var newFilePath = Path.Combine(tmpFolderPath, newFileName);
+                File.Move(tmpFilePath, newFilePath);
+                source.Refresh(tmpFilePath, newFilePath);
+                fileNames = source.ListArtifactNames().ToList();
+                Assert.AreEqual(1, fileNames.Count);
+                Assert.AreEqual(newFileName, fileNames[0]);
+
+                // Delete file and refresh source
+                File.Delete(newFilePath);
+                source.Refresh(newFilePath);
+                fileNames = source.ListArtifactNames().ToList();
+                Assert.AreEqual(0, fileNames.Count);
+
+                // Recreate file and refresh source
+                File.Copy(srcFilePath, tmpFilePath);
+                source.Refresh(tmpFilePath);
+                fileNames = source.ListArtifactNames().ToList();
+                Assert.AreEqual(1, fileNames.Count);
+                Assert.AreEqual(srcFileName, fileNames[0]);
+            }
+            finally
+            {
+                Directory.Delete(tmpFolderPath, true);
             }
         }
     }

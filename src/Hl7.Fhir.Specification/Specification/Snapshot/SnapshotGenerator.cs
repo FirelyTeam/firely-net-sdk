@@ -66,8 +66,13 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <param name="settings">Configuration settings that control the behavior of the snapshot generator.</param>
         public SnapshotGenerator(IResourceResolver resolver, SnapshotGeneratorSettings settings) // : this()
         {
-            _resolver = resolver ?? throw Error.ArgumentNull(nameof(resolver));
-            _settings = settings ?? throw Error.ArgumentNull(nameof(settings));
+            if (resolver == null) { throw Error.ArgumentNull(nameof(resolver)); }
+            if (settings == null) { throw Error.ArgumentNull(nameof(settings)); }
+            _resolver = resolver;
+
+            // [WMR 20171023] Always copy the specified settings, to prevent shared state
+            // Especially important to prevent corruption of the global SnapshotGeneratorSettings.Default instance.
+            _settings = new SnapshotGeneratorSettings(settings);
         }
 
         /// <summary>

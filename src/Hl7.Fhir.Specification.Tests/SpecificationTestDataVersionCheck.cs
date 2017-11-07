@@ -1,13 +1,9 @@
 ﻿using Hl7.Fhir.Model;
-using Hl7.Fhir.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace Hl7.Fhir.Specification.Tests

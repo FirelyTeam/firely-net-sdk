@@ -1,5 +1,6 @@
 ﻿using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Specification.Source.Summary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +52,8 @@ namespace Hl7.Fhir.Specification.Tests
 
         public IEnumerable<string> ListResourceUris(ResourceType? filter = default(ResourceType?))
             => _resources.Select(g => g.Key);
+
+        public IEnumerable<ArtifactSummary> Summaries => throw new NotImplementedException();
 
         #endregion
     }
