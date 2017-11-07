@@ -437,7 +437,7 @@ namespace Hl7.Fhir.Specification.Tests
                         ep.Count() + ns.Count(), all.Count());
         }
 
-        [TestMethod,Ignore]
+        [TestMethod]
         public async Tasks.Task TestThreadSafety()
         {
             // Verify thread safety by resolving same uri simultaneously from different threads
