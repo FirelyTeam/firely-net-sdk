@@ -23,6 +23,13 @@ namespace Hl7.Fhir.Specification.Tests
     [TestClass]
     public class ArtifactSourceTests
     {
+        [ClassInitialize]
+        public static void SetupSource(TestContext t)
+        {
+            source = ZipSource.CreateValidationSource();
+        }
+
+
         [TestMethod]
         public void ZipCacherShouldCache()
         {
