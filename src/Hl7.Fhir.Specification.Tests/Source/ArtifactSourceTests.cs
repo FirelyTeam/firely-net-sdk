@@ -168,16 +168,18 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(names.Contains("TestPatient.xml"));
             Assert.IsTrue(names.Contains("nonfhir.xml"));
             Assert.IsTrue(names.Contains("invalid.xml"));
-            Assert.AreEqual(0, fa.Errors.Length);
+            //[WMR 20171020] TODO: Use ArtifactSummary.Error
+            //Assert.AreEqual(0, fa.Errors.Length);
 
             // Call a method on the IConformanceSource interface to trigger prepareResources
             var sd = fa.FindStructureDefinition("http://hl7.org/fhir/StructureDefinition/qicore-adverseevent-discoveryDateTime");
             Assert.IsNotNull(sd);
 
-            Assert.AreEqual(1, fa.Errors.Length);
-            var error = fa.Errors[0];
-            Debug.Print($"{error.FileName} : {error.Error.Message}");
-            Assert.AreEqual("invalid.xml", Path.GetFileName(error.FileName));
+            var errors = fa.Errors().ToList();
+            Assert.AreEqual(1, errors.Count);
+            var error = errors[0];
+            Debug.Print($"{error.Origin} : {error.Error.Message}");
+            Assert.AreEqual("invalid.xml", Path.GetFileName(error.Origin));
         }
 
         [TestMethod]
@@ -192,7 +194,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void ReadsSubdirectories()
         {
             var testPath = prepareExampleDirectory(out int numFiles);
-            var fa = new DirectorySource(testPath, includeSubdirectories: true);
+            var fa = new DirectorySource(testPath, new DirectorySourceSettings() {  IncludeSubDirectories = true });
             var names = fa.ListArtifactNames();
 
             Assert.AreEqual(numFiles, names.Count());
@@ -336,7 +338,7 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         // Note: we still have write permissions...
 
-                        var dirSource = new DirectorySource(testPath, includeSubdirectories: true);
+                        var dirSource = new DirectorySource(testPath, new DirectorySourceSettings() { IncludeSubDirectories = true });
 
                         // [WMR 20170823] Test ListArtifactNames => prepareFiles()
                         var names = dirSource.ListArtifactNames();

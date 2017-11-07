@@ -4580,32 +4580,27 @@ namespace Hl7.Fhir.Specification.Tests
             Base = ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.QuestionnaireResponse),
             Name = "QuestionnaireResponseWithSlice",
             Url = @"http://example.org/fhir/StructureDefinition/QuestionnaireResponseWithSlice",
-            //Derivation = StructureDefinition.TypeDerivationRule.Constraint,
             Kind = StructureDefinition.StructureDefinitionKind.Resource,
             Differential = new StructureDefinition.DifferentialComponent()
             {
                 Element = new List<ElementDefinition>()
                 {
-                    new ElementDefinition("QuestionnaireResponse")
-                    {
-                    },
-
-                    new ElementDefinition("QuestionnaireResponse.group.group")
+                    new ElementDefinition("QuestionnaireResponse.group.question")
                     {
                         Slicing = new ElementDefinition.SlicingComponent()
                         {
-                            Discriminator = new string[] { "text" }
+                            Discriminator = new List<string>() { "text" }
                         }
                     },
-                    new ElementDefinition("QuestionnaireResponse.group.group")
+                    new ElementDefinition("QuestionnaireResponse.group.question")
                     {
                         Name = "Q1"
                     },
-                    new ElementDefinition("QuestionnaireResponse.group.group")
+                    new ElementDefinition("QuestionnaireResponse.group.question")
                     {
                         Name = "Q2"
                     },
-                    new ElementDefinition("QuestionnaireResponse.group.group.linkid")
+                    new ElementDefinition("QuestionnaireResponse.group.question.linkid")
                     {
                         Max = "0"
                     },
@@ -4641,19 +4636,19 @@ namespace Hl7.Fhir.Specification.Tests
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
             StructureDefinition expanded = null;
-           // _generator.BeforeExpandElement += beforeExpandElementHandler_DEBUG;
+            // _generator.BeforeExpandElement += beforeExpandElementHandler_DEBUG;
             try
             {
                 generateSnapshotAndCompare(sd, out expanded);
             }
             finally
             {
-          //      _generator.BeforeExpandElement -= beforeExpandElementHandler_DEBUG;
+                // _generator.BeforeExpandElement -= beforeExpandElementHandler_DEBUG;
             }
 
             dumpOutcome(_generator.Outcome);
             Assert.IsTrue(expanded.HasSnapshot);
-         //   dumpElements(expanded.Snapshot.Element);
+            // dumpElements(expanded.Snapshot.Element);
 
             // Verify the inherited example binding on QuestionnaireResponse.item.answer.value[x]
             var answerValues = expanded.Snapshot.Element.Where(e => e.Path == "QuestionnaireResponse.group.group.question.answer.value[x]").ToList();
@@ -5015,6 +5010,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(ann);
             Assert.IsNotNull(ann.BaseElementDefinition);
             Assert.AreEqual(0, ann.BaseElementDefinition.Min);
+            // dumpElements(expanded.Snapshot.Element);
         }
 
     }

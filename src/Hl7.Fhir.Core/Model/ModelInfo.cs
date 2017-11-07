@@ -110,8 +110,7 @@ namespace Hl7.Fhir.Model
             else
                 return null;
         }
-
-#else
+#elif false
         // [WMR 20160421] NEW - Improved & optimized
         // 1. Convert from/to FHIR type names as defined by EnumLiteral attributes on FHIRDefinedType enum members
         // 2. Cache lookup tables, to optimize runtime reflection
@@ -152,8 +151,40 @@ namespace Hl7.Fhir.Model
             var values = Enum.GetValues(typeof(FHIRDefinedType)).OfType<FHIRDefinedType>();
             return values.ToDictionary(type => type.GetLiteral());
         }
+#else
+        // [WMR 2017-10-25] Remove Lazy initialization
+        // These methods are used frequently throughout the API (and by clients) and initialization cost is low
 
+        private static readonly Dictionary<string, FHIRDefinedType> _fhirTypeNameToFhirType
+            = Enum.GetValues(typeof(FHIRDefinedType)).OfType<FHIRDefinedType>().ToDictionary(type => type.GetLiteral());
+
+        private static readonly Dictionary<FHIRDefinedType, string> _fhirTypeToFhirTypeName
+            = _fhirTypeNameToFhirType.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
+
+        /// <summary>Returns the FHIR type name represented by the specified <see cref="FHIRDefinedType"/> enum value, or <c>null</c>.</summary>
+        public static FHIRDefinedType? FhirTypeNameToFhirType(string typeName)
+            => _fhirTypeNameToFhirType.TryGetValue(typeName, out var result) ? (FHIRDefinedType?)result : null;
+
+        /// <summary>Returns the <see cref="FHIRDefinedType"/> enum value that represents the specified FHIR type name, or <c>null</c>.</summary>
+        public static string FhirTypeToFhirTypeName(FHIRDefinedType type)
+            => _fhirTypeToFhirTypeName.TryGetValue(type, out var result) ? result : null;
 #endif
+
+        // [WMR 20171025] NEW: Conversion methods for ResourceType
+
+        private static readonly Dictionary<string, ResourceType> _fhirTypeNameToResourceType
+            = Enum.GetValues(typeof(ResourceType)).OfType<ResourceType>().ToDictionary(type => type.GetLiteral());
+
+        private static readonly Dictionary<ResourceType, string> _resourceTypeToFhirTypeName
+            = _fhirTypeNameToResourceType.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
+
+        /// <summary>Returns the FHIR type name represented by the specified <see cref="ResourceType"/> enum value, or <c>null</c>.</summary>
+        public static ResourceType? FhirTypeNameToResourceType(string typeName)
+            => _fhirTypeNameToResourceType.TryGetValue(typeName, out var result) ? (ResourceType?)result : null;
+
+        /// <summary>Returns the <see cref="ResourceType"/> enum value that represents the specified FHIR type name, or <c>null</c>.</summary>
+        public static string ResourceTypeToFhirTypeName(ResourceType type)
+            => _resourceTypeToFhirTypeName.TryGetValue(type, out var result) ? result : null;
 
         /// <summary>Returns the C# <see cref="Type"/> that represents the FHIR type with the specified name, or <c>null</c>.</summary>
         public static Type GetTypeForFhirType(string name)
@@ -341,30 +372,8 @@ namespace Hl7.Fhir.Model
                 return false;
         }
 
-        /// <summary>
-        /// Determines if the specified <see cref="FHIRDefinedType"/> value represents a FHIR conformance resource type,
-        /// i.e. if it equals one of the following values:
-        /// <list type="bullet">
-        /// <item>FHIRDefinedType.Conformance</item>
-        /// <item>FHIRDefinedType.StructureDefinition</item>
-        /// <item>FHIRDefinedType.ValueSet</item>
-        /// <item>FHIRDefinedType.ConceptMap</item>
-        /// <item>FHIRDefinedType.DataElement</item>
-        /// <item>FHIRDefinedType.OperationDefinition</item>
-        /// <item>FHIRDefinedType.SearchParameter</item>
-        /// <item>FHIRDefinedType.NamingSystem</item>
-        /// <item>FHIRDefinedType.ImplementationGuide</item>
-        /// <item>FHIRDefinedType.TestScript</item>
-        /// </list>
-        /// </summary>
-        public static bool IsConformanceResource(FHIRDefinedType type)
-        {
-            return ConformanceResources.Contains(type);
-        }
-
-
-
-        public static readonly FHIRDefinedType[] ConformanceResources = 
+        /// <summary>Subset of <see cref="FHIRDefinedType"/> enumeration values for conformance resources.</summary>
+        public static readonly FHIRDefinedType[] ConformanceResources =
         {
             FHIRDefinedType.Conformance,
             FHIRDefinedType.StructureDefinition,
@@ -377,6 +386,33 @@ namespace Hl7.Fhir.Model
             FHIRDefinedType.ImplementationGuide,
             FHIRDefinedType.TestScript
         };
+
+        /// <summary>Determines if the specified <see cref="FHIRDefinedType"/> value represents a FHIR conformance resource.</summary>
+        public static bool IsConformanceResource(FHIRDefinedType type) => ConformanceResources.Contains(type);
+
+        /// <summary>Determines if the specified <see cref="FHIRDefinedType"/> value represents a FHIR conformance resource.</summary>
+        public static bool IsConformanceResource(FHIRDefinedType? type) => type.HasValue && ConformanceResources.Contains(type.Value);
+
+        /// <summary>Subset of <see cref="ResourceType"/> enumeration values for conformance resources.</summary>
+        public static readonly ResourceType[] ConformanceResourceTypes =
+        {
+            ResourceType.Conformance,
+            ResourceType.StructureDefinition,
+            ResourceType.ValueSet,
+            ResourceType.ConceptMap,
+            ResourceType.DataElement,
+            ResourceType.OperationDefinition,
+            ResourceType.SearchParameter,
+            ResourceType.NamingSystem,
+            ResourceType.ImplementationGuide,
+            ResourceType.TestScript
+        };
+
+        /// <summary>Determines if the specified <see cref="ResourceType"/> value represents a FHIR conformance resource.</summary>
+        public static bool IsConformanceResource(ResourceType type) => ConformanceResourceTypes.Contains(type);
+
+        /// <summary>Determines if the specified <see cref="ResourceType"/> value represents a FHIR conformance resource.</summary>
+        public static bool IsConformanceResource(ResourceType? type) => type.HasValue && ConformanceResourceTypes.Contains(type.Value);
 
         /// <summary>Determines if the specified value represents the name of a core Resource, Datatype or primitive.</summary>
         public static bool IsCoreModelType(string name) => FhirTypeToCsType.ContainsKey(name);
