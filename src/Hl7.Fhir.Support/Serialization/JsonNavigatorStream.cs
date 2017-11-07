@@ -68,17 +68,22 @@ namespace Hl7.Fhir.Serialization
 
         public void Dispose() => Dispose(true);
 
+        private void disposeReader()
+        {
+            if (_reader != null)
+            {
+                ((IDisposable)_reader).Dispose();
+                _reader = null;
+            }
+        }
+
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposed)
             {
                 if (disposing)
                 {
-                    if (_reader != null)
-                    {
-                        ((IDisposable)_reader).Dispose();
-                        _reader = null;
-                    }
+                    disposeReader();
 
                     if (_stream != null && _disposeStream)
                     {
@@ -112,6 +117,8 @@ namespace Hl7.Fhir.Serialization
             throwIfDisposed();
 
             _stream.Seek(0, SeekOrigin.Begin);
+
+            disposeReader();
             _reader = SerializationUtil.JsonReaderFromStream(_stream);
 
             ResourceType = scanForResourceType(_reader);

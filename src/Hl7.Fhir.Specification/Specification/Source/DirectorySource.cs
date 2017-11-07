@@ -812,30 +812,33 @@ namespace Hl7.Fhir.Specification.Source
             // File path of the containing resource file (could be a Bundle)
             var path = info.Origin;
 
-            var navStream = DefaultNavigatorStreamFactory.Create(path);
-
-            // TODO: Handle exceptions & null return values
-            // e.g. file may have been deleted/renamed since last scan
-
-            // Advance stream to the target resource (e.g. specific Bundle entry)
-            if (navStream != null && navStream.Seek(info.Position))
+            using (var navStream = DefaultNavigatorStreamFactory.Create(path))
             {
-                // Create navigator for the target resource
-                var nav = navStream.Current;
-                if (nav != null)
+
+                // TODO: Handle exceptions & null return values
+                // e.g. file may have been deleted/renamed since last scan
+
+                // Advance stream to the target resource (e.g. specific Bundle entry)
+                if (navStream != null && navStream.Seek(info.Position))
                 {
-                    // Parse target resource from navigator
-                    var parser = new BaseFhirParser();
-                    var result = parser.Parse<T>(nav);
-                    if (result != null)
+                    // Create navigator for the target resource
+                    var nav = navStream.Current;
+                    if (nav != null)
                     {
-                        // Add origin annotation
-                        result.SetOrigin(info.Origin);
-                        return result;
+                        // Parse target resource from navigator
+                        var parser = new BaseFhirParser();
+                        var result = parser.Parse<T>(nav);
+                        if (result != null)
+                        {
+                            // Add origin annotation
+                            result.SetOrigin(info.Origin);
+                            return result;
+                        }
                     }
                 }
+
+                return null;
             }
-            return null;
         }
 
         #endregion
