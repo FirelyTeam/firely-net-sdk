@@ -87,22 +87,28 @@ namespace Hl7.Fhir.Specification.Source.Summary
         /// <remarks>If <c>true</c>, then the <see cref="Error"/> property returns detailed error information.</remarks>
         public bool IsFaulted => Error != null; // cf. Task
 
-        /// <summary>The original location of the associated artifact.</summary>
+        /// <summary>Gets the original location of the associated artifact.</summary>
         public string Origin => properties.GetOrigin();
 
+        /// <summary>Gets the size of the original artifact file.</summary>
+        public long FileSize => properties.GetFileSize();
+
+        /// <summary>Gets the last modified date of the original artifact file.</summary>
+        public DateTime LastModified => properties.GetLastModified();
+
         /// <summary>
-        /// Returns an opaque value that represents the position of the artifact within the container.
+        /// Gets an opaque value that represents the position of the artifact within the container.
         /// Allows the <see cref="DirectorySource"/> to retrieve and deserialize the associated artifact.
         /// </summary>
         public string Position => properties.GetPosition();
 
-        /// <summary>Returns the type name of the resource.</summary>
+        /// <summary>Gets the type name of the resource.</summary>
         public string ResourceTypeName => properties.GetTypeName();
 
-        /// <summary>Returns the type of the resource, parsed from the original <see cref="ResourceTypeName"/> value, or <c>null</c>.</summary>
+        /// <summary>Gets the type of the resource, parsed from the original <see cref="ResourceTypeName"/> value, or <c>null</c>.</summary>
         public ResourceType? ResourceType { get; }
 
-        /// <summary>Returns the resource uri.</summary>
+        /// <summary>Gets the resource uri.</summary>
         /// <remarks>The <see cref="DirectorySource"/> generates virtual uri values for resources that are not bundle entries.</remarks>
         public string ResourceUri => properties.GetResourceUri();
 

@@ -29,6 +29,8 @@ namespace Hl7.Fhir.Specification.Source.Summary
     public static class ArtifactSummaryProperties
     {
         public const string OriginKey = "Origin";
+        public const string FileSizeKey = "Size";
+        public const string LastModifiedKey = "LastModified";
         public const string PositionKey = "Position";
         public const string TypeNameKey = "TypeName";
         public const string ResourceUriKey = "Uri";
@@ -56,6 +58,24 @@ namespace Hl7.Fhir.Specification.Source.Summary
         internal static void SetOrigin(this ArtifactSummaryPropertyBag properties, string value)
         {
             properties[OriginKey] = value;
+        }
+
+        /// <summary>Get the Size property value from the specified artifact summary property bag, if available.</summary>
+        public static long GetFileSize(this IArtifactSummaryPropertyBag properties)
+            => (long)properties.GetValueOrDefault(FileSizeKey);
+
+        internal static void SetFileSize(this ArtifactSummaryPropertyBag properties, long value)
+        {
+            properties[FileSizeKey] = value;
+        }
+
+        /// <summary>Get the LastModified property value from the specified artifact summary property bag, if available.</summary>
+        public static DateTime GetLastModified(this IArtifactSummaryPropertyBag properties)
+            => (DateTime)properties.GetValueOrDefault(LastModifiedKey);
+
+        internal static void SetLastModified(this ArtifactSummaryPropertyBag properties, DateTime value)
+        {
+            properties[LastModifiedKey] = value;
         }
 
         /// <summary>Get the Position property value from the specified artifact summary property bag, if available.</summary>
