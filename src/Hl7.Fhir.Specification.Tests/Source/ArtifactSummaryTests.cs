@@ -5,6 +5,7 @@ using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 
 namespace Hl7.Fhir.Specification.Tests
@@ -94,6 +95,11 @@ namespace Hl7.Fhir.Specification.Tests
 
                 // Common properties
                 Assert.AreEqual(path, summary.Origin);
+
+                var fi = new FileInfo(path);
+                Assert.AreEqual(fi.Length, summary.FileSize);
+                Assert.AreEqual(fi.LastWriteTimeUtc, summary.LastModified);
+
                 Assert.AreEqual(ResourceType.StructureDefinition.GetLiteral(), summary.ResourceTypeName);
                 Assert.IsTrue(summary.ResourceType == ResourceType.StructureDefinition);
 
@@ -123,6 +129,11 @@ namespace Hl7.Fhir.Specification.Tests
             var summary = summaries[0];
             Assert.IsFalse(summary.IsFaulted);
             Assert.AreEqual(path, summary.Origin);
+
+            var fi = new FileInfo(path);
+            Assert.AreEqual(fi.Length, summary.FileSize);
+            Assert.AreEqual(fi.LastWriteTimeUtc, summary.LastModified);
+
             return summary;
         }
     }

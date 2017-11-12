@@ -12,6 +12,7 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Serialization;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Hl7.Fhir.Specification.Source.Summary
 {
@@ -93,6 +94,9 @@ namespace Hl7.Fhir.Specification.Source.Summary
                 // Call default navigator factory
                 navStream = DefaultNavigatorStreamFactory.Create(origin);
 
+                // Get some source file properties
+                var fi = new FileInfo(origin);
+
                 // Factory returns null for unknown file formats
                 if (navStream == null) { return result; }
 
@@ -112,6 +116,8 @@ namespace Hl7.Fhir.Specification.Source.Summary
                         // Initialize default summary information
                         // Note: not exposed by IElementNavigator, cannot use harvester
                         properties.SetOrigin(origin);
+                        properties.SetFileSize(fi.Length);
+                        properties.SetLastModified(fi.LastWriteTimeUtc);
                         properties.SetPosition(navStream.Position);
                         properties.SetTypeName(current.Type);
                         properties.SetResourceUri(navStream.Position);
