@@ -520,7 +520,7 @@ namespace Hl7.Fhir.Specification.Source
 
 #endregion
 
-#region Private members
+        #region Private members
 
         // IMPORTANT!
         // prepareFiles & prepareSummaries callers MUST lock on _syncLock
@@ -776,9 +776,9 @@ namespace Hl7.Fhir.Specification.Source
                         // new ParallelOptions() { MaxDegreeOfParallelism = Environment.ProcessorCount },
                         i =>
                         {
-                        // Harvest summaries from single file
-                        // Save each result to a separate array entry (no locking required)
-                        results[i] = ArtifactSummaryGenerator.Generate(paths[i], harvesters);
+                            // Harvest summaries from single file
+                            // Save each result to a separate array entry (no locking required)
+                            results[i] = ArtifactSummaryGenerator.Generate(paths[i], harvesters);
                         });
                 }
                 catch (AggregateException aex)
