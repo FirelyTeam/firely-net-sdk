@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -31,7 +32,7 @@ namespace Hl7.Fhir.Rest
         private const string USERDATA_BODY = "$body";
         private const string EXTENSION_RESPONSE_HEADER = "http://hl7.org/fhir/StructureDefinition/http-response-header";      
 
-        internal static Bundle.EntryComponent ToBundleEntry(this HttpWebResponse response, byte[] body, ParserSettings parserSettings, bool throwOnFormatException)
+        internal static Bundle.EntryComponent ToBundleEntry(this HttpResponseMessage response, byte[] body, ParserSettings parserSettings, bool throwOnFormatException)
         {
             var result = new Bundle.EntryComponent();
 
@@ -39,26 +40,31 @@ namespace Hl7.Fhir.Rest
             result.Response.Status = ((int)response.StatusCode).ToString();
             result.Response.SetHeaders(response.Headers);
 
-            var contentType = getContentType(response);
-            var charEncoding = getCharacterEncoding(response);
+            var contentType = response.Content.Headers.ContentType;
 
-            result.Response.Location = response.Headers[HttpUtil.LOCATION] ?? response.Headers[HttpUtil.CONTENTLOCATION];
+            Encoding charEncoding;
 
-#if !DOTNETFW
-            if (!String.IsNullOrEmpty(response.Headers[HttpUtil.LASTMODIFIED]))
-                    result.Response.LastModified = DateTimeOffset.Parse(response.Headers[HttpUtil.LASTMODIFIED]);
-#else
-            result.Response.LastModified = response.LastModified;
-#endif
-            result.Response.Etag = getETag(response);                     
+            try
+            {
+                charEncoding = Encoding.GetEncoding(response.Content.Headers.ContentType.CharSet);
+            }
+            catch(ArgumentException e)
+            {
+                charEncoding = Encoding.UTF8;
+            } 
+
+            result.Response.Location = response.Headers.Location.AbsoluteUri ?? response.Content.Headers.ContentLocation.AbsoluteUri;
+
+            result.Response.LastModified = response.Content.Headers.LastModified;
+            result.Response.Etag = response.Headers.ETag.Tag;                     
 
             if (body != null)
             {
                 result.Response.SetBody(body);
 
-                if (IsBinaryResponse(response.ResponseUri.OriginalString, contentType))
+                if (IsBinaryResponse(response.Content.Headers.ContentLocation.AbsoluteUri, contentType.ToString()))
                 {
-                    result.Resource = makeBinaryResource(body, contentType);
+                    result.Resource = makeBinaryResource(body, contentType.ToString());
                     if (result.Response.Location != null)
                     {
                         var ri = new ResourceIdentity(result.Response.Location);
@@ -71,7 +77,7 @@ namespace Hl7.Fhir.Rest
                 else
                 {
                     var bodyText = DecodeBody(body, charEncoding);
-                    var resource = parseResource(bodyText, contentType, parserSettings, throwOnFormatException);
+                    var resource = parseResource(bodyText, contentType.ToString(), parserSettings, throwOnFormatException);
                     result.Resource = resource;
 
                     if (result.Response.Location != null)
@@ -81,7 +87,6 @@ namespace Hl7.Fhir.Rest
 
             return result;
         }
-
 
         private static string getETag(HttpWebResponse response)
         {
@@ -120,7 +125,7 @@ namespace Hl7.Fhir.Rest
             return result;
         }      
 
-        private static Resource parseResource(string bodyText, string contentType, ParserSettings settings, bool throwOnFormatException)
+        internal static Resource parseResource(string bodyText, string contentType, ParserSettings settings, bool throwOnFormatException)
         {           
             Resource result= null;
 
@@ -151,11 +156,10 @@ namespace Hl7.Fhir.Rest
             return result;
         }
 
-
         internal static bool IsBinaryResponse(string responseUri, string contentType)
         {
-            if (!string.IsNullOrEmpty(contentType) 
-                && (ContentType.XML_CONTENT_HEADERS.Contains(contentType.ToLower()) 
+            if (!string.IsNullOrEmpty(contentType)
+                && (ContentType.XML_CONTENT_HEADERS.Contains(contentType.ToLower())
                     || ContentType.JSON_CONTENT_HEADERS.Contains(contentType.ToLower())
                 )
                 )
@@ -170,10 +174,9 @@ namespace Hl7.Fhir.Rest
                 if (id.Id != null && Id.IsValidValue(id.Id)) return true;
                 if (id.VersionId != null && Id.IsValidValue(id.VersionId)) return true;
             }
-            
+
             return false;
         }
-
 
         internal static string DecodeBody(byte[] body, Encoding enc)
         {
@@ -189,7 +192,7 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-        private static Binary makeBinaryResource(byte[] data, string contentType)
+        internal static Binary makeBinaryResource(byte[] data, string contentType)
         {
             var binary = new Binary();
 
@@ -198,18 +201,6 @@ namespace Hl7.Fhir.Rest
 
             return binary;
         }
-
-
-        public static string GetBodyAsText(this Bundle.ResponseComponent interaction)
-        {
-            var body = interaction.GetBody();
-
-            if (body != null)
-                return DecodeBody(body, Encoding.UTF8);
-            else
-                return null;
-        }
-
 
         private class Body
         {
@@ -227,6 +218,14 @@ namespace Hl7.Fhir.Rest
         {
             interaction.RemoveAnnotations<Body>();
             interaction.AddAnnotation(new Body { Data = data });
+        }
+
+        internal static void SetHeaders(this Bundle.ResponseComponent interaction, System.Net.Http.Headers.HttpResponseHeaders headers)
+        {
+            foreach (var header in headers)
+            {
+                interaction.AddExtension(EXTENSION_RESPONSE_HEADER, new FhirString(header.Key + ":" + header.Value));
+            }
         }
 
         internal static void SetHeaders(this Bundle.ResponseComponent interaction, WebHeaderCollection headers)

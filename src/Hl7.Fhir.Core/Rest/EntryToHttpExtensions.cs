@@ -1,7 +1,7 @@
-﻿/* 
+﻿/*
  * Copyright (c) 2014, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
- * 
+ *
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
@@ -12,18 +12,18 @@ using System;
 using System.Net;
 using System.Reflection;
 using Hl7.Fhir.Utility;
+using System.Net.Http;
 
 namespace Hl7.Fhir.Rest
 {
     internal static class EntryToHttpExtensions
     {
-        public static HttpWebRequest ToHttpRequest(this Bundle.EntryComponent entry, 
-            SearchParameterHandling? handlingPreference, Prefer? returnPreference, ResourceFormat format, bool useFormatParameter, bool CompressRequestBody, out byte[] body)
+        public static HttpRequestMessage ToHttpRequest(this Bundle.EntryComponent entry,
+            Prefer bodyPreference, ResourceFormat format, bool useFormatParameter, bool CompressRequestBody, HttpMethod method)
         {
             System.Diagnostics.Debug.WriteLine("{0}: {1}", entry.Request.Method, entry.Request.Url);
 
             var interaction = entry.Request;
-            body = null;
 
             if (entry.Resource != null && !(interaction.Method == Bundle.HTTPVerb.POST || interaction.Method == Bundle.HTTPVerb.PUT))
                 throw Error.InvalidOperation("Cannot have a body on an Http " + interaction.Method.ToString());
@@ -33,80 +33,33 @@ namespace Hl7.Fhir.Rest
             if (useFormatParameter)
                 location.AddParam(HttpUtil.RESTPARAM_FORMAT, Hl7.Fhir.Rest.ContentType.BuildFormatParam(format));
 
-            var request = (HttpWebRequest)HttpWebRequest.Create(location.Uri);
-            request.Method = interaction.Method.ToString();
-            setAgent(request, ".NET FhirClient for FHIR " + Model.ModelInfo.Version);
+            var request = new HttpRequestMessage(method, location.Uri);
+            request.Headers.Add("User-Agent", ".NET FhirClient for FHIR " + Model.ModelInfo.Version);
 
             if (!useFormatParameter)
-                request.Accept = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false);
+                request.Headers.Add("Accept", Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false));
 
-            if (interaction.IfMatch != null) request.Headers["If-Match"] = interaction.IfMatch;
-            if (interaction.IfNoneMatch != null) request.Headers["If-None-Match"] = interaction.IfNoneMatch;
-#if DOTNETFW
-            if (interaction.IfModifiedSince != null) request.IfModifiedSince = interaction.IfModifiedSince.Value.UtcDateTime;
-#else
-            if (interaction.IfModifiedSince != null) request.Headers["If-Modified-Since"] = interaction.IfModifiedSince.Value.UtcDateTime.ToString();
-#endif
-            if (interaction.IfNoneExist != null) request.Headers["If-None-Exist"] = interaction.IfNoneExist;
+            if (interaction.IfMatch != null) request.Headers.TryAddWithoutValidation("If-Match", interaction.IfMatch);
+            if (interaction.IfNoneMatch != null) request.Headers.TryAddWithoutValidation("If-None-Match", interaction.IfNoneMatch);
+            if (interaction.IfModifiedSince != null) request.Headers.IfModifiedSince = interaction.IfModifiedSince.Value.UtcDateTime;
+            if (interaction.IfNoneExist != null) request.Headers.TryAddWithoutValidation("If-None-Exist", interaction.IfNoneExist);
 
-            var interactionType = entry.Annotation<TransactionBuilder.InteractionType>();
-
-            if (interactionType == TransactionBuilder.InteractionType.Create && returnPreference != null)
-                request.Headers["Prefer"] = "return=" + PrimitiveTypeConverter.ConvertTo<string>(returnPreference);
-            else if(interactionType == TransactionBuilder.InteractionType.Search && handlingPreference != null)
-                request.Headers["Prefer"] = "handling=" + PrimitiveTypeConverter.ConvertTo<string>(handlingPreference);
+            if (interaction.Method == Bundle.HTTPVerb.POST || interaction.Method == Bundle.HTTPVerb.PUT)
+            {
+                request.Headers.TryAddWithoutValidation("Prefer", bodyPreference == Prefer.ReturnMinimal ? "return=minimal" : "return=representation");
+            }
 
             if (entry.Resource != null)
                 setBodyAndContentType(request, entry.Resource, format, CompressRequestBody, out body);
             // PCL doesn't support setting the length (and in this case will be empty anyway)
 #if DOTNETFW
             else
-                request.ContentLength = 0;
+                request.Content.Headers.ContentLength = 0;
 #endif
             return request;
         }
 
-        /// <summary>
-        /// Flag to control the setting of the User Agent string (different platforms have different abilities)
-        /// </summary>
-        public static bool SetUserAgentUsingReflection = true;
-        public static bool SetUserAgentUsingDirectHeaderManipulation = true;
-
-        private static void setAgent(HttpWebRequest request, string agent)
-        {
-            bool userAgentSet = false;
-            if (SetUserAgentUsingReflection)
-            {
-                try
-                {
-					System.Reflection.PropertyInfo prop = request.GetType().GetRuntimeProperty("UserAgent");
-
-                    if (prop != null)
-                        prop.SetValue(request, agent, null);
-                    userAgentSet = true;
-                }
-                catch (Exception)
-                {
-                    // This approach doesn't work on this platform, so don't try it again.
-                    SetUserAgentUsingReflection = false;
-                }
-            }
-            if (!userAgentSet && SetUserAgentUsingDirectHeaderManipulation)
-            {
-                // platform does not support UserAgent property...too bad
-                try
-                {
-                    request.Headers[HttpRequestHeader.UserAgent] = agent;
-                }
-                catch (ArgumentException)
-                {
-                    SetUserAgentUsingDirectHeaderManipulation = false;
-                }
-            }
-        }
-
-
-        private static void setBodyAndContentType(HttpWebRequest request, Resource data, ResourceFormat format, bool CompressRequestBody, out byte[] body)
+        private static void setBodyAndContentType(HttpRequestMessage request, Resource data, ResourceFormat format, bool CompressRequestBody)
         {
             if (data == null) throw Error.ArgumentNull(nameof(data));
 
@@ -132,6 +85,6 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-      
+
     }
 }
