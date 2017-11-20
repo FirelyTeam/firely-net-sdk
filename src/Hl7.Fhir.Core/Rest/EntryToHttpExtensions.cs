@@ -14,6 +14,7 @@ using System.Reflection;
 using Hl7.Fhir.Utility;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Linq;
 
 namespace Hl7.Fhir.Rest
 {
@@ -52,11 +53,7 @@ namespace Hl7.Fhir.Rest
 
             if (entry.Resource != null)
                 setBodyAndContentType(request, entry.Resource, format, CompressRequestBody);
-            // PCL doesn't support setting the length (and in this case will be empty anyway)
-#if DOTNETFW
-            else
-                request.Content.Headers.ContentLength = 0;
-#endif
+
             return request;
         }
 
@@ -104,7 +101,9 @@ namespace Hl7.Fhir.Rest
             }
 
             request.Content = new ByteArrayContent(body);
-            request.Content.Headers.ContentType = new MediaTypeHeaderValue(contentType);
+            var contentTypeList = contentType.Split(';');
+            request.Content.Headers.ContentType = new MediaTypeHeaderValue(contentTypeList.FirstOrDefault());
+            request.Content.Headers.ContentType.CharSet = System.Text.Encoding.UTF8.WebName;
         }
 
 

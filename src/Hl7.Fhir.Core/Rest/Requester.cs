@@ -49,8 +49,13 @@ namespace Hl7.Fhir.Rest
 
         public Requester(Uri baseUrl)
         {
+            var clientHandler = new HttpClientHandler()
+            {
+                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
+            };
+
             BaseUrl = baseUrl;
-            Client = new HttpClient();
+            Client = new HttpClient(clientHandler);
             UseFormatParameter = false;
             PreferredFormat = ResourceFormat.Xml;
             Client.Timeout = new TimeSpan(0, 0, 100);       // Default timeout is 100 seconds            
@@ -86,7 +91,13 @@ namespace Hl7.Fhir.Rest
             }
 
             LastRequest = requestMessage;
-            var outgoingBody = await requestMessage.Content.ReadAsByteArrayAsync();
+
+            byte[] outgoingBody = null;
+            if(requestMessage.Method == HttpMethod.Post || requestMessage.Method == HttpMethod.Put)
+            {
+                outgoingBody = await requestMessage.Content.ReadAsByteArrayAsync();
+            }
+
             BeforeRequest?.Invoke(requestMessage, outgoingBody);
 
             var response = await Client.SendAsync(requestMessage).ConfigureAwait(false);

@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using System.Net.Http;
 
 namespace Hl7.Fhir.Rest
 {
@@ -17,8 +18,8 @@ namespace Hl7.Fhir.Rest
         byte[] LastBody { get; }
         Resource LastBodyAsResource { get; }
         string LastBodyAsText { get; }
-        HttpWebRequest LastRequest { get; }
-        HttpWebResponse LastResponse { get; }
+        HttpRequestMessage LastRequest { get; }
+        HttpResponseMessage LastResponse { get; }
         Bundle.ResponseComponent LastResult { get; }
         ParserSettings ParserSettings { get; set; }
         ResourceFormat PreferredFormat { get; set; }

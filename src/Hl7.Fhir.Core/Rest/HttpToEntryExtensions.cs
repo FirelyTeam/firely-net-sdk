@@ -19,6 +19,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -53,16 +54,16 @@ namespace Hl7.Fhir.Rest
                 charEncoding = Encoding.UTF8;
             } 
 
-            result.Response.Location = response.Headers.Location.AbsoluteUri ?? response.Content.Headers.ContentLocation.AbsoluteUri;
+            result.Response.Location = response.Headers.Location?.AbsoluteUri ?? response.Content.Headers.ContentLocation?.AbsoluteUri;
 
             result.Response.LastModified = response.Content.Headers.LastModified;
-            result.Response.Etag = response.Headers.ETag.Tag;                     
+            result.Response.Etag = response.Headers.ETag?.Tag;                     
 
             if (body != null)
             {
                 result.Response.SetBody(body);
 
-                if (IsBinaryResponse(response.Content.Headers.ContentLocation.AbsoluteUri, contentType.ToString()))
+                if (IsBinaryResponse(result.Response.Location, contentType.ToString()))
                 {
                     result.Resource = makeBinaryResource(body, contentType.ToString());
                     if (result.Response.Location != null)
@@ -202,6 +203,16 @@ namespace Hl7.Fhir.Rest
             return binary;
         }
 
+        public static string GetBodyAsText(this Bundle.ResponseComponent interaction)
+        {
+            var body = interaction.GetBody();
+
+            if (body != null)
+                return DecodeBody(body, Encoding.UTF8);
+            else
+                return null;
+        }
+
         private class Body
         {
             public byte[] Data;
@@ -220,7 +231,7 @@ namespace Hl7.Fhir.Rest
             interaction.AddAnnotation(new Body { Data = data });
         }
 
-        internal static void SetHeaders(this Bundle.ResponseComponent interaction, System.Net.Http.Headers.HttpResponseHeaders headers)
+        internal static void SetHeaders(this Bundle.ResponseComponent interaction, HttpResponseHeaders headers)
         {
             foreach (var header in headers)
             {
