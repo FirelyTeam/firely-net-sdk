@@ -13,13 +13,14 @@ using System.Net;
 using System.Reflection;
 using Hl7.Fhir.Utility;
 using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace Hl7.Fhir.Rest
 {
     internal static class EntryToHttpExtensions
     {
-        public static HttpRequestMessage ToHttpRequest(this Bundle.EntryComponent entry,
-            Prefer bodyPreference, ResourceFormat format, bool useFormatParameter, bool CompressRequestBody, HttpMethod method)
+        public static HttpRequestMessage ToHttpRequest(this Bundle.EntryComponent entry, 
+            Prefer bodyPreference, ResourceFormat format, bool useFormatParameter, bool CompressRequestBody)
         {
             System.Diagnostics.Debug.WriteLine("{0}: {1}", entry.Request.Method, entry.Request.Url);
 
@@ -33,7 +34,7 @@ namespace Hl7.Fhir.Rest
             if (useFormatParameter)
                 location.AddParam(HttpUtil.RESTPARAM_FORMAT, Hl7.Fhir.Rest.ContentType.BuildFormatParam(format));
 
-            var request = new HttpRequestMessage(method, location.Uri);
+            var request = new HttpRequestMessage(getMethod(interaction.Method), location.Uri);
             request.Headers.Add("User-Agent", ".NET FhirClient for FHIR " + Model.ModelInfo.Version);
 
             if (!useFormatParameter)
@@ -50,7 +51,7 @@ namespace Hl7.Fhir.Rest
             }
 
             if (entry.Resource != null)
-                setBodyAndContentType(request, entry.Resource, format, CompressRequestBody, out body);
+                setBodyAndContentType(request, entry.Resource, format, CompressRequestBody);
             // PCL doesn't support setting the length (and in this case will be empty anyway)
 #if DOTNETFW
             else
@@ -59,18 +60,36 @@ namespace Hl7.Fhir.Rest
             return request;
         }
 
+        private static HttpMethod getMethod(Bundle.HTTPVerb? verb)
+        {
+            switch(verb)
+            {
+                case Bundle.HTTPVerb.GET:
+                    return HttpMethod.Get;
+                case Bundle.HTTPVerb.POST:
+                    return HttpMethod.Post;
+                case Bundle.HTTPVerb.PUT:
+                    return HttpMethod.Put;
+                case Bundle.HTTPVerb.DELETE:
+                    return HttpMethod.Delete;
+            }
+            throw new HttpRequestException($"Valid HttpVerb could not be found for verb type: [{verb}]");
+        }
+
         private static void setBodyAndContentType(HttpRequestMessage request, Resource data, ResourceFormat format, bool CompressRequestBody)
         {
             if (data == null) throw Error.ArgumentNull(nameof(data));
 
-            if (data is Binary)
+            byte[] body;
+            string contentType;
+
+            if (data is Binary bin)
             {
-                var bin = (Binary)data;
                 body = bin.Content;
                 // This is done by the caller after the OnBeforeRequest is called so that other properties
                 // can be set before the content is committed
                 // request.WriteBody(CompressRequestBody, bin.Content);
-                request.ContentType = bin.ContentType;
+                contentType = bin.ContentType;
             }
             else
             {
@@ -81,8 +100,11 @@ namespace Hl7.Fhir.Rest
                 // This is done by the caller after the OnBeforeRequest is called so that other properties
                 // can be set before the content is committed
                 // request.WriteBody(CompressRequestBody, body);
-                request.ContentType = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false);
+                contentType = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false);
             }
+
+            request.Content = new ByteArrayContent(body);
+            request.Content.Headers.ContentType = new MediaTypeHeaderValue(contentType);
         }
 
 
