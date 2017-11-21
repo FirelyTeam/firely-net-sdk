@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Rest
             UseFormatParameter = false;
             PreferredFormat = ResourceFormat.Xml;
             Client.Timeout = new TimeSpan(0, 0, 100);       // Default timeout is 100 seconds            
-            Prefer = Rest.Prefer.ReturnRepresentation;
+            PreferredReturn = Rest.Prefer.ReturnRepresentation;
             ParserSettings = Hl7.Fhir.Serialization.ParserSettings.Default;
         }
 
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Rest
 
             compressRequestBody = CompressRequestBody; // PCL doesn't support compression at the moment
 
-            var requestMessage = interaction.ToHttpRequest(Prefer, PreferredFormat, UseFormatParameter, compressRequestBody);
+            var requestMessage = interaction.ToHttpRequest(PreferredReturn, PreferredFormat, UseFormatParameter, compressRequestBody);
 
             if (PreferCompressedResponses)
             {
