@@ -1,0 +1,40 @@
+﻿<!-- 
+    A demo 'resource' that shows the capabilities of the FHIR Xml reader 
+    Note that the reader supports a wider set of XML features than the
+    standard FHIR serialization would.  This allows us to parse invalid
+    XML and report structural errors about it.
+-->
+<SomeResource xmlns='http://hl7.org/fhir' xmlns:cust='http://example.org/some-ns'>
+  <anElement value='true' customAttribute='primitive' />
+  <anElementWithValueAndChildren value='4'>
+    <firstChild>I have text content</firstChild>
+    <secondChild customAttribute='morning'>I have text &#x0063;ontent too</secondChild>
+    <thirdChild value='afternoon'>Invisible, since there is a @value</thirdChild>
+    Crap, mixed content!
+    <fourthChild><!-- this should be possible --></fourthChild> 
+    Is Merged
+  </anElementWithValueAndChildren>
+  <!-- next line intentionally left empty -->
+  
+  <!-- Div is really special, since the value includes the node itself -->
+  <div xmlns="http://www.w3.org/1999/xhtml">
+    <p>Some &#x0068;tml</p>
+  </div>
+  <resourceContainer>
+    <!-- In FHIR, this could not repeat -->
+    <AnotherResource>
+      <primitiveElement value='nested' />
+    </AnotherResource>
+    <AnotherResource value='notStandard' custom='but sup&#x0070;orted'>
+      <primitiveElement value='nested' />
+    </AnotherResource>
+    <!-- But we have no such constraints in the parser per se -->
+  </resourceContainer>
+  <resourceContainer>
+    <AnotherResource value='notStandard' custom='but sup&#x0070;orted'>
+      <primitiveElement value='nested' />
+    </AnotherResource>
+    <!-- But we have no such constraints in the parser per se -->
+  </resourceContainer>
+</SomeResource>
+<!-- Again, this is not standard FHIR -->

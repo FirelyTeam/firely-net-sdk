@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -21,7 +22,7 @@ namespace Hl7.Fhir.Serialization
 
             try
             {
-                doc = SerializationUtil.XDocumentFromReader(reader);
+                doc = XDocument.Load(wrapXmlReader(reader));
             }
             catch (XmlException xec)
             {
@@ -43,10 +44,25 @@ namespace Hl7.Fhir.Serialization
 
         public static IElementNavigator Create(string xml)
         {
-            using (var reader = SerializationUtil.XmlReaderFromXmlText(xml))
+            using (var reader = xmlReaderFromText(xml))
             {
                 return Create(reader);
             }
         }
+
+        private static XmlReader xmlReaderFromText(string xml) =>
+            wrapXmlReader(XmlReader.Create(new StringReader(xml)));
+
+        private static XmlReader wrapXmlReader(XmlReader xmlReader)
+        {
+            var settings = new XmlReaderSettings
+            {
+                IgnoreProcessingInstructions = true,
+                DtdProcessing = DtdProcessing.Prohibit
+            };
+
+            return XmlReader.Create(xmlReader, settings);
+        }
+
     }
 }

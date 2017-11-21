@@ -17,10 +17,26 @@ namespace Hl7.Fhir.Serialization
         public XmlNodeType NodeType;
         public XName Name;
 
-        public bool IsNamespaceDeclaration;
 
-        public string[] CommentBefore;
-        public string[] CommentAfter;
+        /// <summary>
+        /// All child text nodes
+        /// </summary>
+        public string NodeText;
+
+        /// <summary>
+        /// Comments encountered after this but before the next element in the document
+        /// </summary>
+        public string[] CommentsAfter;
+
+        /// <summary>
+        /// Comments encountered before the first child in this element
+        /// </summary>
+        public string[] OpeningComments;
+
+        /// <summary>
+        /// Comments encountered before the root element of the document
+        /// </summary>
+        public string[] DocumentStartComments;
 
         public int LineNumber { get; internal set; }
 

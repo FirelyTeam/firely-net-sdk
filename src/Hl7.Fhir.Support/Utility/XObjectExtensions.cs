@@ -1,5 +1,6 @@
 ﻿using System.Xml.Linq;
 using System.Xml;
+using System.Linq;
 
 namespace Hl7.Fhir.Utility
 {
@@ -39,15 +40,11 @@ namespace Hl7.Fhir.Utility
          */
         public static XObject FirstChild(this XObject node)
         {
-            var container = node as XContainer;
-
-            if (container != null)
+            if (node is XContainer container)
             {
                 // Alright, containers may have children, but if this is an Element, 
                 // we need to iterate through the attributes first
-                var element = container as XElement;
-
-                if(element?.FirstAttribute != null)
+                if (container is XElement element && element.FirstAttribute != null)
                     return element.FirstAttribute;
                 else
                     return container.FirstNode;
@@ -58,9 +55,7 @@ namespace Hl7.Fhir.Utility
 
         public static XObject NextChild(this XObject node)
         {
-            var n = node as XNode;
-
-            if (n != null)
+            if (node is XNode n)
                 return n.NextNode;
             else
             {
@@ -72,6 +67,7 @@ namespace Hl7.Fhir.Utility
                 return attr.Parent.FirstNode;
             }
         }
+
 
         public static XName Name(this XObject node)
         {
@@ -88,6 +84,16 @@ namespace Hl7.Fhir.Utility
             if (node is XText xt) return xt.Value;
 
             return null;
+        }
+
+        public static string Text(this XObject node)
+        {
+            if (node is XContainer container)
+                return string.Concat(
+                    container.Nodes()
+                    .OfType<XText>().Select(t => t.Value));
+            else
+                return null;
         }
     }
 }

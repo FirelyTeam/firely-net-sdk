@@ -4,17 +4,16 @@ using System.Xml;
 
 namespace Hl7.Fhir.Serialization
 {
+    // Just need to keep this in mind (for json): if value == null && no children -> render "null" as primitive value of node?
     public class NavigatorXmlWriter
     {
         public NavigatorXmlWriter()
         {
         }
 
-
         public void Write(IElementNavigator source, XmlWriter destination)
         {
-            var settings = new XmlWriterSettings();
-            settings.NewLineHandling = NewLineHandling.Entitize;
+            var settings = new XmlWriterSettings { NewLineHandling = NewLineHandling.Entitize };
 
             // To this from the original XmlFhirWriter, have to double check what it does ;-)
             var xw = XmlWriter.Create(destination, settings);

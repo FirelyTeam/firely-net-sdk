@@ -5,6 +5,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace Hl7.FhirPath.Tests.XmlNavTests
 {
@@ -145,6 +147,102 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             Assert.IsNotNull(xmlDetails);
             Assert.AreNotEqual(-1, xmlDetails.LineNumber);
             Assert.AreNotEqual(-1, xmlDetails.LinePosition);
-        }      
+        } 
+        
+        [TestMethod]
+        public void TestAllFeaturesXml()
+        {
+            var tpXml = File.ReadAllText(@"TestData\all-xml-features.xml");
+
+            // will allow whitespace and comments to come through
+            var reader = XmlReader.Create(new StringReader(tpXml));          
+            var nav = XmlDomFhirNavigator.Create(reader);
+
+            Assert.AreEqual("SomeResource", nav.Name);
+            Assert.AreEqual("SomeResource", nav.Type);
+
+            var xmldetails = (nav as IAnnotated).Annotation<XmlSerializationDetails>();
+            Assert.IsNotNull(xmldetails);
+            Assert.AreEqual(XmlNodeType.Element, xmldetails.NodeType);
+            Assert.AreEqual("http://hl7.org/fhir", xmldetails.Name.NamespaceName);
+            Assert.IsTrue(xmldetails.DocumentStartComments.Single().Contains("structural errors"));
+            Assert.IsTrue(xmldetails.CommentsAfter.Single().Contains("standard FHIR"));
+
+            // namespace attributes should not be found
+
+            nav.MoveToFirstChild(); assertAnElement(nav.Clone());
+            nav.MoveToNext(); assertAnElementWithValueAndChildren(nav.Clone());
+
+            void assertAnElement(IElementNavigator cn)
+            {
+                Assert.AreEqual("anElement", cn.Name);
+                Assert.AreEqual("true", cn.Value);
+                Assert.AreEqual(1, cn.Children().Count());
+                cn.MoveToFirstChild();
+
+                Assert.AreEqual("customAttribute", cn.Name);
+                Assert.AreEqual("primitive", cn.Value);
+                var xd = (cn as IAnnotated).Annotation<XmlSerializationDetails>();
+                Assert.IsNotNull(xd);
+                Assert.AreEqual(XmlNodeType.Attribute,xd.NodeType);
+                Assert.IsFalse(cn.HasChildren());
+            }
+
+            void assertAnElementWithValueAndChildren(IElementNavigator cn)
+            {
+                Assert.AreEqual("anElementWithValueAndChildren", cn.Name);
+                Assert.AreEqual("4", cn.Value);
+                var mylittledetails = (cn as IAnnotated).Annotation<XmlSerializationDetails>();
+                Assert.IsNotNull(mylittledetails);
+                Assert.IsTrue(mylittledetails.NodeText.Contains("Crap, mixed content!"));
+                Assert.IsTrue(mylittledetails.NodeText.Contains("Is Merged"));
+
+                Assert.IsTrue(cn.MoveToFirstChild());
+                firstChild(cn.Clone());
+                cn.MoveToNext(); secondChild(cn.Clone());
+                cn.MoveToNext(); thirdChild(cn.Clone());
+                cn.MoveToNext(); fourthChild(cn.Clone());
+
+                void firstChild(IElementNavigator ccn)
+                {
+                    Assert.AreEqual("firstChild", ccn.Name);
+                    Assert.AreEqual("I have text content", ccn.Value);
+                    Assert.IsFalse(ccn.HasChildren());
+                }
+
+                void secondChild(IElementNavigator ccn)
+                {
+                    Assert.AreEqual("secondChild", ccn.Name);
+                    Assert.AreEqual("I have text content too", ccn.Value);
+                    Assert.AreEqual(1, ccn.Children().Count());
+                    ccn.MoveToFirstChild();
+                    Assert.AreEqual("customAttribute", ccn.Name);
+                    Assert.AreEqual("morning", ccn.Value);
+                    Assert.IsFalse(ccn.HasChildren());
+                }
+
+                void thirdChild(IElementNavigator ccn)
+                {
+                    Assert.AreEqual("thirdChild", ccn.Name);
+                    Assert.AreEqual("afternoon", ccn.Value);
+                    Assert.IsFalse(ccn.HasChildren());
+                    var xd = (ccn as IAnnotated).Annotation<XmlSerializationDetails>();
+                    Assert.IsNotNull(xd);
+                    Assert.AreEqual("Invisible, since there is a @value", xd.NodeText);
+                }
+
+                void fourthChild(IElementNavigator ccn)
+                {
+                    Assert.AreEqual("fourthChild", ccn.Name);
+                    Assert.IsNull(ccn.Value);
+                    Assert.IsFalse(ccn.HasChildren());
+                    var xd = (ccn as IAnnotated).Annotation<XmlSerializationDetails>();
+                    Assert.IsNotNull(xd);
+                    Assert.AreEqual(" this should be possible ", xd.OpeningComments.Single());
+                    Assert.AreEqual(0, xd.CommentsAfter);
+                }
+            }
+
+        }
     }
 }

@@ -108,11 +108,10 @@ namespace Hl7.Fhir.Serialization
                 else if (_current is XElement xelem)
                 {
                     // Special case, "value" attribute under the element
-                    // TODO: this will hide the nested text value of the element, thus making it
-                    // impossible to have both
-                    var attrVal = xelem.Attribute("value")?.Value;
-
-                    return attrVal;
+                    // If both are available, value will be given precedence,
+                    // and the nested text is available in the XmlSerializationDetails
+                    return xelem.Attribute("value")?.Value ?? 
+                        String.Concat(xelem.Text());
                 }
                 else
                     return _current.Value();
@@ -198,7 +197,7 @@ namespace Hl7.Fhir.Serialization
         }
 
         private bool isReservedAttribute(XAttribute attr) =>
-            attr.Name == (XName)"xmlns" || attr.Name.NamespaceName == XmlNs.XMLNS || attr.Name == "value";
+            attr.IsNamespaceDeclaration || attr.Name == "value";
 
         public override string ToString() => _current.ToString();
 
@@ -218,11 +217,33 @@ namespace Hl7.Fhir.Serialization
                     {
                         NodeType = _current.NodeType,
                         Name = XmlName,
-                        IsNamespaceDeclaration = (_current is XAttribute xa) ? xa.IsNamespaceDeclaration : false,
+                        NodeText = _current.Text(),
+                        //IsNamespaceDeclaration = (_current is XAttribute xa) ? xa.IsNamespaceDeclaration : false,
                         LineNumber = this.LineNumber,
-                        LinePosition = this.LinePosition
+                        LinePosition = this.LinePosition,
+
+                        CommentsAfter = commentsAfter(_current),
+                        OpeningComments = openingComments(_current),
+                        DocumentStartComments = docComments(_current)
                     }
                 };
+
+                string[] commentsAfter(XObject current) =>
+                    current is XNode xn ?
+                        filterComments(xn.NodesAfterSelf()) : new string[0];
+
+                string[] openingComments(XObject current) =>
+                    current is XContainer xc ?
+                        filterComments(xc.Nodes()): new string[0];
+
+                string[] docComments(XObject current) =>
+                    current.Parent is null ?
+                        openingComments(current.Document)
+                        : new string[0];
+
+                string[] filterComments(IEnumerable<XNode> source) =>
+                    source.TakeWhile(n => n.NodeType != XmlNodeType.Element)
+                            .OfType<XComment>().Select(c => c.Value).ToArray();
             }
             else if(type == typeof(BasicTypeInfo))
             {
