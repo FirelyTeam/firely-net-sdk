@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Rest
             result.Response.LastModified = response.Content.Headers.LastModified;
             result.Response.Etag = response.Headers.ETag?.Tag;                     
 
-            if (body != null)
+            if (body != null && body.Length != 0)
             {
                 result.Response.SetBody(body);
 
