@@ -15,7 +15,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.Rest
 {
-   internal static class EntryToHttpExtensions
+    internal static class EntryToHttpExtensions
     {
         public static HttpRequestMessage ToHttpRequest(this Bundle.EntryComponent entry, 
             SearchParameterHandling? handlingPreference, Prefer? returnPreference, ResourceFormat format, bool useFormatParameter, bool CompressRequestBody)
