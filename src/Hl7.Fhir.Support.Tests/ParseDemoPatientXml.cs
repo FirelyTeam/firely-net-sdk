@@ -167,11 +167,15 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             Assert.AreEqual("http://hl7.org/fhir", xmldetails.Name.NamespaceName);
             Assert.IsTrue(xmldetails.DocumentStartComments.Single().Contains("structural errors"));
             Assert.IsTrue(xmldetails.CommentsAfter.Single().Contains("standard FHIR"));
+            Assert.IsNull(nav.Value);
 
             // namespace attributes should not be found
 
             nav.MoveToFirstChild(); assertAnElement(nav.Clone());
             nav.MoveToNext(); assertAnElementWithValueAndChildren(nav.Clone());
+            nav.MoveToNext(); assertDiv(nav.Clone());
+            nav.MoveToNext(); assertResourceContainer(nav.Clone());
+            Assert.IsFalse(nav.MoveToNext());
 
             void assertAnElement(IElementNavigator cn)
             {
@@ -196,12 +200,14 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
                 Assert.IsNotNull(mylittledetails);
                 Assert.IsTrue(mylittledetails.NodeText.Contains("Crap, mixed content!"));
                 Assert.IsTrue(mylittledetails.NodeText.Contains("Is Merged"));
+                Assert.AreEqual(2, mylittledetails.CommentsAfter.Length);
 
                 Assert.IsTrue(cn.MoveToFirstChild());
                 firstChild(cn.Clone());
                 cn.MoveToNext(); secondChild(cn.Clone());
                 cn.MoveToNext(); thirdChild(cn.Clone());
                 cn.MoveToNext(); fourthChild(cn.Clone());
+                Assert.IsFalse(cn.MoveToNext());
 
                 void firstChild(IElementNavigator ccn)
                 {
@@ -229,6 +235,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
                     var xd = (ccn as IAnnotated).Annotation<XmlSerializationDetails>();
                     Assert.IsNotNull(xd);
                     Assert.AreEqual("Invisible, since there is a @value", xd.NodeText);
+                    Assert.IsFalse(xd.OpeningComments.Any());
                 }
 
                 void fourthChild(IElementNavigator ccn)
@@ -239,10 +246,24 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
                     var xd = (ccn as IAnnotated).Annotation<XmlSerializationDetails>();
                     Assert.IsNotNull(xd);
                     Assert.AreEqual(" this should be possible ", xd.OpeningComments.Single());
-                    Assert.AreEqual(0, xd.CommentsAfter);
+                    Assert.IsFalse(xd.CommentsAfter.Any());
                 }
             }
 
+            void assertDiv(IElementNavigator cnn)
+            {
+                var val = cnn.Value as string;
+                Assert.IsTrue(val.StartsWith("<div") && val.Contains("Some html"));
+                Assert.IsFalse(cnn.HasChildren());  // html should not be represented as children
+
+                var xd = (nav as IAnnotated).Annotation<XmlSerializationDetails>();
+                Assert.AreEqual(XmlNs.XHTML, xd.Name.NamespaceName);
+            }
+
+            void assertResourceContainer(IElementNavigator cnn)
+            {
+
+            }
         }
     }
 }

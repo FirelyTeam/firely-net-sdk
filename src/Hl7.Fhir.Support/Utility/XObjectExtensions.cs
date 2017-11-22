@@ -1,6 +1,7 @@
 ﻿using System.Xml.Linq;
 using System.Xml;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Utility
 {
@@ -88,12 +89,14 @@ namespace Hl7.Fhir.Utility
 
         public static string Text(this XObject node)
         {
-            if (node is XContainer container)
-                return string.Concat(
-                    container.Nodes()
-                    .OfType<XText>().Select(t => t.Value));
-            else
-                return null;
+            return (node is XContainer container) ?
+                extractString(container.Nodes().OfType<XText>().Select(t => t.Value)) : null;
+
+            string extractString(IEnumerable<string> source)
+            {
+                var concatenated = string.Concat(source).Trim();
+                return string.IsNullOrEmpty(concatenated) ? null : concatenated;
+            }
         }
     }
 }

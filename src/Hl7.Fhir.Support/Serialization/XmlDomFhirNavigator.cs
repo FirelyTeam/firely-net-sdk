@@ -110,11 +110,12 @@ namespace Hl7.Fhir.Serialization
                     // Special case, "value" attribute under the element
                     // If both are available, value will be given precedence,
                     // and the nested text is available in the XmlSerializationDetails
-                    return xelem.Attribute("value")?.Value ?? 
-                        String.Concat(xelem.Text());
+                    return xelem.Attribute("value")?.Value ?? xelem.Text();
                 }
                 else
                     return _current.Value();
+
+
             }
         }
 

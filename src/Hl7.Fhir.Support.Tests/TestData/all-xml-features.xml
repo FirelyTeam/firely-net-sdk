@@ -18,23 +18,22 @@
   
   <!-- Div is really special, since the value includes the node itself -->
   <div xmlns="http://www.w3.org/1999/xhtml">
-    <p>Some &#x0068;tml</p>
+ <p>Some &#x0068;tml</p>
   </div>
   <resourceContainer>
     <!-- In FHIR, this could not repeat -->
     <AnotherResource>
       <primitiveElement value='nested' />
     </AnotherResource>
-    <AnotherResource value='notStandard' custom='but sup&#x0070;orted'>
+    <YetAnotherResource value='notStandard' custom='but sup&#x0070;orted'>
       <primitiveElement value='nested' />
-    </AnotherResource>
+    </YetAnotherResource>
     <!-- But we have no such constraints in the parser per se -->
   </resourceContainer>
   <resourceContainer>
-    <AnotherResource value='notStandard' custom='but sup&#x0070;orted'>
+    <AnotherResource>
       <primitiveElement value='nested' />
     </AnotherResource>
-    <!-- But we have no such constraints in the parser per se -->
   </resourceContainer>
 </SomeResource>
 <!-- Again, this is not standard FHIR -->
