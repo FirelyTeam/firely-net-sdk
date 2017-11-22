@@ -1025,7 +1025,7 @@ namespace Hl7.Fhir.Rest
         public event EventHandler<AfterResponseEventArgs> OnAfterResponse;
 
         /// <summary>
-        /// Inspect or modify the HttpWebRequest just before the FhirClient issues a call to the server
+        /// Inspect or modify the <see cref="HttpRequestMessage"/> just before the FhirClient issues a call to the server
         /// </summary>
         /// <param name="rawRequest">The request as it is about to be sent to the server</param>
         /// <param name="body">The data in the body of the request as it is about to be sent to the server</param>
@@ -1036,9 +1036,9 @@ namespace Hl7.Fhir.Rest
         }
 
         /// <summary>
-        /// Inspect the HttpWebResponse as it came back from the server
+        /// Inspect the <see cref="HttpResponseMessage"/> as it came back from the server
         /// </summary>
-        /// <remarks>You cannot read the body from the HttpWebResponse, since it has
+        /// <remarks>You cannot read the body from the HttpResponseMessage, since it has
         /// already been read by the framework. Use the body parameter instead.</remarks>
         protected virtual void AfterResponse(HttpResponseMessage webResponse, byte[] body)
         {
