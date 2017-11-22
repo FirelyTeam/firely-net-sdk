@@ -8,12 +8,8 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
-using System.Collections.Generic;
-using System.IO.Compression;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -21,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
-    internal class Requester
+   internal class Requester
     {
         public Uri BaseUrl { get; private set; }
         public HttpClient Client { get; private set; }

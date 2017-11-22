@@ -237,10 +237,8 @@ namespace Hl7.Fhir.Tests.Rest
 
             client.CompressRequestBody = true;
             client.OnBeforeRequest += Compression_OnBeforeRequestGZip;
-            client.OnAfterResponse += Client_OnAfterResponse;
 
             result = client.Search<DiagnosticReport>();
-            client.OnAfterResponse -= Client_OnAfterResponse;
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Entry.Count() > 10, "Test should use testdata with more than 10 reports");
 
@@ -280,10 +278,6 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsTrue(result.Entry.Count > 0);
         }
 
-        private void Client_OnAfterResponse(object sender, AfterResponseEventArgs e)
-        {
-            
-        }
 
 #if NO_ASYNC_ANYMORE
         [TestMethod, TestCategory("FhirClient")]

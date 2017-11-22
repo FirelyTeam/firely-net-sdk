@@ -9,26 +9,18 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Linq;
 
 namespace Hl7.Fhir.Rest
 {
-    public static class HttpToEntryExtensions
+   public static class HttpToEntryExtensions
     {
         private const string USERDATA_BODY = "$body";
         private const string EXTENSION_RESPONSE_HEADER = "http://hl7.org/fhir/StructureDefinition/http-response-header";      
@@ -86,43 +78,6 @@ namespace Hl7.Fhir.Rest
                 }
             }
 
-            return result;
-        }
-
-        private static string getETag(HttpWebResponse response)
-        {
-            var result = response.Headers[HttpUtil.ETAG];
-
-            if(result != null)
-            {
-                if(result.StartsWith(@"W/")) result = result.Substring(2);
-                result = result.Trim('\"');
-            }
-
-            return result;
-        }
-
-        private static string getContentType(HttpWebResponse response)
-        {
-            if (!String.IsNullOrEmpty(response.ContentType))
-            {
-                return ContentType.GetMediaTypeFromHeaderValue(response.ContentType);
-            }
-            else
-                return null;
-        }
-
-        private static Encoding getCharacterEncoding(HttpWebResponse response)
-        {
-            Encoding result = null;
-
-            if (!String.IsNullOrEmpty(response.ContentType))
-            {
-                var charset = ContentType.GetCharSetFromHeaderValue(response.ContentType);
-
-                if (!String.IsNullOrEmpty(charset))
-                    result = Encoding.GetEncoding(charset);
-            }
             return result;
         }      
 
@@ -236,14 +191,6 @@ namespace Hl7.Fhir.Rest
             foreach (var header in headers)
             {
                 interaction.AddExtension(EXTENSION_RESPONSE_HEADER, new FhirString(header.Key + ":" + header.Value));
-            }
-        }
-
-        internal static void SetHeaders(this Bundle.ResponseComponent interaction, WebHeaderCollection headers)
-        {
-            foreach (var key in headers.AllKeys)
-            {
-                interaction.AddExtension(EXTENSION_RESPONSE_HEADER, new FhirString(key + ":" + headers[key]));
             }
         }
 

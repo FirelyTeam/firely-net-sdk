@@ -8,9 +8,6 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
-using System;
-using System.Net;
-using System.Reflection;
 using Hl7.Fhir.Utility;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -18,7 +15,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.Rest
 {
-    internal static class EntryToHttpExtensions
+   internal static class EntryToHttpExtensions
     {
         public static HttpRequestMessage ToHttpRequest(this Bundle.EntryComponent entry, 
             SearchParameterHandling? handlingPreference, Prefer? returnPreference, ResourceFormat format, bool useFormatParameter, bool CompressRequestBody)
@@ -59,6 +56,11 @@ namespace Hl7.Fhir.Rest
             return request;
         }
 
+        /// <summary>
+        /// Converts bundle http verb to corresponding <see cref="HttpMethod"/>.
+        /// </summary>
+        /// <param name="verb"><see cref="Bundle.HttpVerb"/> specified by input bundle.</param>
+        /// <returns><see cref="HttpMethod"/> corresponding to verb specified in input bundle.</returns>
         private static HttpMethod getMethod(Bundle.HTTPVerb? verb)
         {
             switch(verb)
@@ -103,6 +105,8 @@ namespace Hl7.Fhir.Rest
             }
 
             request.Content = new ByteArrayContent(body);
+
+            // MediaTypeHeaderValue cannot accept a content type that contains charset at the end, so that value must be split out.
             var contentTypeList = contentType.Split(';');
             request.Content.Headers.ContentType = new MediaTypeHeaderValue(contentTypeList.FirstOrDefault());
             request.Content.Headers.ContentType.CharSet = System.Text.Encoding.UTF8.WebName;
