@@ -144,6 +144,43 @@ namespace Hl7.Fhir.Serialization
 
         public IEnumerable<object> Annotations(Type type)
         {
+            if (type == typeof(SourceComments))
+            {
+                return new[]
+                {
+                    new SourceComments()
+                    {
+                        CommentsBefore = commentsBefore(_current),
+                        ClosingComments = closingComment(_current),
+                        DocumentEndComments = docEndComments(_current)
+                    }
+                };
+
+                string[] commentsBefore(XObject current) =>
+                        current is XNode xn ?
+                            filterComments(xn.PreviousNodes()) : new string[0];
+
+                string[] closingComment(XObject current)
+                {
+                    if (current is XContainer xc && xc.LastNode != null)
+                        return filterComments(cons(xc.LastNode, xc.LastNode.PreviousNodes()));
+                    return new string[0];
+                }
+
+                string[] docEndComments(XObject current) =>
+                    current is XNode xn && current.Parent is null ?
+                        filterComments(xn.NodesAfterSelf())
+                        : new string[0];
+
+                string[] filterComments(IEnumerable<XNode> source) =>
+                    source.TakeWhile(n => n.NodeType != XmlNodeType.Element)
+                            .OfType<XComment>().Select(c => c.Value).Reverse().ToArray();
+
+                IEnumerable<XNode> cons(XNode header, IEnumerable<XNode> tail) =>
+                    header == null ? tail : new[] { header }.Union(tail);
+
+
+            }
             if (type == typeof(XmlSerializationDetails))
             {
                 return new[]
@@ -155,29 +192,8 @@ namespace Hl7.Fhir.Serialization
                         NodeText = _current.Text(),
                         LineNumber = this.LineNumber,
                         LinePosition = this.LinePosition,
-
-                        CommentsAfter = commentsAfter(_current),
-                        OpeningComments = openingComments(_current),
-                        DocumentStartComments = docComments(_current)
                     }
                 };
-
-                string[] commentsAfter(XObject current) =>
-                    current is XNode xn ?
-                        filterComments(xn.NodesAfterSelf()) : new string[0];
-
-                string[] openingComments(XObject current) =>
-                    current is XContainer xc ?
-                        filterComments(xc.Nodes()) : new string[0];
-
-                string[] docComments(XObject current) =>
-                    current.Parent is null ?
-                        openingComments(current.Document)
-                        : new string[0];
-
-                string[] filterComments(IEnumerable<XNode> source) =>
-                    source.TakeWhile(n => n.NodeType != XmlNodeType.Element)
-                            .OfType<XComment>().Select(c => c.Value).ToArray();
             }
             else
                 return null;

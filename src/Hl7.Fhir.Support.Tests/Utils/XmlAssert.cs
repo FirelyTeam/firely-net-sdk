@@ -38,11 +38,12 @@ namespace Hl7.Fhir.Tests
             //    throw new AssertFailedException(String.Format("Expected element '{0}', actual '{1}' at '{2}'",
             //        expected.Name.ToString(), actual.Name.ToString(), context));
 
-            if (expected.Attributes().Count() != actual.Attributes().Count())
+            if (expected.Attributes().Where(a=>a.IsNamespaceDeclaration == false).Count() != 
+                    actual.Attributes().Where(a=>a.IsNamespaceDeclaration == false).Count())
                 throw new AssertFailedException(
                     String.Format("Number of attributes are not the same in element '{0}'", context));
 
-            foreach (XAttribute attr in expected.Attributes())
+            foreach (XAttribute attr in expected.Attributes().Where(a=>a.IsNamespaceDeclaration == false))
             {
                 if (actual.Attribute(attr.Name) == null)
                     throw new AssertFailedException(

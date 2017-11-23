@@ -98,5 +98,16 @@ namespace Hl7.Fhir.Utility
                 return string.IsNullOrEmpty(concatenated) ? null : concatenated;
             }
         }
+
+        public static IEnumerable<XNode> PreviousNodes(this XNode node)
+        {
+            var scan = node.PreviousNode;
+
+            while(scan != null)
+            {
+                yield return scan;
+                scan = scan.PreviousNode;
+            }
+        }
     }
 }

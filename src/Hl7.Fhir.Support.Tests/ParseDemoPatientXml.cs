@@ -1,11 +1,13 @@
 ﻿using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support.Utility;
+using Hl7.Fhir.Tests;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -15,7 +17,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
     public class ParseDemoPatientXml
     {
         // This test should resurface once you read this through a validating reader navigator (or somesuch)
-        [TestMethod,Ignore]
+        [TestMethod, Ignore]
         public void CanReadThroughNavigator()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
@@ -120,7 +122,7 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
 
 
         // resurface when read through a validating navigator
-        [TestMethod,Ignore]
+        [TestMethod, Ignore]
         public void CompareXmlJsonParseOutcomes()
         {
             var tpXml = File.ReadAllText(@"TestData\fp-test-patient.xml");
@@ -164,11 +166,12 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
             Assert.AreEqual("SomeResource", nav.Name);
 
             var xmldetails = (nav as IAnnotated).Annotation<XmlSerializationDetails>();
+            var commentdetails = (nav as IAnnotated).Annotation<SourceComments>();
             Assert.IsNotNull(xmldetails);
             Assert.AreEqual(XmlNodeType.Element, xmldetails.NodeType);
             Assert.AreEqual("http://hl7.org/fhir", xmldetails.Name.NamespaceName);
-            Assert.IsTrue(xmldetails.DocumentStartComments.Single().Contains("structural errors"));
-            Assert.IsTrue(xmldetails.CommentsAfter.Single().Contains("standard FHIR"));
+            Assert.IsTrue(commentdetails.CommentsBefore.Single().Contains("structural errors"));
+            Assert.IsTrue(commentdetails.DocumentEndComments.Single().Contains("standard FHIR"));
             Assert.IsNull(nav.Value);
 
             // namespace attributes should not be found
@@ -202,7 +205,6 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
                 var mylittledetails = (cn as IAnnotated).Annotation<XmlSerializationDetails>();
                 Assert.IsTrue(mylittledetails.NodeText.Contains("Crap, mixed content!"));
                 Assert.IsTrue(mylittledetails.NodeText.Contains("Is Merged"));
-                Assert.AreEqual(2, mylittledetails.CommentsAfter.Length);
 
                 Assert.IsTrue(cn.MoveToFirstChild());
                 firstChild(cn.Clone());
@@ -242,8 +244,9 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
                     Assert.IsFalse(ccn.HasChildren());
 
                     var xd = (ccn as IAnnotated).Annotation<XmlSerializationDetails>();
-                    Assert.AreEqual(" this should be possible ", xd.OpeningComments.Single());
-                    Assert.IsFalse(xd.CommentsAfter.Any());
+                    var cd = (ccn as IAnnotated).Annotation<SourceComments>();
+                    Assert.AreEqual(" this should be possible ", cd.ClosingComments.Single());
+                    Assert.IsFalse(cd.CommentsBefore.Any());
                 }
             }
 
@@ -254,8 +257,34 @@ namespace Hl7.FhirPath.Tests.XmlNavTests
                 Assert.IsFalse(cnn.HasChildren());  // html should not be represented as children
 
                 var xd = (nav as IAnnotated).Annotation<XmlSerializationDetails>();
+                var cd = (nav as IAnnotated).Annotation<SourceComments>();
                 Assert.AreEqual(XmlNs.XHTML, xd.Name.NamespaceName);
+                Assert.AreEqual(2, cd.CommentsBefore.Length);
+                Assert.AreEqual(" next line intentionally left empty ", cd.CommentsBefore.First());
+                Assert.AreEqual(" Div is really special, since the value includes the node itself ", cd.CommentsBefore.Last());
+
             }
         }
+
+        [TestMethod]
+        public void RoundtripXml()
+        {
+            var tpXml = File.ReadAllText(@"TestData\roundtrippable.xml");
+
+            // will allow whitespace and comments to come through
+            var reader = XmlReader.Create(new StringReader(tpXml));
+            var nav = XmlDomFhirNavigator.Create(reader);
+
+            var xmlBuilder = new StringBuilder();
+            var serializer = new NavigatorXmlWriter();
+            using (var writer = XmlWriter.Create(xmlBuilder))
+            {
+                serializer.Write(nav, writer);
+            }
+
+            var output = xmlBuilder.ToString();
+            XmlAssert.AreSame("roundtrippable.xml", tpXml, output);            
+        }
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
+using System.Linq;
 using System.Xml;
 
 namespace Hl7.Fhir.Serialization
@@ -15,7 +16,6 @@ namespace Hl7.Fhir.Serialization
         {
             var settings = new XmlWriterSettings { NewLineHandling = NewLineHandling.Entitize };
 
-            // To this from the original XmlFhirWriter, have to double check what it does ;-)
             var xw = XmlWriter.Create(destination, settings);
             write(source, xw, atRoot:true);
         }
@@ -23,28 +23,21 @@ namespace Hl7.Fhir.Serialization
         private void write(IElementNavigator source, XmlWriter destination, bool atRoot=false)
         {
             var xmlDetails = (source as IAnnotated)?.Annotation<XmlSerializationDetails>();
-            var isXhtml = source.Type == "xhtml" || xmlDetails?.Name == XmlNs.XHTMLDIV;
+            var sourceComments = (source as IAnnotated)?.Annotation<SourceComments>();
+
+            var isXhtml = xmlDetails?.Name == XmlNs.XHTMLDIV;
             var value = source.Value != null ? PrimitiveTypeConverter.ConvertTo<string>(source.Value) : null;
+
+            if(sourceComments?.CommentsBefore != null)
+                writeComments(sourceComments.CommentsBefore, destination);
 
             // xhtml children require special treament:
             // - They don't use an xml "value" attribute to represent the value, instead their Value is inserted verbatim into the parent
             // - They cannot have child nodes - the "Value" on the node contains all children as raw xml text
             if (isXhtml)
             {
-                //var sanitized = SerializationUtil.SanitizeXml(valueAsString);
-                //XElement xe = XElement.Parse(sanitized);
-                //xe.Name = XmlNs.XHTMLNS + xe.Name.LocalName;
-
-                //// Write xhtml directly into the output stream,
-                //// the xhtml <div> becomes part of the elements
-                //// of the type, just like the other FHIR elements
-                //var ready = xe.ToString();
-                //xw.WriteRaw(ready);
-
-                // To this from the original XmlFhirWriter, have to double check what it does ;-)
                 using(var nodeReader = SerializationUtil.XmlReaderFromXmlText(value))
                     destination.WriteNode(nodeReader, false);
-
                 return;
             }
 
@@ -63,21 +56,11 @@ namespace Hl7.Fhir.Serialization
 
             // Not being xhtml or an attribute node, we can now create a new element
             // that might represent the nodes Value (if any) and/or its children
-            // Note that the named root of an IElementNav tree is not represented, so
-            // we need to check for that
-            if (!atRoot)
-                destination.WriteStartElement(prefix, localName, ns);
+            destination.WriteStartElement(prefix, localName, ns);
 
             // If the node has a value, at the standard FHIR value attribute
             if (value != null)
                 destination.WriteAttributeString("value", value);
-
-            // If this element is a resource, the "type" of the element is inserted
-            // as an xml element with the capitalized name of the Resource type
-            // (both true for the root as for nested resources (e.g. <contained>)
-            var isResourceType = char.IsUpper(source.Type?[0] ?? 'q');
-            if (isResourceType)
-                destination.WriteStartElement(prefix, source.Type, ns);
 
             // Now, do the same for the children
             if (source.HasChildren())
@@ -86,13 +69,27 @@ namespace Hl7.Fhir.Serialization
                     write(child, destination);
             }
 
-            // Close the tag with the resource type name, if any
-            if (isResourceType)
-                destination.WriteEndElement();
+            if(sourceComments?.ClosingComments != null)
+                writeComments(sourceComments.ClosingComments, destination);
+
+            if (xmlDetails?.NodeText != null)
+                destination.WriteValue(xmlDetails.NodeText);
 
             // Close the tag with the element name
-            if (!atRoot)
-                destination.WriteEndElement();
+            destination.WriteEndElement();
+
+            if (atRoot && sourceComments?.DocumentEndComments != null)
+                writeComments(sourceComments.DocumentEndComments, destination);
+        }
+
+
+        private void writeComments(string[] comments, XmlWriter destination)
+        {
+            if (comments?.Any() == true)
+            {
+                foreach (var comment in comments)
+                    destination.WriteComment(comment);
+            }
         }
     }
 }
