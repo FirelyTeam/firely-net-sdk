@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Serialization
             _currentMemberName = _memberStack.Pop();
             switch (_currentMemberName)
             {
-                case "coding": _coding = false; break;
+                //case "coding": _coding = false; break;
                 case "system": _coding_system = false; break;
                 case "code": _coding_code = false; break;
                 case "reference": _reference = false; break;
@@ -258,11 +258,14 @@ namespace Hl7.Fhir.Serialization
             _typeStack.Push(_currentTypeName);
             _memberStack.Push(_currentMemberName);
 
-            switch(_currentMemberName)
+            switch (_currentTypeName)
             {
-                case "coding":
-                    _coding = true;
-                    break;
+                case "Coding": _coding = true; break;
+                default: _coding = false; break;
+            }
+            switch (_currentMemberName)
+            {
+                //case "coding": _coding = true; break;
                 case "system":
                     if (_coding)
                     {
@@ -277,9 +280,7 @@ namespace Hl7.Fhir.Serialization
                         _coding_code = true;
                     }
                     break;
-                case "reference":
-                    _reference = true;
-                    break;
+                case "reference": _reference = true; break;
             }
         }
 
