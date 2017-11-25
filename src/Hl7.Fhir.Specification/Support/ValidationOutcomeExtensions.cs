@@ -7,6 +7,7 @@
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using Hl7.Fhir.Support;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -89,7 +90,7 @@ namespace Hl7.Fhir.Support
         }
 
         public static IEnumerable<OperationOutcome.IssueComponent> Where(this OperationOutcome outcome,
-                OperationOutcome.IssueSeverity? severity=null, OperationOutcome.IssueType? type=null, int? issueCode = null)
+                IssueSeverity? severity=null, IssueType? type=null, int? issueCode = null)
         {
             IEnumerable<OperationOutcome.IssueComponent> result = outcome.Issue;
 

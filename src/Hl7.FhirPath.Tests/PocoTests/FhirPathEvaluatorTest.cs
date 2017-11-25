@@ -13,7 +13,7 @@ using System;
 using System.Linq;
 using Hl7.FhirPath.Expressions;
 using System.Diagnostics;
-using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using System.Xml.Linq;
 using Xunit;
 using System.IO;

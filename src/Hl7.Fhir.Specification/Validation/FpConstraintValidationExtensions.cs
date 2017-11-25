@@ -9,6 +9,7 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
@@ -46,14 +47,14 @@ namespace Hl7.Fhir.Validation
                 catch (Exception e)
                 {
                     v.Trace(outcome, $"Evaluation of FhirPath for constraint '{constraintElement.Key}' failed: {e.Message}",
-                                    Issue.PROFILE_ELEMENTDEF_INVALID_FHIRPATH_EXPRESSION, instance);
+                                    Support.Issue.PROFILE_ELEMENTDEF_INVALID_FHIRPATH_EXPRESSION, instance);
                 }
 
                 if (!success)
                 {
                     var text = "Instance failed constraint " + constraintElement.ConstraintDescription();
-                    var issue = constraintElement.Severity == ElementDefinition.ConstraintSeverity.Error ?
-                        Issue.CONTENT_ELEMENT_FAILS_ERROR_CONSTRAINT : Issue.CONTENT_ELEMENT_FAILS_WARNING_CONSTRAINT;
+                    var issue = constraintElement.Severity == ConstraintSeverity.Error ?
+                        Support.Issue.CONTENT_ELEMENT_FAILS_ERROR_CONSTRAINT : Support.Issue.CONTENT_ELEMENT_FAILS_WARNING_CONSTRAINT;
 
                     v.Trace(outcome, text, issue, instance);
                 }
@@ -92,12 +93,12 @@ namespace Hl7.Fhir.Validation
                     catch (Exception e)
                     {
                         v.Trace(outcome, $"Compilation of FhirPath for constraint '{constraintElement.Key}' failed: {e.Message}",
-                                        Issue.PROFILE_ELEMENTDEF_INVALID_FHIRPATH_EXPRESSION, instance);
+                                        Support.Issue.PROFILE_ELEMENTDEF_INVALID_FHIRPATH_EXPRESSION, instance);
                     }
                 }
                 else
                     v.Trace(outcome, $"Encountered an invariant ({constraintElement.Key}) that has no FhirPath expression, skipping validation of this constraint",
-                            Issue.UNSUPPORTED_CONSTRAINT_WITHOUT_FHIRPATH, instance);
+                            Support.Issue.UNSUPPORTED_CONSTRAINT_WITHOUT_FHIRPATH, instance);
             }
 
             return compiledExpression;

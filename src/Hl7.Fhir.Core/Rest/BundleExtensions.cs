@@ -7,28 +7,23 @@
  */
 
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
     public static class BundleExtensions
     {
-        public static async Task<Bundle> RefreshBundleAsync(this FhirClient client, Bundle bundle)
+        public static async Task<Model.DSTU2.Bundle> RefreshBundleAsync(this FhirDstu2Client client, Model.DSTU2.Bundle bundle)
         {
             if (bundle == null) throw Error.ArgumentNull(nameof(bundle));
 
-            if (bundle.Type != Bundle.BundleType.Searchset)
+            if (bundle.Type != BundleType.Searchset)
                 throw Error.Argument("Refresh is only applicable to bundles of type 'searchset'");
 
             // Clone old bundle, without the entries (so, just the header)
-            Bundle result = (Bundle) bundle.DeepCopy();
+            var result = (Model.DSTU2.Bundle) bundle.DeepCopy();
 
             result.Id = "urn:uuid:" + Guid.NewGuid().ToString("n");
             result.Meta = new Meta();
@@ -45,7 +40,37 @@ namespace Hl7.Fhir.Rest
             return result;
         }
 
-        public static Bundle RefreshBundle(this FhirClient client, Bundle bundle)
+        public static Model.DSTU2.Bundle RefreshBundle(this FhirDstu2Client client, Model.DSTU2.Bundle bundle)
+        {
+            return RefreshBundleAsync(client, bundle).WaitResult();
+        }
+
+        public static async Task<Model.STU3.Bundle> RefreshBundleAsync(this FhirStu3Client client, Model.STU3.Bundle bundle)
+        {
+            if (bundle == null) throw Error.ArgumentNull(nameof(bundle));
+
+            if (bundle.Type != BundleType.Searchset)
+                throw Error.Argument("Refresh is only applicable to bundles of type 'searchset'");
+
+            // Clone old bundle, without the entries (so, just the header)
+            var result = (Model.STU3.Bundle)bundle.DeepCopy();
+
+            result.Id = "urn:uuid:" + Guid.NewGuid().ToString("n");
+            result.Meta = new Meta();
+            result.Meta.LastUpdated = DateTimeOffset.Now;
+
+            foreach (var entry in result.Entry)
+            {
+                if (entry.Resource != null)
+                {
+                    entry.Resource = await client.ReadAsync<Resource>(entry.FullUrl).ConfigureAwait(false);
+                }
+            }
+
+            return result;
+        }
+
+        public static Model.STU3.Bundle RefreshBundle(this FhirStu3Client client, Model.STU3.Bundle bundle)
         {
             return RefreshBundleAsync(client, bundle).WaitResult();
         }

@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
@@ -91,7 +92,7 @@ namespace Hl7.Fhir.Validation
             }
             catch (Exception e)
             {
-                result.AddIssue($"Parsing of Xml into a FHIR Poco failed: {e.Message}", Issue.XSD_CONTENT_POCO_PARSING_FAILED, (string)null);
+                result.AddIssue($"Parsing of Xml into a FHIR Poco failed: {e.Message}", Support.Issue.XSD_CONTENT_POCO_PARSING_FAILED, (string)null);
                 poco = null;
             }
 
@@ -116,9 +117,9 @@ namespace Hl7.Fhir.Validation
             string pos = $"line: { args.Exception.LineNumber}, pos: { args.Exception.LinePosition}";
 
             if (args.Severity == XmlSeverityType.Error)
-                return Issue.XSD_VALIDATION_ERROR.ToIssueComponent(message, pos);
+                return Support.Issue.XSD_VALIDATION_ERROR.ToIssueComponent(message, pos);
             else
-                return Issue.XSD_VALIDATION_WARNING.ToIssueComponent(message, pos);
+                return Support.Issue.XSD_VALIDATION_WARNING.ToIssueComponent(message, pos);
         }
     }
 

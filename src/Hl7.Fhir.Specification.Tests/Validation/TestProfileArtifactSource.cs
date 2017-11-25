@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using System.IO;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Snapshot;
@@ -25,13 +26,13 @@ namespace Hl7.Fhir.Validation
             buildWeightQuantity(),
             buildWeightHeightObservation(),
             bundleWithSpecificEntries("Contained"),
-            patientWithSpecificOrganization(new[] { ElementDefinition.AggregationMode.Contained }, "Contained"),
+            patientWithSpecificOrganization(new[] { AggregationMode.Contained }, "Contained"),
             bundleWithSpecificEntries("ContainedBundled"),
-            patientWithSpecificOrganization(new[] { ElementDefinition.AggregationMode.Contained, ElementDefinition.AggregationMode.Bundled }, "ContainedBundled"),
+            patientWithSpecificOrganization(new[] { AggregationMode.Contained, AggregationMode.Bundled }, "ContainedBundled"),
             bundleWithSpecificEntries("Bundled"),
-            patientWithSpecificOrganization(new[] { ElementDefinition.AggregationMode.Bundled }, "Bundled"),
+            patientWithSpecificOrganization(new[] { AggregationMode.Bundled }, "Bundled"),
             bundleWithSpecificEntries("Referenced"),
-            patientWithSpecificOrganization(new[] { ElementDefinition.AggregationMode.Referenced }, "Referenced"),
+            patientWithSpecificOrganization(new[] { AggregationMode.Referenced }, "Referenced"),
             buildParametersWithBoundParams(),
             bundleWithConstrainedContained()
         };
@@ -179,7 +180,7 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        private static StructureDefinition patientWithSpecificOrganization(IEnumerable<ElementDefinition.AggregationMode> aggregation, string prefix)
+        private static StructureDefinition patientWithSpecificOrganization(IEnumerable<AggregationMode> aggregation, string prefix)
         {
             var result = createTestSD($"http://validationtest.org/fhir/StructureDefinition/PatientWith{prefix}Organization", $"Patient with {prefix} managing organization",
                     $"Patient for which the managingOrganization reference is limited to {prefix} references", FHIRDefinedType.Patient);
@@ -219,11 +220,11 @@ namespace Hl7.Fhir.Validation
             result.FhirVersion = ModelInfo.Version;
 
             if (ModelInfo.IsKnownResource(constrainedType))
-                result.Kind = StructureDefinition.StructureDefinitionKind.Resource;
+                result.Kind = StructureDefinitionKind.Resource;
             else if (ModelInfo.IsDataType(constrainedType) || ModelInfo.IsPrimitive(constrainedType))
-                result.Kind = StructureDefinition.StructureDefinitionKind.Datatype;
+                result.Kind = StructureDefinitionKind.Datatype;
             else
-                result.Kind = StructureDefinition.StructureDefinitionKind.Logical;
+                result.Kind = StructureDefinitionKind.Logical;
 
             result.ConstrainedType = constrainedType;
             result.Abstract = false;

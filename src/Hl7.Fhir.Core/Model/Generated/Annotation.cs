@@ -7,37 +7,38 @@ using System.Runtime.Serialization;
 using Hl7.Fhir.Utility;
 
 /*
-  Copyright (c) 2011+, HL7, Inc.
-  All rights reserved.
-  
-  Redistribution and use in source and binary forms, with or without modification, 
-  are permitted provided that the following conditions are met:
-  
-   * Redistributions of source code must retain the above copyright notice, this 
-     list of conditions and the following disclaimer.
-   * Redistributions in binary form must reproduce the above copyright notice, 
-     this list of conditions and the following disclaimer in the documentation 
-     and/or other materials provided with the distribution.
-   * Neither the name of HL7 nor the names of its contributors may be used to 
-     endorse or promote products derived from this software without specific 
-     prior written permission.
-  
-  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
-  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
-  IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
-  INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
-  NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
-  PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
-  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
-  POSSIBILITY OF SUCH DAMAGE.
-  
+    Copyright (c) 2011+, HL7, Inc.
+    All rights reserved.
+
+    Redistribution and use in source and binary forms, with or without modification, 
+    are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice, this 
+        list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice, 
+        this list of conditions and the following disclaimer in the documentation 
+        and/or other materials provided with the distribution.
+    * Neither the name of HL7 nor the names of its contributors may be used to 
+        endorse or promote products derived from this software without specific 
+        prior written permission.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+    ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+    IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+    INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+    NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
+    PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+    WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+    POSSIBILITY OF SUCH DAMAGE.
+
 
 */
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.0.2, v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -50,13 +51,15 @@ namespace Hl7.Fhir.Model
     {
         [NotMapped]
         public override string TypeName { get { return "Annotation"; } }
+    
         
         /// <summary>
         /// Individual responsible for the annotation
         /// </summary>
         [FhirElement("author", InSummary=true, Order=30, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
-		[AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.FhirString))]
+        [AllowedTypes(Version=Version.DSTU2, Types=new[]{typeof(Hl7.Fhir.Model.DSTU2.ResourceReference),typeof(Hl7.Fhir.Model.FhirString)})]
+        [AllowedTypes(Version=Version.STU3, Types=new[]{typeof(Hl7.Fhir.Model.STU3.ResourceReference),typeof(Hl7.Fhir.Model.FhirString)})]
         [DataMember]
         public Hl7.Fhir.Model.Element Author
         {
@@ -91,9 +94,9 @@ namespace Hl7.Fhir.Model
             set
             {
                 if (value == null)
-                  TimeElement = null; 
+                    TimeElement = null;
                 else
-                  TimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                    TimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
                 OnPropertyChanged("Time");
             }
         }
@@ -101,7 +104,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The annotation  - text content
         /// </summary>
-        [FhirElement("text", InSummary=true, Order=50)]
+        [FhirElement("text", Order=50)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TextElement
@@ -124,18 +127,18 @@ namespace Hl7.Fhir.Model
             set
             {
                 if (value == null)
-                  TextElement = null; 
+                    TextElement = null;
                 else
-                  TextElement = new Hl7.Fhir.Model.FhirString(value);
+                    TextElement = new Hl7.Fhir.Model.FhirString(value);
                 OnPropertyChanged("Text");
             }
         }
-        
-
+    
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Annotation;
-            
+        
             if (dest != null)
             {
                 base.CopyTo(dest);
@@ -145,24 +148,24 @@ namespace Hl7.Fhir.Model
                 return dest;
             }
             else
-            	throw new ArgumentException("Can only copy to an object of the same type", "other");
+                throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
         
         public override IDeepCopyable DeepCopy()
         {
-            return CopyTo(new Annotation());
+             return CopyTo(new Annotation());
         }
         
         public override bool Matches(IDeepComparable other)
         {
             var otherT = other as Annotation;
             if(otherT == null) return false;
-            
+        
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Author, otherT.Author)) return false;
             if( !DeepComparable.Matches(TimeElement, otherT.TimeElement)) return false;
             if( !DeepComparable.Matches(TextElement, otherT.TextElement)) return false;
-            
+        
             return true;
         }
         
@@ -170,15 +173,15 @@ namespace Hl7.Fhir.Model
         {
             var otherT = other as Annotation;
             if(otherT == null) return false;
-            
+        
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
             if( !DeepComparable.IsExactly(TimeElement, otherT.TimeElement)) return false;
             if( !DeepComparable.IsExactly(TextElement, otherT.TextElement)) return false;
-            
+        
             return true;
         }
-
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {
@@ -190,21 +193,19 @@ namespace Hl7.Fhir.Model
                 if (TextElement != null) yield return TextElement;
             }
         }
-
+        
         [NotMapped]
-        internal override IEnumerable<ElementValue> NamedChildren 
-        { 
-            get 
-            { 
-                foreach (var item in base.NamedChildren) yield return item; 
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
                 if (Author != null) yield return new ElementValue("author", false, Author);
                 if (TimeElement != null) yield return new ElementValue("time", false, TimeElement);
                 if (TextElement != null) yield return new ElementValue("text", false, TextElement);
- 
-            } 
-        } 
-    
+            }
+        }
     
     }
-    
+
 }

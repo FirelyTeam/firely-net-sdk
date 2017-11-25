@@ -11,6 +11,7 @@ using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
 using System.Linq;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 
@@ -79,7 +80,7 @@ namespace Hl7.Fhir.Validation
             ChildSlices = subs;
 
             Ordered = slicing.Ordered ?? false;
-            Rules = slicing.Rules ?? ElementDefinition.SlicingRules.Open;
+            Rules = slicing.Rules ?? SlicingRules.Open;
         }
 
         public List<IBucket> ChildSlices { get; private set; }
@@ -87,7 +88,7 @@ namespace Hl7.Fhir.Validation
 
         public bool Ordered { get; private set; }
 
-        public ElementDefinition.SlicingRules Rules { get; private set; }
+        public SlicingRules Rules { get; private set; }
 
         public string Name => Entry.Name;
 
@@ -123,7 +124,7 @@ namespace Hl7.Fhir.Validation
                         if (sliceNumber < lastMatchingSlice && Ordered)
                             validator.Trace(outcome, $"Element matches slice '{sliceName}', but this " +
                                 $"is out of order for group '{Name}', since a previous element already matched slice '{ChildSlices[lastMatchingSlice].Name}'", 
-                            Issue.CONTENT_ELEMENT_SLICING_OUT_OF_ORDER, candidate);
+                            Support.Issue.CONTENT_ELEMENT_SLICING_OUT_OF_ORDER, candidate);
                         else 
                             lastMatchingSlice = sliceNumber;
 
@@ -131,7 +132,7 @@ namespace Hl7.Fhir.Validation
                         {
                             // We found a match while we already added a non-match to a "open at end" slicegroup, that's not allowed
                             validator.Trace(outcome, $"Element matched slice '{sliceName}', but it appears after a non-match, which is not allowed for an open-at-end group",
-                                        Issue.CONTENT_ELEMENT_FAILS_SLICING_RULE, candidate);
+                                        Support.Issue.CONTENT_ELEMENT_FAILS_SLICING_RULE, candidate);
                         }
 
                         hasSucceeded = true;
@@ -141,15 +142,15 @@ namespace Hl7.Fhir.Validation
                 // So we found no slice that can take this candidate, let's take a look at the rules
                 if (!hasSucceeded)
                 {
-                    if (Rules == ElementDefinition.SlicingRules.Open)
-                        validator.Trace(outcome, $"Element was determined to be in the open slice for group '{Name}'", Issue.PROCESSING_PROGRESS, candidate);
-                    else if (Rules == ElementDefinition.SlicingRules.OpenAtEnd)
+                    if (Rules == SlicingRules.Open)
+                        validator.Trace(outcome, $"Element was determined to be in the open slice for group '{Name}'", Support.Issue.PROCESSING_PROGRESS, candidate);
+                    else if (Rules == SlicingRules.OpenAtEnd)
                         openTailInUse = true;
                     else
                     {
                         // Sorry, won't fly
                         validator.Trace(outcome, $"Element does not match any slice, but the group at '{Name}' is closed.",
-                                Issue.CONTENT_ELEMENT_FAILS_SLICING_RULE, candidate);
+                                Support.Issue.CONTENT_ELEMENT_FAILS_SLICING_RULE, candidate);
                     }
                 }
             }

@@ -49,19 +49,10 @@ namespace Hl7.Fhir.Rest
         /// <param name="parentResourceUri">Absolute uri representing the location of the resource this reference is in.</param>
         /// <remarks>Implements (part of the logic) as described in bundle.html#6.7.4.1</remarks>
         /// <returns></returns>
-        public static Uri GetAbsoluteUriForReference(this ResourceReference reference, Uri parentResourceUri)
+        public static Uri GetAbsoluteUriForReference(this Model.DSTU2.ResourceReference reference, Uri parentResourceUri)
         {
-            if (parentResourceUri == null) throw Error.ArgumentNull(nameof(parentResourceUri));
             if (reference == null) throw Error.ArgumentNull(nameof(reference));
-            if (reference.Reference == null) return null;
-
-            // Don't need to do anything when Uri is absolute
-            var referenceUri = new Uri(reference.Reference, UriKind.RelativeOrAbsolute);
-            if (referenceUri.IsAbsoluteUri) return referenceUri;
-
-            if (!ResourceIdentity.IsRestResourceIdentity(parentResourceUri)) throw Error.Argument(nameof(parentResourceUri), "Must be an absolute FHIR REST identity when reference is relative");
-            var parent = new ResourceIdentity(parentResourceUri);
-            return HttpUtil.MakeAbsoluteToBase(referenceUri, parent.BaseUri);
+            return GetAbsoluteUriForReference(reference.Reference, parentResourceUri);
         }
 
         /// <summary>
@@ -72,9 +63,50 @@ namespace Hl7.Fhir.Rest
         /// <param name="parentResourceUri">Absolute uri representing the location of the resource this reference is in.</param>
         /// <remarks>Implements (part of the logic) as described in bundle.html#6.7.4.1</remarks>
         /// <returns></returns>
-        public static Uri GetAbsoluteUriForReference(this ResourceReference reference, string parentResourceUri)
+        public static Uri GetAbsoluteUriForReference(this Model.DSTU2.ResourceReference reference, string parentResourceUri)
         {
             return reference.GetAbsoluteUriForReference(new Uri(parentResourceUri, UriKind.RelativeOrAbsolute));
+        }
+
+        /// <summary>
+        /// When a ResourceReference is relative, use the parent resource's fullUrl (e.g. from a Bundle's entry)
+        /// to make it absolute.
+        /// </summary>
+        /// <param name="reference">The ResourceReference to get the (possibily relative) url from</param>
+        /// <param name="parentResourceUri">Absolute uri representing the location of the resource this reference is in.</param>
+        /// <remarks>Implements (part of the logic) as described in bundle.html#6.7.4.1</remarks>
+        /// <returns></returns>
+        public static Uri GetAbsoluteUriForReference(this Model.STU3.ResourceReference reference, Uri parentResourceUri)
+        {
+            if (reference == null) throw Error.ArgumentNull(nameof(reference));
+            return GetAbsoluteUriForReference(reference.Reference, parentResourceUri);
+        }
+
+        /// <summary>
+        /// When a ResourceReference is relative, use the parent resource's fullUrl (e.g. from a Bundle's entry)
+        /// to make it absolute.
+        /// </summary>
+        /// <param name="reference">The ResourceReference to get the (possibily relative) url from</param>
+        /// <param name="parentResourceUri">Absolute uri representing the location of the resource this reference is in.</param>
+        /// <remarks>Implements (part of the logic) as described in bundle.html#6.7.4.1</remarks>
+        /// <returns></returns>
+        public static Uri GetAbsoluteUriForReference(this Model.STU3.ResourceReference reference, string parentResourceUri)
+        {
+            return reference.GetAbsoluteUriForReference(new Uri(parentResourceUri, UriKind.RelativeOrAbsolute));
+        }
+
+        private static Uri GetAbsoluteUriForReference(string reference, Uri parentResourceUri)
+        {
+            if (parentResourceUri == null) throw Error.ArgumentNull(nameof(parentResourceUri));
+            if (reference == null) return null;
+
+            // Don't need to do anything when Uri is absolute
+            var referenceUri = new Uri(reference, UriKind.RelativeOrAbsolute);
+            if (referenceUri.IsAbsoluteUri) return referenceUri;
+
+            if (!ResourceIdentity.IsRestResourceIdentity(parentResourceUri)) throw Error.Argument(nameof(parentResourceUri), "Must be an absolute FHIR REST identity when reference is relative");
+            var parent = new ResourceIdentity(parentResourceUri);
+            return HttpUtil.MakeAbsoluteToBase(referenceUri, parent.BaseUri);
         }
     }
 }

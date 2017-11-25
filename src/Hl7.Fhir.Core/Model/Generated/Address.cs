@@ -7,37 +7,38 @@ using System.Runtime.Serialization;
 using Hl7.Fhir.Utility;
 
 /*
-  Copyright (c) 2011+, HL7, Inc.
-  All rights reserved.
-  
-  Redistribution and use in source and binary forms, with or without modification, 
-  are permitted provided that the following conditions are met:
-  
-   * Redistributions of source code must retain the above copyright notice, this 
-     list of conditions and the following disclaimer.
-   * Redistributions in binary form must reproduce the above copyright notice, 
-     this list of conditions and the following disclaimer in the documentation 
-     and/or other materials provided with the distribution.
-   * Neither the name of HL7 nor the names of its contributors may be used to 
-     endorse or promote products derived from this software without specific 
-     prior written permission.
-  
-  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
-  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
-  IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
-  INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
-  NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
-  PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
-  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
-  POSSIBILITY OF SUCH DAMAGE.
-  
+    Copyright (c) 2011+, HL7, Inc.
+    All rights reserved.
+
+    Redistribution and use in source and binary forms, with or without modification, 
+    are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice, this 
+        list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice, 
+        this list of conditions and the following disclaimer in the documentation 
+        and/or other materials provided with the distribution.
+    * Neither the name of HL7 nor the names of its contributors may be used to 
+        endorse or promote products derived from this software without specific 
+        prior written permission.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+    ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+    IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+    INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+    NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
+    PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+    WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+    POSSIBILITY OF SUCH DAMAGE.
+
 
 */
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.0.2, v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -50,81 +51,20 @@ namespace Hl7.Fhir.Model
     {
         [NotMapped]
         public override string TypeName { get { return "Address"; } }
+    
         
-        /// <summary>
-        /// The use of an address
-        /// The use of an address (home / work / etc.).
-        /// (url: http://hl7.org/fhir/ValueSet/address-use)
-        /// </summary>
-        [FhirEnumeration("AddressUse")]
-        public enum AddressUse
-        {
-            /// <summary>
-            /// A communication address at a home.
-            /// (system: http://hl7.org/fhir/address-use)
-            /// </summary>
-            [EnumLiteral("home", "http://hl7.org/fhir/address-use"), Description("Home")]
-            Home,
-            /// <summary>
-            /// An office address. First choice for business related contacts during business hours.
-            /// (system: http://hl7.org/fhir/address-use)
-            /// </summary>
-            [EnumLiteral("work", "http://hl7.org/fhir/address-use"), Description("Work")]
-            Work,
-            /// <summary>
-            /// A temporary address. The period can provide more detailed information.
-            /// (system: http://hl7.org/fhir/address-use)
-            /// </summary>
-            [EnumLiteral("temp", "http://hl7.org/fhir/address-use"), Description("Temporary")]
-            Temp,
-            /// <summary>
-            /// This address is no longer in use (or was never correct, but retained for records).
-            /// (system: http://hl7.org/fhir/address-use)
-            /// </summary>
-            [EnumLiteral("old", "http://hl7.org/fhir/address-use"), Description("Old / Incorrect")]
-            Old,
-        }
-
-        /// <summary>
-        /// The type of an address (physical / postal)
-        /// The type of an address (physical / postal).
-        /// (url: http://hl7.org/fhir/ValueSet/address-type)
-        /// </summary>
-        [FhirEnumeration("AddressType")]
-        public enum AddressType
-        {
-            /// <summary>
-            /// Mailing addresses - PO Boxes and care-of addresses.
-            /// (system: http://hl7.org/fhir/address-type)
-            /// </summary>
-            [EnumLiteral("postal", "http://hl7.org/fhir/address-type"), Description("Postal")]
-            Postal,
-            /// <summary>
-            /// A physical address that can be visited.
-            /// (system: http://hl7.org/fhir/address-type)
-            /// </summary>
-            [EnumLiteral("physical", "http://hl7.org/fhir/address-type"), Description("Physical")]
-            Physical,
-            /// <summary>
-            /// An address that is both physical and postal.
-            /// (system: http://hl7.org/fhir/address-type)
-            /// </summary>
-            [EnumLiteral("both", "http://hl7.org/fhir/address-type"), Description("Postal & Physical")]
-            Both,
-        }
-
         /// <summary>
         /// home | work | temp | old - purpose of this address
         /// </summary>
         [FhirElement("use", InSummary=true, Order=30)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.Address.AddressUse> UseElement
+        public Code<Hl7.Fhir.Model.AddressUse> UseElement
         {
             get { return _UseElement; }
             set { _UseElement = value; OnPropertyChanged("UseElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.Address.AddressUse> _UseElement;
+        private Code<Hl7.Fhir.Model.AddressUse> _UseElement;
         
         /// <summary>
         /// home | work | temp | old - purpose of this address
@@ -132,15 +72,15 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.Address.AddressUse? Use
+        public Hl7.Fhir.Model.AddressUse? Use
         {
             get { return UseElement != null ? UseElement.Value : null; }
             set
             {
-                if (!value.HasValue)
-                  UseElement = null; 
+                if (value == null)
+                    UseElement = null;
                 else
-                  UseElement = new Code<Hl7.Fhir.Model.Address.AddressUse>(value);
+                    UseElement = new Code<Hl7.Fhir.Model.AddressUse>(value);
                 OnPropertyChanged("Use");
             }
         }
@@ -150,13 +90,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("type", InSummary=true, Order=40)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.Address.AddressType> TypeElement
+        public Code<Hl7.Fhir.Model.AddressType> TypeElement
         {
             get { return _TypeElement; }
             set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.Address.AddressType> _TypeElement;
+        private Code<Hl7.Fhir.Model.AddressType> _TypeElement;
         
         /// <summary>
         /// postal | physical | both
@@ -164,15 +104,15 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.Address.AddressType? Type
+        public Hl7.Fhir.Model.AddressType? Type
         {
             get { return TypeElement != null ? TypeElement.Value : null; }
             set
             {
-                if (!value.HasValue)
-                  TypeElement = null; 
+                if (value == null)
+                    TypeElement = null;
                 else
-                  TypeElement = new Code<Hl7.Fhir.Model.Address.AddressType>(value);
+                    TypeElement = new Code<Hl7.Fhir.Model.AddressType>(value);
                 OnPropertyChanged("Type");
             }
         }
@@ -202,9 +142,9 @@ namespace Hl7.Fhir.Model
             set
             {
                 if (value == null)
-                  TextElement = null; 
+                    TextElement = null;
                 else
-                  TextElement = new Hl7.Fhir.Model.FhirString(value);
+                    TextElement = new Hl7.Fhir.Model.FhirString(value);
                 OnPropertyChanged("Text");
             }
         }
@@ -235,9 +175,9 @@ namespace Hl7.Fhir.Model
             set
             {
                 if (value == null)
-                  LineElement = null; 
+                    LineElement = null;
                 else
-                  LineElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
+                    LineElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
                 OnPropertyChanged("Line");
             }
         }
@@ -267,9 +207,9 @@ namespace Hl7.Fhir.Model
             set
             {
                 if (value == null)
-                  CityElement = null; 
+                    CityElement = null;
                 else
-                  CityElement = new Hl7.Fhir.Model.FhirString(value);
+                    CityElement = new Hl7.Fhir.Model.FhirString(value);
                 OnPropertyChanged("City");
             }
         }
@@ -299,9 +239,9 @@ namespace Hl7.Fhir.Model
             set
             {
                 if (value == null)
-                  DistrictElement = null; 
+                    DistrictElement = null;
                 else
-                  DistrictElement = new Hl7.Fhir.Model.FhirString(value);
+                    DistrictElement = new Hl7.Fhir.Model.FhirString(value);
                 OnPropertyChanged("District");
             }
         }
@@ -331,9 +271,9 @@ namespace Hl7.Fhir.Model
             set
             {
                 if (value == null)
-                  StateElement = null; 
+                    StateElement = null;
                 else
-                  StateElement = new Hl7.Fhir.Model.FhirString(value);
+                    StateElement = new Hl7.Fhir.Model.FhirString(value);
                 OnPropertyChanged("State");
             }
         }
@@ -363,9 +303,9 @@ namespace Hl7.Fhir.Model
             set
             {
                 if (value == null)
-                  PostalCodeElement = null; 
+                    PostalCodeElement = null;
                 else
-                  PostalCodeElement = new Hl7.Fhir.Model.FhirString(value);
+                    PostalCodeElement = new Hl7.Fhir.Model.FhirString(value);
                 OnPropertyChanged("PostalCode");
             }
         }
@@ -395,9 +335,9 @@ namespace Hl7.Fhir.Model
             set
             {
                 if (value == null)
-                  CountryElement = null; 
+                    CountryElement = null;
                 else
-                  CountryElement = new Hl7.Fhir.Model.FhirString(value);
+                    CountryElement = new Hl7.Fhir.Model.FhirString(value);
                 OnPropertyChanged("Country");
             }
         }
@@ -414,17 +354,17 @@ namespace Hl7.Fhir.Model
         }
         
         private Hl7.Fhir.Model.Period _Period;
-        
-
+    
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Address;
-            
+        
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(UseElement != null) dest.UseElement = (Code<Hl7.Fhir.Model.Address.AddressUse>)UseElement.DeepCopy();
-                if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Address.AddressType>)TypeElement.DeepCopy();
+                if(UseElement != null) dest.UseElement = (Code<Hl7.Fhir.Model.AddressUse>)UseElement.DeepCopy();
+                if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.AddressType>)TypeElement.DeepCopy();
                 if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
                 if(LineElement != null) dest.LineElement = new List<Hl7.Fhir.Model.FhirString>(LineElement.DeepCopy());
                 if(CityElement != null) dest.CityElement = (Hl7.Fhir.Model.FhirString)CityElement.DeepCopy();
@@ -436,19 +376,19 @@ namespace Hl7.Fhir.Model
                 return dest;
             }
             else
-            	throw new ArgumentException("Can only copy to an object of the same type", "other");
+                throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
         
         public override IDeepCopyable DeepCopy()
         {
-            return CopyTo(new Address());
+             return CopyTo(new Address());
         }
         
         public override bool Matches(IDeepComparable other)
         {
             var otherT = other as Address;
             if(otherT == null) return false;
-            
+        
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(UseElement, otherT.UseElement)) return false;
             if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
@@ -460,7 +400,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(PostalCodeElement, otherT.PostalCodeElement)) return false;
             if( !DeepComparable.Matches(CountryElement, otherT.CountryElement)) return false;
             if( !DeepComparable.Matches(Period, otherT.Period)) return false;
-            
+        
             return true;
         }
         
@@ -468,7 +408,7 @@ namespace Hl7.Fhir.Model
         {
             var otherT = other as Address;
             if(otherT == null) return false;
-            
+        
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(UseElement, otherT.UseElement)) return false;
             if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
@@ -480,10 +420,10 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(PostalCodeElement, otherT.PostalCodeElement)) return false;
             if( !DeepComparable.IsExactly(CountryElement, otherT.CountryElement)) return false;
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
-            
+        
             return true;
         }
-
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {
@@ -502,13 +442,13 @@ namespace Hl7.Fhir.Model
                 if (Period != null) yield return Period;
             }
         }
-
+        
         [NotMapped]
-        internal override IEnumerable<ElementValue> NamedChildren 
-        { 
-            get 
-            { 
-                foreach (var item in base.NamedChildren) yield return item; 
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
                 if (UseElement != null) yield return new ElementValue("use", false, UseElement);
                 if (TypeElement != null) yield return new ElementValue("type", false, TypeElement);
                 if (TextElement != null) yield return new ElementValue("text", false, TextElement);
@@ -519,11 +459,9 @@ namespace Hl7.Fhir.Model
                 if (PostalCodeElement != null) yield return new ElementValue("postalCode", false, PostalCodeElement);
                 if (CountryElement != null) yield return new ElementValue("country", false, CountryElement);
                 if (Period != null) yield return new ElementValue("period", false, Period);
- 
-            } 
-        } 
-    
+            }
+        }
     
     }
-    
+
 }

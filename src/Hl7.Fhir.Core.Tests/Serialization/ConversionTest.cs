@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void TestEnumToString()
         {
-            var x = Quantity.QuantityComparator.LessOrEqual;
+            var x = QuantityComparator.LessOrEqual;
 
             Assert.AreEqual("<=", PrimitiveTypeConverter.ConvertTo<string>(x));
         }

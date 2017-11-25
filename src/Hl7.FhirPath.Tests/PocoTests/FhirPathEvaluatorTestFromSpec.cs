@@ -27,7 +27,7 @@ namespace Hl7.FhirPath.Tests
 {
     static class ConverterExtensions
     {
-        public static Model.ResourceReference getSubject(this Model.Order me)
+        public static Model.DSTU2.ResourceReference getSubject(this Model.DSTU2.Order me)
         {
             return me.Subject;
         }
@@ -51,11 +51,11 @@ namespace Hl7.FhirPath.Tests
         {
             me.System = value;
         }
-        public static void setValueSet(this Model.ElementDefinition.BindingComponent me, Model.Element value)
+        public static void setValueSet(this Model.DSTU2.ElementDefinition.BindingComponent me, Model.Element value)
         {
             me.ValueSet = value;
         }
-        public static Model.Element getValueSet(this Model.ElementDefinition.BindingComponent me)
+        public static Model.Element getValueSet(this Model.DSTU2.ElementDefinition.BindingComponent me)
         {
             return me.ValueSet;
         }
@@ -71,22 +71,22 @@ namespace Hl7.FhirPath.Tests
             return me;
         }
 
-        public static Model.RiskAssessment.PredictionComponent addPrediction(this Model.RiskAssessment me)
+        public static Model.DSTU2.RiskAssessment.PredictionComponent addPrediction(this Model.DSTU2.RiskAssessment me)
         {
-            var item = new Model.RiskAssessment.PredictionComponent();
+            var item = new Model.DSTU2.RiskAssessment.PredictionComponent();
             me.Prediction.Add(item);
             return item;
         }
-        public static List<Model.RiskAssessment.PredictionComponent> getPrediction(this Model.RiskAssessment me)
+        public static List<Model.DSTU2.RiskAssessment.PredictionComponent> getPrediction(this Model.DSTU2.RiskAssessment me)
         {
             return me.Prediction;
         }
 
-        public static Model.Element getProbability(this Model.RiskAssessment.PredictionComponent me)
+        public static Model.Element getProbability(this Model.DSTU2.RiskAssessment.PredictionComponent me)
         {
             return me.Probability;
         }
-        public static Model.RiskAssessment.PredictionComponent setProbability(this Model.RiskAssessment.PredictionComponent me, Model.Element value)
+        public static Model.DSTU2.RiskAssessment.PredictionComponent setProbability(this Model.DSTU2.RiskAssessment.PredictionComponent me, Model.Element value)
         {
             me.Probability = value;
             return me;
@@ -283,8 +283,8 @@ namespace Hl7.FhirPath.Tests
         [Fact, Trait("Area", "FhirPathFromSpec")]
         public void testTyping()
         {
-            Model.ElementDefinition ed = new Model.ElementDefinition();
-            ed.Binding = new Model.ElementDefinition.BindingComponent();
+            Model.DSTU2.ElementDefinition ed = new Model.DSTU2.ElementDefinition();
+            ed.Binding = new Model.DSTU2.ElementDefinition.BindingComponent();
             ed.Binding.setValueSet(new UriType("http://test.org"));
             testBoolean(null, ed.Binding.getValueSet(), "ElementDefinition.binding.valueSetUri", "startsWith('http:') or startsWith('https') or startsWith('urn:')", true);
         }
@@ -292,7 +292,7 @@ namespace Hl7.FhirPath.Tests
         [Fact, Trait("Area", "FhirPathFromSpec")]
         public void testDecimalRA()
         {
-            Model.RiskAssessment r = new Model.RiskAssessment();
+            Model.DSTU2.RiskAssessment r = new Model.DSTU2.RiskAssessment();
             Model.SimpleQuantity sq = new Model.SimpleQuantity();
             sq.setValue(0.2);
             sq.setUnit("%");
@@ -330,15 +330,15 @@ namespace Hl7.FhirPath.Tests
             // obsolete:
             // Bundle b = (Bundle)FhirParser.ParseResourceFromXml(File.ReadAllText("TestData\\extension-definitions.xml"));
             var parser = new FhirXmlParser();
-            Model.Bundle b = parser.Parse<Model.Bundle>(TestData.ReadTextFile("extension-definitions.xml"));
+            Model.DSTU2.Bundle b = parser.Parse<Model.DSTU2.Bundle>(TestData.ReadTextFile("extension-definitions.xml"));
 
-            foreach (Model.Bundle.EntryComponent be in b.Entry)
+            foreach (Model.DSTU2.Bundle.EntryComponent be in b.Entry)
             {
-                testStructureDefinition((Model.StructureDefinition)be.Resource);
+                testStructureDefinition((Model.DSTU2.StructureDefinition)be.Resource);
             }
         }
 
-        private void testStructureDefinition(Model.StructureDefinition sd)
+        private void testStructureDefinition(Model.DSTU2.StructureDefinition sd)
         {
             testBoolean(sd, sd, "StructureDefinition", "snapshot.element.tail().all(path.startsWith(%resource.snapshot.element.first().path&'.')) and differential.element.tail().all(path.startsWith(%resource.differential.element.first().path&'.'))", true);
         }

@@ -1,6 +1,7 @@
 ﻿using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using Hl7.FhirPath;
 using System;
 using System.Collections.Generic;
@@ -23,10 +24,10 @@ namespace Hl7.Fhir.Validation
             navQ = new PocoNavigator(new Model.Quantity(3.14m, "kg"));
             Assert.Equal(-1, navQ.GetComparableValue(typeof(Model.Quantity)).CompareTo(new Model.Primitives.Quantity(5.0m, "kg")));
 
-            navQ = new PocoNavigator(new Model.HumanName());
-            Assert.Null(navQ.GetComparableValue(typeof(Model.HumanName)));
+            navQ = new PocoNavigator(new HumanName());
+            Assert.Null(navQ.GetComparableValue(typeof(HumanName)));
 
-            var navQ2 = new PocoNavigator(new Model.Quantity(3.14m, "kg") { Comparator = Model.Quantity.QuantityComparator.GreaterOrEqual });
+            var navQ2 = new PocoNavigator(new Model.Quantity(3.14m, "kg") { Comparator = QuantityComparator.GreaterOrEqual });
             Assert.Throws<NotSupportedException>(() => navQ2.GetComparableValue(typeof(Model.Quantity)));
 
             var navQ3 = new PocoNavigator(new Model.Quantity());
@@ -84,7 +85,7 @@ namespace Hl7.Fhir.Validation
             Assert.True(outcome.Success);
             Assert.Equal(2, outcome.Warnings);
 
-            ed.MinValue = new Model.HumanName();
+            ed.MinValue = new Model.DSTU2.HumanName();
             ed.MaxValue = new Model.FhirString("i comes after hi");
             outcome = validator.ValidateMinMaxValue(ed, nav);
             Assert.True(outcome.Success);

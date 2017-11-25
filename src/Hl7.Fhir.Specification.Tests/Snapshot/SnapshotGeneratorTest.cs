@@ -10,6 +10,7 @@ using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using Hl7.Fhir.Support;
 using System.Diagnostics;
 using System.IO;
@@ -742,9 +743,9 @@ namespace Hl7.Fhir.Specification.Tests
             );
             verifier = new ElementVerifier(sd, _settings);
             verifier.VerifyElement("Patient.identifier", null, "Patient.identifier");
-            verifier.AssertSlicing(new string[] { "system" }, ElementDefinition.SlicingRules.Open, null);
+            verifier.AssertSlicing(new string[] { "system" }, SlicingRules.Open, null);
             verifier.VerifyElement("Patient.identifier", "mrn", "Patient.identifier:mrn");
-            verifier.AssertSlicing(new string[] { "use" }, ElementDefinition.SlicingRules.Open, null);
+            verifier.AssertSlicing(new string[] { "use" }, SlicingRules.Open, null);
             verifier.VerifyElement("Patient.identifier.extension", null, "Patient.identifier:mrn.extension");
             verifier.VerifyElement("Patient.identifier.extension", "mrn.issuingSite", "Patient.identifier:mrn.extension:issuingSite");
             verifier.VerifyElement("Patient.identifier.use", null, "Patient.identifier:mrn.use");
@@ -780,7 +781,7 @@ namespace Hl7.Fhir.Specification.Tests
             // However this is not necessary, as there are no child constraints on the extension
 
             // [WMR 20161216] TODO: Merge slicing entry
-            verifier.AssertSlicing(new string[] { "type.value[x]" }, ElementDefinition.SlicingRules.Open, null);
+            verifier.AssertSlicing(new string[] { "type.value[x]" }, SlicingRules.Open, null);
 
             // [WMR 20161208] TODO...
 
@@ -789,7 +790,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // [WMR 20161216] TODO: Merge slicing entry
             verifier.VerifyElement("Patient.extension.extension", null, "Patient.extension:researchAuth/grandfatheredResAuth.extension");
-            verifier.AssertSlicing(new string[] { "url" }, ElementDefinition.SlicingRules.Open, false);
+            verifier.AssertSlicing(new string[] { "url" }, SlicingRules.Open, false);
 
             // The reslice "researchAuth/grandfatheredResAuth" has a child element constraint on "type.value[x]"
             // Therefore the complex extension is fully expanded (child extensions: type, flag, date)
@@ -805,9 +806,9 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Slices inherited from base profile with url http://example.com/fhir/SD/patient-identifier-subslice
             verifier.VerifyElement("Patient.identifier", null, "Patient.identifier");
-            verifier.AssertSlicing(new string[] { "system" }, ElementDefinition.SlicingRules.Open, null);
+            verifier.AssertSlicing(new string[] { "system" }, SlicingRules.Open, null);
             verifier.VerifyElement("Patient.identifier", "mrn", "Patient.identifier:mrn");
-            verifier.AssertSlicing(new string[] { "use" }, ElementDefinition.SlicingRules.Open, null);
+            verifier.AssertSlicing(new string[] { "use" }, SlicingRules.Open, null);
             verifier.VerifyElement("Patient.identifier.extension", null, "Patient.identifier:mrn.extension");
             verifier.VerifyElement("Patient.identifier.extension", "mrn.issuingSite", "Patient.identifier:mrn.extension:issuingSite");
             verifier.VerifyElement("Patient.identifier.use", null, "Patient.identifier:mrn.use");
@@ -880,14 +881,14 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(outcome);
             Assert.AreEqual(3, outcome.Issue.Count);
 
-            assertIssue(outcome.Issue[0], Issue.UNAVAILABLE_REFERENCED_PROFILE, "http://example.org/fhir/StructureDefinition/MyMissingExtension");
+            assertIssue(outcome.Issue[0], Support.Issue.UNAVAILABLE_REFERENCED_PROFILE, "http://example.org/fhir/StructureDefinition/MyMissingExtension");
             // Note: the extension reference to MyExtensionNoSnapshot should not generate an Issue,
             // as the profile only needs to merge the extension definition root element (no full expansion)
-            assertIssue(outcome.Issue[1], Issue.UNAVAILABLE_REFERENCED_PROFILE, "http://example.org/fhir/StructureDefinition/MyIdentifier");
-            assertIssue(outcome.Issue[2], Issue.UNAVAILABLE_REFERENCED_PROFILE, "http://example.org/fhir/StructureDefinition/MyCodeableConcept");
+            assertIssue(outcome.Issue[1], Support.Issue.UNAVAILABLE_REFERENCED_PROFILE, "http://example.org/fhir/StructureDefinition/MyIdentifier");
+            assertIssue(outcome.Issue[2], Support.Issue.UNAVAILABLE_REFERENCED_PROFILE, "http://example.org/fhir/StructureDefinition/MyCodeableConcept");
         }
 
-        static void assertIssue(OperationOutcome.IssueComponent issue, Issue expected, string diagnostics = null)
+        static void assertIssue(OperationOutcome.IssueComponent issue, Support.Issue expected, string diagnostics = null)
         {
             Assert.IsNotNull(issue);
             Assert.AreEqual(expected.Type, issue.Code);
@@ -1865,7 +1866,7 @@ namespace Hl7.Fhir.Specification.Tests
             Name = "MyTestObservation",
             Url = "http://example.org/fhir/StructureDefinition/MyTestObservation",
             //Derivation = StructureDefinition.TypeDerivationRule.Constraint,
-            Kind = StructureDefinition.StructureDefinitionKind.Resource,
+            Kind = StructureDefinitionKind.Resource,
             Differential = new StructureDefinition.DifferentialComponent()
             {
                 Element = new List<ElementDefinition>()
@@ -2400,7 +2401,7 @@ namespace Hl7.Fhir.Specification.Tests
                 //    verified &= verifyBasePath(expandedElems[0], originalElems[0], baseRootElemName);
                 //}
 
-                if (expanded.Kind == StructureDefinition.StructureDefinitionKind.Datatype)
+                if (expanded.Kind == StructureDefinitionKind.Datatype)
                 {
                     if (rootElemName != "Element")
                     {
@@ -2413,7 +2414,7 @@ namespace Hl7.Fhir.Specification.Tests
                         verified &= verifyBasePath(expandedElems[2], originalElems[2], "Element.extension");
                     }
                 }
-                else if (expanded.Kind == StructureDefinition.StructureDefinitionKind.Resource)
+                else if (expanded.Kind == StructureDefinitionKind.Resource)
                 {
                     if (rootElemName != "Resource")
                     {
@@ -2658,7 +2659,7 @@ namespace Hl7.Fhir.Specification.Tests
                         {
                             Discriminator = new string[] { "@type" },
                             Ordered = false,
-                            Rules = ElementDefinition.SlicingRules.Open
+                            Rules = SlicingRules.Open
                         }
                     }
                     ,new ElementDefinition("Observation.value[x]")
@@ -2765,7 +2766,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(outcome);
             Assert.IsNotNull(outcome.Issue);
             Assert.AreEqual(outcome.Issue.Count, 1);
-            assertIssue(outcome.Issue[0], Issue.UNAVAILABLE_REFERENCED_PROFILE, profile.Base);
+            assertIssue(outcome.Issue[0], Support.Issue.UNAVAILABLE_REFERENCED_PROFILE, profile.Base);
         }
 
         static StructureDefinition ObservationTypeResliceProfile => new StructureDefinition()
@@ -2784,7 +2785,7 @@ namespace Hl7.Fhir.Specification.Tests
                         {
                             Discriminator = new string[] { "@type" },
                             Ordered = false,
-                            Rules = ElementDefinition.SlicingRules.Open
+                            Rules = SlicingRules.Open
                         }
                     }
                     // Constraint on existing type slice value[x] : String
@@ -2954,7 +2955,7 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         Slicing = new ElementDefinition.SlicingComponent()
                         {
-                            Rules = ElementDefinition.SlicingRules.Closed
+                            Rules = SlicingRules.Closed
                         }
                     }
                 }
@@ -2982,7 +2983,7 @@ namespace Hl7.Fhir.Specification.Tests
             var elem = expanded.Snapshot.Element.Find(e => e.Path == "Observation.extension");
             Assert.IsNotNull(elem);
             Assert.IsNotNull(elem.Slicing);
-            Assert.AreEqual(ElementDefinition.SlicingRules.Closed, elem.Slicing.Rules);
+            Assert.AreEqual(SlicingRules.Closed, elem.Slicing.Rules);
         }
 
         [TestMethod()]
@@ -3002,7 +3003,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Verify that the snapshot includes the merged children of the slice entry element
             var verifier = new ElementVerifier(expanded, _settings);
             verifier.VerifyElement("Composition.section", null);
-            verifier.AssertSlicing(new string[] { "code" }, ElementDefinition.SlicingRules.Open, false);
+            verifier.AssertSlicing(new string[] { "code" }, SlicingRules.Open, false);
             verifier.VerifyElement("Composition.section.title", null);
             verifier.VerifyElement("Composition.section.code", null);
             Assert.IsNotNull(verifier.CurrentElement.Binding);
@@ -3271,7 +3272,7 @@ namespace Hl7.Fhir.Specification.Tests
                             Slicing = new ElementDefinition.SlicingComponent()
                             {
                                 Discriminator = new string[] { "url" },
-                                Rules = ElementDefinition.SlicingRules.Open
+                                Rules = SlicingRules.Open
                             }
                         },
                         new ElementDefinition("Flag.extension")
@@ -3386,7 +3387,7 @@ namespace Hl7.Fhir.Specification.Tests
                         {
                             Discriminator = new string[] { "system" },
                             Ordered = false,
-                            Rules = ElementDefinition.SlicingRules.Open
+                            Rules = SlicingRules.Open
                         },
                         Min = 1
                     }
@@ -3525,7 +3526,7 @@ namespace Hl7.Fhir.Specification.Tests
                         {
                             Discriminator = new string[] { "system" },
                             Ordered = false,
-                            Rules = ElementDefinition.SlicingRules.Open
+                            Rules = SlicingRules.Open
                         },
                         Min = 1,
                         // Append to comment inherited from base
@@ -3553,7 +3554,7 @@ namespace Hl7.Fhir.Specification.Tests
                         {
                             Discriminator = new string[] { "use" },
                             Ordered = true,
-                            Rules = ElementDefinition.SlicingRules.Closed
+                            Rules = SlicingRules.Closed
                         }
 #endif
                     },
@@ -3696,7 +3697,7 @@ namespace Hl7.Fhir.Specification.Tests
                         {
                             Discriminator = new string[] { "system" },
                             Ordered = false,
-                            Rules = ElementDefinition.SlicingRules.Open
+                            Rules = SlicingRules.Open
                         },
                         Min = 1,
                         // Append to comment inherited from base
@@ -3724,7 +3725,7 @@ namespace Hl7.Fhir.Specification.Tests
                         {
                             Discriminator = new string[] { "use" },
                             Ordered = true,
-                            Rules = ElementDefinition.SlicingRules.Closed
+                            Rules = SlicingRules.Closed
                         }
                     },
 
@@ -4060,7 +4061,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.MoveToChild("telecom"));
             Assert.IsNotNull(nav.Current.Slicing);
             Assert.AreEqual(true, nav.Current.Slicing.Ordered);
-            Assert.AreEqual(ElementDefinition.SlicingRules.OpenAtEnd, nav.Current.Slicing.Rules);
+            Assert.AreEqual(SlicingRules.OpenAtEnd, nav.Current.Slicing.Rules);
             Assert.IsFalse(nav.Current.Slicing.Discriminator.Any());
             Assert.AreEqual(1, nav.Current.Min);
             Assert.AreEqual("5", nav.Current.Max);
@@ -4086,7 +4087,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("1", nav.Current.Max);
             Assert.IsNotNull(nav.Current.Slicing);
             Assert.AreEqual("system|use", string.Join("|", nav.Current.Slicing.Discriminator));
-            Assert.AreEqual(ElementDefinition.SlicingRules.Closed, nav.Current.Slicing.Rules);
+            Assert.AreEqual(SlicingRules.Closed, nav.Current.Slicing.Rules);
             // Assert.AreEqual(false, nav.Current.Slicing.Ordered);
             Assert.IsNull(nav.Current.Slicing.Ordered);
 
@@ -4138,7 +4139,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("3", nav.Current.Max);
             Assert.IsNotNull(nav.Current.Slicing);
             Assert.AreEqual("system|use", string.Join("|", nav.Current.Slicing.Discriminator));
-            Assert.AreEqual(ElementDefinition.SlicingRules.Open, nav.Current.Slicing.Rules);
+            Assert.AreEqual(SlicingRules.Open, nav.Current.Slicing.Rules);
             // Assert.AreEqual(false, nav.Current.Slicing.Ordered);
             Assert.IsNull(nav.Current.Slicing.Ordered);
 
@@ -4488,7 +4489,7 @@ namespace Hl7.Fhir.Specification.Tests
             Name = "PatientIdentifierProfile",
             Url = PatientIdentifierProfileUri,
             //Derivation = StructureDefinition.TypeDerivationRule.Constraint,
-            Kind = StructureDefinition.StructureDefinitionKind.Datatype,
+            Kind = StructureDefinitionKind.Datatype,
             Differential = new StructureDefinition.DifferentialComponent()
             {
                 Element = new List<ElementDefinition>()
@@ -4516,7 +4517,7 @@ namespace Hl7.Fhir.Specification.Tests
             Name = "PatientProfileWithIdentifierProfile",
             Url = PatientProfileWithIdentifierProfileUri,
             //Derivation = StructureDefinition.TypeDerivationRule.Constraint,
-            Kind = StructureDefinition.StructureDefinitionKind.Resource,
+            Kind = StructureDefinitionKind.Resource,
             Differential = new StructureDefinition.DifferentialComponent()
             {
                 Element = new List<ElementDefinition>()
@@ -4686,7 +4687,7 @@ namespace Hl7.Fhir.Specification.Tests
             Name = "MyDerivedObservation",
             Url = MyDerivedObservationUrl,
             //Derivation = StructureDefinition.TypeDerivationRule.Constraint,
-            Kind = StructureDefinition.StructureDefinitionKind.Resource,
+            Kind = StructureDefinitionKind.Resource,
             Differential = new StructureDefinition.DifferentialComponent()
             {
                 Element = new List<ElementDefinition>()
@@ -4750,7 +4751,7 @@ namespace Hl7.Fhir.Specification.Tests
             Name = "MyMoreDerivedObservation",
             Url = MyMoreDerivedObservationUrl,
             //Derivation = StructureDefinition.TypeDerivationRule.Constraint,
-            Kind = StructureDefinition.StructureDefinitionKind.Resource,
+            Kind = StructureDefinitionKind.Resource,
             Differential = new StructureDefinition.DifferentialComponent()
             {
                 Element = new List<ElementDefinition>()
@@ -4832,7 +4833,7 @@ namespace Hl7.Fhir.Specification.Tests
             Name = "MySlicedDocumentReference",
             Url = "http://example.org/fhir/StructureDefinition/MySlicedDocumentReference",
             //Derivation = StructureDefinition.TypeDerivationRule.Constraint,
-            Kind = StructureDefinition.StructureDefinitionKind.Resource,
+            Kind = StructureDefinitionKind.Resource,
             Differential = new StructureDefinition.DifferentialComponent()
             {
                 Element = new List<ElementDefinition>()
@@ -4927,7 +4928,7 @@ namespace Hl7.Fhir.Specification.Tests
             Name = "MySlicedBasePatient",
             Url = @"http://example.org/fhir/StructureDefinition/MySlicedBasePatient",
             //Derivation = StructureDefinition.TypeDerivationRule.Constraint,
-            Kind = StructureDefinition.StructureDefinitionKind.Resource,
+            Kind = StructureDefinitionKind.Resource,
             Differential = new StructureDefinition.DifferentialComponent()
             {
                 Element = new List<ElementDefinition>()
@@ -4954,7 +4955,7 @@ namespace Hl7.Fhir.Specification.Tests
             Name = "MyMoreDerivedPatient",
             Url = @"http://example.org/fhir/StructureDefinition/MyMoreDerivedPatient",
             //Derivation = StructureDefinition.TypeDerivationRule.Constraint,
-            Kind = StructureDefinition.StructureDefinitionKind.Resource,
+            Kind = StructureDefinitionKind.Resource,
             Differential = new StructureDefinition.DifferentialComponent()
             {
                 Element = new List<ElementDefinition>()

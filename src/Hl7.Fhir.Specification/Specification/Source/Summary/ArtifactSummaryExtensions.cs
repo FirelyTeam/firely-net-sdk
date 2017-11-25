@@ -9,6 +9,7 @@
 #if NET_FILESYSTEM
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using System;
 using System.Collections.Generic;
 using System.Linq;

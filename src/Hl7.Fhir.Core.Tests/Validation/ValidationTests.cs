@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using System.Xml.Linq;
 using System.ComponentModel.DataAnnotations;
 using Hl7.Fhir.Validation;
@@ -112,10 +113,10 @@ namespace Hl7.Fhir.Tests.Validation
             oo.Issue.Add(issue);
             validateErrorOrFail(oo,true);
 
-            issue.Severity = OperationOutcome.IssueSeverity.Information;
+            issue.Severity = IssueSeverity.Information;
             validateErrorOrFail(oo, true);
 
-            issue.Code = OperationOutcome.IssueType.Forbidden;
+            issue.Code = IssueType.Forbidden;
 
             DotNetAttributeValidation.Validate(oo, true);
         }
@@ -173,7 +174,7 @@ namespace Hl7.Fhir.Tests.Validation
             validateErrorOrFail(enc, membername: "StatusElement");
             validateErrorOrFail(enc,true);  // recursive checking shouldn't matter
 
-            enc.Status = Encounter.EncounterState.Planned;
+            enc.Status = EncounterState.Planned;
 
             // Now, it should work
             DotNetAttributeValidation.Validate(enc);

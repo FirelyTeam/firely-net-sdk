@@ -7,37 +7,38 @@ using System.Runtime.Serialization;
 using Hl7.Fhir.Utility;
 
 /*
-  Copyright (c) 2011+, HL7, Inc.
-  All rights reserved.
-  
-  Redistribution and use in source and binary forms, with or without modification, 
-  are permitted provided that the following conditions are met:
-  
-   * Redistributions of source code must retain the above copyright notice, this 
-     list of conditions and the following disclaimer.
-   * Redistributions in binary form must reproduce the above copyright notice, 
-     this list of conditions and the following disclaimer in the documentation 
-     and/or other materials provided with the distribution.
-   * Neither the name of HL7 nor the names of its contributors may be used to 
-     endorse or promote products derived from this software without specific 
-     prior written permission.
-  
-  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
-  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
-  IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
-  INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
-  NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
-  PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
-  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
-  POSSIBILITY OF SUCH DAMAGE.
-  
+    Copyright (c) 2011+, HL7, Inc.
+    All rights reserved.
+
+    Redistribution and use in source and binary forms, with or without modification, 
+    are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice, this 
+        list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice, 
+        this list of conditions and the following disclaimer in the documentation 
+        and/or other materials provided with the distribution.
+    * Neither the name of HL7 nor the names of its contributors may be used to 
+        endorse or promote products derived from this software without specific 
+        prior written permission.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+    ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+    IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+    INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+    NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
+    PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+    WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+    POSSIBILITY OF SUCH DAMAGE.
+
 
 */
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.0.2, v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -50,6 +51,7 @@ namespace Hl7.Fhir.Model
     {
         [NotMapped]
         public override string TypeName { get { return "Attachment"; } }
+    
         
         /// <summary>
         /// Mime type of the content, with charset etc.
@@ -76,9 +78,9 @@ namespace Hl7.Fhir.Model
             set
             {
                 if (value == null)
-                  ContentTypeElement = null; 
+                    ContentTypeElement = null;
                 else
-                  ContentTypeElement = new Hl7.Fhir.Model.Code(value);
+                    ContentTypeElement = new Hl7.Fhir.Model.Code(value);
                 OnPropertyChanged("ContentType");
             }
         }
@@ -108,9 +110,9 @@ namespace Hl7.Fhir.Model
             set
             {
                 if (value == null)
-                  LanguageElement = null; 
+                    LanguageElement = null;
                 else
-                  LanguageElement = new Hl7.Fhir.Model.Code(value);
+                    LanguageElement = new Hl7.Fhir.Model.Code(value);
                 OnPropertyChanged("Language");
             }
         }
@@ -118,7 +120,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Data inline, base64ed
         /// </summary>
-        [FhirElement("data", InSummary=true, Order=50)]
+        [FhirElement("data", Order=50)]
         [DataMember]
         public Hl7.Fhir.Model.Base64Binary DataElement
         {
@@ -140,9 +142,9 @@ namespace Hl7.Fhir.Model
             set
             {
                 if (value == null)
-                  DataElement = null; 
+                    DataElement = null;
                 else
-                  DataElement = new Hl7.Fhir.Model.Base64Binary(value);
+                    DataElement = new Hl7.Fhir.Model.Base64Binary(value);
                 OnPropertyChanged("Data");
             }
         }
@@ -172,9 +174,9 @@ namespace Hl7.Fhir.Model
             set
             {
                 if (value == null)
-                  UrlElement = null; 
+                    UrlElement = null;
                 else
-                  UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+                    UrlElement = new Hl7.Fhir.Model.FhirUri(value);
                 OnPropertyChanged("Url");
             }
         }
@@ -203,10 +205,10 @@ namespace Hl7.Fhir.Model
             get { return SizeElement != null ? SizeElement.Value : null; }
             set
             {
-                if (!value.HasValue)
-                  SizeElement = null; 
+                if (value == null)
+                    SizeElement = null;
                 else
-                  SizeElement = new Hl7.Fhir.Model.UnsignedInt(value);
+                    SizeElement = new Hl7.Fhir.Model.UnsignedInt(value);
                 OnPropertyChanged("Size");
             }
         }
@@ -236,9 +238,9 @@ namespace Hl7.Fhir.Model
             set
             {
                 if (value == null)
-                  HashElement = null; 
+                    HashElement = null;
                 else
-                  HashElement = new Hl7.Fhir.Model.Base64Binary(value);
+                    HashElement = new Hl7.Fhir.Model.Base64Binary(value);
                 OnPropertyChanged("Hash");
             }
         }
@@ -268,9 +270,9 @@ namespace Hl7.Fhir.Model
             set
             {
                 if (value == null)
-                  TitleElement = null; 
+                    TitleElement = null;
                 else
-                  TitleElement = new Hl7.Fhir.Model.FhirString(value);
+                    TitleElement = new Hl7.Fhir.Model.FhirString(value);
                 OnPropertyChanged("Title");
             }
         }
@@ -300,18 +302,18 @@ namespace Hl7.Fhir.Model
             set
             {
                 if (value == null)
-                  CreationElement = null; 
+                    CreationElement = null;
                 else
-                  CreationElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                    CreationElement = new Hl7.Fhir.Model.FhirDateTime(value);
                 OnPropertyChanged("Creation");
             }
         }
-        
-
+    
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Attachment;
-            
+        
             if (dest != null)
             {
                 base.CopyTo(dest);
@@ -326,19 +328,19 @@ namespace Hl7.Fhir.Model
                 return dest;
             }
             else
-            	throw new ArgumentException("Can only copy to an object of the same type", "other");
+                throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
         
         public override IDeepCopyable DeepCopy()
         {
-            return CopyTo(new Attachment());
+             return CopyTo(new Attachment());
         }
         
         public override bool Matches(IDeepComparable other)
         {
             var otherT = other as Attachment;
             if(otherT == null) return false;
-            
+        
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(ContentTypeElement, otherT.ContentTypeElement)) return false;
             if( !DeepComparable.Matches(LanguageElement, otherT.LanguageElement)) return false;
@@ -348,7 +350,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(HashElement, otherT.HashElement)) return false;
             if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
             if( !DeepComparable.Matches(CreationElement, otherT.CreationElement)) return false;
-            
+        
             return true;
         }
         
@@ -356,7 +358,7 @@ namespace Hl7.Fhir.Model
         {
             var otherT = other as Attachment;
             if(otherT == null) return false;
-            
+        
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(ContentTypeElement, otherT.ContentTypeElement)) return false;
             if( !DeepComparable.IsExactly(LanguageElement, otherT.LanguageElement)) return false;
@@ -366,10 +368,10 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(HashElement, otherT.HashElement)) return false;
             if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
             if( !DeepComparable.IsExactly(CreationElement, otherT.CreationElement)) return false;
-            
+        
             return true;
         }
-
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {
@@ -386,13 +388,13 @@ namespace Hl7.Fhir.Model
                 if (CreationElement != null) yield return CreationElement;
             }
         }
-
+        
         [NotMapped]
-        internal override IEnumerable<ElementValue> NamedChildren 
-        { 
-            get 
-            { 
-                foreach (var item in base.NamedChildren) yield return item; 
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
                 if (ContentTypeElement != null) yield return new ElementValue("contentType", false, ContentTypeElement);
                 if (LanguageElement != null) yield return new ElementValue("language", false, LanguageElement);
                 if (DataElement != null) yield return new ElementValue("data", false, DataElement);
@@ -401,11 +403,9 @@ namespace Hl7.Fhir.Model
                 if (HashElement != null) yield return new ElementValue("hash", false, HashElement);
                 if (TitleElement != null) yield return new ElementValue("title", false, TitleElement);
                 if (CreationElement != null) yield return new ElementValue("creation", false, CreationElement);
- 
-            } 
-        } 
-    
+            }
+        }
     
     }
-    
+
 }

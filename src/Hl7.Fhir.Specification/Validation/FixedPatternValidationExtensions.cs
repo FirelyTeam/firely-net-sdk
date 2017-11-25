@@ -9,6 +9,7 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using System;
@@ -29,7 +30,7 @@ namespace Hl7.Fhir.Validation
                 if (!instance.IsExactlyEqualTo(fixedValueNav))
                 {
                     v.Trace(outcome, $"Value is not exactly equal to fixed value '{toReadable(definition.Fixed)}'",
-                            Issue.CONTENT_DOES_NOT_MATCH_FIXED_VALUE, instance);
+                            Support.Issue.CONTENT_DOES_NOT_MATCH_FIXED_VALUE, instance);
                 }
             }
 
@@ -47,7 +48,7 @@ namespace Hl7.Fhir.Validation
                 if (!instance.Matches(patternValueNav))
                 {
                     v.Trace(outcome, $"Value does not match pattern '{toReadable(definition.Pattern)}'",
-                            Issue.CONTENT_DOES_NOT_MATCH_PATTERN_VALUE, instance);
+                            Support.Issue.CONTENT_DOES_NOT_MATCH_PATTERN_VALUE, instance);
                 }
             }
 

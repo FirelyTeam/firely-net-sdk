@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Serialization;
 using static Hl7.Fhir.Tests.TestDataHelper;

@@ -1,5 +1,5 @@
 ﻿using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using Hl7.Fhir.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;

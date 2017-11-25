@@ -1,4 +1,5 @@
 ﻿using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Utility;
@@ -70,7 +71,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Fail($"No matching element found for path '{path}'");
         }
 
-        public void AssertSlicing(IEnumerable<string> discriminator, ElementDefinition.SlicingRules? rules, bool? ordered)
+        public void AssertSlicing(IEnumerable<string> discriminator, SlicingRules? rules, bool? ordered)
         {
             var slicing = Current.Slicing;
             Assert.IsNotNull(slicing);

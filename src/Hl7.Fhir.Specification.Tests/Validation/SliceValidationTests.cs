@@ -1,6 +1,7 @@
 ﻿using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
@@ -59,7 +60,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsType<SliceGroupBucket>(s);
             var slice = s as SliceGroupBucket;
 
-            Assert.Equal(ElementDefinition.SlicingRules.OpenAtEnd, slice.Rules);
+            Assert.Equal(SlicingRules.OpenAtEnd, slice.Rules);
             Assert.Equal(true, slice.Ordered);
             Assert.Equal("Patient.telecom", slice.Name);
             Assert.Equal(3, slice.ChildSlices.Count);
@@ -71,7 +72,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsType<SliceGroupBucket>(slice.ChildSlices[1]);
             var email = slice.ChildSlices[1] as SliceGroupBucket;
             Assert.Equal("Patient.telecom:email", email.Name);
-            Assert.Equal(ElementDefinition.SlicingRules.Closed, email.Rules);
+            Assert.Equal(SlicingRules.Closed, email.Rules);
             Assert.Equal(false, email.Ordered);
 
             Assert.IsType<SliceBucket>(email.Entry);
@@ -86,7 +87,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsType<SliceGroupBucket>(slice.ChildSlices[2]);
             var other = slice.ChildSlices[2] as SliceGroupBucket;
             Assert.Equal("Patient.telecom:other", other.Name);
-            Assert.Equal(ElementDefinition.SlicingRules.Open, other.Rules);
+            Assert.Equal(SlicingRules.Open, other.Rules);
         }
 
         [Fact]
@@ -95,16 +96,16 @@ namespace Hl7.Fhir.Specification.Tests
             var p = new Patient();
 
             // Incorrect "home" use for slice "phone"
-            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Phone, Use = ContactPoint.ContactPointUse.Home, Value = "e.kramer@furore.com" });
+            p.Telecom.Add(new ContactPoint { System = ContactPointSystem.Phone, Use = ContactPointUse.Home, Value = "e.kramer@furore.com" });
 
             // Incorrect use of "use" for slice "other"
-            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Other, Use = ContactPoint.ContactPointUse.Home, Value = "http://nu.nl" });
+            p.Telecom.Add(new ContactPoint { System = ContactPointSystem.Other, Use = ContactPointUse.Home, Value = "http://nu.nl" });
 
             // Correct use of slice "other"
-            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Other, Value = "http://nu.nl" });
+            p.Telecom.Add(new ContactPoint { System = ContactPointSystem.Other, Value = "http://nu.nl" });
 
             // Correct "work" use for slice "phone", but out of order
-            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Phone, Use = ContactPoint.ContactPointUse.Work, Value = "ewout@di.nl" });
+            p.Telecom.Add(new ContactPoint { System = ContactPointSystem.Phone, Use = ContactPointUse.Work, Value = "ewout@di.nl" });
 
             var outcome = _validator.Validate(p, "http://example.com/StructureDefinition/patient-telecom-slice-ek");
             Assert.False(outcome.Success);
@@ -122,11 +123,11 @@ namespace Hl7.Fhir.Specification.Tests
             var s = createSliceDefs() as SliceGroupBucket;
 
             var p = new Patient();
-            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Phone, Use = ContactPoint.ContactPointUse.Home, Value = "+31-6-39015765" });
-            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Email, Use = ContactPoint.ContactPointUse.Work, Value = "e.kramer@furore.com" });
-            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Other, Use = ContactPoint.ContactPointUse.Temp, Value = "skype://crap" });
-            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Other, Use = ContactPoint.ContactPointUse.Home, Value = "http://nu.nl" });
-            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Fax, Use = ContactPoint.ContactPointUse.Work, Value = "+31-20-6707070" });
+            p.Telecom.Add(new ContactPoint { System = ContactPointSystem.Phone, Use = ContactPointUse.Home, Value = "+31-6-39015765" });
+            p.Telecom.Add(new ContactPoint { System = ContactPointSystem.Email, Use = ContactPointUse.Work, Value = "e.kramer@furore.com" });
+            p.Telecom.Add(new ContactPoint { System = ContactPointSystem.Other, Use = ContactPointUse.Temp, Value = "skype://crap" });
+            p.Telecom.Add(new ContactPoint { System = ContactPointSystem.Other, Use = ContactPointUse.Home, Value = "http://nu.nl" });
+            p.Telecom.Add(new ContactPoint { System = ContactPointSystem.Fax, Use = ContactPointUse.Work, Value = "+31-20-6707070" });
             var pnav = new ScopedNavigator(new PocoNavigator(p));
 
             var telecoms = pnav.Children("telecom").Cast<ScopedNavigator>();
@@ -159,21 +160,21 @@ namespace Hl7.Fhir.Specification.Tests
             var p = new Patient();
 
             // Incorrect "old" use for closed slice telecom:email
-            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Email, Use = ContactPoint.ContactPointUse.Home, Value = "e.kramer@furore.com" });
-            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Email, Use = ContactPoint.ContactPointUse.Old, Value = "ewout@di.nl" });
+            p.Telecom.Add(new ContactPoint { System = ContactPointSystem.Email, Use = ContactPointUse.Home, Value = "e.kramer@furore.com" });
+            p.Telecom.Add(new ContactPoint { System = ContactPointSystem.Email, Use = ContactPointUse.Old, Value = "ewout@di.nl" });
 
             // Too many for telecom:other/home
-            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Other, Use = ContactPoint.ContactPointUse.Home, Value = "http://nu.nl" });
-            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Other, Use = ContactPoint.ContactPointUse.Home, Value = "http://nos.nl" });
+            p.Telecom.Add(new ContactPoint { System = ContactPointSystem.Other, Use = ContactPointUse.Home, Value = "http://nu.nl" });
+            p.Telecom.Add(new ContactPoint { System = ContactPointSystem.Other, Use = ContactPointUse.Home, Value = "http://nos.nl" });
 
             // Out of order openAtEnd
-            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Fax, Use = ContactPoint.ContactPointUse.Work, Value = "+31-20-6707070" });
+            p.Telecom.Add(new ContactPoint { System = ContactPointSystem.Fax, Use = ContactPointUse.Work, Value = "+31-20-6707070" });
 
             // For the open slice in telecom:other
-            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Other, Use = ContactPoint.ContactPointUse.Temp, Value = "skype://crap" });  // open slice
+            p.Telecom.Add(new ContactPoint { System = ContactPointSystem.Other, Use = ContactPointUse.Temp, Value = "skype://crap" });  // open slice
 
             // Out of order (already have telecom:other)
-            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Phone, Use = ContactPoint.ContactPointUse.Home, Value = "+31-6-39015765" });
+            p.Telecom.Add(new ContactPoint { System = ContactPointSystem.Phone, Use = ContactPointUse.Home, Value = "+31-6-39015765" });
 
             var outcome = _validator.Validate(p, "http://example.com/StructureDefinition/patient-telecom-reslice-ek");
             Assert.False(outcome.Success);

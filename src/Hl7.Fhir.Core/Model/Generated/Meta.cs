@@ -7,37 +7,38 @@ using System.Runtime.Serialization;
 using Hl7.Fhir.Utility;
 
 /*
-  Copyright (c) 2011+, HL7, Inc.
-  All rights reserved.
-  
-  Redistribution and use in source and binary forms, with or without modification, 
-  are permitted provided that the following conditions are met:
-  
-   * Redistributions of source code must retain the above copyright notice, this 
-     list of conditions and the following disclaimer.
-   * Redistributions in binary form must reproduce the above copyright notice, 
-     this list of conditions and the following disclaimer in the documentation 
-     and/or other materials provided with the distribution.
-   * Neither the name of HL7 nor the names of its contributors may be used to 
-     endorse or promote products derived from this software without specific 
-     prior written permission.
-  
-  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
-  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
-  IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
-  INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
-  NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
-  PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
-  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
-  POSSIBILITY OF SUCH DAMAGE.
-  
+    Copyright (c) 2011+, HL7, Inc.
+    All rights reserved.
+
+    Redistribution and use in source and binary forms, with or without modification, 
+    are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice, this 
+        list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice, 
+        this list of conditions and the following disclaimer in the documentation 
+        and/or other materials provided with the distribution.
+    * Neither the name of HL7 nor the names of its contributors may be used to 
+        endorse or promote products derived from this software without specific 
+        prior written permission.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+    ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+    IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+    INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+    NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
+    PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+    WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+    POSSIBILITY OF SUCH DAMAGE.
+
 
 */
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.0.2, v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -50,6 +51,7 @@ namespace Hl7.Fhir.Model
     {
         [NotMapped]
         public override string TypeName { get { return "Meta"; } }
+    
         
         /// <summary>
         /// Version specific identifier
@@ -76,9 +78,9 @@ namespace Hl7.Fhir.Model
             set
             {
                 if (value == null)
-                  VersionIdElement = null; 
+                    VersionIdElement = null;
                 else
-                  VersionIdElement = new Hl7.Fhir.Model.Id(value);
+                    VersionIdElement = new Hl7.Fhir.Model.Id(value);
                 OnPropertyChanged("VersionId");
             }
         }
@@ -107,10 +109,10 @@ namespace Hl7.Fhir.Model
             get { return LastUpdatedElement != null ? LastUpdatedElement.Value : null; }
             set
             {
-                if (!value.HasValue)
-                  LastUpdatedElement = null; 
+                if (value == null)
+                    LastUpdatedElement = null;
                 else
-                  LastUpdatedElement = new Hl7.Fhir.Model.Instant(value);
+                    LastUpdatedElement = new Hl7.Fhir.Model.Instant(value);
                 OnPropertyChanged("LastUpdated");
             }
         }
@@ -141,9 +143,9 @@ namespace Hl7.Fhir.Model
             set
             {
                 if (value == null)
-                  ProfileElement = null; 
+                    ProfileElement = null;
                 else
-                  ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
+                    ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
                 OnPropertyChanged("Profile");
             }
         }
@@ -175,12 +177,12 @@ namespace Hl7.Fhir.Model
         }
         
         private List<Hl7.Fhir.Model.Coding> _Tag;
-        
-
+    
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Meta;
-            
+        
             if (dest != null)
             {
                 base.CopyTo(dest);
@@ -192,26 +194,26 @@ namespace Hl7.Fhir.Model
                 return dest;
             }
             else
-            	throw new ArgumentException("Can only copy to an object of the same type", "other");
+                throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
         
         public override IDeepCopyable DeepCopy()
         {
-            return CopyTo(new Meta());
+             return CopyTo(new Meta());
         }
         
         public override bool Matches(IDeepComparable other)
         {
             var otherT = other as Meta;
             if(otherT == null) return false;
-            
+        
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(VersionIdElement, otherT.VersionIdElement)) return false;
             if( !DeepComparable.Matches(LastUpdatedElement, otherT.LastUpdatedElement)) return false;
             if( !DeepComparable.Matches(ProfileElement, otherT.ProfileElement)) return false;
             if( !DeepComparable.Matches(Security, otherT.Security)) return false;
             if( !DeepComparable.Matches(Tag, otherT.Tag)) return false;
-            
+        
             return true;
         }
         
@@ -219,17 +221,17 @@ namespace Hl7.Fhir.Model
         {
             var otherT = other as Meta;
             if(otherT == null) return false;
-            
+        
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(VersionIdElement, otherT.VersionIdElement)) return false;
             if( !DeepComparable.IsExactly(LastUpdatedElement, otherT.LastUpdatedElement)) return false;
             if( !DeepComparable.IsExactly(ProfileElement, otherT.ProfileElement)) return false;
             if( !DeepComparable.IsExactly(Security, otherT.Security)) return false;
             if( !DeepComparable.IsExactly(Tag, otherT.Tag)) return false;
-            
+        
             return true;
         }
-
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {
@@ -243,23 +245,21 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Tag) { if (elem != null) yield return elem; }
             }
         }
-
+        
         [NotMapped]
-        internal override IEnumerable<ElementValue> NamedChildren 
-        { 
-            get 
-            { 
-                foreach (var item in base.NamedChildren) yield return item; 
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
                 if (VersionIdElement != null) yield return new ElementValue("versionId", false, VersionIdElement);
                 if (LastUpdatedElement != null) yield return new ElementValue("lastUpdated", false, LastUpdatedElement);
                 foreach (var elem in ProfileElement) { if (elem != null) yield return new ElementValue("profile", true, elem); }
                 foreach (var elem in Security) { if (elem != null) yield return new ElementValue("security", true, elem); }
                 foreach (var elem in Tag) { if (elem != null) yield return new ElementValue("tag", true, elem); }
- 
-            } 
-        } 
-    
+            }
+        }
     
     }
-    
+
 }

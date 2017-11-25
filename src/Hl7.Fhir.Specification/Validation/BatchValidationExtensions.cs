@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
@@ -31,7 +32,7 @@ namespace Hl7.Fhir.Validation
             OperationOutcome combinedResult = new OperationOutcome();
 
             var modeLabel = mode == BatchValidationMode.All ? "ALL" : "ANY";
-            validator.Trace(combinedResult, $"Combination of {validations.Count()} child validation runs, {modeLabel} must succeed", Issue.PROCESSING_PROGRESS, instance);
+            validator.Trace(combinedResult, $"Combination of {validations.Count()} child validation runs, {modeLabel} must succeed", Support.Issue.PROCESSING_PROGRESS, instance);
 
             int failures = 0;
             int successes = 0;
@@ -63,7 +64,7 @@ namespace Hl7.Fhir.Validation
             for (var index = 0; index < results.Count; index++)
             {
                 var result = results[index];
-                validator.Trace(combinedResult, $"Report {index}: {(result.Success ? "SUCCESS" : "FAILURE")}", Issue.PROCESSING_PROGRESS, instance);
+                validator.Trace(combinedResult, $"Report {index}: {(result.Success ? "SUCCESS" : "FAILURE")}", Support.Issue.PROCESSING_PROGRESS, instance);
 
                 if (success)
                 {
@@ -76,9 +77,9 @@ namespace Hl7.Fhir.Validation
             }
 
             if (success)
-                validator.Trace(combinedResult, "Combined validation succeeded", Issue.PROCESSING_PROGRESS, instance);
+                validator.Trace(combinedResult, "Combined validation succeeded", Support.Issue.PROCESSING_PROGRESS, instance);
             else
-                combinedResult.AddIssue($"Combined {modeLabel} validation failed, {failures} child validation runs failed, {successes} succeeded", Issue.PROCESSING_PROGRESS, instance);
+                combinedResult.AddIssue($"Combined {modeLabel} validation failed, {failures} child validation runs failed, {successes} succeeded", Support.Issue.PROCESSING_PROGRESS, instance);
 
 
             return combinedResult;

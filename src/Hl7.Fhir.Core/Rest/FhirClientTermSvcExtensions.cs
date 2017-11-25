@@ -59,60 +59,62 @@ namespace Hl7.Fhir.Rest
     public static class FhirClientTermSvcExtensions
     {
         #region Expand
-        public static async Task<ValueSet> ExpandValueSetAsync(this FhirClient client, Uri valueset, FhirString filter = null, FhirDateTime date = null)
+        public static async Task<Model.DSTU2.ValueSet> ExpandValueSetAsync(this FhirDstu2Client client, Uri valueset, FhirString filter = null, FhirDateTime date = null)
         {
-            if (valueset == null) throw Error.ArgumentNull(nameof(valueset));
-
-            var par = new Parameters();
-
-            if (filter != null) par.Add("filter", filter);
-            if (date != null) par.Add("date", date);
-
-            ResourceIdentity id = new ResourceIdentity(valueset);
-
-            return (await client.InstanceOperationAsync(id.WithoutVersion().MakeRelative(), RestOperation.EXPAND_VALUESET, par).ConfigureAwait(false))
-                        .OperationResult<ValueSet>();
+            return await ExpandValueSetAsync<Model.DSTU2.ValueSet, Model.DSTU2.Bundle, Model.DSTU2.Conformance, Model.DSTU2.OperationOutcome>(client, valueset, filter, date);
         }
 
-        public static ValueSet ExpandValueSet(this FhirClient client, Uri valueset, FhirString filter = null,
-            FhirDateTime date = null)
+        public static Model.DSTU2.ValueSet ExpandValueSet(this FhirDstu2Client client, Uri valueset, FhirString filter = null, FhirDateTime date = null)
         {
             return ExpandValueSetAsync(client, valueset, filter, date).WaitResult();
         }
 
-        public static async Task<ValueSet> ExpandValueSetAsync(this FhirClient client, FhirUri identifier, FhirString filter = null, FhirDateTime date = null)
+        public static async Task<Model.STU3.ValueSet> ExpandValueSetAsync(this FhirStu3Client client, Uri valueset, FhirString filter = null, FhirDateTime date = null)
         {
-            if (identifier == null) throw Error.ArgumentNull(nameof(identifier));
-
-            var par = new Parameters();
-
-            par.Add("identifier", identifier);
-            if (filter != null) par.Add("filter", filter);
-            if (date != null) par.Add("date", date);
-
-            return (await client.TypeOperationAsync<ValueSet>(RestOperation.EXPAND_VALUESET, par).ConfigureAwait(false))
-                        .OperationResult<ValueSet>();
+            return await ExpandValueSetAsync<Model.STU3.ValueSet, Model.STU3.Bundle, Model.STU3.CapabilityStatement, Model.STU3.OperationOutcome>(client, valueset, filter, date);
         }
 
-        public static ValueSet ExpandValueSet(this FhirClient client, FhirUri identifier, FhirString filter = null,
-            FhirDateTime date = null)
+        public static Model.STU3.ValueSet ExpandValueSet(this FhirStu3Client client, Uri valueset, FhirString filter = null, FhirDateTime date = null)
+        {
+            return ExpandValueSetAsync(client, valueset, filter, date).WaitResult();
+        }
+
+        public static async Task<Model.DSTU2.ValueSet> ExpandValueSetAsync(this FhirDstu2Client client, FhirUri identifier, FhirString filter = null, FhirDateTime date = null)
+        {
+            return await ExpandValueSetAsync<Model.DSTU2.ValueSet, Model.DSTU2.Bundle, Model.DSTU2.Conformance, Model.DSTU2.OperationOutcome>(client, identifier, filter, date);
+        }
+
+        public static Model.DSTU2.ValueSet ExpandValueSet(this FhirDstu2Client client, FhirUri identifier, FhirString filter = null, FhirDateTime date = null)
         {
             return ExpandValueSetAsync(client, identifier, filter, date).WaitResult();
         }
 
-        public static async Task<ValueSet> ExpandValueSetAsync(this FhirClient client, ValueSet vs, FhirString filter = null, FhirDateTime date = null)
+        public static async Task<Model.STU3.ValueSet> ExpandValueSetAsync(this FhirStu3Client client, FhirUri identifier, FhirString filter = null, FhirDateTime date = null)
         {
-            if (vs == null) throw Error.ArgumentNull(nameof(vs));
-
-            var par = new Parameters().Add("valueSet", vs);
-            if (filter != null) par.Add("filter", filter);
-            if (date != null) par.Add("date", date);
-
-            return (await client.TypeOperationAsync<ValueSet>(RestOperation.EXPAND_VALUESET, par).ConfigureAwait(false))
-                    .OperationResult<ValueSet>();
+            return await ExpandValueSetAsync<Model.STU3.ValueSet, Model.STU3.Bundle, Model.STU3.CapabilityStatement, Model.STU3.OperationOutcome>(client, identifier, filter, date);
         }
 
-        public static ValueSet ExpandValueSet(this FhirClient client, ValueSet vs, FhirString filter = null,
+        public static Model.STU3.ValueSet ExpandValueSet(this FhirStu3Client client, FhirUri identifier, FhirString filter = null, FhirDateTime date = null)
+        {
+            return ExpandValueSetAsync(client, identifier, filter, date).WaitResult();
+        }
+
+        public static async Task<Model.DSTU2.ValueSet> ExpandValueSetAsync(this FhirDstu2Client client, Model.DSTU2.ValueSet vs, FhirString filter = null, FhirDateTime date = null)
+        {
+            return await ExpandValueSetAsync(client, vs, filter, date);
+        }
+
+        public static Model.DSTU2.ValueSet ExpandValueSet(this FhirDstu2Client client, Model.DSTU2.ValueSet vs, FhirString filter = null, FhirDateTime date = null)
+        {
+            return ExpandValueSetAsync(client, vs, filter, date).WaitResult();
+        }
+
+        public static async Task<Model.STU3.ValueSet> ExpandValueSetAsync(this FhirStu3Client client, Model.STU3.ValueSet vs, FhirString filter = null, FhirDateTime date = null)
+        {
+            return await ExpandValueSetAsync(client, vs, filter, date);
+        }
+
+        public static Model.STU3.ValueSet ExpandValueSet(this FhirStu3Client client, Model.STU3.ValueSet vs, FhirString filter = null,
             FhirDateTime date = null)
         {
             return ExpandValueSetAsync(client, vs, filter, date).WaitResult();
@@ -122,7 +124,7 @@ namespace Hl7.Fhir.Rest
 
         #region Concept Lookup
 
-        public static async Task<Parameters> ConceptLookupAsync(this IFhirClient client, 
+        public static async Task<Parameters> ConceptLookupAsync(this FhirDstu2Client client, 
             Code code=null, FhirUri system = null, FhirString version = null, 
             Coding coding=null, FhirDateTime date = null)
         {
@@ -133,11 +135,34 @@ namespace Hl7.Fhir.Rest
                 .Add(nameof(coding), coding)
                 .Add(nameof(date), date);
 
-            return (await client.TypeOperationAsync<ValueSet>(RestOperation.CONCEPT_LOOKUP, par).ConfigureAwait(false))
+            return (await client.TypeOperationAsync<Model.DSTU2.ValueSet>(RestOperation.CONCEPT_LOOKUP, par).ConfigureAwait(false))
                 .OperationResult<Parameters>();
         }
 
-        public static Parameters ConceptLookup(this IFhirClient client,
+        public static Parameters ConceptLookup(this FhirDstu2Client client,
+            Code code = null, FhirUri system = null, FhirString version = null,
+            Coding coding = null, FhirDateTime date = null)
+
+        {
+            return ConceptLookupAsync(client, code, system, version, coding, date).WaitResult();
+        }
+
+        public static async Task<Parameters> ConceptLookupAsync(this FhirStu3Client client,
+            Code code = null, FhirUri system = null, FhirString version = null,
+            Coding coding = null, FhirDateTime date = null)
+        {
+            var par = new Parameters()
+                .Add(nameof(code), code)
+                .Add(nameof(system), system)
+                .Add(nameof(version), version)
+                .Add(nameof(coding), coding)
+                .Add(nameof(date), date);
+
+            return (await client.TypeOperationAsync<Model.STU3.ValueSet>(RestOperation.CONCEPT_LOOKUP, par).ConfigureAwait(false))
+                .OperationResult<Parameters>();
+        }
+
+        public static Parameters ConceptLookup(this FhirStu3Client client,
             Code code = null, FhirUri system = null, FhirString version = null,
             Coding coding = null, FhirDateTime date = null)
 
@@ -149,8 +174,8 @@ namespace Hl7.Fhir.Rest
 
         #region Validate Code
 
-        public static async Task<ValidateCodeResult> ValidateCodeAsync(this IFhirClient client, String valueSetId, 
-                FhirUri identifier = null, FhirUri context = null, ValueSet valueSet = null, Code code = null,
+        public static async Task<ValidateCodeResult> ValidateCodeAsync(this FhirDstu2Client client, String valueSetId, 
+                FhirUri identifier = null, FhirUri context = null, Model.DSTU2.ValueSet valueSet = null, Code code = null,
                 FhirUri system = null, FhirString version = null, FhirString display = null, 
                 Coding coding = null, CodeableConcept codeableConcept = null, FhirDateTime date = null,
                 FhirBoolean @abstract = null)   
@@ -179,8 +204,8 @@ namespace Hl7.Fhir.Rest
                 return null;
         }
 
-        public static ValidateCodeResult ValidateCode(this IFhirClient client, String valueSetId,
-                FhirUri identifier = null, FhirUri context = null, ValueSet valueSet = null, Code code = null,
+        public static ValidateCodeResult ValidateCode(this FhirDstu2Client client, String valueSetId,
+                FhirUri identifier = null, FhirUri context = null, Model.DSTU2.ValueSet valueSet = null, Code code = null,
                 FhirUri system = null, FhirString version = null, FhirString display = null,
                 Coding coding = null, CodeableConcept codeableConcept = null, FhirDateTime date = null,
                 FhirBoolean @abstract = null)
@@ -189,8 +214,48 @@ namespace Hl7.Fhir.Rest
                 coding, codeableConcept, date, @abstract).WaitResult();
         }
 
-        public async static Task<ValidateCodeResult> ValidateCodeAsync(this IFhirClient client,
-                FhirUri identifier = null, FhirUri context = null, ValueSet valueSet = null, Code code = null,
+        public static async Task<ValidateCodeResult> ValidateCodeAsync(this FhirStu3Client client, String valueSetId,
+                FhirUri identifier = null, FhirUri context = null, Model.STU3.ValueSet valueSet = null, Code code = null,
+                FhirUri system = null, FhirString version = null, FhirString display = null,
+                Coding coding = null, CodeableConcept codeableConcept = null, FhirDateTime date = null,
+                FhirBoolean @abstract = null)
+        {
+            if (valueSetId == null) throw new ArgumentNullException(nameof(valueSetId));
+
+            var par = new Parameters()
+                .Add(nameof(identifier), identifier)
+                .Add(nameof(context), context)
+                .Add(nameof(valueSet), valueSet)
+                .Add(nameof(code), code)
+                .Add(nameof(system), system)
+                .Add(nameof(version), version)
+                .Add(nameof(display), display)
+                .Add(nameof(coding), coding)
+                .Add(nameof(codeableConcept), codeableConcept)
+                .Add(nameof(date), date)
+                .Add(nameof(@abstract), @abstract);
+
+            ResourceIdentity location = new ResourceIdentity("ValueSet/" + valueSetId);
+            var result = await client.InstanceOperationAsync(location.WithoutVersion().MakeRelative(), RestOperation.VALIDATE_CODE, par).ConfigureAwait(false);
+
+            if (result != null)
+                return ValidateCodeResult.FromParameters(result.OperationResult<Parameters>());
+            else
+                return null;
+        }
+
+        public static ValidateCodeResult ValidateCode(this FhirStu3Client client, String valueSetId,
+                FhirUri identifier = null, FhirUri context = null, Model.STU3.ValueSet valueSet = null, Code code = null,
+                FhirUri system = null, FhirString version = null, FhirString display = null,
+                Coding coding = null, CodeableConcept codeableConcept = null, FhirDateTime date = null,
+                FhirBoolean @abstract = null)
+        {
+            return ValidateCodeAsync(client, valueSetId, identifier, context, valueSet, code, system, version, display,
+                coding, codeableConcept, date, @abstract).WaitResult();
+        }
+
+        public async static Task<ValidateCodeResult> ValidateCodeAsync(this FhirDstu2Client client,
+                FhirUri identifier = null, FhirUri context = null, Model.DSTU2.ValueSet valueSet = null, Code code = null,
                 FhirUri system = null, FhirString version = null, FhirString display = null,
                 Coding coding = null, CodeableConcept codeableConcept = null, FhirDateTime date = null,
                 FhirBoolean @abstract = null)
@@ -208,7 +273,7 @@ namespace Hl7.Fhir.Rest
                 .Add(nameof(date), date)
                 .Add(nameof(@abstract), @abstract);
 
-            var result = await client.TypeOperationAsync<ValueSet>(RestOperation.VALIDATE_CODE, par).ConfigureAwait(false);
+            var result = await client.TypeOperationAsync<Model.DSTU2.ValueSet>(RestOperation.VALIDATE_CODE, par).ConfigureAwait(false);
 
             if(result != null)
                 return ValidateCodeResult.FromParameters(result.OperationResult<Parameters>());
@@ -216,8 +281,8 @@ namespace Hl7.Fhir.Rest
                 return null;
         }
 
-        public static ValidateCodeResult ValidateCode(this IFhirClient client,
-                FhirUri identifier = null, FhirUri context = null, ValueSet valueSet = null, Code code = null,
+        public static ValidateCodeResult ValidateCode(this FhirDstu2Client client,
+                FhirUri identifier = null, FhirUri context = null, Model.DSTU2.ValueSet valueSet = null, Code code = null,
                 FhirUri system = null, FhirString version = null, FhirString display = null,
                 Coding coding = null, CodeableConcept codeableConcept = null, FhirDateTime date = null,
                 FhirBoolean @abstract = null)
@@ -226,7 +291,96 @@ namespace Hl7.Fhir.Rest
                         coding, codeableConcept, date, @abstract).WaitResult();
         }
 
+        public async static Task<ValidateCodeResult> ValidateCodeAsync(this FhirStu3Client client,
+                FhirUri identifier = null, FhirUri context = null, Model.STU3.ValueSet valueSet = null, Code code = null,
+                FhirUri system = null, FhirString version = null, FhirString display = null,
+                Coding coding = null, CodeableConcept codeableConcept = null, FhirDateTime date = null,
+                FhirBoolean @abstract = null)
+        {
+            var par = new Parameters()
+                .Add(nameof(identifier), identifier)
+                .Add(nameof(context), context)
+                .Add(nameof(valueSet), valueSet)
+                .Add(nameof(code), code)
+                .Add(nameof(system), system)
+                .Add(nameof(version), version)
+                .Add(nameof(display), display)
+                .Add(nameof(coding), coding)
+                .Add(nameof(codeableConcept), codeableConcept)
+                .Add(nameof(date), date)
+                .Add(nameof(@abstract), @abstract);
+
+            var result = await client.TypeOperationAsync<Model.STU3.ValueSet>(RestOperation.VALIDATE_CODE, par).ConfigureAwait(false);
+
+            if (result != null)
+                return ValidateCodeResult.FromParameters(result.OperationResult<Parameters>());
+            else
+                return null;
+        }
+
+        public static ValidateCodeResult ValidateCode(this FhirStu3Client client,
+                FhirUri identifier = null, FhirUri context = null, Model.STU3.ValueSet valueSet = null, Code code = null,
+                FhirUri system = null, FhirString version = null, FhirString display = null,
+                Coding coding = null, CodeableConcept codeableConcept = null, FhirDateTime date = null,
+                FhirBoolean @abstract = null)
+        {
+            return ValidateCodeAsync(client, identifier, context, valueSet, code, system, version, display,
+                        coding, codeableConcept, date, @abstract).WaitResult();
+        }
 
         #endregion
+
+        private static async Task<T> ExpandValueSetAsync<T, TBundle, TMetadata, TOperationOutcome>(FhirClient<TBundle, TMetadata, TOperationOutcome> client, Uri valueset, FhirString filter, FhirDateTime date) 
+            where T : Resource
+            where TBundle : Resource, IBundle
+            where TMetadata : Resource, IMetadata
+            where TOperationOutcome : Resource
+        {
+            if (valueset == null) throw Error.ArgumentNull(nameof(valueset));
+
+            var par = new Parameters();
+
+            if (filter != null) par.Add("filter", filter);
+            if (date != null) par.Add("date", date);
+
+            ResourceIdentity id = new ResourceIdentity(valueset);
+
+            return (await client.InstanceOperationAsync(id.WithoutVersion().MakeRelative(), RestOperation.EXPAND_VALUESET, par).ConfigureAwait(false))
+                        .OperationResult<T>();
+        }
+
+        private static async Task<T> ExpandValueSetAsync<T, TBundle, TMetadata, TOperationOutcome>(FhirClient<TBundle, TMetadata, TOperationOutcome> client, FhirUri identifier, FhirString filter, FhirDateTime date) 
+            where T : Resource
+            where TBundle : Resource, IBundle
+            where TMetadata : Resource, IMetadata
+            where TOperationOutcome : Resource
+        {
+            if (identifier == null) throw Error.ArgumentNull(nameof(identifier));
+
+            var par = new Parameters();
+
+            par.Add("identifier", identifier);
+            if (filter != null) par.Add("filter", filter);
+            if (date != null) par.Add("date", date);
+
+            return (await client.TypeOperationAsync<T>(RestOperation.EXPAND_VALUESET, par).ConfigureAwait(false))
+                        .OperationResult<T>();
+        }
+
+        private static async Task<T> ExpandValueSetAsync<T, TBundle, TMetadata, TOperationOutcome>(FhirClient<TBundle, TMetadata, TOperationOutcome> client, T vs, FhirString filter, FhirDateTime date) 
+            where T :Resource
+            where TBundle : Resource, IBundle
+            where TMetadata : Resource, IMetadata
+            where TOperationOutcome : Resource
+        {
+            if (vs == null) throw Error.ArgumentNull(nameof(vs));
+
+            var par = new Parameters().Add("valueSet", vs);
+            if (filter != null) par.Add("filter", filter);
+            if (date != null) par.Add("date", date);
+
+            return (await client.TypeOperationAsync<T>(RestOperation.EXPAND_VALUESET, par).ConfigureAwait(false))
+                    .OperationResult<T>();
+        }
     }
 }

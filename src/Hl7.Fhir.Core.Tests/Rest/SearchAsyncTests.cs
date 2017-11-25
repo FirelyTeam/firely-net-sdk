@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using Hl7.Fhir.Rest;
 using Task = System.Threading.Tasks.Task;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async Task Search_UsingSearchParams_SearchReturned()
         {
-            var client = new FhirClient(_endpoint)
+            var client = new FhirDstu2Client(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
                 ReturnFullResource = true
@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public void SearchSync_UsingSearchParams_SearchReturned()
         {
-            var client = new FhirClient(_endpoint)
+            var client = new FhirDstu2Client(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
                 ReturnFullResource = true
@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async Task SearchMultiple_UsingSearchParams_SearchReturned()
         {
-            var client = new FhirClient(_endpoint)
+            var client = new FhirDstu2Client(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
                 ReturnFullResource = true
@@ -126,7 +126,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async Task SearchWithCriteria_SyncContinue_SearchReturned()
         {
-            var client = new FhirClient(_endpoint)
+            var client = new FhirDstu2Client(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
                 ReturnFullResource = true
@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async Task SearchWithCriteria_AsyncContinue_SearchReturned()
         {
-            var client = new FhirClient(_endpoint)
+            var client = new FhirDstu2Client(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
                 ReturnFullResource = true

@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Serialization
 
         private void writeProperty(ClassMapping mapping, object instance, Rest.SummaryType summary, SerializationMode mode, PropertyMapping prop)
         {
-            if (instance is Bundle && !(summary == Rest.SummaryType.Count && prop.Name.ToLower() == "entry")
+            if (instance is IBundle && !(summary == Rest.SummaryType.Count && prop.Name.ToLower() == "entry")
                 || prop.Name == "id"
                 || summary == Rest.SummaryType.True && prop.InSummary
                 || summary == Rest.SummaryType.False

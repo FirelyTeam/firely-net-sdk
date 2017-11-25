@@ -66,7 +66,7 @@ namespace Hl7.Fhir.ElementModel
             return true;
         }
 
-        public bool AtResource => Type != null ? Char.IsUpper(Type[0]) && ModelInfo.IsKnownResource(Type) : false;
+        public bool AtResource => Type != null ? Char.IsUpper(Type[0]) && AllVersionsModelInfo.IsKnownResource(Type) : false;
         public bool AtBundle => Type != null ? Type == "Bundle" : false;
 
         public IEnumerable<ScopedNavigator> Parents()

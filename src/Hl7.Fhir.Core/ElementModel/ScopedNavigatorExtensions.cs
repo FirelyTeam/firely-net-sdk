@@ -111,10 +111,10 @@ namespace Hl7.Fhir.ElementModel
             // First, get the url to fetch from the focus
             string url = null;
 
-            if (nav.Type == FHIRDefinedType.String.GetLiteral() && nav.Value is string s)
+            if (nav.Type == "string" && nav.Value is string s)
                 url = s;
-            else if (nav.Type == FHIRDefinedType.Reference.GetLiteral())
-                url = nav.ParseResourceReference()?.Reference;
+            else if (nav.Type == "Reference")
+                url = nav.ParseResourceReferenceReference();
 
             if (url == null) return default(T);   // nothing found to resolve
 

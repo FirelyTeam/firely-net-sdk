@@ -82,7 +82,89 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("value", InSummary = true, Order = 40, Choice = ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean), typeof(Hl7.Fhir.Model.Integer), typeof(Hl7.Fhir.Model.FhirDecimal), typeof(Hl7.Fhir.Model.Base64Binary), typeof(Hl7.Fhir.Model.Instant), typeof(Hl7.Fhir.Model.FhirString), typeof(Hl7.Fhir.Model.FhirUri), typeof(Hl7.Fhir.Model.Date), typeof(Hl7.Fhir.Model.FhirDateTime), typeof(Hl7.Fhir.Model.Time), typeof(Hl7.Fhir.Model.Code), typeof(Hl7.Fhir.Model.Oid), typeof(Hl7.Fhir.Model.Id), typeof(Hl7.Fhir.Model.UnsignedInt), typeof(Hl7.Fhir.Model.PositiveInt), typeof(Hl7.Fhir.Model.Markdown), typeof(Hl7.Fhir.Model.Annotation), typeof(Hl7.Fhir.Model.Attachment), typeof(Hl7.Fhir.Model.Identifier), typeof(Hl7.Fhir.Model.CodeableConcept), typeof(Hl7.Fhir.Model.Coding), typeof(Quantity), typeof(Hl7.Fhir.Model.Range), typeof(Hl7.Fhir.Model.Period), typeof(Hl7.Fhir.Model.Ratio), typeof(Hl7.Fhir.Model.SampledData), typeof(Hl7.Fhir.Model.Signature), typeof(Hl7.Fhir.Model.HumanName), typeof(Hl7.Fhir.Model.Address), typeof(Hl7.Fhir.Model.ContactPoint), typeof(Hl7.Fhir.Model.Timing), typeof(Hl7.Fhir.Model.ResourceReference), typeof(Hl7.Fhir.Model.Meta))]
+        [AllowedTypes(
+            Version = Version.DSTU2, 
+            Types = new[] 
+            {
+                typeof(FhirBoolean),
+                typeof(Integer),
+                typeof(FhirDecimal),
+                typeof(Base64Binary),
+                typeof(Instant),
+                typeof(FhirString),
+                typeof(FhirUri),
+                typeof(Date),
+                typeof(FhirDateTime),
+                typeof(Time),
+                typeof(Code),
+                typeof(Oid),
+                typeof(Id),
+                typeof(UnsignedInt),
+                typeof(PositiveInt),
+                typeof(Markdown),
+                typeof(Annotation),
+                typeof(Attachment),
+                typeof(DSTU2.Identifier),
+                typeof(CodeableConcept),
+                typeof(Coding),
+                typeof(Quantity),
+                typeof(Range),
+                typeof(Period),
+                typeof(Ratio),
+                typeof(SampledData),
+                typeof(DSTU2.Signature),
+                typeof(DSTU2.HumanName),
+                typeof(Address),
+                typeof(DSTU2.ContactPoint),
+                typeof(DSTU2.Timing),
+                typeof(DSTU2.ResourceReference),
+                typeof(Meta),
+            }
+        )]
+        [AllowedTypes(
+            Version = Version.STU3, 
+            Types = new[] 
+            {
+                typeof(Base64Binary),
+                typeof(FhirBoolean),
+                typeof(Code),
+                typeof(Date),
+                typeof(FhirDateTime),
+                typeof(FhirDecimal),
+                typeof(Id),
+                typeof(Instant),
+                typeof(Integer),
+                typeof(Markdown),
+                typeof(Oid),
+                typeof(PositiveInt),
+                typeof(FhirString),
+                typeof(Time),
+                typeof(UnsignedInt),
+                typeof(FhirUri),
+                typeof(Address),
+                typeof(Age),
+                typeof(Annotation),
+                typeof(Attachment),
+                typeof(CodeableConcept),
+                typeof(Coding),
+                typeof(STU3.ContactPoint),
+                typeof(Count),
+                typeof(Distance),
+                typeof(Duration),
+                typeof(STU3.HumanName),
+                typeof(STU3.Identifier),
+                typeof(Money),
+                typeof(Period),
+                typeof(Quantity),
+                typeof(Range),
+                typeof(Ratio),
+                typeof(STU3.ResourceReference),
+                typeof(SampledData),
+                typeof(STU3.Signature),
+                typeof(STU3.Timing),
+                typeof(Meta)
+            }
+        )]
         [DataMember]
         public Hl7.Fhir.Model.Element Value
         {

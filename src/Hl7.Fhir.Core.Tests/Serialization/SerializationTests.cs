@@ -9,6 +9,7 @@
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using Hl7.Fhir.Serialization;
 using System.Text;
 using System.Collections.Generic;
@@ -121,7 +122,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var q = new Questionnaire();
             q.Text = new Narrative() { Div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">Test Questionnaire</div>" };
-            q.Status = Questionnaire.QuestionnaireStatus.Published;
+            q.Status = QuestionnaireStatus.Published;
             q.Date = "2015-09-27";
             q.Group = new Questionnaire.GroupComponent();
             q.Group.Title = "TITLE";

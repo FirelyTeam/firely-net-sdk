@@ -16,6 +16,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Hl7.Fhir.Model.DSTU2;
 
 namespace Hl7.Fhir.Specification.Tests
 {

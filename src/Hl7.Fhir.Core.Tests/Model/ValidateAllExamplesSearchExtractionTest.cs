@@ -55,9 +55,9 @@ namespace Hl7.Fhir.Tests.Model
 
                         ExtractValuesForSearchParameterFromFile(exampleSearchValues, resource);
 
-                        if (resource is Bundle)
+                        if (resource is Fhir.Model.DSTU2.Bundle)
                         {
-                            foreach (var item in (resource as Bundle).Entry)
+                            foreach (var item in (resource as Fhir.Model.DSTU2.Bundle).Entry)
                             {
                                 if (item.Resource != null)
                                 {
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Tests.Model
         private static void ExtractValuesForSearchParameterFromFile(Dictionary<string, int> exampleSearchValues, Resource resource)
         {
             // Extract the search properties
-            var searchparameters = ModelInfo.SearchParameters.Where(r => r.Resource == resource.ResourceType.ToString() && !String.IsNullOrEmpty(r.Expression));
+            var searchparameters = Fhir.Model.DSTU2.ModelInfo.SearchParameters.Where(r => r.Resource == resource.ResourceType.ToString() && !String.IsNullOrEmpty(r.Expression));
             foreach (var index in searchparameters)
             {
                 // prepare the search data cache
@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Tests.Model
             }
         }
 
-        private static void ExtractExamplesFromResource(Dictionary<string, int> exampleSearchValues, Resource resource, ModelInfo.SearchParamDefinition index, string key)
+        private static void ExtractExamplesFromResource(Dictionary<string, int> exampleSearchValues, Resource resource, SearchParamDefinition index, string key)
         {
             var resourceModel = new PocoNavigator(resource);
             var navigator = new PocoNavigator(resource);

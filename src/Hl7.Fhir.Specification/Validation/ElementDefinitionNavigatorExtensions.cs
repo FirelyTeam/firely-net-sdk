@@ -9,6 +9,7 @@
 using System;
 using System.Linq;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using Hl7.Fhir.Specification.Navigation;
 
 namespace Hl7.Fhir.Validation

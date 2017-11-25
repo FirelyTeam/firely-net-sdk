@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -47,7 +48,7 @@ namespace Hl7.Fhir.Tests.Model
             testBundle.AddResourceEntry(new Patient { Id = "1234", Meta = new Meta { VersionId = "v2" } }, "http://nu.nl/fhir/Patient/1234");
             testBundle.AddResourceEntry(new Patient { Id = "1234", Meta = new Meta { VersionId = "v3" } }, "http://nu.nl/fhir/Patient/1234");
             testBundle.AddResourceEntry(new Patient { Id = "1234", Meta = new Meta { VersionId = "v4" } }, "http://nu.nl/fhir/Patient/1234")
-                        .Request = new Bundle.RequestComponent { Method = Bundle.HTTPVerb.DELETE } ;
+                        .Request = new Bundle.RequestComponent { Method = HTTPVerb.DELETE } ;
 
             testBundle.AddResourceEntry(new Patient { Id = "5678" }, "http://server1.com/fhir/Patient/5678");
             testBundle.AddResourceEntry(new Patient { Id = "1.2.3.4.5" }, "urn:oid:1.2.3.4.5");
@@ -74,28 +75,28 @@ namespace Hl7.Fhir.Tests.Model
         public void AddSearchEntry()
         {
             var testBundle = new Bundle();
-            testBundle.AddSearchEntry(new Patient { Id = "5678" }, "http://server1.com/fhir/Patient/5678", Bundle.SearchEntryMode.Match);
+            testBundle.AddSearchEntry(new Patient { Id = "5678" }, "http://server1.com/fhir/Patient/5678", SearchEntryMode.Match);
 
             var firstEntry = testBundle.FindEntry("http://server1.com/fhir/Patient/5678").First();
             
-            Assert.AreEqual(Bundle.SearchEntryMode.Match, firstEntry.Search.Mode);
+            Assert.AreEqual(SearchEntryMode.Match, firstEntry.Search.Mode);
             Assert.AreEqual("5678", firstEntry.Resource.Id);
 
             testBundle.AddSearchEntry(
                 new Patient { Id = "5679" },
                 "http://server1.com/fhir/Patient/5679",
-                Bundle.SearchEntryMode.Include,
+                SearchEntryMode.Include,
                 new decimal(0.1));
 
             var secondEntry = testBundle.FindEntry("http://server1.com/fhir/Patient/5679").First();
-            Assert.AreEqual(Bundle.SearchEntryMode.Include, secondEntry.Search.Mode);
+            Assert.AreEqual(SearchEntryMode.Include, secondEntry.Search.Mode);
             Assert.AreEqual("5679", secondEntry.Resource.Id);
             Assert.AreEqual((Decimal)0.1, secondEntry.Search.Score);
 
             // Retest that the first one can still be located
             firstEntry = testBundle.FindEntry("http://server1.com/fhir/Patient/5678").First();
 
-            Assert.AreEqual(Bundle.SearchEntryMode.Match, firstEntry.Search.Mode);
+            Assert.AreEqual(SearchEntryMode.Match, firstEntry.Search.Mode);
             Assert.AreEqual("5678", firstEntry.Resource.Id);
         }
     }

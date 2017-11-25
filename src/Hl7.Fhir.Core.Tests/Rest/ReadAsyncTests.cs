@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using Hl7.Fhir.Rest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async Task Read_UsingResourceIdentity_ResultReturned()
         {
-            var client = new FhirClient(_endpoint)
+            var client = new FhirDstu2Client(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
                 ReturnFullResource = true
@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async Task Read_UsingLocationString_ResultReturned()
         {
-            var client = new FhirClient(_endpoint)
+            var client = new FhirDstu2Client(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
                 ReturnFullResource = true

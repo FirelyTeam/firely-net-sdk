@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
@@ -24,7 +25,7 @@ namespace Hl7.Fhir.Validation
             var outcome = new OperationOutcome();
             if (!definition.HasChildren) return outcome;
 
-            validator.Trace(outcome, "Start validation of inlined child constraints for '{0}'".FormatWith(definition.Path), Issue.PROCESSING_PROGRESS, instance);
+            validator.Trace(outcome, "Start validation of inlined child constraints for '{0}'".FormatWith(definition.Path), Support.Issue.PROCESSING_PROGRESS, instance);
 
             var matchResult = ChildNameMatcher.Match(definition, instance);
 
@@ -32,7 +33,7 @@ namespace Hl7.Fhir.Validation
             {
                 var elementList = String.Join(",", matchResult.UnmatchedInstanceElements.Select(e => "'" + e.Name + "'"));
                 validator.Trace(outcome, $"Encountered unknown child elements {elementList} for definition '{definition.Path}'",
-                                Issue.CONTENT_ELEMENT_HAS_UNKNOWN_CHILDREN, instance);
+                                Support.Issue.CONTENT_ELEMENT_HAS_UNKNOWN_CHILDREN, instance);
             }
 
             //TODO: Give warnings for out-of order children.  Really? That's an xml artifact, no such thing in Json!
@@ -55,10 +56,10 @@ namespace Hl7.Fhir.Validation
 
             if (definition.Min == null)
                 validator.Trace(outcome, $"Element definition does not specify a 'min' value, which is required. Cardinality has not been validated",
-                    Issue.PROFILE_ELEMENTDEF_CARDINALITY_MISSING, parent);
+                    Support.Issue.PROFILE_ELEMENTDEF_CARDINALITY_MISSING, parent);
             else if (definition.Max == null)
                 validator.Trace(outcome, $"Element definition does not specify a 'max' value, which is required. Cardinality has not been validated",
-                    Issue.PROFILE_ELEMENTDEF_CARDINALITY_MISSING, parent);
+                    Support.Issue.PROFILE_ELEMENTDEF_CARDINALITY_MISSING, parent);
 
             var cardinality = Cardinality.FromElementDefinition(definition);
 

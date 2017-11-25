@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Model
     /// The ResourceEntry class has been made obsolete, please change to the class Bundle.EntryComponent instead
     /// </summary>
     [Obsolete("The ResourceEntry class has been made obsolete, please change to the class Bundle.EntryComponent instead", true)]
-    public class ResourceEntry : Bundle.EntryComponent
+    public class ResourceEntry : STU3.Bundle.EntryComponent
     {
     }
 
@@ -27,14 +27,17 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <typeparam name="T"></typeparam>
     [Obsolete("The ResourceEntry class has been made obsolete, please change to the class Bundle.EntryComponent instead", true)]
-    public class ResourceEntry<T> : Bundle.EntryComponent where T : Resource
+    public class ResourceEntry<T> : STU3.Bundle.EntryComponent where T : Resource
     {
         /// <summary>
         /// The ResourceEntry class has been made obsolete, please change to the class Bundle.EntryComponent instead
         /// </summary>
         public new T Resource { get; set; }
     }
+}
 
+namespace Hl7.Fhir.Model.DSTU2
+{
     /// <summary>
     /// The 'Alert' resource was renamed to 'Flag' in DSTU2
     /// </summary>

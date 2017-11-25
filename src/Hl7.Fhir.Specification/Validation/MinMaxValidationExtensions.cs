@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
@@ -108,8 +109,8 @@ namespace Hl7.Fhir.Validation
                                 var label = comparisonOutcome == -1 ? "smaller than" :
                                                 comparisonOutcome == 0 ? "equal to" :
                                                     "larger than";
-                                var issue = comparisonOutcome == -1 ? Issue.CONTENT_ELEMENT_PRIMITIVE_VALUE_TOO_SMALL :
-                                            Issue.CONTENT_ELEMENT_PRIMITIVE_VALUE_TOO_LARGE;
+                                var issue = comparisonOutcome == -1 ? Support.Issue.CONTENT_ELEMENT_PRIMITIVE_VALUE_TOO_SMALL :
+                                            Support.Issue.CONTENT_ELEMENT_PRIMITIVE_VALUE_TOO_LARGE;
 
                                 outcome.AddIssue($"Instance value '{instanceValue}' is {label} {elementName} '{definition}'", issue, instance);
                             }
@@ -117,11 +118,11 @@ namespace Hl7.Fhir.Validation
                     }
                     catch (NotSupportedException ns)
                     {
-                        outcome.AddIssue($"Comparing the instance against the {elementName} failed: {ns.Message}", Issue.UNSUPPORTED_MIN_MAX_QUANTITY, instance);
+                        outcome.AddIssue($"Comparing the instance against the {elementName} failed: {ns.Message}", Support.Issue.UNSUPPORTED_MIN_MAX_QUANTITY, instance);
                     }
                 }
                 else
-                    me.Trace(outcome, $"{elementName} was given in ElementDefinition, but type '{definition.TypeName}' is not an ordered type", Issue.PROFILE_ELEMENTDEF_MIN_MAX_USES_UNORDERED_TYPE, instance);
+                    me.Trace(outcome, $"{elementName} was given in ElementDefinition, but type '{definition.TypeName}' is not an ordered type", Support.Issue.PROFILE_ELEMENTDEF_MIN_MAX_USES_UNORDERED_TYPE, instance);
             }
 
             return outcome;

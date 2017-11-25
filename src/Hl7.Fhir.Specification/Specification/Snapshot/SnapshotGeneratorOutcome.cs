@@ -8,6 +8,7 @@
 
 using System;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using Hl7.Fhir.Support;
 using System.Linq;
 using Hl7.Fhir.Specification.Navigation;
@@ -81,7 +82,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         void clearIssues() { _outcome = null; }
 
-        OperationOutcome.IssueComponent addIssue(Issue issue, string message, IElementNavigator location = null, string profileUrl = null)
+        OperationOutcome.IssueComponent addIssue(Support.Issue issue, string message, IElementNavigator location = null, string profileUrl = null)
         {
             if (issue == null) { throw Error.ArgumentNull(nameof(issue)); }
             return addIssue(issue.ToIssueComponent(message, location), profileUrl);
@@ -102,7 +103,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // "Differential has a constraint on a choice element '{0}', but does so without using a type slice"
         // Differential specifies a constraint on a child element of a choice type element
         // This is not allowed if an element supports multiple element types; must use slicing!
-        public static readonly Issue PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT = Issue.Create(10000, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+        public static readonly Support.Issue PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT = Support.Issue.Create(10000, IssueSeverity.Error, IssueType.Invalid);
 
         void addIssueInvalidChoiceConstraint(ElementDefinition elementDef) { addIssue(CreateIssueInvalidChoiceConstraint(elementDef)); }
 
@@ -146,14 +147,14 @@ namespace Hl7.Fhir.Specification.Snapshot
         void addIssueNoTypeOrNameReference(IElementNavigator location)
         {
             addIssue(
-                Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE_OR_NAMEREF,
+                Support.Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE_OR_NAMEREF,
                 $"Element {location} has neither a type nor a nameReference.",
                 location
             );
         }
 
         // "Type profile '{0}' has an invalid name reference. The base profile does not contain an element with name '{1}'"
-        public static readonly Issue PROFILE_ELEMENTDEF_INVALID_TYPEPROFILE_NAMEREF = Issue.Create(10002, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+        public static readonly Support.Issue PROFILE_ELEMENTDEF_INVALID_TYPEPROFILE_NAMEREF = Support.Issue.Create(10002, IssueSeverity.Error, IssueType.Invalid);
 
         void addIssueInvalidProfileNameReference(ElementDefinition elementDef, string name, string profileRef) { addIssueInvalidProfileNameReference(elementDef.ToNamedNode(), name, profileRef); }
         void addIssueInvalidProfileNameReference(IElementNavigator location, string name, string profileRef)
@@ -166,7 +167,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         // "The slicing entry in the differential at '{0}' indicates a slice, but the base element is not a repeating or choice element"
-        public static readonly Issue PROFILE_ELEMENTDEF_INVALID_SLICE = Issue.Create(10003, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+        public static readonly Support.Issue PROFILE_ELEMENTDEF_INVALID_SLICE = Support.Issue.Create(10003, IssueSeverity.Error, IssueType.Invalid);
 
         void addIssueInvalidSlice(ElementDefinition elementDef) { addIssueInvalidSlice(elementDef.ToNamedNode()); }
         void addIssueInvalidSlice(IElementNavigator location)
@@ -179,7 +180,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         // "The slice group at '{0}' does not start with a slice entry element"
-        public static readonly Issue PROFILE_ELEMENTDEF_MISSING_SLICE_ENTRY = Issue.Create(10004, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Required);
+        public static readonly Support.Issue PROFILE_ELEMENTDEF_MISSING_SLICE_ENTRY = Support.Issue.Create(10004, IssueSeverity.Error, IssueType.Required);
 
         internal static OperationOutcome.IssueComponent CreateIssueMissingSliceEntry(ElementDefinition elementDef)
         {
@@ -197,7 +198,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // public static readonly Issue PROFILE_NO_ROOT = Issue.Create(10004, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
 
         // "Element at path '{0}' has a choice of types, cannot expand"
-        public static readonly Issue PROFILE_ELEMENTDEF_CANNOT_EXPAND_CHOICE = Issue.Create(10005, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+        public static readonly Support.Issue PROFILE_ELEMENTDEF_CANNOT_EXPAND_CHOICE = Support.Issue.Create(10005, IssueSeverity.Error, IssueType.Invalid);
 
         // Dependency errors
 
@@ -210,11 +211,11 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (profileUrl == null) { throw Error.ArgumentNull(nameof(profileUrl)); }
             if (location != null)
             {
-                addIssue(Issue.UNAVAILABLE_REFERENCED_PROFILE, $"Unable to resolve reference to profile '{profileUrl}' for element {location}", location, profileUrl);
+                addIssue(Support.Issue.UNAVAILABLE_REFERENCED_PROFILE, $"Unable to resolve reference to profile '{profileUrl}' for element {location}", location, profileUrl);
             }
             else
             {
-                addIssue(Issue.UNAVAILABLE_REFERENCED_PROFILE, $"Unable to resolve reference to profile '{profileUrl}'", null, profileUrl);
+                addIssue(Support.Issue.UNAVAILABLE_REFERENCED_PROFILE, $"Unable to resolve reference to profile '{profileUrl}'", null, profileUrl);
             }
         }
 
@@ -225,24 +226,24 @@ namespace Hl7.Fhir.Specification.Snapshot
         void addIssueProfileHasNoSnapshot(IElementNavigator location, string profileUrl)
         {
             if (profileUrl == null) { throw Error.ArgumentNull(nameof(profileUrl)); }
-            addIssue(Issue.UNAVAILABLE_NEED_SNAPSHOT, $"The resolved external profile with url '{profileUrl}' has no snapshot.", location, profileUrl);
+            addIssue(Support.Issue.UNAVAILABLE_NEED_SNAPSHOT, $"The resolved external profile with url '{profileUrl}' has no snapshot.", location, profileUrl);
         }
 
         // Issue.UNAVAILABLE_SNAPSHOT_GENERATION_FAILED
         void addIssueSnapshotGenerationFailed(string profileUrl = null)
         {
             if (profileUrl == null) { profileUrl = CurrentProfileUri; } // throw Error.ArgumentNull(nameof(profileUrl));
-            addIssue(Issue.UNAVAILABLE_SNAPSHOT_GENERATION_FAILED, $"Snapshot generation failed for profile with url '{profileUrl}'.", null, profileUrl);
+            addIssue(Support.Issue.UNAVAILABLE_SNAPSHOT_GENERATION_FAILED, $"Snapshot generation failed for profile with url '{profileUrl}'.", null, profileUrl);
         }
 
         //void addIssueProfileHasNoDifferential(ElementDefinition elementDef, string profileUrl) { addIssueProfileHasNoDifferential(ToNamedNode(elementDef), profileUrl); }
         void addIssueProfileHasNoDifferential(IElementNavigator location, string profileUrl)
         {
             if (profileUrl == null) { throw Error.ArgumentNull(nameof(profileUrl)); }
-            addIssue(Issue.UNAVAILABLE_NEED_DIFFERENTIAL, $"The resolved external profile with url '{profileUrl}' has no differential.", location, profileUrl);
+            addIssue(Support.Issue.UNAVAILABLE_NEED_DIFFERENTIAL, $"The resolved external profile with url '{profileUrl}' has no differential.", location, profileUrl);
         }
 
-        public static readonly Issue PROFILE_ELEMENTDEF_INVALID_EXTENSION_DISCRIMINATOR = Issue.Create(10006, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+        public static readonly Support.Issue PROFILE_ELEMENTDEF_INVALID_EXTENSION_DISCRIMINATOR = Support.Issue.Create(10006, IssueSeverity.Error, IssueType.Invalid);
 
         internal static OperationOutcome.IssueComponent CreateIssueInvalidExtensionSlicingDiscriminator(ElementDefinition elementDef)
         {
@@ -255,7 +256,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             );
         }
 
-        public static readonly Issue PROFILE_ELEMENTDEF_TYPESLICE_WITHOUT_TYPE = Issue.Create(10007, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Required);
+        public static readonly Support.Issue PROFILE_ELEMENTDEF_TYPESLICE_WITHOUT_TYPE = Support.Issue.Create(10007, IssueSeverity.Error, IssueType.Required);
 
         internal static OperationOutcome.IssueComponent CreateIssueTypeSliceWithoutType(ElementDefinition elementDef)
         {
@@ -266,7 +267,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             );
         }
 
-        public static readonly Issue PROFILE_ELEMENTDEF_INVALID_SLICE_WITHOUT_NAME = Issue.Create(10008, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Required);
+        public static readonly Support.Issue PROFILE_ELEMENTDEF_INVALID_SLICE_WITHOUT_NAME = Support.Issue.Create(10008, IssueSeverity.Error, IssueType.Required);
 
         internal static OperationOutcome.IssueComponent CreateIssueSliceWithoutName(ElementDefinition elementDef)
         {
@@ -280,7 +281,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // [WMR 20170224] NEW - ElementDefinition.Type.Profile target profile has the wrong type
         // e.g. if a profile extension references a StructureDefinition that is not an Extension Definition.
         // or if Identifier element type references a Location profile
-        public static readonly Issue PROFILE_ELEMENTDEF_INVALID_PROFILE_TYPE = Issue.Create(10009, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+        public static readonly Support.Issue PROFILE_ELEMENTDEF_INVALID_PROFILE_TYPE = Support.Issue.Create(10009, IssueSeverity.Error, IssueType.Invalid);
 
         internal OperationOutcome.IssueComponent addIssueInvalidProfileType(ElementDefinition elementDef, StructureDefinition profile)
         {

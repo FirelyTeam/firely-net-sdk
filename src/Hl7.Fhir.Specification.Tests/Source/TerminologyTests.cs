@@ -1,4 +1,5 @@
 ﻿using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
@@ -153,7 +154,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact, Trait("TestCategory", "IntegrationTest")]
         public void ExternalServiceValidateCodeTest()
         {
-            var client = new FhirClient("http://ontoserver.csiro.au/dstu2_1");
+            var client = new FhirDstu2Client("http://ontoserver.csiro.au/dstu2_1");
             var svc = new ExternalTerminologyService(client);
 
             // Do common tests for service
@@ -167,7 +168,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact, Trait("TestCategory", "IntegrationTest")]
         public void FallbackServiceValidateCodeTest()
         {
-            var client = new FhirClient("http://ontoserver.csiro.au/dstu2_1");
+            var client = new FhirDstu2Client("http://ontoserver.csiro.au/dstu2_1");
             var external = new ExternalTerminologyService(client);
             var local = new LocalTerminologyService(_resolver);
             var svc = new FallbackTerminologyService(local, external);
@@ -182,7 +183,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact, Trait("TestCategory", "IntegrationTest")]
         public void FallbackServiceValidateCodeTestWithVS()
         {
-            var client = new FhirClient("http://ontoserver.csiro.au/dstu2_1");
+            var client = new FhirDstu2Client("http://ontoserver.csiro.au/dstu2_1");
             var service = new ExternalTerminologyService(client);
             var vs = _resolver.FindValueSet("http://hl7.org/fhir/ValueSet/substance-code");
             Assert.NotNull(vs);

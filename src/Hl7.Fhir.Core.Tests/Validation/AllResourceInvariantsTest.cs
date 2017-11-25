@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using System.Linq;
 using System.Diagnostics;
 using System.Collections.Generic;

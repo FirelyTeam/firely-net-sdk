@@ -21,12 +21,12 @@ namespace Hl7.Fhir.Rest
 #if DOTNETFW
     [SerializableAttribute]
 #endif
-    public class FhirOperationException : Exception
+    public class FhirOperationException<TOperationOutcome> : Exception where TOperationOutcome : Resource
     {
         /// <summary>
         /// Gets or sets the outcome of the operation <see cref="OperationOutcome"/>.
         /// </summary>
-        public OperationOutcome Outcome { get; set; }
+        public TOperationOutcome Outcome { get; set; }
         /// <summary>
         /// The HTTP Status Code that resulted in this Exception
         /// </summary>
@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="status">The http status code associated with the message</param>
         /// <param name="outcome">The outcome of the operation <see cref="OperationOutcome"/>.</param>
         /// <param name="inner">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified. </param>
-        public FhirOperationException(string message, HttpStatusCode status, OperationOutcome outcome, Exception inner)
+        public FhirOperationException(string message, HttpStatusCode status, TOperationOutcome outcome, Exception inner)
             : base(message, inner)
         {
             Outcome = outcome;
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="message">The message that describes the error.</param>
         /// <param name="status">The http status code associated with the message</param>
         /// <param name="outcome">The outcome of the operation <see cref="OperationOutcome"/>.</param>
-        public FhirOperationException(string message, HttpStatusCode status, OperationOutcome outcome)
+        public FhirOperationException(string message, HttpStatusCode status, TOperationOutcome outcome)
             : base(message)
         {
             Outcome = outcome;

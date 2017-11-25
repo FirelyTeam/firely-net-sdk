@@ -7,37 +7,38 @@ using System.Runtime.Serialization;
 using Hl7.Fhir.Utility;
 
 /*
-  Copyright (c) 2011+, HL7, Inc.
-  All rights reserved.
-  
-  Redistribution and use in source and binary forms, with or without modification, 
-  are permitted provided that the following conditions are met:
-  
-   * Redistributions of source code must retain the above copyright notice, this 
-     list of conditions and the following disclaimer.
-   * Redistributions in binary form must reproduce the above copyright notice, 
-     this list of conditions and the following disclaimer in the documentation 
-     and/or other materials provided with the distribution.
-   * Neither the name of HL7 nor the names of its contributors may be used to 
-     endorse or promote products derived from this software without specific 
-     prior written permission.
-  
-  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
-  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
-  IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
-  INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
-  NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
-  PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
-  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
-  POSSIBILITY OF SUCH DAMAGE.
-  
+    Copyright (c) 2011+, HL7, Inc.
+    All rights reserved.
+
+    Redistribution and use in source and binary forms, with or without modification, 
+    are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice, this 
+        list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice, 
+        this list of conditions and the following disclaimer in the documentation 
+        and/or other materials provided with the distribution.
+    * Neither the name of HL7 nor the names of its contributors may be used to 
+        endorse or promote products derived from this software without specific 
+        prior written permission.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+    ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+    IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+    INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+    NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
+    PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+    WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+    POSSIBILITY OF SUCH DAMAGE.
+
 
 */
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.0.2, v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -50,6 +51,7 @@ namespace Hl7.Fhir.Model
     {
         [NotMapped]
         public override string TypeName { get { return "SampledData"; } }
+    
         
         /// <summary>
         /// Zero value and units
@@ -90,10 +92,10 @@ namespace Hl7.Fhir.Model
             get { return PeriodElement != null ? PeriodElement.Value : null; }
             set
             {
-                if (!value.HasValue)
-                  PeriodElement = null; 
+                if (value == null)
+                    PeriodElement = null;
                 else
-                  PeriodElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                    PeriodElement = new Hl7.Fhir.Model.FhirDecimal(value);
                 OnPropertyChanged("Period");
             }
         }
@@ -122,10 +124,10 @@ namespace Hl7.Fhir.Model
             get { return FactorElement != null ? FactorElement.Value : null; }
             set
             {
-                if (!value.HasValue)
-                  FactorElement = null; 
+                if (value == null)
+                    FactorElement = null;
                 else
-                  FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                    FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
                 OnPropertyChanged("Factor");
             }
         }
@@ -154,10 +156,10 @@ namespace Hl7.Fhir.Model
             get { return LowerLimitElement != null ? LowerLimitElement.Value : null; }
             set
             {
-                if (!value.HasValue)
-                  LowerLimitElement = null; 
+                if (value == null)
+                    LowerLimitElement = null;
                 else
-                  LowerLimitElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                    LowerLimitElement = new Hl7.Fhir.Model.FhirDecimal(value);
                 OnPropertyChanged("LowerLimit");
             }
         }
@@ -186,10 +188,10 @@ namespace Hl7.Fhir.Model
             get { return UpperLimitElement != null ? UpperLimitElement.Value : null; }
             set
             {
-                if (!value.HasValue)
-                  UpperLimitElement = null; 
+                if (value == null)
+                    UpperLimitElement = null;
                 else
-                  UpperLimitElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                    UpperLimitElement = new Hl7.Fhir.Model.FhirDecimal(value);
                 OnPropertyChanged("UpperLimit");
             }
         }
@@ -219,10 +221,10 @@ namespace Hl7.Fhir.Model
             get { return DimensionsElement != null ? DimensionsElement.Value : null; }
             set
             {
-                if (!value.HasValue)
-                  DimensionsElement = null; 
+                if (value == null)
+                    DimensionsElement = null;
                 else
-                  DimensionsElement = new Hl7.Fhir.Model.PositiveInt(value);
+                    DimensionsElement = new Hl7.Fhir.Model.PositiveInt(value);
                 OnPropertyChanged("Dimensions");
             }
         }
@@ -230,7 +232,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Decimal values with spaces, or "E" | "U" | "L"
         /// </summary>
-        [FhirElement("data", InSummary=true, Order=90)]
+        [FhirElement("data", Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DataElement
@@ -253,18 +255,18 @@ namespace Hl7.Fhir.Model
             set
             {
                 if (value == null)
-                  DataElement = null; 
+                    DataElement = null;
                 else
-                  DataElement = new Hl7.Fhir.Model.FhirString(value);
+                    DataElement = new Hl7.Fhir.Model.FhirString(value);
                 OnPropertyChanged("Data");
             }
         }
-        
-
+    
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as SampledData;
-            
+        
             if (dest != null)
             {
                 base.CopyTo(dest);
@@ -278,19 +280,19 @@ namespace Hl7.Fhir.Model
                 return dest;
             }
             else
-            	throw new ArgumentException("Can only copy to an object of the same type", "other");
+                throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
         
         public override IDeepCopyable DeepCopy()
         {
-            return CopyTo(new SampledData());
+             return CopyTo(new SampledData());
         }
         
         public override bool Matches(IDeepComparable other)
         {
             var otherT = other as SampledData;
             if(otherT == null) return false;
-            
+        
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Origin, otherT.Origin)) return false;
             if( !DeepComparable.Matches(PeriodElement, otherT.PeriodElement)) return false;
@@ -299,7 +301,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(UpperLimitElement, otherT.UpperLimitElement)) return false;
             if( !DeepComparable.Matches(DimensionsElement, otherT.DimensionsElement)) return false;
             if( !DeepComparable.Matches(DataElement, otherT.DataElement)) return false;
-            
+        
             return true;
         }
         
@@ -307,7 +309,7 @@ namespace Hl7.Fhir.Model
         {
             var otherT = other as SampledData;
             if(otherT == null) return false;
-            
+        
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Origin, otherT.Origin)) return false;
             if( !DeepComparable.IsExactly(PeriodElement, otherT.PeriodElement)) return false;
@@ -316,10 +318,10 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(UpperLimitElement, otherT.UpperLimitElement)) return false;
             if( !DeepComparable.IsExactly(DimensionsElement, otherT.DimensionsElement)) return false;
             if( !DeepComparable.IsExactly(DataElement, otherT.DataElement)) return false;
-            
+        
             return true;
         }
-
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {
@@ -335,13 +337,13 @@ namespace Hl7.Fhir.Model
                 if (DataElement != null) yield return DataElement;
             }
         }
-
+        
         [NotMapped]
-        internal override IEnumerable<ElementValue> NamedChildren 
-        { 
-            get 
-            { 
-                foreach (var item in base.NamedChildren) yield return item; 
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
                 if (Origin != null) yield return new ElementValue("origin", false, Origin);
                 if (PeriodElement != null) yield return new ElementValue("period", false, PeriodElement);
                 if (FactorElement != null) yield return new ElementValue("factor", false, FactorElement);
@@ -349,11 +351,9 @@ namespace Hl7.Fhir.Model
                 if (UpperLimitElement != null) yield return new ElementValue("upperLimit", false, UpperLimitElement);
                 if (DimensionsElement != null) yield return new ElementValue("dimensions", false, DimensionsElement);
                 if (DataElement != null) yield return new ElementValue("data", false, DataElement);
- 
-            } 
-        } 
-    
+            }
+        }
     
     }
-    
+
 }

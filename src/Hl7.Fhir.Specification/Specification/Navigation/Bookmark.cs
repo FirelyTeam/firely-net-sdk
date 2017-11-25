@@ -7,7 +7,7 @@
  */
 
 using System;
-using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using System.Text;
 using System.Diagnostics;
 

@@ -17,6 +17,7 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Utility;
 using ssac = System.Security.AccessControl;
 using System.Collections.Generic;
+using Hl7.Fhir.Model.DSTU2;
 
 namespace Hl7.Fhir.Specification.Tests
 {

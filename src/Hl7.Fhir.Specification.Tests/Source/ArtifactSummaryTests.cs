@@ -1,5 +1,6 @@
 ﻿using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using Hl7.Fhir.Specification.Source.Summary;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -109,7 +110,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsNotNull(summary.GetStructureDefinitionFhirVersion());
                 Assert.AreEqual(ModelInfo.Version, summary.GetStructureDefinitionFhirVersion());
 
-                Assert.AreEqual(StructureDefinition.StructureDefinitionKind.Datatype.GetLiteral(), summary.GetStructureDefinitionKind());
+                Assert.AreEqual(StructureDefinitionKind.Datatype.GetLiteral(), summary.GetStructureDefinitionKind());
                 // If this is a constraining StructDef, then Base should also be specified
                 Assert.IsTrue(summary.GetStructureDefinitionConstrainedType() == null || summary.GetStructureDefinitionBase() != null);
             }

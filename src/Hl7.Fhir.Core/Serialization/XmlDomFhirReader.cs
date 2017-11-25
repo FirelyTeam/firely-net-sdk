@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Serialization
                             
                         // special case - nested resources -> the value is the nested resource in the element, not
                         // the current element itself.
-                        if (elem.FirstNode as XElement != null && ModelInfo.IsKnownResource(((XElement)elem.FirstNode).Name.LocalName))
+                        if (elem.FirstNode as XElement != null && AllVersionsModelInfo.IsKnownResource(((XElement)elem.FirstNode).Name.LocalName))
                             value = (XElement)elem.FirstNode;
 
                         result.Add(Tuple.Create(elem.Name.LocalName, (IFhirReader)new XmlDomFhirReader(value)));

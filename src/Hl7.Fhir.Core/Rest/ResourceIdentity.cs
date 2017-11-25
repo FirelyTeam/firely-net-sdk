@@ -76,13 +76,13 @@ namespace Hl7.Fhir.Rest
                 if (baseUri == null)
                 {
                     return versionId != null ?
-                        string.Format("{0}/{1}/{2}/{3}", resourceType, id, TransactionBuilder.HISTORY, versionId) :
+                        string.Format("{0}/{1}/{2}/{3}", resourceType, id, RequestsBuilder.HISTORY, versionId) :
                         string.Format("{0}/{1}", resourceType, id);
                 }
                 else
                 {
                     if (versionId != null)
-                        return construct(baseUri, resourceType, id, TransactionBuilder.HISTORY, versionId);
+                        return construct(baseUri, resourceType, id, RequestsBuilder.HISTORY, versionId);
                     else
                         return construct(baseUri, resourceType, id);
                 }
@@ -202,7 +202,12 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public static ResourceIdentity Core(FHIRDefinedType type)
+        public static ResourceIdentity Core(Model.DSTU2.FHIRDefinedType type)
+        {
+            return ResourceIdentity.Core(type.GetLiteral());
+        }
+
+        public static ResourceIdentity Core(Model.STU3.FHIRDefinedType type)
         {
             return ResourceIdentity.Core(type.GetLiteral());
         }
@@ -306,13 +311,13 @@ namespace Hl7.Fhir.Rest
 
                 var history = -1;
                 for(var index=0; index<count; index++) 
-                    if(components[index] == TransactionBuilder.HISTORY) history = index;
+                    if(components[index] == RequestsBuilder.HISTORY) history = index;
                 if (history > -1 && history == count - 1) return; // illegal use, there's just a _history component, but no version id
 
                 int resourceTypePos = (history > -1) ? history - 2 : count - 2;
 
                 ResourceType = components[resourceTypePos];
-                if (!ModelInfo.IsKnownResource(ResourceType))
+                if (!AllVersionsModelInfo.IsKnownResource(ResourceType))
                 {
                     ResourceType = null;
                     return;

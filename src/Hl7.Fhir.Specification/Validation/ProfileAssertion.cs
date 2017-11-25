@@ -11,6 +11,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 
@@ -206,7 +207,7 @@ namespace Hl7.Fhir.Validation
                     structureDefinition = _resolver(entry.Reference);
 
                     if (structureDefinition == null)
-                        outcome.AddIssue($"Unable to resolve reference to profile '{entry.Reference}'", Issue.UNAVAILABLE_REFERENCED_PROFILE, _path);
+                        outcome.AddIssue($"Unable to resolve reference to profile '{entry.Reference}'", Support.Issue.UNAVAILABLE_REFERENCED_PROFILE, _path);
                     else
                     {
                         entry.StructureDefinition = structureDefinition;
@@ -214,7 +215,7 @@ namespace Hl7.Fhir.Validation
                 }
                 catch (Exception e)
                 {
-                    outcome.AddIssue($"Resolution of profile at '{entry.Reference}' failed: {e.Message}", Issue.UNAVAILABLE_REFERENCED_PROFILE, _path);
+                    outcome.AddIssue($"Resolution of profile at '{entry.Reference}' failed: {e.Message}", Support.Issue.UNAVAILABLE_REFERENCED_PROFILE, _path);
                     continue;
                 }
             }
@@ -246,15 +247,15 @@ namespace Hl7.Fhir.Validation
                 if (DeclaredType != null)
                 {
                     if (!ModelInfo.IsInstanceTypeFor(DeclaredType.BaseType(), InstanceType.BaseType()))
-                        outcome.AddIssue($"The declared type of the element ({DeclaredType.ReadableName()}) is incompatible with that of the instance ('{InstanceType.ReadableName()}')", 
-                            Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, _path);
+                        outcome.AddIssue($"The declared type of the element ({DeclaredType.ReadableName()}) is incompatible with that of the instance ('{InstanceType.ReadableName()}')",
+                            Support.Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, _path);
                 }
 
                 foreach (var type in StatedProfiles)
                 {
                     if (!ModelInfo.IsInstanceTypeFor(type.BaseType(), InstanceType.BaseType()))
-                        outcome.AddIssue($"Instance of type '{InstanceType.ReadableName()}' is incompatible with the stated profile '{type.Url}' which is constraining constrained type '{type.ReadableName()}'", 
-                            Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, _path);
+                        outcome.AddIssue($"Instance of type '{InstanceType.ReadableName()}' is incompatible with the stated profile '{type.Url}' which is constraining constrained type '{type.ReadableName()}'",
+                            Support.Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, _path);
                 }
             }
 
@@ -266,8 +267,8 @@ namespace Hl7.Fhir.Validation
                 if (baseTypes.Count > 1)
                 {
                     var combinedNames = String.Join(" and ", baseTypes.Select(bt => bt.GetLiteral()));
-                    outcome.AddIssue($"The stated profiles are constraints on multiple different core types ({combinedNames}), which can never be satisfied.", 
-                        Issue.CONTENT_MISMATCHING_PROFILES, _path);
+                    outcome.AddIssue($"The stated profiles are constraints on multiple different core types ({combinedNames}), which can never be satisfied.",
+                        Support.Issue.CONTENT_MISMATCHING_PROFILES, _path);
                 }
                 else
                 {
@@ -276,7 +277,7 @@ namespace Hl7.Fhir.Validation
                     {
                         if (!ModelInfo.IsInstanceTypeFor(DeclaredType.BaseType(), baseTypes.Single()))
                             outcome.AddIssue($"The stated profiles are all constraints on '{baseTypes.Single()}', which is incompatible with the declared type '{DeclaredType.ReadableName()}' of the element",
-                                Issue.CONTENT_MISMATCHING_PROFILES, _path);
+                                Support.Issue.CONTENT_MISMATCHING_PROFILES, _path);
                     }
                 }
             }

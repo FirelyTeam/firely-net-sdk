@@ -20,15 +20,18 @@ using System.Reflection;
 namespace Hl7.Fhir.Validation
 {
     [CLSCompliant(false)]
-    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = true)]
     public class AllowedTypesAttribute : ValidationAttribute
     {
         public AllowedTypesAttribute(params Type[] types)
         {
             Types = types;
+            Version = Model.Version.All;
         }
 
         public Type[] Types { get; set; }
+
+        public Hl7.Fhir.Model.Version Version { get; set; }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {

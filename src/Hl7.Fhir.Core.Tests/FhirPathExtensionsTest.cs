@@ -9,7 +9,7 @@
 using System.Diagnostics;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using Hl7.Fhir.ElementModel;
 using System.IO;
 using Hl7.Fhir.Serialization;

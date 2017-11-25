@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using Hl7.Fhir.Rest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async Task UpdateDelete_UsingResourceIdentity_ResultReturned()
         {
-            var client = new FhirClient(_endpoint)
+            var client = new FhirDstu2Client(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
                 ReturnFullResource = true
@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             };
 
             // VERIFY //
-            Assert.ThrowsException<FhirOperationException>(act, "the patient is no longer on the server");
+            Assert.ThrowsException<FhirOperationException<OperationOutcome>>(act, "the patient is no longer on the server");
             
             
             Console.WriteLine("Test Completed");

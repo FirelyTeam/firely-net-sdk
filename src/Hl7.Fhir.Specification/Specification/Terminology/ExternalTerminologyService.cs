@@ -9,6 +9,7 @@
 using System;
 using System.Linq;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
@@ -18,12 +19,12 @@ namespace Hl7.Fhir.Specification.Terminology
 {
     public class ExternalTerminologyService : ITerminologyService
     {
-        public ExternalTerminologyService(IFhirClient client)
+        public ExternalTerminologyService(FhirDstu2Client client)
         {
             Endpoint = client;
         }
 
-        public IFhirClient Endpoint { get; set; }
+        public FhirDstu2Client Endpoint { get; set; }
 
         public OperationOutcome ValidateCode(string canonical = null, string context = null, ValueSet valueSet = null, 
             string code = null, string system = null, string version = null, string display = null, 
@@ -52,7 +53,7 @@ namespace Hl7.Fhir.Specification.Terminology
                 return outcome;
 
             }
-            catch (FhirOperationException ex)
+            catch (FhirOperationException<OperationOutcome> ex)
             {
                 // Special case, if term service returns 404, turn that into a more explicit exception
                 if (ex.Status == System.Net.HttpStatusCode.NotFound)
@@ -75,7 +76,7 @@ namespace Hl7.Fhir.Specification.Terminology
                 string message = result?.Message?.Value;
 
                 if (message != null)
-                    outcome.AddIssue(message, Issue.TERMINOLOGY_CODE_NOT_IN_VALUESET);
+                    outcome.AddIssue(message, Support.Issue.TERMINOLOGY_CODE_NOT_IN_VALUESET);
                 else
                 {
                     if (code != null && coding == null)
@@ -88,7 +89,7 @@ namespace Hl7.Fhir.Specification.Terminology
 
                     outcome.AddIssue($"Validation of '{codeDisplay}' failed, but" +
                                 $"the terminology service at {Endpoint.Endpoint.ToString()} did not provide further details.",
-                                Issue.TERMINOLOGY_CODE_NOT_IN_VALUESET);
+                                Support.Issue.TERMINOLOGY_CODE_NOT_IN_VALUESET);
                 }
             }
 

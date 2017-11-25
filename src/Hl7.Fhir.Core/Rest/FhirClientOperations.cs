@@ -60,25 +60,34 @@ namespace Hl7.Fhir.Rest
     }
 
     public static class FhirClientOperations
-    {  
+    {
         #region Validate (Create/Update/Delete/Resource)
 
-        public static async Task<OperationOutcome> ValidateCreateAsync(this FhirClient client, DomainResource resource, FhirUri profile = null)
+        public static async Task<TOperationOutcome> ValidateCreateAsync<TBundle, TMetadata, TOperationOutcome>(this FhirClient<TBundle, TMetadata, TOperationOutcome> client, DomainResource resource, FhirUri profile = null)
+            where TBundle : Resource, IBundle
+            where TMetadata : Resource, IMetadata
+            where TOperationOutcome : Resource
         {
             if (resource == null) throw Error.ArgumentNull(nameof(resource));
 
             var par = new Parameters().Add("resource", resource).Add("mode", new Code("create"));
             if (profile != null) par.Add("profile", profile);
 
-            return OperationResult<OperationOutcome>(await client.TypeOperationAsync(RestOperation.VALIDATE_RESOURCE, resource.TypeName, par).ConfigureAwait(false));
+            return OperationResult<TOperationOutcome>(await client.TypeOperationAsync(RestOperation.VALIDATE_RESOURCE, resource.TypeName, par).ConfigureAwait(false));
         }
-        public static OperationOutcome ValidateCreate(this FhirClient client, DomainResource resource,
-            FhirUri profile = null)
+
+        public static TOperationOutcome ValidateCreate<TBundle, TMetadata, TOperationOutcome>(this FhirClient<TBundle, TMetadata, TOperationOutcome> client, DomainResource resource, FhirUri profile = null)
+            where TBundle : Resource, IBundle
+            where TMetadata : Resource, IMetadata
+            where TOperationOutcome : Resource
         {
             return ValidateCreateAsync(client, resource, profile).WaitResult();
         }
 
-        public static async Task<OperationOutcome> ValidateUpdateAsync(this FhirClient client, DomainResource resource, string id, FhirUri profile = null)
+        public static async Task<TOperationOutcome> ValidateUpdateAsync<TBundle, TMetadata, TOperationOutcome>(this FhirClient<TBundle, TMetadata, TOperationOutcome> client, DomainResource resource, string id, FhirUri profile = null)
+            where TBundle : Resource, IBundle
+            where TMetadata : Resource, IMetadata
+            where TOperationOutcome : Resource
         {
             if (id == null) throw Error.ArgumentNull(nameof(id));
             if (resource == null) throw Error.ArgumentNull(nameof(resource));
@@ -87,29 +96,42 @@ namespace Hl7.Fhir.Rest
             if (profile != null) par.Add("profile", profile);
 
             var loc = ResourceIdentity.Build(resource.TypeName, id);
-            return OperationResult<OperationOutcome>(await client.InstanceOperationAsync(loc, RestOperation.VALIDATE_RESOURCE, par).ConfigureAwait(false));
+            return OperationResult<TOperationOutcome>(await client.InstanceOperationAsync(loc, RestOperation.VALIDATE_RESOURCE, par).ConfigureAwait(false));
         }
-        public static OperationOutcome ValidateUpdate(this FhirClient client, DomainResource resource, string id,
+
+        public static TOperationOutcome ValidateUpdate<TBundle, TMetadata, TOperationOutcome>(this FhirClient<TBundle, TMetadata, TOperationOutcome> client, DomainResource resource, string id,
             FhirUri profile = null)
+            where TBundle : Resource, IBundle
+            where TMetadata : Resource, IMetadata
+            where TOperationOutcome : Resource
         {
             return ValidateUpdateAsync(client, resource, id, profile).WaitResult();
         }
 
-
-        public static async Task<OperationOutcome> ValidateDeleteAsync(this FhirClient client, ResourceIdentity location)
+        public static async Task<TOperationOutcome> ValidateDeleteAsync<TBundle, TMetadata, TOperationOutcome>(this FhirClient<TBundle, TMetadata, TOperationOutcome> client, ResourceIdentity location)
+            where TBundle : Resource, IBundle
+            where TMetadata : Resource, IMetadata
+            where TOperationOutcome : Resource
         {
             if (location == null) throw Error.ArgumentNull(nameof(location));
 
             var par = new Parameters().Add("mode", new Code("delete"));
 
-            return OperationResult<OperationOutcome>(await client.InstanceOperationAsync(location.WithoutVersion().MakeRelative(), RestOperation.VALIDATE_RESOURCE, par).ConfigureAwait(false));
+            return OperationResult<TOperationOutcome>(await client.InstanceOperationAsync(location.WithoutVersion().MakeRelative(), RestOperation.VALIDATE_RESOURCE, par).ConfigureAwait(false));
         }
-        public static OperationOutcome ValidateDelete(this FhirClient client, ResourceIdentity location)
+
+        public static TOperationOutcome ValidateDelete<TBundle, TMetadata, TOperationOutcome>(this FhirClient<TBundle, TMetadata, TOperationOutcome> client, ResourceIdentity location)
+            where TBundle : Resource, IBundle
+            where TMetadata : Resource, IMetadata
+            where TOperationOutcome : Resource
         {
             return ValidateDeleteAsync(client,location).WaitResult();
         }
 
-        public static async Task<OperationOutcome> ValidateResourceAsync(this FhirClient client, DomainResource resource, string id = null, FhirUri profile = null)
+        public static async Task<TOperationOutcome> ValidateResourceAsync<TBundle, TMetadata, TOperationOutcome>(this FhirClient<TBundle, TMetadata, TOperationOutcome> client, DomainResource resource, string id = null, FhirUri profile = null)
+            where TBundle : Resource, IBundle
+            where TMetadata : Resource, IMetadata
+            where TOperationOutcome : Resource
         {
             if (resource == null) throw Error.ArgumentNull(nameof(resource));
 
@@ -118,17 +140,20 @@ namespace Hl7.Fhir.Rest
 
             if (id == null)
             {
-                return OperationResult<OperationOutcome>(await client.TypeOperationAsync(RestOperation.VALIDATE_RESOURCE, resource.TypeName, par).ConfigureAwait(false));
+                return OperationResult<TOperationOutcome>(await client.TypeOperationAsync(RestOperation.VALIDATE_RESOURCE, resource.TypeName, par).ConfigureAwait(false));
             }
             else
             {
                 var loc = ResourceIdentity.Build(resource.TypeName, id);
-                return OperationResult<OperationOutcome>(await client.InstanceOperationAsync(loc, RestOperation.VALIDATE_RESOURCE, par).ConfigureAwait(false));
+                return OperationResult<TOperationOutcome>(await client.InstanceOperationAsync(loc, RestOperation.VALIDATE_RESOURCE, par).ConfigureAwait(false));
             }
         }
 
-        public static OperationOutcome ValidateResource(this FhirClient client, DomainResource resource,
+        public static TOperationOutcome ValidateResource<TBundle, TMetadata, TOperationOutcome>(this FhirClient<TBundle, TMetadata, TOperationOutcome> client, DomainResource resource,
             string id = null, FhirUri profile = null)
+            where TBundle : Resource, IBundle
+            where TMetadata : Resource, IMetadata
+            where TOperationOutcome : Resource
         {
             return ValidateResourceAsync(client, resource, id, profile).WaitResult();
         }
@@ -137,7 +162,7 @@ namespace Hl7.Fhir.Rest
 
         #region Fetch
 
-        public static async Task<Bundle> FetchPatientRecordAsync(this FhirClient client, Uri patient = null, FhirDateTime start = null, FhirDateTime end = null)
+        public static async Task<Model.DSTU2.Bundle> FetchPatientRecordAsync(this FhirDstu2Client client, Uri patient = null, FhirDateTime start = null, FhirDateTime end = null)
         {
             var par = new Parameters();
 
@@ -146,104 +171,181 @@ namespace Hl7.Fhir.Rest
             
             Resource result;
             if (patient == null)
-                result = await client.TypeOperationAsync<Patient>(RestOperation.FETCH_PATIENT_RECORD, par).ConfigureAwait(false);
+                result = await client.TypeOperationAsync<Model.DSTU2.Patient>(RestOperation.FETCH_PATIENT_RECORD, par).ConfigureAwait(false);
             else
             {
                 var location = new ResourceIdentity(patient);
                 result = await client.InstanceOperationAsync(location.WithoutVersion().MakeRelative(), RestOperation.FETCH_PATIENT_RECORD, par).ConfigureAwait(false);
             }
 
-            return OperationResult<Bundle>(result);
+            return OperationResult<Model.DSTU2.Bundle>(result);
         }
-        public static Bundle FetchPatientRecord(this FhirClient client, Uri patient = null, FhirDateTime start = null,
-            FhirDateTime end = null)
+
+        public static Model.DSTU2.Bundle FetchPatientRecord(this FhirDstu2Client client, Uri patient = null, FhirDateTime start = null, FhirDateTime end = null)
+        {
+            return FetchPatientRecordAsync(client, patient, start, end).WaitResult();
+        }
+
+        public static async Task<Model.STU3.Bundle> FetchPatientRecordAsync(this FhirStu3Client client, Uri patient = null, FhirDateTime start = null, FhirDateTime end = null)
+        {
+            var par = new Parameters();
+
+            if (start != null) par.Add("start", start);
+            if (end != null) par.Add("end", end);
+
+            Resource result;
+            if (patient == null)
+                result = await client.TypeOperationAsync<Model.STU3.Patient>(RestOperation.FETCH_PATIENT_RECORD, par).ConfigureAwait(false);
+            else
+            {
+                var location = new ResourceIdentity(patient);
+                result = await client.InstanceOperationAsync(location.WithoutVersion().MakeRelative(), RestOperation.FETCH_PATIENT_RECORD, par).ConfigureAwait(false);
+            }
+
+            return OperationResult<Model.STU3.Bundle>(result);
+        }
+
+        public static Model.STU3.Bundle FetchPatientRecord(this FhirStu3Client client, Uri patient = null, FhirDateTime start = null, FhirDateTime end = null)
         {
             return FetchPatientRecordAsync(client, patient, start, end).WaitResult();
         }
 
         #endregion
-                      
+
         #region Meta
 
         //[base]/$meta
-        public static async Task<Meta> MetaAsync(this FhirClient client)
+        public static async Task<Meta> MetaAsync<TBundle, TMetadata, TOperationOutcome>(this FhirClient<TBundle, TMetadata, TOperationOutcome> client)
+            where TBundle : Resource, IBundle
+            where TMetadata : Resource, IMetadata
+            where TOperationOutcome : Resource
         {
             return extractMeta(OperationResult<Parameters>(await client.WholeSystemOperationAsync(RestOperation.META, useGet:true).ConfigureAwait(false)));
         }
-        public static Meta Meta(this FhirClient client)
+
+        public static Meta Meta<TBundle, TMetadata, TOperationOutcome>(this FhirClient<TBundle, TMetadata, TOperationOutcome> client)
+            where TBundle : Resource, IBundle
+            where TMetadata : Resource, IMetadata
+            where TOperationOutcome : Resource
         {
             return MetaAsync(client).WaitResult();
         }
         
         //[base]/Resource/$meta
-        public static async Task<Meta> MetaAsync(this FhirClient client, ResourceType type)
-        {             
+        public static async Task<Meta> MetaAsync<TBundle, TMetadata, TOperationOutcome>(this FhirClient<TBundle, TMetadata, TOperationOutcome> client, ResourceType type)
+            where TBundle : Resource, IBundle
+            where TMetadata : Resource, IMetadata
+            where TOperationOutcome : Resource
+        {
             return extractMeta(OperationResult<Parameters>(await client.TypeOperationAsync(RestOperation.META, type.ToString(), useGet: true).ConfigureAwait(false)));
         }
-        public static Meta Meta(this FhirClient client, ResourceType type)
+
+        public static Meta Meta<TBundle, TMetadata, TOperationOutcome>(this FhirClient<TBundle, TMetadata, TOperationOutcome> client, ResourceType type)
+            where TBundle : Resource, IBundle
+            where TMetadata : Resource, IMetadata
+            where TOperationOutcome : Resource
         {
             return MetaAsync(client, type).WaitResult();
         }
 
         //[base]/Resource/id/$meta/[_history/vid]
-        public static async Task<Meta> MetaAsync(this FhirClient client, Uri location)
+        public static async Task<Meta> MetaAsync<TBundle, TMetadata, TOperationOutcome>(this FhirClient<TBundle, TMetadata, TOperationOutcome> client, Uri location)
+            where TBundle : Resource, IBundle
+            where TMetadata : Resource, IMetadata
+            where TOperationOutcome : Resource
         {
             Resource result;
             result = await client.InstanceOperationAsync(location, RestOperation.META, useGet: true).ConfigureAwait(false);
 
             return extractMeta(OperationResult<Parameters>(result));
         }
-        public static Meta Meta(this FhirClient client, Uri location)
+
+        public static Meta Meta<TBundle, TMetadata, TOperationOutcome>(this FhirClient<TBundle, TMetadata, TOperationOutcome> client, Uri location)
+            where TBundle : Resource, IBundle
+            where TMetadata : Resource, IMetadata
+            where TOperationOutcome : Resource
         {
             return MetaAsync(client, location).WaitResult();
         }
 
-        public static Task<Meta> MetaAsync(this FhirClient client, string location)
+        public static Task<Meta> MetaAsync<TBundle, TMetadata, TOperationOutcome>(this FhirClient<TBundle, TMetadata, TOperationOutcome> client, string location)
+            where TBundle : Resource, IBundle
+            where TMetadata : Resource, IMetadata
+            where TOperationOutcome : Resource
         {
             return MetaAsync(client, new Uri(location, UriKind.RelativeOrAbsolute));
         }
-        public static Meta Meta(this FhirClient client, string location)
+
+        public static Meta Meta<TBundle, TMetadata, TOperationOutcome>(this FhirClient<TBundle, TMetadata, TOperationOutcome> client, string location)
+            where TBundle : Resource, IBundle
+            where TMetadata : Resource, IMetadata
+            where TOperationOutcome : Resource
         {
             return MetaAsync(client, location).WaitResult();
         }
 
-        public static async Task<Meta> AddMetaAsync(this FhirClient client, Uri location, Meta meta)
+        public static async Task<Meta> AddMetaAsync<TBundle, TMetadata, TOperationOutcome>(this FhirClient<TBundle, TMetadata, TOperationOutcome> client, Uri location, Meta meta)
+            where TBundle : Resource, IBundle
+            where TMetadata : Resource, IMetadata
+            where TOperationOutcome : Resource
         {
             var par = new Parameters().Add("meta", meta);
             return extractMeta(OperationResult<Parameters>(await client.InstanceOperationAsync(location, RestOperation.META_ADD, par).ConfigureAwait(false)));
         }
-        public static Meta AddMeta(this FhirClient client, Uri location, Meta meta)
+
+        public static Meta AddMeta<TBundle, TMetadata, TOperationOutcome>(this FhirClient<TBundle, TMetadata, TOperationOutcome> client, Uri location, Meta meta)
+            where TBundle : Resource, IBundle
+            where TMetadata : Resource, IMetadata
+            where TOperationOutcome : Resource
         {
             return AddMetaAsync(client, location, meta).WaitResult();
         }
         
-        public static Task<Meta> AddMetaAsync(this FhirClient client, string location, Meta meta)
+        public static Task<Meta> AddMetaAsync<TBundle, TMetadata, TOperationOutcome>(this FhirClient<TBundle, TMetadata, TOperationOutcome> client, string location, Meta meta)
+            where TBundle : Resource, IBundle
+            where TMetadata : Resource, IMetadata
+            where TOperationOutcome : Resource
         {
             return AddMetaAsync(client, new Uri(location, UriKind.RelativeOrAbsolute), meta);
         }
-        public static Meta AddMeta(this FhirClient client, string location, Meta meta)
+
+        public static Meta AddMeta<TBundle, TMetadata, TOperationOutcome>(this FhirClient<TBundle, TMetadata, TOperationOutcome> client, string location, Meta meta)
+            where TBundle : Resource, IBundle
+            where TMetadata : Resource, IMetadata
+            where TOperationOutcome : Resource
         {
             return AddMetaAsync(client, location, meta).WaitResult();
         }
 
-
-        public static async Task<Meta> DeleteMetaAsync(this FhirClient client, Uri location, Meta meta)
+        public static async Task<Meta> DeleteMetaAsync<TBundle, TMetadata, TOperationOutcome>(this FhirClient<TBundle, TMetadata, TOperationOutcome> client, Uri location, Meta meta)
+            where TBundle : Resource, IBundle
+            where TMetadata : Resource, IMetadata
+            where TOperationOutcome : Resource
         {
             var par = new Parameters().Add("meta", meta);
             return extractMeta(OperationResult<Parameters>(await client.InstanceOperationAsync(location, RestOperation.META_DELETE, par).ConfigureAwait(false)));
         }
 
-        public static Meta DeleteMeta(this FhirClient client, Uri location, Meta meta)
+        public static Meta DeleteMeta<TBundle, TMetadata, TOperationOutcome>(this FhirClient<TBundle, TMetadata, TOperationOutcome> client, Uri location, Meta meta)
+            where TBundle : Resource, IBundle
+            where TMetadata : Resource, IMetadata
+            where TOperationOutcome : Resource
         {
             return DeleteMetaAsync(client, location, meta).WaitResult();
         }
 
-        public static Task<Meta> DeleteMetaAsync(this FhirClient client, string location, Meta meta)
+        public static Task<Meta> DeleteMetaAsync<TBundle, TMetadata, TOperationOutcome>(this FhirClient<TBundle, TMetadata, TOperationOutcome> client, string location, Meta meta)
+            where TBundle : Resource, IBundle
+            where TMetadata : Resource, IMetadata
+            where TOperationOutcome : Resource
         {
             return DeleteMetaAsync(client, new Uri(location, UriKind.RelativeOrAbsolute), meta);
         }
 
-        public static Meta DeleteMeta(this FhirClient client, string location, Meta meta)
+        public static Meta DeleteMeta<TBundle, TMetadata, TOperationOutcome>(this FhirClient<TBundle, TMetadata, TOperationOutcome> client, string location, Meta meta)
+            where TBundle : Resource, IBundle
+            where TMetadata : Resource, IMetadata
+            where TOperationOutcome : Resource
         {
             return DeleteMetaAsync(client, location, meta).WaitResult();
         }
@@ -260,32 +362,54 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public static async Task<Parameters> TranslateConceptAsync(this FhirClient client, string id, Code code, FhirUri system, FhirString version,
+        public static async Task<Parameters> TranslateConceptAsync<TBundle, TMetadata, TOperationOutcome>(this FhirClient<TBundle, TMetadata, TOperationOutcome> client, string id, Code code, FhirUri system, FhirString version,
             FhirUri valueSet, Coding coding, CodeableConcept codeableConcept, FhirUri target, IEnumerable<TranslateConceptDependency> dependencies)
+            where TBundle : Resource, IBundle
+            where TMetadata : Resource, IMetadata
+            where TOperationOutcome : Resource
         {
             Parameters par = createTranslateConceptParams(code, system, version, valueSet, coding, codeableConcept, target, dependencies);
             var loc = ResourceIdentity.Build("ConceptMap", id);
             return OperationResult<Parameters>(await client.InstanceOperationAsync(loc, RestOperation.TRANSLATE, par).ConfigureAwait(false));
         }
-        public static Parameters TranslateConcept(this FhirClient client, string id, Code code, FhirUri system,
+
+        public static Parameters TranslateConcept<TBundle, TMetadata, TOperationOutcome>(this FhirClient<TBundle, TMetadata, TOperationOutcome> client, string id, Code code, FhirUri system,
             FhirString version,
             FhirUri valueSet, Coding coding, CodeableConcept codeableConcept, FhirUri target,
             IEnumerable<TranslateConceptDependency> dependencies)
+            where TBundle : Resource, IBundle
+            where TMetadata : Resource, IMetadata
+            where TOperationOutcome : Resource
         {
             return TranslateConceptAsync(client, id, code, system, version, valueSet, coding, codeableConcept, target,
                 dependencies).WaitResult();
         }
 
-
-        public static async Task<Parameters> TranslateConceptAsync(this FhirClient client, Code code, FhirUri system, FhirString version,
+        public static async Task<Parameters> TranslateConceptAsync(this FhirDstu2Client client, Code code, FhirUri system, FhirString version,
             FhirUri valueSet, Coding coding, CodeableConcept codeableConcept, FhirUri target, IEnumerable<TranslateConceptDependency> dependencies )
         {
             Parameters par = createTranslateConceptParams(code, system, version, valueSet, coding, codeableConcept, target, dependencies);
 
-            return OperationResult<Parameters>(await client.TypeOperationAsync<ConceptMap>(RestOperation.TRANSLATE, par).ConfigureAwait(false));
+            return OperationResult<Parameters>(await client.TypeOperationAsync<Model.DSTU2.ConceptMap>(RestOperation.TRANSLATE, par).ConfigureAwait(false));
         }
 
-        public static Parameters TranslateConcept(this FhirClient client, Code code, FhirUri system, FhirString version,
+        public static Parameters TranslateConcept(this FhirDstu2Client client, Code code, FhirUri system, FhirString version,
+            FhirUri valueSet, Coding coding, CodeableConcept codeableConcept, FhirUri target,
+            IEnumerable<TranslateConceptDependency> dependencies)
+        {
+            return TranslateConceptAsync(client, code, system, version, valueSet, coding, codeableConcept, target,
+                dependencies).WaitResult();
+        }
+
+        public static async Task<Parameters> TranslateConceptAsync(this FhirStu3Client client, Code code, FhirUri system, FhirString version,
+            FhirUri valueSet, Coding coding, CodeableConcept codeableConcept, FhirUri target, IEnumerable<TranslateConceptDependency> dependencies)
+        {
+            Parameters par = createTranslateConceptParams(code, system, version, valueSet, coding, codeableConcept, target, dependencies);
+
+            return OperationResult<Parameters>(await client.TypeOperationAsync<Model.STU3.ConceptMap>(RestOperation.TRANSLATE, par).ConfigureAwait(false));
+        }
+
+        public static Parameters TranslateConcept(this FhirStu3Client client, Code code, FhirUri system, FhirString version,
             FhirUri valueSet, Coding coding, CodeableConcept codeableConcept, FhirUri target,
             IEnumerable<TranslateConceptDependency> dependencies)
         {

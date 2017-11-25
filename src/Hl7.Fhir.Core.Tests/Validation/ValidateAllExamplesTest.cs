@@ -14,6 +14,7 @@ using System.Xml;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 
@@ -62,14 +63,14 @@ namespace Hl7.Fhir.Tests.Serialization
 
                         testFileCount++;
                         // Debug.WriteLine(String.Format("Validating {0}", entry.Name));
-                        resource.InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+                        resource.InvariantConstraints = new List<ElementDefinitionConstraint>();
                         resource.AddDefaultConstraints();
-                        var outcome = new OperationOutcome();
-                        resource.ValidateInvariants(outcome);
-                        if (outcome.Issue.Count > 0)
+                        var issues = new List<Issue>();
+                        resource.ValidateInvariants(issues);
+                        if (issues.Count > 0)
                         {
                             Debug.WriteLine(String.Format("Validating {0} failed:", entry.Name));
-                            foreach (var item in outcome.Issue)
+                            foreach (var item in issues)
                             {
                                 if (!failedInvariantCodes.ContainsKey(item.Details.Coding[0].Code))
                                     failedInvariantCodes.Add(item.Details.Coding[0].Code, 1);
@@ -83,7 +84,7 @@ namespace Hl7.Fhir.Tests.Serialization
                             Trace.WriteLine(new FhirXmlSerializer().SerializeToString(resource));
                             Trace.WriteLine("-------------------------");
                         }
-                        if (outcome.Issue.Count != 0)
+                        if (issues.Count != 0)
                         {
                             errorCount++;
                         }
@@ -121,20 +122,20 @@ namespace Hl7.Fhir.Tests.Serialization
 
 
             Bundle otherSDs;
-            Dictionary<string, List<ElementDefinition.ConstraintComponent>> invariantCache = new Dictionary<string, List<ElementDefinition.ConstraintComponent>>();
+            var invariantCache = new Dictionary<string, List<ElementDefinitionConstraint>>();
             using (Stream streamOther = File.OpenRead(profiles))
             {
                 otherSDs = new Fhir.Serialization.FhirXmlParser().Parse<Bundle>(SerializationUtil.XmlReaderFromStream(streamOther));
                 foreach (StructureDefinition resource in otherSDs.Entry.Select(e => e.Resource).Where(r => r != null && r is StructureDefinition))
                 {
-                    List<ElementDefinition.ConstraintComponent> cacheForResource;
+                    List<ElementDefinitionConstraint> cacheForResource;
                     if (invariantCache.ContainsKey(resource.ConstrainedType.ToString()))
                     {
                         cacheForResource = invariantCache[resource.ConstrainedType.ToString()];
                     }
                     else
                     {
-                        cacheForResource = new List<ElementDefinition.ConstraintComponent>();
+                        cacheForResource = new List<ElementDefinitionConstraint>();
                         invariantCache.Add(resource.ConstrainedType.ToString(), cacheForResource);
                     }
 
@@ -157,7 +158,7 @@ namespace Hl7.Fhir.Tests.Serialization
                             string key = constraint.Key;
                             if (!string.IsNullOrEmpty(expression))
                             {
-                                cacheForResource.Add(constraint);
+                                cacheForResource.Add(new ElementDefinitionConstraint(constraint));
                             }
                         }
                     }
@@ -198,15 +199,15 @@ namespace Hl7.Fhir.Tests.Serialization
                         {
                             resource.InvariantConstraints.AddRange(invariantCache[resource.ResourceType.ToString()]);
                         }
-                        var outcome = new OperationOutcome();
-                        resource.ValidateInvariants(outcome);
+                        var issues = new List<Issue>();
+                        resource.ValidateInvariants(issues);
                         // Debug.WriteLine("Key: " + String.Join(", ", resource.InvariantConstraints.Select(s => s.Key)));
                         foreach (var item in resource.InvariantConstraints)
                         {
                             if (checkedCode.Contains(item.Key))
                                 continue;
                             checkedCode.Add(item.Key);
-                            string expression = item.GetExtensionValue<FhirString>("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression").Value;
+                            string expression = item.Expression;
                             if (expression.Contains("[x]"))
                                 Debug.WriteLine(String.Format("Expression {0} had an [x] in it '{1}'", item.Key, expression));
                             if (expression.Contains("\"%\""))
@@ -224,10 +225,10 @@ namespace Hl7.Fhir.Tests.Serialization
 
                         }
                         // we can skip the US zipcode validations
-                        if (outcome.Issue.Where(i => (i.Diagnostics != "address.postalCode.all(matches('[0-9]{5}(-[0-9]{4}){0,1}'))")).Count() > 0)
+                        if (issues.Where(i => (i.Diagnostics != "address.postalCode.all(matches('[0-9]{5}(-[0-9]{4}){0,1}'))")).Count() > 0)
                         {
                             Debug.WriteLine(String.Format("Validating {0} failed:", entry.Name));
-                            foreach (var item in outcome.Issue)
+                            foreach (var item in issues)
                             {
                                 if (!failedInvariantCodes.ContainsKey(item.Details.Coding[0].Code))
                                     failedInvariantCodes.Add(item.Details.Coding[0].Code, 1);

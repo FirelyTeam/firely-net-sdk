@@ -37,39 +37,6 @@ using System.Text;
 
 namespace Hl7.Fhir.Model
 {
-    public partial class HumanName
-    {
-        public static HumanName ForFamily(string family)
-        {
-            var result = new HumanName()
-            {
-                Family = new string[] { family }
-            };
-            return result;
-        }
-
-        public HumanName WithGiven(string given)
-        {
-            if (this.GivenElement == null) this.GivenElement = new List<FhirString>();
-            this.GivenElement.Add(new FhirString(given));
-
-            return this;
-        }
-
-        public HumanName AndFamily(string family)
-        {
-            if(this.FamilyElement == null) this.FamilyElement = new List<FhirString>();
-            this.FamilyElement.Add(new FhirString(family));
-
-            return this;
-        }
-
-        public List<HumanName> AsList()
-        {
-            return new List<HumanName>() { this };
-        }
-    }
-
     [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay(),nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
     public partial class Address
     {
@@ -81,20 +48,6 @@ namespace Hl7.Fhir.Model
                 City, State, PostalCode, Country)
                 + (Use.HasValue ? " Use=\"" + Use.Value + "\"" : "")
                 + (Type.HasValue ? " Type=\"" + Type.Value + "\"" : "");
-        }
-    }
-
-    public partial class ContactPoint
-    {
-        public ContactPoint()
-        {
-        }
-
-        public ContactPoint(ContactPointSystem? system, ContactPointUse? use, string value)
-        {
-            this.System = system;
-            this.Use = use;
-            this.Value = value;
         }
     }
 
@@ -159,19 +112,6 @@ namespace Hl7.Fhir.Model
             this.Code = code;
             this.Display = display;
         }
-    }
-
-    public partial class Identifier
-    {
-        public Identifier()
-        {
-        }
-
-        public Identifier(string system, string value)
-        {
-            this.System = system;
-            this.Value = value;
-        }        
     }
 
     [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx

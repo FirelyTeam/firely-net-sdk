@@ -52,10 +52,14 @@
   <ItemGroup>
     <None Include="Validation\xhtml\fhir-xhtml.xsd" />
     <None Include="Validation\xhtml\xml.xsd" />
-    <None Include="Model\Source\expansions.xml" />
-    <None Include="Model\Source\profiles-resources.xml" />
-    <None Include="Model\Source\profiles-types.xml" />
-    <None Include="Model\Source\search-parameters.xml" />
+    <None Include="Model\Source-DSTU2\expansions.xml" />
+    <None Include="Model\Source-DSTU2\profiles-resources.xml" />
+    <None Include="Model\Source-DSTU2\profiles-types.xml" />
+    <None Include="Model\Source-DSTU2\search-parameters.xml" />
+    <None Include="Model\Source-STU3\expansions.xml" />
+    <None Include="Model\Source-STU3\profiles-resources.xml" />
+    <None Include="Model\Source-STU3\profiles-types.xml" />
+    <None Include="Model\Source-STU3\search-parameters.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
@@ -122,5 +126,8 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Template-ProfiledDataTypes.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Model\Generated\STU3\" />
   </ItemGroup>
 </Project>

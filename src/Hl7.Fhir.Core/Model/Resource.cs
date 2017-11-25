@@ -72,12 +72,12 @@ namespace Hl7.Fhir.Model
         /// The List of invariants to be validated for the resource
         /// </summary>
         [NotMapped]
-        public List<ElementDefinition.ConstraintComponent> InvariantConstraints;
+        public List<ElementDefinitionConstraint> InvariantConstraints;
 
         public virtual void AddDefaultConstraints()
         {
             if (InvariantConstraints == null || InvariantConstraints.Count == 0)
-                InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+                InvariantConstraints = new List<ElementDefinitionConstraint>();
         }
 
         /// <summary>
@@ -85,23 +85,22 @@ namespace Hl7.Fhir.Model
         /// </summary>
         /// <param name="invariantRule"></param>
         /// <param name="model"></param>
-        /// <param name="result">The OperationOutcome that will have the validation results appended</param>
+        /// <param name="issues">The list of issues that will have the validation results appended</param>
         /// <param name="context">Describes the context in which a validation check is performed.</param>
         /// <returns></returns>
-        public static bool ValidateInvariantRule(ValidationContext context, ElementDefinition.ConstraintComponent invariantRule, IElementNavigator model, OperationOutcome result)
+        public static bool ValidateInvariantRule(ValidationContext context, ElementDefinitionConstraint invariantRule, IElementNavigator model, List<Issue> issues)
         {
-            string expression = invariantRule.GetStringExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression");
             try
             {
                 // No FhirPath extension
-                if (string.IsNullOrEmpty(expression))
+                if (string.IsNullOrEmpty(invariantRule.Expression))
                 {
-                    result.Issue.Add(new OperationOutcome.IssueComponent()
+                    issues.Add(new Issue
                     {
-                        Code = OperationOutcome.IssueType.Invariant,
-                        Severity = OperationOutcome.IssueSeverity.Warning,
+                        Code = IssueType.Invariant,
+                        Severity = IssueSeverity.Warning,
                         Details = new CodeableConcept(null, invariantRule.Key, "Unable to validate without a FhirPath expression"),
-                        Diagnostics = expression
+                        Diagnostics = invariantRule.Expression
                     });
                     return true;
                 }
@@ -109,26 +108,26 @@ namespace Hl7.Fhir.Model
                 // Ensure the FHIR extensions are registered
                 Hl7.Fhir.FhirPath.ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
 
-                if (model.Predicate(expression, new EvaluationContext(model)))
+                if (model.Predicate(invariantRule.Expression, new EvaluationContext(model)))
                     return true;
 
-                result.Issue.Add(new OperationOutcome.IssueComponent()
+                issues.Add(new Issue
                 {
-                    Code = OperationOutcome.IssueType.Invariant,
-                    Severity = OperationOutcome.IssueSeverity.Error,
+                    Code = IssueType.Invariant,
+                    Severity = IssueSeverity.Error,
                     Details = new CodeableConcept(null, invariantRule.Key, invariantRule.Human),
-                    Diagnostics = expression
+                    Diagnostics = invariantRule.Expression
                 });
                 return false;
             }
             catch (Exception ex)
             {
-                result.Issue.Add(new OperationOutcome.IssueComponent()
+                issues.Add(new Issue
                 {
-                    Code = OperationOutcome.IssueType.Invariant,
-                    Severity = OperationOutcome.IssueSeverity.Fatal,
-                    Details = new CodeableConcept(null, invariantRule.Key, "FATAL: Unable to process the invariant rule: " + invariantRule.Key + " " + expression),
-                    Diagnostics = String.Format("FhirPath: {0}\r\nError: {1}", expression, ex.Message)
+                    Code = IssueType.Invariant,
+                    Severity = IssueSeverity.Fatal,
+                    Details = new CodeableConcept(null, invariantRule.Key, "FATAL: Unable to process the invariant rule: " + invariantRule.Key + " " + invariantRule.Expression),
+                    Diagnostics = String.Format("FhirPath: {0}\r\nError: {1}", invariantRule.Expression, ex.Message)
                 });
                 return false;
             }
@@ -191,20 +190,20 @@ namespace Hl7.Fhir.Model
 
         public void ValidateInvariants(ValidationContext context, List<ValidationResult> result)
         {
-            OperationOutcome results = new OperationOutcome();
-            ValidateInvariants(context, results);
-            foreach (var item in results.Issue)
+            var issues = new List<Issue>();
+            ValidateInvariants(context, issues);
+            foreach (var item in issues)
             {
-                if (item.Severity == OperationOutcome.IssueSeverity.Error
-                    || item.Severity == OperationOutcome.IssueSeverity.Fatal)
+                if (item.Severity == IssueSeverity.Error
+                    || item.Severity == IssueSeverity.Fatal)
                     result.Add(new ValidationResult(item.Details.Coding[0].Code + ": " + item.Details.Text));
             }
         }
 
-        public void ValidateInvariants(OperationOutcome result)
-            => ValidateInvariants(DotNetAttributeValidation.BuildContext(new object()), result);
+        public void ValidateInvariants(List<Issue> issues)
+            => ValidateInvariants(DotNetAttributeValidation.BuildContext(new object()), issues);
 
-        public void ValidateInvariants(ValidationContext context, OperationOutcome result)
+        public void ValidateInvariants(ValidationContext context, List<Issue> issues)
         {
             if (InvariantConstraints != null && InvariantConstraints.Count > 0)
             {
@@ -215,7 +214,7 @@ namespace Hl7.Fhir.Model
                 var tree = new PocoNavigator(this);
                 foreach (var invariantRule in InvariantConstraints)
                 {
-                    ValidateInvariantRule(context,invariantRule, tree, result);
+                    ValidateInvariantRule(context,invariantRule, tree, issues);
                 }
 
                 sw.Stop();

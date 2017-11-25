@@ -32,7 +32,7 @@ namespace Hl7.FhirPath.Tests
             // var navigator = new TreeNavigator(tree);
             // return navigator;
 
-            var patient = (new FhirXmlParser()).Parse<Hl7.Fhir.Model.Patient>(tpXml);
+            var patient = (new FhirXmlParser()).Parse<Hl7.Fhir.Model.DSTU2.Patient>(tpXml);
             return new PocoNavigator(patient);
         }
 

@@ -14,6 +14,7 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Navigation;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Hl7.Fhir.Model.DSTU2;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -209,7 +210,7 @@ namespace Hl7.Fhir.Specification.Tests
                             Slicing = new ElementDefinition.SlicingComponent()
                             {
                                 Discriminator = new string[] { "url" },
-                                Rules = ElementDefinition.SlicingRules.Closed
+                                Rules = SlicingRules.Closed
                             }
                         },
                         new ElementDefinition("Patient.extension")

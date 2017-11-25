@@ -1,4 +1,5 @@
 ﻿using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
@@ -333,7 +334,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var obs = new Observation()
             {
-                Status = Observation.ObservationStatus.Final,
+                Status = ObservationStatus.Final,
                 Code = new CodeableConcept("http://somesystem.org/codes", "AABB"),
                 Meta = new Meta { Profile = new[] { "http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation" } }
             };
@@ -607,7 +608,7 @@ namespace Hl7.Fhir.Specification.Tests
             var sd = "http://validationtest.org/fhir/StructureDefinition/BundleWithConstrainedContained";
             Bundle b = new Bundle();
 
-            b.Type = Bundle.BundleType.Message;
+            b.Type = BundleType.Message;
             b.Entry.Add(new Bundle.EntryComponent
             {
                 FullUrl = "http://somewhere.org/",

@@ -20,7 +20,7 @@ namespace Hl7.Fhir.ElementModel
 
             var comp = instance.Children("comparator").GetString();
             if(comp != null)
-                newQuantity.ComparatorElement = new Code<Quantity.QuantityComparator> { ObjectValue = comp };
+                newQuantity.ComparatorElement = new Code<QuantityComparator> { ObjectValue = comp };
 
             newQuantity.Unit = instance.Children("unit").GetString();
             newQuantity.System = instance.Children("system").GetString();
@@ -47,27 +47,52 @@ namespace Hl7.Fhir.ElementModel
         /// </remarks>
         public static Element ParseBindable(this IElementNavigator instance)
         {
-            var instanceType = ModelInfo.FhirTypeNameToFhirType(instance.Type);
-
-            switch (instanceType)
+            var dstu2InstanceType = Model.DSTU2.ModelInfo.FhirTypeNameToFhirType(instance.Type);
+            if (dstu2InstanceType != null)
             {
-                case FHIRDefinedType.Code:
+                switch (dstu2InstanceType)
+                {
+                    case Model.DSTU2.FHIRDefinedType.Code:
+                        return instance.ParsePrimitive<Code>();
+                    case Model.DSTU2.FHIRDefinedType.Coding:
+                        return instance.ParseCoding();
+                    case Model.DSTU2.FHIRDefinedType.CodeableConcept:
+                        return instance.ParseCodeableConcept();
+                    case Model.DSTU2.FHIRDefinedType.Quantity:
+                        return parseQuantity(instance);
+                    case Model.DSTU2.FHIRDefinedType.String:
+                        return new Code(instance.ParsePrimitive<FhirString>()?.Value);
+                    case Model.DSTU2.FHIRDefinedType.Uri:
+                        return new Code(instance.ParsePrimitive<FhirUri>()?.Value);
+                    case Model.DSTU2.FHIRDefinedType.Extension:
+                        return parseExtension(instance);
+                    default:
+                        // Not bindable
+                        return null;
+                }
+            }
+
+            var stu3InstanceType = Model.STU3.ModelInfo.FhirTypeNameToFhirType(instance.Type);
+
+            switch (stu3InstanceType)
+            {
+                case Model.STU3.FHIRAllTypes.Code:
                     return instance.ParsePrimitive<Code>();
-                case FHIRDefinedType.Coding:
+                case Model.STU3.FHIRAllTypes.Coding:
                     return instance.ParseCoding();
-                case FHIRDefinedType.CodeableConcept:
+                case Model.STU3.FHIRAllTypes.CodeableConcept:
                     return instance.ParseCodeableConcept();
-                case FHIRDefinedType.Quantity:
+                case Model.STU3.FHIRAllTypes.Quantity:
                     return parseQuantity(instance);
-                case FHIRDefinedType.String:
+                case Model.STU3.FHIRAllTypes.String:
                     return new Code(instance.ParsePrimitive<FhirString>()?.Value);
-                case FHIRDefinedType.Uri:
+                case Model.STU3.FHIRAllTypes.Uri:
                     return new Code(instance.ParsePrimitive<FhirUri>()?.Value);
-                case FHIRDefinedType.Extension:
+                case Model.STU3.FHIRAllTypes.Extension:
                     return parseExtension(instance);
                 case null:
-                    //HACK: fall through - IElementNav did not provide a type
-                    //should not happen, and I have no intention to handle it.
+                //HACK: fall through - IElementNav did not provide a type
+                //should not happen, and I have no intention to handle it.
                 default:
                     // Not bindable
                     return null;
@@ -110,16 +135,29 @@ namespace Hl7.Fhir.ElementModel
             };
         }
 
-        public static ResourceReference ParseResourceReference(this IElementNavigator instance)
+        public static string ParseResourceReferenceReference(this IElementNavigator instance)
         {
-            return new ResourceReference()
+            return instance.Children("reference").GetString();
+        }
+
+        public static Model.DSTU2.ResourceReference ParseDstu2ResourceReference(this IElementNavigator instance)
+        {
+            return new Model.DSTU2.ResourceReference
             {
                 Reference = instance.Children("reference").GetString(),
                 Display = instance.Children("display").GetString()           
             };
         }
 
-
+        public static Model.STU3.ResourceReference ParseStu3ResourceReference(this IElementNavigator instance)
+        {
+            return new Model.STU3.ResourceReference
+            {
+                Reference = instance.Children("reference").GetString(),
+                Display = instance.Children("display").GetString(),
+                Identifier = null, // TODO
+            };
+        }
 
         public static CodeableConcept ParseCodeableConcept(this IElementNavigator instance)
         {

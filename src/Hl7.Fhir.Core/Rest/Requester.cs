@@ -17,10 +17,10 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
-    internal class Requester
+    internal class Requester<TOperationOutcome> where TOperationOutcome : Resource
     {
         public Uri BaseUrl { get; private set; }
-
+        public string FhirVersion { get; private set; }
         public bool UseFormatParameter { get; set; }
         public ResourceFormat PreferredFormat { get; set; }
         public int Timeout { get; set; }           // In milliseconds
@@ -40,29 +40,34 @@ namespace Hl7.Fhir.Rest
 
         public ParserSettings ParserSettings { get; set; }
 
-        public Requester(Uri baseUrl)
+        public Requester(Uri baseUrl, string fhirVersion, Func<Exception, TOperationOutcome> operationOutcomeFromException, Func<byte[], string, Resource> makeBinaryResource)
         {
             BaseUrl = baseUrl;
+            FhirVersion = fhirVersion;
             UseFormatParameter = false;
             PreferredFormat = ResourceFormat.Xml;
             Timeout = 100 * 1000;       // Default timeout is 100 seconds            
             Prefer = Rest.Prefer.ReturnRepresentation;
             ParserSettings = Hl7.Fhir.Serialization.ParserSettings.Default;
+            _operationOutcomeFromException = operationOutcomeFromException;
+            _makeBinaryResource = makeBinaryResource;
         }
 
 
-        public Bundle.EntryComponent LastResult { get; private set; }
+        public Response LastResult { get; private set; }
         public HttpWebResponse LastResponse { get; private set; }
         public HttpWebRequest LastRequest { get; private set; }
         public Action<HttpWebRequest, byte[]> BeforeRequest { get; set; }
         public Action<HttpWebResponse, byte[]> AfterResponse { get; set; }
 
+        private readonly Func<Exception, TOperationOutcome> _operationOutcomeFromException;
+        private readonly Func<byte[], string, Resource> _makeBinaryResource;
 
-        public Bundle.EntryComponent Execute(Bundle.EntryComponent interaction)
+        public Response Execute(Request interaction)
         {
             return ExecuteAsync(interaction).WaitResult();
         }
-        public async Task<Bundle.EntryComponent> ExecuteAsync(Bundle.EntryComponent interaction)
+        public async Task<Response> ExecuteAsync(Request interaction)
         {
             if (interaction == null) throw Error.ArgumentNull(nameof(interaction));
             bool compressRequestBody = false;
@@ -70,7 +75,7 @@ namespace Hl7.Fhir.Rest
             compressRequestBody = CompressRequestBody; // PCL doesn't support compression at the moment
 
             byte[] outBody;
-            var request = interaction.ToHttpRequest(Prefer, PreferredFormat, UseFormatParameter, compressRequestBody, out outBody);
+            var request = interaction.ToHttpRequest(FhirVersion, Prefer, PreferredFormat, UseFormatParameter, compressRequestBody, out outBody);
 
 #if DOTNETFW
             request.Timeout = Timeout;
@@ -107,12 +112,12 @@ namespace Hl7.Fhir.Rest
 
                         if (webResponse.StatusCode.IsSuccessful())
                         {
-                            LastResult = webResponse.ToBundleEntry(inBody, ParserSettings, throwOnFormatException: true);
+                            LastResult = Response.FromHttpResponse( webResponse, inBody, ParserSettings, _makeBinaryResource, throwOnFormatException: true);
                             return LastResult;
                         }
                         else
                         {
-                            LastResult = webResponse.ToBundleEntry(inBody, ParserSettings, throwOnFormatException: false);
+                            LastResult = Response.FromHttpResponse( webResponse, inBody, ParserSettings, _makeBinaryResource, throwOnFormatException: false);
                             throw buildFhirOperationException(webResponse.StatusCode, LastResult.Resource);
                         }
                     }
@@ -120,16 +125,14 @@ namespace Hl7.Fhir.Rest
                     {
                         // The server responded with HTML code. Still build a FhirOperationException and set a LastResult.
                         // Build a very minimal LastResult
-                        var errorResult = new Bundle.EntryComponent();
-                        errorResult.Response = new Bundle.ResponseComponent();
-                        errorResult.Response.Status = ((int)webResponse.StatusCode).ToString();
+                        var errorResult = new Response();
+                        errorResult.Status = ((int)webResponse.StatusCode).ToString();
 
-                        OperationOutcome operationOutcome = OperationOutcome.ForException(bte, OperationOutcome.IssueType.Invalid);
 
-                        errorResult.Resource = operationOutcome;
+                        errorResult.Resource = _operationOutcomeFromException(bte);
                         LastResult = errorResult;
 
-                        throw buildFhirOperationException(webResponse.StatusCode, operationOutcome);
+                        throw buildFhirOperationException(webResponse.StatusCode, errorResult.Resource);
                     }
                 }
                 catch (AggregateException ae)
@@ -184,7 +187,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        private static Exception buildFhirOperationException(HttpStatusCode status, Resource body)
+        private Exception buildFhirOperationException(HttpStatusCode status, Resource body)
         {
             string message;
 
@@ -197,12 +200,12 @@ namespace Hl7.Fhir.Rest
             else
                 message = $"Operation was unsuccessful, and returned status {status}";
 
-            if (body is OperationOutcome outcome)
-                return new FhirOperationException($"{message}. OperationOutcome: {outcome.ToString()}.", status, outcome);
+            if (body is TOperationOutcome outcome)
+                return new FhirOperationException<TOperationOutcome>($"{message}. OperationOutcome: {outcome.ToString()}.", status, outcome);
             else if (body != null)
-                return new FhirOperationException($"{message}. Body contains a {body.TypeName}.", status);
+                return new FhirOperationException<TOperationOutcome>($"{message}. Body contains a {body.TypeName}.", status);
             else
-                return new FhirOperationException($"{message}. Body has no content.", status);
+                return new FhirOperationException<TOperationOutcome>($"{message}. Body has no content.", status);
         }
     }
 }

@@ -8,6 +8,7 @@
 
 using System;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
@@ -87,7 +88,7 @@ namespace Hl7.Fhir.Specification.Terminology
 
             if (successOutcome == null)
             {
-                outcome.AddIssue("None of the Codings in the CodeableConcept were valid for the binding. Details follow.", Issue.CONTENT_INVALID_FOR_REQUIRED_BINDING);
+                outcome.AddIssue("None of the Codings in the CodeableConcept were valid for the binding. Details follow.", Support.Issue.CONTENT_INVALID_FOR_REQUIRED_BINDING);
                 foreach (var cr in callResults)
                 {
                     cr.MakeInformational();
@@ -125,14 +126,14 @@ namespace Hl7.Fhir.Specification.Terminology
             var result = new OperationOutcome();
 
             if (component == null)
-                result.AddIssue($"{codeLabel} does not exist in valueset '{vs.Url}'", Issue.TERMINOLOGY_CODE_NOT_IN_VALUESET);
+                result.AddIssue($"{codeLabel} does not exist in valueset '{vs.Url}'", Support.Issue.TERMINOLOGY_CODE_NOT_IN_VALUESET);
             else
             {
                 if (component.Abstract == true && abstractAllowed == false)  // will be ignored if abstractAllowed == null
-                    result.AddIssue($"{codeLabel} is abstract, which is not allowed here", Issue.TERMINOLOGY_ABSTRACT_CODE_NOT_ALLOWED);
+                    result.AddIssue($"{codeLabel} is abstract, which is not allowed here", Support.Issue.TERMINOLOGY_ABSTRACT_CODE_NOT_ALLOWED);
 
                 if (display != null && component.Display != null && display != component.Display)
-                    result.AddIssue($"{codeLabel} has incorrect display '{display}', should be '{component.Display}'", Issue.TERMINOLOGY_INCORRECT_DISPLAY);
+                    result.AddIssue($"{codeLabel} has incorrect display '{display}', should be '{component.Display}'", Support.Issue.TERMINOLOGY_INCORRECT_DISPLAY);
             }
 
             return result;

@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
 using System.Net;
@@ -23,14 +24,14 @@ namespace Hl7.Fhir.Specification.Source
         {
         }
 
-        Func<Uri, FhirClient> _clientFactory;
+        Func<Uri, FhirDstu2Client> _clientFactory;
 
         /// <summary>Create a new <see cref="WebResolver"/> instance that supports a custom <see cref="FhirClient"/> implementation.</summary>
         /// <param name="fhirClientFactory">
         /// Factory function that should create a new <see cref="FhirClient"/> instance for the specified <see cref="Uri"/>.
         /// If this parameter equals <c>null</c>, then the new instance creates a default <see cref="FhirClient"/> instance.
         /// </param>
-        public WebResolver(Func<Uri, FhirClient> fhirClientFactory) { _clientFactory = fhirClientFactory; }
+        public WebResolver(Func<Uri, FhirDstu2Client> fhirClientFactory) { _clientFactory = fhirClientFactory; }
 
 
         public Hl7.Fhir.Model.Resource ResolveByUri(string uri)
@@ -42,7 +43,7 @@ namespace Hl7.Fhir.Specification.Source
             var id = new ResourceIdentity(uri);
 
             // [WMR 20150810] Use custom FhirClient factory if specified
-            var client = _clientFactory != null ? _clientFactory(id.BaseUri) : new FhirClient(id.BaseUri) { Timeout = 5000 };
+            var client = _clientFactory != null ? _clientFactory(id.BaseUri) : new FhirDstu2Client(id.BaseUri) { Timeout = 5000 };
 
             try
             {
@@ -50,7 +51,7 @@ namespace Hl7.Fhir.Specification.Source
                 resultResource.SetOrigin(uri);
                 return resultResource;
             }
-            catch (FhirOperationException)
+            catch (FhirOperationException<OperationOutcome>)
             {
                 return null;
             }

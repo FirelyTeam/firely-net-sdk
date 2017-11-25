@@ -51,9 +51,9 @@ namespace Hl7.Fhir.Validation
         [Fact]
         public void TestParseResourceReference()
         {
-            var i = new Model.ResourceReference("http://example.org/fhir/Patient/1", "a patient");
+            var i = new Model.DSTU2.ResourceReference("http://example.org/fhir/Patient/1", "a patient");
             var nav = new PocoNavigator(i);
-            var p = nav.ParseResourceReference();
+            var p = nav.ParseDstu2ResourceReference();
             Assert.True(p.IsExactly(i));
         }
 
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Validation
             Assert.NotNull(c);
             Assert.True(ic.IsExactly(c));
 
-            ext.Value = new HumanName();
+            ext.Value = new Model.DSTU2.HumanName();
             nav = new PocoNavigator(ext);
             c = nav.ParseBindable() as Coding;
             Assert.Null(c);  // HumanName is not bindable
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Validation
         public void TestParseUnbindable()
         { 
             // Now, something non-bindable
-            var x = new HumanName().WithGiven("Ewout");
+            var x = new Model.DSTU2.HumanName().WithGiven("Ewout");
             var nav = new PocoNavigator(x);
             var xe = nav.ParseBindable();
             Assert.Null(xe);

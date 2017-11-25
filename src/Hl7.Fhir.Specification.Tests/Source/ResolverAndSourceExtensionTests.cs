@@ -16,6 +16,7 @@ using System.IO;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Model.DSTU2;
 
 namespace Hl7.Fhir.Specification.Tests
 {

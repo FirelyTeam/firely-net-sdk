@@ -9,6 +9,7 @@
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.DSTU2;
 using System.Diagnostics;
 using Hl7.Fhir.Specification.Source;
 using System.Net;
@@ -79,7 +80,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("http://test.fhir.org/r2/StructureDefinition/Observation", artifact.GetOrigin());
         }
 
-        private class TestFhirClient : Rest.FhirClient
+        private class TestFhirClient : Rest.FhirDstu2Client
         {
             private int _status = 0;
 

@@ -7,37 +7,38 @@ using System.Runtime.Serialization;
 using Hl7.Fhir.Utility;
 
 /*
-  Copyright (c) 2011+, HL7, Inc.
-  All rights reserved.
-  
-  Redistribution and use in source and binary forms, with or without modification, 
-  are permitted provided that the following conditions are met:
-  
-   * Redistributions of source code must retain the above copyright notice, this 
-     list of conditions and the following disclaimer.
-   * Redistributions in binary form must reproduce the above copyright notice, 
-     this list of conditions and the following disclaimer in the documentation 
-     and/or other materials provided with the distribution.
-   * Neither the name of HL7 nor the names of its contributors may be used to 
-     endorse or promote products derived from this software without specific 
-     prior written permission.
-  
-  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
-  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
-  IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
-  INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
-  NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
-  PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
-  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
-  POSSIBILITY OF SUCH DAMAGE.
-  
+    Copyright (c) 2011+, HL7, Inc.
+    All rights reserved.
+
+    Redistribution and use in source and binary forms, with or without modification, 
+    are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice, this 
+        list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice, 
+        this list of conditions and the following disclaimer in the documentation 
+        and/or other materials provided with the distribution.
+    * Neither the name of HL7 nor the names of its contributors may be used to 
+        endorse or promote products derived from this software without specific 
+        prior written permission.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+    ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+    IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+    INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+    NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
+    PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+    WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+    POSSIBILITY OF SUCH DAMAGE.
+
 
 */
+#pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.0.2, v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -50,40 +51,8 @@ namespace Hl7.Fhir.Model
     {
         [NotMapped]
         public override string TypeName { get { return "Quantity"; } }
+    
         
-        /// <summary>
-        /// How the Quantity should be understood and represented.
-        /// (url: http://hl7.org/fhir/ValueSet/quantity-comparator)
-        /// </summary>
-        [FhirEnumeration("QuantityComparator")]
-        public enum QuantityComparator
-        {
-            /// <summary>
-            /// The actual value is less than the given value.
-            /// (system: http://hl7.org/fhir/quantity-comparator)
-            /// </summary>
-            [EnumLiteral("<", "http://hl7.org/fhir/quantity-comparator"), Description("Less than")]
-            LessThan,
-            /// <summary>
-            /// The actual value is less than or equal to the given value.
-            /// (system: http://hl7.org/fhir/quantity-comparator)
-            /// </summary>
-            [EnumLiteral("<=", "http://hl7.org/fhir/quantity-comparator"), Description("Less or Equal to")]
-            LessOrEqual,
-            /// <summary>
-            /// The actual value is greater than or equal to the given value.
-            /// (system: http://hl7.org/fhir/quantity-comparator)
-            /// </summary>
-            [EnumLiteral(">=", "http://hl7.org/fhir/quantity-comparator"), Description("Greater or Equal to")]
-            GreaterOrEqual,
-            /// <summary>
-            /// The actual value is greater than the given value.
-            /// (system: http://hl7.org/fhir/quantity-comparator)
-            /// </summary>
-            [EnumLiteral(">", "http://hl7.org/fhir/quantity-comparator"), Description("Greater than")]
-            GreaterThan,
-        }
-
         /// <summary>
         /// Numerical value (with implicit precision)
         /// </summary>
@@ -108,10 +77,10 @@ namespace Hl7.Fhir.Model
             get { return ValueElement != null ? ValueElement.Value : null; }
             set
             {
-                if (!value.HasValue)
-                  ValueElement = null; 
+                if (value == null)
+                    ValueElement = null;
                 else
-                  ValueElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                    ValueElement = new Hl7.Fhir.Model.FhirDecimal(value);
                 OnPropertyChanged("Value");
             }
         }
@@ -121,13 +90,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("comparator", InSummary=true, Order=40)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.Quantity.QuantityComparator> ComparatorElement
+        public Code<Hl7.Fhir.Model.QuantityComparator> ComparatorElement
         {
             get { return _ComparatorElement; }
             set { _ComparatorElement = value; OnPropertyChanged("ComparatorElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.Quantity.QuantityComparator> _ComparatorElement;
+        private Code<Hl7.Fhir.Model.QuantityComparator> _ComparatorElement;
         
         /// <summary>
         /// &lt; | &lt;= | &gt;= | &gt; - how to understand the value
@@ -135,15 +104,15 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.Quantity.QuantityComparator? Comparator
+        public Hl7.Fhir.Model.QuantityComparator? Comparator
         {
             get { return ComparatorElement != null ? ComparatorElement.Value : null; }
             set
             {
-                if (!value.HasValue)
-                  ComparatorElement = null; 
+                if (value == null)
+                    ComparatorElement = null;
                 else
-                  ComparatorElement = new Code<Hl7.Fhir.Model.Quantity.QuantityComparator>(value);
+                    ComparatorElement = new Code<Hl7.Fhir.Model.QuantityComparator>(value);
                 OnPropertyChanged("Comparator");
             }
         }
@@ -173,9 +142,9 @@ namespace Hl7.Fhir.Model
             set
             {
                 if (value == null)
-                  UnitElement = null; 
+                    UnitElement = null;
                 else
-                  UnitElement = new Hl7.Fhir.Model.FhirString(value);
+                    UnitElement = new Hl7.Fhir.Model.FhirString(value);
                 OnPropertyChanged("Unit");
             }
         }
@@ -205,9 +174,9 @@ namespace Hl7.Fhir.Model
             set
             {
                 if (value == null)
-                  SystemElement = null; 
+                    SystemElement = null;
                 else
-                  SystemElement = new Hl7.Fhir.Model.FhirUri(value);
+                    SystemElement = new Hl7.Fhir.Model.FhirUri(value);
                 OnPropertyChanged("System");
             }
         }
@@ -237,49 +206,49 @@ namespace Hl7.Fhir.Model
             set
             {
                 if (value == null)
-                  CodeElement = null; 
+                    CodeElement = null;
                 else
-                  CodeElement = new Hl7.Fhir.Model.Code(value);
+                    CodeElement = new Hl7.Fhir.Model.Code(value);
                 OnPropertyChanged("Code");
             }
         }
-        
-
+    
+    
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Quantity;
-            
+        
             if (dest != null)
             {
                 base.CopyTo(dest);
                 if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirDecimal)ValueElement.DeepCopy();
-                if(ComparatorElement != null) dest.ComparatorElement = (Code<Hl7.Fhir.Model.Quantity.QuantityComparator>)ComparatorElement.DeepCopy();
+                if(ComparatorElement != null) dest.ComparatorElement = (Code<Hl7.Fhir.Model.QuantityComparator>)ComparatorElement.DeepCopy();
                 if(UnitElement != null) dest.UnitElement = (Hl7.Fhir.Model.FhirString)UnitElement.DeepCopy();
                 if(SystemElement != null) dest.SystemElement = (Hl7.Fhir.Model.FhirUri)SystemElement.DeepCopy();
                 if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
                 return dest;
             }
             else
-            	throw new ArgumentException("Can only copy to an object of the same type", "other");
+                throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
         
         public override IDeepCopyable DeepCopy()
         {
-            return CopyTo(new Quantity());
+             return CopyTo(new Quantity());
         }
         
         public override bool Matches(IDeepComparable other)
         {
             var otherT = other as Quantity;
             if(otherT == null) return false;
-            
+        
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(ValueElement, otherT.ValueElement)) return false;
             if( !DeepComparable.Matches(ComparatorElement, otherT.ComparatorElement)) return false;
             if( !DeepComparable.Matches(UnitElement, otherT.UnitElement)) return false;
             if( !DeepComparable.Matches(SystemElement, otherT.SystemElement)) return false;
             if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
-            
+        
             return true;
         }
         
@@ -287,17 +256,17 @@ namespace Hl7.Fhir.Model
         {
             var otherT = other as Quantity;
             if(otherT == null) return false;
-            
+        
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
             if( !DeepComparable.IsExactly(ComparatorElement, otherT.ComparatorElement)) return false;
             if( !DeepComparable.IsExactly(UnitElement, otherT.UnitElement)) return false;
             if( !DeepComparable.IsExactly(SystemElement, otherT.SystemElement)) return false;
             if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
-            
+        
             return true;
         }
-
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {
@@ -311,23 +280,21 @@ namespace Hl7.Fhir.Model
                 if (CodeElement != null) yield return CodeElement;
             }
         }
-
+        
         [NotMapped]
-        internal override IEnumerable<ElementValue> NamedChildren 
-        { 
-            get 
-            { 
-                foreach (var item in base.NamedChildren) yield return item; 
+        internal override IEnumerable<ElementValue> NamedChildren
+        {
+            get
+            {
+                foreach (var item in base.NamedChildren) yield return item;
                 if (ValueElement != null) yield return new ElementValue("value", false, ValueElement);
                 if (ComparatorElement != null) yield return new ElementValue("comparator", false, ComparatorElement);
                 if (UnitElement != null) yield return new ElementValue("unit", false, UnitElement);
                 if (SystemElement != null) yield return new ElementValue("system", false, SystemElement);
                 if (CodeElement != null) yield return new ElementValue("code", false, CodeElement);
- 
-            } 
-        } 
-    
+            }
+        }
     
     }
-    
+
 }
