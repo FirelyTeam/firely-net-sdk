@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Validation
                     }
                     else
                         outcome.AddIssue("There are no profile and type assertions at this point in the instance, so validation cannot succeed",
-                                Support.Issue.PROFILE_NO_PROFILE_TO_VALIDATE_AGAINST, _path);
+                                Issue.PROFILE_NO_PROFILE_TO_VALIDATE_AGAINST, _path);
 
                 }
             }
@@ -114,20 +114,20 @@ namespace Hl7.Fhir.Validation
                         if(!snapshotOutcome.Success)
                         {
                             outcome.AddIssue($"Snapshot generation failed for '{sd.Url}'. Details follow below.",
-                               Support.Issue.UNAVAILABLE_SNAPSHOT_GENERATION_FAILED, path);
+                               Issue.UNAVAILABLE_SNAPSHOT_GENERATION_FAILED, path);
                             outcome.Add(snapshotOutcome);
                         }                                                
                     }
                     catch (Exception e)
                     {
                         outcome.AddIssue($"Snapshot generation failed for '{sd.Url}'. Message: {e.Message}",
-                               Support.Issue.UNAVAILABLE_SNAPSHOT_GENERATION_FAILED, path);
+                               Issue.UNAVAILABLE_SNAPSHOT_GENERATION_FAILED, path);
                     }
                 }
 
 
                 if (!sd.HasSnapshot)
-                    outcome.AddIssue($"Profile '{sd.Url}' does not include a snapshot.", Support.Issue.UNAVAILABLE_NEED_SNAPSHOT, path);
+                    outcome.AddIssue($"Profile '{sd.Url}' does not include a snapshot.", Issue.UNAVAILABLE_NEED_SNAPSHOT, path);
             }
 
             return outcome;

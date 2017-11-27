@@ -47,14 +47,14 @@ namespace Hl7.Fhir.Validation
                 catch (Exception e)
                 {
                     v.Trace(outcome, $"Evaluation of FhirPath for constraint '{constraintElement.Key}' failed: {e.Message}",
-                                    Support.Issue.PROFILE_ELEMENTDEF_INVALID_FHIRPATH_EXPRESSION, instance);
+                                    Issue.PROFILE_ELEMENTDEF_INVALID_FHIRPATH_EXPRESSION, instance);
                 }
 
                 if (!success)
                 {
                     var text = "Instance failed constraint " + constraintElement.ConstraintDescription();
                     var issue = constraintElement.Severity == ConstraintSeverity.Error ?
-                        Support.Issue.CONTENT_ELEMENT_FAILS_ERROR_CONSTRAINT : Support.Issue.CONTENT_ELEMENT_FAILS_WARNING_CONSTRAINT;
+                        Issue.CONTENT_ELEMENT_FAILS_ERROR_CONSTRAINT : Issue.CONTENT_ELEMENT_FAILS_WARNING_CONSTRAINT;
 
                     v.Trace(outcome, text, issue, instance);
                 }
@@ -93,12 +93,12 @@ namespace Hl7.Fhir.Validation
                     catch (Exception e)
                     {
                         v.Trace(outcome, $"Compilation of FhirPath for constraint '{constraintElement.Key}' failed: {e.Message}",
-                                        Support.Issue.PROFILE_ELEMENTDEF_INVALID_FHIRPATH_EXPRESSION, instance);
+                                        Issue.PROFILE_ELEMENTDEF_INVALID_FHIRPATH_EXPRESSION, instance);
                     }
                 }
                 else
                     v.Trace(outcome, $"Encountered an invariant ({constraintElement.Key}) that has no FhirPath expression, skipping validation of this constraint",
-                            Support.Issue.UNSUPPORTED_CONSTRAINT_WITHOUT_FHIRPATH, instance);
+                            Issue.UNSUPPORTED_CONSTRAINT_WITHOUT_FHIRPATH, instance);
             }
 
             return compiledExpression;

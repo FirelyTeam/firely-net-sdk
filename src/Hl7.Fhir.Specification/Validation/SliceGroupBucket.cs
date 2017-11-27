@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Validation
                         if (sliceNumber < lastMatchingSlice && Ordered)
                             validator.Trace(outcome, $"Element matches slice '{sliceName}', but this " +
                                 $"is out of order for group '{Name}', since a previous element already matched slice '{ChildSlices[lastMatchingSlice].Name}'", 
-                            Support.Issue.CONTENT_ELEMENT_SLICING_OUT_OF_ORDER, candidate);
+                            Issue.CONTENT_ELEMENT_SLICING_OUT_OF_ORDER, candidate);
                         else 
                             lastMatchingSlice = sliceNumber;
 
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Validation
                         {
                             // We found a match while we already added a non-match to a "open at end" slicegroup, that's not allowed
                             validator.Trace(outcome, $"Element matched slice '{sliceName}', but it appears after a non-match, which is not allowed for an open-at-end group",
-                                        Support.Issue.CONTENT_ELEMENT_FAILS_SLICING_RULE, candidate);
+                                        Issue.CONTENT_ELEMENT_FAILS_SLICING_RULE, candidate);
                         }
 
                         hasSucceeded = true;
@@ -143,14 +143,14 @@ namespace Hl7.Fhir.Validation
                 if (!hasSucceeded)
                 {
                     if (Rules == SlicingRules.Open)
-                        validator.Trace(outcome, $"Element was determined to be in the open slice for group '{Name}'", Support.Issue.PROCESSING_PROGRESS, candidate);
+                        validator.Trace(outcome, $"Element was determined to be in the open slice for group '{Name}'", Issue.PROCESSING_PROGRESS, candidate);
                     else if (Rules == SlicingRules.OpenAtEnd)
                         openTailInUse = true;
                     else
                     {
                         // Sorry, won't fly
                         validator.Trace(outcome, $"Element does not match any slice, but the group at '{Name}' is closed.",
-                                Support.Issue.CONTENT_ELEMENT_FAILS_SLICING_RULE, candidate);
+                                Issue.CONTENT_ELEMENT_FAILS_SLICING_RULE, candidate);
                     }
                 }
             }

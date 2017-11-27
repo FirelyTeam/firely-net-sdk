@@ -158,7 +158,7 @@ namespace Hl7.Fhir.Validation
             }
             catch (Exception e)
             {
-                outcome.AddIssue($"Internal logic failure: {e.Message}", Support.Issue.PROCESSING_CATASTROPHIC_FAILURE, instance);
+                outcome.AddIssue($"Internal logic failure: {e.Message}", Issue.PROCESSING_CATASTROPHIC_FAILURE, instance);
             }
 
             return outcome;
@@ -177,19 +177,19 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
-            Trace(outcome, $"Start validation of ElementDefinition at path '{definition.QualifiedDefinitionPath()}'", Support.Issue.PROCESSING_PROGRESS, instance);
+            Trace(outcome, $"Start validation of ElementDefinition at path '{definition.QualifiedDefinitionPath()}'", Issue.PROCESSING_PROGRESS, instance);
 
             // If navigator cannot be moved to content, there's really nothing to validate against.
             if (definition.AtRoot && !definition.MoveToFirstChild())
             {
-                outcome.AddIssue($"Snapshot component of profile '{definition.StructureDefinition?.Url}' has no content.", Support.Issue.PROFILE_ELEMENTDEF_IS_EMPTY, instance);
+                outcome.AddIssue($"Snapshot component of profile '{definition.StructureDefinition?.Url}' has no content.", Issue.PROFILE_ELEMENTDEF_IS_EMPTY, instance);
                 return outcome;
             }
 
             // Any node must either have a value, or children, or both (e.g. extensions on primitives)
             if (instance.Value == null && !instance.HasChildren())
             {
-                outcome.AddIssue("Element must not be empty", Support.Issue.CONTENT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN, instance);
+                outcome.AddIssue("Element must not be empty", Issue.CONTENT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN, instance);
                 return outcome;
             }
 
@@ -239,7 +239,7 @@ namespace Hl7.Fhir.Validation
                         outcome.Add(ValidateNameReference(elementConstraints, definition, instance));
                     }
                     else
-                        Trace(outcome, "ElementDefinition has no child, nor does it specify a type or nameReference to validate the instance data against", Support.Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE_OR_NAMEREF, instance);
+                        Trace(outcome, "ElementDefinition has no child, nor does it specify a type or nameReference to validate the instance data against", Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE_OR_NAMEREF, instance);
                 }
             }
 
@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Validation
                 if (Settings.ResourceResolver == null)
                 {
                     Trace(outcome, $"Cannot resolve binding references since neither TerminologyService nor ResourceResolver is given in the settings",
-                        Support.Issue.UNAVAILABLE_TERMINOLOGY_SERVER, instance);
+                        Issue.UNAVAILABLE_TERMINOLOGY_SERVER, instance);
                     return outcome;
                 }
 
@@ -305,7 +305,7 @@ namespace Hl7.Fhir.Validation
             }
             catch (Exception e)
             {
-                Trace(outcome, $"Terminology service call failed for binding at {definition.Path}: {e.Message}", Support.Issue.TERMINOLOGY_SERVICE_FAILED, instance);
+                Trace(outcome, $"Terminology service call failed for binding at {definition.Path}: {e.Message}", Issue.TERMINOLOGY_SERVICE_FAILED, instance);
             }
 
             return outcome;
@@ -317,14 +317,14 @@ namespace Hl7.Fhir.Validation
 
             if (definition.NameReference != null)
             {
-                Trace(outcome, $"Start validation of constraints referred to by nameReference '{definition.NameReference}'", Support.Issue.PROCESSING_PROGRESS, instance);
+                Trace(outcome, $"Start validation of constraints referred to by nameReference '{definition.NameReference}'", Issue.PROCESSING_PROGRESS, instance);
 
                 var referencedPositionNav = allDefinitions.ShallowCopy();
 
                 if (referencedPositionNav.JumpToNameReference(definition.NameReference))
                     outcome.Include(Validate(instance, referencedPositionNav));
                 else
-                    Trace(outcome, $"ElementDefinition uses a non-existing nameReference '{definition.NameReference}'", Support.Issue.PROFILE_ELEMENTDEF_INVALID_NAMEREFERENCE, instance);
+                    Trace(outcome, $"ElementDefinition uses a non-existing nameReference '{definition.NameReference}'", Issue.PROFILE_ELEMENTDEF_INVALID_NAMEREFERENCE, instance);
 
             }
 
@@ -335,7 +335,7 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
-            Trace(outcome, "Verifying content of the leaf primitive value attribute", Support.Issue.PROCESSING_PROGRESS, instance);
+            Trace(outcome, "Verifying content of the leaf primitive value attribute", Issue.PROCESSING_PROGRESS, instance);
 
             // Go look for the primitive type extensions
             //  <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-regex">
@@ -363,7 +363,7 @@ namespace Hl7.Fhir.Validation
                 var success = Regex.Match(value, "^" + primitiveRegEx + "$").Success;
 
                 if (!success)
-                    Trace(outcome, $"Primitive value '{value}' does not match regex '{primitiveRegEx}'", Support.Issue.CONTENT_ELEMENT_INVALID_PRIMITIVE_VALUE, instance);
+                    Trace(outcome, $"Primitive value '{value}' does not match regex '{primitiveRegEx}'", Issue.CONTENT_ELEMENT_INVALID_PRIMITIVE_VALUE, instance);
             }
 
             return outcome;
@@ -387,24 +387,24 @@ namespace Hl7.Fhir.Validation
                         var serializedValue = instance.Value.ToString();
 
                         if (serializedValue.Length > maxLength)
-                            Trace(outcome, $"Value '{serializedValue}' is too long (maximum length is {maxLength})", Support.Issue.CONTENT_ELEMENT_VALUE_TOO_LONG, instance);
+                            Trace(outcome, $"Value '{serializedValue}' is too long (maximum length is {maxLength})", Issue.CONTENT_ELEMENT_VALUE_TOO_LONG, instance);
                     }
                 }
                 else
-                    Trace(outcome, $"MaxLength was given in ElementDefinition, but it has a negative value ({maxLength})", Support.Issue.PROFILE_ELEMENTDEF_MAXLENGTH_NEGATIVE, instance);
+                    Trace(outcome, $"MaxLength was given in ElementDefinition, but it has a negative value ({maxLength})", Issue.PROFILE_ELEMENTDEF_MAXLENGTH_NEGATIVE, instance);
             }
 
             return outcome;
         }
 
 
-        internal void Trace(OperationOutcome outcome, string message, Support.Issue issue, string location)
+        internal void Trace(OperationOutcome outcome, string message, Issue issue, string location)
         {
             if (Settings.Trace || issue.Severity != IssueSeverity.Information)
                 outcome.AddIssue(message, issue, location);
         }
 
-        internal void Trace(OperationOutcome outcome, string message, Support.Issue issue, IElementNavigator location)
+        internal void Trace(OperationOutcome outcome, string message, Issue issue, IElementNavigator location)
         {
             Trace(outcome, message, issue, location.Location);
         }
@@ -447,7 +447,7 @@ namespace Hl7.Fhir.Validation
             }
             catch (Exception e)
             {
-                Trace(outcome, "External resolution of '{reference}' caused an error: " + e.Message, Support.Issue.UNAVAILABLE_REFERENCED_RESOURCE, path);
+                Trace(outcome, "External resolution of '{reference}' caused an error: " + e.Message, Issue.UNAVAILABLE_REFERENCED_RESOURCE, path);
             }
 
             // Else, try to resolve using the given ResourceResolver 
@@ -462,7 +462,7 @@ namespace Hl7.Fhir.Validation
                 }
                 catch (Exception e)
                 {
-                    Trace(outcome, $"Resolution of reference '{reference}' using the Resolver API failed: " + e.Message, Support.Issue.UNAVAILABLE_REFERENCED_RESOURCE, path);
+                    Trace(outcome, $"Resolution of reference '{reference}' using the Resolver API failed: " + e.Message, Issue.UNAVAILABLE_REFERENCED_RESOURCE, path);
                 }
             }
 

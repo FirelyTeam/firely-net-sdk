@@ -33,13 +33,13 @@ namespace Hl7.Fhir.Validation
             // bindable should be code, Coding or CodeableConcept
 
             if (binding.Strength == null)
-                return new OperationOutcome().AddIssue($"Encountered a binding element without a binding strength", Support.Issue.PROFILE_INCOMPLETE_BINDING, _path);
+                return new OperationOutcome().AddIssue($"Encountered a binding element without a binding strength", Issue.PROFILE_INCOMPLETE_BINDING, _path);
 
             var uri = (binding.ValueSet as FhirUri)?.Value ??
                         (binding.ValueSet as ResourceReference)?.Reference;
 
             if (uri == null)
-                return new OperationOutcome().AddIssue($"Encountered a binding element without either a ValueSet reference or uri", Support.Issue.PROFILE_INCOMPLETE_BINDING, _path);
+                return new OperationOutcome().AddIssue($"Encountered a binding element without either a ValueSet reference or uri", Issue.PROFILE_INCOMPLETE_BINDING, _path);
 
             var abstractAllowed = true;     // no way to say otherwise in the current spec?
 
@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Validation
                     return new OperationOutcome();   // OK
                 else
                     return new OperationOutcome()
-                        .AddIssue($"No code found in instance.", Support.Issue.TERMINOLOGY_NO_CODE_IN_INSTANCE, _path);
+                        .AddIssue($"No code found in instance.", Issue.TERMINOLOGY_NO_CODE_IN_INSTANCE, _path);
             }
 
             switch (bindable)
@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Validation
             }
             catch (TerminologyServiceException tse)
             {
-                outcome.AddIssue($"Terminology service failed while validating code '{code}' (system '{system}'): {tse.Message}", Support.Issue.TERMINOLOGY_SERVICE_FAILED, _path);
+                outcome.AddIssue($"Terminology service failed while validating code '{code}' (system '{system}'): {tse.Message}", Issue.TERMINOLOGY_SERVICE_FAILED, _path);
             }
 
             return outcome;

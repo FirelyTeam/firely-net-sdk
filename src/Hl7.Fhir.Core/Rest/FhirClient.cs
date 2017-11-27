@@ -486,9 +486,9 @@ namespace Hl7.Fhir.Rest
         {
             if (resource == null) throw Error.ArgumentNull(nameof(resource));
 
-            var tx = new RequestsBuilder(Endpoint).Create(resource).ToRequest();
+            var request = new RequestsBuilder(Endpoint).Create(resource).ToRequest();
 
-            return executeAsync<TResource>(tx,new[] { HttpStatusCode.Created, HttpStatusCode.OK });
+            return executeAsync<TResource>(request,new[] { HttpStatusCode.Created, HttpStatusCode.OK });
         }
         /// <summary>
         /// Create a resource on a FHIR endpoint

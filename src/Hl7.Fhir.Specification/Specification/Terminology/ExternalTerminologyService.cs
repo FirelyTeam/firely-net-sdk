@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Specification.Terminology
                 string message = result?.Message?.Value;
 
                 if (message != null)
-                    outcome.AddIssue(message, Support.Issue.TERMINOLOGY_CODE_NOT_IN_VALUESET);
+                    outcome.AddIssue(message, Issue.TERMINOLOGY_CODE_NOT_IN_VALUESET);
                 else
                 {
                     if (code != null && coding == null)
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Specification.Terminology
 
                     outcome.AddIssue($"Validation of '{codeDisplay}' failed, but" +
                                 $"the terminology service at {Endpoint.Endpoint.ToString()} did not provide further details.",
-                                Support.Issue.TERMINOLOGY_CODE_NOT_IN_VALUESET);
+                                Issue.TERMINOLOGY_CODE_NOT_IN_VALUESET);
                 }
             }
 

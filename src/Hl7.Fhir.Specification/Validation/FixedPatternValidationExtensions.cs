@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Validation
                 if (!instance.IsExactlyEqualTo(fixedValueNav))
                 {
                     v.Trace(outcome, $"Value is not exactly equal to fixed value '{toReadable(definition.Fixed)}'",
-                            Support.Issue.CONTENT_DOES_NOT_MATCH_FIXED_VALUE, instance);
+                            Issue.CONTENT_DOES_NOT_MATCH_FIXED_VALUE, instance);
                 }
             }
 
@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Validation
                 if (!instance.Matches(patternValueNav))
                 {
                     v.Trace(outcome, $"Value does not match pattern '{toReadable(definition.Pattern)}'",
-                            Support.Issue.CONTENT_DOES_NOT_MATCH_PATTERN_VALUE, instance);
+                            Issue.CONTENT_DOES_NOT_MATCH_PATTERN_VALUE, instance);
                 }
             }
 

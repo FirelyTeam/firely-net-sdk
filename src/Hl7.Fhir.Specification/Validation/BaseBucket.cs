@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Validation
 
             if (!Cardinality.InRange(Members.Count))
                 validator.Trace(outcome, $"Instance count for '{Name}' is {Members.Count}, which is not within the specified cardinality of {Cardinality.ToString()}",
-                        Support.Issue.CONTENT_INCORRECT_OCCURRENCE, errorLocation);
+                        Issue.CONTENT_INCORRECT_OCCURRENCE, errorLocation);
 
             return outcome;
         }
