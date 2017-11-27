@@ -16,15 +16,16 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async System.Threading.Tasks.Task UpdateDelete_UsingResourceIdentity_ResultReturned()
         {
-            var client = new FhirClient(_endpoint)
+            using (var client = new FhirClient(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
                 PreferredReturn = Prefer.ReturnRepresentation
-            };
-
-            var pat = new Patient()
+            })
             {
-                Name = new List<HumanName>()
+
+                var pat = new Patient()
+                {
+                    Name = new List<HumanName>()
                 {
                     new HumanName()
                     {
@@ -32,33 +33,33 @@ namespace Hl7.Fhir.Core.AsyncTests
                         Family = "test_family",
                     }
                 },
-                Id = "async-test-patient"
-            };
-            // Create the patient
-            Console.WriteLine("Creating patient...");
-            Patient p = await client.UpdateAsync<Patient>(pat);
-            Assert.IsNotNull(p);
+                    Id = "async-test-patient"
+                };
+                // Create the patient
+                Console.WriteLine("Creating patient...");
+                Patient p = await client.UpdateAsync<Patient>(pat);
+                Assert.IsNotNull(p);
 
-            // Refresh the patient
-            Console.WriteLine("Refreshing patient...");
-            await client.RefreshAsync(p);
+                // Refresh the patient
+                Console.WriteLine("Refreshing patient...");
+                await client.RefreshAsync(p);
 
-            // Delete the patient
-            Console.WriteLine("Deleting patient...");
-            await client.DeleteAsync(p);
+                // Delete the patient
+                Console.WriteLine("Deleting patient...");
+                await client.DeleteAsync(p);
 
-            Console.WriteLine("Reading patient...");
-            Func<System.Threading.Tasks.Task> act = async () =>
-            {
-                await client.ReadAsync<Patient>(new ResourceIdentity("/Patient/async-test-patient"));
-            };
+                Console.WriteLine("Reading patient...");
+                Func<System.Threading.Tasks.Task> act = async () =>
+                {
+                    await client.ReadAsync<Patient>(new ResourceIdentity("/Patient/async-test-patient"));
+                };
 
-            // VERIFY //
-            Assert.ThrowsException<FhirOperationException>(act, "the patient is no longer on the server");
-            
-            
-            Console.WriteLine("Test Completed");
+                // VERIFY //
+                Assert.ThrowsException<FhirOperationException>(act, "the patient is no longer on the server");
+
+
+                Console.WriteLine("Test Completed");
+            }
         }
-        
     }
 }
