@@ -7,7 +7,7 @@ using System.Net.Http;
 
 namespace Hl7.Fhir.Rest
 {
-    public interface IFhirClient
+    public interface IFhirClient : IDisposable
     {
 #if NET_COMPRESSION
         bool PreferCompressedResponses { get; set; }

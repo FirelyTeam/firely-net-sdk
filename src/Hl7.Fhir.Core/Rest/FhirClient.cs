@@ -1138,7 +1138,29 @@ namespace Hl7.Fhir.Rest
                 throw Error.NotSupported("This client support FHIR version {0}, but the server uses version {1}".FormatWith(ModelInfo.Version, conf.FhirVersion));
             }
         }
-    }
+
+      #region IDisposable Support
+      private bool disposedValue = false; // To detect redundant calls
+
+      protected virtual void Dispose(bool disposing)
+      {
+         if (!disposedValue)
+         {
+            if (disposing)
+            {
+               this._requester.Dispose();
+            }
+
+            disposedValue = true;
+         }
+      }
+
+      public void Dispose()
+      {
+         Dispose(true);
+      }
+      #endregion
+   }
 
 
     public class BeforeRequestEventArgs : EventArgs
