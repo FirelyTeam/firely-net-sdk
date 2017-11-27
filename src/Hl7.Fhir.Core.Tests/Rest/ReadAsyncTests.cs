@@ -16,36 +16,40 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async System.Threading.Tasks.Task Read_UsingResourceIdentity_ResultReturned()
         {
-            var client = new FhirClient(_endpoint)
+            using (var client = new FhirClient(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
                 PreferredReturn = Prefer.ReturnRepresentation
-            };
-            
-            Patient p = await client.ReadAsync<Patient>(new ResourceIdentity("/Patient/SMART-1288992"));
-            Assert.IsNotNull(p);
-            Assert.IsNotNull(p.Name[0].Given);
-            Assert.IsNotNull(p.Name[0].Family);
-            Console.WriteLine($"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
-            Console.WriteLine("Test Completed");
+            })
+            {
+
+                Patient p = await client.ReadAsync<Patient>(new ResourceIdentity("/Patient/SMART-1288992"));
+                Assert.IsNotNull(p);
+                Assert.IsNotNull(p.Name[0].Given);
+                Assert.IsNotNull(p.Name[0].Family);
+                Console.WriteLine($"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
+                Console.WriteLine("Test Completed");
+            }
         }
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
         public async System.Threading.Tasks.Task Read_UsingLocationString_ResultReturned()
         {
-            var client = new FhirClient(_endpoint)
+            using (var client = new FhirClient(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
                 PreferredReturn = Prefer.ReturnRepresentation
-            };
+            })
+            {
 
-            Patient p = await client.ReadAsync<Patient>("/Patient/SMART-1288992");
-            Assert.IsNotNull(p);
-            Assert.IsNotNull(p.Name[0].Given);
-            Assert.IsNotNull(p.Name[0].Family);
-            Console.WriteLine($"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
-            Console.WriteLine("Test Completed");
+                Patient p = await client.ReadAsync<Patient>("/Patient/SMART-1288992");
+                Assert.IsNotNull(p);
+                Assert.IsNotNull(p.Name[0].Given);
+                Assert.IsNotNull(p.Name[0].Family);
+                Console.WriteLine($"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
+                Console.WriteLine("Test Completed");
+            }
         }
     }
 }
