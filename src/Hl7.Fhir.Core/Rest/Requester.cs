@@ -52,6 +52,7 @@ namespace Hl7.Fhir.Rest
 
             BaseUrl = baseUrl;
             Client = new HttpClient(clientHandler);
+            Client.DefaultRequestHeaders.Add("User-Agent", ".NET FhirClient for FHIR " + Model.ModelInfo.Version);
             UseFormatParameter = false;
             PreferredFormat = ResourceFormat.Xml;
             Client.Timeout = new TimeSpan(0, 0, 100);       // Default timeout is 100 seconds            

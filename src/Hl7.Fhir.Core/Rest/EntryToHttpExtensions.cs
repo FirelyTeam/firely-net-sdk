@@ -33,7 +33,6 @@ namespace Hl7.Fhir.Rest
                 location.AddParam(HttpUtil.RESTPARAM_FORMAT, Hl7.Fhir.Rest.ContentType.BuildFormatParam(format));
 
             var request = new HttpRequestMessage(getMethod(interaction.Method), location.Uri);
-            request.Headers.Add("User-Agent", ".NET FhirClient for FHIR " + Model.ModelInfo.Version);
 
             if (!useFormatParameter)
                 request.Headers.Add("Accept", Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false));
