@@ -80,72 +80,74 @@ namespace Hl7.Fhir.Rest
 
             compressRequestBody = CompressRequestBody; // PCL doesn't support compression at the moment
 
-            var requestMessage = interaction.ToHttpRequest(this.PreferredParameterHandling, this.PreferredReturn, PreferredFormat, UseFormatParameter, compressRequestBody);
-
-            if (PreferCompressedResponses)
+            using (var requestMessage = interaction.ToHttpRequest(this.PreferredParameterHandling, this.PreferredReturn, PreferredFormat, UseFormatParameter, compressRequestBody))
             {
-                requestMessage.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
-                requestMessage.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
-            }
-
-            LastRequest = requestMessage;
-
-            byte[] outgoingBody = null;
-            if(requestMessage.Method == HttpMethod.Post || requestMessage.Method == HttpMethod.Put)
-            {
-                outgoingBody = await requestMessage.Content.ReadAsByteArrayAsync();
-            }
-
-            BeforeRequest?.Invoke(requestMessage, outgoingBody);
-
-            var response = await Client.SendAsync(requestMessage).ConfigureAwait(false);
-            try
-            {
-                var body = await response.Content.ReadAsByteArrayAsync();
-                //Read body before we call the hook, so the hook cannot read the body before we do
-
-                LastResponse = response;
-                AfterResponse?.Invoke(response, body);
-
-                // Do this call after AfterResponse, so AfterResponse will be called, even if exceptions are thrown by ToBundleEntry()
-                try
+                if (PreferCompressedResponses)
                 {
-                    LastResult = null;
+                    requestMessage.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+                    requestMessage.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
+                }
 
-                    if (response.IsSuccessStatusCode)
+                LastRequest = requestMessage;
+
+                byte[] outgoingBody = null;
+                if (requestMessage.Method == HttpMethod.Post || requestMessage.Method == HttpMethod.Put)
+                {
+                    outgoingBody = await requestMessage.Content.ReadAsByteArrayAsync();
+                }
+
+                BeforeRequest?.Invoke(requestMessage, outgoingBody);
+
+                using (var response = await Client.SendAsync(requestMessage).ConfigureAwait(false))
+                {
+                    try
                     {
-                        LastResult = response.ToBundleEntry(body, ParserSettings, throwOnFormatException: true);
-                        return LastResult;
+                        var body = await response.Content.ReadAsByteArrayAsync();
+
+                        LastResponse = response;
+                        AfterResponse?.Invoke(response, body);
+
+                        // Do this call after AfterResponse, so AfterResponse will be called, even if exceptions are thrown by ToBundleEntry()
+                        try
+                        {
+                            LastResult = null;
+
+                            if (response.IsSuccessStatusCode)
+                            {
+                                LastResult = response.ToBundleEntry(body, ParserSettings, throwOnFormatException: true);
+                                return LastResult;
+                            }
+                            else
+                            {
+                                LastResult = response.ToBundleEntry(body, ParserSettings, throwOnFormatException: false);
+                                throw buildFhirOperationException(response.StatusCode, LastResult.Resource);
+                            }
+                        }
+                        catch (UnsupportedBodyTypeException bte)
+                        {
+                            // The server responded with HTML code. Still build a FhirOperationException and set a LastResult.
+                            // Build a very minimal LastResult
+                            var errorResult = new Bundle.EntryComponent();
+                            errorResult.Response = new Bundle.ResponseComponent();
+                            errorResult.Response.Status = ((int)response.StatusCode).ToString();
+
+                            OperationOutcome operationOutcome = OperationOutcome.ForException(bte, OperationOutcome.IssueType.Invalid);
+
+                            errorResult.Resource = operationOutcome;
+                            LastResult = errorResult;
+
+                            throw buildFhirOperationException(response.StatusCode, operationOutcome);
+                        }
                     }
-                    else
+                    catch (AggregateException ae)
                     {
-                        LastResult = response.ToBundleEntry(body, ParserSettings, throwOnFormatException: false);
-                        throw buildFhirOperationException(response.StatusCode, LastResult.Resource);
+                        //EK: This code looks weird. Is this correct?
+                        if (ae.GetBaseException() is WebException)
+                        {
+                        }
+                        throw ae.GetBaseException();
                     }
                 }
-                catch (UnsupportedBodyTypeException bte)
-                {
-                    // The server responded with HTML code. Still build a FhirOperationException and set a LastResult.
-                    // Build a very minimal LastResult
-                    var errorResult = new Bundle.EntryComponent();
-                    errorResult.Response = new Bundle.ResponseComponent();
-                    errorResult.Response.Status = ((int)response.StatusCode).ToString();
-
-                    OperationOutcome operationOutcome = OperationOutcome.ForException(bte, OperationOutcome.IssueType.Invalid);
-
-                    errorResult.Resource = operationOutcome;
-                    LastResult = errorResult;
-
-                    throw buildFhirOperationException(response.StatusCode, operationOutcome);
-                }
-            }
-            catch (AggregateException ae)
-            {
-                //EK: This code looks weird. Is this correct?
-                if (ae.GetBaseException() is WebException)
-                {
-                }
-                throw ae.GetBaseException();
             }
         }
 
