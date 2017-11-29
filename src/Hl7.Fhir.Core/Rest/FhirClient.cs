@@ -13,6 +13,7 @@ using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -51,7 +52,9 @@ namespace Hl7.Fhir.Rest
             _requester = new Requester(Endpoint)
             {
                 BeforeRequest = this.BeforeRequest,
-                AfterResponse = this.AfterResponse
+                AfterResponse = this.AfterResponse,
+                BeforeRequestStream = this.BeforeRequestStream,
+                AfterResponseStream = this.AfterResponseStream
             };
 
             VerifyFhirVersion = verifyFhirVersion;
@@ -984,6 +987,10 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         public event EventHandler<AfterResponseEventArgs> OnAfterResponse;
 
+        public Func<Stream, WebHeaderCollection, Stream> OnBeforeRequestStream;
+
+        public Func<Stream, WebHeaderCollection, Stream> OnAfterResponseStream;
+
         /// <summary>
         /// Inspect or modify the HttpWebRequest just before the FhirClient issues a call to the server
         /// </summary>
@@ -1004,6 +1011,18 @@ namespace Hl7.Fhir.Rest
         {
             // Default implementation: call event
             OnAfterResponse?.Invoke(this, new AfterResponseEventArgs(webResponse, body));
+        }
+
+        protected virtual Stream BeforeRequestStream(Stream stream, WebHeaderCollection headers)
+        {
+            if (OnBeforeRequestStream == null) return stream;
+            return OnBeforeRequestStream?.Invoke(stream, headers);
+        }
+
+        protected virtual Stream AfterResponseStream(Stream stream, WebHeaderCollection headers)
+        {
+            if (OnAfterResponseStream == null) return stream;
+            return OnAfterResponseStream.Invoke(stream, headers);
         }
 
         // Original
