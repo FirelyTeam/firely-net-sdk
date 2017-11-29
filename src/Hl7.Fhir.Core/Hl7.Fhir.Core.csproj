@@ -102,32 +102,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Update="Model\Generated\Template-Bindings.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-Bindings.cs</LastGenOutput>
-    </None>
-    <None Update="Model\Generated\Template-Children.ttinclude">
-      <Generator>
-      </Generator>
-    </None>
-    <None Update="Model\Generated\Template-DataTypeModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-DataTypeModel.cs</LastGenOutput>
-    </None>
-    <None Update="Model\Generated\Template-Model.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-Model.cs</LastGenOutput>
-    </None>
-    <None Update="Model\Generated\Template-ModelInfo.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-ModelInfo.cs</LastGenOutput>
-    </None>
-    <None Update="Model\Generated\Template-ProfiledDataTypes.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-ProfiledDataTypes.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
+    <Folder Include="Model\Generated\DSTU2\" />
     <Folder Include="Model\Generated\STU3\" />
   </ItemGroup>
 </Project>

@@ -1,5 +1,25 @@
 /*
- - Support different constraints by version
+    Generates the model classes from the XML structure definition files
+
+    The XML files are in Source-XXXX sub-directories, where XXX is the version (DSTU2, STU3 etc.) 
+    This script automatically generate classes for all the versions it can find. 
+    
+    Classes that are the same across all versions are generated in the Hl7.Fhir.Model namespace, with files in the Generated sub-directory
+
+    Classes that are specific for a version are generated in the Hl7.Fhir.Model.XXX namespace (e.g. Hl7.Fhir.Model.DSTU2), with files in the Generated\XXX sub-directory
+
+    To execute this script either call
+
+        csi Generate.csx
+
+    from the command line or execute
+
+        #load "Generate.csx"
+
+    from the Visual Studio C# Interactive window
+
+TODO:
+- Support different constraints by version
 
  - Handle logical types as interfaces
 
@@ -12,8 +32,6 @@
 - Share common code between STU3 and DSTU2: ModelInfo, Binary, Bundle, BundleExtensions, ElementDefinitonExtensions
 
 - STU3 equivalent of IConformanceResource
-
-
 */
 
 #r "System.Xml"
@@ -289,39 +307,43 @@ public class LoadedVersion
     public XmlNamespaceManager NSSP;
     public string FhirVersion;
 
-    public static List<LoadedVersion> LoadAll(IEnumerable<string> versions, string rootDirectory)
+    private const string SourceDirectoryPrefix = "Source-";
+
+    public static List<LoadedVersion> LoadAll(string rootDirectory)
     {
+        var sourceDirectories = Directory.GetDirectories(rootDirectory)
+            .Where(dir => Path.GetFileName(dir).StartsWith(SourceDirectoryPrefix, StringComparison.CurrentCultureIgnoreCase));
         var result = new List<LoadedVersion>();
-        foreach (var version in versions)
+        foreach (var sourceDirectory in sourceDirectories)
         {
-            result.Add(Load(version, rootDirectory));
+            result.Add(Load(sourceDirectory));
         }
         return result;
     }
 
-    private static LoadedVersion Load(string version, string rootDirectory)
+    private static LoadedVersion Load(string sourceDirectory)
     {
         var result = new LoadedVersion();
 
-        result.Version = version;
+        result.Version = Path.GetFileName(sourceDirectory).Substring(SourceDirectoryPrefix.Length);
 
         result.Resources = new XmlDocument();
-        result.Resources.Load(rootDirectory + "\\..\\Source-" + version + "\\profiles-resources.xml");
+        result.Resources.Load(Path.Combine(sourceDirectory, "profiles-resources.xml"));
         result.NSR = new XmlNamespaceManager(result.Resources.NameTable);
         result.NSR.AddNamespace("fhir", "http://hl7.org/fhir");
 
         result.Expansions = new XmlDocument();
-        result.Expansions.Load(rootDirectory + "\\..\\Source-" + version + "\\expansions.xml");
+        result.Expansions.Load(Path.Combine(sourceDirectory, "expansions.xml"));
         result.NSE = new XmlNamespaceManager(result.Expansions.NameTable);
         result.NSE.AddNamespace("fhir", "http://hl7.org/fhir");
 
         result.Types = new XmlDocument();
-        result.Types.Load(rootDirectory + "\\..\\Source-" + version + "\\profiles-types.xml");
+        result.Types.Load(Path.Combine(sourceDirectory, "profiles-types.xml"));
         result.NST = new XmlNamespaceManager(result.Types.NameTable);
         result.NST.AddNamespace("fhir", "http://hl7.org/fhir");
 
         result.SearchParameters = new XmlDocument();
-        result.SearchParameters.Load(rootDirectory + "\\..\\Source-" + version + "\\search-parameters.xml");
+        result.SearchParameters.Load(Path.Combine(sourceDirectory, "search-parameters.xml"));
         result.NSSP = new XmlNamespaceManager(result.SearchParameters.NameTable);
         result.NSSP.AddNamespace("fhir", "http://hl7.org/fhir");
 
@@ -2396,11 +2418,12 @@ public class SearchParameter
     }
 }
 
-var versions = new[] { "DSTU2", "STU3" };
+static string GetMyDirectory([System.Runtime.CompilerServices.CallerFilePath] string path = "") => Path.GetDirectoryName(path);
 
-// rootDirectory = Path.GetDirectoryName(this.Host.TemplateFile)
-var rootDirectory = @"c:\careevolution\fhir-net-api\src\hl7.fhir.core\model\generated";
-var loadedVersions = LoadedVersion.LoadAll(versions, rootDirectory);
+var rootDirectory = GetMyDirectory();
+var loadedVersions = LoadedVersion.LoadAll(rootDirectory);
+Console.WriteLine("Generating code for versions {0}", string.Join(", ", loadedVersions.Select(lv => lv.Version)));
+
 var valueSetsByEnumNameByVersion = ValueSet.LoadAll(loadedVersions);
 valueSetsByEnumNameByVersion[string.Empty].Add(
     "Version",
@@ -2408,26 +2431,27 @@ valueSetsByEnumNameByVersion[string.Empty].Add(
     {
         EnumName = "Version",
         Description = "Supported FHIR versions",
-        Values = versions
-            .Select( version => new ValueSetValue { Code = version } )
-            .Concat( new[] { new ValueSetValue { Code = "All" } })
+        Values = loadedVersions
+            .Select(loadedVersion => new ValueSetValue { Code = loadedVersion.Version })
+            .Concat(new[] { new ValueSetValue { Code = "All" } })
             .ToList()
     }
 );
 var resourcesByNameByVersion = ResourceDetails.LoadAll(loadedVersions, valueSetsByEnumNameByVersion);
 
+var generatedDirectory = Path.Combine(rootDirectory, "Generated");
 foreach (var pair in valueSetsByEnumNameByVersion)
 {
     var version = loadedVersions.FirstOrDefault(lv => lv.Version == pair.Key);
     var versions = version == null ?
         loadedVersions : new List<LoadedVersion> { version };
-    var filePath = Path.Combine(rootDirectory, pair.Key, "_Enumerations.cs");
+    var filePath = Path.Combine(generatedDirectory, pair.Key, "_Enumerations.cs");
     Console.WriteLine("Creating {0}", filePath);
     ValueSet.Write(filePath, pair.Value.Values, versions);
 }
 
 var allVersionsModelInfo = new AllVersionsModelInfo(resourcesByNameByVersion, loadedVersions);
-var allVersionsModelInfoFilePath = Path.Combine(rootDirectory, "AllVersionsModelInfo.cs");
+var allVersionsModelInfoFilePath = Path.Combine(generatedDirectory, "AllVersionsModelInfo.cs");
 Console.WriteLine("Creating {0}", allVersionsModelInfoFilePath);
 allVersionsModelInfo.Write(allVersionsModelInfoFilePath);
 
@@ -2438,7 +2462,7 @@ foreach (var pair in resourcesByNameByVersion)
     if (!string.IsNullOrEmpty(pair.Key))
     {
         var modelInfo = new ModelInfo(pair.Value.Values, sharedResourcesByName.Values);
-        var filePath = Path.Combine(rootDirectory, pair.Key, "ModelInfo.cs");
+        var filePath = Path.Combine(generatedDirectory, pair.Key, "ModelInfo.cs");
         Console.WriteLine("Creating {0}", filePath);
         modelInfo.Write(filePath);
     }
@@ -2446,7 +2470,7 @@ foreach (var pair in resourcesByNameByVersion)
     {
         if (!toSkip.Contains(resource.Name))
         {
-            var filePath = Path.Combine(rootDirectory, pair.Key, resource.Name + ".cs");
+            var filePath = Path.Combine(generatedDirectory, pair.Key, resource.Name + ".cs");
             Console.WriteLine("Creating {0}", filePath);
             resource.Write(filePath);
         }
