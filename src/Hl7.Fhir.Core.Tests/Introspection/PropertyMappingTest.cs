@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Tests.Introspection
             Assert.IsTrue(valueProp.RepresentsValueElement);
 
             mapping = ClassMapping.Create(typeof(Code<AddressUse>));
-            Assert.AreEqual("codeOfT<Hl7.Fhir.Model.Address+AddressUse>", mapping.Name);
+            Assert.AreEqual("codeOfT<Hl7.Fhir.Model.AddressUse>", mapping.Name);
             Assert.IsTrue(mapping.HasPrimitiveValueMember);
             Assert.AreEqual(4, mapping.PropertyMappings.Count); // id, extension, fhir_comments & value
             valueProp = mapping.PrimitiveValueProperty;
