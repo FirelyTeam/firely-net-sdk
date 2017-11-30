@@ -1,0 +1,93 @@
+{
+    // could each keyword have a message/id as well, to be generated when it fails?
+
+    // these keywords deal with the current node in the tree
+    id: // canonical url or fragments with paths for nested schemas
+    // annotation which serves as a hint to generators/validators etc.
+    kind: primitive/datatype/constraint
+    title: "some top level schema"       // this is an annotation
+    name: ""  // align with structuredef?
+    description: "what does this schema describe"
+
+    definitions: { reusable stuff }
+
+
+    type: // only for primitive value of a node!!
+    const: // only for primitive value of a node (otherwise set of nested schemas with const?)
+
+    // using fhirpath you could switch on "type" to implement type slices?
+    // in any case this would hide the notion of typeslicing from the validator -> consequences for err messages
+    if { schema or fhirpath }   // same as 'dependencies' ?
+    {
+        // condition of this sub-group
+    }
+
+    invariant <fhirpath>
+
+    serialization: ["xml:attribute", "json:object"]
+
+    // need easy way to say "must have value" (or is 'type' enough?)
+
+    minItems: 0, maxItems: 10
+    any: { // another schema }
+    all: { // another schema }      // any of the schema constraints for individual nodes can be used here, interpreted as a for all, so this is not necessary
+    uniqueItems:
+
+    items: // list subschemas, must match 1-on-1
+
+    // constraints on the children of the node are introduced...
+    partition
+    {
+        ordered: true
+        case { subschema }: { subschema for arrays }    // how to divide constraints on left and right side is relevant and has subtly different meaning!
+        case fhirpath: { subschema for arrays }   // equal to case { invariant <fhirpath> }: ......
+        default: { .... }
+    }
+
+    properties
+    {
+        ordered: true       // dunno
+        "bla" : { subschema }
+        default: { fail }       // won't solve the problem Json schema has here to represent inheritance
+    }
+
+    items: [ { // constraint based on position in the collection }]
+
+    reference
+    {
+        // conditions on the reference        
+        // works when type = "uri" or "string"?
+    }
+    
+    // pattern  => set of nested schemas with children.any { const =  or nested children.any {}} ?
+
+    // bindings 
+    //  enum seems to be a subset of binding validation
+
+    // typeref
+    // turn into invocation of schemas?
+    // what about if the instance specifies the type-> only invoke the indicated type
+    
+    anyOf:
+    allOf:
+    oneOf:
+
+    // if it matches this schema, we should be able
+    // to tag on annotations to the instance
+    onValid:
+    {
+        tag-with
+        {
+            // ability to add/remove/replace tags?
+            // this is state -> we should not have this
+            // validation language depend on it (like grouping
+            // first, then counting tags), in order to create
+            // dependencies on order of execution
+        }
+    }
+
+    onInvalid:
+    {
+        fail "Message"
+    }
+}
