@@ -24,7 +24,6 @@ namespace Hl7.Fhir.Specification.Source
     public class ZipSource : IConformanceSource, IArtifactSource
     {
         public const string SpecificationZipFileName = "specification.zip";
-        private static readonly string CACHE_KEY = "FhirArtifactCache-" + typeof(ZipSource).GetTypeInfo().Assembly.GetName().Version.ToString();
 
         /// <summary>Create a new <see cref="ZipSource"/> instance to read FHIR artifacts from the core specification archive "specification.zip".</summary>
         /// <returns>A new <see cref="ZipSource"/> instance.</returns>
@@ -161,7 +160,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             if (!File.Exists(ZipPath)) throw new FileNotFoundException(String.Format("Cannot prepare ZipArtifactSource: file '{0}' was not found", ZipPath));
 
-            var zc = new ZipCacher(ZipPath, CACHE_KEY);
+            var zc = new ZipCacher(ZipPath, GetCacheKey());
             var source = new DirectorySource(zc.GetContentDirectory(), _settings);
 
             var mask = Mask;
@@ -170,6 +169,14 @@ namespace Hl7.Fhir.Specification.Source
                 source.Mask = mask;
             }
             return source;
+        }
+
+        private string GetCacheKey()
+        {
+            Assembly assembly = typeof(ZipSource).GetTypeInfo().Assembly;
+            var versionInfo =  assembly.GetCustomAttribute(typeof(AssemblyInformationalVersionAttribute)) as AssemblyInformationalVersionAttribute;
+            var productInfo = assembly.GetCustomAttribute(typeof(AssemblyProductAttribute)) as AssemblyProductAttribute;
+            return $"FhirArtifactCache-{versionInfo.InformationalVersion}-{productInfo.Product}";
         }
 
         // Allow derived classes to override
