@@ -19,8 +19,6 @@
     from the Visual Studio C# Interactive window
 
 TODO:
-- ComponentDetails.Render: is the inAbstractType parameter needed / correct?
-
 - Share common code between STU3 and DSTU2: ModelInfo, Binary, Bundle, BundleExtensions, ElementDefinitonExtensions
 
 - STU3 equivalent of IConformanceResource
@@ -801,7 +799,7 @@ public class ResourceDetails
         {
             yield return string.Empty;
             yield return string.Empty;
-            foreach (var line in component.Render(AbstractType)) yield return "    " + line;
+            foreach (var line in component.Render()) yield return "    " + line;
         }
 
         if (!IsPrimitive)
@@ -1340,7 +1338,7 @@ public class ComponentDetails
         };
     }
 
-    public IEnumerable<string> Render(bool inAbstractType)
+    public IEnumerable<string> Render()
     {
         yield return $"[FhirType(\"{ Name }\")]";
         yield return $"[DataContract]";
@@ -1352,7 +1350,7 @@ public class ComponentDetails
         foreach (var line in StringUtils.RenderProperties(30, Properties)) yield return "    " + line;
 
         yield return string.Empty;
-        foreach (var line in StringUtils.RenderPropertiesMethods(Name, inAbstractType, Properties)) yield return "    " + line;
+        foreach (var line in StringUtils.RenderPropertiesMethods(Name, false, Properties)) yield return "    " + line;
 
         yield return string.Empty;
         yield return string.Empty;
