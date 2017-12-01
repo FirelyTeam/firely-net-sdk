@@ -17,34 +17,49 @@ namespace Hl7.Fhir.Validation
 {
     public class DotNetAttributeValidation
     {
-        public static ValidationContext BuildContext(object value=null)
+        private const string ValidationContextVersionKey = "Version";
+
+        public static ValidationContext BuildContext(Model.Version version, object value=null)
         {
+            if (version == Model.Version.All) throw new ArgumentException("Must be a specific version", nameof(version));
 #if NET40
-            return new ValidationContext(value, null, null);
+            var result = new ValidationContext(value, null, null);
 #else
-            return new ValidationContext(value);
+            var result = new ValidationContext(value);
 #endif
+            result.Items[ValidationContextVersionKey] = version;
+            return result;
         }
 
-        public static void Validate(object value, bool recurse = false, Func<string, Resource> resolver = null)
+        public static Model.Version GetVersion(ValidationContext validationContext)
+        {
+            object versionObject;
+            if (validationContext == null || !validationContext.Items.TryGetValue(ValidationContextVersionKey, out versionObject))
+            {
+                return Model.Version.All;
+            }
+            return (Model.Version)versionObject;
+        }
+
+        public static void Validate(Model.Version version, object value, bool recurse = false, Func<string, Resource> resolver = null)
         {
             if (value == null) throw new ArgumentNullException("value");
             //    assertSupportedInstanceType(value);
 
-            var validationContext = BuildContext(value);
+            var validationContext = BuildContext(version, value);
             validationContext.SetValidateRecursively(recurse);
             validationContext.SetResolver(resolver);
 
             Validator.ValidateObject(value, validationContext, true);
         }
 
-        public static bool TryValidate(object value, ICollection<ValidationResult> validationResults = null, bool recurse = false, Func<string,Resource> resolver=null)
+        public static bool TryValidate(Model.Version version, object value, ICollection<ValidationResult> validationResults = null, bool recurse = false, Func<string,Resource> resolver=null)
         {
             if (value == null) throw new ArgumentNullException("value");
           // assertSupportedInstanceType(value);
 
             var results = validationResults ?? new List<ValidationResult>();
-            var validationContext = BuildContext(value);
+            var validationContext = BuildContext(version, value);
             validationContext.SetValidateRecursively(recurse);
             validationContext.SetResolver(resolver);
             return Validator.TryValidateObject(value, validationContext, results, true);

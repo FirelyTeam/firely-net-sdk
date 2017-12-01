@@ -66,7 +66,7 @@ namespace Hl7.Fhir.Tests.Serialization
                         resource.InvariantConstraints = new List<ElementDefinitionConstraint>();
                         resource.AddDefaultConstraints();
                         var issues = new List<OperationOutcomeIssue>();
-                        resource.ValidateInvariants(issues);
+                        resource.ValidateInvariants(Fhir.Model.Version.DSTU2, issues);
                         if (issues.Count > 0)
                         {
                             Debug.WriteLine(String.Format("Validating {0} failed:", entry.Name));
@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Tests.Serialization
                             resource.InvariantConstraints.AddRange(invariantCache[resource.ResourceType.ToString()]);
                         }
                         var issues = new List<OperationOutcomeIssue>();
-                        resource.ValidateInvariants(issues);
+                        resource.ValidateInvariants(Fhir.Model.Version.DSTU2, issues);
                         // Debug.WriteLine("Key: " + String.Join(", ", resource.InvariantConstraints.Select(s => s.Key)));
                         foreach (var item in resource.InvariantConstraints)
                         {

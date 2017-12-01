@@ -35,20 +35,20 @@ namespace Hl7.Fhir.Tests.Validation
 
             foreach (var contained in patient.Contained) ((DomainResource)contained).Text = new Narrative() { Div = "<wrong />" };
 
-            Assert.IsFalse(DotNetAttributeValidation.TryValidate(patient, results, true));
+            Assert.IsFalse(DotNetAttributeValidation.TryValidate(Fhir.Model.Version.DSTU2, patient, results, true));
             Assert.IsTrue(results.Count > 0);
 
             results.Clear();
             foreach (DomainResource contained in patient.Contained) contained.Text = null;
 
             // Try again
-            Assert.IsTrue(DotNetAttributeValidation.TryValidate(patient, results, true));
+            Assert.IsTrue(DotNetAttributeValidation.TryValidate(Fhir.Model.Version.DSTU2, patient, results, true));
 
             patient.Identifier[0].System = "urn:oid:crap really not valid";
 
             results = new List<ValidationResult>();
             
-            Assert.IsFalse(DotNetAttributeValidation.TryValidate(patient, results, true));
+            Assert.IsFalse(DotNetAttributeValidation.TryValidate(Fhir.Model.Version.DSTU2, patient, results, true));
             Assert.IsTrue(results.Count > 0);
         }
     }

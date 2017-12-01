@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Model
                 //     result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Entry selflink must be an absolute URI"));
 
                 if (Meta.Tag != null && validationContext.ValidateRecursively())
-                    DotNetAttributeValidation.TryValidate(Meta.Tag, result, true);
+                    DotNetAttributeValidation.TryValidate(DotNetAttributeValidation.GetVersion(validationContext), Meta.Tag, result, true);
             }
 
             // and process all the invariants from the resource
@@ -185,8 +185,8 @@ namespace Hl7.Fhir.Model
             return result;
         }
 
-        public void ValidateInvariants(List<ValidationResult> result)
-             => ValidateInvariants(DotNetAttributeValidation.BuildContext(null), result);
+        public void ValidateInvariants(Version version, List<ValidationResult> result)
+             => ValidateInvariants(DotNetAttributeValidation.BuildContext(version, null), result);
 
         public void ValidateInvariants(ValidationContext context, List<ValidationResult> result)
         {
@@ -200,24 +200,24 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        public void ValidateInvariants(List<OperationOutcomeIssue> issues)
-            => ValidateInvariants(DotNetAttributeValidation.BuildContext(new object()), issues);
+        public void ValidateInvariants(Version version, List<OperationOutcomeIssue> issues)
+            => ValidateInvariants(DotNetAttributeValidation.BuildContext(version, new object()), issues);
 
         public void ValidateInvariants(ValidationContext context, List<OperationOutcomeIssue> issues)
         {
             if (InvariantConstraints != null && InvariantConstraints.Count > 0)
             {
-                var sw = System.Diagnostics.Stopwatch.StartNew();
+                // var sw = System.Diagnostics.Stopwatch.StartNew();
                 // Need to serialize to XML until the object model processor exists
                 // string tpXml = Fhir.Serialization.FhirSerializer.SerializeResourceToXml(this);
                 // FhirPath.IFhirPathElement tree = FhirPath.InstanceTree.TreeConstructor.FromXml(tpXml);
                 var tree = new PocoNavigator(this);
                 foreach (var invariantRule in InvariantConstraints)
                 {
-                    ValidateInvariantRule(context,invariantRule, tree, issues);
+                    ValidateInvariantRule(context, invariantRule, tree, issues);
                 }
 
-                sw.Stop();
+                // sw.Stop();
                 // System.Diagnostics.Trace.WriteLine(String.Format("Validation of {0} execution took {1}", ResourceType.ToString(), sw.Elapsed.TotalSeconds));
             }
         }

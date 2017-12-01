@@ -33,9 +33,16 @@ namespace Hl7.Fhir.Validation
 
         public Hl7.Fhir.Model.Version Version { get; set; }
 
+#if DOTNETFW
+        public override object TypeId => Version;
+#endif
+
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             if (value == null) return ValidationResult.Success;
+            
+            // Ignore attributes that apply to a different FHIR specifications version
+            if (Version != Model.Version.All && Version != DotNetAttributeValidation.GetVersion(validationContext)) return ValidationResult.Success;
 
             var list = value as IEnumerable;
             ValidationResult result = ValidationResult.Success;

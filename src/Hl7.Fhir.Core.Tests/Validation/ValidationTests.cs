@@ -27,8 +27,8 @@ namespace Hl7.Fhir.Tests.Validation
         {
             Id id = new Id("az23");
 
-            DotNetAttributeValidation.Validate(id);
-            DotNetAttributeValidation.Validate(id,true);        // recursive checking shouldnt matter
+            DotNetAttributeValidation.Validate(Fhir.Model.Version.DSTU2, id);
+            DotNetAttributeValidation.Validate(Fhir.Model.Version.DSTU2, id, true);        // recursive checking shouldnt matter
 
             id = new Id("!notgood!");
             validateErrorOrFail(id);
@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Tests.Validation
             try
             {
                 // should throw error
-                DotNetAttributeValidation.Validate(instance, recurse);
+                DotNetAttributeValidation.Validate(Fhir.Model.Version.DSTU2, instance, recurse);
                 Assert.Fail();
             }
             catch (ValidationException ve) 
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Tests.Validation
             Patient p = new Patient();
 
             p.Deceased = new FhirBoolean(true);
-            DotNetAttributeValidation.Validate(p);
+            DotNetAttributeValidation.Validate(Fhir.Model.Version.DSTU2, p);
 
             // Deceased can either be boolean or dateTime, not FhirUri
             p.Deceased = new FhirUri();
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Tests.Validation
 
             issue.Code = IssueType.Forbidden;
 
-            DotNetAttributeValidation.Validate(oo, true);
+            DotNetAttributeValidation.Validate(Fhir.Model.Version.DSTU2, oo, true);
         }
 
         [TestMethod]
@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Tests.Validation
             pr.Contained = new List<Resource> { p };
 
             validateErrorOrFail(pr,true);
-            DotNetAttributeValidation.Validate(pr);
+            DotNetAttributeValidation.Validate(Fhir.Model.Version.DSTU2, pr);
         }
 
         [TestMethod]
@@ -157,7 +157,7 @@ namespace Hl7.Fhir.Tests.Validation
             validateErrorOrFail(pat);
 
             patn.Contained = null;
-            DotNetAttributeValidation.Validate(pat);
+            DotNetAttributeValidation.Validate(Fhir.Model.Version.DSTU2, pat);
 
             patn.Text = new Narrative();
             patn.Text.Div = "<div>Narrative in contained resource</div>";
@@ -177,8 +177,8 @@ namespace Hl7.Fhir.Tests.Validation
             enc.Status = EncounterState.Planned;
 
             // Now, it should work
-            DotNetAttributeValidation.Validate(enc);
-            DotNetAttributeValidation.Validate(enc, true);  // recursive checking shouldnt matter
+            DotNetAttributeValidation.Validate(Fhir.Model.Version.DSTU2, enc);
+            DotNetAttributeValidation.Validate(Fhir.Model.Version.DSTU2, enc, true);  // recursive checking shouldnt matter
 
             // Hide an incorrect datetime deep into the Encounter
             FhirDateTime dt = new FhirDateTime();
@@ -187,7 +187,7 @@ namespace Hl7.Fhir.Tests.Validation
             enc.Period = new Period() { StartElement = dt };
 
             // When we do not validate recursively, we should still be ok
-            DotNetAttributeValidation.Validate(enc);
+            DotNetAttributeValidation.Validate(Fhir.Model.Version.DSTU2, enc);
 
             // When we recurse, this should fail
             validateErrorOrFail(enc, true, membername: "Value");
@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Tests.Validation
             var p = new Patient();
 
             p.Text = new Narrative() { Div = "<div xmlns='http://www.w3.org/1999/xhtml'><p>should be valid</p></div>", Status = Narrative.NarrativeStatus.Generated  };
-            DotNetAttributeValidation.Validate(p,true);
+            DotNetAttributeValidation.Validate(Fhir.Model.Version.DSTU2, p, true);
 
             p.Text.Div = "<div xmlns='http://www.w3.org/1999/xhtml'><p>should not be valid<p></div>";
             validateErrorOrFail(p,true);
@@ -209,5 +209,23 @@ namespace Hl7.Fhir.Tests.Validation
             validateErrorOrFail(p,true);
         }
 #endif       
+
+        [TestMethod]
+        public void TestVersionDependentValidation()
+        {
+            var p = new Parameters
+            {
+                Parameter = new List<Parameters.ParameterComponent>
+                {
+                    new Parameters.ParameterComponent
+                    {
+                        Name = "Test",
+                        Value = new Fhir.Model.STU3.ResourceReference { Reference = "#test" }
+                    }
+                }
+            };
+            validateErrorOrFail(p, true);
+            DotNetAttributeValidation.Validate(Fhir.Model.Version.STU3, p, true);
+        }
     }
 }

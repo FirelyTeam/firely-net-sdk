@@ -19,12 +19,6 @@
     from the Visual Studio C# Interactive window
 
 TODO:
-- Support different constraints by version
-
- - Handle logical types as interfaces
-
-- Version-dependent AllowedTypes
-
 - Version-dependent InSummary
 
 - ComponentDetails.Render: is the inAbstractType parameter needed / correct?
@@ -32,6 +26,8 @@ TODO:
 - Share common code between STU3 and DSTU2: ModelInfo, Binary, Bundle, BundleExtensions, ElementDefinitonExtensions
 
 - STU3 equivalent of IConformanceResource
+
+- Handle logical types as interfaces
 */
 
 #r "System.Xml"
@@ -598,7 +594,7 @@ public class ResourceDetails
     public string Pattern;
     public List<PropertyDetails> Properties;
     public List<ComponentDetails> Components;
-    public Dictionary<string, List<ConstraintDetails>> ConstraintsByVersion;
+    public List<ConstraintDetails> Constraints;
     public string Definition;
 
     public bool IsResource()
@@ -644,22 +640,12 @@ public class ResourceDetails
                 writer.WriteLine("        {0}: {1}", comprop.Name, comprop.PropType);
             }
         }
-        foreach (var versionAndConstraints in ConstraintsByVersion)
+        if (Constraints.Count > 0)
         {
-            if (versionAndConstraints.Value.Count > 0)
+            writer.WriteLine("    ---- Constraints");
+            foreach (var constraint in Constraints)
             {
-                if (string.IsNullOrEmpty(versionAndConstraints.Key))
-                {
-                    writer.WriteLine("    ---- Constraints for all versions");
-                }
-                else
-                {
-                    writer.WriteLine("    ---- Constraints for version {0}", versionAndConstraints.Key);
-                }
-                foreach (var constraint in versionAndConstraints.Value)
-                {
-                    writer.WriteLine("        {0} - {1}: {2}, XPath: {3}, Expression: {4}", constraint.Key, constraint.Severity, constraint.Human, constraint.XPath, constraint.Expression);
-                }
+                writer.WriteLine("        {0} - {1}: {2}, XPath: {3}, Expression: {4}", constraint.Key, constraint.Severity, constraint.Human, constraint.XPath, constraint.Expression);
             }
         }
     }
@@ -685,10 +671,6 @@ public class ResourceDetails
     )
     {
         var firstResource = resources.First();
-        var constraintsAreTheSame = resources
-            .Skip(1)
-            .All(r => r.ConstraintsByVersion.Values.Single().Count == firstResource.ConstraintsByVersion.Values.Single().Count &&
-                r.ConstraintsByVersion.Values.Single().OrderBy(c => c.Key).Zip(firstResource.ConstraintsByVersion.Values.Single().OrderBy(c => c.Key), (c1, c2) => c1.IsSame(c2)).All(same => same));
         return new ResourceDetails
         {
             Versions = resources
@@ -718,21 +700,13 @@ public class ResourceDetails
                     )
                 )
                 .ToList(),
-            ConstraintsByVersion = constraintsAreTheSame ?
-                new Dictionary<string, List<ConstraintDetails>>
-                {
-                    {
-                        string.Empty,
-                        firstResource.ConstraintsByVersion.Values.Single()
-                            .Select(
-                                constraint => ConstraintDetails.MergeSame(
-                                    resources.Select(resource => new KeyValuePair<string, ConstraintDetails>(resource.Versions.Single().Version, resource.ConstraintsByVersion.Values.Single().Single(c => c.Key == constraint.Key)))
-                                )
-                            )
-                            .ToList()
-                    }
-                } :
-                resources.ToDictionary( resource => resource.Versions.Single().Version, resource => resource.ConstraintsByVersion.Values.Single() ),
+            Constraints = firstResource.Constraints
+                .Select(
+                    constraint => ConstraintDetails.MergeSame(
+                        resources.Select(resource => new KeyValuePair<string, ConstraintDetails>(resource.Versions.Single().Version, resource.Constraints.Single(c => c.Key == constraint.Key)))
+                    )
+                )
+                .ToList(),
             Definition = firstResource.Definition
         };
     }
@@ -842,10 +816,9 @@ public class ResourceDetails
         }
 
         yield return string.Empty;
-        List<ConstraintDetails> sharedConstraints;
-        if (ConstraintsByVersion.TryGetValue(string.Empty, out sharedConstraints) && sharedConstraints.Count > 0)
+        if (Constraints.Count > 0)
         {
-            foreach (var constraint in sharedConstraints)
+            foreach (var constraint in Constraints)
             {
                 yield return string.Empty;
                 foreach (var line in constraint.Render(Name)) yield return "    " + line;
@@ -855,7 +828,7 @@ public class ResourceDetails
             yield return $"    {{";
             yield return $"        base.AddDefaultConstraints();";
             yield return string.Empty;
-            foreach (var constraint in sharedConstraints)
+            foreach (var constraint in Constraints)
             {
                 yield return $"        InvariantConstraints.Add({ constraint.GetName(Name) });";
             }
@@ -944,8 +917,36 @@ public class ResourceDetails
                 .ToDictionary( res => res.Name );
             resourcesByNameByVersion.Add(loadedVersion.Version, resourcesByName);
         }
+        Patch(resourcesByNameByVersion);
         ExtractShared(resourcesByNameByVersion);
         return resourcesByNameByVersion;
+    }
+
+    private static void Patch(Dictionary<string, Dictionary<string, ResourceDetails>> resourcesByNameByVersion)
+    {
+        // Make the STU3 Code patterns the same as DSTU2 (the STU3 one seems just plain wrong)
+        var stu3Code = resourcesByNameByVersion["STU3"]["Code"];
+        stu3Code.Pattern = @"[^\s]+([\s][^\s]+)*";
+
+        // Make the DSTU2 Element.Id a string as in STU3 - less restrictive
+        var dstu2Element = resourcesByNameByVersion["DSTU2"]["Element"];
+        var dstu2ElementIdElement = dstu2Element.Properties.Single(p => p.Name == "IdElement");
+        dstu2ElementIdElement.PropType = "Hl7.Fhir.Model.FhirString";
+        dstu2ElementIdElement.NativeType = "string";
+
+        // Make DSTU2 Parameters constraints the same as in STU3 - the DSTU2 ones are wrong
+        var dstu2Parameters = resourcesByNameByVersion["DSTU2"]["Parameters"];
+        dstu2Parameters.Constraints = new List<ConstraintDetails>
+        {
+            new ConstraintDetails
+            {
+                Expression = "parameter.all((part.exists() and value.empty() and resource.empty()) or (part.empty() and (value.exists() xor resource.exists())))",
+                Key = "inv-1",
+                Severity = "Warning",
+                Human = "A parameter must have only one of (value, resource, part)",
+                XPath = "exists(f:value) or exists(f:resource) and not(exists(f:value) and exists(f:resource))"
+            }
+        };
     }
 
     private static List<ResourceDetails> LoadResources(LoadedVersion loadedVersion, Dictionary<string, string> enumTypesByValueSetUrl)
@@ -1007,8 +1008,7 @@ public class ResourceDetails
                 resource.Components.Add(component);
             }
 
-            var constraints = new List<ConstraintDetails>();
-            resource.ConstraintsByVersion = new Dictionary<string, List<ConstraintDetails>>() { { string.Empty, constraints } };
+            resource.Constraints = new List<ConstraintDetails>();
             foreach (var node in e.SelectNodes("fhir:differential/fhir:element/fhir:constraint", loadedVersion.NSR).OfType<XmlElement>())
             {
                 var expression = node.SelectSingleNode("fhir:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-expression']/fhir:valueString/@value|fhir:expression/@value", loadedVersion.NSR).Value;
@@ -1026,7 +1026,7 @@ public class ResourceDetails
                     XPath = node.SelectSingleNode("fhir:xpath/@value", loadedVersion.NSR).Value,
                     Expression = expression
                 };
-                constraints.Add(constraint);
+                resource.Constraints.Add(constraint);
             }
         }
         return result;
@@ -1163,12 +1163,6 @@ public class ResourceDetails
             var patternNode = e.SelectSingleNode("fhir:differential/fhir:element/fhir:type/fhir:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-regex']/fhir:valueString/@value", loadedVersion.NST);
             resource.Pattern = patternNode != null ? patternNode.Value : null;
 
-            // Make the DSTU2 and STU3 Code patterns the same (the STU3 one seems just plain wrong)
-            if (resource.Pattern == @"[^\s]+([\s]?[^\s]+)*")
-            {
-                resource.Pattern = @"[^\s]+([\s][^\s]+)*";
-            }
-
             resource.Properties = resource.IsPrimitive ?
                 new List<PropertyDetails>() :
                 GetProperties(resourceName, rawResourceName, e, loadedVersion.NST, enumTypesByValueSetUrl);
@@ -1199,7 +1193,7 @@ public class ResourceDetails
                 }
             }
 
-            resource.ConstraintsByVersion = new Dictionary<string, List<ConstraintDetails>>() { { string.Empty, new List<ConstraintDetails>() } };
+            resource.Constraints = new List<ConstraintDetails>();
 
             var definitionNode = e.SelectSingleNode("fhir:differential/fhir:element/fhir:definition/@value", loadedVersion.NST);
             if (definitionNode != null)

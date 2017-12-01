@@ -147,7 +147,7 @@
             <min value="0" />
             <max value="1" />
             <type>
-              <code value="id" />
+              <code value="string" />
             </type>
             <mapping>
               <identity value="rim" />
@@ -208,7 +208,7 @@
             <min value="0" />
             <max value="1" />
             <type>
-              <code value="id" />
+              <code value="string" />
             </type>
             <mapping>
               <identity value="rim" />
