@@ -2,7 +2,7 @@
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Validation;
-using Xunit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Hl7.Fhir.Support.Tests.Model
 {
@@ -11,7 +11,7 @@ namespace Hl7.Fhir.Support.Tests.Model
         /// <summary>
         /// See https://github.com/ewoutkramer/fhir-net-api/issues/474
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void Issue474StartdateIs0001_01_01()
         {
             var json = "{ \"resourceType\": \"Patient\", \"active\": true, \"contact\": [{\"organization\": {\"reference\": \"Organization/1\", \"display\": \"Walt Disney Corporation\" }, \"period\": { \"start\": \"0001-01-01\", \"end\": \"2018\" } } ],}";
@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Support.Tests.Model
             var pat = new FhirJsonParser().Parse<Patient>(json);
 
             var report = validator.Validate(pat);
-            Assert.True(report.Success);
+            Assert.IsTrue(report.Success);
         }
     }
 }
