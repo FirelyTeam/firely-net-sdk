@@ -1092,16 +1092,42 @@ namespace Hl7.Fhir.Tests.Rest
             loc = client.TypeOperation<Patient>("everything", null, false);
             Assert.IsNotNull(loc);
 
-            // GET operation $everything with 1 parameter
-            // This doesn't work yet. When an operation is used with primitive types then those parameters must be appended to the url as query parameters.
-            // loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Date(2017, 10)), true);
-            // Assert.IsNotNull(loc);
+            
+
+            // GET operation $everything with 1 primitive parameter
+             loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Date(2017, 11)), true);
+            Assert.IsNotNull(loc);
+
+            // GET operation $everything with 1 primitive2token parameter
+            loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Identifier("", "example")), true);
+            Assert.IsNotNull(loc);
+
+            // GET operation $everything with 1 resource parameter
+            try
+            {
+                loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Patient()), true);
+                Assert.Fail("An InvalidOperationException was expected here");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsInstanceOfType(ex, typeof(InvalidOperationException), ex.Message);
+            }
+
+            // GET operation $everything with 1 complex parameter
+            try
+            {
+                loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Annotation() { Text = "test" }), true);
+                Assert.Fail("An InvalidOperationException was expected here");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsInstanceOfType(ex, typeof(InvalidOperationException), ex.Message);
+            }
 
             // POST operation $everything with 1 parameter
             loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Date(2017, 10)), false);
             Assert.IsNotNull(loc);
         }
-
     }
 
 }

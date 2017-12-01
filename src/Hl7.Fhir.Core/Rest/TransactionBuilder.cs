@@ -9,6 +9,7 @@
 using Hl7.Fhir.Model;
 using System;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Rest
 {
@@ -247,15 +248,51 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
+        private string ParamValueToString(Element parameterValue)
+        {
+            if (parameterValue != null)
+            {
+                switch (parameterValue)
+                {
+                    case Identifier id:
+                        return id.ToToken();
+                    case Coding coding:
+                        return coding.ToToken();
+                    case ContactPoint contactPoint:
+                        return contactPoint.ToToken();
+                    case CodeableConcept codeableConcept:
+                        return codeableConcept.ToToken();
+                    default:
+                        if (ModelInfo.IsPrimitive(parameterValue.GetType()))
+                        {
+                            return parameterValue.ToString();
+                        }
+                        break;
+                }
+            }
+            throw Error.InvalidOperation("Parameters of non-primitive types are not allowed.");
+        }
+
         public TransactionBuilder EndpointOperation(RestUrl endpoint, Parameters parameters, bool useGet = false)
         {
             var entry = newEntry(useGet ? Bundle.HTTPVerb.GET : Bundle.HTTPVerb.POST, InteractionType.Operation);
-
-            entry.Resource = parameters;
-
             var path = new RestUrl(endpoint);
-            addEntry(entry, path);
 
+            if (useGet)
+            {
+                if (parameters != null)
+                {
+                    foreach (var parameter in parameters.Parameter)
+                    {
+                        path.AddParam(parameter.Name, ParamValueToString(parameter.Value));
+                    }
+                }
+            }
+            else
+            {
+                entry.Resource = parameters;
+            }
+            addEntry(entry, path);
             return this;
         }
 
